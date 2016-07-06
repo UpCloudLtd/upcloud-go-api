@@ -116,7 +116,7 @@ values:
 * `UPCLOUD_GO_SDK_TEST_USER`
 * `UPCLOUD_GO_SDK_TEST_PASSWORD`
 
-To run the test suite, run `go test ./... -v`
+To run the test suite, run `go test ./... -v -parallel 4`
 
 ## License
 
