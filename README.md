@@ -14,13 +14,6 @@ You'll need Go 1.6 or higher to use the SDK. You can use the following command t
 go get -u github.com/jalle19/upcloud-go-sdk
 ```
 
-Otherwise if your Go environment does not have vendoring support enabled you can use the following command to retrieve 
-the SDK:
-
-```
-go get -u github.com/jalle19/upcloud-go-sdk/upcloud/...
-````
-
 ## Usage
 
 The general pattern for using the SDK goes like this:
