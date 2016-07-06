@@ -54,6 +54,60 @@ for _, server := range servers.Servers {
 }
 ```
 
+### Creating a new server
+
+```go
+// Create the server. The state will be "maintenance" since the request is asynchronous
+serverDetails, err := svc.CreateServer(&request.CreateServerRequest{
+	Zone:             "fi-hel1",
+	Title:            "My new server",
+	Hostname:         "server.example.com",
+	PasswordDelivery: request.PasswordDeliveryNone,
+	StorageDevices: []request.CreateServerStorageDevice{
+		{
+			Action:  request.CreateStorageDeviceActionClone,
+			Storage: "01000000-0000-4000-8000-000030060200",
+			Title:   "disk1",
+			Size:    30,
+			Tier:    request.CreateStorageDeviceTierMaxIOPS,
+		},
+	},
+	IPAddresses: []request.CreateServerIPAddress{
+		{
+			Access: upcloud.IPAddressAccessPrivate,
+			Family: upcloud.IPAddressFamilyIPv4,
+		},
+		{
+			Access: upcloud.IPAddressAccessPublic,
+			Family: upcloud.IPAddressFamilyIPv4,
+		},
+		{
+			Access: upcloud.IPAddressAccessPublic,
+			Family: upcloud.IPAddressFamilyIPv6,
+		},
+	},
+})
+
+if err != nil {
+	panic(err)
+}
+
+fmt.Println(fmt.Sprintf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID))
+
+// Block for up to five minutes until the server has entered the "started" state
+err = svc.WaitForServerState(&request.WaitForServerStateRequest{
+	UUID:         serverDetails.UUID,
+	DesiredState: upcloud.ServerStateStarted,
+	Timeout:      time.Minute * 5,
+})
+
+if err != nil {
+	panic(err)
+}
+
+fmt.Println("Server is now started")
+```
+
 ## License
 
 This SDK is distributed under the [MIT License](https://opensource.org/licenses/MIT), see LICENSE.txt for more information.
