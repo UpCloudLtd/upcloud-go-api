@@ -25,17 +25,220 @@ func init() {
 }
 
 /**
-TestCreateServer performs the following actions:
+TestCreateModifyDeleteServer performs the following actions:
 
 - creates a server
-- waits until the server has started
 - modifies the server
 - stops the server
 - deletes the server
 
 */
-func TestCreateServer(t *testing.T) {
+func TestCreateModifyDeleteServer(t *testing.T) {
 	// Create a server
+	serverDetails := createServer()
+	t.Log(fmt.Sprintf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID))
+	t.Log("Waiting for server to start ...")
+
+	err := svc.WaitForServerState(&request.WaitForServerStateRequest{
+		UUID:         serverDetails.UUID,
+		DesiredState: upcloud.ServerStateStarted,
+		Timeout:      time.Minute * 5,
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	t.Log("Server is now active")
+
+	// Modify the server
+	t.Log("Modifying the server ...")
+
+	serverDetails, err = svc.ModifyServer(&request.ModifyServerRequest{
+		UUID:  serverDetails.UUID,
+		Title: "Modified server",
+	})
+
+	handleError(err)
+	t.Log("Waiting for the server to exit maintenance state ...")
+
+	err = svc.WaitForServerState(&request.WaitForServerStateRequest{
+		UUID:         serverDetails.UUID,
+		DesiredState: upcloud.ServerStateStarted,
+		Timeout:      time.Minute * 5,
+	})
+
+	handleError(err)
+	t.Log(fmt.Sprintf("Server is now modified, new title is %s", serverDetails.Title))
+
+	// Stop the server
+	t.Log("Force stopping the server ...")
+
+	serverDetails, err = svc.StopServer(&request.StopServerRequest{
+		UUID:     serverDetails.UUID,
+		StopType: request.ServerStopTypeHard,
+		Timeout:  time.Minute * 5,
+	})
+
+	handleError(err)
+	t.Log("Waiting for the server to stop ...")
+
+	err = svc.WaitForServerState(&request.WaitForServerStateRequest{
+		UUID:         serverDetails.UUID,
+		DesiredState: upcloud.ServerStateStopped,
+		Timeout:      time.Minute * 5,
+	})
+
+	handleError(err)
+	t.Log("Server is now stopped")
+
+	// Delete the server
+	t.Log("Deleting the server ...")
+
+	err = svc.DeleteServer(&request.DeleteServerRequest{
+		UUID: serverDetails.UUID,
+	})
+
+	handleError(err)
+	t.Log("Server is now deleted")
+}
+
+/**
+TestCreateModifyDelete performs the following actions:
+
+- creates a new storage disk
+- modifies the storage
+- deletes the storage
+
+*/
+func TestCreateModifyDelete(t *testing.T) {
+	// Create some storage
+	storageDetails := createStorage()
+	t.Log(fmt.Sprintf("Storage %s with UUID %s created", storageDetails.Title, storageDetails.UUID))
+
+	// Modify the storage
+	t.Log("Modifying the storage ...")
+
+	storageDetails, err := svc.ModifyStorage(&request.ModifyStorageRequest{
+		UUID:  storageDetails.UUID,
+		Title: "New fancy title",
+	})
+
+	handleError(err)
+	t.Log(fmt.Sprintf("Storage with UUID %s modified successfully, new title is %s", storageDetails.UUID, storageDetails.Title))
+
+	// Delete the storage
+	t.Log("Deleting the storage ...")
+
+	err = svc.DeleteStorage(&request.DeleteStorageRequest{
+		UUID: storageDetails.UUID,
+	})
+
+	handleError(err)
+	t.Log("Storage is now deleted")
+}
+
+/**
+TestAttachDetachStorage performs the following actions:
+
+- creates a server
+- stops the server
+- creates a new storage disk
+- attaches the storage
+- detaches the storage
+- deletes the storage
+- deletes the server
+
+ */
+func TestAttachDetachStorage(t *testing.T) {
+	// Create a server
+	serverDetails := createServer()
+	t.Log(fmt.Sprintf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID))
+	t.Log("Waiting for server to start ...")
+
+	err := svc.WaitForServerState(&request.WaitForServerStateRequest{
+		UUID:         serverDetails.UUID,
+		DesiredState: upcloud.ServerStateStarted,
+		Timeout:      time.Minute * 5,
+	})
+
+	handleError(err)
+	t.Log("Server is now active")
+
+	// Stop the server so we can attach the storage
+	t.Log("Stopping the server ...")
+	serverDetails, err = svc.StopServer(&request.StopServerRequest{
+		UUID:    serverDetails.UUID,
+		Timeout: time.Minute * 5,
+	})
+
+	handleError(err)
+
+	// Wait for the server to stop
+	t.Log("Waiting for server to stop ...")
+
+	err = svc.WaitForServerState(&request.WaitForServerStateRequest{
+		UUID:         serverDetails.UUID,
+		DesiredState: upcloud.ServerStateStopped,
+		Timeout:      time.Minute * 5,
+	})
+
+	handleError(err)
+	t.Log("Server is now stopped")
+
+	// Create some storage
+	storageDetails := createStorage()
+	t.Log(fmt.Sprintf("Storage %s with UUID %s created", storageDetails.Title, storageDetails.UUID))
+
+	// Attach the storage
+	t.Log(fmt.Sprintf("Attaching storage %s", storageDetails.UUID))
+
+	serverDetails, err = svc.AttachStorageRequest(&request.AttachStorageRequest{
+		StorageUUID: storageDetails.UUID,
+		ServerUUID: serverDetails.UUID,
+		Type: upcloud.StorageTypeDisk,
+		Address: "scsi:0:0",
+	})
+
+	handleError(err)
+	t.Log(fmt.Sprintf("Storage attached to server with UUID %s", serverDetails.UUID))
+
+	// Detach the storage
+	t.Log(fmt.Sprintf("Detaching storage %s", storageDetails.UUID))
+
+	serverDetails, err = svc.DetachStorageRequest(&request.DetachStorageRequest{
+		ServerUUID: serverDetails.UUID,
+		Address: "scsi:0:0",
+	})
+
+	handleError(err)
+	t.Log(fmt.Sprintf("Storage %s detached", storageDetails.UUID))
+
+	// Delete the storage
+	t.Log("Deleting the storage ...")
+
+	err = svc.DeleteStorage(&request.DeleteStorageRequest{
+		UUID: storageDetails.UUID,
+	})
+
+	handleError(err)
+	t.Log("Storage is now deleted")
+
+	// Delete the server
+	t.Log("Deleting the server ...")
+
+	err = svc.DeleteServer(&request.DeleteServerRequest{
+		UUID: serverDetails.UUID,
+	})
+
+	handleError(err)
+	t.Log("Server is now deleted")
+}
+
+/**
+Creates a server and returns the details about it, panic if creation fails
+*/
+func createServer() *upcloud.ServerDetails {
 	createServerRequest := request.CreateServerRequest{
 		Zone:             "fi-hel1",
 		Title:            "Integration test server #1",
@@ -73,98 +276,13 @@ func TestCreateServer(t *testing.T) {
 		panic(err)
 	}
 
-	t.Log(fmt.Sprintf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID))
-	t.Log("Waiting for server to start ...")
-
-	err = svc.WaitForServerState(&request.WaitForServerStateRequest{
-		UUID:         serverDetails.UUID,
-		DesiredState: upcloud.ServerStateStarted,
-		Timeout:      time.Minute * 5,
-	})
-
-	if err != nil {
-		panic(err)
-	}
-
-	t.Log("Server is now active")
-
-	// Modify the server
-	t.Log("Modifying the server ...")
-
-	serverDetails, err = svc.ModifyServer(&request.ModifyServerRequest{
-		UUID:  serverDetails.UUID,
-		Title: "Modified server",
-	})
-
-	if err != nil {
-		panic(err)
-	}
-
-	t.Log("Waiting for the server to exit maintenance state ...")
-
-	err = svc.WaitForServerState(&request.WaitForServerStateRequest{
-		UUID:         serverDetails.UUID,
-		DesiredState: upcloud.ServerStateStarted,
-		Timeout:      time.Minute * 5,
-	})
-
-	if err != nil {
-		panic(err)
-	}
-
-	t.Log(fmt.Sprintf("Server is now modified, new title is %s", serverDetails.Title))
-
-	// Stop the server
-	t.Log("Force stopping the server ...")
-
-	serverDetails, err = svc.StopServer(&request.StopServerRequest{
-		UUID:     serverDetails.UUID,
-		StopType: request.ServerStopTypeHard,
-		Timeout:  time.Minute * 5,
-	})
-
-	if err != nil {
-		panic(err)
-	}
-
-	t.Log("Waiting for the server to stop ...")
-
-	err = svc.WaitForServerState(&request.WaitForServerStateRequest{
-		UUID:         serverDetails.UUID,
-		DesiredState: upcloud.ServerStateStopped,
-		Timeout:      time.Minute * 5,
-	})
-
-	if err != nil {
-		panic(err)
-	}
-
-	t.Log("Server is now stopped")
-
-	// Delete the server
-	t.Log("Deleting the server ...")
-
-	err = svc.DeleteServer(&request.DeleteServerRequest{
-		UUID: serverDetails.UUID,
-	})
-
-	if err != nil {
-		panic(err)
-	}
-
-	t.Log("Server is now deleted")
+	return serverDetails
 }
 
 /**
-TestCreateStorage performs the following actions:
-
-- creates a piece of storage
-- modifies the storage
-- deletes the storage
-
+Creates a piece of storage and returns the details about it, panic if creation fails
 */
-func TestCreateStorage(t *testing.T) {
-	// Create some storage
+func createStorage() *upcloud.StorageDetails {
 	createStorageRequest := request.CreateStorageRequest{
 		Tier:  upcloud.StorageTierMaxIOPS,
 		Title: "Test storage",
@@ -178,34 +296,16 @@ func TestCreateStorage(t *testing.T) {
 		panic(err)
 	}
 
-	t.Log(fmt.Sprintf("Storage %s with UUID %s created", storageDetails.Title, storageDetails.UUID))
+	return storageDetails
+}
 
-	// Modify the storage
-	t.Log("Modifying the storage ...")
-
-	storageDetails, err = svc.ModifyStorage(&request.ModifyStorageRequest{
-		UUID:  storageDetails.UUID,
-		Title: "New fancy title",
-	})
-
+/**
+Handles the error by panicing, thus stopping the test execution
+ */
+func handleError(err error) {
 	if err != nil {
 		panic(err)
 	}
-
-	t.Log(fmt.Sprintf("Storage with UUID %s modified successfully, new title is %s", storageDetails.UUID, storageDetails.Title))
-
-	// Delete the storage
-	t.Log("Deleting the storage ...")
-
-	err = svc.DeleteStorage(&request.DeleteStorageRequest{
-		UUID: storageDetails.UUID,
-	})
-
-	if err != nil {
-		panic(err)
-	}
-
-	t.Log("Storage is now deleted")
 }
 
 /**
