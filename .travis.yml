@@ -7,3 +7,5 @@ go:
 matrix:
   allow_failures:
     - go: tip
+
+script: go test ./... -v -parallel 4

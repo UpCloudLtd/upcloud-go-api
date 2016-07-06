@@ -33,6 +33,8 @@ TestCreateModifyDeleteServer performs the following actions:
 
 */
 func TestCreateModifyDeleteServer(t *testing.T) {
+	t.Parallel()
+
 	// Create a server
 	serverDetails := createServer()
 	t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
@@ -82,6 +84,8 @@ TestCreateModifyDelete performs the following actions:
 
 */
 func TestCreateModifyDelete(t *testing.T) {
+	t.Parallel()
+
 	// Create some storage
 	storageDetails := createStorage()
 	t.Logf("Storage %s with UUID %s created", storageDetails.Title, storageDetails.UUID)
@@ -121,6 +125,8 @@ TestAttachDetachStorage performs the following actions:
 
 */
 func TestAttachDetachStorage(t *testing.T) {
+	t.Parallel()
+
 	// Create a server
 	serverDetails := createServer()
 	t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
@@ -193,6 +199,8 @@ TestLoadEjectCDROM performs the following actions:
 
 */
 func TestLoadEjectCDROM(t *testing.T) {
+	t.Parallel()
+
 	// Create the server
 	serverDetails := createServer()
 	t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
