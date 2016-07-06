@@ -3,9 +3,9 @@
 This is an SDK for interfacing with Upcloud's API using the Go programming language. It is loosely based on similar 
 SDKs such as https://github.com/aws/aws-sdk-go.
 
-## Installation
+## Installation and requirements
 
-If you are using Go 1.6 and higher you can use the following command to retrieve the SDK:
+You'll need Go 1.6 or higher to use the SDK. You can use the following command to retrieve the SDK:
 
 ```
 go get -u github.com/jalle19/upcloud-go-sdk
