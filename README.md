@@ -108,6 +108,16 @@ if err != nil {
 fmt.Println("Server is now started")
 ```
 
+## Testing
+
+To be able to run the test suite you'll need to export the following environment variables with their corresponding 
+values:
+
+* `UPCLOUD_GO_SDK_TEST_USER`
+* `UPCLOUD_GO_SDK_TEST_PASSWORD`
+
+To run the test suite, run `go test ./... -v`
+
 ## License
 
 This SDK is distributed under the [MIT License](https://opensource.org/licenses/MIT), see LICENSE.txt for more information.
