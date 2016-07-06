@@ -10,35 +10,31 @@ import (
 	"time"
 )
 
-/**
-TestServiceIntegration performs an extensive set of operations using credentials read from the environmental variables
-UPCLOUD_GO_SDK_TEST_USER and UPCLOUD_GO_SDK_TEST_PASSWORD. These credentials should preferably belong to a test account
-to avoid racking up charges.
-*/
-func TestServiceIntegration(t *testing.T) {
-	user := os.Getenv("UPCLOUD_GO_SDK_TEST_USER")
-	password := os.Getenv("UPCLOUD_GO_SDK_TEST_PASSWORD")
+// The service object used by the tests
+var svc *Service
 
-	if user == "" || password == "" {
-		panic("Unable to retrieve credentials from the environment, ensure UPCLOUD_GO_SDK_TEST_USER and UPCLOUD_GO_SDK_TEST_PASSWORD are exported")
-	}
+/**
+Configures the test environment
+*/
+func init() {
+	user, password := getCredentials()
 
 	c := client.New(user, password)
 	c.SetTimeout(time.Second * 30)
-	svc := New(c)
+	svc = New(c)
+}
 
-	// Retrieve the list of servers
-	servers, err := svc.GetServers()
+/**
+TestCreateServer performs the following actions:
 
-	if err != nil {
-		panic(err)
-	}
+- creates a server
+- waits until the server has started
+- modifies the server
+- stops the server
+- deletes the server
 
-	// Print the UUID and hostname of each server
-	for _, server := range servers.Servers {
-		fmt.Println(fmt.Sprintf("UUID: %s, hostname: %s", server.UUID, server.Hostname))
-	}
-
+*/
+func TestCreateServer(t *testing.T) {
 	// Create a server
 	createServerRequest := request.CreateServerRequest{
 		Zone:             "fi-hel1",
@@ -91,49 +87,6 @@ func TestServiceIntegration(t *testing.T) {
 	}
 
 	t.Log("Server is now active")
-
-	// Create some storage
-	t.Log("Creating some extra storage ...")
-
-	createStorageRequest := request.CreateStorageRequest{
-		Tier:  upcloud.StorageTierMaxIOPS,
-		Title: "Title",
-		Size:  50,
-		Zone:  "fi-hel1",
-	}
-
-	storageDetails, err := svc.CreateStorage(&createStorageRequest)
-
-	if err != nil {
-		panic(err)
-	}
-
-	t.Log(fmt.Sprintf("Storage %s created with UUID %s", storageDetails.Title, storageDetails.UUID))
-
-	// Modify the storage
-	t.Log("Modifying the storage ...")
-
-	storageDetails, err = svc.ModifyStorage(&request.ModifyStorageRequest{
-		UUID:  storageDetails.UUID,
-		Title: "New fancy title",
-	})
-
-	if err != nil {
-		panic(err)
-	}
-
-	t.Log(fmt.Sprintf("Storage with UUID %s modified successfully, new title is %s", storageDetails.UUID, storageDetails.Title))
-
-	// Delete the storage
-	t.Log("Deleting the storage ...")
-
-	err = svc.DeleteStorage(&request.DeleteStorageRequest{
-		UUID: storageDetails.UUID,
-	})
-
-	if err != nil {
-		panic(err)
-	}
 
 	// Modify the server
 	t.Log("Modifying the server ...")
@@ -200,4 +153,71 @@ func TestServiceIntegration(t *testing.T) {
 	}
 
 	t.Log("Server is now deleted")
+}
+
+/**
+TestCreateStorage performs the following actions:
+
+- creates a piece of storage
+- modifies the storage
+- deletes the storage
+
+*/
+func TestCreateStorage(t *testing.T) {
+	// Create some storage
+	createStorageRequest := request.CreateStorageRequest{
+		Tier:  upcloud.StorageTierMaxIOPS,
+		Title: "Test storage",
+		Size:  50,
+		Zone:  "fi-hel1",
+	}
+
+	storageDetails, err := svc.CreateStorage(&createStorageRequest)
+
+	if err != nil {
+		panic(err)
+	}
+
+	t.Log(fmt.Sprintf("Storage %s with UUID %s created", storageDetails.Title, storageDetails.UUID))
+
+	// Modify the storage
+	t.Log("Modifying the storage ...")
+
+	storageDetails, err = svc.ModifyStorage(&request.ModifyStorageRequest{
+		UUID:  storageDetails.UUID,
+		Title: "New fancy title",
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	t.Log(fmt.Sprintf("Storage with UUID %s modified successfully, new title is %s", storageDetails.UUID, storageDetails.Title))
+
+	// Delete the storage
+	t.Log("Deleting the storage ...")
+
+	err = svc.DeleteStorage(&request.DeleteStorageRequest{
+		UUID: storageDetails.UUID,
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	t.Log("Storage is now deleted")
+}
+
+/**
+Reads the API username and password from the environment, panics if they are not available
+*/
+func getCredentials() (string, string) {
+	user := os.Getenv("UPCLOUD_GO_SDK_TEST_USER")
+	password := os.Getenv("UPCLOUD_GO_SDK_TEST_PASSWORD")
+
+	if user == "" || password == "" {
+		panic("Unable to retrieve credentials from the environment, ensure UPCLOUD_GO_SDK_TEST_USER and UPCLOUD_GO_SDK_TEST_PASSWORD are exported")
+	}
+
+	return user, password
 }
