@@ -406,6 +406,40 @@ func (s *Service) DeleteStorage(r *request.DeleteStorageRequest) error {
 }
 
 /**
+LoadCDROM loads a storage as a CD-ROM in the CD-ROM device of a server
+*/
+func (s *Service) LoadCDROM(r *request.LoadCDROMRequest) (*upcloud.ServerDetails, error) {
+	serverDetails := upcloud.ServerDetails{}
+	requestBody, _ := xml.Marshal(r)
+	response, err := s.client.PerformPostRequest(s.client.CreateRequestUrl(r.RequestURL()), requestBody)
+
+	if err != nil {
+		return nil, parseServiceError(err)
+	}
+
+	xml.Unmarshal(response, &serverDetails)
+
+	return &serverDetails, nil
+}
+
+/**
+EjectCDROM ejects the storage from the CD-ROM device of a server
+*/
+func (s *Service) EjectCDROM(r *request.EjectCDROMRequest) (*upcloud.ServerDetails, error) {
+	serverDetails := upcloud.ServerDetails{}
+	requestBody, _ := xml.Marshal(r)
+	response, err := s.client.PerformPostRequest(s.client.CreateRequestUrl(r.RequestURL()), requestBody)
+
+	if err != nil {
+		return nil, parseServiceError(err)
+	}
+
+	xml.Unmarshal(response, &serverDetails)
+
+	return &serverDetails, nil
+}
+
+/**
 GetIPAddresses returns all IP addresses associated with the account
 */
 func (s *Service) GetIPAddresses() (*upcloud.IPAddresses, error) {

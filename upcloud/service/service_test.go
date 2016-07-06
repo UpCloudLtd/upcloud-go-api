@@ -1,7 +1,6 @@
 package service
 
 import (
-	"fmt"
 	"github.com/jalle19/upcloud-go-sdk/upcloud"
 	"github.com/jalle19/upcloud-go-sdk/upcloud/client"
 	"github.com/jalle19/upcloud-go-sdk/upcloud/request"
@@ -36,25 +35,12 @@ TestCreateModifyDeleteServer performs the following actions:
 func TestCreateModifyDeleteServer(t *testing.T) {
 	// Create a server
 	serverDetails := createServer()
-	t.Log(fmt.Sprintf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID))
-	t.Log("Waiting for server to start ...")
-
-	err := svc.WaitForServerState(&request.WaitForServerStateRequest{
-		UUID:         serverDetails.UUID,
-		DesiredState: upcloud.ServerStateStarted,
-		Timeout:      time.Minute * 5,
-	})
-
-	if err != nil {
-		panic(err)
-	}
-
-	t.Log("Server is now active")
+	t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 	// Modify the server
 	t.Log("Modifying the server ...")
 
-	serverDetails, err = svc.ModifyServer(&request.ModifyServerRequest{
+	serverDetails, err := svc.ModifyServer(&request.ModifyServerRequest{
 		UUID:  serverDetails.UUID,
 		Title: "Modified server",
 	})
@@ -69,27 +55,11 @@ func TestCreateModifyDeleteServer(t *testing.T) {
 	})
 
 	handleError(err)
-	t.Log(fmt.Sprintf("Server is now modified, new title is %s", serverDetails.Title))
+	t.Logf("Server is now modified, new title is %s", serverDetails.Title)
 
 	// Stop the server
-	t.Log("Force stopping the server ...")
-
-	serverDetails, err = svc.StopServer(&request.StopServerRequest{
-		UUID:     serverDetails.UUID,
-		StopType: request.ServerStopTypeHard,
-		Timeout:  time.Minute * 5,
-	})
-
-	handleError(err)
-	t.Log("Waiting for the server to stop ...")
-
-	err = svc.WaitForServerState(&request.WaitForServerStateRequest{
-		UUID:         serverDetails.UUID,
-		DesiredState: upcloud.ServerStateStopped,
-		Timeout:      time.Minute * 5,
-	})
-
-	handleError(err)
+	t.Log("Stopping the server ...")
+	stopServer(serverDetails.UUID)
 	t.Log("Server is now stopped")
 
 	// Delete the server
@@ -114,7 +84,7 @@ TestCreateModifyDelete performs the following actions:
 func TestCreateModifyDelete(t *testing.T) {
 	// Create some storage
 	storageDetails := createStorage()
-	t.Log(fmt.Sprintf("Storage %s with UUID %s created", storageDetails.Title, storageDetails.UUID))
+	t.Logf("Storage %s with UUID %s created", storageDetails.Title, storageDetails.UUID)
 
 	// Modify the storage
 	t.Log("Modifying the storage ...")
@@ -125,7 +95,7 @@ func TestCreateModifyDelete(t *testing.T) {
 	})
 
 	handleError(err)
-	t.Log(fmt.Sprintf("Storage with UUID %s modified successfully, new title is %s", storageDetails.UUID, storageDetails.Title))
+	t.Logf("Storage with UUID %s modified successfully, new title is %s", storageDetails.UUID, storageDetails.Title)
 
 	// Delete the storage
 	t.Log("Deleting the storage ...")
@@ -149,70 +119,44 @@ TestAttachDetachStorage performs the following actions:
 - deletes the storage
 - deletes the server
 
- */
+*/
 func TestAttachDetachStorage(t *testing.T) {
 	// Create a server
 	serverDetails := createServer()
-	t.Log(fmt.Sprintf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID))
-	t.Log("Waiting for server to start ...")
+	t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
-	err := svc.WaitForServerState(&request.WaitForServerStateRequest{
-		UUID:         serverDetails.UUID,
-		DesiredState: upcloud.ServerStateStarted,
-		Timeout:      time.Minute * 5,
-	})
-
-	handleError(err)
-	t.Log("Server is now active")
-
-	// Stop the server so we can attach the storage
+	// Stop the server
 	t.Log("Stopping the server ...")
-	serverDetails, err = svc.StopServer(&request.StopServerRequest{
-		UUID:    serverDetails.UUID,
-		Timeout: time.Minute * 5,
-	})
-
-	handleError(err)
-
-	// Wait for the server to stop
-	t.Log("Waiting for server to stop ...")
-
-	err = svc.WaitForServerState(&request.WaitForServerStateRequest{
-		UUID:         serverDetails.UUID,
-		DesiredState: upcloud.ServerStateStopped,
-		Timeout:      time.Minute * 5,
-	})
-
-	handleError(err)
+	stopServer(serverDetails.UUID)
 	t.Log("Server is now stopped")
 
 	// Create some storage
 	storageDetails := createStorage()
-	t.Log(fmt.Sprintf("Storage %s with UUID %s created", storageDetails.Title, storageDetails.UUID))
+	t.Logf("Storage %s with UUID %s created", storageDetails.Title, storageDetails.UUID)
 
 	// Attach the storage
-	t.Log(fmt.Sprintf("Attaching storage %s", storageDetails.UUID))
+	t.Logf("Attaching storage %s", storageDetails.UUID)
 
-	serverDetails, err = svc.AttachStorageRequest(&request.AttachStorageRequest{
+	serverDetails, err := svc.AttachStorageRequest(&request.AttachStorageRequest{
 		StorageUUID: storageDetails.UUID,
-		ServerUUID: serverDetails.UUID,
-		Type: upcloud.StorageTypeDisk,
-		Address: "scsi:0:0",
+		ServerUUID:  serverDetails.UUID,
+		Type:        upcloud.StorageTypeDisk,
+		Address:     "scsi:0:0",
 	})
 
 	handleError(err)
-	t.Log(fmt.Sprintf("Storage attached to server with UUID %s", serverDetails.UUID))
+	t.Logf("Storage attached to server with UUID %s", serverDetails.UUID)
 
 	// Detach the storage
-	t.Log(fmt.Sprintf("Detaching storage %s", storageDetails.UUID))
+	t.Logf("Detaching storage %s", storageDetails.UUID)
 
 	serverDetails, err = svc.DetachStorageRequest(&request.DetachStorageRequest{
 		ServerUUID: serverDetails.UUID,
-		Address: "scsi:0:0",
+		Address:    "scsi:0:0",
 	})
 
 	handleError(err)
-	t.Log(fmt.Sprintf("Storage %s detached", storageDetails.UUID))
+	t.Logf("Storage %s detached", storageDetails.UUID)
 
 	// Delete the storage
 	t.Log("Deleting the storage ...")
@@ -224,6 +168,93 @@ func TestAttachDetachStorage(t *testing.T) {
 	handleError(err)
 	t.Log("Storage is now deleted")
 
+	// Delete the server
+	t.Log("Deleting the server ...")
+
+	err = svc.DeleteServer(&request.DeleteServerRequest{
+		UUID: serverDetails.UUID,
+	})
+
+	handleError(err)
+	t.Log("Server is now deleted")
+}
+
+/**
+TestLoadEjectCDROM performs the following actions:
+
+- creates a server
+- stops the server
+- attaches a CD-ROM device
+- starts the server
+- loads a CD-ROM
+- ejects the CD-ROM
+- stops the server
+- deletes the server
+
+*/
+func TestLoadEjectCDROM(t *testing.T) {
+	// Create the server
+	serverDetails := createServer()
+	t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
+
+	// Stop the server
+	t.Log("Stopping the server ...")
+	stopServer(serverDetails.UUID)
+	t.Log("Server is now stopped")
+
+	// Attach CD-ROM device
+	t.Logf("Attaching CD-ROM device to server with UUID %s", serverDetails.UUID)
+	serverDetails, err := svc.AttachStorageRequest(&request.AttachStorageRequest{
+		ServerUUID: serverDetails.UUID,
+		Type:       upcloud.StorageTypeCDROM,
+	})
+
+	handleError(err)
+	t.Log("CD-ROM is now attached")
+
+	// Start the server
+	t.Logf("Starting server with UUID %s", serverDetails.UUID)
+	serverDetails, err = svc.StartServer(&request.StartServerRequest{
+		UUID:    serverDetails.UUID,
+		Timeout: time.Minute * 5,
+	})
+
+	handleError(err)
+
+	err = svc.WaitForServerState(&request.WaitForServerStateRequest{
+		UUID:         serverDetails.UUID,
+		DesiredState: upcloud.ServerStateStarted,
+		Timeout:      time.Minute * 5,
+	})
+
+	handleError(err)
+	t.Log("Server is now started")
+
+	// Load the CD-ROM
+	t.Log("Loading CD-ROM into CD-ROM device")
+	serverDetails, err = svc.LoadCDROM(&request.LoadCDROMRequest{
+		ServerUUID:  serverDetails.UUID,
+		StorageUUID: "01000000-0000-4000-8000-000030060101",
+	})
+
+	handleError(err)
+	t.Log("CD-ROM is now loaded")
+
+	// Eject the CD-ROM
+	t.Log("Ejecting CD-ROM from CD-ROM device")
+	serverDetails, err = svc.EjectCDROM(&request.EjectCDROMRequest{
+		ServerUUID: serverDetails.UUID,
+	})
+
+	handleError(err)
+	t.Log("CD-ROM is now ejected")
+
+	// Stop the server
+	t.Logf("Stopping server with UUID %s", serverDetails.UUID)
+	stopServer(serverDetails.UUID)
+	t.Log("Server is now stopped")
+
+	// Delete the server
 	// Delete the server
 	t.Log("Deleting the server ...")
 
@@ -276,7 +307,36 @@ func createServer() *upcloud.ServerDetails {
 		panic(err)
 	}
 
+	// Wait for the server to start
+	err = svc.WaitForServerState(&request.WaitForServerStateRequest{
+		UUID:         serverDetails.UUID,
+		DesiredState: upcloud.ServerStateStarted,
+		Timeout:      time.Minute * 5,
+	})
+
+	handleError(err)
+
 	return serverDetails
+}
+
+/**
+Stops the specified server
+*/
+func stopServer(uuid string) {
+	serverDetails, err := svc.StopServer(&request.StopServerRequest{
+		UUID:    uuid,
+		Timeout: time.Minute * 5,
+	})
+
+	handleError(err)
+
+	err = svc.WaitForServerState(&request.WaitForServerStateRequest{
+		UUID:         serverDetails.UUID,
+		DesiredState: upcloud.ServerStateStopped,
+		Timeout:      time.Minute * 5,
+	})
+
+	handleError(err)
 }
 
 /**
@@ -301,7 +361,7 @@ func createStorage() *upcloud.StorageDetails {
 
 /**
 Handles the error by panicing, thus stopping the test execution
- */
+*/
 func handleError(err error) {
 	if err != nil {
 		panic(err)

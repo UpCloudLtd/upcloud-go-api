@@ -139,3 +139,34 @@ RequestURL() implements the Request interface
 func (r *DeleteStorageRequest) RequestURL() string {
 	return fmt.Sprintf("/storage/%s", r.UUID)
 }
+
+/**
+LoadCDROMRequest represents a request to load a storage as a CD-ROM in the CD-ROM device of a server
+*/
+type LoadCDROMRequest struct {
+	XMLName    xml.Name `xml:"storage_device"`
+	ServerUUID string   `xml:"-"`
+
+	StorageUUID string `xml:"storage"`
+}
+
+/**
+RequestURL() implements the Request interface
+*/
+func (r *LoadCDROMRequest) RequestURL() string {
+	return fmt.Sprintf("/server/%s/cdrom/load", r.ServerUUID)
+}
+
+/**
+EjectCDROMRequest represents a request to load a storage as a CD-ROM in the CD-ROM device of a server
+*/
+type EjectCDROMRequest struct {
+	ServerUUID string
+}
+
+/**
+RequestURL() implements the Request interface
+*/
+func (r *EjectCDROMRequest) RequestURL() string {
+	return fmt.Sprintf("/server/%s/cdrom/eject", r.ServerUUID)
+}
