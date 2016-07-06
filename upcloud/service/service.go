@@ -10,14 +10,14 @@ import (
 )
 
 /**
-Represents the API service. The specified client is used to communicate with the API
+Service represents the API service. The specified client is used to communicate with the API
 */
 type Service struct {
 	client *client.Client
 }
 
 /**
-Constructs and returns a new service object configured with the specified client
+New constructs and returns a new service object configured with the specified client
 */
 func New(client *client.Client) *Service {
 	service := Service{}
@@ -27,7 +27,7 @@ func New(client *client.Client) *Service {
 }
 
 /**
-Returns the current user's account
+GetAccount returns the current user's account
 */
 func (s *Service) GetAccount() (*upcloud.Account, error) {
 	account := upcloud.Account{}
@@ -43,7 +43,7 @@ func (s *Service) GetAccount() (*upcloud.Account, error) {
 }
 
 /**
-Returns the available zones
+GetZones returns the available zones
 */
 func (s *Service) GetZones() (*upcloud.Zones, error) {
 	zones := upcloud.Zones{}
@@ -59,7 +59,7 @@ func (s *Service) GetZones() (*upcloud.Zones, error) {
 }
 
 /**
-Returns the available price zones and their corresponding prices
+GetPriceZones returns the available price zones and their corresponding prices
 */
 func (s *Service) GetPriceZones() (*upcloud.PrizeZones, error) {
 	zones := upcloud.PrizeZones{}
@@ -75,7 +75,7 @@ func (s *Service) GetPriceZones() (*upcloud.PrizeZones, error) {
 }
 
 /**
-Returns the available timezones
+GetTimeZones returns the available timezones
 */
 func (s *Service) GetTimeZones() (*upcloud.TimeZones, error) {
 	zones := upcloud.TimeZones{}
@@ -91,7 +91,7 @@ func (s *Service) GetTimeZones() (*upcloud.TimeZones, error) {
 }
 
 /**
-Returns the available service plans
+GetPlans returns the available service plans
 */
 func (s *Service) GetPlans() (*upcloud.Plans, error) {
 	plans := upcloud.Plans{}
@@ -107,7 +107,7 @@ func (s *Service) GetPlans() (*upcloud.Plans, error) {
 }
 
 /**
-Returns the available pre-configured server configurations
+GetServerConfigurations returns the available pre-configured server configurations
 */
 func (s *Service) GetServerConfigurations() (*upcloud.ServerConfigurations, error) {
 	serverConfigurations := upcloud.ServerConfigurations{}
@@ -123,7 +123,7 @@ func (s *Service) GetServerConfigurations() (*upcloud.ServerConfigurations, erro
 }
 
 /**
-Returns the available servers
+GetServers returns the available servers
 */
 func (s *Service) GetServers() (*upcloud.Servers, error) {
 	servers := upcloud.Servers{}
@@ -139,7 +139,7 @@ func (s *Service) GetServers() (*upcloud.Servers, error) {
 }
 
 /**
-Returns extended details about the specified server
+GetServerDetails returns extended details about the specified server
 */
 func (s *Service) GetServerDetails(r *request.GetServerDetailsRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
@@ -155,7 +155,7 @@ func (s *Service) GetServerDetails(r *request.GetServerDetailsRequest) (*upcloud
 }
 
 /**
-Creates a server and returns the server details for the newly created server
+CreateServer creates a server and returns the server details for the newly created server
 */
 func (s *Service) CreateServer(r *request.CreateServerRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
@@ -172,7 +172,7 @@ func (s *Service) CreateServer(r *request.CreateServerRequest) (*upcloud.ServerD
 }
 
 /**
-Blocks execution until the specified server has entered the specified state. The method will give up after the
+WaitForServerState blocks execution until the specified server has entered the specified state. The method will give up after the
 specified timeout
 */
 func (s *Service) WaitForServerState(r *request.WaitForServerStateRequest) error {
@@ -203,7 +203,7 @@ func (s *Service) WaitForServerState(r *request.WaitForServerStateRequest) error
 }
 
 /**
-Starts the specified server
+StartServer starts the specified server
 */
 func (s *Service) StartServer(r *request.StartServerRequest) (*upcloud.ServerDetails, error) {
 	// Increase the client timeout to match the request timeout
@@ -222,7 +222,7 @@ func (s *Service) StartServer(r *request.StartServerRequest) (*upcloud.ServerDet
 }
 
 /**
-Stops the specified server
+StopServer stops the specified server
 */
 func (s *Service) StopServer(r *request.StopServerRequest) (*upcloud.ServerDetails, error) {
 	// Increase the client timeout to match the request timeout
@@ -242,7 +242,7 @@ func (s *Service) StopServer(r *request.StopServerRequest) (*upcloud.ServerDetai
 }
 
 /**
-Restarts the specified server
+RestartServer restarts the specified server
 */
 func (s *Service) RestartServer(r *request.RestartServerRequest) (*upcloud.ServerDetails, error) {
 	// Increase the client timeout to match the request timeout
@@ -262,8 +262,8 @@ func (s *Service) RestartServer(r *request.RestartServerRequest) (*upcloud.Serve
 }
 
 /**
-Modifies the configuration of an existing server. Attaching and detaching storages as well as assigning and releasing
-IP addresses have their own separate operations
+ModifyServer modifies the configuration of an existing server. Attaching and detaching storages as well as assigning
+and releasing IP addresses have their own separate operations.
 */
 func (s *Service) ModifyServer(r *request.ModifyServerRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
@@ -280,7 +280,7 @@ func (s *Service) ModifyServer(r *request.ModifyServerRequest) (*upcloud.ServerD
 }
 
 /**
-Deletes the specified server
+DeleteServer deletes the specified server
 */
 func (s *Service) DeleteServer(r *request.DeleteServerRequest) error {
 	err := s.client.PerformDeleteRequest(s.client.CreateRequestUrl(r.RequestURL()))
@@ -293,7 +293,7 @@ func (s *Service) DeleteServer(r *request.DeleteServerRequest) error {
 }
 
 /**
-Returns all available storages
+GetStorages returns all available storages
 */
 func (s *Service) GetStorages(r *request.GetStoragesRequest) (*upcloud.Storages, error) {
 	storages := upcloud.Storages{}
@@ -309,7 +309,7 @@ func (s *Service) GetStorages(r *request.GetStoragesRequest) (*upcloud.Storages,
 }
 
 /**
-Returns extended details about the specified piece of storage
+GetStorageDetails returns extended details about the specified piece of storage
 */
 func (s *Service) GetStorageDetails(r *request.GetStorageDetailsRequest) (*upcloud.StorageDetails, error) {
 	storageDetails := upcloud.StorageDetails{}
@@ -325,7 +325,7 @@ func (s *Service) GetStorageDetails(r *request.GetStorageDetailsRequest) (*upclo
 }
 
 /**
-Creates the specified storage
+CreateStorage creates the specified storage
 */
 func (s *Service) CreateStorage(r *request.CreateStorageRequest) (*upcloud.StorageDetails, error) {
 	storageDetails := upcloud.StorageDetails{}
@@ -342,7 +342,7 @@ func (s *Service) CreateStorage(r *request.CreateStorageRequest) (*upcloud.Stora
 }
 
 /**
-Modifies the specified storage device
+ModifyStorage modifies the specified storage device
 */
 func (s *Service) ModifyStorage(r *request.ModifyStorageRequest) (*upcloud.StorageDetails, error) {
 	storageDetails := upcloud.StorageDetails{}
@@ -359,7 +359,7 @@ func (s *Service) ModifyStorage(r *request.ModifyStorageRequest) (*upcloud.Stora
 }
 
 /**
-Attaches the specified storage to the specified server
+AttachStorageRequest attaches the specified storage to the specified server
 */
 func (s *Service) AttachStorageRequest(r *request.AttachStorageRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
@@ -376,7 +376,7 @@ func (s *Service) AttachStorageRequest(r *request.AttachStorageRequest) (*upclou
 }
 
 /**
-Detaches the specified storage from the specified server
+DetachStorageRequest detaches the specified storage from the specified server
 */
 func (s *Service) DetachStorageRequest(r *request.DetachStorageRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
@@ -393,7 +393,7 @@ func (s *Service) DetachStorageRequest(r *request.DetachStorageRequest) (*upclou
 }
 
 /**
-Deletes the specified storage device
+DeleteStorage deletes the specified storage device
 */
 func (s *Service) DeleteStorage(r *request.DeleteStorageRequest) error {
 	err := s.client.PerformDeleteRequest(s.client.CreateRequestUrl(r.RequestURL()))
@@ -406,7 +406,7 @@ func (s *Service) DeleteStorage(r *request.DeleteStorageRequest) error {
 }
 
 /**
-Returns all IP addresses associated with the account
+GetIPAddresses returns all IP addresses associated with the account
 */
 func (s *Service) GetIPAddresses() (*upcloud.IPAddresses, error) {
 	ipAddresses := upcloud.IPAddresses{}
@@ -422,7 +422,7 @@ func (s *Service) GetIPAddresses() (*upcloud.IPAddresses, error) {
 }
 
 /**
-Returns extended details about the specified IP address
+GetIPAddressDetails returns extended details about the specified IP address
 */
 func (s *Service) GetIPAddressDetails(r *request.GetIPAddressDetailsRequest) (*upcloud.IPAddress, error) {
 	ipAddress := upcloud.IPAddress{}
@@ -438,7 +438,7 @@ func (s *Service) GetIPAddressDetails(r *request.GetIPAddressDetailsRequest) (*u
 }
 
 /**
-Returns the firewall rules for the specified server
+GetServerFirewallRules returns the firewall rules for the specified server
 */
 func (s *Service) GetServerFirewallRules(r *request.GetServerFirewallRulesRequest) (*upcloud.FirewallRules, error) {
 	firewallRules := upcloud.FirewallRules{}
@@ -454,7 +454,7 @@ func (s *Service) GetServerFirewallRules(r *request.GetServerFirewallRulesReques
 }
 
 /**
-Returns all tags
+GetTags returns all tags
 */
 func (s *Service) GetTags() (*upcloud.Tags, error) {
 	tags := upcloud.Tags{}

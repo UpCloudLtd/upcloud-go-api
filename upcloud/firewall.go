@@ -1,14 +1,14 @@
 package upcloud
 
 /**
-Represents a list of firewall rules
+FirewallRules represents a list of firewall rules
 */
 type FirewallRules struct {
 	FirewallRules []FirewallRule `xml:"firewall_rule"`
 }
 
 /**
-Represents a single firewall rule
+FirewallRule represents a single firewall rule
 */
 type FirewallRule struct {
 	Action                  string `xml:"action"`

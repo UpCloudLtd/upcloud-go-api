@@ -1,7 +1,7 @@
 package upcloud
 
 /**
-Represents an account
+Account represents an account
 */
 type Account struct {
 	Credits  float64 `xml:"credits"`

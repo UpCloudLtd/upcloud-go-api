@@ -7,7 +7,7 @@ import (
 )
 
 /**
-Represents a request for retrieving all or some storages
+GetStoragesRequest represents a request for retrieving all or some storages
 */
 type GetStoragesRequest struct {
 	// If specified, only storages with this access type will be retrieved
@@ -18,6 +18,9 @@ type GetStoragesRequest struct {
 	Favorite bool
 }
 
+/**
+RequestURL() implements the Request interface
+*/
 func (r *GetStoragesRequest) RequestURL() string {
 	if r.Access != "" {
 		return fmt.Sprintf("/storage/%s", r.Access)
@@ -35,18 +38,21 @@ func (r *GetStoragesRequest) RequestURL() string {
 }
 
 /**
-Represents a request for retrieving details about a piece of storage
+GetStorageDetailsRequest represents a request for retrieving details about a piece of storage
 */
 type GetStorageDetailsRequest struct {
 	UUID string
 }
 
+/**
+RequestURL() implements the Request interface
+*/
 func (r *GetStorageDetailsRequest) RequestURL() string {
 	return fmt.Sprintf("/storage/%s", r.UUID)
 }
 
 /**
-Represents a request to create a storage device
+CreateStorageRequest represents a request to create a storage device
 */
 type CreateStorageRequest struct {
 	XMLName xml.Name `xml:"storage"`
@@ -58,12 +64,15 @@ type CreateStorageRequest struct {
 	BackupRule *upcloud.BackupRule `xml:"backup_rule,omitempty"`
 }
 
+/**
+RequestURL() implements the Request interface
+*/
 func (r *CreateStorageRequest) RequestURL() string {
 	return "/storage"
 }
 
 /**
-Represents a request to modify a storage device
+ModifyStorageRequest represents a request to modify a storage device
 */
 type ModifyStorageRequest struct {
 	XMLName xml.Name `xml:"storage"`
@@ -74,12 +83,15 @@ type ModifyStorageRequest struct {
 	BackupRule *upcloud.BackupRule `xml:"backup_rule,omitempty"`
 }
 
+/**
+RequestURL() implements the Request interface
+*/
 func (r *ModifyStorageRequest) RequestURL() string {
 	return fmt.Sprintf("/storage/%s", r.UUID)
 }
 
 /**
-Represents a request to attach a storage device to a server
+AttachStorageRequest represents a request to attach a storage device to a server
 */
 type AttachStorageRequest struct {
 	XMLName    xml.Name `xml:"storage_device"`
@@ -90,12 +102,15 @@ type AttachStorageRequest struct {
 	StorageUUID string `xml:"storage,omitempty"`
 }
 
+/**
+RequestURL() implements the Request interface
+*/
 func (r *AttachStorageRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s/storage/attach", r.ServerUUID)
 }
 
 /**
-Represents a request to detch a storage device from a server
+DetachStorageRequest represents a request to detach a storage device from a server
 */
 type DetachStorageRequest struct {
 	XMLName    xml.Name `xml:"storage_device"`
@@ -104,17 +119,23 @@ type DetachStorageRequest struct {
 	Address string `xml:"address"`
 }
 
+/**
+RequestURL() implements the Request interface
+*/
 func (r *DetachStorageRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s/storage/detach", r.ServerUUID)
 }
 
 /**
-Represents a request to delete a storage device
+DeleteStorageRequest represents a request to delete a storage device
 */
 type DeleteStorageRequest struct {
 	UUID string
 }
 
+/**
+RequestURL() implements the Request interface
+*/
 func (r *DeleteStorageRequest) RequestURL() string {
 	return fmt.Sprintf("/storage/%s", r.UUID)
 }

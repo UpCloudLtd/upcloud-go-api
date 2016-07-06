@@ -1,5 +1,8 @@
 package upcloud
 
+/**
+Constants
+*/
 const (
 	StorageTypeDisk     = "disk"
 	StorageTypeCDROM    = "cdrom"
@@ -14,14 +17,14 @@ const (
 )
 
 /**
-Represents a /storage response
+Storages represents a /storage response
 */
 type Storages struct {
 	Storages []Storage `xml:"storage"`
 }
 
 /**
-Represents a storage device
+Storage represents a storage device
 */
 type Storage struct {
 	Action  string  `xml:"action"`
@@ -40,7 +43,7 @@ type Storage struct {
 }
 
 /**
-Represents detailed information about a piece of storage
+StorageDetails represents detailed information about a piece of storage
 */
 type StorageDetails struct {
 	Storage
@@ -50,7 +53,7 @@ type StorageDetails struct {
 }
 
 /**
-Represents a backup rule
+BackupRule represents a backup rule
 */
 type BackupRule struct {
 	Interval  string `xml:"interval"`

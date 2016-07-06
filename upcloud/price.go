@@ -1,14 +1,14 @@
 package upcloud
 
 /**
-Represents a /price response
+PrizeZones represents a /price response
 */
 type PrizeZones struct {
 	PrizeZones []PrizeZone `xml:"zone"`
 }
 
 /**
-Represents a price zone. A prize zone consists of multiple items that each have a price.
+PrizeZone represents a price zone. A prize zone consists of multiple items that each have a price.
 */
 type PrizeZone struct {
 	Name string `xml:"name"`
@@ -34,7 +34,7 @@ type PrizeZone struct {
 }
 
 /**
-Represents a price
+Price represents a price
 */
 type Price struct {
 	Amount int     `xml:"amount"`

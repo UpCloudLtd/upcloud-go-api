@@ -11,6 +11,9 @@ type Error struct {
 	ResponseBody []byte
 }
 
+/**
+Error implements the Error interface
+*/
 func (e *Error) Error() string {
 	return fmt.Sprintf("%d: %s", e.ErrorCode, e.ErrorMessage)
 }

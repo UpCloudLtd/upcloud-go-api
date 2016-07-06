@@ -1,14 +1,14 @@
 package upcloud
 
 /**
-Represents a /zone response
+Zones represents a /zone response
 */
 type Zones struct {
 	Zones []Zone `xml:"zone"`
 }
 
 /**
-Represents a zone
+Zone represents a zone
 */
 type Zone struct {
 	Id          string `xml:"id"`

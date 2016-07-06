@@ -6,6 +6,9 @@ import (
 	"time"
 )
 
+/**
+Constants
+*/
 const (
 	PasswordDeliveryNone  = "none"
 	PasswordDeliveryEmail = "email"
@@ -29,18 +32,21 @@ const (
 )
 
 /**
-Represents a request for retrieving details about a server
+GetServerDetailsRequest represents a request for retrieving details about a server
 */
 type GetServerDetailsRequest struct {
 	UUID string
 }
 
+/**
+RequestURL() implements the Request interface
+*/
 func (r *GetServerDetailsRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s", r.UUID)
 }
 
 /**
-Represents a request for creating a new server
+CreateServerRequest represents a request for creating a new server
 */
 type CreateServerRequest struct {
 	XMLName xml.Name `xml:"server"`
@@ -69,12 +75,15 @@ type CreateServerRequest struct {
 	Zone        string `xml:"zone"`
 }
 
+/**
+RequestURL() implements the Request interface
+*/
 func (r *CreateServerRequest) RequestURL() string {
 	return "/server"
 }
 
 /**
-Represents a storage device for a CreateServerRequest
+CreateServerStorageDevice represents a storage device for a CreateServerRequest
 */
 type CreateServerStorageDevice struct {
 	Action  string `xml:"action"`
@@ -87,7 +96,7 @@ type CreateServerStorageDevice struct {
 }
 
 /**
-Represents an IP address for a CreateServerRequest
+CreateServerIPAddress represents an IP address for a CreateServerRequest
 */
 type CreateServerIPAddress struct {
 	Access string `xml:"access"`
@@ -95,7 +104,7 @@ type CreateServerIPAddress struct {
 }
 
 /**
-Represents a request to wait for a server to enter a specific state
+WaitForServerStateRequest represents a request to wait for a server to enter a specific state
 */
 type WaitForServerStateRequest struct {
 	UUID         string
@@ -104,7 +113,7 @@ type WaitForServerStateRequest struct {
 }
 
 /**
-Represents a request to start a server
+StartServerRequest represents a request to start a server
 */
 type StartServerRequest struct {
 	UUID string
@@ -113,12 +122,15 @@ type StartServerRequest struct {
 	Timeout time.Duration
 }
 
+/**
+RequestURL() implements the Request interface
+*/
 func (r *StartServerRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s/start", r.UUID)
 }
 
 /**
-Represents a request to stop a server
+StopServerRequest represents a request to stop a server
 */
 type StopServerRequest struct {
 	XMLName xml.Name `xml:"stop_server"`
@@ -129,12 +141,15 @@ type StopServerRequest struct {
 	Timeout  time.Duration `xml:"timeout,omitempty"`
 }
 
+/**
+RequestURL() implements the Request interface
+*/
 func (r *StopServerRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s/stop", r.UUID)
 }
 
 /**
-Custom marshaller for StopServerRequest which converts the timeout to seconds
+MarshalXML implements a custom marshaller for StopServerRequest which converts the timeout to seconds
 */
 func (r *StopServerRequest) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	type Alias StopServerRequest
@@ -149,7 +164,7 @@ func (r *StopServerRequest) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 }
 
 /**
-Represents a request to restart a server
+RestartServerRequest represents a request to restart a server
 */
 type RestartServerRequest struct {
 	XMLName xml.Name `xml:"restart_server"`
@@ -161,12 +176,15 @@ type RestartServerRequest struct {
 	TimeoutAction string        `xml:"timeout_action,omitempty"`
 }
 
+/**
+RequestURL() implements the Request interface
+*/
 func (r *RestartServerRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s/restart", r.UUID)
 }
 
 /**
-Custom marshaller for RestartServerRequest which converts the timeout to seconds
+MarshalXML implements a custom marshaller for RestartServerRequest which converts the timeout to seconds
 */
 func (r *RestartServerRequest) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	type Alias RestartServerRequest
@@ -181,7 +199,7 @@ func (r *RestartServerRequest) MarshalXML(e *xml.Encoder, start xml.StartElement
 }
 
 /**
-Represents a request to modify a server
+ModifyServerRequest represents a request to modify a server
 */
 type ModifyServerRequest struct {
 	XMLName xml.Name `xml:"server"`
@@ -206,17 +224,23 @@ type ModifyServerRequest struct {
 	VNCPassword string `xml:"vnc_password,omitempty"`
 }
 
+/**
+RequestURL() implements the Request interface
+*/
 func (r *ModifyServerRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s", r.UUID)
 }
 
 /**
-Represents a request to delete a server
+DeleteServerRequest represents a request to delete a server
 */
 type DeleteServerRequest struct {
 	UUID string
 }
 
+/**
+RequestURL() implements the Request interface
+*/
 func (r *DeleteServerRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s", r.UUID)
 }

@@ -11,7 +11,7 @@ import (
 )
 
 /**
-Performs an extensive set of operations using credentials read from the environmental variables
+TestServiceIntegration performs an extensive set of operations using credentials read from the environmental variables
 UPCLOUD_GO_SDK_TEST_USER and UPCLOUD_GO_SDK_TEST_PASSWORD. These credentials should preferably belong to a test account
 to avoid racking up charges.
 */

@@ -11,14 +11,14 @@ const (
 )
 
 /**
-Represents a /server_size response
+ServerConfigurations represents a /server_size response
 */
 type ServerConfigurations struct {
 	ServerConfigurations []ServerConfiguration `xml:"server_size"`
 }
 
 /**
-Represents a server configuration
+ServerConfiguration represents a server configuration
 */
 type ServerConfiguration struct {
 	CoreNumber   string `xml:"core_number"`
@@ -26,14 +26,14 @@ type ServerConfiguration struct {
 }
 
 /**
-Represents a /server response
+Servers represents a /server response
 */
 type Servers struct {
 	Servers []Server `xml:"server"`
 }
 
 /**
-Represents a server
+Server represents a server
 */
 type Server struct {
 	Hostname     string   `xml:"hostname"`
@@ -47,6 +47,9 @@ type Server struct {
 	Zone         string   `xml:"zone"`
 }
 
+/**
+ServerDetails represents details about a server
+*/
 type ServerDetails struct {
 	Server
 
