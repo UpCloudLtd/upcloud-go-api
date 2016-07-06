@@ -32,7 +32,7 @@ request objects.
 
 ### Creating the client and the service
 
-```
+```go
 // Upcloud doesn't use dedicated API keys, instead you pass your account login credentials to the client
 c := client.New(user, password)
 
