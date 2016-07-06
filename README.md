@@ -33,7 +33,7 @@ c := client.New(user, password)
 c.SetTimeout(time.Second * 30)
 
 // Create the service object
-svc := New(c)
+svc := service.New(c)
 ```
 
 The rest of these examples assume you already have a service object configured and named `svc`.
