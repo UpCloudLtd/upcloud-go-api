@@ -1,5 +1,8 @@
 # upcloud-go-sdk
 
+[![Build Status](https://travis-ci.org/Jalle19/upcloud-go-sdk.svg?branch=master)](https://travis-ci.org/Jalle19/upcloud-go-sdk)
+[![Go Report Card](https://goreportcard.com/badge/github.com/jalle19/upcloud-go-sdk)](https://goreportcard.com/report/github.com/jalle19/upcloud-go-sdk)
+
 This is an SDK for interfacing with Upcloud's API using the Go programming language. It is loosely based on similar 
 SDKs such as https://github.com/aws/aws-sdk-go.
 
