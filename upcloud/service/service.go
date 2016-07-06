@@ -359,9 +359,9 @@ func (s *Service) ModifyStorage(r *request.ModifyStorageRequest) (*upcloud.Stora
 }
 
 /**
-AttachStorageRequest attaches the specified storage to the specified server
+AttachStorage attaches the specified storage to the specified server
 */
-func (s *Service) AttachStorageRequest(r *request.AttachStorageRequest) (*upcloud.ServerDetails, error) {
+func (s *Service) AttachStorage(r *request.AttachStorageRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
 	requestBody, _ := xml.Marshal(r)
 	response, err := s.client.PerformPostRequest(s.client.CreateRequestUrl(r.RequestURL()), requestBody)
@@ -376,9 +376,9 @@ func (s *Service) AttachStorageRequest(r *request.AttachStorageRequest) (*upclou
 }
 
 /**
-DetachStorageRequest detaches the specified storage from the specified server
+DetachStorage detaches the specified storage from the specified server
 */
-func (s *Service) DetachStorageRequest(r *request.DetachStorageRequest) (*upcloud.ServerDetails, error) {
+func (s *Service) DetachStorage(r *request.DetachStorageRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
 	requestBody, _ := xml.Marshal(r)
 	response, err := s.client.PerformPostRequest(s.client.CreateRequestUrl(r.RequestURL()), requestBody)

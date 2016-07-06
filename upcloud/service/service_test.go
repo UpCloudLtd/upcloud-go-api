@@ -76,14 +76,14 @@ func TestCreateModifyDeleteServer(t *testing.T) {
 }
 
 /**
-TestCreateModifyDelete performs the following actions:
+TestCreateModifyDeleteStorage performs the following actions:
 
 - creates a new storage disk
 - modifies the storage
 - deletes the storage
 
 */
-func TestCreateModifyDelete(t *testing.T) {
+func TestCreateModifyDeleteStorage(t *testing.T) {
 	t.Parallel()
 
 	// Create some storage
@@ -143,7 +143,7 @@ func TestAttachDetachStorage(t *testing.T) {
 	// Attach the storage
 	t.Logf("Attaching storage %s", storageDetails.UUID)
 
-	serverDetails, err := svc.AttachStorageRequest(&request.AttachStorageRequest{
+	serverDetails, err := svc.AttachStorage(&request.AttachStorageRequest{
 		StorageUUID: storageDetails.UUID,
 		ServerUUID:  serverDetails.UUID,
 		Type:        upcloud.StorageTypeDisk,
@@ -156,7 +156,7 @@ func TestAttachDetachStorage(t *testing.T) {
 	// Detach the storage
 	t.Logf("Detaching storage %s", storageDetails.UUID)
 
-	serverDetails, err = svc.DetachStorageRequest(&request.DetachStorageRequest{
+	serverDetails, err = svc.DetachStorage(&request.DetachStorageRequest{
 		ServerUUID: serverDetails.UUID,
 		Address:    "scsi:0:0",
 	})
@@ -212,7 +212,7 @@ func TestLoadEjectCDROM(t *testing.T) {
 
 	// Attach CD-ROM device
 	t.Logf("Attaching CD-ROM device to server with UUID %s", serverDetails.UUID)
-	serverDetails, err := svc.AttachStorageRequest(&request.AttachStorageRequest{
+	serverDetails, err := svc.AttachStorage(&request.AttachStorageRequest{
 		ServerUUID: serverDetails.UUID,
 		Type:       upcloud.StorageTypeCDROM,
 	})
