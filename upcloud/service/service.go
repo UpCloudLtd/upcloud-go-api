@@ -406,6 +406,54 @@ func (s *Service) DeleteStorage(r *request.DeleteStorageRequest) error {
 }
 
 /**
+CloneStorage detaches the specified storage from the specified server
+*/
+func (s *Service) CloneStorage(r *request.CloneStorageRequest) (*upcloud.StorageDetails, error) {
+	storageDetails := upcloud.StorageDetails{}
+	requestBody, _ := xml.Marshal(r)
+	response, err := s.client.PerformPostRequest(s.client.CreateRequestUrl(r.RequestURL()), requestBody)
+
+	if err != nil {
+		return nil, parseServiceError(err)
+	}
+
+	xml.Unmarshal(response, &storageDetails)
+
+	return &storageDetails, nil
+}
+
+/**
+WaitForStorageState blocks execution until the specified storage device has entered the specified state. The method
+will give up after the specified timeout
+*/
+func (s *Service) WaitForStorageState(r *request.WaitForStorageStateRequest) error {
+	attempts := 0
+	sleepDuration := time.Second * 5
+
+	for {
+		attempts++
+
+		storageDetails, err := s.GetStorageDetails(&request.GetStorageDetailsRequest{
+			UUID: r.UUID,
+		})
+
+		if err != nil {
+			return err
+		}
+
+		if storageDetails.State == r.DesiredState {
+			return nil
+		}
+
+		time.Sleep(sleepDuration)
+
+		if time.Duration(attempts)*sleepDuration >= r.Timeout {
+			return fmt.Errorf("Timeout reached while waiting for storage to enter state \"%s\"", r.DesiredState)
+		}
+	}
+}
+
+/**
 LoadCDROM loads a storage as a CD-ROM in the CD-ROM device of a server
 */
 func (s *Service) LoadCDROM(r *request.LoadCDROMRequest) (*upcloud.ServerDetails, error) {

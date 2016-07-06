@@ -4,6 +4,7 @@ import (
 	"encoding/xml"
 	"fmt"
 	"github.com/jalle19/upcloud-go-sdk/upcloud"
+	"time"
 )
 
 /**
@@ -138,6 +139,34 @@ RequestURL() implements the Request interface
 */
 func (r *DeleteStorageRequest) RequestURL() string {
 	return fmt.Sprintf("/storage/%s", r.UUID)
+}
+
+/**
+CloneStorageRequest represents a requests to clone a storage device
+*/
+type CloneStorageRequest struct {
+	XMLName xml.Name `xml:"storage"`
+	UUID    string   `xml:"-"`
+
+	Zone  string `xml:"zone"`
+	Tier  string `xml:"tier"`
+	Title string `xml:"title"`
+}
+
+/**
+RequestURL() implements the Request interface
+*/
+func (r *CloneStorageRequest) RequestURL() string {
+	return fmt.Sprintf("/storage/%s/clone", r.UUID)
+}
+
+/**
+WaitForStorageStateRequest represents a request to wait for a storage to enter a specific state
+*/
+type WaitForStorageStateRequest struct {
+	UUID         string
+	DesiredState string
+	Timeout      time.Duration
 }
 
 /**

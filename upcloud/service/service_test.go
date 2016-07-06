@@ -186,6 +186,61 @@ func TestAttachDetachStorage(t *testing.T) {
 }
 
 /**
+TestCloneStorage performs the following actions:
+
+- creates a storage device
+- clones the storage device
+- deletes the clone and the storage device
+
+*/
+func TestCloneStorage(t *testing.T) {
+	// Create storage
+	storageDetails := createStorage()
+	t.Logf("Storage %s with UUID %s created", storageDetails.Title, storageDetails.UUID)
+
+	// Clone the storage
+	t.Log("Cloning storage ...")
+
+	clonedStorageDetails, err := svc.CloneStorage(&request.CloneStorageRequest{
+		UUID:  storageDetails.UUID,
+		Title: "Cloned storage",
+		Zone:  "fi-hel1",
+		Tier:  upcloud.StorageTierMaxIOPS,
+	})
+
+	handleError(err)
+
+	// Wait for the cloned storage to come online
+	err = svc.WaitForStorageState(&request.WaitForStorageStateRequest{
+		UUID:         clonedStorageDetails.UUID,
+		DesiredState: upcloud.StorageStateOnline,
+		Timeout:      time.Minute * 5,
+	})
+
+	handleError(err)
+	t.Logf("Storage cloned as %s", clonedStorageDetails.UUID)
+
+	// Delete both storage devices
+	t.Log("Deleting the storage ...")
+
+	err = svc.DeleteStorage(&request.DeleteStorageRequest{
+		UUID: storageDetails.UUID,
+	})
+
+	handleError(err)
+	t.Log("Storage is now deleted")
+
+	t.Log("Deleting the cloned storage ...")
+
+	err = svc.DeleteStorage(&request.DeleteStorageRequest{
+		UUID: clonedStorageDetails.UUID,
+	})
+
+	handleError(err)
+	t.Log("Cloned storage is now deleted")
+}
+
+/**
 TestLoadEjectCDROM performs the following actions:
 
 - creates a server

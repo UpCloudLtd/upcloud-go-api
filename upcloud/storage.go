@@ -14,6 +14,12 @@ const (
 
 	StorageAccessPublic  = "public"
 	StorageAccessPrivate = "private"
+
+	StorageStateOnline      = "online"
+	StorageStateMaintenance = "maintenance"
+	StorageStateCloning     = "cloning"
+	StorageStateBackuping   = "backuping"
+	StorageStateError       = "error"
 )
 
 /**
