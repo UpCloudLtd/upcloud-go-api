@@ -251,6 +251,8 @@ func TestTemplatizeServerStorage(t *testing.T) {
 			t.Log("Deleting storage ...")
 			deleteStorage(storageDetails.UUID)
 			t.Log("Storage deleted")
+			
+			break
 		}
 	}
 
