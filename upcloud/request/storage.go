@@ -149,7 +149,7 @@ type CloneStorageRequest struct {
 	UUID    string   `xml:"-"`
 
 	Zone  string `xml:"zone"`
-	Tier  string `xml:"tier"`
+	Tier  string `xml:"tier,omitempty"`
 	Title string `xml:"title"`
 }
 
