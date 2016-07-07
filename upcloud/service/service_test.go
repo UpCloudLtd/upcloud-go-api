@@ -60,18 +60,13 @@ func TestCreateModifyDeleteServer(t *testing.T) {
 	t.Logf("Server is now modified, new title is %s", serverDetails.Title)
 
 	// Stop the server
-	t.Log("Stopping the server ...")
+	t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
 	stopServer(serverDetails.UUID)
 	t.Log("Server is now stopped")
 
 	// Delete the server
 	t.Log("Deleting the server ...")
-
-	err = svc.DeleteServer(&request.DeleteServerRequest{
-		UUID: serverDetails.UUID,
-	})
-
-	handleError(err)
+	deleteServer(serverDetails.UUID)
 	t.Log("Server is now deleted")
 }
 
@@ -103,12 +98,7 @@ func TestCreateModifyDeleteStorage(t *testing.T) {
 
 	// Delete the storage
 	t.Log("Deleting the storage ...")
-
-	err = svc.DeleteStorage(&request.DeleteStorageRequest{
-		UUID: storageDetails.UUID,
-	})
-
-	handleError(err)
+	deleteStorage(storageDetails.UUID)
 	t.Log("Storage is now deleted")
 }
 
@@ -132,7 +122,7 @@ func TestAttachDetachStorage(t *testing.T) {
 	t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 	// Stop the server
-	t.Log("Stopping the server ...")
+	t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
 	stopServer(serverDetails.UUID)
 	t.Log("Server is now stopped")
 
@@ -166,22 +156,12 @@ func TestAttachDetachStorage(t *testing.T) {
 
 	// Delete the storage
 	t.Log("Deleting the storage ...")
-
-	err = svc.DeleteStorage(&request.DeleteStorageRequest{
-		UUID: storageDetails.UUID,
-	})
-
-	handleError(err)
+	deleteStorage(storageDetails.UUID)
 	t.Log("Storage is now deleted")
 
 	// Delete the server
 	t.Log("Deleting the server ...")
-
-	err = svc.DeleteServer(&request.DeleteServerRequest{
-		UUID: serverDetails.UUID,
-	})
-
-	handleError(err)
+	deleteServer(serverDetails.UUID)
 	t.Log("Server is now deleted")
 }
 
@@ -209,28 +189,17 @@ func TestCloneStorage(t *testing.T) {
 	})
 
 	handleError(err)
-
-	// Wait for the cloned storage to come online
-	err = svc.WaitForStorageState(&request.WaitForStorageStateRequest{
-		UUID:         clonedStorageDetails.UUID,
-		DesiredState: upcloud.StorageStateOnline,
-		Timeout:      time.Minute * 5,
-	})
-
-	handleError(err)
+	waitForStorageOnline(clonedStorageDetails.UUID)
 	t.Logf("Storage cloned as %s", clonedStorageDetails.UUID)
 
 	// Delete both storage devices
 	t.Log("Deleting the storage ...")
-
-	err = svc.DeleteStorage(&request.DeleteStorageRequest{
-		UUID: storageDetails.UUID,
-	})
-
-	handleError(err)
+	deleteStorage(storageDetails.UUID)
 	t.Log("Storage is now deleted")
 
 	t.Log("Deleting the cloned storage ...")
+	deleteStorage(clonedStorageDetails.UUID)
+	t.Log("Cloned storage is now deleted")
 
 	err = svc.DeleteStorage(&request.DeleteStorageRequest{
 		UUID: clonedStorageDetails.UUID,
@@ -261,7 +230,7 @@ func TestLoadEjectCDROM(t *testing.T) {
 	t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 	// Stop the server
-	t.Log("Stopping the server ...")
+	t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
 	stopServer(serverDetails.UUID)
 	t.Log("Server is now stopped")
 
@@ -313,19 +282,13 @@ func TestLoadEjectCDROM(t *testing.T) {
 	t.Log("CD-ROM is now ejected")
 
 	// Stop the server
-	t.Logf("Stopping server with UUID %s", serverDetails.UUID)
+	t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
 	stopServer(serverDetails.UUID)
 	t.Log("Server is now stopped")
 
 	// Delete the server
-	// Delete the server
 	t.Log("Deleting the server ...")
-
-	err = svc.DeleteServer(&request.DeleteServerRequest{
-		UUID: serverDetails.UUID,
-	})
-
-	handleError(err)
+	deleteServer(serverDetails.UUID)
 	t.Log("Server is now deleted")
 }
 
@@ -403,6 +366,17 @@ func stopServer(uuid string) {
 }
 
 /**
+Deletes the specified server
+*/
+func deleteServer(uuid string) {
+	err := svc.DeleteServer(&request.DeleteServerRequest{
+		UUID: uuid,
+	})
+
+	handleError(err)
+}
+
+/**
 Creates a piece of storage and returns the details about it, panic if creation fails
 */
 func createStorage() *upcloud.StorageDetails {
@@ -420,6 +394,30 @@ func createStorage() *upcloud.StorageDetails {
 	}
 
 	return storageDetails
+}
+
+/**
+Deletes the specified storage
+*/
+func deleteStorage(uuid string) {
+	err := svc.DeleteStorage(&request.DeleteStorageRequest{
+		UUID: uuid,
+	})
+
+	handleError(err)
+}
+
+/**
+Waits for the specified storage to come online
+*/
+func waitForStorageOnline(uuid string) {
+	err := svc.WaitForStorageState(&request.WaitForStorageStateRequest{
+		UUID:         uuid,
+		DesiredState: upcloud.StorageStateOnline,
+		Timeout:      time.Minute * 5,
+	})
+
+	handleError(err)
 }
 
 /**
