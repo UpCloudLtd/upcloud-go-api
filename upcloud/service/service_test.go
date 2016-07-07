@@ -62,7 +62,18 @@ func teardown() {
 	handleError(err)
 
 	for _, storage := range storages.Storages {
-		log.Printf("Deleting the storage with UUID %s", storage.UUID)
+		// Wait for the storage to come online so we can delete it
+		if storage.State != upcloud.StorageStateOnline {
+			log.Printf("Waiting for storage %s to come online ...", storage.UUID)
+			err = svc.WaitForStorageState(&request.WaitForStorageStateRequest{
+				UUID:         storage.UUID,
+				DesiredState: upcloud.StorageStateOnline,
+				Timeout:      time.Minute * 5,
+			})
+			handleError(err)
+		}
+
+		log.Printf("Deleting the storage with UUID %s ...", storage.UUID)
 		deleteStorage(storage.UUID)
 	}
 }
