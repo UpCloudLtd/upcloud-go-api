@@ -56,13 +56,13 @@ type ServerDetails struct {
 	BootOrder  string `xml:"boot_order"`
 	CoreNumber int    `xml:"core_number"`
 	// TODO: Convert to boolean
-	Firewall       string      `xml:"firewall"`
-	Host           int         `xml:"host"`
-	IPAddresses    []IPAddress `xml:"ip_addresses>ip_address"`
-	NICModel       string      `xml:"nic_model"`
-	StorageDevices []Storage   `xml:"storage_devices"`
-	Timezone       string      `xml:"timezone"`
-	VideoModel     string      `xml:"video_model"`
+	Firewall       string                `xml:"firewall"`
+	Host           int                   `xml:"host"`
+	IPAddresses    []IPAddress           `xml:"ip_addresses>ip_address"`
+	NICModel       string                `xml:"nic_model"`
+	StorageDevices []ServerStorageDevice `xml:"storage_devices>storage_device"`
+	Timezone       string                `xml:"timezone"`
+	VideoModel     string                `xml:"video_model"`
 	// TODO: Convert to boolean
 	VNC         string `xml:"vnc"`
 	VNCHost     string `xml:"vnc_host"`

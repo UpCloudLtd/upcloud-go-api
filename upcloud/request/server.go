@@ -3,6 +3,7 @@ package request
 import (
 	"encoding/xml"
 	"fmt"
+	"github.com/jalle19/upcloud-go-sdk/upcloud"
 	"time"
 )
 
@@ -17,9 +18,9 @@ const (
 	VideoModelVGA    = "vga"
 	VideoModelCirrus = "cirrus"
 
-	CreateStorageDeviceActionCreate = "create"
-	CreateStorageDeviceActionClone  = "clone"
-	CreateStorageDeviceActionAttach = "attach"
+	CreateServerStorageDeviceActionCreate = "create"
+	CreateServerStorageDeviceActionClone  = "clone"
+	CreateServerStorageDeviceActionAttach = "attach"
 
 	CreateStorageDeviceTierHDD     = "hdd"
 	CreateStorageDeviceTierMaxIOPS = "maxiops"
@@ -61,14 +62,14 @@ type CreateServerRequest struct {
 	IPAddresses []CreateServerIPAddress `xml:"ip_addresses>ip_address"`
 	LoginUser   string                  `xml:"login_user,omitempty"`
 	// TODO: Investigate correct type and format
-	MemoryAmount     string                      `xml:"memory_amount,omitempty"`
-	PasswordDelivery string                      `xml:"password_delivery,omitempty"`
-	Plan             string                      `xml:"plan,omitempty"`
-	StorageDevices   []CreateServerStorageDevice `xml:"storage_devices>storage_device"`
-	TimeZone         string                      `xml:"timezone,omitempty"`
-	Title            string                      `xml:"title"`
-	UserData         string                      `xml:"user_data,omitempty"`
-	VideoModel       string                      `xml:"video_model,omitempty"`
+	MemoryAmount     string                              `xml:"memory_amount,omitempty"`
+	PasswordDelivery string                              `xml:"password_delivery,omitempty"`
+	Plan             string                              `xml:"plan,omitempty"`
+	StorageDevices   []upcloud.CreateServerStorageDevice `xml:"storage_devices>storage_device"`
+	TimeZone         string                              `xml:"timezone,omitempty"`
+	Title            string                              `xml:"title"`
+	UserData         string                              `xml:"user_data,omitempty"`
+	VideoModel       string                              `xml:"video_model,omitempty"`
 	// TODO: Convert to boolean
 	VNC         string `xml:"vnc,omitempty"`
 	VNCPassword string `xml:"vnc_password,omitempty"`
@@ -80,19 +81,6 @@ RequestURL() implements the Request interface
 */
 func (r *CreateServerRequest) RequestURL() string {
 	return "/server"
-}
-
-/**
-CreateServerStorageDevice represents a storage device for a CreateServerRequest
-*/
-type CreateServerStorageDevice struct {
-	Action  string `xml:"action"`
-	Address string `xml:"address,omitempty"`
-	Storage string `xml:"storage"`
-	Title   string `xml:"title,omitempty"`
-	// Storage size in gigabytes
-	Size int    `xml:"size"`
-	Tier string `xml:"tier,omitempty"`
 }
 
 /**

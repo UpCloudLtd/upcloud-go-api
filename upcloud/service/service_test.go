@@ -303,9 +303,9 @@ func createServer() *upcloud.ServerDetails {
 		Title:            "Integration test server #1",
 		Hostname:         "debian.example.com",
 		PasswordDelivery: request.PasswordDeliveryNone,
-		StorageDevices: []request.CreateServerStorageDevice{
+		StorageDevices: []upcloud.CreateServerStorageDevice{
 			{
-				Action:  request.CreateStorageDeviceActionClone,
+				Action:  request.CreateServerStorageDeviceActionClone,
 				Storage: "01000000-0000-4000-8000-000030060200",
 				Title:   "disk1",
 				Size:    30,
