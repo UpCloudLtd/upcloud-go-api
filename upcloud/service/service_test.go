@@ -4,6 +4,7 @@ import (
 	"github.com/jalle19/upcloud-go-sdk/upcloud"
 	"github.com/jalle19/upcloud-go-sdk/upcloud/client"
 	"github.com/jalle19/upcloud-go-sdk/upcloud/request"
+	"log"
 	"os"
 	"testing"
 	"time"
@@ -13,14 +14,57 @@ import (
 var svc *Service
 
 /**
+TestMain is the main test method
+*/
+func TestMain(m *testing.M) {
+	setup()
+	retCode := m.Run()
+	teardown()
+	os.Exit(retCode)
+}
+
+/**
 Configures the test environment
 */
-func init() {
+func setup() {
 	user, password := getCredentials()
 
 	c := client.New(user, password)
 	c.SetTimeout(time.Second * 30)
 	svc = New(c)
+}
+
+/**
+Tears down the test environment by removing all resources
+*/
+func teardown() {
+	servers, err := svc.GetServers()
+	handleError(err)
+
+	for _, server := range servers.Servers {
+		// TODO: Handle servers in maintenance state properly
+
+		// Stop the server if it's in a suitable state
+		if server.State != upcloud.ServerStateStopped && server.State != upcloud.ServerStateMaintenance {
+			log.Printf("Stopping server with UUID %s ...", server.UUID)
+			stopServer(server.UUID)
+		}
+
+		// Delete the server
+		log.Printf("Deleting the server with UUID %s ...", server.UUID)
+		deleteServer(server.UUID)
+	}
+
+	// Delete all private storage devices
+	storages, err := svc.GetStorages(&request.GetStoragesRequest{
+		Access: upcloud.StorageAccessPrivate,
+	})
+	handleError(err)
+
+	for _, storage := range storages.Storages {
+		log.Printf("Deleting the storage with UUID %s", storage.UUID)
+		deleteStorage(storage.UUID)
+	}
 }
 
 /**
@@ -153,16 +197,6 @@ func TestAttachDetachStorage(t *testing.T) {
 
 	handleError(err)
 	t.Logf("Storage %s detached", storageDetails.UUID)
-
-	// Delete the storage
-	t.Log("Deleting the storage ...")
-	deleteStorage(storageDetails.UUID)
-	t.Log("Storage is now deleted")
-
-	// Delete the server
-	t.Log("Deleting the server ...")
-	deleteServer(serverDetails.UUID)
-	t.Log("Server is now deleted")
 }
 
 /**
@@ -193,15 +227,6 @@ func TestCloneStorage(t *testing.T) {
 	handleError(err)
 	waitForStorageOnline(clonedStorageDetails.UUID)
 	t.Logf("Storage cloned as %s", clonedStorageDetails.UUID)
-
-	// Delete both storage devices
-	t.Log("Deleting the storage ...")
-	deleteStorage(storageDetails.UUID)
-	t.Log("Storage is now deleted")
-
-	t.Log("Deleting the cloned storage ...")
-	deleteStorage(clonedStorageDetails.UUID)
-	t.Log("Cloned storage is now deleted")
 }
 
 /**
@@ -247,11 +272,6 @@ func TestTemplatizeServerStorage(t *testing.T) {
 			waitForStorageOnline(storageDetails.UUID)
 			t.Logf("Storage templatized as %s", storageDetails.UUID)
 
-			// Delete the storage
-			t.Log("Deleting storage ...")
-			deleteStorage(storageDetails.UUID)
-			t.Log("Storage deleted")
-			
 			break
 		}
 	}
@@ -260,11 +280,6 @@ func TestTemplatizeServerStorage(t *testing.T) {
 	if !storageFound {
 		t.FailNow()
 	}
-
-	// Delete the server
-	t.Log("Deleting the server ...")
-	deleteServer(serverDetails.UUID)
-	t.Log("Server is now deleted")
 }
 
 /**
@@ -338,16 +353,6 @@ func TestLoadEjectCDROM(t *testing.T) {
 
 	handleError(err)
 	t.Log("CD-ROM is now ejected")
-
-	// Stop the server
-	t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
-	stopServer(serverDetails.UUID)
-	t.Log("Server is now stopped")
-
-	// Delete the server
-	t.Log("Deleting the server ...")
-	deleteServer(serverDetails.UUID)
-	t.Log("Server is now deleted")
 }
 
 /**

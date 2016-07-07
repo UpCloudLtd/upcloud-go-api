@@ -143,7 +143,8 @@ values:
 * `UPCLOUD_GO_SDK_TEST_USER`
 * `UPCLOUD_GO_SDK_TEST_PASSWORD`
 
-To run the test suite, run `go test ./... -v -parallel 4`
+To run the test suite, run `go test ./... -v -parallel 4`. Be careful about which account you use for testing - all 
+resources will be stopped and/or deleted by the test suite.
 
 ## License
 
