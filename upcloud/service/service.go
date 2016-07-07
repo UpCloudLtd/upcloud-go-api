@@ -505,6 +505,37 @@ func (s *Service) EjectCDROM(r *request.EjectCDROMRequest) (*upcloud.ServerDetai
 }
 
 /**
+CreateBackup creates a backup of the specified storage
+*/
+func (s *Service) CreateBackup(r *request.CreateBackupRequest) (*upcloud.StorageDetails, error) {
+	storageDetails := upcloud.StorageDetails{}
+	requestBody, _ := xml.Marshal(r)
+	response, err := s.client.PerformPostRequest(s.client.CreateRequestUrl(r.RequestURL()), requestBody)
+
+	if err != nil {
+		return nil, parseServiceError(err)
+	}
+
+	xml.Unmarshal(response, &storageDetails)
+
+	return &storageDetails, nil
+}
+
+/**
+RestoreBackup creates a backup of the specified storage
+*/
+func (s *Service) RestoreBackup(r *request.RestoreBackupRequest) error {
+	requestBody, _ := xml.Marshal(r)
+	_, err := s.client.PerformPostRequest(s.client.CreateRequestUrl(r.RequestURL()), requestBody)
+
+	if err != nil {
+		return parseServiceError(err)
+	}
+
+	return nil
+}
+
+/**
 GetIPAddresses returns all IP addresses associated with the account
 */
 func (s *Service) GetIPAddresses() (*upcloud.IPAddresses, error) {

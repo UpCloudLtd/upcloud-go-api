@@ -367,6 +367,34 @@ func TestLoadEjectCDROM(t *testing.T) {
 }
 
 /**
+TestCreateRestoreBackup performs the following actions:
+
+- creates a storage device
+- creates a backup of the storage device
+
+It's not feasible to test backup restoration due to time contraints
+
+*/
+func TestCreateBackup(t *testing.T) {
+	t.Parallel()
+
+	// Create the storage
+	storageDetails := createStorage()
+	t.Logf("Storage %s with UUID %s created", storageDetails.Title, storageDetails.UUID)
+
+	// Create a backup
+	t.Logf("Creating backup of storage with UUID %s ...", storageDetails.UUID)
+	backupDetails, err := svc.CreateBackup(&request.CreateBackupRequest{
+		UUID:  storageDetails.UUID,
+		Title: "Backup",
+	})
+
+	handleError(err)
+	waitForStorageOnline(storageDetails.UUID)
+	t.Logf("Created backup with UUID %s", backupDetails.UUID)
+}
+
+/**
 Creates a server and returns the details about it, panic if creation fails
 */
 func createServer() *upcloud.ServerDetails {

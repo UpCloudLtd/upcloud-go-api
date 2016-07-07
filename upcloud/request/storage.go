@@ -216,3 +216,34 @@ RequestURL() implements the Request interface
 func (r *EjectCDROMRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s/cdrom/eject", r.ServerUUID)
 }
+
+/**
+CreateBackupRequest represents a request to create a backup of a storage device
+*/
+type CreateBackupRequest struct {
+	XMLName xml.Name `xml:"storage"`
+	UUID    string   `xml:"-"`
+
+	Title string `xml:"title"`
+}
+
+/**
+RequestURL() implements the Request interface
+*/
+func (r *CreateBackupRequest) RequestURL() string {
+	return fmt.Sprintf("/storage/%s/backup", r.UUID)
+}
+
+/**
+RestoreBackupRequest represents a request to restore a storage from the specified backup
+*/
+type RestoreBackupRequest struct {
+	UUID string
+}
+
+/**
+RequestURL() implements the Request interface
+*/
+func (r *RestoreBackupRequest) RequestURL() string {
+	return fmt.Sprintf("/storage/%s/restore", r.UUID)
+}

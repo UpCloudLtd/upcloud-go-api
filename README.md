@@ -135,6 +135,24 @@ for i, storage := range serverDetails.StorageDevices {
 }
 ```
 
+### Create a manual backup
+
+In this example, we assume that there is a storage device represented by `storageDetails` and that if it is attached 
+to any server, the server is stopped.
+
+```go
+backupDetails, err := svc.CreateBackup(&request.CreateBackupRequest{
+	UUID:  storageDetails.UUID,
+	Title: "Backup",
+})
+
+if err != nil {
+    panic(err)
+}
+
+fmt.Println(fmt.Sprintf("Backup of %s created as %s", storageDetails.UUID, backupDetails.UUID))
+```
+
 ## Testing
 
 To be able to run the test suite you'll need to export the following environment variables with their corresponding 
