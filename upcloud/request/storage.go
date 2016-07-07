@@ -161,6 +161,23 @@ func (r *CloneStorageRequest) RequestURL() string {
 }
 
 /**
+TemplatizeStorageRequest represents a request to templatize a storage device
+*/
+type TemplatizeStorageRequest struct {
+	XMLName xml.Name `xml:"storage"`
+	UUID    string   `xml:"-"`
+
+	Title string `xml:"title"`
+}
+
+/**
+RequestURL() implements the Request interface
+*/
+func (r *TemplatizeStorageRequest) RequestURL() string {
+	return fmt.Sprintf("/storage/%s/templatize", r.UUID)
+}
+
+/**
 WaitForStorageStateRequest represents a request to wait for a storage to enter a specific state
 */
 type WaitForStorageStateRequest struct {

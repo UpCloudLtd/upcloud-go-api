@@ -423,6 +423,23 @@ func (s *Service) CloneStorage(r *request.CloneStorageRequest) (*upcloud.Storage
 }
 
 /**
+TemplatizeStorage detaches the specified storage from the specified server
+*/
+func (s *Service) TemplatizeStorage(r *request.TemplatizeStorageRequest) (*upcloud.StorageDetails, error) {
+	storageDetails := upcloud.StorageDetails{}
+	requestBody, _ := xml.Marshal(r)
+	response, err := s.client.PerformPostRequest(s.client.CreateRequestUrl(r.RequestURL()), requestBody)
+
+	if err != nil {
+		return nil, parseServiceError(err)
+	}
+
+	xml.Unmarshal(response, &storageDetails)
+
+	return &storageDetails, nil
+}
+
+/**
 WaitForStorageState blocks execution until the specified storage device has entered the specified state. The method
 will give up after the specified timeout
 */

@@ -202,13 +202,67 @@ func TestCloneStorage(t *testing.T) {
 	t.Log("Deleting the cloned storage ...")
 	deleteStorage(clonedStorageDetails.UUID)
 	t.Log("Cloned storage is now deleted")
+}
 
-	err = svc.DeleteStorage(&request.DeleteStorageRequest{
-		UUID: clonedStorageDetails.UUID,
+/**
+TestTemplatizeServerStorage performs the following actions:
+
+- creates a server
+- templatizes the server's storage
+- deletes the new storage
+- stops and deletes the server
+*/
+func TestTemplatizeServerStorage(t *testing.T) {
+	t.Parallel()
+
+	// Create server
+	serverDetails := createServer()
+	t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
+
+	// Stop the server
+	t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
+	stopServer(serverDetails.UUID)
+	t.Log("Server is now stopped")
+
+	// Get extended service details
+	serverDetails, err := svc.GetServerDetails(&request.GetServerDetailsRequest{
+		UUID: serverDetails.UUID,
 	})
 
 	handleError(err)
-	t.Log("Cloned storage is now deleted")
+
+	// Templatize the server's first storage device
+	storageFound := false
+	for i, storage := range serverDetails.StorageDevices {
+		if i == 0 {
+			storageFound = true
+			t.Log("Templatizing storage ...")
+
+			storageDetails, err := svc.TemplatizeStorage(&request.TemplatizeStorageRequest{
+				UUID:  storage.UUID,
+				Title: "Templatized storage",
+			})
+
+			handleError(err)
+			waitForStorageOnline(storageDetails.UUID)
+			t.Logf("Storage templatized as %s", storageDetails.UUID)
+
+			// Delete the storage
+			t.Log("Deleting storage ...")
+			deleteStorage(storageDetails.UUID)
+			t.Log("Storage deleted")
+		}
+	}
+
+	// Fail the test if for some reason the storage was never found
+	if !storageFound {
+		t.FailNow()
+	}
+
+	// Delete the server
+	t.Log("Deleting the server ...")
+	deleteServer(serverDetails.UUID)
+	t.Log("Server is now deleted")
 }
 
 /**
