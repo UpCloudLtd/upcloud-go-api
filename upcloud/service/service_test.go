@@ -174,6 +174,8 @@ TestCloneStorage performs the following actions:
 
 */
 func TestCloneStorage(t *testing.T) {
+	t.Parallel()
+
 	// Create storage
 	storageDetails := createStorage()
 	t.Logf("Storage %s with UUID %s created", storageDetails.Title, storageDetails.UUID)
