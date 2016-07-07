@@ -109,6 +109,32 @@ if err != nil {
 fmt.Println("Server is now started")
 ```
 
+### Templatizing a server's storage device
+
+In this example we assume that there is a server represented by the variable `serverDetails` and that the server state 
+is `stopped`. We also assume that we want to templatize the first storage device of the server only.
+
+```go
+// Loop through the storage devices
+for i, storage := range serverDetails.StorageDevices {
+	// Find the first device
+	if i == 0 {
+		// Templatize the storage
+		storageDetails, err := svc.TemplatizeStorage(&request.TemplatizeStorageRequest{
+			UUID:  storage.UUID,
+			Title: "Templatized storage",
+		})
+
+		if err != nil {
+			panic(err)
+		}
+		
+		fmt.Println(fmt.Sprintf("Storage templatized as %s", storageDetails.UUID))		
+		break
+	}
+}
+```
+
 ## Testing
 
 To be able to run the test suite you'll need to export the following environment variables with their corresponding 
