@@ -446,7 +446,7 @@ func createStorage() *upcloud.StorageDetails {
 	createStorageRequest := request.CreateStorageRequest{
 		Tier:  upcloud.StorageTierMaxIOPS,
 		Title: "Test storage",
-		Size:  50,
+		Size:  10,
 		Zone:  "fi-hel1",
 	}
 
