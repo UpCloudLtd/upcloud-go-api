@@ -180,12 +180,12 @@ func (s *Service) WaitForServerState(r *request.WaitForServerStateRequest) error
 	sleepDuration := time.Second * 3
 
 	for {
-		// Always wait for one attempt period before querying the state the first time. Newly created servers 
-		// may not immediately switch to "maintenance" upon creation, triggering a false positive from this 
+		// Always wait for one attempt period before querying the state the first time. Newly created servers
+		// may not immediately switch to "maintenance" upon creation, triggering a false positive from this
 		// method
 		attempts++
 		time.Sleep(sleepDuration)
-		
+
 		serverDetails, err := s.GetServerDetails(&request.GetServerDetailsRequest{
 			UUID: r.UUID,
 		})
