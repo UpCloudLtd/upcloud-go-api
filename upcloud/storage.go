@@ -75,10 +75,12 @@ type ServerStorageDevice struct {
 	XMLName xml.Name `xml:"storage_device"`
 
 	Address string `xml:"address"`
-	UUID    string `xml:"storage"`
-	Size    int    `xml:"storage_size"`
-	Title   string `xml:"storage_title"`
-	Type    string `xml:"type"`
+	// TODO: Convert to boolean
+	PartOfPlan string `xml:"part_of_plan"`
+	UUID       string `xml:"storage"`
+	Size       int    `xml:"storage_size"`
+	Title      string `xml:"storage_title"`
+	Type       string `xml:"type"`
 }
 
 /**
