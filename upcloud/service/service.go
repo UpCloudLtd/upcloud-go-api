@@ -180,8 +180,12 @@ func (s *Service) WaitForServerState(r *request.WaitForServerStateRequest) error
 	sleepDuration := time.Second * 5
 
 	for {
+		// Always wait for one attempt period before querying the state the first time. Newly created servers 
+		// may not immediately switch to "maintenance" upon creation, triggering a false positive from this 
+		// method
 		attempts++
-
+		time.Sleep(sleepDuration)
+		
 		serverDetails, err := s.GetServerDetails(&request.GetServerDetailsRequest{
 			UUID: r.UUID,
 		})
@@ -193,8 +197,6 @@ func (s *Service) WaitForServerState(r *request.WaitForServerStateRequest) error
 		if serverDetails.State == r.DesiredState {
 			return nil
 		}
-
-		time.Sleep(sleepDuration)
 
 		if time.Duration(attempts)*sleepDuration >= r.Timeout {
 			return fmt.Errorf("Timeout reached while waiting for server to enter state \"%s\"", r.DesiredState)
