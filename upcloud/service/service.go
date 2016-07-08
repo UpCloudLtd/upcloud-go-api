@@ -612,10 +612,8 @@ func (s *Service) ReleaseIPAddress(r *request.ReleaseIPAddressRequest) error {
 	return nil
 }
 
-/**
-GetServerFirewallRules returns the firewall rules for the specified server
-*/
-func (s *Service) GetServerFirewallRules(r *request.GetServerFirewallRulesRequest) (*upcloud.FirewallRules, error) {
+// GetFirewallRules returns the firewall rules for the specified server
+func (s *Service) GetFirewallRules(r *request.GetFirewallRulesRequest) (*upcloud.FirewallRules, error) {
 	firewallRules := upcloud.FirewallRules{}
 	response, err := s.basicGetRequest(r.RequestURL())
 
