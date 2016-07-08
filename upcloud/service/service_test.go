@@ -88,6 +88,9 @@ TestCreateModifyDeleteServer performs the following actions:
 
 */
 func TestCreateModifyDeleteServer(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode")
+	}
 	t.Parallel()
 
 	// Create a server
@@ -134,6 +137,9 @@ TestCreateModifyDeleteStorage performs the following actions:
 
 */
 func TestCreateModifyDeleteStorage(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode")
+	}
 	t.Parallel()
 
 	// Create some storage
@@ -170,6 +176,9 @@ TestAttachDetachStorage performs the following actions:
 
 */
 func TestAttachDetachStorage(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode")
+	}
 	t.Parallel()
 
 	// Create a server
@@ -219,6 +228,9 @@ TestCloneStorage performs the following actions:
 
 */
 func TestCloneStorage(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode")
+	}
 	t.Parallel()
 
 	// Create storage
@@ -249,6 +261,9 @@ TestTemplatizeServerStorage performs the following actions:
 - stops and deletes the server
 */
 func TestTemplatizeServerStorage(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode")
+	}
 	t.Parallel()
 
 	// Create server
@@ -307,6 +322,9 @@ TestLoadEjectCDROM performs the following actions:
 
 */
 func TestLoadEjectCDROM(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode")
+	}
 	t.Parallel()
 
 	// Create the server
@@ -376,6 +394,9 @@ It's not feasible to test backup restoration due to time contraints
 
 */
 func TestCreateBackup(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode")
+	}
 	t.Parallel()
 
 	// Create the storage

@@ -164,6 +164,8 @@ values:
 To run the test suite, run `go test ./... -v -parallel 4`. Be careful about which account you use for testing - all 
 resources will be stopped and/or deleted by the test suite.
 
+You can skip running the integration tests and just run the unit tests by passing `-short` to the test command.
+
 ## License
 
 This SDK is distributed under the [MIT License](https://opensource.org/licenses/MIT), see LICENSE.txt for more information.
