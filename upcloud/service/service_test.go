@@ -427,6 +427,15 @@ func TestLoadEjectCDROM(t *testing.T) {
 	handleError(err)
 	t.Log("CD-ROM is now loaded")
 
+	// Ejecting the CD-ROM is not possible while the server is in maintenance state, so wait until it exits it
+	log.Printf("Waiting for server with UUID %s to leave maintenance state ...", serverDetails.UUID)
+	err = svc.WaitForServerState(&request.WaitForServerStateRequest{
+		UUID:           serverDetails.UUID,
+		UndesiredState: upcloud.ServerStateMaintenance,
+		Timeout:        time.Minute * 5,
+	})
+	handleError(err)
+
 	// Eject the CD-ROM
 	t.Log("Ejecting CD-ROM from CD-ROM device")
 	serverDetails, err = svc.EjectCDROM(&request.EjectCDROMRequest{
