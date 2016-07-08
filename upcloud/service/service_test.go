@@ -43,10 +43,19 @@ func teardown() {
 	handleError(err)
 
 	for _, server := range servers.Servers {
-		// TODO: Handle servers in maintenance state properly
+		// If the server is in maintenance, wait until the state changes
+		if server.State == upcloud.ServerStateMaintenance {
+			log.Printf("Waiting for server with UUID %s to leave maintenance state ...")
+			err = svc.WaitForServerState(&request.WaitForServerStateRequest{
+				UUID:           server.UUID,
+				UndesiredState: upcloud.ServerStateMaintenance,
+				Timeout:        time.Minute * 5,
+			})
+			handleError(err)
+		}
 
-		// Stop the server if it's in a suitable state
-		if server.State != upcloud.ServerStateStopped && server.State != upcloud.ServerStateMaintenance {
+		// Stop the server if it's still running
+		if server.State != upcloud.ServerStateStopped {
 			log.Printf("Stopping server with UUID %s ...", server.UUID)
 			stopServer(server.UUID)
 		}

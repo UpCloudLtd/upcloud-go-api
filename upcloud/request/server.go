@@ -92,12 +92,13 @@ type CreateServerIPAddress struct {
 }
 
 /**
-WaitForServerStateRequest represents a request to wait for a server to enter a specific state
+WaitForServerStateRequest represents a request to wait for a server to enter or exit a specific state
 */
 type WaitForServerStateRequest struct {
-	UUID         string
-	DesiredState string
-	Timeout      time.Duration
+	UUID           string
+	DesiredState   string
+	UndesiredState string
+	Timeout        time.Duration
 }
 
 /**

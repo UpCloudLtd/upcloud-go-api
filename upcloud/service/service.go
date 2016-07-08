@@ -194,7 +194,10 @@ func (s *Service) WaitForServerState(r *request.WaitForServerStateRequest) error
 			return err
 		}
 
-		if serverDetails.State == r.DesiredState {
+		// Either wait for the server to enter the desired state or wait for it to leave the undesired state
+		if r.DesiredState != "" && serverDetails.State == r.DesiredState {
+			return nil
+		} else if r.UndesiredState != "" && serverDetails.State != r.UndesiredState {
 			return nil
 		}
 
