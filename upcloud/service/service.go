@@ -569,6 +569,49 @@ func (s *Service) GetIPAddressDetails(r *request.GetIPAddressDetailsRequest) (*u
 	return &ipAddress, nil
 }
 
+// AssignIPAddress assigns the specified IP address to the specified server
+func (s *Service) AssignIPAddress(r *request.AssignIPAddressRequest) (*upcloud.IPAddress, error) {
+	ipAddress := upcloud.IPAddress{}
+	requestBody, _ := xml.Marshal(r)
+	response, err := s.client.PerformPostRequest(s.client.CreateRequestUrl(r.RequestURL()), requestBody)
+
+	if err != nil {
+		return nil, parseServiceError(err)
+	}
+
+	xml.Unmarshal(response, &ipAddress)
+
+	return &ipAddress, nil
+}
+
+// ModifyIPAddress modifies the specified IP address
+func (s *Service) ModifyIPAddress(r *request.ModifyIPAddressRequest) (*upcloud.IPAddress, error) {
+	ipAddress := upcloud.IPAddress{}
+	requestBody, _ := xml.Marshal(r)
+	response, err := s.client.PerformPutRequest(s.client.CreateRequestUrl(r.RequestURL()), requestBody)
+
+	if err != nil {
+		return nil, parseServiceError(err)
+	}
+
+	xml.Unmarshal(response, &ipAddress)
+
+	return &ipAddress, nil
+}
+
+/**
+ReleaseIPAddress releases the specified IP address from the server it is attached to
+*/
+func (s *Service) ReleaseIPAddress(r *request.ReleaseIPAddressRequest) error {
+	err := s.client.PerformDeleteRequest(s.client.CreateRequestUrl(r.RequestURL()))
+
+	if err != nil {
+		return parseServiceError(err)
+	}
+
+	return nil
+}
+
 /**
 GetServerFirewallRules returns the firewall rules for the specified server
 */

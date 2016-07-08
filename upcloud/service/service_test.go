@@ -459,6 +459,54 @@ func TestCreateBackup(t *testing.T) {
 	t.Logf("Created backup with UUID %s", backupDetails.UUID)
 }
 
+// TestAttachModifyReleaseIPAddress performs the following actions
+//
+//   - creates a server
+//   - assigns an additional IP address to it
+//   - modifies the PTR record of the IP address
+//   - deletes the IP address
+func TestAttachModifyReleaseIPAddress(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode")
+	}
+	t.Parallel()
+
+	// Create the server
+	serverDetails := createServer()
+	t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
+
+	// Stop the server
+	t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
+	stopServer(serverDetails.UUID)
+	t.Log("Server is now stopped")
+
+	// Assign an IP address
+	t.Log("Assigning IP address to server ...")
+	ipAddress, err := svc.AssignIPAddress(&request.AssignIPAddressRequest{
+		Access:     upcloud.IPAddressAccessPublic,
+		Family:     upcloud.IPAddressFamilyIPv6,
+		ServerUUID: serverDetails.UUID,
+	})
+	handleError(err)
+	t.Logf("Assigned IP address %s to server with UUID %s", ipAddress.Address, serverDetails.UUID)
+
+	// Modify the PTR record
+	t.Logf("Modifying PTR record for address %s ...", ipAddress.Address)
+	ipAddress, err = svc.ModifyIPAddress(&request.ModifyIPAddressRequest{
+		IPAddress: ipAddress.Address,
+		PTRRecord: "such.pointer.example.com",
+	})
+	handleError(err)
+	t.Logf("PTR record modified, new record is %s", ipAddress.PTRRecord)
+
+	// Release the IP address
+	t.Log("Releasing the IP address ...")
+	err = svc.ReleaseIPAddress(&request.ReleaseIPAddressRequest{
+		IPAddress: ipAddress.Address,
+	})
+	t.Log("The IP address is now released")
+}
+
 /**
 Creates a server and returns the details about it, panic if creation fails
 */
