@@ -177,7 +177,7 @@ specified timeout
 */
 func (s *Service) WaitForServerState(r *request.WaitForServerStateRequest) error {
 	attempts := 0
-	sleepDuration := time.Second * 5
+	sleepDuration := time.Second * 3
 
 	for {
 		// Always wait for one attempt period before querying the state the first time. Newly created servers 
@@ -447,7 +447,7 @@ will give up after the specified timeout
 */
 func (s *Service) WaitForStorageState(r *request.WaitForStorageStateRequest) error {
 	attempts := 0
-	sleepDuration := time.Second * 5
+	sleepDuration := time.Second * 3
 
 	for {
 		attempts++
