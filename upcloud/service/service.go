@@ -630,6 +630,52 @@ func (s *Service) GetFirewallRules(r *request.GetFirewallRulesRequest) (*upcloud
 }
 
 /**
+GetFirewallRuleDetails returns extended details about the specified firewall rule
+*/
+func (s *Service) GetFirewallRuleDetails(r *request.GetFirewallRuleDetailsRequest) (*upcloud.FirewallRule, error) {
+	firewallRule := upcloud.FirewallRule{}
+	response, err := s.basicGetRequest(r.RequestURL())
+
+	if err != nil {
+		return nil, parseServiceError(err)
+	}
+
+	xml.Unmarshal(response, &firewallRule)
+
+	return &firewallRule, nil
+}
+
+/**
+CreateFirewallRule creates the firewall rule
+*/
+func (s *Service) CreateFirewallRule(r *request.CreateFirewallRuleRequest) (*upcloud.FirewallRule, error) {
+	firewallRule := upcloud.FirewallRule{}
+	requestBody, _ := xml.Marshal(r)
+	response, err := s.client.PerformPostRequest(s.client.CreateRequestUrl(r.RequestURL()), requestBody)
+
+	if err != nil {
+		return nil, parseServiceError(err)
+	}
+
+	xml.Unmarshal(response, &firewallRule)
+
+	return &firewallRule, nil
+}
+
+/**
+DeleteFirewallRule deletes the specified firewall rule
+*/
+func (s *Service) DeleteFirewallRule(r *request.DeleteFirewallRuleRequest) error {
+	err := s.client.PerformDeleteRequest(s.client.CreateRequestUrl(r.RequestURL()))
+
+	if err != nil {
+		return parseServiceError(err)
+	}
+
+	return nil
+}
+
+/**
 GetTags returns all tags
 */
 func (s *Service) GetTags() (*upcloud.Tags, error) {

@@ -470,10 +470,10 @@ func TestCreateBackup(t *testing.T) {
 
 // TestAttachModifyReleaseIPAddress performs the following actions
 //
-//   - creates a server
-//   - assigns an additional IP address to it
-//   - modifies the PTR record of the IP address
-//   - deletes the IP address
+// - creates a server
+// - assigns an additional IP address to it
+// - modifies the PTR record of the IP address
+// - deletes the IP address
 func TestAttachModifyReleaseIPAddress(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping test in short mode")
@@ -514,6 +514,58 @@ func TestAttachModifyReleaseIPAddress(t *testing.T) {
 		IPAddress: ipAddress.Address,
 	})
 	t.Log("The IP address is now released")
+}
+
+// TestFirewallRules performs the following actions:
+//
+// - creates a server
+// - adds a firewall rule to the server
+// - gets details about the firewall rule
+// - deletes the firewall rule
+//
+func TestFirewallRules(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode")
+	}
+	t.Parallel()
+
+	// Create the server
+	serverDetails := createServer()
+	t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
+
+	// Create firewall rule
+	t.Logf("Creating firewall rule #1 for server with UUID %s ...", serverDetails.UUID)
+	firewallRule, err := svc.CreateFirewallRule(&request.CreateFirewallRuleRequest{
+		ServerUUID: serverDetails.UUID,
+		FirewallRule: upcloud.FirewallRule{
+			Direction: upcloud.FirewallRuleDirectionIn,
+			Action:    upcloud.FirewallRuleActionAccept,
+			Family:    upcloud.IPAddressFamilyIPv4,
+			Protocol:  upcloud.FirewallRuleProtocolTCP,
+			Position:  1,
+			Comment:   "This is the comment",
+		},
+	})
+	handleError(err)
+	t.Log("Firewall rule created")
+
+	// Get details about the rule
+	t.Log("Getting details about firewall rule #1 ...")
+	firewallRule, err = svc.GetFirewallRuleDetails(&request.GetFirewallRuleDetailsRequest{
+		ServerUUID: serverDetails.UUID,
+		Position:   1,
+	})
+	handleError(err)
+	t.Logf("Got firewall rule details, comment is %s", firewallRule.Comment)
+
+	// Delete the firewall rule
+	t.Log("Deleting firewall rule #1 ...")
+	err = svc.DeleteFirewallRule(&request.DeleteFirewallRuleRequest{
+		ServerUUID: serverDetails.UUID,
+		Position:   1,
+	})
+	handleError(err)
+	t.Log("Firewall rule #1 deleted")
 }
 
 /**

@@ -24,6 +24,9 @@ The general pattern for using the SDK goes like this:
 * Interface with the API using the various methods of the service object. Methods that take parameters wrap them in 
 request objects.
 
+The examples here only deal with how to use the SDK itself. For information on how to use the API in general, please 
+consult the [official documentation](https://www.upcloud.com/api/).
+
 ### Creating the client and the service
 
 ```go
@@ -152,6 +155,30 @@ if err != nil {
 
 fmt.Println(fmt.Sprintf("Backup of %s created as %s", storageDetails.UUID, backupDetails.UUID))
 ```
+
+### Create a new firewall rule
+
+In this example we assume that there is a server represented by the variable `serverDetails`.
+
+```go
+firewallRule, err := svc.CreateFirewallRule(&request.CreateFirewallRuleRequest{
+	ServerUUID: serverDetails.UUID,
+	FirewallRule: upcloud.FirewallRule{
+		Direction: upcloud.FirewallRuleDirectionIn,
+		Action:    upcloud.FirewallRuleActionAccept,
+		Family:    upcloud.IPAddressFamilyIPv4,
+		Protocol:  upcloud.FirewallRuleProtocolTCP,
+		Position:  1,
+		Comment:   "Accept all TCP input on IPv4",
+	},
+})
+
+if err != nil {
+    panic(err)
+}
+```
+
+For more examples, please consult the service integration test suite (`upcloud/service/service_test.go`).
 
 ## Testing
 
