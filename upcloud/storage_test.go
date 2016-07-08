@@ -7,9 +7,9 @@ import (
 )
 
 /**
-Tests that Storages and Storage struct are unmarshaled correctly
+TestUnmarshalStorage tests that Storages and Storage struct are unmarshaled correctly
 */
-func TestStorageUnmarshal(t *testing.T) {
+func TestUnmarshalStorage(t *testing.T) {
 	originalXML := `<?xml version="1.0" encoding="utf-8"?>
 <storages>
     <storage>
