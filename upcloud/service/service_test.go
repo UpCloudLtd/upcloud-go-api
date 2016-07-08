@@ -6,6 +6,7 @@ import (
 	"github.com/jalle19/upcloud-go-sdk/upcloud/request"
 	"log"
 	"os"
+	"reflect"
 	"testing"
 	"time"
 )
@@ -75,6 +76,49 @@ func teardown() {
 
 		log.Printf("Deleting the storage with UUID %s ...", storage.UUID)
 		deleteStorage(storage.UUID)
+	}
+}
+
+/**
+TestGetAccount tests that the GetAccount() method returns proper data
+*/
+func TestGetAccount(t *testing.T) {
+	account, err := svc.GetAccount()
+	handleError(err)
+
+	if account.UserName != svc.client.GetUserName() {
+		t.Errorf("TestGetAccoun expected %s, got %s", svc.client.GetUserName(), account.UserName)
+	}
+}
+
+/**
+TestErrorHandling performs various type checking on errors returned from the service and the underlying client
+*/
+func TestErrorHandling(t *testing.T) {
+	// Perform a bogus request that will certainly fail
+	_, err := svc.StartServer(&request.StartServerRequest{
+		UUID: "invalid",
+	})
+
+	// Check that the correct error type is returned
+	expectedErrorType := "*upcloud.Error"
+	actualErrorType := reflect.TypeOf(err).String()
+
+	if actualErrorType != expectedErrorType {
+		t.Errorf("TestErrorHandling expected %s, got %s", expectedErrorType, actualErrorType)
+	}
+
+	// Create a service where the client is misconfigured
+	brokenClient := client.New("foo", "bar")
+	brokenClient.SetAPIBaseUrl("???¤#Whttp://example.com")
+	brokenSvc := New(brokenClient)
+
+	_, err = brokenSvc.GetAccount()
+	expectedErrorType = "*url.Error"
+	actualErrorType = reflect.TypeOf(err).String()
+
+	if actualErrorType != expectedErrorType {
+		t.Errorf("TestErrorHandling expected %s, got %s", expectedErrorType, actualErrorType)
 	}
 }
 

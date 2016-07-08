@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/blang/semver"
+	"github.com/hashicorp/go-cleanhttp"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -14,8 +15,8 @@ import (
 Constants
 */
 const (
-	API_VERSION  = "1.2.3"
-	API_BASE_URL = "https://api.upcloud.com"
+	DEFAULT_API_VERSION = "1.2.3"
+	DEFAULT_API_BASEURL = "https://api.upcloud.com"
 
 	// The default timeout (in seconds)
 	DEFAULT_TIMEOUT = 10
@@ -28,6 +29,9 @@ type Client struct {
 	userName   string
 	password   string
 	httpClient *http.Client
+
+	apiVersion string
+	apiBaseUrl string
 }
 
 /**
@@ -38,10 +42,20 @@ func New(userName, password string) *Client {
 
 	client.SetUserName(userName)
 	client.SetPassword(password)
-	client.httpClient = http.DefaultClient
+	client.httpClient = cleanhttp.DefaultClient()
 	client.SetTimeout(time.Second * DEFAULT_TIMEOUT)
 
+	client.SetAPIVersion(DEFAULT_API_VERSION)
+	client.SetAPIBaseUrl(DEFAULT_API_BASEURL)
+
 	return &client
+}
+
+/**
+GetUserName returns the user name the client uses
+*/
+func (c *Client) GetUserName() string {
+	return c.userName
 }
 
 /**
@@ -66,10 +80,24 @@ func (c *Client) SetTimeout(timeout time.Duration) {
 }
 
 /**
+SetAPIVersion tells the client which API version to use
+*/
+func (c *Client) SetAPIVersion(version string) {
+	c.apiVersion = version
+}
+
+/**
+SetAPIBaseUrl tells the client which API URL to use
+*/
+func (c *Client) SetAPIBaseUrl(url string) {
+	c.apiBaseUrl = url
+}
+
+/**
 CreateRequestUrl creates and returns a complete request URL for the specified API location
 */
 func (c *Client) CreateRequestUrl(location string) string {
-	return fmt.Sprintf("%s%s", getBaseUrl(), location)
+	return fmt.Sprintf("%s%s", c.getBaseUrl(), location)
 }
 
 /**
@@ -165,10 +193,10 @@ func (c *Client) performRequest(request *http.Request) ([]byte, error) {
 /**
 Returns the base URL to use for API requests
 */
-func getBaseUrl() string {
-	urlVersion, _ := semver.Make(API_VERSION)
+func (c *Client) getBaseUrl() string {
+	urlVersion, _ := semver.Make(c.apiVersion)
 
-	return fmt.Sprintf("%s/%d.%d", API_BASE_URL, urlVersion.Major, urlVersion.Minor)
+	return fmt.Sprintf("%s/%d.%d", c.apiBaseUrl, urlVersion.Major, urlVersion.Minor)
 }
 
 /**

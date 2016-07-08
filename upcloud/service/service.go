@@ -34,7 +34,7 @@ func (s *Service) GetAccount() (*upcloud.Account, error) {
 	response, err := s.basicGetRequest("/account")
 
 	if err != nil {
-		return nil, err
+		return nil, parseServiceError(err)
 	}
 
 	xml.Unmarshal(response, &account)
@@ -50,7 +50,7 @@ func (s *Service) GetZones() (*upcloud.Zones, error) {
 	response, err := s.basicGetRequest("/zone")
 
 	if err != nil {
-		return nil, err
+		return nil, parseServiceError(err)
 	}
 
 	xml.Unmarshal(response, &zones)
@@ -66,7 +66,7 @@ func (s *Service) GetPriceZones() (*upcloud.PrizeZones, error) {
 	response, err := s.basicGetRequest("/price")
 
 	if err != nil {
-		return nil, err
+		return nil, parseServiceError(err)
 	}
 
 	xml.Unmarshal(response, &zones)
@@ -82,7 +82,7 @@ func (s *Service) GetTimeZones() (*upcloud.TimeZones, error) {
 	response, err := s.basicGetRequest("/timezone")
 
 	if err != nil {
-		return nil, err
+		return nil, parseServiceError(err)
 	}
 
 	xml.Unmarshal(response, &zones)
@@ -98,7 +98,7 @@ func (s *Service) GetPlans() (*upcloud.Plans, error) {
 	response, err := s.basicGetRequest("/plan")
 
 	if err != nil {
-		return nil, err
+		return nil, parseServiceError(err)
 	}
 
 	xml.Unmarshal(response, &plans)
@@ -114,7 +114,7 @@ func (s *Service) GetServerConfigurations() (*upcloud.ServerConfigurations, erro
 	response, err := s.basicGetRequest("/server_size")
 
 	if err != nil {
-		return nil, err
+		return nil, parseServiceError(err)
 	}
 
 	xml.Unmarshal(response, &serverConfigurations)
@@ -130,7 +130,7 @@ func (s *Service) GetServers() (*upcloud.Servers, error) {
 	response, err := s.basicGetRequest("/server")
 
 	if err != nil {
-		return nil, err
+		return nil, parseServiceError(err)
 	}
 
 	xml.Unmarshal(response, &servers)
@@ -146,7 +146,7 @@ func (s *Service) GetServerDetails(r *request.GetServerDetailsRequest) (*upcloud
 	response, err := s.basicGetRequest(r.RequestURL())
 
 	if err != nil {
-		return nil, err
+		return nil, parseServiceError(err)
 	}
 
 	xml.Unmarshal(response, &serverDetails)
