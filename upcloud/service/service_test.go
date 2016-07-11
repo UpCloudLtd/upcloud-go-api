@@ -20,7 +20,14 @@ TestMain is the main test method
 func TestMain(m *testing.M) {
 	setup()
 	retCode := m.Run()
-	teardown()
+
+	// Optionally perform teardown
+	delete := os.Getenv("UPCLOUD_GO_SDK_DELETE_RESOURCES")
+	if delete == "yes" {
+		log.Print("UPCLOUD_GO_SDK_DELETE_RESOURCES defined, deleting all resources ...")
+		teardown()
+	}
+
 	os.Exit(retCode)
 }
 

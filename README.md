@@ -187,9 +187,11 @@ values:
 
 * `UPCLOUD_GO_SDK_TEST_USER`
 * `UPCLOUD_GO_SDK_TEST_PASSWORD`
+* `UPCLOUD_GO_SDK_TEST_DELETE_RESOURCES` (either `yes` or `no`)
 
-To run the test suite, run `go test ./... -v -parallel 4`. Be careful about which account you use for testing - all 
-resources will be stopped and/or deleted by the test suite.
+To run the test suite, run `go test ./... -v -parallel 4`. If `UPCLOUD_GO_SDK_TEST_DELETE_RESOURCES` is set to `yes`, 
+all resources will be stopped and/or deleted after the test suite has run. Be careful which account you use for 
+testing so you don't accidentally delete or your production resources!
 
 You can skip running the integration tests and just run the unit tests by passing `-short` to the test command.
 
