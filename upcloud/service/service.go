@@ -153,7 +153,7 @@ func (s *Service) CreateServer(r *request.CreateServerRequest) (*upcloud.ServerD
 // specified timeout
 func (s *Service) WaitForServerState(r *request.WaitForServerStateRequest) error {
 	attempts := 0
-	sleepDuration := time.Second * 3
+	sleepDuration := time.Second * 5
 
 	for {
 		// Always wait for one attempt period before querying the state the first time. Newly created servers
@@ -396,7 +396,7 @@ func (s *Service) TemplatizeStorage(r *request.TemplatizeStorageRequest) (*upclo
 // will give up after the specified timeout
 func (s *Service) WaitForStorageState(r *request.WaitForStorageStateRequest) error {
 	attempts := 0
-	sleepDuration := time.Second * 3
+	sleepDuration := time.Second * 5
 
 	for {
 		attempts++
