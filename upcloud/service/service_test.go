@@ -499,6 +499,7 @@ func TestAttachModifyReleaseIPAddress(t *testing.T) {
 	err = svc.ReleaseIPAddress(&request.ReleaseIPAddressRequest{
 		IPAddress: ipAddress.Address,
 	})
+	handleError(err)
 	t.Log("The IP address is now released")
 }
 
