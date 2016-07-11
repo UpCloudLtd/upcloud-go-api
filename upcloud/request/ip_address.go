@@ -49,5 +49,5 @@ type ReleaseIPAddressRequest struct {
 
 // RequestURL implements the Request interface
 func (r *ReleaseIPAddressRequest) RequestURL() string {
-	return fmt.Sprintf("/%s", r.IPAddress)
+	return fmt.Sprintf("/ip_address/%s", r.IPAddress)
 }

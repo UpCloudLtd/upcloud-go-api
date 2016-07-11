@@ -68,5 +68,5 @@ func TestReleaseIPAddressRequest(t *testing.T) {
 		IPAddress: "0.0.0.0",
 	}
 
-	assert.Equal(t, "/0.0.0.0", request.RequestURL())
+	assert.Equal(t, "/ip_address/0.0.0.0", request.RequestURL())
 }
