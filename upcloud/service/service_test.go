@@ -14,9 +14,7 @@ import (
 // The service object used by the tests
 var svc *Service
 
-/**
-TestMain is the main test method
-*/
+// TestMain is the main test method
 func TestMain(m *testing.M) {
 	setup()
 	retCode := m.Run()
@@ -31,9 +29,7 @@ func TestMain(m *testing.M) {
 	os.Exit(retCode)
 }
 
-/**
-Configures the test environment
-*/
+// Configures the test environment
 func setup() {
 	user, password := getCredentials()
 
@@ -42,9 +38,7 @@ func setup() {
 	svc = New(c)
 }
 
-/**
-Tears down the test environment by removing all resources
-*/
+// Tears down the test environment by removing all resources
 func teardown() {
 	servers, err := svc.GetServers()
 	handleError(err)
@@ -95,9 +89,7 @@ func teardown() {
 	}
 }
 
-/**
-TestGetAccount tests that the GetAccount() method returns proper data
-*/
+// TestGetAccount tests that the GetAccount() method returns proper data
 func TestGetAccount(t *testing.T) {
 	account, err := svc.GetAccount()
 	handleError(err)
@@ -107,9 +99,7 @@ func TestGetAccount(t *testing.T) {
 	}
 }
 
-/**
-TestErrorHandling performs various type checking on errors returned from the service and the underlying client
-*/
+// TestErrorHandling performs various type checking on errors returned from the service and the underlying client
 func TestErrorHandling(t *testing.T) {
 	// Perform a bogus request that will certainly fail
 	_, err := svc.StartServer(&request.StartServerRequest{
@@ -138,15 +128,12 @@ func TestErrorHandling(t *testing.T) {
 	}
 }
 
-/**
-TestCreateModifyDeleteServer performs the following actions:
-
-- creates a server
-- modifies the server
-- stops the server
-- deletes the server
-
-*/
+// TestCreateModifyDeleteServer performs the following actions:
+//
+// - creates a server
+// - modifies the server
+// - stops the server
+// - deletes the server
 func TestCreateModifyDeleteServer(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping test in short mode")
@@ -188,14 +175,11 @@ func TestCreateModifyDeleteServer(t *testing.T) {
 	t.Log("Server is now deleted")
 }
 
-/**
-TestCreateModifyDeleteStorage performs the following actions:
-
-- creates a new storage disk
-- modifies the storage
-- deletes the storage
-
-*/
+// TestCreateModifyDeleteStorage performs the following actions:
+//
+// - creates a new storage disk
+// - modifies the storage
+// - deletes the storage
 func TestCreateModifyDeleteStorage(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping test in short mode")
@@ -223,18 +207,15 @@ func TestCreateModifyDeleteStorage(t *testing.T) {
 	t.Log("Storage is now deleted")
 }
 
-/**
-TestAttachDetachStorage performs the following actions:
-
-- creates a server
-- stops the server
-- creates a new storage disk
-- attaches the storage
-- detaches the storage
-- deletes the storage
-- deletes the server
-
-*/
+// TestAttachDetachStorage performs the following actions:
+//
+// - creates a server
+// - stops the server
+// - creates a new storage disk
+// - attaches the storage
+// - detaches the storage
+// - deletes the storage
+// - deletes the server
 func TestAttachDetachStorage(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping test in short mode")
@@ -279,14 +260,11 @@ func TestAttachDetachStorage(t *testing.T) {
 	t.Logf("Storage %s detached", storageDetails.UUID)
 }
 
-/**
-TestCloneStorage performs the following actions:
-
-- creates a storage device
-- clones the storage device
-- deletes the clone and the storage device
-
-*/
+// TestCloneStorage performs the following actions:
+//
+// - creates a storage device
+// - clones the storage device
+// - deletes the clone and the storage device
 func TestCloneStorage(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping test in short mode")
@@ -312,14 +290,12 @@ func TestCloneStorage(t *testing.T) {
 	t.Logf("Storage cloned as %s", clonedStorageDetails.UUID)
 }
 
-/**
-TestTemplatizeServerStorage performs the following actions:
-
-- creates a server
-- templatizes the server's storage
-- deletes the new storage
-- stops and deletes the server
-*/
+// TestTemplatizeServerStorage performs the following actions:
+//
+// - creates a server
+// - templatizes the server's storage
+// - deletes the new storage
+// - stops and deletes the server
 func TestTemplatizeServerStorage(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping test in short mode")
@@ -368,19 +344,16 @@ func TestTemplatizeServerStorage(t *testing.T) {
 	}
 }
 
-/**
-TestLoadEjectCDROM performs the following actions:
-
-- creates a server
-- stops the server
-- attaches a CD-ROM device
-- starts the server
-- loads a CD-ROM
-- ejects the CD-ROM
-- stops the server
-- deletes the server
-
-*/
+// TestLoadEjectCDROM performs the following actions:
+//
+// - creates a server
+// - stops the server
+// - attaches a CD-ROM device
+// - starts the server
+// - loads a CD-ROM
+// - ejects the CD-ROM
+// - stops the server
+// - deletes the server
 func TestLoadEjectCDROM(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping test in short mode")
@@ -453,15 +426,12 @@ func TestLoadEjectCDROM(t *testing.T) {
 	t.Log("CD-ROM is now ejected")
 }
 
-/**
-TestCreateRestoreBackup performs the following actions:
-
-- creates a storage device
-- creates a backup of the storage device
-
-It's not feasible to test backup restoration due to time contraints
-
-*/
+// TestCreateRestoreBackup performs the following actions:
+//
+// - creates a storage device
+// - creates a backup of the storage device
+//
+// It's not feasible to test backup restoration due to time contraints
 func TestCreateBackup(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping test in short mode")
@@ -584,9 +554,7 @@ func TestFirewallRules(t *testing.T) {
 	t.Log("Firewall rule #1 deleted")
 }
 
-/**
-Creates a server and returns the details about it, panic if creation fails
-*/
+// Creates a server and returns the details about it, panic if creation fails
 func createServer() *upcloud.ServerDetails {
 	createServerRequest := request.CreateServerRequest{
 		Zone:             "fi-hel1",
@@ -637,9 +605,7 @@ func createServer() *upcloud.ServerDetails {
 	return serverDetails
 }
 
-/**
-Stops the specified server
-*/
+// Stops the specified server
 func stopServer(uuid string) {
 	serverDetails, err := svc.StopServer(&request.StopServerRequest{
 		UUID:    uuid,
@@ -657,9 +623,7 @@ func stopServer(uuid string) {
 	handleError(err)
 }
 
-/**
-Deletes the specified server
-*/
+// Deletes the specified server
 func deleteServer(uuid string) {
 	err := svc.DeleteServer(&request.DeleteServerRequest{
 		UUID: uuid,
@@ -668,9 +632,7 @@ func deleteServer(uuid string) {
 	handleError(err)
 }
 
-/**
-Creates a piece of storage and returns the details about it, panic if creation fails
-*/
+// Creates a piece of storage and returns the details about it, panic if creation fails
 func createStorage() *upcloud.StorageDetails {
 	createStorageRequest := request.CreateStorageRequest{
 		Tier:  upcloud.StorageTierMaxIOPS,
@@ -693,9 +655,7 @@ func createStorage() *upcloud.StorageDetails {
 	return storageDetails
 }
 
-/**
-Deletes the specified storage
-*/
+// Deletes the specified storage
 func deleteStorage(uuid string) {
 	err := svc.DeleteStorage(&request.DeleteStorageRequest{
 		UUID: uuid,
@@ -704,9 +664,7 @@ func deleteStorage(uuid string) {
 	handleError(err)
 }
 
-/**
-Waits for the specified storage to come online
-*/
+// Waits for the specified storage to come online
 func waitForStorageOnline(uuid string) {
 	err := svc.WaitForStorageState(&request.WaitForStorageStateRequest{
 		UUID:         uuid,
@@ -717,18 +675,14 @@ func waitForStorageOnline(uuid string) {
 	handleError(err)
 }
 
-/**
-Handles the error by panicing, thus stopping the test execution
-*/
+// Handles the error by panicing, thus stopping the test execution
 func handleError(err error) {
 	if err != nil {
 		panic(err)
 	}
 }
 
-/**
-Reads the API username and password from the environment, panics if they are not available
-*/
+// Reads the API username and password from the environment, panics if they are not available
 func getCredentials() (string, string) {
 	user := os.Getenv("UPCLOUD_GO_SDK_TEST_USER")
 	password := os.Getenv("UPCLOUD_GO_SDK_TEST_PASSWORD")

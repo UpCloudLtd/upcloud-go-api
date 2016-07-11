@@ -1,15 +1,11 @@
 package upcloud
 
-/**
-Plans represents a /plan response
-*/
+// Plans represents a /plan response
 type Plans struct {
 	Plans []Plan `xml:"plan"`
 }
 
-/**
-Plan represents a pre-configured server configuration plan
-*/
+// Plan represents a pre-configured server configuration plan
 type Plan struct {
 	CoreNumber       int    `xml:"core_number"`
 	MemoryAmount     int    `xml:"memory_amount"`

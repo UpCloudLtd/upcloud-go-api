@@ -6,9 +6,7 @@ import (
 	"testing"
 )
 
-/**
-TestUnmarshalStorage tests that Storages and Storage struct are unmarshaled correctly
-*/
+// TestUnmarshalStorage tests that Storages and Storage struct are unmarshaled correctly
 func TestUnmarshalStorage(t *testing.T) {
 	originalXML := `<?xml version="1.0" encoding="utf-8"?>
 <storages>
@@ -56,9 +54,7 @@ func TestUnmarshalStorage(t *testing.T) {
 	assert.Equal(t, "01000000-0000-4000-8000-000010010101", firstStorage.UUID)
 }
 
-/**
-TestUnmarshalServerStorageDevice tests that ServerStorageDevice objects are properly unmarshaled
-*/
+// TestUnmarshalServerStorageDevice tests that ServerStorageDevice objects are properly unmarshaled
 func TestUnmarshalServerStorageDevice(t *testing.T) {
 	originalXML := `<?xml version="1.0" encoding="utf-8"?>
 <storage_device>

@@ -2,9 +2,7 @@ package upcloud
 
 import "encoding/xml"
 
-/**
-Constants
-*/
+// Constants
 const (
 	StorageTypeDisk     = "disk"
 	StorageTypeCDROM    = "cdrom"
@@ -40,16 +38,12 @@ const (
 	CreateStorageDeviceTierMaxIOPS = "maxiops"
 )
 
-/**
-Storages represents a /storage response
-*/
+// Storages represents a /storage response
 type Storages struct {
 	Storages []Storage `xml:"storage"`
 }
 
-/**
-Storage represents a storage device
-*/
+// Storage represents a storage device
 type Storage struct {
 	Access  string  `xml:"access"`
 	License float64 `xml:"license"`
@@ -64,9 +58,7 @@ type Storage struct {
 	Zone       string `xml:"zone"`
 }
 
-/**
-StorageDetails represents detailed information about a piece of storage
-*/
+// StorageDetails represents detailed information about a piece of storage
 type StorageDetails struct {
 	Storage
 
@@ -84,9 +76,7 @@ type BackupRule struct {
 	Retention int    `xml:"retention"`
 }
 
-/**
-ServerStorage represents a storage device in the context of server requests or server details
-*/
+// ServerStorage represents a storage device in the context of server requests or server details
 type ServerStorageDevice struct {
 	XMLName xml.Name `xml:"storage_device"`
 
@@ -99,9 +89,7 @@ type ServerStorageDevice struct {
 	Type       string `xml:"type"`
 }
 
-/**
-CreateServerStorageDevice represents a storage device for a CreateServerRequest
-*/
+// CreateServerStorageDevice represents a storage device for a CreateServerRequest
 type CreateServerStorageDevice struct {
 	XMLName xml.Name `xml:"storage_device"`
 

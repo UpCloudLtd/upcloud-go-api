@@ -6,9 +6,7 @@ import (
 	"testing"
 )
 
-/**
-TestUnmarshalTimeZone tests that the TimeZones struct is correctly marshaled
-*/
+// TestUnmarshalTimeZone tests that the TimeZones struct is correctly marshaled
 func TestUnmarshalTimeZones(t *testing.T) {
 	originalXML := `<?xml version="1.0" encoding="utf-8"?>
 <timezones>

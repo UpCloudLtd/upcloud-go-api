@@ -6,9 +6,7 @@ import (
 	"testing"
 )
 
-/**
-TestUnmarshalTag tests that Tag structs are unmarshaled correctly
-*/
+// TestUnmarshalTag tests that Tag structs are unmarshaled correctly
 func TestUnmarshalTag(t *testing.T) {
 	originalXML := `<?xml version="1.0" encoding="utf-8"?>
 <tags>

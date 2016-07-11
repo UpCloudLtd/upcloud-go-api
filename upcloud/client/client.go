@@ -11,9 +11,7 @@ import (
 	"time"
 )
 
-/**
-Constants
-*/
+// Constants
 const (
 	DEFAULT_API_VERSION = "1.2.3"
 	DEFAULT_API_BASEURL = "https://api.upcloud.com"
@@ -22,9 +20,7 @@ const (
 	DEFAULT_TIMEOUT = 10
 )
 
-/**
-Client represents an API client
-*/
+// Client represents an API client
 type Client struct {
 	userName   string
 	password   string
@@ -34,9 +30,7 @@ type Client struct {
 	apiBaseUrl string
 }
 
-/**
-New creates ands returns a new client configured with the specified user and password
-*/
+// New creates ands returns a new client configured with the specified user and password
 func New(userName, password string) *Client {
 	client := Client{}
 
@@ -51,58 +45,42 @@ func New(userName, password string) *Client {
 	return &client
 }
 
-/**
-GetUserName returns the user name the client uses
-*/
+// GetUserName returns the user name the client uses
 func (c *Client) GetUserName() string {
 	return c.userName
 }
 
-/**
-SetUserName sets the client user to the specified user
-*/
+// SetUserName sets the client user to the specified user
 func (c *Client) SetUserName(userName string) {
 	c.userName = userName
 }
 
-/**
-SetPassword sets the client password to the specified password
-*/
+// SetPassword sets the client password to the specified password
 func (c *Client) SetPassword(password string) {
 	c.password = password
 }
 
-/**
-SetTimeout sets the client timeout to the specified amount of seconds
-*/
+// SetTimeout sets the client timeout to the specified amount of seconds
 func (c *Client) SetTimeout(timeout time.Duration) {
 	c.httpClient.Timeout = timeout
 }
 
-/**
-SetAPIVersion tells the client which API version to use
-*/
+// SetAPIVersion tells the client which API version to use
 func (c *Client) SetAPIVersion(version string) {
 	c.apiVersion = version
 }
 
-/**
-SetAPIBaseUrl tells the client which API URL to use
-*/
+// SetAPIBaseUrl tells the client which API URL to use
 func (c *Client) SetAPIBaseUrl(url string) {
 	c.apiBaseUrl = url
 }
 
-/**
-CreateRequestUrl creates and returns a complete request URL for the specified API location
-*/
+// CreateRequestUrl creates and returns a complete request URL for the specified API location
 func (c *Client) CreateRequestUrl(location string) string {
 	return fmt.Sprintf("%s%s", c.getBaseUrl(), location)
 }
 
-/**
-PerformGetRequest performs a GET request to the specified URL and returns the response body and eventual errors
-*/
+// PerformGetRequest performs a GET request to the specified URL and returns the response body and eventual errors
 func (c *Client) PerformGetRequest(url string) ([]byte, error) {
 	request, err := http.NewRequest("GET", url, nil)
 
@@ -113,9 +91,7 @@ func (c *Client) PerformGetRequest(url string) ([]byte, error) {
 	return c.performRequest(request)
 }
 
-/**
-PerformPostRequest performs a POST request to the specified URL and returns the response body and eventual errors
-*/
+// PerformPostRequest performs a POST request to the specified URL and returns the response body and eventual errors
 func (c *Client) PerformPostRequest(url string, requestBody []byte) ([]byte, error) {
 	var bodyReader io.Reader = nil
 
@@ -132,9 +108,7 @@ func (c *Client) PerformPostRequest(url string, requestBody []byte) ([]byte, err
 	return c.performRequest(request)
 }
 
-/**
-PerformPutRequest performs a PUT request to the specified URL and returns the response body and eventual errors
-*/
+// PerformPutRequest performs a PUT request to the specified URL and returns the response body and eventual errors
 func (c *Client) PerformPutRequest(url string, requestBody []byte) ([]byte, error) {
 	var bodyReader io.Reader = nil
 
@@ -151,9 +125,7 @@ func (c *Client) PerformPutRequest(url string, requestBody []byte) ([]byte, erro
 	return c.performRequest(request)
 }
 
-/**
-PerformDeleteRequest performs a DELETE request to the specified URL and returns the response body and eventual errors
-*/
+// PerformDeleteRequest performs a DELETE request to the specified URL and returns the response body and eventual errors
 func (c *Client) PerformDeleteRequest(url string) error {
 	request, err := http.NewRequest("DELETE", url, nil)
 
@@ -165,9 +137,7 @@ func (c *Client) PerformDeleteRequest(url string) error {
 	return err
 }
 
-/**
-Adds common headers to the specified request
-*/
+// Adds common headers to the specified request
 func (c *Client) addRequestHeaders(request *http.Request) *http.Request {
 	request.SetBasicAuth(c.userName, c.password)
 	request.Header.Add("Accept", "application/xml")
@@ -176,9 +146,7 @@ func (c *Client) addRequestHeaders(request *http.Request) *http.Request {
 	return request
 }
 
-/**
-Performs the specified HTTP request and returns the response through handleResponse()
-*/
+// Performs the specified HTTP request and returns the response through handleResponse()
 func (c *Client) performRequest(request *http.Request) ([]byte, error) {
 	c.addRequestHeaders(request)
 	response, err := c.httpClient.Do(request)
@@ -190,18 +158,14 @@ func (c *Client) performRequest(request *http.Request) ([]byte, error) {
 	return handleResponse(response)
 }
 
-/**
-Returns the base URL to use for API requests
-*/
+// Returns the base URL to use for API requests
 func (c *Client) getBaseUrl() string {
 	urlVersion, _ := semver.Make(c.apiVersion)
 
 	return fmt.Sprintf("%s/%d.%d", c.apiBaseUrl, urlVersion.Major, urlVersion.Minor)
 }
 
-/**
-Parses the response and returns either the response body or an error
-*/
+// Parses the response and returns either the response body or an error
 func handleResponse(response *http.Response) ([]byte, error) {
 	defer response.Body.Close()
 

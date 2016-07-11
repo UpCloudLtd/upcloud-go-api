@@ -6,9 +6,7 @@ import (
 	"testing"
 )
 
-/**
-TestUnmarshalZones tests that the Zone and Zones structs are correctly marshaled
-*/
+// TestUnmarshalZones tests that the Zone and Zones structs are correctly marshaled
 func TestUnmarshalZones(t *testing.T) {
 	originalXML := `<?xml version="1.0" encoding="utf-8"?>
 <zones>

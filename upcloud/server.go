@@ -1,8 +1,6 @@
 package upcloud
 
-/**
-Constants
-*/
+// Constants
 const (
 	ServerStateStarted     = "started"
 	ServerStateStopped     = "stopped"
@@ -13,31 +11,23 @@ const (
 	VideoModelCirrus = "cirrus"
 )
 
-/**
-ServerConfigurations represents a /server_size response
-*/
+// ServerConfigurations represents a /server_size response
 type ServerConfigurations struct {
 	ServerConfigurations []ServerConfiguration `xml:"server_size"`
 }
 
-/**
-ServerConfiguration represents a server configuration
-*/
+// ServerConfiguration represents a server configuration
 type ServerConfiguration struct {
 	CoreNumber   int `xml:"core_number"`
 	MemoryAmount int `xml:"memory_amount"`
 }
 
-/**
-Servers represents a /server response
-*/
+// Servers represents a /server response
 type Servers struct {
 	Servers []Server `xml:"server"`
 }
 
-/**
-Server represents a server
-*/
+// Server represents a server
 type Server struct {
 	CoreNumber   int      `xml:"core_number"`
 	Hostname     string   `xml:"hostname"`
@@ -52,9 +42,7 @@ type Server struct {
 	Zone         string   `xml:"zone"`
 }
 
-/**
-ServerDetails represents details about a server
-*/
+// ServerDetails represents details about a server
 type ServerDetails struct {
 	Server
 
