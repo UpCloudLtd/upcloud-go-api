@@ -22,6 +22,22 @@ const (
 	StorageStateCloning     = "cloning"
 	StorageStateBackuping   = "backuping"
 	StorageStateError       = "error"
+
+	BackupRuleIntervalDaily     = "daily"
+	BackupRuleIntervalMonday    = "mon"
+	BackupRuleIntervalTuesday   = "tue"
+	BackupRuleIntervalWednesday = "wed"
+	BackupRuleIntervalThursday  = "thu"
+	BackupRuleIntervalFriday    = "fri"
+	BackupRuleIntervalSaturday  = "sat"
+	BackupRuleIntervalSunday    = "sun"
+
+	CreateServerStorageDeviceActionCreate = "create"
+	CreateServerStorageDeviceActionClone  = "clone"
+	CreateServerStorageDeviceActionAttach = "attach"
+
+	CreateStorageDeviceTierHDD     = "hdd"
+	CreateStorageDeviceTierMaxIOPS = "maxiops"
 )
 
 /**
@@ -59,13 +75,13 @@ type StorageDetails struct {
 	ServerUUIDs []string `xml:"servers>server"`
 }
 
-/**
-BackupRule represents a backup rule
-*/
+// BackupRule represents a backup rule
 type BackupRule struct {
-	Interval  string `xml:"interval"`
+	XMLName  xml.Name `xml:"backup_rule"`
+	Interval string   `xml:"interval"`
+	// Time should be in the format "hhmm", e.g. "0430"
 	Time      string `xml:"time"`
-	Retention string `xml:"retention"`
+	Retention int    `xml:"retention"`
 }
 
 /**

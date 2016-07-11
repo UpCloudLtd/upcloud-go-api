@@ -588,11 +588,11 @@ func createServer() *upcloud.ServerDetails {
 		PasswordDelivery: request.PasswordDeliveryNone,
 		StorageDevices: []upcloud.CreateServerStorageDevice{
 			{
-				Action:  request.CreateServerStorageDeviceActionClone,
+				Action:  upcloud.CreateServerStorageDeviceActionClone,
 				Storage: "01000000-0000-4000-8000-000030060200",
 				Title:   "disk1",
 				Size:    30,
-				Tier:    request.CreateStorageDeviceTierMaxIOPS,
+				Tier:    upcloud.CreateStorageDeviceTierMaxIOPS,
 			},
 		},
 		IPAddresses: []request.CreateServerIPAddress{
@@ -670,6 +670,11 @@ func createStorage() *upcloud.StorageDetails {
 		Title: "Test storage",
 		Size:  10,
 		Zone:  "fi-hel1",
+		BackupRule: &upcloud.BackupRule{
+			Interval:  upcloud.BackupRuleIntervalDaily,
+			Time:      "0430",
+			Retention: 30,
+		},
 	}
 
 	storageDetails, err := svc.CreateStorage(&createStorageRequest)

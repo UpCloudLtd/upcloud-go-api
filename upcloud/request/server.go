@@ -18,13 +18,6 @@ const (
 	VideoModelVGA    = "vga"
 	VideoModelCirrus = "cirrus"
 
-	CreateServerStorageDeviceActionCreate = "create"
-	CreateServerStorageDeviceActionClone  = "clone"
-	CreateServerStorageDeviceActionAttach = "attach"
-
-	CreateStorageDeviceTierHDD     = "hdd"
-	CreateStorageDeviceTierMaxIOPS = "maxiops"
-
 	ServerStopTypeSoft = "soft"
 	ServerStopTypeHard = "hard"
 

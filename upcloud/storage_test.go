@@ -81,3 +81,46 @@ func TestUnmarshalServerStorageDevice(t *testing.T) {
 	assert.Equal(t, "test-disk0", storageDevice.Title)
 	assert.Equal(t, StorageTypeDisk, storageDevice.Type)
 }
+
+// TestMarshalCreateStorageDevice tests that CreateStorageDevice objects are correctly marshaled. We don't need to
+// test unmarshaling because these data structures are never returned from the API.
+func TestMarshalCreateStorageDevice(t *testing.T) {
+	storage := CreateServerStorageDevice{
+		Action:  CreateServerStorageDeviceActionClone,
+		Storage: "01000000-0000-4000-8000-000030060200",
+		Title:   "disk1",
+		Size:    30,
+		Tier:    StorageTierMaxIOPS,
+	}
+
+	expectedXML := "<storage_device><action>clone</action><storage>01000000-0000-4000-8000-000030060200</storage><title>disk1</title><size>30</size><tier>maxiops</tier></storage_device>"
+
+	actualXML, err := xml.Marshal(storage)
+	assert.Nil(t, err)
+	assert.Equal(t, expectedXML, string(actualXML))
+}
+
+// TestMarshalBackupRule tests that BackupRule objects are properly marshaled
+func TestMarshalBackupRule(t *testing.T) {
+	backupRule := BackupRule{
+		Interval:  BackupRuleIntervalDaily,
+		Time:      "0430",
+		Retention: 30,
+	}
+
+	ruleXML, err := xml.Marshal(backupRule)
+	assert.Nil(t, err)
+	assert.Equal(t, "<backup_rule><interval>daily</interval><time>0430</time><retention>30</retention></backup_rule>", string(ruleXML))
+}
+
+// TestUnmarshalBackupRule tests that BackupRule objects are properly unmarshaled
+func TestUnmarshalBackupRule(t *testing.T) {
+	originalXML := "<backup_rule><interval>daily</interval><time>0430</time><retention>30</retention></backup_rule>"
+
+	backupRule := BackupRule{}
+	err := xml.Unmarshal([]byte(originalXML), &backupRule)
+	assert.Nil(t, err)
+	assert.Equal(t, BackupRuleIntervalDaily, backupRule.Interval)
+	assert.Equal(t, "0430", backupRule.Time)
+	assert.Equal(t, 30, backupRule.Retention)
+}
