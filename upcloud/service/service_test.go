@@ -45,7 +45,7 @@ func teardown() {
 	for _, server := range servers.Servers {
 		// If the server is in maintenance, wait until the state changes
 		if server.State == upcloud.ServerStateMaintenance {
-			log.Printf("Waiting for server with UUID %s to leave maintenance state ...")
+			log.Printf("Waiting for server with UUID %s to leave maintenance state ...", server.UUID)
 			err = svc.WaitForServerState(&request.WaitForServerStateRequest{
 				UUID:           server.UUID,
 				UndesiredState: upcloud.ServerStateMaintenance,
