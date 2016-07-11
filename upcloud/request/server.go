@@ -15,9 +15,6 @@ const (
 	PasswordDeliveryEmail = "email"
 	PasswordDeliverySMS   = "sms"
 
-	VideoModelVGA    = "vga"
-	VideoModelCirrus = "cirrus"
-
 	ServerStopTypeSoft = "soft"
 	ServerStopTypeHard = "hard"
 

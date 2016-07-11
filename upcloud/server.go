@@ -8,6 +8,9 @@ const (
 	ServerStateStopped     = "stopped"
 	ServerStateMaintenance = "maintenance"
 	ServerStateError       = "error"
+
+	VideoModelVGA    = "vga"
+	VideoModelCirrus = "cirrus"
 )
 
 /**
@@ -21,8 +24,8 @@ type ServerConfigurations struct {
 ServerConfiguration represents a server configuration
 */
 type ServerConfiguration struct {
-	CoreNumber   string `xml:"core_number"`
-	MemoryAmount string `xml:"memory_amount"`
+	CoreNumber   int `xml:"core_number"`
+	MemoryAmount int `xml:"memory_amount"`
 }
 
 /**
@@ -36,10 +39,12 @@ type Servers struct {
 Server represents a server
 */
 type Server struct {
+	CoreNumber   int      `xml:"core_number"`
 	Hostname     string   `xml:"hostname"`
 	License      float64  `xml:"license"`
-	MemoryAmount string   `xml:"memory_amount"`
+	MemoryAmount int      `xml:"memory_amount"`
 	Plan         string   `xml:"plan"`
+	Progress     int      `xml:"progress"`
 	State        string   `xml:"state"`
 	Tags         []string `xml:"tags>tag"`
 	Title        string   `xml:"title"`
