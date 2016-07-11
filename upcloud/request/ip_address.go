@@ -10,7 +10,7 @@ type GetIPAddressDetailsRequest struct {
 	Address string
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *GetIPAddressDetailsRequest) RequestURL() string {
 	return fmt.Sprintf("/ip_address/%s", r.Address)
 }
@@ -24,7 +24,7 @@ type AssignIPAddressRequest struct {
 	ServerUUID string `xml:"server"`
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *AssignIPAddressRequest) RequestURL() string {
 	return "/ip_address"
 }
@@ -37,7 +37,7 @@ type ModifyIPAddressRequest struct {
 	PTRRecord string `xml:"ptr_record"`
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *ModifyIPAddressRequest) RequestURL() string {
 	return fmt.Sprintf("/ip_address/%s", r.IPAddress)
 }
@@ -47,7 +47,7 @@ type ReleaseIPAddressRequest struct {
 	IPAddress string
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *ReleaseIPAddressRequest) RequestURL() string {
 	return fmt.Sprintf("/%s", r.IPAddress)
 }

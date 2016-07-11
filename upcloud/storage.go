@@ -76,7 +76,7 @@ type BackupRule struct {
 	Retention int    `xml:"retention"`
 }
 
-// ServerStorage represents a storage device in the context of server requests or server details
+// ServerStorageDevice represents a storage device in the context of server requests or server details
 type ServerStorageDevice struct {
 	XMLName xml.Name `xml:"storage_device"`
 

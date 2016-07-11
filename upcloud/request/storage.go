@@ -17,7 +17,7 @@ type GetStoragesRequest struct {
 	Favorite bool
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *GetStoragesRequest) RequestURL() string {
 	if r.Access != "" {
 		return fmt.Sprintf("/storage/%s", r.Access)
@@ -39,7 +39,7 @@ type GetStorageDetailsRequest struct {
 	UUID string
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *GetStorageDetailsRequest) RequestURL() string {
 	return fmt.Sprintf("/storage/%s", r.UUID)
 }
@@ -55,7 +55,7 @@ type CreateStorageRequest struct {
 	BackupRule *upcloud.BackupRule `xml:"backup_rule,omitempty"`
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *CreateStorageRequest) RequestURL() string {
 	return "/storage"
 }
@@ -70,7 +70,7 @@ type ModifyStorageRequest struct {
 	BackupRule *upcloud.BackupRule `xml:"backup_rule,omitempty"`
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *ModifyStorageRequest) RequestURL() string {
 	return fmt.Sprintf("/storage/%s", r.UUID)
 }
@@ -85,7 +85,7 @@ type AttachStorageRequest struct {
 	StorageUUID string `xml:"storage,omitempty"`
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *AttachStorageRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s/storage/attach", r.ServerUUID)
 }
@@ -98,7 +98,7 @@ type DetachStorageRequest struct {
 	Address string `xml:"address"`
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *DetachStorageRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s/storage/detach", r.ServerUUID)
 }
@@ -108,7 +108,7 @@ type DeleteStorageRequest struct {
 	UUID string
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *DeleteStorageRequest) RequestURL() string {
 	return fmt.Sprintf("/storage/%s", r.UUID)
 }
@@ -123,7 +123,7 @@ type CloneStorageRequest struct {
 	Title string `xml:"title"`
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *CloneStorageRequest) RequestURL() string {
 	return fmt.Sprintf("/storage/%s/clone", r.UUID)
 }
@@ -136,7 +136,7 @@ type TemplatizeStorageRequest struct {
 	Title string `xml:"title"`
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *TemplatizeStorageRequest) RequestURL() string {
 	return fmt.Sprintf("/storage/%s/templatize", r.UUID)
 }
@@ -156,7 +156,7 @@ type LoadCDROMRequest struct {
 	StorageUUID string `xml:"storage"`
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *LoadCDROMRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s/cdrom/load", r.ServerUUID)
 }
@@ -166,7 +166,7 @@ type EjectCDROMRequest struct {
 	ServerUUID string
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *EjectCDROMRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s/cdrom/eject", r.ServerUUID)
 }
@@ -179,7 +179,7 @@ type CreateBackupRequest struct {
 	Title string `xml:"title"`
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *CreateBackupRequest) RequestURL() string {
 	return fmt.Sprintf("/storage/%s/backup", r.UUID)
 }
@@ -189,7 +189,7 @@ type RestoreBackupRequest struct {
 	UUID string
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *RestoreBackupRequest) RequestURL() string {
 	return fmt.Sprintf("/storage/%s/restore", r.UUID)
 }

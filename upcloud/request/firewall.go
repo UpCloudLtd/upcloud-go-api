@@ -6,12 +6,12 @@ import (
 	"github.com/jalle19/upcloud-go-sdk/upcloud"
 )
 
-// GetServerFirewallRulesRequest represents a request for retrieving the firewall rules for a specific server
+// GetFirewallRulesRequest represents a request for retrieving the firewall rules for a specific server
 type GetFirewallRulesRequest struct {
 	ServerUUID string
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *GetFirewallRulesRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s/firewall_rule", r.ServerUUID)
 }
@@ -22,7 +22,7 @@ type GetFirewallRuleDetailsRequest struct {
 	Position   int
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *GetFirewallRuleDetailsRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s/firewall_rule/%d", r.ServerUUID, r.Position)
 }
@@ -35,7 +35,7 @@ type CreateFirewallRuleRequest struct {
 	ServerUUID string   `xml:"-"`
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *CreateFirewallRuleRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s/firewall_rule", r.ServerUUID)
 }
@@ -46,7 +46,7 @@ type DeleteFirewallRuleRequest struct {
 	Position   int
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *DeleteFirewallRuleRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s/firewall_rule/%d", r.ServerUUID, r.Position)
 }

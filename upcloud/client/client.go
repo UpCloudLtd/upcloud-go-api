@@ -93,7 +93,7 @@ func (c *Client) PerformGetRequest(url string) ([]byte, error) {
 
 // PerformPostRequest performs a POST request to the specified URL and returns the response body and eventual errors
 func (c *Client) PerformPostRequest(url string, requestBody []byte) ([]byte, error) {
-	var bodyReader io.Reader = nil
+	var bodyReader io.Reader
 
 	if requestBody != nil {
 		bodyReader = bytes.NewBuffer(requestBody)
@@ -110,7 +110,7 @@ func (c *Client) PerformPostRequest(url string, requestBody []byte) ([]byte, err
 
 // PerformPutRequest performs a PUT request to the specified URL and returns the response body and eventual errors
 func (c *Client) PerformPutRequest(url string, requestBody []byte) ([]byte, error) {
-	var bodyReader io.Reader = nil
+	var bodyReader io.Reader
 
 	if requestBody != nil {
 		bodyReader = bytes.NewBuffer(requestBody)

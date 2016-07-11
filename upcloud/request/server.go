@@ -25,7 +25,7 @@ type GetServerDetailsRequest struct {
 	UUID string
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *GetServerDetailsRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s", r.UUID)
 }
@@ -58,7 +58,7 @@ type CreateServerRequest struct {
 	Zone        string `xml:"zone"`
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *CreateServerRequest) RequestURL() string {
 	return "/server"
 }
@@ -85,7 +85,7 @@ type StartServerRequest struct {
 	Timeout time.Duration
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *StartServerRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s/start", r.UUID)
 }
@@ -100,7 +100,7 @@ type StopServerRequest struct {
 	Timeout  time.Duration `xml:"timeout,omitempty"`
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *StopServerRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s/stop", r.UUID)
 }
@@ -129,7 +129,7 @@ type RestartServerRequest struct {
 	TimeoutAction string        `xml:"timeout_action,omitempty"`
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *RestartServerRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s/restart", r.UUID)
 }
@@ -171,7 +171,7 @@ type ModifyServerRequest struct {
 	VNCPassword string `xml:"vnc_password,omitempty"`
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *ModifyServerRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s", r.UUID)
 }
@@ -181,7 +181,7 @@ type DeleteServerRequest struct {
 	UUID string
 }
 
-// RequestURL() implements the Request interface
+// RequestURL implements the Request interface
 func (r *DeleteServerRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s", r.UUID)
 }
