@@ -7,6 +7,15 @@ import (
 	"testing"
 )
 
+// TestGetIPAddressDetailsRequest tests that GetIPAddressDetailsRequest behaves correctly
+func TestGetIPAddressDetailsRequest(t *testing.T) {
+	request := GetIPAddressDetailsRequest{
+		Address: "0.0.0.0",
+	}
+
+	assert.Equal(t, "/ip_address/0.0.0.0", request.RequestURL())
+}
+
 // TestMarshalAssignIPAddressRequest tests that AssignIPAddressRequest structs are marshaled correctly
 func TestMarshalAssignIPAddressRequest(t *testing.T) {
 	request := AssignIPAddressRequest{
