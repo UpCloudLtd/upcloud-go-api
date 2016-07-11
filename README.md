@@ -180,6 +180,16 @@ if err != nil {
 
 For more examples, please consult the service integration test suite (`upcloud/service/service_test.go`).
 
+### Debugging the API using Postman
+
+The repository contains a Postman collection which can be used to quickly perform requests against the API to see what 
+it returns. Import the collection into Postman, then create an environment containing the following variables:
+
+* `authorization` - the value of the `Authorization` HTTP header, e.g. `Basic <base64>`
+* `serveruuid` - an existing server UUID
+* `ipaddress` - an existing IP address that is assigned to one of your servers
+* `storageuuid` - the UUID of a piece of storage (can be a template, doesn't have to be a disk)
+
 ## Testing
 
 To be able to run the test suite you'll need to export the following environment variables with their corresponding 
