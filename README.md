@@ -12,7 +12,7 @@ SDKs such as https://github.com/aws/aws-sdk-go.
 You'll need Go 1.6 or higher to use the SDK. You can use the following command to retrieve the SDK:
 
 ```
-go get -u github.com/jalle19/upcloud-go-sdk
+go get github.com/jalle19/upcloud-go-sdk
 ```
 
 ## Usage
