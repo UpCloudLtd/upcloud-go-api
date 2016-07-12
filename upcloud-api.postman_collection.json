@@ -248,9 +248,9 @@
 			"response": []
 		},
 		{
-			"name": "Get server details",
+			"name": "List servers",
 			"request": {
-				"url": "https://api.upcloud.com/1.2/server/{{serveruuid}}",
+				"url": "https://api.upcloud.com/1.2/server/",
 				"method": "GET",
 				"header": [
 					{
