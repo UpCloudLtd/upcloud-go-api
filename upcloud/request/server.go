@@ -36,15 +36,13 @@ type CreateServerRequest struct {
 
 	AvoidHost string `xml:"avoid_host,omitempty"`
 	BootOrder string `xml:"boot_order,omitempty"`
-	// TODO: Investigate correct type and format
-	CoreNumber string `xml:"core_number,omitempty"`
+	CoreNumber int `xml:"core_number,omitempty"`
 	// TODO: Convert to boolean
 	Firewall    string                  `xml:"firewall,omitempty"`
 	Hostname    string                  `xml:"hostname"`
 	IPAddresses []CreateServerIPAddress `xml:"ip_addresses>ip_address"`
 	LoginUser   *LoginUser              `xml:"login_user,omitempty"`
-	// TODO: Investigate correct type and format
-	MemoryAmount     string                              `xml:"memory_amount,omitempty"`
+	MemoryAmount     int                              `xml:"memory_amount,omitempty"`
 	PasswordDelivery string                              `xml:"password_delivery,omitempty"`
 	Plan             string                              `xml:"plan,omitempty"`
 	StorageDevices   []upcloud.CreateServerStorageDevice `xml:"storage_devices>storage_device"`
