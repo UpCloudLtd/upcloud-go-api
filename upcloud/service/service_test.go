@@ -44,19 +44,17 @@ func teardown() {
 	handleError(err)
 
 	for _, server := range servers.Servers {
-		// If the server is in maintenance, wait until the state changes
-		if server.State == upcloud.ServerStateMaintenance {
-			log.Printf("Waiting for server with UUID %s to leave maintenance state ...", server.UUID)
-			err = svc.WaitForServerState(&request.WaitForServerStateRequest{
-				UUID:           server.UUID,
-				UndesiredState: upcloud.ServerStateMaintenance,
-				Timeout:        time.Minute * 5,
-			})
-			handleError(err)
-		}
+		// Try to ensure the server is not in maintenance state
+		log.Printf("Waiting for server with UUID %s to leave maintenance state ...", server.UUID)
+		serverDetails, err := svc.WaitForServerState(&request.WaitForServerStateRequest{
+			UUID:           server.UUID,
+			UndesiredState: upcloud.ServerStateMaintenance,
+			Timeout:        time.Minute * 5,
+		})
+		handleError(err)
 
 		// Stop the server if it's still running
-		if server.State != upcloud.ServerStateStopped {
+		if serverDetails.State != upcloud.ServerStateStopped {
 			log.Printf("Stopping server with UUID %s ...", server.UUID)
 			stopServer(server.UUID)
 		}
@@ -76,7 +74,7 @@ func teardown() {
 		// Wait for the storage to come online so we can delete it
 		if storage.State != upcloud.StorageStateOnline {
 			log.Printf("Waiting for storage %s to come online ...", storage.UUID)
-			err = svc.WaitForStorageState(&request.WaitForStorageStateRequest{
+			_, err = svc.WaitForStorageState(&request.WaitForStorageStateRequest{
 				UUID:         storage.UUID,
 				DesiredState: upcloud.StorageStateOnline,
 				Timeout:      time.Minute * 5,
@@ -155,7 +153,7 @@ func TestCreateModifyDeleteServer(t *testing.T) {
 	handleError(err)
 	t.Log("Waiting for the server to exit maintenance state ...")
 
-	err = svc.WaitForServerState(&request.WaitForServerStateRequest{
+	serverDetails, err = svc.WaitForServerState(&request.WaitForServerStateRequest{
 		UUID:         serverDetails.UUID,
 		DesiredState: upcloud.ServerStateStarted,
 		Timeout:      time.Minute * 5,
@@ -388,7 +386,7 @@ func TestLoadEjectCDROM(t *testing.T) {
 
 	handleError(err)
 
-	err = svc.WaitForServerState(&request.WaitForServerStateRequest{
+	serverDetails, err = svc.WaitForServerState(&request.WaitForServerStateRequest{
 		UUID:         serverDetails.UUID,
 		DesiredState: upcloud.ServerStateStarted,
 		Timeout:      time.Minute * 5,
@@ -409,7 +407,7 @@ func TestLoadEjectCDROM(t *testing.T) {
 
 	// Ejecting the CD-ROM is not possible while the server is in maintenance state, so wait until it exits it
 	log.Printf("Waiting for server with UUID %s to leave maintenance state ...", serverDetails.UUID)
-	err = svc.WaitForServerState(&request.WaitForServerStateRequest{
+	serverDetails, err = svc.WaitForServerState(&request.WaitForServerStateRequest{
 		UUID:           serverDetails.UUID,
 		UndesiredState: upcloud.ServerStateMaintenance,
 		Timeout:        time.Minute * 5,
@@ -595,7 +593,7 @@ func createServer() *upcloud.ServerDetails {
 	}
 
 	// Wait for the server to start
-	err = svc.WaitForServerState(&request.WaitForServerStateRequest{
+	serverDetails, err = svc.WaitForServerState(&request.WaitForServerStateRequest{
 		UUID:         serverDetails.UUID,
 		DesiredState: upcloud.ServerStateStarted,
 		Timeout:      time.Minute * 5,
@@ -615,7 +613,7 @@ func stopServer(uuid string) {
 
 	handleError(err)
 
-	err = svc.WaitForServerState(&request.WaitForServerStateRequest{
+	serverDetails, err = svc.WaitForServerState(&request.WaitForServerStateRequest{
 		UUID:         serverDetails.UUID,
 		DesiredState: upcloud.ServerStateStopped,
 		Timeout:      time.Minute * 5,
@@ -667,7 +665,7 @@ func deleteStorage(uuid string) {
 
 // Waits for the specified storage to come online
 func waitForStorageOnline(uuid string) {
-	err := svc.WaitForStorageState(&request.WaitForStorageStateRequest{
+	_, err := svc.WaitForStorageState(&request.WaitForStorageStateRequest{
 		UUID:         uuid,
 		DesiredState: upcloud.StorageStateOnline,
 		Timeout:      time.Minute * 5,

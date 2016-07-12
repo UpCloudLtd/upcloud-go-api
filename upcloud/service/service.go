@@ -149,9 +149,9 @@ func (s *Service) CreateServer(r *request.CreateServerRequest) (*upcloud.ServerD
 	return &serverDetails, nil
 }
 
-// WaitForServerState blocks execution until the specified server has entered the specified state. The method will give up after the
-// specified timeout
-func (s *Service) WaitForServerState(r *request.WaitForServerStateRequest) error {
+// WaitForServerState blocks execution until the specified server has entered the specified state. If the state changes
+// favorably, the new server details are returned. The method will give up after the specified timeout
+func (s *Service) WaitForServerState(r *request.WaitForServerStateRequest) (*upcloud.ServerDetails, error) {
 	attempts := 0
 	sleepDuration := time.Second * 5
 
@@ -167,18 +167,18 @@ func (s *Service) WaitForServerState(r *request.WaitForServerStateRequest) error
 		})
 
 		if err != nil {
-			return err
+			return nil, err
 		}
 
 		// Either wait for the server to enter the desired state or wait for it to leave the undesired state
 		if r.DesiredState != "" && serverDetails.State == r.DesiredState {
-			return nil
+			return serverDetails, nil
 		} else if r.UndesiredState != "" && serverDetails.State != r.UndesiredState {
-			return nil
+			return serverDetails, nil
 		}
 
 		if time.Duration(attempts)*sleepDuration >= r.Timeout {
-			return fmt.Errorf("Timeout reached while waiting for server to enter state \"%s\"", r.DesiredState)
+			return nil, fmt.Errorf("Timeout reached while waiting for server to enter state \"%s\"", r.DesiredState)
 		}
 	}
 }
@@ -392,9 +392,9 @@ func (s *Service) TemplatizeStorage(r *request.TemplatizeStorageRequest) (*upclo
 	return &storageDetails, nil
 }
 
-// WaitForStorageState blocks execution until the specified storage device has entered the specified state. The method
-// will give up after the specified timeout
-func (s *Service) WaitForStorageState(r *request.WaitForStorageStateRequest) error {
+// WaitForStorageState blocks execution until the specified storage device has entered the specified state. If the
+// state changes favorably, the new storage details is returned. The method will give up after the specified timeout
+func (s *Service) WaitForStorageState(r *request.WaitForStorageStateRequest) (*upcloud.StorageDetails, error) {
 	attempts := 0
 	sleepDuration := time.Second * 5
 
@@ -406,17 +406,17 @@ func (s *Service) WaitForStorageState(r *request.WaitForStorageStateRequest) err
 		})
 
 		if err != nil {
-			return err
+			return nil, err
 		}
 
 		if storageDetails.State == r.DesiredState {
-			return nil
+			return storageDetails, nil
 		}
 
 		time.Sleep(sleepDuration)
 
 		if time.Duration(attempts)*sleepDuration >= r.Timeout {
-			return fmt.Errorf("Timeout reached while waiting for storage to enter state \"%s\"", r.DesiredState)
+			return nil, fmt.Errorf("Timeout reached while waiting for storage to enter state \"%s\"", r.DesiredState)
 		}
 	}
 }
