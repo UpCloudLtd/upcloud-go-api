@@ -42,7 +42,7 @@ type CreateServerRequest struct {
 	Firewall    string                  `xml:"firewall,omitempty"`
 	Hostname    string                  `xml:"hostname"`
 	IPAddresses []CreateServerIPAddress `xml:"ip_addresses>ip_address"`
-	LoginUser   string                  `xml:"login_user,omitempty"`
+	LoginUser   *LoginUser              `xml:"login_user,omitempty"`
 	// TODO: Investigate correct type and format
 	MemoryAmount     string                              `xml:"memory_amount,omitempty"`
 	PasswordDelivery string                              `xml:"password_delivery,omitempty"`
@@ -61,6 +61,13 @@ type CreateServerRequest struct {
 // RequestURL implements the Request interface
 func (r *CreateServerRequest) RequestURL() string {
 	return "/server"
+}
+
+// LoginUser represents the login_user block when creating a new server
+type LoginUser struct {
+	CreatePassword string   `xml:"create_password,omitempty"`
+	Username       string   `xml:"username,omitempty"`
+	SSHKeys        []string `xml:"ssh_keys>ssh_key,omitempty"`
 }
 
 // CreateServerIPAddress represents an IP address for a CreateServerRequest
