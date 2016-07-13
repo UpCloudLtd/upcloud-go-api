@@ -8,4 +8,4 @@ matrix:
   allow_failures:
     - go: tip
 
-script: go test ./... -v -parallel 4
+script: travis_retry go test ./... -v -parallel 4
