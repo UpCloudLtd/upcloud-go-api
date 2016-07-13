@@ -33,9 +33,6 @@ const (
 	CreateServerStorageDeviceActionCreate = "create"
 	CreateServerStorageDeviceActionClone  = "clone"
 	CreateServerStorageDeviceActionAttach = "attach"
-
-	CreateStorageDeviceTierHDD     = "hdd"
-	CreateStorageDeviceTierMaxIOPS = "maxiops"
 )
 
 // Storages represents a /storage response

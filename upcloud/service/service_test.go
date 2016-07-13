@@ -566,7 +566,7 @@ func createServer() *upcloud.ServerDetails {
 				Storage: "01000000-0000-4000-8000-000030060200",
 				Title:   "disk1",
 				Size:    30,
-				Tier:    upcloud.CreateStorageDeviceTierMaxIOPS,
+				Tier:    upcloud.StorageTierMaxIOPS,
 			},
 		},
 		IPAddresses: []request.CreateServerIPAddress{
