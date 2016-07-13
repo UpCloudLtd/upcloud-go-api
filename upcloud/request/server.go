@@ -34,15 +34,15 @@ func (r *GetServerDetailsRequest) RequestURL() string {
 type CreateServerRequest struct {
 	XMLName xml.Name `xml:"server"`
 
-	AvoidHost string `xml:"avoid_host,omitempty"`
-	BootOrder string `xml:"boot_order,omitempty"`
-	CoreNumber int `xml:"core_number,omitempty"`
+	AvoidHost  string `xml:"avoid_host,omitempty"`
+	BootOrder  string `xml:"boot_order,omitempty"`
+	CoreNumber int    `xml:"core_number,omitempty"`
 	// TODO: Convert to boolean
-	Firewall    string                  `xml:"firewall,omitempty"`
-	Hostname    string                  `xml:"hostname"`
-	IPAddresses []CreateServerIPAddress `xml:"ip_addresses>ip_address"`
-	LoginUser   *LoginUser              `xml:"login_user,omitempty"`
-	MemoryAmount     int                              `xml:"memory_amount,omitempty"`
+	Firewall         string                              `xml:"firewall,omitempty"`
+	Hostname         string                              `xml:"hostname"`
+	IPAddresses      []CreateServerIPAddress             `xml:"ip_addresses>ip_address"`
+	LoginUser        *LoginUser                          `xml:"login_user,omitempty"`
+	MemoryAmount     int                                 `xml:"memory_amount,omitempty"`
 	PasswordDelivery string                              `xml:"password_delivery,omitempty"`
 	Plan             string                              `xml:"plan,omitempty"`
 	StorageDevices   []upcloud.CreateServerStorageDevice `xml:"storage_devices>storage_device"`
