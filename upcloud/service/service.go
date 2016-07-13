@@ -153,7 +153,7 @@ func (s *Service) CreateServer(r *request.CreateServerRequest) (*upcloud.ServerD
 // favorably, the new server details are returned. The method will give up after the specified timeout
 func (s *Service) WaitForServerState(r *request.WaitForServerStateRequest) (*upcloud.ServerDetails, error) {
 	attempts := 0
-	sleepDuration := time.Second * 5
+	sleepDuration := time.Second * 1
 
 	for {
 		// Always wait for one attempt period before querying the state the first time. Newly created servers
@@ -166,6 +166,11 @@ func (s *Service) WaitForServerState(r *request.WaitForServerStateRequest) (*upc
 			UUID: r.UUID,
 		})
 
+		if r.UndesiredState != "" {
+			fmt.Println(fmt.Sprintf("SERVER STATE NOW %s, ATTEMPT %d", serverDetails.State, attempts))	
+		}
+		
+
 		if err != nil {
 			return nil, err
 		}
@@ -174,6 +179,7 @@ func (s *Service) WaitForServerState(r *request.WaitForServerStateRequest) (*upc
 		if r.DesiredState != "" && serverDetails.State == r.DesiredState {
 			return serverDetails, nil
 		} else if r.UndesiredState != "" && serverDetails.State != r.UndesiredState {
+			fmt.Println(fmt.Sprintf("UNDESIRED STATE %s, SERVER STATE %s", r.UndesiredState, serverDetails.State))
 			return serverDetails, nil
 		}
 
