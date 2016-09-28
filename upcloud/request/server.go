@@ -4,6 +4,7 @@ import (
 	"encoding/xml"
 	"fmt"
 	"github.com/jalle19/upcloud-go-sdk/upcloud"
+	"strings"
 	"time"
 )
 
@@ -189,4 +190,26 @@ type DeleteServerRequest struct {
 // RequestURL implements the Request interface
 func (r *DeleteServerRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s", r.UUID)
+}
+
+// TagServerRequest represents a request to tag a server with one or more tags
+type TagServerRequest struct {
+	UUID string
+	Tags []string
+}
+
+// RequestURL implements the Request interface
+func (r *TagServerRequest) RequestURL() string {
+	return fmt.Sprintf("/server/%s/tag/%s", r.UUID, strings.Join(r.Tags, ","))
+}
+
+// UntagServerRequest represents a request to remove one or more tags from a server
+type UntagServerRequest struct {
+	UUID string
+	Tags []string
+}
+
+// RequestURL implements the Request interface
+func (r *UntagServerRequest) RequestURL() string {
+	return fmt.Sprintf("/server/%s/untag/%s", r.UUID, strings.Join(r.Tags, ","))
 }

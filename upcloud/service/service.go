@@ -167,9 +167,8 @@ func (s *Service) WaitForServerState(r *request.WaitForServerStateRequest) (*upc
 		})
 
 		if r.UndesiredState != "" {
-			fmt.Println(fmt.Sprintf("SERVER STATE NOW %s, ATTEMPT %d", serverDetails.State, attempts))	
+			fmt.Println(fmt.Sprintf("SERVER STATE NOW %s, ATTEMPT %d", serverDetails.State, attempts))
 		}
-		
 
 		if err != nil {
 			return nil, err
@@ -260,6 +259,75 @@ func (s *Service) ModifyServer(r *request.ModifyServerRequest) (*upcloud.ServerD
 
 // DeleteServer deletes the specified server
 func (s *Service) DeleteServer(r *request.DeleteServerRequest) error {
+	err := s.client.PerformDeleteRequest(s.client.CreateRequestUrl(r.RequestURL()))
+
+	if err != nil {
+		return parseServiceError(err)
+	}
+
+	return nil
+}
+
+// TagServer tags a server with with one or more tags
+func (s *Service) TagServer(r *request.TagServerRequest) (*upcloud.ServerDetails, error) {
+	serverDetails := upcloud.ServerDetails{}
+	response, err := s.client.PerformPostRequest(s.client.CreateRequestUrl(r.RequestURL()), nil)
+
+	if err != nil {
+		return nil, parseServiceError(err)
+	}
+
+	xml.Unmarshal(response, &serverDetails)
+
+	return &serverDetails, nil
+}
+
+// UntagServer removes one or more tags from a server
+func (s *Service) UntagServer(r *request.UntagServerRequest) (*upcloud.ServerDetails, error) {
+	serverDetails := upcloud.ServerDetails{}
+	response, err := s.client.PerformPostRequest(s.client.CreateRequestUrl(r.RequestURL()), nil)
+
+	if err != nil {
+		return nil, parseServiceError(err)
+	}
+
+	xml.Unmarshal(response, &serverDetails)
+
+	return &serverDetails, nil
+}
+
+// CreateTag creates a new tag, optionally assigning it to one or more servers at the same time
+func (s *Service) CreateTag(r *request.CreateTagRequest) (*upcloud.Tag, error) {
+	tagDetails := upcloud.Tag{}
+	requestBody, _ := xml.Marshal(r)
+	response, err := s.client.PerformPostRequest(s.client.CreateRequestUrl(r.RequestURL()), requestBody)
+
+	if err != nil {
+		return nil, parseServiceError(err)
+	}
+
+	xml.Unmarshal(response, &tagDetails)
+
+	return &tagDetails, nil
+}
+
+// ModifyTag modifies a tag (e.g. renaming it)
+func (s *Service) ModifyTag(r *request.ModifyTagRequest) (*upcloud.Tag, error) {
+	tagDetails := upcloud.Tag{}
+	requestBody, _ := xml.Marshal(r)
+	response, err := s.client.PerformPutRequest(s.client.CreateRequestUrl(r.RequestURL()), requestBody)
+
+	if err != nil {
+		return nil, parseServiceError(err)
+	}
+
+	xml.Unmarshal(response, &tagDetails)
+
+	return &tagDetails, nil
+}
+
+// DeleteTag deletes the specified tag
+func (s *Service) DeleteTag(r *request.DeleteTagRequest) error {
 	err := s.client.PerformDeleteRequest(s.client.CreateRequestUrl(r.RequestURL()))
 
 	if err != nil {

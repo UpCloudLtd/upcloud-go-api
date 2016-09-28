@@ -126,3 +126,52 @@ func TestDeleteServerRequest(t *testing.T) {
 
 	assert.Equal(t, "/server/foo", request.RequestURL())
 }
+
+// TestTagServerRequest tests that TestTagServer behaves correctly
+func TestTagServerRequest(t *testing.T) {
+	// Test with multiple tags
+	request := TagServerRequest{
+		UUID: "foo",
+		Tags: []string{
+			"tag1",
+			"tag2",
+			"tag with spaces",
+		},
+	}
+
+	assert.Equal(t, "/server/foo/tag/tag1,tag2,tag with spaces", request.RequestURL())
+
+	// Test with single tag
+	request = TagServerRequest{
+		UUID: "foo",
+		Tags: []string{
+			"tag1",
+		},
+	}
+
+	assert.Equal(t, "/server/foo/tag/tag1", request.RequestURL())
+}
+
+func TestUntagServerRequest(t *testing.T) {
+	// Test with multiple tags
+	request := UntagServerRequest{
+		UUID: "foo",
+		Tags: []string{
+			"tag1",
+			"tag2",
+			"tag with spaces",
+		},
+	}
+
+	assert.Equal(t, "/server/foo/untag/tag1,tag2,tag with spaces", request.RequestURL())
+
+	// Test with single tag
+	request = UntagServerRequest{
+		UUID: "foo",
+		Tags: []string{
+			"tag1",
+		},
+	}
+
+	assert.Equal(t, "/server/foo/untag/tag1", request.RequestURL())
+}

@@ -85,6 +85,10 @@ func teardown() {
 		log.Printf("Deleting the storage with UUID %s ...", storage.UUID)
 		deleteStorage(storage.UUID)
 	}
+
+	// Delete all tags
+	log.Print("Deleting all tags")
+	deleteAllTags()
 }
 
 // TestGetAccount tests that the GetAccount() method returns proper data
@@ -554,6 +558,88 @@ func TestFirewallRules(t *testing.T) {
 	t.Log("Firewall rule #1 deleted")
 }
 
+// TestTagging tests that all tagging-related functionality works correctly. It performs the following actions:
+//   - creates a server
+//   - creates three tags
+//   - assigns the first tag to the server
+//   - renames the second tag
+//   - deletes the third tag
+//   - untags the first tag from the server
+func TestTagging(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode")
+	}
+	t.Parallel()
+
+	// Create the server
+	serverDetails := createServer()
+	t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
+
+	// Remove all existing tags
+	t.Log("Deleting any existing tags ...")
+	deleteAllTags()
+
+	// Create three tags
+	tags := []string{
+		"tag1",
+		"tag2",
+		"tag3",
+	}
+
+	for _, tag := range tags {
+		t.Logf("Creating tag %s", tag)
+		tagDetails, err := svc.CreateTag(&request.CreateTagRequest{
+			Tag: upcloud.Tag{
+				Name: tag,
+			},
+		})
+
+		handleError(err)
+		t.Logf("Tag %s created", tagDetails.Name)
+	}
+
+	// Assign the first tag to the server
+	serverDetails, err := svc.TagServer(&request.TagServerRequest{
+		UUID: serverDetails.UUID,
+		Tags: []string{
+			"tag1",
+		},
+	})
+
+	handleError(err)
+	t.Logf("Server %s is now tagged with tag %s", serverDetails.Title, "tag1")
+
+	// Rename the second tag
+	tagDetails, err := svc.ModifyTag(&request.ModifyTagRequest{
+		Name: "tag2",
+		Tag: upcloud.Tag{
+			Name: "tag2_renamed",
+		},
+	})
+
+	handleError(err)
+	t.Logf("Tag #2 renamed to %s", tagDetails.Name)
+
+	// Delete the third tag
+	err = svc.DeleteTag(&request.DeleteTagRequest{
+		Name: "tag3",
+	})
+
+	handleError(err)
+	t.Log("Tag #3 deleted")
+
+	// Untag the server
+	serverDetails, err = svc.UntagServer(&request.UntagServerRequest{
+		UUID: serverDetails.UUID,
+		Tags: []string{
+			"tag1",
+		},
+	})
+
+	handleError(err)
+	t.Logf("Server %s is now untagged", serverDetails.Title)
+}
+
 // Creates a server and returns the details about it, panic if creation fails
 func createServer() *upcloud.ServerDetails {
 	createServerRequest := request.CreateServerRequest{
@@ -662,6 +748,20 @@ func deleteStorage(uuid string) {
 	})
 
 	handleError(err)
+}
+
+// deleteAllTags deletes all existing tags
+func deleteAllTags() {
+	tags, err := svc.GetTags()
+	handleError(err)
+
+	for _, tagDetails := range tags.Tags {
+		err = svc.DeleteTag(&request.DeleteTagRequest{
+			Name: tagDetails.Name,
+		})
+
+		handleError(err)
+	}
 }
 
 // Waits for the specified storage to come online
