@@ -8,6 +8,6 @@ type Tags struct {
 // Tag represents a server tag
 type Tag struct {
 	Name        string   `xml:"name"`
-	Description string   `xml:"description"`
+	Description string   `xml:"description,omitempty"`
 	Servers     []string `xml:"servers>server"`
 }
