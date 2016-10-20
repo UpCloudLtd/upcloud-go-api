@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"reflect"
+	"strings"
 	"testing"
 	"time"
 )
@@ -145,7 +146,7 @@ func TestCreateModifyDeleteServer(t *testing.T) {
 	t.Parallel()
 
 	// Create a server
-	serverDetails := createServer()
+	serverDetails := createServer("TestCreateModifyDeleteServer")
 	t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 	// Modify the server
@@ -227,7 +228,7 @@ func TestAttachDetachStorage(t *testing.T) {
 	t.Parallel()
 
 	// Create a server
-	serverDetails := createServer()
+	serverDetails := createServer("TestAttachDetachStorage")
 	t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 	// Stop the server
@@ -307,7 +308,7 @@ func TestTemplatizeServerStorage(t *testing.T) {
 	t.Parallel()
 
 	// Create server
-	serverDetails := createServer()
+	serverDetails := createServer("TestTemplatizeServerStorage")
 	t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 	// Stop the server
@@ -366,7 +367,7 @@ func TestLoadEjectCDROM(t *testing.T) {
 	t.Parallel()
 
 	// Create the server
-	serverDetails := createServer()
+	serverDetails := createServer("TestLoadEjectCDROM")
 	t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 	// Stop the server
@@ -420,7 +421,7 @@ func TestLoadEjectCDROM(t *testing.T) {
 		Timeout:        time.Minute * 5,
 	})
 	handleError(err)
-	
+
 	// Stop the server (apparently the CD-ROM cannot be ejected while it's running)
 	t.Logf("Waiting for the server with UUID %s to stop ...", serverDetails.UUID)
 	stopServer(serverDetails.UUID)
@@ -476,7 +477,7 @@ func TestAttachModifyReleaseIPAddress(t *testing.T) {
 	t.Parallel()
 
 	// Create the server
-	serverDetails := createServer()
+	serverDetails := createServer("TestAttachModifyReleaseIPAddress")
 	t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 	// Stop the server
@@ -526,7 +527,7 @@ func TestFirewallRules(t *testing.T) {
 	t.Parallel()
 
 	// Create the server
-	serverDetails := createServer()
+	serverDetails := createServer("TestFirewallRules")
 	t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 	// Create firewall rule
@@ -578,7 +579,7 @@ func TestTagging(t *testing.T) {
 	t.Parallel()
 
 	// Create the server
-	serverDetails := createServer()
+	serverDetails := createServer("TestTagging")
 	t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 	// Remove all existing tags
@@ -648,11 +649,14 @@ func TestTagging(t *testing.T) {
 }
 
 // Creates a server and returns the details about it, panic if creation fails
-func createServer() *upcloud.ServerDetails {
+func createServer(name string) *upcloud.ServerDetails {
+	title := "uploud-go-sdk-integration-test-" + name
+	hostname := strings.ToLower(title + ".example.com")
+
 	createServerRequest := request.CreateServerRequest{
 		Zone:             "fi-hel1",
-		Title:            "Integration test server #1",
-		Hostname:         "debian.example.com",
+		Title:            title,
+		Hostname:         hostname,
 		PasswordDelivery: request.PasswordDeliveryNone,
 		StorageDevices: []upcloud.CreateServerStorageDevice{
 			{
