@@ -4,4 +4,4 @@ go:
   - 1.6
   - 1.7
 
-script: travis_retry go test ./... -v -parallel 4
+script: travis_retry go test ./... -v -parallel 8
