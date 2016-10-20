@@ -9,6 +9,9 @@ const (
 
 	VideoModelVGA    = "vga"
 	VideoModelCirrus = "cirrus"
+
+	StopTypeSoft = "soft"
+	StopTypeHard = "hard"
 )
 
 // ServerConfigurations represents a /server_size response

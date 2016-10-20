@@ -702,11 +702,12 @@ func createServer(name string) *upcloud.ServerDetails {
 	return serverDetails
 }
 
-// Stops the specified server
+// Stops the specified server (forcibly)
 func stopServer(uuid string) {
 	serverDetails, err := svc.StopServer(&request.StopServerRequest{
-		UUID:    uuid,
-		Timeout: time.Minute * 5,
+		UUID:     uuid,
+		Timeout:  time.Minute * 5,
+		StopType: request.ServerStopTypeHard,
 	})
 
 	handleError(err)
