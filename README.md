@@ -195,8 +195,8 @@ it returns. Import the collection into Postman, then create an environment conta
 To be able to run the test suite you'll need to export the following environment variables with their corresponding 
 values:
 
-* `UPCLOUD_GO_SDK_TEST_USER`
-* `UPCLOUD_GO_SDK_TEST_PASSWORD`
+* `UPCLOUD_GO_SDK_TEST_USER` (the API username)
+* `UPCLOUD_GO_SDK_TEST_PASSWORD` (the API password)
 * `UPCLOUD_GO_SDK_TEST_DELETE_RESOURCES` (either `yes` or `no`)
 
 To run the test suite, run `go test ./... -v -parallel 4`. If `UPCLOUD_GO_SDK_TEST_DELETE_RESOURCES` is set to `yes`, 
