@@ -40,6 +40,7 @@ func setup() {
 
 // Tears down the test environment by removing all resources
 func teardown() {
+	log.Print("Deleting all servers ...")
 	servers, err := svc.GetServers()
 	handleError(err)
 
@@ -65,6 +66,7 @@ func teardown() {
 	}
 
 	// Delete all private storage devices
+	log.Print("Deleting all storage devices ...")
 	storages, err := svc.GetStorages(&request.GetStoragesRequest{
 		Access: upcloud.StorageAccessPrivate,
 	})
@@ -87,7 +89,7 @@ func teardown() {
 	}
 
 	// Delete all tags
-	log.Print("Deleting all tags")
+	log.Print("Deleting all tags ...")
 	deleteAllTags()
 }
 
@@ -622,7 +624,7 @@ func TestTagging(t *testing.T) {
 	})
 
 	handleError(err)
-	t.Logf("Tag #2 renamed to %s", tagDetails.Name)
+	t.Logf("Tag tag2 renamed to %s", tagDetails.Name)
 
 	// Delete the third tag
 	err = svc.DeleteTag(&request.DeleteTagRequest{
@@ -630,9 +632,10 @@ func TestTagging(t *testing.T) {
 	})
 
 	handleError(err)
-	t.Log("Tag #3 deleted")
+	t.Log("Tag tag3 deleted")
 
 	// Untag the server
+	t.Logf("Removing tag %s from server %s", "tag1", serverDetails.UUID)
 	serverDetails, err = svc.UntagServer(&request.UntagServerRequest{
 		UUID: serverDetails.UUID,
 		Tags: []string{
