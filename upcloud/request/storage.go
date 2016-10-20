@@ -3,7 +3,7 @@ package request
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/jalle19/upcloud-go-sdk/upcloud"
+	"github.com/Jalle19/upcloud-go-sdk/upcloud"
 	"time"
 )
 

@@ -1,9 +1,9 @@
 package service
 
 import (
-	"github.com/jalle19/upcloud-go-sdk/upcloud"
-	"github.com/jalle19/upcloud-go-sdk/upcloud/client"
-	"github.com/jalle19/upcloud-go-sdk/upcloud/request"
+	"github.com/Jalle19/upcloud-go-sdk/upcloud"
+	"github.com/Jalle19/upcloud-go-sdk/upcloud/client"
+	"github.com/Jalle19/upcloud-go-sdk/upcloud/request"
 	"log"
 	"os"
 	"reflect"
