@@ -353,11 +353,11 @@ func TestTemplatizeServerStorage(t *testing.T) {
 // - attaches a CD-ROM device
 // - starts the server
 // - loads a CD-ROM
-// - ejects the CD-ROM
 // - stops the server
+// - ejects the CD-ROM
 // - deletes the server
 func TestLoadEjectCDROM(t *testing.T) {
-	t.Skip("Skipping test because the API returns a lot of GENERAL_FAILURE and CDROM_EJECT_FAILED errors")
+	//t.Skip("Skipping test because the API returns a lot of GENERAL_FAILURE and CDROM_EJECT_FAILED errors")
 	if testing.Short() {
 		t.Skip("Skipping test in short mode")
 	}
@@ -410,7 +410,7 @@ func TestLoadEjectCDROM(t *testing.T) {
 	handleError(err)
 	t.Log("CD-ROM is now loaded")
 
-	// Ejecting the CD-ROM is not possible while the server is in maintenance state, so wait until it exits it
+	// Wait for the server to leave maintenance state before stopping it
 	t.Logf("Waiting for server with UUID %s to leave maintenance state ...", serverDetails.UUID)
 	serverDetails, err = svc.WaitForServerState(&request.WaitForServerStateRequest{
 		UUID:           serverDetails.UUID,
@@ -418,6 +418,10 @@ func TestLoadEjectCDROM(t *testing.T) {
 		Timeout:        time.Minute * 5,
 	})
 	handleError(err)
+	
+	// Stop the server (apparently the CD-ROM cannot be ejected while it's running)
+	t.Logf("Waiting for the server with UUID %s to stop ...", serverDetails.UUID)
+	stopServer(serverDetails.UUID)
 
 	// Eject the CD-ROM
 	t.Log("Ejecting CD-ROM from CD-ROM device")
