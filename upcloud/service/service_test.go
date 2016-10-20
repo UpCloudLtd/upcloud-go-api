@@ -172,7 +172,7 @@ func TestCreateModifyDeleteServer(t *testing.T) {
 	t.Log("Server is now stopped")
 
 	// Delete the server
-	t.Log("Deleting the server ...")
+	t.Logf("Deleting the server with UUID %s...", serverDetails.UUID)
 	deleteServer(serverDetails.UUID)
 	t.Log("Server is now deleted")
 }
