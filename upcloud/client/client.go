@@ -34,30 +34,14 @@ type Client struct {
 func New(userName, password string) *Client {
 	client := Client{}
 
-	client.SetUserName(userName)
-	client.SetPassword(password)
+	client.userName = userName
+	client.password = password
 	client.httpClient = cleanhttp.DefaultClient()
 	client.SetTimeout(time.Second * DEFAULT_TIMEOUT)
-
 	client.SetAPIVersion(DEFAULT_API_VERSION)
 	client.SetAPIBaseUrl(DEFAULT_API_BASEURL)
 
 	return &client
-}
-
-// GetUserName returns the user name the client uses
-func (c *Client) GetUserName() string {
-	return c.userName
-}
-
-// SetUserName sets the client user to the specified user
-func (c *Client) SetUserName(userName string) {
-	c.userName = userName
-}
-
-// SetPassword sets the client password to the specified password
-func (c *Client) SetPassword(password string) {
-	c.password = password
 }
 
 // SetTimeout sets the client timeout to the specified amount of seconds

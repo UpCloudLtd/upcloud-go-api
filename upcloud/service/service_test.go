@@ -97,10 +97,11 @@ func teardown() {
 // TestGetAccount tests that the GetAccount() method returns proper data
 func TestGetAccount(t *testing.T) {
 	account, err := svc.GetAccount()
+	username, _ := getCredentials()
 	handleError(err)
 
-	if account.UserName != svc.client.GetUserName() {
-		t.Errorf("TestGetAccoun expected %s, got %s", svc.client.GetUserName(), account.UserName)
+	if account.UserName != username {
+		t.Errorf("TestGetAccount expected %s, got %s", username, account.UserName)
 	}
 }
 
