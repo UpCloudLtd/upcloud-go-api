@@ -441,7 +441,7 @@ func TestLoadEjectCDROM(t *testing.T) {
 // - creates a storage device
 // - creates a backup of the storage device
 //
-// It's not feasible to test backup restoration due to time contraints
+// It's not feasible to test backup restoration due to time constraints
 func TestCreateBackup(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping test in short mode")
