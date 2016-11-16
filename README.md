@@ -40,6 +40,24 @@ c.SetTimeout(time.Second * 30)
 svc := service.New(c)
 ```
 
+### Validating credentials
+
+The easiest way to check whether the client credentials are correct is to issue a call to `GetAccount()` (since it 
+doesn't require any parameters).
+
+```go
+username := "completely"
+password := "invalid"
+
+svc := service.New(client.New(username, password))
+
+_, err := svc.GetAccount()
+
+if err != nil {
+	panic("Invalid credentials")
+}
+```
+
 The rest of these examples assume you already have a service object configured and named `svc`.
 
 ### Retrieving a list of servers
