@@ -58,6 +58,37 @@ if err != nil {
 }
 ```
 
+### Error handling
+
+All `Service` methods return a result and an error object. You can differentiate between generic connection errors 
+(like the API not being reachable) and service errors, which are errors returned in the response body by the API. This 
+is useful if you want to gracefully recover from certain types of errors.
+
+```go
+username := "completely"
+password := "invalid"
+
+svc := service.New(client.New(username, password))
+
+_, err := svc.GetAccount()
+
+// Handle errors in general
+if (err != nil) {
+	// Handle service errors specifically
+	if serviceError, ok := err.(*upcloud.Error); ok {
+		fmt.Println(serviceError.ErrorCode)
+		fmt.Println(serviceError.ErrorMessage)
+	}
+}
+````
+
+This snippet would print the following:
+
+```
+AUTHENTICATION_FAILED
+Authentication failed using the given username and password.
+```
+
 The rest of these examples assume you already have a service object configured and named `svc`.
 
 ### Retrieving a list of servers
