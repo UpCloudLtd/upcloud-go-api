@@ -38,8 +38,9 @@ func New(userName, password string) *Client {
 	client.password = password
 	client.httpClient = cleanhttp.DefaultClient()
 	client.SetTimeout(time.Second * DEFAULT_TIMEOUT)
-	client.SetAPIVersion(DEFAULT_API_VERSION)
-	client.SetAPIBaseUrl(DEFAULT_API_BASEURL)
+
+	client.apiVersion = DEFAULT_API_VERSION
+	client.apiBaseUrl = DEFAULT_API_BASEURL
 
 	return &client
 }
@@ -47,16 +48,6 @@ func New(userName, password string) *Client {
 // SetTimeout sets the client timeout to the specified amount of seconds
 func (c *Client) SetTimeout(timeout time.Duration) {
 	c.httpClient.Timeout = timeout
-}
-
-// SetAPIVersion tells the client which API version to use
-func (c *Client) SetAPIVersion(version string) {
-	c.apiVersion = version
-}
-
-// SetAPIBaseUrl tells the client which API URL to use
-func (c *Client) SetAPIBaseUrl(url string) {
-	c.apiBaseUrl = url
 }
 
 // CreateRequestUrl creates and returns a complete request URL for the specified API location

@@ -105,7 +105,7 @@ func TestGetAccount(t *testing.T) {
 	}
 }
 
-// TestErrorHandling performs various type checking on errors returned from the service and the underlying client
+// TestErrorHandling checks that the correct error type is returned from service methods
 func TestErrorHandling(t *testing.T) {
 	// Perform a bogus request that will certainly fail
 	_, err := svc.StartServer(&request.StartServerRequest{
@@ -115,19 +115,6 @@ func TestErrorHandling(t *testing.T) {
 	// Check that the correct error type is returned
 	expectedErrorType := "*upcloud.Error"
 	actualErrorType := reflect.TypeOf(err).String()
-
-	if actualErrorType != expectedErrorType {
-		t.Errorf("TestErrorHandling expected %s, got %s", expectedErrorType, actualErrorType)
-	}
-
-	// Create a service where the client is misconfigured
-	brokenClient := client.New("foo", "bar")
-	brokenClient.SetAPIBaseUrl("???¤#Whttp://example.com")
-	brokenSvc := New(brokenClient)
-
-	_, err = brokenSvc.GetAccount()
-	expectedErrorType = "*url.Error"
-	actualErrorType = reflect.TypeOf(err).String()
 
 	if actualErrorType != expectedErrorType {
 		t.Errorf("TestErrorHandling expected %s, got %s", expectedErrorType, actualErrorType)
