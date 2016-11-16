@@ -1,5 +1,10 @@
 # Change log
 
+## 1.1.0
+
+* improve documentation
+* remove ability to override the API base URL and version
+
 ## 1.0.2
 
 * remove credentials related getters and setters from `Client`
