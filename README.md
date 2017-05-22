@@ -1,36 +1,35 @@
-# upcloud-go-sdk
+# UpCloud Go SDK
 
-[![Build Status](https://travis-ci.org/Jalle19/upcloud-go-sdk.svg?branch=master)](https://travis-ci.org/Jalle19/upcloud-go-sdk)
-[![Go Report Card](https://goreportcard.com/badge/github.com/Jalle19/upcloud-go-sdk)](https://goreportcard.com/report/github.com/Jalle19/upcloud-go-sdk)
+[![Build Status](https://travis-ci.org/UpCloudLtd/upcloud-go-sdk.svg?branch=master)](https://travis-ci.org/UpCloudLtd/upcloud-go-sdk)
+[![Go Report Card](https://goreportcard.com/badge/github.com/UpCloudLtd/upcloud-go-sdk)](https://goreportcard.com/report/github.com/UpCloudLtd/upcloud-go-sdk)
 [![GoDoc](https://godoc.org/github.com/Jalle19/upcloud-go-sdk?status.svg)](https://godoc.org/github.com/Jalle19/upcloud-go-sdk)
 
-This is an SDK for interfacing with UpCloud's API using the Go programming language. It is loosely based on similar 
-SDKs such as https://github.com/aws/aws-sdk-go.
+This is the SDK for interfacing with UpCloud's API using the Go programming language. The features in the development kit allow easy application creation and simplify UpCloud API integration when using Go.
 
 ## Installation and requirements
 
-You'll need Go 1.6 or higher to use the SDK. You can use the following command to retrieve the SDK:
+You'll need Go 1.7 or higher to use the SDK. You can use the following command to retrieve the SDK:
 
 ```
-go get github.com/Jalle19/upcloud-go-sdk
+go get github.com/UpCloudLtd/upcloud-go-sdk
 ```
 
 ## Usage
 
-The general pattern for using the SDK goes like this:
+The general usage of the SDK adheres to the following pattern:
 
-* Create a `client.Client`
-* Create a `service.Service` by passing the newly created client object to it
-* Interface with the API using the various methods of the service object. Methods that take parameters wrap them in 
-request objects.
+* Authenticate by creating a `client.Client`
+* Create a `service.Service` by passing the newly created `client` object to it
+* Interface with the API using the various methods of the `service` object. Methods that take parameters wrap them in request objects.
 
-The examples here only deal with how to use the SDK itself. For information on how to use the API in general, please 
-consult the [official documentation](https://www.upcloud.com/api/).
+We recommend setting up a separate subaccount for API usage to allow better access control and security. You can find out more about creating subaccounts at the following support article for [Server Tags and Group Accounts](https://www.upcloud.com/support/server-tags-and-group-accounts/). We strongly recommend limiting the connections to a specific address or address range for security purposes.
+
+The examples here only deal with how to use the SDK itself. For information on how to use the API in general, please consult the [UpCloud API documentation](https://www.upcloud.com/api/).
 
 ### Creating the client and the service
 
 ```go
-// Upcloud doesn't use dedicated API keys, instead you pass your account login credentials to the client
+// Authenticate by passing your account login credentials to the client
 c := client.New(user, password)
 
 // It is generally a good idea to override the default timeout of the underlying HTTP client since some requests block for longer periods of time
@@ -42,8 +41,7 @@ svc := service.New(c)
 
 ### Validating credentials
 
-The easiest way to check whether the client credentials are correct is to issue a call to `GetAccount()` (since it 
-doesn't require any parameters).
+The easiest way to check whether the client credentials are correct is to issue a call to `GetAccount()`.
 
 ```go
 username := "completely"
@@ -60,9 +58,7 @@ if err != nil {
 
 ### Error handling
 
-All `Service` methods return a result and an error object. You can differentiate between generic connection errors 
-(like the API not being reachable) and service errors, which are errors returned in the response body by the API. This 
-is useful if you want to gracefully recover from certain types of errors.
+All `Service` methods return a result and an error object. You can differentiate between generic connection errors (like the API not being reachable) and service errors, which are errors returned in the response body by the API. This is useful for gracefully recovering from certain types of errors.
 
 ```go
 username := "completely"
@@ -93,6 +89,8 @@ The rest of these examples assume you already have a service object configured a
 
 ### Retrieving a list of servers
 
+The following example will retrieve a list of servers the account has access to.
+
 ```go
 // Retrieve the list of servers
 servers, err := svc.GetServers()
@@ -109,8 +107,10 @@ for _, server := range servers.Servers {
 
 ### Creating a new server
 
+Since the request for creating a new server is asynchronous, the server will report its status as "maintenance" until the deployment has been fully completed.
+
 ```go
-// Create the server. The state will be "maintenance" since the request is asynchronous
+// Create the server
 serverDetails, err := svc.CreateServer(&request.CreateServerRequest{
 	Zone:             "fi-hel1",
 	Title:            "My new server",
@@ -163,8 +163,7 @@ fmt.Println("Server is now started")
 
 ### Templatizing a server's storage device
 
-In this example we assume that there is a server represented by the variable `serverDetails` and that the server state 
-is `stopped`. We also assume that we want to templatize the first storage device of the server only.
+In this example, we assume that there is a server represented by the variable `serverDetails` and that the server state is `stopped`. The next piece of code allows you to templatize the first storage device of the server.
 
 ```go
 // Loop through the storage devices
@@ -189,8 +188,7 @@ for i, storage := range serverDetails.StorageDevices {
 
 ### Create a manual backup
 
-In this example, we assume that there is a storage device represented by `storageDetails` and that if it is attached 
-to any server, the server is stopped.
+In this example, we assume that there is a storage device represented by `storageDetails` and that if it is attached to any server, the server is stopped.
 
 ```go
 backupDetails, err := svc.CreateBackup(&request.CreateBackupRequest{
@@ -207,7 +205,7 @@ fmt.Println(fmt.Sprintf("Backup of %s created as %s", storageDetails.UUID, backu
 
 ### Create a new firewall rule
 
-In this example we assume that there is a server represented by the variable `serverDetails`.
+In this example, we assume that there is a server represented by the variable `serverDetails`.
 
 ```go
 firewallRule, err := svc.CreateFirewallRule(&request.CreateFirewallRuleRequest{
