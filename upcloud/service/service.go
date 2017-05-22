@@ -3,9 +3,9 @@ package service
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/Jalle19/upcloud-go-sdk/upcloud"
-	"github.com/Jalle19/upcloud-go-sdk/upcloud/client"
-	"github.com/Jalle19/upcloud-go-sdk/upcloud/request"
+	"github.com/UpCloudLtd/upcloud-go-sdk/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-sdk/upcloud/client"
+	"github.com/UpCloudLtd/upcloud-go-sdk/upcloud/request"
 	"time"
 )
 

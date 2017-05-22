@@ -2,7 +2,7 @@ package request
 
 import (
 	"encoding/xml"
-	"github.com/Jalle19/upcloud-go-sdk/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-sdk/upcloud"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"

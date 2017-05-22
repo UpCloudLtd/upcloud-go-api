@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/UpCloudLtd/upcloud-go-sdk.svg?branch=master)](https://travis-ci.org/UpCloudLtd/upcloud-go-sdk)
 [![Go Report Card](https://goreportcard.com/badge/github.com/UpCloudLtd/upcloud-go-sdk)](https://goreportcard.com/report/github.com/UpCloudLtd/upcloud-go-sdk)
-[![GoDoc](https://godoc.org/github.com/Jalle19/upcloud-go-sdk?status.svg)](https://godoc.org/github.com/Jalle19/upcloud-go-sdk)
+[![GoDoc](https://godoc.org/github.com/UpCloudLtd/upcloud-go-sdk?status.svg)](https://godoc.org/github.com/UpCloudLtd/upcloud-go-sdk)
 
 This is the SDK for interfacing with UpCloud's API using the Go programming language. The features in the development kit allow easy application creation and simplify UpCloud API integration when using Go.
 
