@@ -3,7 +3,7 @@ package request
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/Jalle19/upcloud-go-sdk/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-sdk/upcloud"
 )
 
 // GetFirewallRulesRequest represents a request for retrieving the firewall rules for a specific server

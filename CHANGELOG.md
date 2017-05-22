@@ -1,5 +1,9 @@
 # Change log
 
+## 2.0.0
+
+* moved project to UpCloud's own GitHub organization
+
 ## 1.1.0
 
 * improve documentation
