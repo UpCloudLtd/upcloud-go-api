@@ -3,6 +3,7 @@
 ## 2.0.0
 
 * moved project to UpCloud's own GitHub organization
+* raise the minimum required Go version to 1.7
 
 ## 1.1.0
 
