@@ -52,7 +52,7 @@ svc := service.New(client.New(username, password))
 _, err := svc.GetAccount()
 
 if err != nil {
-    panic("Invalid credentials")
+	panic("Invalid credentials")
 }
 ```
 
@@ -70,11 +70,11 @@ _, err := svc.GetAccount()
 
 // Handle errors in general
 if (err != nil) {
-    // Handle service errors specifically
-    if serviceError, ok := err.(*upcloud.Error); ok {
-        fmt.Println(serviceError.ErrorCode)
-        fmt.Println(serviceError.ErrorMessage)
-    }
+	// Handle service errors specifically
+	if serviceError, ok := err.(*upcloud.Error); ok {
+		fmt.Println(serviceError.ErrorCode)
+		fmt.Println(serviceError.ErrorMessage)
+	}
 }
 ````
 
@@ -96,12 +96,12 @@ The following example will retrieve a list of servers the account has access to.
 servers, err := svc.GetServers()
 
 if err != nil {
-    panic(err)
+	panic(err)
 }
 
 // Print the UUID and hostname of each server
 for _, server := range servers.Servers {
-    fmt.Println(fmt.Sprintf("UUID: %s, hostname: %s", server.UUID, server.Hostname))
+	fmt.Println(fmt.Sprintf("UUID: %s, hostname: %s", server.UUID, server.Hostname))
 }
 ```
 
@@ -112,50 +112,50 @@ Since the request for creating a new server is asynchronous, the server will rep
 ```go
 // Create the server
 serverDetails, err := svc.CreateServer(&request.CreateServerRequest{
-    Zone:             "fi-hel1",
-    Title:            "My new server",
-    Hostname:         "server.example.com",
-    PasswordDelivery: request.PasswordDeliveryNone,
-    StorageDevices: []request.CreateServerStorageDevice{
-        {
-            Action:  request.CreateStorageDeviceActionClone,
-            Storage: "01000000-0000-4000-8000-000030060200",
-            Title:   "disk1",
-            Size:    30,
-            Tier:    upcloud.StorageTierMaxIOPS,
-        },
-    },
-    IPAddresses: []request.CreateServerIPAddress{
-        {
-            Access: upcloud.IPAddressAccessPrivate,
-            Family: upcloud.IPAddressFamilyIPv4,
-        },
-        {
-            Access: upcloud.IPAddressAccessPublic,
-            Family: upcloud.IPAddressFamilyIPv4,
-        },
-        {
-            Access: upcloud.IPAddressAccessPublic,
-            Family: upcloud.IPAddressFamilyIPv6,
-        },
-    },
+	Zone:             "fi-hel1",
+	Title:            "My new server",
+	Hostname:         "server.example.com",
+	PasswordDelivery: request.PasswordDeliveryNone,
+	StorageDevices: []request.CreateServerStorageDevice{
+		{
+			Action:  request.CreateStorageDeviceActionClone,
+			Storage: "01000000-0000-4000-8000-000030060200",
+			Title:   "disk1",
+			Size:    30,
+			Tier:    upcloud.StorageTierMaxIOPS,
+		},
+	},
+	IPAddresses: []request.CreateServerIPAddress{
+		{
+			Access: upcloud.IPAddressAccessPrivate,
+			Family: upcloud.IPAddressFamilyIPv4,
+		},
+		{
+			Access: upcloud.IPAddressAccessPublic,
+			Family: upcloud.IPAddressFamilyIPv4,
+		},
+		{
+			Access: upcloud.IPAddressAccessPublic,
+			Family: upcloud.IPAddressFamilyIPv6,
+		},
+	},
 })
 
 if err != nil {
-    panic(err)
+	panic(err)
 }
 
 fmt.Println(fmt.Sprintf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID))
 
 // Block for up to five minutes until the server has entered the "started" state
 err = svc.WaitForServerState(&request.WaitForServerStateRequest{
-    UUID:         serverDetails.UUID,
-    DesiredState: upcloud.ServerStateStarted,
-    Timeout:      time.Minute * 5,
+	UUID:         serverDetails.UUID,
+	DesiredState: upcloud.ServerStateStarted,
+	Timeout:      time.Minute * 5,
 })
 
 if err != nil {
-    panic(err)
+	panic(err)
 }
 
 fmt.Println("Server is now started")
@@ -168,21 +168,21 @@ In this example, we assume that there is a server represented by the variable `s
 ```go
 // Loop through the storage devices
 for i, storage := range serverDetails.StorageDevices {
-    // Find the first device
-    if i == 0 {
-        // Templatize the storage
-        storageDetails, err := svc.TemplatizeStorage(&request.TemplatizeStorageRequest{
-            UUID:  storage.UUID,
-            Title: "Templatized storage",
-        })
+	// Find the first device
+	if i == 0 {
+		// Templatize the storage
+		storageDetails, err := svc.TemplatizeStorage(&request.TemplatizeStorageRequest{
+			UUID:  storage.UUID,
+			Title: "Templatized storage",
+		})
 
-        if err != nil {
-            panic(err)
-        }
-        
-        fmt.Println(fmt.Sprintf("Storage templatized as %s", storageDetails.UUID))      
-        break
-    }
+		if err != nil {
+			panic(err)
+		}
+		
+		fmt.Println(fmt.Sprintf("Storage templatized as %s", storageDetails.UUID))		
+		break
+	}
 }
 ```
 
@@ -192,8 +192,8 @@ In this example, we assume that there is a storage device represented by `storag
 
 ```go
 backupDetails, err := svc.CreateBackup(&request.CreateBackupRequest{
-    UUID:  storageDetails.UUID,
-    Title: "Backup",
+	UUID:  storageDetails.UUID,
+	Title: "Backup",
 })
 
 if err != nil {
@@ -209,15 +209,15 @@ In this example, we assume that there is a server represented by the variable `s
 
 ```go
 firewallRule, err := svc.CreateFirewallRule(&request.CreateFirewallRuleRequest{
-    ServerUUID: serverDetails.UUID,
-    FirewallRule: upcloud.FirewallRule{
-        Direction: upcloud.FirewallRuleDirectionIn,
-        Action:    upcloud.FirewallRuleActionAccept,
-        Family:    upcloud.IPAddressFamilyIPv4,
-        Protocol:  upcloud.FirewallRuleProtocolTCP,
-        Position:  1,
-        Comment:   "Accept all TCP input on IPv4",
-    },
+	ServerUUID: serverDetails.UUID,
+	FirewallRule: upcloud.FirewallRule{
+		Direction: upcloud.FirewallRuleDirectionIn,
+		Action:    upcloud.FirewallRuleActionAccept,
+		Family:    upcloud.IPAddressFamilyIPv4,
+		Protocol:  upcloud.FirewallRuleProtocolTCP,
+		Position:  1,
+		Comment:   "Accept all TCP input on IPv4",
+	},
 })
 
 if err != nil {
