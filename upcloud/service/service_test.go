@@ -1,9 +1,9 @@
 package service
 
 import (
-	"github.com/UpCloudLtd/upcloud-go-sdk/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-sdk/upcloud/client"
-	"github.com/UpCloudLtd/upcloud-go-sdk/upcloud/request"
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud/client"
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
 	"log"
 	"os"
 	"reflect"
