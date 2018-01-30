@@ -114,7 +114,7 @@ func TestUmarshalPriceZones(t *testing.T) {
             <amount>1</amount>
             <price>0</price>
         </ipv6_address>
-        <name>fi-hel1</name>
+        <name>fi-hel2</name>
         <public_ipv4_bandwidth_in>
             <amount>1</amount>
             <price>0</price>

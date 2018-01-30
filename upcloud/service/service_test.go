@@ -274,7 +274,7 @@ func TestCloneStorage(t *testing.T) {
 	clonedStorageDetails, err := svc.CloneStorage(&request.CloneStorageRequest{
 		UUID:  storageDetails.UUID,
 		Title: "Cloned storage",
-		Zone:  "fi-hel1",
+		Zone:  "fi-hel2",
 		Tier:  upcloud.StorageTierMaxIOPS,
 	})
 
@@ -607,7 +607,7 @@ func createServer(name string) *upcloud.ServerDetails {
 	hostname := strings.ToLower(title + ".example.com")
 
 	createServerRequest := request.CreateServerRequest{
-		Zone:             "fi-hel1",
+		Zone:             "fi-hel2",
 		Title:            title,
 		Hostname:         hostname,
 		PasswordDelivery: request.PasswordDeliveryNone,
@@ -689,7 +689,7 @@ func createStorage() *upcloud.StorageDetails {
 		Tier:  upcloud.StorageTierMaxIOPS,
 		Title: "Test storage",
 		Size:  10,
-		Zone:  "fi-hel1",
+		Zone:  "fi-hel2",
 		BackupRule: &upcloud.BackupRule{
 			Interval:  upcloud.BackupRuleIntervalDaily,
 			Time:      "0430",

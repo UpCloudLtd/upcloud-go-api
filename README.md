@@ -112,7 +112,7 @@ Since the request for creating a new server is asynchronous, the server will rep
 ```go
 // Create the server
 serverDetails, err := svc.CreateServer(&request.CreateServerRequest{
-	Zone:             "fi-hel1",
+	Zone:             "fi-hel2",
 	Title:            "My new server",
 	Hostname:         "server.example.com",
 	PasswordDelivery: request.PasswordDeliveryNone,

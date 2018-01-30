@@ -15,8 +15,8 @@ func TestUnmarshalZones(t *testing.T) {
         <id>de-fra1</id>
     </zone>
     <zone>
-        <description>Helsinki #1</description>
-        <id>fi-hel1</id>
+        <description>Helsinki #2</description>
+        <id>fi-hel2</id>
     </zone>
     <zone>
         <description>London #1</description>

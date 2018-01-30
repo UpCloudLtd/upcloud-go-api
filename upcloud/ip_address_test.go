@@ -14,7 +14,7 @@ func TestUnmarshalIPAddresses(t *testing.T) {
         <access>public</access>
         <address>2a04:3540:1000:310:6069:7bff:fe96:71d1</address>
         <family>IPv6</family>
-        <ptr_record>6069-7bff-fe96-71d1.v6.fi-hel1.host.upcloud.com</ptr_record>
+        <ptr_record>6069-7bff-fe96-71d1.v6.fi-hel2.host.upcloud.com</ptr_record>
         <server>0000acd1-06aa-4453-865c-fedb3f02a6a1</server>
     </ip_address>
     <ip_address>
@@ -29,7 +29,7 @@ func TestUnmarshalIPAddresses(t *testing.T) {
         <address>94.237.32.40</address>
         <family>IPv4</family>
         <part_of_plan>yes</part_of_plan>
-        <ptr_record>94-237-32-40.fi-hel1.host.upcloud.com</ptr_record>
+        <ptr_record>94-237-32-40.fi-hel2.host.upcloud.com</ptr_record>
         <server>0000acd1-06aa-4453-865c-fedb3f02a6a1</server>
     </ip_address>
 </ip_addresses>`
@@ -43,6 +43,6 @@ func TestUnmarshalIPAddresses(t *testing.T) {
 	assert.Equal(t, IPAddressAccessPublic, firstAddress.Access)
 	assert.Equal(t, "2a04:3540:1000:310:6069:7bff:fe96:71d1", firstAddress.Address)
 	assert.Equal(t, IPAddressFamilyIPv6, firstAddress.Family)
-	assert.Equal(t, "6069-7bff-fe96-71d1.v6.fi-hel1.host.upcloud.com", firstAddress.PTRRecord)
+	assert.Equal(t, "6069-7bff-fe96-71d1.v6.fi-hel2.host.upcloud.com", firstAddress.PTRRecord)
 	assert.Equal(t, "0000acd1-06aa-4453-865c-fedb3f02a6a1", firstAddress.ServerUUID)
 }
