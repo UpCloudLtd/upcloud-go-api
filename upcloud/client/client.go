@@ -3,12 +3,12 @@ package client
 import (
 	"bytes"
 	"fmt"
-	"github.com/blang/semver"
-	"github.com/hashicorp/go-cleanhttp"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"time"
+
+	"github.com/blang/semver"
 )
 
 // Constants
@@ -48,6 +48,11 @@ func New(userName, password string) *Client {
 // SetTimeout sets the client timeout to the specified amount of seconds
 func (c *Client) SetTimeout(timeout time.Duration) {
 	c.httpClient.Timeout = timeout
+}
+
+// GetTimeout returns current timeout
+func (c *Client) GetTimeout() time.Duration {
+	return c.httpClient.Timeout
 }
 
 // CreateRequestUrl creates and returns a complete request URL for the specified API location

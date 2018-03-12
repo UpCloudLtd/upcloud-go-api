@@ -3,10 +3,11 @@ package service
 import (
 	"encoding/xml"
 	"fmt"
+	"time"
+
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud/client"
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
-	"time"
 )
 
 // Service represents the API service. The specified client is used to communicate with the API
@@ -185,11 +186,17 @@ func (s *Service) WaitForServerState(r *request.WaitForServerStateRequest) (*upc
 
 // StartServer starts the specified server
 func (s *Service) StartServer(r *request.StartServerRequest) (*upcloud.ServerDetails, error) {
+	// Save previous timeout
+	prevTimeout := s.client.GetTimeout()
+
 	// Increase the client timeout to match the request timeout
 	s.client.SetTimeout(r.Timeout)
 
 	serverDetails := upcloud.ServerDetails{}
 	response, err := s.client.PerformPostRequest(s.client.CreateRequestUrl(r.RequestURL()), nil)
+
+	// Restore previous timout
+	s.client.SetTimeout(prevTimeout)
 
 	if err != nil {
 		return nil, parseServiceError(err)
