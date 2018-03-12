@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/blang/semver"
+	"github.com/hashicorp/go-cleanhttp"
 )
 
 // Constants
