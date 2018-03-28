@@ -5,4 +5,4 @@ go:
   - 1.8
   - 1.9
 
-script: travis_wait travis_retry go test ./... -v -parallel 8 -timeout 60m
+script: travis_retry go test ./... -v -parallel 15 -timeout 60m
