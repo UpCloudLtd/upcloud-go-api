@@ -35,7 +35,7 @@ func setup() {
 	user, password := getCredentials()
 
 	c := client.New(user, password)
-	c.SetTimeout(time.Second * 30)
+	c.SetTimeout(time.Second * 120)
 	svc = New(c)
 }
 
