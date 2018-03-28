@@ -18,7 +18,7 @@ var svc *Service
 // TestMain is the main test method
 func TestMain(m *testing.M) {
 	setup()
-	retCode := m.Run()
+    retCode := m.Run()
 
 	// Optionally perform teardown
 	deleteResources := os.Getenv("UPCLOUD_GO_SDK_TEST_DELETE_RESOURCES")
@@ -35,7 +35,7 @@ func setup() {
 	user, password := getCredentials()
 
 	c := client.New(user, password)
-	c.SetTimeout(time.Second * 120)
+	c.SetTimeout(time.Second * 300)
 	svc = New(c)
 }
 
