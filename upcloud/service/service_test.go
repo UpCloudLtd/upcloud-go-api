@@ -51,7 +51,7 @@ func teardown() {
 		serverDetails, err := svc.WaitForServerState(&request.WaitForServerStateRequest{
 			UUID:           server.UUID,
 			UndesiredState: upcloud.ServerStateMaintenance,
-			Timeout:        time.Minute * 5,
+			Timeout:        time.Minute * 15,
 		})
 		handleError(err)
 
@@ -80,7 +80,7 @@ func teardown() {
 			_, err = svc.WaitForStorageState(&request.WaitForStorageStateRequest{
 				UUID:         storage.UUID,
 				DesiredState: upcloud.StorageStateOnline,
-				Timeout:      time.Minute * 5,
+				Timeout:      time.Minute * 15,
 			})
 			handleError(err)
 		}
@@ -151,7 +151,7 @@ func TestCreateModifyDeleteServer(t *testing.T) {
 	serverDetails, err = svc.WaitForServerState(&request.WaitForServerStateRequest{
 		UUID:         serverDetails.UUID,
 		DesiredState: upcloud.ServerStateStarted,
-		Timeout:      time.Minute * 5,
+		Timeout:      time.Minute * 15,
 	})
 
 	handleError(err)
@@ -647,7 +647,7 @@ func createServer(name string) *upcloud.ServerDetails {
 	serverDetails, err = svc.WaitForServerState(&request.WaitForServerStateRequest{
 		UUID:         serverDetails.UUID,
 		DesiredState: upcloud.ServerStateStarted,
-		Timeout:      time.Minute * 5,
+		Timeout:      time.Minute * 15,
 	})
 
 	handleError(err)
@@ -659,7 +659,7 @@ func createServer(name string) *upcloud.ServerDetails {
 func stopServer(uuid string) {
 	serverDetails, err := svc.StopServer(&request.StopServerRequest{
 		UUID:     uuid,
-		Timeout:  time.Minute * 5,
+		Timeout:  time.Minute * 15,
 		StopType: request.ServerStopTypeHard,
 	})
 
@@ -668,7 +668,7 @@ func stopServer(uuid string) {
 	serverDetails, err = svc.WaitForServerState(&request.WaitForServerStateRequest{
 		UUID:         serverDetails.UUID,
 		DesiredState: upcloud.ServerStateStopped,
-		Timeout:      time.Minute * 5,
+		Timeout:      time.Minute * 15,
 	})
 
 	handleError(err)
@@ -734,7 +734,7 @@ func waitForStorageOnline(uuid string) {
 	_, err := svc.WaitForStorageState(&request.WaitForStorageStateRequest{
 		UUID:         uuid,
 		DesiredState: upcloud.StorageStateOnline,
-		Timeout:      time.Minute * 5,
+		Timeout:      time.Minute * 15,
 	})
 
 	handleError(err)
