@@ -98,9 +98,9 @@ func TestUnmarshalStorageDetails(t *testing.T) {
 	assert.Equal(t, 1, storageDeviceDetails.BackupRule.Retention)
 	assert.Equal(t, "0400", storageDeviceDetails.BackupRule.Time)
 
-	assert.Equal(t, 2, len(storageDeviceDetails.Backups))
-	assert.Equal(t, "37c96670-9c02-4d5d-8f60-291d38f9a80c", storageDeviceDetails.Backups[0])
-	assert.Equal(t, "ecfda9f2-e071-4bbb-b38f-079ed26eb32a", storageDeviceDetails.Backups[1])
+	assert.Equal(t, 2, len(storageDeviceDetails.BackupUUIDs))
+	assert.Equal(t, "37c96670-9c02-4d5d-8f60-291d38f9a80c", storageDeviceDetails.BackupUUIDs[0])
+	assert.Equal(t, "ecfda9f2-e071-4bbb-b38f-079ed26eb32a", storageDeviceDetails.BackupUUIDs[1])
 
 	assert.Equal(t, 1, len(storageDeviceDetails.ServerUUIDs))
 	assert.Equal(t, "33850294-50f4-4712-8463-aeb7b42de42f", storageDeviceDetails.ServerUUIDs[0])

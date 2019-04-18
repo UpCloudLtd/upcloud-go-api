@@ -61,7 +61,7 @@ type StorageDetails struct {
 	Storage
 
 	BackupRule  *BackupRule `xml:"backup_rule"`
-	Backups     []string    `xml:"backups>backup"`
+	BackupUUIDs []string    `xml:"backups>backup"`
 	ServerUUIDs []string    `xml:"servers>server"`
 }
 
