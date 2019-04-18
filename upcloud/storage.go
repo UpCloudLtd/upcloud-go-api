@@ -4,10 +4,11 @@ import "encoding/xml"
 
 // Constants
 const (
-	StorageTypeDisk     = "disk"
-	StorageTypeCDROM    = "cdrom"
-	StorageTypeTemplate = "template"
 	StorageTypeBackup   = "backup"
+	StorageTypeCDROM    = "cdrom"
+	StorageTypeDisk     = "disk"
+	StorageTypeNormal   = "normal"
+	StorageTypeTemplate = "template"
 
 	StorageTierHDD     = "hdd"
 	StorageTierMaxIOPS = "maxiops"
@@ -59,9 +60,9 @@ type Storage struct {
 type StorageDetails struct {
 	Storage
 
-	BackupRule *BackupRule `xml:"backup_rule"`
-	// TODO: Support the <backups> field
-	ServerUUIDs []string `xml:"servers>server"`
+	BackupRule  *BackupRule `xml:"backup_rule"`
+	Backups     []string    `xml:"backups>backup"`
+	ServerUUIDs []string    `xml:"servers>server"`
 }
 
 // BackupRule represents a backup rule
