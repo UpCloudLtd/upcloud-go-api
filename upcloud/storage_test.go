@@ -54,6 +54,58 @@ func TestUnmarshalStorage(t *testing.T) {
 	assert.Equal(t, "01000000-0000-4000-8000-000010010101", firstStorage.UUID)
 }
 
+// TestUnmarshalStorageDetails tests that StorageDetails struct is unmarshaled correctly
+func TestUnmarshalStorageDetails(t *testing.T) {
+	originalXML := `<?xml version="1.0" encoding="utf-8"?>
+<storage>
+    <access>private</access>
+    <backup_rule>
+        <interval>daily</interval>
+        <retention>1</retention>
+        <time>0400</time>
+    </backup_rule>
+    <backups>
+        <backup>37c96670-9c02-4d5d-8f60-291d38f9a80c</backup>
+        <backup>ecfda9f2-e071-4bbb-b38f-079ed26eb32a</backup>
+    </backups>
+    <license>0</license>
+    <servers>
+        <server>33850294-50f4-4712-8463-aeb7b42de42f</server>
+    </servers>
+    <size>500</size>
+    <state>online</state>
+    <tier>maxiops</tier>
+    <title>Debian server (Disk 1)</title>
+    <type>normal</type>
+    <uuid>bf3da6c2-66c4-4e70-9640-5b4896aacd5c</uuid>
+    <zone>fi-hel1</zone>
+</storage>`
+	storageDeviceDetails := StorageDetails{}
+	err := xml.Unmarshal([]byte(originalXML), &storageDeviceDetails)
+
+	assert.Nil(t, err)
+	assert.Equal(t, "private", storageDeviceDetails.Access)
+	assert.Equal(t, 0.0, storageDeviceDetails.License)
+	assert.Equal(t, 500, storageDeviceDetails.Size)
+	assert.Equal(t, "online", storageDeviceDetails.State)
+	assert.Equal(t, "maxiops", storageDeviceDetails.Tier)
+	assert.Equal(t, "Debian server (Disk 1)", storageDeviceDetails.Title)
+	assert.Equal(t, StorageTypeNormal, storageDeviceDetails.Type)
+	assert.Equal(t, "bf3da6c2-66c4-4e70-9640-5b4896aacd5c", storageDeviceDetails.UUID)
+	assert.Equal(t, "fi-hel1", storageDeviceDetails.Zone)
+
+	assert.Equal(t, BackupRuleIntervalDaily, storageDeviceDetails.BackupRule.Interval)
+	assert.Equal(t, 1, storageDeviceDetails.BackupRule.Retention)
+	assert.Equal(t, "0400", storageDeviceDetails.BackupRule.Time)
+
+	assert.Equal(t, 2, len(storageDeviceDetails.BackupUUIDs))
+	assert.Equal(t, "37c96670-9c02-4d5d-8f60-291d38f9a80c", storageDeviceDetails.BackupUUIDs[0])
+	assert.Equal(t, "ecfda9f2-e071-4bbb-b38f-079ed26eb32a", storageDeviceDetails.BackupUUIDs[1])
+
+	assert.Equal(t, 1, len(storageDeviceDetails.ServerUUIDs))
+	assert.Equal(t, "33850294-50f4-4712-8463-aeb7b42de42f", storageDeviceDetails.ServerUUIDs[0])
+}
+
 // TestUnmarshalServerStorageDevice tests that ServerStorageDevice objects are properly unmarshaled
 func TestUnmarshalServerStorageDevice(t *testing.T) {
 	originalXML := `<?xml version="1.0" encoding="utf-8"?>
