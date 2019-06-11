@@ -37,7 +37,7 @@ func TestCreateStorageRequest(t *testing.T) {
 		Tier:  upcloud.StorageTierMaxIOPS,
 		Title: "Test storage",
 		Size:  10,
-		Zone:  "fi-hel1",
+		Zone:  "fi-hel2",
 		BackupRule: &upcloud.BackupRule{
 			Interval:  upcloud.BackupRuleIntervalDaily,
 			Time:      "0430",
@@ -45,7 +45,7 @@ func TestCreateStorageRequest(t *testing.T) {
 		},
 	}
 
-	expectedXML := "<storage><size>10</size><tier>maxiops</tier><title>Test storage</title><zone>fi-hel1</zone><backup_rule><interval>daily</interval><time>0430</time><retention>30</retention></backup_rule></storage>"
+	expectedXML := "<storage><size>10</size><tier>maxiops</tier><title>Test storage</title><zone>fi-hel2</zone><backup_rule><interval>daily</interval><time>0430</time><retention>30</retention></backup_rule></storage>"
 	actualXML, err := xml.Marshal(&request)
 	assert.Nil(t, err)
 	assert.Equal(t, expectedXML, string(actualXML))
@@ -110,11 +110,11 @@ func TestCloneStorageRequest(t *testing.T) {
 	request := CloneStorageRequest{
 		UUID:  "foo",
 		Title: "Cloned storage",
-		Zone:  "fi-hel1",
+		Zone:  "fi-hel2",
 		Tier:  upcloud.StorageTierMaxIOPS,
 	}
 
-	expectedXML := "<storage><zone>fi-hel1</zone><tier>maxiops</tier><title>Cloned storage</title></storage>"
+	expectedXML := "<storage><zone>fi-hel2</zone><tier>maxiops</tier><title>Cloned storage</title></storage>"
 	actualXML, err := xml.Marshal(&request)
 	assert.Nil(t, err)
 	assert.Equal(t, expectedXML, string(actualXML))
