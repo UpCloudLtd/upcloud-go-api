@@ -179,8 +179,8 @@ for i, storage := range serverDetails.StorageDevices {
 		if err != nil {
 			panic(err)
 		}
-		
-		fmt.Println(fmt.Sprintf("Storage templatized as %s", storageDetails.UUID))		
+
+		fmt.Println(fmt.Sprintf("Storage templatized as %s", storageDetails.UUID))
 		break
 	}
 }
@@ -229,7 +229,7 @@ For more examples, please consult the service integration test suite (`upcloud/s
 
 ### Debugging the API using Postman
 
-The repository contains a Postman collection which can be used to quickly perform requests against the API to see what 
+The repository contains a Postman collection which can be used to quickly perform requests against the API to see what
 it returns. Import the collection into Postman, then create an environment containing the following variables:
 
 * `authorization` - the value of the `Authorization` HTTP header, e.g. `Basic <base64>`
@@ -239,15 +239,15 @@ it returns. Import the collection into Postman, then create an environment conta
 
 ## Testing
 
-To be able to run the test suite you'll need to export the following environment variables with their corresponding 
+To be able to run the test suite you'll need to export the following environment variables with their corresponding
 values:
 
-* `UPCLOUD_GO_API_TEST_USER` (the API username)
-* `UPCLOUD_GO_API_TEST_PASSWORD` (the API password)
-* `UPCLOUD_GO_API_TEST_DELETE_RESOURCES` (either `yes` or `no`)
+* `UPCLOUD_GO_SDK_TEST_USER` (the API username)
+* `UPCLOUD_GO_SDK_TEST_PASSWORD` (the API password)
+* `UPCLOUD_GO_SDK_TEST_DELETE_RESOURCES` (either `yes` or `no`)
 
-To run the test suite, run `go test ./... -v -parallel 8`. If `UPCLOUD_GO_API_TEST_DELETE_RESOURCES` is set to `yes`, 
-all resources will be stopped and/or deleted after the test suite has run. Be careful which account you use for 
+To run the test suite, run `go test ./... -v -parallel 8`. If `UPCLOUD_GO_API_TEST_DELETE_RESOURCES` is set to `yes`,
+all resources will be stopped and/or deleted after the test suite has run. Be careful which account you use for
 testing so you don't accidentally delete or your production resources!
 
 You can skip running the integration tests and just run the unit tests by passing `-short` to the test command.
