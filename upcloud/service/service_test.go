@@ -409,7 +409,11 @@ func TestCreateBackup(t *testing.T) {
 
 	// Create a backup
 	t.Logf("Creating backup of storage with UUID %s ...", storageDetails.UUID)
-	timeBeforeBackup := time.Now()
+
+	utc, err := time.LoadLocation("UTC")
+	handleError(err)
+
+	timeBeforeBackup := time.Now().In(utc)
 
 	backupDetails, err := svc.CreateBackup(&request.CreateBackupRequest{
 		UUID:  storageDetails.UUID,
@@ -418,7 +422,9 @@ func TestCreateBackup(t *testing.T) {
 
 	handleError(err)
 	waitForStorageOnline(storageDetails.UUID)
-	timeAfterBackup := time.Now()
+
+	timeAfterBackup := time.Now().In(utc)
+
 	t.Logf("Created backup with UUID %s", backupDetails.UUID)
 
 	// Get backup storage details
