@@ -440,11 +440,11 @@ func TestCreateBackup(t *testing.T) {
 	}
 
 	if backupStorageDetails.Created.Before(timeBeforeBackup) {
-		t.Errorf("The creation timestamp of backup storage UUID %s is too early", backupDetails.UUID)
+		t.Errorf("The creation timestamp of backup storage UUID %s is too early: %v (should be after %v)", backupDetails.UUID, backupStorageDetails.Created, timeBeforeBackup)
 	}
 
 	if backupStorageDetails.Created.After(timeAfterBackup) {
-		t.Errorf("The creation timestamp of backup storage UUID %s is too late", backupDetails.UUID)
+		t.Errorf("The creation timestamp of backup storage UUID %s is too late: %v (should be before %v)", backupDetails.UUID, backupStorageDetails.Created, timeAfterBackup)
 	}
 
 	t.Logf("Backup storage origin UUID OK")
