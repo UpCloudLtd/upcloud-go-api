@@ -409,6 +409,8 @@ func TestCreateBackup(t *testing.T) {
 
 	// Create a backup
 	t.Logf("Creating backup of storage with UUID %s ...", storageDetails.UUID)
+	timeBeforeBackup := time.Now()
+
 	backupDetails, err := svc.CreateBackup(&request.CreateBackupRequest{
 		UUID:  storageDetails.UUID,
 		Title: "Backup",
@@ -416,6 +418,7 @@ func TestCreateBackup(t *testing.T) {
 
 	handleError(err)
 	waitForStorageOnline(storageDetails.UUID)
+	timeAfterBackup := time.Now()
 	t.Logf("Created backup with UUID %s", backupDetails.UUID)
 
 	// Get backup storage details
@@ -428,6 +431,14 @@ func TestCreateBackup(t *testing.T) {
 
 	if backupStorageDetails.Origin != storageDetails.UUID {
 		t.Errorf("The origin UUID %s of backup storage UUID %s does not match the actual origina UUID %s", backupStorageDetails.Origin, backupDetails.UUID, storageDetails.UUID)
+	}
+
+	if backupStorageDetails.Created.Before(timeBeforeBackup) {
+		t.Errorf("The creation timestamp of backup storage UUID %s is too early", backupDetails.UUID)
+	}
+
+	if backupStorageDetails.Created.After(timeAfterBackup) {
+		t.Errorf("The creation timestamp of backup storage UUID %s is too late", backupDetails.UUID)
 	}
 
 	t.Logf("Backup storage origin UUID OK")
