@@ -3,9 +3,10 @@ package request
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 	"strings"
 	"time"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 )
 
 // Constants
@@ -190,6 +191,16 @@ type DeleteServerRequest struct {
 // RequestURL implements the Request interface
 func (r *DeleteServerRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s", r.UUID)
+}
+
+// DeleteServerAndStoragesRequest represents a request to delete a server and all attached storages
+type DeleteServerAndStoragesRequest struct {
+	UUID string
+}
+
+// RequestURL implements the Request interface
+func (r *DeleteServerAndStoragesRequest) RequestURL() string {
+	return fmt.Sprintf("/server/%s/?storages=1", r.UUID)
 }
 
 // TagServerRequest represents a request to tag a server with one or more tags
