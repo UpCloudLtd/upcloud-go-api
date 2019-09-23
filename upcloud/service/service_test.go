@@ -410,10 +410,7 @@ func TestCreateBackup(t *testing.T) {
 	// Create a backup
 	t.Logf("Creating backup of storage with UUID %s ...", storageDetails.UUID)
 
-	utc, err := time.LoadLocation("UTC")
-	handleError(err)
-
-	timeBeforeBackup := time.Now().In(utc)
+	timeBeforeBackup := utcTimeWithSecondPrecision()
 
 	backupDetails, err := svc.CreateBackup(&request.CreateBackupRequest{
 		UUID:  storageDetails.UUID,
@@ -423,7 +420,7 @@ func TestCreateBackup(t *testing.T) {
 	handleError(err)
 	waitForStorageOnline(storageDetails.UUID)
 
-	timeAfterBackup := time.Now().In(utc)
+	timeAfterBackup := utcTimeWithSecondPrecision()
 
 	t.Logf("Created backup with UUID %s", backupDetails.UUID)
 
@@ -771,6 +768,17 @@ func waitForStorageOnline(uuid string) {
 	})
 
 	handleError(err)
+}
+
+// Returns the current UTC time with second precision (milliseconds truncated).
+// This is the format we usually get from the UpCloud API.
+func utcTimeWithSecondPrecision() time.Time {
+	utc, err := time.LoadLocation("UTC")
+	handleError(err)
+
+	t := time.Now().In(utc).Truncate(time.Second)
+
+	return t
 }
 
 // Handles the error by panicing, thus stopping the test execution
