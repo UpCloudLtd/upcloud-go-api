@@ -1,15 +1,16 @@
 package service
 
 import (
-	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/upcloud/client"
-	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
 	"log"
 	"os"
 	"reflect"
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud/client"
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
 )
 
 // The service object used by the tests
@@ -18,7 +19,7 @@ var svc *Service
 // TestMain is the main test method
 func TestMain(m *testing.M) {
 	setup()
-    retCode := m.Run()
+	retCode := m.Run()
 
 	// Optionally perform teardown
 	deleteResources := os.Getenv("UPCLOUD_GO_SDK_TEST_DELETE_RESOURCES")
@@ -393,6 +394,7 @@ func TestLoadEjectCDROM(t *testing.T) {
 //
 // - creates a storage device
 // - creates a backup of the storage device
+// - gets backup storage details
 //
 // It's not feasible to test backup restoration due to time constraints
 func TestCreateBackup(t *testing.T) {
@@ -415,6 +417,20 @@ func TestCreateBackup(t *testing.T) {
 	handleError(err)
 	waitForStorageOnline(storageDetails.UUID)
 	t.Logf("Created backup with UUID %s", backupDetails.UUID)
+
+	// Get backup storage details
+	t.Logf("Getting details of backup sorage with UUID %s ...", backupDetails.UUID)
+
+	backupStorageDetails, err := svc.GetStorageDetails(&request.GetStorageDetailsRequest{
+		UUID: backupDetails.UUID,
+	})
+	handleError(err)
+
+	if backupStorageDetails.Origin != storageDetails.UUID {
+		t.Errorf("The origin UUID %s of backup storage UUID %s does not match the actual origina UUID %s", backupStorageDetails.Origin, backupDetails.UUID, storageDetails.UUID)
+	}
+
+	t.Logf("Backup storage origin UUID OK")
 }
 
 // TestAttachModifyReleaseIPAddress performs the following actions
