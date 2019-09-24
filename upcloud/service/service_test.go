@@ -425,7 +425,7 @@ func TestCreateBackup(t *testing.T) {
 	t.Logf("Created backup with UUID %s", backupDetails.UUID)
 
 	// Get backup storage details
-	t.Logf("Getting details of backup sorage with UUID %s ...", backupDetails.UUID)
+	t.Logf("Getting details of backup storage with UUID %s ...", backupDetails.UUID)
 
 	backupStorageDetails, err := svc.GetStorageDetails(&request.GetStorageDetailsRequest{
 		UUID: backupDetails.UUID,
