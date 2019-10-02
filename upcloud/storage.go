@@ -1,6 +1,9 @@
 package upcloud
 
-import "encoding/xml"
+import (
+	"encoding/xml"
+	"time"
+)
 
 // Constants
 const (
@@ -54,6 +57,9 @@ type Storage struct {
 	Type       string `xml:"type"`
 	UUID       string `xml:"uuid"`
 	Zone       string `xml:"zone"`
+	// Only for type "backup":
+	Origin  string    `xml:"origin"`
+	Created time.Time `xml:"created"`
 }
 
 // StorageDetails represents detailed information about a piece of storage

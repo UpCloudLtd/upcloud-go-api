@@ -1,15 +1,16 @@
 package service
 
 import (
-	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/upcloud/client"
-	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
 	"log"
 	"os"
 	"reflect"
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud/client"
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
 )
 
 // The service object used by the tests
@@ -18,7 +19,7 @@ var svc *Service
 // TestMain is the main test method
 func TestMain(m *testing.M) {
 	setup()
-    retCode := m.Run()
+	retCode := m.Run()
 
 	// Optionally perform teardown
 	deleteResources := os.Getenv("UPCLOUD_GO_SDK_TEST_DELETE_RESOURCES")
@@ -393,6 +394,7 @@ func TestLoadEjectCDROM(t *testing.T) {
 //
 // - creates a storage device
 // - creates a backup of the storage device
+// - gets backup storage details
 //
 // It's not feasible to test backup restoration due to time constraints
 func TestCreateBackup(t *testing.T) {
@@ -407,6 +409,9 @@ func TestCreateBackup(t *testing.T) {
 
 	// Create a backup
 	t.Logf("Creating backup of storage with UUID %s ...", storageDetails.UUID)
+
+	timeBeforeBackup := utcTimeWithSecondPrecision()
+
 	backupDetails, err := svc.CreateBackup(&request.CreateBackupRequest{
 		UUID:  storageDetails.UUID,
 		Title: "Backup",
@@ -414,7 +419,32 @@ func TestCreateBackup(t *testing.T) {
 
 	handleError(err)
 	waitForStorageOnline(storageDetails.UUID)
+
+	timeAfterBackup := utcTimeWithSecondPrecision()
+
 	t.Logf("Created backup with UUID %s", backupDetails.UUID)
+
+	// Get backup storage details
+	t.Logf("Getting details of backup storage with UUID %s ...", backupDetails.UUID)
+
+	backupStorageDetails, err := svc.GetStorageDetails(&request.GetStorageDetailsRequest{
+		UUID: backupDetails.UUID,
+	})
+	handleError(err)
+
+	if backupStorageDetails.Origin != storageDetails.UUID {
+		t.Errorf("The origin UUID %s of backup storage UUID %s does not match the actual origina UUID %s", backupStorageDetails.Origin, backupDetails.UUID, storageDetails.UUID)
+	}
+
+	if backupStorageDetails.Created.Before(timeBeforeBackup) {
+		t.Errorf("The creation timestamp of backup storage UUID %s is too early: %v (should be after %v)", backupDetails.UUID, backupStorageDetails.Created, timeBeforeBackup)
+	}
+
+	if backupStorageDetails.Created.After(timeAfterBackup) {
+		t.Errorf("The creation timestamp of backup storage UUID %s is too late: %v (should be before %v)", backupDetails.UUID, backupStorageDetails.Created, timeAfterBackup)
+	}
+
+	t.Logf("Backup storage origin UUID OK")
 }
 
 // TestAttachModifyReleaseIPAddress performs the following actions
@@ -738,6 +768,17 @@ func waitForStorageOnline(uuid string) {
 	})
 
 	handleError(err)
+}
+
+// Returns the current UTC time with second precision (milliseconds truncated).
+// This is the format we usually get from the UpCloud API.
+func utcTimeWithSecondPrecision() time.Time {
+	utc, err := time.LoadLocation("UTC")
+	handleError(err)
+
+	t := time.Now().In(utc).Truncate(time.Second)
+
+	return t
 }
 
 // Handles the error by panicing, thus stopping the test execution

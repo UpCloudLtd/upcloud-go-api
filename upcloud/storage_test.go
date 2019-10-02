@@ -2,8 +2,10 @@ package upcloud
 
 import (
 	"encoding/xml"
-	"github.com/stretchr/testify/assert"
 	"testing"
+	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 // TestUnmarshalStorage tests that Storages and Storage struct are unmarshaled correctly
@@ -52,6 +54,82 @@ func TestUnmarshalStorage(t *testing.T) {
 	assert.Equal(t, "Windows Server 2003 R2 Standard (CD 1)", firstStorage.Title)
 	assert.Equal(t, StorageTypeCDROM, firstStorage.Type)
 	assert.Equal(t, "01000000-0000-4000-8000-000010010101", firstStorage.UUID)
+}
+
+// TestUnmarshalStorage tests that Storages and Storage struct are unmarshaled correctly for private and backup storages
+func TestUnmarshalStoragesPrivateAndBackup(t *testing.T) {
+	originalXML := `<?xml version="1.0" encoding="utf-8"?>
+<storages>
+    <storage>
+        <access>private</access>
+        <license>0</license>
+        <size>10</size>
+        <state>online</state>
+	<tier>hdd</tier>
+        <title>Operating system disk</title>
+        <type>normal</type>
+        <uuid>01eff7ad-168e-413e-83b0-054f6a28fa23</uuid>
+        <zone>uk-lon1</zone>
+    </storage>
+    <storage>
+        <access>private</access>
+	<created>2019-09-17T14:34:43Z</created>
+        <license>0</license>
+	<origin>01eff7ad-168e-413e-83b0-054f6a28fa23</origin>
+        <size>10</size>
+        <state>online</state>
+        <title>On demand backup</title>
+        <type>backup</type>
+        <uuid>01287ad1-496c-4b5f-bb67-0fc2e3494740</uuid>
+        <zone>uk-lon1</zone>
+    </storage>
+    <storage>
+        <access>private</access>
+        <license>0</license>
+        <part_of_plan>yes</part_of_plan>
+        <size>50</size>
+        <state>online</state>
+        <tier>maxiops</tier>
+        <title>Databases</title>
+        <type>normal</type>
+        <uuid>01f3286c-a5ea-4670-8121-d0b9767d625b</uuid>
+        <zone>fi-hel1</zone>
+    </storage>
+</storages>`
+
+	storages := Storages{}
+	err := xml.Unmarshal([]byte(originalXML), &storages)
+
+	assert.Nil(t, err)
+	assert.Len(t, storages.Storages, 3)
+
+	firstStorage := storages.Storages[0]
+	assert.Equal(t, "private", firstStorage.Access)
+	assert.Equal(t, 0.0, firstStorage.License)
+	assert.Equal(t, 10, firstStorage.Size)
+	assert.Equal(t, "online", firstStorage.State)
+	assert.Equal(t, "hdd", firstStorage.Tier)
+	assert.Equal(t, "Operating system disk", firstStorage.Title)
+	assert.Equal(t, "normal", firstStorage.Type)
+	assert.Equal(t, "01eff7ad-168e-413e-83b0-054f6a28fa23", firstStorage.UUID)
+	assert.Equal(t, "uk-lon1", firstStorage.Zone)
+	assert.Equal(t, time.Time{}, firstStorage.Created)
+	assert.Equal(t, "", firstStorage.Origin)
+
+	secondStorage := storages.Storages[1]
+	assert.Equal(t, "private", secondStorage.Access)
+	created, err := time.Parse(time.RFC3339, "2019-09-17T14:34:43Z")
+	assert.Nil(t, err)
+	assert.Equal(t, created, secondStorage.Created)
+	assert.Equal(t, 0.0, secondStorage.License)
+	assert.Equal(t, "01eff7ad-168e-413e-83b0-054f6a28fa23", secondStorage.Origin)
+	assert.Equal(t, 10, secondStorage.Size)
+	assert.Equal(t, "online", secondStorage.State)
+	assert.Equal(t, "", secondStorage.Tier)
+	assert.Equal(t, "On demand backup", secondStorage.Title)
+	assert.Equal(t, "backup", secondStorage.Type)
+	assert.Equal(t, "01287ad1-496c-4b5f-bb67-0fc2e3494740", secondStorage.UUID)
+	assert.Equal(t, "uk-lon1", secondStorage.Zone)
 }
 
 // TestUnmarshalStorageDetails tests that StorageDetails struct is unmarshaled correctly
