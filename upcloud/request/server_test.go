@@ -2,10 +2,11 @@ package request
 
 import (
 	"encoding/xml"
-	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
-	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
+	"github.com/stretchr/testify/assert"
 )
 
 // TestGetServerDetailsRequest tests that GetServerDetailsRequest objects behave correctly
@@ -125,6 +126,15 @@ func TestDeleteServerRequest(t *testing.T) {
 	}
 
 	assert.Equal(t, "/server/foo", request.RequestURL())
+}
+
+// TestDeleteServerAndStoragesRequest tests that DeleteServerAndStoragesRequest objects behave correctly
+func TestDeleteServerAndStoragesRequest(t *testing.T) {
+	request := DeleteServerAndStoragesRequest{
+		UUID: "foo",
+	}
+
+	assert.Equal(t, "/server/foo/?storages=1", request.RequestURL())
 }
 
 // TestTagServerRequest tests that TestTagServer behaves correctly

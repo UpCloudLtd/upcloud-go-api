@@ -138,6 +138,16 @@ func TestCreateModifyDeleteServer(t *testing.T) {
 	serverDetails := createServer("TestCreateModifyDeleteServer")
 	t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
+	// Get details about the storage (UUID is required for testing)
+	if len(serverDetails.StorageDevices) == 0 {
+		t.Errorf("Server %s with UUID %s has no storages attached", serverDetails.Title, serverDetails.UUID)
+	}
+
+	firstStorage := serverDetails.StorageDevices[0]
+	storageUUID := firstStorage.UUID
+
+	t.Logf("First storage of server with UUID %s has UUID %s", serverDetails.UUID, storageUUID)
+
 	// Modify the server
 	t.Log("Modifying the server ...")
 
@@ -167,6 +177,76 @@ func TestCreateModifyDeleteServer(t *testing.T) {
 	t.Logf("Deleting the server with UUID %s...", serverDetails.UUID)
 	deleteServer(serverDetails.UUID)
 	t.Log("Server is now deleted")
+
+	// Check if the storage still exists
+	storages, err := svc.GetStorages(&request.GetStoragesRequest{
+		Access: upcloud.StorageAccessPrivate,
+	})
+	handleError(err)
+
+	found := false
+
+	for _, storage := range storages.Storages {
+		if storage.UUID == storageUUID {
+			found = true
+			break
+		}
+	}
+
+	if !found {
+		t.Errorf("Storage with UUID %s not found. It should still exist after deleting server with UUID %s", storageUUID, serverDetails.UUID)
+	}
+
+	t.Log("Storage still exists")
+}
+
+// TestCreateDeleteServerAndStorage performs the following actions:
+//
+// - creates a server
+// - deletes the server including storage
+func TestCreateDeleteServerAndStorage(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode")
+	}
+	t.Parallel()
+
+	// Create a server
+	serverDetails := createServer("TestCreateDeleteServerAndStorage")
+	t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
+
+	// Get details about the storage (UUID is required for testing)
+	if len(serverDetails.StorageDevices) == 0 {
+		t.Errorf("Server %s with UUID %s has no storages attached", serverDetails.Title, serverDetails.UUID)
+	}
+
+	firstStorage := serverDetails.StorageDevices[0]
+	storageUUID := firstStorage.UUID
+
+	t.Logf("First storage of server with UUID %s has UUID %s", serverDetails.UUID, storageUUID)
+
+	// Stop the server
+	t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
+	stopServer(serverDetails.UUID)
+	t.Log("Server is now stopped")
+
+	// Delete the server and storage
+	t.Logf("Deleting the server with UUID %s, including storages...", serverDetails.UUID)
+	deleteServerAndStorages(serverDetails.UUID)
+	t.Log("Server is now deleted")
+
+	// Check if the storage was deleted
+	storages, err := svc.GetStorages(&request.GetStoragesRequest{
+		Access: upcloud.StorageAccessPrivate,
+	})
+	handleError(err)
+
+	for _, storage := range storages.Storages {
+		if storage.UUID == storageUUID {
+			t.Errorf("Storage with UUID %s still exists. It should have been deleted with server with UUID %s", storageUUID, serverDetails.UUID)
+		}
+	}
+
+	t.Log("Storage was deleted, too")
 }
 
 // TestCreateModifyDeleteStorage performs the following actions:
@@ -707,6 +787,15 @@ func stopServer(uuid string) {
 // Deletes the specified server
 func deleteServer(uuid string) {
 	err := svc.DeleteServer(&request.DeleteServerRequest{
+		UUID: uuid,
+	})
+
+	handleError(err)
+}
+
+// Deletes the specified server and storages
+func deleteServerAndStorages(uuid string) {
+	err := svc.DeleteServerAndStorages(&request.DeleteServerAndStoragesRequest{
 		UUID: uuid,
 	})
 

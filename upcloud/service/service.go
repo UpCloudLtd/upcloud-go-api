@@ -270,6 +270,17 @@ func (s *Service) DeleteServer(r *request.DeleteServerRequest) error {
 	return nil
 }
 
+// DeleteServerAndStorages deletes the specified server and all attached storages
+func (s *Service) DeleteServerAndStorages(r *request.DeleteServerAndStoragesRequest) error {
+	err := s.client.PerformDeleteRequest(s.client.CreateRequestUrl(r.RequestURL()))
+
+	if err != nil {
+		return parseServiceError(err)
+	}
+
+	return nil
+}
+
 // TagServer tags a server with with one or more tags
 func (s *Service) TagServer(r *request.TagServerRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
