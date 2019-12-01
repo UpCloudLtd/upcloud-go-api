@@ -97,7 +97,6 @@ func (c *Client) PerformPostRequestJsontoXMLFIXME(url string, requestBody []byte
 	if requestBody != nil {
 		bodyReader = bytes.NewBuffer(requestBody)
 	}
-	fmt.Printf("%s", requestBody)
 
 	request, err := http.NewRequest("POST", url, bodyReader)
 

@@ -643,6 +643,7 @@ func TestSDNNetwork(t *testing.T) {
 		panic("expected value not changed")
 	}
 
+	t.Logf("Retrieving and comparing %s", network.Name)
 	getnetwork := getSDNPrivateNetwork(network.UUID)
 	if getnetwork.Name != network.Name {
 		panic("original and newly retrieved networks are not identical")
@@ -651,29 +652,37 @@ func TestSDNNetwork(t *testing.T) {
 	server := createServer("networkinterfacetest")
 	stopServer(server.UUID)
 
+	t.Logf("creating network interface attached to server %s using network %s", server.UUID, getnetwork.UUID)
 	ni, err := createNetworkInterface(server.UUID, getnetwork)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("%+v", ni)
+	t.Logf("listing all networks for server %s", server.UUID)
 	networks, err := ListServerNetworks(server.UUID)
 	if err != nil {
 		panic(err)
 	}
+	t.Log("figuring out which one of the listed server networks is attached to our test machine")
 	var serverAttachedInterface upcloud.Interface
 	for _, i := range networks.Networking.Interfaces.Interface {
 		if i.Network == getnetwork.UUID {
 			serverAttachedInterface = i
 		}
 	}
+	if ni.Network != serverAttachedInterface.Network {
+		panic(fmt.Sprintf("created and retrieved networks dont match. %s != %s", ni.Network, serverAttachedInterface.Network))
+	}
+	t.Logf("modifying network interface %s at index %d", server.UUID, serverAttachedInterface.Index)
 	modifiedInterface, err := ModifyNetworkInterface(server.UUID, serverAttachedInterface.Index)
 	if err != nil {
 		panic(err)
 	}
+	t.Logf("deleting network interface %s at index %d", server.UUID, serverAttachedInterface.Index)
 	err = DeleteNetworkInterface(server.UUID, modifiedInterface.Index)
 	if err != nil {
 		panic(err)
 	}
+	t.Logf("deleting SDN network %s", network.UUID)
 	deleteSDNPrivateNetwork(network.UUID)
 }
 
@@ -748,7 +757,6 @@ func createNetworkInterface(serverUUID string, network *upcloud.Network) (*upclo
 	ip4 := ip.To4()
 	ip4[3]++ //gateway
 	ip4[3]++ //first available //TODO automate checking for this?
-	fmt.Println(ipNet)
 	address := ip4.String()
 	createNI := &request.CreateNetworkInterfaceRequest{
 		ServerUUID: serverUUID,
