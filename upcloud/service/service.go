@@ -1,6 +1,7 @@
 package service
 
 import (
+	"encoding/json"
 	"encoding/xml"
 	"fmt"
 	"time"
@@ -679,6 +680,139 @@ func (s *Service) CreateFirewallRule(r *request.CreateFirewallRuleRequest) (*upc
 
 // DeleteFirewallRule deletes the specified firewall rule
 func (s *Service) DeleteFirewallRule(r *request.DeleteFirewallRuleRequest) error {
+	err := s.client.PerformDeleteRequest(s.client.CreateRequestUrl(r.RequestURL()))
+
+	if err != nil {
+		return parseServiceError(err)
+	}
+
+	return nil
+}
+
+func (s *Service) GetNetworks(r *request.GetNetworksRequest) (*upcloud.Networks, error) {
+	networks := upcloud.Networks{}
+	response, err := s.basicGetRequest(r.RequestURL())
+	if err != nil {
+		return nil, parseServiceError(err)
+	}
+
+	xml.Unmarshal(response, &networks)
+
+	return &networks, nil
+}
+
+func (s *Service) GetNetworksInZone(r *request.GetNetworksInZoneRequest) (*upcloud.Networks, error) {
+	networks := upcloud.Networks{}
+	response, err := s.basicGetRequest(r.RequestURL())
+	if err != nil {
+		return nil, parseServiceError(err)
+	}
+
+	xml.Unmarshal(response, &networks)
+
+	return &networks, nil
+}
+
+func (s *Service) CreateSDNPrivateNetwork(r *request.CreateSDNPrivateNetworkRequest) (*upcloud.Network, error) {
+	network := upcloud.Network{}
+	//FIXME appears to be bug in XML parser, switching to JSON
+	// requestBody, _ := xml.Marshal(r)
+	// response, err := s.client.PerformPostRequest(s.client.CreateRequestUrl(r.RequestURL()), requestBody)
+	requestBody, _ := json.Marshal(r)
+	response, err := s.client.PerformPostRequestJsontoXMLFIXME(s.client.CreateRequestUrl(r.RequestURL()), requestBody)
+
+	if err != nil {
+		return nil, parseServiceError(err)
+	}
+
+	xml.Unmarshal(response, &network)
+
+	return &network, nil
+}
+
+func (s *Service) GetNetworkDetails(r *request.GetNetworkDetailsRequest) (*upcloud.Network, error) {
+	network := upcloud.Network{}
+	response, err := s.basicGetRequest(r.RequestURL())
+	if err != nil {
+		return nil, parseServiceError(err)
+	}
+
+	xml.Unmarshal(response, &network)
+
+	return &network, nil
+}
+
+func (s *Service) ModifyNetworkDetails(r *request.ModifyNetworkDetailsRequest) (*upcloud.Network, error) {
+	network := upcloud.Network{}
+
+	//FIXME appears to be bug in XML parser, switching to JSON
+	// requestBody, _ := xml.Marshal(r)
+	// response, err := s.client.PerformPutRequest(s.client.CreateRequestUrl(r.RequestURL()), requestBody)
+	requestBody, _ := json.Marshal(r)
+	response, err := s.client.PerformPutRequestXMLtoJsonFIXME(s.client.CreateRequestUrl(r.RequestURL()), requestBody)
+	if err != nil {
+		return nil, parseServiceError(err)
+	}
+
+	xml.Unmarshal(response, &network)
+
+	return &network, nil
+}
+
+// DeleteNetwork deletes the specified network
+func (s *Service) DeleteNetwork(r *request.DeleteNetworkRequest) error {
+	err := s.client.PerformDeleteRequest(s.client.CreateRequestUrl(r.RequestURL()))
+
+	if err != nil {
+		return parseServiceError(err)
+	}
+
+	return nil
+}
+
+func (s *Service) CreateNetworkInterface(r *request.CreateNetworkInterfaceRequest) (*upcloud.Interface, error) {
+	netInterface := &upcloud.Interface{}
+	requestBody, _ := xml.Marshal(r.Interface)
+	response, err := s.client.PerformPostRequest(s.client.CreateRequestUrl(r.RequestURL()), requestBody)
+
+	if err != nil {
+		return nil, parseServiceError(err)
+	}
+
+	xml.Unmarshal(response, &netInterface)
+
+	return netInterface, nil
+}
+
+func (s *Service) ListServerNetworks(r *request.ListServerNetworks) (*upcloud.ServerNetworkresponse, error) {
+	networking := &upcloud.ServerNetworkresponse{}
+
+	response, err := s.basicGetRequest(r.RequestURL())
+	if err != nil {
+		return nil, parseServiceError(err)
+	}
+
+	xml.Unmarshal(response, &networking.Networking)
+
+	return networking, nil
+}
+
+func (s *Service) ModifyNetworkInterface(r *request.ModifyNetworkInterfaceRequest) (*upcloud.Interface, error) {
+	net_interface := upcloud.Interface{}
+
+	requestBody, _ := xml.Marshal(r.Interface)
+	response, err := s.client.PerformPutRequest(s.client.CreateRequestUrl(r.RequestURL()), requestBody)
+
+	if err != nil {
+		return nil, parseServiceError(err)
+	}
+
+	xml.Unmarshal(response, &net_interface)
+
+	return &net_interface, nil
+}
+
+func (s *Service) DeleteNetworkInterface(r *request.DeleteNetworkInterfaceRequest) error {
 	err := s.client.PerformDeleteRequest(s.client.CreateRequestUrl(r.RequestURL()))
 
 	if err != nil {

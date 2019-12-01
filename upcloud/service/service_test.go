@@ -1,7 +1,9 @@
 package service
 
 import (
+	"fmt"
 	"log"
+	"net"
 	"os"
 	"reflect"
 	"strings"
@@ -626,6 +628,175 @@ func TestFirewallRules(t *testing.T) {
 	})
 	handleError(err)
 	t.Log("Firewall rule #1 deleted")
+}
+
+// - create a private network
+// - checks whether it exists
+// - checks whether it can be succesfully modified
+// - checks whether it can be retrieved again
+// - delete a private network
+func TestSDNNetwork(t *testing.T) {
+	network := CreateSDNPrivateNetwork("test-network")
+	t.Logf("Network %s created", network.Name)
+	net := modifySDNPrivateNetwork(network.UUID, "no")
+	if net.IPnetworks[0].DHCP != "no" {
+		panic("expected value not changed")
+	}
+
+	getnetwork := getSDNPrivateNetwork(network.UUID)
+	if getnetwork.Name != network.Name {
+		panic("original and newly retrieved networks are not identical")
+	}
+
+	server := createServer("networkinterfacetest")
+	stopServer(server.UUID)
+
+	ni, err := createNetworkInterface(server.UUID, getnetwork)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("%+v", ni)
+	networks, err := ListServerNetworks(server.UUID)
+	if err != nil {
+		panic(err)
+	}
+	var serverAttachedInterface upcloud.Interface
+	for _, i := range networks.Networking.Interfaces.Interface {
+		if i.Network == getnetwork.UUID {
+			serverAttachedInterface = i
+		}
+	}
+	modifiedInterface, err := ModifyNetworkInterface(server.UUID, serverAttachedInterface.Index)
+	if err != nil {
+		panic(err)
+	}
+	err = DeleteNetworkInterface(server.UUID, modifiedInterface.Index)
+	if err != nil {
+		panic(err)
+	}
+	deleteSDNPrivateNetwork(network.UUID)
+}
+
+func CreateSDNPrivateNetwork(name string) *upcloud.Network {
+	title := "upcloud-go-sdk-integration-test-" + name
+	createNetworkRequest := request.CreateSDNPrivateNetworkRequest{
+		Network: request.Network{
+			Name: title,
+			Zone: "nl-ams1",
+			IPNetworks: request.IPNetworks{IPNetwork: []request.IPNetwork{request.IPNetwork{
+				Address:          "172.16.0.0/22",
+				DHCP:             "yes",
+				DHCPDefaultRoute: "no",
+				Family:           "IPv4",
+				Gateway:          "172.16.0.1",
+			},
+			}}},
+	}
+
+	// Create network
+	networkDetails, err := svc.CreateSDNPrivateNetwork(&createNetworkRequest)
+	if err != nil {
+		panic(err)
+	}
+
+	return networkDetails
+}
+
+func modifySDNPrivateNetwork(uuid string, dhcp string) *upcloud.Network {
+	modifyNetwork := request.ModifyNetworkDetailsRequest{
+		UUID: uuid,
+		Network: request.Network{
+			IPNetworks: request.IPNetworks{
+				IPNetwork: []request.IPNetwork{request.IPNetwork{
+					DHCP:   dhcp,
+					Family: upcloud.IPAddressFamilyIPv4,
+				}},
+			},
+		},
+	}
+	network, err := svc.ModifyNetworkDetails(&modifyNetwork)
+	if err != nil {
+		panic(err)
+	}
+	return network
+}
+
+func getSDNPrivateNetwork(uuid string) *upcloud.Network {
+	request := request.GetNetworkDetailsRequest{UUID: uuid}
+	network, err := svc.GetNetworkDetails(&request)
+	if err != nil {
+		panic(err)
+	}
+
+	return network
+}
+
+func deleteSDNPrivateNetwork(uuid string) {
+	deleteNetwork := request.DeleteNetworkRequest{UUID: uuid}
+	err := svc.DeleteNetwork(&deleteNetwork)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func createNetworkInterface(serverUUID string, network *upcloud.Network) (*upcloud.Interface, error) {
+	addressCIDR := network.IPnetworks[0].Address
+	ip, ipNet, err := net.ParseCIDR(addressCIDR)
+	if err != nil {
+		fmt.Println(err)
+	}
+	ip4 := ip.To4()
+	ip4[3]++ //gateway
+	ip4[3]++ //first available //TODO automate checking for this?
+	fmt.Println(ipNet)
+	address := ip4.String()
+	createNI := &request.CreateNetworkInterfaceRequest{
+		ServerUUID: serverUUID,
+		Interface: request.Interface{
+			Type:        network.Type,
+			NetworkUUID: network.UUID,
+			IPAddresses: &request.IPAddresses{
+				IPAddress: []request.IPAddress{
+					request.IPAddress{
+						Family:  network.IPnetworks[0].Family,
+						Address: address,
+					},
+				},
+			},
+		}}
+	ni, err := svc.CreateNetworkInterface(createNI)
+	if err != nil {
+		return nil, err
+	}
+	return ni, nil
+}
+
+func ListServerNetworks(serverUUID string) (*upcloud.ServerNetworkresponse, error) {
+	r := request.ListServerNetworks{ServerUUID: serverUUID}
+	networks, err := svc.ListServerNetworks(&r)
+	if err != nil {
+		return nil, err
+	}
+	return networks, nil
+}
+
+func ModifyNetworkInterface(serverUUID string, index int) (*upcloud.Interface, error) {
+	r := request.ModifyNetworkInterfaceRequest{ServerUUID: serverUUID, Index: index}
+	r.Interface.SourceIPFiltering = "no"
+	netInterface, err := svc.ModifyNetworkInterface(&r)
+	if err != nil {
+		return nil, err
+	}
+	return netInterface, nil
+}
+
+func DeleteNetworkInterface(serverUUID string, index int) error {
+	r := request.DeleteNetworkInterfaceRequest{ServerUUID: serverUUID, Index: index}
+	err := svc.DeleteNetworkInterface(&r)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 // TestTagging tests that all tagging-related functionality works correctly. It performs the following actions:

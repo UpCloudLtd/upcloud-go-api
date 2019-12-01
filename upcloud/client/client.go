@@ -14,7 +14,7 @@ import (
 
 // Constants
 const (
-	DEFAULT_API_VERSION = "1.2.3"
+	DEFAULT_API_VERSION = "1.3.0"
 	DEFAULT_API_BASEURL = "https://api.upcloud.com"
 
 	// The default timeout (in seconds)
@@ -89,6 +89,25 @@ func (c *Client) PerformPostRequest(url string, requestBody []byte) ([]byte, err
 	return c.performRequest(request)
 }
 
+// PerformPostRequest performs a POST request to the specified URL and returns the response body and eventual errors
+// FIXME
+func (c *Client) PerformPostRequestJsontoXMLFIXME(url string, requestBody []byte) ([]byte, error) {
+	var bodyReader io.Reader
+
+	if requestBody != nil {
+		bodyReader = bytes.NewBuffer(requestBody)
+	}
+	fmt.Printf("%s", requestBody)
+
+	request, err := http.NewRequest("POST", url, bodyReader)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return c.performFIXMERequest(request)
+}
+
 // PerformPutRequest performs a PUT request to the specified URL and returns the response body and eventual errors
 func (c *Client) PerformPutRequest(url string, requestBody []byte) ([]byte, error) {
 	var bodyReader io.Reader
@@ -104,6 +123,23 @@ func (c *Client) PerformPutRequest(url string, requestBody []byte) ([]byte, erro
 	}
 
 	return c.performRequest(request)
+}
+
+// PerformPutRequest performs a PUT request to the specified URL and returns the response body and eventual errors
+func (c *Client) PerformPutRequestXMLtoJsonFIXME(url string, requestBody []byte) ([]byte, error) {
+	var bodyReader io.Reader
+
+	if requestBody != nil {
+		bodyReader = bytes.NewBuffer(requestBody)
+	}
+
+	request, err := http.NewRequest("PUT", url, bodyReader)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return c.performFIXMERequest(request)
 }
 
 // PerformDeleteRequest performs a DELETE request to the specified URL and returns the response body and eventual errors
@@ -127,9 +163,30 @@ func (c *Client) addRequestHeaders(request *http.Request) *http.Request {
 	return request
 }
 
+func (c *Client) addRequestHeadersJsontoXML(request *http.Request) *http.Request {
+	//FIXME exists due to a possible bug that requires JSON input, but still want xml output
+	request.SetBasicAuth(c.userName, c.password)
+	request.Header.Add("Accept", "application/xml")
+	request.Header.Add("Content-Type", "application/json")
+
+	return request
+}
+
 // Performs the specified HTTP request and returns the response through handleResponse()
 func (c *Client) performRequest(request *http.Request) ([]byte, error) {
 	c.addRequestHeaders(request)
+	response, err := c.httpClient.Do(request)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return handleResponse(response)
+}
+
+// Performs the specified HTTP request and returns the response through handleResponse()
+func (c *Client) performFIXMERequest(request *http.Request) ([]byte, error) {
+	c.addRequestHeadersJsontoXML(request)
 	response, err := c.httpClient.Do(request)
 
 	if err != nil {
