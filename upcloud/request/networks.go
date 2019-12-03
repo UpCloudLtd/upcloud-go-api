@@ -72,7 +72,7 @@ type CreateSDNPrivateNetworkRequest struct {
 
 // RequestURL implements the Request interface
 func (r *CreateSDNPrivateNetworkRequest) RequestURL() string {
-	return fmt.Sprint("/network/")
+	return fmt.Sprint("/network")
 }
 
 type GetNetworkDetailsRequest struct {
