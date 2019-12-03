@@ -750,7 +750,7 @@ func deleteSDNPrivateNetwork(uuid string) {
 
 func createNetworkInterface(serverUUID string, network *upcloud.Network) (*upcloud.Interface, error) {
 	addressCIDR := network.IPnetworks[0].Address
-	ip, ipNet, err := net.ParseCIDR(addressCIDR)
+	ip, _, err := net.ParseCIDR(addressCIDR)
 	if err != nil {
 		fmt.Println(err)
 	}
