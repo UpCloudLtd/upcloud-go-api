@@ -37,6 +37,32 @@ func (s *Service) GetAccount() (*upcloud.Account, error) {
 	return &account, nil
 }
 
+func (s *Service) GetAccountList() (*upcloud.AccountList, error) {
+	accountList := upcloud.AccountList{}
+	response, err := s.basicGetRequest("/account/list")
+
+	if err != nil {
+		return nil, parseServiceError(err)
+	}
+
+	xml.Unmarshal(response, &accountList)
+
+	return &accountList, nil
+}
+
+func (s *Service) GetAccountDetails(account string) (*upcloud.AccountDetails, error) {
+	accountDetails := upcloud.AccountDetails{}
+	response, err := s.basicGetRequest(fmt.Sprintf("/account/details/%s", account))
+
+	if err != nil {
+		return nil, parseServiceError(err)
+	}
+
+	xml.Unmarshal(response, &accountDetails)
+
+	return &accountDetails, nil
+}
+
 // GetZones returns the available zones
 func (s *Service) GetZones() (*upcloud.Zones, error) {
 	zones := upcloud.Zones{}

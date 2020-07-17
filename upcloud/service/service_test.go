@@ -106,6 +106,33 @@ func TestGetAccount(t *testing.T) {
 	}
 }
 
+func TestGetAccountList(t *testing.T) {
+	accountList, err := svc.GetAccountList()
+	username, _ := getCredentials()
+	handleError(err)
+	accountExists := false
+
+	for _, account := range accountList.Accounts {
+		if account.UserName == username {
+			accountExists = true
+		}
+	}
+
+	if accountExists != true {
+		t.Errorf("TestGetAccountList expected %t, got %t", true, false)
+	}
+}
+
+func TestGetAccountDetails(t *testing.T) {
+	username, _ := getCredentials()
+	accountDetails, err := svc.GetAccountDetails(username)
+	handleError(err)
+
+	if accountDetails.UserName != username {
+		t.Errorf("TestGetAccountDetails expected %s, got %s", username, accountDetails.UserName)
+	}
+}
+
 // TestErrorHandling checks that the correct error type is returned from service methods
 func TestErrorHandling(t *testing.T) {
 	// Perform a bogus request that will certainly fail
