@@ -2,8 +2,9 @@ package upcloud
 
 import (
 	"encoding/xml"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 // TestUnmarshalZones tests that the Zone and Zones structs are correctly marshaled

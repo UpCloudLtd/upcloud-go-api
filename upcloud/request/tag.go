@@ -3,6 +3,7 @@ package request
 import (
 	"encoding/xml"
 	"fmt"
+
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 )
 

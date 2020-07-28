@@ -325,7 +325,7 @@ func TestAttachDetachStorage(t *testing.T) {
 	// Detach the storage
 	t.Logf("Detaching storage %s", storageDetails.UUID)
 
-	serverDetails, err = svc.DetachStorage(&request.DetachStorageRequest{
+	_, err = svc.DetachStorage(&request.DetachStorageRequest{
 		ServerUUID: serverDetails.UUID,
 		Address:    "scsi:0:0",
 	})
@@ -442,7 +442,7 @@ func TestLoadEjectCDROM(t *testing.T) {
 
 	// Attach CD-ROM device
 	t.Logf("Attaching CD-ROM device to server with UUID %s", serverDetails.UUID)
-	serverDetails, err := svc.AttachStorage(&request.AttachStorageRequest{
+	_, err := svc.AttachStorage(&request.AttachStorageRequest{
 		ServerUUID: serverDetails.UUID,
 		Type:       upcloud.StorageTypeCDROM,
 	})
@@ -452,7 +452,7 @@ func TestLoadEjectCDROM(t *testing.T) {
 
 	// Load the CD-ROM
 	t.Log("Loading CD-ROM into CD-ROM device")
-	serverDetails, err = svc.LoadCDROM(&request.LoadCDROMRequest{
+	_, err = svc.LoadCDROM(&request.LoadCDROMRequest{
 		ServerUUID:  serverDetails.UUID,
 		StorageUUID: "01000000-0000-4000-8000-000030060101",
 	})
@@ -462,7 +462,7 @@ func TestLoadEjectCDROM(t *testing.T) {
 
 	// Eject the CD-ROM
 	t.Log("Ejecting CD-ROM from CD-ROM device")
-	serverDetails, err = svc.EjectCDROM(&request.EjectCDROMRequest{
+	_, err = svc.EjectCDROM(&request.EjectCDROMRequest{
 		ServerUUID: serverDetails.UUID,
 	})
 
@@ -595,7 +595,7 @@ func TestFirewallRules(t *testing.T) {
 
 	// Create firewall rule
 	t.Logf("Creating firewall rule #1 for server with UUID %s ...", serverDetails.UUID)
-	firewallRule, err := svc.CreateFirewallRule(&request.CreateFirewallRuleRequest{
+	_, err := svc.CreateFirewallRule(&request.CreateFirewallRuleRequest{
 		ServerUUID: serverDetails.UUID,
 		FirewallRule: upcloud.FirewallRule{
 			Direction: upcloud.FirewallRuleDirectionIn,
@@ -611,7 +611,7 @@ func TestFirewallRules(t *testing.T) {
 
 	// Get details about the rule
 	t.Log("Getting details about firewall rule #1 ...")
-	firewallRule, err = svc.GetFirewallRuleDetails(&request.GetFirewallRuleDetailsRequest{
+	firewallRule, err := svc.GetFirewallRuleDetails(&request.GetFirewallRuleDetailsRequest{
 		ServerUUID: serverDetails.UUID,
 		Position:   1,
 	})
@@ -775,7 +775,7 @@ func stopServer(uuid string) {
 
 	handleError(err)
 
-	serverDetails, err = svc.WaitForServerState(&request.WaitForServerStateRequest{
+	_, err = svc.WaitForServerState(&request.WaitForServerStateRequest{
 		UUID:         serverDetails.UUID,
 		DesiredState: upcloud.ServerStateStopped,
 		Timeout:      time.Minute * 15,

@@ -2,9 +2,10 @@ package request
 
 import (
 	"encoding/xml"
+	"testing"
+
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 // TestCreateTagRequest tests that CreateTagRequest behaves correctly
