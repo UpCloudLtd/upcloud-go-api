@@ -11,6 +11,8 @@ type Error struct {
 	ErrorMessage string `xml:"error_message" json:"error_message"`
 }
 
+// UnmarshalJSON is a custom unmarshaller that deals with
+// deeply embedded values.
 func (e *Error) UnmarshalJSON(b []byte) error {
 	type localError Error
 	v := struct {

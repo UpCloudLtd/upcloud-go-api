@@ -1,0 +1,313 @@
+---
+version: 1
+interactions:
+- request:
+    body: <storage><size>10</size><tier>maxiops</tier><title>Test storage</title><zone>fi-hel2</zone><backup_rule><interval>daily</interval><time>0430</time><retention>30</retention></backup_rule></storage>
+    form: {}
+    headers:
+      Accept:
+      - application/xml
+      Content-Type:
+      - application/xml
+    url: https://api.upcloud.com/1.2/storage
+    method: POST
+  response:
+    body: |
+      <?xml version="1.0" encoding="utf-8"?>
+      <storage>
+        <access>private</access>
+        <backup_rule>
+          <interval>daily</interval>
+          <retention>30</retention>
+          <time>0430</time>
+        </backup_rule>
+        <backups>
+        </backups>
+        <license>0</license>
+        <servers>
+        </servers>
+        <size>10</size>
+        <state>online</state>
+        <tier>maxiops</tier>
+        <title>Test storage</title>
+        <type>normal</type>
+        <uuid>011ef631-c144-45d3-a525-076dc8388415</uuid>
+        <zone>fi-hel2</zone>
+      </storage>
+    headers:
+      Content-Length:
+      - "468"
+      Content-Type:
+      - application/xml; charset=UTF-8
+      Date:
+      - Mon, 03 Aug 2020 13:01:23 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: <storage><zone>fi-hel2</zone><tier>maxiops</tier><title>Cloned storage</title></storage>
+    form: {}
+    headers:
+      Accept:
+      - application/xml
+      Content-Type:
+      - application/xml
+    url: https://api.upcloud.com/1.2/storage/011ef631-c144-45d3-a525-076dc8388415/clone
+    method: POST
+  response:
+    body: |
+      <?xml version="1.0" encoding="utf-8"?>
+      <storage>
+        <access>private</access>
+        <backup_rule></backup_rule>
+        <backups>
+        </backups>
+        <license>0</license>
+        <progress>0</progress>
+        <servers>
+        </servers>
+        <size>10</size>
+        <state>maintenance</state>
+        <tier>maxiops</tier>
+        <title>Cloned storage</title>
+        <type>normal</type>
+        <uuid>01d31d86-4bd6-442a-878c-a20f761367eb</uuid>
+        <zone>fi-hel2</zone>
+      </storage>
+    headers:
+      Content-Length:
+      - "414"
+      Content-Type:
+      - application/xml; charset=UTF-8
+      Date:
+      - Mon, 03 Aug 2020 13:01:35 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/xml
+      Content-Type:
+      - application/xml
+    url: https://api.upcloud.com/1.2/storage/01d31d86-4bd6-442a-878c-a20f761367eb
+    method: GET
+  response:
+    body: |
+      <?xml version="1.0" encoding="utf-8"?>
+      <storage>
+        <access>private</access>
+        <backup_rule></backup_rule>
+        <backups>
+        </backups>
+        <license>0</license>
+        <progress>1</progress>
+        <servers>
+        </servers>
+        <size>10</size>
+        <state>maintenance</state>
+        <tier>maxiops</tier>
+        <title>Cloned storage</title>
+        <type>normal</type>
+        <uuid>01d31d86-4bd6-442a-878c-a20f761367eb</uuid>
+        <zone>fi-hel2</zone>
+      </storage>
+    headers:
+      Content-Length:
+      - "414"
+      Content-Type:
+      - application/xml; charset=UTF-8
+      Date:
+      - Mon, 03 Aug 2020 13:01:36 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/xml
+      Content-Type:
+      - application/xml
+    url: https://api.upcloud.com/1.2/storage/01d31d86-4bd6-442a-878c-a20f761367eb
+    method: GET
+  response:
+    body: |
+      <?xml version="1.0" encoding="utf-8"?>
+      <storage>
+        <access>private</access>
+        <backup_rule></backup_rule>
+        <backups>
+        </backups>
+        <license>0</license>
+        <progress>5</progress>
+        <servers>
+        </servers>
+        <size>10</size>
+        <state>maintenance</state>
+        <tier>maxiops</tier>
+        <title>Cloned storage</title>
+        <type>normal</type>
+        <uuid>01d31d86-4bd6-442a-878c-a20f761367eb</uuid>
+        <zone>fi-hel2</zone>
+      </storage>
+    headers:
+      Content-Length:
+      - "414"
+      Content-Type:
+      - application/xml; charset=UTF-8
+      Date:
+      - Mon, 03 Aug 2020 13:01:42 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/xml
+      Content-Type:
+      - application/xml
+    url: https://api.upcloud.com/1.2/storage/01d31d86-4bd6-442a-878c-a20f761367eb
+    method: GET
+  response:
+    body: |
+      <?xml version="1.0" encoding="utf-8"?>
+      <storage>
+        <access>private</access>
+        <backup_rule></backup_rule>
+        <backups>
+        </backups>
+        <license>0</license>
+        <progress>90</progress>
+        <servers>
+        </servers>
+        <size>10</size>
+        <state>maintenance</state>
+        <tier>maxiops</tier>
+        <title>Cloned storage</title>
+        <type>normal</type>
+        <uuid>01d31d86-4bd6-442a-878c-a20f761367eb</uuid>
+        <zone>fi-hel2</zone>
+      </storage>
+    headers:
+      Content-Length:
+      - "415"
+      Content-Type:
+      - application/xml; charset=UTF-8
+      Date:
+      - Mon, 03 Aug 2020 13:01:47 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/xml
+      Content-Type:
+      - application/xml
+    url: https://api.upcloud.com/1.2/storage/01d31d86-4bd6-442a-878c-a20f761367eb
+    method: GET
+  response:
+    body: |
+      <?xml version="1.0" encoding="utf-8"?>
+      <storage>
+        <access>private</access>
+        <backup_rule></backup_rule>
+        <backups>
+        </backups>
+        <license>0</license>
+        <progress>90</progress>
+        <servers>
+        </servers>
+        <size>10</size>
+        <state>maintenance</state>
+        <tier>maxiops</tier>
+        <title>Cloned storage</title>
+        <type>normal</type>
+        <uuid>01d31d86-4bd6-442a-878c-a20f761367eb</uuid>
+        <zone>fi-hel2</zone>
+      </storage>
+    headers:
+      Content-Length:
+      - "415"
+      Content-Type:
+      - application/xml; charset=UTF-8
+      Date:
+      - Mon, 03 Aug 2020 13:01:52 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/xml
+      Content-Type:
+      - application/xml
+    url: https://api.upcloud.com/1.2/storage/01d31d86-4bd6-442a-878c-a20f761367eb
+    method: GET
+  response:
+    body: |
+      <?xml version="1.0" encoding="utf-8"?>
+      <storage>
+        <access>private</access>
+        <backup_rule></backup_rule>
+        <backups>
+        </backups>
+        <license>0</license>
+        <servers>
+        </servers>
+        <size>10</size>
+        <state>online</state>
+        <tier>maxiops</tier>
+        <title>Cloned storage</title>
+        <type>normal</type>
+        <uuid>01d31d86-4bd6-442a-878c-a20f761367eb</uuid>
+        <zone>fi-hel2</zone>
+      </storage>
+    headers:
+      Content-Length:
+      - "384"
+      Content-Type:
+      - application/xml; charset=UTF-8
+      Date:
+      - Mon, 03 Aug 2020 13:01:57 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""

@@ -20,13 +20,33 @@ const (
 
 // ServerConfigurations represents a /server_size response
 type ServerConfigurations struct {
-	ServerConfigurations []ServerConfiguration `xml:"server_size"`
+	ServerConfigurations []ServerConfiguration `xml:"server_size" json:"server_sizes"`
+}
+
+// UnmarshalJSON is a custom unmarshaller that deals with
+// deeply embedded values.
+func (s *ServerConfigurations) UnmarshalJSON(b []byte) error {
+	type serverConfigurationWrapper struct {
+		ServerConfigurations []ServerConfiguration `json:"server_size"`
+	}
+
+	v := struct {
+		ServerConfigurations serverConfigurationWrapper `json:"server_sizes"`
+	}{}
+	err := json.Unmarshal(b, &v)
+	if err != nil {
+		return err
+	}
+
+	s.ServerConfigurations = v.ServerConfigurations.ServerConfigurations
+
+	return nil
 }
 
 // ServerConfiguration represents a server configuration
 type ServerConfiguration struct {
-	CoreNumber   int `xml:"core_number"`
-	MemoryAmount int `xml:"memory_amount"`
+	CoreNumber   int `xml:"core_number" json:"core_number,string"`
+	MemoryAmount int `xml:"memory_amount" json:"memory_amount,string"`
 }
 
 // Servers represents a /server response
@@ -34,6 +54,8 @@ type Servers struct {
 	Servers []Server `xml:"server" json:"servers"`
 }
 
+// UnmarshalJSON is a custom unmarshaller that deals with
+// deeply embedded values.
 func (s *Servers) UnmarshalJSON(b []byte) error {
 	type serverWrapper struct {
 		Servers []Server `json:"server"`
@@ -52,8 +74,12 @@ func (s *Servers) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+// TagSlice is a slice of string.
+// It exists to allow for a custom JSON unmarshaller.
 type TagSlice []string
 
+// UnmarshalJSON is a custom unmarshaller that deals with
+// deeply embedded values.
 func (t *TagSlice) UnmarshalJSON(b []byte) error {
 	v := struct {
 		Tags []string `json:"tag"`
@@ -83,8 +109,12 @@ type Server struct {
 	Zone         string   `xml:"zone" json:"zone"`
 }
 
+// IPAddressSlice is a slice of IPAddress.
+// It exists to allow for a custom JSON unmarshaller.
 type IPAddressSlice []IPAddress
 
+// UnmarshalJSON is a custom unmarshaller that deals with
+// deeply embedded values.
 func (i *IPAddressSlice) UnmarshalJSON(b []byte) error {
 	v := struct {
 		IPAddresses []IPAddress `json:"ip_address"`
@@ -99,8 +129,12 @@ func (i *IPAddressSlice) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+// ServerStorageDeviceSlice is a slice of ServerStorageDevices.
+// It exists to allow for a custom JSON unmarshaller.
 type ServerStorageDeviceSlice []ServerStorageDevice
 
+// UnmarshalJSON is a custom unmarshaller that deals with
+// deeply embedded values.
 func (s *ServerStorageDeviceSlice) UnmarshalJSON(b []byte) error {
 	v := struct {
 		StorageDevices []ServerStorageDevice `json:"storage_device"`
@@ -133,9 +167,11 @@ type ServerDetails struct {
 	VNC         string `xml:"vnc" json:"vnc"`
 	VNCHost     string `xml:"vnc_host" json:"vnc_host"`
 	VNCPassword string `xml:"vnc_password" json:"vnc_password"`
-	VNCPort     int    `xml:"vnc_port" json:"vnc_port"`
+	VNCPort     int    `xml:"vnc_port" json:"vnc_port,string"`
 }
 
+// UnmarshalJSON is a custom unmarshaller that deals with
+// deeply embedded values.
 func (s *ServerDetails) UnmarshalJSON(b []byte) error {
 	type localServerDetails ServerDetails
 

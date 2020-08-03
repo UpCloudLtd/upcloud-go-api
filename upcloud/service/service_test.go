@@ -140,6 +140,153 @@ func TestGetAccount(t *testing.T) {
 	})
 }
 
+// TestGetZones tests that the GetZones() function returns proper data
+func TestGetZones(t *testing.T) {
+	record(t, "getzones", func(t *testing.T, svc *Service) {
+		zones, err := svc.GetZones()
+		require.NoError(t, err)
+		assert.NotEmpty(t, zones.Zones)
+
+		var found bool
+		for _, z := range zones.Zones {
+			if z.Description == "Helsinki #1" && z.ID == "fi-hel1" {
+				found = true
+				break
+			}
+		}
+		assert.True(t, found)
+	})
+}
+
+// TestGetPriceZones tests that GetPriceZones() function returns proper data
+func TestGetPriceZones(t *testing.T) {
+	record(t, "getpricezones", func(t *testing.T, svc *Service) {
+		zones, err := svc.GetPriceZones()
+		require.NoError(t, err)
+		assert.NotEmpty(t, zones.PriceZones)
+
+		var found bool
+		var zone upcloud.PriceZone
+		for _, z := range zones.PriceZones {
+			if z.Name == "fi-hel1" {
+				found = true
+				zone = z
+				break
+			}
+		}
+		assert.True(t, found)
+		assert.NotZero(t, zone.Firewall.Amount)
+		assert.NotZero(t, zone.Firewall.Price)
+		assert.NotZero(t, zone.IPv4Address.Amount)
+		assert.NotZero(t, zone.IPv4Address.Price)
+	})
+}
+
+// TestGetTimeZones ensures that the GetTimeZones() function returns proper data
+func TestGetTimeZones(t *testing.T) {
+	record(t, "gettimezones", func(t *testing.T, svc *Service) {
+		zones, err := svc.GetTimeZones()
+		require.NoError(t, err)
+		assert.NotEmpty(t, zones.TimeZones)
+
+		var found bool
+		for _, z := range zones.TimeZones {
+			if z == "Pacific/Wallis" {
+				found = true
+				break
+			}
+		}
+		assert.True(t, found)
+	})
+}
+
+// TestGetPlans ensures that the GetPlans() functions returns proper data
+func TestGetPlans(t *testing.T) {
+	record(t, "getplans", func(t *testing.T, svc *Service) {
+		plans, err := svc.GetPlans()
+		require.NoError(t, err)
+		assert.NotEmpty(t, plans.Plans)
+
+		var found bool
+		var plan upcloud.Plan
+		for _, p := range plans.Plans {
+			if p.Name == "1xCPU-1GB" {
+				found = true
+				plan = p
+				break
+			}
+		}
+		assert.True(t, found)
+
+		assert.Equal(t, 1, plan.CoreNumber)
+		assert.Equal(t, 1024, plan.MemoryAmount)
+		assert.Equal(t, 1024, plan.PublicTrafficOut)
+		assert.Equal(t, 25, plan.StorageSize)
+		assert.Equal(t, upcloud.StorageTierMaxIOPS, plan.StorageTier)
+	})
+}
+
+// TestGetServerConfigurations ensures that the GetServerConfigurations() function returns proper data
+func TestGetServerConfigurations(t *testing.T) {
+	record(t, "getserverconfigurations", func(t *testing.T, svc *Service) {
+		configurations, err := svc.GetServerConfigurations()
+		require.NoError(t, err)
+		assert.NotEmpty(t, configurations.ServerConfigurations)
+
+		var found bool
+		for _, sc := range configurations.ServerConfigurations {
+			if sc.CoreNumber == 1 && sc.MemoryAmount == 1024 {
+				found = true
+				break
+			}
+		}
+		assert.True(t, found)
+	})
+}
+
+// TestGetServerDetails ensures that the GetServerDetails() function returns proper data
+func TestGetServerDetails(t *testing.T) {
+	record(t, "getserverdetails", func(t *testing.T, svc *Service) {
+		d, err := createServer(svc, "getserverdetails")
+		require.NoError(t, err)
+
+		serverDetails, err := svc.GetServerDetails(&request.GetServerDetailsRequest{
+			UUID: d.UUID,
+		})
+		require.NoError(t, err)
+
+		assert.Contains(t, serverDetails.Title, "getserverdetails")
+		assert.Equal(t, "fi-hel2", serverDetails.Zone)
+	})
+}
+
+// TestCreateStopStartServer ensures that StartServer() behaves as expect and returns
+// proper data
+// The test:
+//   - Creates a server
+//   - Stops the server
+//   - Starts the server
+//   - Checks the details of the started server and that it is in the
+//     correct state.
+func TestCreateStopStartServer(t *testing.T) {
+	record(t, "createstartstopserver", func(t *testing.T, svc *Service) {
+		d, err := createServer(svc, "createstartstopserver")
+		require.NoError(t, err)
+
+		err = stopServer(svc, d.UUID)
+		require.NoError(t, err)
+
+		serverDetails, err := svc.StartServer(&request.StartServerRequest{
+			UUID: d.UUID,
+		})
+		require.NoError(t, err)
+
+		assert.Contains(t, serverDetails.Title, "createstartstopserver")
+		assert.Equal(t, "fi-hel2", serverDetails.Zone)
+		assert.Equal(t, upcloud.ServerStateStarted, serverDetails.State)
+	})
+}
+
 // TestErrorHandling checks that the correct error type is returned from service methods
 func TestErrorHandling(t *testing.T) {
 	record(t, "errorhandling", func(t *testing.T, svc *Service) {
@@ -457,7 +604,7 @@ func TestTemplatizeServerStorage(t *testing.T) {
 			UUID:  serverDetails.StorageDevices[0].UUID,
 			Title: "Templatized storage",
 		})
-		require.NoError(t, err)
+		require.NoErrorf(t, err, "Error: %#v", err)
 
 		err = waitForStorageOnline(svc, storageDetails.UUID)
 		require.NoError(t, err)
