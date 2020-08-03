@@ -1,0 +1,44 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/xml
+      Content-Type:
+      - application/xml
+    url: https://api.upcloud.com/1.2/account
+    method: GET
+  response:
+    body: |
+      <?xml version="1.0" encoding="utf-8"?>
+      <account>
+        <credits>995435.8356</credits>
+        <resource_limits>
+          <cores>100</cores>
+          <detached_floating_ips></detached_floating_ips>
+          <memory>307200</memory>
+          <networks>100</networks>
+          <public_ipv4></public_ipv4>
+          <public_ipv6>100</public_ipv6>
+          <storage_hdd>10240</storage_hdd>
+          <storage_ssd>10240</storage_ssd>
+        </resource_limits>
+        <username>opencredo</username>
+      </account>
+    headers:
+      Content-Length:
+      - "440"
+      Content-Type:
+      - application/xml; charset=UTF-8
+      Date:
+      - Mon, 03 Aug 2020 12:55:07 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""

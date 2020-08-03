@@ -1,0 +1,119 @@
+---
+version: 1
+interactions:
+- request:
+    body: <storage><size>10</size><tier>maxiops</tier><title>Test storage</title><zone>fi-hel2</zone><backup_rule><interval>daily</interval><time>0430</time><retention>30</retention></backup_rule></storage>
+    form: {}
+    headers:
+      Accept:
+      - application/xml
+      Content-Type:
+      - application/xml
+    url: https://api.upcloud.com/1.2/storage
+    method: POST
+  response:
+    body: |
+      <?xml version="1.0" encoding="utf-8"?>
+      <storage>
+        <access>private</access>
+        <backup_rule>
+          <interval>daily</interval>
+          <retention>30</retention>
+          <time>0430</time>
+        </backup_rule>
+        <backups>
+        </backups>
+        <license>0</license>
+        <servers>
+        </servers>
+        <size>10</size>
+        <state>online</state>
+        <tier>maxiops</tier>
+        <title>Test storage</title>
+        <type>normal</type>
+        <uuid>01fc286b-69c7-4359-b3c0-0583083e51b7</uuid>
+        <zone>fi-hel2</zone>
+      </storage>
+    headers:
+      Content-Length:
+      - "468"
+      Content-Type:
+      - application/xml; charset=UTF-8
+      Date:
+      - Mon, 03 Aug 2020 13:01:57 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: <storage><title>New fancy title</title></storage>
+    form: {}
+    headers:
+      Accept:
+      - application/xml
+      Content-Type:
+      - application/xml
+    url: https://api.upcloud.com/1.2/storage/01fc286b-69c7-4359-b3c0-0583083e51b7
+    method: PUT
+  response:
+    body: |
+      <?xml version="1.0" encoding="utf-8"?>
+      <storage>
+        <access>private</access>
+        <backup_rule>
+          <interval>daily</interval>
+          <retention>30</retention>
+          <time>0430</time>
+        </backup_rule>
+        <backups>
+        </backups>
+        <license>0</license>
+        <servers>
+        </servers>
+        <size>10</size>
+        <state>online</state>
+        <tier>maxiops</tier>
+        <title>New fancy title</title>
+        <type>normal</type>
+        <uuid>01fc286b-69c7-4359-b3c0-0583083e51b7</uuid>
+        <zone>fi-hel2</zone>
+      </storage>
+    headers:
+      Content-Length:
+      - "471"
+      Content-Type:
+      - application/xml; charset=UTF-8
+      Date:
+      - Mon, 03 Aug 2020 13:02:10 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 202 Accepted
+    code: 202
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/xml
+      Content-Type:
+      - application/xml
+    url: https://api.upcloud.com/1.2/storage/01fc286b-69c7-4359-b3c0-0583083e51b7
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Mon, 03 Aug 2020 13:02:10 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""

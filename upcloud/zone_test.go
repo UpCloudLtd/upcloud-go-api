@@ -1,7 +1,7 @@
 package upcloud
 
 import (
-	"encoding/xml"
+	"encoding/json"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -9,33 +9,62 @@ import (
 
 // TestUnmarshalZones tests that the Zone and Zones structs are correctly marshaled
 func TestUnmarshalZones(t *testing.T) {
-	originalXML := `<?xml version="1.0" encoding="utf-8"?>
-<zones>
-    <zone>
-        <description>Frankfurt #1</description>
-        <id>de-fra1</id>
-    </zone>
-    <zone>
-        <description>Helsinki #2</description>
-        <id>fi-hel2</id>
-    </zone>
-    <zone>
-        <description>London #1</description>
-        <id>uk-lon1</id>
-    </zone>
-    <zone>
-        <description>Chicago #1</description>
-        <id>us-chi1</id>
-    </zone>
-</zones>`
+	originalJSON := `
+{
+    "zones": {
+      "zone": [
+        {
+          "description" : "Frankfurt #1",
+          "id" : "de-fra1"
+        },
+        {
+          "description": "Helsinki #2",
+          "id": "fi-hel2"
+        },
+        {
+          "description": "London #1",
+          "id": "uk-lon1"
+        },
+        {
+          "description" : "Chicago #1",
+          "id" : "us-chi1"
+        }
+      ]
+    }
+  }
+`
 
 	zones := Zones{}
-	err := xml.Unmarshal([]byte(originalXML), &zones)
+	err := json.Unmarshal([]byte(originalJSON), &zones)
 
 	assert.Nil(t, err)
 	assert.Len(t, zones.Zones, 4)
 
-	firstZone := zones.Zones[0]
-	assert.Equal(t, "Frankfurt #1", firstZone.Description)
-	assert.Equal(t, "de-fra1", firstZone.Id)
+	zoneData := []struct {
+		Description string
+		ID          string
+	}{
+		{
+			ID:          "de-fra1",
+			Description: "Frankfurt #1",
+		},
+		{
+			ID:          "fi-hel2",
+			Description: "Helsinki #2",
+		},
+		{
+			ID:          "uk-lon1",
+			Description: "London #1",
+		},
+		{
+			ID:          "us-chi1",
+			Description: "Chicago #1",
+		},
+	}
+
+	for i, d := range zoneData {
+		z := zones.Zones[i]
+		assert.Equal(t, d.Description, z.Description)
+		assert.Equal(t, d.ID, z.ID)
+	}
 }

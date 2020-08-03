@@ -84,13 +84,14 @@ type BackupRule struct {
 type ServerStorageDevice struct {
 	XMLName xml.Name `xml:"storage_device"`
 
-	Address string `xml:"address"`
+	Address string `xml:"address" json:"address"`
 	// TODO: Convert to boolean
-	PartOfPlan string `xml:"part_of_plan"`
-	UUID       string `xml:"storage"`
-	Size       int    `xml:"storage_size"`
-	Title      string `xml:"storage_title"`
-	Type       string `xml:"type"`
+	PartOfPlan string `xml:"part_of_plan" json:"part_of_plan"`
+	UUID       string `xml:"storage" json:"storage"`
+	Size       int    `xml:"storage_size" json:"storage_size"`
+	Title      string `xml:"storage_title" json:"storage_title"`
+	Type       string `xml:"type" json:"type"`
+	BootDisk   int    `xml:"-" json:"boot_disk,string"`
 }
 
 // CreateServerStorageDevice represents a storage device for a CreateServerRequest

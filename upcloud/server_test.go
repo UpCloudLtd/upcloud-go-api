@@ -2,7 +2,6 @@ package upcloud
 
 import (
 	"encoding/json"
-	"encoding/xml"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -10,30 +9,60 @@ import (
 
 // TestUnmarshalServerConfiguratons tests that ServerConfigurations and ServerConfiguration are unmarshaled correctly
 func TestUnmarshalServerConfiguratons(t *testing.T) {
-	originalXML := `<?xml version="1.0" encoding="utf-8"?>
-<server_sizes>
-    <server_size>
-        <core_number>1</core_number>
-        <memory_amount>512</memory_amount>
-    </server_size>
-    <server_size>
-        <core_number>1</core_number>
-        <memory_amount>1024</memory_amount>
-    </server_size>
-    <server_size>
-        <core_number>1</core_number>
-        <memory_amount>1536</memory_amount>
-    </server_size>
-</server_sizes>`
+	originalJSON := `
+{
+    "server_sizes": {
+      "server_size": [
+        {
+          "core_number": "1",
+          "memory_amount": "512"
+        },
+        {
+          "core_number": "1",
+          "memory_amount": "768"
+        },
+        {
+          "core_number": "10",
+          "memory_amount": "65024"
+        },
+        {
+          "core_number": "10",
+          "memory_amount": "65536"
+        }
+      ]
+    }
+  }
+`
 
 	serverConfigurations := ServerConfigurations{}
-	err := xml.Unmarshal([]byte(originalXML), &serverConfigurations)
+	err := json.Unmarshal([]byte(originalJSON), &serverConfigurations)
 	assert.Nil(t, err)
-	assert.Len(t, serverConfigurations.ServerConfigurations, 3)
+	assert.Len(t, serverConfigurations.ServerConfigurations, 4)
 
-	firstConfiguration := serverConfigurations.ServerConfigurations[0]
-	assert.Equal(t, 1, firstConfiguration.CoreNumber)
-	assert.Equal(t, 512, firstConfiguration.MemoryAmount)
+	testData := []ServerConfiguration{
+		{
+			CoreNumber:   1,
+			MemoryAmount: 512,
+		},
+		{
+			CoreNumber:   1,
+			MemoryAmount: 768,
+		},
+		{
+			CoreNumber:   10,
+			MemoryAmount: 65024,
+		},
+		{
+			CoreNumber:   10,
+			MemoryAmount: 65536,
+		},
+	}
+
+	for i, sc := range testData {
+		configuration := serverConfigurations.ServerConfigurations[i]
+		assert.Equal(t, sc.CoreNumber, configuration.CoreNumber)
+		assert.Equal(t, sc.MemoryAmount, configuration.MemoryAmount)
+	}
 }
 
 // TestUnmarshalServers tests that Servers and Server are unmarshaled correctly
@@ -83,67 +112,90 @@ func TestUnmarshalServers(t *testing.T) {
 
 // TestUnmarshalServerDetails tests that ServerDetails objects are correctly unmarshaled
 func TestUnmarshalServerDetails(t *testing.T) {
-	originalXML := `<?xml version="1.0" encoding="utf-8"?>
-<server>
-    <boot_order>cdrom,disk</boot_order>
-    <core_number>1</core_number>
-    <firewall>off</firewall>
-    <hostname>foo</hostname>
-    <ip_addresses>
-        <ip_address>
-            <access>private</access>
-            <address>10.2.0.123</address>
-            <family>IPv4</family>
-        </ip_address>
-        <ip_address>
-            <access>public</access>
-            <address>2a04:3541:1000:500:6069:7bff:fe96:613d</address>
-            <family>IPv6</family>
-        </ip_address>
-        <ip_address>
-            <access>public</access>
-            <address>83.136.252.63</address>
-            <family>IPv4</family>
-            <part_of_plan>yes</part_of_plan>
-        </ip_address>
-    </ip_addresses>
-    <license>0</license>
-    <memory_amount>1024</memory_amount>
-    <nic_model>virtio</nic_model>
-    <plan>1xCPU-1GB</plan>
-    <state>maintenance</state>
-    <storage_devices>
-        <storage_device>
-            <address>virtio:0</address>
-            <part_of_plan>yes</part_of_plan>
-            <storage>01ea621d-e509-4a78-bdf2-068feb07e92a</storage>
-            <storage_size>30</storage_size>
-            <storage_title>foo-disk0</storage_title>
-            <type>disk</type>
-        </storage_device>
-    </storage_devices>
-    <tags>
-  </tags>
-    <timezone>UTC</timezone>
-    <title>foo.example.com</title>
-    <uuid>007efb1c-b7ba-41ff-9e03-57876f2ba0b0</uuid>
-    <video_model>cirrus</video_model>
-    <vnc>off</vnc>
-    <vnc_password>7rNQE6mA</vnc_password>
-    <zone>uk-lon1</zone>
-</server>`
+	originalJSON := `
+      {
+        "server": {
+          "boot_order": "cdrom,disk",
+          "core_number": "0",
+          "firewall": "on",
+          "host" : 7653311107,
+          "hostname": "server1.example.com",
+          "ip_addresses": {
+            "ip_address": [
+              {
+                "access": "private",
+                "address": "10.0.0.00",
+                "family" : "IPv4"
+              },
+              {
+                "access": "public",
+                "address": "0.0.0.0",
+                "family" : "IPv4"
+              },
+              {
+                "access": "public",
+                "address": "xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx",
+                "family" : "IPv6"
+              }
+            ]
+          },
+          "license": 0,
+          "memory_amount": "2048",
+          "nic_model": "virtio",
+          "plan" : "1xCPU-2GB",
+          "plan_ipv4_bytes": "3565675343",
+          "plan_ipv6_bytes": "4534432",
+          "state": "started",
+          "storage_devices": {
+            "storage_device": [
+              {
+                "address": "virtio:0",
+                "part_of_plan" : "yes",
+                "storage": "012580a1-32a1-466e-a323-689ca16f2d43",
+                "storage_size": 20,
+                "storage_title": "Storage for server1.example.com",
+                "type": "disk",
+                "boot_disk": "0"
+              }
+            ]
+          },
+          "tags" : {
+             "tag" : [
+                "DEV",
+                "Ubuntu"
+             ]
+          },
+          "timezone": "UTC",
+          "title": "server1.example.com",
+          "uuid": "0077fa3d-32db-4b09-9f5f-30d9e9afb565",
+          "video_model": "cirrus",
+          "vnc" : "on",
+          "vnc_host" : "fi-hel1.vnc.upcloud.com",
+          "vnc_password": "aabbccdd",
+          "vnc_port": "00000",
+          "zone": "fi-hel1"
+        }
+      }
+    `
 
 	serverDetails := ServerDetails{}
-	err := xml.Unmarshal([]byte(originalXML), &serverDetails)
+	err := json.Unmarshal([]byte(originalJSON), &serverDetails)
 	assert.Nil(t, err)
 
 	assert.Equal(t, "cdrom,disk", serverDetails.BootOrder)
-	assert.Equal(t, "off", serverDetails.Firewall)
+	assert.Equal(t, "on", serverDetails.Firewall)
 	assert.Len(t, serverDetails.IPAddresses, 3)
 	assert.Equal(t, "virtio", serverDetails.NICModel)
 	assert.Len(t, serverDetails.StorageDevices, 1)
+	assert.Equal(t, "012580a1-32a1-466e-a323-689ca16f2d43", serverDetails.StorageDevices[0].UUID)
+	assert.Equal(t, "virtio:0", serverDetails.StorageDevices[0].Address)
+	assert.Equal(t, "yes", serverDetails.StorageDevices[0].PartOfPlan)
+	assert.Equal(t, 20, serverDetails.StorageDevices[0].Size)
+	assert.Equal(t, "Storage for server1.example.com", serverDetails.StorageDevices[0].Title)
+	assert.Equal(t, StorageTypeDisk, serverDetails.StorageDevices[0].Type)
+	assert.Equal(t, 0, serverDetails.StorageDevices[0].BootDisk)
 	assert.Equal(t, "UTC", serverDetails.Timezone)
 	assert.Equal(t, VideoModelCirrus, serverDetails.VideoModel)
-	assert.Equal(t, "off", serverDetails.VNC)
-	assert.Equal(t, "7rNQE6mA", serverDetails.VNCPassword)
+	assert.Equal(t, "on", serverDetails.VNC)
+	assert.Equal(t, "aabbccdd", serverDetails.VNCPassword)
 }

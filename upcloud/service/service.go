@@ -41,27 +41,27 @@ func (s *Service) GetAccount() (*upcloud.Account, error) {
 // GetZones returns the available zones
 func (s *Service) GetZones() (*upcloud.Zones, error) {
 	zones := upcloud.Zones{}
-	response, err := s.basicGetRequest("/zone")
+	response, err := s.basicJSONGetRequest("/zone")
 
 	if err != nil {
-		return nil, parseServiceError(err)
+		return nil, parseJSONServiceError(err)
 	}
 
-	xml.Unmarshal(response, &zones)
+	json.Unmarshal(response, &zones)
 
 	return &zones, nil
 }
 
 // GetPriceZones returns the available price zones and their corresponding prices
-func (s *Service) GetPriceZones() (*upcloud.PrizeZones, error) {
-	zones := upcloud.PrizeZones{}
-	response, err := s.basicGetRequest("/price")
+func (s *Service) GetPriceZones() (*upcloud.PriceZones, error) {
+	zones := upcloud.PriceZones{}
+	response, err := s.basicJSONGetRequest("/price")
 
 	if err != nil {
-		return nil, parseServiceError(err)
+		return nil, parseJSONServiceError(err)
 	}
 
-	xml.Unmarshal(response, &zones)
+	json.Unmarshal(response, &zones)
 
 	return &zones, nil
 }
@@ -69,13 +69,13 @@ func (s *Service) GetPriceZones() (*upcloud.PrizeZones, error) {
 // GetTimeZones returns the available timezones
 func (s *Service) GetTimeZones() (*upcloud.TimeZones, error) {
 	zones := upcloud.TimeZones{}
-	response, err := s.basicGetRequest("/timezone")
+	response, err := s.basicJSONGetRequest("/timezone")
 
 	if err != nil {
-		return nil, parseServiceError(err)
+		return nil, parseJSONServiceError(err)
 	}
 
-	xml.Unmarshal(response, &zones)
+	json.Unmarshal(response, &zones)
 
 	return &zones, nil
 }
@@ -83,13 +83,13 @@ func (s *Service) GetTimeZones() (*upcloud.TimeZones, error) {
 // GetPlans returns the available service plans
 func (s *Service) GetPlans() (*upcloud.Plans, error) {
 	plans := upcloud.Plans{}
-	response, err := s.basicGetRequest("/plan")
+	response, err := s.basicJSONGetRequest("/plan")
 
 	if err != nil {
-		return nil, parseServiceError(err)
+		return nil, parseJSONServiceError(err)
 	}
 
-	xml.Unmarshal(response, &plans)
+	json.Unmarshal(response, &plans)
 
 	return &plans, nil
 }
@@ -97,13 +97,13 @@ func (s *Service) GetPlans() (*upcloud.Plans, error) {
 // GetServerConfigurations returns the available pre-configured server configurations
 func (s *Service) GetServerConfigurations() (*upcloud.ServerConfigurations, error) {
 	serverConfigurations := upcloud.ServerConfigurations{}
-	response, err := s.basicGetRequest("/server_size")
+	response, err := s.basicJSONGetRequest("/server_size")
 
 	if err != nil {
-		return nil, parseServiceError(err)
+		return nil, parseJSONServiceError(err)
 	}
 
-	xml.Unmarshal(response, &serverConfigurations)
+	json.Unmarshal(response, &serverConfigurations)
 
 	return &serverConfigurations, nil
 }
@@ -128,13 +128,13 @@ func (s *Service) GetServers() (*upcloud.Servers, error) {
 // GetServerDetails returns extended details about the specified server
 func (s *Service) GetServerDetails(r *request.GetServerDetailsRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
-	response, err := s.basicGetRequest(r.RequestURL())
+	response, err := s.basicJSONGetRequest(r.RequestURL())
 
 	if err != nil {
-		return nil, parseServiceError(err)
+		return nil, parseJSONServiceError(err)
 	}
 
-	xml.Unmarshal(response, &serverDetails)
+	json.Unmarshal(response, &serverDetails)
 
 	return &serverDetails, nil
 }
@@ -199,17 +199,17 @@ func (s *Service) StartServer(r *request.StartServerRequest) (*upcloud.ServerDet
 	// Increase the client timeout to match the request timeout
 	s.client.SetTimeout(r.Timeout)
 
-	serverDetails := upcloud.ServerDetails{}
-	response, err := s.client.PerformPostRequest(s.client.CreateRequestURL(r.RequestURL()), nil)
+	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), nil)
 
 	// Restore previous timout
 	s.client.SetTimeout(prevTimeout)
 
 	if err != nil {
-		return nil, parseServiceError(err)
+		return nil, parseJSONServiceError(err)
 	}
 
-	xml.Unmarshal(response, &serverDetails)
+	serverDetails := upcloud.ServerDetails{}
+	json.Unmarshal(response, &serverDetails)
 
 	return &serverDetails, nil
 }
@@ -711,8 +711,8 @@ func (s *Service) GetTags() (*upcloud.Tags, error) {
 
 // Wrapper that performs a GET request to the specified location and returns the response or a service error
 func (s *Service) basicGetRequest(location string) ([]byte, error) {
-	requestUrl := s.client.CreateRequestURL(location)
-	response, err := s.client.PerformGetRequest(requestUrl)
+	requestURL := s.client.CreateRequestURL(location)
+	response, err := s.client.PerformGetRequest(requestURL)
 
 	if err != nil {
 		return nil, parseServiceError(err)
