@@ -28,20 +28,27 @@ type Client struct {
 	httpClient *http.Client
 
 	apiVersion string
-	apiBaseUrl string
+	apiBaseURL string
 }
 
 // New creates ands returns a new client configured with the specified user and password
 func New(userName, password string) *Client {
+
+	return NewWithHTTPClient(userName, password, cleanhttp.DefaultClient())
+}
+
+// NewWithHTTPClient creates ands returns a new client configured with the specified user and password and
+// using a supplied `http.Client`.
+func NewWithHTTPClient(userName string, password string, httpClient *http.Client) *Client {
 	client := Client{}
 
 	client.userName = userName
 	client.password = password
-	client.httpClient = cleanhttp.DefaultClient()
+	client.httpClient = httpClient
 	client.SetTimeout(time.Second * DEFAULT_TIMEOUT)
 
 	client.apiVersion = DEFAULT_API_VERSION
-	client.apiBaseUrl = DEFAULT_API_BASEURL
+	client.apiBaseURL = DEFAULT_API_BASEURL
 
 	return &client
 }
@@ -56,9 +63,9 @@ func (c *Client) GetTimeout() time.Duration {
 	return c.httpClient.Timeout
 }
 
-// CreateRequestUrl creates and returns a complete request URL for the specified API location
-func (c *Client) CreateRequestUrl(location string) string {
-	return fmt.Sprintf("%s%s", c.getBaseUrl(), location)
+// CreateRequestURL creates and returns a complete request URL for the specified API location
+func (c *Client) CreateRequestURL(location string) string {
+	return fmt.Sprintf("%s%s", c.getBaseURL(), location)
 }
 
 // PerformGetRequest performs a GET request to the specified URL and returns the response body and eventual errors
@@ -100,7 +107,7 @@ func (c *Client) PerformPostRequest(url string, requestBody []byte) ([]byte, err
 	return c.performRequest(request)
 }
 
-// PerformPostRequest performs a POST request to the specified URL and returns the response body and eventual errors
+// PerformJSONPostRequest performs a POST request to the specified URL and returns the response body and eventual errors
 func (c *Client) PerformJSONPostRequest(url string, requestBody []byte) ([]byte, error) {
 	var bodyReader io.Reader
 
@@ -201,10 +208,10 @@ func (c *Client) performJSONRequest(request *http.Request) ([]byte, error) {
 }
 
 // Returns the base URL to use for API requests
-func (c *Client) getBaseUrl() string {
+func (c *Client) getBaseURL() string {
 	urlVersion, _ := semver.Make(c.apiVersion)
 
-	return fmt.Sprintf("%s/%d.%d", c.apiBaseUrl, urlVersion.Major, urlVersion.Minor)
+	return fmt.Sprintf("%s/%d.%d", c.apiBaseURL, urlVersion.Major, urlVersion.Minor)
 }
 
 // Parses the response and returns either the response body or an error

@@ -40,5 +40,5 @@ go vet ./...
 staticcheck ./...
 
 # Run tests
-go test ./... -v -parallel 1 -timeout 60m
+go test ./... -v -failfast -parallel 1 -timeout 60m $*
 
