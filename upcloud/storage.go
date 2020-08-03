@@ -95,14 +95,14 @@ type ServerStorageDevice struct {
 
 // CreateServerStorageDevice represents a storage device for a CreateServerRequest
 type CreateServerStorageDevice struct {
-	XMLName xml.Name `xml:"storage_device"`
+	XMLName xml.Name `xml:"storage_device" json:"-"`
 
-	Action  string `xml:"action"`
-	Address string `xml:"address,omitempty"`
-	Storage string `xml:"storage"`
-	Title   string `xml:"title,omitempty"`
+	Action  string `xml:"action" json:"action"`
+	Address string `xml:"address,omitempty" json:"address,omitempty"`
+	Storage string `xml:"storage" json:"storage"`
+	Title   string `xml:"title,omitempty" json:"title,omitempty"`
 	// Storage size in gigabytes
-	Size int    `xml:"size"`
-	Tier string `xml:"tier,omitempty"`
-	Type string `xml:"type,omitempty"`
+	Size int    `xml:"size" json:"size"`
+	Tier string `xml:"tier,omitempty" json:"tier,omitempty"`
+	Type string `xml:"type,omitempty" json:"type,omitempty"`
 }

@@ -1,6 +1,7 @@
 package request
 
 import (
+	"encoding/json"
 	"encoding/xml"
 	"fmt"
 	"strings"
@@ -32,30 +33,62 @@ func (r *GetServerDetailsRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s", r.UUID)
 }
 
+type CreateServerIPAddressSlice []CreateServerIPAddress
+
+func (s CreateServerIPAddressSlice) MarshalJSON() ([]byte, error) {
+	v := struct {
+		IPAddress []CreateServerIPAddress `json:"ip_address"`
+	}{}
+	v.IPAddress = s
+
+	return json.Marshal(v)
+}
+
+type CreateServerStorageDeviceSlice []upcloud.CreateServerStorageDevice
+
+func (s CreateServerStorageDeviceSlice) MarshalJSON() ([]byte, error) {
+	v := struct {
+		StorageDevice []upcloud.CreateServerStorageDevice `json:"storage_device"`
+	}{}
+	v.StorageDevice = s
+
+	return json.Marshal(v)
+}
+
 // CreateServerRequest represents a request for creating a new server
 type CreateServerRequest struct {
-	XMLName xml.Name `xml:"server"`
+	XMLName xml.Name `xml:"server" json:"-"`
 
-	AvoidHost  string `xml:"avoid_host,omitempty"`
-	BootOrder  string `xml:"boot_order,omitempty"`
-	CoreNumber int    `xml:"core_number,omitempty"`
+	AvoidHost  string `xml:"avoid_host,omitempty" json:"avoid_host,omitempty"`
+	BootOrder  string `xml:"boot_order,omitempty" json:"boot_order,omitempty"`
+	CoreNumber int    `xml:"core_number,omitempty" json:"core_number,omitempty"`
 	// TODO: Convert to boolean
-	Firewall         string                              `xml:"firewall,omitempty"`
-	Hostname         string                              `xml:"hostname"`
-	IPAddresses      []CreateServerIPAddress             `xml:"ip_addresses>ip_address"`
-	LoginUser        *LoginUser                          `xml:"login_user,omitempty"`
-	MemoryAmount     int                                 `xml:"memory_amount,omitempty"`
-	PasswordDelivery string                              `xml:"password_delivery,omitempty"`
-	Plan             string                              `xml:"plan,omitempty"`
-	StorageDevices   []upcloud.CreateServerStorageDevice `xml:"storage_devices>storage_device"`
-	TimeZone         string                              `xml:"timezone,omitempty"`
-	Title            string                              `xml:"title"`
-	UserData         string                              `xml:"user_data,omitempty"`
-	VideoModel       string                              `xml:"video_model,omitempty"`
+	Firewall         string                         `xml:"firewall,omitempty" json:"firewall,omitempty"`
+	Hostname         string                         `xml:"hostname" json:"hostname"`
+	IPAddresses      CreateServerIPAddressSlice     `xml:"ip_addresses>ip_address" json:"ip_addresses"`
+	LoginUser        *LoginUser                     `xml:"login_user,omitempty" json:"login_user,omitempty"`
+	MemoryAmount     int                            `xml:"memory_amount,omitempty" json:"memory_amount,omitempty"`
+	PasswordDelivery string                         `xml:"password_delivery,omitempty" json:"password_delivery,omitempty"`
+	Plan             string                         `xml:"plan,omitempty" json:"plan,omitempty"`
+	StorageDevices   CreateServerStorageDeviceSlice `xml:"storage_devices>storage_device" json:"storage_devices"`
+	TimeZone         string                         `xml:"timezone,omitempty" json:"timezone,omitempty"`
+	Title            string                         `xml:"title" json:"title"`
+	UserData         string                         `xml:"user_data,omitempty" json:"user_data,omitempty"`
+	VideoModel       string                         `xml:"video_model,omitempty" json:"video_model,omitempty"`
 	// TODO: Convert to boolean
-	VNC         string `xml:"vnc,omitempty"`
-	VNCPassword string `xml:"vnc_password,omitempty"`
-	Zone        string `xml:"zone"`
+	VNC         string `xml:"vnc,omitempty" json:"vnc,omitempty"`
+	VNCPassword string `xml:"vnc_password,omitempty" json:"vnc_password,omitempty"`
+	Zone        string `xml:"zone" json:"zone"`
+}
+
+func (r CreateServerRequest) MarshalJSON() ([]byte, error) {
+	type localCreateServerRequest CreateServerRequest
+	v := struct {
+		Server localCreateServerRequest `json:"server"`
+	}{}
+	v.Server = localCreateServerRequest(r)
+
+	return json.Marshal(&v)
 }
 
 // RequestURL implements the Request interface
@@ -63,17 +96,43 @@ func (r *CreateServerRequest) RequestURL() string {
 	return "/server"
 }
 
+type SSHKeySlice []string
+
+func (s *SSHKeySlice) UnmarshalJSON(b []byte) error {
+	v := struct {
+		SSHKey []string `json:"ssh_key"`
+	}{}
+	err := json.Unmarshal(b, &v)
+	if err != nil {
+		return err
+	}
+
+	(*s) = v.SSHKey
+
+	return nil
+}
+
+func (s SSHKeySlice) MarshalJSON() ([]byte, error) {
+	v := struct {
+		SSHKey []string `json:"ssh_key"`
+	}{}
+
+	v.SSHKey = s
+
+	return json.Marshal(v)
+}
+
 // LoginUser represents the login_user block when creating a new server
 type LoginUser struct {
-	CreatePassword string   `xml:"create_password,omitempty"`
-	Username       string   `xml:"username,omitempty"`
-	SSHKeys        []string `xml:"ssh_keys>ssh_key,omitempty"`
+	CreatePassword string      `xml:"create_password,omitempty" json:"create_password,omitempty"`
+	Username       string      `xml:"username,omitempty" json:"username,omitempty"`
+	SSHKeys        SSHKeySlice `xml:"ssh_keys>ssh_key,omitempty" json:"ssh_keys"`
 }
 
 // CreateServerIPAddress represents an IP address for a CreateServerRequest
 type CreateServerIPAddress struct {
-	Access string `xml:"access"`
-	Family string `xml:"family"`
+	Access string `xml:"access" json:"access"`
+	Family string `xml:"family" json:"family"`
 }
 
 // WaitForServerStateRequest represents a request to wait for a server to enter or exit a specific state

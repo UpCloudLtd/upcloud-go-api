@@ -1,6 +1,7 @@
 package request
 
 import (
+	"encoding/json"
 	"encoding/xml"
 	"testing"
 	"time"
@@ -57,10 +58,55 @@ func TestCreateServerRequest(t *testing.T) {
 		},
 	}
 
-	expectedXML := "<server><hostname>debian.example.com</hostname><ip_addresses><ip_address><access>private</access><family>IPv4</family></ip_address><ip_address><access>public</access><family>IPv4</family></ip_address><ip_address><access>public</access><family>IPv6</family></ip_address></ip_addresses><login_user><create_password>no</create_password><ssh_keys><ssh_key>ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCWf2MmpHweXCNUcW91PWZR5UqOkydBr1Gi1xDI16IW4JndMYkH9OF0sWvPz03kfY6NbcHY0bed1Q8BpAC//WfLltuvjrzk33IoFJZ2Ai+4fVdkevkf7pBeSvzdXSyKAT+suHrp/2Qu5hewIUdDCp+znkwyypIJ/C2hDphwbLR3QquOfn6KyKMPZC4my8dFvLxESI0UqeripaBHUGcvNG2LL563hXmWzUu/cyqCpg5IBzpj/ketg8m1KBO7U0dimIAczuxfHk3kp9bwOFquWA2vSFNuVkr8oavk36pHkU88qojYNEy/zUTINE0w6CE/EbDkQVDZEGgDtAkq4jL+4MPV negge@palinski</ssh_key><ssh_key>ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDJfx4OmD8D6mnPA0BPk2DVlbggEkMvB2cecSttauZuaYX7Vju6PvG+kXrUbTvO09oLQMoNYAk3RinqQLXo9eF7bzZIsgB4ZmKGau84kOpYjguhimkKtZiVTKF53G2pbnpiZUN9wfy3xK2mt/MkacjZ1Tp7lAgRGTfWDoTfQa88kzOJGNPWXd12HIvFtd/1KoS9vm5O0nDLV+5zSBLxEYNDmBlIGu1Y3XXle5ygL1BhfGvqOQnv/TdRZcrOgVGWHADvwEid91/+IycLNMc37uP7TdS6vOihFBMytfmFXAqt4+3AzYNmyc+R392RorFzobZ1UuEFm3gUod2Wvj8pY8d/ negge@palinski</ssh_key></ssh_keys></login_user><password_delivery>none</password_delivery><storage_devices><storage_device><action>clone</action><storage>01000000-0000-4000-8000-000030060200</storage><title>disk1</title><size>30</size><tier>maxiops</tier></storage_device></storage_devices><title>Integration test server #1</title><zone>fi-hel2</zone></server>"
-	actualXML, err := xml.Marshal(&request)
+	expectedJSON := `
+	{
+      "server": {
+        "hostname": "debian.example.com",
+        "ip_addresses": {
+          "ip_address": [
+            {
+              "access": "private",
+              "family": "IPv4"
+            },
+            {
+              "access": "public",
+              "family": "IPv4"
+            },
+            {
+              "access": "public",
+              "family": "IPv6"
+            }
+          ]
+        },
+        "login_user": {
+          "create_password": "no",
+          "ssh_keys": {
+			  "ssh_key": [
+                "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCWf2MmpHweXCNUcW91PWZR5UqOkydBr1Gi1xDI16IW4JndMYkH9OF0sWvPz03kfY6NbcHY0bed1Q8BpAC//WfLltuvjrzk33IoFJZ2Ai+4fVdkevkf7pBeSvzdXSyKAT+suHrp/2Qu5hewIUdDCp+znkwyypIJ/C2hDphwbLR3QquOfn6KyKMPZC4my8dFvLxESI0UqeripaBHUGcvNG2LL563hXmWzUu/cyqCpg5IBzpj/ketg8m1KBO7U0dimIAczuxfHk3kp9bwOFquWA2vSFNuVkr8oavk36pHkU88qojYNEy/zUTINE0w6CE/EbDkQVDZEGgDtAkq4jL+4MPV negge@palinski",
+				"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDJfx4OmD8D6mnPA0BPk2DVlbggEkMvB2cecSttauZuaYX7Vju6PvG+kXrUbTvO09oLQMoNYAk3RinqQLXo9eF7bzZIsgB4ZmKGau84kOpYjguhimkKtZiVTKF53G2pbnpiZUN9wfy3xK2mt/MkacjZ1Tp7lAgRGTfWDoTfQa88kzOJGNPWXd12HIvFtd/1KoS9vm5O0nDLV+5zSBLxEYNDmBlIGu1Y3XXle5ygL1BhfGvqOQnv/TdRZcrOgVGWHADvwEid91/+IycLNMc37uP7TdS6vOihFBMytfmFXAqt4+3AzYNmyc+R392RorFzobZ1UuEFm3gUod2Wvj8pY8d/ negge@palinski"
+			  ]
+		  }
+        },
+        "password_delivery": "none",
+        "storage_devices": {
+          "storage_device": [
+            {
+              "action": "clone",
+              "storage": "01000000-0000-4000-8000-000030060200",
+              "title": "disk1",
+              "size": 30,
+              "tier": "maxiops"
+            }
+          ]
+        },
+        "title": "Integration test server #1",
+        "zone": "fi-hel2"
+      }
+    }
+	`
+	actualJSON, err := json.Marshal(&request)
 	assert.Nil(t, err)
-	assert.Equal(t, expectedXML, string(actualXML))
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
 	assert.Equal(t, "/server", request.RequestURL())
 }
 

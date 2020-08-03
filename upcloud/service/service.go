@@ -1,6 +1,7 @@
 package service
 
 import (
+	"encoding/json"
 	"encoding/xml"
 	"fmt"
 	"time"
@@ -110,13 +111,17 @@ func (s *Service) GetServerConfigurations() (*upcloud.ServerConfigurations, erro
 // GetServers returns the available servers
 func (s *Service) GetServers() (*upcloud.Servers, error) {
 	servers := upcloud.Servers{}
-	response, err := s.basicGetRequest("/server")
+	response, err := s.basicJSONGetRequest("/server")
 
 	if err != nil {
-		return nil, parseServiceError(err)
+		return nil, parseJSONServiceError(err)
 	}
 
-	xml.Unmarshal(response, &servers)
+	fmt.Println(string(response))
+	err = json.Unmarshal(response, &servers)
+	if err != nil {
+		return nil, fmt.Errorf("unable to unmarshal JSON: %s, %w", string(response), err)
+	}
 
 	return &servers, nil
 }
@@ -138,14 +143,17 @@ func (s *Service) GetServerDetails(r *request.GetServerDetailsRequest) (*upcloud
 // CreateServer creates a server and returns the server details for the newly created server
 func (s *Service) CreateServer(r *request.CreateServerRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
-	requestBody, _ := xml.Marshal(r)
-	response, err := s.client.PerformPostRequest(s.client.CreateRequestUrl(r.RequestURL()), requestBody)
+	requestBody, _ := json.Marshal(r)
+	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestUrl(r.RequestURL()), requestBody)
 
 	if err != nil {
-		return nil, parseServiceError(err)
+		return nil, parseJSONServiceError(err)
 	}
 
-	xml.Unmarshal(response, &serverDetails)
+	err = json.Unmarshal(response, &serverDetails)
+	if err != nil {
+		return nil, err
+	}
 
 	return &serverDetails, nil
 }
@@ -272,10 +280,10 @@ func (s *Service) DeleteServer(r *request.DeleteServerRequest) error {
 
 // DeleteServerAndStorages deletes the specified server and all attached storages
 func (s *Service) DeleteServerAndStorages(r *request.DeleteServerAndStoragesRequest) error {
-	err := s.client.PerformDeleteRequest(s.client.CreateRequestUrl(r.RequestURL()))
+	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestUrl(r.RequestURL()))
 
 	if err != nil {
-		return parseServiceError(err)
+		return parseJSONServiceError(err)
 	}
 
 	return nil
@@ -714,6 +722,18 @@ func (s *Service) basicGetRequest(location string) ([]byte, error) {
 	return response, nil
 }
 
+// Wrapper that performs a GET request to the specified location and returns the response or a service error
+func (s *Service) basicJSONGetRequest(location string) ([]byte, error) {
+	requestURL := s.client.CreateRequestUrl(location)
+	response, err := s.client.PerformJSONGetRequest(requestURL)
+
+	if err != nil {
+		return nil, parseServiceError(err)
+	}
+
+	return response, nil
+}
+
 // Parses an error returned from the client into a service error object
 func parseServiceError(err error) error {
 	// Parse service errors
@@ -721,6 +741,20 @@ func parseServiceError(err error) error {
 		serviceError := upcloud.Error{}
 		responseBody := clientError.ResponseBody
 		xml.Unmarshal(responseBody, &serviceError)
+
+		return &serviceError
+	}
+
+	return err
+}
+
+// Parses an error returned from the client into a service error object
+func parseJSONServiceError(err error) error {
+	// Parse service errors
+	if clientError, ok := err.(*client.Error); ok {
+		serviceError := upcloud.Error{}
+		responseBody := clientError.ResponseBody
+		json.Unmarshal(responseBody, &serviceError)
 
 		return &serviceError
 	}
