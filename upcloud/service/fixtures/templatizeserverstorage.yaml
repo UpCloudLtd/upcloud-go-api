@@ -17,24 +17,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596472482,
+            "created" : 1596536433,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testtemplatizeserverstorage.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "private",
-                     "address" : "10.6.6.220",
+                     "address" : "10.6.6.223",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:5228",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1712",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.82",
+                     "address" : "94.237.104.85",
                      "family" : "IPv4"
                   }
                ]
@@ -43,7 +43,7 @@ interactions:
             "memory_amount" : "1024",
             "metadata" : "no",
             "nic_model" : "virtio",
-            "password" : "a3ar89f6",
+            "password" : "k7k73y42",
             "plan" : "custom",
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
@@ -54,7 +54,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "0112dd91-5764-4e5f-9c3e-43f559d3bb57",
+                     "storage" : "01e5a11d-5676-4bf7-bddd-5bad40e8f0f6",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -67,10 +67,10 @@ interactions:
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestTemplatizeServerStorage",
             "username" : "root",
-            "uuid" : "00af9c94-b1a3-4b3f-9112-51a110b7f288",
+            "uuid" : "0057ba93-3858-44c6-a7bb-f9264628f545",
             "video_model" : "cirrus",
             "vnc" : "off",
-            "vnc_password" : "eUM45Nw4",
+            "vnc_password" : "Evp5tXy9",
             "zone" : "fi-hel2"
          }
       }
@@ -80,7 +80,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 16:34:42 GMT
+      - Tue, 04 Aug 2020 10:20:33 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -96,7 +96,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.2/server/00af9c94-b1a3-4b3f-9112-51a110b7f288
+    url: https://api.upcloud.com/1.2/server/0057ba93-3858-44c6-a7bb-f9264628f545
     method: GET
   response:
     body: |
@@ -104,24 +104,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596472482,
+            "created" : 1596536433,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testtemplatizeserverstorage.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "private",
-                     "address" : "10.6.6.220",
+                     "address" : "10.6.6.223",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:5228",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1712",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.82",
+                     "address" : "94.237.104.85",
                      "family" : "IPv4"
                   }
                ]
@@ -140,7 +140,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "0112dd91-5764-4e5f-9c3e-43f559d3bb57",
+                     "storage" : "01e5a11d-5676-4bf7-bddd-5bad40e8f0f6",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -152,10 +152,10 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestTemplatizeServerStorage",
-            "uuid" : "00af9c94-b1a3-4b3f-9112-51a110b7f288",
+            "uuid" : "0057ba93-3858-44c6-a7bb-f9264628f545",
             "video_model" : "cirrus",
             "vnc" : "off",
-            "vnc_password" : "eUM45Nw4",
+            "vnc_password" : "Evp5tXy9",
             "zone" : "fi-hel2"
          }
       }
@@ -165,7 +165,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 16:34:48 GMT
+      - Tue, 04 Aug 2020 10:20:39 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -181,7 +181,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.2/server/00af9c94-b1a3-4b3f-9112-51a110b7f288
+    url: https://api.upcloud.com/1.2/server/0057ba93-3858-44c6-a7bb-f9264628f545
     method: GET
   response:
     body: |
@@ -189,24 +189,109 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596472482,
+            "created" : 1596536433,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testtemplatizeserverstorage.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "private",
-                     "address" : "10.6.6.220",
+                     "address" : "10.6.6.223",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:5228",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1712",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.82",
+                     "address" : "94.237.104.85",
+                     "family" : "IPv4"
+                  }
+               ]
+            },
+            "license" : 0,
+            "memory_amount" : "1024",
+            "metadata" : "no",
+            "nic_model" : "virtio",
+            "plan" : "custom",
+            "plan_ipv4_bytes" : "0",
+            "plan_ipv6_bytes" : "0",
+            "progress" : "95",
+            "state" : "maintenance",
+            "storage_devices" : {
+               "storage_device" : [
+                  {
+                     "address" : "virtio:0",
+                     "boot_disk" : "0",
+                     "storage" : "01e5a11d-5676-4bf7-bddd-5bad40e8f0f6",
+                     "storage_size" : 30,
+                     "storage_title" : "disk1",
+                     "type" : "disk"
+                  }
+               ]
+            },
+            "tags" : {
+               "tag" : []
+            },
+            "timezone" : "UTC",
+            "title" : "uploud-go-sdk-integration-test-TestTemplatizeServerStorage",
+            "uuid" : "0057ba93-3858-44c6-a7bb-f9264628f545",
+            "video_model" : "cirrus",
+            "vnc" : "off",
+            "vnc_password" : "Evp5tXy9",
+            "zone" : "fi-hel2"
+         }
+      }
+    headers:
+      Content-Length:
+      - "1673"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 04 Aug 2020 10:20:45 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.2/server/0057ba93-3858-44c6-a7bb-f9264628f545
+    method: GET
+  response:
+    body: |
+      {
+         "server" : {
+            "boot_order" : "disk",
+            "core_number" : "1",
+            "created" : 1596536433,
+            "firewall" : "off",
+            "hostname" : "uploud-go-sdk-integration-test-testtemplatizeserverstorage.example.com",
+            "ip_addresses" : {
+               "ip_address" : [
+                  {
+                     "access" : "private",
+                     "address" : "10.6.6.223",
+                     "family" : "IPv4"
+                  },
+                  {
+                     "access" : "public",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1712",
+                     "family" : "IPv6"
+                  },
+                  {
+                     "access" : "public",
+                     "address" : "94.237.104.85",
                      "family" : "IPv4"
                   }
                ]
@@ -224,7 +309,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "0112dd91-5764-4e5f-9c3e-43f559d3bb57",
+                     "storage" : "01e5a11d-5676-4bf7-bddd-5bad40e8f0f6",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -236,10 +321,10 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestTemplatizeServerStorage",
-            "uuid" : "00af9c94-b1a3-4b3f-9112-51a110b7f288",
+            "uuid" : "0057ba93-3858-44c6-a7bb-f9264628f545",
             "video_model" : "cirrus",
             "vnc" : "off",
-            "vnc_password" : "eUM45Nw4",
+            "vnc_password" : "Evp5tXy9",
             "zone" : "fi-hel2"
          }
       }
@@ -249,7 +334,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 16:34:53 GMT
+      - Tue, 04 Aug 2020 10:20:50 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -265,7 +350,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.2/server/00af9c94-b1a3-4b3f-9112-51a110b7f288
+    url: https://api.upcloud.com/1.2/server/0057ba93-3858-44c6-a7bb-f9264628f545
     method: GET
   response:
     body: |
@@ -273,109 +358,25 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596472482,
+            "created" : 1596536433,
             "firewall" : "off",
+            "host" : 5201216131,
             "hostname" : "uploud-go-sdk-integration-test-testtemplatizeserverstorage.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "private",
-                     "address" : "10.6.6.220",
+                     "address" : "10.6.6.223",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:5228",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1712",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.82",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "0112dd91-5764-4e5f-9c3e-43f559d3bb57",
-                     "storage_size" : 30,
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestTemplatizeServerStorage",
-            "uuid" : "00af9c94-b1a3-4b3f-9112-51a110b7f288",
-            "video_model" : "cirrus",
-            "vnc" : "off",
-            "vnc_password" : "eUM45Nw4",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "1648"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Mon, 03 Aug 2020 16:34:58 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-    url: https://api.upcloud.com/1.2/server/00af9c94-b1a3-4b3f-9112-51a110b7f288
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1596472482,
-            "firewall" : "off",
-            "host" : 7617135235,
-            "hostname" : "uploud-go-sdk-integration-test-testtemplatizeserverstorage.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "private",
-                     "address" : "10.6.6.220",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:5228",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.104.82",
+                     "address" : "94.237.104.85",
                      "family" : "IPv4"
                   }
                ]
@@ -393,7 +394,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "0112dd91-5764-4e5f-9c3e-43f559d3bb57",
+                     "storage" : "01e5a11d-5676-4bf7-bddd-5bad40e8f0f6",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -405,10 +406,10 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestTemplatizeServerStorage",
-            "uuid" : "00af9c94-b1a3-4b3f-9112-51a110b7f288",
+            "uuid" : "0057ba93-3858-44c6-a7bb-f9264628f545",
             "video_model" : "cirrus",
             "vnc" : "off",
-            "vnc_password" : "eUM45Nw4",
+            "vnc_password" : "Evp5tXy9",
             "zone" : "fi-hel2"
          }
       }
@@ -418,7 +419,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 16:35:04 GMT
+      - Tue, 04 Aug 2020 10:20:55 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -434,7 +435,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.2/server/00af9c94-b1a3-4b3f-9112-51a110b7f288/stop
+    url: https://api.upcloud.com/1.2/server/0057ba93-3858-44c6-a7bb-f9264628f545/stop
     method: POST
   response:
     body: |
@@ -442,25 +443,25 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596472482,
+            "created" : 1596536433,
             "firewall" : "off",
-            "host" : 7617135235,
+            "host" : 5201216131,
             "hostname" : "uploud-go-sdk-integration-test-testtemplatizeserverstorage.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "private",
-                     "address" : "10.6.6.220",
+                     "address" : "10.6.6.223",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:5228",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1712",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.82",
+                     "address" : "94.237.104.85",
                      "family" : "IPv4"
                   }
                ]
@@ -478,7 +479,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "0112dd91-5764-4e5f-9c3e-43f559d3bb57",
+                     "storage" : "01e5a11d-5676-4bf7-bddd-5bad40e8f0f6",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -490,10 +491,10 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestTemplatizeServerStorage",
-            "uuid" : "00af9c94-b1a3-4b3f-9112-51a110b7f288",
+            "uuid" : "0057ba93-3858-44c6-a7bb-f9264628f545",
             "video_model" : "cirrus",
             "vnc" : "off",
-            "vnc_password" : "eUM45Nw4",
+            "vnc_password" : "Evp5tXy9",
             "zone" : "fi-hel2"
          }
       }
@@ -503,7 +504,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 16:35:04 GMT
+      - Tue, 04 Aug 2020 10:20:55 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -519,7 +520,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.2/server/00af9c94-b1a3-4b3f-9112-51a110b7f288
+    url: https://api.upcloud.com/1.2/server/0057ba93-3858-44c6-a7bb-f9264628f545
     method: GET
   response:
     body: |
@@ -527,25 +528,25 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596472482,
+            "created" : 1596536433,
             "firewall" : "off",
-            "host" : 7617135235,
+            "host" : 5201216131,
             "hostname" : "uploud-go-sdk-integration-test-testtemplatizeserverstorage.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "private",
-                     "address" : "10.6.6.220",
+                     "address" : "10.6.6.223",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:5228",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1712",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.82",
+                     "address" : "94.237.104.85",
                      "family" : "IPv4"
                   }
                ]
@@ -563,7 +564,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "0112dd91-5764-4e5f-9c3e-43f559d3bb57",
+                     "storage" : "01e5a11d-5676-4bf7-bddd-5bad40e8f0f6",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -575,10 +576,10 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestTemplatizeServerStorage",
-            "uuid" : "00af9c94-b1a3-4b3f-9112-51a110b7f288",
+            "uuid" : "0057ba93-3858-44c6-a7bb-f9264628f545",
             "video_model" : "cirrus",
             "vnc" : "off",
-            "vnc_password" : "eUM45Nw4",
+            "vnc_password" : "Evp5tXy9",
             "zone" : "fi-hel2"
          }
       }
@@ -588,7 +589,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 16:35:09 GMT
+      - Tue, 04 Aug 2020 10:21:00 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -604,7 +605,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.2/server/00af9c94-b1a3-4b3f-9112-51a110b7f288
+    url: https://api.upcloud.com/1.2/server/0057ba93-3858-44c6-a7bb-f9264628f545
     method: GET
   response:
     body: |
@@ -612,24 +613,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596472482,
+            "created" : 1596536433,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testtemplatizeserverstorage.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "private",
-                     "address" : "10.6.6.220",
+                     "address" : "10.6.6.223",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:5228",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1712",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.82",
+                     "address" : "94.237.104.85",
                      "family" : "IPv4"
                   }
                ]
@@ -647,7 +648,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "0112dd91-5764-4e5f-9c3e-43f559d3bb57",
+                     "storage" : "01e5a11d-5676-4bf7-bddd-5bad40e8f0f6",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -659,10 +660,10 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestTemplatizeServerStorage",
-            "uuid" : "00af9c94-b1a3-4b3f-9112-51a110b7f288",
+            "uuid" : "0057ba93-3858-44c6-a7bb-f9264628f545",
             "video_model" : "cirrus",
             "vnc" : "off",
-            "vnc_password" : "eUM45Nw4",
+            "vnc_password" : "Evp5tXy9",
             "zone" : "fi-hel2"
          }
       }
@@ -672,7 +673,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 16:35:14 GMT
+      - Tue, 04 Aug 2020 10:21:06 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -688,7 +689,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.2/server/00af9c94-b1a3-4b3f-9112-51a110b7f288
+    url: https://api.upcloud.com/1.2/server/0057ba93-3858-44c6-a7bb-f9264628f545
     method: GET
   response:
     body: |
@@ -696,24 +697,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596472482,
+            "created" : 1596536433,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testtemplatizeserverstorage.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "private",
-                     "address" : "10.6.6.220",
+                     "address" : "10.6.6.223",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:5228",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1712",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.82",
+                     "address" : "94.237.104.85",
                      "family" : "IPv4"
                   }
                ]
@@ -731,7 +732,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "0112dd91-5764-4e5f-9c3e-43f559d3bb57",
+                     "storage" : "01e5a11d-5676-4bf7-bddd-5bad40e8f0f6",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -743,10 +744,10 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestTemplatizeServerStorage",
-            "uuid" : "00af9c94-b1a3-4b3f-9112-51a110b7f288",
+            "uuid" : "0057ba93-3858-44c6-a7bb-f9264628f545",
             "video_model" : "cirrus",
             "vnc" : "off",
-            "vnc_password" : "eUM45Nw4",
+            "vnc_password" : "Evp5tXy9",
             "zone" : "fi-hel2"
          }
       }
@@ -756,7 +757,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 16:35:14 GMT
+      - Tue, 04 Aug 2020 10:21:06 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -765,38 +766,40 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: <storage><title>Templatized storage</title></storage>
+    body: '{"storage":{"title":"Templatized storage"}}'
     form: {}
     headers:
       Accept:
-      - application/xml
+      - application/json
       Content-Type:
-      - application/xml
-    url: https://api.upcloud.com/1.2/storage/0112dd91-5764-4e5f-9c3e-43f559d3bb57/templatize
+      - application/json
+    url: https://api.upcloud.com/1.2/storage/01e5a11d-5676-4bf7-bddd-5bad40e8f0f6/templatize
     method: POST
   response:
     body: |
-      <?xml version="1.0" encoding="utf-8"?>
-      <storage>
-        <access>private</access>
-        <license>0</license>
-        <servers>
-        </servers>
-        <size>30</size>
-        <state>maintenance</state>
-        <tier>maxiops</tier>
-        <title>Templatized storage</title>
-        <type>template</type>
-        <uuid>0180a4d0-e19f-4ade-b653-ef88106f7143</uuid>
-        <zone>fi-hel2</zone>
-      </storage>
+      {
+         "storage" : {
+            "access" : "private",
+            "license" : 0,
+            "servers" : {
+               "server" : []
+            },
+            "size" : 30,
+            "state" : "maintenance",
+            "tier" : "maxiops",
+            "title" : "Templatized storage",
+            "type" : "template",
+            "uuid" : "0134a4ac-fd13-41c6-b02f-fe1a9dfdfd9c",
+            "zone" : "fi-hel2"
+         }
+      }
     headers:
       Content-Length:
-      - "341"
+      - "349"
       Content-Type:
-      - application/xml; charset=UTF-8
+      - application/json; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 16:35:15 GMT
+      - Tue, 04 Aug 2020 10:21:06 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -809,34 +812,36 @@ interactions:
     form: {}
     headers:
       Accept:
-      - application/xml
+      - application/json
       Content-Type:
-      - application/xml
-    url: https://api.upcloud.com/1.2/storage/0180a4d0-e19f-4ade-b653-ef88106f7143
+      - application/json
+    url: https://api.upcloud.com/1.2/storage/0134a4ac-fd13-41c6-b02f-fe1a9dfdfd9c
     method: GET
   response:
     body: |
-      <?xml version="1.0" encoding="utf-8"?>
-      <storage>
-        <access>private</access>
-        <license>0</license>
-        <servers>
-        </servers>
-        <size>30</size>
-        <state>maintenance</state>
-        <tier>maxiops</tier>
-        <title>Templatized storage</title>
-        <type>template</type>
-        <uuid>0180a4d0-e19f-4ade-b653-ef88106f7143</uuid>
-        <zone>fi-hel2</zone>
-      </storage>
+      {
+         "storage" : {
+            "access" : "private",
+            "license" : 0,
+            "servers" : {
+               "server" : []
+            },
+            "size" : 30,
+            "state" : "maintenance",
+            "tier" : "maxiops",
+            "title" : "Templatized storage",
+            "type" : "template",
+            "uuid" : "0134a4ac-fd13-41c6-b02f-fe1a9dfdfd9c",
+            "zone" : "fi-hel2"
+         }
+      }
     headers:
       Content-Length:
-      - "341"
+      - "349"
       Content-Type:
-      - application/xml; charset=UTF-8
+      - application/json; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 16:35:15 GMT
+      - Tue, 04 Aug 2020 10:21:07 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -849,34 +854,36 @@ interactions:
     form: {}
     headers:
       Accept:
-      - application/xml
+      - application/json
       Content-Type:
-      - application/xml
-    url: https://api.upcloud.com/1.2/storage/0180a4d0-e19f-4ade-b653-ef88106f7143
+      - application/json
+    url: https://api.upcloud.com/1.2/storage/0134a4ac-fd13-41c6-b02f-fe1a9dfdfd9c
     method: GET
   response:
     body: |
-      <?xml version="1.0" encoding="utf-8"?>
-      <storage>
-        <access>private</access>
-        <license>0</license>
-        <servers>
-        </servers>
-        <size>30</size>
-        <state>maintenance</state>
-        <tier>maxiops</tier>
-        <title>Templatized storage</title>
-        <type>template</type>
-        <uuid>0180a4d0-e19f-4ade-b653-ef88106f7143</uuid>
-        <zone>fi-hel2</zone>
-      </storage>
+      {
+         "storage" : {
+            "access" : "private",
+            "license" : 0,
+            "servers" : {
+               "server" : []
+            },
+            "size" : 30,
+            "state" : "maintenance",
+            "tier" : "maxiops",
+            "title" : "Templatized storage",
+            "type" : "template",
+            "uuid" : "0134a4ac-fd13-41c6-b02f-fe1a9dfdfd9c",
+            "zone" : "fi-hel2"
+         }
+      }
     headers:
       Content-Length:
-      - "341"
+      - "349"
       Content-Type:
-      - application/xml; charset=UTF-8
+      - application/json; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 16:35:20 GMT
+      - Tue, 04 Aug 2020 10:21:12 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -889,34 +896,36 @@ interactions:
     form: {}
     headers:
       Accept:
-      - application/xml
+      - application/json
       Content-Type:
-      - application/xml
-    url: https://api.upcloud.com/1.2/storage/0180a4d0-e19f-4ade-b653-ef88106f7143
+      - application/json
+    url: https://api.upcloud.com/1.2/storage/0134a4ac-fd13-41c6-b02f-fe1a9dfdfd9c
     method: GET
   response:
     body: |
-      <?xml version="1.0" encoding="utf-8"?>
-      <storage>
-        <access>private</access>
-        <license>0</license>
-        <servers>
-        </servers>
-        <size>30</size>
-        <state>maintenance</state>
-        <tier>maxiops</tier>
-        <title>Templatized storage</title>
-        <type>template</type>
-        <uuid>0180a4d0-e19f-4ade-b653-ef88106f7143</uuid>
-        <zone>fi-hel2</zone>
-      </storage>
+      {
+         "storage" : {
+            "access" : "private",
+            "license" : 0,
+            "servers" : {
+               "server" : []
+            },
+            "size" : 30,
+            "state" : "maintenance",
+            "tier" : "maxiops",
+            "title" : "Templatized storage",
+            "type" : "template",
+            "uuid" : "0134a4ac-fd13-41c6-b02f-fe1a9dfdfd9c",
+            "zone" : "fi-hel2"
+         }
+      }
     headers:
       Content-Length:
-      - "341"
+      - "349"
       Content-Type:
-      - application/xml; charset=UTF-8
+      - application/json; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 16:35:25 GMT
+      - Tue, 04 Aug 2020 10:21:17 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -929,34 +938,36 @@ interactions:
     form: {}
     headers:
       Accept:
-      - application/xml
+      - application/json
       Content-Type:
-      - application/xml
-    url: https://api.upcloud.com/1.2/storage/0180a4d0-e19f-4ade-b653-ef88106f7143
+      - application/json
+    url: https://api.upcloud.com/1.2/storage/0134a4ac-fd13-41c6-b02f-fe1a9dfdfd9c
     method: GET
   response:
     body: |
-      <?xml version="1.0" encoding="utf-8"?>
-      <storage>
-        <access>private</access>
-        <license>0</license>
-        <servers>
-        </servers>
-        <size>30</size>
-        <state>maintenance</state>
-        <tier>maxiops</tier>
-        <title>Templatized storage</title>
-        <type>template</type>
-        <uuid>0180a4d0-e19f-4ade-b653-ef88106f7143</uuid>
-        <zone>fi-hel2</zone>
-      </storage>
+      {
+         "storage" : {
+            "access" : "private",
+            "license" : 0,
+            "servers" : {
+               "server" : []
+            },
+            "size" : 30,
+            "state" : "maintenance",
+            "tier" : "maxiops",
+            "title" : "Templatized storage",
+            "type" : "template",
+            "uuid" : "0134a4ac-fd13-41c6-b02f-fe1a9dfdfd9c",
+            "zone" : "fi-hel2"
+         }
+      }
     headers:
       Content-Length:
-      - "341"
+      - "349"
       Content-Type:
-      - application/xml; charset=UTF-8
+      - application/json; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 16:35:31 GMT
+      - Tue, 04 Aug 2020 10:21:22 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -969,34 +980,78 @@ interactions:
     form: {}
     headers:
       Accept:
-      - application/xml
+      - application/json
       Content-Type:
-      - application/xml
-    url: https://api.upcloud.com/1.2/storage/0180a4d0-e19f-4ade-b653-ef88106f7143
+      - application/json
+    url: https://api.upcloud.com/1.2/storage/0134a4ac-fd13-41c6-b02f-fe1a9dfdfd9c
     method: GET
   response:
     body: |
-      <?xml version="1.0" encoding="utf-8"?>
-      <storage>
-        <access>private</access>
-        <license>0</license>
-        <servers>
-        </servers>
-        <size>30</size>
-        <state>online</state>
-        <tier>maxiops</tier>
-        <title>Templatized storage</title>
-        <type>template</type>
-        <uuid>0180a4d0-e19f-4ade-b653-ef88106f7143</uuid>
-        <zone>fi-hel2</zone>
-      </storage>
+      {
+         "storage" : {
+            "access" : "private",
+            "license" : 0,
+            "servers" : {
+               "server" : []
+            },
+            "size" : 30,
+            "state" : "maintenance",
+            "tier" : "maxiops",
+            "title" : "Templatized storage",
+            "type" : "template",
+            "uuid" : "0134a4ac-fd13-41c6-b02f-fe1a9dfdfd9c",
+            "zone" : "fi-hel2"
+         }
+      }
     headers:
       Content-Length:
-      - "336"
+      - "349"
       Content-Type:
-      - application/xml; charset=UTF-8
+      - application/json; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 16:35:36 GMT
+      - Tue, 04 Aug 2020 10:21:27 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.2/storage/0134a4ac-fd13-41c6-b02f-fe1a9dfdfd9c
+    method: GET
+  response:
+    body: |
+      {
+         "storage" : {
+            "access" : "private",
+            "license" : 0,
+            "servers" : {
+               "server" : []
+            },
+            "size" : 30,
+            "state" : "online",
+            "tier" : "maxiops",
+            "title" : "Templatized storage",
+            "type" : "template",
+            "uuid" : "0134a4ac-fd13-41c6-b02f-fe1a9dfdfd9c",
+            "zone" : "fi-hel2"
+         }
+      }
+    headers:
+      Content-Length:
+      - "344"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 04 Aug 2020 10:21:33 GMT
       Server:
       - Apache
       Strict-Transport-Security:

@@ -734,15 +734,15 @@ func TestLoadEjectCDROM(t *testing.T) {
 // - creates a storage device
 // - creates a backup of the storage device
 // - gets backup storage details
+// - restores the backup
 //
-// It's not feasible to test backup restoration due to time constraints
-func TestCreateBackup(t *testing.T) {
+func TestCreateRestoreBackup(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping test in short mode")
 	}
 	t.Parallel()
 
-	record(t, "createbackup", func(t *testing.T, svc *Service) {
+	record(t, "createrestorebackup", func(t *testing.T, svc *Service) {
 		// Create the storage
 		storageDetails, err := createStorage(svc)
 		require.NoError(t, err)
@@ -787,6 +787,7 @@ func TestCreateBackup(t *testing.T) {
 			backupDetails.UUID,
 			storageDetails.UUID,
 		)
+		t.Logf("Backup storage origin UUID OK")
 
 		// Retrieve the time we stored in the title field.
 		titleSplit := strings.Split(backupStorageDetails.Title, "-")
@@ -815,7 +816,13 @@ func TestCreateBackup(t *testing.T) {
 			timeAfterBackup,
 		)
 
-		t.Logf("Backup storage origin UUID OK")
+		err = svc.RestoreBackup(&request.RestoreBackupRequest{
+			UUID: backupDetails.UUID,
+		})
+		assert.NoError(t, err)
+
+		err = waitForStorageOnline(svc, backupDetails.Origin)
+		require.NoError(t, err)
 	})
 }
 

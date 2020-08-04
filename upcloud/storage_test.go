@@ -1,175 +1,161 @@
 package upcloud
 
 import (
+	"encoding/json"
 	"encoding/xml"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/assert"
 )
 
 // TestUnmarshalStorage tests that Storages and Storage struct are unmarshaled correctly
 func TestUnmarshalStorage(t *testing.T) {
-	originalXML := `<?xml version="1.0" encoding="utf-8"?>
-<storages>
-    <storage>
-        <access>public</access>
-        <license>0</license>
-        <size>1</size>
-        <state>online</state>
-        <title>Windows Server 2003 R2 Standard (CD 1)</title>
-        <type>cdrom</type>
-        <uuid>01000000-0000-4000-8000-000010010101</uuid>
-    </storage>
-    <storage>
-        <access>public</access>
-        <license>0</license>
-        <size>1</size>
-        <state>online</state>
-        <title>Windows Server 2003 R2 Standard (CD 2)</title>
-        <type>cdrom</type>
-        <uuid>01000000-0000-4000-8000-000010010102</uuid>
-    </storage>
-    <storage>
-        <access>public</access>
-        <license>0</license>
-        <size>1</size>
-        <state>online</state>
-        <title>Windows Server 2003 R2 Standard (CD 1)</title>
-        <type>cdrom</type>
-        <uuid>01000000-0000-4000-8000-000010010201</uuid>
-    </storage>
-</storages>`
+	originalJSON := `
+{
+  "storages": {
+    "storage": [
+      {
+        "access": "private",
+        "license": 0,
+        "size": 10,
+        "state": "online",
+        "tier": "hdd",
+        "title": "Operating system disk",
+        "type": "normal",
+        "uuid": "01eff7ad-168e-413e-83b0-054f6a28fa23",
+        "zone": "uk-lon1"
+      },
+      {
+        "access" : "private",
+        "created" : "2019-09-17T14:34:43Z",
+        "license" : 0,
+        "origin" : "01eff7ad-168e-413e-83b0-054f6a28fa23",
+        "size" : 10,
+        "state" : "online",
+        "title" : "On demand backup",
+        "type" : "backup",
+        "uuid" : "01287ad1-496c-4b5f-bb67-0fc2e3494740",
+        "zone" : "uk-lon1"
+      },
+      {
+        "access": "private",
+        "license": 0,
+        "part_of_plan": "yes",
+        "size": 50,
+        "state": "online",
+        "tier": "maxiops",
+        "title": "Databases",
+        "type": "normal",
+        "uuid": "01f3286c-a5ea-4670-8121-d0b9767d625b",
+        "zone": "fi-hel1"
+      }
+    ]
+  }
+}`
 
 	storages := Storages{}
-	err := xml.Unmarshal([]byte(originalXML), &storages)
-
-	assert.Nil(t, err)
+	err := json.Unmarshal([]byte(originalJSON), &storages)
+	assert.NoError(t, err)
 	assert.Len(t, storages.Storages, 3)
 
-	firstStorage := storages.Storages[0]
-	assert.Equal(t, "public", firstStorage.Access)
-	assert.Equal(t, 0.0, firstStorage.License)
-	assert.Equal(t, 1, firstStorage.Size)
-	assert.Equal(t, "Windows Server 2003 R2 Standard (CD 1)", firstStorage.Title)
-	assert.Equal(t, StorageTypeCDROM, firstStorage.Type)
-	assert.Equal(t, "01000000-0000-4000-8000-000010010101", firstStorage.UUID)
-}
+	testData := []Storage{
+		{
+			Access:  StorageAccessPrivate,
+			License: 0.0,
+			Size:    10,
+			State:   StorageStateOnline,
+			Tier:    StorageTierHDD,
+			Title:   "Operating system disk",
+			Type:    StorageTypeNormal,
+			UUID:    "01eff7ad-168e-413e-83b0-054f6a28fa23",
+			Zone:    "uk-lon1",
+		},
+		{
+			Access:  StorageAccessPrivate,
+			License: 0.0,
+			Origin:  "01eff7ad-168e-413e-83b0-054f6a28fa23",
+			Size:    10,
+			State:   StorageStateOnline,
+			Title:   "On demand backup",
+			Type:    StorageTypeBackup,
+			UUID:    "01287ad1-496c-4b5f-bb67-0fc2e3494740",
+			Zone:    "uk-lon1",
+		},
+		{
+			Access:     StorageAccessPrivate,
+			License:    0.0,
+			PartOfPlan: "yes",
+			Size:       50,
+			State:      StorageStateOnline,
+			Tier:       StorageTierMaxIOPS,
+			Title:      "Databases",
+			Type:       StorageTypeNormal,
+			UUID:       "01f3286c-a5ea-4670-8121-d0b9767d625b",
+			Zone:       "fi-hel1",
+		},
+	}
 
-// TestUnmarshalStorage tests that Storages and Storage struct are unmarshaled correctly for private and backup storages
-func TestUnmarshalStoragesPrivateAndBackup(t *testing.T) {
-	originalXML := `<?xml version="1.0" encoding="utf-8"?>
-<storages>
-    <storage>
-        <access>private</access>
-        <license>0</license>
-        <size>10</size>
-        <state>online</state>
-	<tier>hdd</tier>
-        <title>Operating system disk</title>
-        <type>normal</type>
-        <uuid>01eff7ad-168e-413e-83b0-054f6a28fa23</uuid>
-        <zone>uk-lon1</zone>
-    </storage>
-    <storage>
-        <access>private</access>
-	<created>2019-09-17T14:34:43Z</created>
-        <license>0</license>
-	<origin>01eff7ad-168e-413e-83b0-054f6a28fa23</origin>
-        <size>10</size>
-        <state>online</state>
-        <title>On demand backup</title>
-        <type>backup</type>
-        <uuid>01287ad1-496c-4b5f-bb67-0fc2e3494740</uuid>
-        <zone>uk-lon1</zone>
-    </storage>
-    <storage>
-        <access>private</access>
-        <license>0</license>
-        <part_of_plan>yes</part_of_plan>
-        <size>50</size>
-        <state>online</state>
-        <tier>maxiops</tier>
-        <title>Databases</title>
-        <type>normal</type>
-        <uuid>01f3286c-a5ea-4670-8121-d0b9767d625b</uuid>
-        <zone>fi-hel1</zone>
-    </storage>
-</storages>`
-
-	storages := Storages{}
-	err := xml.Unmarshal([]byte(originalXML), &storages)
-
-	assert.Nil(t, err)
-	assert.Len(t, storages.Storages, 3)
-
-	firstStorage := storages.Storages[0]
-	assert.Equal(t, "private", firstStorage.Access)
-	assert.Equal(t, 0.0, firstStorage.License)
-	assert.Equal(t, 10, firstStorage.Size)
-	assert.Equal(t, "online", firstStorage.State)
-	assert.Equal(t, "hdd", firstStorage.Tier)
-	assert.Equal(t, "Operating system disk", firstStorage.Title)
-	assert.Equal(t, "normal", firstStorage.Type)
-	assert.Equal(t, "01eff7ad-168e-413e-83b0-054f6a28fa23", firstStorage.UUID)
-	assert.Equal(t, "uk-lon1", firstStorage.Zone)
-	assert.Equal(t, time.Time{}, firstStorage.Created)
-	assert.Equal(t, "", firstStorage.Origin)
-
-	secondStorage := storages.Storages[1]
-	assert.Equal(t, "private", secondStorage.Access)
-	created, err := time.Parse(time.RFC3339, "2019-09-17T14:34:43Z")
-	assert.Nil(t, err)
-	assert.Equal(t, created, secondStorage.Created)
-	assert.Equal(t, 0.0, secondStorage.License)
-	assert.Equal(t, "01eff7ad-168e-413e-83b0-054f6a28fa23", secondStorage.Origin)
-	assert.Equal(t, 10, secondStorage.Size)
-	assert.Equal(t, "online", secondStorage.State)
-	assert.Equal(t, "", secondStorage.Tier)
-	assert.Equal(t, "On demand backup", secondStorage.Title)
-	assert.Equal(t, "backup", secondStorage.Type)
-	assert.Equal(t, "01287ad1-496c-4b5f-bb67-0fc2e3494740", secondStorage.UUID)
-	assert.Equal(t, "uk-lon1", secondStorage.Zone)
+	for i, data := range testData {
+		storage := storages.Storages[i]
+		assert.Equal(t, data.Access, storage.Access)
+		assert.Equal(t, data.License, storage.License)
+		assert.Equal(t, data.Size, storage.Size)
+		assert.Equal(t, data.Title, storage.Title)
+		assert.Equal(t, data.Type, storage.Type)
+		assert.Equal(t, data.UUID, storage.UUID)
+		assert.Equal(t, data.PartOfPlan, storage.PartOfPlan)
+		assert.Equal(t, data.State, storage.State)
+		assert.Equal(t, data.Tier, storage.Tier)
+		assert.Equal(t, data.Zone, storage.Zone)
+	}
 }
 
 // TestUnmarshalStorageDetails tests that StorageDetails struct is unmarshaled correctly
 func TestUnmarshalStorageDetails(t *testing.T) {
-	originalXML := `<?xml version="1.0" encoding="utf-8"?>
-<storage>
-    <access>private</access>
-    <backup_rule>
-        <interval>daily</interval>
-        <retention>1</retention>
-        <time>0400</time>
-    </backup_rule>
-    <backups>
-        <backup>37c96670-9c02-4d5d-8f60-291d38f9a80c</backup>
-        <backup>ecfda9f2-e071-4bbb-b38f-079ed26eb32a</backup>
-    </backups>
-    <license>0</license>
-    <servers>
-        <server>33850294-50f4-4712-8463-aeb7b42de42f</server>
-    </servers>
-    <size>500</size>
-    <state>online</state>
-    <tier>maxiops</tier>
-    <title>Debian server (Disk 1)</title>
-    <type>normal</type>
-    <uuid>bf3da6c2-66c4-4e70-9640-5b4896aacd5c</uuid>
-    <zone>fi-hel1</zone>
-</storage>`
-	storageDeviceDetails := StorageDetails{}
-	err := xml.Unmarshal([]byte(originalXML), &storageDeviceDetails)
+	originalJSON := `
+	{
+		"storage": {
+		  "access": "private",
+		  "backup_rule": {
+			  "interval": "daily",
+			  "time": "0400",
+			  "retention": "1"
+		  },
+		  "backups": {
+			"backup": [
+              "37c96670-9c02-4d5d-8f60-291d38f9a80c",
+              "ecfda9f2-e071-4bbb-b38f-079ed26eb32a"
+			]
+		  },
+		  "license": 0,
+		  "servers": {
+			"server": [
+			  "00798b85-efdc-41ca-8021-f6ef457b8531"
+			]
+		  },
+		  "size": 10,
+		  "state": "online",
+		  "tier": "maxiops",
+		  "title": "Operating system disk",
+		  "type": "normal",
+		  "uuid": "01d4fcd4-e446-433b-8a9c-551a1284952e",
+		  "zone": "fi-hel1"
+		}
+	  }
+	`
 
-	assert.Nil(t, err)
-	assert.Equal(t, "private", storageDeviceDetails.Access)
+	storageDeviceDetails := StorageDetails{}
+	err := json.Unmarshal([]byte(originalJSON), &storageDeviceDetails)
+	assert.NoError(t, err)
+
+	assert.Equal(t, StorageAccessPrivate, storageDeviceDetails.Access)
 	assert.Equal(t, 0.0, storageDeviceDetails.License)
-	assert.Equal(t, 500, storageDeviceDetails.Size)
-	assert.Equal(t, "online", storageDeviceDetails.State)
-	assert.Equal(t, "maxiops", storageDeviceDetails.Tier)
-	assert.Equal(t, "Debian server (Disk 1)", storageDeviceDetails.Title)
+	assert.Equal(t, 10, storageDeviceDetails.Size)
+	assert.Equal(t, StorageStateOnline, storageDeviceDetails.State)
+	assert.Equal(t, StorageTierMaxIOPS, storageDeviceDetails.Tier)
+	assert.Equal(t, "Operating system disk", storageDeviceDetails.Title)
 	assert.Equal(t, StorageTypeNormal, storageDeviceDetails.Type)
-	assert.Equal(t, "bf3da6c2-66c4-4e70-9640-5b4896aacd5c", storageDeviceDetails.UUID)
+	assert.Equal(t, "01d4fcd4-e446-433b-8a9c-551a1284952e", storageDeviceDetails.UUID)
 	assert.Equal(t, "fi-hel1", storageDeviceDetails.Zone)
 
 	assert.Equal(t, BackupRuleIntervalDaily, storageDeviceDetails.BackupRule.Interval)
@@ -181,7 +167,7 @@ func TestUnmarshalStorageDetails(t *testing.T) {
 	assert.Equal(t, "ecfda9f2-e071-4bbb-b38f-079ed26eb32a", storageDeviceDetails.BackupUUIDs[1])
 
 	assert.Equal(t, 1, len(storageDeviceDetails.ServerUUIDs))
-	assert.Equal(t, "33850294-50f4-4712-8463-aeb7b42de42f", storageDeviceDetails.ServerUUIDs[0])
+	assert.Equal(t, "00798b85-efdc-41ca-8021-f6ef457b8531", storageDeviceDetails.ServerUUIDs[0])
 }
 
 // TestUnmarshalServerStorageDevice tests that ServerStorageDevice objects are properly unmarshaled
