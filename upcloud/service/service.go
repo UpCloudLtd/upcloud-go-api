@@ -117,7 +117,6 @@ func (s *Service) GetServers() (*upcloud.Servers, error) {
 		return nil, parseJSONServiceError(err)
 	}
 
-	fmt.Println(string(response))
 	err = json.Unmarshal(response, &servers)
 	if err != nil {
 		return nil, fmt.Errorf("unable to unmarshal JSON: %s, %w", string(response), err)
