@@ -2,7 +2,6 @@ package request
 
 import (
 	"encoding/json"
-	"encoding/xml"
 	"testing"
 	"time"
 
@@ -124,14 +123,21 @@ func TestStartServerRequest(t *testing.T) {
 func TestStopServerRequest(t *testing.T) {
 	request := StopServerRequest{
 		UUID:     "foo",
-		StopType: ServerStopTypeHard,
+		StopType: ServerStopTypeSoft,
 		Timeout:  time.Minute * 5,
 	}
 
-	expectedXML := "<stop_server><timeout>300</timeout><stop_type>hard</stop_type></stop_server>"
-	actualXML, err := xml.Marshal(&request)
+	expectedJSON := `
+	  {
+		"stop_server": {
+		  "stop_type": "soft",
+		  "timeout": "300"
+		}
+	  }
+	`
+	actualJSON, err := json.MarshalIndent(&request, "", "    ")
 	assert.Nil(t, err)
-	assert.Equal(t, expectedXML, string(actualXML))
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
 	assert.Equal(t, "/server/foo/stop", request.RequestURL())
 }
 
@@ -144,24 +150,44 @@ func TestRestartServerRequest(t *testing.T) {
 		TimeoutAction: RestartTimeoutActionDestroy,
 	}
 
-	expectedXML := "<restart_server><timeout>300</timeout><stop_type>soft</stop_type><timeout_action>destroy</timeout_action></restart_server>"
-	actualXML, err := xml.Marshal(&request)
+	expectedJSON := `
+	  {
+		"restart_server": {
+		  "stop_type": "soft",
+		  "timeout": "300",
+		  "timeout_action": "destroy"
+		}
+	  }
+	`
+	actualJSON, err := json.Marshal(&request)
 	assert.Nil(t, err)
-	assert.Equal(t, expectedXML, string(actualXML))
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
 	assert.Equal(t, "/server/foo/restart", request.RequestURL())
 }
 
 // TestModifyServerRequest tests that ModifyServerRequest objects behave correctly
 func TestModifyServerRequest(t *testing.T) {
 	request := ModifyServerRequest{
-		UUID:  "foo",
-		Title: "Modified server",
+		UUID:         "foo",
+		Title:        "Modified server",
+		CoreNumber:   8,
+		MemoryAmount: 16384,
+		Plan:         "custom",
 	}
 
-	expectedXML := "<server><title>Modified server</title></server>"
-	actualXML, err := xml.Marshal(&request)
+	expectedJSON := `
+	  {
+		"server" : {
+          "title": "Modified server",
+		  "core_number": "8",
+		  "memory_amount": "16384",
+		  "plan" : "custom"
+		}
+	  }
+	`
+	actualJSON, err := json.Marshal(&request)
 	assert.Nil(t, err)
-	assert.Equal(t, expectedXML, string(actualXML))
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
 	assert.Equal(t, "/server/foo", request.RequestURL())
 }
 

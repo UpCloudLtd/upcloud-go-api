@@ -1,7 +1,7 @@
 package upcloud
 
 import (
-	"encoding/xml"
+	"encoding/json"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -9,15 +9,18 @@ import (
 
 // TestUnmarshalAccount tests that Account objects unmarshal correctly
 func TestUnmarshalAccount(t *testing.T) {
-	originalXML := `<?xml version="1.0" encoding="utf-8"?>
-<account>
-    <credits>22465.536</credits>
-    <username>foobar</username>
-</account>`
+	originalJSON := `
+	{
+      "account": {
+        "credits": 9972.2324,
+        "username": "username"
+      }
+    }
+	`
 
 	account := Account{}
-	err := xml.Unmarshal([]byte(originalXML), &account)
-	assert.Nil(t, err)
-	assert.Equal(t, 22465.536, account.Credits)
-	assert.Equal(t, "foobar", account.UserName)
+	err := json.Unmarshal([]byte(originalJSON), &account)
+	assert.NoError(t, err)
+	assert.Equal(t, 9972.2324, account.Credits)
+	assert.Equal(t, "username", account.UserName)
 }

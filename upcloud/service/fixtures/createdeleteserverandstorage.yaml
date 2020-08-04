@@ -17,24 +17,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596459731,
+            "created" : 1596472623,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testcreatedeleteserverandstorage.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "private",
-                     "address" : "10.6.6.211",
+                     "address" : "10.6.6.222",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:3469",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:2e26",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.72",
+                     "address" : "94.237.104.84",
                      "family" : "IPv4"
                   }
                ]
@@ -43,7 +43,7 @@ interactions:
             "memory_amount" : "1024",
             "metadata" : "no",
             "nic_model" : "virtio",
-            "password" : "k9e582z8",
+            "password" : "c3z29vs9",
             "plan" : "custom",
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
@@ -54,7 +54,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "019480f1-ef5b-45a5-b83f-1669c7d8d425",
+                     "storage" : "01416b26-8fff-4608-aa59-612e0e3a6ee8",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -67,10 +67,10 @@ interactions:
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestCreateDeleteServerAndStorage",
             "username" : "root",
-            "uuid" : "0022d1eb-c158-4c9d-817b-9e0fb8711e64",
+            "uuid" : "001cf34e-77ac-4aa8-82b4-018a42dde2f9",
             "video_model" : "cirrus",
             "vnc" : "off",
-            "vnc_password" : "25e9Zj6w",
+            "vnc_password" : "uyBdn3TV",
             "zone" : "fi-hel2"
          }
       }
@@ -80,7 +80,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 13:02:10 GMT
+      - Mon, 03 Aug 2020 16:37:03 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -96,7 +96,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.2/server/0022d1eb-c158-4c9d-817b-9e0fb8711e64
+    url: https://api.upcloud.com/1.2/server/001cf34e-77ac-4aa8-82b4-018a42dde2f9
     method: GET
   response:
     body: |
@@ -104,24 +104,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596459731,
+            "created" : 1596472623,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testcreatedeleteserverandstorage.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "private",
-                     "address" : "10.6.6.211",
+                     "address" : "10.6.6.222",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:3469",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:2e26",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.72",
+                     "address" : "94.237.104.84",
                      "family" : "IPv4"
                   }
                ]
@@ -140,7 +140,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "019480f1-ef5b-45a5-b83f-1669c7d8d425",
+                     "storage" : "01416b26-8fff-4608-aa59-612e0e3a6ee8",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -152,10 +152,10 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestCreateDeleteServerAndStorage",
-            "uuid" : "0022d1eb-c158-4c9d-817b-9e0fb8711e64",
+            "uuid" : "001cf34e-77ac-4aa8-82b4-018a42dde2f9",
             "video_model" : "cirrus",
             "vnc" : "off",
-            "vnc_password" : "25e9Zj6w",
+            "vnc_password" : "uyBdn3TV",
             "zone" : "fi-hel2"
          }
       }
@@ -165,7 +165,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 13:02:16 GMT
+      - Mon, 03 Aug 2020 16:37:09 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -181,7 +181,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.2/server/0022d1eb-c158-4c9d-817b-9e0fb8711e64
+    url: https://api.upcloud.com/1.2/server/001cf34e-77ac-4aa8-82b4-018a42dde2f9
     method: GET
   response:
     body: |
@@ -189,24 +189,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596459731,
+            "created" : 1596472623,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testcreatedeleteserverandstorage.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "private",
-                     "address" : "10.6.6.211",
+                     "address" : "10.6.6.222",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:3469",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:2e26",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.72",
+                     "address" : "94.237.104.84",
                      "family" : "IPv4"
                   }
                ]
@@ -225,7 +225,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "019480f1-ef5b-45a5-b83f-1669c7d8d425",
+                     "storage" : "01416b26-8fff-4608-aa59-612e0e3a6ee8",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -237,10 +237,10 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestCreateDeleteServerAndStorage",
-            "uuid" : "0022d1eb-c158-4c9d-817b-9e0fb8711e64",
+            "uuid" : "001cf34e-77ac-4aa8-82b4-018a42dde2f9",
             "video_model" : "cirrus",
             "vnc" : "off",
-            "vnc_password" : "25e9Zj6w",
+            "vnc_password" : "uyBdn3TV",
             "zone" : "fi-hel2"
          }
       }
@@ -250,7 +250,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 13:02:22 GMT
+      - Mon, 03 Aug 2020 16:37:15 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -266,7 +266,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.2/server/0022d1eb-c158-4c9d-817b-9e0fb8711e64
+    url: https://api.upcloud.com/1.2/server/001cf34e-77ac-4aa8-82b4-018a42dde2f9
     method: GET
   response:
     body: |
@@ -274,24 +274,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596459731,
+            "created" : 1596472623,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testcreatedeleteserverandstorage.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "private",
-                     "address" : "10.6.6.211",
+                     "address" : "10.6.6.222",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:3469",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:2e26",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.72",
+                     "address" : "94.237.104.84",
                      "family" : "IPv4"
                   }
                ]
@@ -309,7 +309,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "019480f1-ef5b-45a5-b83f-1669c7d8d425",
+                     "storage" : "01416b26-8fff-4608-aa59-612e0e3a6ee8",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -321,10 +321,10 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestCreateDeleteServerAndStorage",
-            "uuid" : "0022d1eb-c158-4c9d-817b-9e0fb8711e64",
+            "uuid" : "001cf34e-77ac-4aa8-82b4-018a42dde2f9",
             "video_model" : "cirrus",
             "vnc" : "off",
-            "vnc_password" : "25e9Zj6w",
+            "vnc_password" : "uyBdn3TV",
             "zone" : "fi-hel2"
          }
       }
@@ -334,7 +334,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 13:02:27 GMT
+      - Mon, 03 Aug 2020 16:37:20 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -350,7 +350,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.2/server/0022d1eb-c158-4c9d-817b-9e0fb8711e64
+    url: https://api.upcloud.com/1.2/server/001cf34e-77ac-4aa8-82b4-018a42dde2f9
     method: GET
   response:
     body: |
@@ -358,7 +358,91 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596459731,
+            "created" : 1596472623,
+            "firewall" : "off",
+            "hostname" : "uploud-go-sdk-integration-test-testcreatedeleteserverandstorage.example.com",
+            "ip_addresses" : {
+               "ip_address" : [
+                  {
+                     "access" : "private",
+                     "address" : "10.6.6.222",
+                     "family" : "IPv4"
+                  },
+                  {
+                     "access" : "public",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:2e26",
+                     "family" : "IPv6"
+                  },
+                  {
+                     "access" : "public",
+                     "address" : "94.237.104.84",
+                     "family" : "IPv4"
+                  }
+               ]
+            },
+            "license" : 0,
+            "memory_amount" : "1024",
+            "metadata" : "no",
+            "nic_model" : "virtio",
+            "plan" : "custom",
+            "plan_ipv4_bytes" : "0",
+            "plan_ipv6_bytes" : "0",
+            "state" : "maintenance",
+            "storage_devices" : {
+               "storage_device" : [
+                  {
+                     "address" : "virtio:0",
+                     "boot_disk" : "0",
+                     "storage" : "01416b26-8fff-4608-aa59-612e0e3a6ee8",
+                     "storage_size" : 30,
+                     "storage_title" : "disk1",
+                     "type" : "disk"
+                  }
+               ]
+            },
+            "tags" : {
+               "tag" : []
+            },
+            "timezone" : "UTC",
+            "title" : "uploud-go-sdk-integration-test-TestCreateDeleteServerAndStorage",
+            "uuid" : "001cf34e-77ac-4aa8-82b4-018a42dde2f9",
+            "video_model" : "cirrus",
+            "vnc" : "off",
+            "vnc_password" : "uyBdn3TV",
+            "zone" : "fi-hel2"
+         }
+      }
+    headers:
+      Content-Length:
+      - "1658"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Mon, 03 Aug 2020 16:37:25 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.2/server/001cf34e-77ac-4aa8-82b4-018a42dde2f9
+    method: GET
+  response:
+    body: |
+      {
+         "server" : {
+            "boot_order" : "disk",
+            "core_number" : "1",
+            "created" : 1596472623,
             "firewall" : "off",
             "host" : 5201216131,
             "hostname" : "uploud-go-sdk-integration-test-testcreatedeleteserverandstorage.example.com",
@@ -366,17 +450,17 @@ interactions:
                "ip_address" : [
                   {
                      "access" : "private",
-                     "address" : "10.6.6.211",
+                     "address" : "10.6.6.222",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:3469",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:2e26",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.72",
+                     "address" : "94.237.104.84",
                      "family" : "IPv4"
                   }
                ]
@@ -394,7 +478,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "019480f1-ef5b-45a5-b83f-1669c7d8d425",
+                     "storage" : "01416b26-8fff-4608-aa59-612e0e3a6ee8",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -406,10 +490,10 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestCreateDeleteServerAndStorage",
-            "uuid" : "0022d1eb-c158-4c9d-817b-9e0fb8711e64",
+            "uuid" : "001cf34e-77ac-4aa8-82b4-018a42dde2f9",
             "video_model" : "cirrus",
             "vnc" : "off",
-            "vnc_password" : "25e9Zj6w",
+            "vnc_password" : "uyBdn3TV",
             "zone" : "fi-hel2"
          }
       }
@@ -419,7 +503,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 13:02:32 GMT
+      - Mon, 03 Aug 2020 16:37:30 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -428,77 +512,83 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: <stop_server><timeout>900</timeout><stop_type>hard</stop_type></stop_server>
+    body: '{"stop_server":{"stop_type":"hard","timeout":"900"}}'
     form: {}
     headers:
       Accept:
-      - application/xml
+      - application/json
       Content-Type:
-      - application/xml
-    url: https://api.upcloud.com/1.2/server/0022d1eb-c158-4c9d-817b-9e0fb8711e64/stop
+      - application/json
+    url: https://api.upcloud.com/1.2/server/001cf34e-77ac-4aa8-82b4-018a42dde2f9/stop
     method: POST
   response:
     body: |
-      <?xml version="1.0" encoding="utf-8"?>
-      <server>
-        <boot_order>disk</boot_order>
-        <core_number>1</core_number>
-        <created>1596459731</created>
-        <firewall>off</firewall>
-        <host>5201216131</host>
-        <hostname>uploud-go-sdk-integration-test-testcreatedeleteserverandstorage.example.com</hostname>
-        <ip_addresses>
-          <ip_address>
-            <access>private</access>
-            <address>10.6.6.211</address>
-            <family>IPv4</family>
-          </ip_address>
-          <ip_address>
-            <access>public</access>
-            <address>2a04:3545:1000:720:ec1b:dbff:feca:3469</address>
-            <family>IPv6</family>
-          </ip_address>
-          <ip_address>
-            <access>public</access>
-            <address>94.237.104.72</address>
-            <family>IPv4</family>
-          </ip_address>
-        </ip_addresses>
-        <license>0</license>
-        <memory_amount>1024</memory_amount>
-        <metadata>no</metadata>
-        <nic_model>virtio</nic_model>
-        <plan>custom</plan>
-        <plan_ipv4_bytes>0</plan_ipv4_bytes>
-        <plan_ipv6_bytes>0</plan_ipv6_bytes>
-        <state>started</state>
-        <storage_devices>
-          <storage_device>
-            <address>virtio:0</address>
-            <boot_disk>0</boot_disk>
-            <storage>019480f1-ef5b-45a5-b83f-1669c7d8d425</storage>
-            <storage_size>30</storage_size>
-            <storage_title>disk1</storage_title>
-            <type>disk</type>
-          </storage_device>
-        </storage_devices>
-        <tags>
-        </tags>
-        <timezone>UTC</timezone>
-        <title>uploud-go-sdk-integration-test-TestCreateDeleteServerAndStorage</title>
-        <uuid>0022d1eb-c158-4c9d-817b-9e0fb8711e64</uuid>
-        <video_model>cirrus</video_model>
-        <vnc>off</vnc>
-        <vnc_password>25e9Zj6w</vnc_password>
-        <zone>fi-hel2</zone>
-      </server>
+      {
+         "server" : {
+            "boot_order" : "disk",
+            "core_number" : "1",
+            "created" : 1596472623,
+            "firewall" : "off",
+            "host" : 5201216131,
+            "hostname" : "uploud-go-sdk-integration-test-testcreatedeleteserverandstorage.example.com",
+            "ip_addresses" : {
+               "ip_address" : [
+                  {
+                     "access" : "private",
+                     "address" : "10.6.6.222",
+                     "family" : "IPv4"
+                  },
+                  {
+                     "access" : "public",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:2e26",
+                     "family" : "IPv6"
+                  },
+                  {
+                     "access" : "public",
+                     "address" : "94.237.104.84",
+                     "family" : "IPv4"
+                  }
+               ]
+            },
+            "license" : 0,
+            "memory_amount" : "1024",
+            "metadata" : "no",
+            "nic_model" : "virtio",
+            "plan" : "custom",
+            "plan_ipv4_bytes" : "0",
+            "plan_ipv6_bytes" : "0",
+            "state" : "started",
+            "storage_devices" : {
+               "storage_device" : [
+                  {
+                     "address" : "virtio:0",
+                     "boot_disk" : "0",
+                     "storage" : "01416b26-8fff-4608-aa59-612e0e3a6ee8",
+                     "storage_size" : 30,
+                     "storage_title" : "disk1",
+                     "type" : "disk"
+                  }
+               ]
+            },
+            "tags" : {
+               "tag" : []
+            },
+            "timezone" : "UTC",
+            "title" : "uploud-go-sdk-integration-test-TestCreateDeleteServerAndStorage",
+            "uuid" : "001cf34e-77ac-4aa8-82b4-018a42dde2f9",
+            "video_model" : "cirrus",
+            "vnc" : "off",
+            "vnc_password" : "uyBdn3TV",
+            "zone" : "fi-hel2"
+         }
+      }
     headers:
       Content-Length:
-      - "1614"
+      - "1681"
       Content-Type:
-      - application/xml; charset=UTF-8
+      - application/json; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 13:02:32 GMT
+      - Mon, 03 Aug 2020 16:37:30 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -514,7 +604,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.2/server/0022d1eb-c158-4c9d-817b-9e0fb8711e64
+    url: https://api.upcloud.com/1.2/server/001cf34e-77ac-4aa8-82b4-018a42dde2f9
     method: GET
   response:
     body: |
@@ -522,24 +612,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596459731,
+            "created" : 1596472623,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testcreatedeleteserverandstorage.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "private",
-                     "address" : "10.6.6.211",
+                     "address" : "10.6.6.222",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:3469",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:2e26",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.72",
+                     "address" : "94.237.104.84",
                      "family" : "IPv4"
                   }
                ]
@@ -557,7 +647,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "019480f1-ef5b-45a5-b83f-1669c7d8d425",
+                     "storage" : "01416b26-8fff-4608-aa59-612e0e3a6ee8",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -569,10 +659,10 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestCreateDeleteServerAndStorage",
-            "uuid" : "0022d1eb-c158-4c9d-817b-9e0fb8711e64",
+            "uuid" : "001cf34e-77ac-4aa8-82b4-018a42dde2f9",
             "video_model" : "cirrus",
             "vnc" : "off",
-            "vnc_password" : "25e9Zj6w",
+            "vnc_password" : "uyBdn3TV",
             "zone" : "fi-hel2"
          }
       }
@@ -582,7 +672,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 13:02:38 GMT
+      - Mon, 03 Aug 2020 16:37:36 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -598,13 +688,13 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.2/server/0022d1eb-c158-4c9d-817b-9e0fb8711e64/?storages=1
+    url: https://api.upcloud.com/1.2/server/001cf34e-77ac-4aa8-82b4-018a42dde2f9/?storages=1
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Mon, 03 Aug 2020 13:02:38 GMT
+      - Mon, 03 Aug 2020 16:37:36 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -629,23 +719,12 @@ interactions:
         <storage>
           <access>private</access>
           <license>0</license>
-          <size>10</size>
+          <size>30</size>
           <state>online</state>
           <tier>maxiops</tier>
-          <title>Test storage</title>
+          <title>disk1</title>
           <type>normal</type>
-          <uuid>011e7a31-7aef-4cf4-a114-071960b16445</uuid>
-          <zone>fi-hel2</zone>
-        </storage>
-        <storage>
-          <access>private</access>
-          <license>0</license>
-          <size>10</size>
-          <state>online</state>
-          <tier>maxiops</tier>
-          <title>Test storage</title>
-          <type>normal</type>
-          <uuid>011ef631-c144-45d3-a525-076dc8388415</uuid>
+          <uuid>0108e31a-e7ab-40c5-829d-343e7ba2e04a</uuid>
           <zone>fi-hel2</zone>
         </storage>
         <storage>
@@ -656,107 +735,52 @@ interactions:
           <tier>maxiops</tier>
           <title>disk1</title>
           <type>normal</type>
-          <uuid>012145da-c9bf-4c85-8f56-93d4141b61ce</uuid>
+          <uuid>0112dd91-5764-4e5f-9c3e-43f559d3bb57</uuid>
           <zone>fi-hel2</zone>
         </storage>
         <storage>
           <access>private</access>
           <license>0</license>
+          <size>30</size>
+          <state>online</state>
+          <tier>maxiops</tier>
+          <title>disk1</title>
+          <type>normal</type>
+          <uuid>011d9aef-5ef4-4ed5-9aed-a070ac404ba3</uuid>
+          <zone>fi-hel2</zone>
+        </storage>
+        <storage>
+          <access>private</access>
+          <license>0</license>
+          <size>30</size>
+          <state>online</state>
+          <tier>maxiops</tier>
+          <title>disk1</title>
+          <type>normal</type>
+          <uuid>01297071-5773-4a86-b5d7-a18845e7dc2f</uuid>
+          <zone>fi-hel2</zone>
+        </storage>
+        <storage>
+          <access>private</access>
+          <license>0</license>
+          <size>30</size>
+          <state>online</state>
+          <tier>maxiops</tier>
+          <title>disk1</title>
+          <type>normal</type>
+          <uuid>012a4889-543f-4285-8584-64244199b2fd</uuid>
+          <zone>fi-hel2</zone>
+        </storage>
+        <storage>
+          <access>private</access>
+          <created>2020-08-03T16:34:08Z</created>
+          <license>0</license>
+          <origin>018c2a92-c41e-4143-8d87-dc6c12568e03</origin>
           <size>10</size>
           <state>online</state>
-          <tier>maxiops</tier>
-          <title>Test storage</title>
-          <type>normal</type>
-          <uuid>012ae44f-1041-4f6e-aad3-7e7df722d997</uuid>
-          <zone>fi-hel2</zone>
-        </storage>
-        <storage>
-          <access>private</access>
-          <license>0</license>
-          <size>30</size>
-          <state>online</state>
-          <tier>maxiops</tier>
-          <title>disk1</title>
-          <type>normal</type>
-          <uuid>014f89b6-4432-4118-a728-0a168ebcb8b3</uuid>
-          <zone>fi-hel2</zone>
-        </storage>
-        <storage>
-          <access>private</access>
-          <license>0</license>
-          <size>30</size>
-          <state>online</state>
-          <tier>maxiops</tier>
-          <title>disk1</title>
-          <type>normal</type>
-          <uuid>01610d76-1847-40f4-be81-952b2e809b3c</uuid>
-          <zone>fi-hel2</zone>
-        </storage>
-        <storage>
-          <access>private</access>
-          <license>0</license>
-          <size>30</size>
-          <state>online</state>
-          <tier>maxiops</tier>
-          <title>disk1</title>
-          <type>normal</type>
-          <uuid>017433e7-7c21-4638-843a-7246e3fd2e5d</uuid>
-          <zone>fi-hel2</zone>
-        </storage>
-        <storage>
-          <access>private</access>
-          <created>2020-08-03T12:59:21Z</created>
-          <license>0</license>
-          <origin>012ae44f-1041-4f6e-aad3-7e7df722d997</origin>
-          <size>10</size>
-          <state>online</state>
-          <title>backup-1596459561000000000</title>
+          <title>backup-1596472448000000000</title>
           <type>backup</type>
-          <uuid>0176031b-8c5e-4e5e-954e-b61f1bce204d</uuid>
-          <zone>fi-hel2</zone>
-        </storage>
-        <storage>
-          <access>private</access>
-          <license>0</license>
-          <size>30</size>
-          <state>online</state>
-          <tier>maxiops</tier>
-          <title>disk1</title>
-          <type>normal</type>
-          <uuid>019b7c12-0ee0-4675-bb2b-751e0de8c017</uuid>
-          <zone>fi-hel2</zone>
-        </storage>
-        <storage>
-          <access>private</access>
-          <license>0</license>
-          <size>30</size>
-          <state>online</state>
-          <tier>maxiops</tier>
-          <title>disk1</title>
-          <type>normal</type>
-          <uuid>01b14ddd-95eb-4ae4-9af7-7a7406b8ebf9</uuid>
-          <zone>fi-hel2</zone>
-        </storage>
-        <storage>
-          <access>private</access>
-          <license>0</license>
-          <size>30</size>
-          <state>online</state>
-          <tier>maxiops</tier>
-          <title>disk1</title>
-          <type>normal</type>
-          <uuid>01bc4406-62db-4261-a892-24ced56e3a13</uuid>
-          <zone>fi-hel2</zone>
-        </storage>
-        <storage>
-          <access>private</access>
-          <license>0</license>
-          <size>30</size>
-          <state>online</state>
-          <tier>maxiops</tier>
-          <title>disk1</title>
-          <type>normal</type>
-          <uuid>01ccd433-d300-4bd2-a275-1b1b8ae62a2f</uuid>
+          <uuid>01451958-1e1b-43bf-b557-e12c870289fd</uuid>
           <zone>fi-hel2</zone>
         </storage>
         <storage>
@@ -767,7 +791,18 @@ interactions:
           <tier>maxiops</tier>
           <title>Cloned storage</title>
           <type>normal</type>
-          <uuid>01d31d86-4bd6-442a-878c-a20f761367eb</uuid>
+          <uuid>0147532f-0485-46e1-9401-9e455d322c2e</uuid>
+          <zone>fi-hel2</zone>
+        </storage>
+        <storage>
+          <access>private</access>
+          <license>0</license>
+          <size>10</size>
+          <state>online</state>
+          <tier>maxiops</tier>
+          <title>Test storage</title>
+          <type>normal</type>
+          <uuid>0150beca-bb37-42b2-abaf-60a07ce9965c</uuid>
           <zone>fi-hel2</zone>
         </storage>
         <storage>
@@ -778,7 +813,7 @@ interactions:
           <tier>maxiops</tier>
           <title>Templatized storage</title>
           <type>template</type>
-          <uuid>01e0b550-0543-4d91-83f2-d39106528799</uuid>
+          <uuid>015a1bd1-181c-4fb4-ab89-49e648cf7c2f</uuid>
           <zone>fi-hel2</zone>
         </storage>
         <storage>
@@ -789,17 +824,260 @@ interactions:
           <tier>maxiops</tier>
           <title>disk1</title>
           <type>normal</type>
-          <uuid>01f7b6b8-3a57-4318-973d-393e82a053ad</uuid>
+          <uuid>0160202e-ea8a-4650-ad98-67bdeac136cf</uuid>
+          <zone>fi-hel2</zone>
+        </storage>
+        <storage>
+          <access>private</access>
+          <license>0</license>
+          <size>10</size>
+          <state>online</state>
+          <tier>maxiops</tier>
+          <title>Test storage</title>
+          <type>normal</type>
+          <uuid>0165bff8-72ac-4352-95e9-e74ea9fc8e84</uuid>
+          <zone>fi-hel2</zone>
+        </storage>
+        <storage>
+          <access>private</access>
+          <license>0</license>
+          <size>10</size>
+          <state>online</state>
+          <tier>maxiops</tier>
+          <title>Test storage</title>
+          <type>normal</type>
+          <uuid>016b922f-d9ca-45b5-b55a-7c1c77584867</uuid>
+          <zone>fi-hel2</zone>
+        </storage>
+        <storage>
+          <access>private</access>
+          <license>0</license>
+          <size>30</size>
+          <state>online</state>
+          <tier>maxiops</tier>
+          <title>disk1</title>
+          <type>normal</type>
+          <uuid>016e6ccb-d516-45ba-918a-86f06b2bb57a</uuid>
+          <zone>fi-hel2</zone>
+        </storage>
+        <storage>
+          <access>private</access>
+          <license>0</license>
+          <size>30</size>
+          <state>online</state>
+          <tier>maxiops</tier>
+          <title>disk1</title>
+          <type>normal</type>
+          <uuid>017748c7-7950-4954-86e2-d6306b89d73a</uuid>
+          <zone>fi-hel2</zone>
+        </storage>
+        <storage>
+          <access>private</access>
+          <created>2020-08-03T15:54:30Z</created>
+          <license>0</license>
+          <origin>0165bff8-72ac-4352-95e9-e74ea9fc8e84</origin>
+          <size>10</size>
+          <state>online</state>
+          <title>backup-1596470070000000000</title>
+          <type>backup</type>
+          <uuid>0177627a-4690-49c4-a7b9-1ea36983402f</uuid>
+          <zone>fi-hel2</zone>
+        </storage>
+        <storage>
+          <access>private</access>
+          <license>0</license>
+          <size>30</size>
+          <state>online</state>
+          <tier>maxiops</tier>
+          <title>disk1</title>
+          <type>normal</type>
+          <uuid>0177cb07-cfd6-45dd-b34a-00d422fe4b90</uuid>
+          <zone>fi-hel2</zone>
+        </storage>
+        <storage>
+          <access>private</access>
+          <license>0</license>
+          <size>30</size>
+          <state>online</state>
+          <tier>maxiops</tier>
+          <title>Templatized storage</title>
+          <type>template</type>
+          <uuid>0180a4d0-e19f-4ade-b653-ef88106f7143</uuid>
+          <zone>fi-hel2</zone>
+        </storage>
+        <storage>
+          <access>private</access>
+          <license>0</license>
+          <size>30</size>
+          <state>online</state>
+          <tier>maxiops</tier>
+          <title>disk1</title>
+          <type>normal</type>
+          <uuid>018195ad-4b52-4c37-a754-ac80541ac4b0</uuid>
+          <zone>fi-hel2</zone>
+        </storage>
+        <storage>
+          <access>private</access>
+          <license>0</license>
+          <size>10</size>
+          <state>online</state>
+          <tier>maxiops</tier>
+          <title>Test storage</title>
+          <type>normal</type>
+          <uuid>018c2a92-c41e-4143-8d87-dc6c12568e03</uuid>
+          <zone>fi-hel2</zone>
+        </storage>
+        <storage>
+          <access>private</access>
+          <license>0</license>
+          <size>30</size>
+          <state>online</state>
+          <tier>maxiops</tier>
+          <title>disk1</title>
+          <type>normal</type>
+          <uuid>01a6b67c-751b-421a-b5db-7a067720d0e9</uuid>
+          <zone>fi-hel2</zone>
+        </storage>
+        <storage>
+          <access>private</access>
+          <license>0</license>
+          <size>30</size>
+          <state>online</state>
+          <tier>maxiops</tier>
+          <title>disk1</title>
+          <type>normal</type>
+          <uuid>01a80a2e-1153-444c-ac51-396aaced04bd</uuid>
+          <zone>fi-hel2</zone>
+        </storage>
+        <storage>
+          <access>private</access>
+          <license>0</license>
+          <size>30</size>
+          <state>online</state>
+          <tier>maxiops</tier>
+          <title>disk1</title>
+          <type>normal</type>
+          <uuid>01bbbb1c-94a7-4d2b-be6c-a1be204bdf53</uuid>
+          <zone>fi-hel2</zone>
+        </storage>
+        <storage>
+          <access>private</access>
+          <license>0</license>
+          <size>30</size>
+          <state>online</state>
+          <tier>maxiops</tier>
+          <title>disk1</title>
+          <type>normal</type>
+          <uuid>01bcb7f1-b248-4189-9fc0-027646d3d161</uuid>
+          <zone>fi-hel2</zone>
+        </storage>
+        <storage>
+          <access>private</access>
+          <license>0</license>
+          <size>10</size>
+          <state>online</state>
+          <tier>maxiops</tier>
+          <title>Cloned storage</title>
+          <type>normal</type>
+          <uuid>01cbcbe4-5f6b-4b0e-8196-bcb3a24620a7</uuid>
+          <zone>fi-hel2</zone>
+        </storage>
+        <storage>
+          <access>private</access>
+          <license>0</license>
+          <size>30</size>
+          <state>online</state>
+          <tier>maxiops</tier>
+          <title>disk1</title>
+          <type>normal</type>
+          <uuid>01dc471a-3ed2-48c2-9734-8405418c3a42</uuid>
+          <zone>fi-hel2</zone>
+        </storage>
+        <storage>
+          <access>private</access>
+          <license>0</license>
+          <size>10</size>
+          <state>online</state>
+          <tier>maxiops</tier>
+          <title>Test storage</title>
+          <type>normal</type>
+          <uuid>01e520c0-2e3d-4b31-a3bc-1a2a7ccfe668</uuid>
+          <zone>fi-hel2</zone>
+        </storage>
+        <storage>
+          <access>private</access>
+          <license>0</license>
+          <size>30</size>
+          <state>online</state>
+          <tier>maxiops</tier>
+          <title>disk1</title>
+          <type>normal</type>
+          <uuid>01ebbaa8-569b-4c35-ad4f-a53ab7f34dbe</uuid>
+          <zone>fi-hel2</zone>
+        </storage>
+        <storage>
+          <access>private</access>
+          <license>0</license>
+          <size>30</size>
+          <state>online</state>
+          <tier>maxiops</tier>
+          <title>disk1</title>
+          <type>normal</type>
+          <uuid>01ec6889-ae74-4212-bd10-853055df61be</uuid>
+          <zone>fi-hel2</zone>
+        </storage>
+        <storage>
+          <access>private</access>
+          <license>0</license>
+          <size>30</size>
+          <state>online</state>
+          <tier>maxiops</tier>
+          <title>disk1</title>
+          <type>normal</type>
+          <uuid>01edfde3-96c5-4b04-9e71-204dbe1bc7a9</uuid>
+          <zone>fi-hel2</zone>
+        </storage>
+        <storage>
+          <access>private</access>
+          <license>0</license>
+          <size>30</size>
+          <state>online</state>
+          <tier>maxiops</tier>
+          <title>disk1</title>
+          <type>normal</type>
+          <uuid>01f2948d-5702-4c4e-b03d-3e500ebfb622</uuid>
+          <zone>fi-hel2</zone>
+        </storage>
+        <storage>
+          <access>private</access>
+          <license>0</license>
+          <size>30</size>
+          <state>online</state>
+          <tier>maxiops</tier>
+          <title>disk1</title>
+          <type>normal</type>
+          <uuid>01f61e1b-c29f-4984-9735-0819f4c9ac80</uuid>
+          <zone>fi-hel2</zone>
+        </storage>
+        <storage>
+          <access>private</access>
+          <license>0</license>
+          <size>10</size>
+          <state>online</state>
+          <tier>maxiops</tier>
+          <title>Test storage</title>
+          <type>normal</type>
+          <uuid>01fcb912-d7bc-4a84-9a13-92274ff5f205</uuid>
           <zone>fi-hel2</zone>
         </storage>
       </storages>
     headers:
       Content-Length:
-      - "4376"
+      - "9246"
       Content-Type:
       - application/xml; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 13:02:38 GMT
+      - Mon, 03 Aug 2020 16:37:36 GMT
       Server:
       - Apache
       Strict-Transport-Security:

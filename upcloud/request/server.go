@@ -33,8 +33,12 @@ func (r *GetServerDetailsRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s", r.UUID)
 }
 
+// CreateServerIPAddressSlice is a slice of strings
+// It exists to allow for a custom JSON marshaller.
 type CreateServerIPAddressSlice []CreateServerIPAddress
 
+// MarshalJSON is a custom marshaller that deals with
+// deeply embedded values.
 func (s CreateServerIPAddressSlice) MarshalJSON() ([]byte, error) {
 	v := struct {
 		IPAddress []CreateServerIPAddress `json:"ip_address"`
@@ -44,8 +48,12 @@ func (s CreateServerIPAddressSlice) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v)
 }
 
+// CreateServerStorageDeviceSlice is a slice of strings
+// It exists to allow for a custom JSON marshaller.
 type CreateServerStorageDeviceSlice []upcloud.CreateServerStorageDevice
 
+// MarshalJSON is a custom marshaller that deals with
+// deeply embedded values.
 func (s CreateServerStorageDeviceSlice) MarshalJSON() ([]byte, error) {
 	v := struct {
 		StorageDevice []upcloud.CreateServerStorageDevice `json:"storage_device"`
@@ -81,6 +89,8 @@ type CreateServerRequest struct {
 	Zone        string `xml:"zone" json:"zone"`
 }
 
+// MarshalJSON is a custom marshaller that deals with
+// deeply embedded values.
 func (r CreateServerRequest) MarshalJSON() ([]byte, error) {
 	type localCreateServerRequest CreateServerRequest
 	v := struct {
@@ -96,8 +106,12 @@ func (r *CreateServerRequest) RequestURL() string {
 	return "/server"
 }
 
+// SSHKeySlice is a slice of strings
+// It exists to allow for a custom JSON unmarshaller.
 type SSHKeySlice []string
 
+// UnmarshalJSON is a custom unmarshaller that deals with
+// deeply embedded values.
 func (s *SSHKeySlice) UnmarshalJSON(b []byte) error {
 	v := struct {
 		SSHKey []string `json:"ssh_key"`
@@ -112,6 +126,8 @@ func (s *SSHKeySlice) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+// MarshalJSON is a custom marshaller that deals with
+// deeply embedded values.
 func (s SSHKeySlice) MarshalJSON() ([]byte, error) {
 	v := struct {
 		SSHKey []string `json:"ssh_key"`
@@ -158,17 +174,30 @@ func (r *StartServerRequest) RequestURL() string {
 
 // StopServerRequest represents a request to stop a server
 type StopServerRequest struct {
-	XMLName xml.Name `xml:"stop_server"`
+	XMLName xml.Name `xml:"stop_server" json:"-"`
 
-	UUID string `xml:"-"`
+	UUID string `xml:"-" json:"-"`
 
-	StopType string        `xml:"stop_type,omitempty"`
-	Timeout  time.Duration `xml:"timeout,omitempty"`
+	StopType string        `xml:"stop_type,omitempty" json:"stop_type,omitempty"`
+	Timeout  time.Duration `xml:"timeout,omitempty" json:"timeout,omitempty,string"`
 }
 
 // RequestURL implements the Request interface
 func (r *StopServerRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s/stop", r.UUID)
+}
+
+// MarshalJSON is a custom marshaller that deals with
+// deeply embedded values.
+func (r StopServerRequest) MarshalJSON() ([]byte, error) {
+	type localStopServerRequest StopServerRequest
+	v := struct {
+		StopServerRequest localStopServerRequest `json:"stop_server"`
+	}{}
+	v.StopServerRequest = localStopServerRequest(r)
+	v.StopServerRequest.Timeout = v.StopServerRequest.Timeout / 1e9
+
+	return json.Marshal(&v)
 }
 
 // MarshalXML implements a custom marshaller for StopServerRequest which converts the timeout to seconds
@@ -186,18 +215,31 @@ func (r *StopServerRequest) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 
 // RestartServerRequest represents a request to restart a server
 type RestartServerRequest struct {
-	XMLName xml.Name `xml:"restart_server"`
+	XMLName xml.Name `xml:"restart_server" json:"-"`
 
-	UUID string `xml:"-"`
+	UUID string `xml:"-" json:"-"`
 
-	StopType      string        `xml:"stop_type,omitempty"`
-	Timeout       time.Duration `xml:"timeout,omitempty"`
-	TimeoutAction string        `xml:"timeout_action,omitempty"`
+	StopType      string        `xml:"stop_type,omitempty" json:"stop_type,omitempty"`
+	Timeout       time.Duration `xml:"timeout,omitempty"  json:"timeout,omitempty,string"`
+	TimeoutAction string        `xml:"timeout_action,omitempty" json:"timeout_action,omitempty"`
 }
 
 // RequestURL implements the Request interface
 func (r *RestartServerRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s/restart", r.UUID)
+}
+
+// MarshalJSON is a custom marshaller that deals with
+// deeply embedded values.
+func (r RestartServerRequest) MarshalJSON() ([]byte, error) {
+	type localRestartServerRequest RestartServerRequest
+	v := struct {
+		RestartServerRequest localRestartServerRequest `json:"restart_server"`
+	}{}
+	v.RestartServerRequest = localRestartServerRequest(r)
+	v.RestartServerRequest.Timeout = v.RestartServerRequest.Timeout / 1e9
+
+	return json.Marshal(&v)
 }
 
 // MarshalXML implements a custom marshaller for RestartServerRequest which converts the timeout to seconds
@@ -215,26 +257,36 @@ func (r *RestartServerRequest) MarshalXML(e *xml.Encoder, start xml.StartElement
 
 // ModifyServerRequest represents a request to modify a server
 type ModifyServerRequest struct {
-	XMLName xml.Name `xml:"server"`
+	XMLName xml.Name `xml:"server" json:"-"`
 
-	UUID string `xml:"-"`
+	UUID string `xml:"-" json:"-"`
 
-	AvoidHost string `xml:"avoid_host,omitempty"`
-	BootOrder string `xml:"boot_order,omitempty"`
-	// TODO: Investigate correct type and format
-	CoreNumber string `xml:"core_number,omitempty"`
+	AvoidHost  string `xml:"avoid_host,omitempty" json:"avoid_host,omitempty"`
+	BootOrder  string `xml:"boot_order,omitempty" json:"boot_order,omitempty"`
+	CoreNumber int    `xml:"core_number,omitempty" json:"core_number,omitempty,string"`
 	// TODO: Convert to boolean
-	Firewall string `xml:"firewall,omitempty"`
-	Hostname string `xml:"hostname,omitempty"`
-	// TODO: Investigate correct type and format
-	MemoryAmount string `xml:"memory_amount,omitempty"`
-	Plan         string `xml:"plan,omitempty"`
-	TimeZone     string `xml:"timezone,omitempty"`
-	Title        string `xml:"title,omitempty"`
-	VideoModel   string `xml:"video_model,omitempty"`
+	Firewall     string `xml:"firewall,omitempty" json:"firewall,omitempty"`
+	Hostname     string `xml:"hostname,omitempty" json:"hostname,omitempty"`
+	MemoryAmount int    `xml:"memory_amount,omitempty" json:"memory_amount,omitempty,string"`
+	Plan         string `xml:"plan,omitempty" json:"plan,omitempty"`
+	TimeZone     string `xml:"timezone,omitempty" json:"timezone,omitempty"`
+	Title        string `xml:"title,omitempty" json:"title,omitempty"`
+	VideoModel   string `xml:"video_model,omitempty" json:"video_model,omitempty"`
 	// TODO: Convert to boolean
-	VNC         string `xml:"vnc,omitempty"`
-	VNCPassword string `xml:"vnc_password,omitempty"`
+	VNC         string `xml:"vnc,omitempty" json:"vnc,omitempty"`
+	VNCPassword string `xml:"vnc_password,omitempty" json:"vnc_password,omitempty"`
+}
+
+// MarshalJSON is a custom marshaller that deals with
+// deeply embedded values.
+func (r ModifyServerRequest) MarshalJSON() ([]byte, error) {
+	type localModifyServerRequest ModifyServerRequest
+	v := struct {
+		ModifyServerRequest localModifyServerRequest `json:"server"`
+	}{}
+	v.ModifyServerRequest = localModifyServerRequest(r)
+
+	return json.Marshal(&v)
 }
 
 // RequestURL implements the Request interface
