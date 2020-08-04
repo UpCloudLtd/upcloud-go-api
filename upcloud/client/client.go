@@ -63,13 +63,24 @@ func (c *Client) CreateRequestUrl(location string) string {
 
 // PerformGetRequest performs a GET request to the specified URL and returns the response body and eventual errors
 func (c *Client) PerformGetRequest(url string) ([]byte, error) {
-	request, err := http.NewRequest("GET", url, nil)
+	request, err := http.NewRequest(http.MethodGet, url, nil)
 
 	if err != nil {
 		return nil, err
 	}
 
 	return c.performRequest(request)
+}
+
+// PerformJSONGetRequest performs a GET request to the specified URL and returns the response body and eventual errors
+func (c *Client) PerformJSONGetRequest(url string) ([]byte, error) {
+	request, err := http.NewRequest(http.MethodGet, url, nil)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return c.performJSONRequest(request)
 }
 
 // PerformPostRequest performs a POST request to the specified URL and returns the response body and eventual errors
@@ -80,13 +91,30 @@ func (c *Client) PerformPostRequest(url string, requestBody []byte) ([]byte, err
 		bodyReader = bytes.NewBuffer(requestBody)
 	}
 
-	request, err := http.NewRequest("POST", url, bodyReader)
+	request, err := http.NewRequest(http.MethodPost, url, bodyReader)
 
 	if err != nil {
 		return nil, err
 	}
 
 	return c.performRequest(request)
+}
+
+// PerformPostRequest performs a POST request to the specified URL and returns the response body and eventual errors
+func (c *Client) PerformJSONPostRequest(url string, requestBody []byte) ([]byte, error) {
+	var bodyReader io.Reader
+
+	if requestBody != nil {
+		bodyReader = bytes.NewBuffer(requestBody)
+	}
+
+	request, err := http.NewRequest(http.MethodPost, url, bodyReader)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return c.performJSONRequest(request)
 }
 
 // PerformPutRequest performs a PUT request to the specified URL and returns the response body and eventual errors
@@ -108,13 +136,25 @@ func (c *Client) PerformPutRequest(url string, requestBody []byte) ([]byte, erro
 
 // PerformDeleteRequest performs a DELETE request to the specified URL and returns the response body and eventual errors
 func (c *Client) PerformDeleteRequest(url string) error {
-	request, err := http.NewRequest("DELETE", url, nil)
+	request, err := http.NewRequest(http.MethodDelete, url, nil)
 
 	if err != nil {
 		return err
 	}
 
 	_, err = c.performRequest(request)
+	return err
+}
+
+// PerformJSONDeleteRequest performs a DELETE request to the specified URL and returns the response body and eventual errors
+func (c *Client) PerformJSONDeleteRequest(url string) error {
+	request, err := http.NewRequest(http.MethodDelete, url, nil)
+
+	if err != nil {
+		return err
+	}
+
+	_, err = c.performJSONRequest(request)
 	return err
 }
 
@@ -127,9 +167,30 @@ func (c *Client) addRequestHeaders(request *http.Request) *http.Request {
 	return request
 }
 
+// Adds common headers to the specified request
+func (c *Client) addJSONRequestHeaders(request *http.Request) *http.Request {
+	request.SetBasicAuth(c.userName, c.password)
+	request.Header.Add("Accept", "application/json")
+	request.Header.Add("Content-Type", "application/json")
+
+	return request
+}
+
 // Performs the specified HTTP request and returns the response through handleResponse()
 func (c *Client) performRequest(request *http.Request) ([]byte, error) {
 	c.addRequestHeaders(request)
+	response, err := c.httpClient.Do(request)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return handleResponse(response)
+}
+
+// Performs the specified HTTP request and returns the response through handleResponse()
+func (c *Client) performJSONRequest(request *http.Request) ([]byte, error) {
+	c.addJSONRequestHeaders(request)
 	response, err := c.httpClient.Do(request)
 
 	if err != nil {

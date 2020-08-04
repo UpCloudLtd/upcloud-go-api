@@ -1,6 +1,7 @@
 package upcloud
 
 import (
+	"encoding/json"
 	"encoding/xml"
 	"testing"
 
@@ -37,26 +38,32 @@ func TestUnmarshalServerConfiguratons(t *testing.T) {
 
 // TestUnmarshalServers tests that Servers and Server are unmarshaled correctly
 func TestUnmarshalServers(t *testing.T) {
-	originalXML := `<?xml version="1.0" encoding="utf-8"?>
-<servers>
-    <server>
-        <core_number>1</core_number>
-        <hostname>foo</hostname>
-        <license>0</license>
-        <memory_amount>1024</memory_amount>
-        <plan>1xCPU-1GB</plan>
-        <progress>95</progress>
-        <state>maintenance</state>
-        <tags>
-    </tags>
-        <title>foo.example.com</title>
-        <uuid>009114f1-cd89-4202-b057-5680eb6ba428</uuid>
-        <zone>uk-lon1</zone>
-    </server>
-</servers>`
+	originalJSON := `
+        {
+            "servers" : {
+                "server" : [
+                    {
+                        "core_number" : "1",
+                        "hostname": "foo",
+                        "license": 0,
+                        "memory_amount": "1024",
+                        "plan": "1xCPU-1GB",
+                        "progress": "95",
+                        "state": "maintenance",
+                        "tags": {
+                            "tag": []
+                        },
+                        "title": "foo.example.com",
+                        "uuid": "009114f1-cd89-4202-b057-5680eb6ba428",
+                        "zone": "uk-lon1"
+                    }
+                ]
+            }
+        }
+    `
 
 	servers := Servers{}
-	err := xml.Unmarshal([]byte(originalXML), &servers)
+	err := json.Unmarshal([]byte(originalJSON), &servers)
 	assert.Nil(t, err)
 	assert.Len(t, servers.Servers, 1)
 

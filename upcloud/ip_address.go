@@ -16,11 +16,11 @@ type IPAddresses struct {
 
 // IPAddress represents an IP address
 type IPAddress struct {
-	Access  string `xml:"access"`
-	Address string `xml:"address"`
-	Family  string `xml:"family"`
+	Access  string `xml:"access" json:"access"`
+	Address string `xml:"address" json:"address"`
+	Family  string `xml:"family" json:"family"`
 	// TODO: Convert to boolean
-	PartOfPlan string `xml:"part_of_plan"`
-	PTRRecord  string `xml:"ptr_record"`
-	ServerUUID string `xml:"server"`
+	PartOfPlan string `xml:"part_of_plan" json:"part_of_plan"`
+	PTRRecord  string `xml:"ptr_record" json:"ptr_record"`
+	ServerUUID string `xml:"server" json:"server"`
 }
