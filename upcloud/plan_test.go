@@ -2,8 +2,9 @@ package upcloud
 
 import (
 	"encoding/xml"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 // TestUnmarshalPlans tests that Plans and Plan objects unmarshal correctly

@@ -179,7 +179,7 @@ func (s *Service) WaitForServerState(r *request.WaitForServerStateRequest) (*upc
 		}
 
 		if time.Duration(attempts)*sleepDuration >= r.Timeout {
-			return nil, fmt.Errorf("Timeout reached while waiting for server to enter state \"%s\"", r.DesiredState)
+			return nil, fmt.Errorf("timeout reached while waiting for server to enter state \"%s\"", r.DesiredState)
 		}
 	}
 }
@@ -503,7 +503,7 @@ func (s *Service) WaitForStorageState(r *request.WaitForStorageStateRequest) (*u
 		time.Sleep(sleepDuration)
 
 		if time.Duration(attempts)*sleepDuration >= r.Timeout {
-			return nil, fmt.Errorf("Timeout reached while waiting for storage to enter state \"%s\"", r.DesiredState)
+			return nil, fmt.Errorf("timeout reached while waiting for storage to enter state \"%s\"", r.DesiredState)
 		}
 	}
 }

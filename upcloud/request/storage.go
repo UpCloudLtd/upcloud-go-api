@@ -3,8 +3,9 @@ package request
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 	"time"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 )
 
 // GetStoragesRequest represents a request for retrieving all or some storages
