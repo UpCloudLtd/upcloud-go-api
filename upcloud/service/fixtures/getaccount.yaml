@@ -6,35 +6,36 @@ interactions:
     form: {}
     headers:
       Accept:
-      - application/xml
+      - application/json
       Content-Type:
-      - application/xml
+      - application/json
     url: https://api.upcloud.com/1.2/account
     method: GET
   response:
     body: |
-      <?xml version="1.0" encoding="utf-8"?>
-      <account>
-        <credits>995435.8356</credits>
-        <resource_limits>
-          <cores>100</cores>
-          <detached_floating_ips></detached_floating_ips>
-          <memory>307200</memory>
-          <networks>100</networks>
-          <public_ipv4></public_ipv4>
-          <public_ipv6>100</public_ipv6>
-          <storage_hdd>10240</storage_hdd>
-          <storage_ssd>10240</storage_ssd>
-        </resource_limits>
-        <username>opencredo</username>
-      </account>
+      {
+         "account" : {
+            "credits" : 995223.3456,
+            "resource_limits" : {
+               "cores" : 100,
+               "detached_floating_ips" : null,
+               "memory" : 307200,
+               "networks" : 100,
+               "public_ipv4" : null,
+               "public_ipv6" : 100,
+               "storage_hdd" : 10240,
+               "storage_ssd" : 10240
+            },
+            "username" : "opencredo"
+         }
+      }
     headers:
       Content-Length:
-      - "440"
+      - "369"
       Content-Type:
-      - application/xml; charset=UTF-8
+      - application/json; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 12:55:07 GMT
+      - Mon, 03 Aug 2020 16:30:10 GMT
       Server:
       - Apache
       Strict-Transport-Security:

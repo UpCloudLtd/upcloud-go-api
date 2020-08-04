@@ -44,6 +44,7 @@ func getService() *Service {
 	return New(c)
 }
 
+// records the API interactions of the test
 func record(t *testing.T, fixture string, f func(*testing.T, *Service)) {
 	r, err := recorder.New("fixtures/" + fixture)
 	require.NoError(t, err)
@@ -260,8 +261,8 @@ func TestGetServerDetails(t *testing.T) {
 	})
 }
 
-// TestCreateStopStartServer ensures that StartServer() behaves as expect and returns
-// proper data
+// TestCreateStopStartServer ensures that StartServer() and StopServer() behave
+// as expect and return proper data
 // The test:
 //   - Creates a server
 //   - Stops the server
@@ -273,17 +274,80 @@ func TestCreateStopStartServer(t *testing.T) {
 		d, err := createServer(svc, "createstartstopserver")
 		require.NoError(t, err)
 
-		err = stopServer(svc, d.UUID)
+		stopServerDetails, err := svc.StopServer(&request.StopServerRequest{
+			UUID:     d.UUID,
+			Timeout:  15 * time.Minute,
+			StopType: upcloud.StopTypeHard,
+		})
 		require.NoError(t, err)
+		assert.Contains(t, stopServerDetails.Title, "createstartstopserver")
+		assert.Equal(t, "fi-hel2", stopServerDetails.Zone)
+		// We shouldn't have transitioned state yet.
+		assert.Equal(t, upcloud.ServerStateStarted, stopServerDetails.State)
 
-		serverDetails, err := svc.StartServer(&request.StartServerRequest{
+		waitServerDetails, err := svc.WaitForServerState(&request.WaitForServerStateRequest{
+			UUID:         d.UUID,
+			DesiredState: upcloud.ServerStateStopped,
+			Timeout:      15 * time.Minute,
+		})
+		require.NoError(t, err)
+		assert.Contains(t, waitServerDetails.Title, "createstartstopserver")
+		assert.Equal(t, "fi-hel2", waitServerDetails.Zone)
+		assert.Equal(t, upcloud.ServerStateStopped, waitServerDetails.State)
+
+		startServerDetails, err := svc.StartServer(&request.StartServerRequest{
 			UUID: d.UUID,
 		})
 		require.NoError(t, err)
 
-		assert.Contains(t, serverDetails.Title, "createstartstopserver")
-		assert.Equal(t, "fi-hel2", serverDetails.Zone)
-		assert.Equal(t, upcloud.ServerStateStarted, serverDetails.State)
+		assert.Contains(t, startServerDetails.Title, "createstartstopserver")
+		assert.Equal(t, "fi-hel2", startServerDetails.Zone)
+		assert.Equal(t, upcloud.ServerStateStarted, startServerDetails.State)
+	})
+}
+
+// TestCreateRestartServer ensures that RestartServer() behaves as expect and returns
+// proper data
+// The test:
+//   - Creates a server
+//   - Restarts the server
+//   - Checks the details of the restarted server and that it is in the
+//     correct state.
+func TestCreateRestartServer(t *testing.T) {
+	record(t, "createrestartserver", func(t *testing.T, svc *Service) {
+		d, err := createServer(svc, "createrestartserver")
+		require.NoError(t, err)
+
+		restartServerDetails, err := svc.RestartServer(&request.RestartServerRequest{
+			UUID:          d.UUID,
+			Timeout:       15 * time.Minute,
+			StopType:      upcloud.StopTypeHard,
+			TimeoutAction: request.RestartTimeoutActionIgnore,
+		})
+		require.NoError(t, err)
+		assert.Contains(t, restartServerDetails.Title, "createrestartserver")
+		assert.Equal(t, "fi-hel2", restartServerDetails.Zone)
+		// We shouldn't have transitioned state yet.
+		assert.Equal(t, upcloud.ServerStateStarted, restartServerDetails.State)
+
+		waitServerDetails, err := svc.WaitForServerState(&request.WaitForServerStateRequest{
+			UUID:           d.UUID,
+			UndesiredState: upcloud.ServerStateStarted,
+			Timeout:        15 * time.Minute,
+		})
+		require.NoError(t, err)
+		assert.Contains(t, waitServerDetails.Title, "createrestartserver")
+		assert.Equal(t, "fi-hel2", waitServerDetails.Zone)
+
+		waitServerDetails2, err := svc.WaitForServerState(&request.WaitForServerStateRequest{
+			UUID:         waitServerDetails.UUID,
+			DesiredState: upcloud.ServerStateStarted,
+			Timeout:      15 * time.Minute,
+		})
+		require.NoError(t, err)
+		assert.Contains(t, waitServerDetails2.Title, "createrestartserver")
+		assert.Equal(t, "fi-hel2", waitServerDetails2.Zone)
+		assert.Equal(t, upcloud.ServerStateStarted, waitServerDetails2.State)
 	})
 }
 
@@ -863,6 +927,78 @@ func TestFirewallRules(t *testing.T) {
 	})
 }
 
+// TestCreateTag tests the creation of a single tag
+func TestCreateTag(t *testing.T) {
+	record(t, "createtag", func(t *testing.T, svc *Service) {
+		svc.DeleteTag(&request.DeleteTagRequest{
+			Name: "testTag",
+		})
+
+		tag, err := svc.CreateTag(&request.CreateTagRequest{
+			Tag: upcloud.Tag{
+				Name: "testTag",
+			},
+		})
+		require.NoError(t, err)
+		assert.Equal(t, "testTag", tag.Name)
+	})
+}
+
+// TestGetTags tests that GetTags returns multiple tags and it, at least, contains the 3
+// we create.
+func TestGetTags(t *testing.T) {
+	record(t, "gettags", func(t *testing.T, svc *Service) {
+		testData := []string{
+			"testgettags_tag1",
+			"testgettags_tag2",
+			"testgettags_tag3",
+		}
+
+		for _, tag := range testData {
+			// Delete all the tags we're about to create.
+			// We don't care about errors.
+			svc.DeleteTag(&request.DeleteTagRequest{
+				Name: tag,
+			})
+		}
+
+		for _, tag := range testData {
+			_, err := svc.CreateTag(&request.CreateTagRequest{
+				Tag: upcloud.Tag{
+					Name:        tag,
+					Description: tag + " description",
+				},
+			})
+
+			require.NoError(t, err)
+		}
+
+		tags, err := svc.GetTags()
+		require.NoError(t, err)
+		// There may be other tags so the length must be
+		// greater than or equal to.
+		assert.GreaterOrEqual(t, len(tags.Tags), len(testData))
+		for _, expectedTag := range testData {
+			var found bool
+			for _, tag := range tags.Tags {
+				if tag.Name == expectedTag {
+					found = true
+					assert.Equal(t, expectedTag+" description", tag.Description)
+					break
+				}
+			}
+			assert.True(t, found)
+		}
+
+		for _, tag := range tags.Tags {
+			err := svc.DeleteTag(&request.DeleteTagRequest{
+				Name: tag.Name,
+			})
+			require.NoError(t, err)
+		}
+	})
+}
+
 // TestTagging tests that all tagging-related functionality works correctly. It performs the following actions:
 //   - creates a server
 //   - creates three tags
@@ -903,6 +1039,7 @@ func TestTagging(t *testing.T) {
 			})
 
 			require.NoError(t, err)
+			assert.Equal(t, tag, tagDetails.Name)
 			t.Logf("Tag %s created", tagDetails.Name)
 		}
 
@@ -914,6 +1051,7 @@ func TestTagging(t *testing.T) {
 			},
 		})
 		require.NoError(t, err)
+		assert.Contains(t, serverDetails.Tags, "tag1")
 		t.Logf("Server %s is now tagged with tag %s", serverDetails.Title, "tag1")
 
 		// Rename the second tag
@@ -925,6 +1063,7 @@ func TestTagging(t *testing.T) {
 		})
 
 		require.NoError(t, err)
+		assert.Equal(t, "tag2_renamed", tagDetails.Name)
 		t.Logf("Tag tag2 renamed to %s", tagDetails.Name)
 
 		// Delete the third tag
@@ -943,8 +1082,8 @@ func TestTagging(t *testing.T) {
 				"tag1",
 			},
 		})
-
 		require.NoError(t, err)
+		assert.NotContains(t, serverDetails.Tags, "tag1")
 		t.Logf("Server %s is now untagged", serverDetails.Title)
 	})
 }

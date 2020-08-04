@@ -132,13 +132,30 @@ func (c *Client) PerformPutRequest(url string, requestBody []byte) ([]byte, erro
 		bodyReader = bytes.NewBuffer(requestBody)
 	}
 
-	request, err := http.NewRequest("PUT", url, bodyReader)
+	request, err := http.NewRequest(http.MethodPut, url, bodyReader)
 
 	if err != nil {
 		return nil, err
 	}
 
 	return c.performRequest(request)
+}
+
+// PerformJSONPutRequest performs a PUT request to the specified URL and returns the response body and eventual errors
+func (c *Client) PerformJSONPutRequest(url string, requestBody []byte) ([]byte, error) {
+	var bodyReader io.Reader
+
+	if requestBody != nil {
+		bodyReader = bytes.NewBuffer(requestBody)
+	}
+
+	request, err := http.NewRequest(http.MethodPut, url, bodyReader)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return c.performJSONRequest(request)
 }
 
 // PerformDeleteRequest performs a DELETE request to the specified URL and returns the response body and eventual errors

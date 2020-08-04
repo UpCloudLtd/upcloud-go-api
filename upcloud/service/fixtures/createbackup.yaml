@@ -31,7 +31,7 @@ interactions:
         <tier>maxiops</tier>
         <title>Test storage</title>
         <type>normal</type>
-        <uuid>012ae44f-1041-4f6e-aad3-7e7df722d997</uuid>
+        <uuid>018c2a92-c41e-4143-8d87-dc6c12568e03</uuid>
         <zone>fi-hel2</zone>
       </storage>
     headers:
@@ -40,7 +40,7 @@ interactions:
       Content-Type:
       - application/xml; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 12:59:08 GMT
+      - Mon, 03 Aug 2020 16:33:59 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -49,31 +49,31 @@ interactions:
     code: 201
     duration: ""
 - request:
-    body: <storage><title>backup-1596459561000000000</title></storage>
+    body: <storage><title>backup-1596472448000000000</title></storage>
     form: {}
     headers:
       Accept:
       - application/xml
       Content-Type:
       - application/xml
-    url: https://api.upcloud.com/1.2/storage/012ae44f-1041-4f6e-aad3-7e7df722d997/backup
+    url: https://api.upcloud.com/1.2/storage/018c2a92-c41e-4143-8d87-dc6c12568e03/backup
     method: POST
   response:
     body: |
       <?xml version="1.0" encoding="utf-8"?>
       <storage>
         <access>private</access>
-        <created>2020-08-03T12:59:21Z</created>
+        <created>2020-08-03T16:34:08Z</created>
         <license>0</license>
-        <origin>012ae44f-1041-4f6e-aad3-7e7df722d997</origin>
+        <origin>018c2a92-c41e-4143-8d87-dc6c12568e03</origin>
         <progress>0</progress>
         <servers>
         </servers>
         <size>10</size>
         <state>maintenance</state>
-        <title>backup-1596459561000000000</title>
+        <title>backup-1596472448000000000</title>
         <type>backup</type>
-        <uuid>0176031b-8c5e-4e5e-954e-b61f1bce204d</uuid>
+        <uuid>01451958-1e1b-43bf-b557-e12c870289fd</uuid>
         <zone>fi-hel2</zone>
       </storage>
     headers:
@@ -82,7 +82,7 @@ interactions:
       Content-Type:
       - application/xml; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 12:59:21 GMT
+      - Mon, 03 Aug 2020 16:34:08 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -98,7 +98,7 @@ interactions:
       - application/xml
       Content-Type:
       - application/xml
-    url: https://api.upcloud.com/1.2/storage/012ae44f-1041-4f6e-aad3-7e7df722d997
+    url: https://api.upcloud.com/1.2/storage/018c2a92-c41e-4143-8d87-dc6c12568e03
     method: GET
   response:
     body: |
@@ -111,7 +111,7 @@ interactions:
           <time>0430</time>
         </backup_rule>
         <backups>
-          <backup>0176031b-8c5e-4e5e-954e-b61f1bce204d</backup>
+          <backup>01451958-1e1b-43bf-b557-e12c870289fd</backup>
         </backups>
         <license>0</license>
         <servers>
@@ -121,7 +121,7 @@ interactions:
         <tier>maxiops</tier>
         <title>Test storage</title>
         <type>normal</type>
-        <uuid>012ae44f-1041-4f6e-aad3-7e7df722d997</uuid>
+        <uuid>018c2a92-c41e-4143-8d87-dc6c12568e03</uuid>
         <zone>fi-hel2</zone>
       </storage>
     headers:
@@ -130,7 +130,7 @@ interactions:
       Content-Type:
       - application/xml; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 12:59:21 GMT
+      - Mon, 03 Aug 2020 16:34:08 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -146,7 +146,7 @@ interactions:
       - application/xml
       Content-Type:
       - application/xml
-    url: https://api.upcloud.com/1.2/storage/012ae44f-1041-4f6e-aad3-7e7df722d997
+    url: https://api.upcloud.com/1.2/storage/018c2a92-c41e-4143-8d87-dc6c12568e03
     method: GET
   response:
     body: |
@@ -159,7 +159,7 @@ interactions:
           <time>0430</time>
         </backup_rule>
         <backups>
-          <backup>0176031b-8c5e-4e5e-954e-b61f1bce204d</backup>
+          <backup>01451958-1e1b-43bf-b557-e12c870289fd</backup>
         </backups>
         <license>0</license>
         <servers>
@@ -169,7 +169,7 @@ interactions:
         <tier>maxiops</tier>
         <title>Test storage</title>
         <type>normal</type>
-        <uuid>012ae44f-1041-4f6e-aad3-7e7df722d997</uuid>
+        <uuid>018c2a92-c41e-4143-8d87-dc6c12568e03</uuid>
         <zone>fi-hel2</zone>
       </storage>
     headers:
@@ -178,7 +178,7 @@ interactions:
       Content-Type:
       - application/xml; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 12:59:26 GMT
+      - Mon, 03 Aug 2020 16:34:14 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -194,23 +194,23 @@ interactions:
       - application/xml
       Content-Type:
       - application/xml
-    url: https://api.upcloud.com/1.2/storage/0176031b-8c5e-4e5e-954e-b61f1bce204d
+    url: https://api.upcloud.com/1.2/storage/01451958-1e1b-43bf-b557-e12c870289fd
     method: GET
   response:
     body: |
       <?xml version="1.0" encoding="utf-8"?>
       <storage>
         <access>private</access>
-        <created>2020-08-03T12:59:21Z</created>
+        <created>2020-08-03T16:34:08Z</created>
         <license>0</license>
-        <origin>012ae44f-1041-4f6e-aad3-7e7df722d997</origin>
+        <origin>018c2a92-c41e-4143-8d87-dc6c12568e03</origin>
         <servers>
         </servers>
         <size>10</size>
         <state>online</state>
-        <title>backup-1596459561000000000</title>
+        <title>backup-1596472448000000000</title>
         <type>backup</type>
-        <uuid>0176031b-8c5e-4e5e-954e-b61f1bce204d</uuid>
+        <uuid>01451958-1e1b-43bf-b557-e12c870289fd</uuid>
         <zone>fi-hel2</zone>
       </storage>
     headers:
@@ -219,7 +219,7 @@ interactions:
       Content-Type:
       - application/xml; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 12:59:27 GMT
+      - Mon, 03 Aug 2020 16:34:14 GMT
       Server:
       - Apache
       Strict-Transport-Security:

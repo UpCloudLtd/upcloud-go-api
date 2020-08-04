@@ -74,13 +74,13 @@ func (s *Servers) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// TagSlice is a slice of string.
+// ServerTagSlice is a slice of string.
 // It exists to allow for a custom JSON unmarshaller.
-type TagSlice []string
+type ServerTagSlice []string
 
 // UnmarshalJSON is a custom unmarshaller that deals with
 // deeply embedded values.
-func (t *TagSlice) UnmarshalJSON(b []byte) error {
+func (t *ServerTagSlice) UnmarshalJSON(b []byte) error {
 	v := struct {
 		Tags []string `json:"tag"`
 	}{}
@@ -96,17 +96,17 @@ func (t *TagSlice) UnmarshalJSON(b []byte) error {
 
 // Server represents a server
 type Server struct {
-	CoreNumber   int      `xml:"core_number" json:"core_number,string"`
-	Hostname     string   `xml:"hostname" json:"hostname"`
-	License      float64  `xml:"license" json:"license"`
-	MemoryAmount int      `xml:"memory_amount" json:"memory_amount,string"`
-	Plan         string   `xml:"plan" json:"plan"`
-	Progress     int      `xml:"progress" json:"progress,string"`
-	State        string   `xml:"state" json:"state"`
-	Tags         TagSlice `xml:"tags>tag" json:"tags"`
-	Title        string   `xml:"title" json:"title"`
-	UUID         string   `xml:"uuid" json:"uuid"`
-	Zone         string   `xml:"zone" json:"zone"`
+	CoreNumber   int            `xml:"core_number" json:"core_number,string"`
+	Hostname     string         `xml:"hostname" json:"hostname"`
+	License      float64        `xml:"license" json:"license"`
+	MemoryAmount int            `xml:"memory_amount" json:"memory_amount,string"`
+	Plan         string         `xml:"plan" json:"plan"`
+	Progress     int            `xml:"progress" json:"progress,string"`
+	State        string         `xml:"state" json:"state"`
+	Tags         ServerTagSlice `xml:"tags>tag" json:"tags"`
+	Title        string         `xml:"title" json:"title"`
+	UUID         string         `xml:"uuid" json:"uuid"`
+	Zone         string         `xml:"zone" json:"zone"`
 }
 
 // IPAddressSlice is a slice of IPAddress.
