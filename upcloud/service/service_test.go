@@ -135,13 +135,22 @@ func TestGetAccount(t *testing.T) {
 	}
 
 	svc := getService()
+
 	account, err := svc.GetAccount()
-	username, _ := getCredentials()
 	require.NoError(t, err)
+
+	username, _ := getCredentials()
 
 	if account.UserName != username {
 		t.Errorf("TestGetAccount expected %s, got %s", username, account.UserName)
 	}
+
+	assert.NotZero(t, account.ResourceLimits.Cores)
+	assert.NotZero(t, account.ResourceLimits.Memory)
+	assert.NotZero(t, account.ResourceLimits.Networks)
+	assert.NotZero(t, account.ResourceLimits.PublicIPv6)
+	assert.NotZero(t, account.ResourceLimits.StorageHDD)
+	assert.NotZero(t, account.ResourceLimits.StorageSSD)
 }
 
 // TestGetZones tests that the GetZones() function returns proper data

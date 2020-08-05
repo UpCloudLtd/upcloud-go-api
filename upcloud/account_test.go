@@ -10,12 +10,22 @@ import (
 // TestUnmarshalAccount tests that Account objects unmarshal correctly
 func TestUnmarshalAccount(t *testing.T) {
 	originalJSON := `
-	{
-      "account": {
-        "credits": 9972.2324,
-        "username": "username"
-      }
-    }
+	  {
+		"account": {
+		  "credits": 9972.2324,
+		  "username": "username",
+		  "resource_limits": {
+			"cores": 200,
+			"detached_floating_ips": 10,
+			"memory": 1048576,
+			"networks": 100,
+			"public_ipv4": 100,
+			"public_ipv6": 100,
+			"storage_hdd": 10240,
+			"storage_ssd": 10240
+		  }
+		}
+	  }
 	`
 
 	account := Account{}
@@ -23,4 +33,12 @@ func TestUnmarshalAccount(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, 9972.2324, account.Credits)
 	assert.Equal(t, "username", account.UserName)
+	assert.Equal(t, 200, account.ResourceLimits.Cores)
+	assert.Equal(t, 10, account.ResourceLimits.DetachedFloatingIps)
+	assert.Equal(t, 1048576, account.ResourceLimits.Memory)
+	assert.Equal(t, 100, account.ResourceLimits.Networks)
+	assert.Equal(t, 100, account.ResourceLimits.PublicIPv4)
+	assert.Equal(t, 100, account.ResourceLimits.PublicIPv6)
+	assert.Equal(t, 10240, account.ResourceLimits.StorageHDD)
+	assert.Equal(t, 10240, account.ResourceLimits.StorageSSD)
 }

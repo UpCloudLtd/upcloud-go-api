@@ -26,13 +26,16 @@ func New(client *client.Client) *Service {
 // GetAccount returns the current user's account
 func (s *Service) GetAccount() (*upcloud.Account, error) {
 	account := upcloud.Account{}
-	response, err := s.basicJSONGetRequest("/account")
+	response, err := s.basicFutureGetRequest("/account")
 
 	if err != nil {
 		return nil, err
 	}
 
-	json.Unmarshal(response, &account)
+	err = json.Unmarshal(response, &account)
+	if err != nil {
+		return nil, err
+	}
 
 	return &account, nil
 }
