@@ -6,7 +6,7 @@ import (
 
 // Tags represents a list of tags
 type Tags struct {
-	Tags []Tag `xml:"tag"`
+	Tags []Tag
 }
 
 // UnmarshalJSON is a custom unmarshaller that deals with
@@ -68,9 +68,9 @@ func (t TagServerSlice) MarshalJSON() ([]byte, error) {
 
 // Tag represents a server tag
 type Tag struct {
-	Name        string         `xml:"name" json:"name"`
-	Description string         `xml:"description,omitempty" json:"description,omitempty"`
-	Servers     TagServerSlice `xml:"servers>server" json:"servers"`
+	Name        string         `json:"name"`
+	Description string         `json:"description,omitempty"`
+	Servers     TagServerSlice `json:"servers"`
 }
 
 // UnmarshalJSON is a custom unmarshaller that deals with

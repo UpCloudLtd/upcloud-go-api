@@ -2,7 +2,6 @@ package request
 
 import (
 	"encoding/json"
-	"encoding/xml"
 	"fmt"
 
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
@@ -33,8 +32,7 @@ func (r *GetFirewallRuleDetailsRequest) RequestURL() string {
 type CreateFirewallRuleRequest struct {
 	upcloud.FirewallRule
 
-	XMLName    xml.Name `xml:"firewall_rule" json:"-"`
-	ServerUUID string   `xml:"-" json:"-"`
+	ServerUUID string `json:"-"`
 }
 
 // RequestURL implements the Request interface

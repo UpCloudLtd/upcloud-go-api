@@ -13,7 +13,7 @@ const (
 
 // IPAddresses represents a /ip_address response
 type IPAddresses struct {
-	IPAddresses []IPAddress `xml:"ip_address" json:"ip_addresses"`
+	IPAddresses []IPAddress `json:"ip_addresses"`
 }
 
 // UnmarshalJSON is a custom unmarshaller that deals with
@@ -41,13 +41,13 @@ func (s *IPAddresses) UnmarshalJSON(b []byte) error {
 
 // IPAddress represents an IP address
 type IPAddress struct {
-	Access  string `xml:"access" json:"access"`
-	Address string `xml:"address" json:"address"`
-	Family  string `xml:"family" json:"family"`
+	Access  string `json:"access"`
+	Address string `json:"address"`
+	Family  string `json:"family"`
 	// TODO: Convert to boolean
-	PartOfPlan string `xml:"part_of_plan" json:"part_of_plan"`
-	PTRRecord  string `xml:"ptr_record" json:"ptr_record"`
-	ServerUUID string `xml:"server" json:"server"`
+	PartOfPlan string `json:"part_of_plan"`
+	PTRRecord  string `json:"ptr_record"`
+	ServerUUID string `json:"server"`
 }
 
 // UnmarshalJSON is a custom unmarshaller that deals with

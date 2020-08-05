@@ -7,8 +7,8 @@ import (
 
 // Error represents an error
 type Error struct {
-	ErrorCode    string `xml:"error_code" json:"error_code"`
-	ErrorMessage string `xml:"error_message" json:"error_message"`
+	ErrorCode    string `json:"error_code"`
+	ErrorMessage string `json:"error_message"`
 }
 
 // UnmarshalJSON is a custom unmarshaller that deals with

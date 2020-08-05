@@ -4,7 +4,7 @@ import "encoding/json"
 
 // TimeZones represents a list of timezones
 type TimeZones struct {
-	TimeZones []string `xml:"timezone" json:"timezone"`
+	TimeZones []string `json:"timezone"`
 }
 
 // UnmarshalJSON is a custom unmarshaller that deals with

@@ -4,7 +4,7 @@ import "encoding/json"
 
 // Plans represents a /plan response
 type Plans struct {
-	Plans []Plan `xml:"plan" json:"plans"`
+	Plans []Plan `json:"plans"`
 }
 
 // UnmarshalJSON is a custom unmarshaller that deals with
@@ -29,10 +29,10 @@ func (s *Plans) UnmarshalJSON(b []byte) error {
 
 // Plan represents a pre-configured server configuration plan
 type Plan struct {
-	CoreNumber       int    `xml:"core_number" json:"core_number"`
-	MemoryAmount     int    `xml:"memory_amount" json:"memory_amount"`
-	Name             string `xml:"name" json:"name"`
-	PublicTrafficOut int    `xml:"public_traffic_out" json:"public_traffic_out"`
-	StorageSize      int    `xml:"storage_size" json:"storage_size"`
-	StorageTier      string `xml:"storage_tier" json:"storage_tier"`
+	CoreNumber       int    `json:"core_number"`
+	MemoryAmount     int    `json:"memory_amount"`
+	Name             string `json:"name"`
+	PublicTrafficOut int    `json:"public_traffic_out"`
+	StorageSize      int    `json:"storage_size"`
+	StorageTier      string `json:"storage_tier"`
 }

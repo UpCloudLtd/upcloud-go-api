@@ -4,7 +4,7 @@ import "encoding/json"
 
 // Zones represents a /zone response
 type Zones struct {
-	Zones []Zone `xml:"zone" json:"zone"`
+	Zones []Zone `json:"zone"`
 }
 
 // UnmarshalJSON is a custom unmarshaller that deals with
@@ -29,6 +29,6 @@ func (s *Zones) UnmarshalJSON(b []byte) error {
 
 // Zone represents a zone
 type Zone struct {
-	ID          string `xml:"id" json:"id"`
-	Description string `xml:"description" json:"description"`
+	ID          string `json:"id"`
+	Description string `json:"description"`
 }

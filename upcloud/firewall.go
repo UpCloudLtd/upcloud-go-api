@@ -18,7 +18,7 @@ const (
 
 // FirewallRules represents a list of firewall rules
 type FirewallRules struct {
-	FirewallRules []FirewallRule `xml:"firewall_rule" json:"firewall_rules"`
+	FirewallRules []FirewallRule `json:"firewall_rules"`
 }
 
 // UnmarshalJSON is a custom unmarshaller that deals with
@@ -46,21 +46,21 @@ func (s *FirewallRules) UnmarshalJSON(b []byte) error {
 
 // FirewallRule represents a single firewall rule. Note that most integer values are represented as strings
 type FirewallRule struct {
-	Action                  string `xml:"action" json:"action"`
-	Comment                 string `xml:"comment,omitempty" json:"comment,omitempty"`
-	DestinationAddressStart string `xml:"destination_address_start,omitempty" json:"destination_address_start,omitempty"`
-	DestinationAddressEnd   string `xml:"destination_address_end,omitempty" json:"destination_address_end,omitempty"`
-	DestinationPortStart    string `xml:"destination_port_start,omitempty" json:"destination_port_start,omitempty"`
-	DestinationPortEnd      string `xml:"destination_port_end,omitempty" json:"destination_port_end,omitempty"`
-	Direction               string `xml:"direction" json:"direction"`
-	Family                  string `xml:"family" json:"family"`
-	ICMPType                string `xml:"icmp_type,omitempty" json:"icmp_type,omitempty"`
-	Position                int    `xml:"position" json:"position,string"`
-	Protocol                string `xml:"protocol,omitempty" json:"protocol,omitempty"`
-	SourceAddressStart      string `xml:"source_address_start,omitempty" json:"source_address_start,omitempty"`
-	SourceAddressEnd        string `xml:"source_address_end,omitempty" json:"source_address_end,omitempty"`
-	SourcePortStart         string `xml:"source_port_start,omitempty" json:"source_port_start,omitempty"`
-	SourcePortEnd           string `xml:"source_port_end,omitempty" json:"source_port_end,omitempty"`
+	Action                  string `json:"action"`
+	Comment                 string `json:"comment,omitempty"`
+	DestinationAddressStart string `json:"destination_address_start,omitempty"`
+	DestinationAddressEnd   string `json:"destination_address_end,omitempty"`
+	DestinationPortStart    string `json:"destination_port_start,omitempty"`
+	DestinationPortEnd      string `json:"destination_port_end,omitempty"`
+	Direction               string `json:"direction"`
+	Family                  string `json:"family"`
+	ICMPType                string `json:"icmp_type,omitempty"`
+	Position                int    `json:"position,string"`
+	Protocol                string `json:"protocol,omitempty"`
+	SourceAddressStart      string `json:"source_address_start,omitempty"`
+	SourceAddressEnd        string `json:"source_address_end,omitempty"`
+	SourcePortStart         string `json:"source_port_start,omitempty"`
+	SourcePortEnd           string `json:"source_port_end,omitempty"`
 }
 
 // UnmarshalJSON is a custom unmarshaller that deals with

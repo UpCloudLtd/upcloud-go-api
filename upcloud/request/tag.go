@@ -2,7 +2,6 @@ package request
 
 import (
 	"encoding/json"
-	"encoding/xml"
 	"fmt"
 
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
@@ -11,8 +10,6 @@ import (
 // CreateTagRequest represents a request to create a tag and assign it to zero or more servers
 type CreateTagRequest struct {
 	upcloud.Tag
-
-	XMLName xml.Name `xml:"tag" json:"-"`
 }
 
 // RequestURL implements the Request interface
@@ -37,8 +34,7 @@ func (r CreateTagRequest) MarshalJSON() ([]byte, error) {
 type ModifyTagRequest struct {
 	upcloud.Tag
 
-	XMLName xml.Name `xml:"tag" json:"-"`
-	Name    string   `xml:"-" json:"-"`
+	Name string `json:"-"`
 }
 
 // MarshalJSON is a custom marshaller that deals with

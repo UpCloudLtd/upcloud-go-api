@@ -2,7 +2,6 @@ package request
 
 import (
 	"encoding/json"
-	"encoding/xml"
 	"fmt"
 )
 
@@ -18,11 +17,9 @@ func (r *GetIPAddressDetailsRequest) RequestURL() string {
 
 // AssignIPAddressRequest represents a request to assign a new IP address to a server
 type AssignIPAddressRequest struct {
-	XMLName xml.Name `xml:"ip_address" json:"-"`
-
-	Access     string `xml:"access" json:"access"`
-	Family     string `xml:"family,omitempty" json:"family,omitempty"`
-	ServerUUID string `xml:"server" json:"server"`
+	Access     string `json:"access"`
+	Family     string `json:"family,omitempty"`
+	ServerUUID string `json:"server"`
 }
 
 // RequestURL implements the Request interface
@@ -44,10 +41,9 @@ func (r AssignIPAddressRequest) MarshalJSON() ([]byte, error) {
 
 // ModifyIPAddressRequest represents a request to modify the PTR DNS record of a specific IP address
 type ModifyIPAddressRequest struct {
-	XMLName   xml.Name `xml:"ip_address" json:"-"`
-	IPAddress string   `xml:"-" json:"-"`
+	IPAddress string `json:"-"`
 
-	PTRRecord string `xml:"ptr_record" json:"ptr_record"`
+	PTRRecord string `json:"ptr_record"`
 }
 
 // RequestURL implements the Request interface

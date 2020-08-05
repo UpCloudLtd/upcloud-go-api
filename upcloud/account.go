@@ -4,8 +4,8 @@ import "encoding/json"
 
 // Account represents an account
 type Account struct {
-	Credits  float64 `xml:"credits"`
-	UserName string  `xml:"username"`
+	Credits  float64 `json:"credits"`
+	UserName string  `json:"username"`
 }
 
 // UnmarshalJSON is a custom unmarshaller that deals with

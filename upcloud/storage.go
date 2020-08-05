@@ -2,7 +2,6 @@ package upcloud
 
 import (
 	"encoding/json"
-	"encoding/xml"
 	"time"
 )
 
@@ -42,7 +41,7 @@ const (
 
 // Storages represents a /storage response
 type Storages struct {
-	Storages []Storage `xml:"storage" json:"storages"`
+	Storages []Storage `json:"storages"`
 }
 
 // UnmarshalJSON is a custom unmarshaller that deals with
@@ -67,20 +66,20 @@ func (s *Storages) UnmarshalJSON(b []byte) error {
 
 // Storage represents a storage device
 type Storage struct {
-	Access  string  `xml:"access" json:"access"`
-	License float64 `xml:"license" json:"license"`
+	Access  string  `json:"access"`
+	License float64 `json:"license"`
 	// TODO: Convert to boolean
-	PartOfPlan string `xml:"part_of_plan" json:"part_of_plan"`
-	Size       int    `xml:"size" json:"size"`
-	State      string `xml:"state" json:"state"`
-	Tier       string `xml:"tier" json:"tier"`
-	Title      string `xml:"title" json:"title"`
-	Type       string `xml:"type" json:"type"`
-	UUID       string `xml:"uuid" json:"uuid"`
-	Zone       string `xml:"zone" json:"zone"`
+	PartOfPlan string `json:"part_of_plan"`
+	Size       int    `json:"size"`
+	State      string `json:"state"`
+	Tier       string `json:"tier"`
+	Title      string `json:"title"`
+	Type       string `json:"type"`
+	UUID       string `json:"uuid"`
+	Zone       string `json:"zone"`
 	// Only for type "backup":
-	Origin  string    `xml:"origin" json:"origin"`
-	Created time.Time `xml:"created" json:"created"`
+	Origin  string    `json:"origin"`
+	Created time.Time `json:"created"`
 }
 
 // BackupUUIDSlice is a slice of string.
@@ -127,9 +126,9 @@ func (s *ServerUUIDSlice) UnmarshalJSON(b []byte) error {
 type StorageDetails struct {
 	Storage
 
-	BackupRule  *BackupRule     `xml:"backup_rule" json:"backup_rule"`
-	BackupUUIDs BackupUUIDSlice `xml:"backups>backup" json:"backups"`
-	ServerUUIDs ServerUUIDSlice `xml:"servers>server" json:"servers"`
+	BackupRule  *BackupRule     `json:"backup_rule"`
+	BackupUUIDs BackupUUIDSlice `json:"backups"`
+	ServerUUIDs ServerUUIDSlice `json:"servers"`
 }
 
 // UnmarshalJSON is a custom unmarshaller that deals with
@@ -152,37 +151,32 @@ func (s *StorageDetails) UnmarshalJSON(b []byte) error {
 
 // BackupRule represents a backup rule
 type BackupRule struct {
-	XMLName  xml.Name `xml:"backup_rule" json:"-"`
-	Interval string   `xml:"interval" json:"interval"`
+	Interval string `json:"interval"`
 	// Time should be in the format "hhmm", e.g. "0430"
-	Time      string `xml:"time" json:"time"`
-	Retention int    `xml:"retention" json:"retention,string"`
+	Time      string `json:"time"`
+	Retention int    `json:"retention,string"`
 }
 
 // ServerStorageDevice represents a storage device in the context of server requests or server details
 type ServerStorageDevice struct {
-	XMLName xml.Name `xml:"storage_device"`
-
-	Address string `xml:"address" json:"address"`
+	Address string `json:"address"`
 	// TODO: Convert to boolean
-	PartOfPlan string `xml:"part_of_plan" json:"part_of_plan"`
-	UUID       string `xml:"storage" json:"storage"`
-	Size       int    `xml:"storage_size" json:"storage_size"`
-	Title      string `xml:"storage_title" json:"storage_title"`
-	Type       string `xml:"type" json:"type"`
-	BootDisk   int    `xml:"-" json:"boot_disk,string"`
+	PartOfPlan string `json:"part_of_plan"`
+	UUID       string `json:"storage"`
+	Size       int    `json:"storage_size"`
+	Title      string `json:"storage_title"`
+	Type       string `json:"type"`
+	BootDisk   int    `json:"boot_disk,string"`
 }
 
 // CreateServerStorageDevice represents a storage device for a CreateServerRequest
 type CreateServerStorageDevice struct {
-	XMLName xml.Name `xml:"storage_device" json:"-"`
-
-	Action  string `xml:"action" json:"action"`
-	Address string `xml:"address,omitempty" json:"address,omitempty"`
-	Storage string `xml:"storage" json:"storage"`
-	Title   string `xml:"title,omitempty" json:"title,omitempty"`
+	Action  string `json:"action"`
+	Address string `json:"address,omitempty"`
+	Storage string `json:"storage"`
+	Title   string `json:"title,omitempty"`
 	// Storage size in gigabytes
-	Size int    `xml:"size" json:"size"`
-	Tier string `xml:"tier,omitempty" json:"tier,omitempty"`
-	Type string `xml:"type,omitempty" json:"type,omitempty"`
+	Size int    `json:"size"`
+	Tier string `json:"tier,omitempty"`
+	Type string `json:"type,omitempty"`
 }

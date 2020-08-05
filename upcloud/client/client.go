@@ -68,17 +68,6 @@ func (c *Client) CreateRequestURL(location string) string {
 	return fmt.Sprintf("%s%s", c.getBaseURL(), location)
 }
 
-// PerformGetRequest performs a GET request to the specified URL and returns the response body and eventual errors
-func (c *Client) PerformGetRequest(url string) ([]byte, error) {
-	request, err := http.NewRequest(http.MethodGet, url, nil)
-
-	if err != nil {
-		return nil, err
-	}
-
-	return c.performRequest(request)
-}
-
 // PerformJSONGetRequest performs a GET request to the specified URL and returns the response body and eventual errors
 func (c *Client) PerformJSONGetRequest(url string) ([]byte, error) {
 	request, err := http.NewRequest(http.MethodGet, url, nil)
@@ -88,23 +77,6 @@ func (c *Client) PerformJSONGetRequest(url string) ([]byte, error) {
 	}
 
 	return c.performJSONRequest(request)
-}
-
-// PerformPostRequest performs a POST request to the specified URL and returns the response body and eventual errors
-func (c *Client) PerformPostRequest(url string, requestBody []byte) ([]byte, error) {
-	var bodyReader io.Reader
-
-	if requestBody != nil {
-		bodyReader = bytes.NewBuffer(requestBody)
-	}
-
-	request, err := http.NewRequest(http.MethodPost, url, bodyReader)
-
-	if err != nil {
-		return nil, err
-	}
-
-	return c.performRequest(request)
 }
 
 // PerformJSONPostRequest performs a POST request to the specified URL and returns the response body and eventual errors
@@ -124,23 +96,6 @@ func (c *Client) PerformJSONPostRequest(url string, requestBody []byte) ([]byte,
 	return c.performJSONRequest(request)
 }
 
-// PerformPutRequest performs a PUT request to the specified URL and returns the response body and eventual errors
-func (c *Client) PerformPutRequest(url string, requestBody []byte) ([]byte, error) {
-	var bodyReader io.Reader
-
-	if requestBody != nil {
-		bodyReader = bytes.NewBuffer(requestBody)
-	}
-
-	request, err := http.NewRequest(http.MethodPut, url, bodyReader)
-
-	if err != nil {
-		return nil, err
-	}
-
-	return c.performRequest(request)
-}
-
 // PerformJSONPutRequest performs a PUT request to the specified URL and returns the response body and eventual errors
 func (c *Client) PerformJSONPutRequest(url string, requestBody []byte) ([]byte, error) {
 	var bodyReader io.Reader
@@ -158,18 +113,6 @@ func (c *Client) PerformJSONPutRequest(url string, requestBody []byte) ([]byte, 
 	return c.performJSONRequest(request)
 }
 
-// PerformDeleteRequest performs a DELETE request to the specified URL and returns the response body and eventual errors
-func (c *Client) PerformDeleteRequest(url string) error {
-	request, err := http.NewRequest(http.MethodDelete, url, nil)
-
-	if err != nil {
-		return err
-	}
-
-	_, err = c.performRequest(request)
-	return err
-}
-
 // PerformJSONDeleteRequest performs a DELETE request to the specified URL and returns the response body and eventual errors
 func (c *Client) PerformJSONDeleteRequest(url string) error {
 	request, err := http.NewRequest(http.MethodDelete, url, nil)
@@ -183,33 +126,12 @@ func (c *Client) PerformJSONDeleteRequest(url string) error {
 }
 
 // Adds common headers to the specified request
-func (c *Client) addRequestHeaders(request *http.Request) *http.Request {
-	request.SetBasicAuth(c.userName, c.password)
-	request.Header.Add("Accept", "application/xml")
-	request.Header.Add("Content-Type", "application/xml")
-
-	return request
-}
-
-// Adds common headers to the specified request
 func (c *Client) addJSONRequestHeaders(request *http.Request) *http.Request {
 	request.SetBasicAuth(c.userName, c.password)
 	request.Header.Add("Accept", "application/json")
 	request.Header.Add("Content-Type", "application/json")
 
 	return request
-}
-
-// Performs the specified HTTP request and returns the response through handleResponse()
-func (c *Client) performRequest(request *http.Request) ([]byte, error) {
-	c.addRequestHeaders(request)
-	response, err := c.httpClient.Do(request)
-
-	if err != nil {
-		return nil, err
-	}
-
-	return handleResponse(response)
 }
 
 // Performs the specified HTTP request and returns the response through handleResponse()
