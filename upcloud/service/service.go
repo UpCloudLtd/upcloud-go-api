@@ -40,7 +40,7 @@ func (s *Service) GetAccount() (*upcloud.Account, error) {
 // GetZones returns the available zones
 func (s *Service) GetZones() (*upcloud.Zones, error) {
 	zones := upcloud.Zones{}
-	response, err := s.basicJSONGetRequest("/zone")
+	response, err := s.basicFutureGetRequest("/zone")
 
 	if err != nil {
 		return nil, err

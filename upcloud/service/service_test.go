@@ -155,6 +155,7 @@ func TestGetZones(t *testing.T) {
 		for _, z := range zones.Zones {
 			if z.Description == "Helsinki #1" && z.ID == "fi-hel1" {
 				found = true
+				assert.True(t, bool(z.Public))
 				break
 			}
 		}
