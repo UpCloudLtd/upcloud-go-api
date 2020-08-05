@@ -1111,6 +1111,14 @@ func TestTagging(t *testing.T) {
 		})
 		require.NoError(t, err)
 		assert.Contains(t, serverDetails.Tags, "tag1")
+		var utilityCount int
+		for _, ip := range serverDetails.IPAddresses {
+			assert.NotEqual(t, upcloud.IPAddressAccessPrivate, ip.Access)
+			if ip.Access == upcloud.IPAddressAccessUtility {
+				utilityCount++
+			}
+		}
+		assert.NotZero(t, utilityCount)
 		t.Logf("Server %s is now tagged with tag %s", serverDetails.Title, "tag1")
 
 		// Rename the second tag
@@ -1143,6 +1151,14 @@ func TestTagging(t *testing.T) {
 		})
 		require.NoError(t, err)
 		assert.NotContains(t, serverDetails.Tags, "tag1")
+		utilityCount = 0
+		for _, ip := range serverDetails.IPAddresses {
+			assert.NotEqual(t, upcloud.IPAddressAccessPrivate, ip.Access)
+			if ip.Access == upcloud.IPAddressAccessUtility {
+				utilityCount++
+			}
+		}
+		assert.NotZero(t, utilityCount)
 		t.Logf("Server %s is now untagged", serverDetails.Title)
 	})
 }

@@ -9,6 +9,7 @@ const (
 
 	IPAddressAccessPrivate = "private"
 	IPAddressAccessPublic  = "public"
+	IPAddressAccessUtility = "utility"
 )
 
 // IPAddresses represents a /ip_address response

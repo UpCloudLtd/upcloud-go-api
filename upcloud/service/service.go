@@ -290,7 +290,7 @@ func (s *Service) DeleteServerAndStorages(r *request.DeleteServerAndStoragesRequ
 // TagServer tags a server with with one or more tags
 func (s *Service) TagServer(r *request.TagServerRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
-	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), nil)
+	response, err := s.client.PerformJSONPostRequest(s.client.CreateFutureRequestURL(r.RequestURL()), nil)
 
 	if err != nil {
 		return nil, parseJSONServiceError(err)
@@ -304,7 +304,7 @@ func (s *Service) TagServer(r *request.TagServerRequest) (*upcloud.ServerDetails
 // UntagServer removes one or more tags from a server
 func (s *Service) UntagServer(r *request.UntagServerRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
-	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), nil)
+	response, err := s.client.PerformJSONPostRequest(s.client.CreateFutureRequestURL(r.RequestURL()), nil)
 
 	if err != nil {
 		return nil, parseJSONServiceError(err)
