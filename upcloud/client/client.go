@@ -14,11 +14,12 @@ import (
 
 // Constants
 const (
-	DEFAULT_API_VERSION = "1.2.3"
-	DEFAULT_API_BASEURL = "https://api.upcloud.com"
+	DefaultAPIVersion = "1.2.3"
+	FutureAPIVersion  = "1.3.4"
+	DefaultAPIBaseURL = "https://api.upcloud.com"
 
 	// The default timeout (in seconds)
-	DEFAULT_TIMEOUT = 10
+	DefaultTimeout = 10
 )
 
 // Client represents an API client
@@ -26,9 +27,6 @@ type Client struct {
 	userName   string
 	password   string
 	httpClient *http.Client
-
-	apiVersion string
-	apiBaseURL string
 }
 
 // New creates ands returns a new client configured with the specified user and password
@@ -45,10 +43,7 @@ func NewWithHTTPClient(userName string, password string, httpClient *http.Client
 	client.userName = userName
 	client.password = password
 	client.httpClient = httpClient
-	client.SetTimeout(time.Second * DEFAULT_TIMEOUT)
-
-	client.apiVersion = DEFAULT_API_VERSION
-	client.apiBaseURL = DEFAULT_API_BASEURL
+	client.SetTimeout(time.Second * DefaultTimeout)
 
 	return &client
 }
@@ -65,7 +60,13 @@ func (c *Client) GetTimeout() time.Duration {
 
 // CreateRequestURL creates and returns a complete request URL for the specified API location
 func (c *Client) CreateRequestURL(location string) string {
-	return fmt.Sprintf("%s%s", c.getBaseURL(), location)
+	return fmt.Sprintf("%s%s", c.getBaseURL(false), location)
+}
+
+// CreateFutureRequestURL creates and returns a complete request URL for the specified API location
+// using a newer API version
+func (c *Client) CreateFutureRequestURL(location string) string {
+	return fmt.Sprintf("%s%s", c.getBaseURL(true), location)
 }
 
 // PerformJSONGetRequest performs a GET request to the specified URL and returns the response body and eventual errors
@@ -147,10 +148,15 @@ func (c *Client) performJSONRequest(request *http.Request) ([]byte, error) {
 }
 
 // Returns the base URL to use for API requests
-func (c *Client) getBaseURL() string {
-	urlVersion, _ := semver.Make(c.apiVersion)
+func (c *Client) getBaseURL(future bool) string {
+	var urlVersion semver.Version
+	if !future {
+		urlVersion, _ = semver.Make(DefaultAPIVersion)
+	} else {
+		urlVersion, _ = semver.Make(FutureAPIVersion)
+	}
 
-	return fmt.Sprintf("%s/%d.%d", c.apiBaseURL, urlVersion.Major, urlVersion.Minor)
+	return fmt.Sprintf("%s/%d.%d", DefaultAPIBaseURL, urlVersion.Major, urlVersion.Minor)
 }
 
 // Parses the response and returns either the response body or an error

@@ -54,7 +54,7 @@ func (s *Service) GetZones() (*upcloud.Zones, error) {
 // GetPriceZones returns the available price zones and their corresponding prices
 func (s *Service) GetPriceZones() (*upcloud.PriceZones, error) {
 	zones := upcloud.PriceZones{}
-	response, err := s.basicJSONGetRequest("/price")
+	response, err := s.basicFutureGetRequest("/price")
 
 	if err != nil {
 		return nil, err
@@ -709,6 +709,19 @@ func (s *Service) GetTags() (*upcloud.Tags, error) {
 // Wrapper that performs a GET request to the specified location and returns the response or a service error
 func (s *Service) basicJSONGetRequest(location string) ([]byte, error) {
 	requestURL := s.client.CreateRequestURL(location)
+
+	response, err := s.client.PerformJSONGetRequest(requestURL)
+
+	if err != nil {
+		return nil, parseJSONServiceError(err)
+	}
+
+	return response, nil
+}
+
+// Wrapper that performs a GET request to the specified location and returns the response or a service error
+func (s *Service) basicFutureGetRequest(location string) ([]byte, error) {
+	requestURL := s.client.CreateFutureRequestURL(location)
 
 	response, err := s.client.PerformJSONGetRequest(requestURL)
 
