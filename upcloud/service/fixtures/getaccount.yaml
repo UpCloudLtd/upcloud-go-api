@@ -15,7 +15,7 @@ interactions:
     body: |
       {
          "account" : {
-            "credits" : 995223.3456,
+            "credits" : 993939.1953,
             "resource_limits" : {
                "cores" : 100,
                "detached_floating_ips" : null,
@@ -35,7 +35,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Mon, 03 Aug 2020 16:30:10 GMT
+      - Tue, 04 Aug 2020 15:41:52 GMT
       Server:
       - Apache
       Strict-Transport-Security:

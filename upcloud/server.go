@@ -116,15 +116,18 @@ type IPAddressSlice []IPAddress
 // UnmarshalJSON is a custom unmarshaller that deals with
 // deeply embedded values.
 func (i *IPAddressSlice) UnmarshalJSON(b []byte) error {
+	type localIPAddress IPAddress
 	v := struct {
-		IPAddresses []IPAddress `json:"ip_address"`
+		IPAddresses []localIPAddress `json:"ip_address"`
 	}{}
 	err := json.Unmarshal(b, &v)
 	if err != nil {
 		return err
 	}
 
-	(*i) = v.IPAddresses
+	for _, ip := range v.IPAddresses {
+		(*i) = append((*i), IPAddress(ip))
+	}
 
 	return nil
 }

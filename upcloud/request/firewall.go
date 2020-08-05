@@ -1,6 +1,7 @@
 package request
 
 import (
+	"encoding/json"
 	"encoding/xml"
 	"fmt"
 
@@ -32,13 +33,25 @@ func (r *GetFirewallRuleDetailsRequest) RequestURL() string {
 type CreateFirewallRuleRequest struct {
 	upcloud.FirewallRule
 
-	XMLName    xml.Name `xml:"firewall_rule"`
-	ServerUUID string   `xml:"-"`
+	XMLName    xml.Name `xml:"firewall_rule" json:"-"`
+	ServerUUID string   `xml:"-" json:"-"`
 }
 
 // RequestURL implements the Request interface
 func (r *CreateFirewallRuleRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s/firewall_rule", r.ServerUUID)
+}
+
+// MarshalJSON is a custom marshaller that deals with
+// deeply embedded values.
+func (r CreateFirewallRuleRequest) MarshalJSON() ([]byte, error) {
+	type localCreateFirewallRuleRequest CreateFirewallRuleRequest
+	v := struct {
+		CreateFirewallRuleRequest localCreateFirewallRuleRequest `json:"firewall_rule"`
+	}{}
+	v.CreateFirewallRuleRequest = localCreateFirewallRuleRequest(r)
+
+	return json.Marshal(&v)
 }
 
 // DeleteFirewallRuleRequest represents a request to remove a firewall rule

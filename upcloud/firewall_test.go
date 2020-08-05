@@ -1,7 +1,7 @@
 package upcloud
 
 import (
-	"encoding/xml"
+	"encoding/json"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -9,63 +9,196 @@ import (
 
 // TestUnmarshalFirewallRules tests the FirewallRules and FirewallRule are unmarshaled correctly
 func TestUnmarshalFirewallRules(t *testing.T) {
-	originalXML := `<?xml version="1.0" encoding="utf-8"?>
-<firewall_rules>
-    <firewall_rule>
-        <action>accept</action>
-        <comment>HTTP 80</comment>
-        <destination_address_end></destination_address_end>
-        <destination_address_start></destination_address_start>
-        <destination_port_end>80</destination_port_end>
-        <destination_port_start>80</destination_port_start>
-        <direction>in</direction>
-        <family>IPv4</family>
-        <icmp_type></icmp_type>
-        <position>1</position>
-        <protocol>tcp</protocol>
-        <source_address_end></source_address_end>
-        <source_address_start></source_address_start>
-        <source_port_end></source_port_end>
-        <source_port_start></source_port_start>
-    </firewall_rule>
-    <firewall_rule>
-        <action>reject</action>
-        <comment>ICMP</comment>
-        <destination_address_end></destination_address_end>
-        <destination_address_start></destination_address_start>
-        <destination_port_end></destination_port_end>
-        <destination_port_start></destination_port_start>
-        <direction>in</direction>
-        <family>IPv6</family>
-        <icmp_type>1</icmp_type>
-        <position>2</position>
-        <protocol>icmp</protocol>
-        <source_address_end></source_address_end>
-        <source_address_start></source_address_start>
-        <source_port_end></source_port_end>
-        <source_port_start></source_port_start>
-    </firewall_rule>
-</firewall_rules>`
-
+	originalJSON := `
+      {
+        "firewall_rules": {
+          "firewall_rule": [
+            {
+              "action": "accept",
+              "comment": "Allow HTTP from anywhere",
+              "destination_address_end": "",
+              "destination_address_start": "",
+              "destination_port_end": "80",
+              "destination_port_start": "80",
+              "direction": "in",
+              "family": "IPv4",
+              "icmp_type": "",
+              "position": "1",
+              "protocol": "",
+              "source_address_end": "",
+              "source_address_start": "",
+              "source_port_end": "",
+              "source_port_start": ""
+            },
+            {
+              "action": "accept",
+              "comment": "Allow SSH from a specific network only",
+              "destination_address_end": "",
+              "destination_address_start": "",
+              "destination_port_end": "22",
+              "destination_port_start": "22",
+              "direction": "in",
+              "family": "IPv4",
+              "icmp_type": "",
+              "position": "2",
+              "protocol": "tcp",
+              "source_address_end": "192.168.1.255",
+              "source_address_start": "192.168.1.1",
+              "source_port_end": "",
+              "source_port_start": ""
+            },
+            {
+              "action": "accept",
+              "comment": "Allow SSH over IPv6 from this range",
+              "destination_address_end": "",
+              "destination_address_start": "",
+              "destination_port_end": "22",
+              "destination_port_start": "22",
+              "direction": "in",
+              "family": "IPv6",
+              "icmp_type": "",
+              "position": "3",
+              "protocol": "tcp",
+              "source_address_end": "2a04:3540:1000:aaaa:bbbb:cccc:d001",
+              "source_address_start": "2a04:3540:1000:aaaa:bbbb:cccc:d001",
+              "source_port_end": "",
+              "source_port_start": ""
+            },
+            {
+              "action": "accept",
+              "comment": "Allow ICMP echo request (ping)",
+              "destination_address_end": "",
+              "destination_address_start": "",
+              "destination_port_end": "",
+              "destination_port_start": "",
+              "direction": "in",
+              "family": "IPv4",
+              "icmp_type": "8",
+              "position": "4",
+              "protocol": "icmp",
+              "source_address_end": "",
+              "source_address_start": "",
+              "source_port_end": "",
+              "source_port_start": ""
+            },
+            {
+              "action": "drop",
+              "comment": "",
+              "destination_address_end": "",
+              "destination_address_start": "",
+              "destination_port_end": "",
+              "destination_port_start": "",
+              "direction": "in",
+              "family": "",
+              "icmp_type": "",
+              "position": "5",
+              "protocol": "",
+              "source_address_end": "",
+              "source_address_start": "",
+              "source_port_end": "",
+              "source_port_start": ""
+            }
+          ]
+        }
+      }
+    `
 	firewallRules := FirewallRules{}
-	err := xml.Unmarshal([]byte(originalXML), &firewallRules)
-	assert.Nil(t, err)
-	assert.Len(t, firewallRules.FirewallRules, 2)
+	err := json.Unmarshal([]byte(originalJSON), &firewallRules)
+	assert.NoError(t, err)
+	assert.Len(t, firewallRules.FirewallRules, 5)
 
-	firstRule := firewallRules.FirewallRules[0]
-	assert.Equal(t, FirewallRuleActionAccept, firstRule.Action)
-	assert.Equal(t, "HTTP 80", firstRule.Comment)
-	assert.Empty(t, firstRule.DestinationAddressEnd)
-	assert.Empty(t, firstRule.DestinationAddressStart)
-	assert.Equal(t, "80", firstRule.DestinationPortEnd)
-	assert.Equal(t, "80", firstRule.DestinationPortStart)
-	assert.Equal(t, FirewallRuleDirectionIn, firstRule.Direction)
-	assert.Equal(t, IPAddressFamilyIPv4, firstRule.Family)
-	assert.Empty(t, firstRule.ICMPType)
-	assert.Equal(t, 1, firstRule.Position)
-	assert.Equal(t, FirewallRuleProtocolTCP, firstRule.Protocol)
-	assert.Empty(t, firstRule.SourceAddressEnd)
-	assert.Empty(t, firstRule.SourceAddressStart)
-	assert.Empty(t, firstRule.SourcePortEnd)
-	assert.Empty(t, firstRule.SourcePortStart)
+	testData := []FirewallRule{
+		{
+			Action:               FirewallRuleActionAccept,
+			Comment:              "Allow HTTP from anywhere",
+			DestinationPortStart: "80",
+			DestinationPortEnd:   "80",
+			Direction:            FirewallRuleDirectionIn,
+			Family:               IPAddressFamilyIPv4,
+			Position:             1,
+		},
+		{
+			Action:               FirewallRuleActionAccept,
+			Comment:              "Allow SSH from a specific network only",
+			DestinationPortStart: "22",
+			DestinationPortEnd:   "22",
+			Direction:            FirewallRuleDirectionIn,
+			Family:               IPAddressFamilyIPv4,
+			Position:             2,
+			Protocol:             FirewallRuleProtocolTCP,
+			SourceAddressStart:   "192.168.1.1",
+			SourceAddressEnd:     "192.168.1.255",
+		},
+		{
+			Action:               FirewallRuleActionAccept,
+			Comment:              "Allow SSH over IPv6 from this range",
+			DestinationPortStart: "22",
+			DestinationPortEnd:   "22",
+			Direction:            FirewallRuleDirectionIn,
+			Family:               IPAddressFamilyIPv6,
+			Position:             3,
+			Protocol:             FirewallRuleProtocolTCP,
+			SourceAddressStart:   "2a04:3540:1000:aaaa:bbbb:cccc:d001",
+			SourceAddressEnd:     "2a04:3540:1000:aaaa:bbbb:cccc:d001",
+		},
+		{
+			Action:    FirewallRuleActionAccept,
+			Comment:   "Allow ICMP echo request (ping)",
+			Direction: FirewallRuleDirectionIn,
+			Family:    IPAddressFamilyIPv4,
+			ICMPType:  "8",
+			Position:  4,
+			Protocol:  FirewallRuleProtocolICMP,
+		},
+		{
+			Action:    FirewallRuleActionDrop,
+			Direction: FirewallRuleDirectionIn,
+			Position:  5,
+		},
+	}
+
+	for i, expectedRule := range testData {
+		actualRule := firewallRules.FirewallRules[i]
+		assert.Equal(t, expectedRule, actualRule)
+	}
+}
+
+// TestUnmarshalFirewallRule tests that FirewallRule is unmarshaled correctly on its own
+func TestUnmarshalFirewallRule(t *testing.T) {
+	originalJSON := `
+      {
+        "firewall_rule": {
+            "action": "accept",
+            "comment": "Allow HTTP from anywhere",
+            "destination_address_end": "",
+            "destination_address_start": "",
+            "destination_port_end": "80",
+            "destination_port_start": "80",
+            "direction": "in",
+            "family": "IPv4",
+            "icmp_type": "",
+            "position": "1",
+            "protocol": "",
+            "source_address_end": "",
+            "source_address_start": "",
+            "source_port_end": "",
+            "source_port_start": ""
+        }
+      }
+    `
+	actualRule := FirewallRule{}
+	err := json.Unmarshal([]byte(originalJSON), &actualRule)
+	assert.NoError(t, err)
+
+	expectedRule := FirewallRule{
+		Action:               FirewallRuleActionAccept,
+		Comment:              "Allow HTTP from anywhere",
+		DestinationPortStart: "80",
+		DestinationPortEnd:   "80",
+		Direction:            FirewallRuleDirectionIn,
+		Family:               IPAddressFamilyIPv4,
+		Position:             1,
+	}
+
+	assert.Equal(t, expectedRule, actualRule)
 }

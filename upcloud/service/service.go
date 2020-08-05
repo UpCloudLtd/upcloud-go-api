@@ -2,7 +2,6 @@ package service
 
 import (
 	"encoding/json"
-	"encoding/xml"
 	"fmt"
 	"time"
 
@@ -573,13 +572,13 @@ func (s *Service) RestoreBackup(r *request.RestoreBackupRequest) error {
 // GetIPAddresses returns all IP addresses associated with the account
 func (s *Service) GetIPAddresses() (*upcloud.IPAddresses, error) {
 	ipAddresses := upcloud.IPAddresses{}
-	response, err := s.basicGetRequest("/ip_address")
+	response, err := s.basicJSONGetRequest("/ip_address")
 
 	if err != nil {
 		return nil, err
 	}
 
-	xml.Unmarshal(response, &ipAddresses)
+	json.Unmarshal(response, &ipAddresses)
 
 	return &ipAddresses, nil
 }
@@ -587,13 +586,13 @@ func (s *Service) GetIPAddresses() (*upcloud.IPAddresses, error) {
 // GetIPAddressDetails returns extended details about the specified IP address
 func (s *Service) GetIPAddressDetails(r *request.GetIPAddressDetailsRequest) (*upcloud.IPAddress, error) {
 	ipAddress := upcloud.IPAddress{}
-	response, err := s.basicGetRequest(r.RequestURL())
+	response, err := s.basicJSONGetRequest(r.RequestURL())
 
 	if err != nil {
 		return nil, err
 	}
 
-	xml.Unmarshal(response, &ipAddress)
+	json.Unmarshal(response, &ipAddress)
 
 	return &ipAddress, nil
 }
@@ -601,14 +600,14 @@ func (s *Service) GetIPAddressDetails(r *request.GetIPAddressDetailsRequest) (*u
 // AssignIPAddress assigns the specified IP address to the specified server
 func (s *Service) AssignIPAddress(r *request.AssignIPAddressRequest) (*upcloud.IPAddress, error) {
 	ipAddress := upcloud.IPAddress{}
-	requestBody, _ := xml.Marshal(r)
-	response, err := s.client.PerformPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
+	requestBody, _ := json.Marshal(r)
+	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
 
 	if err != nil {
-		return nil, parseServiceError(err)
+		return nil, parseJSONServiceError(err)
 	}
 
-	xml.Unmarshal(response, &ipAddress)
+	json.Unmarshal(response, &ipAddress)
 
 	return &ipAddress, nil
 }
@@ -616,24 +615,24 @@ func (s *Service) AssignIPAddress(r *request.AssignIPAddressRequest) (*upcloud.I
 // ModifyIPAddress modifies the specified IP address
 func (s *Service) ModifyIPAddress(r *request.ModifyIPAddressRequest) (*upcloud.IPAddress, error) {
 	ipAddress := upcloud.IPAddress{}
-	requestBody, _ := xml.Marshal(r)
-	response, err := s.client.PerformPutRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
+	requestBody, _ := json.Marshal(r)
+	response, err := s.client.PerformJSONPutRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
 
 	if err != nil {
-		return nil, parseServiceError(err)
+		return nil, parseJSONServiceError(err)
 	}
 
-	xml.Unmarshal(response, &ipAddress)
+	json.Unmarshal(response, &ipAddress)
 
 	return &ipAddress, nil
 }
 
 // ReleaseIPAddress releases the specified IP address from the server it is attached to
 func (s *Service) ReleaseIPAddress(r *request.ReleaseIPAddressRequest) error {
-	err := s.client.PerformDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
+	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
 
 	if err != nil {
-		return parseServiceError(err)
+		return parseJSONServiceError(err)
 	}
 
 	return nil
@@ -642,13 +641,13 @@ func (s *Service) ReleaseIPAddress(r *request.ReleaseIPAddressRequest) error {
 // GetFirewallRules returns the firewall rules for the specified server
 func (s *Service) GetFirewallRules(r *request.GetFirewallRulesRequest) (*upcloud.FirewallRules, error) {
 	firewallRules := upcloud.FirewallRules{}
-	response, err := s.basicGetRequest(r.RequestURL())
+	response, err := s.basicJSONGetRequest(r.RequestURL())
 
 	if err != nil {
 		return nil, err
 	}
 
-	xml.Unmarshal(response, &firewallRules)
+	json.Unmarshal(response, &firewallRules)
 
 	return &firewallRules, nil
 }
@@ -656,13 +655,13 @@ func (s *Service) GetFirewallRules(r *request.GetFirewallRulesRequest) (*upcloud
 // GetFirewallRuleDetails returns extended details about the specified firewall rule
 func (s *Service) GetFirewallRuleDetails(r *request.GetFirewallRuleDetailsRequest) (*upcloud.FirewallRule, error) {
 	firewallRule := upcloud.FirewallRule{}
-	response, err := s.basicGetRequest(r.RequestURL())
+	response, err := s.basicJSONGetRequest(r.RequestURL())
 
 	if err != nil {
-		return nil, parseServiceError(err)
+		return nil, parseJSONServiceError(err)
 	}
 
-	xml.Unmarshal(response, &firewallRule)
+	json.Unmarshal(response, &firewallRule)
 
 	return &firewallRule, nil
 }
@@ -670,24 +669,24 @@ func (s *Service) GetFirewallRuleDetails(r *request.GetFirewallRuleDetailsReques
 // CreateFirewallRule creates the firewall rule
 func (s *Service) CreateFirewallRule(r *request.CreateFirewallRuleRequest) (*upcloud.FirewallRule, error) {
 	firewallRule := upcloud.FirewallRule{}
-	requestBody, _ := xml.Marshal(r)
-	response, err := s.client.PerformPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
+	requestBody, _ := json.Marshal(r)
+	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
 
 	if err != nil {
-		return nil, parseServiceError(err)
+		return nil, parseJSONServiceError(err)
 	}
 
-	xml.Unmarshal(response, &firewallRule)
+	json.Unmarshal(response, &firewallRule)
 
 	return &firewallRule, nil
 }
 
 // DeleteFirewallRule deletes the specified firewall rule
 func (s *Service) DeleteFirewallRule(r *request.DeleteFirewallRuleRequest) error {
-	err := s.client.PerformDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
+	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
 
 	if err != nil {
-		return parseServiceError(err)
+		return parseJSONServiceError(err)
 	}
 
 	return nil
@@ -708,18 +707,6 @@ func (s *Service) GetTags() (*upcloud.Tags, error) {
 }
 
 // Wrapper that performs a GET request to the specified location and returns the response or a service error
-func (s *Service) basicGetRequest(location string) ([]byte, error) {
-	requestURL := s.client.CreateRequestURL(location)
-	response, err := s.client.PerformGetRequest(requestURL)
-
-	if err != nil {
-		return nil, parseServiceError(err)
-	}
-
-	return response, nil
-}
-
-// Wrapper that performs a GET request to the specified location and returns the response or a service error
 func (s *Service) basicJSONGetRequest(location string) ([]byte, error) {
 	requestURL := s.client.CreateRequestURL(location)
 
@@ -730,20 +717,6 @@ func (s *Service) basicJSONGetRequest(location string) ([]byte, error) {
 	}
 
 	return response, nil
-}
-
-// Parses an error returned from the client into a service error object
-func parseServiceError(err error) error {
-	// Parse service errors
-	if clientError, ok := err.(*client.Error); ok {
-		serviceError := upcloud.Error{}
-		responseBody := clientError.ResponseBody
-		xml.Unmarshal(responseBody, &serviceError)
-
-		return &serviceError
-	}
-
-	return err
 }
 
 // Parses an error returned from the client into a service error object

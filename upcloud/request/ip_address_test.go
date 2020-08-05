@@ -1,7 +1,7 @@
 package request
 
 import (
-	"encoding/xml"
+	"encoding/json"
 	"testing"
 
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
@@ -25,25 +25,42 @@ func TestMarshalAssignIPAddressRequest(t *testing.T) {
 		ServerUUID: "009d64ef-31d1-4684-a26b-c86c955cbf46",
 	}
 
-	byteXml, err := xml.Marshal(&request)
-	assert.Nil(t, err)
-	expectedXML := "<ip_address><access>public</access><family>IPv4</family><server>009d64ef-31d1-4684-a26b-c86c955cbf46</server></ip_address>"
-	actualXML := string(byteXml)
-	assert.Equal(t, expectedXML, actualXML)
+	actualJSON, err := json.Marshal(&request)
+	assert.NoError(t, err)
+	expectedJSON := `
+	  {
+		"ip_address": {
+          "access": "public",
+		  "family": "IPv4",
+		  "server": "009d64ef-31d1-4684-a26b-c86c955cbf46"
+		}
+	  }
+	`
 
-	// Omit family
-	request = AssignIPAddressRequest{
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
+}
+
+// TestMarshalAssignIPAddressRequest_OmitFields tests that AssignIPAddressRequest structs are marshaled correctly
+// when optional fields are left out
+func TestMarshalAssignIPAddressRequest_OmitFields(t *testing.T) {
+	request := AssignIPAddressRequest{
 		Access:     upcloud.IPAddressAccessPublic,
 		ServerUUID: "009d64ef-31d1-4684-a26b-c86c955cbf46",
 	}
 
-	byteXml, err = xml.Marshal(&request)
-	assert.Nil(t, err)
+	actualJSON, err := json.Marshal(&request)
+	assert.NoError(t, err)
 
-	expectedXML = "<ip_address><access>public</access><server>009d64ef-31d1-4684-a26b-c86c955cbf46</server></ip_address>"
-	actualXML = string(byteXml)
-	assert.Equal(t, expectedXML, actualXML)
+	expectedJSON := `
+	  {
+		"ip_address": {
+          "access": "public",
+		  "server": "009d64ef-31d1-4684-a26b-c86c955cbf46"
+		}
+	  }
+	`
 
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
 }
 
 // TestModifyIPAddressRequest tests that ModifyIPAddressRequest structs are marshaled correctly and that their URLs
@@ -51,15 +68,20 @@ func TestMarshalAssignIPAddressRequest(t *testing.T) {
 func TestModifyIPAddressRequest(t *testing.T) {
 	request := ModifyIPAddressRequest{
 		IPAddress: "0.0.0.0",
-		PTRRecord: "ptr.example.com",
+		PTRRecord: "hostname.example.com",
 	}
 
-	byteXml, err := xml.Marshal(&request)
-	assert.Nil(t, err)
-	expectedXML := "<ip_address><ptr_record>ptr.example.com</ptr_record></ip_address>"
-	actualXML := string(byteXml)
+	actualJSON, err := json.Marshal(&request)
+	assert.NoError(t, err)
 
-	assert.Equal(t, expectedXML, actualXML)
+	expectedJSON := `
+	  {
+		"ip_address": {
+		  "ptr_record": "hostname.example.com"
+		}
+	  }
+	`
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
 	assert.Equal(t, "/ip_address/0.0.0.0", request.RequestURL())
 }
 

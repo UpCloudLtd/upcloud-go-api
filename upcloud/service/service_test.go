@@ -826,6 +826,46 @@ func TestCreateRestoreBackup(t *testing.T) {
 	})
 }
 
+// TestGetIPAddresses performs the following actions:
+// - creates a server
+// - retrieves all IP addresses
+// - compares the retrieved IP addresses with the created server's
+//   ip addresses
+func TestGetIPAddresses(t *testing.T) {
+	record(t, "getipaddresses", func(t *testing.T, svc *Service) {
+		serverDetails, err := createServer(svc, "TestGetIPAddresses")
+		require.NoError(t, err)
+		assert.Greater(t, len(serverDetails.IPAddresses), 0)
+
+		ipAddresses, err := svc.GetIPAddresses()
+		require.NoError(t, err)
+		var foundCount int
+		for _, sip := range serverDetails.IPAddresses {
+			for _, gip := range ipAddresses.IPAddresses {
+				if sip.Address == gip.Address {
+					foundCount++
+					assert.Equal(t, sip.Access, gip.Access)
+					assert.Equal(t, sip.Family, gip.Family)
+					break
+				}
+			}
+		}
+		assert.Equal(t, len(serverDetails.IPAddresses), foundCount)
+
+		for _, ip := range serverDetails.IPAddresses {
+			require.NotEmpty(t, ip.Address)
+			ipAddress, err := svc.GetIPAddressDetails(&request.GetIPAddressDetailsRequest{
+				Address: ip.Address,
+			})
+			require.NoError(t, err)
+
+			assert.Equal(t, ip.Address, ipAddress.Address)
+			assert.Equal(t, ip.Access, ipAddress.Access)
+			assert.Equal(t, ip.Family, ipAddress.Family)
+		}
+	})
+}
+
 // TestAttachModifyReleaseIPAddress performs the following actions
 //
 // - creates a server
@@ -914,6 +954,14 @@ func TestFirewallRules(t *testing.T) {
 		require.NoError(t, err)
 		t.Log("Firewall rule created")
 
+		// Get list of firewall rules for this server
+		firewallRules, err := svc.GetFirewallRules(&request.GetFirewallRulesRequest{
+			ServerUUID: serverDetails.UUID,
+		})
+		require.NoError(t, err)
+		assert.Len(t, firewallRules.FirewallRules, 1)
+		assert.Equal(t, "This is the comment", firewallRules.FirewallRules[0].Comment)
+
 		// Get details about the rule
 		t.Log("Getting details about firewall rule #1 ...")
 		firewallRule, err := svc.GetFirewallRuleDetails(&request.GetFirewallRuleDetailsRequest{
@@ -921,6 +969,7 @@ func TestFirewallRules(t *testing.T) {
 			Position:   1,
 		})
 		require.NoError(t, err)
+		assert.Equal(t, "This is the comment", firewallRule.Comment)
 		t.Logf("Got firewall rule details, comment is %s", firewallRule.Comment)
 
 		// Delete the firewall rule
