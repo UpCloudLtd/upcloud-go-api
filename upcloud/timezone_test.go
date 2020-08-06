@@ -1,7 +1,7 @@
 package upcloud
 
 import (
-	"encoding/xml"
+	"encoding/json"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -9,17 +9,30 @@ import (
 
 // TestUnmarshalTimeZone tests that the TimeZones struct is correctly marshaled
 func TestUnmarshalTimeZones(t *testing.T) {
-	originalXML := `<?xml version="1.0" encoding="utf-8"?>
-<timezones>
-    <timezone>Africa/Abidjan</timezone>
-    <timezone>Africa/Accra</timezone>
-    <timezone>UTC</timezone>
-</timezones>`
+	originalJSON := `
+{
+	"timezones": {
+	  "timezone": [
+		"Africa/Abidjan",
+		"Africa/Accra",
+		"UTC"
+	  ]
+	}
+  }
+`
 
 	timeZones := TimeZones{}
-	err := xml.Unmarshal([]byte(originalXML), &timeZones)
+	err := json.Unmarshal([]byte(originalJSON), &timeZones)
+	assert.NoError(t, err)
 
-	assert.Nil(t, err)
+	timezoneData := []string{
+		"Africa/Abidjan",
+		"Africa/Accra",
+		"UTC",
+	}
 	assert.Len(t, timeZones.TimeZones, 3)
-	assert.Equal(t, "Africa/Abidjan", timeZones.TimeZones[0])
+
+	for i, tz := range timezoneData {
+		assert.Equal(t, tz, timeZones.TimeZones[i])
+	}
 }

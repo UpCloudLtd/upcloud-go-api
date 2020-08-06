@@ -1,7 +1,7 @@
 package request
 
 import (
-	"encoding/xml"
+	"encoding/json"
 	"testing"
 
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
@@ -46,10 +46,24 @@ func TestCreateStorageRequest(t *testing.T) {
 		},
 	}
 
-	expectedXML := "<storage><size>10</size><tier>maxiops</tier><title>Test storage</title><zone>fi-hel2</zone><backup_rule><interval>daily</interval><time>0430</time><retention>30</retention></backup_rule></storage>"
-	actualXML, err := xml.Marshal(&request)
-	assert.Nil(t, err)
-	assert.Equal(t, expectedXML, string(actualXML))
+	expectedJSON := `
+	  {
+		"storage": {
+		  "size": "10",
+		  "tier": "maxiops",
+		  "title": "Test storage",
+		  "zone": "fi-hel2",
+		  "backup_rule": {
+			"interval": "daily",
+			"time": "0430",
+			"retention": "30"
+		  }
+		}
+	  }
+	`
+	actualJSON, err := json.MarshalIndent(&request, "", "  ")
+	assert.NoError(t, err)
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
 	assert.Equal(t, "/storage", request.RequestURL())
 }
 
@@ -57,13 +71,21 @@ func TestCreateStorageRequest(t *testing.T) {
 func TestModifyStorageRequest(t *testing.T) {
 	request := ModifyStorageRequest{
 		UUID:  "foo",
-		Title: "New fancy title",
+		Title: "A larger storage",
+		Size:  20,
 	}
 
-	expectedXML := "<storage><title>New fancy title</title></storage>"
-	actualXML, err := xml.Marshal(&request)
-	assert.Nil(t, err)
-	assert.Equal(t, expectedXML, string(actualXML))
+	expectedJSON := `
+	  {
+        "storage": {
+          "size": "20",
+          "title": "A larger storage"
+        }
+      }
+	`
+	actualJSON, err := json.Marshal(&request)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
 	assert.Equal(t, "/storage/foo", request.RequestURL())
 }
 
@@ -74,12 +96,22 @@ func TestAttachStorageRequest(t *testing.T) {
 		ServerUUID:  "bar",
 		Type:        upcloud.StorageTypeDisk,
 		Address:     "scsi:0:0",
+		BootDisk:    1,
 	}
 
-	expectedXML := "<storage_device><type>disk</type><address>scsi:0:0</address><storage>foo</storage></storage_device>"
-	actualXML, err := xml.Marshal(&request)
-	assert.Nil(t, err)
-	assert.Equal(t, expectedXML, string(actualXML))
+	expectedJSON := `
+	{
+		"storage_device": {
+		  "type": "disk",
+		  "address": "scsi:0:0",
+		  "storage": "foo",
+		  "boot_disk": "1"
+		}
+	}
+	`
+	actualJSON, err := json.Marshal(&request)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
 	assert.Equal(t, "/server/bar/storage/attach", request.RequestURL())
 }
 
@@ -90,10 +122,16 @@ func TestDetachStorageRequest(t *testing.T) {
 		Address:    "scsi:0:0",
 	}
 
-	expectedXML := "<storage_device><address>scsi:0:0</address></storage_device>"
-	actualXML, err := xml.Marshal(&request)
-	assert.Nil(t, err)
-	assert.Equal(t, expectedXML, string(actualXML))
+	expectedJSON := `
+	  {
+        "storage_device": {
+          "address": "scsi:0:0"
+        }
+      }
+	`
+	actualJSON, err := json.Marshal(&request)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
 	assert.Equal(t, "/server/foo/storage/detach", request.RequestURL())
 }
 
@@ -110,15 +148,23 @@ func TestDeleteStorageRequest(t *testing.T) {
 func TestCloneStorageRequest(t *testing.T) {
 	request := CloneStorageRequest{
 		UUID:  "foo",
-		Title: "Cloned storage",
-		Zone:  "fi-hel2",
+		Title: "Clone of operating system disk",
+		Zone:  "fi-hel1",
 		Tier:  upcloud.StorageTierMaxIOPS,
 	}
 
-	expectedXML := "<storage><zone>fi-hel2</zone><tier>maxiops</tier><title>Cloned storage</title></storage>"
-	actualXML, err := xml.Marshal(&request)
-	assert.Nil(t, err)
-	assert.Equal(t, expectedXML, string(actualXML))
+	expectedJSON := `
+	{
+      "storage": {
+        "zone": "fi-hel1",
+        "tier": "maxiops",
+        "title": "Clone of operating system disk"
+      }
+    }
+	`
+	actualJSON, err := json.Marshal(&request)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
 	assert.Equal(t, "/storage/foo/clone", request.RequestURL())
 }
 
@@ -129,10 +175,17 @@ func TestTemplatizeStorageRequest(t *testing.T) {
 		Title: "Templatized storage",
 	}
 
-	expectedXML := "<storage><title>Templatized storage</title></storage>"
-	actualXML, err := xml.Marshal(&request)
-	assert.Nil(t, err)
-	assert.Equal(t, expectedXML, string(actualXML))
+	expectedJSON := `
+	  {
+        "storage": {
+          "title": "Templatized storage"
+        }
+      }
+	`
+	actualJSON, err := json.Marshal(&request)
+	assert.NoError(t, err)
+
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
 	assert.Equal(t, "/storage/foo/templatize", request.RequestURL())
 }
 
@@ -143,10 +196,16 @@ func TestLoadCDROMRequest(t *testing.T) {
 		StorageUUID: "bar",
 	}
 
-	expectedXML := "<storage_device><storage>bar</storage></storage_device>"
-	actualXML, err := xml.Marshal(&request)
+	expectedJSON := `
+	  {
+		"storage_device": {
+		  "storage": "bar"
+		}
+	  }
+	`
+	actualJSON, err := json.Marshal(&request)
 	assert.Nil(t, err)
-	assert.Equal(t, expectedXML, string(actualXML))
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
 	assert.Equal(t, "/server/foo/cdrom/load", request.RequestURL())
 }
 
@@ -163,13 +222,19 @@ func TestEjectCDROMRequest(t *testing.T) {
 func TestCreateBackupRequest(t *testing.T) {
 	request := CreateBackupRequest{
 		UUID:  "foo",
-		Title: "Backup",
+		Title: "Manually created backup",
 	}
 
-	expectedXML := "<storage><title>Backup</title></storage>"
-	actualXML, err := xml.Marshal(&request)
-	assert.Nil(t, err)
-	assert.Equal(t, expectedXML, string(actualXML))
+	expectedJSON := `
+	  {
+		"storage": {
+		  "title": "Manually created backup"
+		}
+	  }
+	`
+	actualJSON, err := json.Marshal(&request)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
 	assert.Equal(t, "/storage/foo/backup", request.RequestURL())
 }
 

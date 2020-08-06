@@ -1,7 +1,7 @@
 package request
 
 import (
-	"encoding/xml"
+	"encoding/json"
 	"testing"
 
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
@@ -32,11 +32,16 @@ func TestCreateFirewallRuleRequest(t *testing.T) {
 	request := CreateFirewallRuleRequest{
 		ServerUUID: "00798b85-efdc-41ca-8021-f6ef457b8531",
 		FirewallRule: upcloud.FirewallRule{
-			Direction: upcloud.FirewallRuleDirectionIn,
-			Action:    upcloud.FirewallRuleActionAccept,
-			Family:    upcloud.IPAddressFamilyIPv4,
-			Position:  1,
-			Comment:   "This is the comment",
+			Direction:            upcloud.FirewallRuleDirectionIn,
+			Action:               upcloud.FirewallRuleActionAccept,
+			Family:               upcloud.IPAddressFamilyIPv4,
+			Position:             1,
+			Comment:              "Allow SSH from this network",
+			DestinationPortStart: "22",
+			DestinationPortEnd:   "22",
+			SourceAddressStart:   "192.168.1.1",
+			SourceAddressEnd:     "192.168.1.255",
+			Protocol:             upcloud.FirewallRuleProtocolTCP,
 		},
 	}
 
@@ -44,12 +49,26 @@ func TestCreateFirewallRuleRequest(t *testing.T) {
 	assert.Equal(t, "/server/00798b85-efdc-41ca-8021-f6ef457b8531/firewall_rule", request.RequestURL())
 
 	// Check marshaling
-	byteXML, err := xml.Marshal(&request)
-	assert.Nil(t, err)
+	actualJSON, err := json.Marshal(&request)
+	assert.NoError(t, err)
 
-	expectedXML := "<firewall_rule><action>accept</action><comment>This is the comment</comment><direction>in</direction><family>IPv4</family><position>1</position></firewall_rule>"
-	actualXML := string(byteXML)
-	assert.Equal(t, expectedXML, actualXML)
+	expectedJSON := `
+	{
+		"firewall_rule": {
+		  "position": "1",
+		  "direction": "in",
+		  "family": "IPv4",
+		  "protocol": "tcp",
+		  "source_address_start": "192.168.1.1",
+		  "source_address_end": "192.168.1.255",
+		  "destination_port_start": "22",
+		  "destination_port_end": "22",
+		  "action": "accept",
+		  "comment": "Allow SSH from this network"
+		}
+	  }
+	`
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
 }
 
 // TestDeleteFirewallRuleRequest tests that DeleteFirewallRuleRequest behaves correctly

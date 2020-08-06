@@ -25,8 +25,9 @@ func TestMain(m *testing.M) {
 	retCode := m.Run()
 
 	// Optionally perform teardown
-	deleteResources := os.Getenv("UPCLOUD_GO_SDK_TEST_DELETE_RESOURCES")
-	if deleteResources == "yes" {
+	deleteResources := os.Getenv("UPCLOUD_GO_SDK_TEST_DELETE_RESOURCES") == "yes"
+	noCredentials := os.Getenv("UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS") == "yes"
+	if deleteResources && !noCredentials {
 		log.Print("UPCLOUD_GO_SDK_TEST_DELETE_RESOURCES defined, deleting all resources ...")
 		teardown()
 	}
@@ -44,6 +45,7 @@ func getService() *Service {
 	return New(c)
 }
 
+// records the API interactions of the test
 func record(t *testing.T, fixture string, f func(*testing.T, *Service)) {
 	r, err := recorder.New("fixtures/" + fixture)
 	require.NoError(t, err)
@@ -128,15 +130,227 @@ func teardown() {
 
 // TestGetAccount tests that the GetAccount() method returns proper data
 func TestGetAccount(t *testing.T) {
-	record(t, "getaccount", func(t *testing.T, svc *Service) {
+	if os.Getenv("UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS") == "yes" {
+		t.Skip("Skipping TestGetAccount...")
+	}
 
-		account, err := svc.GetAccount()
-		username, _ := getCredentials()
+	svc := getService()
+	account, err := svc.GetAccount()
+	username, _ := getCredentials()
+	require.NoError(t, err)
+
+	if account.UserName != username {
+		t.Errorf("TestGetAccount expected %s, got %s", username, account.UserName)
+	}
+}
+
+// TestGetZones tests that the GetZones() function returns proper data
+func TestGetZones(t *testing.T) {
+	record(t, "getzones", func(t *testing.T, svc *Service) {
+		zones, err := svc.GetZones()
+		require.NoError(t, err)
+		assert.NotEmpty(t, zones.Zones)
+
+		var found bool
+		for _, z := range zones.Zones {
+			if z.Description == "Helsinki #1" && z.ID == "fi-hel1" {
+				found = true
+				break
+			}
+		}
+		assert.True(t, found)
+	})
+}
+
+// TestGetPriceZones tests that GetPriceZones() function returns proper data
+func TestGetPriceZones(t *testing.T) {
+	record(t, "getpricezones", func(t *testing.T, svc *Service) {
+		zones, err := svc.GetPriceZones()
+		require.NoError(t, err)
+		assert.NotEmpty(t, zones.PriceZones)
+
+		var found bool
+		var zone upcloud.PriceZone
+		for _, z := range zones.PriceZones {
+			if z.Name == "fi-hel1" {
+				found = true
+				zone = z
+				break
+			}
+		}
+		assert.True(t, found)
+		assert.NotZero(t, zone.Firewall.Amount)
+		assert.NotZero(t, zone.Firewall.Price)
+		assert.NotZero(t, zone.IPv4Address.Amount)
+		assert.NotZero(t, zone.IPv4Address.Price)
+	})
+}
+
+// TestGetTimeZones ensures that the GetTimeZones() function returns proper data
+func TestGetTimeZones(t *testing.T) {
+	record(t, "gettimezones", func(t *testing.T, svc *Service) {
+		zones, err := svc.GetTimeZones()
+		require.NoError(t, err)
+		assert.NotEmpty(t, zones.TimeZones)
+
+		var found bool
+		for _, z := range zones.TimeZones {
+			if z == "Pacific/Wallis" {
+				found = true
+				break
+			}
+		}
+		assert.True(t, found)
+	})
+}
+
+// TestGetPlans ensures that the GetPlans() functions returns proper data
+func TestGetPlans(t *testing.T) {
+	record(t, "getplans", func(t *testing.T, svc *Service) {
+		plans, err := svc.GetPlans()
+		require.NoError(t, err)
+		assert.NotEmpty(t, plans.Plans)
+
+		var found bool
+		var plan upcloud.Plan
+		for _, p := range plans.Plans {
+			if p.Name == "1xCPU-1GB" {
+				found = true
+				plan = p
+				break
+			}
+		}
+		assert.True(t, found)
+
+		assert.Equal(t, 1, plan.CoreNumber)
+		assert.Equal(t, 1024, plan.MemoryAmount)
+		assert.Equal(t, 1024, plan.PublicTrafficOut)
+		assert.Equal(t, 25, plan.StorageSize)
+		assert.Equal(t, upcloud.StorageTierMaxIOPS, plan.StorageTier)
+	})
+}
+
+// TestGetServerConfigurations ensures that the GetServerConfigurations() function returns proper data
+func TestGetServerConfigurations(t *testing.T) {
+	record(t, "getserverconfigurations", func(t *testing.T, svc *Service) {
+		configurations, err := svc.GetServerConfigurations()
+		require.NoError(t, err)
+		assert.NotEmpty(t, configurations.ServerConfigurations)
+
+		var found bool
+		for _, sc := range configurations.ServerConfigurations {
+			if sc.CoreNumber == 1 && sc.MemoryAmount == 1024 {
+				found = true
+				break
+			}
+		}
+		assert.True(t, found)
+	})
+}
+
+// TestGetServerDetails ensures that the GetServerDetails() function returns proper data
+func TestGetServerDetails(t *testing.T) {
+	record(t, "getserverdetails", func(t *testing.T, svc *Service) {
+		d, err := createServer(svc, "getserverdetails")
 		require.NoError(t, err)
 
-		if account.UserName != username {
-			t.Errorf("TestGetAccount expected %s, got %s", username, account.UserName)
-		}
+		serverDetails, err := svc.GetServerDetails(&request.GetServerDetailsRequest{
+			UUID: d.UUID,
+		})
+		require.NoError(t, err)
+
+		assert.Contains(t, serverDetails.Title, "getserverdetails")
+		assert.Equal(t, "fi-hel2", serverDetails.Zone)
+	})
+}
+
+// TestCreateStopStartServer ensures that StartServer() and StopServer() behave
+// as expect and return proper data
+// The test:
+//   - Creates a server
+//   - Stops the server
+//   - Starts the server
+//   - Checks the details of the started server and that it is in the
+//     correct state.
+func TestCreateStopStartServer(t *testing.T) {
+	record(t, "createstartstopserver", func(t *testing.T, svc *Service) {
+		d, err := createServer(svc, "createstartstopserver")
+		require.NoError(t, err)
+
+		stopServerDetails, err := svc.StopServer(&request.StopServerRequest{
+			UUID:     d.UUID,
+			Timeout:  15 * time.Minute,
+			StopType: upcloud.StopTypeHard,
+		})
+		require.NoError(t, err)
+		assert.Contains(t, stopServerDetails.Title, "createstartstopserver")
+		assert.Equal(t, "fi-hel2", stopServerDetails.Zone)
+		// We shouldn't have transitioned state yet.
+		assert.Equal(t, upcloud.ServerStateStarted, stopServerDetails.State)
+
+		waitServerDetails, err := svc.WaitForServerState(&request.WaitForServerStateRequest{
+			UUID:         d.UUID,
+			DesiredState: upcloud.ServerStateStopped,
+			Timeout:      15 * time.Minute,
+		})
+		require.NoError(t, err)
+		assert.Contains(t, waitServerDetails.Title, "createstartstopserver")
+		assert.Equal(t, "fi-hel2", waitServerDetails.Zone)
+		assert.Equal(t, upcloud.ServerStateStopped, waitServerDetails.State)
+
+		startServerDetails, err := svc.StartServer(&request.StartServerRequest{
+			UUID: d.UUID,
+		})
+		require.NoError(t, err)
+
+		assert.Contains(t, startServerDetails.Title, "createstartstopserver")
+		assert.Equal(t, "fi-hel2", startServerDetails.Zone)
+		assert.Equal(t, upcloud.ServerStateStarted, startServerDetails.State)
+	})
+}
+
+// TestCreateRestartServer ensures that RestartServer() behaves as expect and returns
+// proper data
+// The test:
+//   - Creates a server
+//   - Restarts the server
+//   - Checks the details of the restarted server and that it is in the
+//     correct state.
+func TestCreateRestartServer(t *testing.T) {
+	record(t, "createrestartserver", func(t *testing.T, svc *Service) {
+		d, err := createServer(svc, "createrestartserver")
+		require.NoError(t, err)
+
+		restartServerDetails, err := svc.RestartServer(&request.RestartServerRequest{
+			UUID:          d.UUID,
+			Timeout:       15 * time.Minute,
+			StopType:      upcloud.StopTypeHard,
+			TimeoutAction: request.RestartTimeoutActionIgnore,
+		})
+		require.NoError(t, err)
+		assert.Contains(t, restartServerDetails.Title, "createrestartserver")
+		assert.Equal(t, "fi-hel2", restartServerDetails.Zone)
+		// We shouldn't have transitioned state yet.
+		assert.Equal(t, upcloud.ServerStateStarted, restartServerDetails.State)
+
+		waitServerDetails, err := svc.WaitForServerState(&request.WaitForServerStateRequest{
+			UUID:           d.UUID,
+			UndesiredState: upcloud.ServerStateStarted,
+			Timeout:        15 * time.Minute,
+		})
+		require.NoError(t, err)
+		assert.Contains(t, waitServerDetails.Title, "createrestartserver")
+		assert.Equal(t, "fi-hel2", waitServerDetails.Zone)
+
+		waitServerDetails2, err := svc.WaitForServerState(&request.WaitForServerStateRequest{
+			UUID:         waitServerDetails.UUID,
+			DesiredState: upcloud.ServerStateStarted,
+			Timeout:      15 * time.Minute,
+		})
+		require.NoError(t, err)
+		assert.Contains(t, waitServerDetails2.Title, "createrestartserver")
+		assert.Equal(t, "fi-hel2", waitServerDetails2.Zone)
+		assert.Equal(t, upcloud.ServerStateStarted, waitServerDetails2.State)
 	})
 }
 
@@ -457,7 +671,7 @@ func TestTemplatizeServerStorage(t *testing.T) {
 			UUID:  serverDetails.StorageDevices[0].UUID,
 			Title: "Templatized storage",
 		})
-		require.NoError(t, err)
+		require.NoErrorf(t, err, "Error: %#v", err)
 
 		err = waitForStorageOnline(svc, storageDetails.UUID)
 		require.NoError(t, err)
@@ -523,15 +737,15 @@ func TestLoadEjectCDROM(t *testing.T) {
 // - creates a storage device
 // - creates a backup of the storage device
 // - gets backup storage details
+// - restores the backup
 //
-// It's not feasible to test backup restoration due to time constraints
-func TestCreateBackup(t *testing.T) {
+func TestCreateRestoreBackup(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping test in short mode")
 	}
 	t.Parallel()
 
-	record(t, "createbackup", func(t *testing.T, svc *Service) {
+	record(t, "createrestorebackup", func(t *testing.T, svc *Service) {
 		// Create the storage
 		storageDetails, err := createStorage(svc)
 		require.NoError(t, err)
@@ -576,6 +790,7 @@ func TestCreateBackup(t *testing.T) {
 			backupDetails.UUID,
 			storageDetails.UUID,
 		)
+		t.Logf("Backup storage origin UUID OK")
 
 		// Retrieve the time we stored in the title field.
 		titleSplit := strings.Split(backupStorageDetails.Title, "-")
@@ -604,7 +819,53 @@ func TestCreateBackup(t *testing.T) {
 			timeAfterBackup,
 		)
 
-		t.Logf("Backup storage origin UUID OK")
+		err = svc.RestoreBackup(&request.RestoreBackupRequest{
+			UUID: backupDetails.UUID,
+		})
+		assert.NoError(t, err)
+
+		err = waitForStorageOnline(svc, backupDetails.Origin)
+		require.NoError(t, err)
+	})
+}
+
+// TestGetIPAddresses performs the following actions:
+// - creates a server
+// - retrieves all IP addresses
+// - compares the retrieved IP addresses with the created server's
+//   ip addresses
+func TestGetIPAddresses(t *testing.T) {
+	record(t, "getipaddresses", func(t *testing.T, svc *Service) {
+		serverDetails, err := createServer(svc, "TestGetIPAddresses")
+		require.NoError(t, err)
+		assert.Greater(t, len(serverDetails.IPAddresses), 0)
+
+		ipAddresses, err := svc.GetIPAddresses()
+		require.NoError(t, err)
+		var foundCount int
+		for _, sip := range serverDetails.IPAddresses {
+			for _, gip := range ipAddresses.IPAddresses {
+				if sip.Address == gip.Address {
+					foundCount++
+					assert.Equal(t, sip.Access, gip.Access)
+					assert.Equal(t, sip.Family, gip.Family)
+					break
+				}
+			}
+		}
+		assert.Equal(t, len(serverDetails.IPAddresses), foundCount)
+
+		for _, ip := range serverDetails.IPAddresses {
+			require.NotEmpty(t, ip.Address)
+			ipAddress, err := svc.GetIPAddressDetails(&request.GetIPAddressDetailsRequest{
+				Address: ip.Address,
+			})
+			require.NoError(t, err)
+
+			assert.Equal(t, ip.Address, ipAddress.Address)
+			assert.Equal(t, ip.Access, ipAddress.Access)
+			assert.Equal(t, ip.Family, ipAddress.Family)
+		}
 	})
 }
 
@@ -696,6 +957,14 @@ func TestFirewallRules(t *testing.T) {
 		require.NoError(t, err)
 		t.Log("Firewall rule created")
 
+		// Get list of firewall rules for this server
+		firewallRules, err := svc.GetFirewallRules(&request.GetFirewallRulesRequest{
+			ServerUUID: serverDetails.UUID,
+		})
+		require.NoError(t, err)
+		assert.Len(t, firewallRules.FirewallRules, 1)
+		assert.Equal(t, "This is the comment", firewallRules.FirewallRules[0].Comment)
+
 		// Get details about the rule
 		t.Log("Getting details about firewall rule #1 ...")
 		firewallRule, err := svc.GetFirewallRuleDetails(&request.GetFirewallRuleDetailsRequest{
@@ -703,6 +972,7 @@ func TestFirewallRules(t *testing.T) {
 			Position:   1,
 		})
 		require.NoError(t, err)
+		assert.Equal(t, "This is the comment", firewallRule.Comment)
 		t.Logf("Got firewall rule details, comment is %s", firewallRule.Comment)
 
 		// Delete the firewall rule
@@ -713,6 +983,78 @@ func TestFirewallRules(t *testing.T) {
 		})
 		require.NoError(t, err)
 		t.Log("Firewall rule #1 deleted")
+	})
+}
+
+// TestCreateTag tests the creation of a single tag
+func TestCreateTag(t *testing.T) {
+	record(t, "createtag", func(t *testing.T, svc *Service) {
+		svc.DeleteTag(&request.DeleteTagRequest{
+			Name: "testTag",
+		})
+
+		tag, err := svc.CreateTag(&request.CreateTagRequest{
+			Tag: upcloud.Tag{
+				Name: "testTag",
+			},
+		})
+		require.NoError(t, err)
+		assert.Equal(t, "testTag", tag.Name)
+	})
+}
+
+// TestGetTags tests that GetTags returns multiple tags and it, at least, contains the 3
+// we create.
+func TestGetTags(t *testing.T) {
+	record(t, "gettags", func(t *testing.T, svc *Service) {
+		testData := []string{
+			"testgettags_tag1",
+			"testgettags_tag2",
+			"testgettags_tag3",
+		}
+
+		for _, tag := range testData {
+			// Delete all the tags we're about to create.
+			// We don't care about errors.
+			svc.DeleteTag(&request.DeleteTagRequest{
+				Name: tag,
+			})
+		}
+
+		for _, tag := range testData {
+			_, err := svc.CreateTag(&request.CreateTagRequest{
+				Tag: upcloud.Tag{
+					Name:        tag,
+					Description: tag + " description",
+				},
+			})
+
+			require.NoError(t, err)
+		}
+
+		tags, err := svc.GetTags()
+		require.NoError(t, err)
+		// There may be other tags so the length must be
+		// greater than or equal to.
+		assert.GreaterOrEqual(t, len(tags.Tags), len(testData))
+		for _, expectedTag := range testData {
+			var found bool
+			for _, tag := range tags.Tags {
+				if tag.Name == expectedTag {
+					found = true
+					assert.Equal(t, expectedTag+" description", tag.Description)
+					break
+				}
+			}
+			assert.True(t, found)
+		}
+
+		for _, tag := range tags.Tags {
+			err := svc.DeleteTag(&request.DeleteTagRequest{
+				Name: tag.Name,
+			})
+			require.NoError(t, err)
+		}
 	})
 }
 
@@ -756,6 +1098,7 @@ func TestTagging(t *testing.T) {
 			})
 
 			require.NoError(t, err)
+			assert.Equal(t, tag, tagDetails.Name)
 			t.Logf("Tag %s created", tagDetails.Name)
 		}
 
@@ -767,6 +1110,7 @@ func TestTagging(t *testing.T) {
 			},
 		})
 		require.NoError(t, err)
+		assert.Contains(t, serverDetails.Tags, "tag1")
 		t.Logf("Server %s is now tagged with tag %s", serverDetails.Title, "tag1")
 
 		// Rename the second tag
@@ -778,6 +1122,7 @@ func TestTagging(t *testing.T) {
 		})
 
 		require.NoError(t, err)
+		assert.Equal(t, "tag2_renamed", tagDetails.Name)
 		t.Logf("Tag tag2 renamed to %s", tagDetails.Name)
 
 		// Delete the third tag
@@ -796,8 +1141,8 @@ func TestTagging(t *testing.T) {
 				"tag1",
 			},
 		})
-
 		require.NoError(t, err)
+		assert.NotContains(t, serverDetails.Tags, "tag1")
 		t.Logf("Server %s is now untagged", serverDetails.Title)
 	})
 }
@@ -982,6 +1327,10 @@ func handleError(err error) {
 
 // Reads the API username and password from the environment, panics if they are not available
 func getCredentials() (string, string) {
+	if os.Getenv("UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS") == "yes" {
+		return "username", "password"
+	}
+
 	user := os.Getenv("UPCLOUD_GO_SDK_TEST_USER")
 	password := os.Getenv("UPCLOUD_GO_SDK_TEST_PASSWORD")
 

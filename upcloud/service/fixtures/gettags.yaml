@@ -1,0 +1,410 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.2/tag/testgettags_tag1
+    method: DELETE
+  response:
+    body: |
+      {
+         "error" : {
+            "error_code" : "TAG_NOT_FOUND",
+            "error_message" : "The tag testgettags_tag1 does not exist."
+         }
+      }
+    headers:
+      Content-Length:
+      - "129"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 04 Aug 2020 15:44:00 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 404 Not Found
+    code: 404
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.2/tag/testgettags_tag2
+    method: DELETE
+  response:
+    body: |
+      {
+         "error" : {
+            "error_code" : "TAG_NOT_FOUND",
+            "error_message" : "The tag testgettags_tag2 does not exist."
+         }
+      }
+    headers:
+      Content-Length:
+      - "129"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 04 Aug 2020 15:44:00 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 404 Not Found
+    code: 404
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.2/tag/testgettags_tag3
+    method: DELETE
+  response:
+    body: |
+      {
+         "error" : {
+            "error_code" : "TAG_NOT_FOUND",
+            "error_message" : "The tag testgettags_tag3 does not exist."
+         }
+      }
+    headers:
+      Content-Length:
+      - "129"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 04 Aug 2020 15:44:01 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 404 Not Found
+    code: 404
+    duration: ""
+- request:
+    body: '{"tag":{"name":"testgettags_tag1","description":"testgettags_tag1 description","servers":{"server":[]}}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.2/tag
+    method: POST
+  response:
+    body: |
+      {
+         "tag" : {
+            "description" : "testgettags_tag1 description",
+            "name" : "testgettags_tag1",
+            "servers" : {
+               "server" : []
+            }
+         }
+      }
+    headers:
+      Content-Length:
+      - "162"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 04 Aug 2020 15:44:01 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"tag":{"name":"testgettags_tag2","description":"testgettags_tag2 description","servers":{"server":[]}}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.2/tag
+    method: POST
+  response:
+    body: |
+      {
+         "tag" : {
+            "description" : "testgettags_tag2 description",
+            "name" : "testgettags_tag2",
+            "servers" : {
+               "server" : []
+            }
+         }
+      }
+    headers:
+      Content-Length:
+      - "162"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 04 Aug 2020 15:44:01 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"tag":{"name":"testgettags_tag3","description":"testgettags_tag3 description","servers":{"server":[]}}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.2/tag
+    method: POST
+  response:
+    body: |
+      {
+         "tag" : {
+            "description" : "testgettags_tag3 description",
+            "name" : "testgettags_tag3",
+            "servers" : {
+               "server" : []
+            }
+         }
+      }
+    headers:
+      Content-Length:
+      - "162"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 04 Aug 2020 15:44:01 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.2/tag
+    method: GET
+  response:
+    body: |
+      {
+         "tags" : {
+            "tag" : [
+               {
+                  "description" : "",
+                  "name" : "tag1",
+                  "servers" : {
+                     "server" : []
+                  }
+               },
+               {
+                  "description" : "",
+                  "name" : "tag2_renamed",
+                  "servers" : {
+                     "server" : []
+                  }
+               },
+               {
+                  "description" : "testgettags_tag1 description",
+                  "name" : "testgettags_tag1",
+                  "servers" : {
+                     "server" : []
+                  }
+               },
+               {
+                  "description" : "testgettags_tag2 description",
+                  "name" : "testgettags_tag2",
+                  "servers" : {
+                     "server" : []
+                  }
+               },
+               {
+                  "description" : "testgettags_tag3 description",
+                  "name" : "testgettags_tag3",
+                  "servers" : {
+                     "server" : []
+                  }
+               },
+               {
+                  "description" : "",
+                  "name" : "testTag",
+                  "servers" : {
+                     "server" : []
+                  }
+               }
+            ]
+         }
+      }
+    headers:
+      Content-Length:
+      - "1095"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 04 Aug 2020 15:44:01 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.2/tag/tag1
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Tue, 04 Aug 2020 15:44:02 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.2/tag/tag2_renamed
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Tue, 04 Aug 2020 15:44:02 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.2/tag/testgettags_tag1
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Tue, 04 Aug 2020 15:44:02 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.2/tag/testgettags_tag2
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Tue, 04 Aug 2020 15:44:03 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.2/tag/testgettags_tag3
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Tue, 04 Aug 2020 15:44:03 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.2/tag/testTag
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Tue, 04 Aug 2020 15:44:03 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""

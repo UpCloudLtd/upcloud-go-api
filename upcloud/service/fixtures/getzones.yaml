@@ -1,0 +1,75 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.2/zone
+    method: GET
+  response:
+    body: |
+      {
+         "zones" : {
+            "zone" : [
+               {
+                  "description" : "Frankfurt #1",
+                  "id" : "de-fra1"
+               },
+               {
+                  "description" : "Helsinki #1",
+                  "id" : "fi-hel1"
+               },
+               {
+                  "description" : "Helsinki #2",
+                  "id" : "fi-hel2"
+               },
+               {
+                  "description" : "Amsterdam #1",
+                  "id" : "nl-ams1"
+               },
+               {
+                  "description" : "Singapore #1",
+                  "id" : "sg-sin1"
+               },
+               {
+                  "description" : "London #1",
+                  "id" : "uk-lon1"
+               },
+               {
+                  "description" : "Test Cloud #1",
+                  "id" : "uk-tst1"
+               },
+               {
+                  "description" : "Chicago #1",
+                  "id" : "us-chi1"
+               },
+               {
+                  "description" : "New York #1",
+                  "id" : "us-nyc1"
+               },
+               {
+                  "description" : "San Jose #1",
+                  "id" : "us-sjo1"
+               }
+            ]
+         }
+      }
+    headers:
+      Content-Length:
+      - "1000"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 04 Aug 2020 15:41:52 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""

@@ -1,7 +1,7 @@
 package upcloud
 
 import (
-	"encoding/xml"
+	"encoding/json"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -9,41 +9,112 @@ import (
 
 // TestUnmarshalIPAddresses tests that IPAddresses and IPAddress structs are unmarshaled correctly
 func TestUnmarshalIPAddresses(t *testing.T) {
-	originalXML := `<?xml version="1.0" encoding="utf-8"?>
-<ip_addresses>
-    <ip_address>
-        <access>public</access>
-        <address>2a04:3540:1000:310:6069:7bff:fe96:71d1</address>
-        <family>IPv6</family>
-        <ptr_record>6069-7bff-fe96-71d1.v6.fi-hel2.host.upcloud.com</ptr_record>
-        <server>0000acd1-06aa-4453-865c-fedb3f02a6a1</server>
-    </ip_address>
-    <ip_address>
-        <access>private</access>
-        <address>10.1.1.15</address>
-        <family>IPv4</family>
-        <ptr_record></ptr_record>
-        <server>0000acd1-06aa-4453-865c-fedb3f02a6a1</server>
-    </ip_address>
-    <ip_address>
-        <access>public</access>
-        <address>94.237.32.40</address>
-        <family>IPv4</family>
-        <part_of_plan>yes</part_of_plan>
-        <ptr_record>94-237-32-40.fi-hel2.host.upcloud.com</ptr_record>
-        <server>0000acd1-06aa-4453-865c-fedb3f02a6a1</server>
-    </ip_address>
-</ip_addresses>`
+	originalJSON := `
+      {
+        "ip_addresses": {
+          "ip_address": [
+            {
+              "access": "private",
+              "address": "10.0.0.0",
+              "family": "IPv4",
+              "ptr_record": "",
+              "server": "0053cd80-5945-4105-9081-11192806a8f7"
+            },
+            {
+              "access": "private",
+              "address": "10.0.0.1",
+              "family": "IPv4",
+              "ptr_record": "",
+              "server": "006b6701-55d2-4374-ac40-56cc1501037f"
+            },
+            {
+              "access": "public",
+              "address": "x.x.x.x",
+              "family": "IPv4",
+              "part_of_plan": "yes",
+              "ptr_record": "x-x-x-x.zone.upcloud.host",
+              "server": "0053cd80-5945-4105-9081-11192806a8f7"
+            },
+            {
+              "access": "public",
+              "address": "xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx",
+              "family": "IPv6",
+              "ptr_record": "xxxx-xxxx-xxxx-xxxx.v6.zone.upcloud.host",
+              "server": "006b6701-55d2-4374-ac40-56cc1501037f"
+            }
+          ]
+        }
+      }
+    `
 
 	ipAddresses := IPAddresses{}
-	err := xml.Unmarshal([]byte(originalXML), &ipAddresses)
-	assert.Nil(t, err)
-	assert.Len(t, ipAddresses.IPAddresses, 3)
+	err := json.Unmarshal([]byte(originalJSON), &ipAddresses)
+	assert.NoError(t, err)
+	assert.Len(t, ipAddresses.IPAddresses, 4)
 
-	firstAddress := ipAddresses.IPAddresses[0]
-	assert.Equal(t, IPAddressAccessPublic, firstAddress.Access)
-	assert.Equal(t, "2a04:3540:1000:310:6069:7bff:fe96:71d1", firstAddress.Address)
-	assert.Equal(t, IPAddressFamilyIPv6, firstAddress.Family)
-	assert.Equal(t, "6069-7bff-fe96-71d1.v6.fi-hel2.host.upcloud.com", firstAddress.PTRRecord)
-	assert.Equal(t, "0000acd1-06aa-4453-865c-fedb3f02a6a1", firstAddress.ServerUUID)
+	testData := []IPAddress{
+		{
+			Access:     IPAddressAccessPrivate,
+			Address:    "10.0.0.0",
+			Family:     IPAddressFamilyIPv4,
+			PTRRecord:  "",
+			ServerUUID: "0053cd80-5945-4105-9081-11192806a8f7",
+		},
+		{
+			Access:     IPAddressAccessPrivate,
+			Address:    "10.0.0.1",
+			Family:     IPAddressFamilyIPv4,
+			PTRRecord:  "",
+			ServerUUID: "006b6701-55d2-4374-ac40-56cc1501037f",
+		},
+		{
+			Access:     IPAddressAccessPublic,
+			Address:    "x.x.x.x",
+			Family:     IPAddressFamilyIPv4,
+			PartOfPlan: "yes",
+			PTRRecord:  "x-x-x-x.zone.upcloud.host",
+			ServerUUID: "0053cd80-5945-4105-9081-11192806a8f7",
+		},
+		{
+			Access:     IPAddressAccessPublic,
+			Address:    "xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx",
+			Family:     IPAddressFamilyIPv6,
+			PTRRecord:  "xxxx-xxxx-xxxx-xxxx.v6.zone.upcloud.host",
+			ServerUUID: "006b6701-55d2-4374-ac40-56cc1501037f",
+		},
+	}
+
+	for i, v := range testData {
+		address := ipAddresses.IPAddresses[i]
+		assert.Equal(t, v.Access, address.Access)
+		assert.Equal(t, v.Address, address.Address)
+		assert.Equal(t, v.Family, address.Family)
+		assert.Equal(t, v.PTRRecord, address.PTRRecord)
+		assert.Equal(t, v.ServerUUID, address.ServerUUID)
+	}
+}
+
+// TestUnmarshalIPAddress tests that IPAddress is unmarshaled correctly on its own
+func TestUnmarshalIPAddress(t *testing.T) {
+	originalJSON := `
+      {
+        "ip_address" : {
+           "access" : "public",
+           "address" : "94.237.104.58",
+           "family" : "IPv4",
+           "ptr_record" : "94-237-104-58.fi-hel2.upcloud.host",
+           "server" : "0028ab30-491a-4696-a601-91e810d154a8"
+        }
+      }
+    `
+
+	ipAddress := IPAddress{}
+	err := json.Unmarshal([]byte(originalJSON), &ipAddress)
+	assert.NoError(t, err)
+
+	assert.Equal(t, IPAddressAccessPublic, ipAddress.Access)
+	assert.Equal(t, "94.237.104.58", ipAddress.Address)
+	assert.Equal(t, IPAddressFamilyIPv4, ipAddress.Family)
+	assert.Equal(t, "94-237-104-58.fi-hel2.upcloud.host", ipAddress.PTRRecord)
+	assert.Equal(t, "0028ab30-491a-4696-a601-91e810d154a8", ipAddress.ServerUUID)
 }

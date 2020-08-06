@@ -1,0 +1,35 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.2/server/invalid/start
+    method: POST
+  response:
+    body: |
+      {
+         "error" : {
+            "error_code" : "SERVER_INVALID",
+            "error_message" : "The server UUID is invalid."
+         }
+      }
+    headers:
+      Content-Length:
+      - "117"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 04 Aug 2020 15:43:36 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 400 Bad Request
+    code: 400
+    duration: ""

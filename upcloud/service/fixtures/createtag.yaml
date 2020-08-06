@@ -1,0 +1,70 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.2/tag/testTag
+    method: DELETE
+  response:
+    body: |
+      {
+         "error" : {
+            "error_code" : "TAG_NOT_FOUND",
+            "error_message" : "The tag testTag does not exist."
+         }
+      }
+    headers:
+      Content-Length:
+      - "120"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 04 Aug 2020 15:44:00 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 404 Not Found
+    code: 404
+    duration: ""
+- request:
+    body: '{"tag":{"name":"testTag","servers":{"server":[]}}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.2/tag
+    method: POST
+  response:
+    body: |
+      {
+         "tag" : {
+            "description" : "",
+            "name" : "testTag",
+            "servers" : {
+               "server" : []
+            }
+         }
+      }
+    headers:
+      Content-Length:
+      - "125"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 04 Aug 2020 15:44:00 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
