@@ -25,8 +25,9 @@ func TestMain(m *testing.M) {
 	retCode := m.Run()
 
 	// Optionally perform teardown
-	deleteResources := os.Getenv("UPCLOUD_GO_SDK_TEST_DELETE_RESOURCES")
-	if deleteResources == "yes" {
+	deleteResources := os.Getenv("UPCLOUD_GO_SDK_TEST_DELETE_RESOURCES") == "yes"
+	noCredentials := os.Getenv("UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS") == "yes"
+	if deleteResources && !noCredentials {
 		log.Print("UPCLOUD_GO_SDK_TEST_DELETE_RESOURCES defined, deleting all resources ...")
 		teardown()
 	}
