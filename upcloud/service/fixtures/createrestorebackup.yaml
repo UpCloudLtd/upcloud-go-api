@@ -33,7 +33,7 @@ interactions:
             "tier" : "maxiops",
             "title" : "Test storage",
             "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
+            "uuid" : "0134099a-03e3-402c-b2dc-452c67dfbc98",
             "zone" : "fi-hel2"
          }
       }
@@ -43,7 +43,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 05 Aug 2020 09:06:27 GMT
+      - Thu, 06 Aug 2020 10:10:36 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -52,32 +52,32 @@ interactions:
     code: 201
     duration: ""
 - request:
-    body: '{"storage":{"title":"backup-1596618397000000000"}}'
+    body: '{"storage":{"title":"backup-1596708649000000000"}}'
     form: {}
     headers:
       Accept:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2/backup
+    url: https://api.upcloud.com/1.3/storage/0134099a-03e3-402c-b2dc-452c67dfbc98/backup
     method: POST
   response:
     body: |
       {
          "storage" : {
             "access" : "private",
-            "created" : "2020-08-05T09:06:38Z",
+            "created" : "2020-08-06T10:10:48Z",
             "license" : 0,
-            "origin" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
+            "origin" : "0134099a-03e3-402c-b2dc-452c67dfbc98",
             "progress" : "0",
             "servers" : {
                "server" : []
             },
             "size" : 10,
             "state" : "maintenance",
-            "title" : "backup-1596618397000000000",
+            "title" : "backup-1596708649000000000",
             "type" : "backup",
-            "uuid" : "01dc1c9a-5104-4777-a886-2db262ccc22d",
+            "uuid" : "0186dc9d-f9b0-44f0-8f21-36ce4245a2ef",
             "zone" : "fi-hel2"
          }
       }
@@ -87,7 +87,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 05 Aug 2020 09:06:38 GMT
+      - Thu, 06 Aug 2020 10:10:48 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -103,7 +103,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
+    url: https://api.upcloud.com/1.3/storage/0134099a-03e3-402c-b2dc-452c67dfbc98
     method: GET
   response:
     body: |
@@ -117,7 +117,7 @@ interactions:
             },
             "backups" : {
                "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
+                  "0186dc9d-f9b0-44f0-8f21-36ce4245a2ef"
                ]
             },
             "license" : 0,
@@ -129,7 +129,7 @@ interactions:
             "tier" : "maxiops",
             "title" : "Test storage",
             "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
+            "uuid" : "0134099a-03e3-402c-b2dc-452c67dfbc98",
             "zone" : "fi-hel2"
          }
       }
@@ -139,7 +139,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 05 Aug 2020 09:06:38 GMT
+      - Thu, 06 Aug 2020 10:10:49 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -155,7 +155,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
+    url: https://api.upcloud.com/1.3/storage/0134099a-03e3-402c-b2dc-452c67dfbc98
     method: GET
   response:
     body: |
@@ -169,7 +169,7 @@ interactions:
             },
             "backups" : {
                "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
+                  "0186dc9d-f9b0-44f0-8f21-36ce4245a2ef"
                ]
             },
             "license" : 0,
@@ -181,7 +181,7 @@ interactions:
             "tier" : "maxiops",
             "title" : "Test storage",
             "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
+            "uuid" : "0134099a-03e3-402c-b2dc-452c67dfbc98",
             "zone" : "fi-hel2"
          }
       }
@@ -191,7 +191,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 05 Aug 2020 09:06:44 GMT
+      - Thu, 06 Aug 2020 10:10:54 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -207,24 +207,24 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/storage/01dc1c9a-5104-4777-a886-2db262ccc22d
+    url: https://api.upcloud.com/1.3/storage/0186dc9d-f9b0-44f0-8f21-36ce4245a2ef
     method: GET
   response:
     body: |
       {
          "storage" : {
             "access" : "private",
-            "created" : "2020-08-05T09:06:38Z",
+            "created" : "2020-08-06T10:10:48Z",
             "license" : 0,
-            "origin" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
+            "origin" : "0134099a-03e3-402c-b2dc-452c67dfbc98",
             "servers" : {
                "server" : []
             },
             "size" : 10,
             "state" : "online",
-            "title" : "backup-1596618397000000000",
+            "title" : "backup-1596708649000000000",
             "type" : "backup",
-            "uuid" : "01dc1c9a-5104-4777-a886-2db262ccc22d",
+            "uuid" : "0186dc9d-f9b0-44f0-8f21-36ce4245a2ef",
             "zone" : "fi-hel2"
          }
       }
@@ -234,7 +234,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 05 Aug 2020 09:06:44 GMT
+      - Thu, 06 Aug 2020 10:10:54 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -250,13 +250,13 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/storage/01dc1c9a-5104-4777-a886-2db262ccc22d/restore
+    url: https://api.upcloud.com/1.3/storage/0186dc9d-f9b0-44f0-8f21-36ce4245a2ef/restore
     method: POST
   response:
     body: ""
     headers:
       Date:
-      - Wed, 05 Aug 2020 09:06:44 GMT
+      - Thu, 06 Aug 2020 10:10:54 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -272,7 +272,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
+    url: https://api.upcloud.com/1.3/storage/0134099a-03e3-402c-b2dc-452c67dfbc98
     method: GET
   response:
     body: |
@@ -286,7 +286,7 @@ interactions:
             },
             "backups" : {
                "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
+                  "0186dc9d-f9b0-44f0-8f21-36ce4245a2ef"
                ]
             },
             "license" : 0,
@@ -299,7 +299,7 @@ interactions:
             "tier" : "maxiops",
             "title" : "Test storage",
             "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
+            "uuid" : "0134099a-03e3-402c-b2dc-452c67dfbc98",
             "zone" : "fi-hel2"
          }
       }
@@ -309,7 +309,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 05 Aug 2020 09:06:45 GMT
+      - Thu, 06 Aug 2020 10:10:55 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -325,7 +325,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
+    url: https://api.upcloud.com/1.3/storage/0134099a-03e3-402c-b2dc-452c67dfbc98
     method: GET
   response:
     body: |
@@ -339,7 +339,7 @@ interactions:
             },
             "backups" : {
                "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
+                  "0186dc9d-f9b0-44f0-8f21-36ce4245a2ef"
                ]
             },
             "license" : 0,
@@ -352,7 +352,7 @@ interactions:
             "tier" : "maxiops",
             "title" : "Test storage",
             "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
+            "uuid" : "0134099a-03e3-402c-b2dc-452c67dfbc98",
             "zone" : "fi-hel2"
          }
       }
@@ -362,7 +362,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 05 Aug 2020 09:06:50 GMT
+      - Thu, 06 Aug 2020 10:11:00 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -378,7 +378,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
+    url: https://api.upcloud.com/1.3/storage/0134099a-03e3-402c-b2dc-452c67dfbc98
     method: GET
   response:
     body: |
@@ -392,7 +392,7 @@ interactions:
             },
             "backups" : {
                "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
+                  "0186dc9d-f9b0-44f0-8f21-36ce4245a2ef"
                ]
             },
             "license" : 0,
@@ -405,7 +405,7 @@ interactions:
             "tier" : "maxiops",
             "title" : "Test storage",
             "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
+            "uuid" : "0134099a-03e3-402c-b2dc-452c67dfbc98",
             "zone" : "fi-hel2"
          }
       }
@@ -415,7 +415,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 05 Aug 2020 09:06:55 GMT
+      - Thu, 06 Aug 2020 10:11:05 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -431,7 +431,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
+    url: https://api.upcloud.com/1.3/storage/0134099a-03e3-402c-b2dc-452c67dfbc98
     method: GET
   response:
     body: |
@@ -445,7 +445,60 @@ interactions:
             },
             "backups" : {
                "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
+                  "0186dc9d-f9b0-44f0-8f21-36ce4245a2ef"
+               ]
+            },
+            "license" : 0,
+            "progress" : "95",
+            "servers" : {
+               "server" : []
+            },
+            "size" : 10,
+            "state" : "maintenance",
+            "tier" : "maxiops",
+            "title" : "Test storage",
+            "type" : "normal",
+            "uuid" : "0134099a-03e3-402c-b2dc-452c67dfbc98",
+            "zone" : "fi-hel2"
+         }
+      }
+    headers:
+      Content-Length:
+      - "596"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Thu, 06 Aug 2020 10:11:10 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.3/storage/0134099a-03e3-402c-b2dc-452c67dfbc98
+    method: GET
+  response:
+    body: |
+      {
+         "storage" : {
+            "access" : "private",
+            "backup_rule" : {
+               "interval" : "daily",
+               "retention" : "30",
+               "time" : "0430"
+            },
+            "backups" : {
+               "backup" : [
+                  "0186dc9d-f9b0-44f0-8f21-36ce4245a2ef"
                ]
             },
             "license" : 0,
@@ -457,7 +510,7 @@ interactions:
             "tier" : "maxiops",
             "title" : "Test storage",
             "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
+            "uuid" : "0134099a-03e3-402c-b2dc-452c67dfbc98",
             "zone" : "fi-hel2"
          }
       }
@@ -467,7 +520,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 05 Aug 2020 09:07:00 GMT
+      - Thu, 06 Aug 2020 10:21:24 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -483,7 +536,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
+    url: https://api.upcloud.com/1.3/storage/0134099a-03e3-402c-b2dc-452c67dfbc98
     method: GET
   response:
     body: |
@@ -497,7 +550,7 @@ interactions:
             },
             "backups" : {
                "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
+                  "0186dc9d-f9b0-44f0-8f21-36ce4245a2ef"
                ]
             },
             "license" : 0,
@@ -505,21 +558,21 @@ interactions:
                "server" : []
             },
             "size" : 10,
-            "state" : "syncing",
+            "state" : "maintenance",
             "tier" : "maxiops",
             "title" : "Test storage",
             "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
+            "uuid" : "0134099a-03e3-402c-b2dc-452c67dfbc98",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "567"
+      - "571"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 05 Aug 2020 09:07:05 GMT
+      - Thu, 06 Aug 2020 10:21:30 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -535,7 +588,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
+    url: https://api.upcloud.com/1.3/storage/0134099a-03e3-402c-b2dc-452c67dfbc98
     method: GET
   response:
     body: |
@@ -549,7 +602,7 @@ interactions:
             },
             "backups" : {
                "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
+                  "0186dc9d-f9b0-44f0-8f21-36ce4245a2ef"
                ]
             },
             "license" : 0,
@@ -557,21 +610,21 @@ interactions:
                "server" : []
             },
             "size" : 10,
-            "state" : "syncing",
+            "state" : "maintenance",
             "tier" : "maxiops",
             "title" : "Test storage",
             "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
+            "uuid" : "0134099a-03e3-402c-b2dc-452c67dfbc98",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "567"
+      - "571"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 05 Aug 2020 09:07:11 GMT
+      - Thu, 06 Aug 2020 10:21:35 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -587,7 +640,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
+    url: https://api.upcloud.com/1.3/storage/0134099a-03e3-402c-b2dc-452c67dfbc98
     method: GET
   response:
     body: |
@@ -601,995 +654,7 @@ interactions:
             },
             "backups" : {
                "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
-               ]
-            },
-            "license" : 0,
-            "servers" : {
-               "server" : []
-            },
-            "size" : 10,
-            "state" : "syncing",
-            "tier" : "maxiops",
-            "title" : "Test storage",
-            "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "567"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Wed, 05 Aug 2020 09:07:16 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
-    method: GET
-  response:
-    body: |
-      {
-         "storage" : {
-            "access" : "private",
-            "backup_rule" : {
-               "interval" : "daily",
-               "retention" : "30",
-               "time" : "0430"
-            },
-            "backups" : {
-               "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
-               ]
-            },
-            "license" : 0,
-            "servers" : {
-               "server" : []
-            },
-            "size" : 10,
-            "state" : "syncing",
-            "tier" : "maxiops",
-            "title" : "Test storage",
-            "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "567"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Wed, 05 Aug 2020 09:07:21 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
-    method: GET
-  response:
-    body: |
-      {
-         "storage" : {
-            "access" : "private",
-            "backup_rule" : {
-               "interval" : "daily",
-               "retention" : "30",
-               "time" : "0430"
-            },
-            "backups" : {
-               "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
-               ]
-            },
-            "license" : 0,
-            "servers" : {
-               "server" : []
-            },
-            "size" : 10,
-            "state" : "syncing",
-            "tier" : "maxiops",
-            "title" : "Test storage",
-            "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "567"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Wed, 05 Aug 2020 09:07:26 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
-    method: GET
-  response:
-    body: |
-      {
-         "storage" : {
-            "access" : "private",
-            "backup_rule" : {
-               "interval" : "daily",
-               "retention" : "30",
-               "time" : "0430"
-            },
-            "backups" : {
-               "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
-               ]
-            },
-            "license" : 0,
-            "servers" : {
-               "server" : []
-            },
-            "size" : 10,
-            "state" : "syncing",
-            "tier" : "maxiops",
-            "title" : "Test storage",
-            "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "567"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Wed, 05 Aug 2020 09:07:31 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
-    method: GET
-  response:
-    body: |
-      {
-         "storage" : {
-            "access" : "private",
-            "backup_rule" : {
-               "interval" : "daily",
-               "retention" : "30",
-               "time" : "0430"
-            },
-            "backups" : {
-               "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
-               ]
-            },
-            "license" : 0,
-            "servers" : {
-               "server" : []
-            },
-            "size" : 10,
-            "state" : "syncing",
-            "tier" : "maxiops",
-            "title" : "Test storage",
-            "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "567"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Wed, 05 Aug 2020 09:07:37 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
-    method: GET
-  response:
-    body: |
-      {
-         "storage" : {
-            "access" : "private",
-            "backup_rule" : {
-               "interval" : "daily",
-               "retention" : "30",
-               "time" : "0430"
-            },
-            "backups" : {
-               "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
-               ]
-            },
-            "license" : 0,
-            "servers" : {
-               "server" : []
-            },
-            "size" : 10,
-            "state" : "syncing",
-            "tier" : "maxiops",
-            "title" : "Test storage",
-            "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "567"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Wed, 05 Aug 2020 09:07:42 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
-    method: GET
-  response:
-    body: |
-      {
-         "storage" : {
-            "access" : "private",
-            "backup_rule" : {
-               "interval" : "daily",
-               "retention" : "30",
-               "time" : "0430"
-            },
-            "backups" : {
-               "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
-               ]
-            },
-            "license" : 0,
-            "servers" : {
-               "server" : []
-            },
-            "size" : 10,
-            "state" : "syncing",
-            "tier" : "maxiops",
-            "title" : "Test storage",
-            "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "567"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Wed, 05 Aug 2020 09:07:47 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
-    method: GET
-  response:
-    body: |
-      {
-         "storage" : {
-            "access" : "private",
-            "backup_rule" : {
-               "interval" : "daily",
-               "retention" : "30",
-               "time" : "0430"
-            },
-            "backups" : {
-               "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
-               ]
-            },
-            "license" : 0,
-            "servers" : {
-               "server" : []
-            },
-            "size" : 10,
-            "state" : "syncing",
-            "tier" : "maxiops",
-            "title" : "Test storage",
-            "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "567"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Wed, 05 Aug 2020 09:07:52 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
-    method: GET
-  response:
-    body: |
-      {
-         "storage" : {
-            "access" : "private",
-            "backup_rule" : {
-               "interval" : "daily",
-               "retention" : "30",
-               "time" : "0430"
-            },
-            "backups" : {
-               "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
-               ]
-            },
-            "license" : 0,
-            "servers" : {
-               "server" : []
-            },
-            "size" : 10,
-            "state" : "syncing",
-            "tier" : "maxiops",
-            "title" : "Test storage",
-            "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "567"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Wed, 05 Aug 2020 09:07:58 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
-    method: GET
-  response:
-    body: |
-      {
-         "storage" : {
-            "access" : "private",
-            "backup_rule" : {
-               "interval" : "daily",
-               "retention" : "30",
-               "time" : "0430"
-            },
-            "backups" : {
-               "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
-               ]
-            },
-            "license" : 0,
-            "servers" : {
-               "server" : []
-            },
-            "size" : 10,
-            "state" : "syncing",
-            "tier" : "maxiops",
-            "title" : "Test storage",
-            "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "567"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Wed, 05 Aug 2020 09:08:03 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
-    method: GET
-  response:
-    body: |
-      {
-         "storage" : {
-            "access" : "private",
-            "backup_rule" : {
-               "interval" : "daily",
-               "retention" : "30",
-               "time" : "0430"
-            },
-            "backups" : {
-               "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
-               ]
-            },
-            "license" : 0,
-            "servers" : {
-               "server" : []
-            },
-            "size" : 10,
-            "state" : "syncing",
-            "tier" : "maxiops",
-            "title" : "Test storage",
-            "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "567"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Wed, 05 Aug 2020 09:08:08 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
-    method: GET
-  response:
-    body: |
-      {
-         "storage" : {
-            "access" : "private",
-            "backup_rule" : {
-               "interval" : "daily",
-               "retention" : "30",
-               "time" : "0430"
-            },
-            "backups" : {
-               "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
-               ]
-            },
-            "license" : 0,
-            "servers" : {
-               "server" : []
-            },
-            "size" : 10,
-            "state" : "syncing",
-            "tier" : "maxiops",
-            "title" : "Test storage",
-            "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "567"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Wed, 05 Aug 2020 09:08:13 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
-    method: GET
-  response:
-    body: |
-      {
-         "storage" : {
-            "access" : "private",
-            "backup_rule" : {
-               "interval" : "daily",
-               "retention" : "30",
-               "time" : "0430"
-            },
-            "backups" : {
-               "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
-               ]
-            },
-            "license" : 0,
-            "servers" : {
-               "server" : []
-            },
-            "size" : 10,
-            "state" : "syncing",
-            "tier" : "maxiops",
-            "title" : "Test storage",
-            "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "567"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Wed, 05 Aug 2020 09:08:18 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
-    method: GET
-  response:
-    body: |
-      {
-         "storage" : {
-            "access" : "private",
-            "backup_rule" : {
-               "interval" : "daily",
-               "retention" : "30",
-               "time" : "0430"
-            },
-            "backups" : {
-               "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
-               ]
-            },
-            "license" : 0,
-            "servers" : {
-               "server" : []
-            },
-            "size" : 10,
-            "state" : "syncing",
-            "tier" : "maxiops",
-            "title" : "Test storage",
-            "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "567"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Wed, 05 Aug 2020 09:08:24 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
-    method: GET
-  response:
-    body: |
-      {
-         "storage" : {
-            "access" : "private",
-            "backup_rule" : {
-               "interval" : "daily",
-               "retention" : "30",
-               "time" : "0430"
-            },
-            "backups" : {
-               "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
-               ]
-            },
-            "license" : 0,
-            "servers" : {
-               "server" : []
-            },
-            "size" : 10,
-            "state" : "syncing",
-            "tier" : "maxiops",
-            "title" : "Test storage",
-            "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "567"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Wed, 05 Aug 2020 09:08:29 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
-    method: GET
-  response:
-    body: |
-      {
-         "storage" : {
-            "access" : "private",
-            "backup_rule" : {
-               "interval" : "daily",
-               "retention" : "30",
-               "time" : "0430"
-            },
-            "backups" : {
-               "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
-               ]
-            },
-            "license" : 0,
-            "servers" : {
-               "server" : []
-            },
-            "size" : 10,
-            "state" : "syncing",
-            "tier" : "maxiops",
-            "title" : "Test storage",
-            "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "567"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Wed, 05 Aug 2020 09:08:34 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
-    method: GET
-  response:
-    body: |
-      {
-         "storage" : {
-            "access" : "private",
-            "backup_rule" : {
-               "interval" : "daily",
-               "retention" : "30",
-               "time" : "0430"
-            },
-            "backups" : {
-               "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
-               ]
-            },
-            "license" : 0,
-            "servers" : {
-               "server" : []
-            },
-            "size" : 10,
-            "state" : "syncing",
-            "tier" : "maxiops",
-            "title" : "Test storage",
-            "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "567"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Wed, 05 Aug 2020 09:08:39 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
-    method: GET
-  response:
-    body: |
-      {
-         "storage" : {
-            "access" : "private",
-            "backup_rule" : {
-               "interval" : "daily",
-               "retention" : "30",
-               "time" : "0430"
-            },
-            "backups" : {
-               "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
-               ]
-            },
-            "license" : 0,
-            "servers" : {
-               "server" : []
-            },
-            "size" : 10,
-            "state" : "syncing",
-            "tier" : "maxiops",
-            "title" : "Test storage",
-            "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "567"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Wed, 05 Aug 2020 09:08:44 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
-    method: GET
-  response:
-    body: |
-      {
-         "storage" : {
-            "access" : "private",
-            "backup_rule" : {
-               "interval" : "daily",
-               "retention" : "30",
-               "time" : "0430"
-            },
-            "backups" : {
-               "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
-               ]
-            },
-            "license" : 0,
-            "servers" : {
-               "server" : []
-            },
-            "size" : 10,
-            "state" : "syncing",
-            "tier" : "maxiops",
-            "title" : "Test storage",
-            "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "567"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Wed, 05 Aug 2020 09:08:50 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-    url: https://api.upcloud.com/1.3/storage/01541fb9-78a4-49ea-bf2f-55d9cd8783c2
-    method: GET
-  response:
-    body: |
-      {
-         "storage" : {
-            "access" : "private",
-            "backup_rule" : {
-               "interval" : "daily",
-               "retention" : "30",
-               "time" : "0430"
-            },
-            "backups" : {
-               "backup" : [
-                  "01dc1c9a-5104-4777-a886-2db262ccc22d"
+                  "0186dc9d-f9b0-44f0-8f21-36ce4245a2ef"
                ]
             },
             "license" : 0,
@@ -1601,7 +666,7 @@ interactions:
             "tier" : "maxiops",
             "title" : "Test storage",
             "type" : "normal",
-            "uuid" : "01541fb9-78a4-49ea-bf2f-55d9cd8783c2",
+            "uuid" : "0134099a-03e3-402c-b2dc-452c67dfbc98",
             "zone" : "fi-hel2"
          }
       }
@@ -1611,7 +676,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 05 Aug 2020 09:08:55 GMT
+      - Thu, 06 Aug 2020 10:21:40 GMT
       Server:
       - Apache
       Strict-Transport-Security:

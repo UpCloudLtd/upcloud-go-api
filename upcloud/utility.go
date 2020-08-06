@@ -16,3 +16,11 @@ func (b *Boolean) UnmarshalJSON(buf []byte) error {
 	(*b) = false
 	return nil
 }
+
+func (b Boolean) MarshalJSON() ([]byte, error) {
+	if b {
+		return []byte(`"yes"`), nil
+	}
+
+	return []byte(`"no"`), nil
+}

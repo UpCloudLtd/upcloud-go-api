@@ -14,8 +14,7 @@ import (
 
 // Constants
 const (
-	DefaultAPIVersion = "1.2.3"
-	FutureAPIVersion  = "1.3.4"
+	DefaultAPIVersion = "1.3.4"
 	DefaultAPIBaseURL = "https://api.upcloud.com"
 
 	// The default timeout (in seconds)
@@ -59,14 +58,9 @@ func (c *Client) GetTimeout() time.Duration {
 }
 
 // CreateRequestURL creates and returns a complete request URL for the specified API location
-func (c *Client) CreateRequestURL(location string) string {
-	return fmt.Sprintf("%s%s", c.getBaseURL(false), location)
-}
-
-// CreateFutureRequestURL creates and returns a complete request URL for the specified API location
 // using a newer API version
-func (c *Client) CreateFutureRequestURL(location string) string {
-	return fmt.Sprintf("%s%s", c.getBaseURL(true), location)
+func (c *Client) CreateRequestURL(location string) string {
+	return fmt.Sprintf("%s%s", c.getBaseURL(), location)
 }
 
 // PerformJSONGetRequest performs a GET request to the specified URL and returns the response body and eventual errors
@@ -114,6 +108,23 @@ func (c *Client) PerformJSONPutRequest(url string, requestBody []byte) ([]byte, 
 	return c.performJSONRequest(request)
 }
 
+// PerformJSONPatchRequest performs a PATCH request to the specified URL and returns the response body and eventual errors
+func (c *Client) PerformJSONPatchRequest(url string, requestBody []byte) ([]byte, error) {
+	var bodyReader io.Reader
+
+	if requestBody != nil {
+		bodyReader = bytes.NewBuffer(requestBody)
+	}
+
+	request, err := http.NewRequest(http.MethodPatch, url, bodyReader)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return c.performJSONRequest(request)
+}
+
 // PerformJSONDeleteRequest performs a DELETE request to the specified URL and returns the response body and eventual errors
 func (c *Client) PerformJSONDeleteRequest(url string) error {
 	request, err := http.NewRequest(http.MethodDelete, url, nil)
@@ -148,13 +159,8 @@ func (c *Client) performJSONRequest(request *http.Request) ([]byte, error) {
 }
 
 // Returns the base URL to use for API requests
-func (c *Client) getBaseURL(future bool) string {
-	var urlVersion semver.Version
-	if !future {
-		urlVersion, _ = semver.Make(DefaultAPIVersion)
-	} else {
-		urlVersion, _ = semver.Make(FutureAPIVersion)
-	}
+func (c *Client) getBaseURL() string {
+	urlVersion, _ := semver.Make(DefaultAPIVersion)
 
 	return fmt.Sprintf("%s/%d.%d", DefaultAPIBaseURL, urlVersion.Major, urlVersion.Minor)
 }

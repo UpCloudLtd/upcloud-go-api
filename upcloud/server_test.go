@@ -141,10 +141,66 @@ func TestUnmarshalServerDetails(t *testing.T) {
           },
           "license": 0,
           "memory_amount": "2048",
+          "metadata": "yes",
+          "networking" : {
+            "interfaces" : {
+              "interface" : [
+                {
+                  "index" : 1,
+                  "ip_addresses" : {
+                    "ip_address" : [
+                      {
+                        "address" : "94.237.0.207",
+                        "family" : "IPv4",
+                        "floating" : "no"
+                      }
+                    ]
+                  },
+                  "mac" : "de:ff:ff:ff:66:89",
+                  "network" : "037fcf2a-6745-45dd-867e-f9479ea8c044",
+                  "type" : "public",
+                  "bootable": "no"
+                },
+                {
+                  "index" : 2,
+                  "ip_addresses" : {
+                    "ip_address" : [
+                      {
+                        "address" : "10.6.3.95",
+                        "family" : "IPv4",
+                        "floating" : "no"
+                      }
+                    ]
+                  },
+                  "mac" : "de:ff:ff:ff:ed:85",
+                  "network" : "03000000-0000-4000-8045-000000000000",
+                  "type" : "utility",
+                  "bootable": "no"
+                },
+                {
+                  "index" : 3,
+                  "ip_addresses" : {
+                    "ip_address" : [
+                      {
+                        "address" : "xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx",
+                        "family" : "IPv6",
+                        "floating" : "no"
+                      }
+                    ]
+                  },
+                  "mac" : "de:ff:ff:ff:cc:20",
+                  "network" : "03c93fd8-cc60-4849-91b8-6e404b228e2a",
+                  "type" : "public",
+                  "bootable": "no"
+                }
+              ]
+            }
+          },
           "nic_model": "virtio",
           "plan" : "1xCPU-2GB",
           "plan_ipv4_bytes": "3565675343",
           "plan_ipv6_bytes": "4534432",
+          "simple_backup": "0100,dailies",
           "state": "started",
           "storage_devices": {
             "storage_device": [
@@ -169,10 +225,11 @@ func TestUnmarshalServerDetails(t *testing.T) {
           "title": "server1.example.com",
           "uuid": "0077fa3d-32db-4b09-9f5f-30d9e9afb565",
           "video_model": "cirrus",
-          "vnc" : "on",
-          "vnc_host" : "fi-hel1.vnc.upcloud.com",
-          "vnc_password": "aabbccdd",
-          "vnc_port": "00000",
+          "remote_access_enabled": "yes",
+          "remote_access_type": "vnc",
+          "remote_access_host": "fi-hel1.vnc.upcloud.com",
+          "remote_access_password": "aabbccdd",
+          "remote_access_port": "3000",
           "zone": "fi-hel1"
         }
       }
@@ -196,6 +253,63 @@ func TestUnmarshalServerDetails(t *testing.T) {
 	assert.Equal(t, 0, serverDetails.StorageDevices[0].BootDisk)
 	assert.Equal(t, "UTC", serverDetails.Timezone)
 	assert.Equal(t, VideoModelCirrus, serverDetails.VideoModel)
-	assert.Equal(t, "on", serverDetails.VNC)
-	assert.Equal(t, "aabbccdd", serverDetails.VNCPassword)
+	assert.True(t, bool(serverDetails.RemoteAccessEnabled))
+	assert.Equal(t, "fi-hel1.vnc.upcloud.com", serverDetails.RemoteAccessHost)
+	assert.Equal(t, "aabbccdd", serverDetails.RemoteAccessPassword)
+	assert.Equal(t, 3000, serverDetails.RemoteAccessPort)
+	assert.Equal(t, RemoteAccessTypeVNC, serverDetails.RemoteAccessType)
+	assert.Equal(t, "server1.example.com", serverDetails.Hostname)
+	assert.Equal(t, "0100,dailies", serverDetails.SimpleBackup)
+	assert.True(t, bool(serverDetails.Metadata))
+
+	networkingTestData := []Interface{
+		{
+			Index: 1,
+			IPAddresses: []IPAddress{
+				{
+					Address:  "94.237.0.207",
+					Family:   IPAddressFamilyIPv4,
+					Floating: false,
+				},
+			},
+			MAC:      "de:ff:ff:ff:66:89",
+			Network:  "037fcf2a-6745-45dd-867e-f9479ea8c044",
+			Type:     IPAddressAccessPublic,
+			Bootable: false,
+		},
+		{
+			Index: 2,
+			IPAddresses: []IPAddress{
+				{
+					Address:  "10.6.3.95",
+					Family:   IPAddressFamilyIPv4,
+					Floating: false,
+				},
+			},
+			MAC:      "de:ff:ff:ff:ed:85",
+			Network:  "03000000-0000-4000-8045-000000000000",
+			Type:     IPAddressAccessUtility,
+			Bootable: false,
+		},
+		{
+			Index: 3,
+			IPAddresses: []IPAddress{
+				{
+					Address:  "xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx",
+					Family:   "IPv6",
+					Floating: false,
+				},
+			},
+			MAC:      "de:ff:ff:ff:cc:20",
+			Network:  "03c93fd8-cc60-4849-91b8-6e404b228e2a",
+			Type:     "public",
+			Bootable: false,
+		},
+	}
+
+	assert.Len(t, serverDetails.Networking.Interfaces, len(networkingTestData))
+
+	for i, n := range networkingTestData {
+		assert.Equal(t, n, serverDetails.Networking.Interfaces[i])
+	}
 }

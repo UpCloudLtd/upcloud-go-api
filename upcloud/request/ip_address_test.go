@@ -23,6 +23,9 @@ func TestMarshalAssignIPAddressRequest(t *testing.T) {
 		Access:     upcloud.IPAddressAccessPublic,
 		Family:     upcloud.IPAddressFamilyIPv4,
 		ServerUUID: "009d64ef-31d1-4684-a26b-c86c955cbf46",
+		MAC:        "foo_mac",
+		Floating:   true,
+		Zone:       "foo_zone",
 	}
 
 	actualJSON, err := json.Marshal(&request)
@@ -32,7 +35,10 @@ func TestMarshalAssignIPAddressRequest(t *testing.T) {
 		"ip_address": {
           "access": "public",
 		  "family": "IPv4",
-		  "server": "009d64ef-31d1-4684-a26b-c86c955cbf46"
+		  "server": "009d64ef-31d1-4684-a26b-c86c955cbf46",
+		  "mac": "foo_mac",
+		  "floating": "yes",
+		  "zone": "foo_zone"
 		}
 	  }
 	`
@@ -69,6 +75,30 @@ func TestModifyIPAddressRequest(t *testing.T) {
 	request := ModifyIPAddressRequest{
 		IPAddress: "0.0.0.0",
 		PTRRecord: "hostname.example.com",
+		MAC:       "foo_mac",
+	}
+
+	actualJSON, err := json.Marshal(&request)
+	assert.NoError(t, err)
+
+	expectedJSON := `
+	  {
+		"ip_address": {
+		  "ptr_record": "hostname.example.com",
+		  "mac": "foo_mac"
+		}
+	  }
+	`
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
+	assert.Equal(t, "/ip_address/0.0.0.0", request.RequestURL())
+}
+
+// TestModifyIPAddressRequest_OmitMAC tests that ModifyIPAddressRequest structs are marshaled correctly and that their URLs
+// are correct when the MAC address is not set.
+func TestModifyIPAddressRequest_OmitMAC(t *testing.T) {
+	request := ModifyIPAddressRequest{
+		IPAddress: "0.0.0.0",
+		PTRRecord: "hostname.example.com",
 	}
 
 	actualJSON, err := json.Marshal(&request)
@@ -78,6 +108,49 @@ func TestModifyIPAddressRequest(t *testing.T) {
 	  {
 		"ip_address": {
 		  "ptr_record": "hostname.example.com"
+		}
+	  }
+	`
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
+	assert.Equal(t, "/ip_address/0.0.0.0", request.RequestURL())
+}
+
+// TestModifyIPAddressRequest_OmitPTR tests that ModifyIPAddressRequest structs are marshaled correctly and that their URLs
+// are correct when the PTR record is not set.
+func TestModifyIPAddressRequest_OmitPTR(t *testing.T) {
+	request := ModifyIPAddressRequest{
+		IPAddress: "0.0.0.0",
+		MAC:       "foo_mac",
+	}
+
+	actualJSON, err := json.Marshal(&request)
+	assert.NoError(t, err)
+
+	expectedJSON := `
+	  {
+		"ip_address": {
+			"mac": "foo_mac"
+		}
+	  }
+	`
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
+	assert.Equal(t, "/ip_address/0.0.0.0", request.RequestURL())
+}
+
+// TestModifyIPAddressRequest_OmitBoth tests that ModifyIPAddressRequest structs are marshaled correctly and that their URLs
+// are correct when neither PTR record or MAC address is set.
+func TestModifyIPAddressRequest_OmitBoth(t *testing.T) {
+	request := ModifyIPAddressRequest{
+		IPAddress: "0.0.0.0",
+	}
+
+	actualJSON, err := json.Marshal(&request)
+	assert.NoError(t, err)
+
+	expectedJSON := `
+	  {
+		"ip_address": {
+			"mac": null
 		}
 	  }
 	`
