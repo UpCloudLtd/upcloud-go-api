@@ -129,6 +129,10 @@ func teardown() {
 
 // TestGetAccount tests that the GetAccount() method returns proper data
 func TestGetAccount(t *testing.T) {
+	if os.Getenv("UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS") == "yes" {
+		t.Skip("Skipping TestGetAccount...")
+	}
+
 	svc := getService()
 	account, err := svc.GetAccount()
 	username, _ := getCredentials()
@@ -1322,6 +1326,10 @@ func handleError(err error) {
 
 // Reads the API username and password from the environment, panics if they are not available
 func getCredentials() (string, string) {
+	if os.Getenv("UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS") == "yes" {
+		return "username", "password"
+	}
+
 	user := os.Getenv("UPCLOUD_GO_SDK_TEST_USER")
 	password := os.Getenv("UPCLOUD_GO_SDK_TEST_PASSWORD")
 
