@@ -129,16 +129,14 @@ func teardown() {
 
 // TestGetAccount tests that the GetAccount() method returns proper data
 func TestGetAccount(t *testing.T) {
-	record(t, "getaccount", func(t *testing.T, svc *Service) {
+	svc := getService()
+	account, err := svc.GetAccount()
+	username, _ := getCredentials()
+	require.NoError(t, err)
 
-		account, err := svc.GetAccount()
-		username, _ := getCredentials()
-		require.NoError(t, err)
-
-		if account.UserName != username {
-			t.Errorf("TestGetAccount expected %s, got %s", username, account.UserName)
-		}
-	})
+	if account.UserName != username {
+		t.Errorf("TestGetAccount expected %s, got %s", username, account.UserName)
+	}
 }
 
 // TestGetZones tests that the GetZones() function returns proper data
