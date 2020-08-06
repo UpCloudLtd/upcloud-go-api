@@ -11,4 +11,8 @@ go:
 env:
   - CGO_ENABLED=0
 
-script: travis_wait 20 ./scripts/build.sh
+script: |
+  if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
+    export UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS="yes"
+  fi
+  travis_wait 20 ./scripts/build.sh
