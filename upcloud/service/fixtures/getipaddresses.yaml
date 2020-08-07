@@ -2,14 +2,14 @@
 version: 1
 interactions:
 - request:
-    body: '{"server":{"hostname":"uploud-go-sdk-integration-test-testgetipaddresses.example.com","ip_addresses":{"ip_address":[{"access":"private","family":"IPv4"},{"access":"public","family":"IPv4"},{"access":"public","family":"IPv6"}]},"password_delivery":"none","storage_devices":{"storage_device":[{"action":"clone","storage":"01000000-0000-4000-8000-000030060200","title":"disk1","size":30,"tier":"maxiops"}]},"title":"uploud-go-sdk-integration-test-TestGetIPAddresses","zone":"fi-hel2"}}'
+    body: '{"server":{"hostname":"uploud-go-sdk-integration-test-testgetipaddresses.example.com","metadata":"no","networking":{"interfaces":{"interface":[{"ip_addresses":{"ip_address":[{"family":"IPv4"}]},"type":"utility"},{"ip_addresses":{"ip_address":[{"family":"IPv4"}]},"type":"public"},{"ip_addresses":{"ip_address":[{"family":"IPv6"}]},"type":"public"}]}},"password_delivery":"none","storage_devices":{"storage_device":[{"action":"clone","storage":"01000000-0000-4000-8000-000030060200","title":"disk1","size":30,"tier":"maxiops"}]},"title":"uploud-go-sdk-integration-test-TestGetIPAddresses","remote_access_enabled":"no","zone":"fi-hel2"}}'
     form: {}
     headers:
       Accept:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.2/server
+    url: https://api.upcloud.com/1.3/server
     method: POST
   response:
     body: |
@@ -17,24 +17,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596555817,
+            "created" : 1596716588,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testgetipaddresses.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
-                     "access" : "private",
-                     "address" : "10.6.6.218",
+                     "access" : "utility",
+                     "address" : "10.6.6.235",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:6e86",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d7c",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.81",
+                     "address" : "94.237.104.103",
                      "family" : "IPv4"
                   }
                ]
@@ -42,19 +42,80 @@ interactions:
             "license" : 0,
             "memory_amount" : "1024",
             "metadata" : "no",
+            "networking" : {
+               "interfaces" : {
+                  "interface" : [
+                     {
+                        "bootable" : "no",
+                        "index" : 1,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "10.6.6.235",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:87:cc",
+                        "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
+                        "source_ip_filtering" : "yes",
+                        "type" : "utility"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 2,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "94.237.104.103",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:0f:d1",
+                        "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 3,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d7c",
+                                 "family" : "IPv6",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:1d:7c",
+                        "network" : "03000000-0000-4000-8046-000000000000",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     }
+                  ]
+               }
+            },
             "nic_model" : "virtio",
-            "password" : "6584gs7t",
+            "password" : "899p4u9a",
             "plan" : "custom",
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
             "progress" : "0",
+            "remote_access_enabled" : "no",
+            "remote_access_password" : "4tK24VRc",
+            "remote_access_type" : "vnc",
+            "simple_backup" : "no",
             "state" : "maintenance",
             "storage_devices" : {
                "storage_device" : [
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "012fa05d-5966-4e69-a3ac-756f141338c3",
+                     "storage" : "011e625a-74f3-40a4-a887-1ac4ca1d82d0",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -67,20 +128,18 @@ interactions:
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestGetIPAddresses",
             "username" : "root",
-            "uuid" : "007358e9-60dd-4221-83ad-6abe22ef07bd",
+            "uuid" : "002e3055-50a3-44ff-aa8c-3d5b53e66047",
             "video_model" : "cirrus",
-            "vnc" : "off",
-            "vnc_password" : "G8F4jGe5",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "1712"
+      - "3809"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Tue, 04 Aug 2020 15:43:37 GMT
+      - Thu, 06 Aug 2020 12:23:07 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -96,7 +155,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.2/server/007358e9-60dd-4221-83ad-6abe22ef07bd
+    url: https://api.upcloud.com/1.3/server/002e3055-50a3-44ff-aa8c-3d5b53e66047
     method: GET
   response:
     body: |
@@ -104,24 +163,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596555817,
+            "created" : 1596716588,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testgetipaddresses.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
-                     "access" : "private",
-                     "address" : "10.6.6.218",
+                     "access" : "utility",
+                     "address" : "10.6.6.235",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:6e86",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d7c",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.81",
+                     "address" : "94.237.104.103",
                      "family" : "IPv4"
                   }
                ]
@@ -129,18 +188,79 @@ interactions:
             "license" : 0,
             "memory_amount" : "1024",
             "metadata" : "no",
+            "networking" : {
+               "interfaces" : {
+                  "interface" : [
+                     {
+                        "bootable" : "no",
+                        "index" : 1,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "10.6.6.235",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:87:cc",
+                        "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
+                        "source_ip_filtering" : "yes",
+                        "type" : "utility"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 2,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "94.237.104.103",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:0f:d1",
+                        "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 3,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d7c",
+                                 "family" : "IPv6",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:1d:7c",
+                        "network" : "03000000-0000-4000-8046-000000000000",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     }
+                  ]
+               }
+            },
             "nic_model" : "virtio",
             "plan" : "custom",
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
             "progress" : "85",
+            "remote_access_enabled" : "no",
+            "remote_access_password" : "4tK24VRc",
+            "remote_access_type" : "vnc",
+            "simple_backup" : "no",
             "state" : "maintenance",
             "storage_devices" : {
                "storage_device" : [
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "012fa05d-5966-4e69-a3ac-756f141338c3",
+                     "storage" : "011e625a-74f3-40a4-a887-1ac4ca1d82d0",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -152,20 +272,18 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestGetIPAddresses",
-            "uuid" : "007358e9-60dd-4221-83ad-6abe22ef07bd",
+            "uuid" : "002e3055-50a3-44ff-aa8c-3d5b53e66047",
             "video_model" : "cirrus",
-            "vnc" : "off",
-            "vnc_password" : "G8F4jGe5",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "1655"
+      - "3752"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Tue, 04 Aug 2020 15:43:43 GMT
+      - Thu, 06 Aug 2020 12:23:14 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -181,7 +299,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.2/server/007358e9-60dd-4221-83ad-6abe22ef07bd
+    url: https://api.upcloud.com/1.3/server/002e3055-50a3-44ff-aa8c-3d5b53e66047
     method: GET
   response:
     body: |
@@ -189,24 +307,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596555817,
+            "created" : 1596716588,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testgetipaddresses.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
-                     "access" : "private",
-                     "address" : "10.6.6.218",
+                     "access" : "utility",
+                     "address" : "10.6.6.235",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:6e86",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d7c",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.81",
+                     "address" : "94.237.104.103",
                      "family" : "IPv4"
                   }
                ]
@@ -214,18 +332,79 @@ interactions:
             "license" : 0,
             "memory_amount" : "1024",
             "metadata" : "no",
+            "networking" : {
+               "interfaces" : {
+                  "interface" : [
+                     {
+                        "bootable" : "no",
+                        "index" : 1,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "10.6.6.235",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:87:cc",
+                        "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
+                        "source_ip_filtering" : "yes",
+                        "type" : "utility"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 2,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "94.237.104.103",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:0f:d1",
+                        "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 3,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d7c",
+                                 "family" : "IPv6",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:1d:7c",
+                        "network" : "03000000-0000-4000-8046-000000000000",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     }
+                  ]
+               }
+            },
             "nic_model" : "virtio",
             "plan" : "custom",
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
             "progress" : "95",
+            "remote_access_enabled" : "no",
+            "remote_access_password" : "4tK24VRc",
+            "remote_access_type" : "vnc",
+            "simple_backup" : "no",
             "state" : "maintenance",
             "storage_devices" : {
                "storage_device" : [
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "012fa05d-5966-4e69-a3ac-756f141338c3",
+                     "storage" : "011e625a-74f3-40a4-a887-1ac4ca1d82d0",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -237,20 +416,18 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestGetIPAddresses",
-            "uuid" : "007358e9-60dd-4221-83ad-6abe22ef07bd",
+            "uuid" : "002e3055-50a3-44ff-aa8c-3d5b53e66047",
             "video_model" : "cirrus",
-            "vnc" : "off",
-            "vnc_password" : "G8F4jGe5",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "1655"
+      - "3752"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Tue, 04 Aug 2020 15:43:48 GMT
+      - Thu, 06 Aug 2020 12:23:19 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -266,7 +443,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.2/server/007358e9-60dd-4221-83ad-6abe22ef07bd
+    url: https://api.upcloud.com/1.3/server/002e3055-50a3-44ff-aa8c-3d5b53e66047
     method: GET
   response:
     body: |
@@ -274,24 +451,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596555817,
+            "created" : 1596716588,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testgetipaddresses.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
-                     "access" : "private",
-                     "address" : "10.6.6.218",
+                     "access" : "utility",
+                     "address" : "10.6.6.235",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:6e86",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d7c",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.81",
+                     "address" : "94.237.104.103",
                      "family" : "IPv4"
                   }
                ]
@@ -299,17 +476,79 @@ interactions:
             "license" : 0,
             "memory_amount" : "1024",
             "metadata" : "no",
+            "networking" : {
+               "interfaces" : {
+                  "interface" : [
+                     {
+                        "bootable" : "no",
+                        "index" : 1,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "10.6.6.235",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:87:cc",
+                        "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
+                        "source_ip_filtering" : "yes",
+                        "type" : "utility"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 2,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "94.237.104.103",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:0f:d1",
+                        "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 3,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d7c",
+                                 "family" : "IPv6",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:1d:7c",
+                        "network" : "03000000-0000-4000-8046-000000000000",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     }
+                  ]
+               }
+            },
             "nic_model" : "virtio",
             "plan" : "custom",
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
+            "progress" : "95",
+            "remote_access_enabled" : "no",
+            "remote_access_password" : "4tK24VRc",
+            "remote_access_type" : "vnc",
+            "simple_backup" : "no",
             "state" : "maintenance",
             "storage_devices" : {
                "storage_device" : [
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "012fa05d-5966-4e69-a3ac-756f141338c3",
+                     "storage" : "011e625a-74f3-40a4-a887-1ac4ca1d82d0",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -321,20 +560,18 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestGetIPAddresses",
-            "uuid" : "007358e9-60dd-4221-83ad-6abe22ef07bd",
+            "uuid" : "002e3055-50a3-44ff-aa8c-3d5b53e66047",
             "video_model" : "cirrus",
-            "vnc" : "off",
-            "vnc_password" : "G8F4jGe5",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "1630"
+      - "3752"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Tue, 04 Aug 2020 15:43:53 GMT
+      - Thu, 06 Aug 2020 12:23:25 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -350,7 +587,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.2/server/007358e9-60dd-4221-83ad-6abe22ef07bd
+    url: https://api.upcloud.com/1.3/server/002e3055-50a3-44ff-aa8c-3d5b53e66047
     method: GET
   response:
     body: |
@@ -358,25 +595,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596555817,
+            "created" : 1596716588,
             "firewall" : "off",
-            "host" : 5201216131,
             "hostname" : "uploud-go-sdk-integration-test-testgetipaddresses.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
-                     "access" : "private",
-                     "address" : "10.6.6.218",
+                     "access" : "utility",
+                     "address" : "10.6.6.235",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:6e86",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d7c",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.81",
+                     "address" : "94.237.104.103",
                      "family" : "IPv4"
                   }
                ]
@@ -384,17 +620,509 @@ interactions:
             "license" : 0,
             "memory_amount" : "1024",
             "metadata" : "no",
+            "networking" : {
+               "interfaces" : {
+                  "interface" : [
+                     {
+                        "bootable" : "no",
+                        "index" : 1,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "10.6.6.235",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:87:cc",
+                        "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
+                        "source_ip_filtering" : "yes",
+                        "type" : "utility"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 2,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "94.237.104.103",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:0f:d1",
+                        "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 3,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d7c",
+                                 "family" : "IPv6",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:1d:7c",
+                        "network" : "03000000-0000-4000-8046-000000000000",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     }
+                  ]
+               }
+            },
             "nic_model" : "virtio",
             "plan" : "custom",
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
+            "remote_access_enabled" : "no",
+            "remote_access_password" : "4tK24VRc",
+            "remote_access_type" : "vnc",
+            "simple_backup" : "no",
+            "state" : "maintenance",
+            "storage_devices" : {
+               "storage_device" : [
+                  {
+                     "address" : "virtio:0",
+                     "boot_disk" : "0",
+                     "storage" : "011e625a-74f3-40a4-a887-1ac4ca1d82d0",
+                     "storage_size" : 30,
+                     "storage_title" : "disk1",
+                     "type" : "disk"
+                  }
+               ]
+            },
+            "tags" : {
+               "tag" : []
+            },
+            "timezone" : "UTC",
+            "title" : "uploud-go-sdk-integration-test-TestGetIPAddresses",
+            "uuid" : "002e3055-50a3-44ff-aa8c-3d5b53e66047",
+            "video_model" : "cirrus",
+            "zone" : "fi-hel2"
+         }
+      }
+    headers:
+      Content-Length:
+      - "3727"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Thu, 06 Aug 2020 12:23:30 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.3/server/002e3055-50a3-44ff-aa8c-3d5b53e66047
+    method: GET
+  response:
+    body: |
+      {
+         "server" : {
+            "boot_order" : "disk",
+            "core_number" : "1",
+            "created" : 1596716588,
+            "firewall" : "off",
+            "hostname" : "uploud-go-sdk-integration-test-testgetipaddresses.example.com",
+            "ip_addresses" : {
+               "ip_address" : [
+                  {
+                     "access" : "utility",
+                     "address" : "10.6.6.235",
+                     "family" : "IPv4"
+                  },
+                  {
+                     "access" : "public",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d7c",
+                     "family" : "IPv6"
+                  },
+                  {
+                     "access" : "public",
+                     "address" : "94.237.104.103",
+                     "family" : "IPv4"
+                  }
+               ]
+            },
+            "license" : 0,
+            "memory_amount" : "1024",
+            "metadata" : "no",
+            "networking" : {
+               "interfaces" : {
+                  "interface" : [
+                     {
+                        "bootable" : "no",
+                        "index" : 1,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "10.6.6.235",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:87:cc",
+                        "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
+                        "source_ip_filtering" : "yes",
+                        "type" : "utility"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 2,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "94.237.104.103",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:0f:d1",
+                        "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 3,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d7c",
+                                 "family" : "IPv6",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:1d:7c",
+                        "network" : "03000000-0000-4000-8046-000000000000",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     }
+                  ]
+               }
+            },
+            "nic_model" : "virtio",
+            "plan" : "custom",
+            "plan_ipv4_bytes" : "0",
+            "plan_ipv6_bytes" : "0",
+            "remote_access_enabled" : "no",
+            "remote_access_password" : "4tK24VRc",
+            "remote_access_type" : "vnc",
+            "simple_backup" : "no",
+            "state" : "maintenance",
+            "storage_devices" : {
+               "storage_device" : [
+                  {
+                     "address" : "virtio:0",
+                     "boot_disk" : "0",
+                     "storage" : "011e625a-74f3-40a4-a887-1ac4ca1d82d0",
+                     "storage_size" : 30,
+                     "storage_title" : "disk1",
+                     "type" : "disk"
+                  }
+               ]
+            },
+            "tags" : {
+               "tag" : []
+            },
+            "timezone" : "UTC",
+            "title" : "uploud-go-sdk-integration-test-TestGetIPAddresses",
+            "uuid" : "002e3055-50a3-44ff-aa8c-3d5b53e66047",
+            "video_model" : "cirrus",
+            "zone" : "fi-hel2"
+         }
+      }
+    headers:
+      Content-Length:
+      - "3727"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Thu, 06 Aug 2020 12:23:35 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.3/server/002e3055-50a3-44ff-aa8c-3d5b53e66047
+    method: GET
+  response:
+    body: |
+      {
+         "server" : {
+            "boot_order" : "disk",
+            "core_number" : "1",
+            "created" : 1596716588,
+            "firewall" : "off",
+            "host" : 7617135235,
+            "hostname" : "uploud-go-sdk-integration-test-testgetipaddresses.example.com",
+            "ip_addresses" : {
+               "ip_address" : [
+                  {
+                     "access" : "utility",
+                     "address" : "10.6.6.235",
+                     "family" : "IPv4"
+                  },
+                  {
+                     "access" : "public",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d7c",
+                     "family" : "IPv6"
+                  },
+                  {
+                     "access" : "public",
+                     "address" : "94.237.104.103",
+                     "family" : "IPv4"
+                  }
+               ]
+            },
+            "license" : 0,
+            "memory_amount" : "1024",
+            "metadata" : "no",
+            "networking" : {
+               "interfaces" : {
+                  "interface" : [
+                     {
+                        "bootable" : "no",
+                        "index" : 1,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "10.6.6.235",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:87:cc",
+                        "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
+                        "source_ip_filtering" : "yes",
+                        "type" : "utility"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 2,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "94.237.104.103",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:0f:d1",
+                        "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 3,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d7c",
+                                 "family" : "IPv6",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:1d:7c",
+                        "network" : "03000000-0000-4000-8046-000000000000",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     }
+                  ]
+               }
+            },
+            "nic_model" : "virtio",
+            "plan" : "custom",
+            "plan_ipv4_bytes" : "0",
+            "plan_ipv6_bytes" : "0",
+            "remote_access_enabled" : "no",
+            "remote_access_password" : "4tK24VRc",
+            "remote_access_type" : "vnc",
+            "simple_backup" : "no",
+            "state" : "maintenance",
+            "storage_devices" : {
+               "storage_device" : [
+                  {
+                     "address" : "virtio:0",
+                     "boot_disk" : "0",
+                     "storage" : "011e625a-74f3-40a4-a887-1ac4ca1d82d0",
+                     "storage_size" : 30,
+                     "storage_title" : "disk1",
+                     "type" : "disk"
+                  }
+               ]
+            },
+            "tags" : {
+               "tag" : []
+            },
+            "timezone" : "UTC",
+            "title" : "uploud-go-sdk-integration-test-TestGetIPAddresses",
+            "uuid" : "002e3055-50a3-44ff-aa8c-3d5b53e66047",
+            "video_model" : "cirrus",
+            "zone" : "fi-hel2"
+         }
+      }
+    headers:
+      Content-Length:
+      - "3754"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Thu, 06 Aug 2020 12:23:40 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.3/server/002e3055-50a3-44ff-aa8c-3d5b53e66047
+    method: GET
+  response:
+    body: |
+      {
+         "server" : {
+            "boot_order" : "disk",
+            "core_number" : "1",
+            "created" : 1596716588,
+            "firewall" : "off",
+            "host" : 7617135235,
+            "hostname" : "uploud-go-sdk-integration-test-testgetipaddresses.example.com",
+            "ip_addresses" : {
+               "ip_address" : [
+                  {
+                     "access" : "utility",
+                     "address" : "10.6.6.235",
+                     "family" : "IPv4"
+                  },
+                  {
+                     "access" : "public",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d7c",
+                     "family" : "IPv6"
+                  },
+                  {
+                     "access" : "public",
+                     "address" : "94.237.104.103",
+                     "family" : "IPv4"
+                  }
+               ]
+            },
+            "license" : 0,
+            "memory_amount" : "1024",
+            "metadata" : "no",
+            "networking" : {
+               "interfaces" : {
+                  "interface" : [
+                     {
+                        "bootable" : "no",
+                        "index" : 1,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "10.6.6.235",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:87:cc",
+                        "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
+                        "source_ip_filtering" : "yes",
+                        "type" : "utility"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 2,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "94.237.104.103",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:0f:d1",
+                        "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 3,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d7c",
+                                 "family" : "IPv6",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:1d:7c",
+                        "network" : "03000000-0000-4000-8046-000000000000",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     }
+                  ]
+               }
+            },
+            "nic_model" : "virtio",
+            "plan" : "custom",
+            "plan_ipv4_bytes" : "0",
+            "plan_ipv6_bytes" : "0",
+            "remote_access_enabled" : "no",
+            "remote_access_password" : "4tK24VRc",
+            "remote_access_type" : "vnc",
+            "simple_backup" : "no",
             "state" : "started",
             "storage_devices" : {
                "storage_device" : [
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "012fa05d-5966-4e69-a3ac-756f141338c3",
+                     "storage" : "011e625a-74f3-40a4-a887-1ac4ca1d82d0",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -406,20 +1134,18 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestGetIPAddresses",
-            "uuid" : "007358e9-60dd-4221-83ad-6abe22ef07bd",
+            "uuid" : "002e3055-50a3-44ff-aa8c-3d5b53e66047",
             "video_model" : "cirrus",
-            "vnc" : "off",
-            "vnc_password" : "G8F4jGe5",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "1653"
+      - "3750"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Tue, 04 Aug 2020 15:43:58 GMT
+      - Thu, 06 Aug 2020 12:23:46 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -435,7 +1161,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.2/ip_address
+    url: https://api.upcloud.com/1.3/ip_address
     method: GET
   response:
     body: |
@@ -444,371 +1170,610 @@ interactions:
             "ip_address" : [
                {
                   "access" : "public",
-                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:3d85",
+                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:3ad8",
                   "family" : "IPv6",
-                  "ptr_record" : "ec1b-dbff-feca-3d85.v6.fi-hel2.upcloud.host",
-                  "server" : "00480ba6-4217-4113-b139-80d2b441d319"
+                  "mac" : "ee:1b:db:ca:3a:d8",
+                  "ptr_record" : "ec1b-dbff-feca-3ad8.v6.fi-hel2.upcloud.host",
+                  "server" : "00338a8c-775d-45cc-8c78-166f50528940",
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
-                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:5184",
+                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:53bd",
                   "family" : "IPv6",
-                  "ptr_record" : "ec1b-dbff-feca-5184.v6.fi-hel2.upcloud.host",
-                  "server" : "00dc84d3-73db-45a3-88ac-35f14bf08e1a"
+                  "mac" : "ee:1b:db:ca:53:bd",
+                  "ptr_record" : "ec1b-dbff-feca-53bd.v6.fi-hel2.upcloud.host",
+                  "server" : "003a8339-625a-46ce-9192-45328092fb43",
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
-                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:4f14",
+                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:3f3e",
                   "family" : "IPv6",
-                  "ptr_record" : "ec1b-dbff-feca-4f14.v6.fi-hel2.upcloud.host",
-                  "server" : "00b362ca-1bad-4db4-bcd3-2189bed55d5a"
+                  "mac" : "ee:1b:db:ca:3f:3e",
+                  "ptr_record" : "ec1b-dbff-feca-3f3e.v6.fi-hel2.upcloud.host",
+                  "server" : "00b00c8a-6b55-4dd3-b474-703a51a9b318",
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
-                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:4ae3",
+                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:3b86",
                   "family" : "IPv6",
-                  "ptr_record" : "ec1b-dbff-feca-4ae3.v6.fi-hel2.upcloud.host",
-                  "server" : "0028ab30-491a-4696-a601-91e810d154a8"
+                  "mac" : "ee:1b:db:ca:3b:86",
+                  "ptr_record" : "ec1b-dbff-feca-3b86.v6.fi-hel2.upcloud.host",
+                  "server" : "006b854c-efda-457a-8d78-b5335c9c386d",
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
-                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:4482",
+                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:3b58",
                   "family" : "IPv6",
-                  "ptr_record" : "ec1b-dbff-feca-4482.v6.fi-hel2.upcloud.host",
-                  "server" : "00c67be7-f66a-4e9b-bbf1-b5d420667d9e"
+                  "mac" : "ee:1b:db:ca:3b:58",
+                  "ptr_record" : "ec1b-dbff-feca-3b58.v6.fi-hel2.upcloud.host",
+                  "server" : "000803a1-7c5b-42fd-b074-72ecdd9f4b58",
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
-                  "address" : "2a04:3540:1000:310:ec1b:dbff:feca:53cc",
+                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:0547",
                   "family" : "IPv6",
-                  "ptr_record" : "ec1b-dbff-feca-53cc.v6.fi-hel1.upcloud.host",
-                  "server" : "006bf955-f63d-43ed-8489-3b7224ca0e68"
+                  "mac" : "ee:1b:db:ca:05:47",
+                  "ptr_record" : "ec1b-dbff-feca-0547.v6.fi-hel2.upcloud.host",
+                  "server" : "0037c20d-1909-4cc3-a501-f3455fe73e27",
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
-                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:0967",
+                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:0594",
                   "family" : "IPv6",
-                  "ptr_record" : "ec1b-dbff-feca-0967.v6.fi-hel2.upcloud.host",
-                  "server" : "00a9ca17-2bd7-4ced-b4fc-959054606232"
+                  "mac" : "ee:1b:db:ca:05:94",
+                  "ptr_record" : "ec1b-dbff-feca-0594.v6.fi-hel2.upcloud.host",
+                  "server" : "004af359-1cde-4dbd-a438-a438758aa9f5",
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
-                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:174b",
+                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:0a86",
                   "family" : "IPv6",
-                  "ptr_record" : "ec1b-dbff-feca-174b.v6.fi-hel2.upcloud.host",
-                  "server" : "00d9984f-d05b-4186-ab79-c0001dc4fbb1"
+                  "mac" : "ee:1b:db:ca:0a:86",
+                  "ptr_record" : "ec1b-dbff-feca-0a86.v6.fi-hel2.upcloud.host",
+                  "server" : "00d37801-5b4c-436f-a398-473d4bc5c194",
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
-                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:2424",
+                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:10fb",
                   "family" : "IPv6",
-                  "ptr_record" : "ec1b-dbff-feca-2424.v6.fi-hel2.upcloud.host",
-                  "server" : "00f1d58e-088b-46b9-9161-fb14c725f149"
+                  "mac" : "ee:1b:db:ca:10:fb",
+                  "ptr_record" : "ec1b-dbff-feca-10fb.v6.fi-hel2.upcloud.host",
+                  "server" : "00a14a34-eece-4a11-ba83-ca1bba94420a",
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
-                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:35b3",
+                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1443",
                   "family" : "IPv6",
-                  "ptr_record" : "ec1b-dbff-feca-35b3.v6.fi-hel2.upcloud.host",
-                  "server" : "0010b837-3b55-4556-8686-bf1dc53bd577"
+                  "mac" : "ee:1b:db:ca:14:43",
+                  "ptr_record" : "ec1b-dbff-feca-1443.v6.fi-hel2.upcloud.host",
+                  "server" : "00295557-22e0-4933-ba9f-74cd2cfbdf25",
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
-                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:5656",
+                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d7c",
                   "family" : "IPv6",
-                  "ptr_record" : "ec1b-dbff-feca-5656.v6.fi-hel2.upcloud.host",
-                  "server" : "008cf871-7d3c-4001-849f-8e298cd144de"
+                  "mac" : "ee:1b:db:ca:1d:7c",
+                  "ptr_record" : "ec1b-dbff-feca-1d7c.v6.fi-hel2.upcloud.host",
+                  "server" : "002e3055-50a3-44ff-aa8c-3d5b53e66047",
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
-                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:59c8",
+                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1f7c",
                   "family" : "IPv6",
-                  "ptr_record" : "ec1b-dbff-feca-59c8.v6.fi-hel2.upcloud.host",
-                  "server" : "005bbf12-c0d4-441f-8fe7-1821333ced54"
+                  "mac" : "ee:1b:db:ca:1f:7c",
+                  "ptr_record" : "ec1b-dbff-feca-1f7c.v6.fi-hel2.upcloud.host",
+                  "server" : "008cc1f8-c4e8-4e89-bf23-d23c10e2eb97",
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
-                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:6cc0",
+                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:2aa0",
                   "family" : "IPv6",
-                  "ptr_record" : "ec1b-dbff-feca-6cc0.v6.fi-hel2.upcloud.host",
-                  "server" : "00a28262-7aab-4190-be59-be59edf533ae"
+                  "mac" : "ee:1b:db:ca:2a:a0",
+                  "ptr_record" : "ec1b-dbff-feca-2aa0.v6.fi-hel2.upcloud.host",
+                  "server" : "00e5e204-66ac-4a2e-b0d5-4e01b29d375f",
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
-                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:6e86",
+                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:5f0d",
                   "family" : "IPv6",
-                  "ptr_record" : "ec1b-dbff-feca-6e86.v6.fi-hel2.upcloud.host",
-                  "server" : "007358e9-60dd-4221-83ad-6abe22ef07bd"
+                  "mac" : "ee:1b:db:ca:5f:0d",
+                  "ptr_record" : "ec1b-dbff-feca-5f0d.v6.fi-hel2.upcloud.host",
+                  "server" : "00a38716-43fb-47f8-82b2-cd4871ef5f4c",
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
-                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:6fb9",
+                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:5fd4",
                   "family" : "IPv6",
-                  "ptr_record" : "ec1b-dbff-feca-6fb9.v6.fi-hel2.upcloud.host",
-                  "server" : "00bcf144-20bd-4cc8-9427-ceb3de1bd417"
+                  "mac" : "ee:1b:db:ca:5f:d4",
+                  "ptr_record" : "ec1b-dbff-feca-5fd4.v6.fi-hel2.upcloud.host",
+                  "server" : "009aa971-b351-42e2-b049-619443d874c7",
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
-                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:7b65",
+                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:68c9",
                   "family" : "IPv6",
-                  "ptr_record" : "ec1b-dbff-feca-7b65.v6.fi-hel2.upcloud.host",
-                  "server" : "0089f255-0d77-4e4a-9f97-8ea75a98760f"
+                  "mac" : "ee:1b:db:ca:68:c9",
+                  "ptr_record" : "ec1b-dbff-feca-68c9.v6.fi-hel2.upcloud.host",
+                  "server" : "00314d62-fda7-4b99-a151-a83172292b4d",
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
-                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:4a3b",
+                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:7522",
                   "family" : "IPv6",
-                  "ptr_record" : "ec1b-dbff-feca-4a3b.v6.fi-hel2.upcloud.host",
-                  "server" : "00d1aed8-04fe-42f8-9dbf-98a56cd343a2"
+                  "mac" : "ee:1b:db:ca:75:22",
+                  "ptr_record" : "ec1b-dbff-feca-7522.v6.fi-hel2.upcloud.host",
+                  "server" : "0042822c-869c-481f-a7be-733f55996543",
+                  "zone" : "fi-hel2"
                },
                {
-                  "access" : "private",
-                  "address" : "10.1.9.200",
-                  "family" : "IPv4",
-                  "ptr_record" : "",
-                  "server" : "006bf955-f63d-43ed-8489-3b7224ca0e68"
+                  "access" : "public",
+                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:794f",
+                  "family" : "IPv6",
+                  "mac" : "ee:1b:db:ca:79:4f",
+                  "ptr_record" : "ec1b-dbff-feca-794f.v6.fi-hel2.upcloud.host",
+                  "server" : "00e3cbc4-b911-4e5c-b774-5a80ddb7405c",
+                  "zone" : "fi-hel2"
                },
                {
-                  "access" : "private",
+                  "access" : "public",
+                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:7ad8",
+                  "family" : "IPv6",
+                  "mac" : "ee:1b:db:ca:7a:d8",
+                  "ptr_record" : "ec1b-dbff-feca-7ad8.v6.fi-hel2.upcloud.host",
+                  "server" : "00349bdd-1583-4962-9f26-0e021e9a9019",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "public",
+                  "address" : "2a04:3545:1000:720:ec1b:dbff:feca:55bc",
+                  "family" : "IPv6",
+                  "mac" : "ee:1b:db:ca:55:bc",
+                  "ptr_record" : "ec1b-dbff-feca-55bc.v6.fi-hel2.upcloud.host",
+                  "server" : "00866a31-4040-4067-aaf2-dffc54c8b724",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "utility",
                   "address" : "10.6.0.230",
                   "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:f0:e3",
                   "ptr_record" : "",
-                  "server" : "00a28262-7aab-4190-be59-be59edf533ae"
+                  "server" : "00b00c8a-6b55-4dd3-b474-703a51a9b318",
+                  "zone" : "fi-hel2"
                },
                {
-                  "access" : "private",
-                  "address" : "10.6.5.217",
-                  "family" : "IPv4",
-                  "ptr_record" : "",
-                  "server" : "0028ab30-491a-4696-a601-91e810d154a8"
-               },
-               {
-                  "access" : "private",
-                  "address" : "10.6.6.139",
-                  "family" : "IPv4",
-                  "ptr_record" : "",
-                  "server" : "008cf871-7d3c-4001-849f-8e298cd144de"
-               },
-               {
-                  "access" : "private",
-                  "address" : "10.6.6.150",
-                  "family" : "IPv4",
-                  "ptr_record" : "",
-                  "server" : "00b362ca-1bad-4db4-bcd3-2189bed55d5a"
-               },
-               {
-                  "access" : "private",
-                  "address" : "10.6.6.192",
-                  "family" : "IPv4",
-                  "ptr_record" : "",
-                  "server" : "00d9984f-d05b-4186-ab79-c0001dc4fbb1"
-               },
-               {
-                  "access" : "private",
-                  "address" : "10.6.6.207",
-                  "family" : "IPv4",
-                  "ptr_record" : "",
-                  "server" : "00dc84d3-73db-45a3-88ac-35f14bf08e1a"
-               },
-               {
-                  "access" : "private",
-                  "address" : "10.6.6.208",
-                  "family" : "IPv4",
-                  "ptr_record" : "",
-                  "server" : "0089f255-0d77-4e4a-9f97-8ea75a98760f"
-               },
-               {
-                  "access" : "private",
+                  "access" : "utility",
                   "address" : "10.6.6.209",
                   "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:d0:ee",
                   "ptr_record" : "",
-                  "server" : "00a9ca17-2bd7-4ced-b4fc-959054606232"
+                  "server" : "00a14a34-eece-4a11-ba83-ca1bba94420a",
+                  "zone" : "fi-hel2"
                },
                {
-                  "access" : "private",
+                  "access" : "utility",
                   "address" : "10.6.6.210",
                   "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:92:54",
                   "ptr_record" : "",
-                  "server" : "00f1d58e-088b-46b9-9161-fb14c725f149"
+                  "server" : "00a38716-43fb-47f8-82b2-cd4871ef5f4c",
+                  "zone" : "fi-hel2"
                },
                {
-                  "access" : "private",
+                  "access" : "utility",
                   "address" : "10.6.6.211",
                   "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:80:c6",
                   "ptr_record" : "",
-                  "server" : "00bcf144-20bd-4cc8-9427-ceb3de1bd417"
+                  "server" : "009aa971-b351-42e2-b049-619443d874c7",
+                  "zone" : "fi-hel2"
                },
                {
-                  "access" : "private",
+                  "access" : "utility",
                   "address" : "10.6.6.212",
                   "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:93:05",
                   "ptr_record" : "",
-                  "server" : "00480ba6-4217-4113-b139-80d2b441d319"
+                  "server" : "00e5e204-66ac-4a2e-b0d5-4e01b29d375f",
+                  "zone" : "fi-hel2"
                },
                {
-                  "access" : "private",
+                  "access" : "utility",
                   "address" : "10.6.6.213",
                   "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:af:c9",
                   "ptr_record" : "",
-                  "server" : "00d1aed8-04fe-42f8-9dbf-98a56cd343a2"
+                  "server" : "008cc1f8-c4e8-4e89-bf23-d23c10e2eb97",
+                  "zone" : "fi-hel2"
                },
                {
-                  "access" : "private",
+                  "access" : "utility",
                   "address" : "10.6.6.214",
                   "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:d2:b6",
                   "ptr_record" : "",
-                  "server" : "00c67be7-f66a-4e9b-bbf1-b5d420667d9e"
+                  "server" : "00314d62-fda7-4b99-a151-a83172292b4d",
+                  "zone" : "fi-hel2"
                },
                {
-                  "access" : "private",
+                  "access" : "utility",
                   "address" : "10.6.6.216",
                   "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:ce:8c",
                   "ptr_record" : "",
-                  "server" : "0010b837-3b55-4556-8686-bf1dc53bd577"
+                  "server" : "00338a8c-775d-45cc-8c78-166f50528940",
+                  "zone" : "fi-hel2"
                },
                {
-                  "access" : "private",
+                  "access" : "utility",
                   "address" : "10.6.6.217",
                   "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:ae:08",
                   "ptr_record" : "",
-                  "server" : "005bbf12-c0d4-441f-8fe7-1821333ced54"
+                  "server" : "00866a31-4040-4067-aaf2-dffc54c8b724",
+                  "zone" : "fi-hel2"
                },
                {
-                  "access" : "private",
-                  "address" : "10.6.6.218",
+                  "access" : "utility",
+                  "address" : "10.6.6.219",
                   "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:df:d2",
                   "ptr_record" : "",
-                  "server" : "007358e9-60dd-4221-83ad-6abe22ef07bd"
+                  "server" : "00d37801-5b4c-436f-a398-473d4bc5c194",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "utility",
+                  "address" : "10.6.6.221",
+                  "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:96:d9",
+                  "ptr_record" : "",
+                  "server" : "004af359-1cde-4dbd-a438-a438758aa9f5",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "utility",
+                  "address" : "10.6.6.222",
+                  "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:ef:aa",
+                  "ptr_record" : "",
+                  "server" : "00349bdd-1583-4962-9f26-0e021e9a9019",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "utility",
+                  "address" : "10.6.6.223",
+                  "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:d7:f7",
+                  "ptr_record" : "",
+                  "server" : "00295557-22e0-4933-ba9f-74cd2cfbdf25",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "utility",
+                  "address" : "10.6.6.224",
+                  "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:c5:27",
+                  "ptr_record" : "",
+                  "server" : "0042822c-869c-481f-a7be-733f55996543",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "utility",
+                  "address" : "10.6.6.227",
+                  "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:97:c7",
+                  "ptr_record" : "",
+                  "server" : "006b854c-efda-457a-8d78-b5335c9c386d",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "utility",
+                  "address" : "10.6.6.228",
+                  "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:c7:67",
+                  "ptr_record" : "",
+                  "server" : "003a8339-625a-46ce-9192-45328092fb43",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "utility",
+                  "address" : "10.6.6.230",
+                  "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:98:c8",
+                  "ptr_record" : "",
+                  "server" : "0037c20d-1909-4cc3-a501-f3455fe73e27",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "utility",
+                  "address" : "10.6.6.232",
+                  "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:ed:1b",
+                  "ptr_record" : "",
+                  "server" : "000803a1-7c5b-42fd-b074-72ecdd9f4b58",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "utility",
+                  "address" : "10.6.6.234",
+                  "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:9c:cd",
+                  "ptr_record" : "",
+                  "server" : "00e3cbc4-b911-4e5c-b774-5a80ddb7405c",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "utility",
+                  "address" : "10.6.6.235",
+                  "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:87:cc",
+                  "ptr_record" : "",
+                  "server" : "002e3055-50a3-44ff-aa8c-3d5b53e66047",
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
                   "address" : "94.237.104.24",
                   "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:76:68",
                   "ptr_record" : "94-237-104-24.fi-hel2.upcloud.host",
-                  "server" : "00a28262-7aab-4190-be59-be59edf533ae"
-               },
-               {
-                  "access" : "public",
-                  "address" : "94.237.104.58",
-                  "family" : "IPv4",
-                  "ptr_record" : "94-237-104-58.fi-hel2.upcloud.host",
-                  "server" : "0028ab30-491a-4696-a601-91e810d154a8"
+                  "server" : "00b00c8a-6b55-4dd3-b474-703a51a9b318",
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
                   "address" : "94.237.104.63",
                   "family" : "IPv4",
+                  "floating" : "yes",
                   "ptr_record" : "94-237-104-63.fi-hel2.upcloud.host",
-                  "server" : "008cf871-7d3c-4001-849f-8e298cd144de"
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "public",
+                  "address" : "94.237.104.65",
+                  "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:68:86",
+                  "ptr_record" : "94-237-104-65.fi-hel2.upcloud.host",
+                  "server" : "003a8339-625a-46ce-9192-45328092fb43",
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
                   "address" : "94.237.104.66",
                   "family" : "IPv4",
+                  "floating" : "yes",
                   "ptr_record" : "94-237-104-66.fi-hel2.upcloud.host",
-                  "server" : "00b362ca-1bad-4db4-bcd3-2189bed55d5a"
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
                   "address" : "94.237.104.67",
                   "family" : "IPv4",
+                  "floating" : "yes",
                   "ptr_record" : "94-237-104-67.fi-hel2.upcloud.host",
-                  "server" : "00d9984f-d05b-4186-ab79-c0001dc4fbb1"
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
                   "address" : "94.237.104.69",
                   "family" : "IPv4",
+                  "floating" : "yes",
                   "ptr_record" : "94-237-104-69.fi-hel2.upcloud.host",
-                  "server" : "00dc84d3-73db-45a3-88ac-35f14bf08e1a"
-               },
-               {
-                  "access" : "public",
-                  "address" : "94.237.104.70",
-                  "family" : "IPv4",
-                  "ptr_record" : "94-237-104-70.fi-hel2.upcloud.host",
-                  "server" : "0089f255-0d77-4e4a-9f97-8ea75a98760f"
-               },
-               {
-                  "access" : "public",
-                  "address" : "94.237.104.71",
-                  "family" : "IPv4",
-                  "ptr_record" : "94-237-104-71.fi-hel2.upcloud.host",
-                  "server" : "00a9ca17-2bd7-4ced-b4fc-959054606232"
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
                   "address" : "94.237.104.72",
                   "family" : "IPv4",
+                  "floating" : "yes",
                   "ptr_record" : "94-237-104-72.fi-hel2.upcloud.host",
-                  "server" : "00f1d58e-088b-46b9-9161-fb14c725f149"
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
-                  "address" : "94.237.104.73",
+                  "address" : "94.237.104.75",
                   "family" : "IPv4",
-                  "ptr_record" : "94-237-104-73.fi-hel2.upcloud.host",
-                  "server" : "00bcf144-20bd-4cc8-9427-ceb3de1bd417"
-               },
-               {
-                  "access" : "public",
-                  "address" : "94.237.104.74",
-                  "family" : "IPv4",
-                  "ptr_record" : "94-237-104-74.fi-hel2.upcloud.host",
-                  "server" : "00480ba6-4217-4113-b139-80d2b441d319"
+                  "mac" : "ee:1b:db:ca:61:4a",
+                  "ptr_record" : "94-237-104-75.fi-hel2.upcloud.host",
+                  "server" : "0037c20d-1909-4cc3-a501-f3455fe73e27",
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
                   "address" : "94.237.104.77",
                   "family" : "IPv4",
+                  "floating" : "yes",
                   "ptr_record" : "94-237-104-77.fi-hel2.upcloud.host",
-                  "server" : "00d1aed8-04fe-42f8-9dbf-98a56cd343a2"
-               },
-               {
-                  "access" : "public",
-                  "address" : "94.237.104.78",
-                  "family" : "IPv4",
-                  "ptr_record" : "94-237-104-78.fi-hel2.upcloud.host",
-                  "server" : "00c67be7-f66a-4e9b-bbf1-b5d420667d9e"
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
                   "address" : "94.237.104.79",
                   "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:3e:53",
                   "ptr_record" : "94-237-104-79.fi-hel2.upcloud.host",
-                  "server" : "0010b837-3b55-4556-8686-bf1dc53bd577"
+                  "server" : "00a14a34-eece-4a11-ba83-ca1bba94420a",
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
                   "address" : "94.237.104.80",
                   "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:74:6c",
                   "ptr_record" : "94-237-104-80.fi-hel2.upcloud.host",
-                  "server" : "005bbf12-c0d4-441f-8fe7-1821333ced54"
+                  "server" : "00a38716-43fb-47f8-82b2-cd4871ef5f4c",
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
-                  "address" : "94.237.104.81",
+                  "address" : "94.237.104.82",
                   "family" : "IPv4",
-                  "ptr_record" : "94-237-104-81.fi-hel2.upcloud.host",
-                  "server" : "007358e9-60dd-4221-83ad-6abe22ef07bd"
+                  "mac" : "ee:1b:db:ca:3f:f7",
+                  "ptr_record" : "94-237-104-82.fi-hel2.upcloud.host",
+                  "server" : "009aa971-b351-42e2-b049-619443d874c7",
+                  "zone" : "fi-hel2"
                },
                {
                   "access" : "public",
-                  "address" : "185.26.48.101",
+                  "address" : "94.237.104.83",
                   "family" : "IPv4",
-                  "ptr_record" : "185-26-48-101.fi-hel1.upcloud.host",
-                  "server" : "006bf955-f63d-43ed-8489-3b7224ca0e68"
+                  "mac" : "ee:1b:db:ca:3b:81",
+                  "ptr_record" : "94-237-104-83.fi-hel2.upcloud.host",
+                  "server" : "00e5e204-66ac-4a2e-b0d5-4e01b29d375f",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "public",
+                  "address" : "94.237.104.84",
+                  "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:34:56",
+                  "ptr_record" : "94-237-104-84.fi-hel2.upcloud.host",
+                  "server" : "008cc1f8-c4e8-4e89-bf23-d23c10e2eb97",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "public",
+                  "address" : "94.237.104.85",
+                  "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:49:d0",
+                  "ptr_record" : "94-237-104-85.fi-hel2.upcloud.host",
+                  "server" : "00314d62-fda7-4b99-a151-a83172292b4d",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "public",
+                  "address" : "94.237.104.86",
+                  "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:4b:13",
+                  "ptr_record" : "94-237-104-86.fi-hel2.upcloud.host",
+                  "server" : "00338a8c-775d-45cc-8c78-166f50528940",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "public",
+                  "address" : "94.237.104.87",
+                  "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:31:df",
+                  "ptr_record" : "94-237-104-87.fi-hel2.upcloud.host",
+                  "server" : "00866a31-4040-4067-aaf2-dffc54c8b724",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "public",
+                  "address" : "94.237.104.90",
+                  "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:22:db",
+                  "ptr_record" : "94-237-104-90.fi-hel2.upcloud.host",
+                  "server" : "00d37801-5b4c-436f-a398-473d4bc5c194",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "public",
+                  "address" : "94.237.104.95",
+                  "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:14:36",
+                  "ptr_record" : "94-237-104-95.fi-hel2.upcloud.host",
+                  "server" : "004af359-1cde-4dbd-a438-a438758aa9f5",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "public",
+                  "address" : "94.237.104.96",
+                  "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:08:45",
+                  "ptr_record" : "94-237-104-96.fi-hel2.upcloud.host",
+                  "server" : "00349bdd-1583-4962-9f26-0e021e9a9019",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "public",
+                  "address" : "94.237.104.98",
+                  "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:48:79",
+                  "ptr_record" : "94-237-104-98.fi-hel2.upcloud.host",
+                  "server" : "00295557-22e0-4933-ba9f-74cd2cfbdf25",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "public",
+                  "address" : "94.237.104.99",
+                  "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:73:27",
+                  "ptr_record" : "94-237-104-99.fi-hel2.upcloud.host",
+                  "server" : "0042822c-869c-481f-a7be-733f55996543",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "public",
+                  "address" : "94.237.104.100",
+                  "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:35:2e",
+                  "ptr_record" : "94-237-104-100.fi-hel2.upcloud.host",
+                  "server" : "006b854c-efda-457a-8d78-b5335c9c386d",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "public",
+                  "address" : "94.237.104.101",
+                  "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:4d:15",
+                  "ptr_record" : "94-237-104-101.fi-hel2.upcloud.host",
+                  "server" : "000803a1-7c5b-42fd-b074-72ecdd9f4b58",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "public",
+                  "address" : "94.237.104.102",
+                  "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:56:4a",
+                  "ptr_record" : "94-237-104-102.fi-hel2.upcloud.host",
+                  "server" : "00e3cbc4-b911-4e5c-b774-5a80ddb7405c",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "public",
+                  "address" : "94.237.104.103",
+                  "family" : "IPv4",
+                  "mac" : "ee:1b:db:ca:0f:d1",
+                  "ptr_record" : "94-237-104-103.fi-hel2.upcloud.host",
+                  "server" : "002e3055-50a3-44ff-aa8c-3d5b53e66047",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "public",
+                  "address" : "94.237.104.104",
+                  "family" : "IPv4",
+                  "floating" : "yes",
+                  "ptr_record" : "94-237-104-104.fi-hel2.upcloud.host",
+                  "zone" : "fi-hel2"
                }
             ]
          }
       }
     headers:
       Content-Length:
-      - "13032"
+      - "21503"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Tue, 04 Aug 2020 15:43:58 GMT
+      - Thu, 06 Aug 2020 12:23:46 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -824,26 +1789,28 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.2/ip_address/10.6.6.218
+    url: https://api.upcloud.com/1.3/ip_address/10.6.6.235
     method: GET
   response:
     body: |
       {
          "ip_address" : {
-            "access" : "private",
-            "address" : "10.6.6.218",
+            "access" : "utility",
+            "address" : "10.6.6.235",
             "family" : "IPv4",
+            "mac" : "ee:1b:db:ca:87:cc",
             "ptr_record" : "",
-            "server" : "007358e9-60dd-4221-83ad-6abe22ef07bd"
+            "server" : "002e3055-50a3-44ff-aa8c-3d5b53e66047",
+            "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "195"
+      - "256"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Tue, 04 Aug 2020 15:43:59 GMT
+      - Thu, 06 Aug 2020 12:23:46 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -859,26 +1826,28 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.2/ip_address/2a04:3545:1000:720:ec1b:dbff:feca:6e86
+    url: https://api.upcloud.com/1.3/ip_address/2a04:3545:1000:720:ec1b:dbff:feca:1d7c
     method: GET
   response:
     body: |
       {
          "ip_address" : {
             "access" : "public",
-            "address" : "2a04:3545:1000:720:ec1b:dbff:feca:6e86",
+            "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d7c",
             "family" : "IPv6",
-            "ptr_record" : "ec1b-dbff-feca-6e86.v6.fi-hel2.upcloud.host",
-            "server" : "007358e9-60dd-4221-83ad-6abe22ef07bd"
+            "mac" : "ee:1b:db:ca:1d:7c",
+            "ptr_record" : "ec1b-dbff-feca-1d7c.v6.fi-hel2.upcloud.host",
+            "server" : "002e3055-50a3-44ff-aa8c-3d5b53e66047",
+            "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "265"
+      - "326"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Tue, 04 Aug 2020 15:43:59 GMT
+      - Thu, 06 Aug 2020 12:23:47 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -894,26 +1863,28 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.2/ip_address/94.237.104.81
+    url: https://api.upcloud.com/1.3/ip_address/94.237.104.103
     method: GET
   response:
     body: |
       {
          "ip_address" : {
             "access" : "public",
-            "address" : "94.237.104.81",
+            "address" : "94.237.104.103",
             "family" : "IPv4",
-            "ptr_record" : "94-237-104-81.fi-hel2.upcloud.host",
-            "server" : "007358e9-60dd-4221-83ad-6abe22ef07bd"
+            "mac" : "ee:1b:db:ca:0f:d1",
+            "ptr_record" : "94-237-104-103.fi-hel2.upcloud.host",
+            "server" : "002e3055-50a3-44ff-aa8c-3d5b53e66047",
+            "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "231"
+      - "294"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Tue, 04 Aug 2020 15:43:59 GMT
+      - Thu, 06 Aug 2020 12:23:47 GMT
       Server:
       - Apache
       Strict-Transport-Security:

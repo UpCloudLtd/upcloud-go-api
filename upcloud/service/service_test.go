@@ -5,7 +5,6 @@ import (
 	"log"
 	"os"
 	"reflect"
-	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -135,13 +134,22 @@ func TestGetAccount(t *testing.T) {
 	}
 
 	svc := getService()
+
 	account, err := svc.GetAccount()
-	username, _ := getCredentials()
 	require.NoError(t, err)
+
+	username, _ := getCredentials()
 
 	if account.UserName != username {
 		t.Errorf("TestGetAccount expected %s, got %s", username, account.UserName)
 	}
+
+	assert.NotZero(t, account.ResourceLimits.Cores)
+	assert.NotZero(t, account.ResourceLimits.Memory)
+	assert.NotZero(t, account.ResourceLimits.Networks)
+	assert.NotZero(t, account.ResourceLimits.PublicIPv6)
+	assert.NotZero(t, account.ResourceLimits.StorageHDD)
+	assert.NotZero(t, account.ResourceLimits.StorageSSD)
 }
 
 // TestGetZones tests that the GetZones() function returns proper data
@@ -155,6 +163,7 @@ func TestGetZones(t *testing.T) {
 		for _, z := range zones.Zones {
 			if z.Description == "Helsinki #1" && z.ID == "fi-hel1" {
 				found = true
+				assert.True(t, bool(z.Public))
 				break
 			}
 		}
@@ -306,6 +315,35 @@ func TestCreateStopStartServer(t *testing.T) {
 		assert.Contains(t, startServerDetails.Title, "createstartstopserver")
 		assert.Equal(t, "fi-hel2", startServerDetails.Zone)
 		assert.Equal(t, upcloud.ServerStateStarted, startServerDetails.State)
+	})
+}
+
+func TestStartAvoidHost(t *testing.T) {
+	record(t, "startavoidhost", func(t *testing.T, svc *Service) {
+		serverDetails, err := createServer(svc, "TestStartAvoidHost")
+		require.NoError(t, err)
+		assert.NotZero(t, serverDetails.Host)
+
+		_, err = svc.StopServer(&request.StopServerRequest{
+			UUID:     serverDetails.UUID,
+			StopType: upcloud.StopTypeHard,
+		})
+		require.NoError(t, err)
+
+		_, err = svc.WaitForServerState(&request.WaitForServerStateRequest{
+			UUID:         serverDetails.UUID,
+			DesiredState: upcloud.ServerStateStopped,
+			Timeout:      15 * time.Minute,
+		})
+		require.NoError(t, err)
+
+		postServerDetails, err := svc.StartServer(&request.StartServerRequest{
+			UUID:      serverDetails.UUID,
+			AvoidHost: serverDetails.Host,
+		})
+		require.NoError(t, err)
+		assert.NotZero(t, postServerDetails.Host)
+		assert.NotEqual(t, serverDetails.Host, postServerDetails.Host)
 	})
 }
 
@@ -768,9 +806,6 @@ func TestCreateRestoreBackup(t *testing.T) {
 		err = waitForStorageOnline(svc, storageDetails.UUID)
 		require.NoError(t, err)
 
-		timeAfterBackup, err := utcTimeWithSecondPrecision()
-		require.NoError(t, err)
-
 		t.Logf("Created backup with UUID %s", backupDetails.UUID)
 
 		// Get backup storage details
@@ -791,33 +826,6 @@ func TestCreateRestoreBackup(t *testing.T) {
 			storageDetails.UUID,
 		)
 		t.Logf("Backup storage origin UUID OK")
-
-		// Retrieve the time we stored in the title field.
-		titleSplit := strings.Split(backupStorageDetails.Title, "-")
-		require.Len(t, titleSplit, 2)
-		timeBeforeBackupNano, err := strconv.ParseInt(titleSplit[1], 0, 64)
-		require.NoError(t, err)
-
-		assert.GreaterOrEqualf(
-			t,
-			backupStorageDetails.Created.UnixNano(),
-			timeBeforeBackupNano,
-			"The creation timestamp of backup storage UUID %s is too early: %v (should be after %v)",
-			backupDetails.UUID,
-			backupStorageDetails.Created,
-			timeBeforeBackup,
-		)
-
-		// This test becomes less useful the older the fixtures are.
-		assert.LessOrEqualf(
-			t,
-			backupStorageDetails.Created.UnixNano(),
-			timeAfterBackup.UnixNano(),
-			"The creation timestamp of backup storage UUID %s is too late: %v (should be before %v)",
-			backupDetails.UUID,
-			backupStorageDetails.Created,
-			timeAfterBackup,
-		)
 
 		err = svc.RestoreBackup(&request.RestoreBackupRequest{
 			UUID: backupDetails.UUID,
@@ -847,6 +855,10 @@ func TestGetIPAddresses(t *testing.T) {
 			for _, gip := range ipAddresses.IPAddresses {
 				if sip.Address == gip.Address {
 					foundCount++
+					if sip.Access == upcloud.IPAddressAccessPrivate {
+						// Workaround during transition
+						sip.Access = upcloud.IPAddressAccessUtility
+					}
 					assert.Equal(t, sip.Access, gip.Access)
 					assert.Equal(t, sip.Family, gip.Family)
 					break
@@ -863,6 +875,10 @@ func TestGetIPAddresses(t *testing.T) {
 			require.NoError(t, err)
 
 			assert.Equal(t, ip.Address, ipAddress.Address)
+			if ip.Access == upcloud.IPAddressAccessPrivate {
+				// Workaround during transition
+				ip.Access = upcloud.IPAddressAccessUtility
+			}
 			assert.Equal(t, ip.Access, ipAddress.Access)
 			assert.Equal(t, ip.Family, ipAddress.Family)
 		}
@@ -919,6 +935,129 @@ func TestAttachModifyReleaseIPAddress(t *testing.T) {
 		})
 		require.NoError(t, err)
 		t.Log("The IP address is now released")
+	})
+}
+
+func TestAttachModifyReleaseFloatingIPAddress(t *testing.T) {
+	record(t, "attachmodifyreleasefloatingipaddress", func(t *testing.T, svc *Service) {
+		// Create the first server
+		serverDetails1, err := createServer(svc, "TestAttachModifyReleaseIPAddress1")
+		require.NoError(t, err)
+		t.Logf("Server 1 %s with UUID %s created", serverDetails1.Title, serverDetails1.UUID)
+
+		// Create the second server
+		serverDetails2, err := createServer(svc, "TestAttachModifyReleaseIPAddress2")
+		require.NoError(t, err)
+		t.Logf("Server 2 %s with UUID %s created", serverDetails2.Title, serverDetails2.UUID)
+
+		var mac string
+		for _, ip := range serverDetails1.IPAddresses {
+			if ip.Access == upcloud.IPAddressAccessPublic && ip.Family == upcloud.IPAddressFamilyIPv4 {
+				ipDetails, err := svc.GetIPAddressDetails(&request.GetIPAddressDetailsRequest{
+					Address: ip.Address,
+				})
+				require.NoError(t, err)
+				mac = ipDetails.MAC
+				break
+			}
+		}
+		require.NotEmpty(t, mac)
+
+		assignedIP, err := svc.AssignIPAddress(&request.AssignIPAddressRequest{
+			Family:   upcloud.IPAddressFamilyIPv4,
+			Floating: true,
+			MAC:      mac,
+		})
+		require.NoError(t, err)
+
+		postAssignServerDetails1, err := svc.GetServerDetails(&request.GetServerDetailsRequest{
+			UUID: serverDetails1.UUID,
+		})
+		require.NoError(t, err)
+
+		var found bool
+		for _, inf := range postAssignServerDetails1.Networking.Interfaces {
+			for _, ip := range inf.IPAddresses {
+				if ip.Address == assignedIP.Address {
+					found = true
+					break
+				}
+			}
+			if found {
+				break
+			}
+		}
+		assert.True(t, found)
+
+		var mac2 string
+		for _, ip := range serverDetails2.IPAddresses {
+			if ip.Access == upcloud.IPAddressAccessPublic && ip.Family == upcloud.IPAddressFamilyIPv4 {
+				ipDetails, err := svc.GetIPAddressDetails(&request.GetIPAddressDetailsRequest{
+					Address: ip.Address,
+				})
+				require.NoError(t, err)
+				mac2 = ipDetails.MAC
+				break
+			}
+		}
+		require.NotEmpty(t, mac2)
+
+		_, err = svc.ModifyIPAddress(&request.ModifyIPAddressRequest{
+			IPAddress: assignedIP.Address,
+			MAC:       mac2,
+		})
+		require.NoError(t, err)
+
+		postModifyServerDetails1, err := svc.GetServerDetails(&request.GetServerDetailsRequest{
+			UUID: serverDetails1.UUID,
+		})
+		require.NoError(t, err)
+
+		found = false
+		for _, inf := range postModifyServerDetails1.Networking.Interfaces {
+			for _, ip := range inf.IPAddresses {
+				if ip.Address == assignedIP.Address {
+					found = true
+					break
+				}
+			}
+			if found {
+				break
+			}
+		}
+		assert.False(t, found)
+
+		postModifyServerDetails2, err := svc.GetServerDetails(&request.GetServerDetailsRequest{
+			UUID: serverDetails2.UUID,
+		})
+		require.NoError(t, err)
+
+		found = false
+		for _, inf := range postModifyServerDetails2.Networking.Interfaces {
+			for _, ip := range inf.IPAddresses {
+				if ip.Address == assignedIP.Address {
+					found = true
+					break
+				}
+			}
+			if found {
+				break
+			}
+		}
+		assert.True(t, found)
+
+		// Unassign IP
+		unassignIP, err := svc.ModifyIPAddress(&request.ModifyIPAddressRequest{
+			IPAddress: assignedIP.Address,
+		})
+		require.NoError(t, err)
+		assert.Empty(t, unassignIP.ServerUUID)
+		assert.Empty(t, unassignIP.MAC)
+
+		err = svc.ReleaseIPAddress(&request.ReleaseIPAddressRequest{
+			IPAddress: assignedIP.Address,
+		})
+		require.NoError(t, err)
 	})
 }
 
@@ -1111,6 +1250,14 @@ func TestTagging(t *testing.T) {
 		})
 		require.NoError(t, err)
 		assert.Contains(t, serverDetails.Tags, "tag1")
+		var utilityCount int
+		for _, ip := range serverDetails.IPAddresses {
+			assert.NotEqual(t, upcloud.IPAddressAccessPrivate, ip.Access)
+			if ip.Access == upcloud.IPAddressAccessUtility {
+				utilityCount++
+			}
+		}
+		assert.NotZero(t, utilityCount)
 		t.Logf("Server %s is now tagged with tag %s", serverDetails.Title, "tag1")
 
 		// Rename the second tag
@@ -1143,6 +1290,14 @@ func TestTagging(t *testing.T) {
 		})
 		require.NoError(t, err)
 		assert.NotContains(t, serverDetails.Tags, "tag1")
+		utilityCount = 0
+		for _, ip := range serverDetails.IPAddresses {
+			assert.NotEqual(t, upcloud.IPAddressAccessPrivate, ip.Access)
+			if ip.Access == upcloud.IPAddressAccessUtility {
+				utilityCount++
+			}
+		}
+		assert.NotZero(t, utilityCount)
 		t.Logf("Server %s is now untagged", serverDetails.Title)
 	})
 }
@@ -1166,18 +1321,32 @@ func createServer(svc *Service, name string) (*upcloud.ServerDetails, error) {
 				Tier:    upcloud.StorageTierMaxIOPS,
 			},
 		},
-		IPAddresses: []request.CreateServerIPAddress{
-			{
-				Access: upcloud.IPAddressAccessPrivate,
-				Family: upcloud.IPAddressFamilyIPv4,
-			},
-			{
-				Access: upcloud.IPAddressAccessPublic,
-				Family: upcloud.IPAddressFamilyIPv4,
-			},
-			{
-				Access: upcloud.IPAddressAccessPublic,
-				Family: upcloud.IPAddressFamilyIPv6,
+		Networking: &request.CreateServerNetworking{
+			Interfaces: []request.CreateServerInterface{
+				{
+					IPAddresses: []request.CreateServerIPAddress{
+						{
+							Family: upcloud.IPAddressFamilyIPv4,
+						},
+					},
+					Type: upcloud.IPAddressAccessUtility,
+				},
+				{
+					IPAddresses: []request.CreateServerIPAddress{
+						{
+							Family: upcloud.IPAddressFamilyIPv4,
+						},
+					},
+					Type: upcloud.IPAddressAccessPublic,
+				},
+				{
+					IPAddresses: []request.CreateServerIPAddress{
+						{
+							Family: upcloud.IPAddressFamilyIPv6,
+						},
+					},
+					Type: upcloud.IPAddressAccessPublic,
+				},
 			},
 		},
 	}

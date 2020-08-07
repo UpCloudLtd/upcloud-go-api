@@ -26,13 +26,16 @@ func New(client *client.Client) *Service {
 // GetAccount returns the current user's account
 func (s *Service) GetAccount() (*upcloud.Account, error) {
 	account := upcloud.Account{}
-	response, err := s.basicJSONGetRequest("/account")
+	response, err := s.basicFutureGetRequest("/account")
 
 	if err != nil {
 		return nil, err
 	}
 
-	json.Unmarshal(response, &account)
+	err = json.Unmarshal(response, &account)
+	if err != nil {
+		return nil, err
+	}
 
 	return &account, nil
 }
@@ -40,7 +43,7 @@ func (s *Service) GetAccount() (*upcloud.Account, error) {
 // GetZones returns the available zones
 func (s *Service) GetZones() (*upcloud.Zones, error) {
 	zones := upcloud.Zones{}
-	response, err := s.basicJSONGetRequest("/zone")
+	response, err := s.basicFutureGetRequest("/zone")
 
 	if err != nil {
 		return nil, err
@@ -54,7 +57,7 @@ func (s *Service) GetZones() (*upcloud.Zones, error) {
 // GetPriceZones returns the available price zones and their corresponding prices
 func (s *Service) GetPriceZones() (*upcloud.PriceZones, error) {
 	zones := upcloud.PriceZones{}
-	response, err := s.basicJSONGetRequest("/price")
+	response, err := s.basicFutureGetRequest("/price")
 
 	if err != nil {
 		return nil, err
@@ -68,7 +71,7 @@ func (s *Service) GetPriceZones() (*upcloud.PriceZones, error) {
 // GetTimeZones returns the available timezones
 func (s *Service) GetTimeZones() (*upcloud.TimeZones, error) {
 	zones := upcloud.TimeZones{}
-	response, err := s.basicJSONGetRequest("/timezone")
+	response, err := s.basicFutureGetRequest("/timezone")
 
 	if err != nil {
 		return nil, err
@@ -82,7 +85,7 @@ func (s *Service) GetTimeZones() (*upcloud.TimeZones, error) {
 // GetPlans returns the available service plans
 func (s *Service) GetPlans() (*upcloud.Plans, error) {
 	plans := upcloud.Plans{}
-	response, err := s.basicJSONGetRequest("/plan")
+	response, err := s.basicFutureGetRequest("/plan")
 
 	if err != nil {
 		return nil, err
@@ -96,7 +99,7 @@ func (s *Service) GetPlans() (*upcloud.Plans, error) {
 // GetServerConfigurations returns the available pre-configured server configurations
 func (s *Service) GetServerConfigurations() (*upcloud.ServerConfigurations, error) {
 	serverConfigurations := upcloud.ServerConfigurations{}
-	response, err := s.basicJSONGetRequest("/server_size")
+	response, err := s.basicFutureGetRequest("/server_size")
 
 	if err != nil {
 		return nil, err
@@ -110,7 +113,7 @@ func (s *Service) GetServerConfigurations() (*upcloud.ServerConfigurations, erro
 // GetServers returns the available servers
 func (s *Service) GetServers() (*upcloud.Servers, error) {
 	servers := upcloud.Servers{}
-	response, err := s.basicJSONGetRequest("/server")
+	response, err := s.basicFutureGetRequest("/server")
 
 	if err != nil {
 		return nil, err
@@ -127,7 +130,7 @@ func (s *Service) GetServers() (*upcloud.Servers, error) {
 // GetServerDetails returns extended details about the specified server
 func (s *Service) GetServerDetails(r *request.GetServerDetailsRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
-	response, err := s.basicJSONGetRequest(r.RequestURL())
+	response, err := s.basicFutureGetRequest(r.RequestURL())
 
 	if err != nil {
 		return nil, err
@@ -198,7 +201,8 @@ func (s *Service) StartServer(r *request.StartServerRequest) (*upcloud.ServerDet
 	// Increase the client timeout to match the request timeout
 	s.client.SetTimeout(r.Timeout)
 
-	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), nil)
+	requestBody, _ := json.Marshal(r)
+	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
 
 	// Restore previous timout
 	s.client.SetTimeout(prevTimeout)
@@ -359,7 +363,7 @@ func (s *Service) DeleteTag(r *request.DeleteTagRequest) error {
 // GetStorages returns all available storages
 func (s *Service) GetStorages(r *request.GetStoragesRequest) (*upcloud.Storages, error) {
 	storages := upcloud.Storages{}
-	response, err := s.basicJSONGetRequest(r.RequestURL())
+	response, err := s.basicFutureGetRequest(r.RequestURL())
 
 	if err != nil {
 		return nil, err
@@ -373,7 +377,7 @@ func (s *Service) GetStorages(r *request.GetStoragesRequest) (*upcloud.Storages,
 // GetStorageDetails returns extended details about the specified piece of storage
 func (s *Service) GetStorageDetails(r *request.GetStorageDetailsRequest) (*upcloud.StorageDetails, error) {
 	storageDetails := upcloud.StorageDetails{}
-	response, err := s.basicJSONGetRequest(r.RequestURL())
+	response, err := s.basicFutureGetRequest(r.RequestURL())
 
 	if err != nil {
 		return nil, err
@@ -572,7 +576,7 @@ func (s *Service) RestoreBackup(r *request.RestoreBackupRequest) error {
 // GetIPAddresses returns all IP addresses associated with the account
 func (s *Service) GetIPAddresses() (*upcloud.IPAddresses, error) {
 	ipAddresses := upcloud.IPAddresses{}
-	response, err := s.basicJSONGetRequest("/ip_address")
+	response, err := s.basicFutureGetRequest("/ip_address")
 
 	if err != nil {
 		return nil, err
@@ -586,7 +590,7 @@ func (s *Service) GetIPAddresses() (*upcloud.IPAddresses, error) {
 // GetIPAddressDetails returns extended details about the specified IP address
 func (s *Service) GetIPAddressDetails(r *request.GetIPAddressDetailsRequest) (*upcloud.IPAddress, error) {
 	ipAddress := upcloud.IPAddress{}
-	response, err := s.basicJSONGetRequest(r.RequestURL())
+	response, err := s.basicFutureGetRequest(r.RequestURL())
 
 	if err != nil {
 		return nil, err
@@ -616,7 +620,7 @@ func (s *Service) AssignIPAddress(r *request.AssignIPAddressRequest) (*upcloud.I
 func (s *Service) ModifyIPAddress(r *request.ModifyIPAddressRequest) (*upcloud.IPAddress, error) {
 	ipAddress := upcloud.IPAddress{}
 	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPutRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
+	response, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
 
 	if err != nil {
 		return nil, parseJSONServiceError(err)
@@ -641,7 +645,7 @@ func (s *Service) ReleaseIPAddress(r *request.ReleaseIPAddressRequest) error {
 // GetFirewallRules returns the firewall rules for the specified server
 func (s *Service) GetFirewallRules(r *request.GetFirewallRulesRequest) (*upcloud.FirewallRules, error) {
 	firewallRules := upcloud.FirewallRules{}
-	response, err := s.basicJSONGetRequest(r.RequestURL())
+	response, err := s.basicFutureGetRequest(r.RequestURL())
 
 	if err != nil {
 		return nil, err
@@ -655,7 +659,7 @@ func (s *Service) GetFirewallRules(r *request.GetFirewallRulesRequest) (*upcloud
 // GetFirewallRuleDetails returns extended details about the specified firewall rule
 func (s *Service) GetFirewallRuleDetails(r *request.GetFirewallRuleDetailsRequest) (*upcloud.FirewallRule, error) {
 	firewallRule := upcloud.FirewallRule{}
-	response, err := s.basicJSONGetRequest(r.RequestURL())
+	response, err := s.basicFutureGetRequest(r.RequestURL())
 
 	if err != nil {
 		return nil, parseJSONServiceError(err)
@@ -695,7 +699,7 @@ func (s *Service) DeleteFirewallRule(r *request.DeleteFirewallRuleRequest) error
 // GetTags returns all tags
 func (s *Service) GetTags() (*upcloud.Tags, error) {
 	tags := upcloud.Tags{}
-	response, err := s.basicJSONGetRequest("/tag")
+	response, err := s.basicFutureGetRequest("/tag")
 
 	if err != nil {
 		return nil, err
@@ -707,7 +711,7 @@ func (s *Service) GetTags() (*upcloud.Tags, error) {
 }
 
 // Wrapper that performs a GET request to the specified location and returns the response or a service error
-func (s *Service) basicJSONGetRequest(location string) ([]byte, error) {
+func (s *Service) basicFutureGetRequest(location string) ([]byte, error) {
 	requestURL := s.client.CreateRequestURL(location)
 
 	response, err := s.client.PerformJSONGetRequest(requestURL)

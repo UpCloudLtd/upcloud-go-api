@@ -9,7 +9,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.2/price
+    url: https://api.upcloud.com/1.3/price
     method: GET
   response:
     body: |
@@ -109,6 +109,138 @@ interactions:
                   "server_plan_8xCPU-32GB" : {
                      "amount" : 1,
                      "price" : 23.8095
+                  },
+                  "simple_backup_dailies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 7.1428
+                  },
+                  "simple_backup_dailies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 9.5238
+                  },
+                  "simple_backup_dailies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.1488
+                  },
+                  "simple_backup_dailies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.2976
+                  },
+                  "simple_backup_dailies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 19.0476
+                  },
+                  "simple_backup_dailies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
+                  },
+                  "simple_backup_dailies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 0.5952
+                  },
+                  "simple_backup_dailies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 1.1905
+                  },
+                  "simple_backup_dailies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 2.3809
+                  },
+                  "simple_backup_dailies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 4.7619
+                  },
+                  "simple_backup_extra_dailies" : {
+                     "amount" : 1,
+                     "price" : 0.0069
+                  },
+                  "simple_backup_extra_monthlies" : {
+                     "amount" : 1,
+                     "price" : 0.0208
+                  },
+                  "simple_backup_extra_weeklies" : {
+                     "amount" : 1,
+                     "price" : 0.0138
+                  },
+                  "simple_backup_monthlies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 21.4285
+                  },
+                  "simple_backup_monthlies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 28.5714
+                  },
+                  "simple_backup_monthlies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.4464
+                  },
+                  "simple_backup_monthlies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.8928
+                  },
+                  "simple_backup_monthlies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 57.1428
+                  },
+                  "simple_backup_monthlies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 42.8571
+                  },
+                  "simple_backup_monthlies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 1.7857
+                  },
+                  "simple_backup_monthlies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 3.5714
+                  },
+                  "simple_backup_monthlies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 7.1428
+                  },
+                  "simple_backup_monthlies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
+                  },
+                  "simple_backup_weeklies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
+                  },
+                  "simple_backup_weeklies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 19.0476
+                  },
+                  "simple_backup_weeklies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.2976
+                  },
+                  "simple_backup_weeklies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.5952
+                  },
+                  "simple_backup_weeklies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 38.0952
+                  },
+                  "simple_backup_weeklies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 28.5714
+                  },
+                  "simple_backup_weeklies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 1.1904
+                  },
+                  "simple_backup_weeklies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 2.3809
+                  },
+                  "simple_backup_weeklies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 4.7619
+                  },
+                  "simple_backup_weeklies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 9.5238
                   },
                   "storage_backup" : {
                      "amount" : 1,
@@ -221,6 +353,138 @@ interactions:
                      "amount" : 1,
                      "price" : 35.7142
                   },
+                  "simple_backup_dailies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 10.7143
+                  },
+                  "simple_backup_dailies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
+                  },
+                  "simple_backup_dailies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.2232
+                  },
+                  "simple_backup_dailies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.4464
+                  },
+                  "simple_backup_dailies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 28.5714
+                  },
+                  "simple_backup_dailies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 21.4286
+                  },
+                  "simple_backup_dailies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 0.8928
+                  },
+                  "simple_backup_dailies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 1.7857
+                  },
+                  "simple_backup_dailies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 3.5714
+                  },
+                  "simple_backup_dailies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 7.1428
+                  },
+                  "simple_backup_extra_dailies" : {
+                     "amount" : 1,
+                     "price" : 0.0104
+                  },
+                  "simple_backup_extra_monthlies" : {
+                     "amount" : 1,
+                     "price" : 0.0312
+                  },
+                  "simple_backup_extra_weeklies" : {
+                     "amount" : 1,
+                     "price" : 0.0208
+                  },
+                  "simple_backup_monthlies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 32.1428
+                  },
+                  "simple_backup_monthlies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 42.8571
+                  },
+                  "simple_backup_monthlies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.6696
+                  },
+                  "simple_backup_monthlies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 1.3393
+                  },
+                  "simple_backup_monthlies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 85.7143
+                  },
+                  "simple_backup_monthlies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 64.2857
+                  },
+                  "simple_backup_monthlies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 2.6785
+                  },
+                  "simple_backup_monthlies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 5.3571
+                  },
+                  "simple_backup_monthlies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 10.7143
+                  },
+                  "simple_backup_monthlies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 21.4285
+                  },
+                  "simple_backup_weeklies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 21.4286
+                  },
+                  "simple_backup_weeklies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 28.5714
+                  },
+                  "simple_backup_weeklies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.4464
+                  },
+                  "simple_backup_weeklies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.8928
+                  },
+                  "simple_backup_weeklies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 57.1428
+                  },
+                  "simple_backup_weeklies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 42.8571
+                  },
+                  "simple_backup_weeklies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 1.7857
+                  },
+                  "simple_backup_weeklies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 3.5714
+                  },
+                  "simple_backup_weeklies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 7.1428
+                  },
+                  "simple_backup_weeklies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
+                  },
                   "storage_backup" : {
                      "amount" : 1,
                      "price" : 0.0078
@@ -331,6 +595,138 @@ interactions:
                   "server_plan_8xCPU-32GB" : {
                      "amount" : 1,
                      "price" : 35.7142
+                  },
+                  "simple_backup_dailies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 10.7143
+                  },
+                  "simple_backup_dailies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
+                  },
+                  "simple_backup_dailies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.2232
+                  },
+                  "simple_backup_dailies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.4464
+                  },
+                  "simple_backup_dailies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 28.5714
+                  },
+                  "simple_backup_dailies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 21.4286
+                  },
+                  "simple_backup_dailies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 0.8928
+                  },
+                  "simple_backup_dailies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 1.7857
+                  },
+                  "simple_backup_dailies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 3.5714
+                  },
+                  "simple_backup_dailies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 7.1428
+                  },
+                  "simple_backup_extra_dailies" : {
+                     "amount" : 1,
+                     "price" : 0.0104
+                  },
+                  "simple_backup_extra_monthlies" : {
+                     "amount" : 1,
+                     "price" : 0.0312
+                  },
+                  "simple_backup_extra_weeklies" : {
+                     "amount" : 1,
+                     "price" : 0.0208
+                  },
+                  "simple_backup_monthlies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 32.1428
+                  },
+                  "simple_backup_monthlies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 42.8571
+                  },
+                  "simple_backup_monthlies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.6696
+                  },
+                  "simple_backup_monthlies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 1.3393
+                  },
+                  "simple_backup_monthlies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 85.7143
+                  },
+                  "simple_backup_monthlies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 64.2857
+                  },
+                  "simple_backup_monthlies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 2.6785
+                  },
+                  "simple_backup_monthlies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 5.3571
+                  },
+                  "simple_backup_monthlies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 10.7143
+                  },
+                  "simple_backup_monthlies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 21.4285
+                  },
+                  "simple_backup_weeklies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 21.4286
+                  },
+                  "simple_backup_weeklies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 28.5714
+                  },
+                  "simple_backup_weeklies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.4464
+                  },
+                  "simple_backup_weeklies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.8928
+                  },
+                  "simple_backup_weeklies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 57.1428
+                  },
+                  "simple_backup_weeklies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 42.8571
+                  },
+                  "simple_backup_weeklies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 1.7857
+                  },
+                  "simple_backup_weeklies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 3.5714
+                  },
+                  "simple_backup_weeklies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 7.1428
+                  },
+                  "simple_backup_weeklies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
                   },
                   "storage_backup" : {
                      "amount" : 1,
@@ -443,6 +839,138 @@ interactions:
                      "amount" : 1,
                      "price" : 23.8095
                   },
+                  "simple_backup_dailies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 7.1428
+                  },
+                  "simple_backup_dailies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 9.5238
+                  },
+                  "simple_backup_dailies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.1488
+                  },
+                  "simple_backup_dailies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.2976
+                  },
+                  "simple_backup_dailies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 19.0476
+                  },
+                  "simple_backup_dailies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
+                  },
+                  "simple_backup_dailies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 0.5952
+                  },
+                  "simple_backup_dailies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 1.1905
+                  },
+                  "simple_backup_dailies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 2.3809
+                  },
+                  "simple_backup_dailies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 4.7619
+                  },
+                  "simple_backup_extra_dailies" : {
+                     "amount" : 1,
+                     "price" : 0.0069
+                  },
+                  "simple_backup_extra_monthlies" : {
+                     "amount" : 1,
+                     "price" : 0.0208
+                  },
+                  "simple_backup_extra_weeklies" : {
+                     "amount" : 1,
+                     "price" : 0.0138
+                  },
+                  "simple_backup_monthlies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 21.4285
+                  },
+                  "simple_backup_monthlies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 28.5714
+                  },
+                  "simple_backup_monthlies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.4464
+                  },
+                  "simple_backup_monthlies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.8928
+                  },
+                  "simple_backup_monthlies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 57.1428
+                  },
+                  "simple_backup_monthlies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 42.8571
+                  },
+                  "simple_backup_monthlies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 1.7857
+                  },
+                  "simple_backup_monthlies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 3.5714
+                  },
+                  "simple_backup_monthlies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 7.1428
+                  },
+                  "simple_backup_monthlies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
+                  },
+                  "simple_backup_weeklies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
+                  },
+                  "simple_backup_weeklies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 19.0476
+                  },
+                  "simple_backup_weeklies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.2976
+                  },
+                  "simple_backup_weeklies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.5952
+                  },
+                  "simple_backup_weeklies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 38.0952
+                  },
+                  "simple_backup_weeklies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 28.5714
+                  },
+                  "simple_backup_weeklies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 1.1904
+                  },
+                  "simple_backup_weeklies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 2.3809
+                  },
+                  "simple_backup_weeklies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 4.7619
+                  },
+                  "simple_backup_weeklies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 9.5238
+                  },
                   "storage_backup" : {
                      "amount" : 1,
                      "price" : 0.0078
@@ -553,6 +1081,138 @@ interactions:
                   "server_plan_8xCPU-32GB" : {
                      "amount" : 1,
                      "price" : 23.8095
+                  },
+                  "simple_backup_dailies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 7.1428
+                  },
+                  "simple_backup_dailies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 9.5238
+                  },
+                  "simple_backup_dailies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.1488
+                  },
+                  "simple_backup_dailies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.2976
+                  },
+                  "simple_backup_dailies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 19.0476
+                  },
+                  "simple_backup_dailies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
+                  },
+                  "simple_backup_dailies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 0.5952
+                  },
+                  "simple_backup_dailies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 1.1905
+                  },
+                  "simple_backup_dailies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 2.3809
+                  },
+                  "simple_backup_dailies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 4.7619
+                  },
+                  "simple_backup_extra_dailies" : {
+                     "amount" : 1,
+                     "price" : 0.0069
+                  },
+                  "simple_backup_extra_monthlies" : {
+                     "amount" : 1,
+                     "price" : 0.0208
+                  },
+                  "simple_backup_extra_weeklies" : {
+                     "amount" : 1,
+                     "price" : 0.0138
+                  },
+                  "simple_backup_monthlies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 21.4285
+                  },
+                  "simple_backup_monthlies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 28.5714
+                  },
+                  "simple_backup_monthlies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.4464
+                  },
+                  "simple_backup_monthlies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.8928
+                  },
+                  "simple_backup_monthlies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 57.1428
+                  },
+                  "simple_backup_monthlies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 42.8571
+                  },
+                  "simple_backup_monthlies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 1.7857
+                  },
+                  "simple_backup_monthlies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 3.5714
+                  },
+                  "simple_backup_monthlies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 7.1428
+                  },
+                  "simple_backup_monthlies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
+                  },
+                  "simple_backup_weeklies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
+                  },
+                  "simple_backup_weeklies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 19.0476
+                  },
+                  "simple_backup_weeklies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.2976
+                  },
+                  "simple_backup_weeklies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.5952
+                  },
+                  "simple_backup_weeklies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 38.0952
+                  },
+                  "simple_backup_weeklies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 28.5714
+                  },
+                  "simple_backup_weeklies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 1.1904
+                  },
+                  "simple_backup_weeklies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 2.3809
+                  },
+                  "simple_backup_weeklies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 4.7619
+                  },
+                  "simple_backup_weeklies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 9.5238
                   },
                   "storage_backup" : {
                      "amount" : 1,
@@ -665,6 +1325,138 @@ interactions:
                      "amount" : 1,
                      "price" : 23.8095
                   },
+                  "simple_backup_dailies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 7.1428
+                  },
+                  "simple_backup_dailies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 9.5238
+                  },
+                  "simple_backup_dailies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.1488
+                  },
+                  "simple_backup_dailies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.2976
+                  },
+                  "simple_backup_dailies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 19.0476
+                  },
+                  "simple_backup_dailies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
+                  },
+                  "simple_backup_dailies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 0.5952
+                  },
+                  "simple_backup_dailies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 1.1905
+                  },
+                  "simple_backup_dailies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 2.3809
+                  },
+                  "simple_backup_dailies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 4.7619
+                  },
+                  "simple_backup_extra_dailies" : {
+                     "amount" : 1,
+                     "price" : 0.0069
+                  },
+                  "simple_backup_extra_monthlies" : {
+                     "amount" : 1,
+                     "price" : 0.0208
+                  },
+                  "simple_backup_extra_weeklies" : {
+                     "amount" : 1,
+                     "price" : 0.0138
+                  },
+                  "simple_backup_monthlies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 21.4285
+                  },
+                  "simple_backup_monthlies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 28.5714
+                  },
+                  "simple_backup_monthlies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.4464
+                  },
+                  "simple_backup_monthlies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.8928
+                  },
+                  "simple_backup_monthlies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 57.1428
+                  },
+                  "simple_backup_monthlies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 42.8571
+                  },
+                  "simple_backup_monthlies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 1.7857
+                  },
+                  "simple_backup_monthlies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 3.5714
+                  },
+                  "simple_backup_monthlies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 7.1428
+                  },
+                  "simple_backup_monthlies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
+                  },
+                  "simple_backup_weeklies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
+                  },
+                  "simple_backup_weeklies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 19.0476
+                  },
+                  "simple_backup_weeklies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.2976
+                  },
+                  "simple_backup_weeklies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.5952
+                  },
+                  "simple_backup_weeklies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 38.0952
+                  },
+                  "simple_backup_weeklies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 28.5714
+                  },
+                  "simple_backup_weeklies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 1.1904
+                  },
+                  "simple_backup_weeklies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 2.3809
+                  },
+                  "simple_backup_weeklies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 4.7619
+                  },
+                  "simple_backup_weeklies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 9.5238
+                  },
                   "storage_backup" : {
                      "amount" : 1,
                      "price" : 0.0078
@@ -775,6 +1567,138 @@ interactions:
                   "server_plan_8xCPU-32GB" : {
                      "amount" : 1,
                      "price" : 0
+                  },
+                  "simple_backup_dailies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 7.1428
+                  },
+                  "simple_backup_dailies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 9.5238
+                  },
+                  "simple_backup_dailies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.1488
+                  },
+                  "simple_backup_dailies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.2976
+                  },
+                  "simple_backup_dailies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 19.0476
+                  },
+                  "simple_backup_dailies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
+                  },
+                  "simple_backup_dailies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 0.5952
+                  },
+                  "simple_backup_dailies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 1.1905
+                  },
+                  "simple_backup_dailies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 2.3809
+                  },
+                  "simple_backup_dailies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 4.7619
+                  },
+                  "simple_backup_extra_dailies" : {
+                     "amount" : 1,
+                     "price" : 0.0069
+                  },
+                  "simple_backup_extra_monthlies" : {
+                     "amount" : 1,
+                     "price" : 0.0208
+                  },
+                  "simple_backup_extra_weeklies" : {
+                     "amount" : 1,
+                     "price" : 0.0138
+                  },
+                  "simple_backup_monthlies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 21.4285
+                  },
+                  "simple_backup_monthlies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 28.5714
+                  },
+                  "simple_backup_monthlies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.4464
+                  },
+                  "simple_backup_monthlies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.8928
+                  },
+                  "simple_backup_monthlies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 57.1428
+                  },
+                  "simple_backup_monthlies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 42.8571
+                  },
+                  "simple_backup_monthlies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 1.7857
+                  },
+                  "simple_backup_monthlies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 3.5714
+                  },
+                  "simple_backup_monthlies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 7.1428
+                  },
+                  "simple_backup_monthlies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
+                  },
+                  "simple_backup_weeklies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
+                  },
+                  "simple_backup_weeklies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 19.0476
+                  },
+                  "simple_backup_weeklies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.2976
+                  },
+                  "simple_backup_weeklies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.5952
+                  },
+                  "simple_backup_weeklies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 38.0952
+                  },
+                  "simple_backup_weeklies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 28.5714
+                  },
+                  "simple_backup_weeklies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 1.1904
+                  },
+                  "simple_backup_weeklies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 2.3809
+                  },
+                  "simple_backup_weeklies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 4.7619
+                  },
+                  "simple_backup_weeklies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 9.5238
                   },
                   "storage_backup" : {
                      "amount" : 1,
@@ -887,6 +1811,138 @@ interactions:
                      "amount" : 1,
                      "price" : 23.8095
                   },
+                  "simple_backup_dailies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 7.1428
+                  },
+                  "simple_backup_dailies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 9.5238
+                  },
+                  "simple_backup_dailies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.1488
+                  },
+                  "simple_backup_dailies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.2976
+                  },
+                  "simple_backup_dailies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 19.0476
+                  },
+                  "simple_backup_dailies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
+                  },
+                  "simple_backup_dailies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 0.5952
+                  },
+                  "simple_backup_dailies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 1.1905
+                  },
+                  "simple_backup_dailies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 2.3809
+                  },
+                  "simple_backup_dailies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 4.7619
+                  },
+                  "simple_backup_extra_dailies" : {
+                     "amount" : 1,
+                     "price" : 0.0069
+                  },
+                  "simple_backup_extra_monthlies" : {
+                     "amount" : 1,
+                     "price" : 0.0208
+                  },
+                  "simple_backup_extra_weeklies" : {
+                     "amount" : 1,
+                     "price" : 0.0138
+                  },
+                  "simple_backup_monthlies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 21.4285
+                  },
+                  "simple_backup_monthlies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 28.5714
+                  },
+                  "simple_backup_monthlies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.4464
+                  },
+                  "simple_backup_monthlies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.8928
+                  },
+                  "simple_backup_monthlies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 57.1428
+                  },
+                  "simple_backup_monthlies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 42.8571
+                  },
+                  "simple_backup_monthlies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 1.7857
+                  },
+                  "simple_backup_monthlies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 3.5714
+                  },
+                  "simple_backup_monthlies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 7.1428
+                  },
+                  "simple_backup_monthlies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
+                  },
+                  "simple_backup_weeklies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
+                  },
+                  "simple_backup_weeklies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 19.0476
+                  },
+                  "simple_backup_weeklies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.2976
+                  },
+                  "simple_backup_weeklies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.5952
+                  },
+                  "simple_backup_weeklies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 38.0952
+                  },
+                  "simple_backup_weeklies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 28.5714
+                  },
+                  "simple_backup_weeklies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 1.1904
+                  },
+                  "simple_backup_weeklies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 2.3809
+                  },
+                  "simple_backup_weeklies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 4.7619
+                  },
+                  "simple_backup_weeklies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 9.5238
+                  },
                   "storage_backup" : {
                      "amount" : 1,
                      "price" : 0.0078
@@ -997,6 +2053,138 @@ interactions:
                   "server_plan_8xCPU-32GB" : {
                      "amount" : 1,
                      "price" : 23.8095
+                  },
+                  "simple_backup_dailies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 7.1428
+                  },
+                  "simple_backup_dailies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 9.5238
+                  },
+                  "simple_backup_dailies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.1488
+                  },
+                  "simple_backup_dailies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.2976
+                  },
+                  "simple_backup_dailies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 19.0476
+                  },
+                  "simple_backup_dailies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
+                  },
+                  "simple_backup_dailies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 0.5952
+                  },
+                  "simple_backup_dailies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 1.1905
+                  },
+                  "simple_backup_dailies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 2.3809
+                  },
+                  "simple_backup_dailies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 4.7619
+                  },
+                  "simple_backup_extra_dailies" : {
+                     "amount" : 1,
+                     "price" : 0.0069
+                  },
+                  "simple_backup_extra_monthlies" : {
+                     "amount" : 1,
+                     "price" : 0.0208
+                  },
+                  "simple_backup_extra_weeklies" : {
+                     "amount" : 1,
+                     "price" : 0.0138
+                  },
+                  "simple_backup_monthlies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 21.4285
+                  },
+                  "simple_backup_monthlies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 28.5714
+                  },
+                  "simple_backup_monthlies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.4464
+                  },
+                  "simple_backup_monthlies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.8928
+                  },
+                  "simple_backup_monthlies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 57.1428
+                  },
+                  "simple_backup_monthlies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 42.8571
+                  },
+                  "simple_backup_monthlies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 1.7857
+                  },
+                  "simple_backup_monthlies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 3.5714
+                  },
+                  "simple_backup_monthlies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 7.1428
+                  },
+                  "simple_backup_monthlies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
+                  },
+                  "simple_backup_weeklies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
+                  },
+                  "simple_backup_weeklies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 19.0476
+                  },
+                  "simple_backup_weeklies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.2976
+                  },
+                  "simple_backup_weeklies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.5952
+                  },
+                  "simple_backup_weeklies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 38.0952
+                  },
+                  "simple_backup_weeklies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 28.5714
+                  },
+                  "simple_backup_weeklies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 1.1904
+                  },
+                  "simple_backup_weeklies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 2.3809
+                  },
+                  "simple_backup_weeklies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 4.7619
+                  },
+                  "simple_backup_weeklies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 9.5238
                   },
                   "storage_backup" : {
                      "amount" : 1,
@@ -1109,6 +2297,138 @@ interactions:
                      "amount" : 1,
                      "price" : 23.8095
                   },
+                  "simple_backup_dailies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 7.1428
+                  },
+                  "simple_backup_dailies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 9.5238
+                  },
+                  "simple_backup_dailies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.1488
+                  },
+                  "simple_backup_dailies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.2976
+                  },
+                  "simple_backup_dailies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 19.0476
+                  },
+                  "simple_backup_dailies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
+                  },
+                  "simple_backup_dailies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 0.5952
+                  },
+                  "simple_backup_dailies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 1.1905
+                  },
+                  "simple_backup_dailies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 2.3809
+                  },
+                  "simple_backup_dailies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 4.7619
+                  },
+                  "simple_backup_extra_dailies" : {
+                     "amount" : 1,
+                     "price" : 0.0069
+                  },
+                  "simple_backup_extra_monthlies" : {
+                     "amount" : 1,
+                     "price" : 0.0208
+                  },
+                  "simple_backup_extra_weeklies" : {
+                     "amount" : 1,
+                     "price" : 0.0138
+                  },
+                  "simple_backup_monthlies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 21.4285
+                  },
+                  "simple_backup_monthlies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 28.5714
+                  },
+                  "simple_backup_monthlies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.4464
+                  },
+                  "simple_backup_monthlies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.8928
+                  },
+                  "simple_backup_monthlies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 57.1428
+                  },
+                  "simple_backup_monthlies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 42.8571
+                  },
+                  "simple_backup_monthlies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 1.7857
+                  },
+                  "simple_backup_monthlies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 3.5714
+                  },
+                  "simple_backup_monthlies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 7.1428
+                  },
+                  "simple_backup_monthlies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
+                  },
+                  "simple_backup_weeklies_12xCPU-48GB" : {
+                     "amount" : 1,
+                     "price" : 14.2857
+                  },
+                  "simple_backup_weeklies_16xCPU-64GB" : {
+                     "amount" : 1,
+                     "price" : 19.0476
+                  },
+                  "simple_backup_weeklies_1xCPU-1GB" : {
+                     "amount" : 1,
+                     "price" : 0.2976
+                  },
+                  "simple_backup_weeklies_1xCPU-2GB" : {
+                     "amount" : 1,
+                     "price" : 0.5952
+                  },
+                  "simple_backup_weeklies_20xCPU-128GB" : {
+                     "amount" : 1,
+                     "price" : 38.0952
+                  },
+                  "simple_backup_weeklies_20xCPU-96GB" : {
+                     "amount" : 1,
+                     "price" : 28.5714
+                  },
+                  "simple_backup_weeklies_2xCPU-4GB" : {
+                     "amount" : 1,
+                     "price" : 1.1904
+                  },
+                  "simple_backup_weeklies_4xCPU-8GB" : {
+                     "amount" : 1,
+                     "price" : 2.3809
+                  },
+                  "simple_backup_weeklies_6xCPU-16GB" : {
+                     "amount" : 1,
+                     "price" : 4.7619
+                  },
+                  "simple_backup_weeklies_8xCPU-32GB" : {
+                     "amount" : 1,
+                     "price" : 9.5238
+                  },
                   "storage_backup" : {
                      "amount" : 1,
                      "price" : 0.0078
@@ -1131,11 +2451,11 @@ interactions:
       }
     headers:
       Content-Length:
-      - "30882"
+      - "73120"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Tue, 04 Aug 2020 15:41:52 GMT
+      - Thu, 06 Aug 2020 12:20:34 GMT
       Server:
       - Apache
       Strict-Transport-Security:

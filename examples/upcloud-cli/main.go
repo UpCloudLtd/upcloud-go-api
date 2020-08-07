@@ -87,10 +87,16 @@ func createServer(s *service.Service) error {
 				Tier:    upcloud.StorageTierMaxIOPS,
 			},
 		},
-		IPAddresses: []request.CreateServerIPAddress{
-			{
-				Access: upcloud.IPAddressAccessPrivate,
-				Family: upcloud.IPAddressFamilyIPv4,
+		Networking: &request.CreateServerNetworking{
+			Interfaces: []request.CreateServerInterface{
+				{
+					IPAddresses: []request.CreateServerIPAddress{
+						{
+							Family: upcloud.IPAddressFamilyIPv4,
+						},
+					},
+					Type: upcloud.IPAddressAccessUtility,
+				},
 			},
 		},
 	})

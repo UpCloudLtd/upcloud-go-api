@@ -34,18 +34,34 @@ func TestCreateServerRequest(t *testing.T) {
 				Tier:    upcloud.StorageTierMaxIOPS,
 			},
 		},
-		IPAddresses: []CreateServerIPAddress{
-			{
-				Access: upcloud.IPAddressAccessPrivate,
-				Family: upcloud.IPAddressFamilyIPv4,
-			},
-			{
-				Access: upcloud.IPAddressAccessPublic,
-				Family: upcloud.IPAddressFamilyIPv4,
-			},
-			{
-				Access: upcloud.IPAddressAccessPublic,
-				Family: upcloud.IPAddressFamilyIPv6,
+		SimpleBackup: "0430,monthlies",
+		Metadata:     true,
+		Networking: &CreateServerNetworking{
+			Interfaces: []CreateServerInterface{
+				{
+					IPAddresses: []CreateServerIPAddress{
+						{
+							Family: upcloud.IPAddressFamilyIPv4,
+						},
+					},
+					Type: upcloud.IPAddressAccessPublic,
+				},
+				{
+					IPAddresses: []CreateServerIPAddress{
+						{
+							Family: upcloud.IPAddressFamilyIPv4,
+						},
+					},
+					Type: upcloud.IPAddressAccessUtility,
+				},
+				{
+					IPAddresses: []CreateServerIPAddress{
+						{
+							Family: upcloud.IPAddressFamilyIPv6,
+						},
+					},
+					Type: upcloud.IPAddressAccessPublic,
+				},
 			},
 		},
 		LoginUser: &LoginUser{
@@ -55,28 +71,15 @@ func TestCreateServerRequest(t *testing.T) {
 				"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDJfx4OmD8D6mnPA0BPk2DVlbggEkMvB2cecSttauZuaYX7Vju6PvG+kXrUbTvO09oLQMoNYAk3RinqQLXo9eF7bzZIsgB4ZmKGau84kOpYjguhimkKtZiVTKF53G2pbnpiZUN9wfy3xK2mt/MkacjZ1Tp7lAgRGTfWDoTfQa88kzOJGNPWXd12HIvFtd/1KoS9vm5O0nDLV+5zSBLxEYNDmBlIGu1Y3XXle5ygL1BhfGvqOQnv/TdRZcrOgVGWHADvwEid91/+IycLNMc37uP7TdS6vOihFBMytfmFXAqt4+3AzYNmyc+R392RorFzobZ1UuEFm3gUod2Wvj8pY8d/ negge@palinski",
 			},
 		},
+		RemoteAccessEnabled:  true,
+		RemoteAccessType:     upcloud.RemoteAccessTypeVNC,
+		RemoteAccessPassword: "abcdefgh",
 	}
 
 	expectedJSON := `
 	{
       "server": {
         "hostname": "debian.example.com",
-        "ip_addresses": {
-          "ip_address": [
-            {
-              "access": "private",
-              "family": "IPv4"
-            },
-            {
-              "access": "public",
-              "family": "IPv4"
-            },
-            {
-              "access": "public",
-              "family": "IPv6"
-            }
-          ]
-        },
         "login_user": {
           "create_password": "no",
           "ssh_keys": {
@@ -97,24 +100,84 @@ func TestCreateServerRequest(t *testing.T) {
               "tier": "maxiops"
             }
           ]
-        },
-        "title": "Integration test server #1",
+		},
+		"simple_backup": "0430,monthlies",
+		"metadata": "yes",
+		"networking": {
+			"interfaces": {
+			  "interface": [
+				{
+				  "ip_addresses": { "ip_address": [{ "family": "IPv4" }] },
+				  "type": "public"
+				},
+				{
+				  "ip_addresses": { "ip_address": [{ "family": "IPv4" }] },
+				  "type": "utility"
+				},
+				{
+				  "ip_addresses": { "ip_address": [{ "family": "IPv6" }] },
+				  "type": "public"
+				}
+			  ]
+			}
+		},
+		"title": "Integration test server #1",
+		"remote_access_enabled": "yes",
+		"remote_access_type": "vnc",
+		"remote_access_password": "abcdefgh",
         "zone": "fi-hel2"
       }
     }
 	`
-	actualJSON, err := json.Marshal(&request)
-	assert.Nil(t, err)
+	actualJSON, err := json.MarshalIndent(&request, "", "  ")
+	assert.NoError(t, err)
 	assert.JSONEq(t, expectedJSON, string(actualJSON))
 	assert.Equal(t, "/server", request.RequestURL())
 }
 
-// TestStartServerRequest tests that StartServerRequest objects behave correctly
-func TestStartServerRequest(t *testing.T) {
+// TestStartServerRequest_OmitValues tests that StartServerRequest objects behave correctly
+// when Host and AvoidHost are not specified
+func TestStartServerRequest_OmitValues(t *testing.T) {
 	request := StartServerRequest{
 		UUID:    "foo",
 		Timeout: time.Minute * 5,
 	}
+
+	expectedJSON := `
+	  {
+		  "server": {}
+	  }
+	`
+
+	actualJSON, err := json.Marshal(request)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
+
+	assert.Equal(t, "/server/foo/start", request.RequestURL())
+}
+
+// TestStartServerRequest_WithValues tests that StartServerRequest objects behave correctly
+// when Host and AvoidHost are specified
+func TestStartServerRequest_WithValues(t *testing.T) {
+	request := StartServerRequest{
+		UUID:      "foo",
+		Timeout:   time.Minute * 5,
+		Host:      1010,
+		AvoidHost: 1101,
+	}
+
+	expectedJSON := `
+	  {
+		  "server": {
+			  "host": 1010,
+			  "avoid_host": 1101 
+		  }
+	  }
+	`
+
+	actualJSON, err := json.Marshal(request)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
 
 	assert.Equal(t, "/server/foo/start", request.RequestURL())
 }
@@ -148,6 +211,33 @@ func TestRestartServerRequest(t *testing.T) {
 		Timeout:       time.Minute * 5,
 		StopType:      ServerStopTypeSoft,
 		TimeoutAction: RestartTimeoutActionDestroy,
+		Host:          999,
+	}
+
+	expectedJSON := `
+	  {
+		"restart_server": {
+		  "stop_type": "soft",
+		  "timeout": "300",
+		  "timeout_action": "destroy",
+		  "host": 999
+		}
+	  }
+	`
+	actualJSON, err := json.Marshal(&request)
+	assert.Nil(t, err)
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
+	assert.Equal(t, "/server/foo/restart", request.RequestURL())
+}
+
+// TestRestartServerRequest_OmitHost tests that RestartServerRequest objects behave correctly
+// when Host is omitted
+func TestRestartServerRequest_OmitHost(t *testing.T) {
+	request := RestartServerRequest{
+		UUID:          "foo",
+		Timeout:       time.Minute * 5,
+		StopType:      ServerStopTypeSoft,
+		TimeoutAction: RestartTimeoutActionDestroy,
 	}
 
 	expectedJSON := `
@@ -173,6 +263,7 @@ func TestModifyServerRequest(t *testing.T) {
 		CoreNumber:   8,
 		MemoryAmount: 16384,
 		Plan:         "custom",
+		Metadata:     true,
 	}
 
 	expectedJSON := `
@@ -181,7 +272,9 @@ func TestModifyServerRequest(t *testing.T) {
           "title": "Modified server",
 		  "core_number": "8",
 		  "memory_amount": "16384",
-		  "plan" : "custom"
+		  "plan" : "custom",
+		  "metadata": "yes",
+		  "remote_access_enabled": "no"
 		}
 	  }
 	`

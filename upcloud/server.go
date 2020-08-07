@@ -16,6 +16,9 @@ const (
 
 	StopTypeSoft = "soft"
 	StopTypeHard = "hard"
+
+	RemoteAccessTypeVNC   = "vnc"
+	RemoteAccessTypeSPICE = "spice"
 )
 
 // ServerConfigurations represents a /server_size response
@@ -156,21 +159,23 @@ func (s *ServerStorageDeviceSlice) UnmarshalJSON(b []byte) error {
 type ServerDetails struct {
 	Server
 
-	BootOrder  string `json:"boot_order"`
-	CoreNumber int    `json:"core_number,string"`
+	BootOrder string `json:"boot_order"`
 	// TODO: Convert to boolean
-	Firewall       string                   `json:"firewall"`
-	Host           int                      `json:"host"`
-	IPAddresses    IPAddressSlice           `json:"ip_addresses"`
-	NICModel       string                   `json:"nic_model"`
-	StorageDevices ServerStorageDeviceSlice `json:"storage_devices"`
-	Timezone       string                   `json:"timezone"`
-	VideoModel     string                   `json:"video_model"`
-	// TODO: Convert to boolean
-	VNC         string `json:"vnc"`
-	VNCHost     string `json:"vnc_host"`
-	VNCPassword string `json:"vnc_password"`
-	VNCPort     int    `json:"vnc_port,string"`
+	Firewall             string                   `json:"firewall"`
+	Host                 int                      `json:"host"`
+	IPAddresses          IPAddressSlice           `json:"ip_addresses"`
+	Metadata             Boolean                  `json:"metadata"`
+	NICModel             string                   `json:"nic_model"`
+	Networking           Networking               `json:"networking"`
+	SimpleBackup         string                   `json:"simple_backup"`
+	StorageDevices       ServerStorageDeviceSlice `json:"storage_devices"`
+	Timezone             string                   `json:"timezone"`
+	VideoModel           string                   `json:"video_model"`
+	RemoteAccessEnabled  Boolean                  `json:"remote_access_enabled"`
+	RemoteAccessType     string                   `json:"remote_access_type"`
+	RemoteAccessHost     string                   `json:"remote_access_host"`
+	RemoteAccessPassword string                   `json:"remote_access_password"`
+	RemoteAccessPort     int                      `json:"remote_access_port,string"`
 }
 
 // UnmarshalJSON is a custom unmarshaller that deals with
