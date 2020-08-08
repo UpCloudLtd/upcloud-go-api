@@ -1,0 +1,192 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.3/host
+    method: GET
+  response:
+    body: |
+      {
+         "hosts" : {
+            "host" : [
+               {
+                  "description" : "Test private host #1",
+                  "id" : 6707495555,
+                  "stats" : {
+                     "stat" : [
+                        {
+                           "name" : "cpu_idle",
+                           "timestamp" : "2020-08-08T06:00:24Z",
+                           "value" : 99.7671614583555
+                        },
+                        {
+                           "name" : "memory_free",
+                           "timestamp" : "2020-08-08T06:00:24Z",
+                           "value" : 341
+                        }
+                     ]
+                  },
+                  "windows_enabled" : "no",
+                  "zone" : "uk-tst1"
+               },
+               {
+                  "description" : "Test private host #2",
+                  "id" : 4560011907,
+                  "stats" : {
+                     "stat" : [
+                        {
+                           "name" : "cpu_idle",
+                           "timestamp" : "2020-08-08T06:00:24Z",
+                           "value" : 99.8154861110961
+                        },
+                        {
+                           "name" : "memory_free",
+                           "timestamp" : "2020-08-08T06:00:24Z",
+                           "value" : 344
+                        }
+                     ]
+                  },
+                  "windows_enabled" : "yes",
+                  "zone" : "uk-tst1"
+               }
+            ]
+         }
+      }
+    headers:
+      Content-Length:
+      - "1301"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Sat, 08 Aug 2020 06:00:24 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.3/host/6707495555
+    method: GET
+  response:
+    body: |
+      {
+         "host" : {
+            "description" : "Test private host #1",
+            "id" : 6707495555,
+            "stats" : {
+               "stat" : [
+                  {
+                     "name" : "memory_free",
+                     "timestamp" : "2020-08-08T06:00:37Z",
+                     "value" : 341
+                  }
+               ]
+            },
+            "windows_enabled" : "no",
+            "zone" : "uk-tst1"
+         }
+      }
+    headers:
+      Content-Length:
+      - "358"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Sat, 08 Aug 2020 06:00:24 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"host":{"description":"Test private host #1(modified)"}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.3/host/6707495555
+    method: PATCH
+  response:
+    body: |
+      {
+         "host" : {
+            "description" : "Test private host #1(modified)",
+            "id" : 6707495555,
+            "stats" : {
+               "stat" : []
+            },
+            "windows_enabled" : "no",
+            "zone" : "uk-tst1"
+         }
+      }
+    headers:
+      Content-Length:
+      - "209"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Sat, 08 Aug 2020 06:00:37 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"host":{"description":"Test private host #1"}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.3/host/6707495555
+    method: PATCH
+  response:
+    body: |
+      {
+         "host" : {
+            "description" : "Test private host #1",
+            "id" : 6707495555,
+            "stats" : {
+               "stat" : []
+            },
+            "windows_enabled" : "no",
+            "zone" : "uk-tst1"
+         }
+      }
+    headers:
+      Content-Length:
+      - "199"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Sat, 08 Aug 2020 06:00:37 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""

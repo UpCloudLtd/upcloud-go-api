@@ -20,7 +20,7 @@ interactions:
             },
             "name" : "Testy McRouterface (test)",
             "type" : "normal",
-            "uuid" : "0482fc81-5040-415d-92c4-c4921e0b4280"
+            "uuid" : "04b170fa-b751-45c2-851a-f2984a300343"
          }
       }
     headers:
@@ -29,7 +29,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Fri, 07 Aug 2020 09:08:58 GMT
+      - Sat, 08 Aug 2020 06:02:28 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -45,7 +45,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/router/0482fc81-5040-415d-92c4-c4921e0b4280
+    url: https://api.upcloud.com/1.3/router/04b170fa-b751-45c2-851a-f2984a300343
     method: PATCH
   response:
     body: |
@@ -56,7 +56,7 @@ interactions:
             },
             "name" : "Modified name (test)",
             "type" : "normal",
-            "uuid" : "0482fc81-5040-415d-92c4-c4921e0b4280"
+            "uuid" : "04b170fa-b751-45c2-851a-f2984a300343"
          }
       }
     headers:
@@ -65,7 +65,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Fri, 07 Aug 2020 09:08:58 GMT
+      - Sat, 08 Aug 2020 06:02:29 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -111,22 +111,6 @@ interactions:
                },
                {
                   "attached_networks" : {
-                     "network" : []
-                  },
-                  "name" : "Testy McRouterface",
-                  "type" : "normal",
-                  "uuid" : "04690deb-5aa9-4ff3-997b-84c6d7ba3c0a"
-               },
-               {
-                  "attached_networks" : {
-                     "network" : []
-                  },
-                  "name" : "Modified name (test)",
-                  "type" : "normal",
-                  "uuid" : "0482fc81-5040-415d-92c4-c4921e0b4280"
-               },
-               {
-                  "attached_networks" : {
                      "network" : [
                         {
                            "uuid" : "03baf748-c757-4317-90b4-da92f7f94743"
@@ -144,28 +128,20 @@ interactions:
                   "attached_networks" : {
                      "network" : []
                   },
-                  "name" : "Testy McRouterface",
+                  "name" : "Modified name (test)",
                   "type" : "normal",
-                  "uuid" : "04a557ca-973c-42a8-a3eb-820034bfb916"
-               },
-               {
-                  "attached_networks" : {
-                     "network" : []
-                  },
-                  "name" : "Modified name",
-                  "type" : "normal",
-                  "uuid" : "04ea1b23-c5bf-40f6-890b-052461e4ee60"
+                  "uuid" : "04b170fa-b751-45c2-851a-f2984a300343"
                }
             ]
          }
       }
     headers:
       Content-Length:
-      - "2211"
+      - "1502"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Fri, 07 Aug 2020 09:08:59 GMT
+      - Sat, 08 Aug 2020 06:02:29 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -181,13 +157,13 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/router/0482fc81-5040-415d-92c4-c4921e0b4280
+    url: https://api.upcloud.com/1.3/router/04b170fa-b751-45c2-851a-f2984a300343
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Fri, 07 Aug 2020 09:08:59 GMT
+      - Sat, 08 Aug 2020 06:02:29 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -233,14 +209,6 @@ interactions:
                },
                {
                   "attached_networks" : {
-                     "network" : []
-                  },
-                  "name" : "Testy McRouterface",
-                  "type" : "normal",
-                  "uuid" : "04690deb-5aa9-4ff3-997b-84c6d7ba3c0a"
-               },
-               {
-                  "attached_networks" : {
                      "network" : [
                         {
                            "uuid" : "03baf748-c757-4317-90b4-da92f7f94743"
@@ -253,33 +221,17 @@ interactions:
                   "name" : "Utility network router for zone fi-hel2",
                   "type" : "service",
                   "uuid" : "0495fef9-b234-4819-ac51-431b934037c0"
-               },
-               {
-                  "attached_networks" : {
-                     "network" : []
-                  },
-                  "name" : "Testy McRouterface",
-                  "type" : "normal",
-                  "uuid" : "04a557ca-973c-42a8-a3eb-820034bfb916"
-               },
-               {
-                  "attached_networks" : {
-                     "network" : []
-                  },
-                  "name" : "Modified name",
-                  "type" : "normal",
-                  "uuid" : "04ea1b23-c5bf-40f6-890b-052461e4ee60"
                }
             ]
          }
       }
     headers:
       Content-Length:
-      - "1971"
+      - "1262"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Fri, 07 Aug 2020 09:08:59 GMT
+      - Sat, 08 Aug 2020 06:02:30 GMT
       Server:
       - Apache
       Strict-Transport-Security:

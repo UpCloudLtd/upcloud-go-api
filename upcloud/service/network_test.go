@@ -286,7 +286,7 @@ func TestCreateModifyDeleteRouter(t *testing.T) {
 //     - adds network interfaces in each one server in each network
 //     - verifies the network details in the interfaces is correct
 //     - verifies the servers can be found in the network details
-//     - deletes the servers, the routers and the networks 
+//     - deletes the servers, the routers and the networks
 func TestCreateTwoNetworksTwoServersAndARouter(t *testing.T) {
 	record(t, "createtwonetworkstwoserversandarouter", func(t *testing.T, svc *Service) {
 		network1, err := svc.CreateNetwork(&request.CreateNetworkRequest{

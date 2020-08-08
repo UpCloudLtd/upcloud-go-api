@@ -39,14 +39,6 @@ interactions:
                },
                {
                   "attached_networks" : {
-                     "network" : []
-                  },
-                  "name" : "Testy McRouterface",
-                  "type" : "normal",
-                  "uuid" : "04690deb-5aa9-4ff3-997b-84c6d7ba3c0a"
-               },
-               {
-                  "attached_networks" : {
                      "network" : [
                         {
                            "uuid" : "03baf748-c757-4317-90b4-da92f7f94743"
@@ -59,33 +51,17 @@ interactions:
                   "name" : "Utility network router for zone fi-hel2",
                   "type" : "service",
                   "uuid" : "0495fef9-b234-4819-ac51-431b934037c0"
-               },
-               {
-                  "attached_networks" : {
-                     "network" : []
-                  },
-                  "name" : "Testy McRouterface",
-                  "type" : "normal",
-                  "uuid" : "04a557ca-973c-42a8-a3eb-820034bfb916"
-               },
-               {
-                  "attached_networks" : {
-                     "network" : []
-                  },
-                  "name" : "Modified name",
-                  "type" : "normal",
-                  "uuid" : "04ea1b23-c5bf-40f6-890b-052461e4ee60"
                }
             ]
          }
       }
     headers:
       Content-Length:
-      - "1971"
+      - "1262"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Fri, 07 Aug 2020 08:43:02 GMT
+      - Sat, 08 Aug 2020 06:02:28 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -134,7 +110,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Fri, 07 Aug 2020 08:43:03 GMT
+      - Sat, 08 Aug 2020 06:02:28 GMT
       Server:
       - Apache
       Strict-Transport-Security:

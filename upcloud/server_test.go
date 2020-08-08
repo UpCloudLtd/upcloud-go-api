@@ -262,7 +262,7 @@ func TestUnmarshalServerDetails(t *testing.T) {
 	assert.Equal(t, "0100,dailies", serverDetails.SimpleBackup)
 	assert.True(t, bool(serverDetails.Metadata))
 
-	networkingTestData := []Interface{
+	networkingTestData := []ServerInterface{
 		{
 			Index: 1,
 			IPAddresses: []IPAddress{
