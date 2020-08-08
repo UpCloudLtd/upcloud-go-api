@@ -33,10 +33,6 @@ const (
 	BackupRuleIntervalFriday    = "fri"
 	BackupRuleIntervalSaturday  = "sat"
 	BackupRuleIntervalSunday    = "sun"
-
-	CreateServerStorageDeviceActionCreate = "create"
-	CreateServerStorageDeviceActionClone  = "clone"
-	CreateServerStorageDeviceActionAttach = "attach"
 )
 
 // Storages represents a /storage response
@@ -167,16 +163,4 @@ type ServerStorageDevice struct {
 	Title      string `json:"storage_title"`
 	Type       string `json:"type"`
 	BootDisk   int    `json:"boot_disk,string"`
-}
-
-// CreateServerStorageDevice represents a storage device for a CreateServerRequest
-type CreateServerStorageDevice struct {
-	Action  string `json:"action"`
-	Address string `json:"address,omitempty"`
-	Storage string `json:"storage"`
-	Title   string `json:"title,omitempty"`
-	// Storage size in gigabytes
-	Size int    `json:"size"`
-	Tier string `json:"tier,omitempty"`
-	Type string `json:"type,omitempty"`
 }
