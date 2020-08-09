@@ -20,7 +20,7 @@ interactions:
             },
             "name" : "Testy McRouterface (test)",
             "type" : "normal",
-            "uuid" : "04b170fa-b751-45c2-851a-f2984a300343"
+            "uuid" : "0462f56c-1c5f-47d6-ae2f-9fc29b21d687"
          }
       }
     headers:
@@ -29,7 +29,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sat, 08 Aug 2020 06:02:28 GMT
+      - Sun, 09 Aug 2020 18:21:10 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -45,7 +45,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/router/04b170fa-b751-45c2-851a-f2984a300343
+    url: https://api.upcloud.com/1.3/router/0462f56c-1c5f-47d6-ae2f-9fc29b21d687
     method: PATCH
   response:
     body: |
@@ -56,7 +56,7 @@ interactions:
             },
             "name" : "Modified name (test)",
             "type" : "normal",
-            "uuid" : "04b170fa-b751-45c2-851a-f2984a300343"
+            "uuid" : "0462f56c-1c5f-47d6-ae2f-9fc29b21d687"
          }
       }
     headers:
@@ -65,7 +65,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sat, 08 Aug 2020 06:02:29 GMT
+      - Sun, 09 Aug 2020 18:21:11 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -111,6 +111,14 @@ interactions:
                },
                {
                   "attached_networks" : {
+                     "network" : []
+                  },
+                  "name" : "Modified name (test)",
+                  "type" : "normal",
+                  "uuid" : "0462f56c-1c5f-47d6-ae2f-9fc29b21d687"
+               },
+               {
+                  "attached_networks" : {
                      "network" : [
                         {
                            "uuid" : "03baf748-c757-4317-90b4-da92f7f94743"
@@ -123,14 +131,6 @@ interactions:
                   "name" : "Utility network router for zone fi-hel2",
                   "type" : "service",
                   "uuid" : "0495fef9-b234-4819-ac51-431b934037c0"
-               },
-               {
-                  "attached_networks" : {
-                     "network" : []
-                  },
-                  "name" : "Modified name (test)",
-                  "type" : "normal",
-                  "uuid" : "04b170fa-b751-45c2-851a-f2984a300343"
                }
             ]
          }
@@ -141,7 +141,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sat, 08 Aug 2020 06:02:29 GMT
+      - Sun, 09 Aug 2020 18:21:11 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -157,13 +157,13 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/router/04b170fa-b751-45c2-851a-f2984a300343
+    url: https://api.upcloud.com/1.3/router/0462f56c-1c5f-47d6-ae2f-9fc29b21d687
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Sat, 08 Aug 2020 06:02:29 GMT
+      - Sun, 09 Aug 2020 18:21:11 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -231,7 +231,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sat, 08 Aug 2020 06:02:30 GMT
+      - Sun, 09 Aug 2020 18:21:11 GMT
       Server:
       - Apache
       Strict-Transport-Security:

@@ -2,6 +2,7 @@ package service
 
 import (
 	"log"
+	"net/http"
 	"os"
 	"strings"
 	"testing"
@@ -33,6 +34,10 @@ func record(t *testing.T, fixture string, f func(*testing.T, *Service)) {
 
 	r.AddFilter(func(i *cassette.Interaction) error {
 		delete(i.Request.Headers, "Authorization")
+		if i.Request.Method == http.MethodPut && strings.Contains(i.Request.URL, "uploader") {
+			// We will remove the body from the upload to reduce fixture size
+			i.Request.Body = ""
+		}
 		return nil
 	})
 
@@ -333,6 +338,10 @@ func handleError(err error) {
 
 // Reads the API username and password from the environment, panics if they are not available
 func getCredentials() (string, string) {
+	if os.Getenv("UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS") == "yes" {
+		return "username", "password"
+	}
+
 	user := os.Getenv("UPCLOUD_GO_SDK_TEST_USER")
 	password := os.Getenv("UPCLOUD_GO_SDK_TEST_PASSWORD")
 
