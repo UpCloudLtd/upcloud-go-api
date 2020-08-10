@@ -246,3 +246,37 @@ func TestRestoreBackupRequest(t *testing.T) {
 
 	assert.Equal(t, "/storage/foo/restore", request.RequestURL())
 }
+
+// TestStorageImportRequest tests that StorageImportRequest marshals correctly
+func TestStorageImportRequest(t *testing.T) {
+	request := CreateStorageImportRequest{
+		StorageUUID:    "foo",
+		Source:         StorageImportSourceHTTPImport,
+		SourceLocation: "http://somewhere.com",
+	}
+
+	expectedJSON := `
+	  {
+		  "storage_import": {
+			  "source": "http_import",
+			  "source_location": "http://somewhere.com"
+		  }
+	  }
+	`
+
+	actualJSON, err := json.Marshal(&request)
+	assert.NoError(t, err)
+
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
+
+	assert.Equal(t, "/storage/foo/import", request.RequestURL())
+}
+
+// TestGetStorageImportDetails tests that GetStorageImportDetails objects behave correctly
+func TestGetStorageImportDetails(t *testing.T) {
+	request := GetStorageImportDetailsRequest{
+		UUID: "foo",
+	}
+
+	assert.Equal(t, "/storage/foo/import", request.RequestURL())
+}

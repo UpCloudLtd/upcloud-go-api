@@ -137,6 +137,19 @@ func (c *Client) PerformJSONDeleteRequest(url string) error {
 	return err
 }
 
+// PerformJSONPutUploadRequest performs a PUT request to the specified URL with an io.Reader
+// and returns the response body and eventual errors
+func (c *Client) PerformJSONPutUploadRequest(url string, requestBody io.Reader) ([]byte, error) {
+
+	request, err := http.NewRequest(http.MethodPut, url, requestBody)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return c.performJSONRequest(request)
+}
+
 // Adds common headers to the specified request
 func (c *Client) addJSONRequestHeaders(request *http.Request) *http.Request {
 	request.SetBasicAuth(c.userName, c.password)

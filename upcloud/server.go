@@ -155,6 +155,10 @@ func (s *ServerStorageDeviceSlice) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+// ServerNetworking represents the networking on a server response.
+// It is castable to a Networking struct.
+type ServerNetworking Networking
+
 // ServerDetails represents details about a server
 type ServerDetails struct {
 	Server
@@ -166,7 +170,7 @@ type ServerDetails struct {
 	IPAddresses          IPAddressSlice           `json:"ip_addresses"`
 	Metadata             Boolean                  `json:"metadata"`
 	NICModel             string                   `json:"nic_model"`
-	Networking           Networking               `json:"networking"`
+	Networking           ServerNetworking         `json:"networking"`
 	SimpleBackup         string                   `json:"simple_backup"`
 	StorageDevices       ServerStorageDeviceSlice `json:"storage_devices"`
 	Timezone             string                   `json:"timezone"`

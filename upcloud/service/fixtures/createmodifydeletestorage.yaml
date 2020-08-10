@@ -33,7 +33,7 @@ interactions:
             "tier" : "maxiops",
             "title" : "Test storage",
             "type" : "normal",
-            "uuid" : "01563935-7104-40a5-b5b6-ca069e0c36e0",
+            "uuid" : "01a5e7f8-5ee5-427b-b5e6-4b0c687045a1",
             "zone" : "fi-hel2"
          }
       }
@@ -43,7 +43,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 06 Aug 2020 12:35:46 GMT
+      - Sun, 09 Aug 2020 18:39:59 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -59,7 +59,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/storage/01563935-7104-40a5-b5b6-ca069e0c36e0
+    url: https://api.upcloud.com/1.3/storage/01a5e7f8-5ee5-427b-b5e6-4b0c687045a1
     method: PUT
   response:
     body: |
@@ -83,7 +83,7 @@ interactions:
             "tier" : "maxiops",
             "title" : "New fancy title",
             "type" : "normal",
-            "uuid" : "01563935-7104-40a5-b5b6-ca069e0c36e0",
+            "uuid" : "01a5e7f8-5ee5-427b-b5e6-4b0c687045a1",
             "zone" : "fi-hel2"
          }
       }
@@ -93,7 +93,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 06 Aug 2020 12:35:57 GMT
+      - Sun, 09 Aug 2020 18:40:08 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -109,13 +109,13 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/storage/01563935-7104-40a5-b5b6-ca069e0c36e0
+    url: https://api.upcloud.com/1.3/storage/01a5e7f8-5ee5-427b-b5e6-4b0c687045a1
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Thu, 06 Aug 2020 12:35:57 GMT
+      - Sun, 09 Aug 2020 18:40:08 GMT
       Server:
       - Apache
       Strict-Transport-Security:

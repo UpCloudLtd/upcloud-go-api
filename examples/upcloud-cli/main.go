@@ -78,9 +78,9 @@ func createServer(s *service.Service) error {
 		Title:    fmt.Sprintf("example-cli-server-%04d", rand.Int31n(1000)),
 		Zone:     "fi-hel2",
 		Plan:     "1xCPU-1GB",
-		StorageDevices: []upcloud.CreateServerStorageDevice{
+		StorageDevices: []request.CreateServerStorageDevice{
 			{
-				Action:  upcloud.CreateServerStorageDeviceActionClone,
+				Action:  request.CreateServerStorageDeviceActionClone,
 				Storage: "01000000-0000-4000-8000-000050010400",
 				Title:   "Centos8 from a template",
 				Size:    50,
@@ -95,7 +95,7 @@ func createServer(s *service.Service) error {
 							Family: upcloud.IPAddressFamilyIPv4,
 						},
 					},
-					Type: upcloud.IPAddressAccessUtility,
+					Type: upcloud.NetworkTypeUtility,
 				},
 			},
 		},
