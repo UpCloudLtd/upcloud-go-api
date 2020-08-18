@@ -262,7 +262,7 @@ func TestUnmarshalServerDetails(t *testing.T) {
 	assert.Equal(t, "0100,dailies", serverDetails.SimpleBackup)
 	assert.True(t, bool(serverDetails.Metadata))
 
-	networkingTestData := []Interface{
+	networkingTestData := []ServerInterface{
 		{
 			Index: 1,
 			IPAddresses: []IPAddress{
@@ -274,7 +274,7 @@ func TestUnmarshalServerDetails(t *testing.T) {
 			},
 			MAC:      "de:ff:ff:ff:66:89",
 			Network:  "037fcf2a-6745-45dd-867e-f9479ea8c044",
-			Type:     IPAddressAccessPublic,
+			Type:     NetworkTypePublic,
 			Bootable: false,
 		},
 		{
@@ -288,7 +288,7 @@ func TestUnmarshalServerDetails(t *testing.T) {
 			},
 			MAC:      "de:ff:ff:ff:ed:85",
 			Network:  "03000000-0000-4000-8045-000000000000",
-			Type:     IPAddressAccessUtility,
+			Type:     NetworkTypeUtility,
 			Bootable: false,
 		},
 		{
@@ -302,7 +302,7 @@ func TestUnmarshalServerDetails(t *testing.T) {
 			},
 			MAC:      "de:ff:ff:ff:cc:20",
 			Network:  "03c93fd8-cc60-4849-91b8-6e404b228e2a",
-			Type:     "public",
+			Type:     NetworkTypePublic,
 			Bootable: false,
 		},
 	}

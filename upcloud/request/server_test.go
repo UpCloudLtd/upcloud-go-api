@@ -25,9 +25,9 @@ func TestCreateServerRequest(t *testing.T) {
 		Title:            "Integration test server #1",
 		Hostname:         "debian.example.com",
 		PasswordDelivery: PasswordDeliveryNone,
-		StorageDevices: []upcloud.CreateServerStorageDevice{
+		StorageDevices: []CreateServerStorageDevice{
 			{
-				Action:  upcloud.CreateServerStorageDeviceActionClone,
+				Action:  CreateServerStorageDeviceActionClone,
 				Storage: "01000000-0000-4000-8000-000030060200",
 				Title:   "disk1",
 				Size:    30,

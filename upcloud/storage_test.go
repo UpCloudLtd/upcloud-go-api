@@ -168,3 +168,50 @@ func TestUnmarshalStorageDetails(t *testing.T) {
 	assert.Equal(t, 1, len(storageDeviceDetails.ServerUUIDs))
 	assert.Equal(t, "00798b85-efdc-41ca-8021-f6ef457b8531", storageDeviceDetails.ServerUUIDs[0])
 }
+
+// TestUnmarshalStorageImport tests that StorageImport struct is unmarshaled correctly
+func TestUnmarshalStorageImport(t *testing.T) {
+	originalJSON := `
+	  {
+		"storage_import": {
+		  "client_content_length": 1,
+		  "client_content_type": "abc",
+		  "completed": "def",
+		  "created": "2020-06-26T08:51:07Z",
+		  "direct_upload_url": "https://fi-hel1.img.upcloud.com/uploader/session/07a6c9a3-300e-4d0e-b935-624f3dbdff3f",
+		  "error_code": "ghi",
+		  "error_message": "jkl",
+		  "md5sum": "mno",
+		  "read_bytes": 2,
+		  "sha256sum": "pqr",
+		  "source": "direct_upload",
+		  "state": "prepared",
+		  "uuid": "07a6c9a3-300e-4d0e-b935-624f3dbdff3f",
+		  "written_bytes": 3 
+		}
+	  }
+	`
+
+	storageImport := StorageImportDetails{}
+	err := json.Unmarshal([]byte(originalJSON), &storageImport)
+	assert.NoError(t, err)
+
+	testStorageImport := StorageImportDetails{
+		ClientContentLength: 1,
+		ClientContentType:   "abc",
+		Completed:           "def",
+		Created:             timeParse("2020-06-26T08:51:07Z"),
+		DirectUploadURL:     "https://fi-hel1.img.upcloud.com/uploader/session/07a6c9a3-300e-4d0e-b935-624f3dbdff3f",
+		ErrorCode:           "ghi",
+		ErrorMessage:        "jkl",
+		MD5Sum:              "mno",
+		ReadBytes:           2,
+		SHA256Sum:           "pqr",
+		Source:              StorageImportSourceDirectUpload,
+		State:               "prepared",
+		UUID:                "07a6c9a3-300e-4d0e-b935-624f3dbdff3f",
+		WrittenBytes:        3,
+	}
+
+	assert.Equal(t, testStorageImport, storageImport)
+}

@@ -1,0 +1,203 @@
+---
+version: 1
+interactions:
+- request:
+    body: '{"storage":{"size":"10","tier":"maxiops","title":"Direct Upload (test)","zone":"fi-hel2"}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.3/storage
+    method: POST
+  response:
+    body: |
+      {
+         "storage" : {
+            "access" : "private",
+            "backup_rule" : {},
+            "backups" : {
+               "backup" : []
+            },
+            "license" : 0,
+            "servers" : {
+               "server" : []
+            },
+            "size" : 10,
+            "state" : "online",
+            "tier" : "maxiops",
+            "title" : "Direct Upload (test)",
+            "type" : "normal",
+            "uuid" : "016a68ef-6858-49ea-9362-6305768a9c1a",
+            "zone" : "fi-hel2"
+         }
+      }
+    headers:
+      Content-Length:
+      - "421"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Sun, 09 Aug 2020 18:26:51 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: '{"storage_import":{"source":"direct_upload"}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.3/storage/016a68ef-6858-49ea-9362-6305768a9c1a/import
+    method: POST
+  response:
+    body: |
+      {
+         "storage_import" : {
+            "client_content_length" : 0,
+            "client_content_type" : "",
+            "completed" : "",
+            "created" : "2020-08-09T18:27:02Z",
+            "direct_upload_url" : "https://fi-hel1.img.upcloud.com/uploader/session/07247cb7-83b8-4ed4-aa60-c2e58956a3c3",
+            "error_code" : "",
+            "error_message" : "",
+            "md5sum" : "",
+            "read_bytes" : 0,
+            "sha256sum" : "",
+            "source" : "direct_upload",
+            "state" : "prepared",
+            "uuid" : "07247cb7-83b8-4ed4-aa60-c2e58956a3c3",
+            "written_bytes" : 0
+         }
+      }
+    headers:
+      Content-Length:
+      - "550"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Sun, 09 Aug 2020 18:27:02 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://fi-hel1.img.upcloud.com/uploader/session/07247cb7-83b8-4ed4-aa60-c2e58956a3c3
+    method: PUT
+  response:
+    body: '{"written_bytes":100000000,"md5sum":"0f86d7c5a6180cf9584c1d21144d85b0","sha256sum":"a993f8c574e0fea8c1cdcbcd9408d9e2e107ee6e4d120edcfa11decd53fa0cae"}'
+    headers:
+      Content-Length:
+      - "150"
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 09 Aug 2020 18:29:22 GMT
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.3/storage/016a68ef-6858-49ea-9362-6305768a9c1a/import
+    method: GET
+  response:
+    body: |
+      {
+         "storage_import" : {
+            "client_content_length" : 0,
+            "client_content_type" : "application/json",
+            "completed" : "2020-08-09T18:28:04Z",
+            "created" : "2020-08-09T18:27:02Z",
+            "direct_upload_url" : "https://fi-hel1.img.upcloud.com/uploader/session/07247cb7-83b8-4ed4-aa60-c2e58956a3c3",
+            "error_code" : "",
+            "error_message" : "",
+            "md5sum" : "0f86d7c5a6180cf9584c1d21144d85b0",
+            "read_bytes" : 100000000,
+            "sha256sum" : "a993f8c574e0fea8c1cdcbcd9408d9e2e107ee6e4d120edcfa11decd53fa0cae",
+            "source" : "direct_upload",
+            "state" : "completed",
+            "uuid" : "07247cb7-83b8-4ed4-aa60-c2e58956a3c3",
+            "written_bytes" : 100000000
+         }
+      }
+    headers:
+      Content-Length:
+      - "699"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Sun, 09 Aug 2020 18:28:04 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.3/storage/016a68ef-6858-49ea-9362-6305768a9c1a/import
+    method: GET
+  response:
+    body: |
+      {
+         "storage_import" : {
+            "client_content_length" : 0,
+            "client_content_type" : "application/json",
+            "completed" : "2020-08-09T18:28:04Z",
+            "created" : "2020-08-09T18:27:02Z",
+            "direct_upload_url" : "https://fi-hel1.img.upcloud.com/uploader/session/07247cb7-83b8-4ed4-aa60-c2e58956a3c3",
+            "error_code" : "",
+            "error_message" : "",
+            "md5sum" : "0f86d7c5a6180cf9584c1d21144d85b0",
+            "read_bytes" : 100000000,
+            "sha256sum" : "a993f8c574e0fea8c1cdcbcd9408d9e2e107ee6e4d120edcfa11decd53fa0cae",
+            "source" : "direct_upload",
+            "state" : "completed",
+            "uuid" : "07247cb7-83b8-4ed4-aa60-c2e58956a3c3",
+            "written_bytes" : 100000000
+         }
+      }
+    headers:
+      Content-Length:
+      - "699"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Sun, 09 Aug 2020 18:28:05 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""

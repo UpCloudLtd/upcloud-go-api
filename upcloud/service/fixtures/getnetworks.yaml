@@ -1,0 +1,3435 @@
+---
+version: 1
+interactions:
+- request:
+    body: '{"server":{"hostname":"uploud-go-sdk-integration-test-testgetnetworks.example.com","metadata":"no","networking":{"interfaces":{"interface":[{"ip_addresses":{"ip_address":[{"family":"IPv4"}]},"type":"utility"},{"ip_addresses":{"ip_address":[{"family":"IPv4"}]},"type":"public"},{"ip_addresses":{"ip_address":[{"family":"IPv6"}]},"type":"public"}]}},"password_delivery":"none","storage_devices":{"storage_device":[{"action":"clone","storage":"01000000-0000-4000-8000-000030060200","title":"disk1","size":30,"tier":"maxiops"}]},"title":"uploud-go-sdk-integration-test-TestGetNetworks","remote_access_enabled":"no","zone":"fi-hel2"}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.3/server
+    method: POST
+  response:
+    body: |
+      {
+         "server" : {
+            "boot_order" : "disk",
+            "core_number" : "1",
+            "created" : 1596997154,
+            "firewall" : "off",
+            "hostname" : "uploud-go-sdk-integration-test-testgetnetworks.example.com",
+            "ip_addresses" : {
+               "ip_address" : [
+                  {
+                     "access" : "utility",
+                     "address" : "10.6.5.158",
+                     "family" : "IPv4"
+                  },
+                  {
+                     "access" : "public",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:0ea0",
+                     "family" : "IPv6"
+                  },
+                  {
+                     "access" : "public",
+                     "address" : "94.237.104.18",
+                     "family" : "IPv4"
+                  }
+               ]
+            },
+            "license" : 0,
+            "memory_amount" : "1024",
+            "metadata" : "no",
+            "networking" : {
+               "interfaces" : {
+                  "interface" : [
+                     {
+                        "bootable" : "no",
+                        "index" : 1,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "10.6.5.158",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:b1:bb",
+                        "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
+                        "source_ip_filtering" : "yes",
+                        "type" : "utility"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 2,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "94.237.104.18",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:79:a3",
+                        "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 3,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:0ea0",
+                                 "family" : "IPv6",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:0e:a0",
+                        "network" : "03000000-0000-4000-8046-000000000000",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     }
+                  ]
+               }
+            },
+            "nic_model" : "virtio",
+            "password" : "p33r3wx6",
+            "plan" : "custom",
+            "plan_ipv4_bytes" : "0",
+            "plan_ipv6_bytes" : "0",
+            "progress" : "0",
+            "remote_access_enabled" : "no",
+            "remote_access_password" : "AsTad9J4",
+            "remote_access_type" : "vnc",
+            "simple_backup" : "no",
+            "state" : "maintenance",
+            "storage_devices" : {
+               "storage_device" : [
+                  {
+                     "address" : "virtio:0",
+                     "boot_disk" : "0",
+                     "storage" : "01c5167a-6a13-4ac7-b3eb-715793f9af98",
+                     "storage_size" : 30,
+                     "storage_title" : "disk1",
+                     "type" : "disk"
+                  }
+               ]
+            },
+            "tags" : {
+               "tag" : []
+            },
+            "timezone" : "UTC",
+            "title" : "uploud-go-sdk-integration-test-TestGetNetworks",
+            "username" : "root",
+            "uuid" : "00f98dd0-fa3e-4f5f-a001-02b81e7de9b1",
+            "video_model" : "cirrus",
+            "zone" : "fi-hel2"
+         }
+      }
+    headers:
+      Content-Length:
+      - "3801"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Sun, 09 Aug 2020 18:19:14 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 202 Accepted
+    code: 202
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.3/server/00f98dd0-fa3e-4f5f-a001-02b81e7de9b1
+    method: GET
+  response:
+    body: |
+      {
+         "server" : {
+            "boot_order" : "disk",
+            "core_number" : "1",
+            "created" : 1596997154,
+            "firewall" : "off",
+            "hostname" : "uploud-go-sdk-integration-test-testgetnetworks.example.com",
+            "ip_addresses" : {
+               "ip_address" : [
+                  {
+                     "access" : "utility",
+                     "address" : "10.6.5.158",
+                     "family" : "IPv4"
+                  },
+                  {
+                     "access" : "public",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:0ea0",
+                     "family" : "IPv6"
+                  },
+                  {
+                     "access" : "public",
+                     "address" : "94.237.104.18",
+                     "family" : "IPv4"
+                  }
+               ]
+            },
+            "license" : 0,
+            "memory_amount" : "1024",
+            "metadata" : "no",
+            "networking" : {
+               "interfaces" : {
+                  "interface" : [
+                     {
+                        "bootable" : "no",
+                        "index" : 1,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "10.6.5.158",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:b1:bb",
+                        "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
+                        "source_ip_filtering" : "yes",
+                        "type" : "utility"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 2,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "94.237.104.18",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:79:a3",
+                        "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 3,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:0ea0",
+                                 "family" : "IPv6",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:0e:a0",
+                        "network" : "03000000-0000-4000-8046-000000000000",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     }
+                  ]
+               }
+            },
+            "nic_model" : "virtio",
+            "plan" : "custom",
+            "plan_ipv4_bytes" : "0",
+            "plan_ipv6_bytes" : "0",
+            "progress" : "85",
+            "remote_access_enabled" : "no",
+            "remote_access_password" : "AsTad9J4",
+            "remote_access_type" : "vnc",
+            "simple_backup" : "no",
+            "state" : "maintenance",
+            "storage_devices" : {
+               "storage_device" : [
+                  {
+                     "address" : "virtio:0",
+                     "boot_disk" : "0",
+                     "storage" : "01c5167a-6a13-4ac7-b3eb-715793f9af98",
+                     "storage_size" : 30,
+                     "storage_title" : "disk1",
+                     "type" : "disk"
+                  }
+               ]
+            },
+            "tags" : {
+               "tag" : []
+            },
+            "timezone" : "UTC",
+            "title" : "uploud-go-sdk-integration-test-TestGetNetworks",
+            "uuid" : "00f98dd0-fa3e-4f5f-a001-02b81e7de9b1",
+            "video_model" : "cirrus",
+            "zone" : "fi-hel2"
+         }
+      }
+    headers:
+      Content-Length:
+      - "3744"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Sun, 09 Aug 2020 18:19:20 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.3/server/00f98dd0-fa3e-4f5f-a001-02b81e7de9b1
+    method: GET
+  response:
+    body: |
+      {
+         "server" : {
+            "boot_order" : "disk",
+            "core_number" : "1",
+            "created" : 1596997154,
+            "firewall" : "off",
+            "hostname" : "uploud-go-sdk-integration-test-testgetnetworks.example.com",
+            "ip_addresses" : {
+               "ip_address" : [
+                  {
+                     "access" : "utility",
+                     "address" : "10.6.5.158",
+                     "family" : "IPv4"
+                  },
+                  {
+                     "access" : "public",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:0ea0",
+                     "family" : "IPv6"
+                  },
+                  {
+                     "access" : "public",
+                     "address" : "94.237.104.18",
+                     "family" : "IPv4"
+                  }
+               ]
+            },
+            "license" : 0,
+            "memory_amount" : "1024",
+            "metadata" : "no",
+            "networking" : {
+               "interfaces" : {
+                  "interface" : [
+                     {
+                        "bootable" : "no",
+                        "index" : 1,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "10.6.5.158",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:b1:bb",
+                        "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
+                        "source_ip_filtering" : "yes",
+                        "type" : "utility"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 2,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "94.237.104.18",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:79:a3",
+                        "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 3,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:0ea0",
+                                 "family" : "IPv6",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:0e:a0",
+                        "network" : "03000000-0000-4000-8046-000000000000",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     }
+                  ]
+               }
+            },
+            "nic_model" : "virtio",
+            "plan" : "custom",
+            "plan_ipv4_bytes" : "0",
+            "plan_ipv6_bytes" : "0",
+            "progress" : "95",
+            "remote_access_enabled" : "no",
+            "remote_access_password" : "AsTad9J4",
+            "remote_access_type" : "vnc",
+            "simple_backup" : "no",
+            "state" : "maintenance",
+            "storage_devices" : {
+               "storage_device" : [
+                  {
+                     "address" : "virtio:0",
+                     "boot_disk" : "0",
+                     "storage" : "01c5167a-6a13-4ac7-b3eb-715793f9af98",
+                     "storage_size" : 30,
+                     "storage_title" : "disk1",
+                     "type" : "disk"
+                  }
+               ]
+            },
+            "tags" : {
+               "tag" : []
+            },
+            "timezone" : "UTC",
+            "title" : "uploud-go-sdk-integration-test-TestGetNetworks",
+            "uuid" : "00f98dd0-fa3e-4f5f-a001-02b81e7de9b1",
+            "video_model" : "cirrus",
+            "zone" : "fi-hel2"
+         }
+      }
+    headers:
+      Content-Length:
+      - "3744"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Sun, 09 Aug 2020 18:19:25 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.3/server/00f98dd0-fa3e-4f5f-a001-02b81e7de9b1
+    method: GET
+  response:
+    body: |
+      {
+         "server" : {
+            "boot_order" : "disk",
+            "core_number" : "1",
+            "created" : 1596997154,
+            "firewall" : "off",
+            "hostname" : "uploud-go-sdk-integration-test-testgetnetworks.example.com",
+            "ip_addresses" : {
+               "ip_address" : [
+                  {
+                     "access" : "utility",
+                     "address" : "10.6.5.158",
+                     "family" : "IPv4"
+                  },
+                  {
+                     "access" : "public",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:0ea0",
+                     "family" : "IPv6"
+                  },
+                  {
+                     "access" : "public",
+                     "address" : "94.237.104.18",
+                     "family" : "IPv4"
+                  }
+               ]
+            },
+            "license" : 0,
+            "memory_amount" : "1024",
+            "metadata" : "no",
+            "networking" : {
+               "interfaces" : {
+                  "interface" : [
+                     {
+                        "bootable" : "no",
+                        "index" : 1,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "10.6.5.158",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:b1:bb",
+                        "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
+                        "source_ip_filtering" : "yes",
+                        "type" : "utility"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 2,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "94.237.104.18",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:79:a3",
+                        "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 3,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:0ea0",
+                                 "family" : "IPv6",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:0e:a0",
+                        "network" : "03000000-0000-4000-8046-000000000000",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     }
+                  ]
+               }
+            },
+            "nic_model" : "virtio",
+            "plan" : "custom",
+            "plan_ipv4_bytes" : "0",
+            "plan_ipv6_bytes" : "0",
+            "remote_access_enabled" : "no",
+            "remote_access_password" : "AsTad9J4",
+            "remote_access_type" : "vnc",
+            "simple_backup" : "no",
+            "state" : "maintenance",
+            "storage_devices" : {
+               "storage_device" : [
+                  {
+                     "address" : "virtio:0",
+                     "boot_disk" : "0",
+                     "storage" : "01c5167a-6a13-4ac7-b3eb-715793f9af98",
+                     "storage_size" : 30,
+                     "storage_title" : "disk1",
+                     "type" : "disk"
+                  }
+               ]
+            },
+            "tags" : {
+               "tag" : []
+            },
+            "timezone" : "UTC",
+            "title" : "uploud-go-sdk-integration-test-TestGetNetworks",
+            "uuid" : "00f98dd0-fa3e-4f5f-a001-02b81e7de9b1",
+            "video_model" : "cirrus",
+            "zone" : "fi-hel2"
+         }
+      }
+    headers:
+      Content-Length:
+      - "3719"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Sun, 09 Aug 2020 18:19:31 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.3/server/00f98dd0-fa3e-4f5f-a001-02b81e7de9b1
+    method: GET
+  response:
+    body: |
+      {
+         "server" : {
+            "boot_order" : "disk",
+            "core_number" : "1",
+            "created" : 1596997154,
+            "firewall" : "off",
+            "hostname" : "uploud-go-sdk-integration-test-testgetnetworks.example.com",
+            "ip_addresses" : {
+               "ip_address" : [
+                  {
+                     "access" : "utility",
+                     "address" : "10.6.5.158",
+                     "family" : "IPv4"
+                  },
+                  {
+                     "access" : "public",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:0ea0",
+                     "family" : "IPv6"
+                  },
+                  {
+                     "access" : "public",
+                     "address" : "94.237.104.18",
+                     "family" : "IPv4"
+                  }
+               ]
+            },
+            "license" : 0,
+            "memory_amount" : "1024",
+            "metadata" : "no",
+            "networking" : {
+               "interfaces" : {
+                  "interface" : [
+                     {
+                        "bootable" : "no",
+                        "index" : 1,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "10.6.5.158",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:b1:bb",
+                        "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
+                        "source_ip_filtering" : "yes",
+                        "type" : "utility"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 2,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "94.237.104.18",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:79:a3",
+                        "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 3,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:0ea0",
+                                 "family" : "IPv6",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:0e:a0",
+                        "network" : "03000000-0000-4000-8046-000000000000",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     }
+                  ]
+               }
+            },
+            "nic_model" : "virtio",
+            "plan" : "custom",
+            "plan_ipv4_bytes" : "0",
+            "plan_ipv6_bytes" : "0",
+            "remote_access_enabled" : "no",
+            "remote_access_password" : "AsTad9J4",
+            "remote_access_type" : "vnc",
+            "simple_backup" : "no",
+            "state" : "maintenance",
+            "storage_devices" : {
+               "storage_device" : [
+                  {
+                     "address" : "virtio:0",
+                     "boot_disk" : "0",
+                     "storage" : "01c5167a-6a13-4ac7-b3eb-715793f9af98",
+                     "storage_size" : 30,
+                     "storage_title" : "disk1",
+                     "type" : "disk"
+                  }
+               ]
+            },
+            "tags" : {
+               "tag" : []
+            },
+            "timezone" : "UTC",
+            "title" : "uploud-go-sdk-integration-test-TestGetNetworks",
+            "uuid" : "00f98dd0-fa3e-4f5f-a001-02b81e7de9b1",
+            "video_model" : "cirrus",
+            "zone" : "fi-hel2"
+         }
+      }
+    headers:
+      Content-Length:
+      - "3719"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Sun, 09 Aug 2020 18:19:36 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.3/server/00f98dd0-fa3e-4f5f-a001-02b81e7de9b1
+    method: GET
+  response:
+    body: |
+      {
+         "server" : {
+            "boot_order" : "disk",
+            "core_number" : "1",
+            "created" : 1596997154,
+            "firewall" : "off",
+            "host" : 5201216131,
+            "hostname" : "uploud-go-sdk-integration-test-testgetnetworks.example.com",
+            "ip_addresses" : {
+               "ip_address" : [
+                  {
+                     "access" : "utility",
+                     "address" : "10.6.5.158",
+                     "family" : "IPv4"
+                  },
+                  {
+                     "access" : "public",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:0ea0",
+                     "family" : "IPv6"
+                  },
+                  {
+                     "access" : "public",
+                     "address" : "94.237.104.18",
+                     "family" : "IPv4"
+                  }
+               ]
+            },
+            "license" : 0,
+            "memory_amount" : "1024",
+            "metadata" : "no",
+            "networking" : {
+               "interfaces" : {
+                  "interface" : [
+                     {
+                        "bootable" : "no",
+                        "index" : 1,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "10.6.5.158",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:b1:bb",
+                        "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
+                        "source_ip_filtering" : "yes",
+                        "type" : "utility"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 2,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "94.237.104.18",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:79:a3",
+                        "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     },
+                     {
+                        "bootable" : "no",
+                        "index" : 3,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:0ea0",
+                                 "family" : "IPv6",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "ee:1b:db:ca:0e:a0",
+                        "network" : "03000000-0000-4000-8046-000000000000",
+                        "source_ip_filtering" : "yes",
+                        "type" : "public"
+                     }
+                  ]
+               }
+            },
+            "nic_model" : "virtio",
+            "plan" : "custom",
+            "plan_ipv4_bytes" : "0",
+            "plan_ipv6_bytes" : "0",
+            "remote_access_enabled" : "no",
+            "remote_access_password" : "AsTad9J4",
+            "remote_access_type" : "vnc",
+            "simple_backup" : "no",
+            "state" : "started",
+            "storage_devices" : {
+               "storage_device" : [
+                  {
+                     "address" : "virtio:0",
+                     "boot_disk" : "0",
+                     "storage" : "01c5167a-6a13-4ac7-b3eb-715793f9af98",
+                     "storage_size" : 30,
+                     "storage_title" : "disk1",
+                     "type" : "disk"
+                  }
+               ]
+            },
+            "tags" : {
+               "tag" : []
+            },
+            "timezone" : "UTC",
+            "title" : "uploud-go-sdk-integration-test-TestGetNetworks",
+            "uuid" : "00f98dd0-fa3e-4f5f-a001-02b81e7de9b1",
+            "video_model" : "cirrus",
+            "zone" : "fi-hel2"
+         }
+      }
+    headers:
+      Content-Length:
+      - "3742"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Sun, 09 Aug 2020 18:19:41 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.3/network
+    method: GET
+  response:
+    body: |
+      {
+         "networks" : {
+            "network" : [
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "80.69.172.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "80.69.172.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 80.69.172.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8001-000000000000",
+                  "zone" : "fi-hel1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "185.20.136.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "185.20.136.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 185.20.136.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8002-000000000000",
+                  "zone" : "fi-hel1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "185.26.48.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "185.26.48.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 185.26.48.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8003-000000000000",
+                  "zone" : "fi-hel1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.1.0.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.1.0.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.1.0.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8004-000000000000",
+                  "zone" : "fi-hel1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.1.4.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.1.4.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.1.4.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8005-000000000000",
+                  "zone" : "fi-hel1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.1.8.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.1.8.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.1.8.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8006-000000000000",
+                  "zone" : "fi-hel1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "83.136.248.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "83.136.248.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 83.136.248.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8008-000000000000",
+                  "zone" : "uk-lon1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "83.136.252.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "83.136.252.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 83.136.252.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8009-000000000000",
+                  "zone" : "uk-lon1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.2.0.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.2.0.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.2.0.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8010-000000000000",
+                  "zone" : "uk-lon1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.2.4.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.2.4.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.2.4.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8011-000000000000",
+                  "zone" : "uk-lon1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "38.100.118.0/24",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "38.100.118.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 38.100.118.0/24",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8012-000000000000",
+                  "zone" : "us-chi1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "38.100.119.0/24",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "38.100.119.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 38.100.119.0/24",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8013-000000000000",
+                  "zone" : "us-chi1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.3.0.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.3.0.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.3.0.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8014-000000000000",
+                  "zone" : "us-chi1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "2a04:3540:1000:310::/64",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "2a04:3540:53::1",
+                              "2a04:3544:53::1"
+                           ],
+                           "family" : "IPv6",
+                           "gateway" : "2a04:3540:1000:310::1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 2a04:3540:1000:310::/64",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8015-000000000000",
+                  "zone" : "fi-hel1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "2a04:3541:1000:500::/64",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "2a04:3540:53::1",
+                              "2a04:3544:53::1"
+                           ],
+                           "family" : "IPv6",
+                           "gateway" : "2a04:3541:1000:500::1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 2a04:3541:1000:500::/64",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8016-000000000000",
+                  "zone" : "uk-lon1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "2605:7380:1000:1310::/64",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "2a04:3540:53::1",
+                              "2a04:3544:53::1"
+                           ],
+                           "family" : "IPv6",
+                           "gateway" : "2605:7380:1000:1310::1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 2605:7380:1000:1310::/64",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8017-000000000000",
+                  "zone" : "us-chi1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.24.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.24.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.24.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8018-000000000000",
+                  "zone" : "de-fra1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "2a04:3542:1000:910::/64",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "2a04:3540:53::1",
+                              "2a04:3544:53::1"
+                           ],
+                           "family" : "IPv6",
+                           "gateway" : "2a04:3542:1000:910::1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 2a04:3542:1000:910::/64",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8019-000000000000",
+                  "zone" : "de-fra1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.4.0.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.4.0.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.4.0.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8020-000000000000",
+                  "zone" : "de-fra1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "209.50.48.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "209.50.48.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 209.50.48.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8021-000000000000",
+                  "zone" : "us-chi1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.32.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.32.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.32.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8023-000000000000",
+                  "zone" : "fi-hel1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.4.4.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.4.4.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.4.4.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8026-000000000000",
+                  "zone" : "de-fra1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.28.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.28.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.28.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8027-000000000000",
+                  "zone" : "de-fra1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.64.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.64.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.64.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8028-000000000000",
+                  "zone" : "sg-sin1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.10.0.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.10.0.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.10.0.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8029-000000000000",
+                  "zone" : "sg-sin1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "2a04:3543:1000:2310::/64",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "2a04:3540:53::1",
+                              "2a04:3544:53::1"
+                           ],
+                           "family" : "IPv6",
+                           "gateway" : "2a04:3543:1000:2310::1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 2a04:3543:1000:2310::/64",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8030-000000000000",
+                  "zone" : "sg-sin1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.40.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.40.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.40.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8031-000000000000",
+                  "zone" : "nl-ams1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.5.0.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.5.0.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.5.0.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8032-000000000000",
+                  "zone" : "nl-ams1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "2a04:3544:1000:1510::/64",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "2a04:3540:53::1",
+                              "2a04:3544:53::1"
+                           ],
+                           "family" : "IPv6",
+                           "gateway" : "2a04:3544:1000:1510::1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 2a04:3544:1000:1510::/64",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8033-000000000000",
+                  "zone" : "nl-ams1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.1.12.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.1.12.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.1.12.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8034-000000000000",
+                  "zone" : "fi-hel1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.36.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.36.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.36.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8035-000000000000",
+                  "zone" : "fi-hel1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.1.16.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.1.16.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.1.16.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8036-000000000000",
+                  "zone" : "fi-hel1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.80.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.80.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.80.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8039-000000000000",
+                  "zone" : "de-fra1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.4.8.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.4.8.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.4.8.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8040-000000000000",
+                  "zone" : "de-fra1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.8.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.8.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.8.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8044-000000000000",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.6.0.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.6.0.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.6.0.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8045-000000000000",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "2a04:3545:1000:720::/64",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "2a04:3540:53::1",
+                              "2a04:3544:53::1"
+                           ],
+                           "family" : "IPv6",
+                           "gateway" : "2a04:3545:1000:720::1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 2a04:3545:1000:720::/64",
+                  "servers" : {
+                     "server" : [
+                        {
+                           "title" : "uploud-go-sdk-integration-test-TestGetNetworks",
+                           "uuid" : "00f98dd0-fa3e-4f5f-a001-02b81e7de9b1"
+                        }
+                     ]
+                  },
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8046-000000000000",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.3.4.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.3.4.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.3.4.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8047-000000000000",
+                  "zone" : "us-chi1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.3.8.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.3.8.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.3.8.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8048-000000000000",
+                  "zone" : "us-chi1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "209.50.52.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "209.50.52.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 209.50.52.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8049-000000000000",
+                  "zone" : "us-chi1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "209.50.56.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "209.50.56.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 209.50.56.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8051-000000000000",
+                  "zone" : "us-chi1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.3.12.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.3.12.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.3.12.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8052-000000000000",
+                  "zone" : "us-chi1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.2.8.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.2.8.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.2.8.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8053-000000000000",
+                  "zone" : "uk-lon1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.48.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.48.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.48.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8054-000000000000",
+                  "zone" : "uk-lon1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.4.0/24",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.4.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.4.0/24",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8055-000000000000",
+                  "zone" : "nl-pbp1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.5.100.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.5.100.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.5.100.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8056-000000000000",
+                  "zone" : "nl-pbp1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.5.0/24",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.5.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.5.0/24",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8057-000000000000",
+                  "zone" : "nl-lia1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "2A04:3544:3000:1531::/64",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "2a04:3540:53::1",
+                              "2a04:3544:53::1"
+                           ],
+                           "family" : "IPv6",
+                           "gateway" : "2a04:3544:3000:1531::1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 2A04:3544:3000:1531::/64",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8058-000000000000",
+                  "zone" : "nl-lia1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "2A04:3544:2000:1530::/64",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "2a04:3540:53::1",
+                              "2a04:3544:53::1"
+                           ],
+                           "family" : "IPv6",
+                           "gateway" : "2a04:3544:2000:1530::1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 2A04:3544:2000:1530::/64",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8059-000000000000",
+                  "zone" : "nl-pbp1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.5.4.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.5.4.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.5.4.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8060-000000000000",
+                  "zone" : "nl-ams1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.44.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.44.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.44.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8061-000000000000",
+                  "zone" : "nl-ams1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.84.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.84.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.84.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8063-000000000000",
+                  "zone" : "de-fra1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.4.12.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.4.12.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.4.12.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8064-000000000000",
+                  "zone" : "de-fra1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "209.50.60.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "209.50.60.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 209.50.60.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8071-000000000000",
+                  "zone" : "us-sjo1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.8.0.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.8.0.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.8.0.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8072-000000000000",
+                  "zone" : "us-sjo1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "2604:ed40:1000:1711::/64",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "2a04:3540:53::1",
+                              "2a04:3544:53::1"
+                           ],
+                           "family" : "IPv6",
+                           "gateway" : "2604:ed40:1000:1711::1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 2604:ed40:1000:1711::/64",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8073-000000000000",
+                  "zone" : "us-sjo1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.68.0/23",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.68.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.68.0/23",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8074-000000000000",
+                  "zone" : "sg-sin1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.10.4.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.10.4.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.10.4.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8075-000000000000",
+                  "zone" : "sg-sin1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.52.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.52.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.52.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8076-000000000000",
+                  "zone" : "uk-lon1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.2.12.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.2.12.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.2.12.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8077-000000000000",
+                  "zone" : "uk-lon1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "152.44.32.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "152.44.32.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 152.44.32.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8079-000000000000",
+                  "zone" : "us-chi1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "152.44.36.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "152.44.36.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 152.44.36.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8080-000000000000",
+                  "zone" : "us-chi1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.3.16.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.3.16.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.3.16.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8081-000000000000",
+                  "zone" : "us-chi1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.72.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.72.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.72.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8083-000000000000",
+                  "zone" : "sg-sin1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.76.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.76.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.76.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8084-000000000000",
+                  "zone" : "sg-sin1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.10.8.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.10.8.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.10.8.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8085-000000000000",
+                  "zone" : "sg-sin1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.10.12.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.10.12.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.10.12.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8086-000000000000",
+                  "zone" : "sg-sin1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "152.44.44.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "152.44.44.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 152.44.44.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8087-000000000000",
+                  "zone" : "us-sjo1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.8.4.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.8.4.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.8.4.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8088-000000000000",
+                  "zone" : "us-sjo1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.56.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.56.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.56.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8089-000000000000",
+                  "zone" : "uk-lon1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.60.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.60.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.60.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8090-000000000000",
+                  "zone" : "uk-lon1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.2.16.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.2.16.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.2.16.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8091-000000000000",
+                  "zone" : "uk-lon1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.2.20.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.2.20.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.2.20.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8092-000000000000",
+                  "zone" : "uk-lon1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "152.44.40.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "152.44.40.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 152.44.40.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8093-000000000000",
+                  "zone" : "us-chi1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.3.20.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.3.20.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.3.20.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8094-000000000000",
+                  "zone" : "us-chi1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.12.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.12.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.12.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8095-000000000000",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.6.4.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.6.4.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.6.4.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4000-8096-000000000000",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.120.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.120.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.120.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4000-8100-000000000000",
+                  "zone" : "uk-lon1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.2.4.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.2.4.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.2.4.0/22",
+                  "type" : "utility",
+                  "uuid" : "03000000-0000-4200-8011-000000000000",
+                  "zone" : "uk-ioa1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "2a04:3541:1000:500::/64",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "2a04:3540:53::1",
+                              "2a04:3544:53::1"
+                           ],
+                           "family" : "IPv6",
+                           "gateway" : "2a04:3541:1000:500::1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 2a04:3541:1000:500::/64",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4200-8016-000000000000",
+                  "zone" : "uk-ioa1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.120.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.120.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.120.0/22",
+                  "type" : "public",
+                  "uuid" : "03000000-0000-4200-8100-000000000000",
+                  "zone" : "uk-ioa1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.116.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.116.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.116.0/22",
+                  "type" : "public",
+                  "uuid" : "03081f13-73cd-4c11-9bb0-6ff4c73bea00",
+                  "zone" : "fi-hel1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.4.16.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.4.16.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.4.16.0/22",
+                  "type" : "utility",
+                  "uuid" : "030c828a-8e0b-4184-bc20-cda2fb9de8c9",
+                  "zone" : "de-fra1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.2.16.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.2.16.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.2.16.0/22",
+                  "type" : "utility",
+                  "uuid" : "030f2c36-72f0-443f-adff-a31e5d899d32",
+                  "zone" : "uk-ioa1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.104.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.104.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public fi-hel2 94.237.104.0/22",
+                  "servers" : {
+                     "server" : [
+                        {
+                           "title" : "uploud-go-sdk-integration-test-TestGetNetworks",
+                           "uuid" : "00f98dd0-fa3e-4f5f-a001-02b81e7de9b1"
+                        }
+                     ]
+                  },
+                  "type" : "public",
+                  "uuid" : "031457f4-0f8c-483c-96f2-eccede02909c",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.88.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.88.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.88.0/22",
+                  "type" : "public",
+                  "uuid" : "03153557-3f86-40ef-968b-9614de4cab22",
+                  "zone" : "de-fra1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "209.151.152.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "209.151.152.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public us-nyc1 209.151.152.0/22",
+                  "type" : "public",
+                  "uuid" : "031b2f23-280b-4b54-9e4d-eebdefae752c",
+                  "zone" : "us-nyc1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.48.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.48.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.48.0/22",
+                  "type" : "public",
+                  "uuid" : "031d71d0-3f4b-4470-b902-defac04761c5",
+                  "zone" : "uk-ioa1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.60.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.60.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.60.0/22",
+                  "type" : "public",
+                  "uuid" : "031fec91-922c-462d-8695-4d626a41959b",
+                  "zone" : "uk-ioa1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.1.4.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.1.4.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.1.4.0/22",
+                  "router" : "040e9e7c-d773-4b0f-bab0-6b61a26ce96e",
+                  "type" : "utility",
+                  "uuid" : "03206c92-50f2-40b0-ad05-5f02cab2e932",
+                  "zone" : "fi-hel1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "2605:7380:8000:1000::/64",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "2a04:3540:53::1",
+                              "2a04:3544:53::1"
+                           ],
+                           "family" : "IPv6",
+                           "gateway" : "2605:7380:8000:1000::1"
+                        }
+                     ]
+                  },
+                  "name" : "Public us-nyc1 2605:7380:8000:1000::/64",
+                  "type" : "public",
+                  "uuid" : "03380293-6992-4675-8913-4f5598d14bf3",
+                  "zone" : "us-nyc1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.92.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.92.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.92.0/22",
+                  "type" : "public",
+                  "uuid" : "034a0abb-5b87-453f-bddc-f93863384e1f",
+                  "zone" : "de-fra1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.9.0.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.9.0.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.9.0.0/22",
+                  "type" : "utility",
+                  "uuid" : "034a5c8d-8926-4819-9152-51de76279f43",
+                  "zone" : "us-nyc1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "209.151.156.0/23",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "209.151.156.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public us-sjo1 209.151.156.0/23",
+                  "type" : "public",
+                  "uuid" : "0354bc8f-ac48-413e-8c64-e447dfedf848",
+                  "zone" : "us-sjo1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "83.136.252.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "83.136.252.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 83.136.252.0/22",
+                  "type" : "public",
+                  "uuid" : "0355755a-afec-46c3-834e-24721b593798",
+                  "zone" : "uk-ioa1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.2.24.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.2.24.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.2.24.0/22",
+                  "type" : "utility",
+                  "uuid" : "0356347f-8eee-447d-ae0b-ab2a7d931b35",
+                  "zone" : "uk-ioa1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.112.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.112.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.112.0/22",
+                  "type" : "public",
+                  "uuid" : "035c9d71-ac3b-40dd-916f-cf993c408368",
+                  "zone" : "fi-hel1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "209.151.158.0/24",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "209.151.158.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public us-sjo1 209.151.158.0/24",
+                  "type" : "public",
+                  "uuid" : "03624ae9-575c-4928-95a0-0f80241e59a0",
+                  "zone" : "us-sjo1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.2.0/23",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.2.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public sg-sin1 94.237.2.0/23",
+                  "type" : "public",
+                  "uuid" : "0362beff-d31f-40cd-ac35-fb9b9110c9b8",
+                  "zone" : "sg-sin1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.1.24.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.1.24.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.1.24.0/22",
+                  "type" : "utility",
+                  "uuid" : "036dc73f-ceea-4283-92ad-94857b8cd480",
+                  "zone" : "fi-hel1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.1.8.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.1.8.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.1.8.0/22",
+                  "router" : "040e9e7c-d773-4b0f-bab0-6b61a26ce96e",
+                  "type" : "utility",
+                  "uuid" : "03854a28-fafe-428f-964f-760cd1b83f1f",
+                  "zone" : "fi-hel1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.5.8.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.5.8.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.5.8.0/22",
+                  "type" : "utility",
+                  "uuid" : "0390bf95-60ff-41a9-afa2-48688e70f5dd",
+                  "zone" : "nl-ams1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.1.20.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.1.20.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.1.20.0/22",
+                  "type" : "utility",
+                  "uuid" : "0398fc12-2110-468f-9d4e-43157ed13abb",
+                  "zone" : "fi-hel1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.2.0.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.2.0.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.2.0.0/22",
+                  "type" : "utility",
+                  "uuid" : "039b1973-2602-4aa1-a6fa-632adcc994fd",
+                  "zone" : "uk-ioa1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.6.4.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.6.4.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.6.4.0/22",
+                  "router" : "0495fef9-b234-4819-ac51-431b934037c0",
+                  "servers" : {
+                     "server" : [
+                        {
+                           "title" : "uploud-go-sdk-integration-test-TestGetNetworks",
+                           "uuid" : "00f98dd0-fa3e-4f5f-a001-02b81e7de9b1"
+                        }
+                     ]
+                  },
+                  "type" : "utility",
+                  "uuid" : "03a002de-994e-45aa-9e1c-9918f0908c57",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.56.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.56.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.56.0/22",
+                  "type" : "public",
+                  "uuid" : "03a330a8-f154-4f9c-a2df-c718b326cd5f",
+                  "zone" : "uk-ioa1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.2.12.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.2.12.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.2.12.0/22",
+                  "type" : "utility",
+                  "uuid" : "03a605a9-6e01-48ea-8600-2a623b3e98d7",
+                  "zone" : "uk-ioa1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.2.24.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.2.24.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.2.24.0/22",
+                  "type" : "utility",
+                  "uuid" : "03b6dbf9-a130-44a0-aed6-49e423d713cc",
+                  "zone" : "uk-lon1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.1.16/28",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "family" : "IPv4",
+                           "gateway" : "94.237.1.17"
+                        }
+                     ]
+                  },
+                  "name" : "Private 94.237.1.16/28",
+                  "type" : "public",
+                  "uuid" : "03b94090-98c8-4add-8016-097d6e26e968",
+                  "zone" : "fi-upc2-prod"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.1.0.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.1.0.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.1.0.0/22",
+                  "router" : "040e9e7c-d773-4b0f-bab0-6b61a26ce96e",
+                  "type" : "utility",
+                  "uuid" : "03bae36d-a30a-4640-9a35-f2ccb0e2cddc",
+                  "zone" : "fi-hel1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.6.0.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.6.0.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.6.0.0/22",
+                  "router" : "0495fef9-b234-4819-ac51-431b934037c0",
+                  "type" : "utility",
+                  "uuid" : "03baf748-c757-4317-90b4-da92f7f94743",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.2.8.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.2.8.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.2.8.0/22",
+                  "type" : "utility",
+                  "uuid" : "03c0169d-a2f7-4f12-9a77-d383f8086e0a",
+                  "zone" : "uk-ioa1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "83.136.248.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "83.136.248.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 83.136.248.0/22",
+                  "type" : "public",
+                  "uuid" : "03c27587-3edd-4b68-b5d0-158c9ca21f71",
+                  "zone" : "uk-ioa1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.52.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.52.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.52.0/22",
+                  "type" : "public",
+                  "uuid" : "03c3c429-6fef-4750-b566-14f18028a5ac",
+                  "zone" : "uk-ioa1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.70.0/24",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.70.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public sg-sin1 94.237.70.0/24",
+                  "type" : "public",
+                  "uuid" : "03d48052-9335-4f2b-b91f-bf2e079afec6",
+                  "zone" : "sg-sin1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.1.12.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.1.12.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.1.12.0/22",
+                  "router" : "040e9e7c-d773-4b0f-bab0-6b61a26ce96e",
+                  "type" : "utility",
+                  "uuid" : "03d781c3-65e3-4a7a-b6cd-a7ce7e23b8c5",
+                  "zone" : "fi-hel1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.124.0/23",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.124.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public 94.237.124.0/23",
+                  "type" : "public",
+                  "uuid" : "03e53dbd-8b71-460e-90e0-26099810a2ff",
+                  "zone" : "nl-ams1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.2.20.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.2.20.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.2.20.0/22",
+                  "type" : "utility",
+                  "uuid" : "03e8ab1a-7242-405a-a920-cb0bcbb72a79",
+                  "zone" : "uk-ioa1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.96.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.96.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public de-fra1 94.237.96.0/22",
+                  "type" : "public",
+                  "uuid" : "03eb6db7-a135-4f62-ac80-8a4ca3229ca8",
+                  "zone" : "de-fra1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "95.111.192.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "95.111.192.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public sg-sin1 95.111.192.0/22",
+                  "type" : "public",
+                  "uuid" : "03edb37f-a06b-489c-a866-b70974c918be",
+                  "zone" : "sg-sin1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "94.237.7.0/24",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "yes",
+                           "dhcp_dns" : [
+                              "94.237.127.9",
+                              "94.237.40.9"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "94.237.7.1"
+                        }
+                     ]
+                  },
+                  "name" : "Public nl-ams1 94.237.7.0/24",
+                  "type" : "public",
+                  "uuid" : "03ee98b8-cb43-4996-b484-321099b02790",
+                  "zone" : "nl-ams1"
+               },
+               {
+                  "ip_networks" : {
+                     "ip_network" : [
+                        {
+                           "address" : "10.4.20.0/22",
+                           "dhcp" : "yes",
+                           "dhcp_default_route" : "no",
+                           "dhcp_routes" : [
+                              "10.0.0.0/8"
+                           ],
+                           "family" : "IPv4",
+                           "gateway" : "10.4.20.1"
+                        }
+                     ]
+                  },
+                  "name" : "Private 10.4.20.0/22",
+                  "type" : "utility",
+                  "uuid" : "03f05aee-36bc-42df-817e-7dfc35a437c9",
+                  "zone" : "de-fra1"
+               }
+            ]
+         }
+      }
+    headers:
+      Content-Length:
+      - "83560"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Sun, 09 Aug 2020 18:19:41 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""

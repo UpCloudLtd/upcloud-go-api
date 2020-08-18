@@ -80,3 +80,63 @@ func TestDeleteFirewallRuleRequest(t *testing.T) {
 
 	assert.Equal(t, "/server/00798b85-efdc-41ca-8021-f6ef457b8531/firewall_rule/1", request.RequestURL())
 }
+
+// TestCreateFirewallRulesRequest tests that CreateFirewallRulesRequest behaves correctly
+func TestCreateFirewallRulesRequest(t *testing.T) {
+	request := CreateFirewallRulesRequest{
+		ServerUUID: "foo",
+		FirewallRules: []upcloud.FirewallRule{
+			{
+				Direction:            upcloud.FirewallRuleDirectionIn,
+				Family:               upcloud.IPAddressFamilyIPv4,
+				Protocol:             upcloud.FirewallRuleProtocolTCP,
+				DestinationPortStart: "22",
+				DestinationPortEnd:   "22",
+				Action:               upcloud.FirewallRuleActionAccept,
+				Comment:              "Allow SSH to this network",
+			},
+			{
+				Direction:            upcloud.FirewallRuleDirectionIn,
+				Family:               upcloud.IPAddressFamilyIPv4,
+				Protocol:             upcloud.FirewallRuleProtocolTCP,
+				DestinationPortStart: "80",
+				DestinationPortEnd:   "80",
+				Action:               upcloud.FirewallRuleActionAccept,
+				Comment:              "Allow HTTP to this network",
+			},
+		},
+	}
+
+	expectedJSON := `
+	{
+		"firewall_rules": {
+		"firewall_rule": [
+		{
+			"direction": "in",
+			"family": "IPv4",
+			"protocol": "tcp",
+			"destination_port_start": "22",
+			"destination_port_end": "22",
+			"action": "accept",
+			"comment": "Allow SSH to this network"
+		  },
+		  {
+			"direction": "in",
+			"family": "IPv4",
+			"protocol": "tcp",
+			"destination_port_start": "80",
+			"destination_port_end": "80",
+			"action": "accept",
+			"comment": "Allow HTTP to this network"
+		  }
+		]
+	  }
+	}
+	`
+
+	actualJSON, err := json.MarshalIndent(&request, "", "  ")
+	assert.NoError(t, err)
+
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
+	assert.Equal(t, "/server/foo/firewall_rule", request.RequestURL())
+}

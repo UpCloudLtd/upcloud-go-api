@@ -20,6 +20,10 @@ const (
 
 	RestartTimeoutActionDestroy = "destroy"
 	RestartTimeoutActionIgnore  = "ignore"
+
+	CreateServerStorageDeviceActionCreate = "create"
+	CreateServerStorageDeviceActionClone  = "clone"
+	CreateServerStorageDeviceActionAttach = "attach"
 )
 
 // GetServerDetailsRequest represents a request for retrieving details about a server
@@ -47,21 +51,42 @@ func (s CreateServerIPAddressSlice) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v)
 }
 
-// CreateServerStorageDeviceSlice is a slice of strings
+// CreateServerStorageDevice represents a storage device for a CreateServerRequest
+type CreateServerStorageDevice struct {
+	Action  string `json:"action"`
+	Address string `json:"address,omitempty"`
+	Storage string `json:"storage"`
+	Title   string `json:"title,omitempty"`
+	// Storage size in gigabytes
+	Size int    `json:"size"`
+	Tier string `json:"tier,omitempty"`
+	Type string `json:"type,omitempty"`
+}
+
+// CreateServerStorageDeviceSlice is a slice of CreateServerStorageDevices
 // It exists to allow for a custom JSON marshaller.
-type CreateServerStorageDeviceSlice []upcloud.CreateServerStorageDevice
+type CreateServerStorageDeviceSlice []CreateServerStorageDevice
 
 // MarshalJSON is a custom marshaller that deals with
 // deeply embedded values.
 func (s CreateServerStorageDeviceSlice) MarshalJSON() ([]byte, error) {
 	v := struct {
-		StorageDevice []upcloud.CreateServerStorageDevice `json:"storage_device"`
+		StorageDevice []CreateServerStorageDevice `json:"storage_device"`
 	}{}
 	v.StorageDevice = s
 
 	return json.Marshal(v)
 }
 
+// CreateServerInterface represents a server network interface
+// that is needed during server creation.
+type CreateServerInterface struct {
+	IPAddresses CreateServerIPAddressSlice `json:"ip_addresses"`
+	Type        string                     `json:"type"`
+}
+
+// CreateServerInterfaceSlice is a slice of CreateServerInterfaces.
+// It exists to allow for a custom JSON marshaller.
 type CreateServerInterfaceSlice []CreateServerInterface
 
 // MarshalJSON is a custom marshaller that deals with
@@ -75,13 +100,10 @@ func (s CreateServerInterfaceSlice) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v)
 }
 
+// CreateServerNetworking represents the networking details of a server
+// needed during server creation.
 type CreateServerNetworking struct {
 	Interfaces CreateServerInterfaceSlice `json:"interfaces"`
-}
-
-type CreateServerInterface struct {
-	IPAddresses CreateServerIPAddressSlice `json:"ip_addresses"`
-	Type        string                     `json:"type"`
 }
 
 // CreateServerRequest represents a request for creating a new server
