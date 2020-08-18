@@ -24,6 +24,7 @@ const (
 	StorageStateCloning     = "cloning"
 	StorageStateBackuping   = "backuping"
 	StorageStateError       = "error"
+	StorageStateSyncing     = "syncing"
 
 	BackupRuleIntervalDaily     = "daily"
 	BackupRuleIntervalMonday    = "mon"
