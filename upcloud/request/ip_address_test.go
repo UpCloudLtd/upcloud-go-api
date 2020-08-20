@@ -24,7 +24,7 @@ func TestMarshalAssignIPAddressRequest(t *testing.T) {
 		Family:     upcloud.IPAddressFamilyIPv4,
 		ServerUUID: "009d64ef-31d1-4684-a26b-c86c955cbf46",
 		MAC:        "foo_mac",
-		Floating:   true,
+		Floating:   upcloud.True,
 		Zone:       "foo_zone",
 	}
 

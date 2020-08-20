@@ -81,8 +81,11 @@ func (s CreateServerStorageDeviceSlice) MarshalJSON() ([]byte, error) {
 // CreateServerInterface represents a server network interface
 // that is needed during server creation.
 type CreateServerInterface struct {
-	IPAddresses CreateServerIPAddressSlice `json:"ip_addresses"`
-	Type        string                     `json:"type"`
+	IPAddresses       CreateServerIPAddressSlice `json:"ip_addresses"`
+	Type              string                     `json:"type"`
+	Network           string                     `json:"network,omitempty"`
+	SourceIPFiltering upcloud.Boolean            `json:"source_ip_filtering,omitempty"`
+	Bootable          upcloud.Boolean            `json:"bootable,omitempty"`
 }
 
 // CreateServerInterfaceSlice is a slice of CreateServerInterfaces.

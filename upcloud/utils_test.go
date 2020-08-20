@@ -22,7 +22,7 @@ func TestBoolean_TrueAsBool(t *testing.T) {
 
 	err := json.Unmarshal([]byte(trueJSON), &s)
 	assert.NoError(t, err)
-	assert.True(t, bool(s.Value))
+	assert.True(t, s.Value.Bool())
 }
 
 func TestBoolean_TrueAsString(t *testing.T) {
@@ -36,7 +36,7 @@ func TestBoolean_TrueAsString(t *testing.T) {
 
 	err := json.Unmarshal([]byte(trueJSON), &s)
 	assert.NoError(t, err)
-	assert.True(t, bool(s.Value))
+	assert.True(t, s.Value.Bool())
 }
 
 func TestBoolean_TrueAsOne(t *testing.T) {
@@ -50,7 +50,7 @@ func TestBoolean_TrueAsOne(t *testing.T) {
 
 	err := json.Unmarshal([]byte(trueJSON), &s)
 	assert.NoError(t, err)
-	assert.True(t, bool(s.Value))
+	assert.True(t, s.Value.Bool())
 }
 
 func TestBoolean_TrueAsOneString(t *testing.T) {
@@ -64,7 +64,7 @@ func TestBoolean_TrueAsOneString(t *testing.T) {
 
 	err := json.Unmarshal([]byte(trueJSON), &s)
 	assert.NoError(t, err)
-	assert.True(t, bool(s.Value))
+	assert.True(t, s.Value.Bool())
 }
 
 func TestBoolean_TrueAsYesString(t *testing.T) {
@@ -78,7 +78,7 @@ func TestBoolean_TrueAsYesString(t *testing.T) {
 
 	err := json.Unmarshal([]byte(trueJSON), &s)
 	assert.NoError(t, err)
-	assert.True(t, bool(s.Value))
+	assert.True(t, s.Value.Bool())
 }
 
 func TestBoolean_FalseAsBool(t *testing.T) {
@@ -92,7 +92,7 @@ func TestBoolean_FalseAsBool(t *testing.T) {
 
 	err := json.Unmarshal([]byte(trueJSON), &s)
 	assert.NoError(t, err)
-	assert.False(t, bool(s.Value))
+	assert.False(t, s.Value.Bool())
 }
 
 func TestBoolean_FalseAsString(t *testing.T) {
@@ -106,7 +106,7 @@ func TestBoolean_FalseAsString(t *testing.T) {
 
 	err := json.Unmarshal([]byte(trueJSON), &s)
 	assert.NoError(t, err)
-	assert.False(t, bool(s.Value))
+	assert.False(t, s.Value.Bool())
 }
 
 func TestBoolean_FalseAsZero(t *testing.T) {
@@ -120,7 +120,7 @@ func TestBoolean_FalseAsZero(t *testing.T) {
 
 	err := json.Unmarshal([]byte(trueJSON), &s)
 	assert.NoError(t, err)
-	assert.False(t, bool(s.Value))
+	assert.False(t, s.Value.Bool())
 }
 
 func TestBoolean_FalseAsZeroString(t *testing.T) {
@@ -134,7 +134,7 @@ func TestBoolean_FalseAsZeroString(t *testing.T) {
 
 	err := json.Unmarshal([]byte(trueJSON), &s)
 	assert.NoError(t, err)
-	assert.False(t, bool(s.Value))
+	assert.False(t, s.Value.Bool())
 }
 
 func TestBoolean_FalseAsNo(t *testing.T) {
@@ -148,7 +148,7 @@ func TestBoolean_FalseAsNo(t *testing.T) {
 
 	err := json.Unmarshal([]byte(trueJSON), &s)
 	assert.NoError(t, err)
-	assert.False(t, bool(s.Value))
+	assert.False(t, s.Value.Bool())
 }
 
 func TestBoolean_FalseAnything(t *testing.T) {
@@ -162,5 +162,10 @@ func TestBoolean_FalseAnything(t *testing.T) {
 
 	err := json.Unmarshal([]byte(trueJSON), &s)
 	assert.NoError(t, err)
-	assert.False(t, bool(s.Value))
+	assert.False(t, s.Value.Bool())
+}
+
+func TestBoolean_Empty(t *testing.T) {
+	var b Boolean
+	assert.True(t, b.Empty())
 }

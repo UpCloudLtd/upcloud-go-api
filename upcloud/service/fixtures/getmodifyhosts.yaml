@@ -23,12 +23,12 @@ interactions:
                      "stat" : [
                         {
                            "name" : "cpu_idle",
-                           "timestamp" : "2020-08-09T18:19:04Z",
-                           "value" : 99.8548495370422
+                           "timestamp" : "2020-08-19T14:06:33Z",
+                           "value" : 99.7840625000083
                         },
                         {
                            "name" : "memory_free",
-                           "timestamp" : "2020-08-09T18:19:05Z",
+                           "timestamp" : "2020-08-19T14:06:33Z",
                            "value" : 341
                         }
                      ]
@@ -43,12 +43,12 @@ interactions:
                      "stat" : [
                         {
                            "name" : "cpu_idle",
-                           "timestamp" : "2020-08-09T18:19:04Z",
-                           "value" : 99.695833333312
+                           "timestamp" : "2020-08-19T14:06:33Z",
+                           "value" : 99.8518402777618
                         },
                         {
                            "name" : "memory_free",
-                           "timestamp" : "2020-08-09T18:19:05Z",
+                           "timestamp" : "2020-08-19T14:06:33Z",
                            "value" : 344
                         }
                      ]
@@ -61,11 +61,11 @@ interactions:
       }
     headers:
       Content-Length:
-      - "1300"
+      - "1301"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:19:04 GMT
+      - Wed, 19 Aug 2020 14:06:33 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -93,7 +93,7 @@ interactions:
                "stat" : [
                   {
                      "name" : "memory_free",
-                     "timestamp" : "2020-08-09T18:19:14Z",
+                     "timestamp" : "2020-08-19T14:06:58Z",
                      "value" : 341
                   }
                ]
@@ -108,7 +108,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:19:05 GMT
+      - Wed, 19 Aug 2020 14:06:33 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -145,7 +145,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:19:14 GMT
+      - Wed, 19 Aug 2020 14:06:58 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -182,7 +182,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:19:14 GMT
+      - Wed, 19 Aug 2020 14:06:58 GMT
       Server:
       - Apache
       Strict-Transport-Security:
