@@ -253,14 +253,14 @@ func TestUnmarshalServerDetails(t *testing.T) {
 	assert.Equal(t, 0, serverDetails.StorageDevices[0].BootDisk)
 	assert.Equal(t, "UTC", serverDetails.Timezone)
 	assert.Equal(t, VideoModelCirrus, serverDetails.VideoModel)
-	assert.True(t, bool(serverDetails.RemoteAccessEnabled))
+	assert.True(t, serverDetails.RemoteAccessEnabled.Bool())
 	assert.Equal(t, "fi-hel1.vnc.upcloud.com", serverDetails.RemoteAccessHost)
 	assert.Equal(t, "aabbccdd", serverDetails.RemoteAccessPassword)
 	assert.Equal(t, 3000, serverDetails.RemoteAccessPort)
 	assert.Equal(t, RemoteAccessTypeVNC, serverDetails.RemoteAccessType)
 	assert.Equal(t, "server1.example.com", serverDetails.Hostname)
 	assert.Equal(t, "0100,dailies", serverDetails.SimpleBackup)
-	assert.True(t, bool(serverDetails.Metadata))
+	assert.True(t, serverDetails.Metadata.Bool())
 
 	networkingTestData := []ServerInterface{
 		{
@@ -269,13 +269,13 @@ func TestUnmarshalServerDetails(t *testing.T) {
 				{
 					Address:  "94.237.0.207",
 					Family:   IPAddressFamilyIPv4,
-					Floating: false,
+					Floating: False,
 				},
 			},
 			MAC:      "de:ff:ff:ff:66:89",
 			Network:  "037fcf2a-6745-45dd-867e-f9479ea8c044",
 			Type:     NetworkTypePublic,
-			Bootable: false,
+			Bootable: False,
 		},
 		{
 			Index: 2,
@@ -283,13 +283,13 @@ func TestUnmarshalServerDetails(t *testing.T) {
 				{
 					Address:  "10.6.3.95",
 					Family:   IPAddressFamilyIPv4,
-					Floating: false,
+					Floating: False,
 				},
 			},
 			MAC:      "de:ff:ff:ff:ed:85",
 			Network:  "03000000-0000-4000-8045-000000000000",
 			Type:     NetworkTypeUtility,
-			Bootable: false,
+			Bootable: False,
 		},
 		{
 			Index: 3,
@@ -297,13 +297,13 @@ func TestUnmarshalServerDetails(t *testing.T) {
 				{
 					Address:  "xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx",
 					Family:   "IPv6",
-					Floating: false,
+					Floating: False,
 				},
 			},
 			MAC:      "de:ff:ff:ff:cc:20",
 			Network:  "03c93fd8-cc60-4849-91b8-6e404b228e2a",
 			Type:     NetworkTypePublic,
-			Bootable: false,
+			Bootable: False,
 		},
 	}
 

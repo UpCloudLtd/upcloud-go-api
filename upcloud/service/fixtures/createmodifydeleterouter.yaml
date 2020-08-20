@@ -20,7 +20,7 @@ interactions:
             },
             "name" : "Testy McRouterface (test)",
             "type" : "normal",
-            "uuid" : "0462f56c-1c5f-47d6-ae2f-9fc29b21d687"
+            "uuid" : "0465e8a4-4779-4803-bef9-7bbaefb311c1"
          }
       }
     headers:
@@ -29,7 +29,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:21:10 GMT
+      - Wed, 19 Aug 2020 14:08:49 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -45,7 +45,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/router/0462f56c-1c5f-47d6-ae2f-9fc29b21d687
+    url: https://api.upcloud.com/1.3/router/0465e8a4-4779-4803-bef9-7bbaefb311c1
     method: PATCH
   response:
     body: |
@@ -56,7 +56,7 @@ interactions:
             },
             "name" : "Modified name (test)",
             "type" : "normal",
-            "uuid" : "0462f56c-1c5f-47d6-ae2f-9fc29b21d687"
+            "uuid" : "0465e8a4-4779-4803-bef9-7bbaefb311c1"
          }
       }
     headers:
@@ -65,7 +65,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:21:11 GMT
+      - Wed, 19 Aug 2020 14:08:50 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -102,6 +102,9 @@ interactions:
                         },
                         {
                            "uuid" : "03bae36d-a30a-4640-9a35-f2ccb0e2cddc"
+                        },
+                        {
+                           "uuid" : "03c5c968-410f-432c-b7ac-8c8e6e6c4520"
                         }
                      ]
                   },
@@ -115,7 +118,7 @@ interactions:
                   },
                   "name" : "Modified name (test)",
                   "type" : "normal",
-                  "uuid" : "0462f56c-1c5f-47d6-ae2f-9fc29b21d687"
+                  "uuid" : "0465e8a4-4779-4803-bef9-7bbaefb311c1"
                },
                {
                   "attached_networks" : {
@@ -137,11 +140,11 @@ interactions:
       }
     headers:
       Content-Length:
-      - "1502"
+      - "1612"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:21:11 GMT
+      - Wed, 19 Aug 2020 14:08:50 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -157,13 +160,13 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/router/0462f56c-1c5f-47d6-ae2f-9fc29b21d687
+    url: https://api.upcloud.com/1.3/router/0465e8a4-4779-4803-bef9-7bbaefb311c1
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Sun, 09 Aug 2020 18:21:11 GMT
+      - Wed, 19 Aug 2020 14:08:50 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -200,6 +203,9 @@ interactions:
                         },
                         {
                            "uuid" : "03bae36d-a30a-4640-9a35-f2ccb0e2cddc"
+                        },
+                        {
+                           "uuid" : "03c5c968-410f-432c-b7ac-8c8e6e6c4520"
                         }
                      ]
                   },
@@ -227,11 +233,11 @@ interactions:
       }
     headers:
       Content-Length:
-      - "1262"
+      - "1372"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:21:11 GMT
+      - Wed, 19 Aug 2020 14:08:50 GMT
       Server:
       - Apache
       Strict-Transport-Security:

@@ -65,7 +65,7 @@ func TestGetZones(t *testing.T) {
 		for _, z := range zones.Zones {
 			if z.Description == "Helsinki #1" && z.ID == "fi-hel1" {
 				found = true
-				assert.True(t, bool(z.Public))
+				assert.True(t, z.Public.Bool())
 				break
 			}
 		}
@@ -567,7 +567,7 @@ func TestAttachModifyReleaseFloatingIPAddress(t *testing.T) {
 
 		assignedIP, err := svc.AssignIPAddress(&request.AssignIPAddressRequest{
 			Family:   upcloud.IPAddressFamilyIPv4,
-			Floating: true,
+			Floating: upcloud.True,
 			MAC:      mac,
 		})
 		require.NoError(t, err)

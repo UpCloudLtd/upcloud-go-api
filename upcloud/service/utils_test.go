@@ -146,6 +146,10 @@ func teardown() {
 
 // Creates a server and returns the details about it, panic if creation fails
 func createServer(svc *Service, name string) (*upcloud.ServerDetails, error) {
+	return createServerWithNetwork(svc, name, "")
+}
+
+func createServerWithNetwork(svc *Service, name string, network string) (*upcloud.ServerDetails, error) {
 	title := "uploud-go-sdk-integration-test-" + name
 	hostname := strings.ToLower(title + ".example.com")
 
@@ -191,6 +195,19 @@ func createServer(svc *Service, name string) (*upcloud.ServerDetails, error) {
 				},
 			},
 		},
+	}
+
+	if network != "" {
+		createServerRequest.Networking.Interfaces = append(createServerRequest.Networking.Interfaces,
+			request.CreateServerInterface{
+				IPAddresses: []request.CreateServerIPAddress{
+					{
+						Family: upcloud.IPAddressFamilyIPv4,
+					},
+				},
+				Type:    upcloud.NetworkTypePrivate,
+				Network: network,
+			})
 	}
 
 	// Create the server and block until it has started

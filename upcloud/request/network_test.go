@@ -35,8 +35,8 @@ func TestMarshalCreateNetworkRequest(t *testing.T) {
 		IPNetworks: []upcloud.IPNetwork{
 			{
 				Address:          "172.16.0.0/22",
-				DHCP:             true,
-				DHCPDefaultRoute: false,
+				DHCP:             upcloud.True,
+				DHCPDefaultRoute: upcloud.False,
 				DHCPDns: []string{
 					"172.16.0.10",
 					"172.16.1.10",
@@ -86,7 +86,7 @@ func TestMarshalModifyNetworkRequest(t *testing.T) {
 		Name: "My private network",
 		IPNetworks: []upcloud.IPNetwork{
 			{
-				DHCP:   false,
+				DHCP:   upcloud.False,
 				Family: upcloud.IPAddressFamilyIPv4,
 			},
 		},
@@ -139,7 +139,7 @@ func TestMarshalCreateNetworkInterfaceRequest(t *testing.T) {
 		ServerUUID:        "foo",
 		Type:              upcloud.IPAddressAccessPrivate,
 		NetworkUUID:       "0374ce47-4303-4490-987d-32dc96cfd79b",
-		SourceIPFiltering: true,
+		SourceIPFiltering: upcloud.True,
 		IPAddresses: []CreateNetworkInterfaceIPAddress{
 			{
 				Address: "10.0.0.20",
@@ -191,7 +191,7 @@ func TestMarshalModifyNetworkInterfaceRequest(t *testing.T) {
 
 		Type:              upcloud.IPAddressAccessPrivate,
 		NetworkUUID:       "0374ce47-4303-4490-987d-32dc96cfd79b",
-		SourceIPFiltering: true,
+		SourceIPFiltering: upcloud.True,
 		IPAddresses: []CreateNetworkInterfaceIPAddress{
 			{
 				Address: "10.0.0.20",

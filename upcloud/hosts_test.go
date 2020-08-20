@@ -73,7 +73,7 @@ func TestUnmarshalHosts(t *testing.T) {
 			ID:             7653311107,
 			Description:    "My Host #1",
 			Zone:           "private-zone-id",
-			WindowsEnabled: false,
+			WindowsEnabled: False,
 			Stats: []Stat{
 				{
 					Name:      "cpu_idle",
@@ -91,7 +91,7 @@ func TestUnmarshalHosts(t *testing.T) {
 			ID:             8055964291,
 			Description:    "My Host #2",
 			Zone:           "private-zone-id",
-			WindowsEnabled: false,
+			WindowsEnabled: False,
 			Stats: []Stat{
 				{
 					Name:      "cpu_idle",
@@ -147,7 +147,7 @@ func TestUnmarshalHost(t *testing.T) {
 		ID:             7653311107,
 		Description:    "My Host #1",
 		Zone:           "private-zone-id",
-		WindowsEnabled: false,
+		WindowsEnabled: False,
 		Stats: []Stat{
 			{
 				Name:      "cpu_idle",

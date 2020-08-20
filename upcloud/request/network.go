@@ -131,7 +131,7 @@ type CreateNetworkInterfaceRequest struct {
 	ServerUUID string `json:"-"`
 
 	Type              string                               `json:"type"`
-	NetworkUUID       string                               `json:"network"`
+	NetworkUUID       string                               `json:"network,omitempty"`
 	Index             int                                  `json:"index,omitempty"`
 	IPAddresses       CreateNetworkInterfaceIPAddressSlice `json:"ip_addresses"`
 	SourceIPFiltering upcloud.Boolean                      `json:"source_ip_filtering,omitempty"`

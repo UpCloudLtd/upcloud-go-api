@@ -83,8 +83,8 @@ func TestUnmarshalNetworks(t *testing.T) {
 			IPNetworks: []IPNetwork{
 				{
 					Address:          "80.69.172.0/22",
-					DHCP:             true,
-					DHCPDefaultRoute: true,
+					DHCP:             True,
+					DHCPDefaultRoute: True,
 					DHCPDns: []string{
 						"94.237.127.9",
 						"94.237.40.9",
@@ -112,8 +112,8 @@ func TestUnmarshalNetworks(t *testing.T) {
 			IPNetworks: []IPNetwork{
 				{
 					Address:          "80.69.173.0/22",
-					DHCP:             false,
-					DHCPDefaultRoute: false,
+					DHCP:             False,
+					DHCPDefaultRoute: False,
 					DHCPDns: []string{
 						"94.237.17.9",
 						"94.237.4.9",
@@ -193,8 +193,8 @@ func TestUnmarshalNetwork(t *testing.T) {
 		IPNetworks: []IPNetwork{
 			{
 				Address:          "172.16.0.0/22",
-				DHCP:             true,
-				DHCPDefaultRoute: false,
+				DHCP:             True,
+				DHCPDefaultRoute: False,
 				DHCPDns: []string{
 					"172.16.0.10",
 					"172.16.1.10",
@@ -296,9 +296,9 @@ func TestUnmarshalServerNetworks(t *testing.T) {
 				},
 				MAC:               "de:ff:ff:ff:66:89",
 				Network:           "037fcf2a-6745-45dd-867e-f9479ea8c044",
-				SourceIPFiltering: true,
+				SourceIPFiltering: True,
 				Type:              NetworkTypePublic,
-				Bootable:          false,
+				Bootable:          False,
 			},
 			{
 				Index: 3,
@@ -310,9 +310,9 @@ func TestUnmarshalServerNetworks(t *testing.T) {
 				},
 				MAC:               "de:ff:ff:ff:ed:85",
 				Network:           "03c93fd8-cc60-4849-91b8-6e404b228e2a",
-				SourceIPFiltering: true,
+				SourceIPFiltering: True,
 				Type:              NetworkTypeUtility,
-				Bootable:          false,
+				Bootable:          False,
 			},
 			{
 				Index: 4,
@@ -324,9 +324,9 @@ func TestUnmarshalServerNetworks(t *testing.T) {
 				},
 				MAC:               "de:ff:ff:ff:cc:20",
 				Network:           "0374ce47-4303-4490-987d-32dc96cfd79b",
-				SourceIPFiltering: true,
+				SourceIPFiltering: True,
 				Type:              NetworkTypePrivate,
-				Bootable:          false,
+				Bootable:          False,
 			},
 		},
 	}
@@ -369,14 +369,14 @@ func TestUnmarshalInterface(t *testing.T) {
 			{
 				Address:  "10.0.0.20",
 				Family:   IPAddressFamilyIPv4,
-				Floating: false,
+				Floating: False,
 			},
 		},
 		MAC:               "de:ff:ff:ff:86:cf",
 		Network:           "0374ce47-4303-4490-987d-32dc96cfd79b",
-		SourceIPFiltering: true,
+		SourceIPFiltering: True,
 		Type:              NetworkTypePrivate,
-		Bootable:          false,
+		Bootable:          False,
 	}
 
 	assert.Equal(t, testIface, iface)

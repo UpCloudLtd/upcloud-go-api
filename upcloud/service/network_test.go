@@ -105,8 +105,8 @@ func TestCreateModifyDeleteNetwork(t *testing.T) {
 			IPNetworks: []upcloud.IPNetwork{
 				{
 					Address:          "172.16.0.0/22",
-					DHCP:             true,
-					DHCPDefaultRoute: false,
+					DHCP:             upcloud.True,
+					DHCPDefaultRoute: upcloud.False,
 					DHCPDns: []string{
 						"172.16.0.10",
 						"172.16.1.10",
@@ -295,8 +295,8 @@ func TestCreateTwoNetworksTwoServersAndARouter(t *testing.T) {
 			IPNetworks: []upcloud.IPNetwork{
 				{
 					Address:          "192.168.86.1/24",
-					DHCP:             true,
-					DHCPDefaultRoute: false,
+					DHCP:             upcloud.True,
+					DHCPDefaultRoute: upcloud.False,
 					DHCPDns: []string{
 						"192.168.86.10",
 						"192.168.86.11",
@@ -315,8 +315,8 @@ func TestCreateTwoNetworksTwoServersAndARouter(t *testing.T) {
 			IPNetworks: []upcloud.IPNetwork{
 				{
 					Address:          "192.168.87.1/24",
-					DHCP:             true,
-					DHCPDefaultRoute: false,
+					DHCP:             upcloud.True,
+					DHCPDefaultRoute: upcloud.False,
 					DHCPDns: []string{
 						"192.168.87.10",
 						"192.168.87.11",
@@ -455,5 +455,41 @@ func TestCreateTwoNetworksTwoServersAndARouter(t *testing.T) {
 		})
 		require.NoError(t, err)
 
+	})
+}
+
+func TestCreateNetworkAndServer(t *testing.T) {
+	record(t, "createnetworkandserver", func(t *testing.T, svc *Service) {
+		network, err := svc.CreateNetwork(&request.CreateNetworkRequest{
+			Name: "test_network_tcns (test)",
+			Zone: "fi-hel2",
+			IPNetworks: []upcloud.IPNetwork{
+				{
+					Address:          "172.16.0.0/22",
+					DHCP:             upcloud.True,
+					DHCPDefaultRoute: upcloud.False,
+					DHCPDns: []string{
+						"172.16.0.10",
+						"172.16.1.10",
+					},
+					Family:  upcloud.IPAddressFamilyIPv4,
+					Gateway: "172.16.0.1",
+				},
+			},
+		})
+		require.NoError(t, err)
+		assert.NotEmpty(t, network.UUID)
+
+		serverDetails, err := createServerWithNetwork(svc, "TestCreateNetworkAndServer", network.UUID)
+		require.NoError(t, err)
+		assert.NotEmpty(t, serverDetails.UUID)
+		var found bool
+		for _, iface := range serverDetails.Networking.Interfaces {
+			if iface.Network == network.UUID {
+				found = true
+				break
+			}
+		}
+		assert.True(t, found)
 	})
 }

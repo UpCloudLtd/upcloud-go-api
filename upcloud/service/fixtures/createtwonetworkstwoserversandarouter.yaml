@@ -32,7 +32,7 @@ interactions:
             },
             "name" : "test private network #1 (test)",
             "type" : "private",
-            "uuid" : "03cac945-fba2-42d7-a491-260bd725a498",
+            "uuid" : "03c007f5-878c-4c1e-90c7-24cf6423c50e",
             "zone" : "fi-hel2"
          }
       }
@@ -42,7 +42,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:21:12 GMT
+      - Wed, 19 Aug 2020 14:08:51 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -81,7 +81,7 @@ interactions:
             },
             "name" : "test private network #2 (test)",
             "type" : "private",
-            "uuid" : "03ed6eaa-3613-4b9c-ad5f-2a2de8ae8021",
+            "uuid" : "03d39bc9-f5a1-4336-9558-cad1c1a66f9f",
             "zone" : "fi-hel2"
          }
       }
@@ -91,7 +91,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:21:12 GMT
+      - Wed, 19 Aug 2020 14:08:51 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -118,7 +118,7 @@ interactions:
             },
             "name" : "test router (test)",
             "type" : "normal",
-            "uuid" : "049df464-baf9-49da-8ad4-700441d28659"
+            "uuid" : "04ba2af3-d772-4f4b-9d30-52fe40f5a82e"
          }
       }
     headers:
@@ -127,7 +127,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:21:12 GMT
+      - Wed, 19 Aug 2020 14:08:51 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -136,14 +136,14 @@ interactions:
     code: 201
     duration: ""
 - request:
-    body: '{"network":{"router":"049df464-baf9-49da-8ad4-700441d28659"}}'
+    body: '{"network":{"router":"04ba2af3-d772-4f4b-9d30-52fe40f5a82e"}}'
     form: {}
     headers:
       Accept:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/network/03cac945-fba2-42d7-a491-260bd725a498
+    url: https://api.upcloud.com/1.3/network/03c007f5-878c-4c1e-90c7-24cf6423c50e
     method: PUT
   response:
     body: |
@@ -165,9 +165,9 @@ interactions:
                ]
             },
             "name" : "test private network #1 (test)",
-            "router" : "049df464-baf9-49da-8ad4-700441d28659",
+            "router" : "04ba2af3-d772-4f4b-9d30-52fe40f5a82e",
             "type" : "private",
-            "uuid" : "03cac945-fba2-42d7-a491-260bd725a498",
+            "uuid" : "03c007f5-878c-4c1e-90c7-24cf6423c50e",
             "zone" : "fi-hel2"
          }
       }
@@ -177,7 +177,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:21:13 GMT
+      - Wed, 19 Aug 2020 14:08:52 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -186,14 +186,14 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"network":{"router":"049df464-baf9-49da-8ad4-700441d28659"}}'
+    body: '{"network":{"router":"04ba2af3-d772-4f4b-9d30-52fe40f5a82e"}}'
     form: {}
     headers:
       Accept:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/network/03ed6eaa-3613-4b9c-ad5f-2a2de8ae8021
+    url: https://api.upcloud.com/1.3/network/03d39bc9-f5a1-4336-9558-cad1c1a66f9f
     method: PUT
   response:
     body: |
@@ -215,9 +215,9 @@ interactions:
                ]
             },
             "name" : "test private network #2 (test)",
-            "router" : "049df464-baf9-49da-8ad4-700441d28659",
+            "router" : "04ba2af3-d772-4f4b-9d30-52fe40f5a82e",
             "type" : "private",
-            "uuid" : "03ed6eaa-3613-4b9c-ad5f-2a2de8ae8021",
+            "uuid" : "03d39bc9-f5a1-4336-9558-cad1c1a66f9f",
             "zone" : "fi-hel2"
          }
       }
@@ -227,7 +227,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:21:13 GMT
+      - Wed, 19 Aug 2020 14:08:52 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -251,24 +251,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596997273,
+            "created" : 1597846132,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testctntr1.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "utility",
-                     "address" : "10.6.6.212",
+                     "address" : "10.6.6.239",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:4b1e",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d76",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.82",
+                     "address" : "94.237.104.128",
                      "family" : "IPv4"
                   }
                ]
@@ -285,13 +285,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "10.6.6.212",
+                                 "address" : "10.6.6.239",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:b3:9c",
+                        "mac" : "ee:1b:db:ca:d6:31",
                         "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
                         "source_ip_filtering" : "yes",
                         "type" : "utility"
@@ -302,13 +302,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "94.237.104.82",
+                                 "address" : "94.237.104.128",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:18:ac",
+                        "mac" : "ee:1b:db:ca:1d:8b",
                         "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -319,13 +319,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:4b1e",
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d76",
                                  "family" : "IPv6",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:4b:1e",
+                        "mac" : "ee:1b:db:ca:1d:76",
                         "network" : "03000000-0000-4000-8046-000000000000",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -334,13 +334,13 @@ interactions:
                }
             },
             "nic_model" : "virtio",
-            "password" : "74994ty3",
+            "password" : "9b6a3nde",
             "plan" : "custom",
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
             "progress" : "0",
             "remote_access_enabled" : "no",
-            "remote_access_password" : "XM82avmf",
+            "remote_access_password" : "MM93X7aU",
             "remote_access_type" : "vnc",
             "simple_backup" : "no",
             "state" : "maintenance",
@@ -349,7 +349,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "0116fbe9-98e6-404c-8510-e9a25bc8b971",
+                     "storage" : "0162cfeb-237f-43e4-8a29-d33a53be7117",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -362,18 +362,18 @@ interactions:
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestCTNTR1",
             "username" : "root",
-            "uuid" : "0077402e-a767-471b-9771-6f668b4b4afd",
+            "uuid" : "00c88e0e-f7f7-4835-8000-a68645ada971",
             "video_model" : "cirrus",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "3791"
+      - "3793"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:21:13 GMT
+      - Wed, 19 Aug 2020 14:08:52 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -389,7 +389,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/server/0077402e-a767-471b-9771-6f668b4b4afd
+    url: https://api.upcloud.com/1.3/server/00c88e0e-f7f7-4835-8000-a68645ada971
     method: GET
   response:
     body: |
@@ -397,24 +397,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596997273,
+            "created" : 1597846132,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testctntr1.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "utility",
-                     "address" : "10.6.6.212",
+                     "address" : "10.6.6.239",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:4b1e",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d76",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.82",
+                     "address" : "94.237.104.128",
                      "family" : "IPv4"
                   }
                ]
@@ -431,13 +431,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "10.6.6.212",
+                                 "address" : "10.6.6.239",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:b3:9c",
+                        "mac" : "ee:1b:db:ca:d6:31",
                         "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
                         "source_ip_filtering" : "yes",
                         "type" : "utility"
@@ -448,13 +448,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "94.237.104.82",
+                                 "address" : "94.237.104.128",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:18:ac",
+                        "mac" : "ee:1b:db:ca:1d:8b",
                         "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -465,13 +465,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:4b1e",
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d76",
                                  "family" : "IPv6",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:4b:1e",
+                        "mac" : "ee:1b:db:ca:1d:76",
                         "network" : "03000000-0000-4000-8046-000000000000",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -485,7 +485,7 @@ interactions:
             "plan_ipv6_bytes" : "0",
             "progress" : "85",
             "remote_access_enabled" : "no",
-            "remote_access_password" : "XM82avmf",
+            "remote_access_password" : "MM93X7aU",
             "remote_access_type" : "vnc",
             "simple_backup" : "no",
             "state" : "maintenance",
@@ -494,7 +494,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "0116fbe9-98e6-404c-8510-e9a25bc8b971",
+                     "storage" : "0162cfeb-237f-43e4-8a29-d33a53be7117",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -506,18 +506,18 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestCTNTR1",
-            "uuid" : "0077402e-a767-471b-9771-6f668b4b4afd",
+            "uuid" : "00c88e0e-f7f7-4835-8000-a68645ada971",
             "video_model" : "cirrus",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "3734"
+      - "3736"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:21:19 GMT
+      - Wed, 19 Aug 2020 14:08:58 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -533,7 +533,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/server/0077402e-a767-471b-9771-6f668b4b4afd
+    url: https://api.upcloud.com/1.3/server/00c88e0e-f7f7-4835-8000-a68645ada971
     method: GET
   response:
     body: |
@@ -541,24 +541,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596997273,
+            "created" : 1597846132,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testctntr1.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "utility",
-                     "address" : "10.6.6.212",
+                     "address" : "10.6.6.239",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:4b1e",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d76",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.82",
+                     "address" : "94.237.104.128",
                      "family" : "IPv4"
                   }
                ]
@@ -575,13 +575,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "10.6.6.212",
+                                 "address" : "10.6.6.239",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:b3:9c",
+                        "mac" : "ee:1b:db:ca:d6:31",
                         "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
                         "source_ip_filtering" : "yes",
                         "type" : "utility"
@@ -592,13 +592,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "94.237.104.82",
+                                 "address" : "94.237.104.128",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:18:ac",
+                        "mac" : "ee:1b:db:ca:1d:8b",
                         "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -609,13 +609,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:4b1e",
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d76",
                                  "family" : "IPv6",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:4b:1e",
+                        "mac" : "ee:1b:db:ca:1d:76",
                         "network" : "03000000-0000-4000-8046-000000000000",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -627,9 +627,8 @@ interactions:
             "plan" : "custom",
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
-            "progress" : "95",
             "remote_access_enabled" : "no",
-            "remote_access_password" : "XM82avmf",
+            "remote_access_password" : "MM93X7aU",
             "remote_access_type" : "vnc",
             "simple_backup" : "no",
             "state" : "maintenance",
@@ -638,7 +637,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "0116fbe9-98e6-404c-8510-e9a25bc8b971",
+                     "storage" : "0162cfeb-237f-43e4-8a29-d33a53be7117",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -650,18 +649,18 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestCTNTR1",
-            "uuid" : "0077402e-a767-471b-9771-6f668b4b4afd",
+            "uuid" : "00c88e0e-f7f7-4835-8000-a68645ada971",
             "video_model" : "cirrus",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "3734"
+      - "3711"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:21:24 GMT
+      - Wed, 19 Aug 2020 14:09:03 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -677,7 +676,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/server/0077402e-a767-471b-9771-6f668b4b4afd
+    url: https://api.upcloud.com/1.3/server/00c88e0e-f7f7-4835-8000-a68645ada971
     method: GET
   response:
     body: |
@@ -685,24 +684,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596997273,
+            "created" : 1597846132,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testctntr1.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "utility",
-                     "address" : "10.6.6.212",
+                     "address" : "10.6.6.239",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:4b1e",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d76",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.82",
+                     "address" : "94.237.104.128",
                      "family" : "IPv4"
                   }
                ]
@@ -719,13 +718,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "10.6.6.212",
+                                 "address" : "10.6.6.239",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:b3:9c",
+                        "mac" : "ee:1b:db:ca:d6:31",
                         "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
                         "source_ip_filtering" : "yes",
                         "type" : "utility"
@@ -736,13 +735,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "94.237.104.82",
+                                 "address" : "94.237.104.128",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:18:ac",
+                        "mac" : "ee:1b:db:ca:1d:8b",
                         "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -753,13 +752,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:4b1e",
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d76",
                                  "family" : "IPv6",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:4b:1e",
+                        "mac" : "ee:1b:db:ca:1d:76",
                         "network" : "03000000-0000-4000-8046-000000000000",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -772,7 +771,7 @@ interactions:
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
             "remote_access_enabled" : "no",
-            "remote_access_password" : "XM82avmf",
+            "remote_access_password" : "MM93X7aU",
             "remote_access_type" : "vnc",
             "simple_backup" : "no",
             "state" : "maintenance",
@@ -781,7 +780,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "0116fbe9-98e6-404c-8510-e9a25bc8b971",
+                     "storage" : "0162cfeb-237f-43e4-8a29-d33a53be7117",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -793,18 +792,18 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestCTNTR1",
-            "uuid" : "0077402e-a767-471b-9771-6f668b4b4afd",
+            "uuid" : "00c88e0e-f7f7-4835-8000-a68645ada971",
             "video_model" : "cirrus",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "3709"
+      - "3711"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:21:29 GMT
+      - Wed, 19 Aug 2020 14:09:08 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -820,7 +819,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/server/0077402e-a767-471b-9771-6f668b4b4afd
+    url: https://api.upcloud.com/1.3/server/00c88e0e-f7f7-4835-8000-a68645ada971
     method: GET
   response:
     body: |
@@ -828,150 +827,7 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596997273,
-            "firewall" : "off",
-            "hostname" : "uploud-go-sdk-integration-test-testctntr1.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.212",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:4b1e",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.104.82",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.212",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "ee:1b:db:ca:b3:9c",
-                        "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.104.82",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "ee:1b:db:ca:18:ac",
-                        "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:4b1e",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "ee:1b:db:ca:4b:1e",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "XM82avmf",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "0116fbe9-98e6-404c-8510-e9a25bc8b971",
-                     "storage_size" : 30,
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestCTNTR1",
-            "uuid" : "0077402e-a767-471b-9771-6f668b4b4afd",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "3709"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Sun, 09 Aug 2020 18:21:34 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-    url: https://api.upcloud.com/1.3/server/0077402e-a767-471b-9771-6f668b4b4afd
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1596997273,
+            "created" : 1597846132,
             "firewall" : "off",
             "host" : 7617135235,
             "hostname" : "uploud-go-sdk-integration-test-testctntr1.example.com",
@@ -979,17 +835,17 @@ interactions:
                "ip_address" : [
                   {
                      "access" : "utility",
-                     "address" : "10.6.6.212",
+                     "address" : "10.6.6.239",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:4b1e",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d76",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.82",
+                     "address" : "94.237.104.128",
                      "family" : "IPv4"
                   }
                ]
@@ -1006,13 +862,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "10.6.6.212",
+                                 "address" : "10.6.6.239",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:b3:9c",
+                        "mac" : "ee:1b:db:ca:d6:31",
                         "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
                         "source_ip_filtering" : "yes",
                         "type" : "utility"
@@ -1023,13 +879,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "94.237.104.82",
+                                 "address" : "94.237.104.128",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:18:ac",
+                        "mac" : "ee:1b:db:ca:1d:8b",
                         "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -1040,13 +896,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:4b1e",
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d76",
                                  "family" : "IPv6",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:4b:1e",
+                        "mac" : "ee:1b:db:ca:1d:76",
                         "network" : "03000000-0000-4000-8046-000000000000",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -1059,7 +915,7 @@ interactions:
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
             "remote_access_enabled" : "no",
-            "remote_access_password" : "XM82avmf",
+            "remote_access_password" : "MM93X7aU",
             "remote_access_type" : "vnc",
             "simple_backup" : "no",
             "state" : "started",
@@ -1068,7 +924,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "0116fbe9-98e6-404c-8510-e9a25bc8b971",
+                     "storage" : "0162cfeb-237f-43e4-8a29-d33a53be7117",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -1080,18 +936,18 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestCTNTR1",
-            "uuid" : "0077402e-a767-471b-9771-6f668b4b4afd",
+            "uuid" : "00c88e0e-f7f7-4835-8000-a68645ada971",
             "video_model" : "cirrus",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "3732"
+      - "3734"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:21:40 GMT
+      - Wed, 19 Aug 2020 14:09:14 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -1115,24 +971,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596997300,
+            "created" : 1597846154,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testctntr2.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "utility",
-                     "address" : "10.6.6.213",
+                     "address" : "10.6.6.240",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:472f",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:172c",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.83",
+                     "address" : "94.237.104.129",
                      "family" : "IPv4"
                   }
                ]
@@ -1149,13 +1005,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "10.6.6.213",
+                                 "address" : "10.6.6.240",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:fd:d9",
+                        "mac" : "ee:1b:db:ca:b2:9a",
                         "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
                         "source_ip_filtering" : "yes",
                         "type" : "utility"
@@ -1166,13 +1022,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "94.237.104.83",
+                                 "address" : "94.237.104.129",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:0d:4c",
+                        "mac" : "ee:1b:db:ca:6b:e1",
                         "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -1183,13 +1039,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:472f",
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:172c",
                                  "family" : "IPv6",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:47:2f",
+                        "mac" : "ee:1b:db:ca:17:2c",
                         "network" : "03000000-0000-4000-8046-000000000000",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -1198,13 +1054,13 @@ interactions:
                }
             },
             "nic_model" : "virtio",
-            "password" : "93p5f3x8",
+            "password" : "mrhg582b",
             "plan" : "custom",
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
             "progress" : "0",
             "remote_access_enabled" : "no",
-            "remote_access_password" : "VFC35MDp",
+            "remote_access_password" : "Qh79Mv8N",
             "remote_access_type" : "vnc",
             "simple_backup" : "no",
             "state" : "maintenance",
@@ -1213,7 +1069,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "0119a6a4-33b4-4b4f-a169-d83835f34160",
+                     "storage" : "0194abb1-c478-483c-8d52-cda69205f6df",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -1226,18 +1082,18 @@ interactions:
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestCTNTR2",
             "username" : "root",
-            "uuid" : "00300677-1826-40fd-a038-fa22f1100cac",
+            "uuid" : "00cb2451-9d47-4650-b393-3e2bb213f9b2",
             "video_model" : "cirrus",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "3791"
+      - "3793"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:21:40 GMT
+      - Wed, 19 Aug 2020 14:09:14 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -1253,7 +1109,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/server/00300677-1826-40fd-a038-fa22f1100cac
+    url: https://api.upcloud.com/1.3/server/00cb2451-9d47-4650-b393-3e2bb213f9b2
     method: GET
   response:
     body: |
@@ -1261,24 +1117,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596997300,
+            "created" : 1597846154,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testctntr2.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "utility",
-                     "address" : "10.6.6.213",
+                     "address" : "10.6.6.240",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:472f",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:172c",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.83",
+                     "address" : "94.237.104.129",
                      "family" : "IPv4"
                   }
                ]
@@ -1295,13 +1151,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "10.6.6.213",
+                                 "address" : "10.6.6.240",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:fd:d9",
+                        "mac" : "ee:1b:db:ca:b2:9a",
                         "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
                         "source_ip_filtering" : "yes",
                         "type" : "utility"
@@ -1312,13 +1168,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "94.237.104.83",
+                                 "address" : "94.237.104.129",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:0d:4c",
+                        "mac" : "ee:1b:db:ca:6b:e1",
                         "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -1329,13 +1185,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:472f",
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:172c",
                                  "family" : "IPv6",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:47:2f",
+                        "mac" : "ee:1b:db:ca:17:2c",
                         "network" : "03000000-0000-4000-8046-000000000000",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -1349,7 +1205,7 @@ interactions:
             "plan_ipv6_bytes" : "0",
             "progress" : "85",
             "remote_access_enabled" : "no",
-            "remote_access_password" : "VFC35MDp",
+            "remote_access_password" : "Qh79Mv8N",
             "remote_access_type" : "vnc",
             "simple_backup" : "no",
             "state" : "maintenance",
@@ -1358,7 +1214,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "0119a6a4-33b4-4b4f-a169-d83835f34160",
+                     "storage" : "0194abb1-c478-483c-8d52-cda69205f6df",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -1370,18 +1226,18 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestCTNTR2",
-            "uuid" : "00300677-1826-40fd-a038-fa22f1100cac",
+            "uuid" : "00cb2451-9d47-4650-b393-3e2bb213f9b2",
             "video_model" : "cirrus",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "3734"
+      - "3736"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:21:46 GMT
+      - Wed, 19 Aug 2020 14:09:20 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -1397,7 +1253,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/server/00300677-1826-40fd-a038-fa22f1100cac
+    url: https://api.upcloud.com/1.3/server/00cb2451-9d47-4650-b393-3e2bb213f9b2
     method: GET
   response:
     body: |
@@ -1405,24 +1261,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596997300,
+            "created" : 1597846154,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testctntr2.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "utility",
-                     "address" : "10.6.6.213",
+                     "address" : "10.6.6.240",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:472f",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:172c",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.83",
+                     "address" : "94.237.104.129",
                      "family" : "IPv4"
                   }
                ]
@@ -1439,13 +1295,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "10.6.6.213",
+                                 "address" : "10.6.6.240",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:fd:d9",
+                        "mac" : "ee:1b:db:ca:b2:9a",
                         "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
                         "source_ip_filtering" : "yes",
                         "type" : "utility"
@@ -1456,13 +1312,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "94.237.104.83",
+                                 "address" : "94.237.104.129",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:0d:4c",
+                        "mac" : "ee:1b:db:ca:6b:e1",
                         "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -1473,13 +1329,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:472f",
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:172c",
                                  "family" : "IPv6",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:47:2f",
+                        "mac" : "ee:1b:db:ca:17:2c",
                         "network" : "03000000-0000-4000-8046-000000000000",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -1491,9 +1347,8 @@ interactions:
             "plan" : "custom",
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
-            "progress" : "95",
             "remote_access_enabled" : "no",
-            "remote_access_password" : "VFC35MDp",
+            "remote_access_password" : "Qh79Mv8N",
             "remote_access_type" : "vnc",
             "simple_backup" : "no",
             "state" : "maintenance",
@@ -1502,7 +1357,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "0119a6a4-33b4-4b4f-a169-d83835f34160",
+                     "storage" : "0194abb1-c478-483c-8d52-cda69205f6df",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -1514,18 +1369,18 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestCTNTR2",
-            "uuid" : "00300677-1826-40fd-a038-fa22f1100cac",
+            "uuid" : "00cb2451-9d47-4650-b393-3e2bb213f9b2",
             "video_model" : "cirrus",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "3734"
+      - "3711"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:21:51 GMT
+      - Wed, 19 Aug 2020 14:09:25 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -1541,7 +1396,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/server/00300677-1826-40fd-a038-fa22f1100cac
+    url: https://api.upcloud.com/1.3/server/00cb2451-9d47-4650-b393-3e2bb213f9b2
     method: GET
   response:
     body: |
@@ -1549,24 +1404,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596997300,
+            "created" : 1597846154,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testctntr2.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "utility",
-                     "address" : "10.6.6.213",
+                     "address" : "10.6.6.240",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:472f",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:172c",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.83",
+                     "address" : "94.237.104.129",
                      "family" : "IPv4"
                   }
                ]
@@ -1583,13 +1438,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "10.6.6.213",
+                                 "address" : "10.6.6.240",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:fd:d9",
+                        "mac" : "ee:1b:db:ca:b2:9a",
                         "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
                         "source_ip_filtering" : "yes",
                         "type" : "utility"
@@ -1600,13 +1455,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "94.237.104.83",
+                                 "address" : "94.237.104.129",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:0d:4c",
+                        "mac" : "ee:1b:db:ca:6b:e1",
                         "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -1617,13 +1472,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:472f",
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:172c",
                                  "family" : "IPv6",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:47:2f",
+                        "mac" : "ee:1b:db:ca:17:2c",
                         "network" : "03000000-0000-4000-8046-000000000000",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -1636,7 +1491,7 @@ interactions:
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
             "remote_access_enabled" : "no",
-            "remote_access_password" : "VFC35MDp",
+            "remote_access_password" : "Qh79Mv8N",
             "remote_access_type" : "vnc",
             "simple_backup" : "no",
             "state" : "maintenance",
@@ -1645,7 +1500,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "0119a6a4-33b4-4b4f-a169-d83835f34160",
+                     "storage" : "0194abb1-c478-483c-8d52-cda69205f6df",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -1657,18 +1512,18 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestCTNTR2",
-            "uuid" : "00300677-1826-40fd-a038-fa22f1100cac",
+            "uuid" : "00cb2451-9d47-4650-b393-3e2bb213f9b2",
             "video_model" : "cirrus",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "3709"
+      - "3711"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:21:56 GMT
+      - Wed, 19 Aug 2020 14:09:30 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -1684,7 +1539,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/server/00300677-1826-40fd-a038-fa22f1100cac
+    url: https://api.upcloud.com/1.3/server/00cb2451-9d47-4650-b393-3e2bb213f9b2
     method: GET
   response:
     body: |
@@ -1692,150 +1547,7 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596997300,
-            "firewall" : "off",
-            "hostname" : "uploud-go-sdk-integration-test-testctntr2.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.213",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:472f",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.104.83",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.213",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "ee:1b:db:ca:fd:d9",
-                        "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.104.83",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "ee:1b:db:ca:0d:4c",
-                        "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:472f",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "ee:1b:db:ca:47:2f",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "VFC35MDp",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "0119a6a4-33b4-4b4f-a169-d83835f34160",
-                     "storage_size" : 30,
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestCTNTR2",
-            "uuid" : "00300677-1826-40fd-a038-fa22f1100cac",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "3709"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Sun, 09 Aug 2020 18:22:01 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-    url: https://api.upcloud.com/1.3/server/00300677-1826-40fd-a038-fa22f1100cac
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1596997300,
+            "created" : 1597846154,
             "firewall" : "off",
             "host" : 7617135235,
             "hostname" : "uploud-go-sdk-integration-test-testctntr2.example.com",
@@ -1843,17 +1555,17 @@ interactions:
                "ip_address" : [
                   {
                      "access" : "utility",
-                     "address" : "10.6.6.213",
+                     "address" : "10.6.6.240",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:472f",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:172c",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.83",
+                     "address" : "94.237.104.129",
                      "family" : "IPv4"
                   }
                ]
@@ -1870,13 +1582,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "10.6.6.213",
+                                 "address" : "10.6.6.240",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:fd:d9",
+                        "mac" : "ee:1b:db:ca:b2:9a",
                         "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
                         "source_ip_filtering" : "yes",
                         "type" : "utility"
@@ -1887,13 +1599,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "94.237.104.83",
+                                 "address" : "94.237.104.129",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:0d:4c",
+                        "mac" : "ee:1b:db:ca:6b:e1",
                         "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -1904,13 +1616,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:472f",
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:172c",
                                  "family" : "IPv6",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:47:2f",
+                        "mac" : "ee:1b:db:ca:17:2c",
                         "network" : "03000000-0000-4000-8046-000000000000",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -1923,7 +1635,7 @@ interactions:
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
             "remote_access_enabled" : "no",
-            "remote_access_password" : "VFC35MDp",
+            "remote_access_password" : "Qh79Mv8N",
             "remote_access_type" : "vnc",
             "simple_backup" : "no",
             "state" : "started",
@@ -1932,7 +1644,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "0119a6a4-33b4-4b4f-a169-d83835f34160",
+                     "storage" : "0194abb1-c478-483c-8d52-cda69205f6df",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -1944,18 +1656,18 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestCTNTR2",
-            "uuid" : "00300677-1826-40fd-a038-fa22f1100cac",
+            "uuid" : "00cb2451-9d47-4650-b393-3e2bb213f9b2",
             "video_model" : "cirrus",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "3732"
+      - "3734"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:22:06 GMT
+      - Wed, 19 Aug 2020 14:09:35 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -1971,7 +1683,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/server/0077402e-a767-471b-9771-6f668b4b4afd/stop
+    url: https://api.upcloud.com/1.3/server/00c88e0e-f7f7-4835-8000-a68645ada971/stop
     method: POST
   response:
     body: |
@@ -1979,7 +1691,7 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596997273,
+            "created" : 1597846132,
             "firewall" : "off",
             "host" : 7617135235,
             "hostname" : "uploud-go-sdk-integration-test-testctntr1.example.com",
@@ -1987,17 +1699,17 @@ interactions:
                "ip_address" : [
                   {
                      "access" : "utility",
-                     "address" : "10.6.6.212",
+                     "address" : "10.6.6.239",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:4b1e",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d76",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.82",
+                     "address" : "94.237.104.128",
                      "family" : "IPv4"
                   }
                ]
@@ -2014,13 +1726,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "10.6.6.212",
+                                 "address" : "10.6.6.239",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:b3:9c",
+                        "mac" : "ee:1b:db:ca:d6:31",
                         "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
                         "source_ip_filtering" : "yes",
                         "type" : "utility"
@@ -2031,13 +1743,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "94.237.104.82",
+                                 "address" : "94.237.104.128",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:18:ac",
+                        "mac" : "ee:1b:db:ca:1d:8b",
                         "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -2048,13 +1760,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:4b1e",
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d76",
                                  "family" : "IPv6",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:4b:1e",
+                        "mac" : "ee:1b:db:ca:1d:76",
                         "network" : "03000000-0000-4000-8046-000000000000",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -2067,7 +1779,7 @@ interactions:
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
             "remote_access_enabled" : "no",
-            "remote_access_password" : "XM82avmf",
+            "remote_access_password" : "MM93X7aU",
             "remote_access_type" : "vnc",
             "simple_backup" : "no",
             "state" : "started",
@@ -2076,7 +1788,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "0116fbe9-98e6-404c-8510-e9a25bc8b971",
+                     "storage" : "0162cfeb-237f-43e4-8a29-d33a53be7117",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -2088,18 +1800,18 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestCTNTR1",
-            "uuid" : "0077402e-a767-471b-9771-6f668b4b4afd",
+            "uuid" : "00c88e0e-f7f7-4835-8000-a68645ada971",
             "video_model" : "cirrus",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "3732"
+      - "3734"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:22:07 GMT
+      - Wed, 19 Aug 2020 14:09:35 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -2115,7 +1827,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/server/0077402e-a767-471b-9771-6f668b4b4afd
+    url: https://api.upcloud.com/1.3/server/00c88e0e-f7f7-4835-8000-a68645ada971
     method: GET
   response:
     body: |
@@ -2123,25 +1835,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596997273,
+            "created" : 1597846132,
             "firewall" : "off",
-            "host" : 7617135235,
             "hostname" : "uploud-go-sdk-integration-test-testctntr1.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "utility",
-                     "address" : "10.6.6.212",
+                     "address" : "10.6.6.239",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:4b1e",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d76",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.82",
+                     "address" : "94.237.104.128",
                      "family" : "IPv4"
                   }
                ]
@@ -2158,13 +1869,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "10.6.6.212",
+                                 "address" : "10.6.6.239",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:b3:9c",
+                        "mac" : "ee:1b:db:ca:d6:31",
                         "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
                         "source_ip_filtering" : "yes",
                         "type" : "utility"
@@ -2175,13 +1886,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "94.237.104.82",
+                                 "address" : "94.237.104.128",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:18:ac",
+                        "mac" : "ee:1b:db:ca:1d:8b",
                         "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -2192,13 +1903,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:4b1e",
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d76",
                                  "family" : "IPv6",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:4b:1e",
+                        "mac" : "ee:1b:db:ca:1d:76",
                         "network" : "03000000-0000-4000-8046-000000000000",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -2211,150 +1922,7 @@ interactions:
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
             "remote_access_enabled" : "no",
-            "remote_access_password" : "XM82avmf",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "0116fbe9-98e6-404c-8510-e9a25bc8b971",
-                     "storage_size" : 30,
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestCTNTR1",
-            "uuid" : "0077402e-a767-471b-9771-6f668b4b4afd",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "3736"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Sun, 09 Aug 2020 18:22:12 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-    url: https://api.upcloud.com/1.3/server/0077402e-a767-471b-9771-6f668b4b4afd
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1596997273,
-            "firewall" : "off",
-            "hostname" : "uploud-go-sdk-integration-test-testctntr1.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.212",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:4b1e",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.104.82",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.212",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "ee:1b:db:ca:b3:9c",
-                        "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.104.82",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "ee:1b:db:ca:18:ac",
-                        "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:4b1e",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "ee:1b:db:ca:4b:1e",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "XM82avmf",
+            "remote_access_password" : "MM93X7aU",
             "remote_access_type" : "vnc",
             "simple_backup" : "no",
             "state" : "stopped",
@@ -2363,7 +1931,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "0116fbe9-98e6-404c-8510-e9a25bc8b971",
+                     "storage" : "0162cfeb-237f-43e4-8a29-d33a53be7117",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -2375,18 +1943,18 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestCTNTR1",
-            "uuid" : "0077402e-a767-471b-9771-6f668b4b4afd",
+            "uuid" : "00c88e0e-f7f7-4835-8000-a68645ada971",
             "video_model" : "cirrus",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "3705"
+      - "3707"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:22:17 GMT
+      - Wed, 19 Aug 2020 14:09:41 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -2402,7 +1970,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/server/00300677-1826-40fd-a038-fa22f1100cac/stop
+    url: https://api.upcloud.com/1.3/server/00cb2451-9d47-4650-b393-3e2bb213f9b2/stop
     method: POST
   response:
     body: |
@@ -2410,7 +1978,7 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596997300,
+            "created" : 1597846154,
             "firewall" : "off",
             "host" : 7617135235,
             "hostname" : "uploud-go-sdk-integration-test-testctntr2.example.com",
@@ -2418,17 +1986,17 @@ interactions:
                "ip_address" : [
                   {
                      "access" : "utility",
-                     "address" : "10.6.6.213",
+                     "address" : "10.6.6.240",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:472f",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:172c",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.83",
+                     "address" : "94.237.104.129",
                      "family" : "IPv4"
                   }
                ]
@@ -2445,13 +2013,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "10.6.6.213",
+                                 "address" : "10.6.6.240",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:fd:d9",
+                        "mac" : "ee:1b:db:ca:b2:9a",
                         "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
                         "source_ip_filtering" : "yes",
                         "type" : "utility"
@@ -2462,13 +2030,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "94.237.104.83",
+                                 "address" : "94.237.104.129",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:0d:4c",
+                        "mac" : "ee:1b:db:ca:6b:e1",
                         "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -2479,13 +2047,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:472f",
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:172c",
                                  "family" : "IPv6",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:47:2f",
+                        "mac" : "ee:1b:db:ca:17:2c",
                         "network" : "03000000-0000-4000-8046-000000000000",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -2498,7 +2066,7 @@ interactions:
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
             "remote_access_enabled" : "no",
-            "remote_access_password" : "VFC35MDp",
+            "remote_access_password" : "Qh79Mv8N",
             "remote_access_type" : "vnc",
             "simple_backup" : "no",
             "state" : "started",
@@ -2507,7 +2075,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "0119a6a4-33b4-4b4f-a169-d83835f34160",
+                     "storage" : "0194abb1-c478-483c-8d52-cda69205f6df",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -2519,18 +2087,18 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestCTNTR2",
-            "uuid" : "00300677-1826-40fd-a038-fa22f1100cac",
+            "uuid" : "00cb2451-9d47-4650-b393-3e2bb213f9b2",
             "video_model" : "cirrus",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "3732"
+      - "3734"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:22:17 GMT
+      - Wed, 19 Aug 2020 14:09:41 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -2546,7 +2114,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/server/00300677-1826-40fd-a038-fa22f1100cac
+    url: https://api.upcloud.com/1.3/server/00cb2451-9d47-4650-b393-3e2bb213f9b2
     method: GET
   response:
     body: |
@@ -2554,25 +2122,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596997300,
+            "created" : 1597846154,
             "firewall" : "off",
-            "host" : 7617135235,
             "hostname" : "uploud-go-sdk-integration-test-testctntr2.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "utility",
-                     "address" : "10.6.6.213",
+                     "address" : "10.6.6.240",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:472f",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:172c",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.83",
+                     "address" : "94.237.104.129",
                      "family" : "IPv4"
                   }
                ]
@@ -2589,13 +2156,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "10.6.6.213",
+                                 "address" : "10.6.6.240",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:fd:d9",
+                        "mac" : "ee:1b:db:ca:b2:9a",
                         "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
                         "source_ip_filtering" : "yes",
                         "type" : "utility"
@@ -2606,13 +2173,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "94.237.104.83",
+                                 "address" : "94.237.104.129",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:0d:4c",
+                        "mac" : "ee:1b:db:ca:6b:e1",
                         "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -2623,13 +2190,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:472f",
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:172c",
                                  "family" : "IPv6",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:47:2f",
+                        "mac" : "ee:1b:db:ca:17:2c",
                         "network" : "03000000-0000-4000-8046-000000000000",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -2642,150 +2209,7 @@ interactions:
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
             "remote_access_enabled" : "no",
-            "remote_access_password" : "VFC35MDp",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "0119a6a4-33b4-4b4f-a169-d83835f34160",
-                     "storage_size" : 30,
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestCTNTR2",
-            "uuid" : "00300677-1826-40fd-a038-fa22f1100cac",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "3736"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Sun, 09 Aug 2020 18:22:22 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-    url: https://api.upcloud.com/1.3/server/00300677-1826-40fd-a038-fa22f1100cac
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1596997300,
-            "firewall" : "off",
-            "hostname" : "uploud-go-sdk-integration-test-testctntr2.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.213",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:472f",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.104.83",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.213",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "ee:1b:db:ca:fd:d9",
-                        "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.104.83",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "ee:1b:db:ca:0d:4c",
-                        "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:472f",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "ee:1b:db:ca:47:2f",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "VFC35MDp",
+            "remote_access_password" : "Qh79Mv8N",
             "remote_access_type" : "vnc",
             "simple_backup" : "no",
             "state" : "stopped",
@@ -2794,7 +2218,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "0119a6a4-33b4-4b4f-a169-d83835f34160",
+                     "storage" : "0194abb1-c478-483c-8d52-cda69205f6df",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -2806,18 +2230,18 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestCTNTR2",
-            "uuid" : "00300677-1826-40fd-a038-fa22f1100cac",
+            "uuid" : "00cb2451-9d47-4650-b393-3e2bb213f9b2",
             "video_model" : "cirrus",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "3705"
+      - "3707"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:22:28 GMT
+      - Wed, 19 Aug 2020 14:09:46 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -2826,14 +2250,14 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"interface":{"type":"private","network":"03cac945-fba2-42d7-a491-260bd725a498","ip_addresses":{"ip_address":[{"family":"IPv4"}]}}}'
+    body: '{"interface":{"type":"private","network":"03c007f5-878c-4c1e-90c7-24cf6423c50e","ip_addresses":{"ip_address":[{"family":"IPv4"}]}}}'
     form: {}
     headers:
       Accept:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/server/0077402e-a767-471b-9771-6f668b4b4afd/networking/interface
+    url: https://api.upcloud.com/1.3/server/00c88e0e-f7f7-4835-8000-a68645ada971/networking/interface
     method: POST
   response:
     body: |
@@ -2850,8 +2274,8 @@ interactions:
                   }
                ]
             },
-            "mac" : "ee:1b:db:ca:c0:e5",
-            "network" : "03cac945-fba2-42d7-a491-260bd725a498",
+            "mac" : "ee:1b:db:ca:ac:46",
+            "network" : "03c007f5-878c-4c1e-90c7-24cf6423c50e",
             "source_ip_filtering" : "yes",
             "type" : "private"
          }
@@ -2862,7 +2286,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:22:28 GMT
+      - Wed, 19 Aug 2020 14:09:46 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -2871,14 +2295,14 @@ interactions:
     code: 201
     duration: ""
 - request:
-    body: '{"interface":{"type":"private","network":"03ed6eaa-3613-4b9c-ad5f-2a2de8ae8021","ip_addresses":{"ip_address":[{"family":"IPv4"}]}}}'
+    body: '{"interface":{"type":"private","network":"03d39bc9-f5a1-4336-9558-cad1c1a66f9f","ip_addresses":{"ip_address":[{"family":"IPv4"}]}}}'
     form: {}
     headers:
       Accept:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/server/00300677-1826-40fd-a038-fa22f1100cac/networking/interface
+    url: https://api.upcloud.com/1.3/server/00cb2451-9d47-4650-b393-3e2bb213f9b2/networking/interface
     method: POST
   response:
     body: |
@@ -2895,8 +2319,8 @@ interactions:
                   }
                ]
             },
-            "mac" : "ee:1b:db:ca:bf:a3",
-            "network" : "03ed6eaa-3613-4b9c-ad5f-2a2de8ae8021",
+            "mac" : "ee:1b:db:ca:dc:95",
+            "network" : "03d39bc9-f5a1-4336-9558-cad1c1a66f9f",
             "source_ip_filtering" : "yes",
             "type" : "private"
          }
@@ -2907,7 +2331,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:22:28 GMT
+      - Wed, 19 Aug 2020 14:09:46 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -2923,7 +2347,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/server/0077402e-a767-471b-9771-6f668b4b4afd
+    url: https://api.upcloud.com/1.3/server/00c88e0e-f7f7-4835-8000-a68645ada971
     method: GET
   response:
     body: |
@@ -2931,24 +2355,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596997273,
+            "created" : 1597846132,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testctntr1.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "utility",
-                     "address" : "10.6.6.212",
+                     "address" : "10.6.6.239",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:4b1e",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d76",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.82",
+                     "address" : "94.237.104.128",
                      "family" : "IPv4"
                   }
                ]
@@ -2965,13 +2389,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "10.6.6.212",
+                                 "address" : "10.6.6.239",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:b3:9c",
+                        "mac" : "ee:1b:db:ca:d6:31",
                         "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
                         "source_ip_filtering" : "yes",
                         "type" : "utility"
@@ -2982,13 +2406,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "94.237.104.82",
+                                 "address" : "94.237.104.128",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:18:ac",
+                        "mac" : "ee:1b:db:ca:1d:8b",
                         "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -2999,13 +2423,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:4b1e",
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:1d76",
                                  "family" : "IPv6",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:4b:1e",
+                        "mac" : "ee:1b:db:ca:1d:76",
                         "network" : "03000000-0000-4000-8046-000000000000",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -3022,8 +2446,8 @@ interactions:
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:c0:e5",
-                        "network" : "03cac945-fba2-42d7-a491-260bd725a498",
+                        "mac" : "ee:1b:db:ca:ac:46",
+                        "network" : "03c007f5-878c-4c1e-90c7-24cf6423c50e",
                         "source_ip_filtering" : "yes",
                         "type" : "private"
                      }
@@ -3035,7 +2459,7 @@ interactions:
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
             "remote_access_enabled" : "no",
-            "remote_access_password" : "XM82avmf",
+            "remote_access_password" : "MM93X7aU",
             "remote_access_type" : "vnc",
             "simple_backup" : "no",
             "state" : "stopped",
@@ -3044,7 +2468,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "0116fbe9-98e6-404c-8510-e9a25bc8b971",
+                     "storage" : "0162cfeb-237f-43e4-8a29-d33a53be7117",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -3056,18 +2480,18 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestCTNTR1",
-            "uuid" : "0077402e-a767-471b-9771-6f668b4b4afd",
+            "uuid" : "00c88e0e-f7f7-4835-8000-a68645ada971",
             "video_model" : "cirrus",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "4328"
+      - "4330"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:22:28 GMT
+      - Wed, 19 Aug 2020 14:09:47 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -3083,7 +2507,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/server/00300677-1826-40fd-a038-fa22f1100cac
+    url: https://api.upcloud.com/1.3/server/00cb2451-9d47-4650-b393-3e2bb213f9b2
     method: GET
   response:
     body: |
@@ -3091,24 +2515,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1596997300,
+            "created" : 1597846154,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testctntr2.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "utility",
-                     "address" : "10.6.6.213",
+                     "address" : "10.6.6.240",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:472f",
+                     "address" : "2a04:3545:1000:720:ec1b:dbff:feca:172c",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.104.83",
+                     "address" : "94.237.104.129",
                      "family" : "IPv4"
                   }
                ]
@@ -3125,13 +2549,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "10.6.6.213",
+                                 "address" : "10.6.6.240",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:fd:d9",
+                        "mac" : "ee:1b:db:ca:b2:9a",
                         "network" : "03a002de-994e-45aa-9e1c-9918f0908c57",
                         "source_ip_filtering" : "yes",
                         "type" : "utility"
@@ -3142,13 +2566,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "94.237.104.83",
+                                 "address" : "94.237.104.129",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:0d:4c",
+                        "mac" : "ee:1b:db:ca:6b:e1",
                         "network" : "031457f4-0f8c-483c-96f2-eccede02909c",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -3159,13 +2583,13 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:472f",
+                                 "address" : "2a04:3545:1000:720:ec1b:dbff:feca:172c",
                                  "family" : "IPv6",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:47:2f",
+                        "mac" : "ee:1b:db:ca:17:2c",
                         "network" : "03000000-0000-4000-8046-000000000000",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -3182,8 +2606,8 @@ interactions:
                               }
                            ]
                         },
-                        "mac" : "ee:1b:db:ca:bf:a3",
-                        "network" : "03ed6eaa-3613-4b9c-ad5f-2a2de8ae8021",
+                        "mac" : "ee:1b:db:ca:dc:95",
+                        "network" : "03d39bc9-f5a1-4336-9558-cad1c1a66f9f",
                         "source_ip_filtering" : "yes",
                         "type" : "private"
                      }
@@ -3195,7 +2619,7 @@ interactions:
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
             "remote_access_enabled" : "no",
-            "remote_access_password" : "VFC35MDp",
+            "remote_access_password" : "Qh79Mv8N",
             "remote_access_type" : "vnc",
             "simple_backup" : "no",
             "state" : "stopped",
@@ -3204,7 +2628,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "0119a6a4-33b4-4b4f-a169-d83835f34160",
+                     "storage" : "0194abb1-c478-483c-8d52-cda69205f6df",
                      "storage_size" : 30,
                      "storage_title" : "disk1",
                      "type" : "disk"
@@ -3216,18 +2640,18 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestCTNTR2",
-            "uuid" : "00300677-1826-40fd-a038-fa22f1100cac",
+            "uuid" : "00cb2451-9d47-4650-b393-3e2bb213f9b2",
             "video_model" : "cirrus",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "4328"
+      - "4330"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:22:28 GMT
+      - Wed, 19 Aug 2020 14:09:47 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -3243,7 +2667,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/network/03cac945-fba2-42d7-a491-260bd725a498
+    url: https://api.upcloud.com/1.3/network/03c007f5-878c-4c1e-90c7-24cf6423c50e
     method: GET
   response:
     body: |
@@ -3265,17 +2689,17 @@ interactions:
                ]
             },
             "name" : "test private network #1 (test)",
-            "router" : "049df464-baf9-49da-8ad4-700441d28659",
+            "router" : "04ba2af3-d772-4f4b-9d30-52fe40f5a82e",
             "servers" : {
                "server" : [
                   {
                      "title" : "uploud-go-sdk-integration-test-TestCTNTR1",
-                     "uuid" : "0077402e-a767-471b-9771-6f668b4b4afd"
+                     "uuid" : "00c88e0e-f7f7-4835-8000-a68645ada971"
                   }
                ]
             },
             "type" : "private",
-            "uuid" : "03cac945-fba2-42d7-a491-260bd725a498",
+            "uuid" : "03c007f5-878c-4c1e-90c7-24cf6423c50e",
             "zone" : "fi-hel2"
          }
       }
@@ -3285,7 +2709,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:22:29 GMT
+      - Wed, 19 Aug 2020 14:09:47 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -3301,7 +2725,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/network/03ed6eaa-3613-4b9c-ad5f-2a2de8ae8021
+    url: https://api.upcloud.com/1.3/network/03d39bc9-f5a1-4336-9558-cad1c1a66f9f
     method: GET
   response:
     body: |
@@ -3323,17 +2747,17 @@ interactions:
                ]
             },
             "name" : "test private network #2 (test)",
-            "router" : "049df464-baf9-49da-8ad4-700441d28659",
+            "router" : "04ba2af3-d772-4f4b-9d30-52fe40f5a82e",
             "servers" : {
                "server" : [
                   {
                      "title" : "uploud-go-sdk-integration-test-TestCTNTR2",
-                     "uuid" : "00300677-1826-40fd-a038-fa22f1100cac"
+                     "uuid" : "00cb2451-9d47-4650-b393-3e2bb213f9b2"
                   }
                ]
             },
             "type" : "private",
-            "uuid" : "03ed6eaa-3613-4b9c-ad5f-2a2de8ae8021",
+            "uuid" : "03d39bc9-f5a1-4336-9558-cad1c1a66f9f",
             "zone" : "fi-hel2"
          }
       }
@@ -3343,7 +2767,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 09 Aug 2020 18:22:30 GMT
+      - Wed, 19 Aug 2020 14:09:47 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -3359,13 +2783,13 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/server/0077402e-a767-471b-9771-6f668b4b4afd
+    url: https://api.upcloud.com/1.3/server/00c88e0e-f7f7-4835-8000-a68645ada971
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Sun, 09 Aug 2020 18:22:30 GMT
+      - Wed, 19 Aug 2020 14:09:47 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -3381,13 +2805,13 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/server/00300677-1826-40fd-a038-fa22f1100cac
+    url: https://api.upcloud.com/1.3/server/00cb2451-9d47-4650-b393-3e2bb213f9b2
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Sun, 09 Aug 2020 18:22:30 GMT
+      - Wed, 19 Aug 2020 14:09:48 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -3403,13 +2827,13 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/network/03cac945-fba2-42d7-a491-260bd725a498
+    url: https://api.upcloud.com/1.3/network/03c007f5-878c-4c1e-90c7-24cf6423c50e
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Sun, 09 Aug 2020 18:22:31 GMT
+      - Wed, 19 Aug 2020 14:09:48 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -3425,13 +2849,13 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/network/03ed6eaa-3613-4b9c-ad5f-2a2de8ae8021
+    url: https://api.upcloud.com/1.3/network/03d39bc9-f5a1-4336-9558-cad1c1a66f9f
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Sun, 09 Aug 2020 18:22:31 GMT
+      - Wed, 19 Aug 2020 14:09:49 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -3447,13 +2871,13 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/router/049df464-baf9-49da-8ad4-700441d28659
+    url: https://api.upcloud.com/1.3/router/04ba2af3-d772-4f4b-9d30-52fe40f5a82e
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Sun, 09 Aug 2020 18:22:31 GMT
+      - Wed, 19 Aug 2020 14:09:49 GMT
       Server:
       - Apache
       Strict-Transport-Security:

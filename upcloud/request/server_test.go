@@ -35,7 +35,7 @@ func TestCreateServerRequest(t *testing.T) {
 			},
 		},
 		SimpleBackup: "0430,monthlies",
-		Metadata:     true,
+		Metadata:     upcloud.True,
 		Networking: &CreateServerNetworking{
 			Interfaces: []CreateServerInterface{
 				{
@@ -71,7 +71,7 @@ func TestCreateServerRequest(t *testing.T) {
 				"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDJfx4OmD8D6mnPA0BPk2DVlbggEkMvB2cecSttauZuaYX7Vju6PvG+kXrUbTvO09oLQMoNYAk3RinqQLXo9eF7bzZIsgB4ZmKGau84kOpYjguhimkKtZiVTKF53G2pbnpiZUN9wfy3xK2mt/MkacjZ1Tp7lAgRGTfWDoTfQa88kzOJGNPWXd12HIvFtd/1KoS9vm5O0nDLV+5zSBLxEYNDmBlIGu1Y3XXle5ygL1BhfGvqOQnv/TdRZcrOgVGWHADvwEid91/+IycLNMc37uP7TdS6vOihFBMytfmFXAqt4+3AzYNmyc+R392RorFzobZ1UuEFm3gUod2Wvj8pY8d/ negge@palinski",
 			},
 		},
-		RemoteAccessEnabled:  true,
+		RemoteAccessEnabled:  upcloud.True,
 		RemoteAccessType:     upcloud.RemoteAccessTypeVNC,
 		RemoteAccessPassword: "abcdefgh",
 	}
@@ -129,7 +129,7 @@ func TestCreateServerRequest(t *testing.T) {
       }
     }
 	`
-	actualJSON, err := json.MarshalIndent(&request, "", "  ")
+	actualJSON, err := json.Marshal(&request)
 	assert.NoError(t, err)
 	assert.JSONEq(t, expectedJSON, string(actualJSON))
 	assert.Equal(t, "/server", request.RequestURL())
@@ -263,7 +263,7 @@ func TestModifyServerRequest(t *testing.T) {
 		CoreNumber:   8,
 		MemoryAmount: 16384,
 		Plan:         "custom",
-		Metadata:     true,
+		Metadata:     upcloud.True,
 	}
 
 	expectedJSON := `
