@@ -27,7 +27,6 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ### Removed
 
-- Removed the plan, price, price_zone and timezone UpCloud resources
 - XML api calls
 
 ### Fixed
