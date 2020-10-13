@@ -222,12 +222,19 @@ func (s *Service) StartServer(r *request.StartServerRequest) (*upcloud.ServerDet
 
 // StopServer stops the specified server
 func (s *Service) StopServer(r *request.StopServerRequest) (*upcloud.ServerDetails, error) {
+	// Save previous timeout
+	prevTimeout := s.client.GetTimeout()
+
 	// Increase the client timeout to match the request timeout
-	s.client.SetTimeout(r.Timeout)
+	// Allow ten seconds to give the API a chance to respond with an error
+	s.client.SetTimeout(r.Timeout + 10*time.Second)
 
 	serverDetails := upcloud.ServerDetails{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
+
+	// Restore previous timeout
+	s.client.SetTimeout(prevTimeout)
 
 	if err != nil {
 		return nil, parseJSONServiceError(err)
@@ -240,12 +247,19 @@ func (s *Service) StopServer(r *request.StopServerRequest) (*upcloud.ServerDetai
 
 // RestartServer restarts the specified server
 func (s *Service) RestartServer(r *request.RestartServerRequest) (*upcloud.ServerDetails, error) {
+	// Save previous timeout
+	prevTimeout := s.client.GetTimeout()
+
 	// Increase the client timeout to match the request timeout
-	s.client.SetTimeout(r.Timeout)
+	// Allow ten seconds to give the API a chance to respond with an error
+	s.client.SetTimeout(r.Timeout + 10*time.Second)
 
 	serverDetails := upcloud.ServerDetails{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
+
+	// Restore previous timeout
+	s.client.SetTimeout(prevTimeout)
 
 	if err != nil {
 		return nil, parseJSONServiceError(err)
