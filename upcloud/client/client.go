@@ -23,9 +23,10 @@ const (
 
 // Client represents an API client
 type Client struct {
-	userName   string
-	password   string
-	httpClient *http.Client
+	userName    string
+	password    string
+	httpClient  *http.Client
+	contentType string
 }
 
 // New creates ands returns a new client configured with the specified user and password
@@ -150,11 +151,22 @@ func (c *Client) PerformJSONPutUploadRequest(url string, requestBody io.Reader) 
 	return c.performJSONRequest(request)
 }
 
+func (c *Client) SetContentType(ct string) {
+	c.contentType = ct
+}
+
+func (c *Client) GetContentType() string {
+	if c.contentType == "" {
+		return "application/json"
+	}
+	return c.contentType
+}
+
 // Adds common headers to the specified request
 func (c *Client) addJSONRequestHeaders(request *http.Request) *http.Request {
 	request.SetBasicAuth(c.userName, c.password)
-	request.Header.Add("Accept", "application/json")
-	request.Header.Add("Content-Type", "application/json")
+	request.Header.Set("Accept", "application/json")
+	request.Header.Set("Content-Type", c.GetContentType())
 
 	return request
 }
