@@ -14,7 +14,7 @@ import (
 
 // Constants
 const (
-	DefaultAPIVersion = "1.3.4"
+	DefaultAPIVersion = "1.3.6"
 	DefaultAPIBaseURL = "https://api.upcloud.com"
 
 	// The default timeout (in seconds)
