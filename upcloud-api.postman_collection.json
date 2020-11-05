@@ -523,6 +523,41 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "List object storages",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{authorization}}"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://api.upcloud.com/1.3/object-storage/",
+					"protocol": "https",
+					"host": [
+						"api",
+						"upcloud",
+						"com"
+					],
+					"path": [
+						"1.3",
+						"object-storage",
+						""
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}
