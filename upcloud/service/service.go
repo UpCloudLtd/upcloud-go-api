@@ -40,6 +40,23 @@ func (s *Service) GetAccount() (*upcloud.Account, error) {
 	return &account, nil
 }
 
+// GetObjectStorages returns the available objects storages
+func (s *Service) GetObjectStorages() (*upcloud.ObjectStorages, error) {
+	objectStorages := upcloud.ObjectStorages{}
+	response, err := s.basicGetRequest("/object-storage")
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(response, &objectStorages)
+	if err != nil {
+		return nil, fmt.Errorf("unable to unmarshal JSON: %s, %w", string(response), err)
+	}
+
+	return &objectStorages, nil
+}
+
 // GetZones returns the available zones
 func (s *Service) GetZones() (*upcloud.Zones, error) {
 	zones := upcloud.Zones{}
@@ -108,23 +125,6 @@ func (s *Service) GetServerConfigurations() (*upcloud.ServerConfigurations, erro
 	json.Unmarshal(response, &serverConfigurations)
 
 	return &serverConfigurations, nil
-}
-
-// GetObjectStorages returns the available objects storages
-func (s *Service) GetObjectStorages() (*upcloud.ObjectStorages, error) {
-	objectStorages := upcloud.ObjectStorages{}
-	response, err := s.basicGetRequest("/object-storage")
-
-	if err != nil {
-		return nil, err
-	}
-
-	err = json.Unmarshal(response, &objectStorages)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %s, %w", string(response), err)
-	}
-
-	return &objectStorages, nil
 }
 
 // GetServers returns the available servers
