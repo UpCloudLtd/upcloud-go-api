@@ -42,7 +42,10 @@ func NewWithHTTPClient(userName string, password string, httpClient *http.Client
 	client.userName = userName
 	client.password = password
 	client.httpClient = httpClient
-	client.SetTimeout(time.Second * DefaultTimeout)
+	// Set the default timeout if the caller hasn't set its own
+	if client.httpClient.Timeout == 0 {
+		client.SetTimeout(time.Second * DefaultTimeout)
+	}
 
 	return &client
 }
