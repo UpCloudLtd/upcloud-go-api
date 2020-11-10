@@ -3,6 +3,7 @@ package upcloud
 import (
 	"encoding/json"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -176,7 +177,7 @@ func TestUnmarshalStorageImport(t *testing.T) {
 		"storage_import": {
 		  "client_content_length": 1,
 		  "client_content_type": "abc",
-		  "completed": "def",
+		  "completed": "",
 		  "created": "2020-06-26T08:51:07Z",
 		  "direct_upload_url": "https://fi-hel1.img.upcloud.com/uploader/session/07a6c9a3-300e-4d0e-b935-624f3dbdff3f",
 		  "error_code": "ghi",
@@ -199,7 +200,7 @@ func TestUnmarshalStorageImport(t *testing.T) {
 	testStorageImport := StorageImportDetails{
 		ClientContentLength: 1,
 		ClientContentType:   "abc",
-		Completed:           "def",
+		Completed:           time.Time{},
 		Created:             timeParse("2020-06-26T08:51:07Z"),
 		DirectUploadURL:     "https://fi-hel1.img.upcloud.com/uploader/session/07a6c9a3-300e-4d0e-b935-624f3dbdff3f",
 		ErrorCode:           "ghi",
