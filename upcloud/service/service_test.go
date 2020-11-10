@@ -54,24 +54,6 @@ func TestGetAccount(t *testing.T) {
 	assert.NotZero(t, account.ResourceLimits.StorageSSD)
 }
 
-// TestGetObjectStorages tests that the GetObjectStorages() function returns proper data
-func TestGetObjectStorages(t *testing.T) {
-	record(t, "getobjectstorages", func(t *testing.T, svc *Service) {
-		objectStorages, err := svc.GetObjectStorages()
-		require.NoError(t, err)
-		assert.NotEmpty(t, objectStorages.ObjectStorages)
-
-		var found bool
-		for _, o := range objectStorages.ObjectStorages {
-			if o.Name == "example-object-storage" {
-				found = true
-				break
-			}
-		}
-		assert.True(t, found)
-	})
-}
-
 // TestGetZones tests that the GetZones() function returns proper data
 func TestGetZones(t *testing.T) {
 	record(t, "getzones", func(t *testing.T, svc *Service) {

@@ -142,6 +142,17 @@ func teardown() {
 		}
 	}
 	log.Printf("Deleted %d routers...", count)
+
+	// Delete all object storages
+	log.Print("Delete all object storages...")
+	objectStorages, err := svc.GetObjectStorages()
+	handleError(err)
+
+	for _, objectStorage := range objectStorages.ObjectStorages {
+		// Delete the Object Storage
+		log.Printf("Deleting the object storage with UUID %s ...", objectStorage.UUID)
+		deleteObjectStorage(svc, objectStorage.UUID)
+	}
 }
 
 // Creates a server and returns the details about it, panic if creation fails
@@ -328,6 +339,35 @@ func waitForStorageOnline(svc *Service, uuid string) error {
 		UUID:         uuid,
 		DesiredState: upcloud.StorageStateOnline,
 		Timeout:      time.Minute * 15,
+	})
+
+	return err
+}
+
+// Creates an Object Storage and returns the details about it, panic if creation fails
+func createObjectStorage(svc *Service, name string, description string, zone string, size int) (*upcloud.ObjectStorageDetails, error) {
+	createObjectStorageRequest := request.CreateObjectStorageRequest{
+		Name:        "uploud-go-sdk-integration-test-" + name,
+		Description: description,
+		Zone:        zone,
+		Size:        size,
+		AccessKey:   "UCOB5HE4NVTVFMXXRBQ2",
+		SecretKey:   "ssLDVHvTRjHaEAPRcMiFep3HItcqdNUNtql3DcLx",
+	}
+
+	// Create the Object Storage and block until it has started
+	objectStorageDetails, err := svc.CreateObjectStorage(&createObjectStorageRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	return objectStorageDetails, nil
+}
+
+// Deletes the specific Object Storage
+func deleteObjectStorage(svc *Service, uuid string) error {
+	err := svc.DeleteObjectStorage(&request.DeleteObjectStorageRequest{
+		UUID: uuid,
 	})
 
 	return err

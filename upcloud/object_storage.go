@@ -2,7 +2,7 @@ package upcloud
 
 import "encoding/json"
 
-// ObjectStorage represents a object storage
+// ObjectStorage represents a Object Storage
 type ObjectStorage struct {
 	Created     string `json:"created"`
 	Description string `json:"description"`
@@ -35,6 +35,30 @@ func (o *ObjectStorages) UnmarshalJSON(b []byte) error {
 	}
 
 	o.ObjectStorages = v.ObjectStorages.ObjectStorages
+
+	return nil
+}
+
+// ObjectStorageDetails represents details about a Object Storage
+type ObjectStorageDetails struct {
+	ObjectStorage
+	UsedSpace int `json:"used_space"`
+}
+
+// UnmarshalJSON is a custom unmarshaller that deals with
+// deeply embedded values.
+func (o *ObjectStorageDetails) UnmarshalJSON(b []byte) error {
+	type localObjectStorageDetails ObjectStorageDetails
+
+	v := struct {
+		ObjectStorageDetails localObjectStorageDetails `json:"object_storage"`
+	}{}
+	err := json.Unmarshal(b, &v)
+	if err != nil {
+		return err
+	}
+
+	(*o) = ObjectStorageDetails(v.ObjectStorageDetails)
 
 	return nil
 }
