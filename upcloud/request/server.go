@@ -58,7 +58,7 @@ type CreateServerStorageDevice struct {
 	Storage string `json:"storage"`
 	Title   string `json:"title,omitempty"`
 	// Storage size in gigabytes
-	Size int    `json:"size"`
+	Size int    `json:"size,omitempty"`
 	Tier string `json:"tier,omitempty"`
 	Type string `json:"type,omitempty"`
 }
