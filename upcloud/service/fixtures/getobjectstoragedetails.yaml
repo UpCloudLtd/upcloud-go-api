@@ -1,0 +1,81 @@
+---
+version: 1
+interactions:
+- request:
+    body: '{"object_storage":{"name":"go-test-getobjectstoragedetails","description":"App object storage","zone":"fi-hel2","access_key":"UCOB5HE4NVTVFMXXRBQ2","secret_key":"ssLDVHvTRjHaEAPRcMiFep3HItcqdNUNtql3DcLx","size":500}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.3/object-storage
+    method: POST
+  response:
+    body: |
+      {
+         "object_storage" : {
+            "created" : "2020-11-12T07:20:22Z",
+            "description" : "App object storage",
+            "name" : "go-test-getobjectstoragedetails",
+            "size" : 500,
+            "state" : "started",
+            "url" : "https://go-test-getobjectstoragedetails.fi-hel2.upcloudobjects.com/",
+            "used_space" : 0,
+            "uuid" : "060f379b-6bab-440f-bcc8-6e49647dc3e2",
+            "zone" : "fi-hel2"
+         }
+      }
+    headers:
+      Content-Length:
+      - "405"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Thu, 12 Nov 2020 07:20:04 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.upcloud.com/1.3/object-storage/060f379b-6bab-440f-bcc8-6e49647dc3e2
+    method: GET
+  response:
+    body: |
+      {
+         "object_storage" : {
+            "created" : "2020-11-12T07:20:22Z",
+            "description" : "App object storage",
+            "name" : "go-test-getobjectstoragedetails",
+            "size" : 500,
+            "state" : "started",
+            "url" : "https://go-test-getobjectstoragedetails.fi-hel2.upcloudobjects.com/",
+            "used_space" : 0,
+            "uuid" : "060f379b-6bab-440f-bcc8-6e49647dc3e2",
+            "zone" : "fi-hel2"
+         }
+      }
+    headers:
+      Content-Length:
+      - "405"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Thu, 12 Nov 2020 07:20:23 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
