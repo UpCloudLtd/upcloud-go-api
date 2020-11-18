@@ -23,10 +23,9 @@ const (
 
 // Client represents an API client
 type Client struct {
-	userName    string
-	password    string
-	httpClient  *http.Client
-	contentType string
+	userName   string
+	password   string
+	httpClient *http.Client
 }
 
 // New creates ands returns a new client configured with the specified user and password
@@ -154,29 +153,29 @@ func (c *Client) PerformJSONPutUploadRequest(url string, requestBody io.Reader) 
 	return c.performJSONRequest(request)
 }
 
-func (c *Client) SetContentType(ct string) {
-	c.contentType = ct
-}
-
-func (c *Client) GetContentType() string {
-	if c.contentType == "" {
-		return "application/json"
-	}
-	return c.contentType
-}
-
 // Adds common headers to the specified request
-func (c *Client) addJSONRequestHeaders(request *http.Request) *http.Request {
+func (c *Client) AddRequestHeaders(request *http.Request) *http.Request {
 	request.SetBasicAuth(c.userName, c.password)
 	request.Header.Set("Accept", "application/json")
-	request.Header.Set("Content-Type", c.GetContentType())
+	request.Header.Set("Content-Type", "application/json")
 
 	return request
 }
 
 // Performs the specified HTTP request and returns the response through handleResponse()
 func (c *Client) performJSONRequest(request *http.Request) ([]byte, error) {
-	c.addJSONRequestHeaders(request)
+	c.AddRequestHeaders(request)
+	response, err := c.httpClient.Do(request)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return handleResponse(response)
+}
+
+// Performs the specified HTTP request and returns the response through handleResponse()
+func (c *Client) PerformRequest(request *http.Request) ([]byte, error) {
 	response, err := c.httpClient.Do(request)
 
 	if err != nil {
