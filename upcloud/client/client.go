@@ -165,13 +165,7 @@ func (c *Client) AddRequestHeaders(request *http.Request) *http.Request {
 // Performs the specified HTTP request and returns the response through handleResponse()
 func (c *Client) performJSONRequest(request *http.Request) ([]byte, error) {
 	c.AddRequestHeaders(request)
-	response, err := c.httpClient.Do(request)
-
-	if err != nil {
-		return nil, err
-	}
-
-	return handleResponse(response)
+	return c.PerformRequest(request)
 }
 
 // Performs the specified HTTP request and returns the response through handleResponse()
