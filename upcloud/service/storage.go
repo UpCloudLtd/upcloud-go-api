@@ -300,7 +300,9 @@ func (s *Service) directStorageImport(r *request.CreateStorageImportRequest) (*u
 
 	s.client.AddRequestHeaders(req)
 	req.Header.Add("Content-Type", r.ContentType)
-	_, err = s.client.PerformRequest(req)
+	if _, err := s.client.PerformRequest(req); err != nil {
+		return nil, err
+	}
 
 	storageImport, err = s.GetStorageImportDetails(&request.GetStorageImportDetailsRequest{
 		UUID: r.StorageUUID,
