@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/UpCloudLtd/upcloud-go-api/internals/globals"
 	"github.com/blang/semver"
 	"github.com/hashicorp/go-cleanhttp"
 )
@@ -48,7 +49,7 @@ func NewWithHTTPClient(userName string, password string, httpClient *http.Client
 	if client.httpClient.Timeout == 0 {
 		client.SetTimeout(time.Second * DefaultTimeout)
 	}
-	client.UserAgent = "upcloud-go-api"
+	client.UserAgent = fmt.Sprintf("upcloud-go-api/%s", globals.Version)
 
 	return &client
 }
