@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/UpCloudLtd/upcloud-go-api/internals/globals"
+	globals "github.com/UpCloudLtd/upcloud-go-api/internal"
 	"github.com/blang/semver"
 	"github.com/hashicorp/go-cleanhttp"
 )
