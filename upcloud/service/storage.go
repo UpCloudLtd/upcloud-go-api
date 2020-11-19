@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"net/http"
 	"os"
 	"time"
 
@@ -314,15 +315,16 @@ func (s *Service) directStorageImport(r *request.CreateStorageImportRequest) (*u
 		return nil, errors.New("no DirectUploadURL found in response")
 	}
 
-	curContentType := s.client.GetContentType()
-	if r.ContentType != "" {
-		s.client.SetContentType(r.ContentType)
-	}
-	_, err = s.client.PerformJSONPutUploadRequest(storageImport.DirectUploadURL, bodyReader)
+	req, err := http.NewRequest(http.MethodPut, storageImport.DirectUploadURL, bodyReader)
 	if err != nil {
 		return nil, err
 	}
-	s.client.SetContentType(curContentType)
+
+	s.client.AddRequestHeaders(req)
+	req.Header.Add("Content-Type", r.ContentType)
+	if _, err := s.client.PerformRequest(req); err != nil {
+		return nil, err
+	}
 
 	storageImport, err = s.GetStorageImportDetails(&request.GetStorageImportDetailsRequest{
 		UUID: r.StorageUUID,
