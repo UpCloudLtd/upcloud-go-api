@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"time"
 
+	globals "github.com/UpCloudLtd/upcloud-go-api/internal"
 	"github.com/blang/semver"
 	"github.com/hashicorp/go-cleanhttp"
 )
@@ -26,6 +27,8 @@ type Client struct {
 	userName   string
 	password   string
 	httpClient *http.Client
+
+	UserAgent string
 }
 
 // New creates ands returns a new client configured with the specified user and password
@@ -46,6 +49,7 @@ func NewWithHTTPClient(userName string, password string, httpClient *http.Client
 	if client.httpClient.Timeout == 0 {
 		client.SetTimeout(time.Second * DefaultTimeout)
 	}
+	client.UserAgent = fmt.Sprintf("upcloud-go-api/%s", globals.Version)
 
 	return &client
 }
@@ -143,7 +147,6 @@ func (c *Client) PerformJSONDeleteRequest(url string) error {
 // PerformJSONPutUploadRequest performs a PUT request to the specified URL with an io.Reader
 // and returns the response body and eventual errors
 func (c *Client) PerformJSONPutUploadRequest(url string, requestBody io.Reader) ([]byte, error) {
-
 	request, err := http.NewRequest(http.MethodPut, url, requestBody)
 
 	if err != nil {
@@ -158,6 +161,7 @@ func (c *Client) AddRequestHeaders(request *http.Request) *http.Request {
 	request.SetBasicAuth(c.userName, c.password)
 	request.Header.Set("Accept", "application/json")
 	request.Header.Set("Content-Type", "application/json")
+	request.Header.Add("User-Agent", c.UserAgent)
 
 	return request
 }
