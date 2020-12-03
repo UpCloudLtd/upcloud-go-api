@@ -172,6 +172,7 @@ type ServerStorageDevice struct {
 	PartOfPlan string `json:"part_of_plan"`
 	UUID       string `json:"storage"`
 	Size       int    `json:"storage_size"`
+	Tier       string `json:"storage_tier"`
 	Title      string `json:"storage_title"`
 	Type       string `json:"type"`
 	BootDisk   int    `json:"boot_disk,string"`
