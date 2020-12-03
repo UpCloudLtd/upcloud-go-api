@@ -209,6 +209,7 @@ func TestUnmarshalServerDetails(t *testing.T) {
                 "part_of_plan" : "yes",
                 "storage": "012580a1-32a1-466e-a323-689ca16f2d43",
                 "storage_size": 20,
+                "storage_tier": "maxiops",
                 "storage_title": "Storage for server1.example.com",
                 "type": "disk",
                 "boot_disk": "0"
@@ -248,6 +249,7 @@ func TestUnmarshalServerDetails(t *testing.T) {
 	assert.Equal(t, "virtio:0", serverDetails.StorageDevices[0].Address)
 	assert.Equal(t, "yes", serverDetails.StorageDevices[0].PartOfPlan)
 	assert.Equal(t, 20, serverDetails.StorageDevices[0].Size)
+	assert.Equal(t, "maxiops", serverDetails.StorageDevices[0].Tier)
 	assert.Equal(t, "Storage for server1.example.com", serverDetails.StorageDevices[0].Title)
 	assert.Equal(t, StorageTypeDisk, serverDetails.StorageDevices[0].Type)
 	assert.Equal(t, 0, serverDetails.StorageDevices[0].BootDisk)
