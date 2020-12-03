@@ -23,7 +23,6 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 - raise mininum required go version to 1.13
 - changelog format to include different lists
 - bump UpCloud API from 1.2 to 1.3 and expand with new functionalities
-- Postman collection to UpCloud API 1.3 and JSON
 
 ### Removed
 
