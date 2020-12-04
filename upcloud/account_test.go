@@ -42,3 +42,29 @@ func TestUnmarshalAccount(t *testing.T) {
 	assert.Equal(t, 10240, account.ResourceLimits.StorageHDD)
 	assert.Equal(t, 10240, account.ResourceLimits.StorageSSD)
 }
+
+// TestMarshalAccount tests that Account objects marshal correctly
+func TestMarshalAccount(t *testing.T) {
+	request := Account{
+		Credits:  100,
+		UserName: "username",
+		ResourceLimits: ResourceLimits{
+			Memory: 123,
+		},
+	}
+
+	expectedJSON := `
+	  {
+      "username": "username",
+      "credits": 100,
+      "resource_limits": {
+        "memory": 123
+      }
+	  }
+	`
+
+	actualJSON, err := json.Marshal(&request)
+	println(string(actualJSON))
+	assert.NoError(t, err)
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
+}
