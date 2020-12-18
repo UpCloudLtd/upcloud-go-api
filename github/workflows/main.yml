@@ -1,0 +1,26 @@
+name: Upcloud go api test
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  Test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go-version: [ 1.14.x, 1.15.x ]
+    steps:
+      - name: Test
+        env:
+          UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS: yes
+          UPCLOUD_GO_SDK_TEST_DELETE_RESOURCES: yes
+          UPCLOUD_GO_SDK_TEST_USER: ${{ secrets.UPCLOUD_GO_SDK_TEST_USER }}
+          UPCLOUD_GO_SDK_TEST_PASSWORD: ${{ secrets.UPCLOUD_GO_SDK_TEST_PASSWORD }}
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ matrix.go-version }}
+      - uses: actions/checkout@v2
+      - run: ./scripts/build.sh
