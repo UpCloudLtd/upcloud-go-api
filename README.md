@@ -1,6 +1,6 @@
 # UpCloud Go API client library
 
-[![Build Status](https://travis-ci.org/UpCloudLtd/upcloud-go-api.svg?branch=master)](https://travis-ci.org/UpCloudLtd/upcloud-go-api)
+![Build Status](https://github.com//UpCloudLtd/upcloud-go-api/workflows/Upcloud%20go%20api%20test/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/UpCloudLtd/upcloud-go-api)](https://goreportcard.com/report/github.com/UpCloudLtd/upcloud-go-api)
 [![GoDoc](https://godoc.org/github.com/UpCloudLtd/upcloud-go-api?status.svg)](https://godoc.org/github.com/UpCloudLtd/upcloud-go-api)
 
