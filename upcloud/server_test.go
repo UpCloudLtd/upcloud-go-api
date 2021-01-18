@@ -315,3 +315,17 @@ func TestUnmarshalServerDetails(t *testing.T) {
 		assert.Equal(t, n, serverDetails.Networking.Interfaces[i])
 	}
 }
+
+func TestStorageDevice(t *testing.T) {
+	needle := ServerStorageDevice{UUID: "012580a1-32a1-466e-a323-689ca16f2d43"}
+	serverDetails := ServerDetails{
+		StorageDevices: []ServerStorageDevice{
+			{UUID: "012580a1-32a1-466e-a323-689ca16f2d44"},
+			needle,
+			{UUID: "012580a1-32a1-466e-a323-689ca16f2d45"},
+		},
+	}
+
+	assert.Equal(t, serverDetails.StorageDevice(needle.UUID), &needle, "Should match the requested storage device")
+	assert.Nil(t, serverDetails.StorageDevice("012580a1-32a1-466e-a323-689ca16f2d42"), "Should return nil when no matches")
+}
