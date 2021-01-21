@@ -87,6 +87,7 @@ type CreateServerInterface struct {
 	Network           string                     `json:"network,omitempty"`
 	SourceIPFiltering upcloud.Boolean            `json:"source_ip_filtering,omitempty"`
 	Bootable          upcloud.Boolean            `json:"bootable,omitempty"`
+	Index             int                        `json:"index,omitempty"`
 }
 
 // CreateServerInterfaceSlice is a slice of CreateServerInterfaces.
