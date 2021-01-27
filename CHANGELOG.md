@@ -13,6 +13,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 - go-vcr to tests
 - Host, Firewall, Network, Router resources from UpCloud API 1.3
 - Storage import resource
+- Add support for explicitly setting IP address for network interfaces (requires special priviledes for your UpCloud account)
 
 ### Changed
 
