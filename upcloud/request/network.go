@@ -60,7 +60,6 @@ type ModifyNetworkRequest struct {
 
 	Name       string                 `json:"name,omitempty"`
 	Zone       string                 `json:"zone,omitempty"`
-	Router     string                 `json:"router,omitempty"`
 	IPNetworks upcloud.IPNetworkSlice `json:"ip_networks,omitempty"`
 }
 
