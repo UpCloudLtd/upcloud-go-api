@@ -8,10 +8,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
 )
 
 // TestMain is the main test method
@@ -33,6 +34,9 @@ func TestMain(m *testing.M) {
 func TestGetAccount(t *testing.T) {
 	if os.Getenv("UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS") == "yes" {
 		t.Skip("Skipping TestGetAccount...")
+	}
+	if testing.Short() {
+		t.Skip("Skipping test in short mode")
 	}
 
 	svc := getService()

@@ -8,13 +8,14 @@ import (
 	"testing"
 	"time"
 
-	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/upcloud/client"
-	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
 	"github.com/dnaeon/go-vcr/cassette"
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/hashicorp/go-cleanhttp"
 	"github.com/stretchr/testify/require"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud/client"
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
 )
 
 // Configures the test environment
@@ -29,6 +30,10 @@ func getService() *Service {
 
 // records the API interactions of the test
 func record(t *testing.T, fixture string, f func(*testing.T, *Service)) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode")
+	}
+
 	r, err := recorder.New("fixtures/" + fixture)
 	require.NoError(t, err)
 
