@@ -4,8 +4,9 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 )
 
 // TestMarshalGetNetworksInZoneRequest tests that GetNetworksInZoneRequest behaves correctly
@@ -122,6 +123,47 @@ func TestMarshalDeleteNetwork(t *testing.T) {
 	}
 
 	assert.Equal(t, "/network/foo", request.RequestURL())
+}
+
+// TestMarshalAttachNetworkRouterRequest tests that AttachNetworkRouterRequest behaves correctly.
+func TestMarshalAttachNetworkRouterRequest(t *testing.T) {
+	request := AttachNetworkRouterRequest{
+		NetworkUUID: "mocknetworkuuid",
+		RouterUUID:  "mockrouteruuid",
+	}
+
+	expectedJSON := `
+	  {
+		"network": {
+		  "router": "mockrouteruuid"
+		}
+	  }
+	`
+
+	actualJSON, err := json.Marshal(&request)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
+	assert.Equal(t, "/network/mocknetworkuuid", request.RequestURL())
+}
+
+// TestMarshalDetachNetworkRouterRequest tests that DetachNetworkRouterRequest behaves correctly.
+func TestMarshalDetachNetworkRouterRequest(t *testing.T) {
+	request := DetachNetworkRouterRequest{
+		NetworkUUID: "mocknetworkuuid",
+	}
+
+	expectedJSON := `
+	  {
+		"network": {
+		  "router": null
+		}
+	  }
+	`
+
+	actualJSON, err := json.Marshal(&request)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
+	assert.Equal(t, "/network/mocknetworkuuid", request.RequestURL())
 }
 
 // TestMarshalGetServerNetworksRequest tests the GetServerNetworksRequest behaves correctly
