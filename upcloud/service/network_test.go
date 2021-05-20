@@ -334,17 +334,21 @@ func TestCreateTwoNetworksTwoServersAndARouter(t *testing.T) {
 		})
 		assert.NoError(t, err)
 
-		network1, err = svc.ModifyNetwork(&request.ModifyNetworkRequest{
-			Router: router.UUID,
-			UUID:   network1.UUID,
+		err = svc.AttachNetworkRouter(&request.AttachNetworkRouterRequest{
+			RouterUUID:  router.UUID,
+			NetworkUUID: network1.UUID,
 		})
+		require.NoError(t, err)
+		network1, err = svc.GetNetworkDetails(&request.GetNetworkDetailsRequest{UUID: network1.UUID})
 		require.NoError(t, err)
 		require.Equal(t, network1.Router, router.UUID)
 
-		network2, err = svc.ModifyNetwork(&request.ModifyNetworkRequest{
-			Router: router.UUID,
-			UUID:   network2.UUID,
+		err = svc.AttachNetworkRouter(&request.AttachNetworkRouterRequest{
+			RouterUUID:  router.UUID,
+			NetworkUUID: network2.UUID,
 		})
+		require.NoError(t, err)
+		network2, err = svc.GetNetworkDetails(&request.GetNetworkDetailsRequest{UUID: network2.UUID})
 		require.NoError(t, err)
 		require.Equal(t, network2.Router, router.UUID)
 
