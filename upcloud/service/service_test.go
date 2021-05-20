@@ -31,11 +31,8 @@ func TestMain(m *testing.M) {
 
 // TestGetAccount tests that the GetAccount() method returns proper data
 func TestGetAccount(t *testing.T) {
-	if os.Getenv("UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS") == "yes" {
+	if os.Getenv("UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS") == "yes" || testing.Short() {
 		t.Skip("Skipping TestGetAccount...")
-	}
-	if testing.Short() {
-		t.Skip("Skipping test in short mode")
 	}
 
 	svc := getService()
