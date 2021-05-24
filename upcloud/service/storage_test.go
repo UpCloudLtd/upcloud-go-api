@@ -22,9 +22,6 @@ import (
 // - modifies the storage
 // - deletes the storage
 func TestCreateModifyDeleteStorage(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode")
-	}
 	t.Parallel()
 
 	record(t, "createmodifydeletestorage", func(t *testing.T, svc *Service) {
@@ -63,9 +60,6 @@ func TestCreateModifyDeleteStorage(t *testing.T) {
 // - deletes the storage
 // - deletes the server
 func TestAttachDetachStorage(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode")
-	}
 	t.Parallel()
 
 	record(t, "attachdetachstorage", func(t *testing.T, svc *Service) {
@@ -115,9 +109,6 @@ func TestAttachDetachStorage(t *testing.T) {
 // - clones the storage device
 // - deletes the clone and the storage device
 func TestCloneStorage(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode")
-	}
 	t.Parallel()
 
 	record(t, "clonestorage", func(t *testing.T, svc *Service) {
@@ -149,9 +140,6 @@ func TestCloneStorage(t *testing.T) {
 // - deletes the new storage
 // - stops and deletes the server
 func TestTemplatizeServerStorage(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode")
-	}
 	t.Parallel()
 
 	record(t, "templatizeserverstorage", func(t *testing.T, svc *Service) {
@@ -196,9 +184,6 @@ func TestTemplatizeServerStorage(t *testing.T) {
 // - loads a CD-ROM
 // - ejects the CD-ROM
 func TestLoadEjectCDROM(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode")
-	}
 	t.Parallel()
 
 	record(t, "loadejectcdrom", func(t *testing.T, svc *Service) {
@@ -249,9 +234,6 @@ func TestLoadEjectCDROM(t *testing.T) {
 // - restores the backup
 //
 func TestCreateRestoreBackup(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode")
-	}
 	t.Parallel()
 
 	record(t, "createrestorebackup", func(t *testing.T, svc *Service) {

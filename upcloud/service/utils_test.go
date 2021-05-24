@@ -30,7 +30,7 @@ func getService() *Service {
 // records the API interactions of the test
 func record(t *testing.T, fixture string, f func(*testing.T, *Service)) {
 	if testing.Short() {
-		t.Skip("Skipping test in short mode")
+		t.Skip("Skipping recorded test in short mode")
 	}
 
 	r, err := recorder.New("fixtures/" + fixture)
