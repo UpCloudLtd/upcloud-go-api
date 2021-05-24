@@ -31,7 +31,7 @@ func TestMain(m *testing.M) {
 
 // TestGetAccount tests that the GetAccount() method returns proper data
 func TestGetAccount(t *testing.T) {
-	if os.Getenv("UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS") == "yes" {
+	if os.Getenv("UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS") == "yes" || testing.Short() {
 		t.Skip("Skipping TestGetAccount...")
 	}
 
@@ -319,9 +319,6 @@ func TestErrorHandling(t *testing.T) {
 // - stops the server
 // - deletes the server
 func TestCreateModifyDeleteServer(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode")
-	}
 	t.Parallel()
 
 	record(t, "createmodifydeleteserver", func(t *testing.T, svc *Service) {
@@ -398,9 +395,6 @@ func TestCreateModifyDeleteServer(t *testing.T) {
 // - creates a server
 // - deletes the server including storage
 func TestCreateDeleteServerAndStorage(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode")
-	}
 	t.Parallel()
 
 	record(t, "createdeleteserverandstorage", func(t *testing.T, svc *Service) {
@@ -494,9 +488,6 @@ func TestGetIPAddresses(t *testing.T) {
 // - modifies the PTR record of the IP address
 // - deletes the IP address
 func TestAttachModifyReleaseIPAddress(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode")
-	}
 	t.Parallel()
 
 	record(t, "attachmodifyreleaseipaddress", func(t *testing.T, svc *Service) {
@@ -671,9 +662,6 @@ func TestAttachModifyReleaseFloatingIPAddress(t *testing.T) {
 // - deletes the firewall rule
 //
 func TestFirewallRules(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode")
-	}
 	t.Parallel()
 
 	record(t, "firewallrules", func(t *testing.T, svc *Service) {
@@ -848,9 +836,6 @@ func TestGetTags(t *testing.T) {
 //   - deletes the third tag
 //   - untags the first tag from the server
 func TestTagging(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode")
-	}
 	t.Parallel()
 
 	record(t, "tagging", func(t *testing.T, svc *Service) {
