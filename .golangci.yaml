@@ -1,0 +1,37 @@
+# Golang CI pipeline configuration
+linters:
+  disable-all: true
+
+  # Run golangci-lint linters to see the list of all linters
+  # Please keep them sorted alphabetically
+  enable:
+    - bodyclose
+    - deadcode
+    - depguard
+    - dogsled
+    # - errcheck # TODO: re-enable
+    - goconst
+    - gofmt
+    - goimports
+    # - golint # TODO: re-enable
+    - goprintffuncname
+    #    - gosec
+    - gosimple
+    - govet
+    # - ineffassign # TODO: re-enable
+    - misspell
+    - nakedret
+    - nolintlint
+    - rowserrcheck
+    - staticcheck
+    - structcheck
+    # - stylecheck # TODO: re-enable
+    - typecheck
+    - unconvert
+    #    - unparam
+    - varcheck
+    # - whitespace # TODO: re-enable
+
+linters-settings:
+  goconst:
+    min-len: 5

@@ -13,16 +13,22 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        go-version: [ 1.14.x, 1.15.x ]
+        # support two latest major versions of Go, following the Go security policy
+        # in which these versions get security updates. See https://golang.org/security
+        go-version: [ 1.15.x, 1.16.x ]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-go@v2
         with:
           go-version: ${{ matrix.go-version }}
-      - name: Build
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v2
+        with:
+          version: v1.40.0
+      - name: test
         env:
           UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS: yes
           UPCLOUD_GO_SDK_TEST_DELETE_RESOURCES: yes
           UPCLOUD_GO_SDK_TEST_USER: ${{ secrets.UPCLOUD_GO_SDK_TEST_USER }}
           UPCLOUD_GO_SDK_TEST_PASSWORD: ${{ secrets.UPCLOUD_GO_SDK_TEST_PASSWORD }}
-        run: ./scripts/build.sh
+        run: go test ./... -v -parallel 1 -timeout 60m
