@@ -3,7 +3,31 @@
 All notable changes to this project will be documented in this file.
 See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
-## 3.0.0 (Unreleased)
+## 4.0.0
+
+### Added
+
+- add support for Object Storage
+- support io.Reader as SourceLocation in CreateStorageImport
+- pass on a custom user agent string in requests
+- add storage tier support to ServerStorageDevice
+- support for backuprules when creating a server
+- add support for explicitly setting IP address for network interfaces (requires special privileges for your UpCloud account)
+
+### Changed
+
+- *BREAKING CHANGE*: changing network router with ModifyNetwork call is no longer supported. Please use AttachNetworkRouter and DetachNetworkRouter from now on.
+- bump default Go version to 1.16, keep supporting 1.15
+- use a default timeout when no timeout given
+
+### Fixed
+
+- default to original storage size in CreateServerStorageDevice when Size = 0
+- *BREAKING CHANGE*: Fix StorageImportDetails.Completed to be a time.Time rather than a string
+- don't marshal empty resource limits
+- allow empty BackupRules (eg. remove backup rule) to be sent to the backend
+
+## 3.0.0
 
 ### Added
 
@@ -13,7 +37,6 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 - go-vcr to tests
 - Host, Firewall, Network, Router resources from UpCloud API 1.3
 - Storage import resource
-- Add support for explicitly setting IP address for network interfaces (requires special priviledes for your UpCloud account)
 
 ### Changed
 

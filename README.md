@@ -8,7 +8,7 @@ This is the official client for interfacing with UpCloud's API using the Go prog
 
 ## Installation and requirements
 
-You'll need Go 1.13 or higher to use the client. You can use the following command to retrieve the client:
+You'll need Go 1.15 or higher to use the client. You can use the following command to retrieve the client:
 
 ```
 go get github.com/UpCloudLtd/upcloud-go-api
