@@ -2,6 +2,7 @@ package service
 
 import (
 	"testing"
+	"time"
 
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
@@ -286,6 +287,7 @@ func TestCreateModifyDeleteRouter(t *testing.T) {
 //     - adds network interfaces in each one server in each network
 //     - verifies the network details in the interfaces is correct
 //     - verifies the servers can be found in the network details
+//     - detaches one of the routers and verifies it was detached
 //     - deletes the servers, the routers and the networks
 func TestCreateTwoNetworksTwoServersAndARouter(t *testing.T) {
 	record(t, "createtwonetworkstwoserversandarouter", func(t *testing.T, svc *Service) {
@@ -334,17 +336,21 @@ func TestCreateTwoNetworksTwoServersAndARouter(t *testing.T) {
 		})
 		assert.NoError(t, err)
 
-		network1, err = svc.ModifyNetwork(&request.ModifyNetworkRequest{
-			Router: router.UUID,
-			UUID:   network1.UUID,
+		err = svc.AttachNetworkRouter(&request.AttachNetworkRouterRequest{
+			RouterUUID:  router.UUID,
+			NetworkUUID: network1.UUID,
 		})
+		require.NoError(t, err)
+		network1, err = svc.GetNetworkDetails(&request.GetNetworkDetailsRequest{UUID: network1.UUID})
 		require.NoError(t, err)
 		require.Equal(t, network1.Router, router.UUID)
 
-		network2, err = svc.ModifyNetwork(&request.ModifyNetworkRequest{
-			Router: router.UUID,
-			UUID:   network2.UUID,
+		err = svc.AttachNetworkRouter(&request.AttachNetworkRouterRequest{
+			RouterUUID:  router.UUID,
+			NetworkUUID: network2.UUID,
 		})
+		require.NoError(t, err)
+		network2, err = svc.GetNetworkDetails(&request.GetNetworkDetailsRequest{UUID: network2.UUID})
 		require.NoError(t, err)
 		require.Equal(t, network2.Router, router.UUID)
 
@@ -421,6 +427,7 @@ func TestCreateTwoNetworksTwoServersAndARouter(t *testing.T) {
 				found = true
 			}
 		}
+		assert.True(t, found)
 
 		network2Details, err := svc.GetNetworkDetails(&request.GetNetworkDetailsRequest{
 			UUID: network2.UUID,
@@ -433,6 +440,18 @@ func TestCreateTwoNetworksTwoServersAndARouter(t *testing.T) {
 				found = true
 			}
 		}
+		assert.True(t, found)
+
+		// try detaching a router
+		err = svc.DetachNetworkRouter(&request.DetachNetworkRouterRequest{NetworkUUID: network1.UUID})
+		require.NoError(t, err)
+		assert.Eventually(t, func() bool {
+			details, err := svc.GetNetworkDetails(&request.GetNetworkDetailsRequest{
+				UUID: network1.UUID,
+			})
+			require.NoError(t, err)
+			return err == nil && details.Router == ""
+		}, 15*time.Second, time.Second)
 
 		err = deleteServer(svc, serverDetails1.UUID)
 		require.NoError(t, err)

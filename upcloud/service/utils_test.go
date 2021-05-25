@@ -176,7 +176,7 @@ func createServerWithNetwork(svc *Service, name string, network string) (*upclou
 		StorageDevices: []request.CreateServerStorageDevice{
 			{
 				Action:  request.CreateServerStorageDeviceActionClone,
-				Storage: "01000000-0000-4000-8000-000030060200",
+				Storage: "01000000-0000-4000-8000-000030080200",
 				Title:   "disk1",
 				Size:    30,
 				Tier:    upcloud.StorageTierMaxIOPS,
