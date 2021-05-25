@@ -1,15 +1,11 @@
 name: Upcloud go api test
 
 on:
-  push:
-    branches:
-      - master
   pull_request:
-    branches:
-      - master
 
 jobs:
-  Test:
+  test:
+    name: test
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -18,13 +14,11 @@ jobs:
         go-version: [ 1.15.x, 1.16.x ]
     steps:
       - uses: actions/checkout@v2
+
       - uses: actions/setup-go@v2
         with:
           go-version: ${{ matrix.go-version }}
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v2
-        with:
-          version: v1.40.0
+
       - name: test
         env:
           UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS: yes
