@@ -1,16 +1,17 @@
 package service
 
 import (
-	"log"
 	"net/http"
 	"os"
 	"strings"
 	"testing"
 	"time"
 
+	log "github.com/UpCloudLtd/upcloud-go-api/logger"
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud/client"
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
+
 	"github.com/dnaeon/go-vcr/cassette"
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/hashicorp/go-cleanhttp"
@@ -65,13 +66,13 @@ func record(t *testing.T, fixture string, f func(*testing.T, *Service)) {
 func teardown() {
 	svc := getService()
 
-	log.Print("Deleting all servers ...")
+	log.Infof("Deleting all servers ...")
 	servers, err := svc.GetServers()
 	handleError(err)
 
 	for _, server := range servers.Servers {
 		// Try to ensure the server is not in maintenance state
-		log.Printf("Waiting for server with UUID %s to leave maintenance state ...", server.UUID)
+		log.Infof("Waiting for server with UUID %s to leave maintenance state ...", server.UUID)
 		serverDetails, err := svc.WaitForServerState(&request.WaitForServerStateRequest{
 			UUID:           server.UUID,
 			UndesiredState: upcloud.ServerStateMaintenance,
@@ -81,17 +82,17 @@ func teardown() {
 
 		// Stop the server if it's still running
 		if serverDetails.State != upcloud.ServerStateStopped {
-			log.Printf("Stopping server with UUID %s ...", server.UUID)
+			log.Infof("Stopping server with UUID %s ...", server.UUID)
 			stopServer(svc, server.UUID)
 		}
 
 		// Delete the server
-		log.Printf("Deleting the server with UUID %s ...", server.UUID)
+		log.Infof("Deleting the server with UUID %s ...", server.UUID)
 		deleteServer(svc, server.UUID)
 	}
 
 	// Delete all private storage devices
-	log.Print("Deleting all storage devices ...")
+	log.Infof("Deleting all storage devices ...")
 	storages, err := svc.GetStorages(&request.GetStoragesRequest{
 		Access: upcloud.StorageAccessPrivate,
 	})
@@ -100,7 +101,7 @@ func teardown() {
 	for _, storage := range storages.Storages {
 		// Wait for the storage to come online so we can delete it
 		if storage.State != upcloud.StorageStateOnline {
-			log.Printf("Waiting for storage %s to come online ...", storage.UUID)
+			log.Infof("Waiting for storage %s to come online ...", storage.UUID)
 			_, err = svc.WaitForStorageState(&request.WaitForStorageStateRequest{
 				UUID:         storage.UUID,
 				DesiredState: upcloud.StorageStateOnline,
@@ -109,15 +110,15 @@ func teardown() {
 			handleError(err)
 		}
 
-		log.Printf("Deleting the storage with UUID %s ...", storage.UUID)
+		log.Infof("Deleting the storage with UUID %s ...", storage.UUID)
 		deleteStorage(svc, storage.UUID)
 	}
 
 	// Delete all tags
-	log.Print("Deleting all tags ...")
+	log.Infof("Deleting all tags ...")
 	deleteAllTags(svc)
 
-	log.Print("Deleting all networks...")
+	log.Infof("Deleting all networks...")
 	networks, err := svc.GetNetworks()
 	handleError(err)
 	var count int
@@ -130,9 +131,9 @@ func teardown() {
 			handleError(err)
 		}
 	}
-	log.Printf("Deleted %d networks...", count)
+	log.Infof("Deleted %d networks...", count)
 
-	log.Print("Deleting all routers...")
+	log.Infof("Deleting all routers...")
 	routers, err := svc.GetRouters()
 	handleError(err)
 	count = 0
@@ -145,16 +146,16 @@ func teardown() {
 			handleError(err)
 		}
 	}
-	log.Printf("Deleted %d routers...", count)
+	log.Infof("Deleted %d routers...", count)
 
 	// Delete all object storages
-	log.Print("Delete all object storages...")
+	log.Infof("Delete all object storages...")
 	objectStorages, err := svc.GetObjectStorages()
 	handleError(err)
 
 	for _, objectStorage := range objectStorages.ObjectStorages {
 		// Delete the Object Storage
-		log.Printf("Deleting the object storage with UUID %s ...", objectStorage.UUID)
+		log.Infof("Deleting the object storage with UUID %s ...", objectStorage.UUID)
 		deleteObjectStorage(svc, objectStorage.UUID)
 	}
 }

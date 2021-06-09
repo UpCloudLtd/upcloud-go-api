@@ -9,6 +9,8 @@ import (
 	"time"
 
 	globals "github.com/UpCloudLtd/upcloud-go-api/internal"
+	log "github.com/UpCloudLtd/upcloud-go-api/logger"
+
 	"github.com/blang/semver"
 	"github.com/hashicorp/go-cleanhttp"
 )
@@ -33,13 +35,15 @@ type Client struct {
 
 // New creates ands returns a new client configured with the specified user and password
 func New(userName, password string) *Client {
-
 	return NewWithHTTPClient(userName, password, cleanhttp.DefaultClient())
 }
 
 // NewWithHTTPClient creates ands returns a new client configured with the specified user and password and
 // using a supplied `http.Client`.
 func NewWithHTTPClient(userName string, password string, httpClient *http.Client) *Client {
+	//Setup logger
+	log.SetupLogger()
+
 	client := Client{}
 
 	client.userName = userName
@@ -174,11 +178,14 @@ func (c *Client) performJSONRequest(request *http.Request) ([]byte, error) {
 
 // Performs the specified HTTP request and returns the response through handleResponse()
 func (c *Client) PerformRequest(request *http.Request) ([]byte, error) {
+	dumpHTTPRequest(request)
 	response, err := c.httpClient.Do(request)
 
 	if err != nil {
 		return nil, err
 	}
+
+	dumpHTTPResponse(response)
 
 	return handleResponse(response)
 }
