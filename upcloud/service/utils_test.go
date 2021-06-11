@@ -82,12 +82,14 @@ func teardown() {
 		// Stop the server if it's still running
 		if serverDetails.State != upcloud.ServerStateStopped {
 			log.Printf("Stopping server with UUID %s ...", server.UUID)
-			stopServer(svc, server.UUID)
+			err = stopServer(svc, server.UUID)
+			handleError(err)
 		}
 
 		// Delete the server
 		log.Printf("Deleting the server with UUID %s ...", server.UUID)
-		deleteServer(svc, server.UUID)
+		err = deleteServer(svc, server.UUID)
+		handleError(err)
 	}
 
 	// Delete all private storage devices
@@ -110,12 +112,14 @@ func teardown() {
 		}
 
 		log.Printf("Deleting the storage with UUID %s ...", storage.UUID)
-		deleteStorage(svc, storage.UUID)
+		err = deleteStorage(svc, storage.UUID)
+		handleError(err)
 	}
 
 	// Delete all tags
 	log.Print("Deleting all tags ...")
-	deleteAllTags(svc)
+	err = deleteAllTags(svc)
+	handleError(err)
 
 	log.Print("Deleting all networks...")
 	networks, err := svc.GetNetworks()
@@ -155,7 +159,8 @@ func teardown() {
 	for _, objectStorage := range objectStorages.ObjectStorages {
 		// Delete the Object Storage
 		log.Printf("Deleting the object storage with UUID %s ...", objectStorage.UUID)
-		deleteObjectStorage(svc, objectStorage.UUID)
+		err = deleteObjectStorage(svc, objectStorage.UUID)
+		handleError(err)
 	}
 }
 

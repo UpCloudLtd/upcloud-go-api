@@ -39,12 +39,14 @@ var _ Storage = (*Service)(nil)
 func (s *Service) GetStorages(r *request.GetStoragesRequest) (*upcloud.Storages, error) {
 	storages := upcloud.Storages{}
 	response, err := s.basicGetRequest(r.RequestURL())
-
 	if err != nil {
 		return nil, err
 	}
 
-	json.Unmarshal(response, &storages)
+	err = json.Unmarshal(response, &storages)
+	if err != nil {
+		return nil, err
+	}
 
 	return &storages, nil
 }
@@ -53,12 +55,14 @@ func (s *Service) GetStorages(r *request.GetStoragesRequest) (*upcloud.Storages,
 func (s *Service) GetStorageDetails(r *request.GetStorageDetailsRequest) (*upcloud.StorageDetails, error) {
 	storageDetails := upcloud.StorageDetails{}
 	response, err := s.basicGetRequest(r.RequestURL())
-
 	if err != nil {
 		return nil, err
 	}
 
-	json.Unmarshal(response, &storageDetails)
+	err = json.Unmarshal(response, &storageDetails)
+	if err != nil {
+		return nil, err
+	}
 
 	return &storageDetails, nil
 }
@@ -67,13 +71,16 @@ func (s *Service) GetStorageDetails(r *request.GetStorageDetailsRequest) (*upclo
 func (s *Service) CreateStorage(r *request.CreateStorageRequest) (*upcloud.StorageDetails, error) {
 	storageDetails := upcloud.StorageDetails{}
 	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
 
+	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
 
-	json.Unmarshal(response, &storageDetails)
+	err = json.Unmarshal(response, &storageDetails)
+	if err != nil {
+		return nil, err
+	}
 
 	return &storageDetails, nil
 }
@@ -82,13 +89,16 @@ func (s *Service) CreateStorage(r *request.CreateStorageRequest) (*upcloud.Stora
 func (s *Service) ModifyStorage(r *request.ModifyStorageRequest) (*upcloud.StorageDetails, error) {
 	storageDetails := upcloud.StorageDetails{}
 	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPutRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
 
+	response, err := s.client.PerformJSONPutRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
 
-	json.Unmarshal(response, &storageDetails)
+	err = json.Unmarshal(response, &storageDetails)
+	if err != nil {
+		return nil, err
+	}
 
 	return &storageDetails, nil
 }
@@ -97,13 +107,16 @@ func (s *Service) ModifyStorage(r *request.ModifyStorageRequest) (*upcloud.Stora
 func (s *Service) AttachStorage(r *request.AttachStorageRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
 	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
 
+	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
 
-	json.Unmarshal(response, &serverDetails)
+	err = json.Unmarshal(response, &serverDetails)
+	if err != nil {
+		return nil, err
+	}
 
 	return &serverDetails, nil
 }
@@ -112,13 +125,16 @@ func (s *Service) AttachStorage(r *request.AttachStorageRequest) (*upcloud.Serve
 func (s *Service) DetachStorage(r *request.DetachStorageRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
 	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
 
+	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
 
-	json.Unmarshal(response, &serverDetails)
+	err = json.Unmarshal(response, &serverDetails)
+	if err != nil {
+		return nil, err
+	}
 
 	return &serverDetails, nil
 }
@@ -138,13 +154,16 @@ func (s *Service) DeleteStorage(r *request.DeleteStorageRequest) error {
 func (s *Service) CloneStorage(r *request.CloneStorageRequest) (*upcloud.StorageDetails, error) {
 	storageDetails := upcloud.StorageDetails{}
 	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
 
+	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
 
-	json.Unmarshal(response, &storageDetails)
+	err = json.Unmarshal(response, &storageDetails)
+	if err != nil {
+		return nil, err
+	}
 
 	return &storageDetails, nil
 }
@@ -153,13 +172,16 @@ func (s *Service) CloneStorage(r *request.CloneStorageRequest) (*upcloud.Storage
 func (s *Service) TemplatizeStorage(r *request.TemplatizeStorageRequest) (*upcloud.StorageDetails, error) {
 	storageDetails := upcloud.StorageDetails{}
 	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
 
+	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
 
-	json.Unmarshal(response, &storageDetails)
+	err = json.Unmarshal(response, &storageDetails)
+	if err != nil {
+		return nil, err
+	}
 
 	return &storageDetails, nil
 }
@@ -197,13 +219,16 @@ func (s *Service) WaitForStorageState(r *request.WaitForStorageStateRequest) (*u
 func (s *Service) LoadCDROM(r *request.LoadCDROMRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
 	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
 
+	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
 
-	json.Unmarshal(response, &serverDetails)
+	err = json.Unmarshal(response, &serverDetails)
+	if err != nil {
+		return nil, err
+	}
 
 	return &serverDetails, nil
 }
@@ -211,13 +236,16 @@ func (s *Service) LoadCDROM(r *request.LoadCDROMRequest) (*upcloud.ServerDetails
 // EjectCDROM ejects the storage from the CD-ROM device of a server
 func (s *Service) EjectCDROM(r *request.EjectCDROMRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
-	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), nil)
 
+	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), nil)
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
 
-	json.Unmarshal(response, &serverDetails)
+	err = json.Unmarshal(response, &serverDetails)
+	if err != nil {
+		return nil, err
+	}
 
 	return &serverDetails, nil
 }
@@ -226,13 +254,16 @@ func (s *Service) EjectCDROM(r *request.EjectCDROMRequest) (*upcloud.ServerDetai
 func (s *Service) CreateBackup(r *request.CreateBackupRequest) (*upcloud.StorageDetails, error) {
 	storageDetails := upcloud.StorageDetails{}
 	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
 
+	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
 
-	json.Unmarshal(response, &storageDetails)
+	err = json.Unmarshal(response, &storageDetails)
+	if err != nil {
+		return nil, err
+	}
 
 	return &storageDetails, nil
 }
@@ -272,13 +303,16 @@ func (s *Service) CreateStorageImport(r *request.CreateStorageImportRequest) (*u
 func (s *Service) doCreateStorageImport(r *request.CreateStorageImportRequest) (*upcloud.StorageImportDetails, error) {
 	storageImport := upcloud.StorageImportDetails{}
 	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
 
+	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
 
-	json.Unmarshal(response, &storageImport)
+	err = json.Unmarshal(response, &storageImport)
+	if err != nil {
+		return nil, err
+	}
 
 	return &storageImport, nil
 }
@@ -339,13 +373,16 @@ func (s *Service) directStorageImport(r *request.CreateStorageImportRequest) (*u
 // GetStorageImportDetails gets updated details about the specified storage import.
 func (s *Service) GetStorageImportDetails(r *request.GetStorageImportDetailsRequest) (*upcloud.StorageImportDetails, error) {
 	storageDetails := upcloud.StorageImportDetails{}
-	response, err := s.basicGetRequest(r.RequestURL())
 
+	response, err := s.basicGetRequest(r.RequestURL())
 	if err != nil {
 		return nil, err
 	}
 
-	json.Unmarshal(response, &storageDetails)
+	err = json.Unmarshal(response, &storageDetails)
+	if err != nil {
+		return nil, err
+	}
 
 	return &storageDetails, nil
 }

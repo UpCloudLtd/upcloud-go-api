@@ -120,7 +120,10 @@ func (s *Service) GetZones() (*upcloud.Zones, error) {
 		return nil, err
 	}
 
-	json.Unmarshal(response, &zones)
+	err = json.Unmarshal(response, &zones)
+	if err != nil {
+		return nil, err
+	}
 
 	return &zones, nil
 }
@@ -134,7 +137,10 @@ func (s *Service) GetPriceZones() (*upcloud.PriceZones, error) {
 		return nil, err
 	}
 
-	json.Unmarshal(response, &zones)
+	err = json.Unmarshal(response, &zones)
+	if err != nil {
+		return nil, err
+	}
 
 	return &zones, nil
 }
@@ -148,7 +154,10 @@ func (s *Service) GetTimeZones() (*upcloud.TimeZones, error) {
 		return nil, err
 	}
 
-	json.Unmarshal(response, &zones)
+	err = json.Unmarshal(response, &zones)
+	if err != nil {
+		return nil, err
+	}
 
 	return &zones, nil
 }
@@ -162,7 +171,10 @@ func (s *Service) GetPlans() (*upcloud.Plans, error) {
 		return nil, err
 	}
 
-	json.Unmarshal(response, &plans)
+	err = json.Unmarshal(response, &plans)
+	if err != nil {
+		return nil, err
+	}
 
 	return &plans, nil
 }
@@ -176,7 +188,10 @@ func (s *Service) GetServerConfigurations() (*upcloud.ServerConfigurations, erro
 		return nil, err
 	}
 
-	json.Unmarshal(response, &serverConfigurations)
+	err = json.Unmarshal(response, &serverConfigurations)
+	if err != nil {
+		return nil, err
+	}
 
 	return &serverConfigurations, nil
 }
@@ -286,7 +301,10 @@ func (s *Service) StartServer(r *request.StartServerRequest) (*upcloud.ServerDet
 	}
 
 	serverDetails := upcloud.ServerDetails{}
-	json.Unmarshal(response, &serverDetails)
+	err = json.Unmarshal(response, &serverDetails)
+	if err != nil {
+		return nil, err
+	}
 
 	return &serverDetails, nil
 }
@@ -311,7 +329,10 @@ func (s *Service) StopServer(r *request.StopServerRequest) (*upcloud.ServerDetai
 		return nil, parseJSONServiceError(err)
 	}
 
-	json.Unmarshal(response, &serverDetails)
+	err = json.Unmarshal(response, &serverDetails)
+	if err != nil {
+		return nil, err
+	}
 
 	return &serverDetails, nil
 }
@@ -336,7 +357,10 @@ func (s *Service) RestartServer(r *request.RestartServerRequest) (*upcloud.Serve
 		return nil, parseJSONServiceError(err)
 	}
 
-	json.Unmarshal(response, &serverDetails)
+	err = json.Unmarshal(response, &serverDetails)
+	if err != nil {
+		return nil, err
+	}
 
 	return &serverDetails, nil
 }
@@ -352,7 +376,10 @@ func (s *Service) ModifyServer(r *request.ModifyServerRequest) (*upcloud.ServerD
 		return nil, parseJSONServiceError(err)
 	}
 
-	json.Unmarshal(response, &serverDetails)
+	err = json.Unmarshal(response, &serverDetails)
+	if err != nil {
+		return nil, err
+	}
 
 	return &serverDetails, nil
 }
@@ -388,7 +415,10 @@ func (s *Service) TagServer(r *request.TagServerRequest) (*upcloud.ServerDetails
 		return nil, parseJSONServiceError(err)
 	}
 
-	json.Unmarshal(response, &serverDetails)
+	err = json.Unmarshal(response, &serverDetails)
+	if err != nil {
+		return nil, err
+	}
 
 	return &serverDetails, nil
 }
@@ -402,7 +432,10 @@ func (s *Service) UntagServer(r *request.UntagServerRequest) (*upcloud.ServerDet
 		return nil, parseJSONServiceError(err)
 	}
 
-	json.Unmarshal(response, &serverDetails)
+	err = json.Unmarshal(response, &serverDetails)
+	if err != nil {
+		return nil, err
+	}
 
 	return &serverDetails, nil
 }
@@ -417,7 +450,10 @@ func (s *Service) CreateTag(r *request.CreateTagRequest) (*upcloud.Tag, error) {
 		return nil, parseJSONServiceError(err)
 	}
 
-	json.Unmarshal(response, &tagDetails)
+	err = json.Unmarshal(response, &tagDetails)
+	if err != nil {
+		return nil, err
+	}
 
 	return &tagDetails, nil
 }
@@ -432,7 +468,10 @@ func (s *Service) ModifyTag(r *request.ModifyTagRequest) (*upcloud.Tag, error) {
 		return nil, parseJSONServiceError(err)
 	}
 
-	json.Unmarshal(response, &tagDetails)
+	err = json.Unmarshal(response, &tagDetails)
+	if err != nil {
+		return nil, err
+	}
 
 	return &tagDetails, nil
 }
@@ -457,7 +496,10 @@ func (s *Service) GetIPAddresses() (*upcloud.IPAddresses, error) {
 		return nil, err
 	}
 
-	json.Unmarshal(response, &ipAddresses)
+	err = json.Unmarshal(response, &ipAddresses)
+	if err != nil {
+		return nil, err
+	}
 
 	return &ipAddresses, nil
 }
@@ -471,7 +513,10 @@ func (s *Service) GetIPAddressDetails(r *request.GetIPAddressDetailsRequest) (*u
 		return nil, err
 	}
 
-	json.Unmarshal(response, &ipAddress)
+	err = json.Unmarshal(response, &ipAddress)
+	if err != nil {
+		return nil, err
+	}
 
 	return &ipAddress, nil
 }
@@ -486,7 +531,10 @@ func (s *Service) AssignIPAddress(r *request.AssignIPAddressRequest) (*upcloud.I
 		return nil, parseJSONServiceError(err)
 	}
 
-	json.Unmarshal(response, &ipAddress)
+	err = json.Unmarshal(response, &ipAddress)
+	if err != nil {
+		return nil, err
+	}
 
 	return &ipAddress, nil
 }
@@ -501,7 +549,10 @@ func (s *Service) ModifyIPAddress(r *request.ModifyIPAddressRequest) (*upcloud.I
 		return nil, parseJSONServiceError(err)
 	}
 
-	json.Unmarshal(response, &ipAddress)
+	err = json.Unmarshal(response, &ipAddress)
+	if err != nil {
+		return nil, err
+	}
 
 	return &ipAddress, nil
 }
@@ -526,7 +577,10 @@ func (s *Service) GetFirewallRules(r *request.GetFirewallRulesRequest) (*upcloud
 		return nil, err
 	}
 
-	json.Unmarshal(response, &firewallRules)
+	err = json.Unmarshal(response, &firewallRules)
+	if err != nil {
+		return nil, err
+	}
 
 	return &firewallRules, nil
 }
@@ -540,7 +594,10 @@ func (s *Service) GetFirewallRuleDetails(r *request.GetFirewallRuleDetailsReques
 		return nil, parseJSONServiceError(err)
 	}
 
-	json.Unmarshal(response, &firewallRule)
+	err = json.Unmarshal(response, &firewallRule)
+	if err != nil {
+		return nil, err
+	}
 
 	return &firewallRule, nil
 }
@@ -555,7 +612,10 @@ func (s *Service) CreateFirewallRule(r *request.CreateFirewallRuleRequest) (*upc
 		return nil, parseJSONServiceError(err)
 	}
 
-	json.Unmarshal(response, &firewallRule)
+	err = json.Unmarshal(response, &firewallRule)
+	if err != nil {
+		return nil, err
+	}
 
 	return &firewallRule, nil
 }
@@ -592,7 +652,10 @@ func (s *Service) GetTags() (*upcloud.Tags, error) {
 		return nil, err
 	}
 
-	json.Unmarshal(response, &tags)
+	err = json.Unmarshal(response, &tags)
+	if err != nil {
+		return nil, err
+	}
 
 	return &tags, nil
 }
@@ -616,7 +679,10 @@ func parseJSONServiceError(err error) error {
 	if clientError, ok := err.(*client.Error); ok {
 		serviceError := upcloud.Error{}
 		responseBody := clientError.ResponseBody
-		json.Unmarshal(responseBody, &serviceError)
+		err = json.Unmarshal(responseBody, &serviceError)
+		if err != nil {
+			return fmt.Errorf("received malformed client error: %s", string(responseBody))
+		}
 
 		return &serviceError
 	}

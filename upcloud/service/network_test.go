@@ -68,9 +68,9 @@ func TestGetNetworksInZone(t *testing.T) {
 		// Find a network with a server
 		var found bool
 		var foundNetwork *upcloud.Network
-		for _, n := range networks.Networks {
+		for i, n := range networks.Networks {
 			if len(n.Servers) > 0 {
-				foundNetwork = &n
+				foundNetwork = &networks.Networks[i]
 				found = true
 			}
 			// Make sure all the networks are in the right zone.
@@ -473,7 +473,6 @@ func TestCreateTwoNetworksTwoServersAndARouter(t *testing.T) {
 			UUID: router.UUID,
 		})
 		require.NoError(t, err)
-
 	})
 }
 

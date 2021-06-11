@@ -80,7 +80,7 @@ func (s *Service) ModifyObjectStorage(r *request.ModifyObjectStorageRequest) (*u
 		return nil, parseJSONServiceError(err)
 	}
 
-	json.Unmarshal(response, &objectStorageDetails)
+	err = json.Unmarshal(response, &objectStorageDetails)
 	if err != nil {
 		return nil, fmt.Errorf("unable to unmarshal JSON: %s, %w", string(response), err)
 	}
