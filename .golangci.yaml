@@ -15,7 +15,7 @@ linters:
     - goimports
     # - golint # TODO: re-enable, needs breaking change due to wanting IpAddress -> IPAddress
     - goprintffuncname
-    #    - gosec
+    - gosec
     - gosimple
     - govet
     - ineffassign

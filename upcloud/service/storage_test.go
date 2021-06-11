@@ -351,7 +351,7 @@ func TestDirectUploadStorageImport(t *testing.T) {
 		sum := sha256.Sum256(buf)
 		sha256sum := hex.EncodeToString(sum[:])
 
-		err = ioutil.WriteFile(path.Join(os.TempDir(), "temp_file.txt"), buf, 0666)
+		err = ioutil.WriteFile(path.Join(os.TempDir(), "temp_file.txt"), buf, 0600)
 		require.NoError(t, err)
 		defer func() {
 			os.Remove(path.Join(os.TempDir(), "temp_file.txt"))
