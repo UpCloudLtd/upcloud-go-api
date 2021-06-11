@@ -759,10 +759,10 @@ func TestFirewallRules(t *testing.T) {
 // TestCreateTag tests the creation of a single tag
 func TestCreateTag(t *testing.T) {
 	record(t, "createtag", func(t *testing.T, svc *Service) {
-		err := svc.DeleteTag(&request.DeleteTagRequest{
+		// ignore errors, but delete the tag if it happens to exist
+		_ = svc.DeleteTag(&request.DeleteTagRequest{
 			Name: "testTag",
 		})
-		require.NoError(t, err)
 
 		tag, err := svc.CreateTag(&request.CreateTagRequest{
 			Tag: upcloud.Tag{
@@ -787,10 +787,9 @@ func TestGetTags(t *testing.T) {
 		for _, tag := range testData {
 			// Delete all the tags we're about to create.
 			// We don't care about errors.
-			err := svc.DeleteTag(&request.DeleteTagRequest{
+			_ = svc.DeleteTag(&request.DeleteTagRequest{
 				Name: tag,
 			})
-			require.NoError(t, err)
 		}
 
 		for _, tag := range testData {
