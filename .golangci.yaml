@@ -13,19 +13,19 @@ linters:
     - goconst
     - gofmt
     - goimports
-    # - golint # TODO: re-enable
+    # - golint # TODO: re-enable, needs breaking change due to wanting IpAddress -> IPAddress
     - goprintffuncname
     #    - gosec
     - gosimple
     - govet
-    # - ineffassign # TODO: re-enable
+    - ineffassign
     - misspell
     - nakedret
     - nolintlint
     - rowserrcheck
     - staticcheck
     - structcheck
-    # - stylecheck # TODO: re-enable
+    # - stylecheck # TODO: re-enable, needs breaking change due to wanting IpAddress -> IPAddress
     - typecheck
     - unconvert
     #    - unparam
