@@ -30,7 +30,7 @@ linters:
     - unconvert
     #    - unparam
     - varcheck
-    # - whitespace # TODO: re-enable
+    - whitespace
 
 linters-settings:
   goconst:

@@ -33,7 +33,6 @@ type Client struct {
 
 // New creates ands returns a new client configured with the specified user and password
 func New(userName, password string) *Client {
-
 	return NewWithHTTPClient(userName, password, cleanhttp.DefaultClient())
 }
 

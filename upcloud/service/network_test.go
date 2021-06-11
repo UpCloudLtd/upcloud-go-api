@@ -473,7 +473,6 @@ func TestCreateTwoNetworksTwoServersAndARouter(t *testing.T) {
 			UUID: router.UUID,
 		})
 		require.NoError(t, err)
-
 	})
 }
 
