@@ -29,6 +29,7 @@ linters:
     - typecheck
     - unconvert
     - unparam
+    - unused
     - varcheck
     - whitespace
 
