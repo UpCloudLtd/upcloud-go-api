@@ -28,7 +28,7 @@ linters:
     # - stylecheck # TODO: re-enable, needs breaking change due to wanting IpAddress -> IPAddress
     - typecheck
     - unconvert
-    #    - unparam
+    - unparam
     - varcheck
     - whitespace
 
