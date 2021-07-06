@@ -1,6 +1,10 @@
 package upcloud
 
-import "os"
+import (
+	"fmt"
+	"os"
+	"strconv"
+)
 
 // Constants
 const (
@@ -81,4 +85,18 @@ func GetEnvOrDefault(envKey string, defaultValue string) string {
 	}
 
 	return defaultValue
+}
+
+func IsEnvEnabled(envKey string) bool {
+	env, exist := os.LookupEnv(envKey)
+	if !exist {
+		return false
+	}
+
+	v, err := strconv.ParseBool(env)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "ERROR: environment variable %s has invalid boolean value\n", envKey)
+	}
+
+	return v
 }
