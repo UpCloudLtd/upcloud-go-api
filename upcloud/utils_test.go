@@ -2,6 +2,7 @@ package upcloud
 
 import (
 	"encoding/json"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -168,4 +169,18 @@ func TestBoolean_FalseAnything(t *testing.T) {
 func TestBoolean_Empty(t *testing.T) {
 	var b Boolean
 	assert.True(t, b.Empty())
+}
+
+func TestGetEnvOrDefault(t *testing.T) {
+	envKey := "FOO_ENV"
+	defaultValue := "https://localhost"
+
+	v := GetEnvOrDefault(envKey, defaultValue)
+	assert.Equal(t, v, defaultValue)
+
+	newValue := "http://api.example.com"
+	os.Setenv(envKey, newValue)
+
+	v = GetEnvOrDefault(envKey, defaultValue)
+	assert.Equal(t, v, newValue)
 }

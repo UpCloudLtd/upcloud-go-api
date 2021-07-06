@@ -9,6 +9,8 @@ import (
 	"time"
 
 	globals "github.com/UpCloudLtd/upcloud-go-api/internal"
+	upcloud "github.com/UpCloudLtd/upcloud-go-api/upcloud"
+
 	"github.com/blang/semver"
 	"github.com/hashicorp/go-cleanhttp"
 )
@@ -18,6 +20,8 @@ const (
 	DefaultAPIVersion = "1.3.6"
 	DefaultAPIBaseURL = "https://api.upcloud.com"
 
+	APIVersionEnv = "UPCLOUD_API_VERSION"
+	APIBaseURLEnv = "UPCLOUD_API_URL"
 	// The default timeout (in seconds)
 	DefaultTimeout = 60
 )
@@ -184,9 +188,12 @@ func (c *Client) PerformRequest(request *http.Request) ([]byte, error) {
 
 // Returns the base URL to use for API requests
 func (c *Client) getBaseURL() string {
-	urlVersion, _ := semver.Make(DefaultAPIVersion)
+	url := upcloud.GetEnvOrDefault(APIBaseURLEnv, DefaultAPIBaseURL)
+	version := upcloud.GetEnvOrDefault(APIVersionEnv, DefaultAPIVersion)
 
-	return fmt.Sprintf("%s/%d.%d", DefaultAPIBaseURL, urlVersion.Major, urlVersion.Minor)
+	APIVersion, _ := semver.Make(version)
+
+	return fmt.Sprintf("%s/%d.%d", url, APIVersion.Major, APIVersion.Minor)
 }
 
 // Parses the response and returns either the response body or an error

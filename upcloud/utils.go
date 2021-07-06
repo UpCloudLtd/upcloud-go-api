@@ -1,5 +1,7 @@
 package upcloud
 
+import "os"
+
 // Constants
 const (
 	True  Boolean = 1
@@ -69,4 +71,14 @@ func FromBool(v bool) Boolean {
 		return True
 	}
 	return False
+}
+
+// GetEnvOrDefault returs the env value or the default one
+func GetEnvOrDefault(envKey string, defaultValue string) string {
+	v, exists := os.LookupEnv(envKey)
+	if exists {
+		return v
+	}
+
+	return defaultValue
 }
