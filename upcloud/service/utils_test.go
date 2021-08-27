@@ -8,14 +8,23 @@ import (
 	"testing"
 	"time"
 
-	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/upcloud/client"
-	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
 	"github.com/dnaeon/go-vcr/cassette"
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/hashicorp/go-cleanhttp"
 	"github.com/stretchr/testify/require"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud/client"
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
 )
+
+type customRoundTripper struct {
+	fn func(r *http.Request) (*http.Response, error)
+}
+
+func (c *customRoundTripper) RoundTrip(r *http.Request) (*http.Response, error) {
+	return c.fn(r)
+}
 
 // Configures the test environment
 func getService() *Service {
@@ -28,7 +37,7 @@ func getService() *Service {
 }
 
 // records the API interactions of the test
-func record(t *testing.T, fixture string, f func(*testing.T, *Service)) {
+func record(t *testing.T, fixture string, f func(*testing.T, *recorder.Recorder, *Service)) {
 	if testing.Short() {
 		t.Skip("Skipping recorded test in short mode")
 	}
@@ -53,12 +62,25 @@ func record(t *testing.T, fixture string, f func(*testing.T, *Service)) {
 	user, password := getCredentials()
 
 	httpClient := cleanhttp.DefaultClient()
+	origTransport := httpClient.Transport
+	r.SetTransport(origTransport)
 	httpClient.Transport = r
 
 	c := client.NewWithHTTPClient(user, password, httpClient)
 	c.SetTimeout(time.Second * 300)
 
-	f(t, New(c))
+	customAPI := os.Getenv("UPCLOUD_GO_SDK_API_HOST")
+	if customAPI != "" {
+		// Override api host after the go-vcr to maintain consistent test fixtures
+		r.SetTransport(&customRoundTripper{fn: func(r *http.Request) (*http.Response, error) {
+			clone := r.Clone(r.Context())
+			clone.URL.Host = customAPI
+			clone.Host = customAPI
+			return origTransport.RoundTrip(clone)
+		}})
+	}
+
+	f(t, r, New(c))
 }
 
 // Tears down the test environment by removing all resources

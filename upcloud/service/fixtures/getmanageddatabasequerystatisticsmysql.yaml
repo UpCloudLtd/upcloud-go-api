@@ -1,0 +1,83 @@
+---
+version: 1
+interactions:
+- request:
+    body: '{"hostname_prefix":"querystatisticsmysql","plan":"2x2xCPU-4GB-100GB","properties":{"automatic_utility_network_ip_filter":true,"ip_filter":["0.0.0.0/0"],"public_access":true},"title":"test","type":"mysql","zone":"fi-hel2","maintenance":{"dow":"monday","time":"12:00:00"}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/database
+    method: POST
+  response:
+    body: '{"backups":[],"components":[{"component":"mysql","host":"querystatisticsmysql-deviyydmahgscgy.db.upclouddatabases.com","port":11550,"route":"dynamic","usage":"primary"},{"component":"mysql","host":"public-querystatisticsmysql-deviyydmahgscgy.db.upclouddatabases.com","port":11550,"route":"public","usage":"primary"},{"component":"mysqlx","host":"querystatisticsmysql-deviyydmahgscgy.db.upclouddatabases.com","port":11554,"route":"dynamic","usage":"primary"},{"component":"mysqlx","host":"public-querystatisticsmysql-deviyydmahgscgy.db.upclouddatabases.com","port":11554,"route":"public","usage":"primary"},{"component":"mysql","host":"replica-querystatisticsmysql-deviyydmahgscgy.db.upclouddatabases.com","port":11550,"route":"dynamic","usage":"replica"},{"component":"mysql","host":"public-replica-querystatisticsmysql-deviyydmahgscgy.db.upclouddatabases.com","port":11550,"route":"public","usage":"replica"},{"component":"mysqlx","host":"replica-querystatisticsmysql-deviyydmahgscgy.db.upclouddatabases.com","port":11554,"route":"dynamic","usage":"replica"},{"component":"mysqlx","host":"public-replica-querystatisticsmysql-deviyydmahgscgy.db.upclouddatabases.com","port":11554,"route":"public","usage":"replica"}],"create_time":"0001-01-01T00:00:00Z","maintenance":{"dow":"monday","time":"12:00:00"},"name":"querystatisticsmysql","node_count":2,"node_states":[],"plan":"2x2xCPU-4GB-100GB","powered":true,"properties":{"automatic_utility_network_ip_filter":true,"ip_filter":["0.0.0.0/0"],"public_access":true},"uuid":"09057e2d-5765-48ca-90a8-b2c75512c153","state":"rebuilding","title":"test","type":"mysql","update_time":"0001-01-01T00:00:00Z","service_uri":"mysql://upadmin:anGNdlBkeUeHiD1e@querystatisticsmysql-deviyydmahgscgy.db.upclouddatabases.com:11550/defaultdb?ssl-mode=REQUIRED","service_uri_params":{"dbname":"defaultdb","host":"querystatisticsmysql-deviyydmahgscgy.db.upclouddatabases.com","password":"anGNdlBkeUeHiD1e","port":"11550","ssl_mode":"REQUIRED","user":"upadmin"},"users":null,"zone":"fi-hel2"}'
+    headers:
+      Access-Control-Allow-Methods:
+      - OPTIONS,GET,POST
+      Access-Control-Allow-Origin:
+      - '*'
+      Content-Length:
+      - "2018"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 14 Sep 2021 13:46:25 GMT
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/database/09057e2d-5765-48ca-90a8-b2c75512c153/query-statistics?limit=1000
+    method: GET
+  response:
+    body: '{"mysql":[{"avg_timer_wait":2000309754,"count_star":1,"digest":"3b74a4bb71311c8dffd4b64a1dabe02d0ac8fcd7ae03087dd69378a554bb28bc","digest_text":"SELECT `SLEEP` (?)","first_seen":"2021-09-14T13:49:55.576024Z","last_seen":"2021-09-14T13:49:55.576024Z","max_timer_wait":2000309754,"min_timer_wait":2000309754,"quantile_95":2089296130,"quantile_99":2089296130,"quantile_999":2089296130,"query_sample_seen":"2021-09-14T13:49:55.576024Z","query_sample_text":"SELECT SLEEP(2)","query_sample_timer_wait":2000309754,"schema_name":"defaultdb","sum_created_tmp_disk_tables":0,"sum_created_tmp_tables":0,"sum_errors":0,"sum_lock_time":0,"sum_no_good_index_used":0,"sum_no_index_used":0,"sum_rows_affected":0,"sum_rows_examined":1,"sum_rows_sent":1,"sum_select_full_join":0,"sum_select_full_range_join":0,"sum_select_range":0,"sum_select_range_check":0,"sum_select_scan":0,"sum_sort_merge_passes":0,"sum_sort_range":0,"sum_sort_rows":0,"sum_sort_scan":0,"sum_timer_wait":2000309754,"sum_warnings":0}]}'
+    headers:
+      Access-Control-Allow-Methods:
+      - OPTIONS,GET,POST
+      Access-Control-Allow-Origin:
+      - '*'
+      Content-Length:
+      - "988"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 14 Sep 2021 13:49:56 GMT
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/database/09057e2d-5765-48ca-90a8-b2c75512c153
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Access-Control-Allow-Methods:
+      - OPTIONS,DELETE,GET,PATCH
+      Access-Control-Allow-Origin:
+      - '*'
+      Date:
+      - Tue, 14 Sep 2021 13:49:56 GMT
+    status: 204 No Content
+    code: 204
+    duration: ""

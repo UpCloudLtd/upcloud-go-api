@@ -10,10 +10,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
+	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
 )
 
 // TestCreateModifyDeleteStorage performs the following actions:
@@ -24,7 +26,7 @@ import (
 func TestCreateModifyDeleteStorage(t *testing.T) {
 	t.Parallel()
 
-	record(t, "createmodifydeletestorage", func(t *testing.T, svc *Service) {
+	record(t, "createmodifydeletestorage", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create some storage
 		storageDetails, err := createStorage(svc)
 		require.NoError(t, err)
@@ -62,7 +64,7 @@ func TestCreateModifyDeleteStorage(t *testing.T) {
 func TestAttachDetachStorage(t *testing.T) {
 	t.Parallel()
 
-	record(t, "attachdetachstorage", func(t *testing.T, svc *Service) {
+	record(t, "attachdetachstorage", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create a server
 		serverDetails, err := createServer(svc, "TestAttachDetachStorage")
 		require.NoError(t, err)
@@ -111,7 +113,7 @@ func TestAttachDetachStorage(t *testing.T) {
 func TestCloneStorage(t *testing.T) {
 	t.Parallel()
 
-	record(t, "clonestorage", func(t *testing.T, svc *Service) {
+	record(t, "clonestorage", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create storage
 		storageDetails, err := createStorage(svc)
 		require.NoError(t, err)
@@ -142,7 +144,7 @@ func TestCloneStorage(t *testing.T) {
 func TestTemplatizeServerStorage(t *testing.T) {
 	t.Parallel()
 
-	record(t, "templatizeserverstorage", func(t *testing.T, svc *Service) {
+	record(t, "templatizeserverstorage", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create server
 		serverDetails, err := createServer(svc, "TestTemplatizeServerStorage")
 		require.NoError(t, err)
@@ -186,7 +188,7 @@ func TestTemplatizeServerStorage(t *testing.T) {
 func TestLoadEjectCDROM(t *testing.T) {
 	t.Parallel()
 
-	record(t, "loadejectcdrom", func(t *testing.T, svc *Service) {
+	record(t, "loadejectcdrom", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create the server
 		serverDetails, err := createServer(svc, "TestLoadEjectCDROM")
 		require.NoError(t, err)
@@ -236,7 +238,7 @@ func TestLoadEjectCDROM(t *testing.T) {
 func TestCreateRestoreBackup(t *testing.T) {
 	t.Parallel()
 
-	record(t, "createrestorebackup", func(t *testing.T, svc *Service) {
+	record(t, "createrestorebackup", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create the storage
 		storageDetails, err := createStorage(svc)
 		require.NoError(t, err)
@@ -291,7 +293,7 @@ func TestCreateRestoreBackup(t *testing.T) {
 }
 
 func TestStorageImport(t *testing.T) {
-	record(t, "storageimport", func(t *testing.T, svc *Service) {
+	record(t, "storageimport", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		storage, err := svc.CreateStorage(&request.CreateStorageRequest{
 			Size:  10,
 			Tier:  upcloud.StorageTierMaxIOPS,
@@ -320,7 +322,7 @@ func TestStorageImport(t *testing.T) {
 }
 
 func TestDirectUploadStorageImport(t *testing.T) {
-	record(t, "directuploadstorageimport", func(t *testing.T, svc *Service) {
+	record(t, "directuploadstorageimport", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		storage, err := svc.CreateStorage(&request.CreateStorageRequest{
 			Size:  10,
 			Tier:  upcloud.StorageTierMaxIOPS,
