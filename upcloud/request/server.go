@@ -256,7 +256,7 @@ func (r StopServerRequest) MarshalJSON() ([]byte, error) {
 		StopServerRequest localStopServerRequest `json:"stop_server"`
 	}{}
 	v.StopServerRequest = localStopServerRequest(r)
-	v.StopServerRequest.Timeout = v.StopServerRequest.Timeout / 1e9
+	v.StopServerRequest.Timeout /= 1e9
 
 	return json.Marshal(&v)
 }
@@ -284,7 +284,7 @@ func (r RestartServerRequest) MarshalJSON() ([]byte, error) {
 		RestartServerRequest localRestartServerRequest `json:"restart_server"`
 	}{}
 	v.RestartServerRequest = localRestartServerRequest(r)
-	v.RestartServerRequest.Timeout = v.RestartServerRequest.Timeout / 1e9
+	v.RestartServerRequest.Timeout /= 1e9
 
 	return json.Marshal(&v)
 }
