@@ -2,6 +2,7 @@ package service
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"time"
 
@@ -676,7 +677,8 @@ func (s *Service) basicGetRequest(location string) ([]byte, error) {
 // Parses an error returned from the client into a service error object
 func parseJSONServiceError(err error) error {
 	// Parse service errors
-	if clientError, ok := err.(*client.Error); ok {
+	var clientError *client.Error
+	if errors.As(err, &clientError) {
 		serviceError := upcloud.Error{}
 		responseBody := clientError.ResponseBody
 		err = json.Unmarshal(responseBody, &serviceError)
