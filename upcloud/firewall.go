@@ -32,8 +32,8 @@ func (s *FirewallRules) UnmarshalJSON(b []byte) error {
 	v := struct {
 		FirewallRules firewallRuleWrapper `json:"firewall_rules"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 
@@ -71,8 +71,8 @@ func (s *FirewallRule) UnmarshalJSON(b []byte) error {
 	v := struct {
 		FirewallRule localFirewallRule `json:"firewall_rule"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 

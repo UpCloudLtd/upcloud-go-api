@@ -20,8 +20,8 @@ func (s *Tags) UnmarshalJSON(b []byte) error {
 	v := struct {
 		Tags tagWrapper `json:"tags"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 
@@ -42,8 +42,8 @@ func (t *TagServerSlice) UnmarshalJSON(b []byte) error {
 	v := struct {
 		Servers []string `json:"server"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 
@@ -81,8 +81,8 @@ func (s *Tag) UnmarshalJSON(b []byte) error {
 	v := struct {
 		Tag localTag `json:"tag"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 

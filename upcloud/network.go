@@ -22,8 +22,8 @@ func (s *ServerInterfaceSlice) UnmarshalJSON(b []byte) error {
 	v := struct {
 		Interfaces []ServerInterface `json:"interface"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 
@@ -45,8 +45,8 @@ func (s *Networking) UnmarshalJSON(b []byte) error {
 	v := struct {
 		Networking localNetworking `json:"networking"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 
@@ -74,8 +74,8 @@ func (s *Interface) UnmarshalJSON(b []byte) error {
 	v := struct {
 		Interface localInterface `json:"interface"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 
@@ -104,8 +104,8 @@ func (t *IPNetworkSlice) UnmarshalJSON(b []byte) error {
 	v := struct {
 		IPNetworks []IPNetwork `json:"ip_network"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 
@@ -138,8 +138,8 @@ func (t *NetworkServerSlice) UnmarshalJSON(b []byte) error {
 	v := struct {
 		NetworkServers []NetworkServer `json:"server"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 
@@ -173,8 +173,8 @@ func (s *Network) UnmarshalJSON(b []byte) error {
 	v := struct {
 		Network localNetwork `json:"network"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 
@@ -199,8 +199,8 @@ func (n *Networks) UnmarshalJSON(b []byte) error {
 	v := struct {
 		Networks networkWrapper `json:"networks"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 
@@ -221,8 +221,8 @@ func (t *NetworkSlice) UnmarshalJSON(b []byte) error {
 	v := struct {
 		Networks []Network `json:"network"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 
@@ -247,8 +247,8 @@ func (n *Routers) UnmarshalJSON(b []byte) error {
 	v := struct {
 		Routers routerWrapper `json:"routers"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 
@@ -274,8 +274,8 @@ func (t *RouterNetworkSlice) UnmarshalJSON(b []byte) error {
 	v := struct {
 		Networks []RouterNetwork `json:"network"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 
@@ -300,8 +300,8 @@ func (s *Router) UnmarshalJSON(b []byte) error {
 	v := struct {
 		Router localRouter `json:"router"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 

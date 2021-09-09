@@ -164,8 +164,8 @@ func (s *SSHKeySlice) UnmarshalJSON(b []byte) error {
 	v := struct {
 		SSHKey []string `json:"ssh_key"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 

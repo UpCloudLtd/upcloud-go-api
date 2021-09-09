@@ -17,8 +17,8 @@ func (s *Zones) UnmarshalJSON(b []byte) error {
 	v := struct {
 		Zones zoneWrapper `json:"zones"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 

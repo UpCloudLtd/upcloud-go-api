@@ -17,8 +17,8 @@ func (s *Plans) UnmarshalJSON(b []byte) error {
 	v := struct {
 		Plans planWrapper `json:"plans"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 

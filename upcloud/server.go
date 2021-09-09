@@ -36,8 +36,8 @@ func (s *ServerConfigurations) UnmarshalJSON(b []byte) error {
 	v := struct {
 		ServerConfigurations serverConfigurationWrapper `json:"server_sizes"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 
@@ -67,8 +67,8 @@ func (s *Servers) UnmarshalJSON(b []byte) error {
 	v := struct {
 		Servers serverWrapper `json:"servers"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 
@@ -87,8 +87,8 @@ func (t *ServerTagSlice) UnmarshalJSON(b []byte) error {
 	v := struct {
 		Tags []string `json:"tag"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 
@@ -123,8 +123,8 @@ func (i *IPAddressSlice) UnmarshalJSON(b []byte) error {
 	v := struct {
 		IPAddresses []localIPAddress `json:"ip_address"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 
@@ -145,8 +145,8 @@ func (s *ServerStorageDeviceSlice) UnmarshalJSON(b []byte) error {
 	v := struct {
 		StorageDevices []ServerStorageDevice `json:"storage_device"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 
@@ -199,8 +199,8 @@ func (s *ServerDetails) UnmarshalJSON(b []byte) error {
 	v := struct {
 		ServerDetails localServerDetails `json:"server"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 

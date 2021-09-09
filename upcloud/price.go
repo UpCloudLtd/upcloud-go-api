@@ -17,8 +17,8 @@ func (s *PriceZones) UnmarshalJSON(b []byte) error {
 	v := struct {
 		PriceZones serverWrapper `json:"prices"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 

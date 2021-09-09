@@ -29,8 +29,8 @@ func (o *ObjectStorages) UnmarshalJSON(b []byte) error {
 	v := struct {
 		ObjectStorages objectStorageWrapper `json:"object_storages"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 
@@ -53,8 +53,8 @@ func (o *ObjectStorageDetails) UnmarshalJSON(b []byte) error {
 	v := struct {
 		ObjectStorageDetails localObjectStorageDetails `json:"object_storage"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 

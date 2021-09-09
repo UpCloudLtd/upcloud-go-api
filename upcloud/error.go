@@ -18,8 +18,8 @@ func (e *Error) UnmarshalJSON(b []byte) error {
 	v := struct {
 		Error localError `json:"error"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 

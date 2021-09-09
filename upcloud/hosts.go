@@ -21,8 +21,8 @@ func (n *Hosts) UnmarshalJSON(b []byte) error {
 	v := struct {
 		Hosts hostWrapper `json:"hosts"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 
@@ -43,8 +43,8 @@ func (t *StatSlice) UnmarshalJSON(b []byte) error {
 	v := struct {
 		Networks []Stat `json:"stat"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 
@@ -70,8 +70,8 @@ func (s *Host) UnmarshalJSON(b []byte) error {
 	v := struct {
 		Host localHost `json:"host"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 

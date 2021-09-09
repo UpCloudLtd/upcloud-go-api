@@ -28,8 +28,8 @@ func (s *IPAddresses) UnmarshalJSON(b []byte) error {
 	v := struct {
 		IPAddresses ipAddressWrapper `json:"ip_addresses"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 
@@ -61,8 +61,8 @@ func (s *IPAddress) UnmarshalJSON(b []byte) error {
 	v := struct {
 		IPAddress localIPAddress `json:"ip_address"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 

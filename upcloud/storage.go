@@ -62,8 +62,8 @@ func (s *Storages) UnmarshalJSON(b []byte) error {
 	v := struct {
 		Storages storageWrapper `json:"storages"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 
@@ -100,8 +100,8 @@ func (s *BackupUUIDSlice) UnmarshalJSON(b []byte) error {
 	v := struct {
 		BackupUUIDs []string `json:"backup"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 
@@ -120,8 +120,8 @@ func (s *ServerUUIDSlice) UnmarshalJSON(b []byte) error {
 	v := struct {
 		ServerUUIDs []string `json:"server"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 
@@ -147,8 +147,8 @@ func (s *StorageDetails) UnmarshalJSON(b []byte) error {
 	v := struct {
 		StorageDetails localStorageDetails `json:"storage"`
 	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
+
+	if err := json.Unmarshal(b, &v); err != nil {
 		return err
 	}
 
