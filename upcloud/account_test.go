@@ -64,7 +64,6 @@ func TestMarshalAccount(t *testing.T) {
 	`
 
 	actualJSON, err := json.Marshal(&request)
-	println(string(actualJSON))
 	assert.NoError(t, err)
 	assert.JSONEq(t, expectedJSON, string(actualJSON))
 }
