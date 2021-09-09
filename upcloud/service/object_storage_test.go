@@ -11,6 +11,7 @@ import (
 
 // TestGetObjectStorages tests that the GetObjectStorages() function returns proper data.
 func TestGetObjectStorages(t *testing.T) {
+	//nolint:thelper // false positive, the function is not a helper
 	record(t, "getobjectstorages", func(t *testing.T, svc *Service) {
 		objectStorages, err := svc.GetObjectStorages()
 		require.NoError(t, err)
@@ -29,6 +30,7 @@ func TestGetObjectStorages(t *testing.T) {
 
 // TestGetObjectStorageDetails ensures that the GetObjectStorageDetails() function returns proper data.
 func TestGetObjectStorageDetails(t *testing.T) {
+	//nolint:thelper // false positive, the function is not a helper
 	record(t, "getobjectstoragedetails", func(t *testing.T, svc *Service) {
 		d, err := createObjectStorage(svc, "getobjectstoragedetails", "App object storage", "fi-hel2", 500)
 		require.NoError(t, err)

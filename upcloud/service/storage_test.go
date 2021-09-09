@@ -24,6 +24,7 @@ import (
 func TestCreateModifyDeleteStorage(t *testing.T) {
 	t.Parallel()
 
+	//nolint:thelper // false positive, the function is not a helper
 	record(t, "createmodifydeletestorage", func(t *testing.T, svc *Service) {
 		// Create some storage
 		storageDetails, err := createStorage(svc)
@@ -62,6 +63,7 @@ func TestCreateModifyDeleteStorage(t *testing.T) {
 func TestAttachDetachStorage(t *testing.T) {
 	t.Parallel()
 
+	//nolint:thelper // false positive, the function is not a helper
 	record(t, "attachdetachstorage", func(t *testing.T, svc *Service) {
 		// Create a server
 		serverDetails, err := createServer(svc, "TestAttachDetachStorage")
@@ -111,6 +113,7 @@ func TestAttachDetachStorage(t *testing.T) {
 func TestCloneStorage(t *testing.T) {
 	t.Parallel()
 
+	//nolint:thelper // false positive, the function is not a helper
 	record(t, "clonestorage", func(t *testing.T, svc *Service) {
 		// Create storage
 		storageDetails, err := createStorage(svc)
@@ -142,6 +145,7 @@ func TestCloneStorage(t *testing.T) {
 func TestTemplatizeServerStorage(t *testing.T) {
 	t.Parallel()
 
+	//nolint:thelper // false positive, the function is not a helper
 	record(t, "templatizeserverstorage", func(t *testing.T, svc *Service) {
 		// Create server
 		serverDetails, err := createServer(svc, "TestTemplatizeServerStorage")
@@ -186,6 +190,7 @@ func TestTemplatizeServerStorage(t *testing.T) {
 func TestLoadEjectCDROM(t *testing.T) {
 	t.Parallel()
 
+	//nolint:thelper // false positive, the function is not a helper
 	record(t, "loadejectcdrom", func(t *testing.T, svc *Service) {
 		// Create the server
 		serverDetails, err := createServer(svc, "TestLoadEjectCDROM")
@@ -236,6 +241,7 @@ func TestLoadEjectCDROM(t *testing.T) {
 func TestCreateRestoreBackup(t *testing.T) {
 	t.Parallel()
 
+	//nolint:thelper // false positive, the function is not a helper
 	record(t, "createrestorebackup", func(t *testing.T, svc *Service) {
 		// Create the storage
 		storageDetails, err := createStorage(svc)
@@ -291,6 +297,7 @@ func TestCreateRestoreBackup(t *testing.T) {
 }
 
 func TestStorageImport(t *testing.T) {
+	//nolint:thelper // false positive, the function is not a helper
 	record(t, "storageimport", func(t *testing.T, svc *Service) {
 		storage, err := svc.CreateStorage(&request.CreateStorageRequest{
 			Size:  10,
@@ -320,6 +327,7 @@ func TestStorageImport(t *testing.T) {
 }
 
 func TestDirectUploadStorageImport(t *testing.T) {
+	//nolint:thelper // false positive, the function is not a helper
 	record(t, "directuploadstorageimport", func(t *testing.T, svc *Service) {
 		storage, err := svc.CreateStorage(&request.CreateStorageRequest{
 			Size:  10,

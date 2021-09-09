@@ -15,6 +15,7 @@ import (
 //   - Modifies a host
 //   - Modifies the host back
 func TestGetModifyHosts(t *testing.T) {
+	//nolint:thelper // false positive, the function is not a helper
 	record(t, "getmodifyhosts", func(t *testing.T, svc *Service) {
 		hosts, err := svc.GetHosts()
 		require.NoError(t, err)
