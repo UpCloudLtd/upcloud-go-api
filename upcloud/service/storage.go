@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -346,7 +347,7 @@ func (s *Service) directStorageImport(r *request.CreateStorageImportRequest) (*u
 		return nil, errors.New("no DirectUploadURL found in response")
 	}
 
-	req, err := http.NewRequest(http.MethodPut, storageImport.DirectUploadURL, bodyReader)
+	req, err := http.NewRequestWithContext(context.TODO(), http.MethodPut, storageImport.DirectUploadURL, bodyReader)
 	if err != nil {
 		return nil, err
 	}

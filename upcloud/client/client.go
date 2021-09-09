@@ -2,6 +2,7 @@ package client
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -71,7 +72,7 @@ func (c *Client) CreateRequestURL(location string) string {
 
 // PerformJSONGetRequest performs a GET request to the specified URL and returns the response body and eventual errors.
 func (c *Client) PerformJSONGetRequest(url string) ([]byte, error) {
-	request, err := http.NewRequest(http.MethodGet, url, nil)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, url, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +88,7 @@ func (c *Client) PerformJSONPostRequest(url string, requestBody []byte) ([]byte,
 		bodyReader = bytes.NewBuffer(requestBody)
 	}
 
-	request, err := http.NewRequest(http.MethodPost, url, bodyReader)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPost, url, bodyReader)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +104,7 @@ func (c *Client) PerformJSONPutRequest(url string, requestBody []byte) ([]byte, 
 		bodyReader = bytes.NewBuffer(requestBody)
 	}
 
-	request, err := http.NewRequest(http.MethodPut, url, bodyReader)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPut, url, bodyReader)
 	if err != nil {
 		return nil, err
 	}
@@ -119,7 +120,7 @@ func (c *Client) PerformJSONPatchRequest(url string, requestBody []byte) ([]byte
 		bodyReader = bytes.NewBuffer(requestBody)
 	}
 
-	request, err := http.NewRequest(http.MethodPatch, url, bodyReader)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPatch, url, bodyReader)
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +130,7 @@ func (c *Client) PerformJSONPatchRequest(url string, requestBody []byte) ([]byte
 
 // PerformJSONDeleteRequest performs a DELETE request to the specified URL and returns the response body and eventual errors.
 func (c *Client) PerformJSONDeleteRequest(url string) error {
-	request, err := http.NewRequest(http.MethodDelete, url, nil)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodDelete, url, nil)
 	if err != nil {
 		return err
 	}
@@ -141,7 +142,7 @@ func (c *Client) PerformJSONDeleteRequest(url string) error {
 // PerformJSONPutUploadRequest performs a PUT request to the specified URL with an io.Reader
 // and returns the response body and eventual errors.
 func (c *Client) PerformJSONPutUploadRequest(url string, requestBody io.Reader) ([]byte, error) {
-	request, err := http.NewRequest(http.MethodPut, url, requestBody)
+	request, err := http.NewRequestWithContext(context.TODO(), http.MethodPut, url, requestBody)
 	if err != nil {
 		return nil, err
 	}
