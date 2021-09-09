@@ -1,15 +1,17 @@
-package request
+package request_test
 
 import (
 	"encoding/json"
 	"testing"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
 
 	"github.com/stretchr/testify/assert"
 )
 
 // TestMarshalGetHostDetailsRequest tests that GetHostDetailsRequest behaves correctly.
 func TestMarshalGetHostDetailsRequest(t *testing.T) {
-	request := GetHostDetailsRequest{
+	request := request.GetHostDetailsRequest{
 		ID: 1234,
 	}
 
@@ -18,7 +20,7 @@ func TestMarshalGetHostDetailsRequest(t *testing.T) {
 
 // TestMarshalModifyHostRequest tests that ModifyHostRequest behaves correctly.
 func TestMarshalModifyHostRequest(t *testing.T) {
-	request := ModifyHostRequest{
+	request := request.ModifyHostRequest{
 		ID:          1234,
 		Description: "My New Host",
 	}

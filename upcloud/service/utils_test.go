@@ -1,4 +1,4 @@
-package service
+package service_test
 
 import (
 	"log"
@@ -7,6 +7,8 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud/service"
 
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud/client"
@@ -18,17 +20,17 @@ import (
 )
 
 // Configures the test environment.
-func getService() *Service {
+func getService() *service.Service {
 	user, password := getCredentials()
 
 	c := client.New(user, password)
 	c.SetTimeout(time.Second * 300)
 
-	return New(c)
+	return service.New(c)
 }
 
 // records the API interactions of the test.
-func record(t *testing.T, fixture string, f func(*testing.T, *Service)) {
+func record(t *testing.T, fixture string, f func(*testing.T, *service.Service)) {
 	t.Helper()
 	if testing.Short() {
 		t.Skip("Skipping recorded test in short mode")
@@ -59,7 +61,7 @@ func record(t *testing.T, fixture string, f func(*testing.T, *Service)) {
 	c := client.NewWithHTTPClient(user, password, httpClient)
 	c.SetTimeout(time.Second * 300)
 
-	f(t, New(c))
+	f(t, service.New(c))
 }
 
 // Tears down the test environment by removing all resources.
@@ -166,11 +168,11 @@ func teardown() {
 }
 
 // Creates a server and returns the details about it, panic if creation fails.
-func createServer(svc *Service, name string) (*upcloud.ServerDetails, error) {
+func createServer(svc *service.Service, name string) (*upcloud.ServerDetails, error) {
 	return createServerWithNetwork(svc, name, "")
 }
 
-func createServerWithNetwork(svc *Service, name string, network string) (*upcloud.ServerDetails, error) {
+func createServerWithNetwork(svc *service.Service, name string, network string) (*upcloud.ServerDetails, error) {
 	title := "uploud-go-sdk-integration-test-" + name
 	hostname := strings.ToLower(title + ".example.com")
 
@@ -251,7 +253,7 @@ func createServerWithNetwork(svc *Service, name string, network string) (*upclou
 }
 
 // Stops the specified server (forcibly).
-func stopServer(svc *Service, uuid string) error {
+func stopServer(svc *service.Service, uuid string) error {
 	serverDetails, err := svc.StopServer(&request.StopServerRequest{
 		UUID:     uuid,
 		Timeout:  time.Minute * 15,
@@ -274,7 +276,7 @@ func stopServer(svc *Service, uuid string) error {
 }
 
 // Deletes the specified server.
-func deleteServer(svc *Service, uuid string) error {
+func deleteServer(svc *service.Service, uuid string) error {
 	err := svc.DeleteServer(&request.DeleteServerRequest{
 		UUID: uuid,
 	})
@@ -283,7 +285,7 @@ func deleteServer(svc *Service, uuid string) error {
 }
 
 // Deletes the specified server and storages.
-func deleteServerAndStorages(svc *Service, uuid string) error {
+func deleteServerAndStorages(svc *service.Service, uuid string) error {
 	err := svc.DeleteServerAndStorages(&request.DeleteServerAndStoragesRequest{
 		UUID: uuid,
 	})
@@ -292,7 +294,7 @@ func deleteServerAndStorages(svc *Service, uuid string) error {
 }
 
 // Creates a piece of storage and returns the details about it, panic if creation fails.
-func createStorage(svc *Service) (*upcloud.StorageDetails, error) {
+func createStorage(svc *service.Service) (*upcloud.StorageDetails, error) {
 	createStorageRequest := request.CreateStorageRequest{
 		Tier:  upcloud.StorageTierMaxIOPS,
 		Title: "Test storage",
@@ -314,7 +316,7 @@ func createStorage(svc *Service) (*upcloud.StorageDetails, error) {
 }
 
 // Deletes the specified storage.
-func deleteStorage(svc *Service, uuid string) error {
+func deleteStorage(svc *service.Service, uuid string) error {
 	err := svc.DeleteStorage(&request.DeleteStorageRequest{
 		UUID: uuid,
 	})
@@ -323,7 +325,7 @@ func deleteStorage(svc *Service, uuid string) error {
 }
 
 // deleteAllTags deletes all existing tags.
-func deleteAllTags(svc *Service) error {
+func deleteAllTags(svc *service.Service) error {
 	tags, err := svc.GetTags()
 	if err != nil {
 		return err
@@ -343,7 +345,7 @@ func deleteAllTags(svc *Service) error {
 }
 
 // Waits for the specified storage to come online.
-func waitForStorageOnline(svc *Service, uuid string) error {
+func waitForStorageOnline(svc *service.Service, uuid string) error {
 	_, err := svc.WaitForStorageState(&request.WaitForStorageStateRequest{
 		UUID:         uuid,
 		DesiredState: upcloud.StorageStateOnline,
@@ -354,7 +356,7 @@ func waitForStorageOnline(svc *Service, uuid string) error {
 }
 
 // Creates an Object Storage and returns the details about it, panic if creation fails.
-func createObjectStorage(svc *Service, name string, description string, zone string, size int) (*upcloud.ObjectStorageDetails, error) {
+func createObjectStorage(svc *service.Service, name string, description string, zone string, size int) (*upcloud.ObjectStorageDetails, error) {
 	createObjectStorageRequest := request.CreateObjectStorageRequest{
 		Name:        "go-test-" + name,
 		Description: description,
@@ -374,7 +376,7 @@ func createObjectStorage(svc *Service, name string, description string, zone str
 }
 
 // Deletes the specific Object Storage.
-func deleteObjectStorage(svc *Service, uuid string) error {
+func deleteObjectStorage(svc *service.Service, uuid string) error {
 	err := svc.DeleteObjectStorage(&request.DeleteObjectStorageRequest{
 		UUID: uuid,
 	})

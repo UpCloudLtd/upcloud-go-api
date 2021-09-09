@@ -1,4 +1,4 @@
-package service
+package service_test
 
 import (
 	"crypto/sha256"
@@ -9,6 +9,8 @@ import (
 	"path"
 	"testing"
 	"time"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud/service"
 
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
@@ -25,7 +27,7 @@ func TestCreateModifyDeleteStorage(t *testing.T) {
 	t.Parallel()
 
 	//nolint:thelper // false positive, the function is not a helper
-	record(t, "createmodifydeletestorage", func(t *testing.T, svc *Service) {
+	record(t, "createmodifydeletestorage", func(t *testing.T, svc *service.Service) {
 		// Create some storage
 		storageDetails, err := createStorage(svc)
 		require.NoError(t, err)
@@ -64,7 +66,7 @@ func TestAttachDetachStorage(t *testing.T) {
 	t.Parallel()
 
 	//nolint:thelper // false positive, the function is not a helper
-	record(t, "attachdetachstorage", func(t *testing.T, svc *Service) {
+	record(t, "attachdetachstorage", func(t *testing.T, svc *service.Service) {
 		// Create a server
 		serverDetails, err := createServer(svc, "TestAttachDetachStorage")
 		require.NoError(t, err)
@@ -114,7 +116,7 @@ func TestCloneStorage(t *testing.T) {
 	t.Parallel()
 
 	//nolint:thelper // false positive, the function is not a helper
-	record(t, "clonestorage", func(t *testing.T, svc *Service) {
+	record(t, "clonestorage", func(t *testing.T, svc *service.Service) {
 		// Create storage
 		storageDetails, err := createStorage(svc)
 		require.NoError(t, err)
@@ -146,7 +148,7 @@ func TestTemplatizeServerStorage(t *testing.T) {
 	t.Parallel()
 
 	//nolint:thelper // false positive, the function is not a helper
-	record(t, "templatizeserverstorage", func(t *testing.T, svc *Service) {
+	record(t, "templatizeserverstorage", func(t *testing.T, svc *service.Service) {
 		// Create server
 		serverDetails, err := createServer(svc, "TestTemplatizeServerStorage")
 		require.NoError(t, err)
@@ -191,7 +193,7 @@ func TestLoadEjectCDROM(t *testing.T) {
 	t.Parallel()
 
 	//nolint:thelper // false positive, the function is not a helper
-	record(t, "loadejectcdrom", func(t *testing.T, svc *Service) {
+	record(t, "loadejectcdrom", func(t *testing.T, svc *service.Service) {
 		// Create the server
 		serverDetails, err := createServer(svc, "TestLoadEjectCDROM")
 		require.NoError(t, err)
@@ -242,7 +244,7 @@ func TestCreateRestoreBackup(t *testing.T) {
 	t.Parallel()
 
 	//nolint:thelper // false positive, the function is not a helper
-	record(t, "createrestorebackup", func(t *testing.T, svc *Service) {
+	record(t, "createrestorebackup", func(t *testing.T, svc *service.Service) {
 		// Create the storage
 		storageDetails, err := createStorage(svc)
 		require.NoError(t, err)
@@ -298,7 +300,7 @@ func TestCreateRestoreBackup(t *testing.T) {
 
 func TestStorageImport(t *testing.T) {
 	//nolint:thelper // false positive, the function is not a helper
-	record(t, "storageimport", func(t *testing.T, svc *Service) {
+	record(t, "storageimport", func(t *testing.T, svc *service.Service) {
 		storage, err := svc.CreateStorage(&request.CreateStorageRequest{
 			Size:  10,
 			Tier:  upcloud.StorageTierMaxIOPS,
@@ -328,7 +330,7 @@ func TestStorageImport(t *testing.T) {
 
 func TestDirectUploadStorageImport(t *testing.T) {
 	//nolint:thelper // false positive, the function is not a helper
-	record(t, "directuploadstorageimport", func(t *testing.T, svc *Service) {
+	record(t, "directuploadstorageimport", func(t *testing.T, svc *service.Service) {
 		storage, err := svc.CreateStorage(&request.CreateStorageRequest{
 			Size:  10,
 			Tier:  upcloud.StorageTierMaxIOPS,

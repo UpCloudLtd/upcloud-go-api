@@ -1,8 +1,10 @@
-package upcloud
+package upcloud_test
 
 import (
 	"encoding/json"
 	"testing"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -34,7 +36,7 @@ func TestUnmarshalZones(t *testing.T) {
   }
 `
 
-	zones := Zones{}
+	zones := upcloud.Zones{}
 	err := json.Unmarshal([]byte(originalJSON), &zones)
 
 	assert.Nil(t, err)

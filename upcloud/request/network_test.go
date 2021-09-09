@@ -1,8 +1,10 @@
-package request
+package request_test
 
 import (
 	"encoding/json"
 	"testing"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
 
 	"github.com/stretchr/testify/assert"
 
@@ -11,7 +13,7 @@ import (
 
 // TestMarshalGetNetworksInZoneRequest tests that GetNetworksInZoneRequest behaves correctly.
 func TestMarshalGetNetworksInZoneRequest(t *testing.T) {
-	request := GetNetworksInZoneRequest{
+	request := request.GetNetworksInZoneRequest{
 		Zone: "foo",
 	}
 
@@ -20,7 +22,7 @@ func TestMarshalGetNetworksInZoneRequest(t *testing.T) {
 
 // TestMarshalGetNetworkDetailsRequest tests that GetNetworkDetailsRequest behaves correctly.
 func TestMarshalGetNetworkDetailsRequest(t *testing.T) {
-	request := GetNetworkDetailsRequest{
+	request := request.GetNetworkDetailsRequest{
 		UUID: "foo",
 	}
 
@@ -29,7 +31,7 @@ func TestMarshalGetNetworkDetailsRequest(t *testing.T) {
 
 // TestMarshalCreateNetworkRequest tests that CreateNetworkRequest behaves correctly.
 func TestMarshalCreateNetworkRequest(t *testing.T) {
-	request := CreateNetworkRequest{
+	request := request.CreateNetworkRequest{
 		Name:   "Test private net",
 		Zone:   "uk-lon1",
 		Router: "04c0df35-2658-4b0c-8ac7-962090f4e92a",
@@ -81,7 +83,7 @@ func TestMarshalCreateNetworkRequest(t *testing.T) {
 
 // TestMarshalModifyNetworkRequest tests that ModifyNetworkRequest behaves correctly.
 func TestMarshalModifyNetworkRequest(t *testing.T) {
-	request := ModifyNetworkRequest{
+	request := request.ModifyNetworkRequest{
 		UUID: "foo",
 
 		Name: "My private network",
@@ -118,7 +120,7 @@ func TestMarshalModifyNetworkRequest(t *testing.T) {
 
 // TestMarshalDeleteNetwork tests the DeleteNetworkRequest behaves correctly.
 func TestMarshalDeleteNetwork(t *testing.T) {
-	request := DeleteNetworkRequest{
+	request := request.DeleteNetworkRequest{
 		UUID: "foo",
 	}
 
@@ -127,7 +129,7 @@ func TestMarshalDeleteNetwork(t *testing.T) {
 
 // TestMarshalAttachNetworkRouterRequest tests that AttachNetworkRouterRequest behaves correctly.
 func TestMarshalAttachNetworkRouterRequest(t *testing.T) {
-	request := AttachNetworkRouterRequest{
+	request := request.AttachNetworkRouterRequest{
 		NetworkUUID: "mocknetworkuuid",
 		RouterUUID:  "mockrouteruuid",
 	}
@@ -148,7 +150,7 @@ func TestMarshalAttachNetworkRouterRequest(t *testing.T) {
 
 // TestMarshalDetachNetworkRouterRequest tests that DetachNetworkRouterRequest behaves correctly.
 func TestMarshalDetachNetworkRouterRequest(t *testing.T) {
-	request := DetachNetworkRouterRequest{
+	request := request.DetachNetworkRouterRequest{
 		NetworkUUID: "mocknetworkuuid",
 	}
 
@@ -168,7 +170,7 @@ func TestMarshalDetachNetworkRouterRequest(t *testing.T) {
 
 // TestMarshalGetServerNetworksRequest tests the GetServerNetworksRequest behaves correctly.
 func TestMarshalGetServerNetworksRequest(t *testing.T) {
-	request := GetServerNetworksRequest{
+	request := request.GetServerNetworksRequest{
 		ServerUUID: "foo",
 	}
 
@@ -177,12 +179,12 @@ func TestMarshalGetServerNetworksRequest(t *testing.T) {
 
 // TestMarshalCreateNetworkInterfaceRequest tests that CreateNetworkInterfaceRequest behaves correctly.
 func TestMarshalCreateNetworkInterfaceRequest(t *testing.T) {
-	request := CreateNetworkInterfaceRequest{
+	request := request.CreateNetworkInterfaceRequest{
 		ServerUUID:        "foo",
 		Type:              upcloud.IPAddressAccessPrivate,
 		NetworkUUID:       "0374ce47-4303-4490-987d-32dc96cfd79b",
 		SourceIPFiltering: upcloud.True,
-		IPAddresses: []CreateNetworkInterfaceIPAddress{
+		IPAddresses: []request.CreateNetworkInterfaceIPAddress{
 			{
 				Address: "10.0.0.20",
 				Family:  upcloud.IPAddressFamilyIPv4,
@@ -216,7 +218,7 @@ func TestMarshalCreateNetworkInterfaceRequest(t *testing.T) {
 
 // TestMarshalDeleteNetworkInterfaceRequest tests that DeleteNetworkInterfaceRequest behaves correctly.
 func TestMarshalDeleteNetworkInterfaceRequest(t *testing.T) {
-	request := DeleteNetworkInterfaceRequest{
+	request := request.DeleteNetworkInterfaceRequest{
 		ServerUUID: "foo",
 		Index:      1,
 	}
@@ -226,7 +228,7 @@ func TestMarshalDeleteNetworkInterfaceRequest(t *testing.T) {
 
 // TestMarshalModifyNetworkInterfaceRequest tests that ModifyNetworkInterfaceRequest behaves correctly.
 func TestMarshalModifyNetworkInterfaceRequest(t *testing.T) {
-	request := ModifyNetworkInterfaceRequest{
+	request := request.ModifyNetworkInterfaceRequest{
 		ServerUUID:   "foo",
 		CurrentIndex: 99,
 		NewIndex:     101,
@@ -234,7 +236,7 @@ func TestMarshalModifyNetworkInterfaceRequest(t *testing.T) {
 		Type:              upcloud.IPAddressAccessPrivate,
 		NetworkUUID:       "0374ce47-4303-4490-987d-32dc96cfd79b",
 		SourceIPFiltering: upcloud.True,
-		IPAddresses: []CreateNetworkInterfaceIPAddress{
+		IPAddresses: []request.CreateNetworkInterfaceIPAddress{
 			{
 				Address: "10.0.0.20",
 				Family:  upcloud.IPAddressFamilyIPv4,
@@ -270,7 +272,7 @@ func TestMarshalModifyNetworkInterfaceRequest(t *testing.T) {
 
 // TestMarshalGetRouterDetailsRequest tests that GetRouterDetailsRequest behaves correctly.
 func TestMarshalGetRouterDetailsRequest(t *testing.T) {
-	request := GetRouterDetailsRequest{
+	request := request.GetRouterDetailsRequest{
 		UUID: "foo",
 	}
 
@@ -279,7 +281,7 @@ func TestMarshalGetRouterDetailsRequest(t *testing.T) {
 
 // TestMarshalCreateRouterRequest tests that CreateRouterRequest behaves correctly.
 func TestMarshalCreateRouterRequest(t *testing.T) {
-	request := CreateRouterRequest{
+	request := request.CreateRouterRequest{
 		Name: "Example router",
 	}
 
@@ -301,7 +303,7 @@ func TestMarshalCreateRouterRequest(t *testing.T) {
 
 // TestMarshalModifyRouterRequest tests that ModifyRouterRequest behaves correctly.
 func TestMarshalModifyRouterRequest(t *testing.T) {
-	request := ModifyRouterRequest{
+	request := request.ModifyRouterRequest{
 		Name: "Modified router",
 		UUID: "foo",
 	}

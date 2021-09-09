@@ -1,8 +1,10 @@
-package upcloud
+package upcloud_test
 
 import (
 	"encoding/json"
 	"testing"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -73,31 +75,31 @@ func TestUnmarshalNetworks(t *testing.T) {
 	  }
 	`
 
-	var networks Networks
+	var networks upcloud.Networks
 	err := json.Unmarshal([]byte(originalJSON), &networks)
 	assert.NoError(t, err)
 	assert.Len(t, networks.Networks, 2)
 
-	testNetworks := []Network{
+	testNetworks := []upcloud.Network{
 		{
-			IPNetworks: []IPNetwork{
+			IPNetworks: []upcloud.IPNetwork{
 				{
 					Address:          "80.69.172.0/22",
-					DHCP:             True,
-					DHCPDefaultRoute: True,
+					DHCP:             upcloud.True,
+					DHCPDefaultRoute: upcloud.True,
 					DHCPDns: []string{
 						"94.237.127.9",
 						"94.237.40.9",
 					},
-					Family:  IPAddressFamilyIPv4,
+					Family:  upcloud.IPAddressFamilyIPv4,
 					Gateway: "80.69.172.1",
 				},
 			},
 			Name: "Public 80.69.172.0/22",
-			Type: NetworkTypePublic,
+			Type: upcloud.NetworkTypePublic,
 			UUID: "03000000-0000-4000-8001-000000000000",
 			Zone: "fi-hel1",
-			Servers: []NetworkServer{
+			Servers: []upcloud.NetworkServer{
 				{
 					ServerUUID:  "007e3200-268f-4848-8b45-bd88c44555d2",
 					ServerTitle: "Helsinki server #1",
@@ -109,24 +111,24 @@ func TestUnmarshalNetworks(t *testing.T) {
 			},
 		},
 		{
-			IPNetworks: []IPNetwork{
+			IPNetworks: []upcloud.IPNetwork{
 				{
 					Address:          "80.69.173.0/22",
-					DHCP:             False,
-					DHCPDefaultRoute: False,
+					DHCP:             upcloud.False,
+					DHCPDefaultRoute: upcloud.False,
 					DHCPDns: []string{
 						"94.237.17.9",
 						"94.237.4.9",
 					},
-					Family:  IPAddressFamilyIPv6,
+					Family:  upcloud.IPAddressFamilyIPv6,
 					Gateway: "80.6.172.1",
 				},
 			},
 			Name: "Public 80.69.173.0/22",
-			Type: NetworkTypeUtility,
+			Type: upcloud.NetworkTypeUtility,
 			UUID: "03000011-0000-4000-8001-000000000000",
 			Zone: "fi-hel2",
-			Servers: []NetworkServer{
+			Servers: []upcloud.NetworkServer{
 				{
 					ServerUUID:  "008e3200-268f-4848-8b45-bd88c44555d2",
 					ServerTitle: "Helsinki server #1",
@@ -180,30 +182,30 @@ func TestUnmarshalNetwork(t *testing.T) {
 	  }
 	`
 
-	var network Network
+	var network upcloud.Network
 	err := json.Unmarshal([]byte(originalJSON), &network)
 	assert.NoError(t, err)
 
-	testNetwork := Network{
+	testNetwork := upcloud.Network{
 		Name:   "Test private net",
-		Type:   NetworkTypePrivate,
+		Type:   upcloud.NetworkTypePrivate,
 		UUID:   "034c12bc-cf15-4b19-97b2-0ab4e51bb98d",
 		Zone:   "uk-lon1",
 		Router: "04c0df35-2658-4b0c-8ac7-962090f4e92a",
-		IPNetworks: []IPNetwork{
+		IPNetworks: []upcloud.IPNetwork{
 			{
 				Address:          "172.16.0.0/22",
-				DHCP:             True,
-				DHCPDefaultRoute: False,
+				DHCP:             upcloud.True,
+				DHCPDefaultRoute: upcloud.False,
 				DHCPDns: []string{
 					"172.16.0.10",
 					"172.16.1.10",
 				},
-				Family:  IPAddressFamilyIPv4,
+				Family:  upcloud.IPAddressFamilyIPv4,
 				Gateway: "172.16.0.1",
 			},
 		},
-		Servers: []NetworkServer{
+		Servers: []upcloud.NetworkServer{
 			{
 				ServerUUID:  "009d64ef-31d1-4684-a26b-c86c955cbf46",
 				ServerTitle: "London server #1",
@@ -280,53 +282,53 @@ func TestUnmarshalServerNetworks(t *testing.T) {
 	  }
 	`
 
-	var networking Networking
+	var networking upcloud.Networking
 	err := json.Unmarshal([]byte(originalJSON), &networking)
 	assert.NoError(t, err)
 
-	testNetworking := Networking{
-		Interfaces: []ServerInterface{
+	testNetworking := upcloud.Networking{
+		Interfaces: []upcloud.ServerInterface{
 			{
 				Index: 2,
-				IPAddresses: []IPAddress{
+				IPAddresses: []upcloud.IPAddress{
 					{
 						Address: "94.237.0.207",
-						Family:  IPAddressFamilyIPv4,
+						Family:  upcloud.IPAddressFamilyIPv4,
 					},
 				},
 				MAC:               "de:ff:ff:ff:66:89",
 				Network:           "037fcf2a-6745-45dd-867e-f9479ea8c044",
-				SourceIPFiltering: True,
-				Type:              NetworkTypePublic,
-				Bootable:          False,
+				SourceIPFiltering: upcloud.True,
+				Type:              upcloud.NetworkTypePublic,
+				Bootable:          upcloud.False,
 			},
 			{
 				Index: 3,
-				IPAddresses: []IPAddress{
+				IPAddresses: []upcloud.IPAddress{
 					{
 						Address: "10.199.3.15",
-						Family:  IPAddressFamilyIPv4,
+						Family:  upcloud.IPAddressFamilyIPv4,
 					},
 				},
 				MAC:               "de:ff:ff:ff:ed:85",
 				Network:           "03c93fd8-cc60-4849-91b8-6e404b228e2a",
-				SourceIPFiltering: True,
-				Type:              NetworkTypeUtility,
-				Bootable:          False,
+				SourceIPFiltering: upcloud.True,
+				Type:              upcloud.NetworkTypeUtility,
+				Bootable:          upcloud.False,
 			},
 			{
 				Index: 4,
-				IPAddresses: []IPAddress{
+				IPAddresses: []upcloud.IPAddress{
 					{
 						Address: "10.0.0.20",
-						Family:  IPAddressFamilyIPv4,
+						Family:  upcloud.IPAddressFamilyIPv4,
 					},
 				},
 				MAC:               "de:ff:ff:ff:cc:20",
 				Network:           "0374ce47-4303-4490-987d-32dc96cfd79b",
-				SourceIPFiltering: True,
-				Type:              NetworkTypePrivate,
-				Bootable:          False,
+				SourceIPFiltering: upcloud.True,
+				Type:              upcloud.NetworkTypePrivate,
+				Bootable:          upcloud.False,
 			},
 		},
 	}
@@ -359,24 +361,24 @@ func TestUnmarshalInterface(t *testing.T) {
 	  }
 	`
 
-	var iface Interface
+	var iface upcloud.Interface
 	err := json.Unmarshal([]byte(originalJSON), &iface)
 	assert.NoError(t, err)
 
-	testIface := Interface{
+	testIface := upcloud.Interface{
 		Index: 4,
-		IPAddresses: []IPAddress{
+		IPAddresses: []upcloud.IPAddress{
 			{
 				Address:  "10.0.0.20",
-				Family:   IPAddressFamilyIPv4,
-				Floating: False,
+				Family:   upcloud.IPAddressFamilyIPv4,
+				Floating: upcloud.False,
 			},
 		},
 		MAC:               "de:ff:ff:ff:86:cf",
 		Network:           "0374ce47-4303-4490-987d-32dc96cfd79b",
-		SourceIPFiltering: True,
-		Type:              NetworkTypePrivate,
-		Bootable:          False,
+		SourceIPFiltering: upcloud.True,
+		Type:              upcloud.NetworkTypePrivate,
+		Bootable:          upcloud.False,
 	}
 
 	assert.Equal(t, testIface, iface)
@@ -415,9 +417,9 @@ func TestUnmarshalRouters(t *testing.T) {
 	  }
 	`
 
-	testRouters := []Router{
+	testRouters := []upcloud.Router{
 		{
-			AttachedNetworks: []RouterNetwork{
+			AttachedNetworks: []upcloud.RouterNetwork{
 				{
 					NetworkUUID: "03206c92-50f2-40b0-ad05-5f02cab2e932",
 				},
@@ -437,7 +439,7 @@ func TestUnmarshalRouters(t *testing.T) {
 		},
 	}
 
-	routers := Routers{}
+	routers := upcloud.Routers{}
 	err := json.Unmarshal([]byte(originalJSON), &routers)
 	assert.NoError(t, err)
 
@@ -475,12 +477,12 @@ func TestUnmarshalRouter(t *testing.T) {
 	  }
 	`
 
-	var router Router
+	var router upcloud.Router
 	err := json.Unmarshal([]byte(originalJSON), &router)
 	assert.NoError(t, err)
 
-	testRouter := Router{
-		AttachedNetworks: []RouterNetwork{
+	testRouter := upcloud.Router{
+		AttachedNetworks: []upcloud.RouterNetwork{
 			{
 				NetworkUUID: "03206c92-50f2-40b0-ad05-5f02cab2e932",
 			},

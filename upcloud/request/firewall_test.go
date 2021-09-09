@@ -1,8 +1,10 @@
-package request
+package request_test
 
 import (
 	"encoding/json"
 	"testing"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
 
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 	"github.com/stretchr/testify/assert"
@@ -10,7 +12,7 @@ import (
 
 // TestGetFirewallRulesRequest tests that GetFirewallRulesRequest behaves correctly.
 func TestGetFirewallRulesRequest(t *testing.T) {
-	request := GetFirewallRulesRequest{
+	request := request.GetFirewallRulesRequest{
 		ServerUUID: "00798b85-efdc-41ca-8021-f6ef457b8531",
 	}
 
@@ -19,7 +21,7 @@ func TestGetFirewallRulesRequest(t *testing.T) {
 
 // TestGetFirewallRuleDetailsRequest tests that GetFirewallRuleDetailsRequest behaves correctly.
 func TestGetFirewallRuleDetailsRequest(t *testing.T) {
-	request := GetFirewallRuleDetailsRequest{
+	request := request.GetFirewallRuleDetailsRequest{
 		ServerUUID: "00798b85-efdc-41ca-8021-f6ef457b8531",
 		Position:   1,
 	}
@@ -29,7 +31,7 @@ func TestGetFirewallRuleDetailsRequest(t *testing.T) {
 
 // TestCreateFirewallRuleRequest tests that CreateFirewallRuleRequest behaves correctly.
 func TestCreateFirewallRuleRequest(t *testing.T) {
-	request := CreateFirewallRuleRequest{
+	request := request.CreateFirewallRuleRequest{
 		ServerUUID: "00798b85-efdc-41ca-8021-f6ef457b8531",
 		FirewallRule: upcloud.FirewallRule{
 			Direction:            upcloud.FirewallRuleDirectionIn,
@@ -73,7 +75,7 @@ func TestCreateFirewallRuleRequest(t *testing.T) {
 
 // TestDeleteFirewallRuleRequest tests that DeleteFirewallRuleRequest behaves correctly.
 func TestDeleteFirewallRuleRequest(t *testing.T) {
-	request := DeleteFirewallRuleRequest{
+	request := request.DeleteFirewallRuleRequest{
 		ServerUUID: "00798b85-efdc-41ca-8021-f6ef457b8531",
 		Position:   1,
 	}
@@ -83,7 +85,7 @@ func TestDeleteFirewallRuleRequest(t *testing.T) {
 
 // TestCreateFirewallRulesRequest tests that CreateFirewallRulesRequest behaves correctly.
 func TestCreateFirewallRulesRequest(t *testing.T) {
-	request := CreateFirewallRulesRequest{
+	request := request.CreateFirewallRulesRequest{
 		ServerUUID: "foo",
 		FirewallRules: []upcloud.FirewallRule{
 			{

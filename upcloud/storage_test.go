@@ -1,9 +1,11 @@
-package upcloud
+package upcloud_test
 
 import (
 	"encoding/json"
 	"testing"
 	"time"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -53,43 +55,43 @@ func TestUnmarshalStorage(t *testing.T) {
   }
 }`
 
-	storages := Storages{}
+	storages := upcloud.Storages{}
 	err := json.Unmarshal([]byte(originalJSON), &storages)
 	assert.NoError(t, err)
 	assert.Len(t, storages.Storages, 3)
 
-	testData := []Storage{
+	testData := []upcloud.Storage{
 		{
-			Access:  StorageAccessPrivate,
+			Access:  upcloud.StorageAccessPrivate,
 			License: 0.0,
 			Size:    10,
-			State:   StorageStateOnline,
-			Tier:    StorageTierHDD,
+			State:   upcloud.StorageStateOnline,
+			Tier:    upcloud.StorageTierHDD,
 			Title:   "Operating system disk",
-			Type:    StorageTypeNormal,
+			Type:    upcloud.StorageTypeNormal,
 			UUID:    "01eff7ad-168e-413e-83b0-054f6a28fa23",
 			Zone:    "uk-lon1",
 		},
 		{
-			Access:  StorageAccessPrivate,
+			Access:  upcloud.StorageAccessPrivate,
 			License: 0.0,
 			Origin:  "01eff7ad-168e-413e-83b0-054f6a28fa23",
 			Size:    10,
-			State:   StorageStateOnline,
+			State:   upcloud.StorageStateOnline,
 			Title:   "On demand backup",
-			Type:    StorageTypeBackup,
+			Type:    upcloud.StorageTypeBackup,
 			UUID:    "01287ad1-496c-4b5f-bb67-0fc2e3494740",
 			Zone:    "uk-lon1",
 		},
 		{
-			Access:     StorageAccessPrivate,
+			Access:     upcloud.StorageAccessPrivate,
 			License:    0.0,
 			PartOfPlan: "yes",
 			Size:       50,
-			State:      StorageStateOnline,
-			Tier:       StorageTierMaxIOPS,
+			State:      upcloud.StorageStateOnline,
+			Tier:       upcloud.StorageTierMaxIOPS,
 			Title:      "Databases",
-			Type:       StorageTypeNormal,
+			Type:       upcloud.StorageTypeNormal,
 			UUID:       "01f3286c-a5ea-4670-8121-d0b9767d625b",
 			Zone:       "fi-hel1",
 		},
@@ -144,21 +146,21 @@ func TestUnmarshalStorageDetails(t *testing.T) {
 	  }
 	`
 
-	storageDeviceDetails := StorageDetails{}
+	storageDeviceDetails := upcloud.StorageDetails{}
 	err := json.Unmarshal([]byte(originalJSON), &storageDeviceDetails)
 	assert.NoError(t, err)
 
-	assert.Equal(t, StorageAccessPrivate, storageDeviceDetails.Access)
+	assert.Equal(t, upcloud.StorageAccessPrivate, storageDeviceDetails.Access)
 	assert.Equal(t, 0.0, storageDeviceDetails.License)
 	assert.Equal(t, 10, storageDeviceDetails.Size)
-	assert.Equal(t, StorageStateOnline, storageDeviceDetails.State)
-	assert.Equal(t, StorageTierMaxIOPS, storageDeviceDetails.Tier)
+	assert.Equal(t, upcloud.StorageStateOnline, storageDeviceDetails.State)
+	assert.Equal(t, upcloud.StorageTierMaxIOPS, storageDeviceDetails.Tier)
 	assert.Equal(t, "Operating system disk", storageDeviceDetails.Title)
-	assert.Equal(t, StorageTypeNormal, storageDeviceDetails.Type)
+	assert.Equal(t, upcloud.StorageTypeNormal, storageDeviceDetails.Type)
 	assert.Equal(t, "01d4fcd4-e446-433b-8a9c-551a1284952e", storageDeviceDetails.UUID)
 	assert.Equal(t, "fi-hel1", storageDeviceDetails.Zone)
 
-	assert.Equal(t, BackupRuleIntervalDaily, storageDeviceDetails.BackupRule.Interval)
+	assert.Equal(t, upcloud.BackupRuleIntervalDaily, storageDeviceDetails.BackupRule.Interval)
 	assert.Equal(t, 1, storageDeviceDetails.BackupRule.Retention)
 	assert.Equal(t, "0400", storageDeviceDetails.BackupRule.Time)
 
@@ -193,11 +195,11 @@ func TestUnmarshalStorageImport(t *testing.T) {
 	  }
 	`
 
-	storageImport := StorageImportDetails{}
+	storageImport := upcloud.StorageImportDetails{}
 	err := json.Unmarshal([]byte(originalJSON), &storageImport)
 	assert.NoError(t, err)
 
-	testStorageImport := StorageImportDetails{
+	testStorageImport := upcloud.StorageImportDetails{
 		ClientContentLength: 1,
 		ClientContentType:   "abc",
 		Completed:           time.Time{},
@@ -208,7 +210,7 @@ func TestUnmarshalStorageImport(t *testing.T) {
 		MD5Sum:              "mno",
 		ReadBytes:           2,
 		SHA256Sum:           "pqr",
-		Source:              StorageImportSourceDirectUpload,
+		Source:              upcloud.StorageImportSourceDirectUpload,
 		State:               "prepared",
 		UUID:                "07a6c9a3-300e-4d0e-b935-624f3dbdff3f",
 		WrittenBytes:        3,

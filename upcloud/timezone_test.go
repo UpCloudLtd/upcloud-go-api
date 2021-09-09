@@ -1,8 +1,10 @@
-package upcloud
+package upcloud_test
 
 import (
 	"encoding/json"
 	"testing"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -21,7 +23,7 @@ func TestUnmarshalTimeZones(t *testing.T) {
   }
 `
 
-	timeZones := TimeZones{}
+	timeZones := upcloud.TimeZones{}
 	err := json.Unmarshal([]byte(originalJSON), &timeZones)
 	assert.NoError(t, err)
 

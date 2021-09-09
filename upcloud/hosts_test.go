@@ -1,9 +1,11 @@
-package upcloud
+package upcloud_test
 
 import (
 	"encoding/json"
 	"testing"
 	"time"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -64,17 +66,17 @@ func TestUnmarshalHosts(t *testing.T) {
 	  }
 	`
 
-	var hosts Hosts
+	var hosts upcloud.Hosts
 	err := json.Unmarshal([]byte(originalJSON), &hosts)
 	assert.NoError(t, err)
 
-	testsHosts := []Host{
+	testsHosts := []upcloud.Host{
 		{
 			ID:             7653311107,
 			Description:    "My Host #1",
 			Zone:           "private-zone-id",
-			WindowsEnabled: False,
-			Stats: []Stat{
+			WindowsEnabled: upcloud.False,
+			Stats: []upcloud.Stat{
 				{
 					Name:      "cpu_idle",
 					Timestamp: timeParse("2019-08-09T12:46:57Z"),
@@ -91,8 +93,8 @@ func TestUnmarshalHosts(t *testing.T) {
 			ID:             8055964291,
 			Description:    "My Host #2",
 			Zone:           "private-zone-id",
-			WindowsEnabled: False,
-			Stats: []Stat{
+			WindowsEnabled: upcloud.False,
+			Stats: []upcloud.Stat{
 				{
 					Name:      "cpu_idle",
 					Timestamp: timeParse("2019-08-09T12:46:57Z"),
@@ -139,16 +141,16 @@ func TestUnmarshalHost(t *testing.T) {
 	  }
 	`
 
-	var host Host
+	var host upcloud.Host
 	err := json.Unmarshal([]byte(originalJSON), &host)
 	assert.NoError(t, err)
 
-	testHost := Host{
+	testHost := upcloud.Host{
 		ID:             7653311107,
 		Description:    "My Host #1",
 		Zone:           "private-zone-id",
-		WindowsEnabled: False,
-		Stats: []Stat{
+		WindowsEnabled: upcloud.False,
+		Stats: []upcloud.Stat{
 			{
 				Name:      "cpu_idle",
 				Timestamp: timeParse("2019-08-09T12:46:57Z"),

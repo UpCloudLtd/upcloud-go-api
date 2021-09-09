@@ -1,8 +1,10 @@
-package upcloud
+package upcloud_test
 
 import (
 	"encoding/json"
 	"testing"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -67,59 +69,59 @@ func TestUnmarshalIPAddresses(t *testing.T) {
 	  }
 	`
 
-	ipAddresses := IPAddresses{}
+	ipAddresses := upcloud.IPAddresses{}
 	err := json.Unmarshal([]byte(originalJSON), &ipAddresses)
 	assert.NoError(t, err)
 	assert.Len(t, ipAddresses.IPAddresses, 5)
 
-	testData := []IPAddress{
+	testData := []upcloud.IPAddress{
 		{
-			Access:     IPAddressAccessUtility,
+			Access:     upcloud.IPAddressAccessUtility,
 			Address:    "10.0.0.0",
-			Family:     IPAddressFamilyIPv4,
+			Family:     upcloud.IPAddressFamilyIPv4,
 			PTRRecord:  "",
 			ServerUUID: "0053cd80-5945-4105-9081-11192806a8f7",
-			Floating:   False,
+			Floating:   upcloud.False,
 			MAC:        "mm:mm:mm:mm:mm:m1",
 			Zone:       "fi-hel2",
 		},
 		{
-			Access:     IPAddressAccessUtility,
+			Access:     upcloud.IPAddressAccessUtility,
 			Address:    "10.0.0.1",
-			Family:     IPAddressFamilyIPv4,
+			Family:     upcloud.IPAddressFamilyIPv4,
 			PTRRecord:  "",
 			ServerUUID: "006b6701-55d2-4374-ac40-56cc1501037f",
-			Floating:   False,
+			Floating:   upcloud.False,
 			MAC:        "mm:mm:mm:mm:mm:m2",
 			Zone:       "de-fra1",
 		},
 		{
-			Access:     IPAddressAccessPublic,
+			Access:     upcloud.IPAddressAccessPublic,
 			Address:    "x.x.x.x",
-			Family:     IPAddressFamilyIPv4,
-			PartOfPlan: True,
+			Family:     upcloud.IPAddressFamilyIPv4,
+			PartOfPlan: upcloud.True,
 			PTRRecord:  "x-x-x-x.zone.upcloud.host",
 			ServerUUID: "0053cd80-5945-4105-9081-11192806a8f7",
-			Floating:   True,
+			Floating:   upcloud.True,
 			MAC:        "mm:mm:mm:mm:mm:m1",
 			Zone:       "de-fra1",
 		},
 		{
-			Access:     IPAddressAccessPublic,
+			Access:     upcloud.IPAddressAccessPublic,
 			Address:    "xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx",
-			Family:     IPAddressFamilyIPv6,
+			Family:     upcloud.IPAddressFamilyIPv6,
 			PTRRecord:  "xxxx-xxxx-xxxx-xxxx.v6.zone.upcloud.host",
 			ServerUUID: "006b6701-55d2-4374-ac40-56cc1501037f",
-			Floating:   False,
+			Floating:   upcloud.False,
 			MAC:        "mm:mm:mm:mm:mm:m3",
 			Zone:       "fi-hel1",
 		},
 		{
-			Access:    IPAddressAccessPublic,
+			Access:    upcloud.IPAddressAccessPublic,
 			Address:   "y.y.y.y",
-			Family:    IPAddressFamilyIPv4,
+			Family:    upcloud.IPAddressFamilyIPv4,
 			PTRRecord: "y.y.y.y.zone.host.upcloud.com",
-			Floating:  True,
+			Floating:  upcloud.True,
 			Zone:      "nl-ams1",
 		},
 	}
@@ -144,13 +146,13 @@ func TestUnmarshalIPAddress(t *testing.T) {
       }
     `
 
-	ipAddress := IPAddress{}
+	ipAddress := upcloud.IPAddress{}
 	err := json.Unmarshal([]byte(originalJSON), &ipAddress)
 	assert.NoError(t, err)
 
-	assert.Equal(t, IPAddressAccessPublic, ipAddress.Access)
+	assert.Equal(t, upcloud.IPAddressAccessPublic, ipAddress.Access)
 	assert.Equal(t, "94.237.104.58", ipAddress.Address)
-	assert.Equal(t, IPAddressFamilyIPv4, ipAddress.Family)
+	assert.Equal(t, upcloud.IPAddressFamilyIPv4, ipAddress.Family)
 	assert.Equal(t, "94-237-104-58.fi-hel2.upcloud.host", ipAddress.PTRRecord)
 	assert.Equal(t, "0028ab30-491a-4696-a601-91e810d154a8", ipAddress.ServerUUID)
 }

@@ -1,8 +1,10 @@
-package upcloud
+package upcloud_test
 
 import (
 	"encoding/json"
 	"testing"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -34,12 +36,12 @@ func TestUnmarshalPlans(t *testing.T) {
       }
     `
 
-	plans := Plans{}
+	plans := upcloud.Plans{}
 	err := json.Unmarshal([]byte(originalJSON), &plans)
 	assert.Nil(t, err)
 	assert.Len(t, plans.Plans, 2)
 
-	testData := []Plan{
+	testData := []upcloud.Plan{
 		{
 			CoreNumber:       1,
 			MemoryAmount:     2048,

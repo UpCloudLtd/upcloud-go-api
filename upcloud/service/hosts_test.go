@@ -1,7 +1,9 @@
-package service
+package service_test
 
 import (
 	"testing"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud/service"
 
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
 	"github.com/stretchr/testify/assert"
@@ -16,7 +18,7 @@ import (
 //   - Modifies the host back
 func TestGetModifyHosts(t *testing.T) {
 	//nolint:thelper // false positive, the function is not a helper
-	record(t, "getmodifyhosts", func(t *testing.T, svc *Service) {
+	record(t, "getmodifyhosts", func(t *testing.T, svc *service.Service) {
 		hosts, err := svc.GetHosts()
 		require.NoError(t, err)
 

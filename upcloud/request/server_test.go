@@ -1,9 +1,11 @@
-package request
+package request_test
 
 import (
 	"encoding/json"
 	"testing"
 	"time"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
 
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 	"github.com/stretchr/testify/assert"
@@ -11,7 +13,7 @@ import (
 
 // TestGetServerDetailsRequest tests that GetServerDetailsRequest objects behave correctly.
 func TestGetServerDetailsRequest(t *testing.T) {
-	request := GetServerDetailsRequest{
+	request := request.GetServerDetailsRequest{
 		UUID: "foo",
 	}
 
@@ -20,14 +22,14 @@ func TestGetServerDetailsRequest(t *testing.T) {
 
 // TestCreateServerRequest tests that CreateServerRequest objects behave correctly.
 func TestCreateServerRequest(t *testing.T) {
-	request := CreateServerRequest{
+	request := request.CreateServerRequest{
 		Zone:             "fi-hel2",
 		Title:            "Integration test server #1",
 		Hostname:         "debian.example.com",
-		PasswordDelivery: PasswordDeliveryNone,
-		StorageDevices: []CreateServerStorageDevice{
+		PasswordDelivery: request.PasswordDeliveryNone,
+		StorageDevices: []request.CreateServerStorageDevice{
 			{
-				Action:  CreateServerStorageDeviceActionClone,
+				Action:  request.CreateServerStorageDeviceActionClone,
 				Storage: "01000000-0000-4000-8000-000030060200",
 				Title:   "disk1",
 				Size:    30,
@@ -36,10 +38,10 @@ func TestCreateServerRequest(t *testing.T) {
 		},
 		SimpleBackup: "0430,monthlies",
 		Metadata:     upcloud.True,
-		Networking: &CreateServerNetworking{
-			Interfaces: []CreateServerInterface{
+		Networking: &request.CreateServerNetworking{
+			Interfaces: []request.CreateServerInterface{
 				{
-					IPAddresses: []CreateServerIPAddress{
+					IPAddresses: []request.CreateServerIPAddress{
 						{
 							Family: upcloud.IPAddressFamilyIPv4,
 						},
@@ -47,7 +49,7 @@ func TestCreateServerRequest(t *testing.T) {
 					Type: upcloud.IPAddressAccessPublic,
 				},
 				{
-					IPAddresses: []CreateServerIPAddress{
+					IPAddresses: []request.CreateServerIPAddress{
 						{
 							Family: upcloud.IPAddressFamilyIPv4,
 						},
@@ -55,7 +57,7 @@ func TestCreateServerRequest(t *testing.T) {
 					Type: upcloud.IPAddressAccessUtility,
 				},
 				{
-					IPAddresses: []CreateServerIPAddress{
+					IPAddresses: []request.CreateServerIPAddress{
 						{
 							Family: upcloud.IPAddressFamilyIPv6,
 						},
@@ -64,7 +66,7 @@ func TestCreateServerRequest(t *testing.T) {
 				},
 			},
 		},
-		LoginUser: &LoginUser{
+		LoginUser: &request.LoginUser{
 			CreatePassword: "no",
 			SSHKeys: []string{
 				"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCWf2MmpHweXCNUcW91PWZR5UqOkydBr1Gi1xDI16IW4JndMYkH9OF0sWvPz03kfY6NbcHY0bed1Q8BpAC//WfLltuvjrzk33IoFJZ2Ai+4fVdkevkf7pBeSvzdXSyKAT+suHrp/2Qu5hewIUdDCp+znkwyypIJ/C2hDphwbLR3QquOfn6KyKMPZC4my8dFvLxESI0UqeripaBHUGcvNG2LL563hXmWzUu/cyqCpg5IBzpj/ketg8m1KBO7U0dimIAczuxfHk3kp9bwOFquWA2vSFNuVkr8oavk36pHkU88qojYNEy/zUTINE0w6CE/EbDkQVDZEGgDtAkq4jL+4MPV negge@palinski",
@@ -138,7 +140,7 @@ func TestCreateServerRequest(t *testing.T) {
 // TestStartServerRequest_OmitValues tests that StartServerRequest objects behave correctly
 // when Host and AvoidHost are not specified.
 func TestStartServerRequest_OmitValues(t *testing.T) {
-	request := StartServerRequest{
+	request := request.StartServerRequest{
 		UUID:    "foo",
 		Timeout: time.Minute * 5,
 	}
@@ -159,7 +161,7 @@ func TestStartServerRequest_OmitValues(t *testing.T) {
 // TestStartServerRequest_WithValues tests that StartServerRequest objects behave correctly
 // when Host and AvoidHost are specified.
 func TestStartServerRequest_WithValues(t *testing.T) {
-	request := StartServerRequest{
+	request := request.StartServerRequest{
 		UUID:      "foo",
 		Timeout:   time.Minute * 5,
 		Host:      1010,
@@ -184,9 +186,9 @@ func TestStartServerRequest_WithValues(t *testing.T) {
 
 // TestStopServerRequest tests that StopServerRequest objects behave correctly.
 func TestStopServerRequest(t *testing.T) {
-	request := StopServerRequest{
+	request := request.StopServerRequest{
 		UUID:     "foo",
-		StopType: ServerStopTypeSoft,
+		StopType: request.ServerStopTypeSoft,
 		Timeout:  time.Minute * 5,
 	}
 
@@ -206,11 +208,11 @@ func TestStopServerRequest(t *testing.T) {
 
 // TestRestartServerRequest tests that RestartServerRequest objects behave correctly.
 func TestRestartServerRequest(t *testing.T) {
-	request := RestartServerRequest{
+	request := request.RestartServerRequest{
 		UUID:          "foo",
 		Timeout:       time.Minute * 5,
-		StopType:      ServerStopTypeSoft,
-		TimeoutAction: RestartTimeoutActionDestroy,
+		StopType:      request.ServerStopTypeSoft,
+		TimeoutAction: request.RestartTimeoutActionDestroy,
 		Host:          999,
 	}
 
@@ -233,11 +235,11 @@ func TestRestartServerRequest(t *testing.T) {
 // TestRestartServerRequest_OmitHost tests that RestartServerRequest objects behave correctly
 // when Host is omitted.
 func TestRestartServerRequest_OmitHost(t *testing.T) {
-	request := RestartServerRequest{
+	request := request.RestartServerRequest{
 		UUID:          "foo",
 		Timeout:       time.Minute * 5,
-		StopType:      ServerStopTypeSoft,
-		TimeoutAction: RestartTimeoutActionDestroy,
+		StopType:      request.ServerStopTypeSoft,
+		TimeoutAction: request.RestartTimeoutActionDestroy,
 	}
 
 	expectedJSON := `
@@ -257,7 +259,7 @@ func TestRestartServerRequest_OmitHost(t *testing.T) {
 
 // TestModifyServerRequest tests that ModifyServerRequest objects behave correctly.
 func TestModifyServerRequest(t *testing.T) {
-	request := ModifyServerRequest{
+	request := request.ModifyServerRequest{
 		UUID:         "foo",
 		Title:        "Modified server",
 		CoreNumber:   8,
@@ -286,7 +288,7 @@ func TestModifyServerRequest(t *testing.T) {
 
 // TestDeleteServerRequest tests that DeleteServerRequest objects behave correctly.
 func TestDeleteServerRequest(t *testing.T) {
-	request := DeleteServerRequest{
+	request := request.DeleteServerRequest{
 		UUID: "foo",
 	}
 
@@ -295,7 +297,7 @@ func TestDeleteServerRequest(t *testing.T) {
 
 // TestDeleteServerAndStoragesRequest tests that DeleteServerAndStoragesRequest objects behave correctly.
 func TestDeleteServerAndStoragesRequest(t *testing.T) {
-	request := DeleteServerAndStoragesRequest{
+	request := request.DeleteServerAndStoragesRequest{
 		UUID: "foo",
 	}
 
@@ -305,7 +307,7 @@ func TestDeleteServerAndStoragesRequest(t *testing.T) {
 // TestTagServerRequest tests that TestTagServer behaves correctly.
 func TestTagServerRequest(t *testing.T) {
 	// Test with multiple tags
-	request := TagServerRequest{
+	testRequest := request.TagServerRequest{
 		UUID: "foo",
 		Tags: []string{
 			"tag1",
@@ -314,22 +316,22 @@ func TestTagServerRequest(t *testing.T) {
 		},
 	}
 
-	assert.Equal(t, "/server/foo/tag/tag1,tag2,tag with spaces", request.RequestURL())
+	assert.Equal(t, "/server/foo/tag/tag1,tag2,tag with spaces", testRequest.RequestURL())
 
 	// Test with single tag
-	request = TagServerRequest{
+	testRequest = request.TagServerRequest{
 		UUID: "foo",
 		Tags: []string{
 			"tag1",
 		},
 	}
 
-	assert.Equal(t, "/server/foo/tag/tag1", request.RequestURL())
+	assert.Equal(t, "/server/foo/tag/tag1", testRequest.RequestURL())
 }
 
 func TestUntagServerRequest(t *testing.T) {
 	// Test with multiple tags
-	request := UntagServerRequest{
+	testRequest := request.UntagServerRequest{
 		UUID: "foo",
 		Tags: []string{
 			"tag1",
@@ -338,15 +340,15 @@ func TestUntagServerRequest(t *testing.T) {
 		},
 	}
 
-	assert.Equal(t, "/server/foo/untag/tag1,tag2,tag with spaces", request.RequestURL())
+	assert.Equal(t, "/server/foo/untag/tag1,tag2,tag with spaces", testRequest.RequestURL())
 
 	// Test with single tag
-	request = UntagServerRequest{
+	testRequest = request.UntagServerRequest{
 		UUID: "foo",
 		Tags: []string{
 			"tag1",
 		},
 	}
 
-	assert.Equal(t, "/server/foo/untag/tag1", request.RequestURL())
+	assert.Equal(t, "/server/foo/untag/tag1", testRequest.RequestURL())
 }

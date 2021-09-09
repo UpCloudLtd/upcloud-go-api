@@ -1,8 +1,10 @@
-package upcloud
+package upcloud_test
 
 import (
 	"encoding/json"
 	"testing"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -160,7 +162,7 @@ func TestUmarshalPriceZones(t *testing.T) {
   }
   `
 
-	priceZones := PriceZones{}
+	priceZones := upcloud.PriceZones{}
 	err := json.Unmarshal([]byte(originalJSON), &priceZones)
 	assert.Nil(t, err)
 	assert.Len(t, priceZones.PriceZones, 2)

@@ -1,8 +1,10 @@
-package upcloud
+package upcloud_test
 
 import (
 	"encoding/json"
 	"testing"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -34,12 +36,12 @@ func TestUnmarshalServerConfiguratons(t *testing.T) {
   }
 `
 
-	serverConfigurations := ServerConfigurations{}
+	serverConfigurations := upcloud.ServerConfigurations{}
 	err := json.Unmarshal([]byte(originalJSON), &serverConfigurations)
 	assert.Nil(t, err)
 	assert.Len(t, serverConfigurations.ServerConfigurations, 4)
 
-	testData := []ServerConfiguration{
+	testData := []upcloud.ServerConfiguration{
 		{
 			CoreNumber:   1,
 			MemoryAmount: 512,
@@ -91,7 +93,7 @@ func TestUnmarshalServers(t *testing.T) {
         }
     `
 
-	servers := Servers{}
+	servers := upcloud.Servers{}
 	err := json.Unmarshal([]byte(originalJSON), &servers)
 	assert.Nil(t, err)
 	assert.Len(t, servers.Servers, 1)
@@ -103,7 +105,7 @@ func TestUnmarshalServers(t *testing.T) {
 	assert.Equal(t, 1024, server.MemoryAmount)
 	assert.Equal(t, "1xCPU-1GB", server.Plan)
 	assert.Equal(t, 95, server.Progress)
-	assert.Equal(t, ServerStateMaintenance, server.State)
+	assert.Equal(t, upcloud.ServerStateMaintenance, server.State)
 	assert.Empty(t, server.Tags)
 	assert.Equal(t, "foo.example.com", server.Title)
 	assert.Equal(t, "009114f1-cd89-4202-b057-5680eb6ba428", server.UUID)
@@ -236,7 +238,7 @@ func TestUnmarshalServerDetails(t *testing.T) {
       }
     `
 
-	serverDetails := ServerDetails{}
+	serverDetails := upcloud.ServerDetails{}
 	err := json.Unmarshal([]byte(originalJSON), &serverDetails)
 	assert.Nil(t, err)
 
@@ -251,61 +253,61 @@ func TestUnmarshalServerDetails(t *testing.T) {
 	assert.Equal(t, 20, serverDetails.StorageDevices[0].Size)
 	assert.Equal(t, "maxiops", serverDetails.StorageDevices[0].Tier)
 	assert.Equal(t, "Storage for server1.example.com", serverDetails.StorageDevices[0].Title)
-	assert.Equal(t, StorageTypeDisk, serverDetails.StorageDevices[0].Type)
+	assert.Equal(t, upcloud.StorageTypeDisk, serverDetails.StorageDevices[0].Type)
 	assert.Equal(t, 0, serverDetails.StorageDevices[0].BootDisk)
 	assert.Equal(t, "UTC", serverDetails.Timezone)
-	assert.Equal(t, VideoModelCirrus, serverDetails.VideoModel)
+	assert.Equal(t, upcloud.VideoModelCirrus, serverDetails.VideoModel)
 	assert.True(t, serverDetails.RemoteAccessEnabled.Bool())
 	assert.Equal(t, "fi-hel1.vnc.upcloud.com", serverDetails.RemoteAccessHost)
 	assert.Equal(t, "aabbccdd", serverDetails.RemoteAccessPassword)
 	assert.Equal(t, 3000, serverDetails.RemoteAccessPort)
-	assert.Equal(t, RemoteAccessTypeVNC, serverDetails.RemoteAccessType)
+	assert.Equal(t, upcloud.RemoteAccessTypeVNC, serverDetails.RemoteAccessType)
 	assert.Equal(t, "server1.example.com", serverDetails.Hostname)
 	assert.Equal(t, "0100,dailies", serverDetails.SimpleBackup)
 	assert.True(t, serverDetails.Metadata.Bool())
 
-	networkingTestData := []ServerInterface{
+	networkingTestData := []upcloud.ServerInterface{
 		{
 			Index: 1,
-			IPAddresses: []IPAddress{
+			IPAddresses: []upcloud.IPAddress{
 				{
 					Address:  "94.237.0.207",
-					Family:   IPAddressFamilyIPv4,
-					Floating: False,
+					Family:   upcloud.IPAddressFamilyIPv4,
+					Floating: upcloud.False,
 				},
 			},
 			MAC:      "de:ff:ff:ff:66:89",
 			Network:  "037fcf2a-6745-45dd-867e-f9479ea8c044",
-			Type:     NetworkTypePublic,
-			Bootable: False,
+			Type:     upcloud.NetworkTypePublic,
+			Bootable: upcloud.False,
 		},
 		{
 			Index: 2,
-			IPAddresses: []IPAddress{
+			IPAddresses: []upcloud.IPAddress{
 				{
 					Address:  "10.6.3.95",
-					Family:   IPAddressFamilyIPv4,
-					Floating: False,
+					Family:   upcloud.IPAddressFamilyIPv4,
+					Floating: upcloud.False,
 				},
 			},
 			MAC:      "de:ff:ff:ff:ed:85",
 			Network:  "03000000-0000-4000-8045-000000000000",
-			Type:     NetworkTypeUtility,
-			Bootable: False,
+			Type:     upcloud.NetworkTypeUtility,
+			Bootable: upcloud.False,
 		},
 		{
 			Index: 3,
-			IPAddresses: []IPAddress{
+			IPAddresses: []upcloud.IPAddress{
 				{
 					Address:  "xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx",
 					Family:   "IPv6",
-					Floating: False,
+					Floating: upcloud.False,
 				},
 			},
 			MAC:      "de:ff:ff:ff:cc:20",
 			Network:  "03c93fd8-cc60-4849-91b8-6e404b228e2a",
-			Type:     NetworkTypePublic,
-			Bootable: False,
+			Type:     upcloud.NetworkTypePublic,
+			Bootable: upcloud.False,
 		},
 	}
 
@@ -317,9 +319,9 @@ func TestUnmarshalServerDetails(t *testing.T) {
 }
 
 func TestStorageDevice(t *testing.T) {
-	needle := ServerStorageDevice{UUID: "012580a1-32a1-466e-a323-689ca16f2d43"}
-	serverDetails := ServerDetails{
-		StorageDevices: []ServerStorageDevice{
+	needle := upcloud.ServerStorageDevice{UUID: "012580a1-32a1-466e-a323-689ca16f2d43"}
+	serverDetails := upcloud.ServerDetails{
+		StorageDevices: []upcloud.ServerStorageDevice{
 			{UUID: "012580a1-32a1-466e-a323-689ca16f2d44"},
 			needle,
 			{UUID: "012580a1-32a1-466e-a323-689ca16f2d45"},

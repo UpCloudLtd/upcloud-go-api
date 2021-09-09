@@ -1,8 +1,10 @@
-package upcloud
+package upcloud_test
 
 import (
 	"encoding/json"
 	"testing"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -28,7 +30,7 @@ func TestUnmarshalAccount(t *testing.T) {
 	  }
 	`
 
-	account := Account{}
+	account := upcloud.Account{}
 	err := json.Unmarshal([]byte(originalJSON), &account)
 	assert.NoError(t, err)
 	assert.Equal(t, 9972.2324, account.Credits)
@@ -45,10 +47,10 @@ func TestUnmarshalAccount(t *testing.T) {
 
 // TestMarshalAccount tests that Account objects marshal correctly.
 func TestMarshalAccount(t *testing.T) {
-	request := Account{
+	request := upcloud.Account{
 		Credits:  100,
 		UserName: "username",
-		ResourceLimits: ResourceLimits{
+		ResourceLimits: upcloud.ResourceLimits{
 			Memory: 123,
 		},
 	}

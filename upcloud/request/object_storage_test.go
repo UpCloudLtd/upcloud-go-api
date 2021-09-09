@@ -1,15 +1,17 @@
-package request
+package request_test
 
 import (
 	"encoding/json"
 	"testing"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
 
 	"github.com/stretchr/testify/assert"
 )
 
 // TestGetObjectStorageDetailsRequest tests that GetObjectStorageDetailsRequest objects behave correctly.
 func TestGetObjectStorageDetailsRequest(t *testing.T) {
-	request := GetObjectStorageDetailsRequest{
+	request := request.GetObjectStorageDetailsRequest{
 		UUID: "foo",
 	}
 
@@ -18,7 +20,7 @@ func TestGetObjectStorageDetailsRequest(t *testing.T) {
 
 // TestCreateObjectStorageRequest tests that CreateObjectStorageRequest objects behave correctly.
 func TestCreateObjectStorageRequest(t *testing.T) {
-	request := CreateObjectStorageRequest{
+	request := request.CreateObjectStorageRequest{
 		Name:        "app-object-storage",
 		Description: "App object storage",
 		Zone:        "fi-hel2",
@@ -48,7 +50,7 @@ func TestCreateObjectStorageRequest(t *testing.T) {
 
 // TestModifyObjectStorageRequest tests that ModifyObjectStorageRequest objects behave correctly.
 func TestModifyObjectStorageRequest(t *testing.T) {
-	request := ModifyObjectStorageRequest{
+	request := request.ModifyObjectStorageRequest{
 		UUID:        "foo",
 		Description: "Modified object storage",
 		AccessKey:   "UCOB5HE4NVTVFMXXRBQ2",
@@ -73,7 +75,7 @@ func TestModifyObjectStorageRequest(t *testing.T) {
 
 // TestDeleteObjectStorageRequest tests that DeleteObjectStorageRequest objects behave correctly.
 func TestDeleteObjectStorageRequest(t *testing.T) {
-	request := DeleteObjectStorageRequest{
+	request := request.DeleteObjectStorageRequest{
 		UUID: "foo",
 	}
 

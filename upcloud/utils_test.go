@@ -1,14 +1,16 @@
-package upcloud
+package upcloud_test
 
 import (
 	"encoding/json"
 	"testing"
 
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
+
 	"github.com/stretchr/testify/assert"
 )
 
 type testStruct struct {
-	Value Boolean `json:"value"`
+	Value upcloud.Boolean `json:"value"`
 }
 
 func TestBoolean_TrueAsBool(t *testing.T) {
@@ -166,6 +168,6 @@ func TestBoolean_FalseAnything(t *testing.T) {
 }
 
 func TestBoolean_Empty(t *testing.T) {
-	var b Boolean
+	var b upcloud.Boolean
 	assert.True(t, b.Empty())
 }

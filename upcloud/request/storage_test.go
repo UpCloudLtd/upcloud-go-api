@@ -1,8 +1,10 @@
-package request
+package request_test
 
 import (
 	"encoding/json"
 	"testing"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
 
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 	"github.com/stretchr/testify/assert"
@@ -10,7 +12,7 @@ import (
 
 // TestGetStoragesRequest tests that GetStoragesRequest objects behave correctly.
 func TestGetStoragesRequest(t *testing.T) {
-	request := GetStoragesRequest{}
+	request := request.GetStoragesRequest{}
 
 	assert.Equal(t, "/storage", request.RequestURL())
 	request.Access = upcloud.StorageAccessPublic
@@ -25,7 +27,7 @@ func TestGetStoragesRequest(t *testing.T) {
 
 // TestGetStorageDetailsRequest tests that GetStorageDetailsRequest objects behave correctly.
 func TestGetStorageDetailsRequest(t *testing.T) {
-	request := GetStorageDetailsRequest{
+	request := request.GetStorageDetailsRequest{
 		UUID: "foo",
 	}
 
@@ -34,7 +36,7 @@ func TestGetStorageDetailsRequest(t *testing.T) {
 
 // TestCreateStorageRequest tests that CreateStorageRequest objects behave correctly.
 func TestCreateStorageRequest(t *testing.T) {
-	request := CreateStorageRequest{
+	request := request.CreateStorageRequest{
 		Tier:  upcloud.StorageTierMaxIOPS,
 		Title: "Test storage",
 		Size:  10,
@@ -69,7 +71,7 @@ func TestCreateStorageRequest(t *testing.T) {
 
 // TestModifyStorageRequest tests that ModifyStorageRequest objects behave correctly.
 func TestModifyStorageRequest(t *testing.T) {
-	request := ModifyStorageRequest{
+	request := request.ModifyStorageRequest{
 		UUID:  "foo",
 		Title: "A larger storage",
 		Size:  20,
@@ -91,7 +93,7 @@ func TestModifyStorageRequest(t *testing.T) {
 
 // TestAttachStorageRequest tests that AttachStorageRequest objects behave correctly.
 func TestAttachStorageRequest(t *testing.T) {
-	request := AttachStorageRequest{
+	request := request.AttachStorageRequest{
 		StorageUUID: "foo",
 		ServerUUID:  "bar",
 		Type:        upcloud.StorageTypeDisk,
@@ -117,7 +119,7 @@ func TestAttachStorageRequest(t *testing.T) {
 
 // TestDetachStorageRequest tests that DetachStorageRequest objects behave correctly.
 func TestDetachStorageRequest(t *testing.T) {
-	request := DetachStorageRequest{
+	request := request.DetachStorageRequest{
 		ServerUUID: "foo",
 		Address:    "scsi:0:0",
 	}
@@ -137,7 +139,7 @@ func TestDetachStorageRequest(t *testing.T) {
 
 // TestDeleteStorageRequest tests that DeleteStorageRequest objects behave correctly.
 func TestDeleteStorageRequest(t *testing.T) {
-	request := DeleteStorageRequest{
+	request := request.DeleteStorageRequest{
 		UUID: "foo",
 	}
 
@@ -146,7 +148,7 @@ func TestDeleteStorageRequest(t *testing.T) {
 
 // TestCloneStorageRequest testa that CloneStorageRequest objects behave correctly.
 func TestCloneStorageRequest(t *testing.T) {
-	request := CloneStorageRequest{
+	request := request.CloneStorageRequest{
 		UUID:  "foo",
 		Title: "Clone of operating system disk",
 		Zone:  "fi-hel1",
@@ -170,7 +172,7 @@ func TestCloneStorageRequest(t *testing.T) {
 
 // TestTemplatizeStorageRequest tests that TemplatizeStorageRequest objects behave correctly.
 func TestTemplatizeStorageRequest(t *testing.T) {
-	request := TemplatizeStorageRequest{
+	request := request.TemplatizeStorageRequest{
 		UUID:  "foo",
 		Title: "Templatized storage",
 	}
@@ -191,7 +193,7 @@ func TestTemplatizeStorageRequest(t *testing.T) {
 
 // TestLoadCDROMRequest tests that LoadCDROMRequest objects behave correctly.
 func TestLoadCDROMRequest(t *testing.T) {
-	request := LoadCDROMRequest{
+	request := request.LoadCDROMRequest{
 		ServerUUID:  "foo",
 		StorageUUID: "bar",
 	}
@@ -211,7 +213,7 @@ func TestLoadCDROMRequest(t *testing.T) {
 
 // TestEjectCDROMRequest tests that EjectCDROMRequest objects behave correctly.
 func TestEjectCDROMRequest(t *testing.T) {
-	request := EjectCDROMRequest{
+	request := request.EjectCDROMRequest{
 		ServerUUID: "foo",
 	}
 
@@ -220,7 +222,7 @@ func TestEjectCDROMRequest(t *testing.T) {
 
 // TestCreateBackupRequest tests that CreateBackupRequest objects behave correctly.
 func TestCreateBackupRequest(t *testing.T) {
-	request := CreateBackupRequest{
+	request := request.CreateBackupRequest{
 		UUID:  "foo",
 		Title: "Manually created backup",
 	}
@@ -240,7 +242,7 @@ func TestCreateBackupRequest(t *testing.T) {
 
 // TestRestoreBackupRequest tests that RestoreBackupRequest objects behave correctly.
 func TestRestoreBackupRequest(t *testing.T) {
-	request := RestoreBackupRequest{
+	request := request.RestoreBackupRequest{
 		UUID: "foo",
 	}
 
@@ -249,9 +251,9 @@ func TestRestoreBackupRequest(t *testing.T) {
 
 // TestStorageImportRequest tests that StorageImportRequest marshals correctly.
 func TestStorageImportRequest(t *testing.T) {
-	request := CreateStorageImportRequest{
+	request := request.CreateStorageImportRequest{
 		StorageUUID:    "foo",
-		Source:         StorageImportSourceHTTPImport,
+		Source:         request.StorageImportSourceHTTPImport,
 		SourceLocation: "http://somewhere.com",
 	}
 
@@ -274,7 +276,7 @@ func TestStorageImportRequest(t *testing.T) {
 
 // TestGetStorageImportDetails tests that GetStorageImportDetails objects behave correctly.
 func TestGetStorageImportDetails(t *testing.T) {
-	request := GetStorageImportDetailsRequest{
+	request := request.GetStorageImportDetailsRequest{
 		UUID: "foo",
 	}
 

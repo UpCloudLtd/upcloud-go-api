@@ -1,8 +1,10 @@
-package request
+package request_test
 
 import (
 	"encoding/json"
 	"testing"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
 
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 	"github.com/stretchr/testify/assert"
@@ -10,7 +12,7 @@ import (
 
 // TestCreateTagRequest tests that CreateTagRequest behaves correctly.
 func TestCreateTagRequest(t *testing.T) {
-	request := CreateTagRequest{
+	request := request.CreateTagRequest{
 		Tag: upcloud.Tag{
 			Name:        "DEV",
 			Description: "Development servers",
@@ -49,7 +51,7 @@ func TestCreateTagRequest(t *testing.T) {
 // is present in the marshalled JSON.
 func TestCreateTagRequest_OmittedElements(t *testing.T) {
 	// Test with omitted elements
-	request := CreateTagRequest{
+	request := request.CreateTagRequest{
 		Tag: upcloud.Tag{
 			Name: "foo",
 		},
@@ -73,7 +75,7 @@ func TestCreateTagRequest_OmittedElements(t *testing.T) {
 
 // TestModifyTagRequest tests that ModifyTagRequest marshals correctly.
 func TestModifyTagRequest(t *testing.T) {
-	request := ModifyTagRequest{
+	request := request.ModifyTagRequest{
 		Name: "foo",
 		Tag: upcloud.Tag{
 			Name: "bar",
@@ -110,7 +112,7 @@ func TestModifyTagRequest(t *testing.T) {
 // TestModifyTagRequest_OmitServers tests that an empty array is present in
 // the marshalled JSON if there are no servers specified.
 func TestModifyTagRequest_OmitServers(t *testing.T) {
-	request := ModifyTagRequest{
+	request := request.ModifyTagRequest{
 		Name: "foo",
 		Tag: upcloud.Tag{
 			Name: "bar",
@@ -139,7 +141,7 @@ func TestModifyTagRequest_OmitServers(t *testing.T) {
 
 // TestDeleteTagRequest tests that DeleteTagRequest behaves correctly.
 func TestDeleteTagRequest(t *testing.T) {
-	request := DeleteTagRequest{
+	request := request.DeleteTagRequest{
 		Name: "foo",
 	}
 

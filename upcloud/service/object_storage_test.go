@@ -1,8 +1,10 @@
-package service
+package service_test
 
 import (
 	"strings"
 	"testing"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud/service"
 
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
 	"github.com/stretchr/testify/assert"
@@ -12,7 +14,7 @@ import (
 // TestGetObjectStorages tests that the GetObjectStorages() function returns proper data.
 func TestGetObjectStorages(t *testing.T) {
 	//nolint:thelper // false positive, the function is not a helper
-	record(t, "getobjectstorages", func(t *testing.T, svc *Service) {
+	record(t, "getobjectstorages", func(t *testing.T, svc *service.Service) {
 		objectStorages, err := svc.GetObjectStorages()
 		require.NoError(t, err)
 		assert.NotEmpty(t, objectStorages.ObjectStorages)
@@ -31,7 +33,7 @@ func TestGetObjectStorages(t *testing.T) {
 // TestGetObjectStorageDetails ensures that the GetObjectStorageDetails() function returns proper data.
 func TestGetObjectStorageDetails(t *testing.T) {
 	//nolint:thelper // false positive, the function is not a helper
-	record(t, "getobjectstoragedetails", func(t *testing.T, svc *Service) {
+	record(t, "getobjectstoragedetails", func(t *testing.T, svc *service.Service) {
 		d, err := createObjectStorage(svc, "getobjectstoragedetails", "App object storage", "fi-hel2", 500)
 		require.NoError(t, err)
 

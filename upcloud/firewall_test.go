@@ -1,8 +1,10 @@
-package upcloud
+package upcloud_test
 
 import (
 	"encoding/json"
 	"testing"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -102,57 +104,57 @@ func TestUnmarshalFirewallRules(t *testing.T) {
         }
       }
     `
-	firewallRules := FirewallRules{}
+	firewallRules := upcloud.FirewallRules{}
 	err := json.Unmarshal([]byte(originalJSON), &firewallRules)
 	assert.NoError(t, err)
 	assert.Len(t, firewallRules.FirewallRules, 5)
 
-	testData := []FirewallRule{
+	testData := []upcloud.FirewallRule{
 		{
-			Action:               FirewallRuleActionAccept,
+			Action:               upcloud.FirewallRuleActionAccept,
 			Comment:              "Allow HTTP from anywhere",
 			DestinationPortStart: "80",
 			DestinationPortEnd:   "80",
-			Direction:            FirewallRuleDirectionIn,
-			Family:               IPAddressFamilyIPv4,
+			Direction:            upcloud.FirewallRuleDirectionIn,
+			Family:               upcloud.IPAddressFamilyIPv4,
 			Position:             1,
 		},
 		{
-			Action:               FirewallRuleActionAccept,
+			Action:               upcloud.FirewallRuleActionAccept,
 			Comment:              "Allow SSH from a specific network only",
 			DestinationPortStart: "22",
 			DestinationPortEnd:   "22",
-			Direction:            FirewallRuleDirectionIn,
-			Family:               IPAddressFamilyIPv4,
+			Direction:            upcloud.FirewallRuleDirectionIn,
+			Family:               upcloud.IPAddressFamilyIPv4,
 			Position:             2,
-			Protocol:             FirewallRuleProtocolTCP,
+			Protocol:             upcloud.FirewallRuleProtocolTCP,
 			SourceAddressStart:   "192.168.1.1",
 			SourceAddressEnd:     "192.168.1.255",
 		},
 		{
-			Action:               FirewallRuleActionAccept,
+			Action:               upcloud.FirewallRuleActionAccept,
 			Comment:              "Allow SSH over IPv6 from this range",
 			DestinationPortStart: "22",
 			DestinationPortEnd:   "22",
-			Direction:            FirewallRuleDirectionIn,
-			Family:               IPAddressFamilyIPv6,
+			Direction:            upcloud.FirewallRuleDirectionIn,
+			Family:               upcloud.IPAddressFamilyIPv6,
 			Position:             3,
-			Protocol:             FirewallRuleProtocolTCP,
+			Protocol:             upcloud.FirewallRuleProtocolTCP,
 			SourceAddressStart:   "2a04:3540:1000:aaaa:bbbb:cccc:d001",
 			SourceAddressEnd:     "2a04:3540:1000:aaaa:bbbb:cccc:d001",
 		},
 		{
-			Action:    FirewallRuleActionAccept,
+			Action:    upcloud.FirewallRuleActionAccept,
 			Comment:   "Allow ICMP echo request (ping)",
-			Direction: FirewallRuleDirectionIn,
-			Family:    IPAddressFamilyIPv4,
+			Direction: upcloud.FirewallRuleDirectionIn,
+			Family:    upcloud.IPAddressFamilyIPv4,
 			ICMPType:  "8",
 			Position:  4,
-			Protocol:  FirewallRuleProtocolICMP,
+			Protocol:  upcloud.FirewallRuleProtocolICMP,
 		},
 		{
-			Action:    FirewallRuleActionDrop,
-			Direction: FirewallRuleDirectionIn,
+			Action:    upcloud.FirewallRuleActionDrop,
+			Direction: upcloud.FirewallRuleDirectionIn,
 			Position:  5,
 		},
 	}
@@ -186,17 +188,17 @@ func TestUnmarshalFirewallRule(t *testing.T) {
         }
       }
     `
-	actualRule := FirewallRule{}
+	actualRule := upcloud.FirewallRule{}
 	err := json.Unmarshal([]byte(originalJSON), &actualRule)
 	assert.NoError(t, err)
 
-	expectedRule := FirewallRule{
-		Action:               FirewallRuleActionAccept,
+	expectedRule := upcloud.FirewallRule{
+		Action:               upcloud.FirewallRuleActionAccept,
 		Comment:              "Allow HTTP from anywhere",
 		DestinationPortStart: "80",
 		DestinationPortEnd:   "80",
-		Direction:            FirewallRuleDirectionIn,
-		Family:               IPAddressFamilyIPv4,
+		Direction:            upcloud.FirewallRuleDirectionIn,
+		Family:               upcloud.IPAddressFamilyIPv4,
 		Position:             1,
 	}
 

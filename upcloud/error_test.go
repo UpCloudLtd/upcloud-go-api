@@ -1,8 +1,10 @@
-package upcloud
+package upcloud_test
 
 import (
 	"encoding/json"
 	"testing"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -18,7 +20,7 @@ func TestError(t *testing.T) {
         }
     `
 
-	e := Error{}
+	e := upcloud.Error{}
 	err := json.Unmarshal([]byte(originalJSON), &e)
 	assert.NoError(t, err)
 	assert.Equal(t, "The server 00af0f73-7082-4283-b925-811d1585774b does not exist.", e.ErrorMessage)

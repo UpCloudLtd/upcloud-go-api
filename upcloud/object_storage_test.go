@@ -1,8 +1,10 @@
-package upcloud
+package upcloud_test
 
 import (
 	"encoding/json"
 	"testing"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -28,7 +30,7 @@ func TestUnmarshalObjectStorages(t *testing.T) {
 		}
 	`
 
-	objectStorages := ObjectStorages{}
+	objectStorages := upcloud.ObjectStorages{}
 	err := json.Unmarshal([]byte(originalJSON), &objectStorages)
 	assert.Nil(t, err)
 	assert.Len(t, objectStorages.ObjectStorages, 1)

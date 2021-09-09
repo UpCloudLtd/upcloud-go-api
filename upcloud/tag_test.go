@@ -1,8 +1,10 @@
-package upcloud
+package upcloud_test
 
 import (
 	"encoding/json"
 	"testing"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -43,12 +45,12 @@ func TestUnmarshalTags(t *testing.T) {
         }
       }
     `
-	tags := Tags{}
+	tags := upcloud.Tags{}
 	err := json.Unmarshal([]byte(originalJSON), &tags)
 	assert.NoError(t, err)
 	assert.Len(t, tags.Tags, 3)
 
-	testData := []Tag{
+	testData := []upcloud.Tag{
 		{
 			Description: "Development servers",
 			Name:        "DEV",
@@ -96,7 +98,7 @@ func TestUnmarshalTag(t *testing.T) {
     }
     `
 
-	tag := Tag{}
+	tag := upcloud.Tag{}
 	err := json.Unmarshal([]byte(originalJSON), &tag)
 	assert.NoError(t, err)
 
