@@ -30,11 +30,10 @@ type Network interface {
 
 var _ Network = (*Service)(nil)
 
-// GetNetworks returns the all the available networks
+// GetNetworks returns the all the available networks.
 func (s *Service) GetNetworks() (*upcloud.Networks, error) {
 	networks := upcloud.Networks{}
 	response, err := s.basicGetRequest("/network")
-
 	if err != nil {
 		return nil, err
 	}
@@ -51,7 +50,6 @@ func (s *Service) GetNetworks() (*upcloud.Networks, error) {
 func (s *Service) GetNetworksInZone(r *request.GetNetworksInZoneRequest) (*upcloud.Networks, error) {
 	networks := upcloud.Networks{}
 	response, err := s.basicGetRequest(r.RequestURL())
-
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +67,6 @@ func (s *Service) CreateNetwork(r *request.CreateNetworkRequest) (*upcloud.Netwo
 	network := upcloud.Network{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -86,7 +83,6 @@ func (s *Service) CreateNetwork(r *request.CreateNetworkRequest) (*upcloud.Netwo
 func (s *Service) GetNetworkDetails(r *request.GetNetworkDetailsRequest) (*upcloud.Network, error) {
 	network := upcloud.Network{}
 	response, err := s.basicGetRequest(r.RequestURL())
-
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +100,6 @@ func (s *Service) ModifyNetwork(r *request.ModifyNetworkRequest) (*upcloud.Netwo
 	network := upcloud.Network{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPutRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -120,7 +115,6 @@ func (s *Service) ModifyNetwork(r *request.ModifyNetworkRequest) (*upcloud.Netwo
 // DeleteNetwork deletes the specified network.
 func (s *Service) DeleteNetwork(r *request.DeleteNetworkRequest) error {
 	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
-
 	if err != nil {
 		return parseJSONServiceError(err)
 	}
@@ -132,7 +126,6 @@ func (s *Service) DeleteNetwork(r *request.DeleteNetworkRequest) error {
 func (s *Service) AttachNetworkRouter(r *request.AttachNetworkRouterRequest) error {
 	requestBody, _ := json.Marshal(r)
 	_, err := s.client.PerformJSONPutRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return parseJSONServiceError(err)
 	}
@@ -143,7 +136,6 @@ func (s *Service) AttachNetworkRouter(r *request.AttachNetworkRouterRequest) err
 func (s *Service) DetachNetworkRouter(r *request.DetachNetworkRouterRequest) error {
 	requestBody, _ := json.Marshal(r)
 	_, err := s.client.PerformJSONPutRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return parseJSONServiceError(err)
 	}
@@ -154,7 +146,6 @@ func (s *Service) DetachNetworkRouter(r *request.DetachNetworkRouterRequest) err
 func (s *Service) GetServerNetworks(r *request.GetServerNetworksRequest) (*upcloud.Networking, error) {
 	networking := upcloud.Networking{}
 	response, err := s.basicGetRequest(r.RequestURL())
-
 	if err != nil {
 		return nil, err
 	}
@@ -172,7 +163,6 @@ func (s *Service) CreateNetworkInterface(r *request.CreateNetworkInterfaceReques
 	iface := upcloud.Interface{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -190,7 +180,6 @@ func (s *Service) ModifyNetworkInterface(r *request.ModifyNetworkInterfaceReques
 	iface := upcloud.Interface{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPutRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -206,7 +195,6 @@ func (s *Service) ModifyNetworkInterface(r *request.ModifyNetworkInterfaceReques
 // DeleteNetworkInterface removes the specified network interface from the specified server.
 func (s *Service) DeleteNetworkInterface(r *request.DeleteNetworkInterfaceRequest) error {
 	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
-
 	if err != nil {
 		return parseJSONServiceError(err)
 	}
@@ -214,11 +202,10 @@ func (s *Service) DeleteNetworkInterface(r *request.DeleteNetworkInterfaceReques
 	return nil
 }
 
-// GetRouters returns the all the available routers
+// GetRouters returns the all the available routers.
 func (s *Service) GetRouters() (*upcloud.Routers, error) {
 	routers := upcloud.Routers{}
 	response, err := s.basicGetRequest("/router")
-
 	if err != nil {
 		return nil, err
 	}
@@ -235,7 +222,6 @@ func (s *Service) GetRouters() (*upcloud.Routers, error) {
 func (s *Service) GetRouterDetails(r *request.GetRouterDetailsRequest) (*upcloud.Router, error) {
 	router := upcloud.Router{}
 	response, err := s.basicGetRequest(r.RequestURL())
-
 	if err != nil {
 		return nil, err
 	}
@@ -253,7 +239,6 @@ func (s *Service) CreateRouter(r *request.CreateRouterRequest) (*upcloud.Router,
 	router := upcloud.Router{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -271,7 +256,6 @@ func (s *Service) ModifyRouter(r *request.ModifyRouterRequest) (*upcloud.Router,
 	router := upcloud.Router{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -287,7 +271,6 @@ func (s *Service) ModifyRouter(r *request.ModifyRouterRequest) (*upcloud.Router,
 // DeleteRouter deletes the specified router.
 func (s *Service) DeleteRouter(r *request.DeleteRouterRequest) error {
 	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
-
 	if err != nil {
 		return parseJSONServiceError(err)
 	}

@@ -1,6 +1,6 @@
 package upcloud
 
-// Constants
+// Constants.
 const (
 	True  Boolean = 1
 	False Boolean = -1
@@ -48,17 +48,17 @@ func (b *Boolean) MarshalJSON() ([]byte, error) {
 	return []byte(jsonFalse), nil
 }
 
-// Bool converts to a standard bool value
+// Bool converts to a standard bool value.
 func (b *Boolean) Bool() bool {
 	return (*b) >= True
 }
 
-// Empty checks if this bool is empty
+// Empty checks if this bool is empty.
 func (b *Boolean) Empty() bool {
 	return (*b) == Empty
 }
 
-// String returns a string representation
+// String returns a string representation.
 func (b *Boolean) String() string {
 	if (*b) >= True {
 		return "True"
@@ -71,7 +71,7 @@ func (b *Boolean) String() string {
 	return "Empty"
 }
 
-// FromBool converts from a standard bool values
+// FromBool converts from a standard bool values.
 func FromBool(v bool) Boolean {
 	if v {
 		return True

@@ -2,7 +2,7 @@ package upcloud
 
 import "encoding/json"
 
-// ObjectStorage represents a Object Storage
+// ObjectStorage represents a Object Storage.
 type ObjectStorage struct {
 	Created     string `json:"created"`
 	Description string `json:"description"`
@@ -14,7 +14,7 @@ type ObjectStorage struct {
 	Zone        string `json:"zone"`
 }
 
-// ObjectStorages represent a /object-storage response
+// ObjectStorages represent a /object-storage response.
 type ObjectStorages struct {
 	ObjectStorages []ObjectStorage `json:"object_storages"`
 }
@@ -39,7 +39,7 @@ func (o *ObjectStorages) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// ObjectStorageDetails represents details about a Object Storage
+// ObjectStorageDetails represents details about a Object Storage.
 type ObjectStorageDetails struct {
 	ObjectStorage
 	UsedSpace int `json:"used_space"`

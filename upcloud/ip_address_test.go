@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// TestUnmarshalIPAddresses tests that IPAddresses and IPAddress structs are unmarshaled correctly
+// TestUnmarshalIPAddresses tests that IPAddresses and IPAddress structs are unmarshaled correctly.
 func TestUnmarshalIPAddresses(t *testing.T) {
 	originalJSON := `
 	  {
@@ -130,7 +130,7 @@ func TestUnmarshalIPAddresses(t *testing.T) {
 	}
 }
 
-// TestUnmarshalIPAddress tests that IPAddress is unmarshaled correctly on its own
+// TestUnmarshalIPAddress tests that IPAddress is unmarshaled correctly on its own.
 func TestUnmarshalIPAddress(t *testing.T) {
 	originalJSON := `
       {

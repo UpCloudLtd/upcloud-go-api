@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// TestGetObjectStorageDetailsRequest tests that GetObjectStorageDetailsRequest objects behave correctly
+// TestGetObjectStorageDetailsRequest tests that GetObjectStorageDetailsRequest objects behave correctly.
 func TestGetObjectStorageDetailsRequest(t *testing.T) {
 	request := GetObjectStorageDetailsRequest{
 		UUID: "foo",
@@ -16,7 +16,7 @@ func TestGetObjectStorageDetailsRequest(t *testing.T) {
 	assert.Equal(t, "/object-storage/foo", request.RequestURL())
 }
 
-// TestCreateObjectStorageRequest tests that CreateObjectStorageRequest objects behave correctly
+// TestCreateObjectStorageRequest tests that CreateObjectStorageRequest objects behave correctly.
 func TestCreateObjectStorageRequest(t *testing.T) {
 	request := CreateObjectStorageRequest{
 		Name:        "app-object-storage",
@@ -46,7 +46,7 @@ func TestCreateObjectStorageRequest(t *testing.T) {
 	assert.Equal(t, "/object-storage", request.RequestURL())
 }
 
-// TestModifyObjectStorageRequest tests that ModifyObjectStorageRequest objects behave correctly
+// TestModifyObjectStorageRequest tests that ModifyObjectStorageRequest objects behave correctly.
 func TestModifyObjectStorageRequest(t *testing.T) {
 	request := ModifyObjectStorageRequest{
 		UUID:        "foo",
@@ -71,7 +71,7 @@ func TestModifyObjectStorageRequest(t *testing.T) {
 	assert.Equal(t, "/object-storage/foo", request.RequestURL())
 }
 
-// TestDeleteObjectStorageRequest tests that DeleteObjectStorageRequest objects behave correctly
+// TestDeleteObjectStorageRequest tests that DeleteObjectStorageRequest objects behave correctly.
 func TestDeleteObjectStorageRequest(t *testing.T) {
 	request := DeleteObjectStorageRequest{
 		UUID: "foo",

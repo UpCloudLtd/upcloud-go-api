@@ -20,7 +20,7 @@ import (
 //
 // - creates a new storage disk
 // - modifies the storage
-// - deletes the storage
+// - deletes the storage.
 func TestCreateModifyDeleteStorage(t *testing.T) {
 	t.Parallel()
 
@@ -58,7 +58,7 @@ func TestCreateModifyDeleteStorage(t *testing.T) {
 // - attaches the storage
 // - detaches the storage
 // - deletes the storage
-// - deletes the server
+// - deletes the server.
 func TestAttachDetachStorage(t *testing.T) {
 	t.Parallel()
 
@@ -107,7 +107,7 @@ func TestAttachDetachStorage(t *testing.T) {
 //
 // - creates a storage device
 // - clones the storage device
-// - deletes the clone and the storage device
+// - deletes the clone and the storage device.
 func TestCloneStorage(t *testing.T) {
 	t.Parallel()
 
@@ -138,7 +138,7 @@ func TestCloneStorage(t *testing.T) {
 // - creates a server
 // - templatizes the server's storage
 // - deletes the new storage
-// - stops and deletes the server
+// - stops and deletes the server.
 func TestTemplatizeServerStorage(t *testing.T) {
 	t.Parallel()
 
@@ -182,7 +182,7 @@ func TestTemplatizeServerStorage(t *testing.T) {
 // - stops the server
 // - attaches a CD-ROM device
 // - loads a CD-ROM
-// - ejects the CD-ROM
+// - ejects the CD-ROM.
 func TestLoadEjectCDROM(t *testing.T) {
 	t.Parallel()
 
@@ -231,7 +231,7 @@ func TestLoadEjectCDROM(t *testing.T) {
 // - creates a storage device
 // - creates a backup of the storage device
 // - gets backup storage details
-// - restores the backup
+// - restores the backup.
 //
 func TestCreateRestoreBackup(t *testing.T) {
 	t.Parallel()
@@ -351,7 +351,7 @@ func TestDirectUploadStorageImport(t *testing.T) {
 		sum := sha256.Sum256(buf)
 		sha256sum := hex.EncodeToString(sum[:])
 
-		err = ioutil.WriteFile(path.Join(os.TempDir(), "temp_file.txt"), buf, 0600)
+		err = ioutil.WriteFile(path.Join(os.TempDir(), "temp_file.txt"), buf, 0o600)
 		require.NoError(t, err)
 		defer func() {
 			os.Remove(path.Join(os.TempDir(), "temp_file.txt"))

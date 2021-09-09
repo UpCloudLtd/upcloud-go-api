@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 )
 
-// Tags represents a list of tags
+// Tags represents a list of tags.
 type Tags struct {
 	Tags []Tag
 }
@@ -66,7 +66,7 @@ func (t TagServerSlice) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v)
 }
 
-// Tag represents a server tag
+// Tag represents a server tag.
 type Tag struct {
 	Name        string         `json:"name"`
 	Description string         `json:"description,omitempty"`

@@ -6,23 +6,23 @@ import (
 )
 
 // GetHostDetailsRequest represents the request for the details of a
-// single private host
+// single private host.
 type GetHostDetailsRequest struct {
 	ID int
 }
 
-// RequestURL implements the Request interface
+// RequestURL implements the Request interface.
 func (r *GetHostDetailsRequest) RequestURL() string {
 	return fmt.Sprintf("/host/%d", r.ID)
 }
 
-// ModifyHostRequest represents the request to modify a private host
+// ModifyHostRequest represents the request to modify a private host.
 type ModifyHostRequest struct {
 	ID          int    `json:"-"`
 	Description string `json:"description"`
 }
 
-// RequestURL implements the Request interface
+// RequestURL implements the Request interface.
 func (r *ModifyHostRequest) RequestURL() string {
 	return fmt.Sprintf("/host/%d", r.ID)
 }

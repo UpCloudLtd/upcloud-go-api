@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 )
 
-// Constants
+// Constants.
 const (
 	ServerStateStarted     = "started"
 	ServerStateStopped     = "stopped"
@@ -21,7 +21,7 @@ const (
 	RemoteAccessTypeSPICE = "spice"
 )
 
-// ServerConfigurations represents a /server_size response
+// ServerConfigurations represents a /server_size response.
 type ServerConfigurations struct {
 	ServerConfigurations []ServerConfiguration `json:"server_sizes"`
 }
@@ -46,13 +46,13 @@ func (s *ServerConfigurations) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// ServerConfiguration represents a server configuration
+// ServerConfiguration represents a server configuration.
 type ServerConfiguration struct {
 	CoreNumber   int `json:"core_number,string"`
 	MemoryAmount int `json:"memory_amount,string"`
 }
 
-// Servers represents a /server response
+// Servers represents a /server response.
 type Servers struct {
 	Servers []Server `json:"servers"`
 }
@@ -97,7 +97,7 @@ func (t *ServerTagSlice) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// Server represents a server
+// Server represents a server.
 type Server struct {
 	CoreNumber   int            `json:"core_number,string"`
 	Hostname     string         `json:"hostname"`
@@ -159,7 +159,7 @@ func (s *ServerStorageDeviceSlice) UnmarshalJSON(b []byte) error {
 // It is castable to a Networking struct.
 type ServerNetworking Networking
 
-// ServerDetails represents details about a server
+// ServerDetails represents details about a server.
 type ServerDetails struct {
 	Server
 

@@ -90,18 +90,18 @@ func (r *DeleteNetworkRequest) RequestURL() string {
 	return fmt.Sprintf("/network/%s", r.UUID)
 }
 
-// AttachNetworkRouterRequest represents a request to attach a particular router to a network
+// AttachNetworkRouterRequest represents a request to attach a particular router to a network.
 type AttachNetworkRouterRequest struct {
 	NetworkUUID string `json:"-"`
 	RouterUUID  string `json:"router"`
 }
 
-// RequestURL implements the Request interface
+// RequestURL implements the Request interface.
 func (r *AttachNetworkRouterRequest) RequestURL() string {
 	return (&ModifyNetworkRequest{UUID: r.NetworkUUID}).RequestURL()
 }
 
-// MarshalJSON implements the json.Marshaler interface
+// MarshalJSON implements the json.Marshaler interface.
 func (r AttachNetworkRouterRequest) MarshalJSON() ([]byte, error) {
 	type localAttachNetworkRouterRequest AttachNetworkRouterRequest
 	v := struct {
@@ -112,17 +112,17 @@ func (r AttachNetworkRouterRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&v)
 }
 
-// DetachNetworkRouterRequest represents a request to detach a router from a network
+// DetachNetworkRouterRequest represents a request to detach a router from a network.
 type DetachNetworkRouterRequest struct {
 	NetworkUUID string `json:"-"`
 }
 
-// RequestURL implements the Request interface
+// RequestURL implements the Request interface.
 func (r *DetachNetworkRouterRequest) RequestURL() string {
 	return (&ModifyNetworkRequest{UUID: r.NetworkUUID}).RequestURL()
 }
 
-// MarshalJSON implements the json.Marshaler interface
+// MarshalJSON implements the json.Marshaler interface.
 func (r DetachNetworkRouterRequest) MarshalJSON() ([]byte, error) {
 	return []byte(`{ "network": { "router": null } }`), nil
 }

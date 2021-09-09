@@ -7,12 +7,12 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 )
 
-// CreateTagRequest represents a request to create a tag and assign it to zero or more servers
+// CreateTagRequest represents a request to create a tag and assign it to zero or more servers.
 type CreateTagRequest struct {
 	upcloud.Tag
 }
 
-// RequestURL implements the Request interface
+// RequestURL implements the Request interface.
 func (r *CreateTagRequest) RequestURL() string {
 	return "/tag"
 }
@@ -49,17 +49,17 @@ func (r ModifyTagRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&v)
 }
 
-// RequestURL implements the Request interface
+// RequestURL implements the Request interface.
 func (r *ModifyTagRequest) RequestURL() string {
 	return fmt.Sprintf("/tag/%s", r.Name)
 }
 
-// DeleteTagRequest represents a request to delete a tag
+// DeleteTagRequest represents a request to delete a tag.
 type DeleteTagRequest struct {
 	Name string
 }
 
-// RequestURL implements the Request interface
+// RequestURL implements the Request interface.
 func (r *DeleteTagRequest) RequestURL() string {
 	return fmt.Sprintf("/tag/%s", r.Name)
 }

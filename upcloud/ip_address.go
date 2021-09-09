@@ -2,7 +2,7 @@ package upcloud
 
 import "encoding/json"
 
-// Constants
+// Constants.
 const (
 	IPAddressFamilyIPv4 = "IPv4"
 	IPAddressFamilyIPv6 = "IPv6"
@@ -12,7 +12,7 @@ const (
 	IPAddressAccessUtility = "utility"
 )
 
-// IPAddresses represents a /ip_address response
+// IPAddresses represents a /ip_address response.
 type IPAddresses struct {
 	IPAddresses []IPAddress `json:"ip_addresses"`
 }
@@ -40,7 +40,7 @@ func (s *IPAddresses) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// IPAddress represents an IP address
+// IPAddress represents an IP address.
 type IPAddress struct {
 	Access     string  `json:"access"`
 	Address    string  `json:"address"`

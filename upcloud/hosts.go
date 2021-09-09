@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-// Hosts represents a GetHosts response
+// Hosts represents a GetHosts response.
 type Hosts struct {
 	Hosts []Host `json:"hosts"`
 }
@@ -34,7 +34,7 @@ func (n *Hosts) UnmarshalJSON(b []byte) error {
 }
 
 // StatSlice is a slice of Stat structs
-// This exsits to support a custom unmarshaller
+// This exsits to support a custom unmarshaller.
 type StatSlice []Stat
 
 // UnmarshalJSON is a custom unmarshaller that deals with
@@ -53,7 +53,7 @@ func (t *StatSlice) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// Host represents an individual Host in a response
+// Host represents an individual Host in a response.
 type Host struct {
 	ID             int       `json:"id"`
 	Description    string    `json:"description"`
@@ -80,7 +80,7 @@ func (s *Host) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// Stat represents Host stats in a response
+// Stat represents Host stats in a response.
 type Stat struct {
 	Name      string    `json:"name"`
 	Timestamp time.Time `json:"timestamp"`

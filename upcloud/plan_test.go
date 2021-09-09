@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// TestUnmarshalPlans tests that Plans and Plan objects unmarshal correctly
+// TestUnmarshalPlans tests that Plans and Plan objects unmarshal correctly.
 func TestUnmarshalPlans(t *testing.T) {
 	originalJSON := `
       {

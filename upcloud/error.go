@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-// Error represents an error
+// Error represents an error.
 type Error struct {
 	ErrorCode    string `json:"error_code"`
 	ErrorMessage string `json:"error_message"`
@@ -28,7 +28,7 @@ func (e *Error) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// Error implements the Error interface
+// Error implements the Error interface.
 func (e *Error) Error() string {
 	return fmt.Sprintf("%s (%s)", e.ErrorMessage, e.ErrorCode)
 }

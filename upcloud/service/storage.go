@@ -35,7 +35,7 @@ type Storage interface {
 
 var _ Storage = (*Service)(nil)
 
-// GetStorages returns all available storages
+// GetStorages returns all available storages.
 func (s *Service) GetStorages(r *request.GetStoragesRequest) (*upcloud.Storages, error) {
 	storages := upcloud.Storages{}
 	response, err := s.basicGetRequest(r.RequestURL())
@@ -51,7 +51,7 @@ func (s *Service) GetStorages(r *request.GetStoragesRequest) (*upcloud.Storages,
 	return &storages, nil
 }
 
-// GetStorageDetails returns extended details about the specified piece of storage
+// GetStorageDetails returns extended details about the specified piece of storage.
 func (s *Service) GetStorageDetails(r *request.GetStorageDetailsRequest) (*upcloud.StorageDetails, error) {
 	storageDetails := upcloud.StorageDetails{}
 	response, err := s.basicGetRequest(r.RequestURL())
@@ -67,7 +67,7 @@ func (s *Service) GetStorageDetails(r *request.GetStorageDetailsRequest) (*upclo
 	return &storageDetails, nil
 }
 
-// CreateStorage creates the specified storage
+// CreateStorage creates the specified storage.
 func (s *Service) CreateStorage(r *request.CreateStorageRequest) (*upcloud.StorageDetails, error) {
 	storageDetails := upcloud.StorageDetails{}
 	requestBody, _ := json.Marshal(r)
@@ -85,7 +85,7 @@ func (s *Service) CreateStorage(r *request.CreateStorageRequest) (*upcloud.Stora
 	return &storageDetails, nil
 }
 
-// ModifyStorage modifies the specified storage device
+// ModifyStorage modifies the specified storage device.
 func (s *Service) ModifyStorage(r *request.ModifyStorageRequest) (*upcloud.StorageDetails, error) {
 	storageDetails := upcloud.StorageDetails{}
 	requestBody, _ := json.Marshal(r)
@@ -103,7 +103,7 @@ func (s *Service) ModifyStorage(r *request.ModifyStorageRequest) (*upcloud.Stora
 	return &storageDetails, nil
 }
 
-// AttachStorage attaches the specified storage to the specified server
+// AttachStorage attaches the specified storage to the specified server.
 func (s *Service) AttachStorage(r *request.AttachStorageRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
 	requestBody, _ := json.Marshal(r)
@@ -121,7 +121,7 @@ func (s *Service) AttachStorage(r *request.AttachStorageRequest) (*upcloud.Serve
 	return &serverDetails, nil
 }
 
-// DetachStorage detaches the specified storage from the specified server
+// DetachStorage detaches the specified storage from the specified server.
 func (s *Service) DetachStorage(r *request.DetachStorageRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
 	requestBody, _ := json.Marshal(r)
@@ -139,10 +139,9 @@ func (s *Service) DetachStorage(r *request.DetachStorageRequest) (*upcloud.Serve
 	return &serverDetails, nil
 }
 
-// DeleteStorage deletes the specified storage device
+// DeleteStorage deletes the specified storage device.
 func (s *Service) DeleteStorage(r *request.DeleteStorageRequest) error {
 	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
-
 	if err != nil {
 		return parseJSONServiceError(err)
 	}
@@ -150,7 +149,7 @@ func (s *Service) DeleteStorage(r *request.DeleteStorageRequest) error {
 	return nil
 }
 
-// CloneStorage detaches the specified storage from the specified server
+// CloneStorage detaches the specified storage from the specified server.
 func (s *Service) CloneStorage(r *request.CloneStorageRequest) (*upcloud.StorageDetails, error) {
 	storageDetails := upcloud.StorageDetails{}
 	requestBody, _ := json.Marshal(r)
@@ -168,7 +167,7 @@ func (s *Service) CloneStorage(r *request.CloneStorageRequest) (*upcloud.Storage
 	return &storageDetails, nil
 }
 
-// TemplatizeStorage detaches the specified storage from the specified server
+// TemplatizeStorage detaches the specified storage from the specified server.
 func (s *Service) TemplatizeStorage(r *request.TemplatizeStorageRequest) (*upcloud.StorageDetails, error) {
 	storageDetails := upcloud.StorageDetails{}
 	requestBody, _ := json.Marshal(r)
@@ -187,7 +186,7 @@ func (s *Service) TemplatizeStorage(r *request.TemplatizeStorageRequest) (*upclo
 }
 
 // WaitForStorageState blocks execution until the specified storage device has entered the specified state. If the
-// state changes favorably, the new storage details is returned. The method will give up after the specified timeout
+// state changes favorably, the new storage details is returned. The method will give up after the specified timeout.
 func (s *Service) WaitForStorageState(r *request.WaitForStorageStateRequest) (*upcloud.StorageDetails, error) {
 	attempts := 0
 	sleepDuration := time.Second * 5
@@ -198,7 +197,6 @@ func (s *Service) WaitForStorageState(r *request.WaitForStorageStateRequest) (*u
 		storageDetails, err := s.GetStorageDetails(&request.GetStorageDetailsRequest{
 			UUID: r.UUID,
 		})
-
 		if err != nil {
 			return nil, err
 		}
@@ -215,7 +213,7 @@ func (s *Service) WaitForStorageState(r *request.WaitForStorageStateRequest) (*u
 	}
 }
 
-// LoadCDROM loads a storage as a CD-ROM in the CD-ROM device of a server
+// LoadCDROM loads a storage as a CD-ROM in the CD-ROM device of a server.
 func (s *Service) LoadCDROM(r *request.LoadCDROMRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
 	requestBody, _ := json.Marshal(r)
@@ -233,7 +231,7 @@ func (s *Service) LoadCDROM(r *request.LoadCDROMRequest) (*upcloud.ServerDetails
 	return &serverDetails, nil
 }
 
-// EjectCDROM ejects the storage from the CD-ROM device of a server
+// EjectCDROM ejects the storage from the CD-ROM device of a server.
 func (s *Service) EjectCDROM(r *request.EjectCDROMRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
 
@@ -250,7 +248,7 @@ func (s *Service) EjectCDROM(r *request.EjectCDROMRequest) (*upcloud.ServerDetai
 	return &serverDetails, nil
 }
 
-// CreateBackup creates a backup of the specified storage
+// CreateBackup creates a backup of the specified storage.
 func (s *Service) CreateBackup(r *request.CreateBackupRequest) (*upcloud.StorageDetails, error) {
 	storageDetails := upcloud.StorageDetails{}
 	requestBody, _ := json.Marshal(r)
@@ -268,10 +266,9 @@ func (s *Service) CreateBackup(r *request.CreateBackupRequest) (*upcloud.Storage
 	return &storageDetails, nil
 }
 
-// RestoreBackup creates a backup of the specified storage
+// RestoreBackup creates a backup of the specified storage.
 func (s *Service) RestoreBackup(r *request.RestoreBackupRequest) error {
 	_, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), nil)
-
 	if err != nil {
 		return parseJSONServiceError(err)
 	}
@@ -398,7 +395,6 @@ func (s *Service) WaitForStorageImportCompletion(r *request.WaitForStorageImport
 		storageImportDetails, err := s.GetStorageImportDetails(&request.GetStorageImportDetailsRequest{
 			UUID: r.StorageUUID,
 		})
-
 		if err != nil {
 			return nil, err
 		}

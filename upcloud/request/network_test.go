@@ -9,7 +9,7 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 )
 
-// TestMarshalGetNetworksInZoneRequest tests that GetNetworksInZoneRequest behaves correctly
+// TestMarshalGetNetworksInZoneRequest tests that GetNetworksInZoneRequest behaves correctly.
 func TestMarshalGetNetworksInZoneRequest(t *testing.T) {
 	request := GetNetworksInZoneRequest{
 		Zone: "foo",
@@ -18,7 +18,7 @@ func TestMarshalGetNetworksInZoneRequest(t *testing.T) {
 	assert.Equal(t, "/network/?zone=foo", request.RequestURL())
 }
 
-// TestMarshalGetNetworkDetailsRequest tests that GetNetworkDetailsRequest behaves correctly
+// TestMarshalGetNetworkDetailsRequest tests that GetNetworkDetailsRequest behaves correctly.
 func TestMarshalGetNetworkDetailsRequest(t *testing.T) {
 	request := GetNetworkDetailsRequest{
 		UUID: "foo",
@@ -27,7 +27,7 @@ func TestMarshalGetNetworkDetailsRequest(t *testing.T) {
 	assert.Equal(t, "/network/foo", request.RequestURL())
 }
 
-// TestMarshalCreateNetworkRequest tests that CreateNetworkRequest behaves correctly
+// TestMarshalCreateNetworkRequest tests that CreateNetworkRequest behaves correctly.
 func TestMarshalCreateNetworkRequest(t *testing.T) {
 	request := CreateNetworkRequest{
 		Name:   "Test private net",
@@ -79,7 +79,7 @@ func TestMarshalCreateNetworkRequest(t *testing.T) {
 	assert.JSONEq(t, expectedJSON, string(actualJSON))
 }
 
-// TestMarshalModifyNetworkRequest tests that ModifyNetworkRequest behaves correctly
+// TestMarshalModifyNetworkRequest tests that ModifyNetworkRequest behaves correctly.
 func TestMarshalModifyNetworkRequest(t *testing.T) {
 	request := ModifyNetworkRequest{
 		UUID: "foo",
@@ -116,7 +116,7 @@ func TestMarshalModifyNetworkRequest(t *testing.T) {
 	assert.JSONEq(t, expectedJSON, string(actualJSON))
 }
 
-// TestMarshalDeleteNetwork tests the DeleteNetworkRequest behaves correctly
+// TestMarshalDeleteNetwork tests the DeleteNetworkRequest behaves correctly.
 func TestMarshalDeleteNetwork(t *testing.T) {
 	request := DeleteNetworkRequest{
 		UUID: "foo",
@@ -166,7 +166,7 @@ func TestMarshalDetachNetworkRouterRequest(t *testing.T) {
 	assert.Equal(t, "/network/mocknetworkuuid", request.RequestURL())
 }
 
-// TestMarshalGetServerNetworksRequest tests the GetServerNetworksRequest behaves correctly
+// TestMarshalGetServerNetworksRequest tests the GetServerNetworksRequest behaves correctly.
 func TestMarshalGetServerNetworksRequest(t *testing.T) {
 	request := GetServerNetworksRequest{
 		ServerUUID: "foo",

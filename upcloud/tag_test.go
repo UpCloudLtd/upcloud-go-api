@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// TestUnmarshalTags tests that Tags structs are unmarshaled correctly
+// TestUnmarshalTags tests that Tags structs are unmarshaled correctly.
 func TestUnmarshalTags(t *testing.T) {
 	originalJSON := `
       {

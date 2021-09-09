@@ -16,11 +16,10 @@ type Host interface {
 
 var _ Host = (*Service)(nil)
 
-// GetHosts returns the all the available private hosts
+// GetHosts returns the all the available private hosts.
 func (s *Service) GetHosts() (*upcloud.Hosts, error) {
 	hosts := upcloud.Hosts{}
 	response, err := s.basicGetRequest("/host")
-
 	if err != nil {
 		return nil, err
 	}
@@ -33,11 +32,10 @@ func (s *Service) GetHosts() (*upcloud.Hosts, error) {
 	return &hosts, nil
 }
 
-// GetHostDetails returns the details for a single private host
+// GetHostDetails returns the details for a single private host.
 func (s *Service) GetHostDetails(r *request.GetHostDetailsRequest) (*upcloud.Host, error) {
 	host := upcloud.Host{}
 	response, err := s.basicGetRequest(r.RequestURL())
-
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +53,6 @@ func (s *Service) ModifyHost(r *request.ModifyHostRequest) (*upcloud.Host, error
 	host := upcloud.Host{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}

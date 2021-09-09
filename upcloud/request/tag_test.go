@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// TestCreateTagRequest tests that CreateTagRequest behaves correctly
+// TestCreateTagRequest tests that CreateTagRequest behaves correctly.
 func TestCreateTagRequest(t *testing.T) {
 	request := CreateTagRequest{
 		Tag: upcloud.Tag{
@@ -71,7 +71,7 @@ func TestCreateTagRequest_OmittedElements(t *testing.T) {
 	assert.JSONEq(t, expectedJSON, string(actualJSON))
 }
 
-// TestModifyTagRequest tests that ModifyTagRequest marshals correctly
+// TestModifyTagRequest tests that ModifyTagRequest marshals correctly.
 func TestModifyTagRequest(t *testing.T) {
 	request := ModifyTagRequest{
 		Name: "foo",
@@ -137,7 +137,7 @@ func TestModifyTagRequest_OmitServers(t *testing.T) {
 	assert.JSONEq(t, expectedJSON, string(actualJSON))
 }
 
-// TestDeleteTagRequest tests that DeleteTagRequest behaves correctly
+// TestDeleteTagRequest tests that DeleteTagRequest behaves correctly.
 func TestDeleteTagRequest(t *testing.T) {
 	request := DeleteTagRequest{
 		Name: "foo",

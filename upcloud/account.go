@@ -2,14 +2,14 @@ package upcloud
 
 import "encoding/json"
 
-// Account represents an account
+// Account represents an account.
 type Account struct {
 	Credits        float64        `json:"credits"`
 	UserName       string         `json:"username"`
 	ResourceLimits ResourceLimits `json:"resource_limits"`
 }
 
-// ResourceLimits represents an account's resource limits
+// ResourceLimits represents an account's resource limits.
 type ResourceLimits struct {
 	Cores               int `json:"cores,omitempty"`
 	DetachedFloatingIps int `json:"detached_floating_ips,omitempty"`

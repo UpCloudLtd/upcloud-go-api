@@ -5,17 +5,17 @@ import (
 	"fmt"
 )
 
-// GetObjectStorageDetailsRequest represents a request for retrieving details about a Object Storage device
+// GetObjectStorageDetailsRequest represents a request for retrieving details about a Object Storage device.
 type GetObjectStorageDetailsRequest struct {
 	UUID string
 }
 
-// RequestURL implements the Request interface
+// RequestURL implements the Request interface.
 func (r *GetObjectStorageDetailsRequest) RequestURL() string {
 	return fmt.Sprintf("/object-storage/%s", r.UUID)
 }
 
-// CreateObjectStorageRequest represents a request for creating a new Object Storage device
+// CreateObjectStorageRequest represents a request for creating a new Object Storage device.
 type CreateObjectStorageRequest struct {
 	Name        string `json:"name,omitempty"`
 	Description string `json:"description,omitempty"`
@@ -37,12 +37,12 @@ func (r CreateObjectStorageRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&v)
 }
 
-// RequestURL implements the Request interface
+// RequestURL implements the Request interface.
 func (r *CreateObjectStorageRequest) RequestURL() string {
 	return "/object-storage"
 }
 
-// ModifyObjectStorageRequest represents a request to modify a Object Storage
+// ModifyObjectStorageRequest represents a request to modify a Object Storage.
 type ModifyObjectStorageRequest struct {
 	UUID        string `json:"-"`
 	Description string `json:"description,omitempty"`
@@ -63,17 +63,17 @@ func (r ModifyObjectStorageRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&v)
 }
 
-// RequestURL implements the Request interface
+// RequestURL implements the Request interface.
 func (r *ModifyObjectStorageRequest) RequestURL() string {
 	return fmt.Sprintf("/object-storage/%s", r.UUID)
 }
 
-// DeleteObjectStorageRequest represents a request to delete a Object Storage
+// DeleteObjectStorageRequest represents a request to delete a Object Storage.
 type DeleteObjectStorageRequest struct {
 	UUID string
 }
 
-// RequestURL implements the Request interface
+// RequestURL implements the Request interface.
 func (r *DeleteObjectStorageRequest) RequestURL() string {
 	return fmt.Sprintf("/object-storage/%s", r.UUID)
 }

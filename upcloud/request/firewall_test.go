@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// TestGetFirewallRulesRequest tests that GetFirewallRulesRequest behaves correctly
+// TestGetFirewallRulesRequest tests that GetFirewallRulesRequest behaves correctly.
 func TestGetFirewallRulesRequest(t *testing.T) {
 	request := GetFirewallRulesRequest{
 		ServerUUID: "00798b85-efdc-41ca-8021-f6ef457b8531",
@@ -17,7 +17,7 @@ func TestGetFirewallRulesRequest(t *testing.T) {
 	assert.Equal(t, "/server/00798b85-efdc-41ca-8021-f6ef457b8531/firewall_rule", request.RequestURL())
 }
 
-// TestGetFirewallRuleDetailsRequest tests that GetFirewallRuleDetailsRequest behaves correctly
+// TestGetFirewallRuleDetailsRequest tests that GetFirewallRuleDetailsRequest behaves correctly.
 func TestGetFirewallRuleDetailsRequest(t *testing.T) {
 	request := GetFirewallRuleDetailsRequest{
 		ServerUUID: "00798b85-efdc-41ca-8021-f6ef457b8531",
@@ -27,7 +27,7 @@ func TestGetFirewallRuleDetailsRequest(t *testing.T) {
 	assert.Equal(t, "/server/00798b85-efdc-41ca-8021-f6ef457b8531/firewall_rule/1", request.RequestURL())
 }
 
-// TestCreateFirewallRuleRequest tests that CreateFirewallRuleRequest behaves correctly
+// TestCreateFirewallRuleRequest tests that CreateFirewallRuleRequest behaves correctly.
 func TestCreateFirewallRuleRequest(t *testing.T) {
 	request := CreateFirewallRuleRequest{
 		ServerUUID: "00798b85-efdc-41ca-8021-f6ef457b8531",
@@ -71,7 +71,7 @@ func TestCreateFirewallRuleRequest(t *testing.T) {
 	assert.JSONEq(t, expectedJSON, string(actualJSON))
 }
 
-// TestDeleteFirewallRuleRequest tests that DeleteFirewallRuleRequest behaves correctly
+// TestDeleteFirewallRuleRequest tests that DeleteFirewallRuleRequest behaves correctly.
 func TestDeleteFirewallRuleRequest(t *testing.T) {
 	request := DeleteFirewallRuleRequest{
 		ServerUUID: "00798b85-efdc-41ca-8021-f6ef457b8531",
@@ -81,7 +81,7 @@ func TestDeleteFirewallRuleRequest(t *testing.T) {
 	assert.Equal(t, "/server/00798b85-efdc-41ca-8021-f6ef457b8531/firewall_rule/1", request.RequestURL())
 }
 
-// TestCreateFirewallRulesRequest tests that CreateFirewallRulesRequest behaves correctly
+// TestCreateFirewallRulesRequest tests that CreateFirewallRulesRequest behaves correctly.
 func TestCreateFirewallRulesRequest(t *testing.T) {
 	request := CreateFirewallRulesRequest{
 		ServerUUID: "foo",

@@ -7,17 +7,17 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 )
 
-// GetIPAddressDetailsRequest represents a request to retrieve details about a specific IP address
+// GetIPAddressDetailsRequest represents a request to retrieve details about a specific IP address.
 type GetIPAddressDetailsRequest struct {
 	Address string
 }
 
-// RequestURL implements the Request interface
+// RequestURL implements the Request interface.
 func (r *GetIPAddressDetailsRequest) RequestURL() string {
 	return fmt.Sprintf("/ip_address/%s", r.Address)
 }
 
-// AssignIPAddressRequest represents a request to assign a new IP address to a server
+// AssignIPAddressRequest represents a request to assign a new IP address to a server.
 type AssignIPAddressRequest struct {
 	Access     string          `json:"access,omitempty"`
 	Family     string          `json:"family,omitempty"`
@@ -27,7 +27,7 @@ type AssignIPAddressRequest struct {
 	Zone       string          `json:"zone,omitempty"`
 }
 
-// RequestURL implements the Request interface
+// RequestURL implements the Request interface.
 func (r *AssignIPAddressRequest) RequestURL() string {
 	return "/ip_address"
 }
@@ -44,7 +44,7 @@ func (r AssignIPAddressRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&v)
 }
 
-// ModifyIPAddressRequest represents a request to modify the PTR DNS record of a specific IP address
+// ModifyIPAddressRequest represents a request to modify the PTR DNS record of a specific IP address.
 type ModifyIPAddressRequest struct {
 	IPAddress string `json:"-"`
 
@@ -52,7 +52,7 @@ type ModifyIPAddressRequest struct {
 	MAC       string `json:"mac,omitempty"`
 }
 
-// RequestURL implements the Request interface
+// RequestURL implements the Request interface.
 func (r *ModifyIPAddressRequest) RequestURL() string {
 	return fmt.Sprintf("/ip_address/%s", r.IPAddress)
 }
@@ -79,12 +79,12 @@ func (r ModifyIPAddressRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&v)
 }
 
-// ReleaseIPAddressRequest represents a request to remove a specific IP address from server
+// ReleaseIPAddressRequest represents a request to remove a specific IP address from server.
 type ReleaseIPAddressRequest struct {
 	IPAddress string
 }
 
-// RequestURL implements the Request interface
+// RequestURL implements the Request interface.
 func (r *ReleaseIPAddressRequest) RequestURL() string {
 	return fmt.Sprintf("/ip_address/%s", r.IPAddress)
 }

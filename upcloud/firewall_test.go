@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// TestUnmarshalFirewallRules tests the FirewallRules and FirewallRule are unmarshaled correctly
+// TestUnmarshalFirewallRules tests the FirewallRules and FirewallRule are unmarshaled correctly.
 func TestUnmarshalFirewallRules(t *testing.T) {
 	originalJSON := `
       {
@@ -163,7 +163,7 @@ func TestUnmarshalFirewallRules(t *testing.T) {
 	}
 }
 
-// TestUnmarshalFirewallRule tests that FirewallRule is unmarshaled correctly on its own
+// TestUnmarshalFirewallRule tests that FirewallRule is unmarshaled correctly on its own.
 func TestUnmarshalFirewallRule(t *testing.T) {
 	originalJSON := `
       {

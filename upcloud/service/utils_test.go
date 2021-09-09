@@ -17,7 +17,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// Configures the test environment
+// Configures the test environment.
 func getService() *Service {
 	user, password := getCredentials()
 
@@ -27,7 +27,7 @@ func getService() *Service {
 	return New(c)
 }
 
-// records the API interactions of the test
+// records the API interactions of the test.
 func record(t *testing.T, fixture string, f func(*testing.T, *Service)) {
 	if testing.Short() {
 		t.Skip("Skipping recorded test in short mode")
@@ -61,7 +61,7 @@ func record(t *testing.T, fixture string, f func(*testing.T, *Service)) {
 	f(t, New(c))
 }
 
-// Tears down the test environment by removing all resources
+// Tears down the test environment by removing all resources.
 func teardown() {
 	svc := getService()
 
@@ -164,7 +164,7 @@ func teardown() {
 	}
 }
 
-// Creates a server and returns the details about it, panic if creation fails
+// Creates a server and returns the details about it, panic if creation fails.
 func createServer(svc *Service, name string) (*upcloud.ServerDetails, error) {
 	return createServerWithNetwork(svc, name, "")
 }
@@ -249,7 +249,7 @@ func createServerWithNetwork(svc *Service, name string, network string) (*upclou
 	return serverDetails, nil
 }
 
-// Stops the specified server (forcibly)
+// Stops the specified server (forcibly).
 func stopServer(svc *Service, uuid string) error {
 	serverDetails, err := svc.StopServer(&request.StopServerRequest{
 		UUID:     uuid,
@@ -272,7 +272,7 @@ func stopServer(svc *Service, uuid string) error {
 	return nil
 }
 
-// Deletes the specified server
+// Deletes the specified server.
 func deleteServer(svc *Service, uuid string) error {
 	err := svc.DeleteServer(&request.DeleteServerRequest{
 		UUID: uuid,
@@ -281,7 +281,7 @@ func deleteServer(svc *Service, uuid string) error {
 	return err
 }
 
-// Deletes the specified server and storages
+// Deletes the specified server and storages.
 func deleteServerAndStorages(svc *Service, uuid string) error {
 	err := svc.DeleteServerAndStorages(&request.DeleteServerAndStoragesRequest{
 		UUID: uuid,
@@ -290,7 +290,7 @@ func deleteServerAndStorages(svc *Service, uuid string) error {
 	return err
 }
 
-// Creates a piece of storage and returns the details about it, panic if creation fails
+// Creates a piece of storage and returns the details about it, panic if creation fails.
 func createStorage(svc *Service) (*upcloud.StorageDetails, error) {
 	createStorageRequest := request.CreateStorageRequest{
 		Tier:  upcloud.StorageTierMaxIOPS,
@@ -305,7 +305,6 @@ func createStorage(svc *Service) (*upcloud.StorageDetails, error) {
 	}
 
 	storageDetails, err := svc.CreateStorage(&createStorageRequest)
-
 	if err != nil {
 		return nil, err
 	}
@@ -313,7 +312,7 @@ func createStorage(svc *Service) (*upcloud.StorageDetails, error) {
 	return storageDetails, nil
 }
 
-// Deletes the specified storage
+// Deletes the specified storage.
 func deleteStorage(svc *Service, uuid string) error {
 	err := svc.DeleteStorage(&request.DeleteStorageRequest{
 		UUID: uuid,
@@ -322,7 +321,7 @@ func deleteStorage(svc *Service, uuid string) error {
 	return err
 }
 
-// deleteAllTags deletes all existing tags
+// deleteAllTags deletes all existing tags.
 func deleteAllTags(svc *Service) error {
 	tags, err := svc.GetTags()
 	if err != nil {
@@ -342,7 +341,7 @@ func deleteAllTags(svc *Service) error {
 	return nil
 }
 
-// Waits for the specified storage to come online
+// Waits for the specified storage to come online.
 func waitForStorageOnline(svc *Service, uuid string) error {
 	_, err := svc.WaitForStorageState(&request.WaitForStorageStateRequest{
 		UUID:         uuid,
@@ -353,7 +352,7 @@ func waitForStorageOnline(svc *Service, uuid string) error {
 	return err
 }
 
-// Creates an Object Storage and returns the details about it, panic if creation fails
+// Creates an Object Storage and returns the details about it, panic if creation fails.
 func createObjectStorage(svc *Service, name string, description string, zone string, size int) (*upcloud.ObjectStorageDetails, error) {
 	createObjectStorageRequest := request.CreateObjectStorageRequest{
 		Name:        "go-test-" + name,
@@ -373,7 +372,7 @@ func createObjectStorage(svc *Service, name string, description string, zone str
 	return objectStorageDetails, nil
 }
 
-// Deletes the specific Object Storage
+// Deletes the specific Object Storage.
 func deleteObjectStorage(svc *Service, uuid string) error {
 	err := svc.DeleteObjectStorage(&request.DeleteObjectStorageRequest{
 		UUID: uuid,
@@ -395,14 +394,14 @@ func utcTimeWithSecondPrecision() (time.Time, error) {
 	return t, err
 }
 
-// Handles the error by panicing, thus stopping the test execution
+// Handles the error by panicing, thus stopping the test execution.
 func handleError(err error) {
 	if err != nil {
 		panic(err)
 	}
 }
 
-// Reads the API username and password from the environment, panics if they are not available
+// Reads the API username and password from the environment, panics if they are not available.
 func getCredentials() (string, string) {
 	if os.Getenv("UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS") == "yes" {
 		return "username", "password"

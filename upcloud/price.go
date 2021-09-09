@@ -2,7 +2,7 @@ package upcloud
 
 import "encoding/json"
 
-// PriceZones represents a /price response
+// PriceZones represents a /price response.
 type PriceZones struct {
 	PriceZones []PriceZone `json:"prices"`
 }
@@ -51,7 +51,7 @@ type PriceZone struct {
 	StorageTemplate        *Price `json:"storage_template"`
 }
 
-// Price represents a price
+// Price represents a price.
 type Price struct {
 	Amount int     `json:"amount"`
 	Price  float64 `json:"price"`

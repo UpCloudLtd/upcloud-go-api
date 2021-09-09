@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// TestUnmarshalTimeZone tests that the TimeZones struct is correctly marshaled
+// TestUnmarshalTimeZone tests that the TimeZones struct is correctly marshaled.
 func TestUnmarshalTimeZones(t *testing.T) {
 	originalJSON := `
 {

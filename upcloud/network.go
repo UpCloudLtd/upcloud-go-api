@@ -2,14 +2,14 @@ package upcloud
 
 import "encoding/json"
 
-// Constants
+// Constants.
 const (
 	NetworkTypePrivate = "private"
 	NetworkTypePublic  = "public"
 	NetworkTypeUtility = "utility"
 )
 
-// ServerInterface represent a network interface on the server
+// ServerInterface represent a network interface on the server.
 type ServerInterface Interface
 
 // ServerInterfaceSlice is a slice of ServerInterfaces.
@@ -32,7 +32,7 @@ func (s *ServerInterfaceSlice) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// Networking represents networking in a response
+// Networking represents networking in a response.
 type Networking struct {
 	Interfaces ServerInterfaceSlice `json:"interfaces"`
 }
@@ -55,7 +55,7 @@ func (s *Networking) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// Interface represents a network interface in a response
+// Interface represents a network interface in a response.
 type Interface struct {
 	Index             int            `json:"index"`
 	IPAddresses       IPAddressSlice `json:"ip_addresses"`
@@ -148,7 +148,7 @@ func (t *NetworkServerSlice) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// NetworkServer represents a server in a networking response
+// NetworkServer represents a server in a networking response.
 type NetworkServer struct {
 	ServerUUID  string `json:"uuid"`
 	ServerTitle string `json:"title"`
@@ -231,7 +231,7 @@ func (t *NetworkSlice) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// Routers represents a response to a GetRouters request
+// Routers represents a response to a GetRouters request.
 type Routers struct {
 	Routers []Router `json:"routers"`
 }
@@ -284,7 +284,7 @@ func (t *RouterNetworkSlice) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// Router represents a Router in a response
+// Router represents a Router in a response.
 type Router struct {
 	AttachedNetworks RouterNetworkSlice `json:"attached_networks"`
 	Name             string             `json:"name"`

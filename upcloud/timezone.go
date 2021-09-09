@@ -2,7 +2,7 @@ package upcloud
 
 import "encoding/json"
 
-// TimeZones represents a list of timezones
+// TimeZones represents a list of timezones.
 type TimeZones struct {
 	TimeZones []string `json:"timezone"`
 }

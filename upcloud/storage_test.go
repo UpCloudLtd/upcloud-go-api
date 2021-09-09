@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// TestUnmarshalStorage tests that Storages and Storage struct are unmarshaled correctly
+// TestUnmarshalStorage tests that Storages and Storage struct are unmarshaled correctly.
 func TestUnmarshalStorage(t *testing.T) {
 	originalJSON := `
 {
@@ -110,7 +110,7 @@ func TestUnmarshalStorage(t *testing.T) {
 	}
 }
 
-// TestUnmarshalStorageDetails tests that StorageDetails struct is unmarshaled correctly
+// TestUnmarshalStorageDetails tests that StorageDetails struct is unmarshaled correctly.
 func TestUnmarshalStorageDetails(t *testing.T) {
 	originalJSON := `
 	{
@@ -170,7 +170,7 @@ func TestUnmarshalStorageDetails(t *testing.T) {
 	assert.Equal(t, "00798b85-efdc-41ca-8021-f6ef457b8531", storageDeviceDetails.ServerUUIDs[0])
 }
 
-// TestUnmarshalStorageImport tests that StorageImport struct is unmarshaled correctly
+// TestUnmarshalStorageImport tests that StorageImport struct is unmarshaled correctly.
 func TestUnmarshalStorageImport(t *testing.T) {
 	originalJSON := `
 	  {

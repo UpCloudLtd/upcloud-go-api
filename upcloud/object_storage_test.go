@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// TestUnmarshalObjectStorages tests that Object Storages are unmarshaled correctly
+// TestUnmarshalObjectStorages tests that Object Storages are unmarshaled correctly.
 func TestUnmarshalObjectStorages(t *testing.T) {
 	originalJSON := `
 		{

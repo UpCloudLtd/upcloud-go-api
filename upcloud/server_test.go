@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// TestUnmarshalServerConfiguratons tests that ServerConfigurations and ServerConfiguration are unmarshaled correctly
+// TestUnmarshalServerConfiguratons tests that ServerConfigurations and ServerConfiguration are unmarshaled correctly.
 func TestUnmarshalServerConfiguratons(t *testing.T) {
 	originalJSON := `
 {
@@ -65,7 +65,7 @@ func TestUnmarshalServerConfiguratons(t *testing.T) {
 	}
 }
 
-// TestUnmarshalServers tests that Servers and Server are unmarshaled correctly
+// TestUnmarshalServers tests that Servers and Server are unmarshaled correctly.
 func TestUnmarshalServers(t *testing.T) {
 	originalJSON := `
         {
@@ -110,7 +110,7 @@ func TestUnmarshalServers(t *testing.T) {
 	assert.Equal(t, "uk-lon1", server.Zone)
 }
 
-// TestUnmarshalServerDetails tests that ServerDetails objects are correctly unmarshaled
+// TestUnmarshalServerDetails tests that ServerDetails objects are correctly unmarshaled.
 func TestUnmarshalServerDetails(t *testing.T) {
 	originalJSON := `
       {

@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// TestUmarshalPriceZones tests that PrizeZones, PriceZone and Price are unmarshaled correctly
+// TestUmarshalPriceZones tests that PrizeZones, PriceZone and Price are unmarshaled correctly.
 func TestUmarshalPriceZones(t *testing.T) {
 	originalJSON := `
 {

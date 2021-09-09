@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// TestUnmarshalAccount tests that Account objects unmarshal correctly
+// TestUnmarshalAccount tests that Account objects unmarshal correctly.
 func TestUnmarshalAccount(t *testing.T) {
 	originalJSON := `
 	  {
@@ -43,7 +43,7 @@ func TestUnmarshalAccount(t *testing.T) {
 	assert.Equal(t, 10240, account.ResourceLimits.StorageSSD)
 }
 
-// TestMarshalAccount tests that Account objects marshal correctly
+// TestMarshalAccount tests that Account objects marshal correctly.
 func TestMarshalAccount(t *testing.T) {
 	request := Account{
 		Credits:  100,

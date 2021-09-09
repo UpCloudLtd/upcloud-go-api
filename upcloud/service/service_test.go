@@ -14,7 +14,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// TestMain is the main test method
+// TestMain is the main test method.
 func TestMain(m *testing.M) {
 	retCode := m.Run()
 
@@ -29,7 +29,7 @@ func TestMain(m *testing.M) {
 	os.Exit(retCode)
 }
 
-// TestGetAccount tests that the GetAccount() method returns proper data
+// TestGetAccount tests that the GetAccount() method returns proper data.
 func TestGetAccount(t *testing.T) {
 	if os.Getenv("UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS") == upcloud.RawTrue || testing.Short() {
 		t.Skip("Skipping TestGetAccount...")
@@ -54,7 +54,7 @@ func TestGetAccount(t *testing.T) {
 	assert.NotZero(t, account.ResourceLimits.StorageSSD)
 }
 
-// TestGetZones tests that the GetZones() function returns proper data
+// TestGetZones tests that the GetZones() function returns proper data.
 func TestGetZones(t *testing.T) {
 	record(t, "getzones", func(t *testing.T, svc *Service) {
 		zones, err := svc.GetZones()
@@ -73,7 +73,7 @@ func TestGetZones(t *testing.T) {
 	})
 }
 
-// TestGetPriceZones tests that GetPriceZones() function returns proper data
+// TestGetPriceZones tests that GetPriceZones() function returns proper data.
 func TestGetPriceZones(t *testing.T) {
 	record(t, "getpricezones", func(t *testing.T, svc *Service) {
 		zones, err := svc.GetPriceZones()
@@ -97,7 +97,7 @@ func TestGetPriceZones(t *testing.T) {
 	})
 }
 
-// TestGetTimeZones ensures that the GetTimeZones() function returns proper data
+// TestGetTimeZones ensures that the GetTimeZones() function returns proper data.
 func TestGetTimeZones(t *testing.T) {
 	record(t, "gettimezones", func(t *testing.T, svc *Service) {
 		zones, err := svc.GetTimeZones()
@@ -115,7 +115,7 @@ func TestGetTimeZones(t *testing.T) {
 	})
 }
 
-// TestGetPlans ensures that the GetPlans() functions returns proper data
+// TestGetPlans ensures that the GetPlans() functions returns proper data.
 func TestGetPlans(t *testing.T) {
 	record(t, "getplans", func(t *testing.T, svc *Service) {
 		plans, err := svc.GetPlans()
@@ -141,7 +141,7 @@ func TestGetPlans(t *testing.T) {
 	})
 }
 
-// TestGetServerConfigurations ensures that the GetServerConfigurations() function returns proper data
+// TestGetServerConfigurations ensures that the GetServerConfigurations() function returns proper data.
 func TestGetServerConfigurations(t *testing.T) {
 	record(t, "getserverconfigurations", func(t *testing.T, svc *Service) {
 		configurations, err := svc.GetServerConfigurations()
@@ -159,7 +159,7 @@ func TestGetServerConfigurations(t *testing.T) {
 	})
 }
 
-// TestGetServerDetails ensures that the GetServerDetails() function returns proper data
+// TestGetServerDetails ensures that the GetServerDetails() function returns proper data.
 func TestGetServerDetails(t *testing.T) {
 	record(t, "getserverdetails", func(t *testing.T, svc *Service) {
 		d, err := createServer(svc, "getserverdetails")
@@ -294,7 +294,7 @@ func TestCreateRestartServer(t *testing.T) {
 	})
 }
 
-// TestErrorHandling checks that the correct error type is returned from service methods
+// TestErrorHandling checks that the correct error type is returned from service methods.
 func TestErrorHandling(t *testing.T) {
 	record(t, "errorhandling", func(t *testing.T, svc *Service) {
 		// Perform a bogus request that will certainly fail
@@ -317,7 +317,7 @@ func TestErrorHandling(t *testing.T) {
 // - creates a server
 // - modifies the server
 // - stops the server
-// - deletes the server
+// - deletes the server.
 func TestCreateModifyDeleteServer(t *testing.T) {
 	t.Parallel()
 
@@ -393,7 +393,7 @@ func TestCreateModifyDeleteServer(t *testing.T) {
 // TestCreateDeleteServerAndStorage performs the following actions:
 //
 // - creates a server
-// - deletes the server including storage
+// - deletes the server including storage.
 func TestCreateDeleteServerAndStorage(t *testing.T) {
 	t.Parallel()
 
@@ -486,7 +486,7 @@ func TestGetIPAddresses(t *testing.T) {
 // - creates a server
 // - assigns an additional IP address to it
 // - modifies the PTR record of the IP address
-// - deletes the IP address
+// - deletes the IP address.
 func TestAttachModifyReleaseIPAddress(t *testing.T) {
 	t.Parallel()
 
@@ -659,7 +659,7 @@ func TestAttachModifyReleaseFloatingIPAddress(t *testing.T) {
 // - creates a server
 // - adds a firewall rule to the server
 // - gets details about the firewall rule
-// - deletes the firewall rule
+// - deletes the firewall rule.
 //
 func TestFirewallRules(t *testing.T) {
 	t.Parallel()
@@ -756,7 +756,7 @@ func TestFirewallRules(t *testing.T) {
 	})
 }
 
-// TestCreateTag tests the creation of a single tag
+// TestCreateTag tests the creation of a single tag.
 func TestCreateTag(t *testing.T) {
 	record(t, "createtag", func(t *testing.T, svc *Service) {
 		// ignore errors, but delete the tag if it happens to exist

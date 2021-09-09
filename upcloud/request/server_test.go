@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// TestGetServerDetailsRequest tests that GetServerDetailsRequest objects behave correctly
+// TestGetServerDetailsRequest tests that GetServerDetailsRequest objects behave correctly.
 func TestGetServerDetailsRequest(t *testing.T) {
 	request := GetServerDetailsRequest{
 		UUID: "foo",
@@ -18,7 +18,7 @@ func TestGetServerDetailsRequest(t *testing.T) {
 	assert.Equal(t, "/server/foo", request.RequestURL())
 }
 
-// TestCreateServerRequest tests that CreateServerRequest objects behave correctly
+// TestCreateServerRequest tests that CreateServerRequest objects behave correctly.
 func TestCreateServerRequest(t *testing.T) {
 	request := CreateServerRequest{
 		Zone:             "fi-hel2",
@@ -136,7 +136,7 @@ func TestCreateServerRequest(t *testing.T) {
 }
 
 // TestStartServerRequest_OmitValues tests that StartServerRequest objects behave correctly
-// when Host and AvoidHost are not specified
+// when Host and AvoidHost are not specified.
 func TestStartServerRequest_OmitValues(t *testing.T) {
 	request := StartServerRequest{
 		UUID:    "foo",
@@ -157,7 +157,7 @@ func TestStartServerRequest_OmitValues(t *testing.T) {
 }
 
 // TestStartServerRequest_WithValues tests that StartServerRequest objects behave correctly
-// when Host and AvoidHost are specified
+// when Host and AvoidHost are specified.
 func TestStartServerRequest_WithValues(t *testing.T) {
 	request := StartServerRequest{
 		UUID:      "foo",
@@ -182,7 +182,7 @@ func TestStartServerRequest_WithValues(t *testing.T) {
 	assert.Equal(t, "/server/foo/start", request.RequestURL())
 }
 
-// TestStopServerRequest tests that StopServerRequest objects behave correctly
+// TestStopServerRequest tests that StopServerRequest objects behave correctly.
 func TestStopServerRequest(t *testing.T) {
 	request := StopServerRequest{
 		UUID:     "foo",
@@ -204,7 +204,7 @@ func TestStopServerRequest(t *testing.T) {
 	assert.Equal(t, "/server/foo/stop", request.RequestURL())
 }
 
-// TestRestartServerRequest tests that RestartServerRequest objects behave correctly
+// TestRestartServerRequest tests that RestartServerRequest objects behave correctly.
 func TestRestartServerRequest(t *testing.T) {
 	request := RestartServerRequest{
 		UUID:          "foo",
@@ -231,7 +231,7 @@ func TestRestartServerRequest(t *testing.T) {
 }
 
 // TestRestartServerRequest_OmitHost tests that RestartServerRequest objects behave correctly
-// when Host is omitted
+// when Host is omitted.
 func TestRestartServerRequest_OmitHost(t *testing.T) {
 	request := RestartServerRequest{
 		UUID:          "foo",
@@ -255,7 +255,7 @@ func TestRestartServerRequest_OmitHost(t *testing.T) {
 	assert.Equal(t, "/server/foo/restart", request.RequestURL())
 }
 
-// TestModifyServerRequest tests that ModifyServerRequest objects behave correctly
+// TestModifyServerRequest tests that ModifyServerRequest objects behave correctly.
 func TestModifyServerRequest(t *testing.T) {
 	request := ModifyServerRequest{
 		UUID:         "foo",
@@ -284,7 +284,7 @@ func TestModifyServerRequest(t *testing.T) {
 	assert.Equal(t, "/server/foo", request.RequestURL())
 }
 
-// TestDeleteServerRequest tests that DeleteServerRequest objects behave correctly
+// TestDeleteServerRequest tests that DeleteServerRequest objects behave correctly.
 func TestDeleteServerRequest(t *testing.T) {
 	request := DeleteServerRequest{
 		UUID: "foo",
@@ -293,7 +293,7 @@ func TestDeleteServerRequest(t *testing.T) {
 	assert.Equal(t, "/server/foo", request.RequestURL())
 }
 
-// TestDeleteServerAndStoragesRequest tests that DeleteServerAndStoragesRequest objects behave correctly
+// TestDeleteServerAndStoragesRequest tests that DeleteServerAndStoragesRequest objects behave correctly.
 func TestDeleteServerAndStoragesRequest(t *testing.T) {
 	request := DeleteServerAndStoragesRequest{
 		UUID: "foo",
@@ -302,7 +302,7 @@ func TestDeleteServerAndStoragesRequest(t *testing.T) {
 	assert.Equal(t, "/server/foo/?storages=1", request.RequestURL())
 }
 
-// TestTagServerRequest tests that TestTagServer behaves correctly
+// TestTagServerRequest tests that TestTagServer behaves correctly.
 func TestTagServerRequest(t *testing.T) {
 	// Test with multiple tags
 	request := TagServerRequest{

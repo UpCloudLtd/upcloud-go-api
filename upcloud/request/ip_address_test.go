@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// TestGetIPAddressDetailsRequest tests that GetIPAddressDetailsRequest behaves correctly
+// TestGetIPAddressDetailsRequest tests that GetIPAddressDetailsRequest behaves correctly.
 func TestGetIPAddressDetailsRequest(t *testing.T) {
 	request := GetIPAddressDetailsRequest{
 		Address: "0.0.0.0",
@@ -17,7 +17,7 @@ func TestGetIPAddressDetailsRequest(t *testing.T) {
 	assert.Equal(t, "/ip_address/0.0.0.0", request.RequestURL())
 }
 
-// TestMarshalAssignIPAddressRequest tests that AssignIPAddressRequest structs are marshaled correctly
+// TestMarshalAssignIPAddressRequest tests that AssignIPAddressRequest structs are marshaled correctly.
 func TestMarshalAssignIPAddressRequest(t *testing.T) {
 	request := AssignIPAddressRequest{
 		Access:     upcloud.IPAddressAccessPublic,
@@ -47,7 +47,7 @@ func TestMarshalAssignIPAddressRequest(t *testing.T) {
 }
 
 // TestMarshalAssignIPAddressRequest_OmitFields tests that AssignIPAddressRequest structs are marshaled correctly
-// when optional fields are left out
+// when optional fields are left out.
 func TestMarshalAssignIPAddressRequest_OmitFields(t *testing.T) {
 	request := AssignIPAddressRequest{
 		Access:     upcloud.IPAddressAccessPublic,
@@ -70,7 +70,7 @@ func TestMarshalAssignIPAddressRequest_OmitFields(t *testing.T) {
 }
 
 // TestModifyIPAddressRequest tests that ModifyIPAddressRequest structs are marshaled correctly and that their URLs
-// are correct
+// are correct.
 func TestModifyIPAddressRequest(t *testing.T) {
 	request := ModifyIPAddressRequest{
 		IPAddress: "0.0.0.0",
@@ -158,7 +158,7 @@ func TestModifyIPAddressRequest_OmitBoth(t *testing.T) {
 	assert.Equal(t, "/ip_address/0.0.0.0", request.RequestURL())
 }
 
-// TestReleaseIPAddressRequest tests that ReleaseIPAddressRequest's URL is correct
+// TestReleaseIPAddressRequest tests that ReleaseIPAddressRequest's URL is correct.
 func TestReleaseIPAddressRequest(t *testing.T) {
 	request := ReleaseIPAddressRequest{
 		IPAddress: "0.0.0.0",

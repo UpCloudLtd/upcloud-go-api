@@ -2,7 +2,7 @@ package upcloud
 
 import "encoding/json"
 
-// Zones represents a /zone response
+// Zones represents a /zone response.
 type Zones struct {
 	Zones []Zone `json:"zone"`
 }
@@ -27,7 +27,7 @@ func (s *Zones) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// Zone represents a zone
+// Zone represents a zone.
 type Zone struct {
 	ID          string  `json:"id"`
 	Description string  `json:"description"`

@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// TestMarshalGetHostDetailsRequest tests that GetHostDetailsRequest behaves correctly
+// TestMarshalGetHostDetailsRequest tests that GetHostDetailsRequest behaves correctly.
 func TestMarshalGetHostDetailsRequest(t *testing.T) {
 	request := GetHostDetailsRequest{
 		ID: 1234,
@@ -16,7 +16,7 @@ func TestMarshalGetHostDetailsRequest(t *testing.T) {
 	assert.Equal(t, "/host/1234", request.RequestURL())
 }
 
-// TestMarshalModifyHostRequest tests that ModifyHostRequest behaves correctly
+// TestMarshalModifyHostRequest tests that ModifyHostRequest behaves correctly.
 func TestMarshalModifyHostRequest(t *testing.T) {
 	request := ModifyHostRequest{
 		ID:          1234,

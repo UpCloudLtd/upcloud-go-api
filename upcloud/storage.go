@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-// Constants
+// Constants.
 const (
 	StorageTypeBackup   = "backup"
 	StorageTypeCDROM    = "cdrom"
@@ -47,7 +47,7 @@ const (
 	StorageImportStateCompleted  = "completed"
 )
 
-// Storages represents a /storage response
+// Storages represents a /storage response.
 type Storages struct {
 	Storages []Storage `json:"storages"`
 }
@@ -72,7 +72,7 @@ func (s *Storages) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// Storage represents a storage device
+// Storage represents a storage device.
 type Storage struct {
 	Access  string  `json:"access"`
 	License float64 `json:"license"`
@@ -130,7 +130,7 @@ func (s *ServerUUIDSlice) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// StorageDetails represents detailed information about a piece of storage
+// StorageDetails represents detailed information about a piece of storage.
 type StorageDetails struct {
 	Storage
 
@@ -157,7 +157,7 @@ func (s *StorageDetails) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// BackupRule represents a backup rule
+// BackupRule represents a backup rule.
 type BackupRule struct {
 	Interval string `json:"interval,omitempty"`
 	// Time should be in the format "hhmm", e.g. "0430"
@@ -165,7 +165,7 @@ type BackupRule struct {
 	Retention int    `json:"retention,string,omitempty"`
 }
 
-// ServerStorageDevice represents a storage device in the context of server requests or server details
+// ServerStorageDevice represents a storage device in the context of server requests or server details.
 type ServerStorageDevice struct {
 	Address string `json:"address"`
 	// TODO: Convert to boolean

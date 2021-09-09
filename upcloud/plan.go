@@ -2,7 +2,7 @@ package upcloud
 
 import "encoding/json"
 
-// Plans represents a /plan response
+// Plans represents a /plan response.
 type Plans struct {
 	Plans []Plan `json:"plans"`
 }
@@ -27,7 +27,7 @@ func (s *Plans) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// Plan represents a pre-configured server configuration plan
+// Plan represents a pre-configured server configuration plan.
 type Plan struct {
 	CoreNumber       int    `json:"core_number"`
 	MemoryAmount     int    `json:"memory_amount"`

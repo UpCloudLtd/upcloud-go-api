@@ -18,11 +18,10 @@ type ObjectStorage interface {
 
 var _ ObjectStorage = (*Service)(nil)
 
-// GetObjectStorages returns the available objects storages
+// GetObjectStorages returns the available objects storages.
 func (s *Service) GetObjectStorages() (*upcloud.ObjectStorages, error) {
 	objectStorages := upcloud.ObjectStorages{}
 	response, err := s.basicGetRequest("/object-storage")
-
 	if err != nil {
 		return nil, err
 	}
@@ -35,11 +34,10 @@ func (s *Service) GetObjectStorages() (*upcloud.ObjectStorages, error) {
 	return &objectStorages, nil
 }
 
-// GetObjectStorageDetails returns extended details about the specified Object Storage
+// GetObjectStorageDetails returns extended details about the specified Object Storage.
 func (s *Service) GetObjectStorageDetails(r *request.GetObjectStorageDetailsRequest) (*upcloud.ObjectStorageDetails, error) {
 	objectStorageDetails := upcloud.ObjectStorageDetails{}
 	response, err := s.basicGetRequest(r.RequestURL())
-
 	if err != nil {
 		return nil, err
 	}
@@ -52,12 +50,11 @@ func (s *Service) GetObjectStorageDetails(r *request.GetObjectStorageDetailsRequ
 	return &objectStorageDetails, nil
 }
 
-// CreateObjectStorage creates a Object Storage and return the Object Storage details for the newly created device
+// CreateObjectStorage creates a Object Storage and return the Object Storage details for the newly created device.
 func (s *Service) CreateObjectStorage(r *request.CreateObjectStorageRequest) (*upcloud.ObjectStorageDetails, error) {
 	objectStorageDetails := upcloud.ObjectStorageDetails{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -70,12 +67,11 @@ func (s *Service) CreateObjectStorage(r *request.CreateObjectStorageRequest) (*u
 	return &objectStorageDetails, nil
 }
 
-// ModifyObjectStorage modifies the configuration of an existing Object Storage
+// ModifyObjectStorage modifies the configuration of an existing Object Storage.
 func (s *Service) ModifyObjectStorage(r *request.ModifyObjectStorageRequest) (*upcloud.ObjectStorageDetails, error) {
 	objectStorageDetails := upcloud.ObjectStorageDetails{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -88,10 +84,9 @@ func (s *Service) ModifyObjectStorage(r *request.ModifyObjectStorageRequest) (*u
 	return &objectStorageDetails, nil
 }
 
-// DeleteObjectStorage deletes the specific Object Storage
+// DeleteObjectStorage deletes the specific Object Storage.
 func (s *Service) DeleteObjectStorage(r *request.DeleteObjectStorageRequest) error {
 	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
-
 	if err != nil {
 		return parseJSONServiceError(err)
 	}

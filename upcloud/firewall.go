@@ -2,7 +2,7 @@ package upcloud
 
 import "encoding/json"
 
-// Constants
+// Constants.
 const (
 	FirewallRuleActionAccept = "accept"
 	FirewallRuleActionReject = "reject"
@@ -16,7 +16,7 @@ const (
 	FirewallRuleProtocolICMP = "icmp"
 )
 
-// FirewallRules represents a list of firewall rules
+// FirewallRules represents a list of firewall rules.
 type FirewallRules struct {
 	FirewallRules []FirewallRule `json:"firewall_rules"`
 }
@@ -44,7 +44,7 @@ func (s *FirewallRules) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// FirewallRule represents a single firewall rule. Note that most integer values are represented as strings
+// FirewallRule represents a single firewall rule. Note that most integer values are represented as strings.
 type FirewallRule struct {
 	Action                  string `json:"action"`
 	Comment                 string `json:"comment,omitempty"`

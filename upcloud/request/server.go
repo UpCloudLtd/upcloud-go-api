@@ -9,7 +9,7 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
 )
 
-// Constants
+// Constants.
 const (
 	PasswordDeliveryNone  = "none"
 	PasswordDeliveryEmail = "email"
@@ -26,12 +26,12 @@ const (
 	CreateServerStorageDeviceActionAttach = "attach"
 )
 
-// GetServerDetailsRequest represents a request for retrieving details about a server
+// GetServerDetailsRequest represents a request for retrieving details about a server.
 type GetServerDetailsRequest struct {
 	UUID string
 }
 
-// RequestURL implements the Request interface
+// RequestURL implements the Request interface.
 func (r *GetServerDetailsRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s", r.UUID)
 }
@@ -51,7 +51,7 @@ func (s CreateServerIPAddressSlice) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v)
 }
 
-// CreateServerStorageDevice represents a storage device for a CreateServerRequest
+// CreateServerStorageDevice represents a storage device for a CreateServerRequest.
 type CreateServerStorageDevice struct {
 	Action  string `json:"action"`
 	Address string `json:"address,omitempty"`
@@ -110,7 +110,7 @@ type CreateServerNetworking struct {
 	Interfaces CreateServerInterfaceSlice `json:"interfaces"`
 }
 
-// CreateServerRequest represents a request for creating a new server
+// CreateServerRequest represents a request for creating a new server.
 type CreateServerRequest struct {
 	AvoidHost  int    `json:"avoid_host,omitempty"`
 	Host       int    `json:"host,omitempty"`
@@ -149,7 +149,7 @@ func (r CreateServerRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&v)
 }
 
-// RequestURL implements the Request interface
+// RequestURL implements the Request interface.
 func (r *CreateServerRequest) RequestURL() string {
 	return "/server"
 }
@@ -186,20 +186,20 @@ func (s SSHKeySlice) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v)
 }
 
-// LoginUser represents the login_user block when creating a new server
+// LoginUser represents the login_user block when creating a new server.
 type LoginUser struct {
 	CreatePassword string      `json:"create_password,omitempty"`
 	Username       string      `json:"username,omitempty"`
 	SSHKeys        SSHKeySlice `json:"ssh_keys,omitempty"`
 }
 
-// CreateServerIPAddress represents an IP address for a CreateServerRequest
+// CreateServerIPAddress represents an IP address for a CreateServerRequest.
 type CreateServerIPAddress struct {
 	Family  string `json:"family"`
 	Address string `json:"address,omitempty"`
 }
 
-// WaitForServerStateRequest represents a request to wait for a server to enter or exit a specific state
+// WaitForServerStateRequest represents a request to wait for a server to enter or exit a specific state.
 type WaitForServerStateRequest struct {
 	UUID           string
 	DesiredState   string
@@ -207,7 +207,7 @@ type WaitForServerStateRequest struct {
 	Timeout        time.Duration
 }
 
-// StartServerRequest represents a request to start a server
+// StartServerRequest represents a request to start a server.
 type StartServerRequest struct {
 	UUID string `json:"-"`
 
@@ -218,7 +218,7 @@ type StartServerRequest struct {
 	Host      int `json:"host,omitempty"`
 }
 
-// RequestURL implements the Request interface
+// RequestURL implements the Request interface.
 func (r *StartServerRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s/start", r.UUID)
 }
@@ -235,7 +235,7 @@ func (r StartServerRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&v)
 }
 
-// StopServerRequest represents a request to stop a server
+// StopServerRequest represents a request to stop a server.
 type StopServerRequest struct {
 	UUID string `json:"-"`
 
@@ -243,7 +243,7 @@ type StopServerRequest struct {
 	Timeout  time.Duration `json:"timeout,omitempty,string"`
 }
 
-// RequestURL implements the Request interface
+// RequestURL implements the Request interface.
 func (r *StopServerRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s/stop", r.UUID)
 }
@@ -261,7 +261,7 @@ func (r StopServerRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&v)
 }
 
-// RestartServerRequest represents a request to restart a server
+// RestartServerRequest represents a request to restart a server.
 type RestartServerRequest struct {
 	UUID string `json:"-"`
 
@@ -271,7 +271,7 @@ type RestartServerRequest struct {
 	Host          int           `json:"host,omitempty"`
 }
 
-// RequestURL implements the Request interface
+// RequestURL implements the Request interface.
 func (r *RestartServerRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s/restart", r.UUID)
 }
@@ -289,7 +289,7 @@ func (r RestartServerRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&v)
 }
 
-// ModifyServerRequest represents a request to modify a server
+// ModifyServerRequest represents a request to modify a server.
 type ModifyServerRequest struct {
 	UUID string `json:"-"`
 
@@ -323,49 +323,49 @@ func (r ModifyServerRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&v)
 }
 
-// RequestURL implements the Request interface
+// RequestURL implements the Request interface.
 func (r *ModifyServerRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s", r.UUID)
 }
 
-// DeleteServerRequest represents a request to delete a server
+// DeleteServerRequest represents a request to delete a server.
 type DeleteServerRequest struct {
 	UUID string
 }
 
-// RequestURL implements the Request interface
+// RequestURL implements the Request interface.
 func (r *DeleteServerRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s", r.UUID)
 }
 
-// DeleteServerAndStoragesRequest represents a request to delete a server and all attached storages
+// DeleteServerAndStoragesRequest represents a request to delete a server and all attached storages.
 type DeleteServerAndStoragesRequest struct {
 	UUID string
 }
 
-// RequestURL implements the Request interface
+// RequestURL implements the Request interface.
 func (r *DeleteServerAndStoragesRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s/?storages=1", r.UUID)
 }
 
-// TagServerRequest represents a request to tag a server with one or more tags
+// TagServerRequest represents a request to tag a server with one or more tags.
 type TagServerRequest struct {
 	UUID string
 	Tags []string
 }
 
-// RequestURL implements the Request interface
+// RequestURL implements the Request interface.
 func (r *TagServerRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s/tag/%s", r.UUID, strings.Join(r.Tags, ","))
 }
 
-// UntagServerRequest represents a request to remove one or more tags from a server
+// UntagServerRequest represents a request to remove one or more tags from a server.
 type UntagServerRequest struct {
 	UUID string
 	Tags []string
 }
 
-// RequestURL implements the Request interface
+// RequestURL implements the Request interface.
 func (r *UntagServerRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s/untag/%s", r.UUID, strings.Join(r.Tags, ","))
 }
