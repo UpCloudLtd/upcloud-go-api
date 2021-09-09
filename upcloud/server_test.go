@@ -11,6 +11,7 @@ import (
 
 // TestUnmarshalServerConfiguratons tests that ServerConfigurations and ServerConfiguration are unmarshaled correctly.
 func TestUnmarshalServerConfiguratons(t *testing.T) {
+	t.Parallel()
 	originalJSON := `
 {
     "server_sizes": {
@@ -69,6 +70,7 @@ func TestUnmarshalServerConfiguratons(t *testing.T) {
 
 // TestUnmarshalServers tests that Servers and Server are unmarshaled correctly.
 func TestUnmarshalServers(t *testing.T) {
+	t.Parallel()
 	originalJSON := `
         {
             "servers" : {
@@ -114,6 +116,7 @@ func TestUnmarshalServers(t *testing.T) {
 
 // TestUnmarshalServerDetails tests that ServerDetails objects are correctly unmarshaled.
 func TestUnmarshalServerDetails(t *testing.T) {
+	t.Parallel()
 	originalJSON := `
       {
         "server": {
@@ -319,6 +322,7 @@ func TestUnmarshalServerDetails(t *testing.T) {
 }
 
 func TestStorageDevice(t *testing.T) {
+	t.Parallel()
 	needle := upcloud.ServerStorageDevice{UUID: "012580a1-32a1-466e-a323-689ca16f2d43"}
 	serverDetails := upcloud.ServerDetails{
 		StorageDevices: []upcloud.ServerStorageDevice{

@@ -11,6 +11,7 @@ import (
 
 // TestUnmarshalTags tests that Tags structs are unmarshaled correctly.
 func TestUnmarshalTags(t *testing.T) {
+	t.Parallel()
 	originalJSON := `
       {
         "tags": {
@@ -86,6 +87,7 @@ func TestUnmarshalTags(t *testing.T) {
 
 // TestUnmarshalTag tests that a single Tag struct is unmarshalled correctly.
 func TestUnmarshalTag(t *testing.T) {
+	t.Parallel()
 	originalJSON := `
     {
         "tag" : {

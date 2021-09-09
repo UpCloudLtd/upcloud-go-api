@@ -11,6 +11,7 @@ import (
 
 // TestUnmarshalAccount tests that Account objects unmarshal correctly.
 func TestUnmarshalAccount(t *testing.T) {
+	t.Parallel()
 	originalJSON := `
 	  {
 		"account": {
@@ -47,6 +48,7 @@ func TestUnmarshalAccount(t *testing.T) {
 
 // TestMarshalAccount tests that Account objects marshal correctly.
 func TestMarshalAccount(t *testing.T) {
+	t.Parallel()
 	request := upcloud.Account{
 		Credits:  100,
 		UserName: "username",

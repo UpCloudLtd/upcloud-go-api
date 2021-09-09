@@ -12,6 +12,7 @@ import (
 
 // TestUnmarshalStorage tests that Storages and Storage struct are unmarshaled correctly.
 func TestUnmarshalStorage(t *testing.T) {
+	t.Parallel()
 	originalJSON := `
 {
   "storages": {
@@ -114,6 +115,7 @@ func TestUnmarshalStorage(t *testing.T) {
 
 // TestUnmarshalStorageDetails tests that StorageDetails struct is unmarshaled correctly.
 func TestUnmarshalStorageDetails(t *testing.T) {
+	t.Parallel()
 	originalJSON := `
 	{
 		"storage": {
@@ -174,6 +176,7 @@ func TestUnmarshalStorageDetails(t *testing.T) {
 
 // TestUnmarshalStorageImport tests that StorageImport struct is unmarshaled correctly.
 func TestUnmarshalStorageImport(t *testing.T) {
+	t.Parallel()
 	originalJSON := `
 	  {
 		"storage_import": {

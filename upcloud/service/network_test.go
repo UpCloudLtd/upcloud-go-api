@@ -18,6 +18,7 @@ import (
 //    - Gets all networks and verifies details are populated
 //    - checks that at least one network has a server in.
 func TestGetNetworks(t *testing.T) {
+	t.Parallel()
 	//nolint:thelper // false positive, the function is not a helper
 	record(t, "getnetworks", func(t *testing.T, svc *service.Service) {
 		_, err := createServer(svc, "TestGetNetworks")
@@ -52,6 +53,7 @@ func TestGetNetworks(t *testing.T) {
 //    - Gets all networks in a zone and verifies details are populated
 //    - checks that at least one network has a server in.
 func TestGetNetworksInZone(t *testing.T) {
+	t.Parallel()
 	//nolint:thelper // false positive, the function is not a helper
 	record(t, "getnetworksinzone", func(t *testing.T, svc *service.Service) {
 		_, err := createServer(svc, "TestGetNetworksInZone")
@@ -103,6 +105,7 @@ func TestGetNetworksInZone(t *testing.T) {
 //    - deletes the network
 //    - verifies the network has been deleted.
 func TestCreateModifyDeleteNetwork(t *testing.T) {
+	t.Parallel()
 	//nolint:thelper // false positive, the function is not a helper
 	record(t, "createmodifydeletenetwork", func(t *testing.T, svc *service.Service) {
 		network, err := svc.CreateNetwork(&request.CreateNetworkRequest{
@@ -190,6 +193,7 @@ func TestCreateModifyDeleteNetwork(t *testing.T) {
 // TestGetServerNetworks tests that the server networks retrieved via GetServerNetworks
 // match those returned when creating the server.
 func TestGetServerNetworks(t *testing.T) {
+	t.Parallel()
 	//nolint:thelper // false positive, the function is not a helper
 	record(t, "getservernetworks", func(t *testing.T, svc *service.Service) {
 		serverDetails, err := createServer(svc, "TestGetServerNetworks")
@@ -207,6 +211,7 @@ func TestGetServerNetworks(t *testing.T) {
 
 // TestGetRouters tests that some routers are returned when using GetRouters.
 func TestGetRouters(t *testing.T) {
+	t.Parallel()
 	//nolint:thelper // false positive, the function is not a helper
 	record(t, "getrouters", func(t *testing.T, svc *service.Service) {
 		routers, err := svc.GetRouters()
@@ -232,6 +237,7 @@ func TestGetRouters(t *testing.T) {
 //     - deletes the router
 //     - retrieves all routers and ensures our new router can't be found
 func TestCreateModifyDeleteRouter(t *testing.T) {
+	t.Parallel()
 	//nolint:thelper // false positive, the function is not a helper
 	record(t, "createmodifydeleterouter", func(t *testing.T, svc *service.Service) {
 		router, err := svc.CreateRouter(&request.CreateRouterRequest{
@@ -298,6 +304,7 @@ func TestCreateModifyDeleteRouter(t *testing.T) {
 //     - detaches one of the routers and verifies it was detached
 //     - deletes the servers, the routers and the networks
 func TestCreateTwoNetworksTwoServersAndARouter(t *testing.T) {
+	t.Parallel()
 	//nolint:thelper // false positive, the function is not a helper
 	record(t, "createtwonetworkstwoserversandarouter", func(t *testing.T, svc *service.Service) {
 		network1, err := svc.CreateNetwork(&request.CreateNetworkRequest{
@@ -486,6 +493,7 @@ func TestCreateTwoNetworksTwoServersAndARouter(t *testing.T) {
 }
 
 func TestCreateNetworkAndServer(t *testing.T) {
+	t.Parallel()
 	//nolint:thelper // false positive, the function is not a helper
 	record(t, "createnetworkandserver", func(t *testing.T, svc *service.Service) {
 		network, err := svc.CreateNetwork(&request.CreateNetworkRequest{

@@ -13,6 +13,7 @@ import (
 
 // TestGetServerDetailsRequest tests that GetServerDetailsRequest objects behave correctly.
 func TestGetServerDetailsRequest(t *testing.T) {
+	t.Parallel()
 	request := request.GetServerDetailsRequest{
 		UUID: "foo",
 	}
@@ -22,6 +23,7 @@ func TestGetServerDetailsRequest(t *testing.T) {
 
 // TestCreateServerRequest tests that CreateServerRequest objects behave correctly.
 func TestCreateServerRequest(t *testing.T) {
+	t.Parallel()
 	request := request.CreateServerRequest{
 		Zone:             "fi-hel2",
 		Title:            "Integration test server #1",
@@ -140,6 +142,7 @@ func TestCreateServerRequest(t *testing.T) {
 // TestStartServerRequest_OmitValues tests that StartServerRequest objects behave correctly
 // when Host and AvoidHost are not specified.
 func TestStartServerRequest_OmitValues(t *testing.T) {
+	t.Parallel()
 	request := request.StartServerRequest{
 		UUID:    "foo",
 		Timeout: time.Minute * 5,
@@ -161,6 +164,7 @@ func TestStartServerRequest_OmitValues(t *testing.T) {
 // TestStartServerRequest_WithValues tests that StartServerRequest objects behave correctly
 // when Host and AvoidHost are specified.
 func TestStartServerRequest_WithValues(t *testing.T) {
+	t.Parallel()
 	request := request.StartServerRequest{
 		UUID:      "foo",
 		Timeout:   time.Minute * 5,
@@ -186,6 +190,7 @@ func TestStartServerRequest_WithValues(t *testing.T) {
 
 // TestStopServerRequest tests that StopServerRequest objects behave correctly.
 func TestStopServerRequest(t *testing.T) {
+	t.Parallel()
 	request := request.StopServerRequest{
 		UUID:     "foo",
 		StopType: request.ServerStopTypeSoft,
@@ -208,6 +213,7 @@ func TestStopServerRequest(t *testing.T) {
 
 // TestRestartServerRequest tests that RestartServerRequest objects behave correctly.
 func TestRestartServerRequest(t *testing.T) {
+	t.Parallel()
 	request := request.RestartServerRequest{
 		UUID:          "foo",
 		Timeout:       time.Minute * 5,
@@ -235,6 +241,7 @@ func TestRestartServerRequest(t *testing.T) {
 // TestRestartServerRequest_OmitHost tests that RestartServerRequest objects behave correctly
 // when Host is omitted.
 func TestRestartServerRequest_OmitHost(t *testing.T) {
+	t.Parallel()
 	request := request.RestartServerRequest{
 		UUID:          "foo",
 		Timeout:       time.Minute * 5,
@@ -259,6 +266,7 @@ func TestRestartServerRequest_OmitHost(t *testing.T) {
 
 // TestModifyServerRequest tests that ModifyServerRequest objects behave correctly.
 func TestModifyServerRequest(t *testing.T) {
+	t.Parallel()
 	request := request.ModifyServerRequest{
 		UUID:         "foo",
 		Title:        "Modified server",
@@ -288,6 +296,7 @@ func TestModifyServerRequest(t *testing.T) {
 
 // TestDeleteServerRequest tests that DeleteServerRequest objects behave correctly.
 func TestDeleteServerRequest(t *testing.T) {
+	t.Parallel()
 	request := request.DeleteServerRequest{
 		UUID: "foo",
 	}
@@ -297,6 +306,7 @@ func TestDeleteServerRequest(t *testing.T) {
 
 // TestDeleteServerAndStoragesRequest tests that DeleteServerAndStoragesRequest objects behave correctly.
 func TestDeleteServerAndStoragesRequest(t *testing.T) {
+	t.Parallel()
 	request := request.DeleteServerAndStoragesRequest{
 		UUID: "foo",
 	}
@@ -306,6 +316,7 @@ func TestDeleteServerAndStoragesRequest(t *testing.T) {
 
 // TestTagServerRequest tests that TestTagServer behaves correctly.
 func TestTagServerRequest(t *testing.T) {
+	t.Parallel()
 	// Test with multiple tags
 	testRequest := request.TagServerRequest{
 		UUID: "foo",
@@ -330,6 +341,7 @@ func TestTagServerRequest(t *testing.T) {
 }
 
 func TestUntagServerRequest(t *testing.T) {
+	t.Parallel()
 	// Test with multiple tags
 	testRequest := request.UntagServerRequest{
 		UUID: "foo",

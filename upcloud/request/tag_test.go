@@ -12,6 +12,7 @@ import (
 
 // TestCreateTagRequest tests that CreateTagRequest behaves correctly.
 func TestCreateTagRequest(t *testing.T) {
+	t.Parallel()
 	request := request.CreateTagRequest{
 		Tag: upcloud.Tag{
 			Name:        "DEV",
@@ -50,6 +51,7 @@ func TestCreateTagRequest(t *testing.T) {
 // TestCreateTagRequest_OmittedElements tests that an empty array
 // is present in the marshalled JSON.
 func TestCreateTagRequest_OmittedElements(t *testing.T) {
+	t.Parallel()
 	// Test with omitted elements
 	request := request.CreateTagRequest{
 		Tag: upcloud.Tag{
@@ -75,6 +77,7 @@ func TestCreateTagRequest_OmittedElements(t *testing.T) {
 
 // TestModifyTagRequest tests that ModifyTagRequest marshals correctly.
 func TestModifyTagRequest(t *testing.T) {
+	t.Parallel()
 	request := request.ModifyTagRequest{
 		Name: "foo",
 		Tag: upcloud.Tag{
@@ -112,6 +115,7 @@ func TestModifyTagRequest(t *testing.T) {
 // TestModifyTagRequest_OmitServers tests that an empty array is present in
 // the marshalled JSON if there are no servers specified.
 func TestModifyTagRequest_OmitServers(t *testing.T) {
+	t.Parallel()
 	request := request.ModifyTagRequest{
 		Name: "foo",
 		Tag: upcloud.Tag{
@@ -141,6 +145,7 @@ func TestModifyTagRequest_OmitServers(t *testing.T) {
 
 // TestDeleteTagRequest tests that DeleteTagRequest behaves correctly.
 func TestDeleteTagRequest(t *testing.T) {
+	t.Parallel()
 	request := request.DeleteTagRequest{
 		Name: "foo",
 	}

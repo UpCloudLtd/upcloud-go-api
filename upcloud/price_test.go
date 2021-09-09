@@ -11,6 +11,7 @@ import (
 
 // TestUmarshalPriceZones tests that PrizeZones, PriceZone and Price are unmarshaled correctly.
 func TestUmarshalPriceZones(t *testing.T) {
+	t.Parallel()
 	originalJSON := `
 {
     "prices": {

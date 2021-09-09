@@ -13,6 +13,7 @@ import (
 
 // TestMarshalGetNetworksInZoneRequest tests that GetNetworksInZoneRequest behaves correctly.
 func TestMarshalGetNetworksInZoneRequest(t *testing.T) {
+	t.Parallel()
 	request := request.GetNetworksInZoneRequest{
 		Zone: "foo",
 	}
@@ -22,6 +23,7 @@ func TestMarshalGetNetworksInZoneRequest(t *testing.T) {
 
 // TestMarshalGetNetworkDetailsRequest tests that GetNetworkDetailsRequest behaves correctly.
 func TestMarshalGetNetworkDetailsRequest(t *testing.T) {
+	t.Parallel()
 	request := request.GetNetworkDetailsRequest{
 		UUID: "foo",
 	}
@@ -31,6 +33,7 @@ func TestMarshalGetNetworkDetailsRequest(t *testing.T) {
 
 // TestMarshalCreateNetworkRequest tests that CreateNetworkRequest behaves correctly.
 func TestMarshalCreateNetworkRequest(t *testing.T) {
+	t.Parallel()
 	request := request.CreateNetworkRequest{
 		Name:   "Test private net",
 		Zone:   "uk-lon1",
@@ -83,6 +86,7 @@ func TestMarshalCreateNetworkRequest(t *testing.T) {
 
 // TestMarshalModifyNetworkRequest tests that ModifyNetworkRequest behaves correctly.
 func TestMarshalModifyNetworkRequest(t *testing.T) {
+	t.Parallel()
 	request := request.ModifyNetworkRequest{
 		UUID: "foo",
 
@@ -120,6 +124,7 @@ func TestMarshalModifyNetworkRequest(t *testing.T) {
 
 // TestMarshalDeleteNetwork tests the DeleteNetworkRequest behaves correctly.
 func TestMarshalDeleteNetwork(t *testing.T) {
+	t.Parallel()
 	request := request.DeleteNetworkRequest{
 		UUID: "foo",
 	}
@@ -129,6 +134,7 @@ func TestMarshalDeleteNetwork(t *testing.T) {
 
 // TestMarshalAttachNetworkRouterRequest tests that AttachNetworkRouterRequest behaves correctly.
 func TestMarshalAttachNetworkRouterRequest(t *testing.T) {
+	t.Parallel()
 	request := request.AttachNetworkRouterRequest{
 		NetworkUUID: "mocknetworkuuid",
 		RouterUUID:  "mockrouteruuid",
@@ -150,6 +156,7 @@ func TestMarshalAttachNetworkRouterRequest(t *testing.T) {
 
 // TestMarshalDetachNetworkRouterRequest tests that DetachNetworkRouterRequest behaves correctly.
 func TestMarshalDetachNetworkRouterRequest(t *testing.T) {
+	t.Parallel()
 	request := request.DetachNetworkRouterRequest{
 		NetworkUUID: "mocknetworkuuid",
 	}
@@ -170,6 +177,7 @@ func TestMarshalDetachNetworkRouterRequest(t *testing.T) {
 
 // TestMarshalGetServerNetworksRequest tests the GetServerNetworksRequest behaves correctly.
 func TestMarshalGetServerNetworksRequest(t *testing.T) {
+	t.Parallel()
 	request := request.GetServerNetworksRequest{
 		ServerUUID: "foo",
 	}
@@ -179,6 +187,7 @@ func TestMarshalGetServerNetworksRequest(t *testing.T) {
 
 // TestMarshalCreateNetworkInterfaceRequest tests that CreateNetworkInterfaceRequest behaves correctly.
 func TestMarshalCreateNetworkInterfaceRequest(t *testing.T) {
+	t.Parallel()
 	request := request.CreateNetworkInterfaceRequest{
 		ServerUUID:        "foo",
 		Type:              upcloud.IPAddressAccessPrivate,
@@ -218,6 +227,7 @@ func TestMarshalCreateNetworkInterfaceRequest(t *testing.T) {
 
 // TestMarshalDeleteNetworkInterfaceRequest tests that DeleteNetworkInterfaceRequest behaves correctly.
 func TestMarshalDeleteNetworkInterfaceRequest(t *testing.T) {
+	t.Parallel()
 	request := request.DeleteNetworkInterfaceRequest{
 		ServerUUID: "foo",
 		Index:      1,
@@ -228,6 +238,7 @@ func TestMarshalDeleteNetworkInterfaceRequest(t *testing.T) {
 
 // TestMarshalModifyNetworkInterfaceRequest tests that ModifyNetworkInterfaceRequest behaves correctly.
 func TestMarshalModifyNetworkInterfaceRequest(t *testing.T) {
+	t.Parallel()
 	request := request.ModifyNetworkInterfaceRequest{
 		ServerUUID:   "foo",
 		CurrentIndex: 99,
@@ -272,6 +283,7 @@ func TestMarshalModifyNetworkInterfaceRequest(t *testing.T) {
 
 // TestMarshalGetRouterDetailsRequest tests that GetRouterDetailsRequest behaves correctly.
 func TestMarshalGetRouterDetailsRequest(t *testing.T) {
+	t.Parallel()
 	request := request.GetRouterDetailsRequest{
 		UUID: "foo",
 	}
@@ -281,6 +293,7 @@ func TestMarshalGetRouterDetailsRequest(t *testing.T) {
 
 // TestMarshalCreateRouterRequest tests that CreateRouterRequest behaves correctly.
 func TestMarshalCreateRouterRequest(t *testing.T) {
+	t.Parallel()
 	request := request.CreateRouterRequest{
 		Name: "Example router",
 	}
@@ -303,6 +316,7 @@ func TestMarshalCreateRouterRequest(t *testing.T) {
 
 // TestMarshalModifyRouterRequest tests that ModifyRouterRequest behaves correctly.
 func TestMarshalModifyRouterRequest(t *testing.T) {
+	t.Parallel()
 	request := request.ModifyRouterRequest{
 		Name: "Modified router",
 		UUID: "foo",

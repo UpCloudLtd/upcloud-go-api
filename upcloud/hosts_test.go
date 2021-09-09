@@ -17,6 +17,7 @@ func timeParse(s string) time.Time {
 
 // TestUnmarshalHosts tests that multiple Host and Stat are unmarshalled correcltly.
 func TestUnmarshalHosts(t *testing.T) {
+	t.Parallel()
 	originalJSON := `
 	  {
 		"hosts": {
@@ -116,6 +117,7 @@ func TestUnmarshalHosts(t *testing.T) {
 
 // TestUnmarshalHosts tests that a single Host and Stat are unmarshalled correcltly.
 func TestUnmarshalHost(t *testing.T) {
+	t.Parallel()
 	originalJSON := `
 	{
 		"host": {

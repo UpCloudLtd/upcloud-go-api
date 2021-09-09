@@ -14,6 +14,7 @@ type testStruct struct {
 }
 
 func TestBoolean_TrueAsBool(t *testing.T) {
+	t.Parallel()
 	trueJSON := `
 	{
 		"value": true
@@ -28,6 +29,7 @@ func TestBoolean_TrueAsBool(t *testing.T) {
 }
 
 func TestBoolean_TrueAsString(t *testing.T) {
+	t.Parallel()
 	trueJSON := `
 	{
 		"value": "true"
@@ -42,6 +44,7 @@ func TestBoolean_TrueAsString(t *testing.T) {
 }
 
 func TestBoolean_TrueAsOne(t *testing.T) {
+	t.Parallel()
 	trueJSON := `
 	{
 		"value": 1
@@ -56,6 +59,7 @@ func TestBoolean_TrueAsOne(t *testing.T) {
 }
 
 func TestBoolean_TrueAsOneString(t *testing.T) {
+	t.Parallel()
 	trueJSON := `
 	{
 		"value": "1"
@@ -70,6 +74,7 @@ func TestBoolean_TrueAsOneString(t *testing.T) {
 }
 
 func TestBoolean_TrueAsYesString(t *testing.T) {
+	t.Parallel()
 	trueJSON := `
 	{
 		"value": "yes"
@@ -84,6 +89,7 @@ func TestBoolean_TrueAsYesString(t *testing.T) {
 }
 
 func TestBoolean_FalseAsBool(t *testing.T) {
+	t.Parallel()
 	trueJSON := `
 	{
 		"value": false
@@ -98,6 +104,7 @@ func TestBoolean_FalseAsBool(t *testing.T) {
 }
 
 func TestBoolean_FalseAsString(t *testing.T) {
+	t.Parallel()
 	trueJSON := `
 	{
 		"value": "false"
@@ -112,6 +119,7 @@ func TestBoolean_FalseAsString(t *testing.T) {
 }
 
 func TestBoolean_FalseAsZero(t *testing.T) {
+	t.Parallel()
 	trueJSON := `
 	{
 		"value": 0
@@ -126,6 +134,7 @@ func TestBoolean_FalseAsZero(t *testing.T) {
 }
 
 func TestBoolean_FalseAsZeroString(t *testing.T) {
+	t.Parallel()
 	trueJSON := `
 	{
 		"value": "0"
@@ -140,6 +149,7 @@ func TestBoolean_FalseAsZeroString(t *testing.T) {
 }
 
 func TestBoolean_FalseAsNo(t *testing.T) {
+	t.Parallel()
 	trueJSON := `
 	{
 		"value": "no"
@@ -154,6 +164,7 @@ func TestBoolean_FalseAsNo(t *testing.T) {
 }
 
 func TestBoolean_FalseAnything(t *testing.T) {
+	t.Parallel()
 	trueJSON := `
 	{
 		"value": "fudge" 
@@ -168,6 +179,7 @@ func TestBoolean_FalseAnything(t *testing.T) {
 }
 
 func TestBoolean_Empty(t *testing.T) {
+	t.Parallel()
 	var b upcloud.Boolean
 	assert.True(t, b.Empty())
 }

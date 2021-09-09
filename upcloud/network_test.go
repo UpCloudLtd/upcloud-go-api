@@ -12,6 +12,7 @@ import (
 // TestUnmarshalNetworks ensures that the unmarshalling of a Networks response
 // behaves correctly.
 func TestUnmarshalNetworks(t *testing.T) {
+	t.Parallel()
 	originalJSON := `
 	{
 		"networks": {
@@ -149,6 +150,7 @@ func TestUnmarshalNetworks(t *testing.T) {
 // TestUnmarshalNetwork ensures that the unmarshalling of a single Network response
 // behaves correctly.
 func TestUnmarshalNetwork(t *testing.T) {
+	t.Parallel()
 	originalJSON := `
 	  {
 		"network": {
@@ -223,6 +225,7 @@ func TestUnmarshalNetwork(t *testing.T) {
 // TestUnmarshalServerNetworks ensures that the unmarshalling of a ServerNetworks response
 // behaves correctly.
 func TestUnmarshalServerNetworks(t *testing.T) {
+	t.Parallel()
 	originalJSON := `
 	  {
 		"networking": {
@@ -339,6 +342,7 @@ func TestUnmarshalServerNetworks(t *testing.T) {
 // TestUnmarshalInterface ensures that the unmarshalling of an Interface response
 // behaves correctly.
 func TestUnmarshalInterface(t *testing.T) {
+	t.Parallel()
 	originalJSON := `
 	  {
 		"interface": {
@@ -387,6 +391,7 @@ func TestUnmarshalInterface(t *testing.T) {
 // TestUnmarshalRouters ensures that the unmarshalling of an Routers response
 // behaves correctly.
 func TestUnmarshalRouters(t *testing.T) {
+	t.Parallel()
 	originalJSON := `
 	  {
 		"routers": {
@@ -451,6 +456,7 @@ func TestUnmarshalRouters(t *testing.T) {
 // TestUnmarshalRouters ensures that the unmarshalling of a single Router response
 // behaves correctly.
 func TestUnmarshalRouter(t *testing.T) {
+	t.Parallel()
 	originalJSON := `
 	  {
 		"router": {

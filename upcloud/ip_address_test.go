@@ -11,6 +11,7 @@ import (
 
 // TestUnmarshalIPAddresses tests that IPAddresses and IPAddress structs are unmarshaled correctly.
 func TestUnmarshalIPAddresses(t *testing.T) {
+	t.Parallel()
 	originalJSON := `
 	  {
 		"ip_addresses": {
@@ -134,6 +135,7 @@ func TestUnmarshalIPAddresses(t *testing.T) {
 
 // TestUnmarshalIPAddress tests that IPAddress is unmarshaled correctly on its own.
 func TestUnmarshalIPAddress(t *testing.T) {
+	t.Parallel()
 	originalJSON := `
       {
         "ip_address" : {

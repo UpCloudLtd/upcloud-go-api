@@ -12,6 +12,7 @@ import (
 
 // TestGetFirewallRulesRequest tests that GetFirewallRulesRequest behaves correctly.
 func TestGetFirewallRulesRequest(t *testing.T) {
+	t.Parallel()
 	request := request.GetFirewallRulesRequest{
 		ServerUUID: "00798b85-efdc-41ca-8021-f6ef457b8531",
 	}
@@ -21,6 +22,7 @@ func TestGetFirewallRulesRequest(t *testing.T) {
 
 // TestGetFirewallRuleDetailsRequest tests that GetFirewallRuleDetailsRequest behaves correctly.
 func TestGetFirewallRuleDetailsRequest(t *testing.T) {
+	t.Parallel()
 	request := request.GetFirewallRuleDetailsRequest{
 		ServerUUID: "00798b85-efdc-41ca-8021-f6ef457b8531",
 		Position:   1,
@@ -31,6 +33,7 @@ func TestGetFirewallRuleDetailsRequest(t *testing.T) {
 
 // TestCreateFirewallRuleRequest tests that CreateFirewallRuleRequest behaves correctly.
 func TestCreateFirewallRuleRequest(t *testing.T) {
+	t.Parallel()
 	request := request.CreateFirewallRuleRequest{
 		ServerUUID: "00798b85-efdc-41ca-8021-f6ef457b8531",
 		FirewallRule: upcloud.FirewallRule{
@@ -75,6 +78,7 @@ func TestCreateFirewallRuleRequest(t *testing.T) {
 
 // TestDeleteFirewallRuleRequest tests that DeleteFirewallRuleRequest behaves correctly.
 func TestDeleteFirewallRuleRequest(t *testing.T) {
+	t.Parallel()
 	request := request.DeleteFirewallRuleRequest{
 		ServerUUID: "00798b85-efdc-41ca-8021-f6ef457b8531",
 		Position:   1,
@@ -85,6 +89,7 @@ func TestDeleteFirewallRuleRequest(t *testing.T) {
 
 // TestCreateFirewallRulesRequest tests that CreateFirewallRulesRequest behaves correctly.
 func TestCreateFirewallRulesRequest(t *testing.T) {
+	t.Parallel()
 	request := request.CreateFirewallRulesRequest{
 		ServerUUID: "foo",
 		FirewallRules: []upcloud.FirewallRule{

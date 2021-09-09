@@ -11,6 +11,7 @@ import (
 
 // TestUnmarshalFirewallRules tests the FirewallRules and FirewallRule are unmarshaled correctly.
 func TestUnmarshalFirewallRules(t *testing.T) {
+	t.Parallel()
 	originalJSON := `
       {
         "firewall_rules": {
@@ -167,6 +168,7 @@ func TestUnmarshalFirewallRules(t *testing.T) {
 
 // TestUnmarshalFirewallRule tests that FirewallRule is unmarshaled correctly on its own.
 func TestUnmarshalFirewallRule(t *testing.T) {
+	t.Parallel()
 	originalJSON := `
       {
         "firewall_rule": {

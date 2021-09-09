@@ -11,6 +11,7 @@ import (
 
 // TestUnmarshalPlans tests that Plans and Plan objects unmarshal correctly.
 func TestUnmarshalPlans(t *testing.T) {
+	t.Parallel()
 	originalJSON := `
       {
         "plans" : {

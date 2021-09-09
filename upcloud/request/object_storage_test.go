@@ -11,6 +11,7 @@ import (
 
 // TestGetObjectStorageDetailsRequest tests that GetObjectStorageDetailsRequest objects behave correctly.
 func TestGetObjectStorageDetailsRequest(t *testing.T) {
+	t.Parallel()
 	request := request.GetObjectStorageDetailsRequest{
 		UUID: "foo",
 	}
@@ -20,6 +21,7 @@ func TestGetObjectStorageDetailsRequest(t *testing.T) {
 
 // TestCreateObjectStorageRequest tests that CreateObjectStorageRequest objects behave correctly.
 func TestCreateObjectStorageRequest(t *testing.T) {
+	t.Parallel()
 	request := request.CreateObjectStorageRequest{
 		Name:        "app-object-storage",
 		Description: "App object storage",
@@ -50,6 +52,7 @@ func TestCreateObjectStorageRequest(t *testing.T) {
 
 // TestModifyObjectStorageRequest tests that ModifyObjectStorageRequest objects behave correctly.
 func TestModifyObjectStorageRequest(t *testing.T) {
+	t.Parallel()
 	request := request.ModifyObjectStorageRequest{
 		UUID:        "foo",
 		Description: "Modified object storage",
@@ -75,6 +78,7 @@ func TestModifyObjectStorageRequest(t *testing.T) {
 
 // TestDeleteObjectStorageRequest tests that DeleteObjectStorageRequest objects behave correctly.
 func TestDeleteObjectStorageRequest(t *testing.T) {
+	t.Parallel()
 	request := request.DeleteObjectStorageRequest{
 		UUID: "foo",
 	}

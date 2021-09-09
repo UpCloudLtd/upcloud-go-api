@@ -11,6 +11,7 @@ import (
 
 // TestMarshalGetHostDetailsRequest tests that GetHostDetailsRequest behaves correctly.
 func TestMarshalGetHostDetailsRequest(t *testing.T) {
+	t.Parallel()
 	request := request.GetHostDetailsRequest{
 		ID: 1234,
 	}
@@ -20,6 +21,7 @@ func TestMarshalGetHostDetailsRequest(t *testing.T) {
 
 // TestMarshalModifyHostRequest tests that ModifyHostRequest behaves correctly.
 func TestMarshalModifyHostRequest(t *testing.T) {
+	t.Parallel()
 	request := request.ModifyHostRequest{
 		ID:          1234,
 		Description: "My New Host",

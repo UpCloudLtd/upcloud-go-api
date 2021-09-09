@@ -11,6 +11,7 @@ import (
 
 // TestUnmarshalTimeZone tests that the TimeZones struct is correctly marshaled.
 func TestUnmarshalTimeZones(t *testing.T) {
+	t.Parallel()
 	originalJSON := `
 {
 	"timezones": {

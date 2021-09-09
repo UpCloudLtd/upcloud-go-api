@@ -17,6 +17,7 @@ import (
 //   - Modifies a host
 //   - Modifies the host back
 func TestGetModifyHosts(t *testing.T) {
+	t.Parallel()
 	//nolint:thelper // false positive, the function is not a helper
 	record(t, "getmodifyhosts", func(t *testing.T, svc *service.Service) {
 		hosts, err := svc.GetHosts()

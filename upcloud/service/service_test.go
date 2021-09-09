@@ -33,6 +33,7 @@ func TestMain(m *testing.M) {
 
 // TestGetAccount tests that the GetAccount() method returns proper data.
 func TestGetAccount(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS") == upcloud.RawTrue || testing.Short() {
 		t.Skip("Skipping TestGetAccount...")
 	}
@@ -58,6 +59,7 @@ func TestGetAccount(t *testing.T) {
 
 // TestGetZones tests that the GetZones() function returns proper data.
 func TestGetZones(t *testing.T) {
+	t.Parallel()
 	//nolint:thelper // false positive, the function is not a helper
 	record(t, "getzones", func(t *testing.T, svc *service.Service) {
 		zones, err := svc.GetZones()
@@ -78,6 +80,7 @@ func TestGetZones(t *testing.T) {
 
 // TestGetPriceZones tests that GetPriceZones() function returns proper data.
 func TestGetPriceZones(t *testing.T) {
+	t.Parallel()
 	//nolint:thelper // false positive, the function is not a helper
 	record(t, "getpricezones", func(t *testing.T, svc *service.Service) {
 		zones, err := svc.GetPriceZones()
@@ -103,6 +106,7 @@ func TestGetPriceZones(t *testing.T) {
 
 // TestGetTimeZones ensures that the GetTimeZones() function returns proper data.
 func TestGetTimeZones(t *testing.T) {
+	t.Parallel()
 	//nolint:thelper // false positive, the function is not a helper
 	record(t, "gettimezones", func(t *testing.T, svc *service.Service) {
 		zones, err := svc.GetTimeZones()
@@ -122,6 +126,7 @@ func TestGetTimeZones(t *testing.T) {
 
 // TestGetPlans ensures that the GetPlans() functions returns proper data.
 func TestGetPlans(t *testing.T) {
+	t.Parallel()
 	//nolint:thelper // false positive, the function is not a helper
 	record(t, "getplans", func(t *testing.T, svc *service.Service) {
 		plans, err := svc.GetPlans()
@@ -149,6 +154,7 @@ func TestGetPlans(t *testing.T) {
 
 // TestGetServerConfigurations ensures that the GetServerConfigurations() function returns proper data.
 func TestGetServerConfigurations(t *testing.T) {
+	t.Parallel()
 	//nolint:thelper // false positive, the function is not a helper
 	record(t, "getserverconfigurations", func(t *testing.T, svc *service.Service) {
 		configurations, err := svc.GetServerConfigurations()
@@ -168,6 +174,7 @@ func TestGetServerConfigurations(t *testing.T) {
 
 // TestGetServerDetails ensures that the GetServerDetails() function returns proper data.
 func TestGetServerDetails(t *testing.T) {
+	t.Parallel()
 	//nolint:thelper // false positive, the function is not a helper
 	record(t, "getserverdetails", func(t *testing.T, svc *service.Service) {
 		d, err := createServer(svc, "getserverdetails")
@@ -192,6 +199,7 @@ func TestGetServerDetails(t *testing.T) {
 //   - Checks the details of the started server and that it is in the
 //     correct state.
 func TestCreateStopStartServer(t *testing.T) {
+	t.Parallel()
 	//nolint:thelper // false positive, the function is not a helper
 	record(t, "createstartstopserver", func(t *testing.T, svc *service.Service) {
 		d, err := createServer(svc, "createstartstopserver")
@@ -230,6 +238,7 @@ func TestCreateStopStartServer(t *testing.T) {
 }
 
 func TestStartAvoidHost(t *testing.T) {
+	t.Parallel()
 	//nolint:thelper // false positive, the function is not a helper
 	record(t, "startavoidhost", func(t *testing.T, svc *service.Service) {
 		serverDetails, err := createServer(svc, "TestStartAvoidHost")
@@ -267,6 +276,7 @@ func TestStartAvoidHost(t *testing.T) {
 //   - Checks the details of the restarted server and that it is in the
 //     correct state.
 func TestCreateRestartServer(t *testing.T) {
+	t.Parallel()
 	//nolint:thelper // false positive, the function is not a helper
 	record(t, "createrestartserver", func(t *testing.T, svc *service.Service) {
 		d, err := createServer(svc, "createrestartserver")
@@ -307,6 +317,7 @@ func TestCreateRestartServer(t *testing.T) {
 
 // TestErrorHandling checks that the correct error type is returned from service methods.
 func TestErrorHandling(t *testing.T) {
+	t.Parallel()
 	//nolint:thelper // false positive, the function is not a helper
 	record(t, "errorhandling", func(t *testing.T, svc *service.Service) {
 		// Perform a bogus request that will certainly fail
@@ -460,6 +471,7 @@ func TestCreateDeleteServerAndStorage(t *testing.T) {
 // - compares the retrieved IP addresses with the created server's
 //   ip addresses
 func TestGetIPAddresses(t *testing.T) {
+	t.Parallel()
 	//nolint:thelper // false positive, the function is not a helper
 	record(t, "getipaddresses", func(t *testing.T, svc *service.Service) {
 		serverDetails, err := createServer(svc, "TestGetIPAddresses")
@@ -547,6 +559,7 @@ func TestAttachModifyReleaseIPAddress(t *testing.T) {
 }
 
 func TestAttachModifyReleaseFloatingIPAddress(t *testing.T) {
+	t.Parallel()
 	//nolint:thelper // false positive, the function is not a helper
 	record(t, "attachmodifyreleasefloatingipaddress", func(t *testing.T, svc *service.Service) {
 		// Create the first server
@@ -775,6 +788,7 @@ func TestFirewallRules(t *testing.T) {
 
 // TestCreateTag tests the creation of a single tag.
 func TestCreateTag(t *testing.T) {
+	t.Parallel()
 	//nolint:thelper // false positive, the function is not a helper
 	record(t, "createtag", func(t *testing.T, svc *service.Service) {
 		// ignore errors, but delete the tag if it happens to exist
@@ -795,6 +809,7 @@ func TestCreateTag(t *testing.T) {
 // TestGetTags tests that GetTags returns multiple tags and it, at least, contains the 3
 // we create.
 func TestGetTags(t *testing.T) {
+	t.Parallel()
 	//nolint:thelper // false positive, the function is not a helper
 	record(t, "gettags", func(t *testing.T, svc *service.Service) {
 		testData := []string{

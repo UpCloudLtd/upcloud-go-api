@@ -11,6 +11,7 @@ import (
 
 // TestUnmarshalZones tests that the Zone and Zones structs are correctly marshaled.
 func TestUnmarshalZones(t *testing.T) {
+	t.Parallel()
 	originalJSON := `
 {
     "zones": {

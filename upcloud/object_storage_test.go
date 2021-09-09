@@ -11,6 +11,7 @@ import (
 
 // TestUnmarshalObjectStorages tests that Object Storages are unmarshaled correctly.
 func TestUnmarshalObjectStorages(t *testing.T) {
+	t.Parallel()
 	originalJSON := `
 		{
 			"object_storages": {
