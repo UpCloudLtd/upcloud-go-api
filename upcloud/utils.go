@@ -5,6 +5,14 @@ const (
 	True  Boolean = 1
 	False Boolean = -1
 	Empty Boolean = 0
+
+	RawTrue  = "yes"
+	RawFalse = "no"
+)
+
+var (
+	jsonTrue  = "\"" + RawTrue + "\""
+	jsonFalse = "\"" + RawFalse + "\""
 )
 
 // Boolean is a custom boolean type that allows
@@ -19,7 +27,7 @@ func (b *Boolean) UnmarshalJSON(buf []byte) error {
 	str := string(buf)
 	if str == `true` ||
 		str == `"true"` ||
-		str == `"yes"` ||
+		str == jsonTrue ||
 		str == `1` ||
 		str == `"1"` {
 		(*b) = 1
@@ -34,10 +42,10 @@ func (b *Boolean) UnmarshalJSON(buf []byte) error {
 // deeply embedded values.
 func (b *Boolean) MarshalJSON() ([]byte, error) {
 	if (*b) == 1 {
-		return []byte(`"yes"`), nil
+		return []byte(jsonTrue), nil
 	}
 
-	return []byte(`"no"`), nil
+	return []byte(jsonFalse), nil
 }
 
 // Bool converts to a standard bool value

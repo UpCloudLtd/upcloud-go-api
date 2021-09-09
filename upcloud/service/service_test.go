@@ -19,8 +19,8 @@ func TestMain(m *testing.M) {
 	retCode := m.Run()
 
 	// Optionally perform teardown
-	deleteResources := os.Getenv("UPCLOUD_GO_SDK_TEST_DELETE_RESOURCES") == "yes"
-	noCredentials := os.Getenv("UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS") == "yes"
+	deleteResources := os.Getenv("UPCLOUD_GO_SDK_TEST_DELETE_RESOURCES") == upcloud.RawTrue
+	noCredentials := os.Getenv("UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS") == upcloud.RawTrue
 	if deleteResources && !noCredentials {
 		log.Print("UPCLOUD_GO_SDK_TEST_DELETE_RESOURCES defined, deleting all resources ...")
 		teardown()
@@ -31,7 +31,7 @@ func TestMain(m *testing.M) {
 
 // TestGetAccount tests that the GetAccount() method returns proper data
 func TestGetAccount(t *testing.T) {
-	if os.Getenv("UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS") == "yes" || testing.Short() {
+	if os.Getenv("UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS") == upcloud.RawTrue || testing.Short() {
 		t.Skip("Skipping TestGetAccount...")
 	}
 
