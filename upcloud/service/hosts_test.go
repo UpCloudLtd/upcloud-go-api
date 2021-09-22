@@ -3,9 +3,11 @@ package service
 import (
 	"testing"
 
-	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
+	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
 )
 
 // TestGetModifyHosts tests host functionality works correctly.
@@ -15,7 +17,7 @@ import (
 //   - Modifies a host
 //   - Modifies the host back
 func TestGetModifyHosts(t *testing.T) {
-	record(t, "getmodifyhosts", func(t *testing.T, svc *Service) {
+	record(t, "getmodifyhosts", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		hosts, err := svc.GetHosts()
 		require.NoError(t, err)
 

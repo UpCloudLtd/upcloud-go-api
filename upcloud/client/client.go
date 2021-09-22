@@ -8,9 +8,10 @@ import (
 	"net/http"
 	"time"
 
-	globals "github.com/UpCloudLtd/upcloud-go-api/internal"
 	"github.com/blang/semver"
 	"github.com/hashicorp/go-cleanhttp"
+
+	globals "github.com/UpCloudLtd/upcloud-go-api/internal"
 )
 
 // Constants
@@ -131,7 +132,7 @@ func (c *Client) PerformJSONPatchRequest(url string, requestBody []byte) ([]byte
 	return c.performJSONRequest(request)
 }
 
-// PerformJSONDeleteRequest performs a DELETE request to the specified URL and returns the response body and eventual errors
+// PerformJSONDeleteRequest performs a DELETE request to the specified URL and returns eventual errors
 func (c *Client) PerformJSONDeleteRequest(url string) error {
 	request, err := http.NewRequest(http.MethodDelete, url, nil)
 
@@ -141,6 +142,18 @@ func (c *Client) PerformJSONDeleteRequest(url string) error {
 
 	_, err = c.performJSONRequest(request)
 	return err
+}
+
+// PerformJSONDeleteRequestWithResponseBody performs a DELETE request to the specified URL and returns
+// the response body and eventual errors
+func (c *Client) PerformJSONDeleteRequestWithResponseBody(url string) ([]byte, error) {
+	request, err := http.NewRequest(http.MethodDelete, url, nil)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return c.performJSONRequest(request)
 }
 
 // PerformJSONPutUploadRequest performs a PUT request to the specified URL with an io.Reader

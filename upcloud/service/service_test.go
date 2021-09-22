@@ -8,10 +8,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
+	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
 )
 
 // TestMain is the main test method
@@ -56,7 +58,7 @@ func TestGetAccount(t *testing.T) {
 
 // TestGetZones tests that the GetZones() function returns proper data
 func TestGetZones(t *testing.T) {
-	record(t, "getzones", func(t *testing.T, svc *Service) {
+	record(t, "getzones", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		zones, err := svc.GetZones()
 		require.NoError(t, err)
 		assert.NotEmpty(t, zones.Zones)
@@ -75,7 +77,7 @@ func TestGetZones(t *testing.T) {
 
 // TestGetPriceZones tests that GetPriceZones() function returns proper data
 func TestGetPriceZones(t *testing.T) {
-	record(t, "getpricezones", func(t *testing.T, svc *Service) {
+	record(t, "getpricezones", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		zones, err := svc.GetPriceZones()
 		require.NoError(t, err)
 		assert.NotEmpty(t, zones.PriceZones)
@@ -99,7 +101,7 @@ func TestGetPriceZones(t *testing.T) {
 
 // TestGetTimeZones ensures that the GetTimeZones() function returns proper data
 func TestGetTimeZones(t *testing.T) {
-	record(t, "gettimezones", func(t *testing.T, svc *Service) {
+	record(t, "gettimezones", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		zones, err := svc.GetTimeZones()
 		require.NoError(t, err)
 		assert.NotEmpty(t, zones.TimeZones)
@@ -117,7 +119,7 @@ func TestGetTimeZones(t *testing.T) {
 
 // TestGetPlans ensures that the GetPlans() functions returns proper data
 func TestGetPlans(t *testing.T) {
-	record(t, "getplans", func(t *testing.T, svc *Service) {
+	record(t, "getplans", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		plans, err := svc.GetPlans()
 		require.NoError(t, err)
 		assert.NotEmpty(t, plans.Plans)
@@ -143,7 +145,7 @@ func TestGetPlans(t *testing.T) {
 
 // TestGetServerConfigurations ensures that the GetServerConfigurations() function returns proper data
 func TestGetServerConfigurations(t *testing.T) {
-	record(t, "getserverconfigurations", func(t *testing.T, svc *Service) {
+	record(t, "getserverconfigurations", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		configurations, err := svc.GetServerConfigurations()
 		require.NoError(t, err)
 		assert.NotEmpty(t, configurations.ServerConfigurations)
@@ -161,7 +163,7 @@ func TestGetServerConfigurations(t *testing.T) {
 
 // TestGetServerDetails ensures that the GetServerDetails() function returns proper data
 func TestGetServerDetails(t *testing.T) {
-	record(t, "getserverdetails", func(t *testing.T, svc *Service) {
+	record(t, "getserverdetails", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		d, err := createServer(svc, "getserverdetails")
 		require.NoError(t, err)
 
@@ -184,7 +186,7 @@ func TestGetServerDetails(t *testing.T) {
 //   - Checks the details of the started server and that it is in the
 //     correct state.
 func TestCreateStopStartServer(t *testing.T) {
-	record(t, "createstartstopserver", func(t *testing.T, svc *Service) {
+	record(t, "createstartstopserver", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		d, err := createServer(svc, "createstartstopserver")
 		require.NoError(t, err)
 
@@ -221,7 +223,7 @@ func TestCreateStopStartServer(t *testing.T) {
 }
 
 func TestStartAvoidHost(t *testing.T) {
-	record(t, "startavoidhost", func(t *testing.T, svc *Service) {
+	record(t, "startavoidhost", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		serverDetails, err := createServer(svc, "TestStartAvoidHost")
 		require.NoError(t, err)
 		assert.NotZero(t, serverDetails.Host)
@@ -257,7 +259,7 @@ func TestStartAvoidHost(t *testing.T) {
 //   - Checks the details of the restarted server and that it is in the
 //     correct state.
 func TestCreateRestartServer(t *testing.T) {
-	record(t, "createrestartserver", func(t *testing.T, svc *Service) {
+	record(t, "createrestartserver", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		d, err := createServer(svc, "createrestartserver")
 		require.NoError(t, err)
 
@@ -296,7 +298,7 @@ func TestCreateRestartServer(t *testing.T) {
 
 // TestErrorHandling checks that the correct error type is returned from service methods
 func TestErrorHandling(t *testing.T) {
-	record(t, "errorhandling", func(t *testing.T, svc *Service) {
+	record(t, "errorhandling", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Perform a bogus request that will certainly fail
 		_, err := svc.StartServer(&request.StartServerRequest{
 			UUID: "invalid",
@@ -321,7 +323,7 @@ func TestErrorHandling(t *testing.T) {
 func TestCreateModifyDeleteServer(t *testing.T) {
 	t.Parallel()
 
-	record(t, "createmodifydeleteserver", func(t *testing.T, svc *Service) {
+	record(t, "createmodifydeleteserver", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create a server
 		serverDetails, err := createServer(svc, "TestCreateModifyDeleteServer")
 		require.NoError(t, err)
@@ -397,7 +399,7 @@ func TestCreateModifyDeleteServer(t *testing.T) {
 func TestCreateDeleteServerAndStorage(t *testing.T) {
 	t.Parallel()
 
-	record(t, "createdeleteserverandstorage", func(t *testing.T, svc *Service) {
+	record(t, "createdeleteserverandstorage", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create a server
 		serverDetails, err := createServer(svc, "TestCreateDeleteServerAndStorage")
 		require.NoError(t, err)
@@ -447,7 +449,7 @@ func TestCreateDeleteServerAndStorage(t *testing.T) {
 // - compares the retrieved IP addresses with the created server's
 //   ip addresses
 func TestGetIPAddresses(t *testing.T) {
-	record(t, "getipaddresses", func(t *testing.T, svc *Service) {
+	record(t, "getipaddresses", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		serverDetails, err := createServer(svc, "TestGetIPAddresses")
 		require.NoError(t, err)
 		assert.Greater(t, len(serverDetails.IPAddresses), 0)
@@ -490,7 +492,7 @@ func TestGetIPAddresses(t *testing.T) {
 func TestAttachModifyReleaseIPAddress(t *testing.T) {
 	t.Parallel()
 
-	record(t, "attachmodifyreleaseipaddress", func(t *testing.T, svc *Service) {
+	record(t, "attachmodifyreleaseipaddress", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create the server
 		serverDetails, err := createServer(svc, "TestAttachModifyReleaseIPAddress")
 		require.NoError(t, err)
@@ -532,7 +534,7 @@ func TestAttachModifyReleaseIPAddress(t *testing.T) {
 }
 
 func TestAttachModifyReleaseFloatingIPAddress(t *testing.T) {
-	record(t, "attachmodifyreleasefloatingipaddress", func(t *testing.T, svc *Service) {
+	record(t, "attachmodifyreleasefloatingipaddress", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create the first server
 		serverDetails1, err := createServer(svc, "TestAttachModifyReleaseIPAddress1")
 		require.NoError(t, err)
@@ -664,7 +666,7 @@ func TestAttachModifyReleaseFloatingIPAddress(t *testing.T) {
 func TestFirewallRules(t *testing.T) {
 	t.Parallel()
 
-	record(t, "firewallrules", func(t *testing.T, svc *Service) {
+	record(t, "firewallrules", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create the server
 		serverDetails, err := createServer(svc, "TestFirewallRules")
 		require.NoError(t, err)
@@ -758,7 +760,7 @@ func TestFirewallRules(t *testing.T) {
 
 // TestCreateTag tests the creation of a single tag
 func TestCreateTag(t *testing.T) {
-	record(t, "createtag", func(t *testing.T, svc *Service) {
+	record(t, "createtag", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// ignore errors, but delete the tag if it happens to exist
 		_ = svc.DeleteTag(&request.DeleteTagRequest{
 			Name: "testTag",
@@ -777,7 +779,7 @@ func TestCreateTag(t *testing.T) {
 // TestGetTags tests that GetTags returns multiple tags and it, at least, contains the 3
 // we create.
 func TestGetTags(t *testing.T) {
-	record(t, "gettags", func(t *testing.T, svc *Service) {
+	record(t, "gettags", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		testData := []string{
 			"testgettags_tag1",
 			"testgettags_tag2",
@@ -839,7 +841,7 @@ func TestGetTags(t *testing.T) {
 func TestTagging(t *testing.T) {
 	t.Parallel()
 
-	record(t, "tagging", func(t *testing.T, svc *Service) {
+	record(t, "tagging", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create the server
 		serverDetails, err := createServer(svc, "TestTagging")
 		require.NoError(t, err)

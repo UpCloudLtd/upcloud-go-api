@@ -4,10 +4,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
+	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/upcloud/request"
 )
 
 // TestGetNetworks checks that network details are retrievable
@@ -16,7 +18,7 @@ import (
 //    - Gets all networks and verifies details are populated
 //    - checks that at least one network has a server in.
 func TestGetNetworks(t *testing.T) {
-	record(t, "getnetworks", func(t *testing.T, svc *Service) {
+	record(t, "getnetworks", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		_, err := createServer(svc, "TestGetNetworks")
 		require.NoError(t, err)
 
@@ -49,7 +51,7 @@ func TestGetNetworks(t *testing.T) {
 //    - Gets all networks in a zone and verifies details are populated
 //    - checks that at least one network has a server in.
 func TestGetNetworksInZone(t *testing.T) {
-	record(t, "getnetworksinzone", func(t *testing.T, svc *Service) {
+	record(t, "getnetworksinzone", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		_, err := createServer(svc, "TestGetNetworksInZone")
 		require.NoError(t, err)
 
@@ -99,7 +101,7 @@ func TestGetNetworksInZone(t *testing.T) {
 //    - deletes the network
 //    - verifies the network has been deleted.
 func TestCreateModifyDeleteNetwork(t *testing.T) {
-	record(t, "createmodifydeletenetwork", func(t *testing.T, svc *Service) {
+	record(t, "createmodifydeletenetwork", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		network, err := svc.CreateNetwork(&request.CreateNetworkRequest{
 			Name: "test private network (test)",
 			Zone: "fi-hel2",
@@ -185,7 +187,7 @@ func TestCreateModifyDeleteNetwork(t *testing.T) {
 // TestGetServerNetworks tests that the server networks retrieved via GetServerNetworks
 // match those returned when creating the server.
 func TestGetServerNetworks(t *testing.T) {
-	record(t, "getservernetworks", func(t *testing.T, svc *Service) {
+	record(t, "getservernetworks", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		serverDetails, err := createServer(svc, "TestGetServerNetworks")
 		require.NoError(t, err)
 
@@ -201,7 +203,7 @@ func TestGetServerNetworks(t *testing.T) {
 
 // TestGetRouters tests that some routers are returned when using GetRouters.
 func TestGetRouters(t *testing.T) {
-	record(t, "getrouters", func(t *testing.T, svc *Service) {
+	record(t, "getrouters", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		routers, err := svc.GetRouters()
 		require.NoError(t, err)
 
@@ -225,7 +227,7 @@ func TestGetRouters(t *testing.T) {
 //     - deletes the router
 //     - retrieves all routers and ensures our new router can't be found
 func TestCreateModifyDeleteRouter(t *testing.T) {
-	record(t, "createmodifydeleterouter", func(t *testing.T, svc *Service) {
+	record(t, "createmodifydeleterouter", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		router, err := svc.CreateRouter(&request.CreateRouterRequest{
 			Name: "Testy McRouterface (test)",
 		})
@@ -290,7 +292,7 @@ func TestCreateModifyDeleteRouter(t *testing.T) {
 //     - detaches one of the routers and verifies it was detached
 //     - deletes the servers, the routers and the networks
 func TestCreateTwoNetworksTwoServersAndARouter(t *testing.T) {
-	record(t, "createtwonetworkstwoserversandarouter", func(t *testing.T, svc *Service) {
+	record(t, "createtwonetworkstwoserversandarouter", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		network1, err := svc.CreateNetwork(&request.CreateNetworkRequest{
 			Name: "test private network #1 (test)",
 			Zone: "fi-hel2",
@@ -477,7 +479,7 @@ func TestCreateTwoNetworksTwoServersAndARouter(t *testing.T) {
 }
 
 func TestCreateNetworkAndServer(t *testing.T) {
-	record(t, "createnetworkandserver", func(t *testing.T, svc *Service) {
+	record(t, "createnetworkandserver", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		network, err := svc.CreateNetwork(&request.CreateNetworkRequest{
 			Name: "test_network_tcns (test)",
 			Zone: "fi-hel2",
