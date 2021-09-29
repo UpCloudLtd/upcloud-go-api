@@ -3,7 +3,13 @@
 All notable changes to this project will be documented in this file.
 See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
-## 4.0.0
+## [Unreleased]
+
+### Added
+
+- add support for Managed Databases https://github.com/UpCloudLtd/upcloud-go-api/pull/96
+
+## [4.0.0]
 
 ### Added
 
@@ -27,7 +33,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 - don't marshal empty resource limits
 - allow empty BackupRules (eg. remove backup rule) to be sent to the backend
 
-## 3.0.0
+## [3.0.0]
 
 ### Added
 
@@ -56,26 +62,35 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 - Timeout issues
 
-## 2.0.0
+## [2.0.0]
 
 - moved project to UpCloud's own GitHub organization
 - raise the minimum required Go version to 1.7
 
-## 1.1.0
+## [1.1.0]
 
 - improve documentation
 - remove ability to override the API base URL and version
 
-## 1.0.2
+## [1.0.2]
 
 - remove credentials related getters and setters from `Client`
 - hopefully fix CD-ROM integration tests for good by performing all operations while the server is stopped
 
-## 1.0.1
+## [1.0.1]
 
 - minor tweaks to the integration tests
 - correct the package name in the README installation instructions
 
-## 1.0.0
+## [1.0.0]
 
 First stable release
+
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/4.0.0...HEAD
+[4.0.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/3.0.0...4.0.0
+[3.0.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/2.0.0...3.0.0
+[2.0.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/1.1.0...2.0.0
+[1.1.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/1.0.2...1.1.0
+[1.0.2]: https://github.com/UpCloudLtd/upcloud-go-api/compare/1.0.1...1.0.2
+[1.0.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/1.0.0...1.0.1
+[1.0.0]: https://github.com/UpCloudLtd/upcloud-go-api/releases/tag/1.0.0
