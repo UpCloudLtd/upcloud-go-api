@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
 )
 
 // GetIPAddressDetailsRequest represents a request to retrieve details about a specific IP address

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/UpCloudLtd/upcloud-go-api/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
 )
 
 // GetFirewallRulesRequest represents a request for retrieving the firewall rules for a specific server

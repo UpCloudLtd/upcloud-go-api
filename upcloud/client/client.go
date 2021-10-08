@@ -11,7 +11,7 @@ import (
 	"github.com/blang/semver"
 	"github.com/hashicorp/go-cleanhttp"
 
-	globals "github.com/UpCloudLtd/upcloud-go-api/internal"
+	globals "github.com/UpCloudLtd/upcloud-go-api/v4/internal"
 )
 
 // Constants
