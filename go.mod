@@ -1,4 +1,4 @@
-module github.com/UpCloudLtd/upcloud-go-api
+module github.com/UpCloudLtd/upcloud-go-api/v4
 
 go 1.14
 
