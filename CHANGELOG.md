@@ -7,6 +7,12 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 --
 
+## [4.1.1]
+
+### Fixed
+
+- bump go.mod major version
+
 ## [4.1.0]
 
 ### Added
@@ -94,7 +100,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.1.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.1.1...HEAD
+[4.1.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.1.0...v4.1.1
 [4.1.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/4.0.0...v4.1.0
 [4.0.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/3.0.0...4.0.0
 [3.0.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/2.0.0...3.0.0
