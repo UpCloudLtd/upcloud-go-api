@@ -5,9 +5,17 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+--
+
+## [4.1.0]
+
 ### Added
 
-- add support for Managed Databases https://github.com/UpCloudLtd/upcloud-go-api/pull/96
+- add experimental support for Managed Databases https://github.com/UpCloudLtd/upcloud-go-api/pull/96
+
+### Changed
+
+- We will now publish the release tags with the `v`-prefix to conform with go mod
 
 ## [4.0.0]
 
