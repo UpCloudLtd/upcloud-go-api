@@ -1,0 +1,372 @@
+---
+version: 1
+interactions:
+- request:
+    body: '{"tag":{"name":"sdk_test_tag_sdk_test_subaccount","description":"test tag","servers":{"server":[]}}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/tag
+    method: POST
+  response:
+    body: |
+      {
+         "tag" : {
+            "description" : "test tag",
+            "name" : "sdk_test_tag_sdk_test_subaccount",
+            "servers" : {
+               "server" : []
+            }
+         }
+      }
+    headers:
+      Content-Length:
+      - "158"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Wed, 12 Jan 2022 06:47:33 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"sub_account":{"username":"sdk_test_subaccount","password":"mysecr3tPassword","first_name":"Test","last_name":"User","company":"UpCloud Ltd","address":"my address","postal_code":"00130","city":"Helsinki","email":"test@myhost.mydomain","phone":"+358.31245434","state":"","country":"FIN","currency":"EUR","language":"en","vat_number":"FI24315605","timezone":"UTC","allow_api":"yes","allow_gui":"no","tag_access":{"tag":[{"name":"sdk_test_tag_sdk_test_subaccount","storage":"yes"}]},"roles":{"role":["billing","aux_billing","technical"]},"server_access":{"server":[{"uuid":"*","storage":"yes"}]},"storage_access":{"storage":["*"]},"network_access":{"network":["*"]},"ip_filters":{"ip_filter":["127.0.0.1"]}}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/account/sub
+    method: POST
+  response:
+    body: ""
+    headers:
+      Date:
+      - Wed, 12 Jan 2022 06:47:33 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/account/details/sdk_test_subaccount
+    method: GET
+  response:
+    body: |
+      {
+         "account" : {
+            "address" : "my address",
+            "allow_api" : "yes",
+            "allow_gui" : "no",
+            "campaigns" : {
+               "campaign" : []
+            },
+            "city" : "Helsinki",
+            "company" : "UpCloud Ltd",
+            "country" : "FIN",
+            "currency" : "EUR",
+            "email" : "test@myhost.mydomain",
+            "enable_3rd_party_services" : "yes",
+            "first_name" : "Test",
+            "ip_filters" : {
+               "ip_filter" : [
+                  "127.0.0.1"
+               ]
+            },
+            "language" : "en",
+            "last_name" : "User",
+            "main_account" : "testuser",
+            "network_access" : {
+               "network" : [
+                  "*"
+               ]
+            },
+            "phone" : "+358.31245434",
+            "postal_code" : "00130",
+            "roles" : {
+               "role" : [
+                  "billing",
+                  "aux_billing",
+                  "technical"
+               ]
+            },
+            "server_access" : {
+               "server" : [
+                  {
+                     "storage" : "yes",
+                     "uuid" : "*"
+                  }
+               ]
+            },
+            "state" : "",
+            "storage_access" : {
+               "storage" : [
+                  "*"
+               ]
+            },
+            "tag_access" : {
+               "tag" : [
+                  {
+                     "name" : "sdk_test_tag_sdk_test_subaccount",
+                     "storage" : "yes"
+                  }
+               ]
+            },
+            "timezone" : "UTC",
+            "type" : "sub",
+            "username" : "sdk_test_subaccount",
+            "vat_number" : "FI24315605"
+         }
+      }
+    headers:
+      Content-Length:
+      - "1421"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Wed, 12 Jan 2022 06:47:33 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"account":{"first_name":"User","last_name":"Test","company":"UpCloud","address":"address","postal_code":"00132","city":"New York","email":"test@mydomain.myhost","phone":"+358.31245436","state":"New York","country":"USA","currency":"USD","language":"en","vat_number":"","timezone":"Europe/Helsinki","allow_api":"no","allow_gui":"yes","tag_access":{"tag":[]},"roles":{"role":["billing"]},"server_access":{"server":[]},"storage_access":{"storage":[]},"network_access":{"network":[]},"ip_filters":{"ip_filter":["127.0.0.3"]}}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/account/sub/sdk_test_subaccount
+    method: PUT
+  response:
+    body: ""
+    headers:
+      Date:
+      - Wed, 12 Jan 2022 06:47:33 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/account/details/sdk_test_subaccount
+    method: GET
+  response:
+    body: |
+      {
+         "account" : {
+            "address" : "address",
+            "allow_api" : "no",
+            "allow_gui" : "yes",
+            "campaigns" : {
+               "campaign" : []
+            },
+            "city" : "New York",
+            "company" : "UpCloud",
+            "country" : "USA",
+            "currency" : "USD",
+            "email" : "test@mydomain.myhost",
+            "enable_3rd_party_services" : "yes",
+            "first_name" : "User",
+            "ip_filters" : {
+               "ip_filter" : [
+                  "127.0.0.3"
+               ]
+            },
+            "language" : "en",
+            "last_name" : "Test",
+            "main_account" : "testuser",
+            "network_access" : {
+               "network" : []
+            },
+            "phone" : "+358.31245436",
+            "postal_code" : "00132",
+            "roles" : {
+               "role" : [
+                  "billing"
+               ]
+            },
+            "server_access" : {
+               "server" : []
+            },
+            "state" : "New York",
+            "storage_access" : {
+               "storage" : []
+            },
+            "tag_access" : {
+               "tag" : []
+            },
+            "timezone" : "Europe/Helsinki",
+            "type" : "sub",
+            "username" : "sdk_test_subaccount",
+            "vat_number" : ""
+         }
+      }
+    headers:
+      Content-Length:
+      - "1089"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Wed, 12 Jan 2022 06:47:33 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/account/list
+    method: GET
+  response:
+    body: |
+      {
+         "accounts" : {
+            "account" : [
+               {
+                  "roles" : {
+                     "role" : [
+                        "technical"
+                     ]
+                  },
+                  "type" : "main",
+                  "username" : "testuser"
+               },
+               {
+                  "roles" : {
+                     "role" : []
+                  },
+                  "type" : "sub",
+                  "username" : "testuser_terraform"
+               },
+               {
+                  "roles" : {
+                     "role" : []
+                  },
+                  "type" : "sub",
+                  "username" : "testuser_packer"
+               },
+               {
+                  "roles" : {
+                     "role" : [
+                        "billing"
+                     ]
+                  },
+                  "type" : "sub",
+                  "username" : "sdk_test_subaccount"
+               }
+            ]
+         }
+      }
+    headers:
+      Content-Length:
+      - "779"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Wed, 12 Jan 2022 06:47:33 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/tag/sdk_test_tag_sdk_test_subaccount
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Wed, 12 Jan 2022 06:47:33 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/account/sub/sdk_test_subaccount
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Wed, 12 Jan 2022 06:47:33 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""

@@ -68,3 +68,154 @@ func TestMarshalAccount(t *testing.T) {
 	assert.NoError(t, err)
 	assert.JSONEq(t, expectedJSON, string(actualJSON))
 }
+
+// TestUnmarshalAccountDetails tests that AccountDetails objects unmarshal correctly
+func TestUnmarshalAccountDetails(t *testing.T) {
+	originalJSON := []byte(`
+	{
+		"account": {
+			"main_account": "mymain",
+			"type": "sub",
+			"username": "my_sub_account",
+			"first_name": "first",
+			"last_name": "last",
+			"company": "UpCloud Ltd",
+			"address": "my address",
+			"postal_code": "00130",
+			"city": "Helsinki",
+			"state": "",
+			"country": "FIN",
+			"currency": "USD",
+			"language": "fi",
+			"phone": "+358.31245434",
+			"email": "test@myhost.mydomain",
+			"vat_number": "FI24315605",
+			"timezone": "UTC",
+			"campaigns": {
+				"campaign": [
+					"test1",
+					"test2"
+				]
+			},
+			"roles": {
+				"role": [
+					"billing",
+					"aux_billing",
+					"technical"
+				]
+			},
+			"allow_api": "yes",
+			"allow_gui": "no",
+			"enable_3rd_party_services": "yes",
+			"network_access": {
+				"network": [
+					"*"
+				]
+			},
+			"server_access": {
+				"server": [
+					{
+						"storage": "no",
+						"uuid": "*"
+					}
+				]
+			},
+			"storage_access": {
+				"storage": [
+					"*"
+				]
+			},
+			"tag_access": {
+				"tag": [
+					{
+						"name": "mytag",
+						"storage": "yes"
+					},
+					{
+						"name": "mytag2",
+						"storage": "no"
+					}
+				]
+			},
+			"ip_filters": {
+				"ip_filter": [
+					"10.0.0.1-255.255.255.255"
+				]
+			}
+		}
+	}
+	`)
+
+	a := AccountDetails{}
+	err := json.Unmarshal(originalJSON, &a)
+	assert.NoError(t, err)
+	assert.True(t, a.IsSubaccount())
+	assert.Len(t, a.Campaigns.Campaign, 2)
+	assert.Equal(t, "test1", a.Campaigns.Campaign[0])
+	assert.Len(t, a.Roles.Role, 3)
+	assert.Equal(t, "billing", a.Roles.Role[0])
+	assert.Len(t, a.TagAccess.Tag, 2)
+	assert.Equal(t, "mytag", a.TagAccess.Tag[0].Name)
+	assert.Len(t, a.ServerAccess.Server, 1)
+	assert.Equal(t, "*", a.ServerAccess.Server[0].UUID)
+	assert.Len(t, a.StorageAccess.Storage, 1)
+	assert.Equal(t, "*", a.StorageAccess.Storage[0])
+	assert.Len(t, a.NetworkAccess.Network, 1)
+	assert.Equal(t, "*", a.NetworkAccess.Network[0])
+	assert.Len(t, a.IPFilters.IPFilter, 1)
+	assert.Equal(t, "10.0.0.1-255.255.255.255", a.IPFilters.IPFilter[0])
+	assert.Equal(t, a.MainAccount, "mymain")
+	assert.Equal(t, a.Type, "sub")
+	assert.Equal(t, a.Username, "my_sub_account")
+	assert.Equal(t, a.FirstName, "first")
+	assert.Equal(t, a.LastName, "last")
+	assert.Equal(t, a.Company, "UpCloud Ltd")
+	assert.Equal(t, a.Address, "my address")
+	assert.Equal(t, a.PostalCode, "00130")
+	assert.Equal(t, a.City, "Helsinki")
+	assert.Equal(t, a.State, "")
+	assert.Equal(t, a.Country, "FIN")
+	assert.Equal(t, a.Currency, "USD")
+	assert.Equal(t, a.Language, "fi")
+	assert.Equal(t, a.Phone, "+358.31245434")
+	assert.Equal(t, a.Email, "test@myhost.mydomain")
+	assert.Equal(t, a.VATNnumber, "FI24315605")
+	assert.Equal(t, a.Timezone, "UTC")
+}
+
+// TestUnmarshalAccountList tests that Accounts slice unmarshal correctly
+func TestUnmarshalAccountList(t *testing.T) {
+	originalJSON := []byte(`
+	{
+		"accounts": {
+			"account": [
+				{
+					"roles": {
+						"role": [
+							"technical"
+						]
+					},
+					"type": "mymain",
+					"username": "test"
+				},
+				{
+					"roles": {
+						"role": [
+							"billing"
+						]
+					},
+					"type": "sub",
+					"username": "my_billing_account"
+				}
+			]
+		}
+	}
+	`)
+	a := make(AccountList, 0)
+	err := json.Unmarshal(originalJSON, &a)
+	assert.NoError(t, err)
+	assert.Len(t, a, 2)
+	assert.Equal(t, "billing", a[1].Roles.Role[0])
+	assert.Equal(t, "sub", a[1].Type)
+	assert.Equal(t, "my_billing_account", a[1].Username)
+}
