@@ -4,8 +4,11 @@ import (
 	"encoding/json"
 )
 
+type AccountType string
+
 const (
-	AccountTypeSubaccount string = "sub"
+	AccountTypeMain       AccountType = "main"
+	AccountTypeSubaccount AccountType = "sub"
 )
 
 // Account represents an account
@@ -96,16 +99,16 @@ type AccountIPFilters struct {
 
 // AccountDetails represents detailed information about an account
 type AccountDetails struct {
-	MainAccount string `json:"main_account"`
-	Type        string `json:"type"`
-	Username    string `json:"username"`
-	FirstName   string `json:"first_name"`
-	LastName    string `json:"last_name"`
-	Company     string `json:"company"`
-	Address     string `json:"address"`
-	PostalCode  string `json:"postal_code"`
-	City        string `json:"city"`
-	Email       string `json:"email"`
+	MainAccount string      `json:"main_account"`
+	Type        AccountType `json:"type"`
+	Username    string      `json:"username"`
+	FirstName   string      `json:"first_name"`
+	LastName    string      `json:"last_name"`
+	Company     string      `json:"company"`
+	Address     string      `json:"address"`
+	PostalCode  string      `json:"postal_code"`
+	City        string      `json:"city"`
+	Email       string      `json:"email"`
 
 	// Phone number in international format, country code and national part separated by a period
 	Phone string `json:"phone"`

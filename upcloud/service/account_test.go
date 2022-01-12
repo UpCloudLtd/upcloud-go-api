@@ -124,7 +124,7 @@ func TestListDetailsCreateModifyDeleteSubaccount(t *testing.T) {
 		assert.Equal(t, "127.0.0.1", subAccount.IPFilters.IPFilter[0])
 		assert.Equal(t, mainAccount, subAccount.MainAccount)
 
-		err = svc.ModifySubaccount(&request.ModifySubaccountRequest{
+		subAccount, err = svc.ModifySubaccount(&request.ModifySubaccountRequest{
 			Username: subAccount.Username,
 			Subaccount: request.ModifySubaccount{
 				FirstName:  "User",
@@ -163,9 +163,6 @@ func TestListDetailsCreateModifyDeleteSubaccount(t *testing.T) {
 				},
 			}})
 
-		require.NoError(t, err)
-
-		subAccount, err = svc.GetAccountDetails(&request.GetAccountDetailsRequest{Username: subAccount.Username})
 		require.NoError(t, err)
 
 		assert.Equal(t, "User", subAccount.FirstName)

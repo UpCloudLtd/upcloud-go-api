@@ -12,7 +12,7 @@ type Account interface {
 	GetAccount() (*upcloud.Account, error)
 	GetAccountDetails(r *request.GetAccountDetailsRequest) (*upcloud.AccountDetails, error)
 	CreateSubaccount(r *request.CreateSubaccountRequest) (*upcloud.AccountDetails, error)
-	ModifySubaccount(r *request.ModifySubaccountRequest) error
+	ModifySubaccount(r *request.ModifySubaccountRequest) (*upcloud.AccountDetails, error)
 	DeleteSubaccount(r *request.DeleteSubaccountRequest) error
 }
 
@@ -68,17 +68,17 @@ func (s *Service) GetAccountDetails(r *request.GetAccountDetailsRequest) (*upclo
 }
 
 // ModifySubaccount modifies a sub account
-func (s *Service) ModifySubaccount(r *request.ModifySubaccountRequest) error {
+func (s *Service) ModifySubaccount(r *request.ModifySubaccountRequest) (*upcloud.AccountDetails, error) {
 	requestBody, err := json.Marshal(r)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	if _, err = s.client.PerformJSONPutRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody); err != nil {
-		return parseJSONServiceError(err)
+		return nil, parseJSONServiceError(err)
 	}
 
-	return nil
+	return s.GetAccountDetails(&request.GetAccountDetailsRequest{Username: r.Username})
 }
 
 // CreateSubaccount creates a new sub account
