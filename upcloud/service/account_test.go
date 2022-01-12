@@ -201,7 +201,7 @@ func TestListDetailsCreateModifyDeleteSubaccount(t *testing.T) {
 			}
 			if a.Username == mainAccount {
 				mainAccountNotFound = false
-				assert.Equal(t, "main", a.Type)
+				assert.Equal(t, upcloud.AccountType("main"), a.Type)
 			}
 		}
 		assert.False(t, subAccountNotFound, "subaccount not found from list of accounts")

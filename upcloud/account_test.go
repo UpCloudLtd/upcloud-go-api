@@ -165,7 +165,7 @@ func TestUnmarshalAccountDetails(t *testing.T) {
 	assert.Len(t, a.IPFilters.IPFilter, 1)
 	assert.Equal(t, "10.0.0.1-255.255.255.255", a.IPFilters.IPFilter[0])
 	assert.Equal(t, a.MainAccount, "mymain")
-	assert.Equal(t, a.Type, "sub")
+	assert.Equal(t, a.Type, AccountType("sub"))
 	assert.Equal(t, a.Username, "my_sub_account")
 	assert.Equal(t, a.FirstName, "first")
 	assert.Equal(t, a.LastName, "last")
@@ -216,6 +216,6 @@ func TestUnmarshalAccountList(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Len(t, a, 2)
 	assert.Equal(t, "billing", a[1].Roles.Role[0])
-	assert.Equal(t, "sub", a[1].Type)
+	assert.Equal(t, AccountType("sub"), a[1].Type)
 	assert.Equal(t, "my_billing_account", a[1].Username)
 }

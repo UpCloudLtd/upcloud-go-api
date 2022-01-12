@@ -160,7 +160,7 @@ func (a *AccountDetails) UnmarshalJSON(b []byte) error {
 
 // AccountListItem represents account list item
 type AccountListItem struct {
-	Type     string       `json:"type"`
+	Type     AccountType  `json:"type"`
 	Username string       `json:"username"`
 	Roles    AccountRoles `json:"roles"`
 }
