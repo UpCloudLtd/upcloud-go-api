@@ -57,12 +57,6 @@ type Tag interface {
 
 var _ Tag = (*Service)(nil)
 
-type Account interface {
-	GetAccount() (*upcloud.Account, error)
-}
-
-var _ Account = (*Service)(nil)
-
 type PriceZones interface {
 	GetPriceZones() (*upcloud.PriceZones, error)
 }
@@ -92,23 +86,6 @@ func New(client *client.Client) *Service {
 	service.client = client
 
 	return &service
-}
-
-// GetAccount returns the current user's account
-func (s *Service) GetAccount() (*upcloud.Account, error) {
-	account := upcloud.Account{}
-	response, err := s.basicGetRequest("/account")
-
-	if err != nil {
-		return nil, err
-	}
-
-	err = json.Unmarshal(response, &account)
-	if err != nil {
-		return nil, err
-	}
-
-	return &account, nil
 }
 
 // GetZones returns the available zones
