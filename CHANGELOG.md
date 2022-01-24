@@ -5,7 +5,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
---
+### Added
+
+- add support for resizing storage partition and filesystem
+
 ## [4.1.3]
 
 ### Added

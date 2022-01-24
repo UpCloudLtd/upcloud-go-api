@@ -376,3 +376,63 @@ func TestDirectUploadStorageImport(t *testing.T) {
 		require.Equal(t, sha256sum, afterStorageImportDetails.SHA256Sum)
 	})
 }
+
+// TestResizeStorage performs the following actions:
+// - creates a server
+// - stops the server
+// - detaches the storage
+// - resizes the storage disk
+// - attaches the storage
+// - resizes the storage
+// - cleanup
+func TestResizeStorage(t *testing.T) {
+	t.Parallel()
+
+	record(t, "resizestorage", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+		// start server
+		serverDetails, err := createMinimalServer(svc, "TestResizeStorage")
+		require.NoError(t, err)
+
+		// stop server
+		require.NoError(t, stopServer(svc, serverDetails.UUID))
+
+		// detach storage
+		_, err = svc.DetachStorage(&request.DetachStorageRequest{
+			ServerUUID: serverDetails.UUID,
+			Address:    serverDetails.StorageDevices[0].Address,
+		})
+		require.NoError(t, err)
+
+		// modify disk size
+		storageDetails, err := svc.ModifyStorage(&request.ModifyStorageRequest{
+			UUID: serverDetails.StorageDevices[0].UUID,
+			Size: serverDetails.StorageDevices[0].Size + 10,
+		})
+		require.NoError(t, err)
+
+		// attach storage
+		serverDetailsNew, err := svc.AttachStorage(&request.AttachStorageRequest{
+			StorageUUID: serverDetails.StorageDevices[0].UUID,
+			ServerUUID:  serverDetails.UUID,
+			Type:        serverDetails.StorageDevices[0].Type,
+			Address:     serverDetails.StorageDevices[0].Address,
+			BootDisk:    serverDetails.StorageDevices[0].BootDisk,
+		})
+		require.NoError(t, err)
+		require.Equal(t, serverDetails.StorageDevices[0].UUID, serverDetailsNew.StorageDevices[0].UUID)
+
+		// resize storage to populate new disk size
+		resizeBackup, err := svc.ResizeStorage(&request.ResizeStorageRequest{
+			UUID: storageDetails.UUID,
+		})
+		require.NoError(t, err)
+		assert.Equal(t, serverDetailsNew.StorageDevices[0].Size, resizeBackup.Size)
+		assert.Equal(t, serverDetailsNew.StorageDevices[0].UUID, resizeBackup.Origin)
+		assert.Equal(t, resizeBackup.State, upcloud.StorageStateOnline)
+
+		// cleanup
+		assert.NoError(t, svc.DeleteStorage(&request.DeleteStorageRequest{UUID: resizeBackup.UUID}))
+		assert.NoError(t, svc.DeleteServerAndStorages(
+			&request.DeleteServerAndStoragesRequest{UUID: serverDetailsNew.UUID}))
+	})
+}
