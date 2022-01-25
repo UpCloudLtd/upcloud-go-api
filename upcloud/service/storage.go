@@ -448,7 +448,7 @@ func (s *Service) ResizeStorage(r *request.ResizeStorageRequest) (*upcloud.Stora
 
 	resizeBackup := upcloud.StorageResizeBackup{}
 	if err = json.Unmarshal(response, &resizeBackup); err != nil {
-		return &resizeBackup, nil
+		return &resizeBackup, err
 	}
 
 	return &resizeBackup, nil
