@@ -31,7 +31,7 @@ type Storage interface {
 	GetStorageImportDetails(r *request.GetStorageImportDetailsRequest) (*upcloud.StorageImportDetails, error)
 	WaitForStorageImportCompletion(r *request.WaitForStorageImportCompletionRequest) (*upcloud.StorageImportDetails, error)
 	DeleteStorage(*request.DeleteStorageRequest) error
-	ResizeStorage(r *request.ResizeStorageRequest) (*upcloud.StorageResizeBackup, error)
+	ResizeFilesystem(r *request.ResizeStorageRequest) (*upcloud.ResizeFilesystemBackup, error)
 }
 
 var _ Storage = (*Service)(nil)
@@ -430,7 +430,7 @@ func (s *Service) WaitForStorageImportCompletion(r *request.WaitForStorageImport
 	}
 }
 
-// ResizeStorage resizes the last partition of a storage and the ext3/ext4/XFS/NTFS filesystem
+// ResizeFilesystem resizes the last partition of a storage and the ext3/ext4/XFS/NTFS filesystem
 // on that partition if the partition does not extend to the end of the storage yet.
 //
 // Before the resize is attempted, a backup is taken from the storage. If the resize
@@ -439,14 +439,14 @@ func (s *Service) WaitForStorageImportCompletion(r *request.WaitForStorageImport
 //
 // If the resize fails, backup is used to restore the storage to the state where it
 // was before the resize. After that the backup is deleted automatically.
-func (s *Service) ResizeStorage(r *request.ResizeStorageRequest) (*upcloud.StorageResizeBackup, error) {
+func (s *Service) ResizeFilesystem(r *request.ResizeStorageRequest) (*upcloud.ResizeFilesystemBackup, error) {
 	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), nil)
 
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
 
-	resizeBackup := upcloud.StorageResizeBackup{}
+	resizeBackup := upcloud.ResizeFilesystemBackup{}
 	if err = json.Unmarshal(response, &resizeBackup); err != nil {
 		return &resizeBackup, err
 	}

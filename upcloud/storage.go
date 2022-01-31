@@ -224,8 +224,8 @@ func (s *StorageImportDetails) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// StorageResizeBackup represents the backup details taken before an resize operation.
-type StorageResizeBackup struct {
+// ResizeFilesystemBackup represents the backup details taken before an resize operation.
+type ResizeFilesystemBackup struct {
 	Access  string          `json:"access"`
 	Created time.Time       `json:"created"`
 	License float64         `json:"license"`
@@ -240,8 +240,8 @@ type StorageResizeBackup struct {
 }
 
 // UnmarshalJSON is a custom unmarshaller that deals with deeply embedded values.
-func (s *StorageResizeBackup) UnmarshalJSON(b []byte) error {
-	type resizeBackup StorageResizeBackup
+func (s *ResizeFilesystemBackup) UnmarshalJSON(b []byte) error {
+	type resizeBackup ResizeFilesystemBackup
 	v := struct {
 		ResizeBackup resizeBackup `json:"resize_backup"`
 	}{}
@@ -250,6 +250,6 @@ func (s *StorageResizeBackup) UnmarshalJSON(b []byte) error {
 		return err
 	}
 
-	*s = StorageResizeBackup(v.ResizeBackup)
+	*s = ResizeFilesystemBackup(v.ResizeBackup)
 	return nil
 }

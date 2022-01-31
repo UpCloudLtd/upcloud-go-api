@@ -377,7 +377,7 @@ func TestDirectUploadStorageImport(t *testing.T) {
 	})
 }
 
-// TestResizeStorage performs the following actions:
+// TestResizeFilesystem performs the following actions:
 // - creates a server
 // - stops the server
 // - resizes the storage disk
@@ -386,9 +386,9 @@ func TestDirectUploadStorageImport(t *testing.T) {
 func TestResizeStorage(t *testing.T) {
 	t.Parallel()
 
-	record(t, "resizestorage", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "resizefilesystem", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// start server
-		serverDetails, err := createMinimalServer(svc, "TestResizeStorage")
+		serverDetails, err := createMinimalServer(svc, "TestResizeFilesystem")
 		require.NoError(t, err)
 
 		// stop server
@@ -410,7 +410,7 @@ func TestResizeStorage(t *testing.T) {
 		require.NoError(t, err)
 
 		// resize storage to populate new disk size
-		resizeBackup, err := svc.ResizeStorage(&request.ResizeStorageRequest{
+		resizeBackup, err := svc.ResizeFilesystem(&request.ResizeStorageRequest{
 			UUID: storageDetails.UUID,
 		})
 		require.NoError(t, err)
