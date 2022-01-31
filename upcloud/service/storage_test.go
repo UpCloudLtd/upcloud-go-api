@@ -383,7 +383,7 @@ func TestDirectUploadStorageImport(t *testing.T) {
 // - resizes the storage disk
 // - resizes the storage
 // - cleanup
-func TestResizeStorage(t *testing.T) {
+func TestResizeFilesystem(t *testing.T) {
 	t.Parallel()
 
 	record(t, "resizefilesystem", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
@@ -410,7 +410,7 @@ func TestResizeStorage(t *testing.T) {
 		require.NoError(t, err)
 
 		// resize storage to populate new disk size
-		resizeBackup, err := svc.ResizeFilesystem(&request.ResizeStorageRequest{
+		resizeBackup, err := svc.ResizeFilesystem(&request.ResizeFilesystemRequest{
 			UUID: storageDetails.UUID,
 		})
 		require.NoError(t, err)

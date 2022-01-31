@@ -31,7 +31,7 @@ type Storage interface {
 	GetStorageImportDetails(r *request.GetStorageImportDetailsRequest) (*upcloud.StorageImportDetails, error)
 	WaitForStorageImportCompletion(r *request.WaitForStorageImportCompletionRequest) (*upcloud.StorageImportDetails, error)
 	DeleteStorage(*request.DeleteStorageRequest) error
-	ResizeFilesystem(r *request.ResizeStorageRequest) (*upcloud.ResizeFilesystemBackup, error)
+	ResizeFilesystem(r *request.ResizeFilesystemRequest) (*upcloud.ResizeFilesystemBackup, error)
 }
 
 var _ Storage = (*Service)(nil)
@@ -439,7 +439,7 @@ func (s *Service) WaitForStorageImportCompletion(r *request.WaitForStorageImport
 //
 // If the resize fails, backup is used to restore the storage to the state where it
 // was before the resize. After that the backup is deleted automatically.
-func (s *Service) ResizeFilesystem(r *request.ResizeStorageRequest) (*upcloud.ResizeFilesystemBackup, error) {
+func (s *Service) ResizeFilesystem(r *request.ResizeFilesystemRequest) (*upcloud.ResizeFilesystemBackup, error) {
 	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), nil)
 
 	if err != nil {
