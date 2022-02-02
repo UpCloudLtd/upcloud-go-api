@@ -281,9 +281,9 @@ func TestGetStorageImportDetails(t *testing.T) {
 	assert.Equal(t, "/storage/foo/import", request.RequestURL())
 }
 
-// TestResizeFilesystemRequest tests that ResizeFilesystemRequest objects behave correctly
-func TestResizeFilesystemRequest(t *testing.T) {
-	request := ResizeFilesystemRequest{
+// TestResizeStorageFilesystemRequest tests that ResizeStorageFilesystemRequest objects behave correctly
+func TestResizeStorageFilesystemRequest(t *testing.T) {
+	request := ResizeStorageFilesystemRequest{
 		UUID: "foo",
 	}
 

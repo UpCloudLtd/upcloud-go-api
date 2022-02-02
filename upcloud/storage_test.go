@@ -217,8 +217,8 @@ func TestUnmarshalStorageImport(t *testing.T) {
 	assert.Equal(t, testStorageImport, storageImport)
 }
 
-// TestUnmarshalResizeFilesystemBackup tests that ResizeFilesystemBackup struct is unmarshaled correctly
-func TestUnmarshalResizeFilesystemBackup(t *testing.T) {
+// TestUnmarshalResizeStorageFilesystemBackup tests that ResizeStorageFilesystemBackup struct is unmarshaled correctly
+func TestUnmarshalResizeStorageFilesystemBackup(t *testing.T) {
 	originalJSON := `
 	{
 		"resize_backup" : {
@@ -241,11 +241,11 @@ func TestUnmarshalResizeFilesystemBackup(t *testing.T) {
 	}
 	`
 
-	resizeBackup := ResizeFilesystemBackup{}
+	resizeBackup := ResizeStorageFilesystemBackup{}
 	err := json.Unmarshal([]byte(originalJSON), &resizeBackup)
 	assert.NoError(t, err)
 
-	testResizeBackup := ResizeFilesystemBackup{
+	testResizeBackup := ResizeStorageFilesystemBackup{
 		Access:  StorageAccessPrivate,
 		Created: timeParse("2021-12-03T06:25:15Z"),
 		License: 0,
