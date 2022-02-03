@@ -376,3 +376,51 @@ func TestDirectUploadStorageImport(t *testing.T) {
 		require.Equal(t, sha256sum, afterStorageImportDetails.SHA256Sum)
 	})
 }
+
+// TestResizeStorageFilesystem performs the following actions:
+// - creates a server
+// - stops the server
+// - resizes the storage disk
+// - resizes the storage
+// - cleanup
+func TestResizeStorageFilesystem(t *testing.T) {
+	t.Parallel()
+
+	record(t, "resizestoragefilesystem", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+		// start server
+		serverDetails, err := createMinimalServer(svc, "TestResizeStorageFilesystem")
+		require.NoError(t, err)
+
+		// stop server
+		require.NoError(t, stopServer(svc, serverDetails.UUID))
+
+		// modify disk size
+		_, err = svc.ModifyStorage(&request.ModifyStorageRequest{
+			UUID: serverDetails.StorageDevices[0].UUID,
+			Size: serverDetails.StorageDevices[0].Size + 10,
+		})
+		require.NoError(t, err)
+
+		// wait disk to become back online
+		storageDetails, err := svc.WaitForStorageState(&request.WaitForStorageStateRequest{
+			UUID:         serverDetails.StorageDevices[0].UUID,
+			DesiredState: upcloud.StorageStateOnline,
+			Timeout:      600,
+		})
+		require.NoError(t, err)
+
+		// resize storage to populate new disk size
+		resizeBackup, err := svc.ResizeStorageFilesystem(&request.ResizeStorageFilesystemRequest{
+			UUID: storageDetails.UUID,
+		})
+		require.NoError(t, err)
+		assert.Equal(t, storageDetails.Size, resizeBackup.Size)
+		assert.Equal(t, storageDetails.UUID, resizeBackup.Origin)
+		assert.Equal(t, upcloud.StorageStateOnline, resizeBackup.State)
+
+		// cleanup
+		assert.NoError(t, svc.DeleteStorage(&request.DeleteStorageRequest{UUID: resizeBackup.UUID}))
+		assert.NoError(t, svc.DeleteServerAndStorages(
+			&request.DeleteServerAndStoragesRequest{UUID: serverDetails.UUID}))
+	})
+}

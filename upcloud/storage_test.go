@@ -216,3 +216,48 @@ func TestUnmarshalStorageImport(t *testing.T) {
 
 	assert.Equal(t, testStorageImport, storageImport)
 }
+
+// TestUnmarshalResizeStorageFilesystemBackup tests that ResizeStorageFilesystemBackup struct is unmarshaled correctly
+func TestUnmarshalResizeStorageFilesystemBackup(t *testing.T) {
+	originalJSON := `
+	{
+		"resize_backup" : {
+		   "access" : "private",
+		   "created" : "2021-12-03T06:25:15Z",
+		   "license" : 0,
+		   "origin" : "017ca4cc-def2-458d-a797-7782959b30a7",
+		   "servers" : {
+			  "server" : [
+				  "117ca4cc-def2-458d-a797-7782959b30a7"
+			  ]
+		   },
+		   "size" : 30,
+		   "state" : "online",
+		   "title" : "Resize Backup",
+		   "type" : "backup",
+		   "uuid" : "01beec3a-14ac-4f71-9c63-3338341121c3",
+		   "zone" : "uk-lon1"
+		}
+	}
+	`
+
+	resizeBackup := ResizeStorageFilesystemBackup{}
+	err := json.Unmarshal([]byte(originalJSON), &resizeBackup)
+	assert.NoError(t, err)
+
+	testResizeBackup := ResizeStorageFilesystemBackup{
+		Access:  StorageAccessPrivate,
+		Created: timeParse("2021-12-03T06:25:15Z"),
+		License: 0,
+		Origin:  "017ca4cc-def2-458d-a797-7782959b30a7",
+		Servers: ServerUUIDSlice{"117ca4cc-def2-458d-a797-7782959b30a7"},
+		Size:    30,
+		State:   StorageStateOnline,
+		Title:   "Resize Backup",
+		Type:    StorageTypeBackup,
+		UUID:    "01beec3a-14ac-4f71-9c63-3338341121c3",
+		Zone:    "uk-lon1",
+	}
+
+	assert.Equal(t, testResizeBackup, resizeBackup)
+}

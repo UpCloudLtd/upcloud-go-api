@@ -271,6 +271,57 @@ func createServerWithNetwork(svc *Service, name string, network string) (*upclou
 	return serverDetails, nil
 }
 
+func createMinimalServer(svc *Service, name string) (*upcloud.ServerDetails, error) {
+	title := "uploud-go-sdk-integration-test-" + name
+	hostname := strings.ToLower(title + ".example.com")
+
+	createServerRequest := request.CreateServerRequest{
+		Zone:             "fi-hel2",
+		Title:            title,
+		Hostname:         hostname,
+		PasswordDelivery: request.PasswordDeliveryNone,
+		StorageDevices: []request.CreateServerStorageDevice{
+			{
+				Action:  request.CreateServerStorageDeviceActionClone,
+				Storage: "01000000-0000-4000-8000-000020060100",
+				Title:   "disk1",
+				Size:    10,
+				Tier:    upcloud.StorageTierMaxIOPS,
+			},
+		},
+		Networking: &request.CreateServerNetworking{
+			Interfaces: []request.CreateServerInterface{
+				{
+					IPAddresses: []request.CreateServerIPAddress{
+						{
+							Family: upcloud.IPAddressFamilyIPv4,
+						},
+					},
+					Type: upcloud.NetworkTypeUtility,
+				},
+			},
+		},
+	}
+
+	// Create the server and block until it has started
+	serverDetails, err := svc.CreateServer(&createServerRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	// Wait for the server to start
+	serverDetails, err = svc.WaitForServerState(&request.WaitForServerStateRequest{
+		UUID:         serverDetails.UUID,
+		DesiredState: upcloud.ServerStateStarted,
+		Timeout:      time.Minute * 15,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return serverDetails, nil
+}
+
 // Stops the specified server (forcibly)
 func stopServer(svc *Service, uuid string) error {
 	serverDetails, err := svc.StopServer(&request.StopServerRequest{

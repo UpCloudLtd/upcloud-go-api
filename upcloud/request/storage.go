@@ -337,3 +337,13 @@ type WaitForStorageImportCompletionRequest struct {
 	StorageUUID string
 	Timeout     time.Duration
 }
+
+// ResizeStorageFilesystemRequest represents a request to resize storage filesystem
+type ResizeStorageFilesystemRequest struct {
+	UUID string
+}
+
+// RequestURL implements the Request interface
+func (r *ResizeStorageFilesystemRequest) RequestURL() string {
+	return fmt.Sprintf("/storage/%s/resize", r.UUID)
+}
