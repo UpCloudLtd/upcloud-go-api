@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [4.2.0]
+
 ### Added
 
 - add support for resizing storage partition and filesystem
@@ -114,7 +116,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.1.2...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.2.0...HEAD
+[4.2.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.1.3...v4.2.0
 [4.1.3]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.1.2...v4.1.3
 [4.1.2]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.1.1...v4.1.2
 [4.1.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.1.0...v4.1.1
