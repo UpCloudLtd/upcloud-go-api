@@ -1,7 +1,9 @@
 package service
 
 import (
+	"github.com/google/uuid"
 	"log"
+	"math/rand"
 	"net/http"
 	"os"
 	"strings"
@@ -46,7 +48,8 @@ func record(t *testing.T, fixture string, f func(*testing.T, *recorder.Recorder,
 	require.NoError(t, err)
 
 	r.AddFilter(func(i *cassette.Interaction) error {
-		delete(i.Request.Headers, "Authorization")
+		// TODO
+		// delete(i.Request.Headers, "Authorization")
 		if i.Request.Method == http.MethodPut && strings.Contains(i.Request.URL, "uploader") {
 			// We will remove the body from the upload to reduce fixture size
 			i.Request.Body = ""
@@ -489,4 +492,36 @@ func getCredentials() (string, string) {
 	}
 
 	return user, password
+}
+
+func createLoadBalancer(svc *Service) (*upcloud.LoadBalancerDetails, error) {
+	s1 := rand.NewSource(time.Now().UnixNano())
+	r1 := rand.New(s1)
+	randomChar := 'a' + rune(r1.Intn(26))
+
+	createLoadBalancerRequest := request.CreateLoadBalancerRequest{
+		Name:             "go-test-loadbalancer" + string(randomChar),
+		Zone:             "es-mad1",
+		Plan:             "development",
+		NetworkUuid:      uuid.MustParse("032d4c7f-61b5-4ea9-a2d6-d2357c3c9a88"),
+		ConfiguredStatus: "started",
+		Frontends:        []upcloud.Frontend{},
+		Backends:         []upcloud.Backend{},
+		// Resolvers:        []*upcloud.Resolver{},
+	}
+
+	loadBalancerDetails, err := svc.CreateLoadBalancer(&createLoadBalancerRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	return loadBalancerDetails, nil
+}
+
+func deleteLoadBalancer(svc *Service, uuid uuid.UUID) error {
+	err := svc.DeleteLoadBalancer(&request.DeleteLoadBalancerRequest{
+		UUID: uuid,
+	})
+
+	return err
 }
