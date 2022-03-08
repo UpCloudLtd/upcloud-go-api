@@ -148,18 +148,19 @@ type ModifyLoadBalancerBackendMemberRequest struct {
 	MemberEnabled     bool   `json:"enabled,omitempty"`
 	MemberIP          string `json:"ip,omitempty"`
 	MemberPort        int    `json:"port,omitempty"`
+	MemberType        string `json:"type,omitempty"`
 }
 
 func (r *ModifyLoadBalancerBackendMemberRequest) RequestURL() string {
 	return fmt.Sprintf("/loadbalancer/%s/backends/%s/members/%s", r.ServiceUUID, r.BackendName, r.MemberName)
 }
 
-type DeleteLoadBalancerBackendMember struct {
+type DeleteLoadBalancerBackendMemberRequest struct {
 	ServiceUUID string `json:"-"`
 	BackendName string `json:"-"`
 	MemberName  string `json:"-"`
 }
 
-func (r *DeleteLoadBalancerBackendMember) RequestURL() string {
+func (r *DeleteLoadBalancerBackendMemberRequest) RequestURL() string {
 	return fmt.Sprintf("/loadbalancer/%s/backends/%s/members/%s", r.ServiceUUID, r.BackendName, r.MemberName)
 }
