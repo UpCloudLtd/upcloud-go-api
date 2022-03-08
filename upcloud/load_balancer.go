@@ -2,8 +2,6 @@ package upcloud
 
 import (
 	"time"
-
-	"github.com/google/uuid"
 )
 
 // LoadBalancerPlan represents load balancer plan details
@@ -39,14 +37,14 @@ type LoadBalancerBackend struct {
 }
 
 type LoadBalancerMember struct {
-	ServerUuid  uuid.UUID `json:"server_uuid,omitempty"`
-	Name        string    `json:"name"`
-	Ip          string    `json:"ip"`
-	Port        int       `json:"port"`
-	Weight      int       `json:"weight"`
-	MaxSessions int       `json:"max_sessions"`
-	Type        string    `json:"type"`
-	Enabled     bool      `json:"enabled"`
+	ServerUuid  string `json:"server_uuid,omitempty"`
+	Name        string `json:"name"`
+	Ip          string `json:"ip,omitempty"`
+	Port        int    `json:"port,omitempty"`
+	Weight      int    `json:"weight"`
+	MaxSessions int    `json:"max_sessions"`
+	Type        string `json:"type"`
+	Enabled     bool   `json:"enabled"`
 }
 
 type LoadBalancerResolver struct {
@@ -55,7 +53,7 @@ type LoadBalancerResolver struct {
 }
 
 type LoadBalancer struct {
-	Uuid                     uuid.UUID              `json:"uuid"`
+	Uuid                     string                 `json:"uuid"`
 	Name                     string                 `json:"name"`
 	Zone                     string                 `json:"zone"`
 	Plan                     string                 `json:"plan"`
@@ -63,7 +61,7 @@ type LoadBalancer struct {
 	PlanMemoryAmount         int                    `json:"plan_memory_amount"`
 	PlanPerServerMaxSessions int                    `json:"plan_per_server_max_sessions"`
 	MainAccountId            int                    `json:"main_account_id,omitempty"`
-	NetworkUuid              uuid.UUID              `json:"network_uuid"`
+	NetworkUuid              string                 `json:"network_uuid"`
 	FloatingIps              []string               `json:"floating_ips,omitempty"`
 	DnsName                  string                 `json:"dns_name"`
 	ConfiguredStatus         string                 `json:"configured_status"`
