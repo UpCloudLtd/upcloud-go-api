@@ -157,7 +157,7 @@ func (s *Service) ModifyLoadBalancerBackend(r *request.ModifyLoadBalancerBackend
 		return nil, err
 	}
 
-	res, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
+	res, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
 	if err != nil {
 		return nil, err
 	}

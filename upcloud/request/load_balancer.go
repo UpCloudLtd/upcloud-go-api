@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
-	"github.com/google/uuid"
 )
 
 type GetLoadBalancersRequest struct{}
@@ -17,7 +16,7 @@ type CreateLoadBalancerRequest struct {
 	Name             string                         `json:"name"`
 	Plan             string                         `json:"plan"`
 	Zone             string                         `json:"zone"`
-	NetworkUuid      uuid.UUID                      `json:"network_uuid"`
+	NetworkUuid      string                         `json:"network_uuid"`
 	ConfiguredStatus string                         `json:"configured_status"`
 	Frontends        []upcloud.LoadBalancerFrontend `json:"frontends"`
 	Backends         []upcloud.LoadBalancerBackend  `json:"backends"`
@@ -25,7 +24,7 @@ type CreateLoadBalancerRequest struct {
 }
 
 type ModifyLoadBalancerRequest struct {
-	UUID uuid.UUID `json:"-"`
+	UUID string `json:"-"`
 
 	Name             string `json:"name,omitempty"`
 	Plan             string `json:"plan,omitempty"`
@@ -33,7 +32,7 @@ type ModifyLoadBalancerRequest struct {
 }
 
 type DeleteLoadBalancerRequest struct {
-	UUID uuid.UUID `json:"-"`
+	UUID string `json:"-"`
 }
 
 func (r *GetLoadBalancersRequest) RequestURL() string {
@@ -57,7 +56,7 @@ func (r *DeleteLoadBalancerRequest) RequestURL() string {
 }
 
 type GetLoadBalancerBackendsRequest struct {
-	UUID uuid.UUID `json:"-"`
+	UUID string `json:"-"`
 }
 
 func (r *GetLoadBalancerBackendsRequest) RequestURL() string {
@@ -65,7 +64,7 @@ func (r *GetLoadBalancerBackendsRequest) RequestURL() string {
 }
 
 type CreateLoadBalancerBackendRequest struct {
-	ServiceUUID uuid.UUID                    `json:"-"`
+	ServiceUUID string                       `json:"-"`
 	Name        string                       `json:"name"`
 	Resolver    string                       `json:"resolver,omitempty"`
 	Members     []upcloud.LoadBalancerMember `json:"members"`
@@ -76,8 +75,8 @@ func (r *CreateLoadBalancerBackendRequest) RequestURL() string {
 }
 
 type GetLoadBalancerBackendDetailsRequest struct {
-	ServiceUUID uuid.UUID `json:"-"`
-	BackendName string    `json:"-"`
+	ServiceUUID string `json:"-"`
+	BackendName string `json:"-"`
 }
 
 func (r *GetLoadBalancerBackendDetailsRequest) RequestURL() string {
@@ -85,10 +84,10 @@ func (r *GetLoadBalancerBackendDetailsRequest) RequestURL() string {
 }
 
 type ModifyLoadBalancerBackendRequest struct {
-	ServiceUUID    uuid.UUID `json:"-"`
-	BackendName    string    `json:"-"`
-	NewBackendName string    `json:"name,omitempty"`
-	Resolver       string    `json:"resolver,omitempty"`
+	ServiceUUID    string `json:"-"`
+	BackendName    string `json:"-"`
+	NewBackendName string `json:"name,omitempty"`
+	Resolver       string `json:"resolver,omitempty"`
 }
 
 func (r *ModifyLoadBalancerBackendRequest) RequestURL() string {
@@ -96,46 +95,33 @@ func (r *ModifyLoadBalancerBackendRequest) RequestURL() string {
 }
 
 type DeleteLoadBalancerBackendRequest struct {
-	ServiceUUID uuid.UUID `json:"-"`
-	BackendName string    `json:"-"`
+	ServiceUUID string `json:"-"`
+	BackendName string `json:"-"`
 }
 
 func (r *DeleteLoadBalancerBackendRequest) RequestURL() string {
 	return fmt.Sprintf("/loadbalancer/%s/backends/%s", r.ServiceUUID, r.BackendName)
 }
 
-type createLoadBalancerBackendMemberRequestBase struct {
-	ServiceUUID       uuid.UUID `json:"-"`
-	BackendName       string    `json:"-"`
-	MemberName        string    `json:"name"`
-	MemberWeight      int       `json:"weight"`
-	MemberMaxSessions int       `json:"max_sessions"`
-	MemberEnabled     bool      `json:"enabled"`
+type CreateLoadBalancerBackenMemberRequest struct {
+	ServiceUUID       string `json:"-"`
+	BackendName       string `json:"-"`
+	MemberName        string `json:"name"`
+	MemberWeight      int    `json:"weight"`
+	MemberMaxSessions int    `json:"max_sessions"`
+	MemberEnabled     bool   `json:"enabled"`
+	MemberType        string `json:"type"`
+	MemberIP          string `json:"ip,omitempty"`
+	MemberPort        int    `json:"port,omitempty"`
 }
 
-type CreateLoadBalancerStaticBackendMemberRequest struct {
-	createLoadBalancerBackendMemberRequestBase
-	MemberIP   string `json:"ip"`
-	MemberPort int    `json:"port"`
-}
-
-func (r *CreateLoadBalancerStaticBackendMemberRequest) RequestURL() string {
-	return fmt.Sprintf("/loadbalancer/%s/backends/%s/members", r.ServiceUUID, r.BackendName)
-}
-
-type CreateLoadBalancerDynamicBackendMemberRequest struct {
-	createLoadBalancerBackendMemberRequestBase
-	MemberIP   string `json:"ip,omitempty"`
-	MemberPort int    `json:"port,omitempty"`
-}
-
-func (r *CreateLoadBalancerDynamicBackendMemberRequest) RequestURL() string {
+func (r *CreateLoadBalancerBackenMemberRequest) RequestURL() string {
 	return fmt.Sprintf("/loadbalancer/%s/backends/%s/members", r.ServiceUUID, r.BackendName)
 }
 
 type GetLoadBalancerBackendMembersRequest struct {
-	ServiceUUID uuid.UUID `json:"-"`
-	BackendName string    `json:"-"`
+	ServiceUUID string `json:"-"`
+	BackendName string `json:"-"`
 }
 
 func (r *GetLoadBalancerBackendMembersRequest) RequestURL() string {
@@ -143,9 +129,9 @@ func (r *GetLoadBalancerBackendMembersRequest) RequestURL() string {
 }
 
 type GetLoadBalancerBackendMemberDetailsRequest struct {
-	ServiceUUID uuid.UUID `json:"-"`
-	BackendName string    `json:"-"`
-	MemberName  string    `json:"-"`
+	ServiceUUID string `json:"-"`
+	BackendName string `json:"-"`
+	MemberName  string `json:"-"`
 }
 
 func (r *GetLoadBalancerBackendMemberDetailsRequest) RequestURL() string {
@@ -153,15 +139,15 @@ func (r *GetLoadBalancerBackendMemberDetailsRequest) RequestURL() string {
 }
 
 type ModifyLoadBalancerBackendMemberRequest struct {
-	ServiceUUID       uuid.UUID `json:"-"`
-	BackendName       string    `json:"-"`
-	MemberName        string    `json:"-"`
-	NewMemberName     string    `json:"name,omitempty"`
-	MemberWeight      int       `json:"weight,omitempty"`
-	MemberMaxSessions int       `json:"max_sessions,omitempty"`
-	MemberEnabled     bool      `json:"enabled,omitempty"`
-	MemberIP          string    `json:"ip,omitempty"`
-	MemberPort        int       `json:"port,omitempty"`
+	ServiceUUID       string `json:"-"`
+	BackendName       string `json:"-"`
+	MemberName        string `json:"-"`
+	NewMemberName     string `json:"name,omitempty"`
+	MemberWeight      int    `json:"weight,omitempty"`
+	MemberMaxSessions int    `json:"max_sessions,omitempty"`
+	MemberEnabled     bool   `json:"enabled,omitempty"`
+	MemberIP          string `json:"ip,omitempty"`
+	MemberPort        int    `json:"port,omitempty"`
 }
 
 func (r *ModifyLoadBalancerBackendMemberRequest) RequestURL() string {
@@ -169,9 +155,9 @@ func (r *ModifyLoadBalancerBackendMemberRequest) RequestURL() string {
 }
 
 type DeleteLoadBalancerBackendMember struct {
-	ServiceUUID uuid.UUID `json:"-"`
-	BackendName string    `json:"-"`
-	MemberName  string    `json:"-"`
+	ServiceUUID string `json:"-"`
+	BackendName string `json:"-"`
+	MemberName  string `json:"-"`
 }
 
 func (r *DeleteLoadBalancerBackendMember) RequestURL() string {
