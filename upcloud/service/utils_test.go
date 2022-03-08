@@ -1,14 +1,15 @@
 package service
 
 import (
-	"github.com/google/uuid"
+	"fmt"
 	"log"
-	"math/rand"
 	"net/http"
 	"os"
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/google/uuid"
 
 	"github.com/dnaeon/go-vcr/cassette"
 	"github.com/dnaeon/go-vcr/recorder"
@@ -494,13 +495,9 @@ func getCredentials() (string, string) {
 	return user, password
 }
 
-func createLoadBalancer(svc *Service) (*upcloud.LoadBalancerDetails, error) {
-	s1 := rand.NewSource(time.Now().UnixNano())
-	r1 := rand.New(s1)
-	randomChar := 'a' + rune(r1.Intn(26))
-
+func createLoadBalancer(svc *Service) (*upcloud.LoadBalancer, error) {
 	createLoadBalancerRequest := request.CreateLoadBalancerRequest{
-		Name:             "go-test-loadbalancer" + string(randomChar),
+		Name:             fmt.Sprintf("go-test-loadbalancer-%d", time.Now().Unix()),
 		Zone:             "es-mad1",
 		Plan:             "development",
 		NetworkUuid:      uuid.MustParse("032d4c7f-61b5-4ea9-a2d6-d2357c3c9a88"),
