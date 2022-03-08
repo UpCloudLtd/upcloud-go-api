@@ -6,39 +6,39 @@ import (
 	"github.com/google/uuid"
 )
 
-// LoadbalancerPlan represents load balancer plan details
-type LoadbalancerPlan struct {
+// LoadBalancerPlan represents load balancer plan details
+type LoadBalancerPlan struct {
 	Name                 string
 	PerServerMaxSessions int
 	ServerNumber         int
 }
 
-type Frontend struct {
+type LoadBalancerFrontend struct {
 	Name string
 	Mode string
 	Port int
 }
 
-type Rule struct {
+type LoadBalancerRule struct {
 	Name     string
 	Priority int
-	Matchers []*Matchers
-	Actions  []*Actions
+	Matchers []*LoadBalancerMatchers
+	Actions  []*LoadBalancerActions
 }
 
-type Matchers struct {
+type LoadBalancerMatchers struct {
 }
 
-type Actions struct {
+type LoadBalancerActions struct {
 }
 
-type Backend struct {
-	Name     string   `json:"name"`
-	Members  []Member `json:"members"`
-	Resolver string   `json:"resolver,omitempty"`
+type LoadBalancerBackend struct {
+	Name     string               `json:"name"`
+	Members  []LoadBalancerMember `json:"members"`
+	Resolver string               `json:"resolver,omitempty"`
 }
 
-type Member struct {
+type LoadBalancerMember struct {
 	ServerUuid  uuid.UUID `json:"server_uuid,omitempty"`
 	Name        string    `json:"name"`
 	Ip          string    `json:"ip"`
@@ -49,29 +49,29 @@ type Member struct {
 	Enabled     bool      `json:"enabled"`
 }
 
-type Resolver struct {
+type LoadBalancerResolver struct {
 	Name        string
 	NameServers []string
 }
 
 type LoadBalancer struct {
-	Uuid                     uuid.UUID  `json:"uuid"`
-	Name                     string     `json:"name"`
-	Zone                     string     `json:"zone"`
-	Plan                     string     `json:"plan"`
-	PlanCoreNumber           int        `json:"plan_core_number"`
-	PlanMemoryAmount         int        `json:"plan_memory_amount"`
-	PlanPerServerMaxSessions int        `json:"plan_per_server_max_sessions"`
-	MainAccountId            int        `json:"main_account_id,omitempty"`
-	NetworkUuid              uuid.UUID  `json:"network_uuid"`
-	FloatingIps              []string   `json:"floating_ips,omitempty"`
-	DnsName                  string     `json:"dns_name"`
-	ConfiguredStatus         string     `json:"configured_status"`
-	OperationalState         string     `json:"operational_state"`
-	Frontends                []Frontend `json:"frontends"`
-	Backends                 []Backend  `json:"backends"`
-	Resolvers                []Resolver `json:"resolvers"`
-	Deleted                  bool       `json:"deleted"`
-	CreatedAt                time.Time  `json:"created_at"`
-	UpdatedAt                time.Time  `json:"updated_at"`
+	Uuid                     uuid.UUID              `json:"uuid"`
+	Name                     string                 `json:"name"`
+	Zone                     string                 `json:"zone"`
+	Plan                     string                 `json:"plan"`
+	PlanCoreNumber           int                    `json:"plan_core_number"`
+	PlanMemoryAmount         int                    `json:"plan_memory_amount"`
+	PlanPerServerMaxSessions int                    `json:"plan_per_server_max_sessions"`
+	MainAccountId            int                    `json:"main_account_id,omitempty"`
+	NetworkUuid              uuid.UUID              `json:"network_uuid"`
+	FloatingIps              []string               `json:"floating_ips,omitempty"`
+	DnsName                  string                 `json:"dns_name"`
+	ConfiguredStatus         string                 `json:"configured_status"`
+	OperationalState         string                 `json:"operational_state"`
+	Frontends                []LoadBalancerFrontend `json:"frontends"`
+	Backends                 []LoadBalancerBackend  `json:"backends"`
+	Resolvers                []LoadBalancerResolver `json:"resolvers"`
+	Deleted                  bool                   `json:"deleted"`
+	CreatedAt                time.Time              `json:"created_at"`
+	UpdatedAt                time.Time              `json:"updated_at"`
 }

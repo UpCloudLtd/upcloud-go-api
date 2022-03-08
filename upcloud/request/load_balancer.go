@@ -14,13 +14,13 @@ type GetLoadBalancerDetailsRequest struct {
 }
 
 type CreateLoadBalancerRequest struct {
-	Name             string             `json:"name"`
-	Plan             string             `json:"plan"`
-	Zone             string             `json:"zone"`
-	NetworkUuid      uuid.UUID          `json:"network_uuid"`
-	ConfiguredStatus string             `json:"configured_status"`
-	Frontends        []upcloud.Frontend `json:"frontends"`
-	Backends         []upcloud.Backend  `json:"backends"`
+	Name             string                         `json:"name"`
+	Plan             string                         `json:"plan"`
+	Zone             string                         `json:"zone"`
+	NetworkUuid      uuid.UUID                      `json:"network_uuid"`
+	ConfiguredStatus string                         `json:"configured_status"`
+	Frontends        []upcloud.LoadBalancerFrontend `json:"frontends"`
+	Backends         []upcloud.LoadBalancerBackend  `json:"backends"`
 	// Resolvers        []*upcloud.Resolver `json:"resolvers"` // TODO explore omit empty
 }
 

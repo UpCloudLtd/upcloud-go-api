@@ -502,8 +502,8 @@ func createLoadBalancer(svc *Service) (*upcloud.LoadBalancer, error) {
 		Plan:             "development",
 		NetworkUuid:      uuid.MustParse("032d4c7f-61b5-4ea9-a2d6-d2357c3c9a88"),
 		ConfiguredStatus: "started",
-		Frontends:        []upcloud.Frontend{},
-		Backends:         []upcloud.Backend{},
+		Frontends:        []upcloud.LoadBalancerFrontend{},
+		Backends:         []upcloud.LoadBalancerBackend{},
 		// Resolvers:        []*upcloud.Resolver{},
 	}
 
