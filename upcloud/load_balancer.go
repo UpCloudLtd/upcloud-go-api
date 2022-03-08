@@ -41,8 +41,8 @@ type LoadBalancerBackend struct {
 type LoadBalancerMember struct {
 	ServerUuid  uuid.UUID `json:"server_uuid,omitempty"`
 	Name        string    `json:"name"`
-	Ip          string    `json:"ip"`
-	Port        int       `json:"port"`
+	Ip          string    `json:"ip,omitempty"`
+	Port        int       `json:"port,omitempty"`
 	Weight      int       `json:"weight"`
 	MaxSessions int       `json:"max_sessions"`
 	Type        string    `json:"type"`
