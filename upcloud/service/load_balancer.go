@@ -3,15 +3,16 @@ package service
 import (
 	"encoding/json"
 	"fmt"
+
 	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/request"
 )
 
 type LoadBalancer interface {
 	GetLoadBalancers(r *request.GetLoadBalancersRequest) ([]*upcloud.LoadBalancer, error)
-	GetLoadBalancerDetails(r *request.GetLoadBalancerDetailsRequest) (*upcloud.LoadBalancerDetails, error)
-	CreateLoadBalancer(r *request.CreateLoadBalancerRequest) (*upcloud.LoadBalancerDetails, error)
-	ModifyLoadBalancer(r *request.ModifyLoadBalancerRequest) (*upcloud.LoadBalancerDetails, error)
+	GetLoadBalancerDetails(r *request.GetLoadBalancerDetailsRequest) (*upcloud.LoadBalancer, error)
+	CreateLoadBalancer(r *request.CreateLoadBalancerRequest) (*upcloud.LoadBalancer, error)
+	ModifyLoadBalancer(r *request.ModifyLoadBalancerRequest) (*upcloud.LoadBalancer, error)
 	DeleteLoadBalancer(r *request.DeleteLoadBalancerRequest) error
 }
 
@@ -34,8 +35,8 @@ func (s *Service) GetLoadBalancers(r *request.GetLoadBalancersRequest) ([]*upclo
 }
 
 // GetLoadBalancerDetails retrieves details of a load balancer.
-func (s *Service) GetLoadBalancerDetails(r *request.GetLoadBalancerDetailsRequest) (*upcloud.LoadBalancerDetails, error) {
-	loadBalancerDetails := upcloud.LoadBalancerDetails{}
+func (s *Service) GetLoadBalancerDetails(r *request.GetLoadBalancerDetailsRequest) (*upcloud.LoadBalancer, error) {
+	loadBalancerDetails := upcloud.LoadBalancer{}
 	res, err := s.basicGetRequest(r.RequestURL())
 	if err != nil {
 		return nil, err
@@ -50,8 +51,8 @@ func (s *Service) GetLoadBalancerDetails(r *request.GetLoadBalancerDetailsReques
 }
 
 // CreateLoadBalancer creates a new load balancer.
-func (s *Service) CreateLoadBalancer(r *request.CreateLoadBalancerRequest) (*upcloud.LoadBalancerDetails, error) {
-	loadBalancerDetails := upcloud.LoadBalancerDetails{}
+func (s *Service) CreateLoadBalancer(r *request.CreateLoadBalancerRequest) (*upcloud.LoadBalancer, error) {
+	loadBalancerDetails := upcloud.LoadBalancer{}
 	requestBody, err := json.Marshal(r)
 	if err != nil {
 		return nil, err
@@ -73,8 +74,8 @@ func (s *Service) CreateLoadBalancer(r *request.CreateLoadBalancerRequest) (*upc
 }
 
 // ModifyLoadBalancer modifies an existing load balancer.
-func (s *Service) ModifyLoadBalancer(r *request.ModifyLoadBalancerRequest) (*upcloud.LoadBalancerDetails, error) {
-	loadBalancerDetails := upcloud.LoadBalancerDetails{}
+func (s *Service) ModifyLoadBalancer(r *request.ModifyLoadBalancerRequest) (*upcloud.LoadBalancer, error) {
+	loadBalancerDetails := upcloud.LoadBalancer{}
 	requestBody, err := json.Marshal(r)
 	if err != nil {
 		return nil, err

@@ -1,16 +1,16 @@
 package upcloud
 
 import (
-	"github.com/google/uuid"
 	"time"
+
+	"github.com/google/uuid"
 )
 
-type LoadBalancers struct {
-	LoadBalancers []LoadBalancer `json:"-"`
-}
-
-type LoadBalancerDetails struct {
-	LoadBalancer
+// LoadbalancerPlan represents load balancer plan details
+type LoadbalancerPlan struct {
+	Name                 string
+	PerServerMaxSessions int
+	ServerNumber         int
 }
 
 type Frontend struct {

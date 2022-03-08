@@ -2,6 +2,7 @@ package request
 
 import (
 	"fmt"
+
 	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
 	"github.com/google/uuid"
 )
