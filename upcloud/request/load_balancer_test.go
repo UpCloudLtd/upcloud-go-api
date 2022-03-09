@@ -25,7 +25,7 @@ func TestCreateLoadBalancerResolverRequest(t *testing.T) {
 		"name":"testname",
 		"nameservers":["10.0.0.0","10.0.0.1"],
 		"retries":5,
-		"timout":20,
+		"timeout":20,
 		"timeout_retry":10,
 		"cache_valid":123,
 		"cache_invalid":321
@@ -83,7 +83,7 @@ func TestModifyLoadBalancerResolverRequest(t *testing.T) {
 		"name":"testname",
 		"nameservers":["10.0.0.0","10.0.0.1"],
 		"retries":5,
-		"timout":20,
+		"timeout":20,
 		"timeout_retry":10,
 		"cache_valid":123,
 		"cache_invalid":321

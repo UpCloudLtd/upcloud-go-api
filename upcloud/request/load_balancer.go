@@ -172,7 +172,7 @@ type CreateLoadBalancerResolverRequest struct {
 	Name         string   `json:"name,omitempty"`
 	Nameservers  []string `json:"nameservers,omitempty"`
 	Retries      int      `json:"retries,omitempty"`
-	Timeout      int      `json:"timout,omitempty"`
+	Timeout      int      `json:"timeout,omitempty"`
 	TimeoutRetry int      `json:"timeout_retry,omitempty"`
 	CacheValid   int      `json:"cache_valid,omitempty"`
 	CacheInvalid int      `json:"cache_invalid,omitempty"`
@@ -205,7 +205,7 @@ type ModifyLoadBalancerRevolverRequest struct {
 	NewResolverName string   `json:"name,omitempty"`
 	Nameservers     []string `json:"nameservers,omitempty"`
 	Retries         int      `json:"retries,omitempty"`
-	Timeout         int      `json:"timout,omitempty"`
+	Timeout         int      `json:"timeout,omitempty"`
 	TimeoutRetry    int      `json:"timeout_retry,omitempty"`
 	CacheValid      int      `json:"cache_valid,omitempty"`
 	CacheInvalid    int      `json:"cache_invalid,omitempty"`
