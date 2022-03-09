@@ -15,7 +15,7 @@ func TestLoadBalancerCRUD(t *testing.T) {
 
 	record(t, "createmodifydeleteloadbalancer", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create Load Balancer
-		lbDetails, err := createLoadBalancer(svc)
+		lbDetails, err := createLoadBalancer(svc, "032d4c7f-61b5-4ea9-a2d6-d2357c3c9a88", "es-mad1")
 		require.NoError(t, err)
 		t.Logf("Created load balancer: %s", lbDetails.Name)
 
@@ -65,7 +65,7 @@ func TestLoadBalancerBackendCRUD(t *testing.T) {
 	t.Parallel()
 
 	record(t, "createmodifydeleteloadbalancerbackend", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
-		lb, err := createLoadBalancer(svc)
+		lb, err := createLoadBalancer(svc, "032d4c7f-61b5-4ea9-a2d6-d2357c3c9a88", "es-mad1")
 		require.NoError(t, err)
 		t.Logf("Created load balancer for testing LB backend CRUD: %s", lb.Name)
 
@@ -126,7 +126,7 @@ func TestLoadBalancerBackendMemberCRUD(t *testing.T) {
 	t.Parallel()
 
 	record(t, "createmodifydeleteloadbalancerbackendmember", func(t *testing.T, r *recorder.Recorder, svc *Service) {
-		lb, err := createLoadBalancer(svc)
+		lb, err := createLoadBalancer(svc, "032d4c7f-61b5-4ea9-a2d6-d2357c3c9a88", "es-mad1")
 		require.NoError(t, err)
 		t.Logf("Created load balancer for testing LB backend members CRUD: %s", lb.Name)
 
@@ -253,5 +253,137 @@ func TestGetLoadBalancerBackendMembers(t *testing.T) {
 		assert.EqualValues(t, member.Type, "static")
 		assert.EqualValues(t, member.Ip, "10.0.0.2")
 		assert.EqualValues(t, member.Port, 80)
+	})
+}
+
+func TestLoadBalancerResolverCRUD(t *testing.T) {
+	t.Parallel()
+
+	record(t, "createmodifydeleteloadbalancerresolver", func(t *testing.T, r *recorder.Recorder, svc *Service) {
+		lb, err := createLoadBalancer(svc, "03716b3c-663f-46ab-a7a4-84221525030b", "pl-waw1")
+		require.NoError(t, err)
+		t.Logf("Created load balancer for testing LB resolvers CRUD: %s", lb.Name)
+
+		name := "testname"
+		nameServers := []string{"10.0.0.1", "10.0.0.2"}
+		retries := 10
+		timeout := 20
+		timeoutRetry := 10
+		cacheValid := 123
+		cacheInvalid := 321
+
+		resolver, err := svc.CreateLoadBalancerResolver(&request.CreateLoadBalancerResolverRequest{
+			ServiceUUID:  lb.UUID,
+			Name:         name,
+			Nameservers:  nameServers,
+			Retries:      retries,
+			Timeout:      timeout,
+			TimeoutRetry: timeoutRetry,
+			CacheValid:   cacheValid,
+			CacheInvalid: cacheInvalid,
+		})
+
+		require.NoError(t, err)
+		assert.EqualValues(t, resolver.Name, name)
+		assert.EqualValues(t, resolver.Retries, retries)
+		assert.EqualValues(t, resolver.Timeout, timeout)
+		assert.EqualValues(t, resolver.TimeoutRetry, timeoutRetry)
+		assert.EqualValues(t, resolver.CacheValid, cacheValid)
+		assert.EqualValues(t, resolver.CacheInvalid, cacheInvalid)
+		assert.Len(t, resolver.Nameservers, 2)
+		assert.Contains(t, resolver.Nameservers, "10.0.0.1")
+		assert.Contains(t, resolver.Nameservers, "10.0.0.2")
+		t.Logf("Created resolver %s for load balancer %s", resolver.Name, lb.Name)
+
+		newName := "updated_testname"
+		newNameServers := append(nameServers, "10.0.0.3")
+		newRetries := 5
+		newTimeout := 30
+		resolver, err = svc.ModifyLoadBalancerResolver(&request.ModifyLoadBalancerRevolverRequest{
+			ServiceUUID:     lb.UUID,
+			ResolverName:    resolver.Name,
+			NewResolverName: newName,
+			Nameservers:     newNameServers,
+			Retries:         newRetries,
+			Timeout:         newTimeout,
+		})
+
+		require.NoError(t, err)
+		assert.EqualValues(t, resolver.Name, newName)
+		assert.EqualValues(t, resolver.Retries, newRetries)
+		assert.EqualValues(t, resolver.Timeout, newTimeout)
+		assert.Len(t, resolver.Nameservers, 3)
+		assert.Contains(t, resolver.Nameservers, "10.0.0.3")
+		t.Logf("Modified name, retries, timeout and nameservers for resolver %s", resolver.Name)
+
+		newTimeoutRetry := 15
+		newCacheValid := 124
+		newCacheInvalid := 324
+		resolver, err = svc.ModifyLoadBalancerResolver(&request.ModifyLoadBalancerRevolverRequest{
+			ServiceUUID:  lb.UUID,
+			ResolverName: resolver.Name,
+			TimeoutRetry: newTimeoutRetry,
+			CacheValid:   newCacheValid,
+			CacheInvalid: newCacheInvalid,
+		})
+
+		require.NoError(t, err)
+		assert.EqualValues(t, resolver.TimeoutRetry, newTimeoutRetry)
+		assert.EqualValues(t, resolver.CacheValid, newCacheValid)
+		assert.EqualValues(t, resolver.CacheInvalid, newCacheInvalid)
+		t.Logf("Modified timeout_retry, cache_valid and cache_invalid for resolver %s", resolver.Name)
+
+		err = svc.DeleteLoadBalancerResolver(&request.DeleteLoadBalancerResolverRequest{
+			ServiceUUID:  lb.UUID,
+			ResolverName: resolver.Name,
+		})
+		require.NoError(t, err)
+		t.Logf("Deleted resolver %s for load balancer %s", resolver.Name, lb.Name)
+	})
+}
+
+func TestGetLoadBalancerResolvers(t *testing.T) {
+	t.Parallel()
+
+	record(t, "getloadbalancerresolvers", func(t *testing.T, r *recorder.Recorder, svc *Service) {
+		resolvers, err := svc.GetLoadBalancerResolvers(&request.GetLoadBalancerResolversRequest{
+			ServiceUUID: "0aceb3dc-e79e-4664-8224-627410be0e8f",
+		})
+
+		require.NoError(t, err)
+		assert.Len(t, resolvers, 1)
+
+		resolver := resolvers[0]
+		assert.EqualValues(t, resolver.Name, "testname")
+		assert.EqualValues(t, resolver.Retries, 10)
+		assert.EqualValues(t, resolver.Timeout, 20)
+		assert.EqualValues(t, resolver.TimeoutRetry, 10)
+		assert.EqualValues(t, resolver.CacheValid, 123)
+		assert.EqualValues(t, resolver.CacheInvalid, 321)
+		assert.Len(t, resolver.Nameservers, 2)
+		assert.Contains(t, resolver.Nameservers, "10.0.0.1")
+		assert.Contains(t, resolver.Nameservers, "10.0.0.2")
+	})
+}
+
+func TestGetLoadBalancerResolverDetails(t *testing.T) {
+	t.Parallel()
+
+	record(t, "getloadbalancerresolverdetails", func(t *testing.T, r *recorder.Recorder, svc *Service) {
+		resolver, err := svc.GetLoadBalancerResolverDetails(&request.GetLoadBalancerResolverDetailsRequest{
+			ServiceUUID:  "0aceb3dc-e79e-4664-8224-627410be0e8f",
+			ResolverName: "testname",
+		})
+
+		require.NoError(t, err)
+		assert.EqualValues(t, resolver.Name, "testname")
+		assert.EqualValues(t, resolver.Retries, 10)
+		assert.EqualValues(t, resolver.Timeout, 20)
+		assert.EqualValues(t, resolver.TimeoutRetry, 10)
+		assert.EqualValues(t, resolver.CacheValid, 123)
+		assert.EqualValues(t, resolver.CacheInvalid, 321)
+		assert.Len(t, resolver.Nameservers, 2)
+		assert.Contains(t, resolver.Nameservers, "10.0.0.1")
+		assert.Contains(t, resolver.Nameservers, "10.0.0.2")
 	})
 }

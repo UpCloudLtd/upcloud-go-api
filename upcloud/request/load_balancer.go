@@ -166,3 +166,60 @@ type DeleteLoadBalancerBackendMemberRequest struct {
 func (r *DeleteLoadBalancerBackendMemberRequest) RequestURL() string {
 	return fmt.Sprintf("/loadbalancer/%s/backends/%s/members/%s", r.ServiceUUID, r.BackendName, r.MemberName)
 }
+
+type CreateLoadBalancerResolverRequest struct {
+	ServiceUUID  string   `json:"-"`
+	Name         string   `json:"name,omitempty"`
+	Nameservers  []string `json:"nameservers,omitempty"`
+	Retries      int      `json:"retries,omitempty"`
+	Timeout      int      `json:"timeout,omitempty"`
+	TimeoutRetry int      `json:"timeout_retry,omitempty"`
+	CacheValid   int      `json:"cache_valid,omitempty"`
+	CacheInvalid int      `json:"cache_invalid,omitempty"`
+}
+
+func (r *CreateLoadBalancerResolverRequest) RequestURL() string {
+	return fmt.Sprintf("/loadbalancer/%s/resolvers", r.ServiceUUID)
+}
+
+type GetLoadBalancerResolversRequest struct {
+	ServiceUUID string `json:"-"`
+}
+
+func (r *GetLoadBalancerResolversRequest) RequestURL() string {
+	return fmt.Sprintf("/loadbalancer/%s/resolvers", r.ServiceUUID)
+}
+
+type GetLoadBalancerResolverDetailsRequest struct {
+	ServiceUUID  string `json:"-"`
+	ResolverName string `json:"-"`
+}
+
+func (r *GetLoadBalancerResolverDetailsRequest) RequestURL() string {
+	return fmt.Sprintf("/loadbalancer/%s/resolvers/%s", r.ServiceUUID, r.ResolverName)
+}
+
+type ModifyLoadBalancerRevolverRequest struct {
+	ServiceUUID     string   `json:"-"`
+	ResolverName    string   `json:"-"`
+	NewResolverName string   `json:"name,omitempty"`
+	Nameservers     []string `json:"nameservers,omitempty"`
+	Retries         int      `json:"retries,omitempty"`
+	Timeout         int      `json:"timeout,omitempty"`
+	TimeoutRetry    int      `json:"timeout_retry,omitempty"`
+	CacheValid      int      `json:"cache_valid,omitempty"`
+	CacheInvalid    int      `json:"cache_invalid,omitempty"`
+}
+
+func (r *ModifyLoadBalancerRevolverRequest) RequestURL() string {
+	return fmt.Sprintf("/loadbalancer/%s/resolvers/%s", r.ServiceUUID, r.ResolverName)
+}
+
+type DeleteLoadBalancerResolverRequest struct {
+	ServiceUUID  string `json:"-"`
+	ResolverName string `json:"-"`
+}
+
+func (r *DeleteLoadBalancerResolverRequest) RequestURL() string {
+	return fmt.Sprintf("/loadbalancer/%s/resolvers/%s", r.ServiceUUID, r.ResolverName)
+}

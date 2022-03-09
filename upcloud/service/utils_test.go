@@ -492,12 +492,12 @@ func getCredentials() (string, string) {
 	return user, password
 }
 
-func createLoadBalancer(svc *Service) (*upcloud.LoadBalancer, error) {
+func createLoadBalancer(svc *Service, networkUUID, zone string) (*upcloud.LoadBalancer, error) {
 	createLoadBalancerRequest := request.CreateLoadBalancerRequest{
 		Name:             fmt.Sprintf("go-test-loadbalancer-%d", time.Now().Unix()),
-		Zone:             "es-mad1",
+		Zone:             zone,
 		Plan:             "development",
-		NetworkUuid:      "032d4c7f-61b5-4ea9-a2d6-d2357c3c9a88",
+		NetworkUuid:      networkUUID,
 		ConfiguredStatus: "started",
 		Frontends:        []upcloud.LoadBalancerFrontend{},
 		Backends:         []upcloud.LoadBalancerBackend{},
