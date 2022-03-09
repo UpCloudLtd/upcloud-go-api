@@ -99,21 +99,12 @@ func TestGetLoadBalancerBackendDetails(t *testing.T) {
 
 	record(t, "getloadbalancerbackenddetails", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		backend, err := svc.GetLoadBalancerBackendDetails(&request.GetLoadBalancerBackendDetailsRequest{
-			ServiceUUID: "0a988541-06e0-4252-b483-3ff9fdfdb5ae",
+			ServiceUUID: "0abdab19-b11b-4f89-8f9f-961b524347b6",
 			BackendName: "updatedName",
 		})
 		require.NoError(t, err)
 		assert.EqualValues(t, backend.Name, "updatedName")
-		assert.Len(t, backend.Members, 1)
-
-		mem := backend.Members[0]
-		assert.EqualValues(t, mem.Port, 8000)
-		assert.EqualValues(t, mem.Enabled, true)
-		assert.EqualValues(t, mem.Ip, "196.123.123.123")
-		assert.EqualValues(t, mem.MaxSessions, 1000)
-		assert.EqualValues(t, mem.Weight, 100)
-		assert.EqualValues(t, mem.Type, "dynamic")
-		assert.EqualValues(t, mem.Name, "default-lb-backend-member")
+		assert.Len(t, backend.Members, 0)
 	})
 }
 
@@ -122,21 +113,12 @@ func TestGetLoadBalancerBackends(t *testing.T) {
 
 	record(t, "getloadbalancerbackends", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		backends, err := svc.GetLoadBalancerBackends(&request.GetLoadBalancerBackendsRequest{
-			UUID: "0a988541-06e0-4252-b483-3ff9fdfdb5ae",
+			UUID: "0abdab19-b11b-4f89-8f9f-961b524347b6",
 		})
 		require.NoError(t, err)
 		assert.Len(t, backends, 1)
 		assert.EqualValues(t, backends[0].Name, "updatedName")
-		assert.Len(t, backends[0].Members, 1)
-
-		mem := backends[0].Members[0]
-		assert.EqualValues(t, mem.Port, 8000)
-		assert.EqualValues(t, mem.Enabled, true)
-		assert.EqualValues(t, mem.Ip, "196.123.123.123")
-		assert.EqualValues(t, mem.MaxSessions, 1000)
-		assert.EqualValues(t, mem.Weight, 100)
-		assert.EqualValues(t, mem.Type, "dynamic")
-		assert.EqualValues(t, mem.Name, "default-lb-backend-member")
+		assert.Len(t, backends[0].Members, 0)
 	})
 }
 
@@ -157,10 +139,11 @@ func TestLoadBalancerBackendMemberCRUD(t *testing.T) {
 		maxSessions := 123
 		enabled := true
 		memberType := "static"
-		ip := "123.123.123.123"
-		port := 9002
+		ip := "10.0.0.2"
+		port := 80
+		serverId := "0050febf-b881-4db1-85ce-4c92776a47e2"
 
-		member, err := svc.CreateLoadBalancerBackendMember(&request.CreateLoadBalancerBackenMemberRequest{
+		member, err := svc.CreateLoadBalancerBackendMember(&request.CreateLoadBalancerBackendMemberRequest{
 			ServiceUUID:       lb.Uuid,
 			BackendName:       backend.Name,
 			MemberName:        name,
@@ -170,6 +153,7 @@ func TestLoadBalancerBackendMemberCRUD(t *testing.T) {
 			MemberType:        memberType,
 			MemberIP:          ip,
 			MemberPort:        port,
+			MemberServerUUID:  serverId,
 		})
 
 		require.NoError(t, err)
@@ -180,6 +164,7 @@ func TestLoadBalancerBackendMemberCRUD(t *testing.T) {
 		assert.EqualValues(t, member.Type, memberType)
 		assert.EqualValues(t, member.Ip, ip)
 		assert.EqualValues(t, member.Port, port)
+		assert.EqualValues(t, member.ServerUuid, serverId)
 		t.Logf("Created new load balancer backend member: %s", member.Name)
 
 		newName := "test_member_TURBO"
@@ -233,19 +218,20 @@ func TestGetLoadBalancerBackendMemberDetails(t *testing.T) {
 
 	record(t, "getloadbalancerbackendmemberdetails", func(t *testing.T, r *recorder.Recorder, svc *Service) {
 		member, err := svc.GetLoadBalancerBackendMemberDetails(&request.GetLoadBalancerBackendMemberDetailsRequest{
-			ServiceUUID: "0a988541-06e0-4252-b483-3ff9fdfdb5ae",
-			BackendName: "updatedName",
-			MemberName:  "default-lb-backend-member",
+			ServiceUUID: "0a0cefa5-a6ef-41d1-b652-3106164f4164",
+			BackendName: "go-test-lb-backend",
+			MemberName:  "backend-1646814491350",
 		})
 
 		require.NoError(t, err)
-		assert.EqualValues(t, member.Name, "default-lb-backend-member")
+		assert.EqualValues(t, member.Name, "backend-1646814491350")
 		assert.EqualValues(t, member.Enabled, true)
 		assert.EqualValues(t, member.Weight, 100)
 		assert.EqualValues(t, member.MaxSessions, 1000)
-		assert.EqualValues(t, member.Type, "dynamic")
-		assert.EqualValues(t, member.Ip, "196.123.123.123")
-		assert.EqualValues(t, member.Port, 8000)
+		assert.EqualValues(t, member.Type, "static")
+		assert.EqualValues(t, member.Ip, "10.0.0.2")
+		assert.EqualValues(t, member.Port, 80)
+		assert.EqualValues(t, member.ServerUuid, "0050febf-b881-4db1-85ce-4c92776a47e2")
 	})
 }
 
@@ -254,20 +240,21 @@ func TestGetLoadBalancerBackendMembers(t *testing.T) {
 
 	record(t, "getloadbalancerbackendmembers", func(t *testing.T, r *recorder.Recorder, svc *Service) {
 		members, err := svc.GetLoadBalancerBackendMembers(&request.GetLoadBalancerBackendMembersRequest{
-			ServiceUUID: "0a988541-06e0-4252-b483-3ff9fdfdb5ae",
-			BackendName: "updatedName",
+			ServiceUUID: "0a0cefa5-a6ef-41d1-b652-3106164f4164",
+			BackendName: "go-test-lb-backend",
 		})
 
 		require.NoError(t, err)
 		assert.Len(t, members, 1)
 
 		member := members[0]
-		assert.EqualValues(t, member.Name, "default-lb-backend-member")
+		assert.EqualValues(t, member.Name, "backend-1646814491350")
 		assert.EqualValues(t, member.Enabled, true)
 		assert.EqualValues(t, member.Weight, 100)
 		assert.EqualValues(t, member.MaxSessions, 1000)
-		assert.EqualValues(t, member.Type, "dynamic")
-		assert.EqualValues(t, member.Ip, "196.123.123.123")
-		assert.EqualValues(t, member.Port, 8000)
+		assert.EqualValues(t, member.Type, "static")
+		assert.EqualValues(t, member.Ip, "10.0.0.2")
+		assert.EqualValues(t, member.Port, 80)
+		assert.EqualValues(t, member.ServerUuid, "0050febf-b881-4db1-85ce-4c92776a47e2")
 	})
 }

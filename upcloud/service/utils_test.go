@@ -525,7 +525,7 @@ func createLoadBalancerBackend(svc *Service, lbUUID string) (*upcloud.LoadBalanc
 	req := request.CreateLoadBalancerBackendRequest{
 		ServiceUUID: lbUUID,
 		Name:        "go-test-lb-backend",
-		Members: []upcloud.LoadBalancerMember{
+		Members: []upcloud.LoadBalancerBackendMember{
 			{
 				Name:        "default-lb-backend-member",
 				Type:        "dynamic",
