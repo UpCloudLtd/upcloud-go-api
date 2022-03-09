@@ -113,6 +113,7 @@ type CreateLoadBalancerBackendMemberRequest struct {
 	MemberType        string `json:"type"`
 	MemberIP          string `json:"ip,omitempty"`
 	MemberPort        int    `json:"port,omitempty"`
+	MemberServerUUID  string `json:"server_uuid,omitempty"`
 }
 
 func (r *CreateLoadBalancerBackendMemberRequest) RequestURL() string {
@@ -149,6 +150,7 @@ type ModifyLoadBalancerBackendMemberRequest struct {
 	MemberIP          string `json:"ip,omitempty"`
 	MemberPort        int    `json:"port,omitempty"`
 	MemberType        string `json:"type,omitempty"`
+	MemberServerUUID  string `json:"server_uuid,omitempty"`
 }
 
 func (r *ModifyLoadBalancerBackendMemberRequest) RequestURL() string {
