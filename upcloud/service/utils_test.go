@@ -520,3 +520,23 @@ func deleteLoadBalancer(svc *Service, uuid string) error {
 
 	return err
 }
+
+func createLoadBalancerBackend(svc *Service, lbUUID string) (*upcloud.LoadBalancerBackend, error) {
+	req := request.CreateLoadBalancerBackendRequest{
+		ServiceUUID: lbUUID,
+		Name:        "go-test-lb-backend",
+		Members: []upcloud.LoadBalancerBackendMember{
+			{
+				Name:        "default-lb-backend-member",
+				Type:        "dynamic",
+				Weight:      100,
+				MaxSessions: 1000,
+				Enabled:     true,
+				Port:        8000,
+				Ip:          "196.123.123.123",
+			},
+		},
+	}
+
+	return svc.CreateLoadBalancerBackend(&req)
+}

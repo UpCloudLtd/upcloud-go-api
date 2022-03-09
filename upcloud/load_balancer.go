@@ -10,7 +10,7 @@ type LoadBalancerActionType string
 type LoadBalancerStringMatcherMethod string
 type LoadBalancerHTTPMatcherMethod string
 type LoadBalancerIntegerMatcherMethod string
-type LoadBalancerMemberType string
+type LoadBalancerBackendMemberType string
 type LoadBalancerOperationalState string
 type LoadBalancerConfiguredStatus string
 
@@ -18,8 +18,8 @@ const (
 	LoadBalancerModeHTTP LoadBalancerMode = "http"
 	LoadBalancerModeTCP  LoadBalancerMode = "tcp"
 
-	LoadBalancerMemberTypeStatic  LoadBalancerMemberType = "static"
-	LoadBalancerMemberTypeDynamic LoadBalancerMemberType = "dynamic"
+	LoadBalancerBackendMemberTypeStatic  LoadBalancerBackendMemberType = "static"
+	LoadBalancerBackendMemberTypeDynamic LoadBalancerBackendMemberType = "dynamic"
 
 	LoadBalancerConfiguredStatusStarted LoadBalancerConfiguredStatus = "started"
 	LoadBalancerConfiguredStatusStopped LoadBalancerConfiguredStatus = "stopped"
@@ -116,23 +116,23 @@ type TLSConfig struct {
 }
 
 type LoadBalancerBackend struct {
-	Name      string               `json:"name"`
-	Members   []LoadBalancerMember `json:"members"`
-	Resolver  string               `json:"resolver,omitempty"`
-	CreatedAt time.Time            `json:"created_at,omitempty"`
-	UpdatedAt time.Time            `json:"updated_at,omitempty"`
+	Name      string                      `json:"name"`
+	Members   []LoadBalancerBackendMember `json:"members"`
+	Resolver  string                      `json:"resolver,omitempty"`
+	CreatedAt time.Time                   `json:"created_at,omitempty"`
+	UpdatedAt time.Time                   `json:"updated_at,omitempty"`
 }
 
-type LoadBalancerMember struct {
-	Name        string                 `json:"name"`
-	Ip          string                 `json:"ip"`
-	Port        int                    `json:"port"`
-	Weight      int                    `json:"weight"`
-	MaxSessions int                    `json:"max_sessions"`
-	Type        LoadBalancerMemberType `json:"type"`
-	Enabled     bool                   `json:"enabled"`
-	CreatedAt   time.Time              `json:"created_at,omitempty"`
-	UpdatedAt   time.Time              `json:"updated_at,omitempty"`
+type LoadBalancerBackendMember struct {
+	Name        string                        `json:"name"`
+	Ip          string                        `json:"ip"`
+	Port        int                           `json:"port"`
+	Weight      int                           `json:"weight"`
+	MaxSessions int                           `json:"max_sessions"`
+	Type        LoadBalancerBackendMemberType `json:"type"`
+	Enabled     bool                          `json:"enabled"`
+	CreatedAt   time.Time                     `json:"created_at,omitempty"`
+	UpdatedAt   time.Time                     `json:"updated_at,omitempty"`
 }
 
 type LoadBalancerResolver struct {

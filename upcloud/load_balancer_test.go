@@ -158,14 +158,14 @@ func TestMarshalLoadBalancer(t *testing.T) {
 				Resolver:  "example-resolver",
 				CreatedAt: timeParse("2021-12-07T13:58:30.817272Z"),
 				UpdatedAt: timeParse("2022-02-11T17:33:08.490581Z"),
-				Members: []LoadBalancerMember{
+				Members: []LoadBalancerBackendMember{
 					{
 						Name:        "example-member-1",
 						Ip:          "172.16.1.4",
 						Port:        8000,
 						Weight:      100,
 						MaxSessions: 1000,
-						Type:        LoadBalancerMemberTypeStatic,
+						Type:        LoadBalancerBackendMemberTypeStatic,
 						Enabled:     true,
 						CreatedAt:   timeParse("2021-12-07T13:58:30.817272Z"),
 						UpdatedAt:   timeParse("2022-02-11T17:33:08.490581Z"),
