@@ -498,7 +498,7 @@ func createLoadBalancer(svc *Service) (*upcloud.LoadBalancer, error) {
 		Name:             fmt.Sprintf("go-test-loadbalancer-%d", time.Now().Unix()),
 		Zone:             "es-mad1",
 		Plan:             "development",
-		NetworkUuid:      "032d4c7f-61b5-4ea9-a2d6-d2357c3c9a88",
+		NetworkUUID:      "032d4c7f-61b5-4ea9-a2d6-d2357c3c9a88",
 		ConfiguredStatus: "started",
 		Frontends:        []upcloud.LoadBalancerFrontend{},
 		Backends:         []upcloud.LoadBalancerBackend{},
@@ -533,7 +533,7 @@ func createLoadBalancerBackend(svc *Service, lbUUID string) (*upcloud.LoadBalanc
 				MaxSessions: 1000,
 				Enabled:     true,
 				Port:        8000,
-				Ip:          "196.123.123.123",
+				IP:          "196.123.123.123",
 			},
 		},
 	}

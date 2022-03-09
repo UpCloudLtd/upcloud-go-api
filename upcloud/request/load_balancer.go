@@ -16,7 +16,7 @@ type CreateLoadBalancerRequest struct {
 	Name             string                         `json:"name"`
 	Plan             string                         `json:"plan"`
 	Zone             string                         `json:"zone"`
-	NetworkUuid      string                         `json:"network_uuid"`
+	NetworkUUID      string                         `json:"network_uuid"`
 	ConfiguredStatus string                         `json:"configured_status"`
 	Frontends        []upcloud.LoadBalancerFrontend `json:"frontends"`
 	Backends         []upcloud.LoadBalancerBackend  `json:"backends"`

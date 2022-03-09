@@ -37,9 +37,9 @@ type LoadBalancerBackend struct {
 }
 
 type LoadBalancerBackendMember struct {
-	ServerUuid  string `json:"server_uuid,omitempty"`
+	ServerUUID  string `json:"server_uuid,omitempty"`
 	Name        string `json:"name"`
-	Ip          string `json:"ip,omitempty"`
+	IP          string `json:"ip,omitempty"`
 	Port        int    `json:"port,omitempty"`
 	Weight      int    `json:"weight"`
 	MaxSessions int    `json:"max_sessions"`
@@ -53,7 +53,7 @@ type LoadBalancerResolver struct {
 }
 
 type LoadBalancer struct {
-	Uuid                     string                 `json:"uuid"`
+	UUID                     string                 `json:"uuid"`
 	Name                     string                 `json:"name"`
 	Zone                     string                 `json:"zone"`
 	Plan                     string                 `json:"plan"`
@@ -61,7 +61,7 @@ type LoadBalancer struct {
 	PlanMemoryAmount         int                    `json:"plan_memory_amount"`
 	PlanPerServerMaxSessions int                    `json:"plan_per_server_max_sessions"`
 	MainAccountId            int                    `json:"main_account_id,omitempty"`
-	NetworkUuid              string                 `json:"network_uuid"`
+	NetworkUUID              string                 `json:"network_uuid"`
 	FloatingIps              []string               `json:"floating_ips,omitempty"`
 	DnsName                  string                 `json:"dns_name"`
 	ConfiguredStatus         string                 `json:"configured_status"`
