@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
-	"github.com/google/uuid"
 )
 
 type GetLoadBalancersRequest struct{}
@@ -17,7 +16,7 @@ type CreateLoadBalancerRequest struct {
 	Name             string                         `json:"name"`
 	Plan             string                         `json:"plan"`
 	Zone             string                         `json:"zone"`
-	NetworkUuid      uuid.UUID                      `json:"network_uuid"`
+	NetworkUuid      string                         `json:"network_uuid"`
 	ConfiguredStatus string                         `json:"configured_status"`
 	Frontends        []upcloud.LoadBalancerFrontend `json:"frontends"`
 	Backends         []upcloud.LoadBalancerBackend  `json:"backends"`
@@ -25,7 +24,7 @@ type CreateLoadBalancerRequest struct {
 }
 
 type ModifyLoadBalancerRequest struct {
-	UUID uuid.UUID `json:"-"`
+	UUID string `json:"-"`
 
 	Name             string `json:"name,omitempty"`
 	Plan             string `json:"plan,omitempty"`
@@ -33,7 +32,7 @@ type ModifyLoadBalancerRequest struct {
 }
 
 type DeleteLoadBalancerRequest struct {
-	UUID uuid.UUID `json:"-"`
+	UUID string `json:"-"`
 }
 
 func (r *GetLoadBalancersRequest) RequestURL() string {

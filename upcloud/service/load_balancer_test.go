@@ -24,18 +24,18 @@ func TestLoadBalancerCRUD(t *testing.T) {
 
 		newName := "new-name-for-lb"
 		lbDetails, err = svc.ModifyLoadBalancer(&request.ModifyLoadBalancerRequest{
-			UUID: lbDetails.Uuid,
+			UUID: lbDetails.UUID,
 			Name: newName,
 		})
 		require.NoError(t, err)
 		assert.Equal(t, newName, lbDetails.Name)
-		t.Logf("Modified load balancer with UUID: %s", lbDetails.Uuid)
+		t.Logf("Modified load balancer with UUID: %s", lbDetails.UUID)
 
 		// Delete Load Balancer
 		t.Log("Deleting load balancer")
-		err = deleteLoadBalancer(svc, lbDetails.Uuid)
+		err = deleteLoadBalancer(svc, lbDetails.UUID)
 		require.NoError(t, err)
-		t.Logf("Deleted load balancer with UUID: %s", lbDetails.Uuid)
+		t.Logf("Deleted load balancer with UUID: %s", lbDetails.UUID)
 	})
 }
 

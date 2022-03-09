@@ -9,8 +9,6 @@ import (
 	"testing"
 	"time"
 
-	"github.com/google/uuid"
-
 	"github.com/dnaeon/go-vcr/cassette"
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/hashicorp/go-cleanhttp"
@@ -500,7 +498,7 @@ func createLoadBalancer(svc *Service) (*upcloud.LoadBalancer, error) {
 		Name:             fmt.Sprintf("go-test-loadbalancer-%d", time.Now().Unix()),
 		Zone:             "es-mad1",
 		Plan:             "development",
-		NetworkUuid:      uuid.MustParse("032d4c7f-61b5-4ea9-a2d6-d2357c3c9a88"),
+		NetworkUuid:      "032d4c7f-61b5-4ea9-a2d6-d2357c3c9a88",
 		ConfiguredStatus: "started",
 		Frontends:        []upcloud.LoadBalancerFrontend{},
 		Backends:         []upcloud.LoadBalancerBackend{},
@@ -515,7 +513,7 @@ func createLoadBalancer(svc *Service) (*upcloud.LoadBalancer, error) {
 	return loadBalancerDetails, nil
 }
 
-func deleteLoadBalancer(svc *Service, uuid uuid.UUID) error {
+func deleteLoadBalancer(svc *Service, uuid string) error {
 	err := svc.DeleteLoadBalancer(&request.DeleteLoadBalancerRequest{
 		UUID: uuid,
 	})
