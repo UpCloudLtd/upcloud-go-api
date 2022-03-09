@@ -24,18 +24,18 @@ func TestLoadBalancerCRUD(t *testing.T) {
 
 		newName := "new-name-for-lb"
 		lbDetails, err = svc.ModifyLoadBalancer(&request.ModifyLoadBalancerRequest{
-			UUID: lbDetails.Uuid,
+			UUID: lbDetails.UUID,
 			Name: newName,
 		})
 		require.NoError(t, err)
 		assert.Equal(t, newName, lbDetails.Name)
-		t.Logf("Modified load balancer with UUID: %s", lbDetails.Uuid)
+		t.Logf("Modified load balancer with UUID: %s", lbDetails.UUID)
 
 		// Delete Load Balancer
 		t.Log("Deleting load balancer")
-		err = deleteLoadBalancer(svc, lbDetails.Uuid)
+		err = deleteLoadBalancer(svc, lbDetails.UUID)
 		require.NoError(t, err)
-		t.Logf("Deleted load balancer with UUID: %s", lbDetails.Uuid)
+		t.Logf("Deleted load balancer with UUID: %s", lbDetails.UUID)
 	})
 }
 
@@ -69,14 +69,14 @@ func TestLoadBalancerBackendCRUD(t *testing.T) {
 		require.NoError(t, err)
 		t.Logf("Created load balancer for testing LB backend CRUD: %s", lb.Name)
 
-		backend, err := createLoadBalancerBackend(svc, lb.Uuid)
+		backend, err := createLoadBalancerBackend(svc, lb.UUID)
 		require.NoError(t, err)
 		t.Logf("Created LB backend: %s", backend.Name)
 
 		t.Logf("Modifying LB backend: %s", backend.Name)
 		newName := "updatedName"
 		backend, err = svc.ModifyLoadBalancerBackend(&request.ModifyLoadBalancerBackendRequest{
-			ServiceUUID:    lb.Uuid,
+			ServiceUUID:    lb.UUID,
 			BackendName:    backend.Name,
 			NewBackendName: newName,
 		})
@@ -87,7 +87,7 @@ func TestLoadBalancerBackendCRUD(t *testing.T) {
 
 		t.Logf("Deleting LB backend: %s", backend.Name)
 		err = svc.DeleteLoadBalancerBackend(&request.DeleteLoadBalancerBackendRequest{
-			ServiceUUID: lb.Uuid,
+			ServiceUUID: lb.UUID,
 			BackendName: backend.Name,
 		})
 		require.NoError(t, err)
@@ -130,7 +130,7 @@ func TestLoadBalancerBackendMemberCRUD(t *testing.T) {
 		require.NoError(t, err)
 		t.Logf("Created load balancer for testing LB backend members CRUD: %s", lb.Name)
 
-		backend, err := createLoadBalancerBackend(svc, lb.Uuid)
+		backend, err := createLoadBalancerBackend(svc, lb.UUID)
 		require.NoError(t, err)
 		t.Logf("Created new backend %s for load balancer %s", backend.Name, lb.Name)
 
@@ -144,7 +144,7 @@ func TestLoadBalancerBackendMemberCRUD(t *testing.T) {
 		serverId := "0050febf-b881-4db1-85ce-4c92776a47e2"
 
 		member, err := svc.CreateLoadBalancerBackendMember(&request.CreateLoadBalancerBackendMemberRequest{
-			ServiceUUID:       lb.Uuid,
+			ServiceUUID:       lb.UUID,
 			BackendName:       backend.Name,
 			MemberName:        name,
 			MemberWeight:      weight,
@@ -164,14 +164,13 @@ func TestLoadBalancerBackendMemberCRUD(t *testing.T) {
 		assert.EqualValues(t, member.Type, memberType)
 		assert.EqualValues(t, member.Ip, ip)
 		assert.EqualValues(t, member.Port, port)
-		assert.EqualValues(t, member.ServerUuid, serverId)
 		t.Logf("Created new load balancer backend member: %s", member.Name)
 
 		newName := "test_member_TURBO"
 		newWeight := 50
 		newMaxSessions := 321
 		member, err = svc.ModifyLoadBalancerBackendMember(&request.ModifyLoadBalancerBackendMemberRequest{
-			ServiceUUID:       lb.Uuid,
+			ServiceUUID:       lb.UUID,
 			BackendName:       backend.Name,
 			MemberName:        member.Name,
 			NewMemberName:     newName,
@@ -189,7 +188,7 @@ func TestLoadBalancerBackendMemberCRUD(t *testing.T) {
 		newIp := "231.231.231.231"
 		newPort := 3003
 		member, err = svc.ModifyLoadBalancerBackendMember(&request.ModifyLoadBalancerBackendMemberRequest{
-			ServiceUUID: lb.Uuid,
+			ServiceUUID: lb.UUID,
 			BackendName: backend.Name,
 			MemberName:  member.Name,
 			MemberType:  newType,
@@ -204,7 +203,7 @@ func TestLoadBalancerBackendMemberCRUD(t *testing.T) {
 		t.Logf("Updated load balancers backend member type, ip and port: %s", member.Name)
 
 		err = svc.DeleteLoadBalancerBackendMember(&request.DeleteLoadBalancerBackendMemberRequest{
-			ServiceUUID: lb.Uuid,
+			ServiceUUID: lb.UUID,
 			BackendName: backend.Name,
 			MemberName:  member.Name,
 		})
@@ -231,7 +230,6 @@ func TestGetLoadBalancerBackendMemberDetails(t *testing.T) {
 		assert.EqualValues(t, member.Type, "static")
 		assert.EqualValues(t, member.Ip, "10.0.0.2")
 		assert.EqualValues(t, member.Port, 80)
-		assert.EqualValues(t, member.ServerUuid, "0050febf-b881-4db1-85ce-4c92776a47e2")
 	})
 }
 
@@ -255,6 +253,5 @@ func TestGetLoadBalancerBackendMembers(t *testing.T) {
 		assert.EqualValues(t, member.Type, "static")
 		assert.EqualValues(t, member.Ip, "10.0.0.2")
 		assert.EqualValues(t, member.Port, 80)
-		assert.EqualValues(t, member.ServerUuid, "0050febf-b881-4db1-85ce-4c92776a47e2")
 	})
 }
