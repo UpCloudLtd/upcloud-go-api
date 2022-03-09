@@ -47,8 +47,7 @@ func record(t *testing.T, fixture string, f func(*testing.T, *recorder.Recorder,
 	require.NoError(t, err)
 
 	r.AddFilter(func(i *cassette.Interaction) error {
-		// TODO
-		// delete(i.Request.Headers, "Authorization")
+		delete(i.Request.Headers, "Authorization")
 		if i.Request.Method == http.MethodPut && strings.Contains(i.Request.URL, "uploader") {
 			// We will remove the body from the upload to reduce fixture size
 			i.Request.Body = ""
