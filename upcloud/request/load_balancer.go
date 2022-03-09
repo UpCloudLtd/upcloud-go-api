@@ -64,10 +64,10 @@ func (r *GetLoadBalancerBackendsRequest) RequestURL() string {
 }
 
 type CreateLoadBalancerBackendRequest struct {
-	ServiceUUID string                       `json:"-"`
-	Name        string                       `json:"name"`
-	Resolver    string                       `json:"resolver,omitempty"`
-	Members     []upcloud.LoadBalancerMember `json:"members"`
+	ServiceUUID string                              `json:"-"`
+	Name        string                              `json:"name"`
+	Resolver    string                              `json:"resolver,omitempty"`
+	Members     []upcloud.LoadBalancerBackendMember `json:"members"`
 }
 
 func (r *CreateLoadBalancerBackendRequest) RequestURL() string {
@@ -103,7 +103,7 @@ func (r *DeleteLoadBalancerBackendRequest) RequestURL() string {
 	return fmt.Sprintf("/loadbalancer/%s/backends/%s", r.ServiceUUID, r.BackendName)
 }
 
-type CreateLoadBalancerBackenMemberRequest struct {
+type CreateLoadBalancerBackendMemberRequest struct {
 	ServiceUUID       string `json:"-"`
 	BackendName       string `json:"-"`
 	MemberName        string `json:"name"`
@@ -115,7 +115,7 @@ type CreateLoadBalancerBackenMemberRequest struct {
 	MemberPort        int    `json:"port,omitempty"`
 }
 
-func (r *CreateLoadBalancerBackenMemberRequest) RequestURL() string {
+func (r *CreateLoadBalancerBackendMemberRequest) RequestURL() string {
 	return fmt.Sprintf("/loadbalancer/%s/backends/%s/members", r.ServiceUUID, r.BackendName)
 }
 

@@ -19,10 +19,10 @@ type LoadBalancer interface {
 	CreateLoadBalancerBackend(r *request.CreateLoadBalancerBackendRequest) (*upcloud.LoadBalancerBackend, error)
 	ModifyLoadBalancerBackend(r *request.ModifyLoadBalancerBackendRequest) (*upcloud.LoadBalancerBackend, error)
 	DeleteLoadBalancerBackend(r *request.DeleteLoadBalancerBackendRequest) error
-	GetLoadBalancerBackendMembers(r *request.GetLoadBalancerBackendMembersRequest) ([]*upcloud.LoadBalancerMember, error)
-	GetLoadBalancerBackendMemberDetails(r *request.GetLoadBalancerBackendMemberDetailsRequest) (*upcloud.LoadBalancerMember, error)
-	CreateLoadBalancerBackendMember(r *request.CreateLoadBalancerBackenMemberRequest) (*upcloud.LoadBalancerMember, error)
-	ModifyLoadBalancerBackendMember(r *request.ModifyLoadBalancerBackendMemberRequest) (*upcloud.LoadBalancerMember, error)
+	GetLoadBalancerBackendMembers(r *request.GetLoadBalancerBackendMembersRequest) ([]*upcloud.LoadBalancerBackendMember, error)
+	GetLoadBalancerBackendMemberDetails(r *request.GetLoadBalancerBackendMemberDetailsRequest) (*upcloud.LoadBalancerBackendMember, error)
+	CreateLoadBalancerBackendMember(r *request.CreateLoadBalancerBackendMemberRequest) (*upcloud.LoadBalancerBackendMember, error)
+	ModifyLoadBalancerBackendMember(r *request.ModifyLoadBalancerBackendMemberRequest) (*upcloud.LoadBalancerBackendMember, error)
 	DeleteLoadBalancerBackendMember(r *request.DeleteLoadBalancerBackendMemberRequest) error
 }
 
@@ -175,7 +175,7 @@ func (s *Service) DeleteLoadBalancerBackend(r *request.DeleteLoadBalancerBackend
 	return s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
 }
 
-func (s *Service) GetLoadBalancerBackendMembers(r *request.GetLoadBalancerBackendMembersRequest) ([]*upcloud.LoadBalancerMember, error) {
+func (s *Service) GetLoadBalancerBackendMembers(r *request.GetLoadBalancerBackendMembersRequest) ([]*upcloud.LoadBalancerBackendMember, error) {
 	var members []*upcloud.LoadBalancerMember
 	res, err := s.basicGetRequest(r.RequestURL())
 	if err != nil {
@@ -186,7 +186,7 @@ func (s *Service) GetLoadBalancerBackendMembers(r *request.GetLoadBalancerBacken
 	return members, err
 }
 
-func (s *Service) GetLoadBalancerBackendMemberDetails(r *request.GetLoadBalancerBackendMemberDetailsRequest) (*upcloud.LoadBalancerMember, error) {
+func (s *Service) GetLoadBalancerBackendMemberDetails(r *request.GetLoadBalancerBackendMemberDetailsRequest) (*upcloud.LoadBalancerBackendMember, error) {
 	var memberDetails upcloud.LoadBalancerMember
 	res, err := s.basicGetRequest(r.RequestURL())
 	if err != nil {
@@ -197,7 +197,7 @@ func (s *Service) GetLoadBalancerBackendMemberDetails(r *request.GetLoadBalancer
 	return &memberDetails, err
 }
 
-func (s *Service) CreateLoadBalancerBackendMember(r *request.CreateLoadBalancerBackenMemberRequest) (*upcloud.LoadBalancerMember, error) {
+func (s *Service) CreateLoadBalancerBackendMember(r *request.CreateLoadBalancerBackendMemberRequest) (*upcloud.LoadBalancerBackendMember, error) {
 	var memberDetails upcloud.LoadBalancerMember
 
 	reqBody, err := json.Marshal(r)
@@ -214,8 +214,8 @@ func (s *Service) CreateLoadBalancerBackendMember(r *request.CreateLoadBalancerB
 	return &memberDetails, err
 }
 
-func (s *Service) ModifyLoadBalancerBackendMember(r *request.ModifyLoadBalancerBackendMemberRequest) (*upcloud.LoadBalancerMember, error) {
-	var memberDetails upcloud.LoadBalancerMember
+func (s *Service) ModifyLoadBalancerBackendMember(r *request.ModifyLoadBalancerBackendMemberRequest) (*upcloud.LoadBalancerBackendMember, error) {
+	var memberDetails upcloud.LoadBalancerBackendMember
 
 	reqBody, err := json.Marshal(r)
 	if err != nil {

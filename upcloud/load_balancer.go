@@ -31,12 +31,12 @@ type LoadBalancerActions struct {
 }
 
 type LoadBalancerBackend struct {
-	Name     string               `json:"name"`
-	Members  []LoadBalancerMember `json:"members"`
-	Resolver string               `json:"resolver,omitempty"`
+	Name     string                      `json:"name"`
+	Members  []LoadBalancerBackendMember `json:"members"`
+	Resolver string                      `json:"resolver,omitempty"`
 }
 
-type LoadBalancerMember struct {
+type LoadBalancerBackendMember struct {
 	ServerUuid  string `json:"server_uuid,omitempty"`
 	Name        string `json:"name"`
 	Ip          string `json:"ip,omitempty"`
