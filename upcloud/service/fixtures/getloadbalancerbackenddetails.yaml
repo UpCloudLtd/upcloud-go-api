@@ -7,8 +7,6 @@ interactions:
     headers:
       Accept:
       - application/json
-      Authorization:
-      - Basic a2FtaWx0ZXN0OlBFTFRfYmVjazhoZWVrNGJsaXA=
       Content-Type:
       - application/json
       User-Agent:
