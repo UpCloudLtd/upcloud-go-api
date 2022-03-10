@@ -113,7 +113,7 @@ func TestGetLoadBalancerBackends(t *testing.T) {
 
 	record(t, "getloadbalancerbackends", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		backends, err := svc.GetLoadBalancerBackends(&request.GetLoadBalancerBackendsRequest{
-			UUID: "0abdab19-b11b-4f89-8f9f-961b524347b6",
+			ServiceUUID: "0abdab19-b11b-4f89-8f9f-961b524347b6",
 		})
 		require.NoError(t, err)
 		assert.Len(t, backends, 1)
