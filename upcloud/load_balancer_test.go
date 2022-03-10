@@ -270,7 +270,7 @@ func TestLoadBalancerRule(t *testing.T) {
 	)
 }
 
-func TestTLSConfig(t *testing.T) {
+func TestLoadBalancerTLSConfig(t *testing.T) {
 	testJSON(t,
 		&LoadBalancerTLSConfig{},
 		&LoadBalancerTLSConfig{
