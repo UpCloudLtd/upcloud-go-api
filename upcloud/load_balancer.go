@@ -37,7 +37,7 @@ const (
 	LoadBalancerOperationalStateDeleteServer  LoadBalancerOperationalState = "delete-server"
 	LoadBalancerOperationalStateDeleteService LoadBalancerOperationalState = "delete-service"
 
-	LoadBalancerMatcherTypeSrcIP        LoadBalancerMatcherType = "src_ip "
+	LoadBalancerMatcherTypeSrcIP        LoadBalancerMatcherType = "src_ip"
 	LoadBalancerMatcherTypeSrcPort      LoadBalancerMatcherType = "src_port"
 	LoadBalancerMatcherTypeBodySize     LoadBalancerMatcherType = "body_size"
 	LoadBalancerMatcherTypePath         LoadBalancerMatcherType = "path"
@@ -74,11 +74,12 @@ const (
 	LoadBalancerHTTPMatcherMethodOptions LoadBalancerHTTPMatcherMethod = "OPTIONS"
 	LoadBalancerHTTPMatcherMethodTrace   LoadBalancerHTTPMatcherMethod = "TRACE"
 
-	LoadBalancerIntegerMatcherMethodEqual               LoadBalancerIntegerMatcherMethod = "equal"
-	LoadBalancerIntegerMatcherMethodEqualGreaterOrEqual LoadBalancerIntegerMatcherMethod = "greater_or_equal"
-	LoadBalancerIntegerMatcherMethodEqualGreater        LoadBalancerIntegerMatcherMethod = "greater"
-	LoadBalancerIntegerMatcherMethodEqualLessOrEqual    LoadBalancerIntegerMatcherMethod = "less_or_equal"
-	LoadBalancerIntegerMatcherMethodEqualLess           LoadBalancerIntegerMatcherMethod = "less"
+	LoadBalancerIntegerMatcherMethodEqual          LoadBalancerIntegerMatcherMethod = "equal"
+	LoadBalancerIntegerMatcherMethodGreaterOrEqual LoadBalancerIntegerMatcherMethod = "greater_or_equal"
+	LoadBalancerIntegerMatcherMethodGreater        LoadBalancerIntegerMatcherMethod = "greater"
+	LoadBalancerIntegerMatcherMethodLessOrEqual    LoadBalancerIntegerMatcherMethod = "less_or_equal"
+	LoadBalancerIntegerMatcherMethodLess           LoadBalancerIntegerMatcherMethod = "less"
+	LoadBalancerIntegerMatcherMethodRange          LoadBalancerIntegerMatcherMethod = "range"
 )
 
 // LoadBalancerPlan represents load balancer plan details
@@ -89,14 +90,14 @@ type LoadBalancerPlan struct {
 }
 
 type LoadBalancerFrontend struct {
-	Name           string             `json:"name,omitempty"`
-	Mode           LoadBalancerMode   `json:"mode,omitempty"`
-	Port           int                `json:"port,omitempty"`
-	DefaultBackend string             `json:"default_backend,omitempty"`
-	Rules          []LoadBalancerRule `json:"rules,omitempty"`
-	TLSConfigs     []TLSConfig        `json:"tls_configs,omitempty"`
-	CreatedAt      time.Time          `json:"created_at,omitempty"`
-	UpdatedAt      time.Time          `json:"updated_at,omitempty"`
+	Name           string                  `json:"name,omitempty"`
+	Mode           LoadBalancerMode        `json:"mode,omitempty"`
+	Port           int                     `json:"port,omitempty"`
+	DefaultBackend string                  `json:"default_backend,omitempty"`
+	Rules          []LoadBalancerRule      `json:"rules,omitempty"`
+	TLSConfigs     []LoadBalancerTLSConfig `json:"tls_configs,omitempty"`
+	CreatedAt      time.Time               `json:"created_at,omitempty"`
+	UpdatedAt      time.Time               `json:"updated_at,omitempty"`
 }
 
 type LoadBalancerRule struct {
@@ -108,7 +109,7 @@ type LoadBalancerRule struct {
 	UpdatedAt time.Time             `json:"updated_at,omitempty"`
 }
 
-type TLSConfig struct {
+type LoadBalancerTLSConfig struct {
 	Name                  string    `json:"name,omitempty"`
 	CertificateBundleUUID string    `json:"certificate_bundle_uuid,omitempty"`
 	CreatedAt             time.Time `json:"created_at,omitempty"`
@@ -125,7 +126,7 @@ type LoadBalancerBackend struct {
 
 type LoadBalancerBackendMember struct {
 	Name        string                        `json:"name"`
-	Ip          string                        `json:"ip"`
+	IP          string                        `json:"ip"`
 	Port        int                           `json:"port"`
 	Weight      int                           `json:"weight"`
 	MaxSessions int                           `json:"max_sessions"`
@@ -176,7 +177,7 @@ type LoadBalancerMatcher struct {
 	Cookie       *LoadBalancerMatcherStringWithArgument `json:"match_cookie,omitempty"`
 	Header       *LoadBalancerMatcherStringWithArgument `json:"match_header,omitempty"`
 	URLParam     *LoadBalancerMatcherStringWithArgument `json:"match_url_param,omitempty"`
-	NumMembersUP *LoadBalancerMatcherBackend            `json:"match_num_members_up,omitempty"`
+	NumMembersUP *LoadBalancerMatcherNumMembersUP       `json:"match_num_members_up,omitempty"`
 }
 
 type LoadBalancerMatcherStringWithArgument struct {
@@ -190,10 +191,10 @@ type LoadBalancerMatcherHost struct {
 	Value string `json:"value,omitempty"`
 }
 
-type LoadBalancerMatcherBackend struct {
+type LoadBalancerMatcherNumMembersUP struct {
 	Method  LoadBalancerIntegerMatcherMethod `json:"method,omitempty"`
 	Value   int                              `json:"value,omitempty"`
-	Backend string
+	Backend string                           `json:"backend,omitempty"`
 }
 
 type LoadBalancerMatcherHTTPMethod struct {
@@ -201,8 +202,10 @@ type LoadBalancerMatcherHTTPMethod struct {
 }
 
 type LoadBalancerMatcherInteger struct {
-	Method LoadBalancerIntegerMatcherMethod `json:"method,omitempty"`
-	Value  int                              `json:"value,omitempty"`
+	Method     LoadBalancerIntegerMatcherMethod `json:"method,omitempty"`
+	Value      int                              `json:"value,omitempty"`
+	RangeStart int                              `json:"range_start,omitempty"`
+	RangeEnd   int                              `json:"range_end,omitempty"`
 }
 
 type LoadBalancerMatcherString struct {

@@ -532,7 +532,7 @@ func createLoadBalancerBackend(svc *Service, lbUUID string) (*upcloud.LoadBalanc
 				MaxSessions: 1000,
 				Enabled:     true,
 				Port:        8000,
-				Ip:          "196.123.123.123",
+				IP:          "196.123.123.123",
 			},
 		},
 	}
