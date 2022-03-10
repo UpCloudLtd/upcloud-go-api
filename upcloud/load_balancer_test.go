@@ -119,7 +119,7 @@ func TestMarshalLoadBalancer(t *testing.T) {
 				Mode:           LoadBalancerModeHTTP,
 				Port:           443,
 				DefaultBackend: "example-backend-1",
-				Rules: []LoadBalancerRule{
+				Rules: []LoadBalancerFrontendRule{
 					{
 						Name:      "example-rule-1",
 						Priority:  100,
@@ -240,8 +240,8 @@ func TestLoadBalancerFrontend(t *testing.T) {
 
 func TestLoadBalancerRule(t *testing.T) {
 	testJSON(t,
-		&LoadBalancerRule{},
-		&LoadBalancerRule{
+		&LoadBalancerFrontendRule{},
+		&LoadBalancerFrontendRule{
 			Name:     "example-rule-1",
 			Priority: 100,
 			Actions: []LoadBalancerAction{

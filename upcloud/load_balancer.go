@@ -89,18 +89,20 @@ type LoadBalancerPlan struct {
 	ServerNumber         int    `json:"server_number,omitempty"`
 }
 
+// LoadBalancerFrontend represents service frontend
 type LoadBalancerFrontend struct {
-	Name           string                  `json:"name,omitempty"`
-	Mode           LoadBalancerMode        `json:"mode,omitempty"`
-	Port           int                     `json:"port,omitempty"`
-	DefaultBackend string                  `json:"default_backend,omitempty"`
-	Rules          []LoadBalancerRule      `json:"rules,omitempty"`
-	TLSConfigs     []LoadBalancerTLSConfig `json:"tls_configs,omitempty"`
-	CreatedAt      time.Time               `json:"created_at,omitempty"`
-	UpdatedAt      time.Time               `json:"updated_at,omitempty"`
+	Name           string                     `json:"name,omitempty"`
+	Mode           LoadBalancerMode           `json:"mode,omitempty"`
+	Port           int                        `json:"port,omitempty"`
+	DefaultBackend string                     `json:"default_backend,omitempty"`
+	Rules          []LoadBalancerFrontendRule `json:"rules,omitempty"`
+	TLSConfigs     []LoadBalancerTLSConfig    `json:"tls_configs,omitempty"`
+	CreatedAt      time.Time                  `json:"created_at,omitempty"`
+	UpdatedAt      time.Time                  `json:"updated_at,omitempty"`
 }
 
-type LoadBalancerRule struct {
+// LoadBalancerFrontendRule represents frontend rule
+type LoadBalancerFrontendRule struct {
 	Name      string                `json:"name,omitempty"`
 	Priority  int                   `json:"priority,omitempty"`
 	Matchers  []LoadBalancerMatcher `json:"matchers,omitempty"`
@@ -109,6 +111,7 @@ type LoadBalancerRule struct {
 	UpdatedAt time.Time             `json:"updated_at,omitempty"`
 }
 
+// LoadBalancerTLSConfig represents TLS configuration
 type LoadBalancerTLSConfig struct {
 	Name                  string    `json:"name,omitempty"`
 	CertificateBundleUUID string    `json:"certificate_bundle_uuid,omitempty"`
@@ -116,6 +119,7 @@ type LoadBalancerTLSConfig struct {
 	UpdatedAt             time.Time `json:"updated_at,omitempty"`
 }
 
+// LoadBalancerBackend represents service backend
 type LoadBalancerBackend struct {
 	Name      string                      `json:"name"`
 	Members   []LoadBalancerBackendMember `json:"members"`
@@ -124,6 +128,7 @@ type LoadBalancerBackend struct {
 	UpdatedAt time.Time                   `json:"updated_at,omitempty"`
 }
 
+// LoadBalancerBackendMembe represents backend member
 type LoadBalancerBackendMember struct {
 	Name        string                        `json:"name"`
 	IP          string                        `json:"ip"`
@@ -136,6 +141,7 @@ type LoadBalancerBackendMember struct {
 	UpdatedAt   time.Time                     `json:"updated_at,omitempty"`
 }
 
+// LoadBalancerResolver represents domain name resolver
 type LoadBalancerResolver struct {
 	Name         string    `json:"name,omitempty"`
 	Nameservers  []string  `json:"nameservers,omitempty"`
@@ -148,6 +154,7 @@ type LoadBalancerResolver struct {
 	UpdatedAt    time.Time `json:"updated_at,omitempty"`
 }
 
+// LoadBalancer service
 type LoadBalancer struct {
 	UUID             string                       `json:"uuid,omitempty"`
 	Name             string                       `json:"name,omitempty"`
@@ -164,6 +171,7 @@ type LoadBalancer struct {
 	UpdatedAt        time.Time                    `json:"updated_at,omitempty"`
 }
 
+// LoadBalancerMatcher represents rule matcher
 type LoadBalancerMatcher struct {
 	Type         LoadBalancerMatcherType                `json:"type,omitempty"`
 	SrcIP        *LoadBalancerMatcherSourceIP           `json:"match_src_ip,omitempty"`
@@ -180,6 +188,7 @@ type LoadBalancerMatcher struct {
 	NumMembersUP *LoadBalancerMatcherNumMembersUP       `json:"match_num_members_up,omitempty"`
 }
 
+// LoadBalancerMatcherStringWithArgument represents 'string with argument' matcher
 type LoadBalancerMatcherStringWithArgument struct {
 	Method     LoadBalancerStringMatcherMethod `json:"method,omitempty"`
 	Name       string                          `json:"name,omitempty"`
@@ -187,20 +196,24 @@ type LoadBalancerMatcherStringWithArgument struct {
 	IgnoreCase *bool                           `json:"ignore_case,omitempty"`
 }
 
+// LoadBalancerMatcherHost represents represents 'host' matcher
 type LoadBalancerMatcherHost struct {
 	Value string `json:"value,omitempty"`
 }
 
+// LoadBalancerMatcherNumMembersUP represents 'num_members_up' matcher
 type LoadBalancerMatcherNumMembersUP struct {
 	Method  LoadBalancerIntegerMatcherMethod `json:"method,omitempty"`
 	Value   int                              `json:"value,omitempty"`
 	Backend string                           `json:"backend,omitempty"`
 }
 
+// LoadBalancerMatcherHTTPMethod represents 'http_method' matcher
 type LoadBalancerMatcherHTTPMethod struct {
 	Value LoadBalancerHTTPMatcherMethod `json:"value,omitempty"`
 }
 
+// LoadBalancerMatcherInteger represents integer matcher
 type LoadBalancerMatcherInteger struct {
 	Method     LoadBalancerIntegerMatcherMethod `json:"method,omitempty"`
 	Value      int                              `json:"value,omitempty"`
@@ -208,16 +221,19 @@ type LoadBalancerMatcherInteger struct {
 	RangeEnd   int                              `json:"range_end,omitempty"`
 }
 
+// LoadBalancerMatcherString represents string matcher
 type LoadBalancerMatcherString struct {
 	Method     LoadBalancerStringMatcherMethod `json:"method,omitempty"`
 	Value      string                          `json:"value,omitempty"`
 	IgnoreCase *bool                           `json:"ignore_case,omitempty"`
 }
 
+// LoadBalancerMatcherSourceIP represents 'src_ip' matcher
 type LoadBalancerMatcherSourceIP struct {
 	Value string `json:"value,omitempty"`
 }
 
+// LoadBalancerAction represents rule action
 type LoadBalancerAction struct {
 	Type         LoadBalancerActionType          `json:"type,omitempty"`
 	UseBackend   *LoadBalancerActionUseBackend   `json:"action_use_backend,omitempty"`
@@ -226,19 +242,23 @@ type LoadBalancerAction struct {
 	HTTPRedirect *LoadBalancerActionHTTPRedirect `json:"action_http_redirect,omitempty"`
 }
 
+// LoadBalancerActionUseBackend represents 'use_backend' action
 type LoadBalancerActionUseBackend struct {
 	Backend string `json:"backend,omitempty"`
 }
 
+// LoadBalancerActionTCPReject represents 'tcp_reject' action
 type LoadBalancerActionTCPReject struct {
 }
 
+// LoadBalancerActionHTTPReturn represents 'http_return' action
 type LoadBalancerActionHTTPReturn struct {
 	Status      int    `json:"status,omitempty"`
 	ContentType string `json:"content_type,omitempty"`
 	Payload     string `json:"payload,omitempty"`
 }
 
+// LoadBalancerActionHTTPRedirect represents 'http_redirect' action
 type LoadBalancerActionHTTPRedirect struct {
 	Location string `json:"location,omitempty"`
 }
