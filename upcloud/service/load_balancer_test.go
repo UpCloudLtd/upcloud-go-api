@@ -162,7 +162,7 @@ func TestLoadBalancerBackendMemberCRUD(t *testing.T) {
 		assert.EqualValues(t, member.MaxSessions, maxSessions)
 		assert.EqualValues(t, member.Enabled, enabled)
 		assert.EqualValues(t, member.Type, memberType)
-		assert.EqualValues(t, member.Ip, ip)
+		assert.EqualValues(t, member.IP, ip)
 		assert.EqualValues(t, member.Port, port)
 		t.Logf("Created new load balancer backend member: %s", member.Name)
 
@@ -198,7 +198,7 @@ func TestLoadBalancerBackendMemberCRUD(t *testing.T) {
 
 		require.NoError(t, err)
 		assert.EqualValues(t, member.Type, newType)
-		assert.EqualValues(t, member.Ip, newIp)
+		assert.EqualValues(t, member.IP, newIp)
 		assert.EqualValues(t, member.Port, newPort)
 		t.Logf("Updated load balancers backend member type, ip and port: %s", member.Name)
 
@@ -228,7 +228,7 @@ func TestGetLoadBalancerBackendMemberDetails(t *testing.T) {
 		assert.EqualValues(t, member.Weight, 100)
 		assert.EqualValues(t, member.MaxSessions, 1000)
 		assert.EqualValues(t, member.Type, "static")
-		assert.EqualValues(t, member.Ip, "10.0.0.2")
+		assert.EqualValues(t, member.IP, "10.0.0.2")
 		assert.EqualValues(t, member.Port, 80)
 	})
 }
@@ -251,7 +251,7 @@ func TestGetLoadBalancerBackendMembers(t *testing.T) {
 		assert.EqualValues(t, member.Weight, 100)
 		assert.EqualValues(t, member.MaxSessions, 1000)
 		assert.EqualValues(t, member.Type, "static")
-		assert.EqualValues(t, member.Ip, "10.0.0.2")
+		assert.EqualValues(t, member.IP, "10.0.0.2")
 		assert.EqualValues(t, member.Port, 80)
 	})
 }
