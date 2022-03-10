@@ -56,11 +56,11 @@ func (r *DeleteLoadBalancerRequest) RequestURL() string {
 }
 
 type GetLoadBalancerBackendsRequest struct {
-	UUID string `json:"-"`
+	ServiceUUID string `json:"-"`
 }
 
 func (r *GetLoadBalancerBackendsRequest) RequestURL() string {
-	return fmt.Sprintf("/loadbalancer/%s/backends", r.UUID)
+	return fmt.Sprintf("/loadbalancer/%s/backends", r.ServiceUUID)
 }
 
 type CreateLoadBalancerBackendRequest struct {
