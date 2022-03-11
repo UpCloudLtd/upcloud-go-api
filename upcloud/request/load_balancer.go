@@ -81,11 +81,7 @@ func (r *CreateLoadBalancerBackendRequest) RequestURL() string {
 }
 
 func (r *CreateLoadBalancerBackendRequest) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&CreateLoadBalancerBackend{
-		Name:     r.Payload.Name,
-		Resolver: r.Payload.Resolver,
-		Members:  r.Payload.Members,
-	})
+	return json.Marshal(r.Payload)
 }
 
 type GetLoadBalancerBackendDetailsRequest struct {
@@ -114,10 +110,7 @@ func (r *ModifyLoadBalancerBackendRequest) RequestURL() string {
 }
 
 func (r *ModifyLoadBalancerBackendRequest) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&ModifyLoadBalancerBackend{
-		Name:     r.Payload.Name,
-		Resolver: r.Payload.Resolver,
-	})
+	return json.Marshal(r.Payload)
 }
 
 type DeleteLoadBalancerBackendRequest struct {
@@ -152,16 +145,7 @@ func (r *CreateLoadBalancerBackendMemberRequest) RequestURL() string {
 }
 
 func (r *CreateLoadBalancerBackendMemberRequest) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&CreateLoadBalancerBackendMember{
-		Name:        r.Payload.Name,
-		Weight:      r.Payload.Weight,
-		MaxSessions: r.Payload.MaxSessions,
-		Enabled:     r.Payload.Enabled,
-		Type:        r.Payload.Type,
-		IP:          r.Payload.IP,
-		Port:        r.Payload.Port,
-		ServerUUID:  r.Payload.ServerUUID,
-	})
+	return json.Marshal(r.Payload)
 }
 
 type GetLoadBalancerBackendMembersRequest struct {
@@ -197,16 +181,7 @@ func (r *ModifyLoadBalancerBackendMemberRequest) RequestURL() string {
 }
 
 func (r *ModifyLoadBalancerBackendMemberRequest) MarshalJSON() ([]byte, error) {
-	return json.Marshal(&ModifyLoadBalancerBackendMember{
-		Name:        r.Payload.Name,
-		Weight:      r.Payload.Weight,
-		MaxSessions: r.Payload.MaxSessions,
-		Enabled:     r.Payload.Enabled,
-		Type:        r.Payload.Type,
-		IP:          r.Payload.IP,
-		Port:        r.Payload.Port,
-		ServerUUID:  r.Payload.ServerUUID,
-	})
+	return json.Marshal(r.Payload)
 }
 
 type DeleteLoadBalancerBackendMemberRequest struct {
