@@ -20,7 +20,7 @@ type CreateLoadBalancerRequest struct {
 	NetworkUuid      string                         `json:"network_uuid"`
 	ConfiguredStatus string                         `json:"configured_status"`
 	Frontends        []upcloud.LoadBalancerFrontend `json:"frontends"`
-	Backends         []upcloud.LoadBalancerBackend  `json:"backends"`
+	Backends         []CreateLoadBalancerBackend    `json:"backends"`
 	// Resolvers        []*upcloud.Resolver `json:"resolvers"` // TODO explore omit empty
 }
 

@@ -500,7 +500,7 @@ func createLoadBalancer(svc *Service, networkUUID, zone string) (*upcloud.LoadBa
 		NetworkUuid:      networkUUID,
 		ConfiguredStatus: "started",
 		Frontends:        []upcloud.LoadBalancerFrontend{},
-		Backends:         []upcloud.LoadBalancerBackend{},
+		Backends:         []request.CreateLoadBalancerBackend{},
 		// Resolvers:        []*upcloud.Resolver{},
 	}
 
