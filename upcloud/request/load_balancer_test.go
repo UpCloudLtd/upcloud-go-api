@@ -12,9 +12,11 @@ import (
 func TestCreateLoadBalancerBackendRequest(t *testing.T) {
 	r := CreateLoadBalancerBackendRequest{
 		ServiceUUID: "lb",
-		Name:        "sesese",
-		Members:     []upcloud.LoadBalancerBackendMember{},
-		Resolver:    "testresolver",
+		Payload: CreateLoadBalancerBackend{
+			Name:     "sesese",
+			Members:  []upcloud.LoadBalancerBackendMember{},
+			Resolver: "testresolver",
+		},
 	}
 
 	expectedJson := `
@@ -24,7 +26,7 @@ func TestCreateLoadBalancerBackendRequest(t *testing.T) {
 		"members": []
 	}`
 
-	actualJson, err := json.Marshal(r)
+	actualJson, err := json.Marshal(&r)
 
 	require.NoError(t, err)
 	assert.Exactly(t, "/loadbalancer/lb/backends", r.RequestURL())
@@ -60,10 +62,12 @@ func TestGetLoadBalancerBackendDetailsRequest(t *testing.T) {
 
 func TestModifyLoadBalancerBackendRequest(t *testing.T) {
 	r := ModifyLoadBalancerBackendRequest{
-		ServiceUUID:    "lb",
-		BackendName:    "be",
-		NewBackendName: "newnew",
-		Resolver:       "newresolver",
+		ServiceUUID: "lb",
+		Name:        "be",
+		Payload: ModifyLoadBalancerBackend{
+			Name:     "newnew",
+			Resolver: "newresolver",
+		},
 	}
 
 	expectedJson := `
@@ -72,7 +76,7 @@ func TestModifyLoadBalancerBackendRequest(t *testing.T) {
 		"resolver": "newresolver"	
 	}`
 
-	actualJson, err := json.Marshal(r)
+	actualJson, err := json.Marshal(&r)
 
 	require.NoError(t, err)
 	assert.Exactly(t, "/loadbalancer/lb/backends/be", r.RequestURL())

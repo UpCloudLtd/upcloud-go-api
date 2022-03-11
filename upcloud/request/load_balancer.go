@@ -1,6 +1,7 @@
 package request
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
@@ -63,15 +64,28 @@ func (r *GetLoadBalancerBackendsRequest) RequestURL() string {
 	return fmt.Sprintf("/loadbalancer/%s/backends", r.ServiceUUID)
 }
 
+// CreatLoadBalancerBackend represents the payload for CreateLoadBalancerBackendRequest
+type CreateLoadBalancerBackend struct {
+	Name     string                              `json:"name"`
+	Resolver string                              `json:"resolver,omitempty"`
+	Members  []upcloud.LoadBalancerBackendMember `json:"members"`
+}
+
 type CreateLoadBalancerBackendRequest struct {
-	ServiceUUID string                              `json:"-"`
-	Name        string                              `json:"name"`
-	Resolver    string                              `json:"resolver,omitempty"`
-	Members     []upcloud.LoadBalancerBackendMember `json:"members"`
+	ServiceUUID string `json:"-"`
+	Payload     CreateLoadBalancerBackend
 }
 
 func (r *CreateLoadBalancerBackendRequest) RequestURL() string {
 	return fmt.Sprintf("/loadbalancer/%s/backends", r.ServiceUUID)
+}
+
+func (r *CreateLoadBalancerBackendRequest) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&CreateLoadBalancerBackend{
+		Name:     r.Payload.Name,
+		Resolver: r.Payload.Resolver,
+		Members:  r.Payload.Members,
+	})
 }
 
 type GetLoadBalancerBackendDetailsRequest struct {
@@ -83,15 +97,26 @@ func (r *GetLoadBalancerBackendDetailsRequest) RequestURL() string {
 	return fmt.Sprintf("/loadbalancer/%s/backends/%s", r.ServiceUUID, r.BackendName)
 }
 
+type ModifyLoadBalancerBackend struct {
+	Name     string `json:"name,omitempty"`
+	Resolver string `json:"resolver,omitempty"`
+}
+
 type ModifyLoadBalancerBackendRequest struct {
-	ServiceUUID    string `json:"-"`
-	BackendName    string `json:"-"`
-	NewBackendName string `json:"name,omitempty"`
-	Resolver       string `json:"resolver,omitempty"`
+	ServiceUUID string `json:"-"`
+	Name        string `json:"-"`
+	Payload     ModifyLoadBalancerBackend
 }
 
 func (r *ModifyLoadBalancerBackendRequest) RequestURL() string {
-	return fmt.Sprintf("/loadbalancer/%s/backends/%s", r.ServiceUUID, r.BackendName)
+	return fmt.Sprintf("/loadbalancer/%s/backends/%s", r.ServiceUUID, r.Name)
+}
+
+func (r *ModifyLoadBalancerBackendRequest) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&ModifyLoadBalancerBackend{
+		Name:     r.Payload.Name,
+		Resolver: r.Payload.Resolver,
+	})
 }
 
 type DeleteLoadBalancerBackendRequest struct {

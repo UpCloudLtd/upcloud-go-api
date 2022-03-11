@@ -76,9 +76,11 @@ func TestLoadBalancerBackendCRUD(t *testing.T) {
 		t.Logf("Modifying LB backend: %s", backend.Name)
 		newName := "updatedName"
 		backend, err = svc.ModifyLoadBalancerBackend(&request.ModifyLoadBalancerBackendRequest{
-			ServiceUUID:    lb.UUID,
-			BackendName:    backend.Name,
-			NewBackendName: newName,
+			ServiceUUID: lb.UUID,
+			Name:        backend.Name,
+			Payload: request.ModifyLoadBalancerBackend{
+				Name: newName,
+			},
 		})
 
 		require.NoError(t, err)
