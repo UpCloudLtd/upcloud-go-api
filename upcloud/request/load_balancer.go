@@ -66,9 +66,9 @@ func (r *GetLoadBalancerBackendsRequest) RequestURL() string {
 
 // CreatLoadBalancerBackend represents the payload for CreateLoadBalancerBackendRequest
 type CreateLoadBalancerBackend struct {
-	Name     string                              `json:"name"`
-	Resolver string                              `json:"resolver,omitempty"`
-	Members  []upcloud.LoadBalancerBackendMember `json:"members"`
+	Name     string                            `json:"name"`
+	Resolver string                            `json:"resolver,omitempty"`
+	Members  []CreateLoadBalancerBackendMember `json:"members"`
 }
 
 type CreateLoadBalancerBackendRequest struct {
@@ -97,6 +97,7 @@ func (r *GetLoadBalancerBackendDetailsRequest) RequestURL() string {
 	return fmt.Sprintf("/loadbalancer/%s/backends/%s", r.ServiceUUID, r.BackendName)
 }
 
+// ModifyLoadBalancerBackend represents the payload for ModifyLoadBalancerBackendRequest
 type ModifyLoadBalancerBackend struct {
 	Name     string `json:"name,omitempty"`
 	Resolver string `json:"resolver,omitempty"`
@@ -128,21 +129,39 @@ func (r *DeleteLoadBalancerBackendRequest) RequestURL() string {
 	return fmt.Sprintf("/loadbalancer/%s/backends/%s", r.ServiceUUID, r.BackendName)
 }
 
+// CreateLoadBalancerBackendMember represents the payload for CreateLoadBalancerBackendMemberRequest
+type CreateLoadBalancerBackendMember struct {
+	Name        string `json:"name"`
+	Weight      int    `json:"weight"`
+	MaxSessions int    `json:"max_sessions"`
+	Enabled     bool   `json:"enabled"`
+	Type        string `json:"type"`
+	IP          string `json:"ip,omitempty"`
+	Port        int    `json:"port,omitempty"`
+	ServerUUID  string `json:"server_uuid,omitempty"`
+}
+
 type CreateLoadBalancerBackendMemberRequest struct {
-	ServiceUUID       string `json:"-"`
-	BackendName       string `json:"-"`
-	MemberName        string `json:"name"`
-	MemberWeight      int    `json:"weight"`
-	MemberMaxSessions int    `json:"max_sessions"`
-	MemberEnabled     bool   `json:"enabled"`
-	MemberType        string `json:"type"`
-	MemberIP          string `json:"ip,omitempty"`
-	MemberPort        int    `json:"port,omitempty"`
-	MemberServerUUID  string `json:"server_uuid,omitempty"`
+	ServiceUUID string `json:"-"`
+	BackendName string `json:"-"`
+	Payload     CreateLoadBalancerBackendMember
 }
 
 func (r *CreateLoadBalancerBackendMemberRequest) RequestURL() string {
 	return fmt.Sprintf("/loadbalancer/%s/backends/%s/members", r.ServiceUUID, r.BackendName)
+}
+
+func (r *CreateLoadBalancerBackendMemberRequest) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&CreateLoadBalancerBackendMember{
+		Name:        r.Payload.Name,
+		Weight:      r.Payload.Weight,
+		MaxSessions: r.Payload.MaxSessions,
+		Enabled:     r.Payload.Enabled,
+		Type:        r.Payload.Type,
+		IP:          r.Payload.IP,
+		Port:        r.Payload.Port,
+		ServerUUID:  r.Payload.ServerUUID,
+	})
 }
 
 type GetLoadBalancerBackendMembersRequest struct {
@@ -164,22 +183,30 @@ func (r *GetLoadBalancerBackendMemberDetailsRequest) RequestURL() string {
 	return fmt.Sprintf("/loadbalancer/%s/backends/%s/members/%s", r.ServiceUUID, r.BackendName, r.MemberName)
 }
 
+type ModifyLoadBalancerBackendMember = CreateLoadBalancerBackendMember
+
 type ModifyLoadBalancerBackendMemberRequest struct {
-	ServiceUUID       string `json:"-"`
-	BackendName       string `json:"-"`
-	MemberName        string `json:"-"`
-	NewMemberName     string `json:"name,omitempty"`
-	MemberWeight      int    `json:"weight,omitempty"`
-	MemberMaxSessions int    `json:"max_sessions,omitempty"`
-	MemberEnabled     bool   `json:"enabled,omitempty"`
-	MemberIP          string `json:"ip,omitempty"`
-	MemberPort        int    `json:"port,omitempty"`
-	MemberType        string `json:"type,omitempty"`
-	MemberServerUUID  string `json:"server_uuid,omitempty"`
+	ServiceUUID string `json:"-"`
+	BackendName string `json:"-"`
+	Name        string `json:"-"`
+	Payload     ModifyLoadBalancerBackendMember
 }
 
 func (r *ModifyLoadBalancerBackendMemberRequest) RequestURL() string {
-	return fmt.Sprintf("/loadbalancer/%s/backends/%s/members/%s", r.ServiceUUID, r.BackendName, r.MemberName)
+	return fmt.Sprintf("/loadbalancer/%s/backends/%s/members/%s", r.ServiceUUID, r.BackendName, r.Name)
+}
+
+func (r *ModifyLoadBalancerBackendMemberRequest) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&ModifyLoadBalancerBackendMember{
+		Name:        r.Payload.Name,
+		Weight:      r.Payload.Weight,
+		MaxSessions: r.Payload.MaxSessions,
+		Enabled:     r.Payload.Enabled,
+		Type:        r.Payload.Type,
+		IP:          r.Payload.IP,
+		Port:        r.Payload.Port,
+		ServerUUID:  r.Payload.ServerUUID,
+	})
 }
 
 type DeleteLoadBalancerBackendMemberRequest struct {
