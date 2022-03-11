@@ -76,9 +76,11 @@ func TestLoadBalancerBackendCRUD(t *testing.T) {
 		t.Logf("Modifying LB backend: %s", backend.Name)
 		newName := "updatedName"
 		backend, err = svc.ModifyLoadBalancerBackend(&request.ModifyLoadBalancerBackendRequest{
-			ServiceUUID:    lb.UUID,
-			BackendName:    backend.Name,
-			NewBackendName: newName,
+			ServiceUUID: lb.UUID,
+			Name:        backend.Name,
+			Payload: request.ModifyLoadBalancerBackend{
+				Name: newName,
+			},
 		})
 
 		require.NoError(t, err)
@@ -144,16 +146,18 @@ func TestLoadBalancerBackendMemberCRUD(t *testing.T) {
 		serverId := "0050febf-b881-4db1-85ce-4c92776a47e2"
 
 		member, err := svc.CreateLoadBalancerBackendMember(&request.CreateLoadBalancerBackendMemberRequest{
-			ServiceUUID:       lb.UUID,
-			BackendName:       backend.Name,
-			MemberName:        name,
-			MemberWeight:      weight,
-			MemberMaxSessions: maxSessions,
-			MemberEnabled:     enabled,
-			MemberType:        memberType,
-			MemberIP:          ip,
-			MemberPort:        port,
-			MemberServerUUID:  serverId,
+			ServiceUUID: lb.UUID,
+			BackendName: backend.Name,
+			Payload: request.CreateLoadBalancerBackendMember{
+				Name:        name,
+				Weight:      weight,
+				MaxSessions: maxSessions,
+				Enabled:     enabled,
+				Type:        memberType,
+				IP:          ip,
+				Port:        port,
+				ServerUUID:  serverId,
+			},
 		})
 
 		require.NoError(t, err)
@@ -170,12 +174,14 @@ func TestLoadBalancerBackendMemberCRUD(t *testing.T) {
 		newWeight := 50
 		newMaxSessions := 321
 		member, err = svc.ModifyLoadBalancerBackendMember(&request.ModifyLoadBalancerBackendMemberRequest{
-			ServiceUUID:       lb.UUID,
-			BackendName:       backend.Name,
-			MemberName:        member.Name,
-			NewMemberName:     newName,
-			MemberWeight:      newWeight,
-			MemberMaxSessions: newMaxSessions,
+			ServiceUUID: lb.UUID,
+			BackendName: backend.Name,
+			Name:        member.Name,
+			Payload: request.ModifyLoadBalancerBackendMember{
+				Name:        newName,
+				Weight:      newWeight,
+				MaxSessions: newMaxSessions,
+			},
 		})
 
 		require.NoError(t, err)
@@ -190,10 +196,12 @@ func TestLoadBalancerBackendMemberCRUD(t *testing.T) {
 		member, err = svc.ModifyLoadBalancerBackendMember(&request.ModifyLoadBalancerBackendMemberRequest{
 			ServiceUUID: lb.UUID,
 			BackendName: backend.Name,
-			MemberName:  member.Name,
-			MemberType:  newType,
-			MemberIP:    newIp,
-			MemberPort:  newPort,
+			Name:        member.Name,
+			Payload: request.ModifyLoadBalancerBackendMember{
+				Type: newType,
+				IP:   newIp,
+				Port: newPort,
+			},
 		})
 
 		require.NoError(t, err)

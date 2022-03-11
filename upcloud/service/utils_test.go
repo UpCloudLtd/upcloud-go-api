@@ -500,7 +500,7 @@ func createLoadBalancer(svc *Service, networkUUID, zone string) (*upcloud.LoadBa
 		NetworkUuid:      networkUUID,
 		ConfiguredStatus: "started",
 		Frontends:        []upcloud.LoadBalancerFrontend{},
-		Backends:         []upcloud.LoadBalancerBackend{},
+		Backends:         []request.CreateLoadBalancerBackend{},
 		// Resolvers:        []*upcloud.Resolver{},
 	}
 
@@ -523,16 +523,18 @@ func deleteLoadBalancer(svc *Service, uuid string) error {
 func createLoadBalancerBackend(svc *Service, lbUUID string) (*upcloud.LoadBalancerBackend, error) {
 	req := request.CreateLoadBalancerBackendRequest{
 		ServiceUUID: lbUUID,
-		Name:        "go-test-lb-backend",
-		Members: []upcloud.LoadBalancerBackendMember{
-			{
-				Name:        "default-lb-backend-member",
-				Type:        "dynamic",
-				Weight:      100,
-				MaxSessions: 1000,
-				Enabled:     true,
-				Port:        8000,
-				IP:          "196.123.123.123",
+		Payload: request.CreateLoadBalancerBackend{
+			Name: "go-test-lb-backend",
+			Members: []request.CreateLoadBalancerBackendMember{
+				{
+					Name:        "default-lb-backend-member",
+					Type:        "dynamic",
+					Weight:      100,
+					MaxSessions: 1000,
+					Enabled:     true,
+					Port:        8000,
+					IP:          "196.123.123.123",
+				},
 			},
 		},
 	}

@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -12,9 +11,11 @@ import (
 func TestCreateLoadBalancerBackendRequest(t *testing.T) {
 	r := CreateLoadBalancerBackendRequest{
 		ServiceUUID: "lb",
-		Name:        "sesese",
-		Members:     []upcloud.LoadBalancerBackendMember{},
-		Resolver:    "testresolver",
+		Payload: CreateLoadBalancerBackend{
+			Name:     "sesese",
+			Members:  []CreateLoadBalancerBackendMember{},
+			Resolver: "testresolver",
+		},
 	}
 
 	expectedJson := `
@@ -24,7 +25,7 @@ func TestCreateLoadBalancerBackendRequest(t *testing.T) {
 		"members": []
 	}`
 
-	actualJson, err := json.Marshal(r)
+	actualJson, err := json.Marshal(&r)
 
 	require.NoError(t, err)
 	assert.Exactly(t, "/loadbalancer/lb/backends", r.RequestURL())
@@ -60,10 +61,12 @@ func TestGetLoadBalancerBackendDetailsRequest(t *testing.T) {
 
 func TestModifyLoadBalancerBackendRequest(t *testing.T) {
 	r := ModifyLoadBalancerBackendRequest{
-		ServiceUUID:    "lb",
-		BackendName:    "be",
-		NewBackendName: "newnew",
-		Resolver:       "newresolver",
+		ServiceUUID: "lb",
+		Name:        "be",
+		Payload: ModifyLoadBalancerBackend{
+			Name:     "newnew",
+			Resolver: "newresolver",
+		},
 	}
 
 	expectedJson := `
@@ -72,7 +75,7 @@ func TestModifyLoadBalancerBackendRequest(t *testing.T) {
 		"resolver": "newresolver"	
 	}`
 
-	actualJson, err := json.Marshal(r)
+	actualJson, err := json.Marshal(&r)
 
 	require.NoError(t, err)
 	assert.Exactly(t, "/loadbalancer/lb/backends/be", r.RequestURL())
@@ -95,16 +98,18 @@ func TestDeleteLoadBalancerBackendRequest(t *testing.T) {
 
 func TestCreateLoadBalancerBackendMember(t *testing.T) {
 	r := CreateLoadBalancerBackendMemberRequest{
-		ServiceUUID:       "lb",
-		BackendName:       "be",
-		MemberName:        "mem",
-		MemberWeight:      100,
-		MemberMaxSessions: 5,
-		MemberEnabled:     true,
-		MemberType:        "static",
-		MemberIP:          "10.0.0.1",
-		MemberPort:        80,
-		MemberServerUUID:  "serv",
+		ServiceUUID: "lb",
+		BackendName: "be",
+		Payload: CreateLoadBalancerBackendMember{
+			Name:        "mem",
+			Weight:      100,
+			MaxSessions: 5,
+			Enabled:     true,
+			Type:        "static",
+			IP:          "10.0.0.1",
+			Port:        80,
+			ServerUUID:  "serv",
+		},
 	}
 
 	expectedJson := `
@@ -119,7 +124,7 @@ func TestCreateLoadBalancerBackendMember(t *testing.T) {
 		"server_uuid": "serv"
 	}`
 
-	actualJson, err := json.Marshal(r)
+	actualJson, err := json.Marshal(&r)
 
 	require.NoError(t, err)
 	assert.Exactly(t, "/loadbalancer/lb/backends/be/members", r.RequestURL())
@@ -157,17 +162,19 @@ func TestGetLoadBalancerBackendMemberDetailsRequest(t *testing.T) {
 
 func TestModifyLoadBalancerBackendMemberRequest(t *testing.T) {
 	r := ModifyLoadBalancerBackendMemberRequest{
-		ServiceUUID:       "lb",
-		BackendName:       "be",
-		MemberName:        "mem",
-		NewMemberName:     "newmem",
-		MemberWeight:      100,
-		MemberMaxSessions: 5,
-		MemberEnabled:     true,
-		MemberType:        "static",
-		MemberIP:          "10.0.0.1",
-		MemberPort:        80,
-		MemberServerUUID:  "serv",
+		ServiceUUID: "lb",
+		BackendName: "be",
+		Name:        "mem",
+		Payload: ModifyLoadBalancerBackendMember{
+			Name:        "newmem",
+			Weight:      100,
+			MaxSessions: 5,
+			Enabled:     true,
+			Type:        "static",
+			IP:          "10.0.0.1",
+			Port:        80,
+			ServerUUID:  "serv",
+		},
 	}
 
 	expectedJson := `
@@ -182,7 +189,7 @@ func TestModifyLoadBalancerBackendMemberRequest(t *testing.T) {
 		"server_uuid": "serv"
 	}`
 
-	actualJson, err := json.Marshal(r)
+	actualJson, err := json.Marshal(&r)
 
 	require.NoError(t, err)
 	assert.Exactly(t, "/loadbalancer/lb/backends/be/members/mem", r.RequestURL())
