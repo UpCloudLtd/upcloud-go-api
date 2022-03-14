@@ -401,7 +401,7 @@ func (m *ModifyManagedDatabaseRequest) RequestURL() string {
 }
 
 // UpgradeManagedDatabaseVersionRequest represents a request to upgrade an existing managed database version;
-// this method works only for PostgreSQL databases, and only upgrades are supported
+// for a list of available versions use GetManagedDatabaseVersionsRequest
 type UpgradeManagedDatabaseVersionRequest struct {
 	UUID          string `json:"-"`
 	TargetVersion string `json:"target_version,omitempty"`

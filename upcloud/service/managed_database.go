@@ -266,7 +266,7 @@ func (s *Service) ModifyManagedDatabase(r *request.ModifyManagedDatabaseRequest)
 }
 
 // UpgradeManagedDatabaseServiceVersion upgrades the version of the database service;
-// this method works only for PostgreSQL databases, and only upgrades are supported
+// for the list of available versions use GetManagedDatabaseVersions function
 func (s *Service) UpgradeManagedDatabaseVersion(r *request.UpgradeManagedDatabaseVersionRequest) (*upcloud.ManagedDatabase, error) {
 	managedDatabaseDetails := upcloud.ManagedDatabase{}
 
