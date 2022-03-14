@@ -24,6 +24,7 @@ type ManagedDatabaseServiceManager interface {
 	DeleteManagedDatabase(r *request.DeleteManagedDatabaseRequest) error
 	ModifyManagedDatabase(r *request.ModifyManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
 	UpgradeManagedDatabaseVersion(r *request.UpgradeManagedDatabaseVersionRequest) (*upcloud.ManagedDatabase, error)
+	GetManagedDatabaseVersions(r *request.GetManagedDatabaseVersionsRequest) ([]string, error)
 	StartManagedDatabase(r *request.StartManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
 	ShutdownManagedDatabase(r *request.ShutdownManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
 	WaitForManagedDatabaseState(r *request.WaitForManagedDatabaseStateRequest) (*upcloud.ManagedDatabase, error)
@@ -264,6 +265,8 @@ func (s *Service) ModifyManagedDatabase(r *request.ModifyManagedDatabaseRequest)
 	return &managedDatabaseDetails, nil
 }
 
+// UpgradeManagedDatabaseServiceVersion upgrades the version of the database service;
+// this method works only for PostgreSQL databases, and only upgrades are supported
 func (s *Service) UpgradeManagedDatabaseVersion(r *request.UpgradeManagedDatabaseVersionRequest) (*upcloud.ManagedDatabase, error) {
 	managedDatabaseDetails := upcloud.ManagedDatabase{}
 
@@ -283,6 +286,23 @@ func (s *Service) UpgradeManagedDatabaseVersion(r *request.UpgradeManagedDatabas
 	}
 
 	return &managedDatabaseDetails, nil
+}
+
+// GetManagedDatabaseVersions available versions of the specific Managed Database service
+func (s *Service) GetManagedDatabaseVersions(r *request.GetManagedDatabaseVersionsRequest) ([]string, error) {
+	versions := []string{}
+
+	res, err := s.basicGetRequest(r.RequestURL())
+	if err != nil {
+		return nil, parseJSONServiceError(err)
+	}
+
+	err = json.Unmarshal(res, &versions)
+	if err != nil {
+		return nil, fmt.Errorf("unable to unmarshal JSON: %w", err)
+	}
+
+	return versions, nil
 }
 
 // WaitForManagedDatabaseState (EXPERIMENTAL) blocks execution until the specified managed database instance has entered the

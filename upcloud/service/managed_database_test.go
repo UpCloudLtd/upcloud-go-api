@@ -835,6 +835,31 @@ func TestService_UpgradeManagedDatabaseVersion(t *testing.T) {
 	})
 }
 
+func TestService_GetManagedDatabaseVersions(t *testing.T) {
+	record(t, "getmanageddatabaseversions", func(t *testing.T, r *recorder.Recorder, svc *Service) {
+		details, err := svc.CreateManagedDatabase(getTestCreateRequest("getmanageddatabaseversions"))
+		require.NoError(t, err)
+
+		defer func() {
+			t.Logf("deleting %s", details.UUID)
+			err := svc.DeleteManagedDatabase(&request.DeleteManagedDatabaseRequest{UUID: details.UUID})
+			require.NoError(t, err)
+		}()
+
+		versions, err := svc.GetManagedDatabaseVersions(&request.GetManagedDatabaseVersionsRequest{
+			UUID: details.UUID,
+		})
+
+		require.NoError(t, err)
+		assert.Len(t, versions, 5)
+		assert.Contains(t, versions, "10")
+		assert.Contains(t, versions, "11")
+		assert.Contains(t, versions, "12")
+		assert.Contains(t, versions, "13")
+		assert.Contains(t, versions, "14")
+	})
+}
+
 func TestService_ShutdownStartManagedDatabase(t *testing.T) {
 	const timeout = 10 * time.Minute
 	record(t, "shutdownstartmanageddatabase", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
