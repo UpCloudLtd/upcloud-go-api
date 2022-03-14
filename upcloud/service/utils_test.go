@@ -492,16 +492,24 @@ func getCredentials() (string, string) {
 	return user, password
 }
 
+func createLoadBalancerAndNetwork(svc *Service, zone, addr string) (*upcloud.LoadBalancer, error) {
+	n, err := createLoadBalancerPrivateNetwork(svc, zone, addr)
+	if err != nil {
+		return nil, err
+	}
+	return createLoadBalancer(svc, n.UUID, zone)
+}
+
 func createLoadBalancer(svc *Service, networkUUID, zone string) (*upcloud.LoadBalancer, error) {
 	createLoadBalancerRequest := request.CreateLoadBalancerRequest{
-		Name:             fmt.Sprintf("go-test-loadbalancer-%d", time.Now().Unix()),
+		Name:             fmt.Sprintf("go-test-lb-%s-%d", zone, time.Now().Unix()),
 		Zone:             zone,
 		Plan:             "development",
 		NetworkUuid:      networkUUID,
 		ConfiguredStatus: "started",
 		Frontends:        []upcloud.LoadBalancerFrontend{},
 		Backends:         []request.CreateLoadBalancerBackend{},
-		// Resolvers:        []*upcloud.Resolver{},
+		Resolvers:        []upcloud.LoadBalancerResolver{},
 	}
 
 	loadBalancerDetails, err := svc.CreateLoadBalancer(&createLoadBalancerRequest)
@@ -512,19 +520,20 @@ func createLoadBalancer(svc *Service, networkUUID, zone string) (*upcloud.LoadBa
 	return loadBalancerDetails, nil
 }
 
-func deleteLoadBalancer(svc *Service, uuid string) error {
-	err := svc.DeleteLoadBalancer(&request.DeleteLoadBalancerRequest{
-		UUID: uuid,
-	})
+func deleteLoadBalancer(svc *Service, lb *upcloud.LoadBalancer) error {
+	netID := lb.NetworkUUID
+	if err := svc.DeleteLoadBalancer(&request.DeleteLoadBalancerRequest{UUID: lb.UUID}); err != nil {
+		return err
+	}
 
-	return err
+	return svc.DeleteNetwork(&request.DeleteNetworkRequest{UUID: netID})
 }
 
 func createLoadBalancerBackend(svc *Service, lbUUID string) (*upcloud.LoadBalancerBackend, error) {
 	req := request.CreateLoadBalancerBackendRequest{
 		ServiceUUID: lbUUID,
 		Payload: request.CreateLoadBalancerBackend{
-			Name: "go-test-lb-backend",
+			Name: fmt.Sprintf("go-test-lb-backend-%d", time.Now().Unix()),
 			Members: []request.CreateLoadBalancerBackendMember{
 				{
 					Name:        "default-lb-backend-member",
@@ -540,4 +549,18 @@ func createLoadBalancerBackend(svc *Service, lbUUID string) (*upcloud.LoadBalanc
 	}
 
 	return svc.CreateLoadBalancerBackend(&req)
+}
+
+func createLoadBalancerPrivateNetwork(svc *Service, zone, addr string) (*upcloud.Network, error) {
+	return svc.CreateNetwork(&request.CreateNetworkRequest{
+		Name: fmt.Sprintf("go-test-lb-%d", time.Now().Unix()),
+		Zone: zone,
+		IPNetworks: []upcloud.IPNetwork{
+			{
+				Address: addr,
+				DHCP:    upcloud.True,
+				Family:  upcloud.IPAddressFamilyIPv4,
+			},
+		},
+	})
 }

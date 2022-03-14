@@ -45,8 +45,8 @@ func TestGetLoadBalancerBackendsRequest(t *testing.T) {
 	assert.JSONEq(t, expectedJson, string(actualJson))
 }
 
-func TestGetLoadBalancerBackendDetailsRequest(t *testing.T) {
-	r := GetLoadBalancerBackendDetailsRequest{
+func TestGetLoadBalancerBackendRequest(t *testing.T) {
+	r := GetLoadBalancerBackendRequest{
 		ServiceUUID: "lb",
 		BackendName: "be",
 	}
@@ -145,8 +145,8 @@ func TestGetLoadBalancerBackendMembersRequest(t *testing.T) {
 	assert.JSONEq(t, expectedJson, string(actualJson))
 }
 
-func TestGetLoadBalancerBackendMemberDetailsRequest(t *testing.T) {
-	r := GetLoadBalancerBackendMemberDetailsRequest{
+func TestGetLoadBalancerBackendMemberRequest(t *testing.T) {
+	r := GetLoadBalancerBackendMemberRequest{
 		ServiceUUID: "lb",
 		BackendName: "be",
 		MemberName:  "mem",
@@ -254,8 +254,8 @@ func TestGetLoadBalancerResolversRequest(t *testing.T) {
 	assert.JSONEq(t, expectedJson, string(actualJson))
 }
 
-func TestGetLoadBalancerResolverDetailsRequest(t *testing.T) {
-	r := GetLoadBalancerResolverDetailsRequest{
+func TestGetLoadBalancerResolverRequest(t *testing.T) {
+	r := GetLoadBalancerResolverRequest{
 		ServiceUUID:  "service-uuid",
 		ResolverName: "sesese",
 	}
