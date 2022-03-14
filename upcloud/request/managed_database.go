@@ -400,6 +400,18 @@ func (m *ModifyManagedDatabaseRequest) RequestURL() string {
 	return fmt.Sprintf("/database/%s", m.UUID)
 }
 
+// UpgradeManagedDatabaseVersionRequest represents a request to upgrade an existing managed database version;
+// this method works only for PostgreSQL databases, and only upgrades are supported
+type UpgradeManagedDatabaseVersionRequest struct {
+	UUID          string `json:"-"`
+	TargetVersion string `json:"target_version,omitempty"`
+}
+
+// RequestURL implements the request.Request interface
+func (r *UpgradeManagedDatabaseVersionRequest) RequestURL() string {
+	return fmt.Sprintf("/database/%s/upgrade", r.UUID)
+}
+
 // WaitForManagedDatabaseStateRequest represents a request to wait for a managed database instance to enter a specific state
 type WaitForManagedDatabaseStateRequest struct {
 	UUID         string

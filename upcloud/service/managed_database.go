@@ -23,6 +23,7 @@ type ManagedDatabaseServiceManager interface {
 	GetManagedDatabaseQueryStatisticsPostgreSQL(r *request.GetManagedDatabaseQueryStatisticsRequest) ([]upcloud.ManagedDatabaseQueryStatisticsPostgreSQL, error)
 	DeleteManagedDatabase(r *request.DeleteManagedDatabaseRequest) error
 	ModifyManagedDatabase(r *request.ModifyManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
+	UpgradeManagedDatabaseVersion(r *request.UpgradeManagedDatabaseVersionRequest) (*upcloud.ManagedDatabase, error)
 	StartManagedDatabase(r *request.StartManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
 	ShutdownManagedDatabase(r *request.ShutdownManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
 	WaitForManagedDatabaseState(r *request.WaitForManagedDatabaseStateRequest) (*upcloud.ManagedDatabase, error)
@@ -251,6 +252,27 @@ func (s *Service) ModifyManagedDatabase(r *request.ModifyManagedDatabaseRequest)
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
 
+	if err != nil {
+		return nil, parseJSONServiceError(err)
+	}
+
+	err = json.Unmarshal(response, &managedDatabaseDetails)
+	if err != nil {
+		return nil, fmt.Errorf("unable to unmarshal JSON: %w", err)
+	}
+
+	return &managedDatabaseDetails, nil
+}
+
+func (s *Service) UpgradeManagedDatabaseVersion(r *request.UpgradeManagedDatabaseVersionRequest) (*upcloud.ManagedDatabase, error) {
+	managedDatabaseDetails := upcloud.ManagedDatabase{}
+
+	reqBody, err := json.Marshal(r)
+	if err != nil {
+		return nil, err
+	}
+
+	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
