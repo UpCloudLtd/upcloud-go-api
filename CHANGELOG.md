@@ -5,6 +5,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- add support for fetching available versions for managed database service
+- add support for upgrading managed database version
+
 ## [4.2.0]
 
 ### Added
