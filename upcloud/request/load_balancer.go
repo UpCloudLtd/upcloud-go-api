@@ -250,3 +250,9 @@ type DeleteLoadBalancerResolverRequest struct {
 func (r *DeleteLoadBalancerResolverRequest) RequestURL() string {
 	return fmt.Sprintf("/loadbalancer/%s/resolvers/%s", r.ServiceUUID, r.ResolverName)
 }
+
+type GetLoadBalancerPlansRequest struct{}
+
+func (r *GetLoadBalancerPlansRequest) RequestURL() string {
+	return "/loadbalancer/plans"
+}

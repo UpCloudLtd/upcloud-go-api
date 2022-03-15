@@ -333,6 +333,14 @@ func TestLoadBalancerResolver(t *testing.T) {
 	})
 }
 
+func TestGetLoadBalancerPlans(t *testing.T) {
+	record(t, "getloadbalancerplans", func(t *testing.T, r *recorder.Recorder, svc *Service) {
+		plans, err := svc.GetLoadBalancerPlans(&request.GetLoadBalancerPlansRequest{})
+		assert.NoError(t, err)
+		assert.GreaterOrEqual(t, len(plans), 2)
+	})
+}
+
 func cleanupLoadBalancer(t *testing.T, svc *Service, lb *upcloud.LoadBalancer) {
 	t.Logf("Cleanup LB: %s", lb.Name)
 	if err := deleteLoadBalancer(svc, lb); err != nil {

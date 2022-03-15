@@ -312,3 +312,8 @@ func TestDeleteLoadBalancerResolverRequest(t *testing.T) {
 	assert.EqualValues(t, "/loadbalancer/service-uuid/resolvers/sesese", r.RequestURL())
 	assert.JSONEq(t, expectedJson, string(actualJson))
 }
+
+func TestGetLoadBalancerPlansRequest(t *testing.T) {
+	r := GetLoadBalancerPlansRequest{}
+	assert.Equal(t, "/loadbalancer/plans", r.RequestURL())
+}
