@@ -97,8 +97,8 @@ type LoadBalancerFrontend struct {
 	DefaultBackend string                     `json:"default_backend,omitempty"`
 	Rules          []LoadBalancerFrontendRule `json:"rules,omitempty"`
 	TLSConfigs     []LoadBalancerTLSConfig    `json:"tls_configs,omitempty"`
-	CreatedAt      time.Time                  `json:"created_at,omitempty"`
-	UpdatedAt      time.Time                  `json:"updated_at,omitempty"`
+	CreatedAt      time.Time                  `json:"-"`
+	UpdatedAt      time.Time                  `json:"-"`
 }
 
 // LoadBalancerFrontendRule represents frontend rule
