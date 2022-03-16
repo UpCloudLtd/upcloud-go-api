@@ -650,19 +650,20 @@ func (s *Service) basicGetRequest(location string) ([]byte, error) {
 	return response, nil
 }
 
-// Parses an error returned from the client into a service error object
+// Parses an error returned from the client into corresponding error type
 func parseJSONServiceError(err error) error {
-	// Parse service errors
 	if clientError, ok := err.(*client.Error); ok {
-		serviceError := upcloud.Error{}
-		responseBody := clientError.ResponseBody
-		err = json.Unmarshal(responseBody, &serviceError)
-		if err != nil {
-			return fmt.Errorf("received malformed client error: %s", string(responseBody))
+		var serviceError error
+		switch clientError.Type {
+		case client.ErrorTypeProblem:
+			serviceError = &upcloud.Problem{}
+		default:
+			serviceError = &upcloud.Error{}
 		}
-
-		return &serviceError
+		if err := json.Unmarshal(clientError.ResponseBody, serviceError); err != nil {
+			return fmt.Errorf("received malformed client error: %s", string(clientError.ResponseBody))
+		}
+		return serviceError
 	}
-
 	return err
 }

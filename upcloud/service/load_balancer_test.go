@@ -13,7 +13,7 @@ import (
 func TestLoadBalancer(t *testing.T) {
 	t.Parallel()
 
-	record(t, "createmodifydeleteloadbalancer", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "loadbalancer", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create Load Balancer
 		lb, err := createLoadBalancerAndNetwork(svc, "fi-hel1", "172.16.0.0/24")
 		require.NoError(t, err)
@@ -51,7 +51,7 @@ func TestLoadBalancer(t *testing.T) {
 func TestLoadBalancerBackend(t *testing.T) {
 	t.Parallel()
 
-	record(t, "createmodifydeleteloadbalancerbackend", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "loadbalancerbackend", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		lb, err := createLoadBalancerAndNetwork(svc, "fi-hel2", "172.16.2.0/24")
 		require.NoError(t, err)
 		defer cleanupLoadBalancer(t, svc, lb)
@@ -66,7 +66,7 @@ func TestLoadBalancerBackend(t *testing.T) {
 		backend, err = svc.ModifyLoadBalancerBackend(&request.ModifyLoadBalancerBackendRequest{
 			ServiceUUID: lb.UUID,
 			Name:        backend.Name,
-			Payload: request.ModifyLoadBalancerBackend{
+			Backend: request.ModifyLoadBalancerBackend{
 				Name: newName,
 			},
 		})
@@ -78,7 +78,7 @@ func TestLoadBalancerBackend(t *testing.T) {
 		t.Logf("Get LB backend: %s", newName)
 		backend, err = svc.GetLoadBalancerBackend(&request.GetLoadBalancerBackendRequest{
 			ServiceUUID: lb.UUID,
-			BackendName: newName,
+			Name:        newName,
 		})
 		require.NoError(t, err)
 		assert.EqualValues(t, backend.Name, newName)
@@ -96,7 +96,7 @@ func TestLoadBalancerBackend(t *testing.T) {
 		t.Logf("Deleting LB backend: %s", backend.Name)
 		err = svc.DeleteLoadBalancerBackend(&request.DeleteLoadBalancerBackendRequest{
 			ServiceUUID: lb.UUID,
-			BackendName: backend.Name,
+			Name:        backend.Name,
 		})
 		require.NoError(t, err)
 	})
@@ -105,7 +105,7 @@ func TestLoadBalancerBackend(t *testing.T) {
 func TestLoadBalancerBackendMember(t *testing.T) {
 	t.Parallel()
 
-	record(t, "createmodifydeleteloadbalancerbackendmember", func(t *testing.T, r *recorder.Recorder, svc *Service) {
+	record(t, "loadbalancerbackendmember", func(t *testing.T, r *recorder.Recorder, svc *Service) {
 		lb, err := createLoadBalancerAndNetwork(svc, "nl-ams1", "172.16.3.0/24")
 		require.NoError(t, err)
 		defer cleanupLoadBalancer(t, svc, lb)
@@ -119,15 +119,14 @@ func TestLoadBalancerBackendMember(t *testing.T) {
 		weight := 100
 		maxSessions := 123
 		enabled := true
-		memberType := "static"
+		memberType := upcloud.LoadBalancerBackendMemberTypeStatic
 		ip := "10.0.0.2"
 		port := 80
-		serverId := "0050febf-b881-4db1-85ce-4c92776a47e2"
 
 		member, err := svc.CreateLoadBalancerBackendMember(&request.CreateLoadBalancerBackendMemberRequest{
 			ServiceUUID: lb.UUID,
 			BackendName: backend.Name,
-			Payload: request.CreateLoadBalancerBackendMember{
+			Member: request.LoadBalancerBackendMember{
 				Name:        name,
 				Weight:      weight,
 				MaxSessions: maxSessions,
@@ -135,7 +134,6 @@ func TestLoadBalancerBackendMember(t *testing.T) {
 				Type:        memberType,
 				IP:          ip,
 				Port:        port,
-				ServerUUID:  serverId,
 			},
 		})
 
@@ -156,7 +154,7 @@ func TestLoadBalancerBackendMember(t *testing.T) {
 			ServiceUUID: lb.UUID,
 			BackendName: backend.Name,
 			Name:        member.Name,
-			Payload: request.ModifyLoadBalancerBackendMember{
+			Member: request.LoadBalancerBackendMember{
 				Name:        newName,
 				Weight:      newWeight,
 				MaxSessions: newMaxSessions,
@@ -175,7 +173,7 @@ func TestLoadBalancerBackendMember(t *testing.T) {
 			ServiceUUID: lb.UUID,
 			BackendName: backend.Name,
 			Name:        member.Name,
-			Payload: request.ModifyLoadBalancerBackendMember{
+			Member: request.LoadBalancerBackendMember{
 				IP:   newIp,
 				Port: newPort,
 			},
@@ -191,7 +189,7 @@ func TestLoadBalancerBackendMember(t *testing.T) {
 		member, err = svc.GetLoadBalancerBackendMember(&request.GetLoadBalancerBackendMemberRequest{
 			ServiceUUID: lb.UUID,
 			BackendName: backend.Name,
-			MemberName:  newName,
+			Name:        newName,
 		})
 
 		require.NoError(t, err)
@@ -215,7 +213,7 @@ func TestLoadBalancerBackendMember(t *testing.T) {
 		err = svc.DeleteLoadBalancerBackendMember(&request.DeleteLoadBalancerBackendMemberRequest{
 			ServiceUUID: lb.UUID,
 			BackendName: backend.Name,
-			MemberName:  member.Name,
+			Name:        member.Name,
 		})
 		require.NoError(t, err)
 		t.Logf("Deleted load balancer backend member: %s", member.Name)
@@ -225,7 +223,7 @@ func TestLoadBalancerBackendMember(t *testing.T) {
 func TestLoadBalancerResolver(t *testing.T) {
 	t.Parallel()
 
-	record(t, "createmodifydeleteloadbalancerresolver", func(t *testing.T, r *recorder.Recorder, svc *Service) {
+	record(t, "loadbalancerresolver", func(t *testing.T, r *recorder.Recorder, svc *Service) {
 		lb, err := createLoadBalancerAndNetwork(svc, "pl-waw1", "10.0.0.0/24")
 		require.NoError(t, err)
 		defer cleanupLoadBalancer(t, svc, lb)
@@ -241,14 +239,15 @@ func TestLoadBalancerResolver(t *testing.T) {
 
 		t.Logf("Create resolver: %s", name)
 		resolver, err := svc.CreateLoadBalancerResolver(&request.CreateLoadBalancerResolverRequest{
-			ServiceUUID:  lb.UUID,
-			Name:         name,
-			Nameservers:  nameServers,
-			Retries:      retries,
-			Timeout:      timeout,
-			TimeoutRetry: timeoutRetry,
-			CacheValid:   cacheValid,
-			CacheInvalid: cacheInvalid,
+			ServiceUUID: lb.UUID,
+			Resolver: request.LoadBalancerResolver{
+				Name:         name,
+				Nameservers:  nameServers,
+				Retries:      retries,
+				Timeout:      timeout,
+				TimeoutRetry: timeoutRetry,
+				CacheValid:   cacheValid,
+				CacheInvalid: cacheInvalid},
 		})
 
 		require.NoError(t, err)
@@ -270,12 +269,13 @@ func TestLoadBalancerResolver(t *testing.T) {
 
 		t.Logf("Update resolver: %s", name)
 		resolver, err = svc.ModifyLoadBalancerResolver(&request.ModifyLoadBalancerRevolverRequest{
-			ServiceUUID:     lb.UUID,
-			ResolverName:    resolver.Name,
-			NewResolverName: newName,
-			Nameservers:     newNameServers,
-			Retries:         newRetries,
-			Timeout:         newTimeout,
+			ServiceUUID: lb.UUID,
+			Name:        resolver.Name,
+			Resolver: request.LoadBalancerResolver{
+				Name:        newName,
+				Nameservers: newNameServers,
+				Retries:     newRetries,
+				Timeout:     newTimeout},
 		})
 
 		require.NoError(t, err)
@@ -290,11 +290,12 @@ func TestLoadBalancerResolver(t *testing.T) {
 		newCacheValid := 124
 		newCacheInvalid := 324
 		resolver, err = svc.ModifyLoadBalancerResolver(&request.ModifyLoadBalancerRevolverRequest{
-			ServiceUUID:  lb.UUID,
-			ResolverName: resolver.Name,
-			TimeoutRetry: newTimeoutRetry,
-			CacheValid:   newCacheValid,
-			CacheInvalid: newCacheInvalid,
+			ServiceUUID: lb.UUID,
+			Name:        resolver.Name,
+			Resolver: request.LoadBalancerResolver{
+				TimeoutRetry: newTimeoutRetry,
+				CacheValid:   newCacheValid,
+				CacheInvalid: newCacheInvalid},
 		})
 
 		require.NoError(t, err)
@@ -305,8 +306,8 @@ func TestLoadBalancerResolver(t *testing.T) {
 
 		t.Logf("Get resolver: %s", resolver.Name)
 		resolver, err = svc.GetLoadBalancerResolver(&request.GetLoadBalancerResolverRequest{
-			ServiceUUID:  lb.UUID,
-			ResolverName: resolver.Name,
+			ServiceUUID: lb.UUID,
+			Name:        resolver.Name,
 		})
 
 		require.NoError(t, err)
@@ -325,8 +326,8 @@ func TestLoadBalancerResolver(t *testing.T) {
 		assert.EqualValues(t, resolvers[0].Name, resolver.Name)
 
 		err = svc.DeleteLoadBalancerResolver(&request.DeleteLoadBalancerResolverRequest{
-			ServiceUUID:  lb.UUID,
-			ResolverName: resolver.Name,
+			ServiceUUID: lb.UUID,
+			Name:        resolver.Name,
 		})
 		require.NoError(t, err)
 		t.Logf("Deleted resolver %s for load balancer %s", resolver.Name, lb.Name)
@@ -336,8 +337,66 @@ func TestLoadBalancerResolver(t *testing.T) {
 func TestGetLoadBalancerPlans(t *testing.T) {
 	record(t, "getloadbalancerplans", func(t *testing.T, r *recorder.Recorder, svc *Service) {
 		plans, err := svc.GetLoadBalancerPlans(&request.GetLoadBalancerPlansRequest{})
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.GreaterOrEqual(t, len(plans), 2)
+	})
+}
+
+func TestLoadBalancerFrontend(t *testing.T) {
+	t.Parallel()
+
+	record(t, "loadbalancerfrontend", func(t *testing.T, r *recorder.Recorder, svc *Service) {
+		lb, err := createLoadBalancerAndNetwork(svc, "de-fra1", "10.0.0.1/24")
+		require.NoError(t, err)
+		defer cleanupLoadBalancer(t, svc, lb)
+		t.Logf("Created LB for testing frontends: %s", lb.Name)
+		be, err := createLoadBalancerBackend(svc, lb.UUID)
+		require.NoError(t, err)
+		t.Logf("Created backend %s for testing LB frontends", be.Name)
+
+		fe, err := svc.CreateLoadBalancerFrontend(&request.CreateLoadBalancerFrontendRequest{
+			ServiceUUID: lb.UUID,
+			Frontend: request.LoadBalancerFrontend{
+				Name:           "fe-1",
+				Mode:           upcloud.LoadBalancerModeHTTP,
+				Port:           443,
+				DefaultBackend: be.Name,
+				Rules:          []request.LoadBalancerFrontendRule{},
+				TLSConfigs:     []request.LoadBalancerTLSConfig{},
+			},
+		})
+		require.NoError(t, err)
+		assert.Equal(t, "fe-1", fe.Name)
+		t.Logf("Created frontend %s for load balancer %s", fe.Name, lb.Name)
+		fe, err = svc.ModifyLoadBalancerFrontend(&request.ModifyLoadBalancerFrontendRequest{
+			ServiceUUID: lb.UUID,
+			Name:        fe.Name,
+			Frontend: request.ModifyLoadBalancerFrontend{
+				Name: "fe-2",
+				Mode: upcloud.LoadBalancerModeTCP,
+				Port: 80},
+		})
+		require.NoError(t, err)
+		t.Logf("Modified frontend %s", fe.Name)
+		fe, err = svc.GetLoadBalancerFrontend(&request.GetLoadBalancerFrontendRequest{
+			ServiceUUID: lb.UUID,
+			Name:        fe.Name,
+		})
+		require.NoError(t, err)
+		assert.Equal(t, "fe-2", fe.Name)
+		assert.Equal(t, upcloud.LoadBalancerModeTCP, fe.Mode)
+		assert.Equal(t, 80, fe.Port)
+		assert.Equal(t, be.Name, fe.DefaultBackend)
+
+		fes, err := svc.GetLoadBalancerFrontends(&request.GetLoadBalancerFrontendsRequest{ServiceUUID: lb.UUID})
+		require.NoError(t, err)
+		assert.Equal(t, *fe, fes[0])
+
+		assert.NoError(t,
+			svc.DeleteLoadBalancerFrontend(&request.DeleteLoadBalancerFrontendRequest{
+				ServiceUUID: lb.UUID,
+				Name:        fe.Name,
+			}))
 	})
 }
 
