@@ -8,7 +8,7 @@ import (
 )
 
 type LoadBalancer interface {
-	GetLoadBalancers(r *request.GetLoadBalancersRequest) ([]*upcloud.LoadBalancer, error)
+	GetLoadBalancers(r *request.GetLoadBalancersRequest) ([]upcloud.LoadBalancer, error)
 	GetLoadBalancer(r *request.GetLoadBalancerRequest) (*upcloud.LoadBalancer, error)
 	CreateLoadBalancer(r *request.CreateLoadBalancerRequest) (*upcloud.LoadBalancer, error)
 	ModifyLoadBalancer(r *request.ModifyLoadBalancerRequest) (*upcloud.LoadBalancer, error)
@@ -33,16 +33,22 @@ type LoadBalancer interface {
 	DeleteLoadBalancerResolver(r *request.DeleteLoadBalancerResolverRequest) error
 	// Plans
 	GetLoadBalancerPlans(r *request.GetLoadBalancerPlansRequest) ([]upcloud.LoadBalancerPlan, error)
+	// Frontends
+	GetLoadBalancerFrontends(r *request.GetLoadBalancerFrontendsRequest) ([]upcloud.LoadBalancerFrontend, error)
+	GetLoadBalancerFrontend(r *request.GetLoadBalancerFrontendRequest) (*upcloud.LoadBalancerFrontend, error)
+	CreateLoadBalancerFrontend(r *request.CreateLoadBalancerFrontendRequest) (*upcloud.LoadBalancerFrontend, error)
+	ModifyLoadBalancerFrontend(r *request.ModifyLoadBalancerFrontendRequest) (*upcloud.LoadBalancerFrontend, error)
+	DeleteLoadBalancerFrontend(r *request.DeleteLoadBalancerFrontendRequest) error
 }
 
 var _ LoadBalancer = (*Service)(nil)
 
 // GetLoadBalancers retrieves a list of load balancers.
-func (s *Service) GetLoadBalancers(r *request.GetLoadBalancersRequest) ([]*upcloud.LoadBalancer, error) {
-	var loadBalancers []*upcloud.LoadBalancer
+func (s *Service) GetLoadBalancers(r *request.GetLoadBalancersRequest) ([]upcloud.LoadBalancer, error) {
+	loadBalancers := make([]upcloud.LoadBalancer, 0)
 	res, err := s.basicGetRequest(r.RequestURL())
 	if err != nil {
-		return nil, err
+		return nil, parseJSONServiceError(err)
 	}
 
 	err = json.Unmarshal(res, &loadBalancers)
@@ -58,7 +64,7 @@ func (s *Service) GetLoadBalancer(r *request.GetLoadBalancerRequest) (*upcloud.L
 	loadBalancer := upcloud.LoadBalancer{}
 	res, err := s.basicGetRequest(r.RequestURL())
 	if err != nil {
-		return nil, err
+		return nil, parseJSONServiceError(err)
 	}
 
 	err = json.Unmarshal(res, &loadBalancer)
@@ -79,7 +85,7 @@ func (s *Service) CreateLoadBalancer(r *request.CreateLoadBalancerRequest) (*upc
 
 	res, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
 	if err != nil {
-		return nil, err
+		return nil, parseJSONServiceError(err)
 	}
 
 	err = json.Unmarshal(res, &loadBalancer)
@@ -100,7 +106,7 @@ func (s *Service) ModifyLoadBalancer(r *request.ModifyLoadBalancerRequest) (*upc
 
 	res, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
 	if err != nil {
-		return nil, err
+		return nil, parseJSONServiceError(err)
 	}
 
 	err = json.Unmarshal(res, &loadBalancer)
@@ -113,10 +119,8 @@ func (s *Service) ModifyLoadBalancer(r *request.ModifyLoadBalancerRequest) (*upc
 
 // DeleteLoadBalancer deletes an existing load balancer.
 func (s *Service) DeleteLoadBalancer(r *request.DeleteLoadBalancerRequest) error {
-	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
-
-	if err != nil {
-		return err
+	if err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL())); err != nil {
+		return parseJSONServiceError(err)
 	}
 
 	return nil
@@ -126,7 +130,7 @@ func (s *Service) GetLoadBalancerBackends(r *request.GetLoadBalancerBackendsRequ
 	backends := make([]upcloud.LoadBalancerBackend, 0)
 	res, err := s.basicGetRequest(r.RequestURL())
 	if err != nil {
-		return nil, err
+		return nil, parseJSONServiceError(err)
 	}
 
 	err = json.Unmarshal(res, &backends)
@@ -137,7 +141,7 @@ func (s *Service) GetLoadBalancerBackend(r *request.GetLoadBalancerBackendReques
 	var backend upcloud.LoadBalancerBackend
 	res, err := s.basicGetRequest(r.RequestURL())
 	if err != nil {
-		return nil, err
+		return nil, parseJSONServiceError(err)
 	}
 
 	err = json.Unmarshal(res, &backend)
@@ -154,7 +158,7 @@ func (s *Service) CreateLoadBalancerBackend(r *request.CreateLoadBalancerBackend
 
 	res, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
 	if err != nil {
-		return nil, err
+		return nil, parseJSONServiceError(err)
 	}
 
 	err = json.Unmarshal(res, &backend)
@@ -171,7 +175,7 @@ func (s *Service) ModifyLoadBalancerBackend(r *request.ModifyLoadBalancerBackend
 
 	res, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
 	if err != nil {
-		return nil, err
+		return nil, parseJSONServiceError(err)
 	}
 
 	err = json.Unmarshal(res, &backend)
@@ -179,14 +183,17 @@ func (s *Service) ModifyLoadBalancerBackend(r *request.ModifyLoadBalancerBackend
 }
 
 func (s *Service) DeleteLoadBalancerBackend(r *request.DeleteLoadBalancerBackendRequest) error {
-	return s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
+	if err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL())); err != nil {
+		return parseJSONServiceError(err)
+	}
+	return nil
 }
 
 func (s *Service) GetLoadBalancerBackendMembers(r *request.GetLoadBalancerBackendMembersRequest) ([]upcloud.LoadBalancerBackendMember, error) {
 	members := make([]upcloud.LoadBalancerBackendMember, 0)
 	res, err := s.basicGetRequest(r.RequestURL())
 	if err != nil {
-		return nil, err
+		return nil, parseJSONServiceError(err)
 	}
 
 	err = json.Unmarshal(res, &members)
@@ -197,7 +204,7 @@ func (s *Service) GetLoadBalancerBackendMember(r *request.GetLoadBalancerBackend
 	var member upcloud.LoadBalancerBackendMember
 	res, err := s.basicGetRequest(r.RequestURL())
 	if err != nil {
-		return nil, err
+		return nil, parseJSONServiceError(err)
 	}
 
 	err = json.Unmarshal(res, &member)
@@ -214,7 +221,7 @@ func (s *Service) CreateLoadBalancerBackendMember(r *request.CreateLoadBalancerB
 
 	res, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
 	if err != nil {
-		return nil, err
+		return nil, parseJSONServiceError(err)
 	}
 
 	err = json.Unmarshal(res, &member)
@@ -231,7 +238,7 @@ func (s *Service) ModifyLoadBalancerBackendMember(r *request.ModifyLoadBalancerB
 
 	res, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
 	if err != nil {
-		return nil, err
+		return nil, parseJSONServiceError(err)
 	}
 
 	err = json.Unmarshal(res, &member)
@@ -239,7 +246,10 @@ func (s *Service) ModifyLoadBalancerBackendMember(r *request.ModifyLoadBalancerB
 }
 
 func (s *Service) DeleteLoadBalancerBackendMember(r *request.DeleteLoadBalancerBackendMemberRequest) error {
-	return s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
+	if err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL())); err != nil {
+		return parseJSONServiceError(err)
+	}
+	return nil
 }
 
 func (s *Service) CreateLoadBalancerResolver(r *request.CreateLoadBalancerResolverRequest) (*upcloud.LoadBalancerResolver, error) {
@@ -252,7 +262,7 @@ func (s *Service) CreateLoadBalancerResolver(r *request.CreateLoadBalancerResolv
 
 	res, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
 	if err != nil {
-		return nil, err
+		return nil, parseJSONServiceError(err)
 	}
 
 	err = json.Unmarshal(res, &resolver)
@@ -264,7 +274,7 @@ func (s *Service) GetLoadBalancerResolvers(r *request.GetLoadBalancerResolversRe
 
 	res, err := s.basicGetRequest(r.RequestURL())
 	if err != nil {
-		return nil, err
+		return nil, parseJSONServiceError(err)
 	}
 
 	err = json.Unmarshal(res, &resolvers)
@@ -276,7 +286,7 @@ func (s *Service) GetLoadBalancerResolver(r *request.GetLoadBalancerResolverRequ
 
 	res, err := s.basicGetRequest(r.RequestURL())
 	if err != nil {
-		return nil, err
+		return nil, parseJSONServiceError(err)
 	}
 
 	err = json.Unmarshal(res, &resolver)
@@ -293,7 +303,7 @@ func (s *Service) ModifyLoadBalancerResolver(r *request.ModifyLoadBalancerRevolv
 
 	res, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
 	if err != nil {
-		return nil, err
+		return nil, parseJSONServiceError(err)
 	}
 
 	err = json.Unmarshal(res, &resolver)
@@ -301,16 +311,85 @@ func (s *Service) ModifyLoadBalancerResolver(r *request.ModifyLoadBalancerRevolv
 }
 
 func (s *Service) DeleteLoadBalancerResolver(r *request.DeleteLoadBalancerResolverRequest) error {
-	return s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
+	if err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL())); err != nil {
+		return parseJSONServiceError(err)
+	}
+	return nil
 }
 
 func (s *Service) GetLoadBalancerPlans(r *request.GetLoadBalancerPlansRequest) ([]upcloud.LoadBalancerPlan, error) {
 	plans := make([]upcloud.LoadBalancerPlan, 0)
 	res, err := s.basicGetRequest(r.RequestURL())
 	if err != nil {
-		return nil, err
+		return nil, parseJSONServiceError(err)
 	}
 
 	err = json.Unmarshal(res, &plans)
 	return plans, err
+}
+
+func (s *Service) GetLoadBalancerFrontends(r *request.GetLoadBalancerFrontendsRequest) ([]upcloud.LoadBalancerFrontend, error) {
+	fes := make([]upcloud.LoadBalancerFrontend, 0)
+	res, err := s.basicGetRequest(r.RequestURL())
+	if err != nil {
+		return nil, parseJSONServiceError(err)
+	}
+
+	err = json.Unmarshal(res, &fes)
+	if err != nil {
+		return nil, err
+	}
+
+	return fes, nil
+}
+
+func (s *Service) GetLoadBalancerFrontend(r *request.GetLoadBalancerFrontendRequest) (*upcloud.LoadBalancerFrontend, error) {
+	var fe upcloud.LoadBalancerFrontend
+	res, err := s.basicGetRequest(r.RequestURL())
+	if err != nil {
+		return nil, parseJSONServiceError(err)
+	}
+
+	err = json.Unmarshal(res, &fe)
+	return &fe, err
+}
+
+func (s *Service) CreateLoadBalancerFrontend(r *request.CreateLoadBalancerFrontendRequest) (*upcloud.LoadBalancerFrontend, error) {
+	var fe upcloud.LoadBalancerFrontend
+	reqBody, err := json.Marshal(r)
+	if err != nil {
+		return nil, err
+	}
+
+	res, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
+	if err != nil {
+		return nil, parseJSONServiceError(err)
+	}
+
+	err = json.Unmarshal(res, &fe)
+	return &fe, err
+}
+
+func (s *Service) ModifyLoadBalancerFrontend(r *request.ModifyLoadBalancerFrontendRequest) (*upcloud.LoadBalancerFrontend, error) {
+	var fe upcloud.LoadBalancerFrontend
+
+	reqBody, err := json.Marshal(r)
+	if err != nil {
+		return nil, err
+	}
+
+	res, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
+	if err != nil {
+		return nil, parseJSONServiceError(err)
+	}
+
+	err = json.Unmarshal(res, &fe)
+	return &fe, err
+}
+
+func (s *Service) DeleteLoadBalancerFrontend(r *request.DeleteLoadBalancerFrontendRequest) error {
+	if err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL())); err != nil {
+		return parseJSONServiceError(err)
+	}
+	return nil
 }

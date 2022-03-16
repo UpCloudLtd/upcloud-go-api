@@ -505,11 +505,11 @@ func createLoadBalancer(svc *Service, networkUUID, zone string) (*upcloud.LoadBa
 		Name:             fmt.Sprintf("go-test-lb-%s-%d", zone, time.Now().Unix()),
 		Zone:             zone,
 		Plan:             "development",
-		NetworkUuid:      networkUUID,
+		NetworkUUID:      networkUUID,
 		ConfiguredStatus: "started",
-		Frontends:        []upcloud.LoadBalancerFrontend{},
-		Backends:         []request.CreateLoadBalancerBackend{},
-		Resolvers:        []upcloud.LoadBalancerResolver{},
+		Frontends:        []request.LoadBalancerFrontend{},
+		Backends:         []request.LoadBalancerBackend{},
+		Resolvers:        []request.LoadBalancerResolver{},
 	}
 
 	loadBalancerDetails, err := svc.CreateLoadBalancer(&createLoadBalancerRequest)
@@ -532,9 +532,9 @@ func deleteLoadBalancer(svc *Service, lb *upcloud.LoadBalancer) error {
 func createLoadBalancerBackend(svc *Service, lbUUID string) (*upcloud.LoadBalancerBackend, error) {
 	req := request.CreateLoadBalancerBackendRequest{
 		ServiceUUID: lbUUID,
-		Payload: request.CreateLoadBalancerBackend{
+		Backend: request.LoadBalancerBackend{
 			Name: fmt.Sprintf("go-test-lb-backend-%d", time.Now().Unix()),
-			Members: []request.CreateLoadBalancerBackendMember{
+			Members: []request.LoadBalancerBackendMember{
 				{
 					Name:        "default-lb-backend-member",
 					Type:        "dynamic",
