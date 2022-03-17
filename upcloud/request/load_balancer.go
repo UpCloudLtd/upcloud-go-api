@@ -343,3 +343,82 @@ type DeleteLoadBalancerFrontendRequest struct {
 func (r *DeleteLoadBalancerFrontendRequest) RequestURL() string {
 	return fmt.Sprintf("/loadbalancer/%s/frontends/%s", r.ServiceUUID, r.Name)
 }
+
+type GetLoadBalancerFrontendRulesRequest struct {
+	ServiceUUID  string `json:"-"`
+	FrontendName string `json:"-"`
+}
+
+func (r *GetLoadBalancerFrontendRulesRequest) RequestURL() string {
+	return fmt.Sprintf("/loadbalancer/%s/frontends/%s/rules", r.ServiceUUID, r.FrontendName)
+}
+
+type GetLoadBalancerFrontendRuleRequest struct {
+	ServiceUUID  string `json:"-"`
+	FrontendName string `json:"-"`
+	Name         string `json:"-"`
+}
+
+func (r *GetLoadBalancerFrontendRuleRequest) RequestURL() string {
+	return fmt.Sprintf("/loadbalancer/%s/frontends/%s/rules/%s", r.ServiceUUID, r.FrontendName, r.Name)
+}
+
+type CreateLoadBalancerFrontendRuleRequest struct {
+	ServiceUUID  string `json:"-"`
+	FrontendName string `json:"-"`
+	Rule         LoadBalancerFrontendRule
+}
+
+func (r *CreateLoadBalancerFrontendRuleRequest) MarshalJSON() ([]byte, error) {
+	return json.Marshal(r.Rule)
+}
+
+func (r *CreateLoadBalancerFrontendRuleRequest) RequestURL() string {
+	return fmt.Sprintf("/loadbalancer/%s/frontends/%s/rules", r.ServiceUUID, r.FrontendName)
+}
+
+type ReplaceLoadBalancerFrontendRuleRequest struct {
+	ServiceUUID  string `json:"-"`
+	FrontendName string `json:"-"`
+	Name         string `json:"-"`
+	Rule         LoadBalancerFrontendRule
+}
+
+func (r *ReplaceLoadBalancerFrontendRuleRequest) MarshalJSON() ([]byte, error) {
+	return json.Marshal(r.Rule)
+}
+
+func (r *ReplaceLoadBalancerFrontendRuleRequest) RequestURL() string {
+	return fmt.Sprintf("/loadbalancer/%s/frontends/%s/rules/%s", r.ServiceUUID, r.FrontendName, r.Name)
+}
+
+// ModifyLoadBalancerFrontendRule represents frontend rule modification payload
+type ModifyLoadBalancerFrontendRule struct {
+	Name     string `json:"name,omitempty"`
+	Priority int    `json:"priority,omitempty"`
+}
+
+type ModifyLoadBalancerFrontendRuleRequest struct {
+	ServiceUUID  string `json:"-"`
+	FrontendName string `json:"-"`
+	Name         string `json:"-"`
+	Rule         ModifyLoadBalancerFrontendRule
+}
+
+func (r *ModifyLoadBalancerFrontendRuleRequest) MarshalJSON() ([]byte, error) {
+	return json.Marshal(r.Rule)
+}
+
+func (r *ModifyLoadBalancerFrontendRuleRequest) RequestURL() string {
+	return fmt.Sprintf("/loadbalancer/%s/frontends/%s/rules/%s", r.ServiceUUID, r.FrontendName, r.Name)
+}
+
+type DeleteLoadBalancerFrontendRuleRequest struct {
+	ServiceUUID  string `json:"-"`
+	FrontendName string `json:"-"`
+	Name         string `json:"-"`
+}
+
+func (r *DeleteLoadBalancerFrontendRuleRequest) RequestURL() string {
+	return fmt.Sprintf("/loadbalancer/%s/frontends/%s/rules/%s", r.ServiceUUID, r.FrontendName, r.Name)
+}

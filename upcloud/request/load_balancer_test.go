@@ -521,3 +521,154 @@ func TestDeleteLoadBalancerFrontendRequest(t *testing.T) {
 	}
 	assert.Equal(t, "/loadbalancer/sid/frontends/example", r.RequestURL())
 }
+
+func TestGetLoadBalancerFrontendRulesRequest(t *testing.T) {
+	r := GetLoadBalancerFrontendRulesRequest{
+		ServiceUUID:  "sid",
+		FrontendName: "fename",
+	}
+	assert.Equal(t, "/loadbalancer/sid/frontends/fename/rules", r.RequestURL())
+}
+
+func TestGetLoadBalancerFrontendRuleRequest(t *testing.T) {
+	r := GetLoadBalancerFrontendRuleRequest{
+		ServiceUUID:  "sid",
+		FrontendName: "fename",
+		Name:         "name",
+	}
+	assert.Equal(t, "/loadbalancer/sid/frontends/fename/rules/name", r.RequestURL())
+}
+
+func TestCreateLoadBalancerFrontendRuleRequest(t *testing.T) {
+	expected := `
+	{
+		"name": "example-rule-1",
+		"priority": 100,
+		"matchers": [
+			{
+				"type": "path",
+				"match_path": {
+					"method": "exact",
+					"value": "/app"
+				}
+			}
+		],
+		"actions": [
+			{
+				"type": "use_backend",
+				"action_use_backend": {
+					"backend": "example-backend-2"
+				}
+			}
+		]
+	}
+	`
+	r := CreateLoadBalancerFrontendRuleRequest{
+		ServiceUUID:  "sid",
+		FrontendName: "fename",
+		Rule: LoadBalancerFrontendRule{
+			Name:     "example-rule-1",
+			Priority: 100,
+			Matchers: []upcloud.LoadBalancerMatcher{{
+				Type: upcloud.LoadBalancerMatcherTypePath,
+				Path: &upcloud.LoadBalancerMatcherString{
+					Method: upcloud.LoadBalancerStringMatcherMethodExact,
+					Value:  "/app",
+				},
+			}},
+			Actions: []upcloud.LoadBalancerAction{{
+				Type: upcloud.LoadBalancerActionTypeUseBackend,
+				UseBackend: &upcloud.LoadBalancerActionUseBackend{
+					Backend: "example-backend-2",
+				},
+			}},
+		},
+	}
+	actual, err := json.Marshal(&r)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expected, string(actual))
+	assert.Equal(t, "/loadbalancer/sid/frontends/fename/rules", r.RequestURL())
+}
+
+func TestReplaceLoadBalancerFrontendRuleRequest(t *testing.T) {
+	expected := `
+	{
+		"name": "example-rule-1",
+		"priority": 100,
+		"matchers": [
+			{
+				"type": "path",
+				"match_path": {
+					"method": "exact",
+					"value": "/app"
+				}
+			}
+		],
+		"actions": [
+			{
+				"type": "use_backend",
+				"action_use_backend": {
+					"backend": "example-backend-2"
+				}
+			}
+		]
+	}
+	`
+	r := ReplaceLoadBalancerFrontendRuleRequest{
+		ServiceUUID:  "sid",
+		FrontendName: "fename",
+		Name:         "example-rule-1",
+		Rule: LoadBalancerFrontendRule{
+			Name:     "example-rule-1",
+			Priority: 100,
+			Matchers: []upcloud.LoadBalancerMatcher{{
+				Type: upcloud.LoadBalancerMatcherTypePath,
+				Path: &upcloud.LoadBalancerMatcherString{
+					Method: upcloud.LoadBalancerStringMatcherMethodExact,
+					Value:  "/app",
+				},
+			}},
+			Actions: []upcloud.LoadBalancerAction{{
+				Type: upcloud.LoadBalancerActionTypeUseBackend,
+				UseBackend: &upcloud.LoadBalancerActionUseBackend{
+					Backend: "example-backend-2",
+				},
+			}},
+		},
+	}
+	actual, err := json.Marshal(&r)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expected, string(actual))
+	assert.Equal(t, "/loadbalancer/sid/frontends/fename/rules/example-rule-1", r.RequestURL())
+}
+
+func TestModifyLoadBalancerFrontendRuleRequest(t *testing.T) {
+	expected := `
+	{
+		"name": "example-rule-2",
+		"priority": 100
+	}
+	`
+	r := ModifyLoadBalancerFrontendRuleRequest{
+		ServiceUUID:  "sid",
+		FrontendName: "fename",
+		Name:         "example-rule-1",
+		Rule: ModifyLoadBalancerFrontendRule{
+			Name:     "example-rule-2",
+			Priority: 100,
+		},
+	}
+	actual, err := json.Marshal(&r)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expected, string(actual))
+	assert.Equal(t, "/loadbalancer/sid/frontends/fename/rules/example-rule-1", r.RequestURL())
+}
+
+func TestDeleteLoadBalancerFrontendRuleRequest(t *testing.T) {
+	r := DeleteLoadBalancerFrontendRuleRequest{
+		ServiceUUID:  "sid",
+		FrontendName: "fename",
+		Name:         "name",
+	}
+	assert.Equal(t, "/loadbalancer/sid/frontends/fename/rules/name", r.RequestURL())
+}
