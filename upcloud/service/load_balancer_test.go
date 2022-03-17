@@ -1,7 +1,9 @@
 package service
 
 import (
+	"fmt"
 	"testing"
+	"time"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/request"
@@ -397,6 +399,140 @@ func TestLoadBalancerFrontend(t *testing.T) {
 				ServiceUUID: lb.UUID,
 				Name:        fe.Name,
 			}))
+	})
+}
+
+func TestLoadBalancerFrontendRule(t *testing.T) {
+	t.Parallel()
+
+	record(t, "loadbalancerfrontendrule", func(t *testing.T, r *recorder.Recorder, svc *Service) {
+		zone := "fi-hel2"
+		net, err := createLoadBalancerPrivateNetwork(svc, zone, "10.0.1.1/24")
+		require.NoError(t, err)
+		lb, err := svc.CreateLoadBalancer(&request.CreateLoadBalancerRequest{
+			Name:             fmt.Sprintf("go-test-lb-%s-%d", zone, time.Now().Unix()),
+			Zone:             zone,
+			Plan:             "development",
+			NetworkUUID:      net.UUID,
+			ConfiguredStatus: upcloud.LoadBalancerConfiguredStatusStarted,
+			Frontends: []request.LoadBalancerFrontend{{
+				Name:           "fe-1",
+				Mode:           upcloud.LoadBalancerModeHTTP,
+				Port:           80,
+				DefaultBackend: "be-1",
+			}},
+			Backends: []request.LoadBalancerBackend{{
+				Name:     "be-1",
+				Resolver: "ns-1",
+				Members:  []request.LoadBalancerBackendMember{},
+			}},
+			Resolvers: []request.LoadBalancerResolver{{
+				Name:         "ns-1",
+				Nameservers:  []string{"10.1.1.100"},
+				Retries:      10,
+				Timeout:      10,
+				TimeoutRetry: 10,
+				CacheValid:   10,
+				CacheInvalid: 10,
+			}},
+		})
+
+		require.NoError(t, err)
+		defer cleanupLoadBalancer(t, svc, lb)
+		rule, err := svc.CreateLoadBalancerFrontendRule(&request.CreateLoadBalancerFrontendRuleRequest{
+			ServiceUUID:  lb.UUID,
+			FrontendName: lb.Frontends[0].Name,
+			Rule: request.LoadBalancerFrontendRule{
+				Name:     "rule-1",
+				Priority: 10,
+				Matchers: []upcloud.LoadBalancerMatcher{{
+					Type: upcloud.LoadBalancerMatcherTypeSrcIP,
+					SrcIP: &upcloud.LoadBalancerMatcherSourceIP{
+						Value: "10.1.1.200",
+					},
+				}},
+				Actions: []upcloud.LoadBalancerAction{{
+					Type:      upcloud.LoadBalancerActionTypeTCPReject,
+					TCPReject: &upcloud.LoadBalancerActionTCPReject{},
+				}},
+			},
+		})
+		require.NoError(t, err)
+		t.Logf("Created frontend rule %s", rule.Name)
+		assert.Len(t, rule.Actions, 1)
+		assert.Len(t, rule.Matchers, 1)
+		assert.Equal(t, upcloud.LoadBalancerActionTypeTCPReject, rule.Actions[0].Type)
+		assert.Equal(t, upcloud.LoadBalancerMatcherTypeSrcIP, rule.Matchers[0].Type)
+		assert.Equal(t, "10.1.1.200", rule.Matchers[0].SrcIP.Value)
+		assert.Equal(t, "rule-1", rule.Name)
+		assert.Equal(t, 10, rule.Priority)
+
+		rule, err = svc.ModifyLoadBalancerFrontendRule(&request.ModifyLoadBalancerFrontendRuleRequest{
+			ServiceUUID:  lb.UUID,
+			FrontendName: lb.Frontends[0].Name,
+			Name:         rule.Name,
+			Rule: request.ModifyLoadBalancerFrontendRule{
+				Name:     "rule",
+				Priority: 20,
+			},
+		})
+		require.NoError(t, err)
+		t.Logf("Modified frontend rule %s", rule.Name)
+		assert.Equal(t, "rule", rule.Name)
+		assert.Equal(t, 20, rule.Priority)
+
+		rule, err = svc.ReplaceLoadBalancerFrontendRule(&request.ReplaceLoadBalancerFrontendRuleRequest{
+			ServiceUUID:  lb.UUID,
+			FrontendName: lb.Frontends[0].Name,
+			Name:         rule.Name,
+			Rule: request.LoadBalancerFrontendRule{
+				Name:     "rule-1",
+				Priority: 10,
+				Matchers: []upcloud.LoadBalancerMatcher{{
+					Type: upcloud.LoadBalancerMatcherTypeSrcIP,
+					SrcIP: &upcloud.LoadBalancerMatcherSourceIP{
+						Value: "10.1.1.201",
+					},
+				}},
+				Actions: []upcloud.LoadBalancerAction{{
+					Type: upcloud.LoadBalancerActionTypeHTTPReturn,
+					HTTPReturn: &upcloud.LoadBalancerActionHTTPReturn{
+						Status:      404,
+						ContentType: "text/html",
+						Payload:     "PGgxPmFwcGxlYmVlPC9oMT4K",
+					},
+				}},
+			},
+		})
+
+		require.NoError(t, err)
+		t.Logf("Replaced frontend rule %s", rule.Name)
+		assert.Equal(t, "rule-1", rule.Name)
+		assert.Equal(t, 10, rule.Priority)
+		assert.Equal(t, upcloud.LoadBalancerActionTypeHTTPReturn, rule.Actions[0].Type)
+
+		t.Logf("Get frontend %s rules", lb.Frontends[0].Name)
+		rules, err := svc.GetLoadBalancerFrontendRules(&request.GetLoadBalancerFrontendRulesRequest{
+			ServiceUUID:  lb.UUID,
+			FrontendName: lb.Frontends[0].Name,
+		})
+		require.NoError(t, err)
+		assert.Len(t, rules, 1)
+
+		t.Logf("Get frontend rule %s", rule.Name)
+		rule, err = svc.GetLoadBalancerFrontendRule(&request.GetLoadBalancerFrontendRuleRequest{
+			ServiceUUID:  lb.UUID,
+			FrontendName: lb.Frontends[0].Name,
+			Name:         "rule-1",
+		})
+		require.NoError(t, err)
+		require.NoError(t,
+			svc.DeleteLoadBalancerFrontendRule(&request.DeleteLoadBalancerFrontendRuleRequest{
+				ServiceUUID:  lb.UUID,
+				FrontendName: lb.Frontends[0].Name,
+				Name:         rule.Name,
+			}))
+		t.Logf("Deleted frontend rule %s", rule.Name)
 	})
 }
 
