@@ -459,7 +459,13 @@ func TestLoadBalancerFrontendRule(t *testing.T) {
 		})
 		require.NoError(t, err)
 		t.Logf("Created frontend rule %s", rule.Name)
+		assert.Len(t, rule.Actions, 1)
+		assert.Len(t, rule.Matchers, 1)
 		assert.Equal(t, upcloud.LoadBalancerActionTypeTCPReject, rule.Actions[0].Type)
+		assert.Equal(t, upcloud.LoadBalancerMatcherTypeSrcIP, rule.Matchers[0].Type)
+		assert.Equal(t, "10.1.1.200", rule.Matchers[0].SrcIP.Value)
+		assert.Equal(t, "rule-1", rule.Name)
+		assert.Equal(t, 10, rule.Priority)
 
 		rule, err = svc.ModifyLoadBalancerFrontendRule(&request.ModifyLoadBalancerFrontendRuleRequest{
 			ServiceUUID:  lb.UUID,
