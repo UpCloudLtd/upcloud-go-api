@@ -12,7 +12,9 @@ type LoadBalancerHTTPMatcherMethod string
 type LoadBalancerIntegerMatcherMethod string
 type LoadBalancerBackendMemberType string
 type LoadBalancerOperationalState string
+type LoadBalancerCertificateBundleOperationalState string
 type LoadBalancerConfiguredStatus string
+type LoadBalancerCertificateBundleType string
 
 const (
 	LoadBalancerModeHTTP LoadBalancerMode = "http"
@@ -23,6 +25,9 @@ const (
 
 	LoadBalancerConfiguredStatusStarted LoadBalancerConfiguredStatus = "started"
 	LoadBalancerConfiguredStatusStopped LoadBalancerConfiguredStatus = "stopped"
+
+	LoadBalancerCertificateBundleTypeManual  LoadBalancerCertificateBundleType = "manual"
+	LoadBalancerCertificateBundleTypeDynamic LoadBalancerCertificateBundleType = "dynamic"
 
 	LoadBalancerOperationalStatePending       LoadBalancerOperationalState = "pending"
 	LoadBalancerOperationalStateSetupAgent    LoadBalancerOperationalState = "setup-agent"
@@ -36,6 +41,11 @@ const (
 	LoadBalancerOperationalStateDeleteNetwork LoadBalancerOperationalState = "delete-network"
 	LoadBalancerOperationalStateDeleteServer  LoadBalancerOperationalState = "delete-server"
 	LoadBalancerOperationalStateDeleteService LoadBalancerOperationalState = "delete-service"
+
+	LoadBalancerCertificateBundleOperationalStateIdle              LoadBalancerCertificateBundleOperationalState = "idle"
+	LoadBalancerCertificateBundleOperationalStatePending           LoadBalancerCertificateBundleOperationalState = "pending"
+	LoadBalancerCertificateBundleOperationalStateSetupChallenge    LoadBalancerCertificateBundleOperationalState = "setup-challenge"
+	LoadBalancerCertificateBundleOperationalStateCompleteChallenge LoadBalancerCertificateBundleOperationalState = "complete-challenge"
 
 	LoadBalancerMatcherTypeSrcIP        LoadBalancerMatcherType = "src_ip"
 	LoadBalancerMatcherTypeSrcPort      LoadBalancerMatcherType = "src_port"
@@ -91,14 +101,14 @@ type LoadBalancerPlan struct {
 
 // LoadBalancerFrontend represents service frontend
 type LoadBalancerFrontend struct {
-	Name           string                     `json:"name,omitempty"`
-	Mode           LoadBalancerMode           `json:"mode,omitempty"`
-	Port           int                        `json:"port,omitempty"`
-	DefaultBackend string                     `json:"default_backend,omitempty"`
-	Rules          []LoadBalancerFrontendRule `json:"rules,omitempty"`
-	TLSConfigs     []LoadBalancerTLSConfig    `json:"tls_configs,omitempty"`
-	CreatedAt      time.Time                  `json:"created_at,omitempty"`
-	UpdatedAt      time.Time                  `json:"updated_at,omitempty"`
+	Name           string                          `json:"name,omitempty"`
+	Mode           LoadBalancerMode                `json:"mode,omitempty"`
+	Port           int                             `json:"port,omitempty"`
+	DefaultBackend string                          `json:"default_backend,omitempty"`
+	Rules          []LoadBalancerFrontendRule      `json:"rules,omitempty"`
+	TLSConfigs     []LoadBalancerFrontendTLSConfig `json:"tls_configs,omitempty"`
+	CreatedAt      time.Time                       `json:"created_at,omitempty"`
+	UpdatedAt      time.Time                       `json:"updated_at,omitempty"`
 }
 
 // LoadBalancerFrontendRule represents frontend rule
@@ -111,8 +121,8 @@ type LoadBalancerFrontendRule struct {
 	UpdatedAt time.Time             `json:"updated_at,omitempty"`
 }
 
-// LoadBalancerTLSConfig represents TLS configuration
-type LoadBalancerTLSConfig struct {
+// LoadBalancerFrontendTLSConfig represents TLS configuration
+type LoadBalancerFrontendTLSConfig struct {
 	Name                  string    `json:"name,omitempty"`
 	CertificateBundleUUID string    `json:"certificate_bundle_uuid,omitempty"`
 	CreatedAt             time.Time `json:"created_at,omitempty"`
@@ -261,4 +271,21 @@ type LoadBalancerActionHTTPReturn struct {
 // LoadBalancerActionHTTPRedirect represents 'http_redirect' action
 type LoadBalancerActionHTTPRedirect struct {
 	Location string `json:"location,omitempty"`
+}
+
+// LoadBalancerCertificateBundle represents certificate bundle
+type LoadBalancerCertificateBundle struct {
+	UUID          string    `json:"uuid,omitempty"`
+	Certificate   string    `json:"certificate,omitempty"`
+	Intermediates string    `json:"intermediates,omitempty"`
+	Hostnames     []string  `json:"hostnames,omitempty"`
+	KeyType       string    `json:"key_type,omitempty"`
+	Name          string    `json:"name,omitempty"`
+	NotAfter      time.Time `json:"not_after,omitempty"`
+	NotBefore     time.Time `json:"not_before,omitempty"`
+	CreatedAt     time.Time `json:"created_at,omitempty"`
+	UpdatedAt     time.Time `json:"updated_at,omitempty"`
+
+	Type             LoadBalancerCertificateBundleType             `json:"type,omitempty"`
+	OperationalState LoadBalancerCertificateBundleOperationalState `json:"operational_state,omitempty"`
 }
