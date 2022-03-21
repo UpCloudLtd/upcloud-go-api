@@ -10,10 +10,6 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/request"
 )
 
-type ServiceRequest interface {
-	RequestURL() string
-}
-
 type Firewall interface {
 	GetFirewallRules(r *request.GetFirewallRulesRequest) (*upcloud.FirewallRules, error)
 	GetFirewallRuleDetails(r *request.GetFirewallRuleDetailsRequest) (*upcloud.FirewallRule, error)

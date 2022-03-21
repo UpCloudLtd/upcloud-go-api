@@ -55,10 +55,8 @@ type LoadBalancer interface {
 	// Certificate bundles
 	GetLoadBalancerCertificateBundles(r *request.GetLoadBalancerCertificateBundlesRequest) ([]upcloud.LoadBalancerCertificateBundle, error)
 	GetLoadBalancerCertificateBundle(r *request.GetLoadBalancerCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error)
-	CreateLoadManualBalancerCertificateBundle(r *request.CreateLoadBalancerManualCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error)
-	CreateLoadBalancerDynamicCertificateBundle(r *request.CreateLoadBalancerDynamicCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error)
-	ModifyLoadBalancerManualCertificateBundle(r *request.ModifyLoadBalancerManualCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error)
-	ModifyLoadBalancerDynamicCertificateBundle(r *request.ModifyLoadBalancerDynamicCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error)
+	CreateLoadBalancerCertificateBundle(r *request.CreateLoadBalancerCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error)
+	ModifyLoadBalancerCertificateBundle(r *request.ModifyLoadBalancerCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error)
 	DeleteLoadBalancerCertificateBundle(r *request.DeleteLoadBalancerCertificateBundleRequest) error
 }
 
@@ -620,17 +618,8 @@ func (s *Service) GetLoadBalancerCertificateBundle(r *request.GetLoadBalancerCer
 	return &cert, err
 }
 
-// CreateLoadManualBalancerCertificateBundle creates a new load balancer manual certificate bundle.
-func (s *Service) CreateLoadManualBalancerCertificateBundle(r *request.CreateLoadBalancerManualCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error) {
-	return s.createLoadBalancerCertificateBundle(r)
-}
-
-// CreateLoadBalancerDynamicCertificateBundle creates a new load balancer dynamic certificate bundle.
-func (s *Service) CreateLoadBalancerDynamicCertificateBundle(r *request.CreateLoadBalancerDynamicCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error) {
-	return s.createLoadBalancerCertificateBundle(r)
-}
-
-func (s *Service) createLoadBalancerCertificateBundle(r ServiceRequest) (*upcloud.LoadBalancerCertificateBundle, error) {
+// CreateLoadBalancerCertificateBundle creates a new load balancer certificate bundle.
+func (s *Service) CreateLoadBalancerCertificateBundle(r *request.CreateLoadBalancerCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error) {
 	var cert upcloud.LoadBalancerCertificateBundle
 	reqBody, err := json.Marshal(r)
 	if err != nil {
@@ -646,17 +635,8 @@ func (s *Service) createLoadBalancerCertificateBundle(r ServiceRequest) (*upclou
 	return &cert, err
 }
 
-// ModifyLoadBalancerManualCertificateBundle modifies an existing load balancer manual certificate bundle.
-func (s *Service) ModifyLoadBalancerManualCertificateBundle(r *request.ModifyLoadBalancerManualCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error) {
-	return s.modifyLoadBalancerCertificateBundle(r)
-}
-
-// ModifyLoadBalancerDynamicCertificateBundle modifies an existing load balancer dynamic certificate bundle.
-func (s *Service) ModifyLoadBalancerDynamicCertificateBundle(r *request.ModifyLoadBalancerDynamicCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error) {
-	return s.modifyLoadBalancerCertificateBundle(r)
-}
-
-func (s *Service) modifyLoadBalancerCertificateBundle(r ServiceRequest) (*upcloud.LoadBalancerCertificateBundle, error) {
+// ModifyLoadBalancerCertificateBundle modifies an existing load balancer certificate bundle.
+func (s *Service) ModifyLoadBalancerCertificateBundle(r *request.ModifyLoadBalancerCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error) {
 	var cert upcloud.LoadBalancerCertificateBundle
 	reqBody, err := json.Marshal(r)
 	if err != nil {

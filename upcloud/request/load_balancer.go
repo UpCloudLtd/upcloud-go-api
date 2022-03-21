@@ -483,51 +483,32 @@ func (r *DeleteLoadBalancerFrontendTLSConfigRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/frontends/%s/tls-configs/%s", r.ServiceUUID, r.FrontendName, r.Name)
 }
 
-type CreateLoadBalancerManualCertificateBundleRequest struct {
+type CreateLoadBalancerCertificateBundleRequest struct {
 	Type upcloud.LoadBalancerCertificateBundleType `json:"type,omitempty"`
 
-	Name          string `json:"name,omitempty"`
-	Certificate   string `json:"certificate,omitempty"`
-	Intermediates string `json:"intermediates,omitempty"`
-	PrivateKey    string `json:"private_key,omitempty"`
+	Name          string   `json:"name,omitempty"`
+	Certificate   string   `json:"certificate,omitempty"`
+	Intermediates string   `json:"intermediates,omitempty"`
+	PrivateKey    string   `json:"private_key,omitempty"`
+	KeyType       string   `json:"key_type,omitempty"`
+	Hostnames     []string `json:"hostnames,omitempty"`
 }
 
-func (r *CreateLoadBalancerManualCertificateBundleRequest) RequestURL() string {
+func (r *CreateLoadBalancerCertificateBundleRequest) RequestURL() string {
 	return loadBalancerCertificateBundleBaseURL
 }
 
-type CreateLoadBalancerDynamicCertificateBundleRequest struct {
-	Type upcloud.LoadBalancerCertificateBundleType `json:"type,omitempty"`
-
-	Name      string   `json:"name,omitempty"`
-	KeyType   string   `json:"key_type,omitempty"`
-	Hostnames []string `json:"hostnames,omitempty"`
+type ModifyLoadBalancerCertificateBundleRequest struct {
+	UUID          string   `json:"-"`
+	Name          string   `json:"name,omitempty"`
+	Certificate   string   `json:"certificate,omitempty"`
+	Intermediates string   `json:"intermediates,omitempty"`
+	PrivateKey    string   `json:"private_key,omitempty"`
+	KeyType       string   `json:"key_type,omitempty"`
+	Hostnames     []string `json:"hostnames,omitempty"`
 }
 
-func (r *CreateLoadBalancerDynamicCertificateBundleRequest) RequestURL() string {
-	return loadBalancerCertificateBundleBaseURL
-}
-
-type ModifyLoadBalancerManualCertificateBundleRequest struct {
-	UUID          string `json:"-"`
-	Name          string `json:"name,omitempty"`
-	Certificate   string `json:"certificate,omitempty"`
-	Intermediates string `json:"intermediates,omitempty"`
-	PrivateKey    string `json:"private_key,omitempty"`
-}
-
-func (r *ModifyLoadBalancerManualCertificateBundleRequest) RequestURL() string {
-	return fmt.Sprintf("/load-balancer/certificate-bundles/%s", r.UUID)
-}
-
-type ModifyLoadBalancerDynamicCertificateBundleRequest struct {
-	UUID      string   `json:"-"`
-	Name      string   `json:"name,omitempty"`
-	KeyType   string   `json:"key_type,omitempty"`
-	Hostnames []string `json:"hostnames,omitempty"`
-}
-
-func (r *ModifyLoadBalancerDynamicCertificateBundleRequest) RequestURL() string {
+func (r *ModifyLoadBalancerCertificateBundleRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/certificate-bundles/%s", r.UUID)
 }
 
