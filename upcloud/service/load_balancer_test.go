@@ -591,7 +591,7 @@ func TestLoadBalancerCerticateBundlesAndFrontendTLSConfigs(t *testing.T) {
 		assert.Equal(t, "example-manual-certificate", mc.Name)
 		assert.Equal(t, upcloud.LoadBalancerCertificateBundleTypeManual, mc.Type)
 
-		dc, err := svc.CreateLoadDynamicBalancerCertificateBundle(&request.CreateLoadBalancerDynamicCertificateBundleRequest{
+		dc, err := svc.CreateLoadBalancerDynamicCertificateBundle(&request.CreateLoadBalancerDynamicCertificateBundleRequest{
 			Type: upcloud.LoadBalancerCertificateBundleTypeDynamic,
 			Name: "example-dynamic-certificate",
 			Hostnames: []string{

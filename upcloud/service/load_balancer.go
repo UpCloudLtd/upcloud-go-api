@@ -56,7 +56,7 @@ type LoadBalancer interface {
 	GetLoadBalancerCertificateBundles(r *request.GetLoadBalancerCertificateBundlesRequest) ([]upcloud.LoadBalancerCertificateBundle, error)
 	GetLoadBalancerCertificateBundle(r *request.GetLoadBalancerCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error)
 	CreateLoadManualBalancerCertificateBundle(r *request.CreateLoadBalancerManualCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error)
-	CreateLoadDynamicBalancerCertificateBundle(r *request.CreateLoadBalancerDynamicCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error)
+	CreateLoadBalancerDynamicCertificateBundle(r *request.CreateLoadBalancerDynamicCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error)
 	ModifyLoadBalancerManualCertificateBundle(r *request.ModifyLoadBalancerManualCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error)
 	ModifyLoadBalancerDynamicCertificateBundle(r *request.ModifyLoadBalancerDynamicCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error)
 	DeleteLoadBalancerCertificateBundle(r *request.DeleteLoadBalancerCertificateBundleRequest) error
@@ -625,8 +625,8 @@ func (s *Service) CreateLoadManualBalancerCertificateBundle(r *request.CreateLoa
 	return s.createLoadBalancerCertificateBundle(r)
 }
 
-// CreateLoadDynamicBalancerCertificateBundle creates a new load balancer dynamic certificate bundle.
-func (s *Service) CreateLoadDynamicBalancerCertificateBundle(r *request.CreateLoadBalancerDynamicCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error) {
+// CreateLoadBalancerDynamicCertificateBundle creates a new load balancer dynamic certificate bundle.
+func (s *Service) CreateLoadBalancerDynamicCertificateBundle(r *request.CreateLoadBalancerDynamicCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error) {
 	return s.createLoadBalancerCertificateBundle(r)
 }
 
