@@ -215,6 +215,36 @@ func TestCreateLoadBalancerBackendMember(t *testing.T) {
 	require.NoError(t, err)
 	assert.Exactly(t, "/load-balancer/lb/backends/be/members", r.RequestURL())
 	assert.JSONEq(t, expectedJson, string(actualJson))
+
+	r = CreateLoadBalancerBackendMemberRequest{
+		ServiceUUID: "lb",
+		BackendName: "be",
+		Member: LoadBalancerBackendMember{
+			Name:        "mem",
+			Weight:      0,
+			MaxSessions: 0,
+			Enabled:     true,
+			Type:        "static",
+			IP:          "10.0.0.1",
+			Port:        80,
+		},
+	}
+
+	expectedJson = `
+	{
+		"name": "mem",
+		"weight": 0,
+		"max_sessions": 0,
+		"enabled": true,
+		"type": "static",
+		"ip": "10.0.0.1",
+		"port": 80
+	}`
+
+	actualJson, err = json.Marshal(&r)
+
+	require.NoError(t, err)
+	assert.JSONEq(t, expectedJson, string(actualJson))
 }
 
 func TestGetLoadBalancerBackendMembersRequest(t *testing.T) {
