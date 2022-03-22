@@ -128,7 +128,7 @@ type LoadBalancerBackendMember struct {
 	Name        string                                `json:"name,omitempty"`
 	Weight      int                                   `json:"weight,omitempty"`
 	MaxSessions int                                   `json:"max_sessions,omitempty"`
-	Enabled     bool                                  `json:"enabled,omitempty"`
+	Enabled     bool                                  `json:"enabled"`
 	Type        upcloud.LoadBalancerBackendMemberType `json:"type,omitempty"`
 	IP          string                                `json:"ip,omitempty"`
 	Port        int                                   `json:"port,omitempty"`

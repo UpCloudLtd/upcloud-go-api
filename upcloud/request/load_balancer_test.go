@@ -192,7 +192,7 @@ func TestCreateLoadBalancerBackendMember(t *testing.T) {
 			Name:        "mem",
 			Weight:      100,
 			MaxSessions: 5,
-			Enabled:     true,
+			Enabled:     false,
 			Type:        "static",
 			IP:          "10.0.0.1",
 			Port:        80,
@@ -204,7 +204,7 @@ func TestCreateLoadBalancerBackendMember(t *testing.T) {
 		"name": "mem",
 		"weight": 100,
 		"max_sessions": 5,
-		"enabled": true,
+		"enabled": false,
 		"type": "static",
 		"ip": "10.0.0.1",
 		"port": 80
