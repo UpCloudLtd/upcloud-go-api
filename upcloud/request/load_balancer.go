@@ -123,11 +123,11 @@ func (r *DeleteLoadBalancerBackendRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/backends/%s", r.ServiceUUID, r.Name)
 }
 
-// LoadBalancerBackendMember represents the payload for CreateLoadBalancerBackendMemberRequest
+// LoadBalancerBackendMember represents the payload for backend member request
 type LoadBalancerBackendMember struct {
 	Name        string                                `json:"name,omitempty"`
-	Weight      int                                   `json:"weight,omitempty"`
-	MaxSessions int                                   `json:"max_sessions,omitempty"`
+	Weight      int                                   `json:"weight"`
+	MaxSessions int                                   `json:"max_sessions"`
 	Enabled     bool                                  `json:"enabled"`
 	Type        upcloud.LoadBalancerBackendMemberType `json:"type,omitempty"`
 	IP          string                                `json:"ip,omitempty"`
