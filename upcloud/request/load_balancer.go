@@ -281,10 +281,10 @@ func (r *GetLoadBalancerFrontendRequest) RequestURL() string {
 
 // LoadBalancerFrontendRule represents frontend rule payload
 type LoadBalancerFrontendRule struct {
-	Name     string                        `json:"name,omitempty"`
-	Priority int                           `json:"priority,omitempty"`
-	Matchers []upcloud.LoadBalancerMatcher `json:"matchers,omitempty"`
-	Actions  []upcloud.LoadBalancerAction  `json:"actions,omitempty"`
+	Name     string                        `json:"name"`
+	Priority int                           `json:"priority"`
+	Matchers []upcloud.LoadBalancerMatcher `json:"matchers"`
+	Actions  []upcloud.LoadBalancerAction  `json:"actions"`
 }
 
 // LoadBalancerFrontend represents frontend payload
