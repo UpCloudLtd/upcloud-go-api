@@ -851,8 +851,7 @@ func TestModifyLoadBalancerDynamicCertificateBundleRequest(t *testing.T) {
 		"hostnames": [
 			"example.com",
 			"app.example.com"
-		],
-		"key_type": "rsa"
+		]
 	}
 	`
 	r := ModifyLoadBalancerCertificateBundleRequest{
@@ -862,7 +861,6 @@ func TestModifyLoadBalancerDynamicCertificateBundleRequest(t *testing.T) {
 			"example.com",
 			"app.example.com",
 		},
-		KeyType: "rsa",
 	}
 	actual, err := json.Marshal(&r)
 	assert.NoError(t, err)

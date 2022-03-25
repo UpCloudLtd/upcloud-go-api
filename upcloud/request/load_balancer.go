@@ -504,7 +504,6 @@ type ModifyLoadBalancerCertificateBundleRequest struct {
 	Certificate   string   `json:"certificate,omitempty"`
 	Intermediates string   `json:"intermediates,omitempty"`
 	PrivateKey    string   `json:"private_key,omitempty"`
-	KeyType       string   `json:"key_type,omitempty"`
 	Hostnames     []string `json:"hostnames,omitempty"`
 }
 
