@@ -4,8 +4,11 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
 )
 
-func NewLoadBalancerTCPRejectAction(name string) upcloud.LoadBalancerAction {
-	return upcloud.LoadBalancerAction{Type: upcloud.LoadBalancerActionTypeTCPReject}
+func NewLoadBalancerTCPRejectAction() upcloud.LoadBalancerAction {
+	return upcloud.LoadBalancerAction{
+		Type:      upcloud.LoadBalancerActionTypeTCPReject,
+		TCPReject: &upcloud.LoadBalancerActionTCPReject{},
+	}
 }
 
 func NewLoadBalancerHTTPReturnAction(statusCode int, contentType, payload string) upcloud.LoadBalancerAction {
