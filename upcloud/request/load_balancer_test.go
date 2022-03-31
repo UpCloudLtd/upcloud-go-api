@@ -93,7 +93,7 @@ func TestCreateLoadBalancerRequest(t *testing.T) {
 	actual, err := json.Marshal(&r)
 	assert.NoError(t, err)
 	assert.JSONEq(t, expected, string(actual))
-	assert.Equal(t, "/loadbalancer", r.RequestURL())
+	assert.Equal(t, "/load-balancer", r.RequestURL())
 }
 
 func TestCreateLoadBalancerBackendRequest(t *testing.T) {

@@ -35,7 +35,7 @@ type CreateLoadBalancerRequest struct {
 }
 
 func (r *CreateLoadBalancerRequest) RequestURL() string {
-	return "/loadbalancer"
+	return "/load-balancer"
 }
 
 type ModifyLoadBalancerRequest struct {
