@@ -2,10 +2,12 @@ package client
 
 import (
 	"bytes"
+	"crypto/tls"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/blang/semver"
@@ -21,6 +23,8 @@ const (
 
 	// The default timeout (in seconds)
 	DefaultTimeout = 60
+
+	EnvDebugSkipCertificateVerify string = "UPCLOUD_DEBUG_SKIP_CERTIFICATE_VERIFY"
 )
 
 // Client represents an API client
@@ -34,7 +38,19 @@ type Client struct {
 
 // New creates ands returns a new client configured with the specified user and password
 func New(userName, password string) *Client {
-	return NewWithHTTPClient(userName, password, cleanhttp.DefaultClient())
+	var client *http.Client
+	if os.Getenv(EnvDebugSkipCertificateVerify) == "1" {
+		client = &http.Client{
+			Transport: &http.Transport{
+				TLSClientConfig: &tls.Config{
+					InsecureSkipVerify: true, //nolint
+				},
+			},
+		}
+	} else {
+		client = cleanhttp.DefaultClient()
+	}
+	return NewWithHTTPClient(userName, password, client)
 }
 
 // NewWithHTTPClient creates ands returns a new client configured with the specified user and password and
