@@ -51,38 +51,38 @@ func NewLoadBalancerNumMembersUPMatcher(m upcloud.LoadBalancerIntegerMatcherMeth
 	}
 }
 
-func NewLoadBalancerURLParamMatcher(m upcloud.LoadBalancerStringMatcherMethod, name, value string, ignoreCase bool) upcloud.LoadBalancerMatcher {
+func NewLoadBalancerURLParamMatcher(m upcloud.LoadBalancerStringMatcherMethod, name, value string, ignoreCase *bool) upcloud.LoadBalancerMatcher {
 	return upcloud.LoadBalancerMatcher{
 		Type: upcloud.LoadBalancerMatcherTypeURLParam,
 		URLParam: &upcloud.LoadBalancerMatcherStringWithArgument{
 			Method:     m,
 			Name:       name,
 			Value:      value,
-			IgnoreCase: &ignoreCase,
+			IgnoreCase: ignoreCase,
 		},
 	}
 }
 
-func NewLoadBalancerHeaderMatcher(m upcloud.LoadBalancerStringMatcherMethod, name, value string, ignoreCase bool) upcloud.LoadBalancerMatcher {
+func NewLoadBalancerHeaderMatcher(m upcloud.LoadBalancerStringMatcherMethod, name, value string, ignoreCase *bool) upcloud.LoadBalancerMatcher {
 	return upcloud.LoadBalancerMatcher{
 		Type: upcloud.LoadBalancerMatcherTypeHeader,
 		Header: &upcloud.LoadBalancerMatcherStringWithArgument{
 			Method:     m,
 			Name:       name,
 			Value:      value,
-			IgnoreCase: &ignoreCase,
+			IgnoreCase: ignoreCase,
 		},
 	}
 }
 
-func NewLoadBalancerCookieMatcher(m upcloud.LoadBalancerStringMatcherMethod, name, value string, ignoreCase bool) upcloud.LoadBalancerMatcher {
+func NewLoadBalancerCookieMatcher(m upcloud.LoadBalancerStringMatcherMethod, name, value string, ignoreCase *bool) upcloud.LoadBalancerMatcher {
 	return upcloud.LoadBalancerMatcher{
 		Type: upcloud.LoadBalancerMatcherTypeCookie,
 		Cookie: &upcloud.LoadBalancerMatcherStringWithArgument{
 			Method:     m,
 			Name:       name,
 			Value:      value,
-			IgnoreCase: &ignoreCase,
+			IgnoreCase: ignoreCase,
 		},
 	}
 }
@@ -105,35 +105,35 @@ func NewLoadBalancerHostMatcher(host string) upcloud.LoadBalancerMatcher {
 	}
 }
 
-func NewLoadBalancerURLQueryMatcher(m upcloud.LoadBalancerStringMatcherMethod, query string, ignoreCase bool) upcloud.LoadBalancerMatcher {
+func NewLoadBalancerURLQueryMatcher(m upcloud.LoadBalancerStringMatcherMethod, query string, ignoreCase *bool) upcloud.LoadBalancerMatcher {
 	return upcloud.LoadBalancerMatcher{
 		Type: upcloud.LoadBalancerMatcherTypeURLQuery,
 		URLQuery: &upcloud.LoadBalancerMatcherString{
 			Method:     m,
 			Value:      query,
-			IgnoreCase: &ignoreCase,
+			IgnoreCase: ignoreCase,
 		},
 	}
 }
 
-func NewLoadBalancerURLMatcher(m upcloud.LoadBalancerStringMatcherMethod, URL string, ignoreCase bool) upcloud.LoadBalancerMatcher {
+func NewLoadBalancerURLMatcher(m upcloud.LoadBalancerStringMatcherMethod, URL string, ignoreCase *bool) upcloud.LoadBalancerMatcher {
 	return upcloud.LoadBalancerMatcher{
 		Type: upcloud.LoadBalancerMatcherTypeURL,
 		URL: &upcloud.LoadBalancerMatcherString{
 			Method:     m,
 			Value:      URL,
-			IgnoreCase: &ignoreCase,
+			IgnoreCase: ignoreCase,
 		},
 	}
 }
 
-func NewLoadBalancerPathMatcher(m upcloud.LoadBalancerStringMatcherMethod, path string, ignoreCase bool) upcloud.LoadBalancerMatcher {
+func NewLoadBalancerPathMatcher(m upcloud.LoadBalancerStringMatcherMethod, path string, ignoreCase *bool) upcloud.LoadBalancerMatcher {
 	return upcloud.LoadBalancerMatcher{
 		Type: upcloud.LoadBalancerMatcherTypePath,
 		Path: &upcloud.LoadBalancerMatcherString{
 			Method:     m,
 			Value:      path,
-			IgnoreCase: &ignoreCase,
+			IgnoreCase: ignoreCase,
 		},
 	}
 }
