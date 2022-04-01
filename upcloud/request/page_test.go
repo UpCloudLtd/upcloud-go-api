@@ -22,9 +22,14 @@ func TestPage(t *testing.T) {
 	p = p.Next()
 	assert.Equal(t, "limit=100&offset=300", p.String())
 	assert.Equal(t, uint16(4), p.Number)
+	p = p.Previous()
+	assert.Equal(t, "limit=100&offset=200", p.String())
+	assert.Equal(t, uint16(3), p.Number)
 	p = &Page{
 		Size:   100,
 		Number: 1,
 	}
+	assert.Equal(t, "limit=100&offset=0", p.String())
+	p = p.Previous()
 	assert.Equal(t, "limit=100&offset=0", p.String())
 }

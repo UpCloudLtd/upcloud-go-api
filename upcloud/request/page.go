@@ -53,6 +53,8 @@ func (p *Page) Previous() *Page {
 	var n uint16
 	if p.Number > 1 {
 		n = p.Number - 1
+	} else {
+		n = 1
 	}
 
 	return &Page{
