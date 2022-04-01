@@ -7,11 +7,16 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
 )
 
-const loadBalancerCertificateBundleBaseURL = "/load-balancer/certificate-bundles"
+const loadBalancerCertificateBundleBaseURL string = "/load-balancer/certificate-bundles"
 
-type GetLoadBalancersRequest struct{}
+type GetLoadBalancersRequest struct {
+	Page *Page
+}
 
 func (r *GetLoadBalancersRequest) RequestURL() string {
+	if r.Page != nil {
+		return fmt.Sprintf("/load-balancer?%s", r.Page.String())
+	}
 	return "/load-balancer"
 }
 

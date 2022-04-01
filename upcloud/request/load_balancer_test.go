@@ -9,6 +9,11 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func TestGetLoadBalancersRequest(t *testing.T) {
+	assert.Equal(t, "/load-balancer", (&GetLoadBalancersRequest{}).RequestURL())
+	assert.Equal(t, "/load-balancer?limit=50&offset=450", (&GetLoadBalancersRequest{Page: &Page{Number: 10, Size: 50}}).RequestURL())
+}
+
 func TestCreateLoadBalancerRequest(t *testing.T) {
 	expected := `
 	{

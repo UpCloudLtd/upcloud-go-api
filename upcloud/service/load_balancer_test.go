@@ -17,9 +17,9 @@ func TestLoadBalancer(t *testing.T) {
 
 	record(t, "loadbalancer", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create Load Balancer
-		lb, err := createLoadBalancerAndNetwork(svc, "fi-hel1", "172.16.0.0/24")
+		lb, err := createLoadBalancerAndNetwork(svc, "fi-hel1", "172.16.1.0/24")
 		require.NoError(t, err)
-		defer cleanupLoadBalancer(t, svc, lb)
+		defer cleanupLoadBalancer(t, rec, svc, lb)
 		t.Logf("Created load balancer: %s", lb.Name)
 
 		// Modify Load Balancer
@@ -56,7 +56,7 @@ func TestLoadBalancerBackend(t *testing.T) {
 	record(t, "loadbalancerbackend", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		lb, err := createLoadBalancerAndNetwork(svc, "fi-hel2", "172.16.2.0/24")
 		require.NoError(t, err)
-		defer cleanupLoadBalancer(t, svc, lb)
+		defer cleanupLoadBalancer(t, rec, svc, lb)
 		t.Logf("Created load balancer for testing LB backend CRUD: %s", lb.Name)
 
 		backend, err := createLoadBalancerBackend(svc, lb.UUID)
@@ -107,10 +107,10 @@ func TestLoadBalancerBackend(t *testing.T) {
 func TestLoadBalancerBackendMember(t *testing.T) {
 	t.Parallel()
 
-	record(t, "loadbalancerbackendmember", func(t *testing.T, r *recorder.Recorder, svc *Service) {
+	record(t, "loadbalancerbackendmember", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		lb, err := createLoadBalancerAndNetwork(svc, "nl-ams1", "172.16.3.0/24")
 		require.NoError(t, err)
-		defer cleanupLoadBalancer(t, svc, lb)
+		defer cleanupLoadBalancer(t, rec, svc, lb)
 		t.Logf("Created load balancer for testing LB backend members CRUD: %s", lb.Name)
 
 		backend, err := createLoadBalancerBackend(svc, lb.UUID)
@@ -176,8 +176,11 @@ func TestLoadBalancerBackendMember(t *testing.T) {
 			BackendName: backend.Name,
 			Name:        member.Name,
 			Member: request.LoadBalancerBackendMember{
-				IP:   newIp,
-				Port: newPort,
+				Weight:      member.Weight,
+				MaxSessions: member.MaxSessions,
+				Enabled:     true,
+				IP:          newIp,
+				Port:        newPort,
 			},
 		})
 
@@ -225,10 +228,10 @@ func TestLoadBalancerBackendMember(t *testing.T) {
 func TestLoadBalancerResolver(t *testing.T) {
 	t.Parallel()
 
-	record(t, "loadbalancerresolver", func(t *testing.T, r *recorder.Recorder, svc *Service) {
+	record(t, "loadbalancerresolver", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		lb, err := createLoadBalancerAndNetwork(svc, "pl-waw1", "10.0.0.0/24")
 		require.NoError(t, err)
-		defer cleanupLoadBalancer(t, svc, lb)
+		defer cleanupLoadBalancer(t, rec, svc, lb)
 		t.Logf("Created load balancer for testing LB resolvers CRUD: %s", lb.Name)
 
 		name := "testname"
@@ -337,7 +340,7 @@ func TestLoadBalancerResolver(t *testing.T) {
 }
 
 func TestGetLoadBalancerPlans(t *testing.T) {
-	record(t, "getloadbalancerplans", func(t *testing.T, r *recorder.Recorder, svc *Service) {
+	record(t, "getloadbalancerplans", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		plans, err := svc.GetLoadBalancerPlans(&request.GetLoadBalancerPlansRequest{})
 		require.NoError(t, err)
 		assert.GreaterOrEqual(t, len(plans), 2)
@@ -347,10 +350,10 @@ func TestGetLoadBalancerPlans(t *testing.T) {
 func TestLoadBalancerFrontend(t *testing.T) {
 	t.Parallel()
 
-	record(t, "loadbalancerfrontend", func(t *testing.T, r *recorder.Recorder, svc *Service) {
+	record(t, "loadbalancerfrontend", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		lb, err := createLoadBalancerAndNetwork(svc, "de-fra1", "10.0.0.1/24")
 		require.NoError(t, err)
-		defer cleanupLoadBalancer(t, svc, lb)
+		defer cleanupLoadBalancer(t, rec, svc, lb)
 		t.Logf("Created LB for testing frontends: %s", lb.Name)
 		be, err := createLoadBalancerBackend(svc, lb.UUID)
 		require.NoError(t, err)
@@ -405,7 +408,7 @@ func TestLoadBalancerFrontend(t *testing.T) {
 func TestLoadBalancerFrontendRule(t *testing.T) {
 	t.Parallel()
 
-	record(t, "loadbalancerfrontendrule", func(t *testing.T, r *recorder.Recorder, svc *Service) {
+	record(t, "loadbalancerfrontendrule", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		zone := "fi-hel2"
 		net, err := createLoadBalancerPrivateNetwork(svc, zone, "10.0.1.1/24")
 		require.NoError(t, err)
@@ -438,7 +441,7 @@ func TestLoadBalancerFrontendRule(t *testing.T) {
 		})
 
 		require.NoError(t, err)
-		defer cleanupLoadBalancer(t, svc, lb)
+		defer cleanupLoadBalancer(t, rec, svc, lb)
 		rule, err := svc.CreateLoadBalancerFrontendRule(&request.CreateLoadBalancerFrontendRuleRequest{
 			ServiceUUID:  lb.UUID,
 			FrontendName: lb.Frontends[0].Name,
@@ -545,7 +548,7 @@ func TestLoadBalancerFrontendRule(t *testing.T) {
 func TestLoadBalancerCerticateBundlesAndFrontendTLSConfigs(t *testing.T) {
 	t.Parallel()
 
-	record(t, "loadbalancercerticatebundlesandfrontendtlsconfigs", func(t *testing.T, r *recorder.Recorder, svc *Service) {
+	record(t, "loadbalancercerticatebundlesandfrontendtlsconfigs", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		net, err := createLoadBalancerPrivateNetwork(svc, "fi-hel1", "10.0.1.1/24")
 		require.NoError(t, err)
 		feName := "fe-1"
@@ -578,7 +581,7 @@ func TestLoadBalancerCerticateBundlesAndFrontendTLSConfigs(t *testing.T) {
 		})
 
 		require.NoError(t, err)
-		defer cleanupLoadBalancer(t, svc, lb)
+		defer cleanupLoadBalancer(t, rec, svc, lb)
 
 		mc, err := svc.CreateLoadBalancerCertificateBundle(&request.CreateLoadBalancerCertificateBundleRequest{
 			Type:        upcloud.LoadBalancerCertificateBundleTypeManual,
@@ -687,9 +690,73 @@ func TestLoadBalancerCerticateBundlesAndFrontendTLSConfigs(t *testing.T) {
 	})
 }
 
-func cleanupLoadBalancer(t *testing.T, svc *Service, lb *upcloud.LoadBalancer) {
+func TestLoadBalancerPage(t *testing.T) {
+	// do not run this test in parallel because it alters request.DefaultPage config which might cause unexpected results
+	record(t, "loadbalancerpage", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+		zone := "fi-hel2"
+		net, err := createLoadBalancerPrivateNetwork(svc, zone, "172.16.0.0/24")
+		require.NoError(t, err)
+		lbs := make([]*upcloud.LoadBalancer, 0)
+		for i := 0; i < 5; i++ {
+			lb, err := createLoadBalancer(svc, net.UUID, zone)
+			require.NoError(t, err)
+			lbs = append(lbs, lb)
+			time.Sleep(1 * time.Second)
+		}
+
+		// Test get-all feature by altering default page config.
+		// We have 5 load balancers so this should create 3 requests and combine results
+		// /load-balancer?limit=2&offset=0 (2)
+		// /load-balancer?limit=2&offset=2 (2)
+		// /load-balancer?limit=2&offset=4 (1) partial page
+		tmp := *request.DefaultPage
+		request.DefaultPage = &request.Page{
+			Size:   2,
+			Number: 1,
+		}
+		list, err := svc.GetLoadBalancers(&request.GetLoadBalancersRequest{})
+		request.DefaultPage = &tmp // restore default
+		assert.NoError(t, err)
+		assert.Len(t, list, 5)
+		assert.Equal(t, request.PageSizeMax, request.DefaultPage.Size)
+
+		// test custom page
+		list, err = svc.GetLoadBalancers(&request.GetLoadBalancersRequest{Page: &request.Page{
+			Size:   2,
+			Number: 0,
+		}})
+		assert.NoError(t, err)
+		assert.Len(t, list, 2)
+
+		// flush load balancers
+		for _, lb := range lbs {
+			if err := svc.DeleteLoadBalancer(&request.DeleteLoadBalancerRequest{UUID: lb.UUID}); err != nil {
+				t.Logf("an error occurred when deleting LB '%s': %v", lb.Name, err)
+				continue
+			}
+		}
+		for _, lb := range lbs {
+			if err := waitLoadBalancerToShutdown(svc, lb); err != nil {
+				t.Log(err)
+				continue
+			}
+		}
+		if err := svc.DeleteNetwork(&request.DeleteNetworkRequest{UUID: net.UUID}); err != nil {
+			t.Log(err)
+		}
+
+		list, err = svc.GetLoadBalancers(&request.GetLoadBalancersRequest{})
+		assert.NoError(t, err)
+		assert.Len(t, list, 0)
+	})
+}
+
+func cleanupLoadBalancer(t *testing.T, rec *recorder.Recorder, svc *Service, lb *upcloud.LoadBalancer) {
 	t.Logf("Cleanup LB: %s", lb.Name)
-	if err := deleteLoadBalancer(svc, lb); err != nil {
+	// speed up tests if replaying by not waiting LB shutdown
+	waitShutdown := rec.Mode() != recorder.ModeReplaying
+	t.Logf("waitShutdown: %+v", waitShutdown)
+	if err := deleteLoadBalancer(svc, lb, waitShutdown); err != nil {
 		t.Log(err)
 	}
 }

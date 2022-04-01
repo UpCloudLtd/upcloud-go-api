@@ -65,14 +65,29 @@ var _ LoadBalancer = (*Service)(nil)
 // GetLoadBalancers retrieves a list of load balancers.
 func (s *Service) GetLoadBalancers(r *request.GetLoadBalancersRequest) ([]upcloud.LoadBalancer, error) {
 	loadBalancers := make([]upcloud.LoadBalancer, 0)
-	res, err := s.basicGetRequest(r.RequestURL())
-	if err != nil {
-		return nil, parseJSONServiceError(err)
+	if r.Page != nil {
+		return loadBalancers, s.get(r.RequestURL(), &loadBalancers)
 	}
 
-	err = json.Unmarshal(res, &loadBalancers)
-	if err != nil {
-		return nil, err
+	// copy request value so that we are not altering original request
+	req := *r
+
+	// use default page size and get all available records
+	req.Page = request.DefaultPage
+
+	// loop until max result is reached or until response doesn't fill our page anymore
+	for len(loadBalancers) <= request.PageResultMaxSize {
+		lbs := make([]upcloud.LoadBalancer, 0)
+		if err := s.get(req.RequestURL(), &lbs); err != nil || len(lbs) < 1 {
+			return loadBalancers, err
+		}
+
+		loadBalancers = append(loadBalancers, lbs...)
+		if len(lbs) < req.Page.SizeInt() {
+			return loadBalancers, nil
+		}
+
+		req.Page = req.Page.Next()
 	}
 
 	return loadBalancers, nil
