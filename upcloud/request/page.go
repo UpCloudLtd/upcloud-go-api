@@ -6,51 +6,50 @@ import (
 )
 
 const (
-	PageSizeMax       uint16 = 100
-	PageResultMaxSize int    = 1000
+	PageSizeMax       int = 100
+	PageResultMaxSize int = 1000
 )
 
 var DefaultPage = &Page{Number: 1, Size: PageSizeMax}
 
+// Page represents list query filter that can be used to limit the number of results that are returned from the endpoint.
 type Page struct {
-	Size   uint16
-	Number uint16
+	// Size of the page limits the number of items in the list
+	Size int
+	// Page number sets offset where to start returning data.
+	Number int
 }
 
-func (p *Page) offset() uint16 {
-	if p.Number < 2 {
-		return 0
+func (p *Page) offset() int {
+	if p.Number < 1 {
+		p.Number = 1
 	}
 	return (p.Number - 1) * p.Size
 }
 
-func (p *Page) SizeInt() int {
-	return int(p.Size)
-}
-
-func (p *Page) NumberInt() int {
-	return int(p.Number)
+func (p *Page) limit() int {
+	if p.Size < 1 {
+		p.Size = 0
+	}
+	return p.Size
 }
 
 func (p *Page) Values() url.Values {
-	if p.Number < 1 {
-		p.Number = 1
-	}
 	v := url.Values{}
-	v.Add("limit", fmt.Sprint(p.Size))
+	v.Add("limit", fmt.Sprint(p.limit()))
 	v.Add("offset", fmt.Sprint(p.offset()))
 	return v
 }
 
 func (p *Page) Next() *Page {
 	return &Page{
-		Size:   p.Size,
+		Size:   p.limit(),
 		Number: p.Number + 1,
 	}
 }
 
 func (p *Page) Previous() *Page {
-	var n uint16
+	var n int
 	if p.Number > 1 {
 		n = p.Number - 1
 	} else {

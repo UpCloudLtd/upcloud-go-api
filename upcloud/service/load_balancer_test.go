@@ -735,10 +735,12 @@ func TestLoadBalancerPage(t *testing.T) {
 				continue
 			}
 		}
-		for _, lb := range lbs {
-			if err := waitLoadBalancerToShutdown(svc, lb); err != nil {
-				t.Log(err)
-				continue
+		if rec.Mode() != recorder.ModeReplaying {
+			for _, lb := range lbs {
+				if err := waitLoadBalancerToShutdown(svc, lb); err != nil {
+					t.Log(err)
+					continue
+				}
 			}
 		}
 		if err := svc.DeleteNetwork(&request.DeleteNetworkRequest{UUID: net.UUID}); err != nil {

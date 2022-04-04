@@ -83,7 +83,7 @@ func (s *Service) GetLoadBalancers(r *request.GetLoadBalancersRequest) ([]upclou
 		}
 
 		loadBalancers = append(loadBalancers, lbs...)
-		if len(lbs) < req.Page.SizeInt() {
+		if len(lbs) < req.Page.Size {
 			return loadBalancers, nil
 		}
 
