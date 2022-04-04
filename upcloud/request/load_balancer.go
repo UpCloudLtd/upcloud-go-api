@@ -7,14 +7,22 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
 )
 
-const loadBalancerCertificateBundleBaseURL = "/load-balancer/certificate-bundles"
+const loadBalancerCertificateBundleBaseURL string = "/load-balancer/certificate-bundles"
 
-type GetLoadBalancersRequest struct{}
+// GetLoadBalancersRequest represents a request to list load balancers
+// List size can be filtered using optional Page object
+type GetLoadBalancersRequest struct {
+	Page *Page
+}
 
 func (r *GetLoadBalancersRequest) RequestURL() string {
+	if r.Page != nil {
+		return fmt.Sprintf("/load-balancer?%s", r.Page.String())
+	}
 	return "/load-balancer"
 }
 
+// GetLoadBalancerRequest represents a request to get load balancer details
 type GetLoadBalancerRequest struct {
 	UUID string
 }
@@ -23,6 +31,7 @@ func (r *GetLoadBalancerRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s", r.UUID)
 }
 
+// CreateLoadBalancerRequest represents a request to create load balancer
 type CreateLoadBalancerRequest struct {
 	Name             string                               `json:"name,omitempty"`
 	Plan             string                               `json:"plan,omitempty"`
@@ -38,6 +47,7 @@ func (r *CreateLoadBalancerRequest) RequestURL() string {
 	return "/load-balancer"
 }
 
+// CreateLoadBalancerRequest represents a request to modify load balancer
 type ModifyLoadBalancerRequest struct {
 	UUID             string `json:"-"`
 	Name             string `json:"name,omitempty"`
@@ -49,6 +59,7 @@ func (r *ModifyLoadBalancerRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s", r.UUID)
 }
 
+// DeleteLoadBalancerRequest represents a request to delete load balancer
 type DeleteLoadBalancerRequest struct {
 	UUID string `json:"-"`
 }
@@ -57,6 +68,7 @@ func (r *DeleteLoadBalancerRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s", r.UUID)
 }
 
+// GetLoadBalancerBackendsRequest represents a request to list load balancer backends
 type GetLoadBalancerBackendsRequest struct {
 	ServiceUUID string `json:"-"`
 }
@@ -72,6 +84,7 @@ type LoadBalancerBackend struct {
 	Members  []LoadBalancerBackendMember `json:"members"`
 }
 
+// CreateLoadBalancerBackendRequest represents a request to create load balancer backend
 type CreateLoadBalancerBackendRequest struct {
 	ServiceUUID string `json:"-"`
 	Backend     LoadBalancerBackend
@@ -85,6 +98,7 @@ func (r *CreateLoadBalancerBackendRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(r.Backend)
 }
 
+// GetLoadBalancerBackendRequest represents a request to get load balancer backend details
 type GetLoadBalancerBackendRequest struct {
 	ServiceUUID string `json:"-"`
 	Name        string `json:"-"`
@@ -100,6 +114,7 @@ type ModifyLoadBalancerBackend struct {
 	Resolver string `json:"resolver,omitempty"`
 }
 
+// ModifyLoadBalancerBackendRequest represents a request to modify load balancer backend
 type ModifyLoadBalancerBackendRequest struct {
 	ServiceUUID string `json:"-"`
 	Name        string `json:"-"`
@@ -114,6 +129,7 @@ func (r *ModifyLoadBalancerBackendRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(r.Backend)
 }
 
+// DeleteLoadBalancerBackendRequest represents a request to delete load balancer backend
 type DeleteLoadBalancerBackendRequest struct {
 	ServiceUUID string `json:"-"`
 	Name        string `json:"-"`
@@ -134,6 +150,7 @@ type LoadBalancerBackendMember struct {
 	Port        int                                   `json:"port,omitempty"`
 }
 
+// CreateLoadBalancerBackendMemberRequest represents a request to create load balancer backend member
 type CreateLoadBalancerBackendMemberRequest struct {
 	ServiceUUID string `json:"-"`
 	BackendName string `json:"-"`
@@ -148,6 +165,7 @@ func (r *CreateLoadBalancerBackendMemberRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(r.Member)
 }
 
+// GetLoadBalancerBackendMembersRequest represents a request to get load balancer backend member list
 type GetLoadBalancerBackendMembersRequest struct {
 	ServiceUUID string `json:"-"`
 	BackendName string `json:"-"`
@@ -157,6 +175,7 @@ func (r *GetLoadBalancerBackendMembersRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/backends/%s/members", r.ServiceUUID, r.BackendName)
 }
 
+// GetLoadBalancerBackendMemberRequest represents a request to get load balancer backend member details
 type GetLoadBalancerBackendMemberRequest struct {
 	ServiceUUID string `json:"-"`
 	BackendName string `json:"-"`
@@ -167,6 +186,7 @@ func (r *GetLoadBalancerBackendMemberRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/backends/%s/members/%s", r.ServiceUUID, r.BackendName, r.Name)
 }
 
+// ModifyLoadBalancerBackendMemberRequest represents a request to modify load balancer backend member
 type ModifyLoadBalancerBackendMemberRequest struct {
 	ServiceUUID string `json:"-"`
 	BackendName string `json:"-"`
@@ -182,6 +202,7 @@ func (r *ModifyLoadBalancerBackendMemberRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(r.Member)
 }
 
+// DeleteLoadBalancerBackendMemberRequest represents a request to delete load balancer backend member
 type DeleteLoadBalancerBackendMemberRequest struct {
 	ServiceUUID string `json:"-"`
 	BackendName string `json:"-"`
@@ -203,6 +224,7 @@ type LoadBalancerResolver struct {
 	CacheInvalid int      `json:"cache_invalid,omitempty"`
 }
 
+// CreateLoadBalancerResolverRequest represents a request to create load balancer resolver
 type CreateLoadBalancerResolverRequest struct {
 	ServiceUUID string `json:"-"`
 	Resolver    LoadBalancerResolver
@@ -216,6 +238,7 @@ func (r *CreateLoadBalancerResolverRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/resolvers", r.ServiceUUID)
 }
 
+// ModifyLoadBalancerRevolverRequest represents a request to modify load balancer resolver
 type ModifyLoadBalancerRevolverRequest struct {
 	ServiceUUID string `json:"-"`
 	Name        string `json:"-"`
@@ -230,6 +253,7 @@ func (r *ModifyLoadBalancerRevolverRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/resolvers/%s", r.ServiceUUID, r.Name)
 }
 
+// GetLoadBalancerResolversRequest represents a request to get load balancer resolver list
 type GetLoadBalancerResolversRequest struct {
 	ServiceUUID string `json:"-"`
 }
@@ -238,6 +262,7 @@ func (r *GetLoadBalancerResolversRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/resolvers", r.ServiceUUID)
 }
 
+// GetLoadBalancerResolverRequest represents a request to get load balancer resolver details
 type GetLoadBalancerResolverRequest struct {
 	ServiceUUID string `json:"-"`
 	Name        string `json:"-"`
@@ -247,6 +272,7 @@ func (r *GetLoadBalancerResolverRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/resolvers/%s", r.ServiceUUID, r.Name)
 }
 
+// DeleteLoadBalancerResolverRequest represents a request to delete load balancer resolver
 type DeleteLoadBalancerResolverRequest struct {
 	ServiceUUID string `json:"-"`
 	Name        string `json:"-"`
@@ -256,12 +282,14 @@ func (r *DeleteLoadBalancerResolverRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/resolvers/%s", r.ServiceUUID, r.Name)
 }
 
+// GetLoadBalancerPlansRequest represents a request to list load balancer plans
 type GetLoadBalancerPlansRequest struct{}
 
 func (r *GetLoadBalancerPlansRequest) RequestURL() string {
 	return "/load-balancer/plans"
 }
 
+// GetLoadBalancerFrontendsRequest represents a request to list load balancer frontends
 type GetLoadBalancerFrontendsRequest struct {
 	ServiceUUID string `json:"-"`
 }
@@ -270,6 +298,7 @@ func (r *GetLoadBalancerFrontendsRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/frontends", r.ServiceUUID)
 }
 
+// GetLoadBalancerFrontendRequest represents a request to get load balancer frontend details
 type GetLoadBalancerFrontendRequest struct {
 	ServiceUUID string `json:"-"`
 	Name        string `json:"-"`
@@ -297,6 +326,7 @@ type LoadBalancerFrontend struct {
 	TLSConfigs     []LoadBalancerFrontendTLSConfig `json:"tls_configs,omitempty"`
 }
 
+// CreateLoadBalancerFrontendRequest represents a request to create load balancer frontend
 type CreateLoadBalancerFrontendRequest struct {
 	ServiceUUID string
 	Frontend    LoadBalancerFrontend
@@ -310,6 +340,7 @@ func (r *CreateLoadBalancerFrontendRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/frontends", r.ServiceUUID)
 }
 
+// ModifyLoadBalancerFrontend represents payload to modify frontend
 type ModifyLoadBalancerFrontend struct {
 	Name           string                   `json:"name,omitempty"`
 	Mode           upcloud.LoadBalancerMode `json:"mode,omitempty"`
@@ -317,6 +348,7 @@ type ModifyLoadBalancerFrontend struct {
 	DefaultBackend string                   `json:"default_backend,omitempty"`
 }
 
+// ModifyLoadBalancerFrontendRequest represents a request to modify load balancer frontend
 type ModifyLoadBalancerFrontendRequest struct {
 	ServiceUUID string `json:"-"`
 	Name        string `json:"-"`
@@ -331,6 +363,7 @@ func (r *ModifyLoadBalancerFrontendRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/frontends/%s", r.ServiceUUID, r.Name)
 }
 
+// DeleteLoadBalancerFrontendRequest represents a request to delete load balancer frontend
 type DeleteLoadBalancerFrontendRequest struct {
 	ServiceUUID string `json:"-"`
 	Name        string `json:"-"`
@@ -340,6 +373,7 @@ func (r *DeleteLoadBalancerFrontendRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/frontends/%s", r.ServiceUUID, r.Name)
 }
 
+// GetLoadBalancerFrontendRulesRequest represents a request to list frontend rules
 type GetLoadBalancerFrontendRulesRequest struct {
 	ServiceUUID  string `json:"-"`
 	FrontendName string `json:"-"`
@@ -349,6 +383,7 @@ func (r *GetLoadBalancerFrontendRulesRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/frontends/%s/rules", r.ServiceUUID, r.FrontendName)
 }
 
+// GetLoadBalancerFrontendRuleRequest represents a request to get frontend rule details
 type GetLoadBalancerFrontendRuleRequest struct {
 	ServiceUUID  string `json:"-"`
 	FrontendName string `json:"-"`
@@ -359,6 +394,7 @@ func (r *GetLoadBalancerFrontendRuleRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/frontends/%s/rules/%s", r.ServiceUUID, r.FrontendName, r.Name)
 }
 
+// CreateLoadBalancerFrontendRuleRequest represents a request to create frontend rule
 type CreateLoadBalancerFrontendRuleRequest struct {
 	ServiceUUID  string `json:"-"`
 	FrontendName string `json:"-"`
@@ -373,6 +409,7 @@ func (r *CreateLoadBalancerFrontendRuleRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/frontends/%s/rules", r.ServiceUUID, r.FrontendName)
 }
 
+// ReplaceLoadBalancerFrontendRuleRequest represents a request to replace frontend rule
 type ReplaceLoadBalancerFrontendRuleRequest struct {
 	ServiceUUID  string `json:"-"`
 	FrontendName string `json:"-"`
@@ -394,6 +431,7 @@ type ModifyLoadBalancerFrontendRule struct {
 	Priority int    `json:"priority,omitempty"`
 }
 
+// ModifyLoadBalancerFrontendRuleRequest represents a request to modify frontend rule
 type ModifyLoadBalancerFrontendRuleRequest struct {
 	ServiceUUID  string `json:"-"`
 	FrontendName string `json:"-"`
@@ -409,6 +447,7 @@ func (r *ModifyLoadBalancerFrontendRuleRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/frontends/%s/rules/%s", r.ServiceUUID, r.FrontendName, r.Name)
 }
 
+// DeleteLoadBalancerFrontendRuleRequest represents a request to delete frontend rule
 type DeleteLoadBalancerFrontendRuleRequest struct {
 	ServiceUUID  string `json:"-"`
 	FrontendName string `json:"-"`
@@ -425,6 +464,7 @@ type LoadBalancerFrontendTLSConfig struct {
 	CertificateBundleUUID string `json:"certificate_bundle_uuid,omitempty"`
 }
 
+// GetLoadBalancerFrontendTLSConfigsRequest represents a request to get frontend TLS configs
 type GetLoadBalancerFrontendTLSConfigsRequest struct {
 	ServiceUUID  string `json:"-"`
 	FrontendName string `json:"-"`
@@ -434,6 +474,7 @@ func (r *GetLoadBalancerFrontendTLSConfigsRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/frontends/%s/tls-configs", r.ServiceUUID, r.FrontendName)
 }
 
+// GetLoadBalancerFrontendTLSConfigRequest represents a request to get frontend TLS config
 type GetLoadBalancerFrontendTLSConfigRequest struct {
 	ServiceUUID  string `json:"-"`
 	FrontendName string `json:"-"`
@@ -444,6 +485,7 @@ func (r *GetLoadBalancerFrontendTLSConfigRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/frontends/%s/tls-configs/%s", r.ServiceUUID, r.FrontendName, r.Name)
 }
 
+// CreateLoadBalancerFrontendTLSConfigRequest represents a request to create frontend TLS config
 type CreateLoadBalancerFrontendTLSConfigRequest struct {
 	ServiceUUID  string `json:"-"`
 	FrontendName string `json:"-"`
@@ -458,6 +500,7 @@ func (r *CreateLoadBalancerFrontendTLSConfigRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/frontends/%s/tls-configs", r.ServiceUUID, r.FrontendName)
 }
 
+// ModifyLoadBalancerFrontendTLSConfigRequest represents a request to modify frontend TLS config
 type ModifyLoadBalancerFrontendTLSConfigRequest struct {
 	ServiceUUID  string `json:"-"`
 	FrontendName string `json:"-"`
@@ -473,6 +516,7 @@ func (r *ModifyLoadBalancerFrontendTLSConfigRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/frontends/%s/tls-configs/%s", r.ServiceUUID, r.FrontendName, r.Name)
 }
 
+// DeleteLoadBalancerFrontendTLSConfigRequest represents a request to delete frontend TLS config
 type DeleteLoadBalancerFrontendTLSConfigRequest struct {
 	ServiceUUID  string `json:"-"`
 	FrontendName string `json:"-"`
@@ -483,6 +527,7 @@ func (r *DeleteLoadBalancerFrontendTLSConfigRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/frontends/%s/tls-configs/%s", r.ServiceUUID, r.FrontendName, r.Name)
 }
 
+// CreateLoadBalancerCertificateBundleRequest represents a request to create certificate bundle
 type CreateLoadBalancerCertificateBundleRequest struct {
 	Type upcloud.LoadBalancerCertificateBundleType `json:"type,omitempty"`
 
@@ -498,6 +543,7 @@ func (r *CreateLoadBalancerCertificateBundleRequest) RequestURL() string {
 	return loadBalancerCertificateBundleBaseURL
 }
 
+// ModifyLoadBalancerCertificateBundleRequest represents a request to modify certificate bundle
 type ModifyLoadBalancerCertificateBundleRequest struct {
 	UUID          string   `json:"-"`
 	Name          string   `json:"name,omitempty"`
@@ -511,12 +557,14 @@ func (r *ModifyLoadBalancerCertificateBundleRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/certificate-bundles/%s", r.UUID)
 }
 
+// GetLoadBalancerCertificateBundlesRequest represents a request to list certificate bundles
 type GetLoadBalancerCertificateBundlesRequest struct{}
 
 func (r *GetLoadBalancerCertificateBundlesRequest) RequestURL() string {
 	return loadBalancerCertificateBundleBaseURL
 }
 
+// GetLoadBalancerCertificateBundleRequest represents a request to get certificate bundle details
 type GetLoadBalancerCertificateBundleRequest struct {
 	UUID string `json:"-"`
 }
@@ -525,6 +573,7 @@ func (r *GetLoadBalancerCertificateBundleRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/certificate-bundles/%s", r.UUID)
 }
 
+// DeleteLoadBalancerCertificateBundleRequest represents a request to delete certificate bundle
 type DeleteLoadBalancerCertificateBundleRequest struct {
 	UUID string `json:"-"`
 }

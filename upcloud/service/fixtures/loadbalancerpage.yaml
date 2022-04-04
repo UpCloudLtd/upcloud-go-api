@@ -1,0 +1,1499 @@
+---
+version: 1
+interactions:
+- request:
+    body: '{"network":{"name":"go-test-lb-1648824572","zone":"fi-hel2","ip_networks":{"ip_network":[{"address":"172.16.0.0/24","dhcp":"yes","dhcp_default_route":"no","family":"IPv4"}]}}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/network/
+    method: POST
+  response:
+    body: |
+      {
+         "network" : {
+            "ip_networks" : {
+               "ip_network" : [
+                  {
+                     "address" : "172.16.0.0/24",
+                     "dhcp" : "yes",
+                     "dhcp_default_route" : "no",
+                     "family" : "IPv4",
+                     "gateway" : "172.16.0.1"
+                  }
+               ]
+            },
+            "name" : "go-test-lb-1648824572",
+            "type" : "private",
+            "uuid" : "03dacc38-b334-4fd5-826c-3a351b884770",
+            "zone" : "fi-hel2"
+         }
+      }
+    headers:
+      Content-Length:
+      - "463"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Fri, 01 Apr 2022 14:49:32 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: '{"name":"go-test-lb-fi-hel2-1648824573","plan":"development","zone":"fi-hel2","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","configured_status":"started","frontends":[],"backends":[],"resolvers":[]}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer
+    method: POST
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"pending","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:33.538326Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "431"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:49:33 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: '{"name":"go-test-lb-fi-hel2-1648824574","plan":"development","zone":"fi-hel2","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","configured_status":"started","frontends":[],"backends":[],"resolvers":[]}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer
+    method: POST
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:34.600087Z","dns_name":"lb-0af7700eb82e40e3baafbc0870730ee1.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824574","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"pending","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:34.600087Z","uuid":"0af7700e-b82e-40e3-baaf-bc0870730ee1","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "431"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:49:34 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: '{"name":"go-test-lb-fi-hel2-1648824575","plan":"development","zone":"fi-hel2","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","configured_status":"started","frontends":[],"backends":[],"resolvers":[]}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer
+    method: POST
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:35.668452Z","dns_name":"lb-0a9cace5fb3f4522afaa30830c3cdc0c.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824575","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"pending","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:35.668452Z","uuid":"0a9cace5-fb3f-4522-afaa-30830c3cdc0c","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "431"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:49:35 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: '{"name":"go-test-lb-fi-hel2-1648824576","plan":"development","zone":"fi-hel2","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","configured_status":"started","frontends":[],"backends":[],"resolvers":[]}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer
+    method: POST
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:36.753558Z","dns_name":"lb-0a817c2cc80c4d4a9c8b7e655863785b.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824576","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"pending","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:36.753558Z","uuid":"0a817c2c-c80c-4d4a-9c8b-7e655863785b","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "431"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:49:36 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: '{"name":"go-test-lb-fi-hel2-1648824577","plan":"development","zone":"fi-hel2","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","configured_status":"started","frontends":[],"backends":[],"resolvers":[]}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer
+    method: POST
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:37.816879Z","dns_name":"lb-0af04bfa8cfb4e7098142d3dccf3182d.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824577","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"pending","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:37.816879Z","uuid":"0af04bfa-8cfb-4e70-9814-2d3dccf3182d","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "431"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:49:37 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer?limit=2&offset=0
+    method: GET
+  response:
+    body: '[{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"setup-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:33.554792Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"},{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:34.600087Z","dns_name":"lb-0af7700eb82e40e3baafbc0870730ee1.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824574","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"setup-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:34.614662Z","uuid":"0af7700e-b82e-40e3-baaf-bc0870730ee1","zone":"fi-hel2"}]'
+    headers:
+      Content-Length:
+      - "875"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:49:38 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer?limit=2&offset=2
+    method: GET
+  response:
+    body: '[{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:35.668452Z","dns_name":"lb-0a9cace5fb3f4522afaa30830c3cdc0c.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824575","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"setup-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:35.685406Z","uuid":"0a9cace5-fb3f-4522-afaa-30830c3cdc0c","zone":"fi-hel2"},{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:36.753558Z","dns_name":"lb-0a817c2cc80c4d4a9c8b7e655863785b.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824576","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"setup-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:36.769727Z","uuid":"0a817c2c-c80c-4d4a-9c8b-7e655863785b","zone":"fi-hel2"}]'
+    headers:
+      Content-Length:
+      - "875"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:49:38 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer?limit=2&offset=4
+    method: GET
+  response:
+    body: '[{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:37.816879Z","dns_name":"lb-0af04bfa8cfb4e7098142d3dccf3182d.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824577","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"setup-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:37.836474Z","uuid":"0af04bfa-8cfb-4e70-9814-2d3dccf3182d","zone":"fi-hel2"}]'
+    headers:
+      Content-Length:
+      - "438"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:49:38 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer?limit=2&offset=0
+    method: GET
+  response:
+    body: '[{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"setup-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:33.554792Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"},{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:34.600087Z","dns_name":"lb-0af7700eb82e40e3baafbc0870730ee1.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824574","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"setup-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:34.614662Z","uuid":"0af7700e-b82e-40e3-baaf-bc0870730ee1","zone":"fi-hel2"}]'
+    headers:
+      Content-Length:
+      - "875"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:49:39 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Fri, 01 Apr 2022 14:49:39 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0af7700e-b82e-40e3-baaf-bc0870730ee1
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Fri, 01 Apr 2022 14:49:39 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a9cace5-fb3f-4522-afaa-30830c3cdc0c
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Fri, 01 Apr 2022 14:49:39 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a817c2c-c80c-4d4a-9c8b-7e655863785b
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Fri, 01 Apr 2022 14:49:39 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0af04bfa-8cfb-4e70-9814-2d3dccf3182d
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Fri, 01 Apr 2022 14:49:39 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:49:39 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:49:41 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:49:43 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:49:45 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:49:47 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:49:49 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:49:51 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:49:53 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:49:55 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:49:57 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:49:59 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:50:01 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:50:03 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:50:05 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:50:08 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:50:10 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:50:12 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:50:14 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:50:16 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:50:18 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:50:20 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:50:22 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:50:24 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:50:26 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:50:28 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:50:30 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:50:32 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:33.538326Z","dns_name":"lb-0a71143362b54df4980f67c04710be4f.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824573","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.096248Z","uuid":"0a711433-62b5-4df4-980f-67c04710be4f","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:50:34 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a711433-62b5-4df4-980f-67c04710be4f
+    method: GET
+  response:
+    body: |
+      {"type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND","title":"Service not found.","correlation_id":"01FZJSPN9ZT37FTD27EQ7Y64N6","status":404}
+    headers:
+      Content-Language:
+      - en
+      Content-Length:
+      - "166"
+      Content-Type:
+      - application/problem+json
+      Date:
+      - Fri, 01 Apr 2022 14:50:36 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 404 Not Found
+    code: 404
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0af7700e-b82e-40e3-baaf-bc0870730ee1
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:34.600087Z","dns_name":"lb-0af7700eb82e40e3baafbc0870730ee1.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824574","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.152506Z","uuid":"0af7700e-b82e-40e3-baaf-bc0870730ee1","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:50:36 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0af7700e-b82e-40e3-baaf-bc0870730ee1
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:34.600087Z","dns_name":"lb-0af7700eb82e40e3baafbc0870730ee1.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824574","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.152506Z","uuid":"0af7700e-b82e-40e3-baaf-bc0870730ee1","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:50:38 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0af7700e-b82e-40e3-baaf-bc0870730ee1
+    method: GET
+  response:
+    body: |
+      {"type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND","title":"Service not found.","correlation_id":"01FZJSPSBT8EFFWNTC0ED9AG9F","status":404}
+    headers:
+      Content-Language:
+      - en
+      Content-Length:
+      - "166"
+      Content-Type:
+      - application/problem+json
+      Date:
+      - Fri, 01 Apr 2022 14:50:40 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 404 Not Found
+    code: 404
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a9cace5-fb3f-4522-afaa-30830c3cdc0c
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:35.668452Z","dns_name":"lb-0a9cace5fb3f4522afaa30830c3cdc0c.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824575","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.198361Z","uuid":"0a9cace5-fb3f-4522-afaa-30830c3cdc0c","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:50:40 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a9cace5-fb3f-4522-afaa-30830c3cdc0c
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:35.668452Z","dns_name":"lb-0a9cace5fb3f4522afaa30830c3cdc0c.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824575","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.198361Z","uuid":"0a9cace5-fb3f-4522-afaa-30830c3cdc0c","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:50:43 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a9cace5-fb3f-4522-afaa-30830c3cdc0c
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:35.668452Z","dns_name":"lb-0a9cace5fb3f4522afaa30830c3cdc0c.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824575","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.198361Z","uuid":"0a9cace5-fb3f-4522-afaa-30830c3cdc0c","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:50:45 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a9cace5-fb3f-4522-afaa-30830c3cdc0c
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:35.668452Z","dns_name":"lb-0a9cace5fb3f4522afaa30830c3cdc0c.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824575","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.198361Z","uuid":"0a9cace5-fb3f-4522-afaa-30830c3cdc0c","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:50:47 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a9cace5-fb3f-4522-afaa-30830c3cdc0c
+    method: GET
+  response:
+    body: '{"backends":[],"configured_status":"started","created_at":"2022-04-01T14:49:35.668452Z","dns_name":"lb-0a9cace5fb3f4522afaa30830c3cdc0c.upcloudlb.com","frontends":[],"name":"go-test-lb-fi-hel2-1648824575","network_uuid":"03dacc38-b334-4fd5-826c-3a351b884770","operational_state":"delete-server","plan":"development","resolvers":[],"updated_at":"2022-04-01T14:49:39.198361Z","uuid":"0a9cace5-fb3f-4522-afaa-30830c3cdc0c","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "437"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:50:49 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a9cace5-fb3f-4522-afaa-30830c3cdc0c
+    method: GET
+  response:
+    body: |
+      {"type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND","title":"Service not found.","correlation_id":"01FZJSQ3E9HVXQW02SXFXFKMCY","status":404}
+    headers:
+      Content-Language:
+      - en
+      Content-Length:
+      - "166"
+      Content-Type:
+      - application/problem+json
+      Date:
+      - Fri, 01 Apr 2022 14:50:51 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 404 Not Found
+    code: 404
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0a817c2c-c80c-4d4a-9c8b-7e655863785b
+    method: GET
+  response:
+    body: |
+      {"type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND","title":"Service not found.","correlation_id":"01FZJSQ3FNKDNFDQ9B76TTV6SX","status":404}
+    headers:
+      Content-Language:
+      - en
+      Content-Length:
+      - "166"
+      Content-Type:
+      - application/problem+json
+      Date:
+      - Fri, 01 Apr 2022 14:50:51 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 404 Not Found
+    code: 404
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer/0af04bfa-8cfb-4e70-9814-2d3dccf3182d
+    method: GET
+  response:
+    body: |
+      {"type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND","title":"Service not found.","correlation_id":"01FZJSQ3GZJ61EQNB0M4MCD6P4","status":404}
+    headers:
+      Content-Language:
+      - en
+      Content-Length:
+      - "166"
+      Content-Type:
+      - application/problem+json
+      Date:
+      - Fri, 01 Apr 2022 14:50:51 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 404 Not Found
+    code: 404
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/network/03dacc38-b334-4fd5-826c-3a351b884770
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Fri, 01 Apr 2022 14:50:51 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.0.0
+    url: https://api.upcloud.com/1.3/load-balancer?limit=100&offset=0
+    method: GET
+  response:
+    body: '[]'
+    headers:
+      Content-Length:
+      - "2"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Apr 2022 14:50:51 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""

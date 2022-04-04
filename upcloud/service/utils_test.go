@@ -1,6 +1,7 @@
 package service
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -520,12 +521,31 @@ func createLoadBalancer(svc *Service, networkUUID, zone string) (*upcloud.LoadBa
 	return loadBalancerDetails, nil
 }
 
-func deleteLoadBalancer(svc *Service, lb *upcloud.LoadBalancer) error {
+func waitLoadBalancerToShutdown(svc *Service, lb *upcloud.LoadBalancer) error {
+	const maxRetries int = 100
+	// wait delete request
+	for i := 0; i <= maxRetries; i++ {
+		_, err := svc.GetLoadBalancer(&request.GetLoadBalancerRequest{UUID: lb.UUID})
+		if err != nil {
+			if svcErr, ok := err.(*upcloud.Problem); ok && svcErr.Status == http.StatusNotFound {
+				return nil
+			}
+		}
+		time.Sleep(2 * time.Second)
+	}
+	return errors.New("max retries reached while waiting for load balancer instance to shutdown")
+}
+
+func deleteLoadBalancer(svc *Service, lb *upcloud.LoadBalancer, waitShutdown bool) error {
 	netID := lb.NetworkUUID
 	if err := svc.DeleteLoadBalancer(&request.DeleteLoadBalancerRequest{UUID: lb.UUID}); err != nil {
 		return err
 	}
-
+	if waitShutdown {
+		if err := waitLoadBalancerToShutdown(svc, lb); err != nil {
+			return fmt.Errorf("unable to shutdown LB '%s' (%s) (check dangling networks)", lb.UUID, lb.Name)
+		}
+	}
 	return svc.DeleteNetwork(&request.DeleteNetworkRequest{UUID: netID})
 }
 

@@ -650,6 +650,15 @@ func (s *Service) basicGetRequest(location string) ([]byte, error) {
 	return response, nil
 }
 
+// Performs a GET request to the specified location and stores the result in the value pointed to by v.
+func (s *Service) get(location string, v interface{}) error {
+	res, err := s.basicGetRequest(location)
+	if err != nil {
+		return err
+	}
+	return json.Unmarshal(res, v)
+}
+
 // Parses an error returned from the client into corresponding error type
 func parseJSONServiceError(err error) error {
 	if clientError, ok := err.(*client.Error); ok {
