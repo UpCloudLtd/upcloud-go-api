@@ -437,6 +437,8 @@ func TestDeleteLoadBalancerResolverRequest(t *testing.T) {
 func TestGetLoadBalancerPlansRequest(t *testing.T) {
 	r := GetLoadBalancerPlansRequest{}
 	assert.Equal(t, "/load-balancer/plans", r.RequestURL())
+	r = GetLoadBalancerPlansRequest{Page: DefaultPage}
+	assert.Equal(t, "/load-balancer/plans?limit=100&offset=0", r.RequestURL())
 }
 
 func TestGetLoadBalancerFrontendsRequest(t *testing.T) {

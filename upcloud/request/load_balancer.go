@@ -283,9 +283,15 @@ func (r *DeleteLoadBalancerResolverRequest) RequestURL() string {
 }
 
 // GetLoadBalancerPlansRequest represents a request to list load balancer plans
-type GetLoadBalancerPlansRequest struct{}
+// List size can be filtered using optional Page object
+type GetLoadBalancerPlansRequest struct {
+	Page *Page
+}
 
 func (r *GetLoadBalancerPlansRequest) RequestURL() string {
+	if r.Page != nil {
+		return fmt.Sprintf("/load-balancer/plans?%s", r.Page.String())
+	}
 	return "/load-balancer/plans"
 }
 
