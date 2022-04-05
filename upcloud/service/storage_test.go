@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"path"
 	"testing"
 	"time"
 
@@ -353,16 +352,18 @@ func TestDirectUploadStorageImport(t *testing.T) {
 		sum := sha256.Sum256(buf)
 		sha256sum := hex.EncodeToString(sum[:])
 
-		err = ioutil.WriteFile(path.Join(os.TempDir(), "temp_file.txt"), buf, 0600)
+		tempf, err := ioutil.TempFile(os.TempDir(), "temp_file.txt")
 		require.NoError(t, err)
 		defer func() {
-			os.Remove(path.Join(os.TempDir(), "temp_file.txt"))
+			if err := tempf.Close(); err == nil {
+				os.Remove(tempf.Name())
+			}
 		}()
 
 		_, err = svc.CreateStorageImport(&request.CreateStorageImportRequest{
 			StorageUUID:    storage.UUID,
 			Source:         upcloud.StorageImportSourceDirectUpload,
-			SourceLocation: path.Join(os.TempDir(), "temp_file.txt"),
+			SourceLocation: tempf.Name(),
 		})
 		require.NoError(t, err)
 
