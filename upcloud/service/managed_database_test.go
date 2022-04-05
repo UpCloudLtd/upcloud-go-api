@@ -15,6 +15,7 @@ import (
 	"github.com/jackc/pgconn"
 	"github.com/jackc/pgx/v4"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/request"
@@ -808,6 +809,54 @@ func TestService_ModifyManagedDatabase(t *testing.T) {
 			}
 		}
 		assert.False(t, publicComponentFound)
+	})
+}
+
+func TestService_UpgradeManagedDatabaseVersion(t *testing.T) {
+	record(t, "upgrademanageddatabaseversion", func(t *testing.T, r *recorder.Recorder, svc *Service) {
+		// This test uses manually created database with postgres version 13
+		// This is because upgrading version requires "Started" state; waiting for started state in tests
+		// results in huge amount of requests made to verify the state and simply takes too long
+		details, err := svc.GetManagedDatabase(&request.GetManagedDatabaseRequest{
+			UUID: "09788889-be2d-48da-a527-962b26014b54",
+		})
+
+		require.NoError(t, err)
+		assert.Equal(t, "13", details.Properties["version"])
+
+		targetVersion := "14"
+		updatedDetails, err := svc.UpgradeManagedDatabaseVersion(&request.UpgradeManagedDatabaseVersionRequest{
+			UUID:          details.UUID,
+			TargetVersion: targetVersion,
+		})
+
+		assert.NoError(t, err)
+		assert.Equal(t, targetVersion, updatedDetails.Properties["version"])
+	})
+}
+
+func TestService_GetManagedDatabaseVersions(t *testing.T) {
+	record(t, "getmanageddatabaseversions", func(t *testing.T, r *recorder.Recorder, svc *Service) {
+		details, err := svc.CreateManagedDatabase(getTestCreateRequest("getmanageddatabaseversions"))
+		require.NoError(t, err)
+
+		defer func() {
+			t.Logf("deleting %s", details.UUID)
+			err := svc.DeleteManagedDatabase(&request.DeleteManagedDatabaseRequest{UUID: details.UUID})
+			require.NoError(t, err)
+		}()
+
+		versions, err := svc.GetManagedDatabaseVersions(&request.GetManagedDatabaseVersionsRequest{
+			UUID: details.UUID,
+		})
+
+		require.NoError(t, err)
+		assert.Len(t, versions, 5)
+		assert.Contains(t, versions, "10")
+		assert.Contains(t, versions, "11")
+		assert.Contains(t, versions, "12")
+		assert.Contains(t, versions, "13")
+		assert.Contains(t, versions, "14")
 	})
 }
 
