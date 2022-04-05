@@ -878,6 +878,9 @@ func TestModifyLoadBalancerDynamicCertificateBundleRequest(t *testing.T) {
 func TestGetLoadBalancerCertificateBundlesRequest(t *testing.T) {
 	r := GetLoadBalancerCertificateBundlesRequest{}
 	assert.Equal(t, "/load-balancer/certificate-bundles", r.RequestURL())
+
+	r.Page = DefaultPage
+	assert.Equal(t, "/load-balancer/certificate-bundles?limit=100&offset=0", r.RequestURL())
 }
 
 func TestGetLoadBalancerCertificateBundleRequest(t *testing.T) {

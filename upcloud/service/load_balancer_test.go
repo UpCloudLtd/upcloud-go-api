@@ -635,6 +635,16 @@ func TestLoadBalancerCerticateBundlesAndFrontendTLSConfigs(t *testing.T) {
 		t.Logf("Fetched certificate bundle list (%d)", len(certs))
 		assert.Len(t, certs, 2)
 
+		certs, err = svc.GetLoadBalancerCertificateBundles(&request.GetLoadBalancerCertificateBundlesRequest{
+			Page: &request.Page{
+				Size:   1,
+				Number: 0,
+			},
+		})
+		assert.NoError(t, err)
+		t.Logf("Fetched first item in certificate bundle list (%d)", len(certs))
+		assert.Len(t, certs, 1)
+
 		cert, err := svc.GetLoadBalancerCertificateBundle(&request.GetLoadBalancerCertificateBundleRequest{UUID: dc.UUID})
 		assert.NoError(t, err)
 		t.Logf("Fetched certificate bundle %s", cert.Name)
