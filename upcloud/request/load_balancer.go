@@ -47,7 +47,7 @@ func (r *CreateLoadBalancerRequest) RequestURL() string {
 	return "/load-balancer"
 }
 
-// CreateLoadBalancerRequest represents a request to modify load balancer
+// ModifyLoadBalancerRequest represents a request to modify load balancer
 type ModifyLoadBalancerRequest struct {
 	UUID             string `json:"-"`
 	Name             string `json:"name,omitempty"`
@@ -110,8 +110,8 @@ func (r *GetLoadBalancerBackendRequest) RequestURL() string {
 
 // ModifyLoadBalancerBackend represents the payload for ModifyLoadBalancerBackendRequest
 type ModifyLoadBalancerBackend struct {
-	Name     string `json:"name,omitempty"`
-	Resolver string `json:"resolver,omitempty"`
+	Name     string  `json:"name,omitempty"`
+	Resolver *string `json:"resolver,omitempty"`
 }
 
 // ModifyLoadBalancerBackendRequest represents a request to modify load balancer backend
@@ -186,12 +186,23 @@ func (r *GetLoadBalancerBackendMemberRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/backends/%s/members/%s", r.ServiceUUID, r.BackendName, r.Name)
 }
 
+// ModifyLoadBalancerBackendMember represents the payload for backend member modification request
+type ModifyLoadBalancerBackendMember struct {
+	Type        upcloud.LoadBalancerBackendMemberType `json:"type,omitempty"`
+	Name        string                                `json:"name,omitempty"`
+	Weight      *int                                  `json:"weight,omitempty"`
+	MaxSessions *int                                  `json:"max_sessions,omitempty"`
+	Enabled     *bool                                 `json:"enabled,omitempty"`
+	IP          *string                               `json:"ip,omitempty"`
+	Port        int                                   `json:"port,omitempty"`
+}
+
 // ModifyLoadBalancerBackendMemberRequest represents a request to modify load balancer backend member
 type ModifyLoadBalancerBackendMemberRequest struct {
 	ServiceUUID string `json:"-"`
 	BackendName string `json:"-"`
 	Name        string `json:"-"`
-	Member      LoadBalancerBackendMember
+	Member      ModifyLoadBalancerBackendMember
 }
 
 func (r *ModifyLoadBalancerBackendMemberRequest) RequestURL() string {
@@ -216,7 +227,7 @@ func (r *DeleteLoadBalancerBackendMemberRequest) RequestURL() string {
 // LoadBalancerResolver represents resolver payload
 type LoadBalancerResolver struct {
 	Name         string   `json:"name,omitempty"`
-	Nameservers  []string `json:"nameservers,omitempty"`
+	Nameservers  []string `json:"nameservers"`
 	Retries      int      `json:"retries,omitempty"`
 	Timeout      int      `json:"timeout,omitempty"`
 	TimeoutRetry int      `json:"timeout_retry,omitempty"`
@@ -314,14 +325,6 @@ func (r *GetLoadBalancerFrontendRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/frontends/%s", r.ServiceUUID, r.Name)
 }
 
-// LoadBalancerFrontendRule represents frontend rule payload
-type LoadBalancerFrontendRule struct {
-	Name     string                        `json:"name"`
-	Priority int                           `json:"priority"`
-	Matchers []upcloud.LoadBalancerMatcher `json:"matchers"`
-	Actions  []upcloud.LoadBalancerAction  `json:"actions"`
-}
-
 // LoadBalancerFrontend represents frontend payload
 type LoadBalancerFrontend struct {
 	Name           string                          `json:"name,omitempty"`
@@ -400,6 +403,14 @@ func (r *GetLoadBalancerFrontendRuleRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/frontends/%s/rules/%s", r.ServiceUUID, r.FrontendName, r.Name)
 }
 
+// LoadBalancerFrontendRule represents frontend rule payload
+type LoadBalancerFrontendRule struct {
+	Name     string                        `json:"name"`
+	Priority int                           `json:"priority"`
+	Matchers []upcloud.LoadBalancerMatcher `json:"matchers"`
+	Actions  []upcloud.LoadBalancerAction  `json:"actions"`
+}
+
 // CreateLoadBalancerFrontendRuleRequest represents a request to create frontend rule
 type CreateLoadBalancerFrontendRuleRequest struct {
 	ServiceUUID  string `json:"-"`
@@ -434,7 +445,7 @@ func (r *ReplaceLoadBalancerFrontendRuleRequest) RequestURL() string {
 // ModifyLoadBalancerFrontendRule represents frontend rule modification payload
 type ModifyLoadBalancerFrontendRule struct {
 	Name     string `json:"name,omitempty"`
-	Priority int    `json:"priority,omitempty"`
+	Priority *int   `json:"priority,omitempty"`
 }
 
 // ModifyLoadBalancerFrontendRuleRequest represents a request to modify frontend rule
@@ -554,7 +565,7 @@ type ModifyLoadBalancerCertificateBundleRequest struct {
 	UUID          string   `json:"-"`
 	Name          string   `json:"name,omitempty"`
 	Certificate   string   `json:"certificate,omitempty"`
-	Intermediates string   `json:"intermediates,omitempty"`
+	Intermediates *string  `json:"intermediates,omitempty"`
 	PrivateKey    string   `json:"private_key,omitempty"`
 	Hostnames     []string `json:"hostnames,omitempty"`
 }

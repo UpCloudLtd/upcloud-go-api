@@ -158,7 +158,7 @@ func TestModifyLoadBalancerBackendRequest(t *testing.T) {
 		Name:        "be",
 		Backend: ModifyLoadBalancerBackend{
 			Name:     "newnew",
-			Resolver: "newresolver",
+			Resolver: upcloud.StringPtr("newresolver"),
 		},
 	}
 
@@ -169,9 +169,44 @@ func TestModifyLoadBalancerBackendRequest(t *testing.T) {
 	}`
 
 	actualJson, err := json.Marshal(&r)
-
 	require.NoError(t, err)
 	assert.Exactly(t, "/load-balancer/lb/backends/be", r.RequestURL())
+	assert.JSONEq(t, expectedJson, string(actualJson))
+
+	r = ModifyLoadBalancerBackendRequest{
+		ServiceUUID: "lb",
+		Name:        "be",
+		Backend: ModifyLoadBalancerBackend{
+			Name:     "newnew",
+			Resolver: upcloud.StringPtr(""),
+		},
+	}
+
+	expectedJson = `
+	{
+		"name": "newnew",
+		"resolver": ""	
+	}`
+
+	actualJson, err = json.Marshal(&r)
+	require.NoError(t, err)
+	assert.JSONEq(t, expectedJson, string(actualJson))
+
+	r = ModifyLoadBalancerBackendRequest{
+		ServiceUUID: "lb",
+		Name:        "be",
+		Backend: ModifyLoadBalancerBackend{
+			Name: "newnew",
+		},
+	}
+
+	expectedJson = `
+	{
+		"name": "newnew"
+	}`
+
+	actualJson, err = json.Marshal(&r)
+	require.NoError(t, err)
 	assert.JSONEq(t, expectedJson, string(actualJson))
 }
 
@@ -286,13 +321,13 @@ func TestModifyLoadBalancerBackendMemberRequest(t *testing.T) {
 		ServiceUUID: "lb",
 		BackendName: "be",
 		Name:        "mem",
-		Member: LoadBalancerBackendMember{
+		Member: ModifyLoadBalancerBackendMember{
 			Name:        "newmem",
-			Weight:      100,
-			MaxSessions: 5,
-			Enabled:     true,
+			Weight:      upcloud.IntPtr(100),
+			MaxSessions: upcloud.IntPtr(5),
+			Enabled:     upcloud.BoolPtr(true),
 			Type:        "static",
-			IP:          "10.0.0.1",
+			IP:          upcloud.StringPtr("10.0.0.1"),
 			Port:        80,
 		},
 	}
@@ -309,9 +344,50 @@ func TestModifyLoadBalancerBackendMemberRequest(t *testing.T) {
 	}`
 
 	actualJson, err := json.Marshal(&r)
-
 	require.NoError(t, err)
 	assert.Exactly(t, "/load-balancer/lb/backends/be/members/mem", r.RequestURL())
+	assert.JSONEq(t, expectedJson, string(actualJson))
+
+	r = ModifyLoadBalancerBackendMemberRequest{
+		ServiceUUID: "lb",
+		BackendName: "be",
+		Name:        "mem",
+		Member: ModifyLoadBalancerBackendMember{
+			Weight:      upcloud.IntPtr(0),
+			MaxSessions: upcloud.IntPtr(0),
+			Enabled:     upcloud.BoolPtr(false),
+			IP:          upcloud.StringPtr(""),
+		},
+	}
+
+	expectedJson = `
+	{
+		"weight": 0,
+		"max_sessions": 0,
+		"enabled": false,
+		"ip": ""
+	}`
+
+	actualJson, err = json.Marshal(&r)
+	require.NoError(t, err)
+	assert.JSONEq(t, expectedJson, string(actualJson))
+
+	r = ModifyLoadBalancerBackendMemberRequest{
+		ServiceUUID: "lb",
+		BackendName: "be",
+		Name:        "mem",
+		Member: ModifyLoadBalancerBackendMember{
+			Name: "test-name",
+		},
+	}
+
+	expectedJson = `
+	{
+		"name": "test-name"
+	}`
+
+	actualJson, err = json.Marshal(&r)
+	require.NoError(t, err)
 	assert.JSONEq(t, expectedJson, string(actualJson))
 }
 
@@ -414,9 +490,25 @@ func TestModifyLoadBalancerResolverRequest(t *testing.T) {
 	}`
 
 	actualJson, err := json.Marshal(&r)
-
 	require.NoError(t, err)
 	assert.EqualValues(t, "/load-balancer/service-uuid/resolvers/sesese", r.RequestURL())
+	assert.JSONEq(t, expectedJson, string(actualJson))
+
+	r = ModifyLoadBalancerRevolverRequest{
+		ServiceUUID: "service-uuid",
+		Name:        "sesese",
+		Resolver: LoadBalancerResolver{
+			Nameservers: []string{},
+		},
+	}
+
+	expectedJson = `
+	{
+		"nameservers":[]
+	}`
+
+	actualJson, err = json.Marshal(&r)
+	require.NoError(t, err)
 	assert.JSONEq(t, expectedJson, string(actualJson))
 }
 
@@ -549,6 +641,21 @@ func TestModifyLoadBalancerFrontendRequest(t *testing.T) {
 	assert.NoError(t, err)
 	assert.JSONEq(t, expected, string(actual))
 	assert.Equal(t, "/load-balancer/sid/frontends/example", r.RequestURL())
+
+	expected = `
+	{
+		"name": "example-frontend"
+	}`
+	r = ModifyLoadBalancerFrontendRequest{
+		ServiceUUID: "sid",
+		Name:        "example",
+		Frontend: ModifyLoadBalancerFrontend{
+			Name: "example-frontend",
+		},
+	}
+	actual, err = json.Marshal(&r)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expected, string(actual))
 }
 
 func TestDeleteLoadBalancerFrontendRequest(t *testing.T) {
@@ -692,13 +799,49 @@ func TestModifyLoadBalancerFrontendRuleRequest(t *testing.T) {
 		Name:         "example-rule-1",
 		Rule: ModifyLoadBalancerFrontendRule{
 			Name:     "example-rule-2",
-			Priority: 100,
+			Priority: upcloud.IntPtr(100),
 		},
 	}
 	actual, err := json.Marshal(&r)
 	assert.NoError(t, err)
 	assert.JSONEq(t, expected, string(actual))
 	assert.Equal(t, "/load-balancer/sid/frontends/fename/rules/example-rule-1", r.RequestURL())
+
+	expected = `
+	{
+		"name": "example-rule-2",
+		"priority": 0
+	}
+	`
+	r = ModifyLoadBalancerFrontendRuleRequest{
+		ServiceUUID:  "sid",
+		FrontendName: "fename",
+		Name:         "example-rule-1",
+		Rule: ModifyLoadBalancerFrontendRule{
+			Name:     "example-rule-2",
+			Priority: upcloud.IntPtr(0),
+		},
+	}
+	actual, err = json.Marshal(&r)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expected, string(actual))
+
+	expected = `
+	{
+		"name": "example-rule-2"
+	}
+	`
+	r = ModifyLoadBalancerFrontendRuleRequest{
+		ServiceUUID:  "sid",
+		FrontendName: "fename",
+		Name:         "example-rule-1",
+		Rule: ModifyLoadBalancerFrontendRule{
+			Name: "example-rule-2",
+		},
+	}
+	actual, err = json.Marshal(&r)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expected, string(actual))
 }
 
 func TestDeleteLoadBalancerFrontendRuleRequest(t *testing.T) {
@@ -842,13 +985,49 @@ func TestModifyLoadBalancerManualCertificateBundleRequest(t *testing.T) {
 		UUID:          "id",
 		Name:          "example-manual-certificate",
 		Certificate:   "LS0LS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNIVENDQWNPZ0F3SUJBZ0lVSWlNbzg1cGd0b25kUmVESU1McVR4YjhncHI0d0NnWUlLb1pJemowRUF3SXcKWkRFTE1Ba0dBMVVFQmhNQ1FWVXhFekFSQmdOVkJBZ01DbE52YldVdFUzUmhkR1V4SVRBZkJnTlZCQW9NR0VsdQpkR1Z5Ym1WMElGZHBaR2RwZEhNZ1VIUjVJRXgwWkRFZE1Cc0dBMVVFQXd3VVpHVjJMblZ3YkdJdWRYQmpiRzkxClpDNWpiMjB3SGhjTk1qRXhNREl5TVRJeE1ETTJXaGNOTXpFeE1ESXdNVEl4TURNMldqQmtNUXN3Q1FZRFZRUUcKRXdKQlZURVRNQkVHQTFVRUNBd0tVMjl0WlMxVGRHRjBaVEVoTUI4R0ExVUVDZ3dZU1c1MFpYSnVaWFFnVjJsawpaMmwwY3lCUWRIa2dUSFJrTVIwd0d3WURWUVFEREJSa1pYWXVkWEJzWWk1MWNHTnNiM1ZrTG1OdmJUQlpNQk1HCkJ5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEEwSUFCQmpVcUgyaVNuMFV2ZkU3UDdkT0QrSDBoKytxUWpnTG9OeWQKSTFwMmkvdlJPZmhMa0hCUjIxZ2JCSUdENjllYU1WWnZ4RWNxVWlKVWYwcmxLU3FzKzIralV6QlJNQjBHQTFVZApEZ1FXQkJTYTFaU3V1NkxJczMrc2lSSUJ5MHRXL3RnamZEQWZCZ05WSFNNRUdEQVdnQlNhMVpTdXU2TElzMytzCmlSSUJ5MHRXL3RnamZEQVBCZ05WSFJNQkFmOEVCVEFEQVFIL01Bb0dDQ3FHU000OUJBTUNBMGdBTUVVQ0lRQ3IKWXA5dHc2TmVXTHZGOGwrWm9rSE9QUzUzaGc2SDM0OHNMSjEvNit4YXN3SWdWVmN6WkFDc3JyUWt3TnVBZEVCeQo5TkxJR1VrWlhqeWgwdVFCS2x4Si9Wdz0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=",
-		Intermediates: "LS0tLS1CRdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJ0VENDQVZ1Z0F4SUJBZ0lSQU5wSDZzV0ZtQzErWkdnUzFMWllVZGN3Q2dZSUtvWkl6ajBFQXdJd0pERU0KTUFvR0ExVUVDaE1EWkdWMk1SUXdFZ1lEVlFRREV3dGtaWFlnVW05dmRDQkRRVEFlRncweU1URXlNRGt4TXpVMwpNREZhRncwek1URXlNRGN4TXpVM01ERmFNQ3d4RERBS0JnTlZCQW9UQTJSbGRqRWNNQm9HQTFVRUF4TVRaR1YyCklFbHVkR1Z5YldWa2FXRjBaU0JEUVRCWk1CTUdCeXFHU000OUFnRUdDQ3FHU000OUF3RUhBMElBQkswbGMzNmcKN01TaDJTaXd3MUdDUjkvL3lSODR6S1VuNml6SmdCUkpFTlBxbmNXcjQzTi8rNktJR1EraERaazhRWHZ6RmExYQp2dFloc3JEVGtnRm9EV0tqWmpCa01BNEdBMVVkRHdFQi93UUVBd0lCQmpBU0JnTlZIUk1CQWY4RUNEQUdBUUgvCkFnRUFNQjBHQTFVZERnUVdCQlRWcG44d3hraHZhYVhvajF6c0Rkcmk4eGJuSnpBZkJnTlZIU01FR0RBV2dCU2oKckgwV0pubDdUSUJtc3NESGVveENFTVZyRmpBS0JnZ3Foa2pPUFFRREFnTklBREJGQWlBa3NhUXdPMkFESGhBLwppRVR1SVY1dTlNV3hFTU5BVGlVODFIZjc0cGVhWlFJaEFLMnJDRmhVVnQxbFlzR1o3dFdjWGFHVDhyU1k2cU1YClBmK3dnUXFnNXUyVAotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==",
+		Intermediates: upcloud.StringPtr("LS0tLS1CRdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJ0VENDQVZ1Z0F4SUJBZ0lSQU5wSDZzV0ZtQzErWkdnUzFMWllVZGN3Q2dZSUtvWkl6ajBFQXdJd0pERU0KTUFvR0ExVUVDaE1EWkdWMk1SUXdFZ1lEVlFRREV3dGtaWFlnVW05dmRDQkRRVEFlRncweU1URXlNRGt4TXpVMwpNREZhRncwek1URXlNRGN4TXpVM01ERmFNQ3d4RERBS0JnTlZCQW9UQTJSbGRqRWNNQm9HQTFVRUF4TVRaR1YyCklFbHVkR1Z5YldWa2FXRjBaU0JEUVRCWk1CTUdCeXFHU000OUFnRUdDQ3FHU000OUF3RUhBMElBQkswbGMzNmcKN01TaDJTaXd3MUdDUjkvL3lSODR6S1VuNml6SmdCUkpFTlBxbmNXcjQzTi8rNktJR1EraERaazhRWHZ6RmExYQp2dFloc3JEVGtnRm9EV0tqWmpCa01BNEdBMVVkRHdFQi93UUVBd0lCQmpBU0JnTlZIUk1CQWY4RUNEQUdBUUgvCkFnRUFNQjBHQTFVZERnUVdCQlRWcG44d3hraHZhYVhvajF6c0Rkcmk4eGJuSnpBZkJnTlZIU01FR0RBV2dCU2oKckgwV0pubDdUSUJtc3NESGVveENFTVZyRmpBS0JnZ3Foa2pPUFFRREFnTklBREJGQWlBa3NhUXdPMkFESGhBLwppRVR1SVY1dTlNV3hFTU5BVGlVODFIZjc0cGVhWlFJaEFLMnJDRmhVVnQxbFlzR1o3dFdjWGFHVDhyU1k2cU1YClBmK3dnUXFnNXUyVAotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg=="),
 		PrivateKey:    "LS0tL1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR0hBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ3NQMzI2RlIxcmNwL0xybmcKNFBCT3BLRjIzSUNaM01GdGNrZFJuWkFESnRlaFJBTkNBQVFZMUtoOW9rcDlGTDN4T3orM1RnL2g5SWZ2cWtJNApDNkRjblNOYWRvdjcwVG40UzVCd1VkdFlHd1NCZyt2WG1qRldiOFJIS2xJaVZIOUs1U2txclB0dgotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tCg==",
 	}
 	actual, err := json.Marshal(&r)
 	assert.NoError(t, err)
 	assert.JSONEq(t, expected, string(actual))
 	assert.Equal(t, "/load-balancer/certificate-bundles/id", r.RequestURL())
+
+	expected = `
+	{
+		"name": "example-manual-certificate",
+		"certificate": "LS0LS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNIVENDQWNPZ0F3SUJBZ0lVSWlNbzg1cGd0b25kUmVESU1McVR4YjhncHI0d0NnWUlLb1pJemowRUF3SXcKWkRFTE1Ba0dBMVVFQmhNQ1FWVXhFekFSQmdOVkJBZ01DbE52YldVdFUzUmhkR1V4SVRBZkJnTlZCQW9NR0VsdQpkR1Z5Ym1WMElGZHBaR2RwZEhNZ1VIUjVJRXgwWkRFZE1Cc0dBMVVFQXd3VVpHVjJMblZ3YkdJdWRYQmpiRzkxClpDNWpiMjB3SGhjTk1qRXhNREl5TVRJeE1ETTJXaGNOTXpFeE1ESXdNVEl4TURNMldqQmtNUXN3Q1FZRFZRUUcKRXdKQlZURVRNQkVHQTFVRUNBd0tVMjl0WlMxVGRHRjBaVEVoTUI4R0ExVUVDZ3dZU1c1MFpYSnVaWFFnVjJsawpaMmwwY3lCUWRIa2dUSFJrTVIwd0d3WURWUVFEREJSa1pYWXVkWEJzWWk1MWNHTnNiM1ZrTG1OdmJUQlpNQk1HCkJ5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEEwSUFCQmpVcUgyaVNuMFV2ZkU3UDdkT0QrSDBoKytxUWpnTG9OeWQKSTFwMmkvdlJPZmhMa0hCUjIxZ2JCSUdENjllYU1WWnZ4RWNxVWlKVWYwcmxLU3FzKzIralV6QlJNQjBHQTFVZApEZ1FXQkJTYTFaU3V1NkxJczMrc2lSSUJ5MHRXL3RnamZEQWZCZ05WSFNNRUdEQVdnQlNhMVpTdXU2TElzMytzCmlSSUJ5MHRXL3RnamZEQVBCZ05WSFJNQkFmOEVCVEFEQVFIL01Bb0dDQ3FHU000OUJBTUNBMGdBTUVVQ0lRQ3IKWXA5dHc2TmVXTHZGOGwrWm9rSE9QUzUzaGc2SDM0OHNMSjEvNit4YXN3SWdWVmN6WkFDc3JyUWt3TnVBZEVCeQo5TkxJR1VrWlhqeWgwdVFCS2x4Si9Wdz0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=",
+		"private_key": "LS0tL1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR0hBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ3NQMzI2RlIxcmNwL0xybmcKNFBCT3BLRjIzSUNaM01GdGNrZFJuWkFESnRlaFJBTkNBQVFZMUtoOW9rcDlGTDN4T3orM1RnL2g5SWZ2cWtJNApDNkRjblNOYWRvdjcwVG40UzVCd1VkdFlHd1NCZyt2WG1qRldiOFJIS2xJaVZIOUs1U2txclB0dgotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tCg=="
+	}
+	`
+	r = ModifyLoadBalancerCertificateBundleRequest{
+		UUID:        "id",
+		Name:        "example-manual-certificate",
+		Certificate: "LS0LS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNIVENDQWNPZ0F3SUJBZ0lVSWlNbzg1cGd0b25kUmVESU1McVR4YjhncHI0d0NnWUlLb1pJemowRUF3SXcKWkRFTE1Ba0dBMVVFQmhNQ1FWVXhFekFSQmdOVkJBZ01DbE52YldVdFUzUmhkR1V4SVRBZkJnTlZCQW9NR0VsdQpkR1Z5Ym1WMElGZHBaR2RwZEhNZ1VIUjVJRXgwWkRFZE1Cc0dBMVVFQXd3VVpHVjJMblZ3YkdJdWRYQmpiRzkxClpDNWpiMjB3SGhjTk1qRXhNREl5TVRJeE1ETTJXaGNOTXpFeE1ESXdNVEl4TURNMldqQmtNUXN3Q1FZRFZRUUcKRXdKQlZURVRNQkVHQTFVRUNBd0tVMjl0WlMxVGRHRjBaVEVoTUI4R0ExVUVDZ3dZU1c1MFpYSnVaWFFnVjJsawpaMmwwY3lCUWRIa2dUSFJrTVIwd0d3WURWUVFEREJSa1pYWXVkWEJzWWk1MWNHTnNiM1ZrTG1OdmJUQlpNQk1HCkJ5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEEwSUFCQmpVcUgyaVNuMFV2ZkU3UDdkT0QrSDBoKytxUWpnTG9OeWQKSTFwMmkvdlJPZmhMa0hCUjIxZ2JCSUdENjllYU1WWnZ4RWNxVWlKVWYwcmxLU3FzKzIralV6QlJNQjBHQTFVZApEZ1FXQkJTYTFaU3V1NkxJczMrc2lSSUJ5MHRXL3RnamZEQWZCZ05WSFNNRUdEQVdnQlNhMVpTdXU2TElzMytzCmlSSUJ5MHRXL3RnamZEQVBCZ05WSFJNQkFmOEVCVEFEQVFIL01Bb0dDQ3FHU000OUJBTUNBMGdBTUVVQ0lRQ3IKWXA5dHc2TmVXTHZGOGwrWm9rSE9QUzUzaGc2SDM0OHNMSjEvNit4YXN3SWdWVmN6WkFDc3JyUWt3TnVBZEVCeQo5TkxJR1VrWlhqeWgwdVFCS2x4Si9Wdz0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=",
+		PrivateKey:  "LS0tL1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR0hBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ3NQMzI2RlIxcmNwL0xybmcKNFBCT3BLRjIzSUNaM01GdGNrZFJuWkFESnRlaFJBTkNBQVFZMUtoOW9rcDlGTDN4T3orM1RnL2g5SWZ2cWtJNApDNkRjblNOYWRvdjcwVG40UzVCd1VkdFlHd1NCZyt2WG1qRldiOFJIS2xJaVZIOUs1U2txclB0dgotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tCg==",
+	}
+	actual, err = json.Marshal(&r)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expected, string(actual))
+
+	expected = `
+	{
+		"name": "example-manual-certificate",
+		"certificate": "LS0LS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNIVENDQWNPZ0F3SUJBZ0lVSWlNbzg1cGd0b25kUmVESU1McVR4YjhncHI0d0NnWUlLb1pJemowRUF3SXcKWkRFTE1Ba0dBMVVFQmhNQ1FWVXhFekFSQmdOVkJBZ01DbE52YldVdFUzUmhkR1V4SVRBZkJnTlZCQW9NR0VsdQpkR1Z5Ym1WMElGZHBaR2RwZEhNZ1VIUjVJRXgwWkRFZE1Cc0dBMVVFQXd3VVpHVjJMblZ3YkdJdWRYQmpiRzkxClpDNWpiMjB3SGhjTk1qRXhNREl5TVRJeE1ETTJXaGNOTXpFeE1ESXdNVEl4TURNMldqQmtNUXN3Q1FZRFZRUUcKRXdKQlZURVRNQkVHQTFVRUNBd0tVMjl0WlMxVGRHRjBaVEVoTUI4R0ExVUVDZ3dZU1c1MFpYSnVaWFFnVjJsawpaMmwwY3lCUWRIa2dUSFJrTVIwd0d3WURWUVFEREJSa1pYWXVkWEJzWWk1MWNHTnNiM1ZrTG1OdmJUQlpNQk1HCkJ5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEEwSUFCQmpVcUgyaVNuMFV2ZkU3UDdkT0QrSDBoKytxUWpnTG9OeWQKSTFwMmkvdlJPZmhMa0hCUjIxZ2JCSUdENjllYU1WWnZ4RWNxVWlKVWYwcmxLU3FzKzIralV6QlJNQjBHQTFVZApEZ1FXQkJTYTFaU3V1NkxJczMrc2lSSUJ5MHRXL3RnamZEQWZCZ05WSFNNRUdEQVdnQlNhMVpTdXU2TElzMytzCmlSSUJ5MHRXL3RnamZEQVBCZ05WSFJNQkFmOEVCVEFEQVFIL01Bb0dDQ3FHU000OUJBTUNBMGdBTUVVQ0lRQ3IKWXA5dHc2TmVXTHZGOGwrWm9rSE9QUzUzaGc2SDM0OHNMSjEvNit4YXN3SWdWVmN6WkFDc3JyUWt3TnVBZEVCeQo5TkxJR1VrWlhqeWgwdVFCS2x4Si9Wdz0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=",
+		"intermediates": "",
+		"private_key": "LS0tL1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR0hBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ3NQMzI2RlIxcmNwL0xybmcKNFBCT3BLRjIzSUNaM01GdGNrZFJuWkFESnRlaFJBTkNBQVFZMUtoOW9rcDlGTDN4T3orM1RnL2g5SWZ2cWtJNApDNkRjblNOYWRvdjcwVG40UzVCd1VkdFlHd1NCZyt2WG1qRldiOFJIS2xJaVZIOUs1U2txclB0dgotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tCg=="
+	}
+	`
+	r = ModifyLoadBalancerCertificateBundleRequest{
+		UUID:          "id",
+		Name:          "example-manual-certificate",
+		Certificate:   "LS0LS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNIVENDQWNPZ0F3SUJBZ0lVSWlNbzg1cGd0b25kUmVESU1McVR4YjhncHI0d0NnWUlLb1pJemowRUF3SXcKWkRFTE1Ba0dBMVVFQmhNQ1FWVXhFekFSQmdOVkJBZ01DbE52YldVdFUzUmhkR1V4SVRBZkJnTlZCQW9NR0VsdQpkR1Z5Ym1WMElGZHBaR2RwZEhNZ1VIUjVJRXgwWkRFZE1Cc0dBMVVFQXd3VVpHVjJMblZ3YkdJdWRYQmpiRzkxClpDNWpiMjB3SGhjTk1qRXhNREl5TVRJeE1ETTJXaGNOTXpFeE1ESXdNVEl4TURNMldqQmtNUXN3Q1FZRFZRUUcKRXdKQlZURVRNQkVHQTFVRUNBd0tVMjl0WlMxVGRHRjBaVEVoTUI4R0ExVUVDZ3dZU1c1MFpYSnVaWFFnVjJsawpaMmwwY3lCUWRIa2dUSFJrTVIwd0d3WURWUVFEREJSa1pYWXVkWEJzWWk1MWNHTnNiM1ZrTG1OdmJUQlpNQk1HCkJ5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEEwSUFCQmpVcUgyaVNuMFV2ZkU3UDdkT0QrSDBoKytxUWpnTG9OeWQKSTFwMmkvdlJPZmhMa0hCUjIxZ2JCSUdENjllYU1WWnZ4RWNxVWlKVWYwcmxLU3FzKzIralV6QlJNQjBHQTFVZApEZ1FXQkJTYTFaU3V1NkxJczMrc2lSSUJ5MHRXL3RnamZEQWZCZ05WSFNNRUdEQVdnQlNhMVpTdXU2TElzMytzCmlSSUJ5MHRXL3RnamZEQVBCZ05WSFJNQkFmOEVCVEFEQVFIL01Bb0dDQ3FHU000OUJBTUNBMGdBTUVVQ0lRQ3IKWXA5dHc2TmVXTHZGOGwrWm9rSE9QUzUzaGc2SDM0OHNMSjEvNit4YXN3SWdWVmN6WkFDc3JyUWt3TnVBZEVCeQo5TkxJR1VrWlhqeWgwdVFCS2x4Si9Wdz0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=",
+		Intermediates: upcloud.StringPtr(""),
+		PrivateKey:    "LS0tL1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR0hBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ3NQMzI2RlIxcmNwL0xybmcKNFBCT3BLRjIzSUNaM01GdGNrZFJuWkFESnRlaFJBTkNBQVFZMUtoOW9rcDlGTDN4T3orM1RnL2g5SWZ2cWtJNApDNkRjblNOYWRvdjcwVG40UzVCd1VkdFlHd1NCZyt2WG1qRldiOFJIS2xJaVZIOUs1U2txclB0dgotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tCg==",
+	}
+	actual, err = json.Marshal(&r)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expected, string(actual))
 }
 
 func TestModifyLoadBalancerDynamicCertificateBundleRequest(t *testing.T) {
