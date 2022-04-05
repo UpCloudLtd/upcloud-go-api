@@ -23,6 +23,8 @@ type ManagedDatabaseServiceManager interface {
 	GetManagedDatabaseQueryStatisticsPostgreSQL(r *request.GetManagedDatabaseQueryStatisticsRequest) ([]upcloud.ManagedDatabaseQueryStatisticsPostgreSQL, error)
 	DeleteManagedDatabase(r *request.DeleteManagedDatabaseRequest) error
 	ModifyManagedDatabase(r *request.ModifyManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
+	UpgradeManagedDatabaseVersion(r *request.UpgradeManagedDatabaseVersionRequest) (*upcloud.ManagedDatabase, error)
+	GetManagedDatabaseVersions(r *request.GetManagedDatabaseVersionsRequest) ([]string, error)
 	StartManagedDatabase(r *request.StartManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
 	ShutdownManagedDatabase(r *request.ShutdownManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
 	WaitForManagedDatabaseState(r *request.WaitForManagedDatabaseStateRequest) (*upcloud.ManagedDatabase, error)
@@ -261,6 +263,46 @@ func (s *Service) ModifyManagedDatabase(r *request.ModifyManagedDatabaseRequest)
 	}
 
 	return &managedDatabaseDetails, nil
+}
+
+// UpgradeManagedDatabaseServiceVersion upgrades the version of the database service;
+// for the list of available versions use GetManagedDatabaseVersions function
+func (s *Service) UpgradeManagedDatabaseVersion(r *request.UpgradeManagedDatabaseVersionRequest) (*upcloud.ManagedDatabase, error) {
+	managedDatabaseDetails := upcloud.ManagedDatabase{}
+
+	reqBody, err := json.Marshal(r)
+	if err != nil {
+		return nil, err
+	}
+
+	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
+	if err != nil {
+		return nil, parseJSONServiceError(err)
+	}
+
+	err = json.Unmarshal(response, &managedDatabaseDetails)
+	if err != nil {
+		return nil, fmt.Errorf("unable to unmarshal JSON: %w", err)
+	}
+
+	return &managedDatabaseDetails, nil
+}
+
+// GetManagedDatabaseVersions available versions of the specific Managed Database service
+func (s *Service) GetManagedDatabaseVersions(r *request.GetManagedDatabaseVersionsRequest) ([]string, error) {
+	versions := []string{}
+
+	res, err := s.basicGetRequest(r.RequestURL())
+	if err != nil {
+		return nil, parseJSONServiceError(err)
+	}
+
+	err = json.Unmarshal(res, &versions)
+	if err != nil {
+		return nil, fmt.Errorf("unable to unmarshal JSON: %w", err)
+	}
+
+	return versions, nil
 }
 
 // WaitForManagedDatabaseState (EXPERIMENTAL) blocks execution until the specified managed database instance has entered the

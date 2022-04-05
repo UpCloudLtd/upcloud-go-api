@@ -216,6 +216,37 @@ func TestModifyManagedDatabaseRequest_RequestURL(t *testing.T) {
 	assert.Equal(t, "/database/fake", req.RequestURL())
 }
 
+func TestUpgradeManagedDatabaseRequest_RequestURL(t *testing.T) {
+	req := UpgradeManagedDatabaseVersionRequest{
+		UUID:          "fake",
+		TargetVersion: "14",
+	}
+
+	assert.Equal(t, "/database/fake/upgrade", req.RequestURL())
+}
+
+func TestUpgradeManagedDatabaseVersion_MarshalJSON(t *testing.T) {
+	expectedJson := `
+	{
+		"target_version": "14"	
+	}`
+
+	actualJson, _ := json.Marshal(&UpgradeManagedDatabaseVersionRequest{
+		UUID:          "fake",
+		TargetVersion: "14",
+	})
+
+	assert.JSONEq(t, expectedJson, string(actualJson))
+}
+
+func TestGetManagedDatabaseVersionsRequest_RequestURL(t *testing.T) {
+	req := GetManagedDatabaseVersionsRequest{
+		UUID: "fake",
+	}
+
+	assert.Equal(t, "/database/fake/versions", req.RequestURL())
+}
+
 func TestShutdownManagedDatabaseRequest_MarshalJSON(t *testing.T) {
 	d, _ := json.Marshal(&ShutdownManagedDatabaseRequest{})
 	assert.Equal(t, `{"powered":false}`, string(d))
