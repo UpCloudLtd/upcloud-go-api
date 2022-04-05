@@ -369,13 +369,33 @@ func (s *Service) DeleteLoadBalancerResolver(r *request.DeleteLoadBalancerResolv
 // GetLoadBalancerPlans retrieves a list of load balancer plans.
 func (s *Service) GetLoadBalancerPlans(r *request.GetLoadBalancerPlansRequest) ([]upcloud.LoadBalancerPlan, error) {
 	plans := make([]upcloud.LoadBalancerPlan, 0)
-	res, err := s.basicGetRequest(r.RequestURL())
-	if err != nil {
-		return nil, parseJSONServiceError(err)
+
+	if r.Page != nil {
+		return plans, s.get(r.RequestURL(), &plans)
 	}
 
-	err = json.Unmarshal(res, &plans)
-	return plans, err
+	// copy request value so that we are not altering original request
+	req := *r
+
+	// use default page size and get all available records
+	req.Page = request.DefaultPage
+
+	// loop until max result is reached or until response doesn't fill our page anymore
+	for len(plans) <= request.PageResultMaxSize {
+		p := make([]upcloud.LoadBalancerPlan, 0)
+		if err := s.get(req.RequestURL(), &p); err != nil || len(p) < 1 {
+			return plans, err
+		}
+
+		plans = append(plans, p...)
+		if len(p) < req.Page.Size {
+			return plans, nil
+		}
+
+		req.Page = req.Page.Next()
+	}
+
+	return plans, nil
 }
 
 // GetLoadBalancerFrontends retrieves a list of load balancer frontends.

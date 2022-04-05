@@ -344,6 +344,12 @@ func TestGetLoadBalancerPlans(t *testing.T) {
 		plans, err := svc.GetLoadBalancerPlans(&request.GetLoadBalancerPlansRequest{})
 		require.NoError(t, err)
 		assert.GreaterOrEqual(t, len(plans), 2)
+		plans, err = svc.GetLoadBalancerPlans(&request.GetLoadBalancerPlansRequest{Page: &request.Page{
+			Size:   1,
+			Number: 0,
+		}})
+		assert.NoError(t, err)
+		assert.Len(t, plans, 1)
 	})
 }
 
