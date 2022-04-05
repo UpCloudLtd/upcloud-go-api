@@ -564,9 +564,15 @@ func (r *ModifyLoadBalancerCertificateBundleRequest) RequestURL() string {
 }
 
 // GetLoadBalancerCertificateBundlesRequest represents a request to list certificate bundles
-type GetLoadBalancerCertificateBundlesRequest struct{}
+// List size can be filtered using optional Page object
+type GetLoadBalancerCertificateBundlesRequest struct {
+	Page *Page
+}
 
 func (r *GetLoadBalancerCertificateBundlesRequest) RequestURL() string {
+	if r.Page != nil {
+		return fmt.Sprintf("%s?%s", loadBalancerCertificateBundleBaseURL, r.Page.String())
+	}
 	return loadBalancerCertificateBundleBaseURL
 }
 

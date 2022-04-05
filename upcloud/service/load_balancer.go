@@ -628,14 +628,30 @@ func (s *Service) DeleteLoadBalancerFrontendTLSConfig(r *request.DeleteLoadBalan
 // GetLoadBalancerCertificateBundles retrieves details of a load balancer certificate bundles.
 func (s *Service) GetLoadBalancerCertificateBundles(r *request.GetLoadBalancerCertificateBundlesRequest) ([]upcloud.LoadBalancerCertificateBundle, error) {
 	certs := make([]upcloud.LoadBalancerCertificateBundle, 0)
-	res, err := s.basicGetRequest(r.RequestURL())
-	if err != nil {
-		return nil, parseJSONServiceError(err)
+
+	if r.Page != nil {
+		return certs, s.get(r.RequestURL(), &certs)
 	}
 
-	err = json.Unmarshal(res, &certs)
-	if err != nil {
-		return nil, err
+	// copy request value so that we are not altering original request
+	req := *r
+
+	// use default page size and get all available records
+	req.Page = request.DefaultPage
+
+	// loop until max result is reached or until response doesn't fill our page anymore
+	for len(certs) <= request.PageResultMaxSize {
+		c := make([]upcloud.LoadBalancerCertificateBundle, 0)
+		if err := s.get(req.RequestURL(), &c); err != nil || len(c) < 1 {
+			return certs, err
+		}
+
+		certs = append(certs, c...)
+		if len(c) < req.Page.Size {
+			return certs, nil
+		}
+
+		req.Page = req.Page.Next()
 	}
 
 	return certs, nil
