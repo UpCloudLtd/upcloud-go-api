@@ -156,10 +156,10 @@ func TestLoadBalancerBackendMember(t *testing.T) {
 			ServiceUUID: lb.UUID,
 			BackendName: backend.Name,
 			Name:        member.Name,
-			Member: request.LoadBalancerBackendMember{
+			Member: request.ModifyLoadBalancerBackendMember{
 				Name:        newName,
-				Weight:      newWeight,
-				MaxSessions: newMaxSessions,
+				Weight:      upcloud.IntPtr(newWeight),
+				MaxSessions: upcloud.IntPtr(newMaxSessions),
 			},
 		})
 
@@ -175,12 +175,10 @@ func TestLoadBalancerBackendMember(t *testing.T) {
 			ServiceUUID: lb.UUID,
 			BackendName: backend.Name,
 			Name:        member.Name,
-			Member: request.LoadBalancerBackendMember{
-				Weight:      member.Weight,
-				MaxSessions: member.MaxSessions,
-				Enabled:     true,
-				IP:          newIp,
-				Port:        newPort,
+			Member: request.ModifyLoadBalancerBackendMember{
+				Enabled: upcloud.BoolPtr(true),
+				IP:      upcloud.StringPtr(newIp),
+				Port:    newPort,
 			},
 		})
 
@@ -482,7 +480,7 @@ func TestLoadBalancerFrontendRule(t *testing.T) {
 			Name:         rule.Name,
 			Rule: request.ModifyLoadBalancerFrontendRule{
 				Name:     "rule",
-				Priority: 20,
+				Priority: upcloud.IntPtr(20),
 			},
 		})
 		require.NoError(t, err)
