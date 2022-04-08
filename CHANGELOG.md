@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- add support for Managed Load Balancer (beta)
+
 ## [4.3.0]
 
 ### Added

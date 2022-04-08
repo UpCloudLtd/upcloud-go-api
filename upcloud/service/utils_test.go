@@ -1,6 +1,8 @@
 package service
 
 import (
+	"errors"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -489,4 +491,96 @@ func getCredentials() (string, string) {
 	}
 
 	return user, password
+}
+
+func createLoadBalancerAndNetwork(svc *Service, zone, addr string) (*upcloud.LoadBalancer, error) {
+	n, err := createLoadBalancerPrivateNetwork(svc, zone, addr)
+	if err != nil {
+		return nil, err
+	}
+	return createLoadBalancer(svc, n.UUID, zone)
+}
+
+func createLoadBalancer(svc *Service, networkUUID, zone string) (*upcloud.LoadBalancer, error) {
+	createLoadBalancerRequest := request.CreateLoadBalancerRequest{
+		Name:             fmt.Sprintf("go-test-lb-%s-%d", zone, time.Now().Unix()),
+		Zone:             zone,
+		Plan:             "development",
+		NetworkUUID:      networkUUID,
+		ConfiguredStatus: "started",
+		Frontends:        []request.LoadBalancerFrontend{},
+		Backends:         []request.LoadBalancerBackend{},
+		Resolvers:        []request.LoadBalancerResolver{},
+	}
+
+	loadBalancerDetails, err := svc.CreateLoadBalancer(&createLoadBalancerRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	return loadBalancerDetails, nil
+}
+
+func waitLoadBalancerToShutdown(svc *Service, lb *upcloud.LoadBalancer) error {
+	const maxRetries int = 100
+	// wait delete request
+	for i := 0; i <= maxRetries; i++ {
+		_, err := svc.GetLoadBalancer(&request.GetLoadBalancerRequest{UUID: lb.UUID})
+		if err != nil {
+			if svcErr, ok := err.(*upcloud.Problem); ok && svcErr.Status == http.StatusNotFound {
+				return nil
+			}
+		}
+		time.Sleep(2 * time.Second)
+	}
+	return errors.New("max retries reached while waiting for load balancer instance to shutdown")
+}
+
+func deleteLoadBalancer(svc *Service, lb *upcloud.LoadBalancer, waitShutdown bool) error {
+	netID := lb.NetworkUUID
+	if err := svc.DeleteLoadBalancer(&request.DeleteLoadBalancerRequest{UUID: lb.UUID}); err != nil {
+		return err
+	}
+	if waitShutdown {
+		if err := waitLoadBalancerToShutdown(svc, lb); err != nil {
+			return fmt.Errorf("unable to shutdown LB '%s' (%s) (check dangling networks)", lb.UUID, lb.Name)
+		}
+	}
+	return svc.DeleteNetwork(&request.DeleteNetworkRequest{UUID: netID})
+}
+
+func createLoadBalancerBackend(svc *Service, lbUUID string) (*upcloud.LoadBalancerBackend, error) {
+	req := request.CreateLoadBalancerBackendRequest{
+		ServiceUUID: lbUUID,
+		Backend: request.LoadBalancerBackend{
+			Name: fmt.Sprintf("go-test-lb-backend-%d", time.Now().Unix()),
+			Members: []request.LoadBalancerBackendMember{
+				{
+					Name:        "default-lb-backend-member",
+					Type:        "dynamic",
+					Weight:      100,
+					MaxSessions: 1000,
+					Enabled:     true,
+					Port:        8000,
+					IP:          "196.123.123.123",
+				},
+			},
+		},
+	}
+
+	return svc.CreateLoadBalancerBackend(&req)
+}
+
+func createLoadBalancerPrivateNetwork(svc *Service, zone, addr string) (*upcloud.Network, error) {
+	return svc.CreateNetwork(&request.CreateNetworkRequest{
+		Name: fmt.Sprintf("go-test-lb-%d", time.Now().Unix()),
+		Zone: zone,
+		IPNetworks: []upcloud.IPNetwork{
+			{
+				Address: addr,
+				DHCP:    upcloud.True,
+				Family:  upcloud.IPAddressFamilyIPv4,
+			},
+		},
+	})
 }
