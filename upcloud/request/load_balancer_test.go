@@ -2,6 +2,7 @@ package request
 
 import (
 	"encoding/json"
+	"fmt"
 	"testing"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
@@ -1070,4 +1071,21 @@ func TestGetLoadBalancerCertificateBundleRequest(t *testing.T) {
 func TestDeleteLoadBalancerCertificateBundleRequest(t *testing.T) {
 	r := GetLoadBalancerCertificateBundleRequest{UUID: "id"}
 	assert.Equal(t, "/load-balancer/certificate-bundles/id", r.RequestURL())
+}
+
+func ExampleLoadBalancerFrontendRule() {
+	rule := LoadBalancerFrontendRule{
+		Name:     "rule-name",
+		Priority: 0,
+		Matchers: []upcloud.LoadBalancerMatcher{
+			NewLoadBalancerHostMatcher("example.com"),
+			NewLoadBalancerSrcPortRangeMatcher(8000, 9000),
+		},
+		Actions: []upcloud.LoadBalancerAction{
+			NewLoadBalancerHTTPRedirectAction("https://internal.example.com"),
+		},
+	}
+	if js, err := json.Marshal(rule); err == nil {
+		fmt.Sprintln(string(js))
+	}
 }
