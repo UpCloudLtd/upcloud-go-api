@@ -149,7 +149,7 @@ func TestMatcheresAndActionsHelper(t *testing.T) {
 		Name:     "rule-name",
 		Priority: 0,
 		Matchers: []upcloud.LoadBalancerMatcher{
-			NewLoadBalancerNumMembersUPMatcher(upcloud.LoadBalancerIntegerMatcherMethodLess, 1, "example-fallback-backend"),
+			NewLoadBalancerNumMembersUpMatcher(upcloud.LoadBalancerIntegerMatcherMethodLess, 1, "example-fallback-backend"),
 			NewLoadBalancerPathMatcher(upcloud.LoadBalancerStringMatcherMethodExact, "/app", nil),
 			NewLoadBalancerURLParamMatcher(upcloud.LoadBalancerStringMatcherMethodExact, "status", "active", &isTrue),
 			NewLoadBalancerHeaderMatcher(upcloud.LoadBalancerStringMatcherMethodExists, "X-Test", "", nil),
