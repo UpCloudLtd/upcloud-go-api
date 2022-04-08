@@ -40,10 +40,10 @@ func NewLoadBalancerUseBackendAction(name string) upcloud.LoadBalancerAction {
 	}
 }
 
-func NewLoadBalancerNumMembersUPMatcher(m upcloud.LoadBalancerIntegerMatcherMethod, count int, backend string) upcloud.LoadBalancerMatcher {
+func NewLoadBalancerNumMembersUpMatcher(m upcloud.LoadBalancerIntegerMatcherMethod, count int, backend string) upcloud.LoadBalancerMatcher {
 	return upcloud.LoadBalancerMatcher{
-		Type: upcloud.LoadBalancerMatcherTypeNumMembersUP,
-		NumMembersUP: &upcloud.LoadBalancerMatcherNumMembersUP{
+		Type: upcloud.LoadBalancerMatcherTypeNumMembersUp,
+		NumMembersUp: &upcloud.LoadBalancerMatcherNumMembersUp{
 			Method:  m,
 			Value:   count,
 			Backend: backend,
