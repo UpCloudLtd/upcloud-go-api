@@ -466,7 +466,7 @@ func TestGetLoadBalancerResolverRequest(t *testing.T) {
 }
 
 func TestModifyLoadBalancerResolverRequest(t *testing.T) {
-	r := ModifyLoadBalancerRevolverRequest{
+	r := ModifyLoadBalancerResolverRequest{
 		ServiceUUID: "service-uuid",
 		Name:        "sesese",
 		Resolver: LoadBalancerResolver{
@@ -495,7 +495,7 @@ func TestModifyLoadBalancerResolverRequest(t *testing.T) {
 	assert.EqualValues(t, "/load-balancer/service-uuid/resolvers/sesese", r.RequestURL())
 	assert.JSONEq(t, expectedJson, string(actualJson))
 
-	r = ModifyLoadBalancerRevolverRequest{
+	r = ModifyLoadBalancerResolverRequest{
 		ServiceUUID: "service-uuid",
 		Name:        "sesese",
 		Resolver: LoadBalancerResolver{
