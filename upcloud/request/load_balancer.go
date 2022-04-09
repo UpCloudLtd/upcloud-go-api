@@ -249,7 +249,7 @@ func (r *CreateLoadBalancerResolverRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/resolvers", r.ServiceUUID)
 }
 
-// ModifyLoadBalancerRevosverRequest represents a request to modify load balancer resolver
+// ModifyLoadBalancerResolverRequest represents a request to modify load balancer resolver
 type ModifyLoadBalancerResolverRequest struct {
 	ServiceUUID string `json:"-"`
 	Name        string `json:"-"`
