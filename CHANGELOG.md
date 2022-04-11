@@ -5,13 +5,16 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Fixed
+- Managed Load Balancer resolver request spelling
+
 ## [4.4.1]
 
 ### Added
 - Managed Load Balancer request example
 
 ### Fixed
-- num_members_up matcher naming convention
+- Managed Load Balancer num_members_up matcher naming convention
 
 ## [4.4.0]
 

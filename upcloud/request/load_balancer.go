@@ -249,18 +249,18 @@ func (r *CreateLoadBalancerResolverRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/resolvers", r.ServiceUUID)
 }
 
-// ModifyLoadBalancerRevolverRequest represents a request to modify load balancer resolver
-type ModifyLoadBalancerRevolverRequest struct {
+// ModifyLoadBalancerResolverRequest represents a request to modify load balancer resolver
+type ModifyLoadBalancerResolverRequest struct {
 	ServiceUUID string `json:"-"`
 	Name        string `json:"-"`
 	Resolver    LoadBalancerResolver
 }
 
-func (r *ModifyLoadBalancerRevolverRequest) MarshalJSON() ([]byte, error) {
+func (r *ModifyLoadBalancerResolverRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(r.Resolver)
 }
 
-func (r *ModifyLoadBalancerRevolverRequest) RequestURL() string {
+func (r *ModifyLoadBalancerResolverRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/resolvers/%s", r.ServiceUUID, r.Name)
 }
 
