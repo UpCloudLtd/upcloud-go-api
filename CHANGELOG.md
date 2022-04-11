@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [4.4.2]
+
 ### Fixed
 - Managed Load Balancer resolver request spelling
 
@@ -138,7 +140,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.4.1...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.4.2...HEAD
+[4.4.2]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.4.1...v4.4.2
 [4.4.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.4.0...v4.4.1
 [4.4.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.3.0...v4.4.0
 [4.3.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.2.0...v4.3.0
