@@ -130,6 +130,16 @@ func (s *ServerUUIDSlice) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+// MarshalJSON is a custom marshaller that deals with deeply embedded values.
+func (s *ServerUUIDSlice) MarshalJSON() ([]byte, error) {
+	v := struct {
+		ServerUUIDs []string `json:"server"`
+	}{
+		ServerUUIDs: *s,
+	}
+	return json.Marshal(&v)
+}
+
 // StorageDetails represents detailed information about a piece of storage
 type StorageDetails struct {
 	Storage
