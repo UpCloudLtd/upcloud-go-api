@@ -10,6 +10,10 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/request"
 )
 
+type requestable interface {
+	RequestURL() string
+}
+
 type Firewall interface {
 	GetFirewallRules(r *request.GetFirewallRulesRequest) (*upcloud.FirewallRules, error)
 	GetFirewallRuleDetails(r *request.GetFirewallRuleDetailsRequest) (*upcloud.FirewallRule, error)
@@ -650,13 +654,52 @@ func (s *Service) basicGetRequest(location string) ([]byte, error) {
 	return response, nil
 }
 
-// Performs a GET request to the specified location and stores the result in the value pointed to by v.
+// Get performs a GET request to the specified location and stores the result in the value pointed to by v.
 func (s *Service) get(location string, v interface{}) error {
 	res, err := s.basicGetRequest(location)
 	if err != nil {
 		return err
 	}
 	return json.Unmarshal(res, v)
+}
+
+// Create performs a POST request to the specified location and stores the response in the value pointed to by v.
+func (s *Service) create(r requestable, v interface{}) error {
+	payload, err := json.Marshal(r)
+	if err != nil {
+		return err
+	}
+
+	res, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), payload)
+	if err != nil {
+		return parseJSONServiceError(err)
+	}
+
+	return json.Unmarshal(res, v)
+}
+
+// Modify performs a PATCH request to the specified location and stores the response in the value pointed to by v.
+func (s *Service) modify(r requestable, v interface{}) error {
+	payload, err := json.Marshal(r)
+	if err != nil {
+		return err
+	}
+
+	res, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), payload)
+	if err != nil {
+		return parseJSONServiceError(err)
+	}
+
+	return json.Unmarshal(res, v)
+}
+
+// Delete performs a DELETE request to the specified location
+func (s *Service) delete(r requestable) error {
+	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
+	if err != nil {
+		return parseJSONServiceError(err)
+	}
+	return nil
 }
 
 // Parses an error returned from the client into corresponding error type

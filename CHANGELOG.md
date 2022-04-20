@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- add experimental support for Server Groups
+
 ## [4.4.2]
 
 ### Fixed
