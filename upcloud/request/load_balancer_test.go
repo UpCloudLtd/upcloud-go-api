@@ -466,7 +466,7 @@ func TestGetLoadBalancerResolverRequest(t *testing.T) {
 }
 
 func TestModifyLoadBalancerResolverRequest(t *testing.T) {
-	r := ModifyLoadBalancerRevolverRequest{
+	r := ModifyLoadBalancerResolverRequest{
 		ServiceUUID: "service-uuid",
 		Name:        "sesese",
 		Resolver: LoadBalancerResolver{
@@ -495,7 +495,7 @@ func TestModifyLoadBalancerResolverRequest(t *testing.T) {
 	assert.EqualValues(t, "/load-balancer/service-uuid/resolvers/sesese", r.RequestURL())
 	assert.JSONEq(t, expectedJson, string(actualJson))
 
-	r = ModifyLoadBalancerRevolverRequest{
+	r = ModifyLoadBalancerResolverRequest{
 		ServiceUUID: "service-uuid",
 		Name:        "sesese",
 		Resolver: LoadBalancerResolver{
@@ -1086,6 +1086,59 @@ func ExampleLoadBalancerFrontendRule() {
 		},
 	}
 	if js, err := json.Marshal(rule); err == nil {
-		fmt.Sprintln(string(js))
+		fmt.Println(string(js))
+	}
+}
+
+func ExampleCreateLoadBalancerRequest() {
+	request := CreateLoadBalancerRequest{
+		Name:             "example-service",
+		Plan:             "development",
+		Zone:             "fi-hel1",
+		NetworkUUID:      "03631160-d57a-4926-ad48-a2f828229dcb",
+		ConfiguredStatus: upcloud.LoadBalancerConfiguredStatusStarted,
+		Frontends: []LoadBalancerFrontend{{
+			Name:           "example-frontend",
+			Mode:           upcloud.LoadBalancerModeHTTP,
+			Port:           443,
+			DefaultBackend: "example-backend-1",
+			Rules: []LoadBalancerFrontendRule{
+				{
+					Name:     "rule-name",
+					Priority: 0,
+					Matchers: []upcloud.LoadBalancerMatcher{
+						NewLoadBalancerHostMatcher("example.com"),
+						NewLoadBalancerSrcPortRangeMatcher(8000, 9000),
+					},
+					Actions: []upcloud.LoadBalancerAction{
+						NewLoadBalancerUseBackendAction("example-backend-1"),
+					},
+				},
+			},
+		}},
+		Backends: []LoadBalancerBackend{{
+			Name: "example-backend-1",
+			Members: []LoadBalancerBackendMember{{
+				Name:        "example-member-1",
+				Weight:      100,
+				MaxSessions: 1000,
+				Type:        upcloud.LoadBalancerBackendMemberTypeStatic,
+				IP:          "172.16.1.4",
+				Port:        8000,
+				Enabled:     true,
+			}},
+		}},
+		Resolvers: []LoadBalancerResolver{{
+			Name:         "example-resolver",
+			Nameservers:  []string{"172.16.1.4:53"},
+			Retries:      5,
+			Timeout:      30,
+			TimeoutRetry: 10,
+			CacheValid:   180,
+			CacheInvalid: 10,
+		}},
+	}
+	if js, err := json.Marshal(request); err == nil {
+		fmt.Println(string(js))
 	}
 }

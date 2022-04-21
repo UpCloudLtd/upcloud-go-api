@@ -446,12 +446,12 @@ func TestLoadBalancerMatcherHost(t *testing.T) {
 	)
 }
 
-func TestLoadBalancerMatcherNumMembersUP(t *testing.T) {
+func TestLoadBalancerMatcherNumMembersUp(t *testing.T) {
 	testJSON(t,
 		&LoadBalancerMatcher{},
 		&LoadBalancerMatcher{
-			Type: LoadBalancerMatcherTypeNumMembersUP,
-			NumMembersUP: &LoadBalancerMatcherNumMembersUP{
+			Type: LoadBalancerMatcherTypeNumMembersUp,
+			NumMembersUp: &LoadBalancerMatcherNumMembersUp{
 				Method:  LoadBalancerIntegerMatcherMethodLess,
 				Value:   1,
 				Backend: "example-fallback-backend",

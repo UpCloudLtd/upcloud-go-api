@@ -29,7 +29,7 @@ type LoadBalancer interface {
 	GetLoadBalancerResolvers(r *request.GetLoadBalancerResolversRequest) ([]upcloud.LoadBalancerResolver, error)
 	CreateLoadBalancerResolver(r *request.CreateLoadBalancerResolverRequest) (*upcloud.LoadBalancerResolver, error)
 	GetLoadBalancerResolver(r *request.GetLoadBalancerResolverRequest) (*upcloud.LoadBalancerResolver, error)
-	ModifyLoadBalancerResolver(r *request.ModifyLoadBalancerRevolverRequest) (*upcloud.LoadBalancerResolver, error)
+	ModifyLoadBalancerResolver(r *request.ModifyLoadBalancerResolverRequest) (*upcloud.LoadBalancerResolver, error)
 	DeleteLoadBalancerResolver(r *request.DeleteLoadBalancerResolverRequest) error
 	// Plans
 	GetLoadBalancerPlans(r *request.GetLoadBalancerPlansRequest) ([]upcloud.LoadBalancerPlan, error)
@@ -341,7 +341,7 @@ func (s *Service) GetLoadBalancerResolver(r *request.GetLoadBalancerResolverRequ
 }
 
 // ModifyLoadBalancerResolver modifies an existing load balancer resolver.
-func (s *Service) ModifyLoadBalancerResolver(r *request.ModifyLoadBalancerRevolverRequest) (*upcloud.LoadBalancerResolver, error) {
+func (s *Service) ModifyLoadBalancerResolver(r *request.ModifyLoadBalancerResolverRequest) (*upcloud.LoadBalancerResolver, error) {
 	var resolver upcloud.LoadBalancerResolver
 
 	reqBody, err := json.Marshal(r)

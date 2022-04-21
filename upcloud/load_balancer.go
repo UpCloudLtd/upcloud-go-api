@@ -58,7 +58,7 @@ const (
 	LoadBalancerMatcherTypeCookie       LoadBalancerMatcherType = "cookie"
 	LoadBalancerMatcherTypeHeader       LoadBalancerMatcherType = "header"
 	LoadBalancerMatcherTypeURLParam     LoadBalancerMatcherType = "url_param"
-	LoadBalancerMatcherTypeNumMembersUP LoadBalancerMatcherType = "num_members_up"
+	LoadBalancerMatcherTypeNumMembersUp LoadBalancerMatcherType = "num_members_up"
 
 	LoadBalancerActionTypeUseBackend   LoadBalancerActionType = "use_backend"
 	LoadBalancerActionTypeTCPReject    LoadBalancerActionType = "tcp_reject"
@@ -195,7 +195,7 @@ type LoadBalancerMatcher struct {
 	Cookie       *LoadBalancerMatcherStringWithArgument `json:"match_cookie,omitempty"`
 	Header       *LoadBalancerMatcherStringWithArgument `json:"match_header,omitempty"`
 	URLParam     *LoadBalancerMatcherStringWithArgument `json:"match_url_param,omitempty"`
-	NumMembersUP *LoadBalancerMatcherNumMembersUP       `json:"match_num_members_up,omitempty"`
+	NumMembersUp *LoadBalancerMatcherNumMembersUp       `json:"match_num_members_up,omitempty"`
 }
 
 // LoadBalancerMatcherStringWithArgument represents 'string with argument' matcher
@@ -211,8 +211,8 @@ type LoadBalancerMatcherHost struct {
 	Value string `json:"value,omitempty"`
 }
 
-// LoadBalancerMatcherNumMembersUP represents 'num_members_up' matcher
-type LoadBalancerMatcherNumMembersUP struct {
+// LoadBalancerMatcherNumMembersUp represents 'num_members_up' matcher
+type LoadBalancerMatcherNumMembersUp struct {
 	Method  LoadBalancerIntegerMatcherMethod `json:"method,omitempty"`
 	Value   int                              `json:"value,omitempty"`
 	Backend string                           `json:"backend,omitempty"`

@@ -271,7 +271,7 @@ func TestLoadBalancerResolver(t *testing.T) {
 		newTimeout := 30
 
 		t.Logf("Update resolver: %s", name)
-		resolver, err = svc.ModifyLoadBalancerResolver(&request.ModifyLoadBalancerRevolverRequest{
+		resolver, err = svc.ModifyLoadBalancerResolver(&request.ModifyLoadBalancerResolverRequest{
 			ServiceUUID: lb.UUID,
 			Name:        resolver.Name,
 			Resolver: request.LoadBalancerResolver{
@@ -292,7 +292,7 @@ func TestLoadBalancerResolver(t *testing.T) {
 		newTimeoutRetry := 15
 		newCacheValid := 124
 		newCacheInvalid := 324
-		resolver, err = svc.ModifyLoadBalancerResolver(&request.ModifyLoadBalancerRevolverRequest{
+		resolver, err = svc.ModifyLoadBalancerResolver(&request.ModifyLoadBalancerResolverRequest{
 			ServiceUUID: lb.UUID,
 			Name:        resolver.Name,
 			Resolver: request.LoadBalancerResolver{

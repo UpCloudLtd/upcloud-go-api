@@ -1,5 +1,7 @@
 package upcloud
 
+import "encoding/json"
+
 // Constants
 const (
 	True  Boolean = 1
@@ -81,4 +83,34 @@ func BoolPtr(v bool) *bool {
 
 func IntPtr(v int) *int {
 	return &v
+}
+
+// ServerUUIDSlice is a slice of string.
+// It exists to allow for a custom JSON unmarshaller.
+type ServerUUIDSlice []string
+
+// UnmarshalJSON is a custom unmarshaller that deals with
+// deeply embedded values.
+func (s *ServerUUIDSlice) UnmarshalJSON(b []byte) error {
+	v := struct {
+		ServerUUIDs []string `json:"server"`
+	}{}
+	err := json.Unmarshal(b, &v)
+	if err != nil {
+		return err
+	}
+
+	(*s) = v.ServerUUIDs
+
+	return nil
+}
+
+// MarshalJSON is a custom marshaller that deals with deeply embedded values.
+func (s *ServerUUIDSlice) MarshalJSON() ([]byte, error) {
+	v := struct {
+		ServerUUIDs []string `json:"server"`
+	}{
+		ServerUUIDs: *s,
+	}
+	return json.Marshal(&v)
 }
