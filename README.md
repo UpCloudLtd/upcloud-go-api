@@ -242,6 +242,10 @@ testing so you don't accidentally delete or your production resources!
 
 You can skip running the integration tests and just run the unit tests by passing `-short` to the test command.
 
+## Debugging
+
+Environment variables `UPCLOUD_DEBUG_API_BASE_URL` and `UPCLOUD_DEBUG_SKIP_CERTIFICATE_VERIFY` can be used for HTTP client debugging purposes.
+
 ## License
 
 This client is distributed under the [MIT License](https://opensource.org/licenses/MIT), see LICENSE.txt for more information.
