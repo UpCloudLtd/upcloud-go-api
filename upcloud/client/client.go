@@ -7,6 +7,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"os"
 	"time"
 
@@ -24,6 +25,7 @@ const (
 	// The default timeout (in seconds)
 	DefaultTimeout = 60
 
+	EnvDebugAPIBaseURL            string = "UPCLOUD_DEBUG_API_BASE_URL"
 	EnvDebugSkipCertificateVerify string = "UPCLOUD_DEBUG_SKIP_CERTIFICATE_VERIFY"
 )
 
@@ -32,8 +34,8 @@ type Client struct {
 	userName   string
 	password   string
 	httpClient *http.Client
-
-	UserAgent string
+	baseURL    string
+	UserAgent  string
 }
 
 // New creates ands returns a new client configured with the specified user and password
@@ -56,16 +58,18 @@ func New(userName, password string) *Client {
 // NewWithHTTPClient creates ands returns a new client configured with the specified user and password and
 // using a supplied `http.Client`.
 func NewWithHTTPClient(userName string, password string, httpClient *http.Client) *Client {
-	client := Client{}
+	client := Client{
+		userName:   userName,
+		password:   password,
+		httpClient: httpClient,
+		baseURL:    clientBaseURL(os.Getenv(EnvDebugAPIBaseURL)),
+		UserAgent:  fmt.Sprintf("upcloud-go-api/%s", globals.Version),
+	}
 
-	client.userName = userName
-	client.password = password
-	client.httpClient = httpClient
 	// Set the default timeout if the caller hasn't set its own
 	if client.httpClient.Timeout == 0 {
 		client.SetTimeout(time.Second * DefaultTimeout)
 	}
-	client.UserAgent = fmt.Sprintf("upcloud-go-api/%s", globals.Version)
 
 	return &client
 }
@@ -214,8 +218,21 @@ func (c *Client) PerformRequest(request *http.Request) ([]byte, error) {
 // Returns the base URL to use for API requests
 func (c *Client) getBaseURL() string {
 	urlVersion, _ := semver.Make(DefaultAPIVersion)
+	// check baseURL just in case user has initialized struct directly
+	if c.baseURL == "" {
+		c.baseURL = clientBaseURL(os.Getenv(EnvDebugAPIBaseURL))
+	}
+	return fmt.Sprintf("%s/%d.%d", c.baseURL, urlVersion.Major, urlVersion.Minor)
+}
 
-	return fmt.Sprintf("%s/%d.%d", DefaultAPIBaseURL, urlVersion.Major, urlVersion.Minor)
+func clientBaseURL(URL string) string {
+	if URL != "" {
+		if u, err := url.Parse(URL); err != nil || u.Scheme == "" || u.Host == "" {
+			return DefaultAPIBaseURL
+		}
+		return URL
+	}
+	return DefaultAPIBaseURL
 }
 
 // Parses the response and returns either the response body or an error

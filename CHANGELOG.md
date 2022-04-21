@@ -7,6 +7,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ### Added
 - add experimental support for Server Groups
+- add possibility to overwrite default API URL with `UPCLOUD_DEBUG_API_BASE_URL` environment variable
 
 ## [4.4.2]
 
