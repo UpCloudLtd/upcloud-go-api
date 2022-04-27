@@ -245,6 +245,10 @@ You can skip running the integration tests and just run the unit tests by passin
 ## Debugging
 
 Environment variables `UPCLOUD_DEBUG_API_BASE_URL` and `UPCLOUD_DEBUG_SKIP_CERTIFICATE_VERIFY` can be used for HTTP client debugging purposes.
+* `UPCLOUD_DEBUG_API_BASE_URL` overrides static base URL. This can be used with local server to debug request problems.  
+E.g. `UPCLOUD_DEBUG_API_BASE_URL=http://127.0.0.1:8080`
+* `UPCLOUD_DEBUG_SKIP_CERTIFICATE_VERIFY` skips server's certificate verification. If set to `1`, API client accepts any certificate presented by the server and any host name in that certificate.  
+E.g. `UPCLOUD_DEBUG_SKIP_CERTIFICATE_VERIFY=1`
 
 ## License
 
