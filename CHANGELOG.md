@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Fixed
+- Expose `GetZones` through `Zones` interface
+
 ## [4.5.0]
 
 ### Added
