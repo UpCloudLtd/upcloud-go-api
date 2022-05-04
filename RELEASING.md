@@ -5,6 +5,7 @@
     1. Add new heading with the correct version e.g. `## [v2.3.5]`
     1. Update links at the bottom of the page
     1. Leave “Unreleased” section at the top empty
+1. Update `Version` in [internal/globals.go](./internal/globals.go)
 1. Visit the repo [GitHub releases-page](https://github.com/UpCloudLtd/upcloud-go-api/releases) and draft a new release
 1. Tag the release `vX.Y.Z` (e.g. `v2.3.5`)
 1. Select the stable branch
