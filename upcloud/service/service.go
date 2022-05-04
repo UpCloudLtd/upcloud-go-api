@@ -12,6 +12,12 @@ type requestable interface {
 	RequestURL() string
 }
 
+type Zones interface {
+	GetZones() (*upcloud.Zones, error)
+}
+
+var _ Zones = (*Service)(nil)
+
 type PriceZones interface {
 	GetPriceZones() (*upcloud.PriceZones, error)
 }
