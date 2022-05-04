@@ -52,69 +52,25 @@ func New(client *client.Client) *Service {
 // GetZones returns the available zones
 func (s *Service) GetZones() (*upcloud.Zones, error) {
 	zones := upcloud.Zones{}
-	response, err := s.basicGetRequest("/zone")
-
-	if err != nil {
-		return nil, err
-	}
-
-	err = json.Unmarshal(response, &zones)
-	if err != nil {
-		return nil, err
-	}
-
-	return &zones, nil
+	return &zones, s.get("/zone", &zones)
 }
 
 // GetPriceZones returns the available price zones and their corresponding prices
 func (s *Service) GetPriceZones() (*upcloud.PriceZones, error) {
 	zones := upcloud.PriceZones{}
-	response, err := s.basicGetRequest("/price")
-
-	if err != nil {
-		return nil, err
-	}
-
-	err = json.Unmarshal(response, &zones)
-	if err != nil {
-		return nil, err
-	}
-
-	return &zones, nil
+	return &zones, s.get("/price", &zones)
 }
 
 // GetTimeZones returns the available timezones
 func (s *Service) GetTimeZones() (*upcloud.TimeZones, error) {
 	zones := upcloud.TimeZones{}
-	response, err := s.basicGetRequest("/timezone")
-
-	if err != nil {
-		return nil, err
-	}
-
-	err = json.Unmarshal(response, &zones)
-	if err != nil {
-		return nil, err
-	}
-
-	return &zones, nil
+	return &zones, s.get("/timezone", &zones)
 }
 
 // GetPlans returns the available service plans
 func (s *Service) GetPlans() (*upcloud.Plans, error) {
 	plans := upcloud.Plans{}
-	response, err := s.basicGetRequest("/plan")
-
-	if err != nil {
-		return nil, err
-	}
-
-	err = json.Unmarshal(response, &plans)
-	if err != nil {
-		return nil, err
-	}
-
-	return &plans, nil
+	return &plans, s.get("/plan", &plans)
 }
 
 // Wrapper that performs a GET request to the specified location and returns the response or a service error
