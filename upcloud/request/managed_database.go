@@ -59,7 +59,7 @@ func (c CloneManagedDatabaseRequest) MarshalJSON() ([]byte, error) {
 	if !req.alias.CloneTime.IsZero() {
 		req.CloneTime = &req.alias.CloneTime
 	}
-	if c.Maintenance.Time != "" && c.Maintenance.DayOfWeek != "" {
+	if c.Maintenance.Time != "" || c.Maintenance.DayOfWeek != "" {
 		req.Maintenance = &c.Maintenance
 	}
 	return json.Marshal(&req)
@@ -88,7 +88,7 @@ func (c CreateManagedDatabaseRequest) MarshalJSON() ([]byte, error) {
 		alias
 		Maintenance *ManagedDatabaseMaintenanceTimeRequest `json:"maintenance,omitempty"`
 	}{alias: alias(c)}
-	if c.Maintenance.Time != "" && c.Maintenance.DayOfWeek != "" {
+	if c.Maintenance.Time != "" || c.Maintenance.DayOfWeek != "" {
 		req.Maintenance = &c.Maintenance
 	}
 	return json.Marshal(&req)
@@ -388,8 +388,7 @@ func (m ModifyManagedDatabaseRequest) MarshalJSON() ([]byte, error) {
 		alias
 		Maintenance *ManagedDatabaseMaintenanceTimeRequest `json:"maintenance,omitempty"`
 	}{alias: alias(m)}
-
-	if m.Maintenance.Time != "" && m.Maintenance.DayOfWeek != "" {
+	if m.Maintenance.Time != "" || m.Maintenance.DayOfWeek != "" {
 		req.Maintenance = &m.Maintenance
 	}
 	return json.Marshal(&req)

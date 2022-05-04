@@ -416,3 +416,70 @@ func TestDeleteManagedDatabaseLogicalDatabaseRequest_RequestURL(t *testing.T) {
 	req := DeleteManagedDatabaseLogicalDatabaseRequest{ServiceUUID: "fakeuuid", Name: "fakedb"}
 	assert.Equal(t, "/database/fakeuuid/databases/fakedb", req.RequestURL())
 }
+
+func TestCreateManagedDatabaseRequestMaintenanceTime_MarshalJSON(t *testing.T) {
+	req := CreateManagedDatabaseRequest{
+		HostNamePrefix: "fakename",
+		Plan:           "fakeplan",
+		Title:          "faketitle",
+		Type:           "faketype",
+		Zone:           "fakezone",
+	}
+	req.Maintenance = ManagedDatabaseMaintenanceTimeRequest{
+		DayOfWeek: "monday",
+		Time:      "12:00:00",
+	}
+	d, err := json.Marshal(&req)
+	assert.NoError(t, err)
+	expect := `
+	{
+		"hostname_prefix": "fakename",
+		"plan": "fakeplan",
+		"title": "faketitle",
+		"type": "faketype",
+		"zone": "fakezone",
+		"maintenance": {
+			"dow": "monday",
+			"time": "12:00:00"
+		}
+	}`
+	assert.JSONEq(t, expect, string(d))
+
+	// Without maintenance time
+	req.Maintenance = ManagedDatabaseMaintenanceTimeRequest{
+		DayOfWeek: "monday",
+	}
+	d, err = json.Marshal(&req)
+	assert.NoError(t, err)
+	expect = `
+	{
+		"hostname_prefix": "fakename",
+		"plan": "fakeplan",
+		"title": "faketitle",
+		"type": "faketype",
+		"zone": "fakezone",
+		"maintenance": {
+			"dow": "monday"
+		}
+	}`
+	assert.JSONEq(t, expect, string(d))
+
+	// Without maintenance dow
+	req.Maintenance = ManagedDatabaseMaintenanceTimeRequest{
+		Time: "12:00:00",
+	}
+	d, err = json.Marshal(&req)
+	assert.NoError(t, err)
+	expect = `
+	{
+		"hostname_prefix": "fakename",
+		"plan": "fakeplan",
+		"title": "faketitle",
+		"type": "faketype",
+		"zone": "fakezone",
+		"maintenance": {
+			"time": "12:00:00"
+		}
+	}`
+	assert.JSONEq(t, expect, string(d))
+}
