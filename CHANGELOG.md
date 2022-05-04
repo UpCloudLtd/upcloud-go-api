@@ -7,6 +7,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ### Fixed
 - Expose `GetZones` through `Zones` interface
+- allow time or day of week to be empty in Managed Database maintenance request property
 
 ## [4.5.0]
 
