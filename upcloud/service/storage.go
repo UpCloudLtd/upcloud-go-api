@@ -356,7 +356,7 @@ func (s *Service) directStorageImport(r *request.CreateStorageImportRequest) (*u
 	}
 
 	s.client.AddRequestHeaders(req)
-	req.Header.Add("Content-Type", r.ContentType)
+	req.Header.Set("Content-Type", r.ContentType)
 	if _, err := s.client.PerformRequest(req); err != nil {
 		return nil, err
 	}
