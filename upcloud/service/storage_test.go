@@ -1,6 +1,7 @@
 package service
 
 import (
+	"compress/gzip"
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
@@ -423,5 +424,53 @@ func TestResizeStorageFilesystem(t *testing.T) {
 		assert.NoError(t, svc.DeleteStorage(&request.DeleteStorageRequest{UUID: resizeBackup.UUID}))
 		assert.NoError(t, svc.DeleteServerAndStorages(
 			&request.DeleteServerAndStoragesRequest{UUID: serverDetails.UUID}))
+	})
+}
+
+func TestCompressedDirectUploadStorageImport(t *testing.T) {
+	record(t, "compresseddirectuploadstorageimport", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+		storage, err := svc.CreateStorage(&request.CreateStorageRequest{
+			Size:  10,
+			Tier:  upcloud.StorageTierMaxIOPS,
+			Zone:  "pl-waw1",
+			Title: "Direct Upload (test)",
+		})
+		require.NoError(t, err)
+
+		_, err = svc.WaitForStorageState(&request.WaitForStorageStateRequest{
+			UUID:         storage.UUID,
+			DesiredState: upcloud.StorageStateOnline,
+			Timeout:      15 * time.Minute,
+		})
+		require.NoError(t, err)
+
+		f, err := ioutil.TempFile(os.TempDir(), "compresseddirectuploadstorageimport-*.raw.gz")
+		require.NoError(t, err)
+		defer f.Close()
+		defer os.Remove(f.Name())
+
+		w := gzip.NewWriter(f)
+		_, err = w.Write([]byte(time.Now().Format(time.ANSIC)))
+		require.NoError(t, err)
+		w.Close()
+
+		contentType := "application/gzip"
+
+		_, err = svc.CreateStorageImport(&request.CreateStorageImportRequest{
+			StorageUUID:    storage.UUID,
+			Source:         upcloud.StorageImportSourceDirectUpload,
+			SourceLocation: f.Name(),
+			ContentType:    contentType,
+		})
+		require.NoError(t, err)
+
+		afterStorageImportDetails, err := svc.WaitForStorageImportCompletion(&request.WaitForStorageImportCompletionRequest{
+			StorageUUID: storage.UUID,
+			Timeout:     15 * time.Minute,
+		})
+		require.NoError(t, err)
+
+		assert.Equal(t, contentType, afterStorageImportDetails.ClientContentType)
+		assert.Equal(t, upcloud.StorageImportStateCompleted, afterStorageImportDetails.State)
 	})
 }

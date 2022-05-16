@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Fixed
+- Content-Type HTTP header when importing compressed storage
+
 ## [4.5.1]
 
 ### Fixed
