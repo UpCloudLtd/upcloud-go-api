@@ -104,6 +104,11 @@ func TestCreateFirewallRulesRequest(t *testing.T) {
 				Action:               upcloud.FirewallRuleActionAccept,
 				Comment:              "Allow HTTP to this network",
 			},
+			{
+				Direction: upcloud.FirewallRuleDirectionIn,
+				Action:    upcloud.FirewallRuleActionDrop,
+				Comment:   "Drop by default",
+			},
 		},
 	}
 
@@ -128,6 +133,11 @@ func TestCreateFirewallRulesRequest(t *testing.T) {
 			"destination_port_end": "80",
 			"action": "accept",
 			"comment": "Allow HTTP to this network"
+		  },
+		  {
+			"direction": "in",
+			"action": "drop",
+			"comment": "Drop by default"
 		  }
 		]
 	  }

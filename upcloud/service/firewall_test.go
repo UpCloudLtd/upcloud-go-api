@@ -82,6 +82,11 @@ func TestFirewallRules(t *testing.T) {
 					DestinationPortEnd:   "22",
 					Comment:              "This is a new comment 1",
 				},
+				{
+					Direction: upcloud.FirewallRuleDirectionIn,
+					Action:    upcloud.FirewallRuleActionDrop,
+					Comment:   "This is a new comment 2",
+				},
 			},
 		})
 		require.NoError(t, err)
@@ -90,7 +95,8 @@ func TestFirewallRules(t *testing.T) {
 			ServerUUID: serverDetails.UUID,
 		})
 		require.NoError(t, err)
-		assert.Len(t, firewallRulesPost.FirewallRules, 2)
+		require.Len(t, firewallRulesPost.FirewallRules, 3)
+		assert.Equal(t, firewallRulesPost.FirewallRules[2].Family, "")
 
 		for i, rule := range firewallRulesPost.FirewallRules {
 			assert.Equal(t, fmt.Sprintf("This is a new comment %d", i), rule.Comment)
@@ -109,6 +115,6 @@ func TestFirewallRules(t *testing.T) {
 			ServerUUID: serverDetails.UUID,
 		})
 		require.NoError(t, err)
-		assert.Len(t, firewallRulesPostDelete.FirewallRules, 1)
+		assert.Len(t, firewallRulesPostDelete.FirewallRules, 2)
 	})
 }
