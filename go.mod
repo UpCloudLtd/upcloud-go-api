@@ -12,8 +12,9 @@ require (
 	github.com/jackc/pgconn v1.10.0
 	github.com/jackc/pgx/v4 v4.13.0
 	github.com/pkg/errors v0.9.1 // indirect
-	github.com/stretchr/testify v1.7.0
+	github.com/stretchr/testify v1.7.1
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	gopkg.in/yaml.v2 v2.3.0 // indirect
+	gopkg.in/yaml.v3 v3.0.0 // indirect
 )
