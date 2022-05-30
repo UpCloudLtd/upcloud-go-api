@@ -312,3 +312,26 @@ func TestManagedDatabaseProperties_GetStringSlice(t *testing.T) {
 	_, err := props.GetStringSlice("fake")
 	assert.Error(t, err)
 }
+
+func TestManagedDatabaseServicePlanZones_UnmarshalJSON(t *testing.T) {
+	const d = `{
+	"zones": {
+		"zone": [
+			{
+				"name": "de-fra1"
+			},
+			{
+				"name": "fi-hel1"
+			}
+		]
+	}
+}`
+	expect := ManagedDatabaseServicePlanZones{
+		Zones: []ManagedDatabaseServicePlanZone{{"de-fra1"}, {"fi-hel1"}},
+	}
+
+	var zones ManagedDatabaseServicePlanZones
+	err := json.Unmarshal([]byte(d), &zones)
+	assert.NoError(t, err)
+	assert.Equal(t, expect, zones)
+}

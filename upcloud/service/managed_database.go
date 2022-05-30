@@ -21,6 +21,7 @@ type ManagedDatabaseServiceManager interface {
 	GetManagedDatabaseLogs(r *request.GetManagedDatabaseLogsRequest) (*upcloud.ManagedDatabaseLogs, error)
 	GetManagedDatabaseQueryStatisticsMySQL(r *request.GetManagedDatabaseQueryStatisticsRequest) ([]upcloud.ManagedDatabaseQueryStatisticsMySQL, error)
 	GetManagedDatabaseQueryStatisticsPostgreSQL(r *request.GetManagedDatabaseQueryStatisticsRequest) ([]upcloud.ManagedDatabaseQueryStatisticsPostgreSQL, error)
+	GetManagedDatabaseServiceTypes(r *request.GetManagedDatabaseServiceTypesRequest) (map[string]upcloud.ManagedDatabaseType, error)
 	DeleteManagedDatabase(r *request.DeleteManagedDatabaseRequest) error
 	ModifyManagedDatabase(r *request.ModifyManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
 	UpgradeManagedDatabaseVersion(r *request.UpgradeManagedDatabaseVersionRequest) (*upcloud.ManagedDatabase, error)
@@ -196,6 +197,12 @@ func (s *Service) GetManagedDatabaseLogs(r *request.GetManagedDatabaseLogsReques
 	}
 
 	return &logs, nil
+}
+
+// GetManagedDatabaseServiceTypes (EXPERIMENTAL) returns a map of available database service types
+func (s *Service) GetManagedDatabaseServiceTypes(r *request.GetManagedDatabaseServiceTypesRequest) (map[string]upcloud.ManagedDatabaseType, error) {
+	serviceTypes := make(map[string]upcloud.ManagedDatabaseType)
+	return serviceTypes, s.get(r.RequestURL(), &serviceTypes)
 }
 
 // GetManagedDatabaseQueryStatisticsMySQL (EXPERIMENTAL) returns MySQL query statistics of a managed database instance
