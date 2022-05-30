@@ -421,6 +421,17 @@ func TestService_GetManagedDatabaseLogs(t *testing.T) {
 	})
 }
 
+func TestService_GetManagedDatabaseServiceTypes(t *testing.T) {
+	record(t, "getmanageddatabaseservicetypes", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+		types, err := svc.GetManagedDatabaseServiceTypes(&request.GetManagedDatabaseServiceTypesRequest{})
+		if !assert.NoError(t, err) {
+			return
+		}
+		assert.Equal(t, "pg", types["pg"].Name)
+		assert.Equal(t, "mysql", types["mysql"].Name)
+	})
+}
+
 func TestService_GetManagedDatabaseConnections(t *testing.T) {
 	const (
 		startTimeout    = 10 * time.Minute
