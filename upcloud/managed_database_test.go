@@ -313,25 +313,73 @@ func TestManagedDatabaseProperties_GetStringSlice(t *testing.T) {
 	assert.Error(t, err)
 }
 
-func TestManagedDatabaseServicePlanZones_UnmarshalJSON(t *testing.T) {
+func TestManagedDatabaseType_UnmarshalJSON(t *testing.T) {
 	const d = `{
-	"zones": {
-		"zone": [
-			{
-				"name": "de-fra1"
+	"name": "mysql",
+    "description": "MySQL - Relational Database Management System",
+    "latest_available_version": "8.0.26",
+	"service_plans": [
+		{
+			"backup_config": {
+				"interval": 24,
+				"max_count": 2,
+				"recovery_mode": "pitr"
 			},
-			{
-				"name": "fi-hel1"
+			"core_number": 1,
+			"node_count": 1,
+			"memory_amount": 2048,
+			"plan": "1x1xCPU-2GB-25GB",
+			"storage_size": 25600,
+			"zones": {
+				"zone": [
+					{
+						"name": "de-fra1"
+					},
+					{
+						"name": "fi-hel1"
+					}
+				]
 			}
-		]
+		}
+	],
+	"properties": {
+		"public_access": {
+			"default": false,
+			"title": "Public Access",
+			"type": "boolean",
+			"description": "Allow access to the service from the public Internet"
+		}
 	}
 }`
-	expect := ManagedDatabaseServicePlanZones{
-		Zones: []ManagedDatabaseServicePlanZone{{"de-fra1"}, {"fi-hel1"}},
+	expect := ManagedDatabaseType{
+		Name:                   "mysql",
+		Description:            "MySQL - Relational Database Management System",
+		LatestAvailableVersion: "8.0.26",
+		ServicePlans: []ManagedDatabaseServicePlan{{
+			BackupConfig: ManagedDatabaseBackupConfig{
+				Interval:     24,
+				MaxCount:     2,
+				RecoveryMode: "pitr",
+			},
+			CoreNumber:   1,
+			NodeCount:    1,
+			MemoryAmount: 2048,
+			Plan:         "1x1xCPU-2GB-25GB",
+			StorageSize:  25600,
+			Zones:        []ManagedDatabaseServicePlanZone{{"de-fra1"}, {"fi-hel1"}},
+		}},
+		Properties: map[string]ManagedDatabaseServiceProperty{
+			"public_access": {
+				Default:     false,
+				Title:       "Public Access",
+				Type:        "boolean",
+				Description: "Allow access to the service from the public Internet",
+			},
+		},
 	}
 
-	var zones ManagedDatabaseServicePlanZones
-	err := json.Unmarshal([]byte(d), &zones)
+	var databaseType ManagedDatabaseType
+	err := json.Unmarshal([]byte(d), &databaseType)
 	assert.NoError(t, err)
-	assert.Equal(t, expect, zones)
+	assert.Equal(t, expect, databaseType)
 }
