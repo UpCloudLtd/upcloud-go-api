@@ -421,6 +421,20 @@ func TestService_GetManagedDatabaseLogs(t *testing.T) {
 	})
 }
 
+func TestService_GetManagedDatabaseServiceType(t *testing.T) {
+	record(t, "getmanageddatabaseservicetype", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+		databaseTypes := []string{"pg", "mysql"}
+
+		for _, databaseType := range databaseTypes {
+			serviceType, err := svc.GetManagedDatabaseServiceType(&request.GetManagedDatabaseServiceTypeRequest{Type: databaseType})
+			if !assert.NoError(t, err) {
+				return
+			}
+			assert.Equal(t, databaseType, serviceType.Name)
+		}
+	})
+}
+
 func TestService_GetManagedDatabaseServiceTypes(t *testing.T) {
 	record(t, "getmanageddatabaseservicetypes", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		types, err := svc.GetManagedDatabaseServiceTypes(&request.GetManagedDatabaseServiceTypesRequest{})
