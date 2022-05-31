@@ -1,0 +1,309 @@
+---
+version: 1
+interactions:
+- request:
+    body: '{"storage":{"size":"10","tier":"maxiops","title":"Direct Upload (test)","zone":"pl-waw1"}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.5.1
+    url: https://api.upcloud.com/1.3/storage
+    method: POST
+  response:
+    body: |
+      {
+         "storage" : {
+            "access" : "private",
+            "backup_rule" : {},
+            "backups" : {
+               "backup" : []
+            },
+            "created" : "2022-05-16T08:02:35Z",
+            "license" : 0,
+            "servers" : {
+               "server" : []
+            },
+            "size" : 10,
+            "state" : "online",
+            "tier" : "maxiops",
+            "title" : "Direct Upload (test)",
+            "type" : "normal",
+            "uuid" : "01d3f82b-984b-45df-8680-15d966cb13c2",
+            "zone" : "pl-waw1"
+         }
+      }
+    headers:
+      Content-Length:
+      - "463"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Mon, 16 May 2022 08:02:35 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.5.1
+    url: https://api.upcloud.com/1.3/storage/01d3f82b-984b-45df-8680-15d966cb13c2
+    method: GET
+  response:
+    body: |
+      {
+         "storage" : {
+            "access" : "private",
+            "backup_rule" : {},
+            "backups" : {
+               "backup" : []
+            },
+            "created" : "2022-05-16T08:02:35Z",
+            "license" : 0,
+            "servers" : {
+               "server" : []
+            },
+            "size" : 10,
+            "state" : "online",
+            "tier" : "maxiops",
+            "title" : "Direct Upload (test)",
+            "type" : "normal",
+            "uuid" : "01d3f82b-984b-45df-8680-15d966cb13c2",
+            "zone" : "pl-waw1"
+         }
+      }
+    headers:
+      Content-Length:
+      - "463"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Mon, 16 May 2022 08:02:46 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"storage_import":{"source":"direct_upload","source_location":""}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.5.1
+    url: https://api.upcloud.com/1.3/storage/01d3f82b-984b-45df-8680-15d966cb13c2/import
+    method: POST
+  response:
+    body: |
+      {
+         "storage_import" : {
+            "client_content_length" : 0,
+            "client_content_type" : "",
+            "completed" : "",
+            "created" : "2022-05-16T08:02:47Z",
+            "direct_upload_url" : "https://pl-waw1.img.upcloud.com/uploader/session/07feb632-65c0-4819-99cf-6c60a3a13f28",
+            "error_code" : "",
+            "error_message" : "",
+            "md5sum" : "",
+            "read_bytes" : 0,
+            "sha256sum" : "",
+            "source" : "direct_upload",
+            "state" : "prepared",
+            "uuid" : "07feb632-65c0-4819-99cf-6c60a3a13f28",
+            "written_bytes" : 0
+         }
+      }
+    headers:
+      Content-Length:
+      - "550"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Mon, 16 May 2022 08:02:46 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/gzip
+      User-Agent:
+      - upcloud-go-api/4.5.1
+    url: https://pl-waw1.img.upcloud.com/uploader/session/07feb632-65c0-4819-99cf-6c60a3a13f28
+    method: PUT
+  response:
+    body: '{"written_bytes":24,"md5sum":"cccd88d29e4cea6733addbb45a325b21","sha256sum":"17c1079983830cdc486c39ec59dd5eb9a9fda7c01a9168246c5da09c75200203"}'
+    headers:
+      Content-Length:
+      - "143"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 16 May 2022 08:02:47 GMT
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.5.1
+    url: https://api.upcloud.com/1.3/storage/01d3f82b-984b-45df-8680-15d966cb13c2/import
+    method: GET
+  response:
+    body: |
+      {
+         "storage_import" : {
+            "client_content_length" : 0,
+            "client_content_type" : "",
+            "completed" : "",
+            "created" : "2022-05-16T08:02:47Z",
+            "direct_upload_url" : "https://pl-waw1.img.upcloud.com/uploader/session/07feb632-65c0-4819-99cf-6c60a3a13f28",
+            "error_code" : "",
+            "error_message" : "",
+            "md5sum" : "",
+            "read_bytes" : 0,
+            "sha256sum" : "",
+            "source" : "direct_upload",
+            "state" : "pending",
+            "uuid" : "07feb632-65c0-4819-99cf-6c60a3a13f28",
+            "written_bytes" : 0
+         }
+      }
+    headers:
+      Content-Length:
+      - "549"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Mon, 16 May 2022 08:02:47 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.5.1
+    url: https://api.upcloud.com/1.3/storage/01d3f82b-984b-45df-8680-15d966cb13c2/import
+    method: GET
+  response:
+    body: |
+      {
+         "storage_import" : {
+            "client_content_length" : 0,
+            "client_content_type" : "",
+            "completed" : "",
+            "created" : "2022-05-16T08:02:47Z",
+            "direct_upload_url" : "https://pl-waw1.img.upcloud.com/uploader/session/07feb632-65c0-4819-99cf-6c60a3a13f28",
+            "error_code" : "",
+            "error_message" : "",
+            "md5sum" : "",
+            "read_bytes" : 0,
+            "sha256sum" : "",
+            "source" : "direct_upload",
+            "state" : "pending",
+            "uuid" : "07feb632-65c0-4819-99cf-6c60a3a13f28",
+            "written_bytes" : 0
+         }
+      }
+    headers:
+      Content-Length:
+      - "549"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Mon, 16 May 2022 08:02:47 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/4.5.1
+    url: https://api.upcloud.com/1.3/storage/01d3f82b-984b-45df-8680-15d966cb13c2/import
+    method: GET
+  response:
+    body: |
+      {
+         "storage_import" : {
+            "client_content_length" : 0,
+            "client_content_type" : "application/gzip",
+            "completed" : "2022-05-16T08:02:52Z",
+            "created" : "2022-05-16T08:02:47Z",
+            "direct_upload_url" : "https://pl-waw1.img.upcloud.com/uploader/session/07feb632-65c0-4819-99cf-6c60a3a13f28",
+            "error_code" : "",
+            "error_message" : "",
+            "md5sum" : "cccd88d29e4cea6733addbb45a325b21",
+            "read_bytes" : 48,
+            "sha256sum" : "17c1079983830cdc486c39ec59dd5eb9a9fda7c01a9168246c5da09c75200203",
+            "source" : "direct_upload",
+            "state" : "completed",
+            "uuid" : "07feb632-65c0-4819-99cf-6c60a3a13f28",
+            "written_bytes" : 24
+         }
+      }
+    headers:
+      Content-Length:
+      - "685"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Mon, 16 May 2022 08:02:52 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""

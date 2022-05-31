@@ -1,9 +1,23 @@
-# Change log
+# Changelog
 
 All notable changes to this project will be documented in this file.
 See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
+
+### Fixed
+- drop IP address family requirement from firewall rule
+
+## [4.5.2]
+
+### Fixed
+- Content-Type HTTP header when importing compressed storage
+
+## [4.5.1]
+
+### Fixed
+- Expose `GetZones` through `Zones` interface
+- allow time or day of week to be empty in Managed Database maintenance request property
 
 ## [4.5.0]
 
@@ -146,7 +160,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.5.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.5.2...HEAD
+[4.5.2]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.5.1...v4.5.2
+[4.5.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.5.0...v4.5.1
 [4.5.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.4.2...v4.5.0
 [4.4.2]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.4.1...v4.4.2
 [4.4.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.4.0...v4.4.1
