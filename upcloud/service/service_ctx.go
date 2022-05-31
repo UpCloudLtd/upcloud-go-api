@@ -8,6 +8,26 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/client"
 )
 
+type service interface {
+	CloudContext
+	AccountContext
+	FirewallContext
+	HostContext
+	IpAddressContext
+	LoadBalancerContext
+	ServerGroupContext
+	NetworkContext
+	TagContext
+	ServerContext
+	StorageContext
+	ObjectStorageContext
+	ManagedDatabaseServiceManagerContext
+	ManagedDatabaseUserManagerContext
+	ManagedDatabaseLogicalDatabaseManagerContext
+}
+
+var _ service = (*ServiceContext)(nil)
+
 // Service represents the API service with context support. The specified client is used to communicate with the API
 type ServiceContext struct {
 	client *client.ClientContext
@@ -33,7 +53,9 @@ func (s *ServiceContext) create(ctx context.Context, r requestable, v interface{
 	if err != nil {
 		return parseJSONServiceError(err)
 	}
-
+	if v == nil {
+		return nil
+	}
 	return json.Unmarshal(res, v)
 }
 
@@ -48,7 +70,9 @@ func (s *ServiceContext) modify(ctx context.Context, r requestable, v interface{
 	if err != nil {
 		return parseJSONServiceError(err)
 	}
-
+	if v == nil {
+		return nil
+	}
 	return json.Unmarshal(res, v)
 }
 
@@ -63,7 +87,9 @@ func (s *ServiceContext) replace(ctx context.Context, r requestable, v interface
 	if err != nil {
 		return parseJSONServiceError(err)
 	}
-
+	if v == nil {
+		return nil
+	}
 	return json.Unmarshal(res, v)
 }
 

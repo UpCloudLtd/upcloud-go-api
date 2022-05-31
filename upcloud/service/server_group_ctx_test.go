@@ -13,7 +13,6 @@ import (
 
 func TestServerGroupsContext(t *testing.T) {
 	t.Parallel()
-
 	recordWithContext(t, "servergroups", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 		srv, err := createMinimalServer(svc, "TestServerGroups")
 		require.NoError(t, err)

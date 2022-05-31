@@ -60,8 +60,6 @@ type LoadBalancerContext interface {
 	DeleteLoadBalancerCertificateBundle(ctx context.Context, r *request.DeleteLoadBalancerCertificateBundleRequest) error
 }
 
-var _ LoadBalancerContext = (*ServiceContext)(nil)
-
 // GetLoadBalancers retrieves a list of load balancers.
 func (s *ServiceContext) GetLoadBalancers(ctx context.Context, r *request.GetLoadBalancersRequest) ([]upcloud.LoadBalancer, error) {
 	loadBalancers := make([]upcloud.LoadBalancer, 0)

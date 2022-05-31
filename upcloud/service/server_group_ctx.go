@@ -15,8 +15,6 @@ type ServerGroupContext interface {
 	DeleteServerGroup(ctx context.Context, r *request.DeleteServerGroupRequest) error
 }
 
-var _ ServerGroupContext = (*ServiceContext)(nil)
-
 // GetServerGroups retrieves a list of server groups with context (EXPERIMENTAL).
 func (s *ServiceContext) GetServerGroups(ctx context.Context, r *request.GetServerGroupsRequest) (upcloud.ServerGroups, error) {
 	groups := upcloud.ServerGroups{}
