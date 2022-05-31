@@ -224,6 +224,24 @@ func (g *GetManagedDatabaseQueryStatisticsRequest) RequestURL() string {
 	return fmt.Sprintf("/database/%s/query-statistics?%s", g.UUID, qv.Encode())
 }
 
+// GetManagedDatabaseServiceTypeRequest represents a request to get details of a database type
+type GetManagedDatabaseServiceTypeRequest struct {
+	Type string
+}
+
+// RequestURL implements the request.Request interface
+func (g *GetManagedDatabaseServiceTypeRequest) RequestURL() string {
+	return fmt.Sprintf("/database/service-types/%s", g.Type)
+}
+
+// GetManagedDatabaseServiceTypesRequest represents a request to get a map of available database types
+type GetManagedDatabaseServiceTypesRequest struct{}
+
+// RequestURL implements the request.Request interface
+func (g *GetManagedDatabaseServiceTypesRequest) RequestURL() string {
+	return "/database/service-types"
+}
+
 // ManagedDatabaseMaintenanceTimeRequest represents the set time of week when automatic maintenance operations are allowed
 type ManagedDatabaseMaintenanceTimeRequest struct {
 	DayOfWeek string `json:"dow,omitempty"`

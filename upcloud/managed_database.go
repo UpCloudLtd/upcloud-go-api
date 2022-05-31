@@ -608,3 +608,68 @@ type ManagedDatabaseQueryStatisticsPostgreSQL struct {
 	TotalTime           time.Duration `json:"total_time"`
 	UserName            string        `json:"user_name"`
 }
+
+// ManagedDatabaseType represets details of a database service type.
+type ManagedDatabaseType struct {
+	Name                   string                                    `json:"name"`
+	Description            string                                    `json:"description"`
+	LatestAvailableVersion string                                    `json:"latest_available_version"`
+	ServicePlans           []ManagedDatabaseServicePlan              `json:"service_plans"`
+	Properties             map[string]ManagedDatabaseServiceProperty `json:"properties"`
+}
+
+// ManagedDatabaseType represets details of a database service plan.
+type ManagedDatabaseServicePlan struct {
+	BackupConfig ManagedDatabaseBackupConfig     `json:"backup_config"`
+	NodeCount    int                             `json:"node_count"`
+	Plan         string                          `json:"plan"`
+	CoreNumber   int                             `json:"core_number"`
+	StorageSize  int                             `json:"storage_size"`
+	MemoryAmount int                             `json:"memory_amount"`
+	Zones        ManagedDatabaseServicePlanZones `json:"zones"`
+}
+
+// ManagedDatabaseType represets backup configuration of a database service plan
+type ManagedDatabaseBackupConfig struct {
+	Interval     int    `json:"interval"`
+	MaxCount     int    `json:"max_count"`
+	RecoveryMode string `json:"recovery_mode"`
+}
+
+// ManagedDatabaseServicePlanZones is a helper for unmarshaling database plan zones
+type ManagedDatabaseServicePlanZones []ManagedDatabaseServicePlanZone
+
+// ManagedDatabaseServicePlanZone represents zone where parent database plan is available
+type ManagedDatabaseServicePlanZone struct {
+	Name string `json:"name"`
+}
+
+// UnmarshalJSON is a custom unmarshaller that deals with deeply embedded values.
+func (s *ManagedDatabaseServicePlanZones) UnmarshalJSON(b []byte) error {
+	v := struct {
+		Zones []ManagedDatabaseServicePlanZone `json:"zone"`
+	}{}
+	err := json.Unmarshal(b, &v)
+	if err != nil {
+		return err
+	}
+
+	*s = v.Zones
+
+	return nil
+}
+
+// ManagedDatabaseServiceProperty contains help for database property usage and validation
+type ManagedDatabaseServiceProperty struct {
+	CreateOnly  bool        `json:"createOnly,omitempty"`
+	Default     interface{} `json:"default,omitempty"`
+	Example     interface{} `json:"example,omitempty"`
+	MaxLength   int         `json:"maxLength,omitempty"`
+	MinLength   int         `json:"minLength,omitempty"`
+	Pattern     string      `json:"pattern,omitempty"`
+	Type        interface{} `json:"type"`
+	Title       string      `json:"title"`
+	Description string      `json:"description,omitempty"`
+	Enum        interface{} `json:"enum,omitempty"`
+	UserError   string      `json:"user_error,omitempty"`
+}
