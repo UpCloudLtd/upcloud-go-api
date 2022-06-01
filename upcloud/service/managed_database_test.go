@@ -28,29 +28,24 @@ const (
 	managedDatabaseTestZone = "fi-hel2"
 )
 
-var managedDatabaseTestCreateReq = &request.CreateManagedDatabaseRequest{
-	HostNamePrefix: "test",
-	Maintenance: request.ManagedDatabaseMaintenanceTimeRequest{
-		DayOfWeek: "monday",
-		Time:      "12:00:00",
-	},
-	Plan:       managedDatabaseTestPlan,
-	Properties: managedDatabaseTestCreateReqProperties,
-	Title:      "test",
-	Type:       upcloud.ManagedDatabaseServiceTypePostgreSQL,
-	Zone:       managedDatabaseTestZone,
-}
-
-var managedDatabaseTestCreateReqProperties = request.ManagedDatabasePropertiesRequest{
-	upcloud.ManagedDatabasePropertyAutoUtilityIPFilter: true,
-	upcloud.ManagedDatabasePropertyIPFilter:            []string{"10.0.0.1/32"},
-	upcloud.ManagedDatabasePropertyPublicAccess:        true,
-}
-
 func getTestCreateRequest(name string) *request.CreateManagedDatabaseRequest {
-	clone := *managedDatabaseTestCreateReq
-	clone.HostNamePrefix = name
-	return &clone
+	r := request.CreateManagedDatabaseRequest{
+		HostNamePrefix: name,
+		Maintenance: request.ManagedDatabaseMaintenanceTimeRequest{
+			DayOfWeek: "monday",
+			Time:      "12:00:00",
+		},
+		Plan: managedDatabaseTestPlan,
+		Properties: request.ManagedDatabasePropertiesRequest{
+			upcloud.ManagedDatabasePropertyAutoUtilityIPFilter: true,
+			upcloud.ManagedDatabasePropertyIPFilter:            []string{"10.0.0.1/32"},
+			upcloud.ManagedDatabasePropertyPublicAccess:        true,
+		},
+		Title: "test",
+		Type:  upcloud.ManagedDatabaseServiceTypePostgreSQL,
+		Zone:  managedDatabaseTestZone,
+	}
+	return &r
 }
 
 func connectPostgres(t *testing.T, service *upcloud.ManagedDatabase, applicationName string, timeout time.Duration, retries int) *pgx.Conn {
