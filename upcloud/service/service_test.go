@@ -144,20 +144,17 @@ func TestGetPlans(t *testing.T) {
 }
 
 func ExampleNew() {
-	username, password := getCredentials()
-	client := client.New(username, password)
+	client := client.New("<username>", "<password>")
 	svc := New(client)
 	zones, err := svc.GetZones()
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Printf("%d", len(zones.Zones))
-	// output: 12
 }
 
 func ExampleNewWithContext() {
-	username, password := getCredentials()
-	client := client.NewWithContext(username, password)
+	client := client.NewWithContext("<username>", "<password>")
 	svc := NewWithContext(client)
 	ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(10*time.Second))
 	defer cancel()
@@ -166,5 +163,4 @@ func ExampleNewWithContext() {
 		log.Fatal(err)
 	}
 	fmt.Printf("%d", len(zones.Zones))
-	// output: 12
 }
