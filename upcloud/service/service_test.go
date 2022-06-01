@@ -1,15 +1,19 @@
 package service
 
 import (
+	"context"
+	"fmt"
 	"log"
 	"os"
 	"testing"
+	"time"
 
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/client"
 )
 
 // TestMain is the main test method
@@ -137,4 +141,30 @@ func TestGetPlans(t *testing.T) {
 		assert.Equal(t, 25, plan.StorageSize)
 		assert.Equal(t, upcloud.StorageTierMaxIOPS, plan.StorageTier)
 	})
+}
+
+func ExampleNew() {
+	username, password := getCredentials()
+	client := client.New(username, password)
+	svc := New(client)
+	zones, err := svc.GetZones()
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("%d", len(zones.Zones))
+	// output: 12
+}
+
+func ExampleNewWithContext() {
+	username, password := getCredentials()
+	client := client.NewWithContext(username, password)
+	svc := NewWithContext(client)
+	ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(10*time.Second))
+	defer cancel()
+	zones, err := svc.GetZones(ctx)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("%d", len(zones.Zones))
+	// output: 12
 }

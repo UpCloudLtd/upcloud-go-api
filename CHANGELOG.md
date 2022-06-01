@@ -7,6 +7,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ### Added
 - add support for fetching available service types for managed database service
+- add context-aware client and service types
 
 ### Fixed
 - drop IP address family requirement from firewall rule
