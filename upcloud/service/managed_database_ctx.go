@@ -28,6 +28,8 @@ type ManagedDatabaseServiceManagerContext interface {
 	StartManagedDatabase(ctx context.Context, r *request.StartManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
 	ShutdownManagedDatabase(ctx context.Context, r *request.ShutdownManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
 	WaitForManagedDatabaseState(ctx context.Context, r *request.WaitForManagedDatabaseStateRequest) (*upcloud.ManagedDatabase, error)
+	GetManagedDatabaseServiceType(ctx context.Context, r *request.GetManagedDatabaseServiceTypeRequest) (*upcloud.ManagedDatabaseType, error)
+	GetManagedDatabaseServiceTypes(ctx context.Context, r *request.GetManagedDatabaseServiceTypesRequest) (map[string]upcloud.ManagedDatabaseType, error)
 }
 
 type ManagedDatabaseUserManagerContext interface {
@@ -248,4 +250,16 @@ func (s *ServiceContext) GetManagedDatabaseLogicalDatabases(ctx context.Context,
 // DeleteManagedDatabaseLogicalDatabase (EXPERIMENTAL) deletes an existing logical database of an existing managed database instance
 func (s *ServiceContext) DeleteManagedDatabaseLogicalDatabase(ctx context.Context, r *request.DeleteManagedDatabaseLogicalDatabaseRequest) error {
 	return s.delete(ctx, r)
+}
+
+// GetManagedDatabaseServiceType (EXPERIMENTAL) returns details of requested service type
+func (s *ServiceContext) GetManagedDatabaseServiceType(ctx context.Context, r *request.GetManagedDatabaseServiceTypeRequest) (*upcloud.ManagedDatabaseType, error) {
+	var serviceType upcloud.ManagedDatabaseType
+	return &serviceType, s.get(ctx, r.RequestURL(), &serviceType)
+}
+
+// GetManagedDatabaseServiceTypes (EXPERIMENTAL) returns a map of available database service types
+func (s *ServiceContext) GetManagedDatabaseServiceTypes(ctx context.Context, r *request.GetManagedDatabaseServiceTypesRequest) (map[string]upcloud.ManagedDatabaseType, error) {
+	serviceTypes := make(map[string]upcloud.ManagedDatabaseType)
+	return serviceTypes, s.get(ctx, r.RequestURL(), &serviceTypes)
 }

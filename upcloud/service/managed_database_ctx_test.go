@@ -974,3 +974,28 @@ func TestService_ManagedDatabaseLogicalDatabaseManagerContext(t *testing.T) {
 		})
 	})
 }
+
+func TestService_GetManagedDatabaseServiceTypeContext(t *testing.T) {
+	recordWithContext(t, "getmanageddatabaseservicetype", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+		databaseTypes := []string{"pg", "mysql"}
+
+		for _, databaseType := range databaseTypes {
+			serviceType, err := svcContext.GetManagedDatabaseServiceType(ctx, &request.GetManagedDatabaseServiceTypeRequest{Type: databaseType})
+			if !assert.NoError(t, err) {
+				return
+			}
+			assert.Equal(t, databaseType, serviceType.Name)
+		}
+	})
+}
+
+func TestService_GetManagedDatabaseServiceTypesContext(t *testing.T) {
+	recordWithContext(t, "getmanageddatabaseservicetypes", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+		types, err := svcContext.GetManagedDatabaseServiceTypes(ctx, &request.GetManagedDatabaseServiceTypesRequest{})
+		if !assert.NoError(t, err) {
+			return
+		}
+		assert.Equal(t, "pg", types["pg"].Name)
+		assert.Equal(t, "mysql", types["mysql"].Name)
+	})
+}
