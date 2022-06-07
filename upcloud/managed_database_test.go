@@ -383,3 +383,186 @@ func TestManagedDatabaseType_UnmarshalJSON(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, expect, databaseType)
 }
+
+func TestUnmarshalManagedDatabaseQueryStatisticsPostgreSQL(t *testing.T) {
+	const d = `{
+		"blk_read_time": 0,
+		"blk_write_time": 0,
+		"calls": 1,
+		"database_name": "defaultdb",
+		"local_blks_dirtied": 0,
+		"local_blks_hit": 0,
+		"local_blks_read": 0,
+		"local_blks_written": 0,
+		"max_time": 3126,
+		"mean_time": 3126,
+		"min_time": 3126,
+		"query": "BEGIN",
+		"rows": 0,
+		"shared_blks_dirtied": 0,
+		"shared_blks_hit": 0,
+		"shared_blks_read": 0,
+		"shared_blks_written": 0,
+		"stddev_time": 0,
+		"temp_blks_read": 0,
+		"temp_blks_written": 0,
+		"total_time": 3126,
+		"user_name": "upadmin"
+	}`
+	var c ManagedDatabaseQueryStatisticsPostgreSQL
+	assert.NoError(t, json.Unmarshal([]byte(d), &c))
+	expect := ManagedDatabaseQueryStatisticsPostgreSQL{
+		BlockReadTime:       0,
+		BlockWriteTime:      0,
+		Calls:               1,
+		DatabaseName:        "defaultdb",
+		LocalBlocksDirtied:  0,
+		LocalBlocksHit:      0,
+		LocalBlocksRead:     0,
+		LocalBlocksWritten:  0,
+		MaxTime:             3126,
+		MeanTime:            3126,
+		MinTime:             3126,
+		Query:               "BEGIN",
+		Rows:                0,
+		SharedBlocksDirtied: 0,
+		SharedBlocksHit:     0,
+		SharedBlocksRead:    0,
+		SharedBlocksWritten: 0,
+		StddevTime:          0,
+		TempBlocksRead:      0,
+		TempBlocksWritten:   0,
+		TotalTime:           3126,
+		UserName:            "upadmin",
+	}
+	assert.Equal(t, expect, c)
+}
+func TestUnmarshalManagedDatabaseQueryStatisticsMySQL(t *testing.T) {
+	const d = `{
+		"avg_timer_wait": 2000309754,
+		"count_star": 1,
+		"digest": "3b74a4bb71311c8dffd4b64a1dabe02d0ac8fcd7ae03087dd69378a554bb28bc",
+		"digest_text": "SELECT SLEEP (?)",
+		"first_seen": "2021-09-14T13:49:55.576024Z",
+		"last_seen": "2021-09-14T13:49:55.576024Z",
+		"max_timer_wait": 2000309754,
+		"min_timer_wait": 2000309754,
+		"quantile_95": 2089296130,
+		"quantile_99": 2089296130,
+		"quantile_999": 2089296130,
+		"query_sample_seen": "2021-09-14T13:49:55.576024Z",
+		"query_sample_text": "SELECT SLEEP(2)",
+		"query_sample_timer_wait": 2000309754,
+		"schema_name": "defaultdb",
+		"sum_created_tmp_disk_tables": 0,
+		"sum_created_tmp_tables": 0,
+		"sum_errors": 0,
+		"sum_lock_time": 0,
+		"sum_no_good_index_used": 0,
+		"sum_no_index_used": 0,
+		"sum_rows_affected": 0,
+		"sum_rows_examined": 1,
+		"sum_rows_sent": 1,
+		"sum_select_full_join": 0,
+		"sum_select_full_range_join": 0,
+		"sum_select_range": 0,
+		"sum_select_range_check": 0,
+		"sum_select_scan": 0,
+		"sum_sort_merge_passes": 0,
+		"sum_sort_range": 0,
+		"sum_sort_rows": 0,
+		"sum_sort_scan": 0,
+		"sum_timer_wait": 2000309754,
+		"sum_warnings": 0
+	}`
+	var c ManagedDatabaseQueryStatisticsMySQL
+	assert.NoError(t, json.Unmarshal([]byte(d), &c))
+	expect := ManagedDatabaseQueryStatisticsMySQL{
+		AvgTimerWait:            2000309754,
+		CountStar:               1,
+		Digest:                  "3b74a4bb71311c8dffd4b64a1dabe02d0ac8fcd7ae03087dd69378a554bb28bc",
+		DigestText:              "SELECT SLEEP (?)",
+		FirstSeen:               timeParse("2021-09-14T13:49:55.576024Z"),
+		LastSeen:                timeParse("2021-09-14T13:49:55.576024Z"),
+		MaxTimerWait:            2000309754,
+		MinTimerWait:            2000309754,
+		Quantile95:              2089296130,
+		Quantile99:              2089296130,
+		Quantile999:             2089296130,
+		QuerySampleSeen:         timeParse("2021-09-14T13:49:55.576024Z"),
+		QuerySampleText:         "SELECT SLEEP(2)",
+		QuerySampleTimerWait:    2000309754,
+		SchemaName:              "defaultdb",
+		SumCreatedTmpDiskTables: 0,
+		SumCreatedTmpTables:     0,
+		SumErrors:               0,
+		SumLockTime:             0,
+		SumNoGoodIndexUsed:      0,
+		SumNoIndexUsed:          0,
+		SumRowsAffected:         0,
+		SumRowsExamined:         1,
+		SumRowsSent:             1,
+		SumSelectFullJoin:       0,
+		SumSelectFullRangeJoin:  0,
+		SumSelectRange:          0,
+		SumSelectRangeCheck:     0,
+		SumSelectScan:           0,
+		SumSortMergePasses:      0,
+		SumSortRange:            0,
+		SumSortRows:             0,
+		SumSortScan:             0,
+		SumTimerWait:            2000309754,
+		SumWarnings:             0,
+	}
+	assert.Equal(t, expect, c)
+}
+
+func TestUnmarshalManagedDatabaseConnection(t *testing.T) {
+	const d = `{
+		"application_name":"upcloudGoTestSuite",
+		"backend_start":"2021-09-14T13:41:29.369748Z",
+		"backend_type":"client backend",
+		"backend_xid":null,
+		"backend_xmin":null,
+		"client_addr":"85.7.82.158",
+		"client_hostname":null,
+		"client_port":62028,
+		"datid":16401,
+		"datname":"defaultdb",
+		"pid":257,
+		"query":"SELECT 1",
+		"query_duration":291591000,
+		"query_start":"2021-09-14T13:41:29.575568Z",
+		"state":"idle",
+		"state_change":"2021-09-14T13:41:29.575916Z",
+		"usename":"upadmin",
+		"usesysid":16400,
+		"wait_event":"ClientRead",
+		"wait_event_type":"Client",
+		"xact_start":null
+	}`
+
+	var c ManagedDatabaseConnection
+	assert.NoError(t, json.Unmarshal([]byte(d), &c))
+
+	expect := ManagedDatabaseConnection{
+		ApplicationName: "upcloudGoTestSuite",
+		BackendStart:    timeParse("2021-09-14T13:41:29.369748Z"),
+		BackendType:     "client backend",
+		ClientAddr:      "85.7.82.158",
+		ClientPort:      62028,
+		DatId:           16401,
+		DatName:         "defaultdb",
+		Pid:             257,
+		Query:           "SELECT 1",
+		QueryDuration:   291591000,
+		QueryStart:      timeParse("2021-09-14T13:41:29.575568Z"),
+		State:           "idle",
+		StateChange:     timeParse("2021-09-14T13:41:29.575916Z"),
+		Username:        "upadmin",
+		UseSysId:        16400,
+		WaitEvent:       "ClientRead",
+		WaitEventType:   "Client",
+	}
+	assert.Equal(t, expect, c)
+}
