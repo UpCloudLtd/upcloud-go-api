@@ -10,6 +10,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ### Fixed
 - drop IP address family requirement from firewall rule
+- typo in `ManagedDatabaseConnection` field `WaitEventType`
 
 ## [4.5.2]
 

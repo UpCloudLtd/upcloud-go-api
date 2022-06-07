@@ -196,7 +196,7 @@ type ManagedDatabaseConnection struct {
 	Username        string        `json:"usename"`
 	UseSysId        int           `json:"usesysid"`
 	WaitEvent       string        `json:"wait_event"`
-	WaintEventType  string        `json:"wait_event_type"`
+	WaitEventType   string        `json:"wait_event_type"`
 	XactStart       time.Time     `json:"xact_start"`
 }
 

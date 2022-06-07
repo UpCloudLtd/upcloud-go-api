@@ -562,7 +562,7 @@ func TestUnmarshalManagedDatabaseConnection(t *testing.T) {
 		Username:        "upadmin",
 		UseSysId:        16400,
 		WaitEvent:       "ClientRead",
-		WaintEventType:  "Client",
+		WaitEventType:   "Client",
 	}
 	assert.Equal(t, expect, c)
 }
