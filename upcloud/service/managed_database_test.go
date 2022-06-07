@@ -1,26 +1,17 @@
 package service
 
 import (
-	"context"
-	"database/sql"
-	"fmt"
-	"net"
 	"net/http"
-	"runtime"
+	"strings"
 	"testing"
 	"time"
 
 	"github.com/dnaeon/go-vcr/recorder"
-	"github.com/go-sql-driver/mysql"
-	"github.com/jackc/pgconn"
-	"github.com/jackc/pgx/v4"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/request"
-
-	_ "github.com/go-sql-driver/mysql"
 )
 
 const (
@@ -51,93 +42,6 @@ func getTestCreateRequest(name string) *request.CreateManagedDatabaseRequest {
 	clone := *managedDatabaseTestCreateReq
 	clone.HostNamePrefix = name
 	return &clone
-}
-
-func connectPostgres(t *testing.T, service *upcloud.ManagedDatabase, applicationName string, timeout time.Duration, retries int) *pgx.Conn {
-	var publicHostname string
-	for _, comp := range service.Components {
-		if comp.Component != "pg" || comp.Route != "public" {
-			continue
-		}
-		publicHostname = comp.Host
-		break
-	}
-	if !assert.NotEmpty(t, publicHostname, "no public hostname found") {
-		return nil
-	}
-	connStr := fmt.Sprintf("sslmode=require host=%s port=%s dbname=%s user=%s password=%s application_name=%s",
-		publicHostname, service.ServiceURIParams.Port, service.ServiceURIParams.DatabaseName,
-		service.ServiceURIParams.User, service.ServiceURIParams.Password, applicationName)
-	config, err := pgx.ParseConfig(connStr)
-	if !assert.NoError(t, err) {
-		return nil
-	}
-	// This defaults to zero which messes with dns resolution
-	config.ConnectTimeout = timeout
-	// MacOS resolver has some interesting caching behaviour. Use native resolver instead
-	if runtime.GOOS == "darwin" {
-		resolver := &net.Resolver{PreferGo: true}
-		config.LookupFunc = resolver.LookupHost
-	}
-	t.Logf("connecting to %s", publicHostname)
-	for i := 0; i < retries; i++ {
-		conn, err := pgx.ConnectConfig(context.Background(), config)
-		if err != nil {
-			t.Logf("connection error (try %d): %s", i+1, err.Error())
-			time.Sleep(timeout / time.Duration(retries))
-			continue
-		}
-		return conn
-	}
-	assert.Failf(t, "connect error", "could not connect to %s", publicHostname)
-	return nil
-}
-
-func connectMysql(t *testing.T, service *upcloud.ManagedDatabase, timeout time.Duration, retries int) (db *sql.DB, restoreResolver func()) {
-	var publicHostname string
-	for _, comp := range service.Components {
-		if comp.Component != "mysql" || comp.Route != "public" {
-			continue
-		}
-		publicHostname = comp.Host
-		break
-	}
-	restoreResolver = func() {}
-	// MacOS resolver has some interesting caching behaviour. Use native resolver instead
-	// It is not ideal to change the default resolver but let's return a restore callback
-	if runtime.GOOS == "darwin" {
-		oldvalue := net.DefaultResolver.PreferGo
-		net.DefaultResolver.PreferGo = true
-		restoreResolver = func() {
-			net.DefaultResolver.PreferGo = oldvalue
-		}
-	}
-	config := mysql.NewConfig()
-	config.User = service.ServiceURIParams.User
-	config.Passwd = service.ServiceURIParams.Password
-	config.Net = "tcp"
-	config.Addr = fmt.Sprintf("%s:%s", publicHostname, service.ServiceURIParams.Port)
-	config.DBName = service.ServiceURIParams.DatabaseName
-	config.TLSConfig = "skip-verify"
-	config.Timeout = timeout
-
-	t.Logf("connecting to %s", publicHostname)
-	fmt.Println(config.FormatDSN())
-	var err error
-	for i := 0; i < retries; i++ {
-		db, err = sql.Open("mysql", config.FormatDSN())
-		if err == nil {
-			err = db.Ping()
-		}
-		if err != nil {
-			t.Logf("connection error (try %d): %s", i+1, err.Error())
-			time.Sleep(timeout / time.Duration(retries))
-			continue
-		}
-		return db, restoreResolver
-	}
-	assert.Failf(t, "connect error", "could not connect to %s", publicHostname)
-	return nil, nil
 }
 
 func TestService_CloneManagedDatabase(t *testing.T) {
@@ -447,13 +351,6 @@ func TestService_GetManagedDatabaseServiceTypes(t *testing.T) {
 }
 
 func TestService_GetManagedDatabaseConnections(t *testing.T) {
-	const (
-		startTimeout    = 10 * time.Minute
-		connTimeout     = 1 * time.Minute
-		retries         = 10
-		applicationName = "upcloudGoTestSuite"
-		testQuery       = "SELECT 1"
-	)
 	record(t, "getmanageddatabaseconnections", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		createReq := getTestCreateRequest("getmanageddatabaseconnections")
 		createReq.Type = upcloud.ManagedDatabaseServiceTypePostgreSQL
@@ -462,113 +359,37 @@ func TestService_GetManagedDatabaseConnections(t *testing.T) {
 		if !assert.NoError(t, err) {
 			return
 		}
-		var testConn *pgx.Conn
 		defer func() {
 			t.Logf("deleting %s", serviceDetails.UUID)
 			err := svc.DeleteManagedDatabase(&request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
 			assert.NoError(t, err)
-			if testConn != nil {
-				_ = testConn.Close(context.Background())
-			}
 		}()
-		if rec.Mode() == recorder.ModeRecording {
-			rec.AddPassthrough(func(h *http.Request) bool {
-				return true
-			})
-			t.Logf("waiting for service to be deployed (up to %s)", startTimeout)
-			_, err = svc.WaitForManagedDatabaseState(&request.WaitForManagedDatabaseStateRequest{
-				UUID:         serviceDetails.UUID,
-				DesiredState: upcloud.ManagedDatabaseStateRunning,
-				Timeout:      startTimeout,
-			})
-			if !assert.NoError(t, err) {
-				return
-			}
-
-			testConn = connectPostgres(t, serviceDetails, applicationName, connTimeout, retries)
-			if testConn == nil {
-				return
-			}
-			ctx, cancel := context.WithTimeout(context.Background(), connTimeout)
-			defer cancel()
-			_, err = testConn.Exec(ctx, testQuery)
-			if !assert.NoError(t, err) {
-				return
-			}
-
-			rec.Passthroughs = nil
-		}
+		require.NoError(t, waitForManagedDatabaseRunningState(rec, svc, serviceDetails.UUID))
 		conns, err := svc.GetManagedDatabaseConnections(&request.GetManagedDatabaseConnectionsRequest{
-			UUID:  serviceDetails.UUID,
-			Limit: 1000,
+			UUID:   serviceDetails.UUID,
+			Limit:  1000,
+			Offset: 0,
 		})
 		if !assert.NoError(t, err) {
 			return
 		}
-		var connInfo *upcloud.ManagedDatabaseConnection
-		for i, conn := range conns {
-			if conn.ApplicationName != applicationName {
-				continue
-			}
-			connInfo = &conns[i]
-			assert.Equal(t, testQuery, conn.Query)
-		}
-		if !assert.NotNil(t, connInfo) {
-			return
-		}
+		assert.Len(t, conns, 0)
 
-		t.Run("CancelManagedDatabaseConnection", func(t *testing.T) {
-			const timeout = 15 * time.Second
-			outerCtx, cancel := context.WithCancel(context.Background())
-			defer cancel()
-			done := make(chan error, 1)
-			if rec.Mode() == recorder.ModeRecording {
-				go func() {
-					defer close(done)
-					ctx, cancel := context.WithTimeout(outerCtx, timeout)
-					defer cancel()
-					_, err := testConn.Exec(ctx, fmt.Sprintf("SELECT pg_sleep(%f)", timeout.Seconds()))
-					done <- err
-				}()
-			}
-			err := svc.CancelManagedDatabaseConnection(&request.CancelManagedDatabaseConnection{
-				UUID:      serviceDetails.UUID,
-				Pid:       connInfo.Pid,
-				Terminate: false,
-			})
-			assert.NoError(t, err)
-			if rec.Mode() == recorder.ModeRecording {
-				err := <-done
-				if assert.Error(t, err) && assert.IsType(t, &pgconn.PgError{}, err) {
-					assert.Equal(t, "57014", err.(*pgconn.PgError).Code)
-				}
-			}
+		err = svc.CancelManagedDatabaseConnection(&request.CancelManagedDatabaseConnection{
+			UUID:      serviceDetails.UUID,
+			Pid:       0,
+			Terminate: true,
 		})
+		assert.Error(t, err)
+		assert.True(t, strings.HasPrefix(err.(*upcloud.Error).ErrorMessage, "Must provide a connection"))
 
-		t.Run("CancelManagedDatabaseConnection/terminate", func(t *testing.T) {
-			const timeout = 15 * time.Second
-			err := svc.CancelManagedDatabaseConnection(&request.CancelManagedDatabaseConnection{
-				UUID:      serviceDetails.UUID,
-				Pid:       connInfo.Pid,
-				Terminate: true,
-			})
-			if !assert.NoError(t, err) {
-				return
-			}
-			conns, err := svc.GetManagedDatabaseConnections(&request.GetManagedDatabaseConnectionsRequest{
-				UUID:  serviceDetails.UUID,
-				Limit: 1000,
-			})
-			if !assert.NoError(t, err) {
-				return
-			}
-			assert.Empty(t, conns)
-			if rec.Mode() == recorder.ModeRecording {
-				ctx, cancel := context.WithTimeout(context.Background(), timeout)
-				defer cancel()
-				assert.Error(t, testConn.Ping(ctx))
-			}
+		err = svc.CancelManagedDatabaseConnection(&request.CancelManagedDatabaseConnection{
+			UUID:      serviceDetails.UUID,
+			Pid:       0,
+			Terminate: false,
 		})
+		assert.Error(t, err)
+		assert.True(t, strings.HasPrefix(err.(*upcloud.Error).ErrorMessage, "Must provide a connection"))
 	})
 }
 
@@ -654,11 +475,6 @@ func TestService_GetManagedDatabaseMetrics(t *testing.T) {
 }
 
 func TestService_GetManagedDatabaseQueryStatisticsMySQL(t *testing.T) {
-	const (
-		startTimeout = 10 * time.Minute
-		connTimeout  = 1 * time.Minute
-		retries      = 10
-	)
 	record(t, "getmanageddatabasequerystatisticsmysql", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		createReq := getTestCreateRequest("querystatisticsmysql")
 		createReq.Type = upcloud.ManagedDatabaseServiceTypeMySQL
@@ -667,71 +483,25 @@ func TestService_GetManagedDatabaseQueryStatisticsMySQL(t *testing.T) {
 		if !assert.NoError(t, err) {
 			return
 		}
-		var testConn *sql.DB
 		defer func() {
 			t.Logf("deleting %s", serviceDetails.UUID)
 			err := svc.DeleteManagedDatabase(&request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
 			assert.NoError(t, err)
-			if testConn != nil {
-				_ = testConn.Close()
-			}
 		}()
-		if rec.Mode() == recorder.ModeRecording {
-			rec.AddPassthrough(func(h *http.Request) bool {
-				return true
-			})
-			t.Logf("waiting for service to be deployed (up to %s)", startTimeout)
-			_, err = svc.WaitForManagedDatabaseState(&request.WaitForManagedDatabaseStateRequest{
-				UUID:         serviceDetails.UUID,
-				DesiredState: upcloud.ManagedDatabaseStateRunning,
-				Timeout:      startTimeout,
-			})
-			if !assert.NoError(t, err) {
-				return
-			}
 
-			db, restoreResolver := connectMysql(t, serviceDetails, connTimeout, retries)
-			testConn = db
-			defer restoreResolver()
-			if testConn == nil {
-				return
-			}
-			ctx, cancel := context.WithTimeout(context.Background(), connTimeout)
-			defer cancel()
-			_, err = testConn.ExecContext(ctx, "SELECT SLEEP(2)")
-			if !assert.NoError(t, err) {
-				return
-			}
-			rec.Passthroughs = nil
-		}
+		require.NoError(t, waitForManagedDatabaseRunningState(rec, svc, serviceDetails.UUID))
 
-		qstats, err := svc.GetManagedDatabaseQueryStatisticsMySQL(&request.GetManagedDatabaseQueryStatisticsRequest{
+		stats, err := svc.GetManagedDatabaseQueryStatisticsMySQL(&request.GetManagedDatabaseQueryStatisticsRequest{
 			UUID:   serviceDetails.UUID,
 			Limit:  1000,
 			Offset: 0,
 		})
-		if !assert.NoError(t, err) {
-			return
-		}
-		var found bool
-		for _, qstat := range qstats {
-			if qstat.QuerySampleText != "SELECT SLEEP(2)" {
-				continue
-			}
-			found = true
-			assert.GreaterOrEqual(t, qstat.SumTimerWait, 2*time.Second)
-		}
-		assert.True(t, found)
+		assert.NoError(t, err)
+		assert.Len(t, stats, 0)
 	})
 }
 
 func TestService_GetManagedDatabaseQueryStatisticsPostgreSQL(t *testing.T) {
-	const (
-		startTimeout    = 10 * time.Minute
-		connTimeout     = 1 * time.Minute
-		retries         = 10
-		applicationName = "upcloudGoTestSuite"
-	)
 	record(t, "getmanageddatabasequerystatisticspostgres", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		createReq := getTestCreateRequest("querystatisticspostgres")
 		createReq.Type = upcloud.ManagedDatabaseServiceTypePostgreSQL
@@ -740,60 +510,22 @@ func TestService_GetManagedDatabaseQueryStatisticsPostgreSQL(t *testing.T) {
 		if !assert.NoError(t, err) {
 			return
 		}
-		var testConn *pgx.Conn
 		defer func() {
 			t.Logf("deleting %s", serviceDetails.UUID)
 			err := svc.DeleteManagedDatabase(&request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
 			assert.NoError(t, err)
-			if testConn != nil {
-				_ = testConn.Close(context.Background())
-			}
 		}()
-		if rec.Mode() == recorder.ModeRecording {
-			rec.AddPassthrough(func(h *http.Request) bool {
-				return true
-			})
-			t.Logf("waiting for service to be deployed (up to %s)", startTimeout)
-			_, err = svc.WaitForManagedDatabaseState(&request.WaitForManagedDatabaseStateRequest{
-				UUID:         serviceDetails.UUID,
-				DesiredState: upcloud.ManagedDatabaseStateRunning,
-				Timeout:      startTimeout,
-			})
-			if !assert.NoError(t, err) {
-				return
-			}
 
-			testConn = connectPostgres(t, serviceDetails, applicationName, connTimeout, retries)
-			if testConn == nil {
-				return
-			}
-			ctx, cancel := context.WithTimeout(context.Background(), connTimeout)
-			defer cancel()
-			_, err = testConn.Exec(ctx, "select pg_sleep(2)")
-			if !assert.NoError(t, err) {
-				return
-			}
+		require.NoError(t, waitForManagedDatabaseRunningState(rec, svc, serviceDetails.UUID))
 
-			rec.Passthroughs = nil
-		}
-
-		qstats, err := svc.GetManagedDatabaseQueryStatisticsPostgreSQL(&request.GetManagedDatabaseQueryStatisticsRequest{
+		stats, err := svc.GetManagedDatabaseQueryStatisticsPostgreSQL(&request.GetManagedDatabaseQueryStatisticsRequest{
 			UUID:   serviceDetails.UUID,
 			Limit:  1000,
 			Offset: 0,
 		})
-		if !assert.NoError(t, err) {
-			return
-		}
-		var found bool
-		for _, qstat := range qstats {
-			if qstat.Query != "select pg_sleep($1)" {
-				continue
-			}
-			found = true
-			assert.GreaterOrEqual(t, qstat.TotalTime, 2*time.Second)
-		}
-		assert.True(t, found)
+		assert.NoError(t, err)
+		assert.Len(t, stats, 1)
+		assert.Equal(t, "defaultdb", stats[0].DatabaseName)
 	})
 }
 
@@ -1118,4 +850,20 @@ func TestService_ManagedDatabaseLogicalDatabaseManager(t *testing.T) {
 			})
 		})
 	})
+}
+
+func waitForManagedDatabaseRunningState(rec *recorder.Recorder, svc *Service, UUID string) error {
+	if rec.Mode() == recorder.ModeRecording {
+		rec.AddPassthrough(func(h *http.Request) bool {
+			return true
+		})
+		_, err := svc.WaitForManagedDatabaseState(&request.WaitForManagedDatabaseStateRequest{
+			UUID:         UUID,
+			DesiredState: upcloud.ManagedDatabaseStateRunning,
+			Timeout:      15 * time.Minute,
+		})
+		rec.Passthroughs = nil
+		return err
+	}
+	return nil
 }
