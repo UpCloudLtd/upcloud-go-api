@@ -15,12 +15,11 @@ import (
 	"github.com/davecgh/go-spew/spew"
 )
 
-var username string
-var password string
+var username, password string
 
 func init() {
-	username = *flag.String("username", os.Getenv("UPCLOUD_USERNAME"), "UpCloud username")
-	password = *flag.String("password", os.Getenv("UPCLOUD_PASSWORD"), "UpCloud password")
+	flag.StringVar(&username, "username", "", "UpCloud username")
+	flag.StringVar(&password, "password", "", "UpCloud password")
 	rand.Seed(time.Now().Unix())
 }
 
@@ -30,6 +29,13 @@ func main() {
 
 func run() int {
 	flag.Parse()
+
+	if password == "" {
+		password = os.Getenv("UPCLOUD_PASSWORD")
+	}
+	if username == "" {
+		username = os.Getenv("UPCLOUD_USERNAME")
+	}
 
 	command := flag.Arg(0)
 
