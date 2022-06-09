@@ -8,7 +8,6 @@ import (
 	"os"
 	"time"
 
-	"git.sr.ht/~yoink00/goflenfig"
 	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/client"
 	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/request"
@@ -16,14 +15,11 @@ import (
 	"github.com/davecgh/go-spew/spew"
 )
 
-var username string
-var password string
+var username, password string
 
 func init() {
-	goflenfig.Prefix("UPCLOUD_")
-	goflenfig.StringVar(&username, "username", "", "UpCloud user name")
-	goflenfig.StringVar(&password, "password", "", "UpCloud password")
-
+	flag.StringVar(&username, "username", "", "UpCloud username")
+	flag.StringVar(&password, "password", "", "UpCloud password")
 	rand.Seed(time.Now().Unix())
 }
 
@@ -32,7 +28,14 @@ func main() {
 }
 
 func run() int {
-	goflenfig.Parse()
+	flag.Parse()
+
+	if password == "" {
+		password = os.Getenv("UPCLOUD_PASSWORD")
+	}
+	if username == "" {
+		username = os.Getenv("UPCLOUD_USERNAME")
+	}
 
 	command := flag.Arg(0)
 

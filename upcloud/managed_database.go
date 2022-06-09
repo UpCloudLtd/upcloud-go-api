@@ -185,8 +185,8 @@ type ManagedDatabaseConnection struct {
 	ClientAddr      string        `json:"client_addr"`
 	ClientHostname  string        `json:"client_hostname"`
 	ClientPort      int           `json:"client_port"`
-	DatId           int           `json:"dat_id"`
-	DatName         string        `json:"dat_name"`
+	DatId           int           `json:"datid"`
+	DatName         string        `json:"datname"`
 	Pid             int           `json:"pid"`
 	Query           string        `json:"query"`
 	QueryDuration   time.Duration `json:"query_duration"`
@@ -196,7 +196,7 @@ type ManagedDatabaseConnection struct {
 	Username        string        `json:"usename"`
 	UseSysId        int           `json:"usesysid"`
 	WaitEvent       string        `json:"wait_event"`
-	WaintEventType  string        `json:"waint_event_type"`
+	WaitEventType   string        `json:"wait_event_type"`
 	XactStart       time.Time     `json:"xact_start"`
 }
 
