@@ -37,7 +37,7 @@ type ServiceContext struct {
 func (s *ServiceContext) get(ctx context.Context, location string, v interface{}) error {
 	body, err := s.client.PerformJSONRequest(ctx, http.MethodGet, s.client.CreateRequestURL(location), nil)
 	if err != nil {
-		return err
+		return parseJSONServiceError(err)
 	}
 	return json.Unmarshal(body, v)
 }
