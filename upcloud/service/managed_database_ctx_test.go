@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"net/http"
 	"strings"
 	"testing"
@@ -14,47 +15,22 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/request"
 )
 
-const (
-	managedDatabaseTestPlan = "2x2xCPU-4GB-100GB"
-	managedDatabaseTestZone = "fi-hel2"
-)
-
-func getTestCreateRequest(name string) *request.CreateManagedDatabaseRequest {
-	r := request.CreateManagedDatabaseRequest{
-		HostNamePrefix: name,
-		Maintenance: request.ManagedDatabaseMaintenanceTimeRequest{
-			DayOfWeek: "monday",
-			Time:      "12:00:00",
-		},
-		Plan: managedDatabaseTestPlan,
-		Properties: request.ManagedDatabasePropertiesRequest{
-			upcloud.ManagedDatabasePropertyAutoUtilityIPFilter: true,
-			upcloud.ManagedDatabasePropertyIPFilter:            []string{"10.0.0.1/32"},
-			upcloud.ManagedDatabasePropertyPublicAccess:        true,
-		},
-		Title: "test",
-		Type:  upcloud.ManagedDatabaseServiceTypePostgreSQL,
-		Zone:  managedDatabaseTestZone,
-	}
-	return &r
-}
-
-func TestService_CloneManagedDatabase(t *testing.T) {
+func TestService_CloneManagedDatabaseContext(t *testing.T) {
 	const timeout = 10 * time.Minute
-	record(t, "clonemanageddatabase", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+	recordWithContext(t, "clonemanageddatabase", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 		var cloneDetails *upcloud.ManagedDatabase
 		createReq := getTestCreateRequest("clonemanageddatabase")
-		serviceDetails, err := svc.CreateManagedDatabase(createReq)
+		serviceDetails, err := svcContext.CreateManagedDatabase(ctx, createReq)
 		if !assert.NoError(t, err) {
 			return
 		}
 		defer func() {
 			t.Logf("deleting %s", serviceDetails.UUID)
-			err := svc.DeleteManagedDatabase(&request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
+			err := svcContext.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
 			assert.NoError(t, err)
 			if cloneDetails != nil {
 				t.Logf("deleting clone %s", cloneDetails.UUID)
-				err := svc.DeleteManagedDatabase(&request.DeleteManagedDatabaseRequest{UUID: cloneDetails.UUID})
+				err := svcContext.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: cloneDetails.UUID})
 				assert.NoError(t, err)
 			}
 		}()
@@ -63,7 +39,7 @@ func TestService_CloneManagedDatabase(t *testing.T) {
 				return true
 			})
 			t.Logf("waiting for service to be deployed (up to %s)", timeout)
-			_, err = svc.WaitForManagedDatabaseState(&request.WaitForManagedDatabaseStateRequest{
+			_, err = svcContext.WaitForManagedDatabaseState(ctx, &request.WaitForManagedDatabaseStateRequest{
 				UUID:         serviceDetails.UUID,
 				DesiredState: upcloud.ManagedDatabaseStateRunning,
 				Timeout:      timeout,
@@ -74,7 +50,7 @@ func TestService_CloneManagedDatabase(t *testing.T) {
 			t.Logf("waiting for initial service service backup (up to %s)", timeout)
 			waitUntil := time.Now().Add(timeout)
 			for {
-				waitForBackupDetails, err := svc.GetManagedDatabase(&request.GetManagedDatabaseRequest{UUID: serviceDetails.UUID})
+				waitForBackupDetails, err := svcContext.GetManagedDatabase(ctx, &request.GetManagedDatabaseRequest{UUID: serviceDetails.UUID})
 				if !assert.NoError(t, err) {
 					return
 				}
@@ -89,7 +65,7 @@ func TestService_CloneManagedDatabase(t *testing.T) {
 			}
 			rec.Passthroughs = nil
 		}
-		serviceDetails, err = svc.GetManagedDatabase(&request.GetManagedDatabaseRequest{UUID: serviceDetails.UUID})
+		serviceDetails, err = svcContext.GetManagedDatabase(ctx, &request.GetManagedDatabaseRequest{UUID: serviceDetails.UUID})
 		if !assert.NoError(t, err) {
 			return
 		}
@@ -102,30 +78,30 @@ func TestService_CloneManagedDatabase(t *testing.T) {
 			Zone:           createReq.Zone,
 			Plan:           createReq.Plan,
 		}
-		cloneDetails, err = svc.CloneManagedDatabase(cloneReq)
+		cloneDetails, err = svcContext.CloneManagedDatabase(ctx, cloneReq)
 		if !assert.NoError(t, err) {
 			return
 		}
 	})
 }
 
-func TestService_CreateManagedDatabase(t *testing.T) {
+func TestService_CreateManagedDatabaseContext(t *testing.T) {
 	typesToTest := []upcloud.ManagedDatabaseServiceType{
 		upcloud.ManagedDatabaseServiceTypeMySQL,
 		upcloud.ManagedDatabaseServiceTypePostgreSQL,
 	}
-	record(t, "createmanageddatabase", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+	recordWithContext(t, "createmanageddatabase", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 		for _, serviceType := range typesToTest {
-			t.Run(string(serviceType), func(t *testing.T) {
+			t.Run("Ctx"+string(serviceType), func(t *testing.T) {
 				req := getTestCreateRequest("createmanageddatabase")
 				req.Type = serviceType
-				details, err := svc.CreateManagedDatabase(req)
+				details, err := svcContext.CreateManagedDatabase(ctx, req)
 				if !assert.NoError(t, err) {
 					return
 				}
 				defer func() {
 					t.Logf("deleting %s", details.UUID)
-					err := svc.DeleteManagedDatabase(&request.DeleteManagedDatabaseRequest{UUID: details.UUID})
+					err := svcContext.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: details.UUID})
 					assert.NoError(t, err)
 				}()
 				assert.Equal(t, serviceType, details.Type)
@@ -145,16 +121,16 @@ func TestService_CreateManagedDatabase(t *testing.T) {
 	})
 }
 
-func TestService_WaitForManagedDatabaseState(t *testing.T) {
+func TestService_WaitForManagedDatabaseStateContext(t *testing.T) {
 	const timeout = 10 * time.Minute
-	record(t, "waitformanageddatabase", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
-		details, err := svc.CreateManagedDatabase(getTestCreateRequest("waitformanageddatabase"))
+	recordWithContext(t, "waitformanageddatabase", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+		details, err := svcContext.CreateManagedDatabase(ctx, getTestCreateRequest("waitformanageddatabase"))
 		if !assert.NoError(t, err) {
 			return
 		}
 		defer func() {
 			t.Logf("deleting %s", details.UUID)
-			err := svc.DeleteManagedDatabase(&request.DeleteManagedDatabaseRequest{UUID: details.UUID})
+			err := svcContext.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: details.UUID})
 			assert.NoError(t, err)
 		}()
 		var newDetails *upcloud.ManagedDatabase
@@ -163,7 +139,7 @@ func TestService_WaitForManagedDatabaseState(t *testing.T) {
 			rec.AddPassthrough(func(h *http.Request) bool {
 				return true
 			})
-			_, err = svc.WaitForManagedDatabaseState(&request.WaitForManagedDatabaseStateRequest{
+			_, err = svcContext.WaitForManagedDatabaseState(ctx, &request.WaitForManagedDatabaseStateRequest{
 				UUID:         details.UUID,
 				DesiredState: upcloud.ManagedDatabaseStateRunning,
 				Timeout:      timeout,
@@ -173,7 +149,7 @@ func TestService_WaitForManagedDatabaseState(t *testing.T) {
 			}
 			rec.Passthroughs = nil
 		}
-		newDetails, err = svc.WaitForManagedDatabaseState(&request.WaitForManagedDatabaseStateRequest{
+		newDetails, err = svcContext.WaitForManagedDatabaseState(ctx, &request.WaitForManagedDatabaseStateRequest{
 			UUID:         details.UUID,
 			DesiredState: upcloud.ManagedDatabaseStateRunning,
 			Timeout:      15 * time.Second,
@@ -185,19 +161,19 @@ func TestService_WaitForManagedDatabaseState(t *testing.T) {
 	})
 }
 
-func TestService_GetManagedDatabase(t *testing.T) {
-	record(t, "getmanageddatabase", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+func TestService_GetManagedDatabaseContext(t *testing.T) {
+	recordWithContext(t, "getmanageddatabase", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 		req := getTestCreateRequest("getmanageddatabase")
-		details, err := svc.CreateManagedDatabase(req)
+		details, err := svcContext.CreateManagedDatabase(ctx, req)
 		if !assert.NoError(t, err) {
 			return
 		}
 		defer func() {
 			t.Logf("deleting %s", details.UUID)
-			err := svc.DeleteManagedDatabase(&request.DeleteManagedDatabaseRequest{UUID: details.UUID})
+			err := svcContext.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: details.UUID})
 			assert.NoError(t, err)
 		}()
-		details, err = svc.GetManagedDatabase(&request.GetManagedDatabaseRequest{UUID: details.UUID})
+		details, err = svcContext.GetManagedDatabase(ctx, &request.GetManagedDatabaseRequest{UUID: details.UUID})
 		if !assert.NoError(t, err) {
 			return
 		}
@@ -213,18 +189,18 @@ func TestService_GetManagedDatabase(t *testing.T) {
 		assert.Equal(t, req.Zone, details.Zone)
 	})
 }
-func TestService_GetManagedDatabases(t *testing.T) {
-	record(t, "getmanageddatabases", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
-		details, err := svc.CreateManagedDatabase(getTestCreateRequest("getmanageddatabases"))
+func TestService_GetManagedDatabasesContext(t *testing.T) {
+	recordWithContext(t, "getmanageddatabases", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+		details, err := svcContext.CreateManagedDatabase(ctx, getTestCreateRequest("getmanageddatabases"))
 		if !assert.NoError(t, err) {
 			return
 		}
 		defer func() {
 			t.Logf("deleting %s", details.UUID)
-			err := svc.DeleteManagedDatabase(&request.DeleteManagedDatabaseRequest{UUID: details.UUID})
+			err := svcContext.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: details.UUID})
 			assert.NoError(t, err)
 		}()
-		services, err := svc.GetManagedDatabases(&request.GetManagedDatabasesRequest{})
+		services, err := svcContext.GetManagedDatabases(ctx, &request.GetManagedDatabasesRequest{})
 		if !assert.NoError(t, err) {
 			return
 		}
@@ -239,21 +215,21 @@ func TestService_GetManagedDatabases(t *testing.T) {
 	})
 }
 
-func TestService_GetManagedDatabaseLogs(t *testing.T) {
+func TestService_GetManagedDatabaseLogsContext(t *testing.T) {
 	const (
 		batchSize = 5
 		timeout   = 10 * time.Minute
 		waitFor   = 30 * time.Second
 	)
-	record(t, "getmanageddatabaselogs", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+	recordWithContext(t, "getmanageddatabaselogs", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 		createReq := getTestCreateRequest("getmanageddatabaselogs")
-		serviceDetails, err := svc.CreateManagedDatabase(createReq)
+		serviceDetails, err := svcContext.CreateManagedDatabase(ctx, createReq)
 		if !assert.NoError(t, err) {
 			return
 		}
 		defer func() {
 			t.Logf("deleting %s", serviceDetails.UUID)
-			err := svc.DeleteManagedDatabase(&request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
+			err := svcContext.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
 			assert.NoError(t, err)
 		}()
 		if rec.Mode() == recorder.ModeRecording {
@@ -261,7 +237,7 @@ func TestService_GetManagedDatabaseLogs(t *testing.T) {
 				return true
 			})
 			t.Logf("waiting for service to be deployed (up to %s)", timeout)
-			_, err = svc.WaitForManagedDatabaseState(&request.WaitForManagedDatabaseStateRequest{
+			_, err = svcContext.WaitForManagedDatabaseState(ctx, &request.WaitForManagedDatabaseStateRequest{
 				UUID:         serviceDetails.UUID,
 				DesiredState: upcloud.ManagedDatabaseStateRunning,
 				Timeout:      timeout,
@@ -277,7 +253,7 @@ func TestService_GetManagedDatabaseLogs(t *testing.T) {
 			upcloud.ManagedDatabaseLogOrderAscending,
 			upcloud.ManagedDatabaseLogOrderDescending,
 		} {
-			t.Run(string(order), func(t *testing.T) {
+			t.Run("Ctx"+string(order), func(t *testing.T) {
 				logReq := &request.GetManagedDatabaseLogsRequest{
 					UUID:  serviceDetails.UUID,
 					Limit: batchSize,
@@ -286,7 +262,7 @@ func TestService_GetManagedDatabaseLogs(t *testing.T) {
 				var num int
 				var prevLogs *upcloud.ManagedDatabaseLogs
 				for {
-					logs, err := svc.GetManagedDatabaseLogs(logReq)
+					logs, err := svcContext.GetManagedDatabaseLogs(ctx, logReq)
 					if !assert.NoError(t, err) {
 						return
 					}
@@ -320,47 +296,22 @@ func TestService_GetManagedDatabaseLogs(t *testing.T) {
 	})
 }
 
-func TestService_GetManagedDatabaseServiceType(t *testing.T) {
-	record(t, "getmanageddatabaseservicetype", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
-		databaseTypes := []string{"pg", "mysql"}
-
-		for _, databaseType := range databaseTypes {
-			serviceType, err := svc.GetManagedDatabaseServiceType(&request.GetManagedDatabaseServiceTypeRequest{Type: databaseType})
-			if !assert.NoError(t, err) {
-				return
-			}
-			assert.Equal(t, databaseType, serviceType.Name)
-		}
-	})
-}
-
-func TestService_GetManagedDatabaseServiceTypes(t *testing.T) {
-	record(t, "getmanageddatabaseservicetypes", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
-		types, err := svc.GetManagedDatabaseServiceTypes(&request.GetManagedDatabaseServiceTypesRequest{})
-		if !assert.NoError(t, err) {
-			return
-		}
-		assert.Equal(t, "pg", types["pg"].Name)
-		assert.Equal(t, "mysql", types["mysql"].Name)
-	})
-}
-
-func TestService_GetManagedDatabaseConnections(t *testing.T) {
-	record(t, "getmanageddatabaseconnections", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+func TestService_GetManagedDatabaseConnectionsContext(t *testing.T) {
+	recordWithContext(t, "getmanageddatabaseconnections", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 		createReq := getTestCreateRequest("getmanageddatabaseconnections")
 		createReq.Type = upcloud.ManagedDatabaseServiceTypePostgreSQL
 		createReq.Properties.SetPublicAccess(true).SetIPFilter(upcloud.ManagedDatabaseAllIPv4)
-		serviceDetails, err := svc.CreateManagedDatabase(createReq)
+		serviceDetails, err := svcContext.CreateManagedDatabase(ctx, createReq)
 		if !assert.NoError(t, err) {
 			return
 		}
 		defer func() {
 			t.Logf("deleting %s", serviceDetails.UUID)
-			err := svc.DeleteManagedDatabase(&request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
+			err := svcContext.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
 			assert.NoError(t, err)
 		}()
 		require.NoError(t, waitForManagedDatabaseRunningState(rec, svc, serviceDetails.UUID))
-		conns, err := svc.GetManagedDatabaseConnections(&request.GetManagedDatabaseConnectionsRequest{
+		conns, err := svcContext.GetManagedDatabaseConnections(ctx, &request.GetManagedDatabaseConnectionsRequest{
 			UUID:   serviceDetails.UUID,
 			Limit:  1000,
 			Offset: 0,
@@ -370,7 +321,7 @@ func TestService_GetManagedDatabaseConnections(t *testing.T) {
 		}
 		assert.Len(t, conns, 0)
 
-		err = svc.CancelManagedDatabaseConnection(&request.CancelManagedDatabaseConnection{
+		err = svcContext.CancelManagedDatabaseConnection(ctx, &request.CancelManagedDatabaseConnection{
 			UUID:      serviceDetails.UUID,
 			Pid:       0,
 			Terminate: true,
@@ -378,7 +329,7 @@ func TestService_GetManagedDatabaseConnections(t *testing.T) {
 		assert.Error(t, err)
 		assert.True(t, strings.HasPrefix(err.(*upcloud.Error).ErrorMessage, "Must provide a connection"))
 
-		err = svc.CancelManagedDatabaseConnection(&request.CancelManagedDatabaseConnection{
+		err = svcContext.CancelManagedDatabaseConnection(ctx, &request.CancelManagedDatabaseConnection{
 			UUID:      serviceDetails.UUID,
 			Pid:       0,
 			Terminate: false,
@@ -388,20 +339,20 @@ func TestService_GetManagedDatabaseConnections(t *testing.T) {
 	})
 }
 
-func TestService_GetManagedDatabaseMetrics(t *testing.T) {
+func TestService_GetManagedDatabaseMetricsContext(t *testing.T) {
 	const (
 		timeout = 10 * time.Minute
 		waitFor = 2 * time.Minute
 	)
-	record(t, "getmanageddatabasemetrics", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+	recordWithContext(t, "getmanageddatabasemetrics", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 		createReq := getTestCreateRequest("getmanageddatabasemetrics")
-		serviceDetails, err := svc.CreateManagedDatabase(createReq)
+		serviceDetails, err := svcContext.CreateManagedDatabase(ctx, createReq)
 		if !assert.NoError(t, err) {
 			return
 		}
 		defer func() {
 			t.Logf("deleting %s", serviceDetails.UUID)
-			err := svc.DeleteManagedDatabase(&request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
+			err := svcContext.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
 			assert.NoError(t, err)
 		}()
 		if rec.Mode() == recorder.ModeRecording {
@@ -409,7 +360,7 @@ func TestService_GetManagedDatabaseMetrics(t *testing.T) {
 				return true
 			})
 			t.Logf("waiting for service to be deployed (up to %s)", timeout)
-			_, err = svc.WaitForManagedDatabaseState(&request.WaitForManagedDatabaseStateRequest{
+			_, err = svcContext.WaitForManagedDatabaseState(ctx, &request.WaitForManagedDatabaseStateRequest{
 				UUID:         serviceDetails.UUID,
 				DesiredState: upcloud.ManagedDatabaseStateRunning,
 				Timeout:      timeout,
@@ -429,8 +380,8 @@ func TestService_GetManagedDatabaseMetrics(t *testing.T) {
 			upcloud.ManagedDatabaseMetricPeriodYear,
 		}
 		for _, period := range periods {
-			t.Run(string(period), func(t *testing.T) {
-				metrics, err := svc.GetManagedDatabaseMetrics(&request.GetManagedDatabaseMetricsRequest{
+			t.Run("Ctx"+string(period), func(t *testing.T) {
+				metrics, err := svcContext.GetManagedDatabaseMetrics(ctx, &request.GetManagedDatabaseMetricsRequest{
 					UUID:   serviceDetails.UUID,
 					Period: period,
 				})
@@ -469,24 +420,24 @@ func TestService_GetManagedDatabaseMetrics(t *testing.T) {
 	})
 }
 
-func TestService_GetManagedDatabaseQueryStatisticsMySQL(t *testing.T) {
-	record(t, "getmanageddatabasequerystatisticsmysql", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+func TestService_GetManagedDatabaseQueryStatisticsMySQLContext(t *testing.T) {
+	recordWithContext(t, "getmanageddatabasequerystatisticsmysql", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 		createReq := getTestCreateRequest("querystatisticsmysql")
 		createReq.Type = upcloud.ManagedDatabaseServiceTypeMySQL
 		createReq.Properties.SetPublicAccess(true).SetIPFilter(upcloud.ManagedDatabaseAllIPv4)
-		serviceDetails, err := svc.CreateManagedDatabase(createReq)
+		serviceDetails, err := svcContext.CreateManagedDatabase(ctx, createReq)
 		if !assert.NoError(t, err) {
 			return
 		}
 		defer func() {
 			t.Logf("deleting %s", serviceDetails.UUID)
-			err := svc.DeleteManagedDatabase(&request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
+			err := svcContext.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
 			assert.NoError(t, err)
 		}()
 
 		require.NoError(t, waitForManagedDatabaseRunningState(rec, svc, serviceDetails.UUID))
 
-		stats, err := svc.GetManagedDatabaseQueryStatisticsMySQL(&request.GetManagedDatabaseQueryStatisticsRequest{
+		stats, err := svcContext.GetManagedDatabaseQueryStatisticsMySQL(ctx, &request.GetManagedDatabaseQueryStatisticsRequest{
 			UUID:   serviceDetails.UUID,
 			Limit:  1000,
 			Offset: 0,
@@ -496,24 +447,24 @@ func TestService_GetManagedDatabaseQueryStatisticsMySQL(t *testing.T) {
 	})
 }
 
-func TestService_GetManagedDatabaseQueryStatisticsPostgreSQL(t *testing.T) {
-	record(t, "getmanageddatabasequerystatisticspostgres", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+func TestService_GetManagedDatabaseQueryStatisticsPostgreSQLContext(t *testing.T) {
+	recordWithContext(t, "getmanageddatabasequerystatisticspostgres", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 		createReq := getTestCreateRequest("querystatisticspostgres")
 		createReq.Type = upcloud.ManagedDatabaseServiceTypePostgreSQL
 		createReq.Properties.SetPublicAccess(true).SetIPFilter(upcloud.ManagedDatabaseAllIPv4)
-		serviceDetails, err := svc.CreateManagedDatabase(createReq)
+		serviceDetails, err := svcContext.CreateManagedDatabase(ctx, createReq)
 		if !assert.NoError(t, err) {
 			return
 		}
 		defer func() {
 			t.Logf("deleting %s", serviceDetails.UUID)
-			err := svc.DeleteManagedDatabase(&request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
+			err := svcContext.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
 			assert.NoError(t, err)
 		}()
 
 		require.NoError(t, waitForManagedDatabaseRunningState(rec, svc, serviceDetails.UUID))
 
-		stats, err := svc.GetManagedDatabaseQueryStatisticsPostgreSQL(&request.GetManagedDatabaseQueryStatisticsRequest{
+		stats, err := svcContext.GetManagedDatabaseQueryStatisticsPostgreSQL(ctx, &request.GetManagedDatabaseQueryStatisticsRequest{
 			UUID:   serviceDetails.UUID,
 			Limit:  1000,
 			Offset: 0,
@@ -524,15 +475,15 @@ func TestService_GetManagedDatabaseQueryStatisticsPostgreSQL(t *testing.T) {
 	})
 }
 
-func TestService_ModifyManagedDatabase(t *testing.T) {
-	record(t, "modifymanageddatabase", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
-		details, err := svc.CreateManagedDatabase(getTestCreateRequest("modifymanageddatabase"))
+func TestService_ModifyManagedDatabaseContext(t *testing.T) {
+	recordWithContext(t, "modifymanageddatabase", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+		details, err := svcContext.CreateManagedDatabase(ctx, getTestCreateRequest("modifymanageddatabase"))
 		if !assert.NoError(t, err) {
 			return
 		}
 		defer func() {
 			t.Logf("deleting %s", details.UUID)
-			err := svc.DeleteManagedDatabase(&request.DeleteManagedDatabaseRequest{UUID: details.UUID})
+			err := svcContext.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: details.UUID})
 			assert.NoError(t, err)
 		}()
 		assert.True(t, details.Properties.GetAutoUtilityIPFilter())
@@ -548,7 +499,7 @@ func TestService_ModifyManagedDatabase(t *testing.T) {
 		modifyReq.Properties.
 			SetPublicAccess(false).
 			SetIPFilter(upcloud.ManagedDatabaseAllIPv4)
-		newDetails, err := svc.ModifyManagedDatabase(modifyReq)
+		newDetails, err := svcContext.ModifyManagedDatabase(ctx, modifyReq)
 		if !assert.NoError(t, err) {
 			return
 		}
@@ -564,12 +515,12 @@ func TestService_ModifyManagedDatabase(t *testing.T) {
 	})
 }
 
-func TestService_UpgradeManagedDatabaseVersion(t *testing.T) {
-	record(t, "upgrademanageddatabaseversion", func(t *testing.T, r *recorder.Recorder, svc *Service) {
+func TestService_UpgradeManagedDatabaseVersionContext(t *testing.T) {
+	recordWithContext(t, "upgrademanageddatabaseversion", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 		// This test uses manually created database with postgres version 13
 		// This is because upgrading version requires "Started" state; waiting for started state in tests
 		// results in huge amount of requests made to verify the state and simply takes too long
-		details, err := svc.GetManagedDatabase(&request.GetManagedDatabaseRequest{
+		details, err := svcContext.GetManagedDatabase(ctx, &request.GetManagedDatabaseRequest{
 			UUID: "09788889-be2d-48da-a527-962b26014b54",
 		})
 
@@ -577,7 +528,7 @@ func TestService_UpgradeManagedDatabaseVersion(t *testing.T) {
 		assert.Equal(t, "13", details.Properties["version"])
 
 		targetVersion := "14"
-		updatedDetails, err := svc.UpgradeManagedDatabaseVersion(&request.UpgradeManagedDatabaseVersionRequest{
+		updatedDetails, err := svcContext.UpgradeManagedDatabaseVersion(ctx, &request.UpgradeManagedDatabaseVersionRequest{
 			UUID:          details.UUID,
 			TargetVersion: targetVersion,
 		})
@@ -587,18 +538,18 @@ func TestService_UpgradeManagedDatabaseVersion(t *testing.T) {
 	})
 }
 
-func TestService_GetManagedDatabaseVersions(t *testing.T) {
-	record(t, "getmanageddatabaseversions", func(t *testing.T, r *recorder.Recorder, svc *Service) {
-		details, err := svc.CreateManagedDatabase(getTestCreateRequest("getmanageddatabaseversions"))
+func TestService_GetManagedDatabaseVersionsContext(t *testing.T) {
+	recordWithContext(t, "getmanageddatabaseversions", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+		details, err := svcContext.CreateManagedDatabase(ctx, getTestCreateRequest("getmanageddatabaseversions"))
 		require.NoError(t, err)
 
 		defer func() {
 			t.Logf("deleting %s", details.UUID)
-			err := svc.DeleteManagedDatabase(&request.DeleteManagedDatabaseRequest{UUID: details.UUID})
+			err := svcContext.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: details.UUID})
 			require.NoError(t, err)
 		}()
 
-		versions, err := svc.GetManagedDatabaseVersions(&request.GetManagedDatabaseVersionsRequest{
+		versions, err := svcContext.GetManagedDatabaseVersions(ctx, &request.GetManagedDatabaseVersionsRequest{
 			UUID: details.UUID,
 		})
 
@@ -612,16 +563,16 @@ func TestService_GetManagedDatabaseVersions(t *testing.T) {
 	})
 }
 
-func TestService_ShutdownStartManagedDatabase(t *testing.T) {
+func TestService_ShutdownStartManagedDatabaseContext(t *testing.T) {
 	const timeout = 10 * time.Minute
-	record(t, "shutdownstartmanageddatabase", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
-		details, err := svc.CreateManagedDatabase(getTestCreateRequest("shutdownstartmanageddatabase"))
+	recordWithContext(t, "shutdownstartmanageddatabase", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+		details, err := svcContext.CreateManagedDatabase(ctx, getTestCreateRequest("shutdownstartmanageddatabase"))
 		if !assert.NoError(t, err) {
 			return
 		}
 		defer func() {
 			t.Logf("deleting %s", details.UUID)
-			err := svc.DeleteManagedDatabase(&request.DeleteManagedDatabaseRequest{UUID: details.UUID})
+			err := svcContext.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: details.UUID})
 			assert.NoError(t, err)
 		}()
 		if rec.Mode() == recorder.ModeRecording {
@@ -629,7 +580,7 @@ func TestService_ShutdownStartManagedDatabase(t *testing.T) {
 				return true
 			})
 			t.Logf("waiting for service to be deployed (up to %s)", timeout)
-			_, err = svc.WaitForManagedDatabaseState(&request.WaitForManagedDatabaseStateRequest{
+			_, err = svcContext.WaitForManagedDatabaseState(ctx, &request.WaitForManagedDatabaseStateRequest{
 				UUID:         details.UUID,
 				DesiredState: upcloud.ManagedDatabaseStateRunning,
 				Timeout:      timeout,
@@ -640,7 +591,7 @@ func TestService_ShutdownStartManagedDatabase(t *testing.T) {
 			t.Logf("waiting for initial service service backup (up to %s)", timeout)
 			waitUntil := time.Now().Add(timeout)
 			for {
-				waitForBackupDetails, err := svc.GetManagedDatabase(&request.GetManagedDatabaseRequest{UUID: details.UUID})
+				waitForBackupDetails, err := svcContext.GetManagedDatabase(ctx, &request.GetManagedDatabaseRequest{UUID: details.UUID})
 				if !assert.NoError(t, err) {
 					return
 				}
@@ -655,13 +606,13 @@ func TestService_ShutdownStartManagedDatabase(t *testing.T) {
 			}
 			rec.Passthroughs = nil
 		}
-		shutdownDetails, err := svc.ShutdownManagedDatabase(&request.ShutdownManagedDatabaseRequest{UUID: details.UUID})
+		shutdownDetails, err := svcContext.ShutdownManagedDatabase(ctx, &request.ShutdownManagedDatabaseRequest{UUID: details.UUID})
 		if !assert.NoError(t, err) {
 			return
 		}
 		assert.False(t, shutdownDetails.Powered)
 
-		startDetails, err := svc.StartManagedDatabase(&request.StartManagedDatabaseRequest{UUID: details.UUID})
+		startDetails, err := svcContext.StartManagedDatabase(ctx, &request.StartManagedDatabaseRequest{UUID: details.UUID})
 		if !assert.NoError(t, err) {
 			return
 		}
@@ -669,16 +620,16 @@ func TestService_ShutdownStartManagedDatabase(t *testing.T) {
 	})
 }
 
-func TestService_ManagedDatabaseUserManager(t *testing.T) {
+func TestService_ManagedDatabaseUserManagerContext(t *testing.T) {
 	const timeout = 10 * time.Minute
-	record(t, "managemanageddatabaseusers", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
-		serviceDetails, err := svc.CreateManagedDatabase(getTestCreateRequest("managemanageddatabaseusers"))
+	recordWithContext(t, "managemanageddatabaseusers", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+		serviceDetails, err := svcContext.CreateManagedDatabase(ctx, getTestCreateRequest("managemanageddatabaseusers"))
 		if !assert.NoError(t, err) {
 			return
 		}
 		defer func() {
 			t.Logf("deleting %s", serviceDetails.UUID)
-			err := svc.DeleteManagedDatabase(&request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
+			err := svcContext.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
 			assert.NoError(t, err)
 		}()
 		if rec.Mode() == recorder.ModeRecording {
@@ -686,7 +637,7 @@ func TestService_ManagedDatabaseUserManager(t *testing.T) {
 			rec.AddPassthrough(func(h *http.Request) bool {
 				return true
 			})
-			_, err = svc.WaitForManagedDatabaseState(&request.WaitForManagedDatabaseStateRequest{
+			_, err = svcContext.WaitForManagedDatabaseState(ctx, &request.WaitForManagedDatabaseStateRequest{
 				UUID:         serviceDetails.UUID,
 				DesiredState: upcloud.ManagedDatabaseStateRunning,
 				Timeout:      timeout,
@@ -696,16 +647,16 @@ func TestService_ManagedDatabaseUserManager(t *testing.T) {
 			}
 			rec.Passthroughs = nil
 		}
-		t.Run("Create", func(t *testing.T) {
-			userDetails, err := svc.CreateManagedDatabaseUser(&request.CreateManagedDatabaseUserRequest{
+		t.Run("CtxCreate", func(t *testing.T) {
+			userDetails, err := svcContext.CreateManagedDatabaseUser(ctx, &request.CreateManagedDatabaseUserRequest{
 				ServiceUUID: serviceDetails.UUID,
 				Username:    "testuser",
 			})
 			if !assert.NoError(t, err) {
 				return
 			}
-			t.Run("Get", func(t *testing.T) {
-				newUserDetails, err := svc.GetManagedDatabaseUser(&request.GetManagedDatabaseUserRequest{
+			t.Run("CtxGet", func(t *testing.T) {
+				newUserDetails, err := svcContext.GetManagedDatabaseUser(ctx, &request.GetManagedDatabaseUserRequest{
 					ServiceUUID: serviceDetails.UUID,
 					Username:    userDetails.Username,
 				})
@@ -714,8 +665,8 @@ func TestService_ManagedDatabaseUserManager(t *testing.T) {
 				}
 				assert.Equal(t, userDetails, newUserDetails)
 			})
-			t.Run("List", func(t *testing.T) {
-				users, err := svc.GetManagedDatabaseUsers(&request.GetManagedDatabaseUsersRequest{ServiceUUID: serviceDetails.UUID})
+			t.Run("CtxList", func(t *testing.T) {
+				users, err := svcContext.GetManagedDatabaseUsers(ctx, &request.GetManagedDatabaseUsersRequest{ServiceUUID: serviceDetails.UUID})
 				if !assert.NoError(t, err) {
 					return
 				}
@@ -737,10 +688,10 @@ func TestService_ManagedDatabaseUserManager(t *testing.T) {
 					assert.True(t, normalFound, "normal user should have been found")
 				}
 			})
-			t.Run("Modify", func(t *testing.T) {
+			t.Run("CtxModify", func(t *testing.T) {
 				//nolint:gosec
 				const newPassword = "yXB8gePmxHuESbJx_I-Iag"
-				newUserDetails, err := svc.ModifyManagedDatabaseUser(&request.ModifyManagedDatabaseUserRequest{
+				newUserDetails, err := svcContext.ModifyManagedDatabaseUser(ctx, &request.ModifyManagedDatabaseUserRequest{
 					ServiceUUID: serviceDetails.UUID,
 					Username:    userDetails.Username,
 					Password:    newPassword,
@@ -750,15 +701,15 @@ func TestService_ManagedDatabaseUserManager(t *testing.T) {
 				}
 				assert.Equal(t, newPassword, newUserDetails.Password)
 			})
-			t.Run("Delete", func(t *testing.T) {
-				err := svc.DeleteManagedDatabaseUser(&request.DeleteManagedDatabaseUserRequest{
+			t.Run("CtxDelete", func(t *testing.T) {
+				err := svcContext.DeleteManagedDatabaseUser(ctx, &request.DeleteManagedDatabaseUserRequest{
 					ServiceUUID: serviceDetails.UUID,
 					Username:    userDetails.Username,
 				})
 				assert.NoError(t, err)
 			})
-			t.Run("DeletePrimaryShouldNotSucceed", func(t *testing.T) {
-				err := svc.DeleteManagedDatabaseUser(&request.DeleteManagedDatabaseUserRequest{
+			t.Run("CtxDeletePrimaryShouldNotSucceed", func(t *testing.T) {
+				err := svcContext.DeleteManagedDatabaseUser(ctx, &request.DeleteManagedDatabaseUserRequest{
 					ServiceUUID: serviceDetails.UUID,
 					Username:    serviceDetails.ServiceURIParams.User,
 				})
@@ -768,19 +719,19 @@ func TestService_ManagedDatabaseUserManager(t *testing.T) {
 	})
 }
 
-func TestService_ManagedDatabaseLogicalDatabaseManager(t *testing.T) {
+func TestService_ManagedDatabaseLogicalDatabaseManagerContext(t *testing.T) {
 	const (
 		timeout   = 10 * time.Minute
 		defaultdb = "defaultdb"
 	)
-	record(t, "managemanageddatabaslogicaldbs", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
-		serviceDetails, err := svc.CreateManagedDatabase(getTestCreateRequest("managemanageddatabaslogicaldbs"))
+	recordWithContext(t, "managemanageddatabaslogicaldbs", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+		serviceDetails, err := svcContext.CreateManagedDatabase(ctx, getTestCreateRequest("managemanageddatabaslogicaldbs"))
 		if !assert.NoError(t, err) {
 			return
 		}
 		defer func() {
 			t.Logf("deleting %s", serviceDetails.UUID)
-			err := svc.DeleteManagedDatabase(&request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
+			err := svcContext.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
 			assert.NoError(t, err)
 		}()
 		if rec.Mode() == recorder.ModeRecording {
@@ -788,7 +739,7 @@ func TestService_ManagedDatabaseLogicalDatabaseManager(t *testing.T) {
 			rec.AddPassthrough(func(h *http.Request) bool {
 				return true
 			})
-			_, err = svc.WaitForManagedDatabaseState(&request.WaitForManagedDatabaseStateRequest{
+			_, err = svcContext.WaitForManagedDatabaseState(ctx, &request.WaitForManagedDatabaseStateRequest{
 				UUID:         serviceDetails.UUID,
 				DesiredState: upcloud.ManagedDatabaseStateRunning,
 				Timeout:      timeout,
@@ -798,13 +749,13 @@ func TestService_ManagedDatabaseLogicalDatabaseManager(t *testing.T) {
 			}
 			rec.Passthroughs = nil
 		}
-		t.Run("Create", func(t *testing.T) {
+		t.Run("CtxCreate", func(t *testing.T) {
 			expected := &upcloud.ManagedDatabaseLogicalDatabase{
 				Name:      "test",
 				LCCollate: "fr_FR.UTF-8",
 				LCCType:   "fr_FR.UTF-8",
 			}
-			dbDetails, err := svc.CreateManagedDatabaseLogicalDatabase(&request.CreateManagedDatabaseLogicalDatabaseRequest{
+			dbDetails, err := svcContext.CreateManagedDatabaseLogicalDatabase(ctx, &request.CreateManagedDatabaseLogicalDatabaseRequest{
 				ServiceUUID: serviceDetails.UUID,
 				Name:        expected.Name,
 				LCCollate:   expected.LCCollate,
@@ -815,8 +766,8 @@ func TestService_ManagedDatabaseLogicalDatabaseManager(t *testing.T) {
 			}
 			assert.Equal(t, expected, dbDetails)
 
-			t.Run("List", func(t *testing.T) {
-				dbs, err := svc.GetManagedDatabaseLogicalDatabases(
+			t.Run("CtxList", func(t *testing.T) {
+				dbs, err := svcContext.GetManagedDatabaseLogicalDatabases(ctx,
 					&request.GetManagedDatabaseLogicalDatabasesRequest{ServiceUUID: serviceDetails.UUID})
 				if !assert.NoError(t, err) {
 					return
@@ -836,8 +787,8 @@ func TestService_ManagedDatabaseLogicalDatabaseManager(t *testing.T) {
 					assert.True(t, createdFound, "created logical database was not found")
 				}
 			})
-			t.Run("Delete", func(t *testing.T) {
-				err := svc.DeleteManagedDatabaseLogicalDatabase(&request.DeleteManagedDatabaseLogicalDatabaseRequest{
+			t.Run("CtxDelete", func(t *testing.T) {
+				err := svcContext.DeleteManagedDatabaseLogicalDatabase(ctx, &request.DeleteManagedDatabaseLogicalDatabaseRequest{
 					ServiceUUID: serviceDetails.UUID,
 					Name:        expected.Name,
 				})
@@ -847,18 +798,27 @@ func TestService_ManagedDatabaseLogicalDatabaseManager(t *testing.T) {
 	})
 }
 
-func waitForManagedDatabaseRunningState(rec *recorder.Recorder, svc *Service, UUID string) error {
-	if rec.Mode() == recorder.ModeRecording {
-		rec.AddPassthrough(func(h *http.Request) bool {
-			return true
-		})
-		_, err := svc.WaitForManagedDatabaseState(&request.WaitForManagedDatabaseStateRequest{
-			UUID:         UUID,
-			DesiredState: upcloud.ManagedDatabaseStateRunning,
-			Timeout:      15 * time.Minute,
-		})
-		rec.Passthroughs = nil
-		return err
-	}
-	return nil
+func TestService_GetManagedDatabaseServiceTypeContext(t *testing.T) {
+	recordWithContext(t, "getmanageddatabaseservicetype", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+		databaseTypes := []string{"pg", "mysql"}
+
+		for _, databaseType := range databaseTypes {
+			serviceType, err := svcContext.GetManagedDatabaseServiceType(ctx, &request.GetManagedDatabaseServiceTypeRequest{Type: databaseType})
+			if !assert.NoError(t, err) {
+				return
+			}
+			assert.Equal(t, databaseType, serviceType.Name)
+		}
+	})
+}
+
+func TestService_GetManagedDatabaseServiceTypesContext(t *testing.T) {
+	recordWithContext(t, "getmanageddatabaseservicetypes", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+		types, err := svcContext.GetManagedDatabaseServiceTypes(ctx, &request.GetManagedDatabaseServiceTypesRequest{})
+		if !assert.NoError(t, err) {
+			return
+		}
+		assert.Equal(t, "pg", types["pg"].Name)
+		assert.Equal(t, "mysql", types["mysql"].Name)
+	})
 }

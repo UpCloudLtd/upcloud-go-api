@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- add context-aware client and service types
+
 ## [4.6.0]
 
 ### Added

@@ -38,7 +38,16 @@ c.SetTimeout(time.Second * 30)
 // Create the service object
 svc := service.New(c)
 ```
+#### Context support
+Use `client.NewWithContext` and `service.NewWithContext` to create context-aware service object.  
+Context-aware service methods accepts `context.Context` as a first argument which is passed to underlying HTTP request.
 
+```go
+ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(10*time.Second))
+defer cancel()
+svc := service.NewWithContext(client.NewWithContext(user, password))
+zones, err := svc.GetZones(ctx)
+```
 ### Validating credentials
 
 The easiest way to check whether the client credentials are correct is to issue a call to `GetAccount()`.
