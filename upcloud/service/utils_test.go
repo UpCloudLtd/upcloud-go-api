@@ -554,6 +554,9 @@ func createLoadBalancerBackend(svc *Service, lbUUID string) (*upcloud.LoadBalanc
 		ServiceUUID: lbUUID,
 		Backend: request.LoadBalancerBackend{
 			Name: fmt.Sprintf("go-test-lb-backend-%d", time.Now().Unix()),
+			Properties: &upcloud.LoadBalancerBackendProperties{
+				TimeoutServer: 30,
+			},
 			Members: []request.LoadBalancerBackendMember{
 				{
 					Name:        "default-lb-backend-member",

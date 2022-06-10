@@ -109,6 +109,18 @@ func TestCreateLoadBalancerBackendRequest(t *testing.T) {
 			Name:     "sesese",
 			Members:  []LoadBalancerBackendMember{},
 			Resolver: "testresolver",
+			Properties: &upcloud.LoadBalancerBackendProperties{
+				TimeoutServer:             30,
+				TimeoutTunnel:             3600,
+				HealthCheckType:           upcloud.LoadBalancerHealthCheckTypeHTTP,
+				HealthCheckInterval:       20,
+				HealthCheckFall:           3,
+				HealthCheckRise:           2,
+				HealthCheckURL:            "/health",
+				HealthCheckExpectedStatus: 200,
+				StickySessionCookieName:   "SERVERID",
+				OutboundProxyProtocol:     upcloud.LoadBalancerProxyProtocolVersion1,
+			},
 		},
 	}
 
@@ -116,7 +128,19 @@ func TestCreateLoadBalancerBackendRequest(t *testing.T) {
 	{
 		"name": "sesese",
 		"resolver": "testresolver",
-		"members": []
+		"members": [],
+		"properties": {
+			"timeout_server": 30,
+			"timeout_tunnel": 3600,
+			"health_check_type": "http",
+			"health_check_interval": 20,
+			"health_check_fall": 3,
+			"health_check_rise": 2,
+			"health_check_url": "/health",
+			"health_check_expected_status": 200,
+			"sticky_session_cookie_name": "SERVERID",
+			"outbound_proxy_protocol": "v1"
+		}
 	}`
 
 	actualJson, err := json.Marshal(&r)
@@ -160,13 +184,37 @@ func TestModifyLoadBalancerBackendRequest(t *testing.T) {
 		Backend: ModifyLoadBalancerBackend{
 			Name:     "newnew",
 			Resolver: upcloud.StringPtr("newresolver"),
+			Properties: &upcloud.LoadBalancerBackendProperties{
+				TimeoutServer:             30,
+				TimeoutTunnel:             3600,
+				HealthCheckType:           upcloud.LoadBalancerHealthCheckTypeHTTP,
+				HealthCheckInterval:       20,
+				HealthCheckFall:           3,
+				HealthCheckRise:           2,
+				HealthCheckURL:            "/health",
+				HealthCheckExpectedStatus: 200,
+				StickySessionCookieName:   "SERVERID",
+				OutboundProxyProtocol:     upcloud.LoadBalancerProxyProtocolVersion1,
+			},
 		},
 	}
 
 	expectedJson := `
 	{
 		"name": "newnew",
-		"resolver": "newresolver"	
+		"resolver": "newresolver",
+		"properties": {
+			"timeout_server": 30,
+			"timeout_tunnel": 3600,
+			"health_check_type": "http",
+			"health_check_interval": 20,
+			"health_check_fall": 3,
+			"health_check_rise": 2,
+			"health_check_url": "/health",
+			"health_check_expected_status": 200,
+			"sticky_session_cookie_name": "SERVERID",
+			"outbound_proxy_protocol": "v1"
+		}
 	}`
 
 	actualJson, err := json.Marshal(&r)
@@ -554,6 +602,10 @@ func TestCreateLoadBalancerFrontendRequest(t *testing.T) {
 		"mode": "http",
 		"port": 443,
 		"default_backend": "example-backend",
+		"properties": {
+			"timeout_client": 10,
+			"inbound_proxy_protocol": false
+		},
 		"rules": [
 			{
 				"name": "example-rule-1",
@@ -592,6 +644,10 @@ func TestCreateLoadBalancerFrontendRequest(t *testing.T) {
 			Mode:           upcloud.LoadBalancerModeHTTP,
 			Port:           443,
 			DefaultBackend: "example-backend",
+			Properties: &upcloud.LoadBalancerFrontendProperties{
+				TimeoutClient:        10,
+				InboundProxyProtocol: false,
+			},
 			Rules: []LoadBalancerFrontendRule{{
 				Name:     "example-rule-1",
 				Priority: 100,
@@ -627,7 +683,11 @@ func TestModifyLoadBalancerFrontendRequest(t *testing.T) {
 		"name": "example-frontend",
 		"mode": "http",
 		"port": 443,
-		"default_backend": "example-backend"
+		"default_backend": "example-backend",
+		"properties": {
+			"timeout_client": 10,
+			"inbound_proxy_protocol": false
+		}
 	}`
 	r := ModifyLoadBalancerFrontendRequest{
 		ServiceUUID: "sid",
@@ -636,7 +696,12 @@ func TestModifyLoadBalancerFrontendRequest(t *testing.T) {
 			Name:           "example-frontend",
 			Mode:           upcloud.LoadBalancerModeHTTP,
 			Port:           443,
-			DefaultBackend: "example-backend"},
+			DefaultBackend: "example-backend",
+			Properties: &upcloud.LoadBalancerFrontendProperties{
+				TimeoutClient:        10,
+				InboundProxyProtocol: false,
+			},
+		},
 	}
 	actual, err := json.Marshal(&r)
 	assert.NoError(t, err)
