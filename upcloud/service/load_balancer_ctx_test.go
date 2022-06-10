@@ -60,8 +60,9 @@ func TestLoadBalancerBackendContext(t *testing.T) {
 		defer cleanupLoadBalancer(t, rec, svc, lb)
 		t.Logf("Created load balancer for testing LB backend CRUD: %s", lb.Name)
 
-		backend, err := createLoadBalancerBackend(svc, lb.UUID)
+		backend, err := createLoadBalancerBackendContext(ctx, svcContext, lb.UUID)
 		require.NoError(t, err)
+		assert.Equal(t, 30, backend.Properties.TimeoutServer)
 		t.Logf("Created LB backend: %s", backend.Name)
 
 		t.Logf("Modifying LB backend: %s", backend.Name)
@@ -71,11 +72,16 @@ func TestLoadBalancerBackendContext(t *testing.T) {
 			Name:        backend.Name,
 			Backend: request.ModifyLoadBalancerBackend{
 				Name: newName,
+				Properties: &upcloud.LoadBalancerBackendProperties{
+					HealthCheckType: upcloud.LoadBalancerHealthCheckTypeTCP,
+				},
 			},
 		})
 
 		require.NoError(t, err)
 		assert.EqualValues(t, backend.Name, newName)
+		assert.Equal(t, 30, backend.Properties.TimeoutServer)
+		assert.Equal(t, upcloud.LoadBalancerHealthCheckType("tcp"), backend.Properties.HealthCheckType)
 		t.Logf("Modified LB backend, new name is: %s", backend.Name)
 
 		t.Logf("Get LB backend: %s", newName)
@@ -114,7 +120,7 @@ func TestLoadBalancerBackendMemberContext(t *testing.T) {
 		defer cleanupLoadBalancer(t, rec, svc, lb)
 		t.Logf("Created load balancer for testing LB backend members CRUD: %s", lb.Name)
 
-		backend, err := createLoadBalancerBackend(svc, lb.UUID)
+		backend, err := createLoadBalancerBackendContext(ctx, svcContext, lb.UUID)
 		require.NoError(t, err)
 		t.Logf("Created new backend %s for load balancer %s", backend.Name, lb.Name)
 
@@ -360,7 +366,7 @@ func TestLoadBalancerFrontendContext(t *testing.T) {
 		require.NoError(t, err)
 		defer cleanupLoadBalancer(t, rec, svc, lb)
 		t.Logf("Created LB for testing frontends: %s", lb.Name)
-		be, err := createLoadBalancerBackend(svc, lb.UUID)
+		be, err := createLoadBalancerBackendContext(ctx, svcContext, lb.UUID)
 		require.NoError(t, err)
 		t.Logf("Created backend %s for testing LB frontends", be.Name)
 
@@ -373,10 +379,16 @@ func TestLoadBalancerFrontendContext(t *testing.T) {
 				DefaultBackend: be.Name,
 				Rules:          []request.LoadBalancerFrontendRule{},
 				TLSConfigs:     []request.LoadBalancerFrontendTLSConfig{},
+				Properties: &upcloud.LoadBalancerFrontendProperties{
+					TimeoutClient:        10,
+					InboundProxyProtocol: false,
+				},
 			},
 		})
 		require.NoError(t, err)
 		assert.Equal(t, "fe-1", fe.Name)
+		assert.Equal(t, 10, fe.Properties.TimeoutClient)
+		assert.Equal(t, false, fe.Properties.InboundProxyProtocol)
 		t.Logf("Created frontend %s for load balancer %s", fe.Name, lb.Name)
 		fe, err = svcContext.ModifyLoadBalancerFrontend(ctx, &request.ModifyLoadBalancerFrontendRequest{
 			ServiceUUID: lb.UUID,
@@ -384,7 +396,11 @@ func TestLoadBalancerFrontendContext(t *testing.T) {
 			Frontend: request.ModifyLoadBalancerFrontend{
 				Name: "fe-2",
 				Mode: upcloud.LoadBalancerModeTCP,
-				Port: 80},
+				Port: 80,
+				Properties: &upcloud.LoadBalancerFrontendProperties{
+					InboundProxyProtocol: true,
+				},
+			},
 		})
 		require.NoError(t, err)
 		t.Logf("Modified frontend %s", fe.Name)
@@ -397,6 +413,8 @@ func TestLoadBalancerFrontendContext(t *testing.T) {
 		assert.Equal(t, upcloud.LoadBalancerModeTCP, fe.Mode)
 		assert.Equal(t, 80, fe.Port)
 		assert.Equal(t, be.Name, fe.DefaultBackend)
+		assert.Equal(t, 10, fe.Properties.TimeoutClient)
+		assert.Equal(t, true, fe.Properties.InboundProxyProtocol)
 
 		fes, err := svcContext.GetLoadBalancerFrontends(ctx, &request.GetLoadBalancerFrontendsRequest{ServiceUUID: lb.UUID})
 		require.NoError(t, err)

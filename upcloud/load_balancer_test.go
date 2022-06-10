@@ -222,8 +222,11 @@ func TestLoadBalancerFrontend(t *testing.T) {
 			Mode:           LoadBalancerModeTCP,
 			Port:           443,
 			DefaultBackend: "example-backend",
-			CreatedAt:      timeParse("2021-12-07T13:58:30.817272Z"),
-			UpdatedAt:      timeParse("2022-02-11T17:33:08.490581Z"),
+			Properties: &LoadBalancerFrontendProperties{
+				TimeoutClient: 10,
+			},
+			CreatedAt: timeParse("2021-12-07T13:58:30.817272Z"),
+			UpdatedAt: timeParse("2022-02-11T17:33:08.490581Z"),
 		},
 		`
 		{
@@ -231,8 +234,53 @@ func TestLoadBalancerFrontend(t *testing.T) {
 			"mode": "tcp",
 			"port": 443,
 			"default_backend": "example-backend",
+			"properties": {
+				"timeout_client": 10,
+				"inbound_proxy_protocol": false
+			},
 			"created_at": "2021-12-07T13:58:30.817272Z",
 			"updated_at": "2022-02-11T17:33:08.490581Z"
+		}
+		`,
+	)
+}
+
+func TestLoadBalancerFrontendProperties(t *testing.T) {
+	testJSON(t,
+		&LoadBalancerFrontendProperties{},
+		&LoadBalancerFrontendProperties{
+			TimeoutClient: 10,
+		},
+		`
+		{
+			"timeout_client": 10,
+			"inbound_proxy_protocol": false
+		}
+		`,
+	)
+	testJSON(t,
+		&LoadBalancerFrontendProperties{},
+		&LoadBalancerFrontendProperties{
+			TimeoutClient:        10,
+			InboundProxyProtocol: true,
+		},
+		`
+		{
+			"timeout_client": 10,
+			"inbound_proxy_protocol": true
+		}
+		`,
+	)
+	testJSON(t,
+		&LoadBalancerFrontendProperties{},
+		&LoadBalancerFrontendProperties{
+			TimeoutClient:        10,
+			InboundProxyProtocol: false,
+		},
+		`
+		{
+			"timeout_client": 10,
+			"inbound_proxy_protocol": false
 		}
 		`,
 	)
@@ -294,19 +342,64 @@ func TestLoadBalancerBackend(t *testing.T) {
 	testJSON(t,
 		&LoadBalancerBackend{},
 		&LoadBalancerBackend{
-			Name:      "example-backend-2",
-			Members:   []LoadBalancerBackendMember{},
+			Name:    "example-backend-2",
+			Members: []LoadBalancerBackendMember{},
+			Properties: &LoadBalancerBackendProperties{
+				TimeoutServer: 30,
+				TimeoutTunnel: 3600,
+			},
 			CreatedAt: timeParse("2022-02-11T17:33:08.490581Z"),
 			UpdatedAt: timeParse("2022-02-11T17:33:08.490581Z"),
 		},
 		`
 		{
 			"name": "example-backend-2",
+			"properties": {
+				"timeout_server": 30,
+				"timeout_tunnel": 3600
+			},
 			"created_at": "2022-02-11T17:33:08.490581Z",
 			"updated_at": "2022-02-11T17:33:08.490581Z",
 			"members": []
 		}
 		`,
+	)
+}
+
+func TestLoadBalancerBackendProperties(t *testing.T) {
+	testJSON(t,
+		&LoadBalancerBackendProperties{},
+		&LoadBalancerBackendProperties{
+			TimeoutServer:             30,
+			TimeoutTunnel:             3600,
+			HealthCheckType:           LoadBalancerHealthCheckTypeHTTP,
+			HealthCheckInterval:       20,
+			HealthCheckFall:           3,
+			HealthCheckRise:           3,
+			HealthCheckURL:            "/health",
+			HealthCheckExpectedStatus: 200,
+			StickySessionCookieName:   "SERVERID",
+			OutboundProxyProtocol:     LoadBalancerProxyProtocolVersion1,
+		},
+		`
+		{
+			"timeout_server": 30,
+			"timeout_tunnel": 3600,
+			"health_check_type": "http",
+			"health_check_interval": 20,
+			"health_check_fall": 3,
+			"health_check_rise": 3,
+			"health_check_url": "/health",
+			"health_check_expected_status": 200,
+			"sticky_session_cookie_name": "SERVERID",
+			"outbound_proxy_protocol": "v1"
+		}
+		`,
+	)
+	testJSON(t,
+		&LoadBalancerBackendProperties{},
+		&LoadBalancerBackendProperties{},
+		`{}`,
 	)
 }
 

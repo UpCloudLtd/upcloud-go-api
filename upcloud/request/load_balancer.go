@@ -79,9 +79,10 @@ func (r *GetLoadBalancerBackendsRequest) RequestURL() string {
 
 // BalancerBackend represents the payload for CreateLoadBalancerBackendRequest
 type LoadBalancerBackend struct {
-	Name     string                      `json:"name"`
-	Resolver string                      `json:"resolver,omitempty"`
-	Members  []LoadBalancerBackendMember `json:"members"`
+	Name       string                                 `json:"name"`
+	Resolver   string                                 `json:"resolver,omitempty"`
+	Members    []LoadBalancerBackendMember            `json:"members"`
+	Properties *upcloud.LoadBalancerBackendProperties `json:"properties,omitempty"`
 }
 
 // CreateLoadBalancerBackendRequest represents a request to create load balancer backend
@@ -110,8 +111,9 @@ func (r *GetLoadBalancerBackendRequest) RequestURL() string {
 
 // ModifyLoadBalancerBackend represents the payload for ModifyLoadBalancerBackendRequest
 type ModifyLoadBalancerBackend struct {
-	Name     string  `json:"name,omitempty"`
-	Resolver *string `json:"resolver,omitempty"`
+	Name       string                                 `json:"name,omitempty"`
+	Resolver   *string                                `json:"resolver,omitempty"`
+	Properties *upcloud.LoadBalancerBackendProperties `json:"properties,omitempty"`
 }
 
 // ModifyLoadBalancerBackendRequest represents a request to modify load balancer backend
@@ -327,12 +329,13 @@ func (r *GetLoadBalancerFrontendRequest) RequestURL() string {
 
 // LoadBalancerFrontend represents frontend payload
 type LoadBalancerFrontend struct {
-	Name           string                          `json:"name,omitempty"`
-	Mode           upcloud.LoadBalancerMode        `json:"mode,omitempty"`
-	Port           int                             `json:"port,omitempty"`
-	DefaultBackend string                          `json:"default_backend,omitempty"`
-	Rules          []LoadBalancerFrontendRule      `json:"rules,omitempty"`
-	TLSConfigs     []LoadBalancerFrontendTLSConfig `json:"tls_configs,omitempty"`
+	Name           string                                  `json:"name,omitempty"`
+	Mode           upcloud.LoadBalancerMode                `json:"mode,omitempty"`
+	Port           int                                     `json:"port,omitempty"`
+	DefaultBackend string                                  `json:"default_backend,omitempty"`
+	Rules          []LoadBalancerFrontendRule              `json:"rules,omitempty"`
+	TLSConfigs     []LoadBalancerFrontendTLSConfig         `json:"tls_configs,omitempty"`
+	Properties     *upcloud.LoadBalancerFrontendProperties `json:"properties,omitempty"`
 }
 
 // CreateLoadBalancerFrontendRequest represents a request to create load balancer frontend
@@ -351,10 +354,11 @@ func (r *CreateLoadBalancerFrontendRequest) RequestURL() string {
 
 // ModifyLoadBalancerFrontend represents payload to modify frontend
 type ModifyLoadBalancerFrontend struct {
-	Name           string                   `json:"name,omitempty"`
-	Mode           upcloud.LoadBalancerMode `json:"mode,omitempty"`
-	Port           int                      `json:"port,omitempty"`
-	DefaultBackend string                   `json:"default_backend,omitempty"`
+	Name           string                                  `json:"name,omitempty"`
+	Mode           upcloud.LoadBalancerMode                `json:"mode,omitempty"`
+	Port           int                                     `json:"port,omitempty"`
+	DefaultBackend string                                  `json:"default_backend,omitempty"`
+	Properties     *upcloud.LoadBalancerFrontendProperties `json:"properties,omitempty"`
 }
 
 // ModifyLoadBalancerFrontendRequest represents a request to modify load balancer frontend

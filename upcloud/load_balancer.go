@@ -15,6 +15,8 @@ type LoadBalancerOperationalState string
 type LoadBalancerCertificateBundleOperationalState string
 type LoadBalancerConfiguredStatus string
 type LoadBalancerCertificateBundleType string
+type LoadBalancerProxyProtocolVersion string
+type LoadBalancerHealthCheckType string
 
 const (
 	LoadBalancerModeHTTP LoadBalancerMode = "http"
@@ -90,6 +92,12 @@ const (
 	LoadBalancerIntegerMatcherMethodLessOrEqual    LoadBalancerIntegerMatcherMethod = "less_or_equal"
 	LoadBalancerIntegerMatcherMethodLess           LoadBalancerIntegerMatcherMethod = "less"
 	LoadBalancerIntegerMatcherMethodRange          LoadBalancerIntegerMatcherMethod = "range"
+
+	LoadBalancerProxyProtocolVersion1 LoadBalancerProxyProtocolVersion = "v1"
+	LoadBalancerProxyProtocolVersion2 LoadBalancerProxyProtocolVersion = "v2"
+
+	LoadBalancerHealthCheckTypeTCP  LoadBalancerHealthCheckType = "tcp"
+	LoadBalancerHealthCheckTypeHTTP LoadBalancerHealthCheckType = "http"
 )
 
 // LoadBalancerPlan represents load balancer plan details
@@ -107,6 +115,7 @@ type LoadBalancerFrontend struct {
 	DefaultBackend string                          `json:"default_backend,omitempty"`
 	Rules          []LoadBalancerFrontendRule      `json:"rules,omitempty"`
 	TLSConfigs     []LoadBalancerFrontendTLSConfig `json:"tls_configs,omitempty"`
+	Properties     *LoadBalancerFrontendProperties `json:"properties,omitempty"`
 	CreatedAt      time.Time                       `json:"created_at,omitempty"`
 	UpdatedAt      time.Time                       `json:"updated_at,omitempty"`
 }
@@ -129,16 +138,23 @@ type LoadBalancerFrontendTLSConfig struct {
 	UpdatedAt             time.Time `json:"updated_at,omitempty"`
 }
 
-// LoadBalancerBackend represents service backend
-type LoadBalancerBackend struct {
-	Name      string                      `json:"name"`
-	Members   []LoadBalancerBackendMember `json:"members"`
-	Resolver  string                      `json:"resolver,omitempty"`
-	CreatedAt time.Time                   `json:"created_at,omitempty"`
-	UpdatedAt time.Time                   `json:"updated_at,omitempty"`
+// LoadBalancerFrontendProperties represents frontend properties
+type LoadBalancerFrontendProperties struct {
+	TimeoutClient        int  `json:"timeout_client,omitempty"`
+	InboundProxyProtocol bool `json:"inbound_proxy_protocol"`
 }
 
-// LoadBalancerBackendMembe represents backend member
+// LoadBalancerBackend represents service backend
+type LoadBalancerBackend struct {
+	Name       string                         `json:"name"`
+	Members    []LoadBalancerBackendMember    `json:"members"`
+	Resolver   string                         `json:"resolver,omitempty"`
+	Properties *LoadBalancerBackendProperties `json:"properties,omitempty"`
+	CreatedAt  time.Time                      `json:"created_at,omitempty"`
+	UpdatedAt  time.Time                      `json:"updated_at,omitempty"`
+}
+
+// LoadBalancerBackendMember represents backend member
 type LoadBalancerBackendMember struct {
 	Name        string                        `json:"name"`
 	IP          string                        `json:"ip"`
@@ -149,6 +165,20 @@ type LoadBalancerBackendMember struct {
 	Enabled     bool                          `json:"enabled"`
 	CreatedAt   time.Time                     `json:"created_at,omitempty"`
 	UpdatedAt   time.Time                     `json:"updated_at,omitempty"`
+}
+
+// LoadBalancerBackendProperties represents backend properties
+type LoadBalancerBackendProperties struct {
+	TimeoutServer             int                              `json:"timeout_server,omitempty"`
+	TimeoutTunnel             int                              `json:"timeout_tunnel,omitempty"`
+	HealthCheckType           LoadBalancerHealthCheckType      `json:"health_check_type,omitempty"`
+	HealthCheckInterval       int                              `json:"health_check_interval,omitempty"`
+	HealthCheckFall           int                              `json:"health_check_fall,omitempty"`
+	HealthCheckRise           int                              `json:"health_check_rise,omitempty"`
+	HealthCheckURL            string                           `json:"health_check_url,omitempty"`
+	HealthCheckExpectedStatus int                              `json:"health_check_expected_status,omitempty"`
+	StickySessionCookieName   string                           `json:"sticky_session_cookie_name,omitempty"`
+	OutboundProxyProtocol     LoadBalancerProxyProtocolVersion `json:"outbound_proxy_protocol,omitempty"`
 }
 
 // LoadBalancerResolver represents domain name resolver

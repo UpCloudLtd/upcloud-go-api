@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"os"
 	"strings"
@@ -190,4 +191,29 @@ func deleteStorageWithContext(ctx context.Context, svc *ServiceContext, uuid str
 	})
 
 	return err
+}
+
+func createLoadBalancerBackendContext(ctx context.Context, svc *ServiceContext, lbUUID string) (*upcloud.LoadBalancerBackend, error) {
+	req := request.CreateLoadBalancerBackendRequest{
+		ServiceUUID: lbUUID,
+		Backend: request.LoadBalancerBackend{
+			Name: fmt.Sprintf("go-test-lb-backend-%d", time.Now().Unix()),
+			Properties: &upcloud.LoadBalancerBackendProperties{
+				TimeoutServer: 30,
+			},
+			Members: []request.LoadBalancerBackendMember{
+				{
+					Name:        "default-lb-backend-member",
+					Type:        "dynamic",
+					Weight:      100,
+					MaxSessions: 1000,
+					Enabled:     true,
+					Port:        8000,
+					IP:          "196.123.123.123",
+				},
+			},
+		},
+	}
+
+	return svc.CreateLoadBalancerBackend(ctx, &req)
 }
