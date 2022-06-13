@@ -11,10 +11,9 @@ import (
 	"os"
 	"time"
 
+	globals "github.com/UpCloudLtd/upcloud-go-api/v4/internal"
 	"github.com/blang/semver"
 	"github.com/hashicorp/go-cleanhttp"
-
-	globals "github.com/UpCloudLtd/upcloud-go-api/v4/internal"
 )
 
 // Constants
@@ -40,19 +39,7 @@ type Client struct {
 
 // New creates ands returns a new client configured with the specified user and password
 func New(userName, password string) *Client {
-	var client *http.Client
-	if os.Getenv(EnvDebugSkipCertificateVerify) == "1" {
-		client = &http.Client{
-			Transport: &http.Transport{
-				TLSClientConfig: &tls.Config{
-					InsecureSkipVerify: true, //nolint
-				},
-			},
-		}
-	} else {
-		client = cleanhttp.DefaultClient()
-	}
-	return NewWithHTTPClient(userName, password, client)
+	return NewWithHTTPClient(userName, password, httpClient())
 }
 
 // NewWithHTTPClient creates ands returns a new client configured with the specified user and password and
@@ -63,7 +50,7 @@ func NewWithHTTPClient(userName string, password string, httpClient *http.Client
 		password:   password,
 		httpClient: httpClient,
 		baseURL:    clientBaseURL(os.Getenv(EnvDebugAPIBaseURL)),
-		UserAgent:  fmt.Sprintf("upcloud-go-api/%s", globals.Version),
+		UserAgent:  userAgent(),
 	}
 
 	// Set the default timeout if the caller hasn't set its own
@@ -255,4 +242,24 @@ func handleResponse(response *http.Response) ([]byte, error) {
 	responseBody, err := ioutil.ReadAll(response.Body)
 
 	return responseBody, err
+}
+
+func httpClient() *http.Client {
+	var client *http.Client
+	if os.Getenv(EnvDebugSkipCertificateVerify) == "1" {
+		client = &http.Client{
+			Transport: &http.Transport{
+				TLSClientConfig: &tls.Config{
+					InsecureSkipVerify: true, //nolint
+				},
+			},
+		}
+	} else {
+		client = cleanhttp.DefaultClient()
+	}
+	return client
+}
+
+func userAgent() string {
+	return fmt.Sprintf("upcloud-go-api/%s", globals.Version)
 }

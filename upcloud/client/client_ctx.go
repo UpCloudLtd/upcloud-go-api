@@ -5,6 +5,7 @@ import (
 	"context"
 	"io"
 	"net/http"
+	"os"
 )
 
 // ClientContext represents an API client with context support
@@ -71,11 +72,19 @@ func (c *ClientContext) PerformJSONRequest(ctx context.Context, method, url stri
 
 // NewWithContext creates ands returns a new client with context support configured with the specified user and password
 func NewWithContext(userName, password string) *ClientContext {
-	return &ClientContext{New(userName, password)}
+	return NewWithHTTPClientContext(userName, password, httpClient())
 }
 
 // NewWithHTTPClientContext creates ands returns a new client with context support configured with the specified user and password and
 // using a supplied `http.Client`.
 func NewWithHTTPClientContext(userName string, password string, httpClient *http.Client) *ClientContext {
-	return &ClientContext{NewWithHTTPClient(userName, password, httpClient)}
+	return &ClientContext{
+		&Client{
+			userName:   userName,
+			password:   password,
+			httpClient: httpClient,
+			baseURL:    clientBaseURL(os.Getenv(EnvDebugAPIBaseURL)),
+			UserAgent:  userAgent(),
+		},
+	}
 }
