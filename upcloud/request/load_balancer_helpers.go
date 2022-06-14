@@ -40,6 +40,13 @@ func NewLoadBalancerUseBackendAction(name string) upcloud.LoadBalancerAction {
 	}
 }
 
+func NewLoadBalancerSetForwardedHeadersAction() upcloud.LoadBalancerAction {
+	return upcloud.LoadBalancerAction{
+		Type:                upcloud.LoadBalancerActionTypeSetForwardedHeaders,
+		SetForwardedHeaders: &upcloud.LoadBalancerActionSetForwardedHeaders{},
+	}
+}
+
 func NewLoadBalancerNumMembersUpMatcher(m upcloud.LoadBalancerIntegerMatcherMethod, count int, backend string) upcloud.LoadBalancerMatcher {
 	return upcloud.LoadBalancerMatcher{
 		Type: upcloud.LoadBalancerMatcherTypeNumMembersUp,
