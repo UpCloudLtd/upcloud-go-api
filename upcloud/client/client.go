@@ -50,7 +50,7 @@ func NewWithHTTPClient(userName string, password string, httpClient *http.Client
 		password:   password,
 		httpClient: httpClient,
 		baseURL:    clientBaseURL(os.Getenv(EnvDebugAPIBaseURL)),
-		UserAgent:  userAgent(),
+		UserAgent:  userAgent(false),
 	}
 
 	// Set the default timeout if the caller hasn't set its own
@@ -260,6 +260,11 @@ func httpClient() *http.Client {
 	return client
 }
 
-func userAgent() string {
-	return fmt.Sprintf("upcloud-go-api/%s", globals.Version)
+func userAgent(ctxAware bool) string {
+	base := "upcloud-go-api"
+	if ctxAware {
+		base = "upcloud-go-api-ctx"
+	}
+
+	return fmt.Sprintf("%s/%s", base, globals.Version)
 }
