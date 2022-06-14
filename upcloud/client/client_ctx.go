@@ -84,7 +84,7 @@ func NewWithHTTPClientContext(userName string, password string, httpClient *http
 			password:   password,
 			httpClient: httpClient,
 			baseURL:    clientBaseURL(os.Getenv(EnvDebugAPIBaseURL)),
-			UserAgent:  userAgent(),
+			UserAgent:  userAgent(true),
 		},
 	}
 }

@@ -21,5 +21,5 @@ func TestClientContextTimeout(t *testing.T) {
 func TestClientContextUserAgent(t *testing.T) {
 	var u, p string
 	c1 := NewWithContext(u, p)
-	assert.Equal(t, fmt.Sprintf("upcloud-go-api/%s", globals.Version), c1.UserAgent)
+	assert.Equal(t, fmt.Sprintf("upcloud-go-api-ctx/%s", globals.Version), c1.UserAgent)
 }
