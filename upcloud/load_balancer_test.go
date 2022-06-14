@@ -297,6 +297,30 @@ func TestLoadBalancerRule(t *testing.T) {
 					Type:      LoadBalancerActionTypeTCPReject,
 					TCPReject: &LoadBalancerActionTCPReject{},
 				},
+				{
+					Type: LoadBalancerActionTypeHTTPRedirect,
+					HTTPRedirect: &LoadBalancerActionHTTPRedirect{
+						Location: "/new",
+					},
+				},
+				{
+					Type: LoadBalancerActionTypeHTTPReturn,
+					HTTPReturn: &LoadBalancerActionHTTPReturn{
+						Status:      200,
+						ContentType: "text/html",
+						Payload:     "PGgxPmFwcGxlYmVlPC9oMT4K",
+					},
+				},
+				{
+					Type: LoadBalancerActionTypeUseBackend,
+					UseBackend: &LoadBalancerActionUseBackend{
+						Backend: "example-backend",
+					},
+				},
+				{
+					Type:                LoadBalancerActionTypeSetForwardedHeaders,
+					SetForwardedHeaders: &LoadBalancerActionSetForwardedHeaders{},
+				},
 			},
 			CreatedAt: timeParse("2021-12-07T13:58:30.817272Z"),
 			UpdatedAt: timeParse("2022-02-11T17:33:08.490581Z"),
@@ -311,6 +335,30 @@ func TestLoadBalancerRule(t *testing.T) {
 				{
 					"type": "tcp_reject",
 					"action_tcp_reject": {}
+				},
+				{
+					"type": "http_redirect",
+					"action_http_redirect": {
+						"location": "/new"
+					}
+				},
+				{
+					"type": "http_return",
+					"action_http_return": {
+							"status": 200,
+							"content_type": "text/html",
+							"payload": "PGgxPmFwcGxlYmVlPC9oMT4K"
+					}
+				},
+				{
+					"type": "use_backend",
+					"action_use_backend": {
+							"backend": "example-backend"
+					}
+				},
+				{
+					"type": "set_forwarded_headers",
+					"action_set_forwarded_headers": {}
 				}
 			]
 		}

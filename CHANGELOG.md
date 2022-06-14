@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- Managed Load Balancer `SetForwardedHeaders` frontend rule action
+
 ## [4.7.0]
 
 ### Added

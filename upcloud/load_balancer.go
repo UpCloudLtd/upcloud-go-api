@@ -62,10 +62,11 @@ const (
 	LoadBalancerMatcherTypeURLParam     LoadBalancerMatcherType = "url_param"
 	LoadBalancerMatcherTypeNumMembersUp LoadBalancerMatcherType = "num_members_up"
 
-	LoadBalancerActionTypeUseBackend   LoadBalancerActionType = "use_backend"
-	LoadBalancerActionTypeTCPReject    LoadBalancerActionType = "tcp_reject"
-	LoadBalancerActionTypeHTTPReturn   LoadBalancerActionType = "http_return"
-	LoadBalancerActionTypeHTTPRedirect LoadBalancerActionType = "http_redirect"
+	LoadBalancerActionTypeUseBackend          LoadBalancerActionType = "use_backend"
+	LoadBalancerActionTypeTCPReject           LoadBalancerActionType = "tcp_reject"
+	LoadBalancerActionTypeHTTPReturn          LoadBalancerActionType = "http_return"
+	LoadBalancerActionTypeHTTPRedirect        LoadBalancerActionType = "http_redirect"
+	LoadBalancerActionTypeSetForwardedHeaders LoadBalancerActionType = "set_forwarded_headers"
 
 	LoadBalancerStringMatcherMethodExact     LoadBalancerStringMatcherMethod = "exact"
 	LoadBalancerStringMatcherMethodSubstring LoadBalancerStringMatcherMethod = "substring"
@@ -275,11 +276,12 @@ type LoadBalancerMatcherSourceIP struct {
 
 // LoadBalancerAction represents rule action
 type LoadBalancerAction struct {
-	Type         LoadBalancerActionType          `json:"type,omitempty"`
-	UseBackend   *LoadBalancerActionUseBackend   `json:"action_use_backend,omitempty"`
-	TCPReject    *LoadBalancerActionTCPReject    `json:"action_tcp_reject,omitempty"`
-	HTTPReturn   *LoadBalancerActionHTTPReturn   `json:"action_http_return,omitempty"`
-	HTTPRedirect *LoadBalancerActionHTTPRedirect `json:"action_http_redirect,omitempty"`
+	Type                LoadBalancerActionType                 `json:"type,omitempty"`
+	UseBackend          *LoadBalancerActionUseBackend          `json:"action_use_backend,omitempty"`
+	TCPReject           *LoadBalancerActionTCPReject           `json:"action_tcp_reject,omitempty"`
+	HTTPReturn          *LoadBalancerActionHTTPReturn          `json:"action_http_return,omitempty"`
+	HTTPRedirect        *LoadBalancerActionHTTPRedirect        `json:"action_http_redirect,omitempty"`
+	SetForwardedHeaders *LoadBalancerActionSetForwardedHeaders `json:"action_set_forwarded_headers,omitempty"`
 }
 
 // LoadBalancerActionUseBackend represents 'use_backend' action
@@ -301,6 +303,10 @@ type LoadBalancerActionHTTPReturn struct {
 // LoadBalancerActionHTTPRedirect represents 'http_redirect' action
 type LoadBalancerActionHTTPRedirect struct {
 	Location string `json:"location,omitempty"`
+}
+
+// LoadBalancerActionSetForwardedHeaders represents 'set_forwarded_headers' action
+type LoadBalancerActionSetForwardedHeaders struct {
 }
 
 // LoadBalancerCertificateBundle represents certificate bundle
