@@ -437,6 +437,7 @@ func TestUnmarshalManagedDatabaseQueryStatisticsPostgreSQL(t *testing.T) {
 	}
 	assert.Equal(t, expect, c)
 }
+
 func TestUnmarshalManagedDatabaseQueryStatisticsMySQL(t *testing.T) {
 	const d = `{
 		"avg_timer_wait": 2000309754,

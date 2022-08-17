@@ -64,7 +64,6 @@ func (s *Service) CancelManagedDatabaseConnection(r *request.CancelManagedDataba
 		Success bool `json:"success"`
 	}{}
 	response, err := s.client.PerformJSONDeleteRequestWithResponseBody(s.client.CreateRequestURL(r.RequestURL()))
-
 	if err != nil {
 		return parseJSONServiceError(err)
 	}
@@ -84,7 +83,6 @@ func (s *Service) CloneManagedDatabase(r *request.CloneManagedDatabaseRequest) (
 	managedDatabaseDetails := upcloud.ManagedDatabase{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -102,7 +100,6 @@ func (s *Service) CreateManagedDatabase(r *request.CreateManagedDatabaseRequest)
 	managedDatabaseDetails := upcloud.ManagedDatabase{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -119,7 +116,6 @@ func (s *Service) CreateManagedDatabase(r *request.CreateManagedDatabaseRequest)
 func (s *Service) GetManagedDatabase(r *request.GetManagedDatabaseRequest) (*upcloud.ManagedDatabase, error) {
 	managedDatabaseDetails := upcloud.ManagedDatabase{}
 	response, err := s.client.PerformJSONGetRequest(s.client.CreateRequestURL(r.RequestURL()))
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -136,7 +132,6 @@ func (s *Service) GetManagedDatabase(r *request.GetManagedDatabaseRequest) (*upc
 func (s *Service) GetManagedDatabases(r *request.GetManagedDatabasesRequest) ([]upcloud.ManagedDatabase, error) {
 	var services []upcloud.ManagedDatabase
 	response, err := s.client.PerformJSONGetRequest(s.client.CreateRequestURL(r.RequestURL()))
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -153,7 +148,6 @@ func (s *Service) GetManagedDatabases(r *request.GetManagedDatabasesRequest) ([]
 func (s *Service) GetManagedDatabaseConnections(r *request.GetManagedDatabaseConnectionsRequest) ([]upcloud.ManagedDatabaseConnection, error) {
 	var conns []upcloud.ManagedDatabaseConnection
 	response, err := s.client.PerformJSONGetRequest(s.client.CreateRequestURL(r.RequestURL()))
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -170,7 +164,6 @@ func (s *Service) GetManagedDatabaseConnections(r *request.GetManagedDatabaseCon
 func (s *Service) GetManagedDatabaseMetrics(r *request.GetManagedDatabaseMetricsRequest) (*upcloud.ManagedDatabaseMetrics, error) {
 	metrics := upcloud.ManagedDatabaseMetrics{}
 	response, err := s.client.PerformJSONGetRequest(s.client.CreateRequestURL(r.RequestURL()))
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -187,7 +180,6 @@ func (s *Service) GetManagedDatabaseMetrics(r *request.GetManagedDatabaseMetrics
 func (s *Service) GetManagedDatabaseLogs(r *request.GetManagedDatabaseLogsRequest) (*upcloud.ManagedDatabaseLogs, error) {
 	logs := upcloud.ManagedDatabaseLogs{}
 	response, err := s.client.PerformJSONGetRequest(s.client.CreateRequestURL(r.RequestURL()))
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -218,7 +210,6 @@ func (s *Service) GetManagedDatabaseQueryStatisticsMySQL(r *request.GetManagedDa
 		Mysql []upcloud.ManagedDatabaseQueryStatisticsMySQL
 	}
 	response, err := s.client.PerformJSONGetRequest(s.client.CreateRequestURL(r.RequestURL()))
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -237,7 +228,6 @@ func (s *Service) GetManagedDatabaseQueryStatisticsPostgreSQL(r *request.GetMana
 		Pg []upcloud.ManagedDatabaseQueryStatisticsPostgreSQL
 	}
 	response, err := s.client.PerformJSONGetRequest(s.client.CreateRequestURL(r.RequestURL()))
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -253,7 +243,6 @@ func (s *Service) GetManagedDatabaseQueryStatisticsPostgreSQL(r *request.GetMana
 // DeleteManagedDatabase (EXPERIMENTAL) deletes an existing managed database instance
 func (s *Service) DeleteManagedDatabase(r *request.DeleteManagedDatabaseRequest) error {
 	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
-
 	if err != nil {
 		return parseJSONServiceError(err)
 	}
@@ -266,7 +255,6 @@ func (s *Service) ModifyManagedDatabase(r *request.ModifyManagedDatabaseRequest)
 	managedDatabaseDetails := upcloud.ManagedDatabase{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -332,7 +320,6 @@ func (s *Service) WaitForManagedDatabaseState(r *request.WaitForManagedDatabaseS
 		details, err := s.GetManagedDatabase(&request.GetManagedDatabaseRequest{
 			UUID: r.UUID,
 		})
-
 		if err != nil {
 			return nil, err
 		}
@@ -354,7 +341,6 @@ func (s *Service) StartManagedDatabase(r *request.StartManagedDatabaseRequest) (
 	managedDatabaseDetails := upcloud.ManagedDatabase{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -373,7 +359,6 @@ func (s *Service) ShutdownManagedDatabase(r *request.ShutdownManagedDatabaseRequ
 	managedDatabaseDetails := upcloud.ManagedDatabase{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -393,7 +378,6 @@ func (s *Service) CreateManagedDatabaseUser(r *request.CreateManagedDatabaseUser
 	userDetails := upcloud.ManagedDatabaseUser{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -410,7 +394,6 @@ func (s *Service) CreateManagedDatabaseUser(r *request.CreateManagedDatabaseUser
 func (s *Service) GetManagedDatabaseUser(r *request.GetManagedDatabaseUserRequest) (*upcloud.ManagedDatabaseUser, error) {
 	userDetails := upcloud.ManagedDatabaseUser{}
 	response, err := s.client.PerformJSONGetRequest(s.client.CreateRequestURL(r.RequestURL()))
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -427,7 +410,6 @@ func (s *Service) GetManagedDatabaseUser(r *request.GetManagedDatabaseUserReques
 func (s *Service) GetManagedDatabaseUsers(r *request.GetManagedDatabaseUsersRequest) ([]upcloud.ManagedDatabaseUser, error) {
 	var userList []upcloud.ManagedDatabaseUser
 	response, err := s.client.PerformJSONGetRequest(s.client.CreateRequestURL(r.RequestURL()))
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -443,7 +425,6 @@ func (s *Service) GetManagedDatabaseUsers(r *request.GetManagedDatabaseUsersRequ
 // DeleteManagedDatabaseUser (EXPERIMENTAL) deletes an existing user of an existing managed database instance
 func (s *Service) DeleteManagedDatabaseUser(r *request.DeleteManagedDatabaseUserRequest) error {
 	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
-
 	if err != nil {
 		return parseJSONServiceError(err)
 	}
@@ -456,7 +437,6 @@ func (s *Service) ModifyManagedDatabaseUser(r *request.ModifyManagedDatabaseUser
 	userDetails := upcloud.ManagedDatabaseUser{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -476,7 +456,6 @@ func (s *Service) CreateManagedDatabaseLogicalDatabase(r *request.CreateManagedD
 	dbDetails := upcloud.ManagedDatabaseLogicalDatabase{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -493,7 +472,6 @@ func (s *Service) CreateManagedDatabaseLogicalDatabase(r *request.CreateManagedD
 func (s *Service) GetManagedDatabaseLogicalDatabases(r *request.GetManagedDatabaseLogicalDatabasesRequest) ([]upcloud.ManagedDatabaseLogicalDatabase, error) {
 	var dbList []upcloud.ManagedDatabaseLogicalDatabase
 	response, err := s.client.PerformJSONGetRequest(s.client.CreateRequestURL(r.RequestURL()))
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -509,7 +487,6 @@ func (s *Service) GetManagedDatabaseLogicalDatabases(r *request.GetManagedDataba
 // DeleteManagedDatabaseLogicalDatabase (EXPERIMENTAL) deletes an existing logical database of an existing managed database instance
 func (s *Service) DeleteManagedDatabaseLogicalDatabase(r *request.DeleteManagedDatabaseLogicalDatabaseRequest) error {
 	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
-
 	if err != nil {
 		return parseJSONServiceError(err)
 	}

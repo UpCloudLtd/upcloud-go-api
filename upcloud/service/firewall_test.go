@@ -17,7 +17,6 @@ import (
 // - adds a firewall rule to the server
 // - gets details about the firewall rule
 // - deletes the firewall rule
-//
 func TestFirewallRules(t *testing.T) {
 	t.Parallel()
 

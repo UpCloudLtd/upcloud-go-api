@@ -18,7 +18,6 @@ import (
 // - adds a firewall rule to the server
 // - gets details about the firewall rule
 // - deletes the firewall rule
-//
 func TestFirewallRulesContext(t *testing.T) {
 	t.Parallel()
 	recordWithContext(t, "firewallrules", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {

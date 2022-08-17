@@ -257,7 +257,8 @@ func TestLoadBalancerResolverContext(t *testing.T) {
 				Timeout:      timeout,
 				TimeoutRetry: timeoutRetry,
 				CacheValid:   cacheValid,
-				CacheInvalid: cacheInvalid},
+				CacheInvalid: cacheInvalid,
+			},
 		})
 
 		require.NoError(t, err)
@@ -285,7 +286,8 @@ func TestLoadBalancerResolverContext(t *testing.T) {
 				Name:        newName,
 				Nameservers: newNameServers,
 				Retries:     newRetries,
-				Timeout:     newTimeout},
+				Timeout:     newTimeout,
+			},
 		})
 
 		require.NoError(t, err)
@@ -305,7 +307,8 @@ func TestLoadBalancerResolverContext(t *testing.T) {
 			Resolver: request.LoadBalancerResolver{
 				TimeoutRetry: newTimeoutRetry,
 				CacheValid:   newCacheValid,
-				CacheInvalid: newCacheInvalid},
+				CacheInvalid: newCacheInvalid,
+			},
 		})
 
 		require.NoError(t, err)
@@ -563,10 +566,10 @@ func TestLoadBalancerFrontendRuleContext(t *testing.T) {
 
 // TestLoadBalancerCerticateBundlesAndFrontendTLSConfigs tests certificate bundles and TLS configs
 // Test:
-//	- certificate bundle CRUD
-//	- TLS config CRUD
-//	- add TLS config to LB frontend
-//	- remove TLS config to LB frontend
+//   - certificate bundle CRUD
+//   - TLS config CRUD
+//   - add TLS config to LB frontend
+//   - remove TLS config to LB frontend
 func TestLoadBalancerCerticateBundlesAndFrontendTLSConfigsContext(t *testing.T) {
 	t.Parallel()
 

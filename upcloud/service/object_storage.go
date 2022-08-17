@@ -22,7 +22,6 @@ var _ ObjectStorage = (*Service)(nil)
 func (s *Service) GetObjectStorages() (*upcloud.ObjectStorages, error) {
 	objectStorages := upcloud.ObjectStorages{}
 	response, err := s.basicGetRequest("/object-storage")
-
 	if err != nil {
 		return nil, err
 	}
@@ -39,7 +38,6 @@ func (s *Service) GetObjectStorages() (*upcloud.ObjectStorages, error) {
 func (s *Service) GetObjectStorageDetails(r *request.GetObjectStorageDetailsRequest) (*upcloud.ObjectStorageDetails, error) {
 	objectStorageDetails := upcloud.ObjectStorageDetails{}
 	response, err := s.basicGetRequest(r.RequestURL())
-
 	if err != nil {
 		return nil, err
 	}
@@ -57,7 +55,6 @@ func (s *Service) CreateObjectStorage(r *request.CreateObjectStorageRequest) (*u
 	objectStorageDetails := upcloud.ObjectStorageDetails{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -75,7 +72,6 @@ func (s *Service) ModifyObjectStorage(r *request.ModifyObjectStorageRequest) (*u
 	objectStorageDetails := upcloud.ObjectStorageDetails{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -91,7 +87,6 @@ func (s *Service) ModifyObjectStorage(r *request.ModifyObjectStorageRequest) (*u
 // DeleteObjectStorage deletes the specific Object Storage
 func (s *Service) DeleteObjectStorage(r *request.DeleteObjectStorageRequest) error {
 	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
-
 	if err != nil {
 		return parseJSONServiceError(err)
 	}

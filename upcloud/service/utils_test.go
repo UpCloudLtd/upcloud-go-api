@@ -380,7 +380,6 @@ func createStorage(svc *Service) (*upcloud.StorageDetails, error) {
 	}
 
 	storageDetails, err := svc.CreateStorage(&createStorageRequest)
-
 	if err != nil {
 		return nil, err
 	}

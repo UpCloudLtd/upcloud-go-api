@@ -21,7 +21,6 @@ var _ Firewall = (*Service)(nil)
 func (s *Service) GetFirewallRules(r *request.GetFirewallRulesRequest) (*upcloud.FirewallRules, error) {
 	firewallRules := upcloud.FirewallRules{}
 	response, err := s.basicGetRequest(r.RequestURL())
-
 	if err != nil {
 		return nil, err
 	}
@@ -38,7 +37,6 @@ func (s *Service) GetFirewallRules(r *request.GetFirewallRulesRequest) (*upcloud
 func (s *Service) GetFirewallRuleDetails(r *request.GetFirewallRuleDetailsRequest) (*upcloud.FirewallRule, error) {
 	firewallRule := upcloud.FirewallRule{}
 	response, err := s.basicGetRequest(r.RequestURL())
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -56,7 +54,6 @@ func (s *Service) CreateFirewallRule(r *request.CreateFirewallRuleRequest) (*upc
 	firewallRule := upcloud.FirewallRule{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -73,7 +70,6 @@ func (s *Service) CreateFirewallRule(r *request.CreateFirewallRuleRequest) (*upc
 func (s *Service) CreateFirewallRules(r *request.CreateFirewallRulesRequest) error {
 	requestBody, _ := json.Marshal(r)
 	_, err := s.client.PerformJSONPutRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return parseJSONServiceError(err)
 	}
@@ -84,7 +80,6 @@ func (s *Service) CreateFirewallRules(r *request.CreateFirewallRulesRequest) err
 // DeleteFirewallRule deletes the specified firewall rule
 func (s *Service) DeleteFirewallRule(r *request.DeleteFirewallRuleRequest) error {
 	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
-
 	if err != nil {
 		return parseJSONServiceError(err)
 	}

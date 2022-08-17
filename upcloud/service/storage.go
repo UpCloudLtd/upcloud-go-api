@@ -143,7 +143,6 @@ func (s *Service) DetachStorage(r *request.DetachStorageRequest) (*upcloud.Serve
 // DeleteStorage deletes the specified storage device
 func (s *Service) DeleteStorage(r *request.DeleteStorageRequest) error {
 	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
-
 	if err != nil {
 		return parseJSONServiceError(err)
 	}
@@ -199,7 +198,6 @@ func (s *Service) WaitForStorageState(r *request.WaitForStorageStateRequest) (*u
 		storageDetails, err := s.GetStorageDetails(&request.GetStorageDetailsRequest{
 			UUID: r.UUID,
 		})
-
 		if err != nil {
 			return nil, err
 		}
@@ -272,7 +270,6 @@ func (s *Service) CreateBackup(r *request.CreateBackupRequest) (*upcloud.Storage
 // RestoreBackup creates a backup of the specified storage
 func (s *Service) RestoreBackup(r *request.RestoreBackupRequest) error {
 	_, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), nil)
-
 	if err != nil {
 		return parseJSONServiceError(err)
 	}
@@ -399,7 +396,6 @@ func (s *Service) WaitForStorageImportCompletion(r *request.WaitForStorageImport
 		storageImportDetails, err := s.GetStorageImportDetails(&request.GetStorageImportDetailsRequest{
 			UUID: r.StorageUUID,
 		})
-
 		if err != nil {
 			return nil, err
 		}
@@ -441,7 +437,6 @@ func (s *Service) WaitForStorageImportCompletion(r *request.WaitForStorageImport
 // was before the resize. After that the backup is deleted automatically.
 func (s *Service) ResizeStorageFilesystem(r *request.ResizeStorageFilesystemRequest) (*upcloud.ResizeStorageFilesystemBackup, error) {
 	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), nil)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}

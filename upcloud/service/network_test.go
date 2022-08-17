@@ -14,9 +14,9 @@ import (
 
 // TestGetNetworks checks that network details are retrievable
 // It:
-//    - creates a server
-//    - Gets all networks and verifies details are populated
-//    - checks that at least one network has a server in.
+//   - creates a server
+//   - Gets all networks and verifies details are populated
+//   - checks that at least one network has a server in.
 func TestGetNetworks(t *testing.T) {
 	record(t, "getnetworks", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		_, err := createServer(svc, "TestGetNetworks")
@@ -47,9 +47,9 @@ func TestGetNetworks(t *testing.T) {
 
 // TestGetNetworksInZone checks that network details in a zone are retrievable
 // It:
-//    - creates a server
-//    - Gets all networks in a zone and verifies details are populated
-//    - checks that at least one network has a server in.
+//   - creates a server
+//   - Gets all networks in a zone and verifies details are populated
+//   - checks that at least one network has a server in.
 func TestGetNetworksInZone(t *testing.T) {
 	record(t, "getnetworksinzone", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		_, err := createServer(svc, "TestGetNetworksInZone")
@@ -91,15 +91,15 @@ func TestGetNetworksInZone(t *testing.T) {
 
 // TestCreateModifyDeleteNetwork checks that the network functionality works.
 // It:
-//    - creates a network
-//    - modifies the network
-//    - creates a server
-//    - stops the server
-//    - creates a network interface in the network
-//    - modifies the network interface
-//    - deletes the network interface
-//    - deletes the network
-//    - verifies the network has been deleted.
+//   - creates a network
+//   - modifies the network
+//   - creates a server
+//   - stops the server
+//   - creates a network interface in the network
+//   - modifies the network interface
+//   - deletes the network interface
+//   - deletes the network
+//   - verifies the network has been deleted.
 func TestCreateModifyDeleteNetwork(t *testing.T) {
 	record(t, "createmodifydeletenetwork", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		network, err := svc.CreateNetwork(&request.CreateNetworkRequest{
@@ -221,11 +221,11 @@ func TestGetRouters(t *testing.T) {
 
 // TestCreateModifyDeleteRouter tests router functionality:
 // It:
-//     - creates a router
-//     - modifies a router
-//     - retrieves all routers and ensures our new router is found
-//     - deletes the router
-//     - retrieves all routers and ensures our new router can't be found
+//   - creates a router
+//   - modifies a router
+//   - retrieves all routers and ensures our new router is found
+//   - deletes the router
+//   - retrieves all routers and ensures our new router can't be found
 func TestCreateModifyDeleteRouter(t *testing.T) {
 	record(t, "createmodifydeleterouter", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		router, err := svc.CreateRouter(&request.CreateRouterRequest{
@@ -282,15 +282,15 @@ func TestCreateModifyDeleteRouter(t *testing.T) {
 // TestCreateTwoNetwoksTwoServersAndARouter tests network, server and router functionality
 // together.
 // It:
-//     - creates 2 new networks
-//     - creates a router
-//     - modifies the two networks to add the router
-//     - creates 2 new servers
-//     - adds network interfaces in each one server in each network
-//     - verifies the network details in the interfaces is correct
-//     - verifies the servers can be found in the network details
-//     - detaches one of the routers and verifies it was detached
-//     - deletes the servers, the routers and the networks
+//   - creates 2 new networks
+//   - creates a router
+//   - modifies the two networks to add the router
+//   - creates 2 new servers
+//   - adds network interfaces in each one server in each network
+//   - verifies the network details in the interfaces is correct
+//   - verifies the servers can be found in the network details
+//   - detaches one of the routers and verifies it was detached
+//   - deletes the servers, the routers and the networks
 func TestCreateTwoNetworksTwoServersAndARouter(t *testing.T) {
 	record(t, "createtwonetworkstwoserversandarouter", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		network1, err := svc.CreateNetwork(&request.CreateNetworkRequest{

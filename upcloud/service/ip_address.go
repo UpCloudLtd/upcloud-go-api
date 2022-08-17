@@ -21,7 +21,6 @@ var _ IpAddress = (*Service)(nil)
 func (s *Service) GetIPAddresses() (*upcloud.IPAddresses, error) {
 	ipAddresses := upcloud.IPAddresses{}
 	response, err := s.basicGetRequest("/ip_address")
-
 	if err != nil {
 		return nil, err
 	}
@@ -38,7 +37,6 @@ func (s *Service) GetIPAddresses() (*upcloud.IPAddresses, error) {
 func (s *Service) GetIPAddressDetails(r *request.GetIPAddressDetailsRequest) (*upcloud.IPAddress, error) {
 	ipAddress := upcloud.IPAddress{}
 	response, err := s.basicGetRequest(r.RequestURL())
-
 	if err != nil {
 		return nil, err
 	}
@@ -56,7 +54,6 @@ func (s *Service) AssignIPAddress(r *request.AssignIPAddressRequest) (*upcloud.I
 	ipAddress := upcloud.IPAddress{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -74,7 +71,6 @@ func (s *Service) ModifyIPAddress(r *request.ModifyIPAddressRequest) (*upcloud.I
 	ipAddress := upcloud.IPAddress{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -90,7 +86,6 @@ func (s *Service) ModifyIPAddress(r *request.ModifyIPAddressRequest) (*upcloud.I
 // ReleaseIPAddress releases the specified IP address from the server it is attached to
 func (s *Service) ReleaseIPAddress(r *request.ReleaseIPAddressRequest) error {
 	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
-
 	if err != nil {
 		return parseJSONServiceError(err)
 	}

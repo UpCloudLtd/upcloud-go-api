@@ -12,10 +12,10 @@ import (
 )
 
 // TestGetIPAddressesContext performs the following actions:
-// - creates a server
-// - retrieves all IP addresses
-// - compares the retrieved IP addresses with the created server's
-//   ip addresses
+//   - creates a server
+//   - retrieves all IP addresses
+//   - compares the retrieved IP addresses with the created server's
+//     ip addresses
 func TestGetIPAddressesContext(t *testing.T) {
 	recordWithContext(t, "getipaddresses", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 		serverDetails, err := createServer(svc, "TestGetIPAddresses")

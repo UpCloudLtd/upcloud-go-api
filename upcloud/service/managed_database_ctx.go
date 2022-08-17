@@ -56,7 +56,6 @@ func (s *ServiceContext) CancelManagedDatabaseConnection(ctx context.Context, r 
 		Success bool `json:"success"`
 	}{}
 	response, err := s.client.PerformJSONDeleteRequestWithResponseBody(ctx, s.client.CreateRequestURL(r.RequestURL()))
-
 	if err != nil {
 		return parseJSONServiceError(err)
 	}
@@ -172,7 +171,6 @@ func (s *ServiceContext) WaitForManagedDatabaseState(ctx context.Context, r *req
 		details, err := s.GetManagedDatabase(ctx, &request.GetManagedDatabaseRequest{
 			UUID: r.UUID,
 		})
-
 		if err != nil {
 			return nil, err
 		}

@@ -231,7 +231,6 @@ func TestLoadEjectCDROMContext(t *testing.T) {
 // - creates a backup of the storage device
 // - gets backup storage details
 // - restores the backup
-//
 func TestCreateRestoreBackupContext(t *testing.T) {
 	t.Parallel()
 	recordWithContext(t, "createrestorebackup", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {

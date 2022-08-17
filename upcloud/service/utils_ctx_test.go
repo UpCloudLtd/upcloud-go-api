@@ -176,7 +176,6 @@ func createStorageWithContext(ctx context.Context, svc *ServiceContext) (*upclou
 	}
 
 	storageDetails, err := svc.CreateStorage(ctx, &createStorageRequest)
-
 	if err != nil {
 		return nil, err
 	}

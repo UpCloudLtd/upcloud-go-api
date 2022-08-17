@@ -22,7 +22,6 @@ var _ Account = (*Service)(nil)
 func (s *Service) GetAccount() (*upcloud.Account, error) {
 	account := upcloud.Account{}
 	response, err := s.basicGetRequest("/account")
-
 	if err != nil {
 		return nil, err
 	}
@@ -40,7 +39,6 @@ func (s *Service) GetAccountList() (upcloud.AccountList, error) {
 	accountList := make(upcloud.AccountList, 0)
 
 	response, err := s.basicGetRequest("/account/list")
-
 	if err != nil {
 		return accountList, err
 	}
