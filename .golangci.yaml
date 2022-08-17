@@ -5,15 +5,20 @@ linters:
   # Run golangci-lint linters to see the list of all linters
   # Please keep them sorted alphabetically
   enable:
+    - asasalint
+    - asciicheck
+    - bidichk
     - bodyclose
+    - containedctx
     - deadcode
     - depguard
     - dogsled
     - errcheck
     - goconst
-    - gofmt
+    - gofumpt
     - goimports
-    # - golint # TODO: re-enable, needs breaking change due to wanting IpAddress -> IPAddress
+    # - golint # TODO: upgrade to revive and re-enable, needs breaking change due to wanting IpAddress -> IPAddress
+    - gomoddirectives
     - goprintffuncname
     - gosec
     - gosimple
@@ -22,6 +27,8 @@ linters:
     - misspell
     - nakedret
     - nolintlint
+    - nosprintfhostport
+    - predeclared
     - rowserrcheck
     - staticcheck
     - structcheck
@@ -31,8 +38,23 @@ linters:
     - unparam
     - unused
     - varcheck
+    - wastedassign
     - whitespace
+
+output:
+  uniq-by-line: false
+
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - funlen
+        - bodyclose
 
 linters-settings:
   goconst:
     min-len: 5
+  predeclared:
+    ignore: "new"
