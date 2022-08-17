@@ -252,7 +252,8 @@ type ManagedDatabaseMaintenanceTimeRequest struct {
 // It allows initialisation by chaining the Set methods.
 //
 // For example:
-// 	req := CreateManagedDatabaseRequest{}; req.Properties.SetString("foo", "bar").Set("test", customValue)
+//
+//	req := CreateManagedDatabaseRequest{}; req.Properties.SetString("foo", "bar").Set("test", customValue)
 type ManagedDatabasePropertiesRequest map[upcloud.ManagedDatabasePropertyKey]interface{}
 
 // Set associates key with a any type of value. The underlying map is initialised if it's nil

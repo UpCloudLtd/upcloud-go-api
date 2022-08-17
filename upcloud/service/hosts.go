@@ -20,7 +20,6 @@ var _ Host = (*Service)(nil)
 func (s *Service) GetHosts() (*upcloud.Hosts, error) {
 	hosts := upcloud.Hosts{}
 	response, err := s.basicGetRequest("/host")
-
 	if err != nil {
 		return nil, err
 	}
@@ -37,7 +36,6 @@ func (s *Service) GetHosts() (*upcloud.Hosts, error) {
 func (s *Service) GetHostDetails(r *request.GetHostDetailsRequest) (*upcloud.Host, error) {
 	host := upcloud.Host{}
 	response, err := s.basicGetRequest(r.RequestURL())
-
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +53,6 @@ func (s *Service) ModifyHost(r *request.ModifyHostRequest) (*upcloud.Host, error
 	host := upcloud.Host{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}

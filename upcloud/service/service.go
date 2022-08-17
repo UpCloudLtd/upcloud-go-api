@@ -78,7 +78,6 @@ func (s *Service) basicGetRequest(location string) ([]byte, error) {
 	requestURL := s.client.CreateRequestURL(location)
 
 	response, err := s.client.PerformJSONGetRequest(requestURL)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}

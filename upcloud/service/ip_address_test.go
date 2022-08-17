@@ -11,10 +11,10 @@ import (
 )
 
 // TestGetIPAddresses performs the following actions:
-// - creates a server
-// - retrieves all IP addresses
-// - compares the retrieved IP addresses with the created server's
-//   ip addresses
+//   - creates a server
+//   - retrieves all IP addresses
+//   - compares the retrieved IP addresses with the created server's
+//     ip addresses
 func TestGetIPAddresses(t *testing.T) {
 	record(t, "getipaddresses", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		serverDetails, err := createServer(svc, "TestGetIPAddresses")

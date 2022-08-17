@@ -213,6 +213,7 @@ func TestService_GetManagedDatabase(t *testing.T) {
 		assert.Equal(t, req.Zone, details.Zone)
 	})
 }
+
 func TestService_GetManagedDatabases(t *testing.T) {
 	record(t, "getmanageddatabases", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		details, err := svc.CreateManagedDatabase(getTestCreateRequest("getmanageddatabases"))

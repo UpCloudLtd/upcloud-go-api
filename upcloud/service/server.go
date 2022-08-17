@@ -29,7 +29,6 @@ var _ Server = (*Service)(nil)
 func (s *Service) GetServerConfigurations() (*upcloud.ServerConfigurations, error) {
 	serverConfigurations := upcloud.ServerConfigurations{}
 	response, err := s.basicGetRequest("/server_size")
-
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +45,6 @@ func (s *Service) GetServerConfigurations() (*upcloud.ServerConfigurations, erro
 func (s *Service) GetServers() (*upcloud.Servers, error) {
 	servers := upcloud.Servers{}
 	response, err := s.basicGetRequest("/server")
-
 	if err != nil {
 		return nil, err
 	}
@@ -63,7 +61,6 @@ func (s *Service) GetServers() (*upcloud.Servers, error) {
 func (s *Service) GetServerDetails(r *request.GetServerDetailsRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
 	response, err := s.basicGetRequest(r.RequestURL())
-
 	if err != nil {
 		return nil, err
 	}
@@ -81,7 +78,6 @@ func (s *Service) CreateServer(r *request.CreateServerRequest) (*upcloud.ServerD
 	serverDetails := upcloud.ServerDetails{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -110,7 +106,6 @@ func (s *Service) WaitForServerState(r *request.WaitForServerStateRequest) (*upc
 		serverDetails, err := s.GetServerDetails(&request.GetServerDetailsRequest{
 			UUID: r.UUID,
 		})
-
 		if err != nil {
 			return nil, err
 		}
@@ -217,7 +212,6 @@ func (s *Service) ModifyServer(r *request.ModifyServerRequest) (*upcloud.ServerD
 	serverDetails := upcloud.ServerDetails{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPutRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -233,7 +227,6 @@ func (s *Service) ModifyServer(r *request.ModifyServerRequest) (*upcloud.ServerD
 // DeleteServer deletes the specified server
 func (s *Service) DeleteServer(r *request.DeleteServerRequest) error {
 	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
-
 	if err != nil {
 		return parseJSONServiceError(err)
 	}
@@ -244,7 +237,6 @@ func (s *Service) DeleteServer(r *request.DeleteServerRequest) error {
 // DeleteServerAndStorages deletes the specified server and all attached storages
 func (s *Service) DeleteServerAndStorages(r *request.DeleteServerAndStoragesRequest) error {
 	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
-
 	if err != nil {
 		return parseJSONServiceError(err)
 	}

@@ -99,7 +99,6 @@ func (s *ServiceContext) WaitForStorageState(ctx context.Context, r *request.Wai
 		storageDetails, err := s.GetStorageDetails(ctx, &request.GetStorageDetailsRequest{
 			UUID: r.UUID,
 		})
-
 		if err != nil {
 			return nil, err
 		}
@@ -235,7 +234,6 @@ func (s *ServiceContext) WaitForStorageImportCompletion(ctx context.Context, r *
 		storageImportDetails, err := s.GetStorageImportDetails(ctx, &request.GetStorageImportDetailsRequest{
 			UUID: r.StorageUUID,
 		})
-
 		if err != nil {
 			return nil, err
 		}

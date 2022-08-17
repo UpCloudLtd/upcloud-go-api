@@ -234,7 +234,6 @@ func TestLoadEjectCDROM(t *testing.T) {
 // - creates a backup of the storage device
 // - gets backup storage details
 // - restores the backup
-//
 func TestCreateRestoreBackup(t *testing.T) {
 	t.Parallel()
 

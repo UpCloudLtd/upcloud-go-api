@@ -42,12 +42,12 @@ func TestGetAccountContext(t *testing.T) {
 
 // TestListDetailsCreateModifyDeleteSubaccountContext tests that subaccount functionality works correctly with context.
 // The test:
-//	- Create temporary test tag
-//	- Create subaccount
-//	- Modifie subaccount
-//	- Get user details to check modifications
-//	- Get account list and check that subaccount and main account is listed
-//	- Delete tag and subaccount
+//   - Create temporary test tag
+//   - Create subaccount
+//   - Modifie subaccount
+//   - Get user details to check modifications
+//   - Get account list and check that subaccount and main account is listed
+//   - Delete tag and subaccount
 func TestListDetailsCreateModifyDeleteSubaccountContext(t *testing.T) {
 	recordWithContext(t, "createmodifydeletesubaccount", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 		var err error
@@ -121,7 +121,8 @@ func TestListDetailsCreateModifyDeleteSubaccountContext(t *testing.T) {
 				IPFilters: upcloud.AccountIPFilters{
 					IPFilter: []string{"127.0.0.1"},
 				},
-			}})
+			},
+		})
 
 		require.NoError(t, err)
 		assert.True(t, subAccount.IsSubaccount())
@@ -188,7 +189,8 @@ func TestListDetailsCreateModifyDeleteSubaccountContext(t *testing.T) {
 				IPFilters: upcloud.AccountIPFilters{
 					IPFilter: []string{"127.0.0.3"},
 				},
-			}})
+			},
+		})
 
 		require.NoError(t, err)
 

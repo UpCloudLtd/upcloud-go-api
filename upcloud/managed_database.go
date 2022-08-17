@@ -243,9 +243,9 @@ func (m ManagedDatabaseMetricsChartFloat64) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("the number of timestamps doesn't match the number of rows: %d != %d",
 			len(m.Timestamps), len(m.Rows))
 	}
-	var rows = make([][]interface{}, 0, len(m.Rows))
+	rows := make([][]interface{}, 0, len(m.Rows))
 	for i := range m.Rows {
-		var row = make([]interface{}, 0, len(m.Rows[i]))
+		row := make([]interface{}, 0, len(m.Rows[i]))
 		row = append(row, &m.Timestamps[i])
 		if len(m.Rows[i]) != len(m.Columns) {
 			return nil, fmt.Errorf("unexpected number of columns at row %d (not %d)", i, len(m.Columns))
@@ -269,7 +269,7 @@ func (m *ManagedDatabaseMetricsChartFloat64) UnmarshalJSON(d []byte) error {
 	rows := make([][]float64, 0, len(chart.Data.Rows))
 	inRows := chart.Data.Rows
 	for i := range inRows {
-		var row = make([]float64, 0, len(inRows)-1)
+		row := make([]float64, 0, len(inRows)-1)
 		var ts time.Time
 		if len(inRows[i]) != len(chart.Data.Columns) {
 			return fmt.Errorf("unexpected number of columns at row %d (not %d)", i, len(m.Columns))
@@ -344,9 +344,9 @@ func (m ManagedDatabaseMetricsChartInt) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("the number of timestamps doesn't match the number of rows: %d != %d",
 			len(m.Timestamps), len(m.Rows))
 	}
-	var rows = make([][]interface{}, 0, len(m.Rows))
+	rows := make([][]interface{}, 0, len(m.Rows))
 	for i := range m.Rows {
-		var row = make([]interface{}, 0, len(m.Rows[i]))
+		row := make([]interface{}, 0, len(m.Rows[i]))
 		row = append(row, &m.Timestamps[i])
 		if len(m.Rows[i]) != len(m.Columns) {
 			return nil, fmt.Errorf("unexpected number of columns at row %d (not %d)", i, len(m.Columns))
@@ -370,7 +370,7 @@ func (m *ManagedDatabaseMetricsChartInt) UnmarshalJSON(d []byte) error {
 	rows := make([][]int, 0, len(chart.Data.Rows))
 	inRows := chart.Data.Rows
 	for i := range inRows {
-		var row = make([]int, 0, len(inRows)-1)
+		row := make([]int, 0, len(inRows)-1)
 		var ts time.Time
 		if len(inRows[i]) != len(chart.Data.Columns) {
 			return fmt.Errorf("unexpected number of columns at row %d (not %d)", i, len(m.Columns))

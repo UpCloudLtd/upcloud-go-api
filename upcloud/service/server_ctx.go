@@ -63,7 +63,6 @@ func (s *ServiceContext) WaitForServerState(ctx context.Context, r *request.Wait
 		serverDetails, err := s.GetServerDetails(ctx, &request.GetServerDetailsRequest{
 			UUID: r.UUID,
 		})
-
 		if err != nil {
 			return nil, err
 		}

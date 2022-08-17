@@ -15,9 +15,9 @@ import (
 
 // TestGetNetworksContext checks that network details are retrievable
 // It:
-//    - creates a server
-//    - Gets all networks and verifies details are populated
-//    - checks that at least one network has a server in.
+//   - creates a server
+//   - Gets all networks and verifies details are populated
+//   - checks that at least one network has a server in.
 func TestGetNetworksContext(t *testing.T) {
 	recordWithContext(t, "getnetworks", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 		_, err := createServer(svc, "TestGetNetworks")
@@ -48,9 +48,9 @@ func TestGetNetworksContext(t *testing.T) {
 
 // TestGetNetworksInZoneContext checks that network details in a zone are retrievable
 // It:
-//    - creates a server
-//    - Gets all networks in a zone and verifies details are populated
-//    - checks that at least one network has a server in.
+//   - creates a server
+//   - Gets all networks in a zone and verifies details are populated
+//   - checks that at least one network has a server in.
 func TestGetNetworksInZoneContext(t *testing.T) {
 	recordWithContext(t, "getnetworksinzone", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 		_, err := createServer(svc, "TestGetNetworksInZone")
@@ -92,15 +92,15 @@ func TestGetNetworksInZoneContext(t *testing.T) {
 
 // TestCreateModifyDeleteNetworkContext checks that the network functionality works.
 // It:
-//    - creates a network
-//    - modifies the network
-//    - creates a server
-//    - stops the server
-//    - creates a network interface in the network
-//    - modifies the network interface
-//    - deletes the network interface
-//    - deletes the network
-//    - verifies the network has been deleted.
+//   - creates a network
+//   - modifies the network
+//   - creates a server
+//   - stops the server
+//   - creates a network interface in the network
+//   - modifies the network interface
+//   - deletes the network interface
+//   - deletes the network
+//   - verifies the network has been deleted.
 func TestCreateModifyDeleteNetworkContext(t *testing.T) {
 	recordWithContext(t, "createmodifydeletenetwork", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 		network, err := svcContext.CreateNetwork(ctx, &request.CreateNetworkRequest{
@@ -222,11 +222,11 @@ func TestGetRoutersContext(t *testing.T) {
 
 // TestCreateModifyDeleteRouterContext tests router functionality:
 // It:
-//     - creates a router
-//     - modifies a router
-//     - retrieves all routers and ensures our new router is found
-//     - deletes the router
-//     - retrieves all routers and ensures our new router can't be found
+//   - creates a router
+//   - modifies a router
+//   - retrieves all routers and ensures our new router is found
+//   - deletes the router
+//   - retrieves all routers and ensures our new router can't be found
 func TestCreateModifyDeleteRouterContext(t *testing.T) {
 	recordWithContext(t, "createmodifydeleterouter", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 		router, err := svcContext.CreateRouter(ctx, &request.CreateRouterRequest{
@@ -283,15 +283,15 @@ func TestCreateModifyDeleteRouterContext(t *testing.T) {
 // TestCreateTwoNetwoksTwoServersAndARouterContext tests network, server and router functionality
 // together.
 // It:
-//     - creates 2 new networks
-//     - creates a router
-//     - modifies the two networks to add the router
-//     - creates 2 new servers
-//     - adds network interfaces in each one server in each network
-//     - verifies the network details in the interfaces is correct
-//     - verifies the servers can be found in the network details
-//     - detaches one of the routers and verifies it was detached
-//     - deletes the servers, the routers and the networks
+//   - creates 2 new networks
+//   - creates a router
+//   - modifies the two networks to add the router
+//   - creates 2 new servers
+//   - adds network interfaces in each one server in each network
+//   - verifies the network details in the interfaces is correct
+//   - verifies the servers can be found in the network details
+//   - detaches one of the routers and verifies it was detached
+//   - deletes the servers, the routers and the networks
 func TestCreateTwoNetworksTwoServersAndARouterContext(t *testing.T) {
 	recordWithContext(t, "createtwonetworkstwoserversandarouter", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 		network1, err := svcContext.CreateNetwork(ctx, &request.CreateNetworkRequest{

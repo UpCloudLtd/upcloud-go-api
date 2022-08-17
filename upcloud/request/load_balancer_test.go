@@ -465,7 +465,8 @@ func TestCreateLoadBalancerResolverRequest(t *testing.T) {
 			TimeoutRetry: 10,
 			Timeout:      20,
 			CacheValid:   123,
-			CacheInvalid: 321},
+			CacheInvalid: 321,
+		},
 	}
 
 	expectedJson := `
@@ -524,7 +525,8 @@ func TestModifyLoadBalancerResolverRequest(t *testing.T) {
 			TimeoutRetry: 10,
 			Timeout:      20,
 			CacheValid:   123,
-			CacheInvalid: 321},
+			CacheInvalid: 321,
+		},
 	}
 
 	expectedJson := `

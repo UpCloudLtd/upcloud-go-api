@@ -4,19 +4,21 @@ import (
 	"time"
 )
 
-type LoadBalancerMode string
-type LoadBalancerMatcherType string
-type LoadBalancerActionType string
-type LoadBalancerStringMatcherMethod string
-type LoadBalancerHTTPMatcherMethod string
-type LoadBalancerIntegerMatcherMethod string
-type LoadBalancerBackendMemberType string
-type LoadBalancerOperationalState string
-type LoadBalancerCertificateBundleOperationalState string
-type LoadBalancerConfiguredStatus string
-type LoadBalancerCertificateBundleType string
-type LoadBalancerProxyProtocolVersion string
-type LoadBalancerHealthCheckType string
+type (
+	LoadBalancerMode                              string
+	LoadBalancerMatcherType                       string
+	LoadBalancerActionType                        string
+	LoadBalancerStringMatcherMethod               string
+	LoadBalancerHTTPMatcherMethod                 string
+	LoadBalancerIntegerMatcherMethod              string
+	LoadBalancerBackendMemberType                 string
+	LoadBalancerOperationalState                  string
+	LoadBalancerCertificateBundleOperationalState string
+	LoadBalancerConfiguredStatus                  string
+	LoadBalancerCertificateBundleType             string
+	LoadBalancerProxyProtocolVersion              string
+	LoadBalancerHealthCheckType                   string
+)
 
 const (
 	LoadBalancerModeHTTP LoadBalancerMode = "http"
@@ -290,8 +292,7 @@ type LoadBalancerActionUseBackend struct {
 }
 
 // LoadBalancerActionTCPReject represents 'tcp_reject' action
-type LoadBalancerActionTCPReject struct {
-}
+type LoadBalancerActionTCPReject struct{}
 
 // LoadBalancerActionHTTPReturn represents 'http_return' action
 type LoadBalancerActionHTTPReturn struct {
@@ -306,8 +307,7 @@ type LoadBalancerActionHTTPRedirect struct {
 }
 
 // LoadBalancerActionSetForwardedHeaders represents 'set_forwarded_headers' action
-type LoadBalancerActionSetForwardedHeaders struct {
-}
+type LoadBalancerActionSetForwardedHeaders struct{}
 
 // LoadBalancerCertificateBundle represents certificate bundle
 type LoadBalancerCertificateBundle struct {

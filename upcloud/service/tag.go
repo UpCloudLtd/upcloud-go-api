@@ -23,7 +23,6 @@ func (s *Service) CreateTag(r *request.CreateTagRequest) (*upcloud.Tag, error) {
 	tagDetails := upcloud.Tag{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -41,7 +40,6 @@ func (s *Service) ModifyTag(r *request.ModifyTagRequest) (*upcloud.Tag, error) {
 	tagDetails := upcloud.Tag{}
 	requestBody, _ := json.Marshal(r)
 	response, err := s.client.PerformJSONPutRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -57,7 +55,6 @@ func (s *Service) ModifyTag(r *request.ModifyTagRequest) (*upcloud.Tag, error) {
 // DeleteTag deletes the specified tag
 func (s *Service) DeleteTag(r *request.DeleteTagRequest) error {
 	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
-
 	if err != nil {
 		return parseJSONServiceError(err)
 	}
@@ -69,7 +66,6 @@ func (s *Service) DeleteTag(r *request.DeleteTagRequest) error {
 func (s *Service) GetTags() (*upcloud.Tags, error) {
 	tags := upcloud.Tags{}
 	response, err := s.basicGetRequest("/tag")
-
 	if err != nil {
 		return nil, err
 	}
@@ -86,7 +82,6 @@ func (s *Service) GetTags() (*upcloud.Tags, error) {
 func (s *Service) TagServer(r *request.TagServerRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
 	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), nil)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}
@@ -103,7 +98,6 @@ func (s *Service) TagServer(r *request.TagServerRequest) (*upcloud.ServerDetails
 func (s *Service) UntagServer(r *request.UntagServerRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
 	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), nil)
-
 	if err != nil {
 		return nil, parseJSONServiceError(err)
 	}

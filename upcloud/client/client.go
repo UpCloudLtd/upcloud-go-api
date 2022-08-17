@@ -80,7 +80,6 @@ func (c *Client) CreateRequestURL(location string) string {
 // PerformJSONGetRequest performs a GET request to the specified URL and returns the response body and eventual errors
 func (c *Client) PerformJSONGetRequest(url string) ([]byte, error) {
 	request, err := http.NewRequest(http.MethodGet, url, nil)
-
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +96,6 @@ func (c *Client) PerformJSONPostRequest(url string, requestBody []byte) ([]byte,
 	}
 
 	request, err := http.NewRequest(http.MethodPost, url, bodyReader)
-
 	if err != nil {
 		return nil, err
 	}
@@ -114,7 +112,6 @@ func (c *Client) PerformJSONPutRequest(url string, requestBody []byte) ([]byte, 
 	}
 
 	request, err := http.NewRequest(http.MethodPut, url, bodyReader)
-
 	if err != nil {
 		return nil, err
 	}
@@ -131,7 +128,6 @@ func (c *Client) PerformJSONPatchRequest(url string, requestBody []byte) ([]byte
 	}
 
 	request, err := http.NewRequest(http.MethodPatch, url, bodyReader)
-
 	if err != nil {
 		return nil, err
 	}
@@ -142,7 +138,6 @@ func (c *Client) PerformJSONPatchRequest(url string, requestBody []byte) ([]byte
 // PerformJSONDeleteRequest performs a DELETE request to the specified URL and returns eventual errors
 func (c *Client) PerformJSONDeleteRequest(url string) error {
 	request, err := http.NewRequest(http.MethodDelete, url, nil)
-
 	if err != nil {
 		return err
 	}
@@ -155,7 +150,6 @@ func (c *Client) PerformJSONDeleteRequest(url string) error {
 // the response body and eventual errors
 func (c *Client) PerformJSONDeleteRequestWithResponseBody(url string) ([]byte, error) {
 	request, err := http.NewRequest(http.MethodDelete, url, nil)
-
 	if err != nil {
 		return nil, err
 	}
@@ -167,7 +161,6 @@ func (c *Client) PerformJSONDeleteRequestWithResponseBody(url string) ([]byte, e
 // and returns the response body and eventual errors
 func (c *Client) PerformJSONPutUploadRequest(url string, requestBody io.Reader) ([]byte, error) {
 	request, err := http.NewRequest(http.MethodPut, url, requestBody)
-
 	if err != nil {
 		return nil, err
 	}
@@ -194,7 +187,6 @@ func (c *Client) performJSONRequest(request *http.Request) ([]byte, error) {
 // Performs the specified HTTP request and returns the response through handleResponse()
 func (c *Client) PerformRequest(request *http.Request) ([]byte, error) {
 	response, err := c.httpClient.Do(request)
-
 	if err != nil {
 		return nil, err
 	}
