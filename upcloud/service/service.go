@@ -105,7 +105,9 @@ func (s *Service) create(r requestable, v interface{}) error {
 	if err != nil {
 		return parseJSONServiceError(err)
 	}
-
+	if v == nil {
+		return nil
+	}
 	return json.Unmarshal(res, v)
 }
 

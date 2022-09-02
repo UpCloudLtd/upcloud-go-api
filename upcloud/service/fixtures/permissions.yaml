@@ -1,0 +1,188 @@
+---
+version: 1
+interactions:
+   - request:
+        body: '{"sub_account":{"username":"sdk_test_permissions_subaccount","password":"mysecr3tPassword","first_name":"Test","last_name":"User","company":"UpCloud Ltd","address":"my address","postal_code":"00130","city":"Helsinki","email":"test@myhost.mydomain","phone":"+358.31245434","state":"","country":"FIN","currency":"EUR","language":"en","vat_number":"FI24315605","timezone":"UTC","allow_api":"yes","allow_gui":"no","tag_access":{"tag":null},"roles":{"role":null},"server_access":{"server":null},"storage_access":{"storage":null},"network_access":{"network":null},"ip_filters":{"ip_filter":null}}}'
+        form: {}
+        headers:
+           Accept:
+              - application/json
+           Content-Type:
+              - application/json
+           User-Agent:
+              - upcloud-go-api/4.8.0
+        url: https://api.upcloud.com/1.3/account/sub
+        method: POST
+     response:
+        body: ""
+        headers:
+           Date:
+              - Fri, 02 Sep 2022 08:52:19 GMT
+           Server:
+              - Apache
+           Strict-Transport-Security:
+              - max-age=63072000
+        status: 204 No Content
+        code: 204
+        duration: ""
+   - request:
+        body: ""
+        form: {}
+        headers:
+           Accept:
+              - application/json
+           Content-Type:
+              - application/json
+           User-Agent:
+              - upcloud-go-api/4.8.0
+        url: https://api.upcloud.com/1.3/account/details/sdk_test_permissions_subaccount
+        method: GET
+     response:
+        body: |
+           {
+              "account" : {
+                 "username" : "sdk_test_permissions_subaccount"
+              }
+           }
+        headers:
+           Content-Length:
+              - "1032"
+           Content-Type:
+              - application/json; charset=UTF-8
+           Date:
+              - Fri, 02 Sep 2022 08:52:19 GMT
+           Server:
+              - Apache
+           Strict-Transport-Security:
+              - max-age=63072000
+        status: 200 OK
+        code: 200
+        duration: ""
+   - request:
+        body: '{"permission":{"target_identifier":"*","target_type":"server","user":"sdk_test_permissions_subaccount","options":{"storage":"yes"}}}'
+        form: {}
+        headers:
+           Accept:
+              - application/json
+           Content-Type:
+              - application/json
+           User-Agent:
+              - upcloud-go-api/4.8.0
+        url: https://api.upcloud.com/1.3/permission/grant
+        method: POST
+     response:
+        body: |
+           {
+              "permission" : {
+                 "options" : {
+                    "storage" : "yes"
+                 },
+                 "target_identifier" : "*",
+                 "target_type" : "server",
+                 "user" : "sdk_test_permissions_subaccount"
+              }
+           }
+        headers:
+           Content-Length:
+              - "199"
+           Content-Type:
+              - application/json; charset=UTF-8
+           Date:
+              - Fri, 02 Sep 2022 08:52:19 GMT
+           Server:
+              - Apache
+           Strict-Transport-Security:
+              - max-age=63072000
+        status: 200 OK
+        code: 200
+        duration: ""
+   - request:
+        body: ""
+        form: {}
+        headers:
+           Accept:
+              - application/json
+           Content-Type:
+              - application/json
+           User-Agent:
+              - upcloud-go-api/4.8.0
+        url: https://api.upcloud.com/1.3/permission
+        method: GET
+     response:
+        body: |
+           {
+              "permissions" : {
+                 "permission" : [
+                    {
+                       "options" : {
+                          "storage" : "yes"
+                       },
+                       "target_identifier" : "*",
+                       "target_type" : "server",
+                       "user" : "sdk_test_permissions_subaccount"
+                    }
+                 ]
+              }
+           }
+        headers:
+           Content-Length:
+              - "2343"
+           Content-Type:
+              - application/json; charset=UTF-8
+           Date:
+              - Fri, 02 Sep 2022 08:52:20 GMT
+           Server:
+              - Apache
+           Strict-Transport-Security:
+              - max-age=63072000
+        status: 200 OK
+        code: 200
+        duration: ""
+   - request:
+        body: '{"permission":{"target_identifier":"*","target_type":"server","user":"sdk_test_permissions_subaccount","options":{"storage":"yes"}}}'
+        form: {}
+        headers:
+           Accept:
+              - application/json
+           Content-Type:
+              - application/json
+           User-Agent:
+              - upcloud-go-api/4.8.0
+        url: https://api.upcloud.com/1.3/permission/revoke
+        method: POST
+     response:
+        body: ""
+        headers:
+           Date:
+              - Fri, 02 Sep 2022 08:52:20 GMT
+           Server:
+              - Apache
+           Strict-Transport-Security:
+              - max-age=63072000
+        status: 204 No Content
+        code: 204
+        duration: ""
+   - request:
+        body: ""
+        form: {}
+        headers:
+           Accept:
+              - application/json
+           Content-Type:
+              - application/json
+           User-Agent:
+              - upcloud-go-api/4.8.0
+        url: https://api.upcloud.com/1.3/account/sub/sdk_test_permissions_subaccount
+        method: DELETE
+     response:
+        body: ""
+        headers:
+           Date:
+              - Fri, 02 Sep 2022 08:52:20 GMT
+           Server:
+              - Apache
+           Strict-Transport-Security:
+              - max-age=63072000
+        status: 204 No Content
+        code: 204
+        duration: ""
