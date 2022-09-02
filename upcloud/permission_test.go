@@ -8,7 +8,7 @@ import (
 )
 
 func TestPermissionsUnmarshal(t *testing.T) {
-	want := &Permissions{
+	want := Permissions{
 		{
 			TargetIdentifier: "0ad9408c-8563-4abf-b862-dbde5b581123",
 			TargetType:       PermissionTargetManagedLoadbalancer,
@@ -46,7 +46,7 @@ func TestPermissionsUnmarshal(t *testing.T) {
 		}
 	`), &got)
 	assert.NoError(t, err)
-	assert.Equal(t, want, &got)
+	assert.Equal(t, want, got)
 }
 
 func TestPermissionMarshal(t *testing.T) {
