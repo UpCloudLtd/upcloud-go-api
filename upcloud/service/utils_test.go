@@ -20,6 +20,8 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/request"
 )
 
+const waitTimeout = time.Minute * 15
+
 type customRoundTripper struct {
 	fn func(r *http.Request) (*http.Response, error)
 }
@@ -99,7 +101,7 @@ func teardown() {
 		serverDetails, err := svc.WaitForServerState(&request.WaitForServerStateRequest{
 			UUID:           server.UUID,
 			UndesiredState: upcloud.ServerStateMaintenance,
-			Timeout:        time.Minute * 15,
+			Timeout:        waitTimeout,
 		})
 		handleError(err)
 
@@ -130,7 +132,7 @@ func teardown() {
 			_, err = svc.WaitForStorageState(&request.WaitForStorageStateRequest{
 				UUID:         storage.UUID,
 				DesiredState: upcloud.StorageStateOnline,
-				Timeout:      time.Minute * 15,
+				Timeout:      waitTimeout,
 			})
 			handleError(err)
 		}
@@ -264,7 +266,7 @@ func createServerWithNetwork(svc *Service, name string, network string) (*upclou
 	serverDetails, err = svc.WaitForServerState(&request.WaitForServerStateRequest{
 		UUID:         serverDetails.UUID,
 		DesiredState: upcloud.ServerStateStarted,
-		Timeout:      time.Minute * 15,
+		Timeout:      waitTimeout,
 	})
 	if err != nil {
 		return nil, err
@@ -315,7 +317,7 @@ func createMinimalServer(svc *Service, name string) (*upcloud.ServerDetails, err
 	serverDetails, err = svc.WaitForServerState(&request.WaitForServerStateRequest{
 		UUID:         serverDetails.UUID,
 		DesiredState: upcloud.ServerStateStarted,
-		Timeout:      time.Minute * 15,
+		Timeout:      waitTimeout,
 	})
 	if err != nil {
 		return nil, err
@@ -328,7 +330,7 @@ func createMinimalServer(svc *Service, name string) (*upcloud.ServerDetails, err
 func stopServer(svc *Service, uuid string) error {
 	serverDetails, err := svc.StopServer(&request.StopServerRequest{
 		UUID:     uuid,
-		Timeout:  time.Minute * 15,
+		Timeout:  waitTimeout,
 		StopType: request.ServerStopTypeHard,
 	})
 	if err != nil {
@@ -338,7 +340,7 @@ func stopServer(svc *Service, uuid string) error {
 	_, err = svc.WaitForServerState(&request.WaitForServerStateRequest{
 		UUID:         serverDetails.UUID,
 		DesiredState: upcloud.ServerStateStopped,
-		Timeout:      time.Minute * 15,
+		Timeout:      waitTimeout,
 	})
 	if err != nil {
 		return err
@@ -421,7 +423,7 @@ func waitForStorageOnline(svc *Service, uuid string) error {
 	_, err := svc.WaitForStorageState(&request.WaitForStorageStateRequest{
 		UUID:         uuid,
 		DesiredState: upcloud.StorageStateOnline,
-		Timeout:      time.Minute * 15,
+		Timeout:      waitTimeout,
 	})
 
 	return err
