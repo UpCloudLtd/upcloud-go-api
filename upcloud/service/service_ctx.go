@@ -24,6 +24,7 @@ type service interface {
 	ManagedDatabaseServiceManagerContext
 	ManagedDatabaseUserManagerContext
 	ManagedDatabaseLogicalDatabaseManagerContext
+	PermissionContext
 }
 
 var _ service = (*ServiceContext)(nil)
