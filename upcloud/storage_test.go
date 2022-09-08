@@ -231,7 +231,7 @@ func TestUnmarshalResizeStorageFilesystemBackup(t *testing.T) {
 				  "117ca4cc-def2-458d-a797-7782959b30a7"
 			  ]
 		   },
-		   "size" : 30,
+		   "size" : 10,
 		   "state" : "online",
 		   "title" : "Resize Backup",
 		   "type" : "backup",
@@ -251,7 +251,7 @@ func TestUnmarshalResizeStorageFilesystemBackup(t *testing.T) {
 		License: 0,
 		Origin:  "017ca4cc-def2-458d-a797-7782959b30a7",
 		Servers: ServerUUIDSlice{"117ca4cc-def2-458d-a797-7782959b30a7"},
-		Size:    30,
+		Size:    10,
 		State:   StorageStateOnline,
 		Title:   "Resize Backup",
 		Type:    StorageTypeBackup,

@@ -210,7 +210,7 @@ func TestLoadEjectCDROMContext(t *testing.T) {
 		t.Log("Loading CD-ROM into CD-ROM device")
 		_, err = svcContext.LoadCDROM(ctx, &request.LoadCDROMRequest{
 			ServerUUID:  serverDetails.UUID,
-			StorageUUID: "01000000-0000-4000-8000-000030060101",
+			StorageUUID: "01000000-0000-4000-8000-000020060101",
 		})
 		require.NoError(t, err)
 		t.Log("CD-ROM is now loaded")
