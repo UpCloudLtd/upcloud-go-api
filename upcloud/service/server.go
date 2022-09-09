@@ -57,6 +57,12 @@ func (s *Service) GetServers() (*upcloud.Servers, error) {
 	return &servers, nil
 }
 
+// GetServersWithFilters returns the available servers that match all the given filters
+func (s *Service) GetServersWithFilters(r *request.GetServersWithFiltersRequest) (*upcloud.Servers, error) {
+	servers := upcloud.Servers{}
+	return &servers, s.get(r.RequestURL(), &servers)
+}
+
 // GetServerDetails returns extended details about the specified server
 func (s *Service) GetServerDetails(r *request.GetServerDetailsRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}

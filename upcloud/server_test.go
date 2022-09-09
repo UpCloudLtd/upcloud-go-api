@@ -139,6 +139,14 @@ func TestUnmarshalServerDetails(t *testing.T) {
               }
             ]
           },
+          "labels": {
+            "label" : [
+              {
+                "key" : "managedBy",
+                "value" : "upcloud-go-sdk-unit-test"
+              }
+            ]
+          },
           "license": 0,
           "memory_amount": "2048",
           "metadata": "yes",
@@ -243,6 +251,8 @@ func TestUnmarshalServerDetails(t *testing.T) {
 	assert.Equal(t, "cdrom,disk", serverDetails.BootOrder)
 	assert.Equal(t, "on", serverDetails.Firewall)
 	assert.Len(t, serverDetails.IPAddresses, 3)
+	assert.Equal(t, "managedBy", serverDetails.Labels[0].Key)
+	assert.Equal(t, "upcloud-go-sdk-unit-test", serverDetails.Labels[0].Value)
 	assert.Equal(t, "virtio", serverDetails.NICModel)
 	assert.Len(t, serverDetails.StorageDevices, 1)
 	assert.Equal(t, "012580a1-32a1-466e-a323-689ca16f2d43", serverDetails.StorageDevices[0].UUID)

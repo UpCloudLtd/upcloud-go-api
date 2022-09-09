@@ -35,6 +35,12 @@ func (s *ServiceContext) GetServers(ctx context.Context) (*upcloud.Servers, erro
 	return &servers, s.get(ctx, "/server", &servers)
 }
 
+// GetServersWithFilters returns the all the available servers using given filters.
+func (s *ServiceContext) GetServersWithFilters(ctx context.Context, r *request.GetServersWithFiltersRequest) (*upcloud.Servers, error) {
+	servers := upcloud.Servers{}
+	return &servers, s.get(ctx, r.RequestURL(), &servers)
+}
+
 // GetServerDetails returns extended details about the specified server
 func (s *ServiceContext) GetServerDetails(ctx context.Context, r *request.GetServerDetailsRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}

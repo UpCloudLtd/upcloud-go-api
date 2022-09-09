@@ -91,6 +91,17 @@ func record(t *testing.T, fixture string, f func(*testing.T, *recorder.Recorder,
 func teardown() {
 	svc := getService()
 
+	// Delete all server groups
+	log.Print("Deleting all server groups ...")
+	serverGroups, err := svc.GetServerGroups(&request.GetServerGroupsRequest{})
+	handleError(err)
+
+	for _, serverGroup := range serverGroups {
+		log.Printf("Deleting the server group with UUID %s ...", serverGroup.UUID)
+		err = deleteServerGroup(svc, serverGroup.UUID)
+		handleError(err)
+	}
+
 	log.Print("Deleting all servers ...")
 	servers, err := svc.GetServers()
 	handleError(err)
@@ -207,9 +218,9 @@ func createServerWithNetwork(svc *Service, name string, network string) (*upclou
 		StorageDevices: []request.CreateServerStorageDevice{
 			{
 				Action:  request.CreateServerStorageDeviceActionClone,
-				Storage: "01000000-0000-4000-8000-000030080200",
+				Storage: "01000000-0000-4000-8000-000020060100",
 				Title:   "disk1",
-				Size:    30,
+				Size:    10,
 				Tier:    upcloud.StorageTierMaxIOPS,
 			},
 		},
@@ -239,6 +250,16 @@ func createServerWithNetwork(svc *Service, name string, network string) (*upclou
 					},
 					Type: upcloud.NetworkTypePublic,
 				},
+			},
+		},
+		Labels: &upcloud.LabelSlice{
+			upcloud.Label{
+				Key:   "managedBy",
+				Value: "upcloud-sdk-integration-test",
+			},
+			upcloud.Label{
+				Key:   "testName",
+				Value: name,
 			},
 		},
 	}
@@ -361,6 +382,15 @@ func deleteServer(svc *Service, uuid string) error {
 // Deletes the specified server and storages
 func deleteServerAndStorages(svc *Service, uuid string) error {
 	err := svc.DeleteServerAndStorages(&request.DeleteServerAndStoragesRequest{
+		UUID: uuid,
+	})
+
+	return err
+}
+
+// Deletes the specified server group
+func deleteServerGroup(svc *Service, uuid string) error {
+	err := svc.DeleteServerGroup(&request.DeleteServerGroupRequest{
 		UUID: uuid,
 	})
 

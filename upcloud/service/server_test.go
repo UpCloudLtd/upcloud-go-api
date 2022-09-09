@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 	"time"
@@ -14,6 +15,8 @@ import (
 
 // TestGetServerConfigurations ensures that the GetServerConfigurations() function returns proper data
 func TestGetServerConfigurations(t *testing.T) {
+	t.Parallel()
+
 	record(t, "getserverconfigurations", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		configurations, err := svc.GetServerConfigurations()
 		require.NoError(t, err)
@@ -30,8 +33,41 @@ func TestGetServerConfigurations(t *testing.T) {
 	})
 }
 
+// TestGetServersWithFilters ensures that the GetServersWithFilters() function returns proper data
+func TestGetServersWithFilters(t *testing.T) {
+	record(t, "getserverswithfilters", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+		name := "getserverswithfilters"
+		createdServer, err := createServer(svc, "getserverswithfilters")
+		require.NoError(t, err)
+
+		servers, err := svc.GetServersWithFilters(&request.GetServersWithFiltersRequest{
+			Filters: []request.ServerFilter{
+				request.FilterLabelKey{Key: "managedBy"},
+				request.FilterLabel{Label: upcloud.Label{
+					Key:   "testName",
+					Value: name,
+				}},
+			},
+		})
+		require.NoError(t, err)
+
+		var found bool
+		for _, s := range servers.Servers {
+			fmt.Println(s.Title)
+			if s.Title == createdServer.Title {
+				found = true
+
+				break
+			}
+		}
+		assert.True(t, found)
+	})
+}
+
 // TestGetServerDetails ensures that the GetServerDetails() function returns proper data
 func TestGetServerDetails(t *testing.T) {
+	t.Parallel()
+
 	record(t, "getserverdetails", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		d, err := createServer(svc, "getserverdetails")
 		require.NoError(t, err)
@@ -55,6 +91,8 @@ func TestGetServerDetails(t *testing.T) {
 //   - Checks the details of the started server and that it is in the
 //     correct state.
 func TestCreateStopStartServer(t *testing.T) {
+	t.Parallel()
+
 	record(t, "createstartstopserver", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		d, err := createServer(svc, "createstartstopserver")
 		require.NoError(t, err)
@@ -92,6 +130,8 @@ func TestCreateStopStartServer(t *testing.T) {
 }
 
 func TestStartAvoidHost(t *testing.T) {
+	t.Parallel()
+
 	record(t, "startavoidhost", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		serverDetails, err := createServer(svc, "TestStartAvoidHost")
 		require.NoError(t, err)
@@ -128,6 +168,8 @@ func TestStartAvoidHost(t *testing.T) {
 //   - Checks the details of the restarted server and that it is in the
 //     correct state.
 func TestCreateRestartServer(t *testing.T) {
+	t.Parallel()
+
 	record(t, "createrestartserver", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		d, err := createServer(svc, "createrestartserver")
 		require.NoError(t, err)
@@ -167,6 +209,8 @@ func TestCreateRestartServer(t *testing.T) {
 
 // TestErrorHandling checks that the correct error type is returned from service methods
 func TestErrorHandling(t *testing.T) {
+	t.Parallel()
+
 	record(t, "errorhandling", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Perform a bogus request that will certainly fail
 		_, err := svc.StartServer(&request.StartServerRequest{
@@ -212,9 +256,12 @@ func TestCreateModifyDeleteServer(t *testing.T) {
 		t.Log("Modifying the server ...")
 
 		newTitle := "Modified server"
+		newLabelSlice := append(serverDetails.Labels, upcloud.Label{Key: "title", Value: newTitle})
+
 		_, err = svc.ModifyServer(&request.ModifyServerRequest{
-			UUID:  serverDetails.UUID,
-			Title: newTitle,
+			Labels: &newLabelSlice,
+			UUID:   serverDetails.UUID,
+			Title:  newTitle,
 		})
 
 		require.NoError(t, err)
@@ -227,6 +274,7 @@ func TestCreateModifyDeleteServer(t *testing.T) {
 		})
 
 		require.NoError(t, err)
+		assert.Equal(t, newLabelSlice, serverDetails.Labels)
 		assert.Equal(t, newTitle, serverDetails.Title)
 		t.Logf("Server is now modified, new title is %s", serverDetails.Title)
 

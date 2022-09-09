@@ -14,6 +14,30 @@ func TestGetServerGroupsRequest(t *testing.T) {
 	assert.Equal(t, "/server-group", r.RequestURL())
 }
 
+// TestGetServerGroupsWithFiltersRequest tests that GetServerGroupsWithFiltersRequest objects behave correctly
+func TestGetServerGroupsWithFiltersRequest(t *testing.T) {
+	request := GetServerGroupsWithFiltersRequest{
+		Filters: []ServerGroupFilter{
+			FilterLabelKey{"onlyKey1"},
+			FilterLabelKey{"onlyKey2"},
+			FilterLabel{Label: upcloud.Label{
+				Key:   "pairKey1",
+				Value: "pairValue1",
+			}},
+			FilterLabel{Label: upcloud.Label{
+				Key:   "pairKey2",
+				Value: "pairValue2",
+			}},
+		},
+	}
+
+	assert.Equal(
+		t,
+		"/server-group?labels=onlyKey1&labels=onlyKey2&labels=pairKey1=pairValue1&labels=pairKey2=pairValue2",
+		request.RequestURL(),
+	)
+}
+
 func TestGetServerGroupRequest(t *testing.T) {
 	r := GetServerGroupRequest{UUID: "id"}
 	assert.Equal(t, "/server-group/id", r.RequestURL())
@@ -43,16 +67,30 @@ func TestCreateServerGroupRequest(t *testing.T) {
 	expected = `
 	{
 		"server_group": {
-			"title": "test",
+			"labels": {
+				"label": [
+					{
+						"key": "managedBy",
+						"value": "upcloud-go-sdk-unit-test"
+					}
+				]
+			},
 			"servers": {
 				"server": ["x", "y"]
-			}
+			},
+			"title": "test"
 		}
 	}	
 	`
 	r = CreateServerGroupRequest{
-		Title:   "test",
+		Labels: &upcloud.LabelSlice{
+			upcloud.Label{
+				Key:   "managedBy",
+				Value: "upcloud-go-sdk-unit-test",
+			},
+		},
 		Members: upcloud.ServerUUIDSlice{"x", "y"},
+		Title:   "test",
 	}
 	actual, err = json.Marshal(&r)
 	assert.NoError(t, err)

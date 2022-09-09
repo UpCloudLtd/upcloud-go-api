@@ -84,9 +84,9 @@ func createServer(s *service.Service) error {
 		StorageDevices: []request.CreateServerStorageDevice{
 			{
 				Action:  request.CreateServerStorageDeviceActionClone,
-				Storage: "01000000-0000-4000-8000-000050010400",
-				Title:   "Centos8 from a template",
-				Size:    50,
+				Storage: "01000000-0000-4000-8000-000020060100",
+				Title:   "Debian GNU/Linux 11 (Bullseye) from a template",
+				Size:    10,
 				Tier:    upcloud.StorageTierMaxIOPS,
 			},
 		},
@@ -100,6 +100,12 @@ func createServer(s *service.Service) error {
 					},
 					Type: upcloud.NetworkTypeUtility,
 				},
+			},
+		},
+		Labels: &upcloud.LabelSlice{
+			upcloud.Label{
+				Key:   "env",
+				Value: "dev",
 			},
 		},
 	})

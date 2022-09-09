@@ -9,6 +9,30 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+// TestGetServersWithFiltersRequest tests that GetServersWithFiltersRequest objects behave correctly
+func TestGetServersWithFiltersRequest(t *testing.T) {
+	request := GetServersWithFiltersRequest{
+		Filters: []ServerFilter{
+			FilterLabelKey{"onlyKey1"},
+			FilterLabelKey{"onlyKey2"},
+			FilterLabel{Label: upcloud.Label{
+				Key:   "pairKey1",
+				Value: "pairValue1",
+			}},
+			FilterLabel{Label: upcloud.Label{
+				Key:   "pairKey2",
+				Value: "pairValue2",
+			}},
+		},
+	}
+
+	assert.Equal(
+		t,
+		"/server/?labels=onlyKey1&labels=onlyKey2&labels=pairKey1=pairValue1&labels=pairKey2=pairValue2",
+		request.RequestURL(),
+	)
+}
+
 // TestGetServerDetailsRequest tests that GetServerDetailsRequest objects behave correctly
 func TestGetServerDetailsRequest(t *testing.T) {
 	request := GetServerDetailsRequest{
@@ -28,14 +52,20 @@ func TestCreateServerRequest(t *testing.T) {
 		StorageDevices: []CreateServerStorageDevice{
 			{
 				Action:  CreateServerStorageDeviceActionClone,
-				Storage: "01000000-0000-4000-8000-000030060200",
+				Storage: "01000000-0000-4000-8000-000020060100",
 				Title:   "disk1",
-				Size:    30,
+				Size:    10,
 				Tier:    upcloud.StorageTierMaxIOPS,
 			},
 		},
 		SimpleBackup: "0430,monthlies",
-		Metadata:     upcloud.True,
+		Labels: &upcloud.LabelSlice{
+			upcloud.Label{
+				Key:   "managedBy",
+				Value: "upcloud-go-sdk-unit-test",
+			},
+		},
+		Metadata: upcloud.True,
 		Networking: &CreateServerNetworking{
 			Interfaces: []CreateServerInterface{
 				{
@@ -94,14 +124,22 @@ func TestCreateServerRequest(t *testing.T) {
           "storage_device": [
             {
               "action": "clone",
-              "storage": "01000000-0000-4000-8000-000030060200",
+              "storage": "01000000-0000-4000-8000-000020060100",
               "title": "disk1",
-              "size": 30,
+              "size": 10,
               "tier": "maxiops"
             }
           ]
 		},
 		"simple_backup": "0430,monthlies",
+		"labels": {
+			"label": [
+				{
+					"key": "managedBy",
+					"value": "upcloud-go-sdk-unit-test"
+				}
+			]
+		},
 		"metadata": "yes",
 		"networking": {
 			"interfaces": {

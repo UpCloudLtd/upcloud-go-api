@@ -27,9 +27,10 @@ func (s *ServerGroups) UnmarshalJSON(b []byte) error {
 
 // ServerGroup represents server group
 type ServerGroup struct {
-	UUID    string          `json:"uuid,omitempty"`
-	Title   string          `json:"title,omitempty"`
+	Labels  LabelSlice      `json:"labels,omitempty"`
 	Members ServerUUIDSlice `json:"servers,omitempty"`
+	Title   string          `json:"title,omitempty"`
+	UUID    string          `json:"uuid,omitempty"`
 }
 
 // UnmarshalJSON is a custom unmarshaller that deals with deeply embedded values.
