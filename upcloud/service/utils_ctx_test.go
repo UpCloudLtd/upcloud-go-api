@@ -93,9 +93,9 @@ func createServerWithNetworkWithContext(ctx context.Context, svc *ServiceContext
 		StorageDevices: []request.CreateServerStorageDevice{
 			{
 				Action:  request.CreateServerStorageDeviceActionClone,
-				Storage: "01000000-0000-4000-8000-000030080200",
+				Storage: "01000000-0000-4000-8000-000020060100",
 				Title:   "disk1",
-				Size:    30,
+				Size:    10,
 				Tier:    upcloud.StorageTierMaxIOPS,
 			},
 		},
@@ -125,6 +125,16 @@ func createServerWithNetworkWithContext(ctx context.Context, svc *ServiceContext
 					},
 					Type: upcloud.NetworkTypePublic,
 				},
+			},
+		},
+		Labels: &upcloud.LabelSlice{
+			upcloud.Label{
+				Key:   "managedBy",
+				Value: "upcloud-sdk-integration-test",
+			},
+			upcloud.Label{
+				Key:   "testName",
+				Value: name,
 			},
 		},
 	}

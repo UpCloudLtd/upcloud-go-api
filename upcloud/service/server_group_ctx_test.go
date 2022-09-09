@@ -13,15 +13,18 @@ import (
 
 func TestServerGroupsContext(t *testing.T) {
 	t.Parallel()
+
 	recordWithContext(t, "servergroups", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 		srv, err := createMinimalServer(svc, "TestServerGroups")
 		require.NoError(t, err)
 		// create new server group
 		group, err := svcContext.CreateServerGroup(ctx, &request.CreateServerGroupRequest{
-			Title:   "test-title",
+			Labels:  &upcloud.LabelSlice{upcloud.Label{Key: "managedBy", Value: "upcloud-go-sdk-integration-test"}},
 			Members: upcloud.ServerUUIDSlice{srv.UUID},
+			Title:   "test-title",
 		})
 		assert.NoError(t, err)
+		assert.ElementsMatch(t, upcloud.LabelSlice{upcloud.Label{Key: "managedBy", Value: "upcloud-go-sdk-integration-test"}}, group.Labels)
 		assert.Equal(t, "test-title", group.Title)
 		assert.Len(t, group.Members, 1)
 
@@ -35,7 +38,7 @@ func TestServerGroupsContext(t *testing.T) {
 		assert.Equal(t, "test-title-edit", group.Title)
 		assert.Len(t, group.Members, 0)
 
-		// append server to group without modifying title
+		// append server to group without modifying title or labels
 		group, err = svcContext.ModifyServerGroup(ctx, &request.ModifyServerGroupRequest{
 			UUID:    group.UUID,
 			Members: &upcloud.ServerUUIDSlice{srv.UUID},
@@ -44,17 +47,33 @@ func TestServerGroupsContext(t *testing.T) {
 		assert.Equal(t, "test-title-edit", group.Title)
 		assert.Len(t, group.Members, 1)
 
-		// modify only title without touching members
+		// modify only title and labels without touching members
+		newLabelSlice := append(group.Labels, upcloud.Label{Key: "title", Value: "test-title"})
 		group, err = svcContext.ModifyServerGroup(ctx, &request.ModifyServerGroupRequest{
-			UUID:  group.UUID,
-			Title: "test-title",
+			Labels: &newLabelSlice,
+			Title:  "test-title",
+			UUID:   group.UUID,
 		})
 		assert.NoError(t, err)
+		assert.ElementsMatch(t, newLabelSlice, group.Labels)
 		assert.Equal(t, "test-title", group.Title)
 		assert.Len(t, group.Members, 1)
 
 		// get server groups
 		groups, err := svcContext.GetServerGroups(ctx, &request.GetServerGroupsRequest{})
+		assert.NoError(t, err)
+		assert.Len(t, groups, 1)
+
+		// get server groups with filters
+		groups, err = svcContext.GetServerGroupsWithFilters(ctx, &request.GetServerGroupsWithFiltersRequest{
+			Filters: []request.ServerGroupFilter{
+				request.FilterLabelKey{Key: "managedBy"},
+				request.FilterLabel{Label: upcloud.Label{
+					Key:   "title",
+					Value: "test-title",
+				}},
+			},
+		})
 		assert.NoError(t, err)
 		assert.Len(t, groups, 1)
 

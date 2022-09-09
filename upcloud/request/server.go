@@ -26,6 +26,36 @@ const (
 	CreateServerStorageDeviceActionAttach = "attach"
 )
 
+type ServerFilter interface {
+	ToQueryParam() string
+}
+
+// GetServersWithFiltersRequest represents a request to get all servers
+// using labels or label keys as filters.
+// Using multiple filters returns only servers that match all.
+type GetServersWithFiltersRequest struct {
+	Filters []ServerFilter
+}
+
+// RequestURL implements the Request interface.
+func (r *GetServersWithFiltersRequest) RequestURL() string {
+	basePath := "/server/"
+
+	if len(r.Filters) == 0 {
+		return basePath
+	}
+
+	params := ""
+	for _, v := range r.Filters {
+		if len(params) > 0 {
+			params += "&"
+		}
+		params += v.ToQueryParam()
+	}
+
+	return fmt.Sprintf("%s?%s", basePath, params)
+}
+
 // GetServerDetailsRequest represents a request for retrieving details about a server
 type GetServerDetailsRequest struct {
 	UUID string
@@ -119,6 +149,7 @@ type CreateServerRequest struct {
 	// TODO: Convert to boolean
 	Firewall             string                         `json:"firewall,omitempty"`
 	Hostname             string                         `json:"hostname"`
+	Labels               *upcloud.LabelSlice            `json:"labels,omitempty"`
 	LoginUser            *LoginUser                     `json:"login_user,omitempty"`
 	MemoryAmount         int                            `json:"memory_amount,omitempty"`
 	Metadata             upcloud.Boolean                `json:"metadata"`
@@ -296,19 +327,20 @@ type ModifyServerRequest struct {
 	BootOrder  string `json:"boot_order,omitempty"`
 	CoreNumber int    `json:"core_number,omitempty,string"`
 	// TODO: Convert to boolean
-	Firewall             string          `json:"firewall,omitempty"`
-	Hostname             string          `json:"hostname,omitempty"`
-	MemoryAmount         int             `json:"memory_amount,omitempty,string"`
-	Metadata             upcloud.Boolean `json:"metadata"`
-	Plan                 string          `json:"plan,omitempty"`
-	SimpleBackup         string          `json:"simple_backup,omitempty"`
-	TimeZone             string          `json:"timezone,omitempty"`
-	Title                string          `json:"title,omitempty"`
-	VideoModel           string          `json:"video_model,omitempty"`
-	RemoteAccessEnabled  upcloud.Boolean `json:"remote_access_enabled"`
-	RemoteAccessType     string          `json:"remote_access_type,omitempty"`
-	RemoteAccessPassword string          `json:"remote_access_password,omitempty"`
-	Zone                 string          `json:"zone,omitempty"`
+	Firewall             string              `json:"firewall,omitempty"`
+	Hostname             string              `json:"hostname,omitempty"`
+	Labels               *upcloud.LabelSlice `json:"labels,omitempty"`
+	MemoryAmount         int                 `json:"memory_amount,omitempty,string"`
+	Metadata             upcloud.Boolean     `json:"metadata"`
+	Plan                 string              `json:"plan,omitempty"`
+	SimpleBackup         string              `json:"simple_backup,omitempty"`
+	TimeZone             string              `json:"timezone,omitempty"`
+	Title                string              `json:"title,omitempty"`
+	VideoModel           string              `json:"video_model,omitempty"`
+	RemoteAccessEnabled  upcloud.Boolean     `json:"remote_access_enabled"`
+	RemoteAccessType     string              `json:"remote_access_type,omitempty"`
+	RemoteAccessPassword string              `json:"remote_access_password,omitempty"`
+	Zone                 string              `json:"zone,omitempty"`
 }
 
 // MarshalJSON is a custom marshaller that deals with
