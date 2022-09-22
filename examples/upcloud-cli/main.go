@@ -170,7 +170,6 @@ func deleteServers(s *service.Service) error {
 			err := s.DeleteServerAndStorages(&request.DeleteServerAndStoragesRequest{
 				UUID: server.UUID,
 			})
-
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "Unable to delete server: %#v\n", err)
 				return err
