@@ -184,7 +184,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 First stable release
 
 [Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.9.0...HEAD
-[4.9.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.7.0...v4.9.0
+[4.9.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.8.0...v4.9.0
 [4.8.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.7.0...v4.8.0
 [4.7.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.6.0...v4.7.0
 [4.6.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.5.2...v4.6.0
