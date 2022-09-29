@@ -100,7 +100,9 @@ func (s *ServiceContext) GetKubernetesPlans(ctx context.Context, r *request.GetK
 
 // GetKubernetesKubeconfig retrieves kubeconfig of a Kubernetes cluster (EXPERIMENTAL).
 func (s *ServiceContext) GetKubernetesKubeconfig(ctx context.Context, r *request.GetKubernetesKubeconfigRequest) (string, error) {
-	var kubeconfig string
+	data := struct {
+		Kubeconfig string `json:"kubeconfig"`
+	}{}
 
 	_, err := s.WaitForKubernetesClusterState(ctx, &request.WaitForKubernetesClusterStateRequest{
 		DesiredState: upcloud.KuberetesClusterStateReady,
@@ -108,10 +110,11 @@ func (s *ServiceContext) GetKubernetesKubeconfig(ctx context.Context, r *request
 		UUID:         r.UUID,
 	})
 	if err != nil {
-		return kubeconfig, err
+		return "", err
 	}
 
-	return kubeconfig, s.get(ctx, r.RequestURL(), &kubeconfig)
+	err = s.get(ctx, r.RequestURL(), &data)
+	return data.Kubeconfig, err
 }
 
 // GetKubernetesVersions retrieves a list of Kubernetes cluster versions (EXPERIMENTAL).
