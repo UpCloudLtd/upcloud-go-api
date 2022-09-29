@@ -12,7 +12,7 @@ type (
 )
 
 type KubernetesCluster struct {
-	Name        string                 `json:"title"`
+	Name        string                 `json:"name"`
 	Network     string                 `json:"network"`
 	NetworkCIDR string                 `json:"network_cidr"`
 	NodeGroups  []KubernetesNodeGroup  `json:"node_groups"`

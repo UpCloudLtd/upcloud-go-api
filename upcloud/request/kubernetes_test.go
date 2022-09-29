@@ -45,7 +45,7 @@ const exampleCreateKubernetesClusterRequestJSON string = `{
 		}
 	],
 	"storage": "01000000-0000-4000-8000-000160010100",
-	"title": "title",
+	"name": "title",
 	"zone": "zone"
 }`
 

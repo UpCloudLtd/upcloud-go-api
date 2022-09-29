@@ -57,7 +57,7 @@ func (r *GetKubernetesClusterRequest) RequestURL() string {
 
 // CreateKubernetesClusterRequest represents a request to create a Kubernetes cluster
 type CreateKubernetesClusterRequest struct {
-	Name        string                        `json:"title"`
+	Name        string                        `json:"name"`
 	Network     string                        `json:"network"`
 	NetworkCIDR string                        `json:"network_cidr"`
 	NodeGroups  []upcloud.KubernetesNodeGroup `json:"node_groups"`

@@ -8,7 +8,7 @@ import (
 )
 
 const exampleKubernetesClusterJSON string = `{
-	"title": "upcloud-go-sdk-unit-test",
+	"name": "upcloud-go-sdk-unit-test",
 	"zone": "de-fra1",
 	"uuid": "0ddab8f4-97c0-4222-91ba-85a4fff7499b",
 	"state":"ready",
