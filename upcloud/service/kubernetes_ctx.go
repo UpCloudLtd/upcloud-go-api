@@ -105,7 +105,7 @@ func (s *ServiceContext) GetKubernetesKubeconfig(ctx context.Context, r *request
 	}{}
 
 	_, err := s.WaitForKubernetesClusterState(ctx, &request.WaitForKubernetesClusterStateRequest{
-		DesiredState: upcloud.KuberetesClusterStateReady,
+		DesiredState: upcloud.KubernetesClusterStateRunning,
 		Timeout:      s.client.GetTimeout(),
 		UUID:         r.UUID,
 	})

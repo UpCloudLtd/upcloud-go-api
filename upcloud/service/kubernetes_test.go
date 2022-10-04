@@ -86,10 +86,10 @@ func TestKubernetes(t *testing.T) {
 			t.Run("WaitForKubernetesClusterState", func(t *testing.T) {
 				require.NotEmpty(t, uuid)
 
-				expected := upcloud.KuberetesClusterStateReady
+				expected := upcloud.KubernetesClusterStateRunning
 
 				c, err := svc.WaitForKubernetesClusterState(&request.WaitForKubernetesClusterStateRequest{
-					DesiredState: upcloud.KuberetesClusterStateReady,
+					DesiredState: upcloud.KubernetesClusterStateRunning,
 					Timeout:      time.Minute * 15,
 					UUID:         uuid,
 				})
@@ -178,7 +178,7 @@ func exampleKubernetesCluster(network, plan, uuid, zone string) *upcloud.Kuberne
 			exampleKubernetesNodeGroup(plan),
 			exampleKubernetesNodeGroup(plan),
 		},
-		State: upcloud.KuberetesClusterStateReady,
+		State: upcloud.KubernetesClusterStateRunning,
 		Type:  upcloud.KubernetesClusterTypeStandalone,
 		UUID:  uuid,
 		Zone:  zone,

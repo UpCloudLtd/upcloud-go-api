@@ -87,10 +87,10 @@ func TestKubernetesCtx(t *testing.T) {
 			require.NotEmpty(t, uuid)
 
 			t.Run("WaitForKubernetesClusterState", func(t *testing.T) {
-				expected := upcloud.KuberetesClusterStateReady
+				expected := upcloud.KubernetesClusterStateRunning
 
 				c, err := svcContext.WaitForKubernetesClusterState(ctx, &request.WaitForKubernetesClusterStateRequest{
-					DesiredState: upcloud.KuberetesClusterStateReady,
+					DesiredState: upcloud.KubernetesClusterStateRunning,
 					Timeout:      time.Minute * 15,
 					UUID:         uuid,
 				})

@@ -1,9 +1,13 @@
 package upcloud
 
 const (
-	KuberetesClusterStateConfiguring KubernetesClusterState = "configuring"
-	KuberetesClusterStateReady       KubernetesClusterState = "ready"
-	KubernetesClusterTypeStandalone  KubernetesClusterType  = "standalone"
+	KubernetesClusterStatePending     KubernetesClusterState = "pending"
+	KubernetesClusterStateRunning     KubernetesClusterState = "running"
+	KubernetesClusterStateTerminating KubernetesClusterState = "terminating"
+	KubernetesClusterStateTerminated  KubernetesClusterState = "terminated"
+	KubernetesClusterStateFailed      KubernetesClusterState = "failed"
+	KubernetesClusterStateUnknown     KubernetesClusterState = "unknown"
+	KubernetesClusterTypeStandalone   KubernetesClusterType  = "standalone"
 )
 
 type (
