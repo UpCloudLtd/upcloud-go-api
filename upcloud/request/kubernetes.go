@@ -61,7 +61,6 @@ type CreateKubernetesClusterRequest struct {
 	Network     string                        `json:"network"`
 	NetworkCIDR string                        `json:"network_cidr"`
 	NodeGroups  []upcloud.KubernetesNodeGroup `json:"node_groups"`
-	Storage     string                        `json:"storage"`
 	Zone        string                        `json:"zone"`
 }
 
@@ -103,12 +102,12 @@ func (r *GetKubernetesKubeconfigRequest) RequestURL() string {
 type GetKubernetesPlansRequest struct{}
 
 func (r *GetKubernetesPlansRequest) RequestURL() string {
-	return fmt.Sprintf("%s/plan", kubernetesClusterBasePath)
+	return fmt.Sprintf("%s/plans", kubernetesClusterBasePath)
 }
 
 // GetKubernetesVersionsRequest represents a request to list available Kubernetes cluster versions
 type GetKubernetesVersionsRequest struct{}
 
 func (r *GetKubernetesVersionsRequest) RequestURL() string {
-	return fmt.Sprintf("%s/version", kubernetesClusterBasePath)
+	return fmt.Sprintf("%s/versions", kubernetesClusterBasePath)
 }

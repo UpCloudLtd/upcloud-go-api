@@ -21,6 +21,19 @@ const exampleCreateKubernetesClusterRequestJSON string = `{
 					"value": "upcloud-go-sdk-unit-test"
 				}
 			],
+			"kubelet_args": [
+				{
+					"key": "somekubeletkey",
+					"value": "somekubeletvalue"
+				}
+			],
+			"taints": [
+				{
+					"effect": "NoExecute",
+					"key": "sometaintkey",
+					"value": "sometaintvalue"
+				}
+			],
 			"name": "name",
 			"plan": "plan",
 			"ssh_key": [
@@ -36,6 +49,19 @@ const exampleCreateKubernetesClusterRequestJSON string = `{
 					"value": "upcloud-go-sdk-unit-test"
 				}
 			],
+			"kubelet_args": [
+				{
+					"key": "somekubeletkey",
+					"value": "somekubeletvalue"
+				}
+			],
+			"taints": [
+				{
+					"effect": "NoExecute",
+					"key": "sometaintkey",
+					"value": "sometaintvalue"
+				}
+			],
 			"name": "name",
 			"plan": "plan",
 			"ssh_key": [
@@ -44,7 +70,6 @@ const exampleCreateKubernetesClusterRequestJSON string = `{
 			]
 		}
 	],
-	"storage": "01000000-0000-4000-8000-000160010100",
 	"name": "title",
 	"zone": "zone"
 }`
@@ -162,7 +187,7 @@ func TestKubernetes(t *testing.T) {
 		t.Parallel()
 
 		expected := fmt.Sprintf(
-			"%s/plan",
+			"%s/plans",
 			kubernetesClusterBasePath,
 		)
 
@@ -180,7 +205,7 @@ func TestKubernetes(t *testing.T) {
 		t.Parallel()
 
 		expected := fmt.Sprintf(
-			"%s/version",
+			"%s/versions",
 			kubernetesClusterBasePath,
 		)
 
@@ -237,8 +262,7 @@ func exampleCreateKubernetesClusterRequest() CreateKubernetesClusterRequest {
 			exampleKubernetesNodeGroup(),
 			exampleKubernetesNodeGroup(),
 		},
-		Storage: "01000000-0000-4000-8000-000160010100",
-		Zone:    "zone",
+		Zone: "zone",
 	}
 }
 
@@ -249,6 +273,19 @@ func exampleKubernetesNodeGroup() upcloud.KubernetesNodeGroup {
 			{
 				Key:   "managedBy",
 				Value: "upcloud-go-sdk-unit-test",
+			},
+		},
+		KubeletArgs: []upcloud.KubernetesKubeletArg{
+			{
+				Key:   "somekubeletkey",
+				Value: "somekubeletvalue",
+			},
+		},
+		Taints: []upcloud.KubernetesTaint{
+			{
+				Effect: "NoExecute",
+				Key:    "sometaintkey",
+				Value:  "sometaintvalue",
 			},
 		},
 		Name: "name",

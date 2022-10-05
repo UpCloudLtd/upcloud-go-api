@@ -48,11 +48,6 @@ func (s *ServiceContext) CreateKubernetesCluster(ctx context.Context, r *request
 
 	r.NetworkCIDR = networkDetails.IPNetworks[0].Address
 
-	_, err = s.GetStorageDetails(ctx, &request.GetStorageDetailsRequest{UUID: r.Storage})
-	if err != nil {
-		return nil, fmt.Errorf("storage does not exist: %w", err)
-	}
-
 	cluster := upcloud.KubernetesCluster{}
 
 	return &cluster, s.create(ctx, r, &cluster)

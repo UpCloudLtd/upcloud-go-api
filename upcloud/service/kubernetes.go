@@ -47,11 +47,6 @@ func (s *Service) CreateKubernetesCluster(r *request.CreateKubernetesClusterRequ
 
 	r.NetworkCIDR = networkDetails.IPNetworks[0].Address
 
-	_, err = s.GetStorageDetails(&request.GetStorageDetailsRequest{UUID: r.Storage})
-	if err != nil {
-		return nil, fmt.Errorf("invalid storage template uuid: %w", err)
-	}
-
 	cluster := upcloud.KubernetesCluster{}
 
 	err = s.create(r, &cluster)
