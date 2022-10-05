@@ -179,7 +179,6 @@ func exampleKubernetesCluster(network, plan, uuid, zone string) *upcloud.Kuberne
 			exampleKubernetesNodeGroup(plan),
 		},
 		State: upcloud.KubernetesClusterStateRunning,
-		Type:  upcloud.KubernetesClusterTypeStandalone,
 		UUID:  uuid,
 		Zone:  zone,
 	}
@@ -207,7 +206,6 @@ func exampleCreateKubernetesClusterRequest(network, plan, zone string) *request.
 			exampleKubernetesNodeGroup(plan),
 			exampleKubernetesNodeGroup(plan),
 		},
-		Storage: "01000000-0000-4000-8000-000160010100",
-		Zone:    zone,
+		Zone: zone,
 	}
 }

@@ -12,7 +12,6 @@ const exampleKubernetesClusterJSON string = `{
 	"zone": "de-fra1",
 	"uuid": "0ddab8f4-97c0-4222-91ba-85a4fff7499b",
 	"state": "running",
-	"version": "v1.23.5",
 	"network": "03a98be3-7daa-443f-bb25-4bc6854b396c",
 	"network_cidr": "172.16.0.0/24",
 	"node_groups": [
@@ -25,6 +24,19 @@ const exampleKubernetesClusterJSON string = `{
 					"key": "managedBy",
 					"value": "upcloud-go-sdk-unit-test"
 				}
+			],
+			"kubelet_args": [
+				{
+					"key": "somekubeletkey",
+					"value": "somekubeletvalue"
+				}
+			],
+			"taints": [
+				{
+					"effect": "NoExecute",
+					"key": "sometaintkey",
+					"value": "sometaintvalue"
+				}
 			]
 		},
 		{
@@ -36,13 +48,22 @@ const exampleKubernetesClusterJSON string = `{
 					"key": "managedBy",
 					"value": "upcloud-go-sdk-unit-test"
 				}
+			],
+			"kubelet_args": [
+				{
+					"key": "somekubeletkey",
+					"value": "somekubeletvalue"
+				}
+			],
+			"taints": [
+				{
+					"effect": "NoExecute",
+					"key": "sometaintkey",
+					"value": "sometaintvalue"
+				}
 			]
 		}
-	],
-	"storage": "01000000-0000-4000-8000-000160010100",
-	"kubelet_args": null,
-	"labels": null,
-	"type": "standalone"
+	]
 }`
 
 const exampleKubenetesPlanJSON string = `{
@@ -100,11 +121,9 @@ func exampleKubernetesCluster() KubernetesCluster {
 			exampleKubernetesNodeGroup(),
 			exampleKubernetesNodeGroup(),
 		},
-		State:   KubernetesClusterStateRunning,
-		Storage: "01000000-0000-4000-8000-000160010100",
-		Type:    KubernetesClusterTypeStandalone,
-		UUID:    "0ddab8f4-97c0-4222-91ba-85a4fff7499b",
-		Zone:    "de-fra1",
+		State: KubernetesClusterStateRunning,
+		UUID:  "0ddab8f4-97c0-4222-91ba-85a4fff7499b",
+		Zone:  "de-fra1",
 	}
 }
 
@@ -119,5 +138,18 @@ func exampleKubernetesNodeGroup() KubernetesNodeGroup {
 		},
 		Name: "upcloud-go-sdk-unit-test",
 		Plan: "K8S-2xCPU-4GB",
+		KubeletArgs: []KubernetesKubeletArg{
+			{
+				Key:   "somekubeletkey",
+				Value: "somekubeletvalue",
+			},
+		},
+		Taints: []KubernetesTaint{
+			{
+				Effect: "NoExecute",
+				Key:    "sometaintkey",
+				Value:  "sometaintvalue",
+			},
+		},
 	}
 }
