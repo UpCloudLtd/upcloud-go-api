@@ -37,7 +37,8 @@ const exampleKubernetesClusterJSON string = `{
 					"key": "sometaintkey",
 					"value": "sometaintvalue"
 				}
-			]
+			],
+			"ssh_keys": ["somekey"]
 		},
 		{
 			"name": "upcloud-go-sdk-unit-test",
@@ -61,7 +62,8 @@ const exampleKubernetesClusterJSON string = `{
 					"key": "sometaintkey",
 					"value": "sometaintvalue"
 				}
-			]
+			],
+			"ssh_keys": ["somekey"]
 		}
 	]
 }`
@@ -151,5 +153,6 @@ func exampleKubernetesNodeGroup() KubernetesNodeGroup {
 				Value:  "sometaintvalue",
 			},
 		},
+		SSHKeys: []string{"somekey"},
 	}
 }

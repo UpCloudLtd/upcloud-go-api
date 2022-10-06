@@ -34,7 +34,7 @@ type KubernetesNodeGroup struct {
 	Labels      []Label                `json:"labels,omitempty"`
 	Name        string                 `json:"name,omitempty"`
 	Plan        string                 `json:"plan,omitempty"`
-	SSHKeys     []string               `json:"ssh_key,omitempty"`
+	SSHKeys     []string               `json:"ssh_keys,omitempty"`
 	Storage     string                 `json:"storage,omitempty"`
 	KubeletArgs []KubernetesKubeletArg `json:"kubelet_args,omitempty"`
 	Taints      []KubernetesTaint      `json:"taints,omitempty"`
