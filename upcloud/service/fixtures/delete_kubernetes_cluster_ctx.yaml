@@ -1,0 +1,31 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api-ctx/4.8.0
+    url: https://api.upcloud.com/1.3/kubernetes/0d5f46a7-bf7d-422b-afc8-7c277bb7b3b1
+    method: DELETE
+  response:
+    body: '{"message":"deletion started for cluster 0d5f46a7-bf7d-422b-afc8-7c277bb7b3b1"}'
+    headers:
+      Content-Length:
+      - "79"
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 10 Oct 2022 11:57:45 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+      X-Request-Id:
+      - 39e09a0d-bb2b-4323-9c20-c3bbed751725
+    status: 202 Accepted
+    code: 202
+    duration: ""

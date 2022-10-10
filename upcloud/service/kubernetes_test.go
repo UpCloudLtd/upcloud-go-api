@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"testing"
 	"time"
 
@@ -71,7 +72,7 @@ func TestKubernetes(t *testing.T) {
 
 		record(t, "createkubernetescluster", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 			t.Run("CreateKubernetesCluster", func(t *testing.T) {
-				c, err := svc.CreateKubernetesCluster(exampleCreateKubernetesClusterRequest(network, plan, zone))
+				c, err := svc.CreateKubernetesCluster(exampleCreateKubernetesClusterRequest("go-sdk-test", network, plan, zone))
 
 				require.NoError(t, err)
 				require.NotEmpty(t, c.UUID)
@@ -108,7 +109,7 @@ func TestKubernetes(t *testing.T) {
 		record(t, "getkubernetescluster", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 			require.NotEmpty(t, uuid)
 
-			expected := exampleKubernetesCluster(network, plan, uuid, zone)
+			expected := exampleKubernetesCluster("go-sdk-test", network, plan, uuid, zone)
 
 			actual, err := svc.GetKubernetesCluster(&request.GetKubernetesClusterRequest{
 				UUID: uuid,
@@ -170,13 +171,13 @@ func TestKubernetes(t *testing.T) {
 	})
 }
 
-func exampleKubernetesCluster(network, plan, uuid, zone string) *upcloud.KubernetesCluster {
+func exampleKubernetesCluster(name, network, plan, uuid, zone string) *upcloud.KubernetesCluster {
 	return &upcloud.KubernetesCluster{
-		Name:    "upcloud-go-sdk-integration-test",
+		Name:    name,
 		Network: network,
 		NodeGroups: []upcloud.KubernetesNodeGroup{
-			exampleKubernetesNodeGroup(plan),
-			exampleKubernetesNodeGroup(plan),
+			exampleKubernetesNodeGroup(plan, 1),
+			exampleKubernetesNodeGroup(plan, 2),
 		},
 		State: upcloud.KubernetesClusterStateRunning,
 		UUID:  uuid,
@@ -184,27 +185,27 @@ func exampleKubernetesCluster(network, plan, uuid, zone string) *upcloud.Kuberne
 	}
 }
 
-func exampleKubernetesNodeGroup(plan string) upcloud.KubernetesNodeGroup {
+func exampleKubernetesNodeGroup(plan string, index int) upcloud.KubernetesNodeGroup {
 	return upcloud.KubernetesNodeGroup{
 		Count: 1,
 		Labels: []upcloud.Label{
 			{
 				Key:   "managedBy",
-				Value: "upcloud-go-sdk-integration-test",
+				Value: "go-sdk",
 			},
 		},
-		Name: "upcloud-go-sdk-integration-test",
+		Name: fmt.Sprintf("go-sdk-test-%d", index),
 		Plan: plan,
 	}
 }
 
-func exampleCreateKubernetesClusterRequest(network, plan, zone string) *request.CreateKubernetesClusterRequest {
+func exampleCreateKubernetesClusterRequest(name, network, plan, zone string) *request.CreateKubernetesClusterRequest {
 	return &request.CreateKubernetesClusterRequest{
-		Name:    "upcloud-go-sdk-integration-test",
+		Name:    name,
 		Network: network,
 		NodeGroups: []upcloud.KubernetesNodeGroup{
-			exampleKubernetesNodeGroup(plan),
-			exampleKubernetesNodeGroup(plan),
+			exampleKubernetesNodeGroup(plan, 1),
+			exampleKubernetesNodeGroup(plan, 2),
 		},
 		Zone: zone,
 	}
