@@ -1,7 +1,7 @@
 package service
 
 import (
-	"fmt"
+	"context"
 	"testing"
 	"time"
 
@@ -16,21 +16,25 @@ func TestKubernetes(t *testing.T) {
 
 	const zone = "de-fra1"
 	const plan = "K8S-2xCPU-4GB"
+	const clusterName = "go-sdk-test-ctx"
+	const SSHKey = "somekey"
 
 	// set when creating a private network for cluster
 	network := ""
+	networkCIDR := ""
+
 	// set when creating a cluster
 	uuid := ""
 
 	t.Cleanup(func() {
-		record(t, "deletekubernetescluster", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+		recordWithContext(t, "delete_kubernetes_cluster", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 			if len(uuid) > 0 {
 				err := svc.DeleteKubernetesCluster(&request.DeleteKubernetesClusterRequest{UUID: uuid})
 
 				require.NoError(t, err)
 			}
 		})
-		record(t, "deletekubernetesprivatenetwork", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+		recordWithContext(t, "delete_kubernetes_private_network", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 			if len(network) > 0 {
 				err := svc.DeleteNetwork(&request.DeleteNetworkRequest{UUID: network})
 
@@ -41,22 +45,16 @@ func TestKubernetes(t *testing.T) {
 
 	// this group is not to be run in parallel
 	t.Run("Setup", func(t *testing.T) {
-		record(t, "createkubernetesprivatenetwork", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+		recordWithContext(t, "create_kubernetes_private_network", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 			t.Run("CreateKubernetesPrivateNetwork", func(t *testing.T) {
 				n, err := svc.CreateNetwork(&request.CreateNetworkRequest{
-					Name: "upcloud-go-sdk-integration-test",
+					Name: "upcloud-go-sdk-test",
 					Zone: zone,
 					IPNetworks: []upcloud.IPNetwork{
 						{
-							Address:          "172.16.0.0/24",
-							DHCP:             upcloud.True,
-							DHCPDefaultRoute: upcloud.False,
-							DHCPDns: []string{
-								"172.16.0.1",
-								"172.16.0.2",
-							},
+							Address: networkCIDR,
+							DHCP:    upcloud.True,
 							Family:  upcloud.IPAddressFamilyIPv4,
-							Gateway: "172.16.0.1",
 						},
 					},
 				})
@@ -65,14 +63,30 @@ func TestKubernetes(t *testing.T) {
 				require.NotEmpty(t, n.UUID)
 
 				network = n.UUID
+				networkCIDR = n.IPNetworks[0].Address
 			})
 		})
 
 		require.NotEmpty(t, network)
 
-		record(t, "createkubernetescluster", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+		recordWithContext(t, "create_kubernetes_cluster", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 			t.Run("CreateKubernetesCluster", func(t *testing.T) {
-				c, err := svc.CreateKubernetesCluster(exampleCreateKubernetesClusterRequest("go-sdk-test", network, plan, zone))
+				c, err := svc.CreateKubernetesCluster(&request.CreateKubernetesClusterRequest{
+					Name:    clusterName,
+					Network: network,
+					NodeGroups: []upcloud.KubernetesNodeGroup{
+						{
+							Count: 2,
+							Name:  "testgroup",
+							Plan:  plan,
+							Labels: []upcloud.Label{
+								{Key: "managedBy", Value: "go-sdk"},
+							},
+							SSHKeys: []string{SSHKey},
+						},
+					},
+					Zone: zone,
+				})
 
 				require.NoError(t, err)
 				require.NotEmpty(t, c.UUID)
@@ -83,15 +97,15 @@ func TestKubernetes(t *testing.T) {
 
 		require.NotEmpty(t, uuid)
 
-		record(t, "waitforkubernetesclusterstate", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
-			t.Run("WaitForKubernetesClusterState", func(t *testing.T) {
-				require.NotEmpty(t, uuid)
+		recordWithContext(t, "wait_for_kubernetes_cluster_state", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+			require.NotEmpty(t, uuid)
 
+			t.Run("WaitForKubernetesClusterState", func(t *testing.T) {
 				expected := upcloud.KubernetesClusterStateRunning
 
 				c, err := svc.WaitForKubernetesClusterState(&request.WaitForKubernetesClusterStateRequest{
 					DesiredState: upcloud.KubernetesClusterStateRunning,
-					Timeout:      time.Minute * 15,
+					Timeout:      time.Minute * 10,
 					UUID:         uuid,
 				})
 				require.NotNil(t, c)
@@ -106,10 +120,30 @@ func TestKubernetes(t *testing.T) {
 	t.Run("GetKubernetesCluster", func(t *testing.T) {
 		t.Parallel()
 
-		record(t, "getkubernetescluster", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+		recordWithContext(t, "get_kubernetes_cluster", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 			require.NotEmpty(t, uuid)
 
-			expected := exampleKubernetesCluster("go-sdk-test", network, plan, uuid, zone)
+			expected := &upcloud.KubernetesCluster{
+				Name:        clusterName,
+				Network:     network,
+				NetworkCIDR: networkCIDR,
+				NodeGroups: []upcloud.KubernetesNodeGroup{
+					{
+						Count: 2,
+						Name:  "testgroup",
+						Plan:  plan,
+						Labels: []upcloud.Label{
+							{Key: "managedBy", Value: "go-sdk"},
+						},
+						SSHKeys:     []string{SSHKey},
+						KubeletArgs: []upcloud.KubernetesKubeletArg{},
+						Storage:     "01000000-0000-4000-8000-000160010100",
+					},
+				},
+				State: upcloud.KubernetesClusterStateRunning,
+				UUID:  uuid,
+				Zone:  zone,
+			}
 
 			actual, err := svc.GetKubernetesCluster(&request.GetKubernetesClusterRequest{
 				UUID: uuid,
@@ -121,11 +155,11 @@ func TestKubernetes(t *testing.T) {
 	})
 
 	t.Run("GetKubernetesClusters", func(t *testing.T) {
-		require.NotEmpty(t, uuid)
-
 		t.Parallel()
 
-		record(t, "getkubernetesclusters", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+		recordWithContext(t, "get_kubernetes_clusters", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+			require.NotEmpty(t, uuid)
+
 			c, err := svc.GetKubernetesClusters(&request.GetKubernetesClustersRequest{})
 
 			require.NoError(t, err)
@@ -134,11 +168,11 @@ func TestKubernetes(t *testing.T) {
 	})
 
 	t.Run("GetKubernetesKubeconfig", func(t *testing.T) {
-		require.NotEmpty(t, uuid)
-
 		t.Parallel()
 
-		record(t, "getkuberneteskubeconfig", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+		recordWithContext(t, "get_kubernetes_kubeconfig", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+			require.NotEmpty(t, uuid)
+
 			k, err := svc.GetKubernetesKubeconfig(&request.GetKubernetesKubeconfigRequest{
 				UUID: uuid,
 			})
@@ -151,63 +185,27 @@ func TestKubernetes(t *testing.T) {
 	t.Run("GetKubernetesPlans", func(t *testing.T) {
 		t.Parallel()
 
-		record(t, "getkubernetesplans", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+		recordWithContext(t, "get_kubernetes_plans", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 			p, err := svc.GetKubernetesPlans(&request.GetKubernetesPlansRequest{})
 
 			require.NoError(t, err)
 			require.NotZero(t, p)
+
+			firstPlan := p[0]
+			require.NotZero(t, firstPlan.Description)
+			require.NotZero(t, firstPlan.Name)
 		})
 	})
 
 	t.Run("GetKubernetesVersions", func(t *testing.T) {
 		t.Parallel()
 
-		record(t, "getkubernetesversions", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+		recordWithContext(t, "get_kubernetes_versions", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 			v, err := svc.GetKubernetesVersions(&request.GetKubernetesVersionsRequest{})
 
 			require.NoError(t, err)
 			require.NotZero(t, v)
+			require.NotZero(t, v[0])
 		})
 	})
-}
-
-func exampleKubernetesCluster(name, network, plan, uuid, zone string) *upcloud.KubernetesCluster {
-	return &upcloud.KubernetesCluster{
-		Name:    name,
-		Network: network,
-		NodeGroups: []upcloud.KubernetesNodeGroup{
-			exampleKubernetesNodeGroup(plan, 1),
-			exampleKubernetesNodeGroup(plan, 2),
-		},
-		State: upcloud.KubernetesClusterStateRunning,
-		UUID:  uuid,
-		Zone:  zone,
-	}
-}
-
-func exampleKubernetesNodeGroup(plan string, index int) upcloud.KubernetesNodeGroup {
-	return upcloud.KubernetesNodeGroup{
-		Count: 1,
-		Labels: []upcloud.Label{
-			{
-				Key:   "managedBy",
-				Value: "go-sdk",
-			},
-		},
-		Name:    fmt.Sprintf("go-sdk-test-%d", index),
-		Plan:    plan,
-		Storage: "01000000-0000-4000-8000-000160010100",
-	}
-}
-
-func exampleCreateKubernetesClusterRequest(name, network, plan, zone string) *request.CreateKubernetesClusterRequest {
-	return &request.CreateKubernetesClusterRequest{
-		Name:    name,
-		Network: network,
-		NodeGroups: []upcloud.KubernetesNodeGroup{
-			exampleKubernetesNodeGroup(plan, 1),
-			exampleKubernetesNodeGroup(plan, 2),
-		},
-		Zone: zone,
-	}
 }
