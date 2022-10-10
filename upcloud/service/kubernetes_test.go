@@ -194,8 +194,9 @@ func exampleKubernetesNodeGroup(plan string, index int) upcloud.KubernetesNodeGr
 				Value: "go-sdk",
 			},
 		},
-		Name: fmt.Sprintf("go-sdk-test-%d", index),
-		Plan: plan,
+		Name:    fmt.Sprintf("go-sdk-test-%d", index),
+		Plan:    plan,
+		Storage: "01000000-0000-4000-8000-000160010100",
 	}
 }
 

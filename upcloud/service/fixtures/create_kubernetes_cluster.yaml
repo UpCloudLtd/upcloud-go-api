@@ -40,7 +40,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Mon, 10 Oct 2022 12:41:42 GMT
+      - Mon, 10 Oct 2022 14:47:14 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -49,7 +49,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"name":"go-sdk-test-ctx","network":"0385327e-80ac-4603-82fd-09f94b9a6194","network_cidr":"10.0.96.0/24","node_groups":[{"count":1,"labels":[{"key":"managedBy","value":"go-sdk"}],"name":"go-sdk-test-1","plan":"K8S-2xCPU-4GB"},{"count":1,"labels":[{"key":"managedBy","value":"go-sdk"}],"name":"go-sdk-test-2","plan":"K8S-2xCPU-4GB"}],"zone":"de-fra1"}'
+    body: '{"name":"go-sdk-test-ctx","network":"0385327e-80ac-4603-82fd-09f94b9a6194","network_cidr":"10.0.96.0/24","node_groups":[{"count":2,"labels":[{"key":"managedBy","value":"go-sdk"}],"name":"testgroup","plan":"K8S-2xCPU-4GB","ssh_keys":["somekey"]}],"zone":"de-fra1"}'
     form: {}
     headers:
       Accept:
@@ -66,7 +66,7 @@ interactions:
       Content-Length:
       - "0"
       Date:
-      - Mon, 10 Oct 2022 12:41:42 GMT
+      - Mon, 10 Oct 2022 14:47:14 GMT
       Location:
       - /1.3/kubernetes/
       Strict-Transport-Security:
@@ -75,7 +75,7 @@ interactions:
     code: 307
     duration: ""
 - request:
-    body: '{"name":"go-sdk-test-ctx","network":"0385327e-80ac-4603-82fd-09f94b9a6194","network_cidr":"10.0.96.0/24","node_groups":[{"count":1,"labels":[{"key":"managedBy","value":"go-sdk"}],"name":"go-sdk-test-1","plan":"K8S-2xCPU-4GB"},{"count":1,"labels":[{"key":"managedBy","value":"go-sdk"}],"name":"go-sdk-test-2","plan":"K8S-2xCPU-4GB"}],"zone":"de-fra1"}'
+    body: '{"name":"go-sdk-test-ctx","network":"0385327e-80ac-4603-82fd-09f94b9a6194","network_cidr":"10.0.96.0/24","node_groups":[{"count":2,"labels":[{"key":"managedBy","value":"go-sdk"}],"name":"testgroup","plan":"K8S-2xCPU-4GB","ssh_keys":["somekey"]}],"zone":"de-fra1"}'
     form: {}
     headers:
       Accept:
@@ -89,18 +89,18 @@ interactions:
     url: https://api.upcloud.com/1.3/kubernetes/
     method: POST
   response:
-    body: '{"name":"go-sdk-test-ctx","network":"0385327e-80ac-4603-82fd-09f94b9a6194","network_cidr":"10.0.96.0/24","node_groups":[{"count":1,"labels":[{"key":"managedBy","value":"go-sdk"}],"name":"go-sdk-test-1","plan":"K8S-2xCPU-4GB"},{"count":1,"labels":[{"key":"managedBy","value":"go-sdk"}],"name":"go-sdk-test-2","plan":"K8S-2xCPU-4GB"}],"state":"pending","uuid":"0d5f46a7-bf7d-422b-afc8-7c277bb7b3b1","zone":"de-fra1"}'
+    body: '{"name":"go-sdk-test-ctx","network":"0385327e-80ac-4603-82fd-09f94b9a6194","network_cidr":"10.0.96.0/24","node_groups":[{"count":2,"labels":[{"key":"managedBy","value":"go-sdk"}],"name":"testgroup","plan":"K8S-2xCPU-4GB","ssh_keys":["somekey"]}],"state":"pending","uuid":"0dddca21-dabe-4e3b-8c29-2f637f8ba4b4","zone":"de-fra1"}'
     headers:
       Content-Length:
-      - "414"
+      - "327"
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Mon, 10 Oct 2022 12:41:43 GMT
+      - Mon, 10 Oct 2022 14:47:16 GMT
       Strict-Transport-Security:
       - max-age=63072000
       X-Request-Id:
-      - 15f14d11-5974-48ce-b5a1-a60c4f07b3ba
+      - 05951103-dcc7-41cb-b45c-648d7dd015f7
     status: 201 Created
     code: 201
     duration: ""
