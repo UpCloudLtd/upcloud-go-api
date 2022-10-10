@@ -36,7 +36,7 @@ const exampleCreateKubernetesClusterRequestJSON string = `{
 			],
 			"name": "name",
 			"plan": "plan",
-			"ssh_key": [
+			"ssh_keys": [
 				"key",
 				"key"
 			]
@@ -64,7 +64,7 @@ const exampleCreateKubernetesClusterRequestJSON string = `{
 			],
 			"name": "name",
 			"plan": "plan",
-			"ssh_key": [
+			"ssh_keys": [
 				"key",
 				"key"
 			]
