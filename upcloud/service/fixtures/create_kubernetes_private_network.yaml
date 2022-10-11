@@ -30,7 +30,7 @@ interactions:
             },
             "name" : "upcloud-go-sdk-test",
             "type" : "private",
-            "uuid" : "0385327e-80ac-4603-82fd-09f94b9a6194",
+            "uuid" : "03be224b-f08a-4fc6-8ac5-f5a41d7fa192",
             "zone" : "de-fra1"
          }
       }
@@ -40,7 +40,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Mon, 10 Oct 2022 11:54:31 GMT
+      - Tue, 11 Oct 2022 07:19:42 GMT
       Server:
       - Apache
       Strict-Transport-Security:

@@ -17,11 +17,11 @@ func TestKubernetesCtx(t *testing.T) {
 	const zone = "de-fra1"
 	const plan = "K8S-2xCPU-4GB"
 	const clusterName = "go-sdk-test-ctx"
-	const SSHKey = "somekey"
+	const SSHKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO3fnjc8UrsYDNU8365mL3lnOPQJg18V42Lt8U/8Sm+r testy_test"
+	const networkCIDR = "10.0.96.0/24"
 
 	// set when creating a private network for cluster
 	network := ""
-	networkCIDR := ""
 
 	// set when creating a cluster
 	uuid := ""
@@ -63,7 +63,6 @@ func TestKubernetesCtx(t *testing.T) {
 				require.NotEmpty(t, n.UUID)
 
 				network = n.UUID
-				networkCIDR = n.IPNetworks[0].Address
 			})
 		})
 
