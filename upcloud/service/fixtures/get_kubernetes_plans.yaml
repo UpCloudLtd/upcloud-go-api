@@ -1,0 +1,31 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api-ctx/4.8.0
+    url: https://api.upcloud.com/1.3/kubernetes/plans
+    method: GET
+  response:
+    body: '[{"name":"small","description":"K8S-2xCPU-4GB"},{"name":"medium","description":"K8S-4xCPU-8GB"},{"name":"large","description":"K8S-8xCPU-32GB"}]'
+    headers:
+      Content-Length:
+      - "144"
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Tue, 11 Oct 2022 07:11:55 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+      X-Request-Id:
+      - f45245a1-6baf-49b1-b6e1-b8790880092d
+    status: 200 OK
+    code: 200
+    duration: ""

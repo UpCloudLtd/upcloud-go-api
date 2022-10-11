@@ -1,0 +1,106 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api-ctx/4.8.0
+    url: https://api.upcloud.com/1.3/network/03be224b-f08a-4fc6-8ac5-f5a41d7fa192
+    method: GET
+  response:
+    body: |
+      {
+         "network" : {
+            "ip_networks" : {
+               "ip_network" : [
+                  {
+                     "address" : "10.0.96.0/24",
+                     "dhcp" : "yes",
+                     "dhcp_default_route" : "no",
+                     "family" : "IPv4",
+                     "gateway" : "10.0.96.1"
+                  }
+               ]
+            },
+            "name" : "upcloud-go-sdk-test",
+            "type" : "private",
+            "uuid" : "03be224b-f08a-4fc6-8ac5-f5a41d7fa192",
+            "zone" : "de-fra1"
+         }
+      }
+    headers:
+      Content-Length:
+      - "459"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 11 Oct 2022 07:19:43 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"name":"go-sdk-test-ctx","network":"03be224b-f08a-4fc6-8ac5-f5a41d7fa192","network_cidr":"10.0.96.0/24","node_groups":[{"count":2,"labels":[{"key":"managedBy","value":"go-sdk"}],"name":"testgroup","plan":"K8S-2xCPU-4GB","ssh_keys":["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO3fnjc8UrsYDNU8365mL3lnOPQJg18V42Lt8U/8Sm+r testy_test"]}],"zone":"de-fra1"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api-ctx/4.8.0
+    url: https://api.upcloud.com/1.3/kubernetes
+    method: POST
+  response:
+    body: ""
+    headers:
+      Content-Length:
+      - "0"
+      Date:
+      - Tue, 11 Oct 2022 07:19:43 GMT
+      Location:
+      - /1.3/kubernetes/
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 307 Temporary Redirect
+    code: 307
+    duration: ""
+- request:
+    body: '{"name":"go-sdk-test-ctx","network":"03be224b-f08a-4fc6-8ac5-f5a41d7fa192","network_cidr":"10.0.96.0/24","node_groups":[{"count":2,"labels":[{"key":"managedBy","value":"go-sdk"}],"name":"testgroup","plan":"K8S-2xCPU-4GB","ssh_keys":["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO3fnjc8UrsYDNU8365mL3lnOPQJg18V42Lt8U/8Sm+r testy_test"]}],"zone":"de-fra1"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      Referer:
+      - https://api.upcloud.com/1.3/kubernetes
+      User-Agent:
+      - upcloud-go-api-ctx/4.8.0
+    url: https://api.upcloud.com/1.3/kubernetes/
+    method: POST
+  response:
+    body: '{"name":"go-sdk-test-ctx","network":"03be224b-f08a-4fc6-8ac5-f5a41d7fa192","network_cidr":"10.0.96.0/24","node_groups":[{"count":2,"labels":[{"key":"managedBy","value":"go-sdk"}],"name":"testgroup","plan":"K8S-2xCPU-4GB","ssh_keys":["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO3fnjc8UrsYDNU8365mL3lnOPQJg18V42Lt8U/8Sm+r testy_test"]}],"state":"pending","uuid":"0d0fe363-dc9a-4f82-9609-46bb1c4cbfc3","zone":"de-fra1"}'
+    headers:
+      Content-Length:
+      - "411"
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Tue, 11 Oct 2022 07:19:45 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+      X-Request-Id:
+      - b07a8dd4-f136-4beb-ab23-dbfad68bea75
+    status: 201 Created
+    code: 201
+    duration: ""

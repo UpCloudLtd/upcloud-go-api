@@ -8,6 +8,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 ### Added
 - label support for server and server groups
 - add support for resource permissions
+- Experimental support for Kubernetes cluster, plans and versions
 
 ## [4.8.0]
 
