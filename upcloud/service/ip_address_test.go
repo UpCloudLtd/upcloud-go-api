@@ -17,7 +17,7 @@ import (
 //     ip addresses
 func TestGetIPAddresses(t *testing.T) {
 	record(t, "getipaddresses", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
-		serverDetails, err := createServer(svc, "TestGetIPAddresses")
+		serverDetails, err := createServerWithRecorder(rec, svc, "TestGetIPAddresses")
 		require.NoError(t, err)
 		assert.Greater(t, len(serverDetails.IPAddresses), 0)
 
@@ -61,13 +61,13 @@ func TestAttachModifyReleaseIPAddress(t *testing.T) {
 
 	record(t, "attachmodifyreleaseipaddress", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create the server
-		serverDetails, err := createServer(svc, "TestAttachModifyReleaseIPAddress")
+		serverDetails, err := createServerWithRecorder(rec, svc, "TestAttachModifyReleaseIPAddress")
 		require.NoError(t, err)
 		t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 		// Stop the server
 		t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
-		err = stopServer(svc, serverDetails.UUID)
+		err = stopServerWithRecorder(rec, svc, serverDetails.UUID)
 		require.NoError(t, err)
 		t.Log("Server is now stopped")
 
@@ -103,12 +103,12 @@ func TestAttachModifyReleaseIPAddress(t *testing.T) {
 func TestAttachModifyReleaseFloatingIPAddress(t *testing.T) {
 	record(t, "attachmodifyreleasefloatingipaddress", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create the first server
-		serverDetails1, err := createServer(svc, "TestAttachModifyReleaseIPAddress1")
+		serverDetails1, err := createServerWithRecorder(rec, svc, "TestAttachModifyReleaseIPAddress1")
 		require.NoError(t, err)
 		t.Logf("Server 1 %s with UUID %s created", serverDetails1.Title, serverDetails1.UUID)
 
 		// Create the second server
-		serverDetails2, err := createServer(svc, "TestAttachModifyReleaseIPAddress2")
+		serverDetails2, err := createServerWithRecorder(rec, svc, "TestAttachModifyReleaseIPAddress2")
 		require.NoError(t, err)
 		t.Logf("Server 2 %s with UUID %s created", serverDetails2.Title, serverDetails2.UUID)
 
