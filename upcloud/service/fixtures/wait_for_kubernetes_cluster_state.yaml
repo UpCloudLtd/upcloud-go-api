@@ -10,78 +10,22 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api-ctx/4.8.0
-    url: https://api.upcloud.com/1.3/kubernetes/0d0fe363-dc9a-4f82-9609-46bb1c4cbfc3
+      - upcloud-go-api-ctx/4.9.0
+    url: https://api.upcloud.com/1.3/kubernetes/0d102e85-52e3-43cf-960b-9d46ec46ac4e
     method: GET
   response:
-    body: '{"name":"go-sdk-test-ctx","network":"03be224b-f08a-4fc6-8ac5-f5a41d7fa192","network_cidr":"10.0.96.0/24","node_groups":[{"count":2,"kubelet_args":[],"labels":[{"key":"managedBy","value":"go-sdk"}],"name":"testgroup","plan":"K8S-2xCPU-4GB","ssh_keys":["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO3fnjc8UrsYDNU8365mL3lnOPQJg18V42Lt8U/8Sm+r testy_test"],"storage":"01000000-0000-4000-8000-000160010100"}],"state":"pending","uuid":"0d0fe363-dc9a-4f82-9609-46bb1c4cbfc3","zone":"de-fra1"}'
+    body: '{"name":"go-sdk-test-ctx","network":"03e6deb5-5f39-4df5-8c8e-a74186aba000","network_cidr":"176.16.1.0/24","node_groups":[{"count":2,"kubelet_args":[],"labels":[{"key":"managedBy","value":"go-sdk"}],"name":"testgroup","plan":"K8S-2xCPU-4GB","ssh_keys":["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO3fnjc8UrsYDNU8365mL3lnOPQJg18V42Lt8U/8Sm+r testy_test"],"storage":"01000000-0000-4000-8000-000160010100"}],"state":"running","uuid":"0d102e85-52e3-43cf-960b-9d46ec46ac4e","zone":"de-fra1"}'
     headers:
       Content-Length:
-      - "478"
+      - "479"
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Tue, 11 Oct 2022 07:22:56 GMT
+      - Mon, 24 Oct 2022 12:20:26 GMT
       Strict-Transport-Security:
       - max-age=63072000
       X-Request-Id:
-      - 2653903b-6808-4622-a868-5d5c1d619505
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api-ctx/4.8.0
-    url: https://api.upcloud.com/1.3/kubernetes/0d0fe363-dc9a-4f82-9609-46bb1c4cbfc3
-    method: GET
-  response:
-    body: '{"name":"go-sdk-test-ctx","network":"03be224b-f08a-4fc6-8ac5-f5a41d7fa192","network_cidr":"10.0.96.0/24","node_groups":[{"count":2,"kubelet_args":[],"labels":[{"key":"managedBy","value":"go-sdk"}],"name":"testgroup","plan":"K8S-2xCPU-4GB","ssh_keys":["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO3fnjc8UrsYDNU8365mL3lnOPQJg18V42Lt8U/8Sm+r testy_test"],"storage":"01000000-0000-4000-8000-000160010100"}],"state":"pending","uuid":"0d0fe363-dc9a-4f82-9609-46bb1c4cbfc3","zone":"de-fra1"}'
-    headers:
-      Content-Length:
-      - "478"
-      Content-Type:
-      - application/json; charset=utf-8
-      Date:
-      - Tue, 11 Oct 2022 07:23:01 GMT
-      Strict-Transport-Security:
-      - max-age=63072000
-      X-Request-Id:
-      - 0aa5600f-e4b5-4f75-b11f-5276ecd60d55
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api-ctx/4.8.0
-    url: https://api.upcloud.com/1.3/kubernetes/0d0fe363-dc9a-4f82-9609-46bb1c4cbfc3
-    method: GET
-  response:
-    body: '{"name":"go-sdk-test-ctx","network":"03be224b-f08a-4fc6-8ac5-f5a41d7fa192","network_cidr":"10.0.96.0/24","node_groups":[{"count":2,"kubelet_args":[],"labels":[{"key":"managedBy","value":"go-sdk"}],"name":"testgroup","plan":"K8S-2xCPU-4GB","ssh_keys":["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO3fnjc8UrsYDNU8365mL3lnOPQJg18V42Lt8U/8Sm+r testy_test"],"storage":"01000000-0000-4000-8000-000160010100"}],"state":"running","uuid":"0d0fe363-dc9a-4f82-9609-46bb1c4cbfc3","zone":"de-fra1"}'
-    headers:
-      Content-Length:
-      - "478"
-      Content-Type:
-      - application/json; charset=utf-8
-      Date:
-      - Tue, 11 Oct 2022 07:23:06 GMT
-      Strict-Transport-Security:
-      - max-age=63072000
-      X-Request-Id:
-      - 971dc4f7-1343-41c6-8595-c2ff5e3e08d9
+      - e0b3a040-6b89-4aef-8cac-b11c24329440
     status: 200 OK
     code: 200
     duration: ""
