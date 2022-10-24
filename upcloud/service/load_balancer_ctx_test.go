@@ -736,7 +736,9 @@ func TestLoadBalancerPageContext(t *testing.T) {
 			lb, err := createLoadBalancer(svc, net.UUID, zone)
 			require.NoError(t, err)
 			lbs = append(lbs, lb)
-			time.Sleep(1 * time.Second)
+			if rec.Mode() != recorder.ModeReplaying {
+				time.Sleep(1 * time.Second)
+			}
 		}
 
 		// Test get-all feature by altering default page config.
