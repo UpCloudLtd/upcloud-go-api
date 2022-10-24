@@ -10,7 +10,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api-ctx/4.8.0
+      - upcloud-go-api-ctx/4.9.0
     url: https://api.upcloud.com/1.3/kubernetes/plans
     method: GET
   response:
@@ -21,11 +21,11 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Tue, 11 Oct 2022 07:11:55 GMT
+      - Mon, 24 Oct 2022 12:20:26 GMT
       Strict-Transport-Security:
       - max-age=63072000
       X-Request-Id:
-      - f45245a1-6baf-49b1-b6e1-b8790880092d
+      - 0acb881d-25ec-40fc-9ae5-1b2a3ad16341
     status: 200 OK
     code: 200
     duration: ""

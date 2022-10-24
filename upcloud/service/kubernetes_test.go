@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"net/http"
 	"testing"
 	"time"
 
@@ -18,7 +19,8 @@ func TestKubernetes(t *testing.T) {
 	const plan = "K8S-2xCPU-4GB"
 	const clusterName = "go-sdk-test-ctx"
 	const SSHKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO3fnjc8UrsYDNU8365mL3lnOPQJg18V42Lt8U/8Sm+r testy_test"
-	const networkCIDR = "10.0.96.0/24"
+	const networkCIDR = "176.16.1.0/24"
+	const waitTimeout = time.Minute * 20
 
 	// set when creating a private network for cluster
 	network := ""
@@ -31,12 +33,41 @@ func TestKubernetes(t *testing.T) {
 				err := svc.DeleteKubernetesCluster(&request.DeleteKubernetesClusterRequest{UUID: uuid})
 
 				require.NoError(t, err)
+
+				if rec.Mode() == recorder.ModeRecording {
+					rec.AddPassthrough(func(h *http.Request) bool {
+						return true
+					})
+
+					attempts := 0
+					sleepDuration := time.Second * 5
+
+					for {
+						attempts++
+
+						c, err := svc.GetKubernetesCluster(&request.GetKubernetesClusterRequest{UUID: uuid})
+						if upcloudErr, ok := err.(*upcloud.Error); ok {
+							if upcloudErr.ErrorCode == "NotFound" {
+								break
+							}
+						}
+
+						require.NoError(t, err)
+						require.NotEmpty(t, c)
+						time.Sleep(sleepDuration)
+
+						if time.Duration(attempts)*sleepDuration >= waitTimeout {
+							t.Fail()
+						}
+					} // additional wait period to make sure the network is deletable
+					time.Sleep(waitTimeout)
+					rec.Passthroughs = nil
+				}
 			}
 		})
 		recordWithContext(t, "delete_kubernetes_private_network", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 			if len(network) > 0 {
 				err := svc.DeleteNetwork(&request.DeleteNetworkRequest{UUID: network})
-
 				require.NoError(t, err)
 			}
 		})
@@ -99,12 +130,31 @@ func TestKubernetes(t *testing.T) {
 			require.NotEmpty(t, uuid)
 
 			t.Run("WaitForKubernetesClusterState", func(t *testing.T) {
+				if rec.Mode() == recorder.ModeRecording {
+					rec.AddPassthrough(func(h *http.Request) bool {
+						return true
+					})
+
+					expected := upcloud.KubernetesClusterStateRunning
+
+					c, err := svc.WaitForKubernetesClusterState(&request.WaitForKubernetesClusterStateRequest{
+						DesiredState: upcloud.KubernetesClusterStateRunning,
+						Timeout:      waitTimeout,
+						UUID:         uuid,
+					})
+					require.NotNil(t, c)
+					actual := c.State
+
+					require.NoError(t, err)
+					require.Equal(t, expected, actual)
+
+					rec.Passthroughs = nil
+				}
+
 				expected := upcloud.KubernetesClusterStateRunning
 
-				c, err := svc.WaitForKubernetesClusterState(&request.WaitForKubernetesClusterStateRequest{
-					DesiredState: upcloud.KubernetesClusterStateRunning,
-					Timeout:      time.Minute * 10,
-					UUID:         uuid,
+				c, err := svcContext.GetKubernetesCluster(ctx, &request.GetKubernetesClusterRequest{
+					UUID: uuid,
 				})
 				require.NotNil(t, c)
 				actual := c.State

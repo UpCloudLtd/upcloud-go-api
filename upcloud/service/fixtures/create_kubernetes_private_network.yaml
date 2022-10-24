@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"network":{"name":"upcloud-go-sdk-test","zone":"de-fra1","ip_networks":{"ip_network":[{"address":"10.0.96.0/24","dhcp":"yes","dhcp_default_route":"no","family":"IPv4"}]}}}'
+    body: '{"network":{"name":"upcloud-go-sdk-test","zone":"de-fra1","ip_networks":{"ip_network":[{"address":"176.16.1.0/24","dhcp":"yes","dhcp_default_route":"no","family":"IPv4"}]}}}'
     form: {}
     headers:
       Accept:
@@ -10,7 +10,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api-ctx/4.8.0
+      - upcloud-go-api-ctx/4.9.0
     url: https://api.upcloud.com/1.3/network/
     method: POST
   response:
@@ -20,27 +20,27 @@ interactions:
             "ip_networks" : {
                "ip_network" : [
                   {
-                     "address" : "10.0.96.0/24",
+                     "address" : "176.16.1.0/24",
                      "dhcp" : "yes",
                      "dhcp_default_route" : "no",
                      "family" : "IPv4",
-                     "gateway" : "10.0.96.1"
+                     "gateway" : "176.16.1.1"
                   }
                ]
             },
             "name" : "upcloud-go-sdk-test",
             "type" : "private",
-            "uuid" : "03be224b-f08a-4fc6-8ac5-f5a41d7fa192",
+            "uuid" : "03e6deb5-5f39-4df5-8c8e-a74186aba000",
             "zone" : "de-fra1"
          }
       }
     headers:
       Content-Length:
-      - "459"
+      - "461"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Tue, 11 Oct 2022 07:19:42 GMT
+      - Mon, 24 Oct 2022 12:17:06 GMT
       Server:
       - Apache
       Strict-Transport-Security:

@@ -10,14 +10,14 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api-ctx/4.8.0
-    url: https://api.upcloud.com/1.3/network/03be224b-f08a-4fc6-8ac5-f5a41d7fa192
+      - upcloud-go-api-ctx/4.9.0
+    url: https://api.upcloud.com/1.3/network/03e6deb5-5f39-4df5-8c8e-a74186aba000
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Tue, 11 Oct 2022 07:26:09 GMT
+      - Mon, 24 Oct 2022 12:26:30 GMT
       Server:
       - Apache
       Strict-Transport-Security:
