@@ -68,7 +68,7 @@ func recordWithContext(t *testing.T, fixture string, f func(context.Context, *te
 	f(ctx, t, r, New(c), NewWithContext(client.NewWithHTTPClientContext(user, password, httpClient)))
 }
 
-// Deletes the specified server and storages
+// Deletes the specified server and storages.
 func deleteServerAndStoragesWithContext(ctx context.Context, svc *ServiceContext, uuid string) error {
 	err := svc.DeleteServerAndStorages(ctx, &request.DeleteServerAndStoragesRequest{
 		UUID: uuid,
@@ -76,12 +76,12 @@ func deleteServerAndStoragesWithContext(ctx context.Context, svc *ServiceContext
 	return err
 }
 
-// Creates a server and returns the details about it, panic if creation fails
-func createServerWithContext(ctx context.Context, svc *ServiceContext, name string) (*upcloud.ServerDetails, error) {
-	return createServerWithNetworkWithContext(ctx, svc, name, "")
+// Creates a server and returns the details about it, panic if creation fails.
+func createServerWithContext(ctx context.Context, rec *recorder.Recorder, svc *ServiceContext, name string) (*upcloud.ServerDetails, error) {
+	return createServerWithNetworkWithContext(ctx, rec, svc, name, "")
 }
 
-func createServerWithNetworkWithContext(ctx context.Context, svc *ServiceContext, name string, network string) (*upcloud.ServerDetails, error) {
+func createServerWithNetworkWithContext(ctx context.Context, rec *recorder.Recorder, svc *ServiceContext, name, network string) (*upcloud.ServerDetails, error) {
 	title := "uploud-go-sdk-integration-test-" + name
 	hostname := strings.ToLower(title + ".example.com")
 
@@ -158,20 +158,30 @@ func createServerWithNetworkWithContext(ctx context.Context, svc *ServiceContext
 		return nil, err
 	}
 
-	// Wait for the server to start
-	serverDetails, err = svc.WaitForServerState(ctx, &request.WaitForServerStateRequest{
-		UUID:         serverDetails.UUID,
-		DesiredState: upcloud.ServerStateStarted,
-		Timeout:      time.Minute * 15,
-	})
-	if err != nil {
-		return nil, err
+	if rec.Mode() == recorder.ModeRecording {
+		rec.AddPassthrough(func(h *http.Request) bool {
+			return true
+		})
+
+		// Wait for the server to start
+		_, err = svc.WaitForServerState(ctx, &request.WaitForServerStateRequest{
+			UUID:         serverDetails.UUID,
+			DesiredState: upcloud.ServerStateStarted,
+			Timeout:      time.Minute * 15,
+		})
+		if err != nil {
+			return nil, err
+		}
+
+		rec.Passthroughs = nil
 	}
 
-	return serverDetails, nil
+	return svc.GetServerDetails(ctx, &request.GetServerDetailsRequest{
+		UUID: serverDetails.UUID,
+	})
 }
 
-// Creates a piece of storage and returns the details about it, panic if creation fails
+// Creates a piece of storage and returns the details about it, panic if creation fails.
 func createStorageWithContext(ctx context.Context, svc *ServiceContext) (*upcloud.StorageDetails, error) {
 	createStorageRequest := request.CreateStorageRequest{
 		Tier:  upcloud.StorageTierMaxIOPS,
@@ -193,7 +203,7 @@ func createStorageWithContext(ctx context.Context, svc *ServiceContext) (*upclou
 	return storageDetails, nil
 }
 
-// Deletes the specified storage
+// Deletes the specified storage.
 func deleteStorageWithContext(ctx context.Context, svc *ServiceContext, uuid string) error {
 	err := svc.DeleteStorage(ctx, &request.DeleteStorageRequest{
 		UUID: uuid,
@@ -225,4 +235,35 @@ func createLoadBalancerBackendContext(ctx context.Context, svc *ServiceContext, 
 	}
 
 	return svc.CreateLoadBalancerBackend(ctx, &req)
+}
+
+// Stops the specified server (forcibly).
+func stopServerWithContext(ctx context.Context, rec *recorder.Recorder, svc *ServiceContext, uuid string) error {
+	serverDetails, err := svc.StopServer(ctx, &request.StopServerRequest{
+		UUID:     uuid,
+		Timeout:  waitTimeout,
+		StopType: request.ServerStopTypeHard,
+	})
+	if err != nil {
+		return err
+	}
+
+	if rec.Mode() == recorder.ModeRecording {
+		rec.AddPassthrough(func(h *http.Request) bool {
+			return true
+		})
+
+		_, err = svc.WaitForServerState(ctx, &request.WaitForServerStateRequest{
+			UUID:         serverDetails.UUID,
+			DesiredState: upcloud.ServerStateStopped,
+			Timeout:      waitTimeout,
+		})
+		if err != nil {
+			return err
+		}
+
+		rec.Passthroughs = nil
+	}
+
+	return nil
 }
