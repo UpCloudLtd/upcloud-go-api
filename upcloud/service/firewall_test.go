@@ -22,7 +22,7 @@ func TestFirewallRules(t *testing.T) {
 
 	record(t, "firewallrules", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create the server
-		serverDetails, err := createServer(svc, "TestFirewallRules")
+		serverDetails, err := createServerWithRecorder(rec, svc, "TestFirewallRules")
 		require.NoError(t, err)
 		t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
