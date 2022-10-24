@@ -229,7 +229,7 @@ func (r *DeleteLoadBalancerBackendMemberRequest) RequestURL() string {
 // LoadBalancerResolver represents resolver payload
 type LoadBalancerResolver struct {
 	Name         string   `json:"name,omitempty"`
-	Nameservers  []string `json:"nameservers"`
+	Nameservers  []string `json:"nameservers,omitempty"`
 	Retries      int      `json:"retries,omitempty"`
 	Timeout      int      `json:"timeout,omitempty"`
 	TimeoutRetry int      `json:"timeout_retry,omitempty"`
