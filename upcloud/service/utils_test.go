@@ -30,7 +30,7 @@ func (c *customRoundTripper) RoundTrip(r *http.Request) (*http.Response, error) 
 	return c.fn(r)
 }
 
-// Configures the test environment
+// Configures the test environment.
 func getService() *Service {
 	user, password := getCredentials()
 
@@ -40,7 +40,7 @@ func getService() *Service {
 	return New(c)
 }
 
-// records the API interactions of the test
+// records the API interactions of the test.
 func record(t *testing.T, fixture string, f func(*testing.T, *recorder.Recorder, *Service)) {
 	if testing.Short() {
 		t.Skip("Skipping recorded test in short mode")
@@ -87,7 +87,7 @@ func record(t *testing.T, fixture string, f func(*testing.T, *recorder.Recorder,
 	f(t, r, New(c))
 }
 
-// Tears down the test environment by removing all resources
+// Tears down the test environment by removing all resources.
 func teardown() {
 	svc := getService()
 
@@ -201,7 +201,7 @@ func teardown() {
 	}
 }
 
-// Creates a server and returns the details about it, panic if creation fails
+// Creates a server and returns the details about it, panic if creation fails.
 func createServer(svc *Service, name string) (*upcloud.ServerDetails, error) {
 	return createServerWithNetwork(svc, name, "")
 }
@@ -296,6 +296,111 @@ func createServerWithNetwork(svc *Service, name string, network string) (*upclou
 	return serverDetails, nil
 }
 
+// Creates a server with recorder and returns the details about it, panic if creation fails.
+func createServerWithRecorder(rec *recorder.Recorder, svc *Service, name string) (*upcloud.ServerDetails, error) {
+	return createServerWithNetworkWithRecorder(rec, svc, name, "")
+}
+
+func createServerWithNetworkWithRecorder(rec *recorder.Recorder, svc *Service, name, network string) (*upcloud.ServerDetails, error) {
+	title := "uploud-go-sdk-integration-test-" + name
+	hostname := strings.ToLower(title + ".example.com")
+
+	createServerRequest := request.CreateServerRequest{
+		Zone:             "fi-hel2",
+		Title:            title,
+		Hostname:         hostname,
+		PasswordDelivery: request.PasswordDeliveryNone,
+		StorageDevices: []request.CreateServerStorageDevice{
+			{
+				Action:  request.CreateServerStorageDeviceActionClone,
+				Storage: "01000000-0000-4000-8000-000020060100",
+				Title:   "disk1",
+				Size:    10,
+				Tier:    upcloud.StorageTierMaxIOPS,
+			},
+		},
+		Networking: &request.CreateServerNetworking{
+			Interfaces: []request.CreateServerInterface{
+				{
+					IPAddresses: []request.CreateServerIPAddress{
+						{
+							Family: upcloud.IPAddressFamilyIPv4,
+						},
+					},
+					Type: upcloud.NetworkTypeUtility,
+				},
+				{
+					IPAddresses: []request.CreateServerIPAddress{
+						{
+							Family: upcloud.IPAddressFamilyIPv4,
+						},
+					},
+					Type: upcloud.NetworkTypePublic,
+				},
+				{
+					IPAddresses: []request.CreateServerIPAddress{
+						{
+							Family: upcloud.IPAddressFamilyIPv6,
+						},
+					},
+					Type: upcloud.NetworkTypePublic,
+				},
+			},
+		},
+		Labels: &upcloud.LabelSlice{
+			upcloud.Label{
+				Key:   "managedBy",
+				Value: "upcloud-sdk-integration-test",
+			},
+			upcloud.Label{
+				Key:   "testName",
+				Value: name,
+			},
+		},
+	}
+
+	if network != "" {
+		createServerRequest.Networking.Interfaces = append(createServerRequest.Networking.Interfaces,
+			request.CreateServerInterface{
+				IPAddresses: []request.CreateServerIPAddress{
+					{
+						Family: upcloud.IPAddressFamilyIPv4,
+					},
+				},
+				Type:    upcloud.NetworkTypePrivate,
+				Network: network,
+			})
+	}
+
+	// Create the server and block until it has started
+	serverDetails, err := svc.CreateServer(&createServerRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	if rec.Mode() == recorder.ModeRecording {
+		rec.AddPassthrough(func(h *http.Request) bool {
+			return true
+		})
+
+		// Wait for the server to start
+		_, err = svc.WaitForServerState(&request.WaitForServerStateRequest{
+			UUID:         serverDetails.UUID,
+			DesiredState: upcloud.ServerStateStarted,
+			Timeout:      time.Minute * 15,
+		})
+		if err != nil {
+			return nil, err
+		}
+
+		rec.Passthroughs = nil
+	}
+
+	return svc.GetServerDetails(&request.GetServerDetailsRequest{
+		UUID: serverDetails.UUID,
+	})
+}
+
 func createMinimalServer(svc *Service, name string) (*upcloud.ServerDetails, error) {
 	title := "uploud-go-sdk-integration-test-" + name
 	hostname := strings.ToLower(title + ".example.com")
@@ -347,7 +452,7 @@ func createMinimalServer(svc *Service, name string) (*upcloud.ServerDetails, err
 	return serverDetails, nil
 }
 
-// Stops the specified server (forcibly)
+// Stops the specified server (forcibly).
 func stopServer(svc *Service, uuid string) error {
 	serverDetails, err := svc.StopServer(&request.StopServerRequest{
 		UUID:     uuid,
@@ -370,7 +475,38 @@ func stopServer(svc *Service, uuid string) error {
 	return nil
 }
 
-// Deletes the specified server
+// Stops the specified server with recorder (forcibly).
+func stopServerWithRecorder(rec *recorder.Recorder, svc *Service, uuid string) error {
+	serverDetails, err := svc.StopServer(&request.StopServerRequest{
+		UUID:     uuid,
+		Timeout:  waitTimeout,
+		StopType: request.ServerStopTypeHard,
+	})
+	if err != nil {
+		return err
+	}
+
+	if rec.Mode() == recorder.ModeRecording {
+		rec.AddPassthrough(func(h *http.Request) bool {
+			return true
+		})
+
+		_, err = svc.WaitForServerState(&request.WaitForServerStateRequest{
+			UUID:         serverDetails.UUID,
+			DesiredState: upcloud.ServerStateStopped,
+			Timeout:      waitTimeout,
+		})
+		if err != nil {
+			return err
+		}
+
+		rec.Passthroughs = nil
+	}
+
+	return nil
+}
+
+// Deletes the specified server.
 func deleteServer(svc *Service, uuid string) error {
 	err := svc.DeleteServer(&request.DeleteServerRequest{
 		UUID: uuid,
@@ -379,7 +515,7 @@ func deleteServer(svc *Service, uuid string) error {
 	return err
 }
 
-// Deletes the specified server and storages
+// Deletes the specified server and storages.
 func deleteServerAndStorages(svc *Service, uuid string) error {
 	err := svc.DeleteServerAndStorages(&request.DeleteServerAndStoragesRequest{
 		UUID: uuid,
@@ -388,7 +524,7 @@ func deleteServerAndStorages(svc *Service, uuid string) error {
 	return err
 }
 
-// Deletes the specified server group
+// Deletes the specified server group.
 func deleteServerGroup(svc *Service, uuid string) error {
 	err := svc.DeleteServerGroup(&request.DeleteServerGroupRequest{
 		UUID: uuid,
@@ -397,7 +533,7 @@ func deleteServerGroup(svc *Service, uuid string) error {
 	return err
 }
 
-// Creates a piece of storage and returns the details about it, panic if creation fails
+// Creates a piece of storage and returns the details about it, panic if creation fails.
 func createStorage(svc *Service) (*upcloud.StorageDetails, error) {
 	createStorageRequest := request.CreateStorageRequest{
 		Tier:  upcloud.StorageTierMaxIOPS,
@@ -419,7 +555,7 @@ func createStorage(svc *Service) (*upcloud.StorageDetails, error) {
 	return storageDetails, nil
 }
 
-// Deletes the specified storage
+// Deletes the specified storage.
 func deleteStorage(svc *Service, uuid string) error {
 	err := svc.DeleteStorage(&request.DeleteStorageRequest{
 		UUID: uuid,
@@ -428,7 +564,7 @@ func deleteStorage(svc *Service, uuid string) error {
 	return err
 }
 
-// deleteAllTags deletes all existing tags
+// deleteAllTags deletes all existing tags.
 func deleteAllTags(svc *Service) error {
 	tags, err := svc.GetTags()
 	if err != nil {
@@ -448,7 +584,7 @@ func deleteAllTags(svc *Service) error {
 	return nil
 }
 
-// Waits for the specified storage to come online
+// Waits for the specified storage to come online.
 func waitForStorageOnline(svc *Service, uuid string) error {
 	_, err := svc.WaitForStorageState(&request.WaitForStorageStateRequest{
 		UUID:         uuid,
@@ -459,8 +595,8 @@ func waitForStorageOnline(svc *Service, uuid string) error {
 	return err
 }
 
-// Creates an Object Storage and returns the details about it, panic if creation fails
-func createObjectStorage(svc *Service, name string, description string, zone string, size int) (*upcloud.ObjectStorageDetails, error) {
+// Creates an Object Storage and returns the details about it, panic if creation fails.
+func createObjectStorage(svc *Service, name, description, zone string, size int) (*upcloud.ObjectStorageDetails, error) {
 	createObjectStorageRequest := request.CreateObjectStorageRequest{
 		Name:        "go-test-" + name,
 		Description: description,
@@ -479,7 +615,7 @@ func createObjectStorage(svc *Service, name string, description string, zone str
 	return objectStorageDetails, nil
 }
 
-// Deletes the specific Object Storage
+// Deletes the specific Object Storage.
 func deleteObjectStorage(svc *Service, uuid string) error {
 	err := svc.DeleteObjectStorage(&request.DeleteObjectStorageRequest{
 		UUID: uuid,
@@ -501,14 +637,14 @@ func utcTimeWithSecondPrecision() (time.Time, error) {
 	return t, err
 }
 
-// Handles the error by panicing, thus stopping the test execution
+// Handles the error by panicing, thus stopping the test execution.
 func handleError(err error) {
 	if err != nil {
 		panic(err)
 	}
 }
 
-// Reads the API username and password from the environment, panics if they are not available
+// Reads the API username and password from the environment, panics if they are not available.
 func getCredentials() (string, string) {
 	if os.Getenv("UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS") == "yes" {
 		return "username", "password"
