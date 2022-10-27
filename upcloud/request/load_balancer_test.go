@@ -554,9 +554,7 @@ func TestModifyLoadBalancerResolverRequest(t *testing.T) {
 	}
 
 	expectedJson = `
-	{
-		"nameservers":[]
-	}`
+	{}`
 
 	actualJson, err = json.Marshal(&r)
 	require.NoError(t, err)
