@@ -9,6 +9,8 @@ interactions:
       - application/json
       Content-Type:
       - application/json
+      User-Agent:
+      - upcloud-go-api-ctx/4.9.0
     url: https://api.upcloud.com/1.3/router
     method: POST
   response:
@@ -19,17 +21,18 @@ interactions:
                "network" : []
             },
             "name" : "Testy McRouterface (test)",
+            "static_routes" : [],
             "type" : "normal",
-            "uuid" : "0465e8a4-4779-4803-bef9-7bbaefb311c1"
+            "uuid" : "04461614-9ae4-4714-b990-8b9db9f047dc"
          }
       }
     headers:
       Content-Length:
-      - "211"
+      - "239"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 19 Aug 2020 14:08:49 GMT
+      - Mon, 24 Oct 2022 13:56:03 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -45,7 +48,9 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/router/0465e8a4-4779-4803-bef9-7bbaefb311c1
+      User-Agent:
+      - upcloud-go-api-ctx/4.9.0
+    url: https://api.upcloud.com/1.3/router/04461614-9ae4-4714-b990-8b9db9f047dc
     method: PATCH
   response:
     body: |
@@ -55,17 +60,18 @@ interactions:
                "network" : []
             },
             "name" : "Modified name (test)",
+            "static_routes" : [],
             "type" : "normal",
-            "uuid" : "0465e8a4-4779-4803-bef9-7bbaefb311c1"
+            "uuid" : "04461614-9ae4-4714-b990-8b9db9f047dc"
          }
       }
     headers:
       Content-Length:
-      - "206"
+      - "234"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 19 Aug 2020 14:08:50 GMT
+      - Mon, 24 Oct 2022 13:56:04 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -81,6 +87,8 @@ interactions:
       - application/json
       Content-Type:
       - application/json
+      User-Agent:
+      - upcloud-go-api-ctx/4.9.0
     url: https://api.upcloud.com/1.3/router
     method: GET
   response:
@@ -92,59 +100,112 @@ interactions:
                   "attached_networks" : {
                      "network" : [
                         {
-                           "uuid" : "03206c92-50f2-40b0-ad05-5f02cab2e932"
+                           "uuid" : "0343ede2-9890-4470-b680-0dcda6d9f7e3"
                         },
                         {
-                           "uuid" : "03d781c3-65e3-4a7a-b6cd-a7ce7e23b8c5"
+                           "uuid" : "03c40911-2f43-4138-bb91-7561a8351353"
+                        }
+                     ]
+                  },
+                  "name" : "Utility network router for zone fi-hel2",
+                  "static_routes" : [],
+                  "type" : "service",
+                  "uuid" : "041e39c9-d2b5-4b26-a9b9-d732fc900189"
+               },
+               {
+                  "attached_networks" : {
+                     "network" : [
+                        {
+                           "uuid" : "03e3babd-fc75-49a2-aa41-8eb697c3ed6d"
                         },
                         {
-                           "uuid" : "03854a28-fafe-428f-964f-760cd1b83f1f"
-                        },
-                        {
-                           "uuid" : "03bae36d-a30a-4640-9a35-f2ccb0e2cddc"
-                        },
-                        {
-                           "uuid" : "03c5c968-410f-432c-b7ac-8c8e6e6c4520"
+                           "uuid" : "03ae51b3-5f99-4de3-92ee-7ced572e13b9"
                         }
                      ]
                   },
                   "name" : "Utility network router for zone fi-hel1",
+                  "static_routes" : [],
                   "type" : "service",
-                  "uuid" : "040e9e7c-d773-4b0f-bab0-6b61a26ce96e"
+                  "uuid" : "04338d3f-4e7a-481f-9382-d6be773d111e"
                },
                {
                   "attached_networks" : {
                      "network" : []
                   },
                   "name" : "Modified name (test)",
+                  "static_routes" : [],
                   "type" : "normal",
-                  "uuid" : "0465e8a4-4779-4803-bef9-7bbaefb311c1"
+                  "uuid" : "04461614-9ae4-4714-b990-8b9db9f047dc"
                },
                {
                   "attached_networks" : {
                      "network" : [
                         {
-                           "uuid" : "03baf748-c757-4317-90b4-da92f7f94743"
-                        },
-                        {
-                           "uuid" : "03a002de-994e-45aa-9e1c-9918f0908c57"
+                           "uuid" : "03e67063-2be4-42ba-b1b1-9beb73b8f02f"
                         }
                      ]
                   },
-                  "name" : "Utility network router for zone fi-hel2",
+                  "name" : "Utility network router for zone pl-waw1",
+                  "static_routes" : [],
                   "type" : "service",
-                  "uuid" : "0495fef9-b234-4819-ac51-431b934037c0"
+                  "uuid" : "047d6685-89bc-42e5-a7cb-4a16d098260f"
+               },
+               {
+                  "attached_networks" : {
+                     "network" : []
+                  },
+                  "name" : "test router (test)",
+                  "static_routes" : [],
+                  "type" : "normal",
+                  "uuid" : "047fcaee-06f1-4876-8347-47e73d340c34"
+               },
+               {
+                  "attached_networks" : {
+                     "network" : [
+                        {
+                           "uuid" : "03c9db27-38a2-427e-8c5e-5f4fcbc9570e"
+                        },
+                        {
+                           "uuid" : "03df6d37-931a-42cc-b6b8-035b58d8b0f0"
+                        },
+                        {
+                           "uuid" : "03f32d48-8628-4b10-94c3-3c1310340d10"
+                        },
+                        {
+                           "uuid" : "03b89ee9-ddb9-44f3-aea2-c4329a1264de"
+                        },
+                        {
+                           "uuid" : "03e9ef62-75f1-4c89-8e2e-88890aa5e713"
+                        },
+                        {
+                           "uuid" : "033b368e-af2e-4211-9970-30af766b1bf9"
+                        }
+                     ]
+                  },
+                  "name" : "Utility network router for zone de-fra1",
+                  "static_routes" : [],
+                  "type" : "service",
+                  "uuid" : "048618ec-8f68-4674-a7bd-f0c0916ae8ab"
+               },
+               {
+                  "attached_networks" : {
+                     "network" : []
+                  },
+                  "name" : "test router (test)",
+                  "static_routes" : [],
+                  "type" : "normal",
+                  "uuid" : "04b9fe4b-309e-46e8-a526-ed1474d88d4e"
                }
             ]
          }
       }
     headers:
       Content-Length:
-      - "1612"
+      - "3316"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 19 Aug 2020 14:08:50 GMT
+      - Mon, 24 Oct 2022 13:56:04 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -160,13 +221,15 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/router/0465e8a4-4779-4803-bef9-7bbaefb311c1
+      User-Agent:
+      - upcloud-go-api-ctx/4.9.0
+    url: https://api.upcloud.com/1.3/router/04461614-9ae4-4714-b990-8b9db9f047dc
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Wed, 19 Aug 2020 14:08:50 GMT
+      - Mon, 24 Oct 2022 13:56:04 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -182,6 +245,8 @@ interactions:
       - application/json
       Content-Type:
       - application/json
+      User-Agent:
+      - upcloud-go-api-ctx/4.9.0
     url: https://api.upcloud.com/1.3/router
     method: GET
   response:
@@ -193,51 +258,103 @@ interactions:
                   "attached_networks" : {
                      "network" : [
                         {
-                           "uuid" : "03206c92-50f2-40b0-ad05-5f02cab2e932"
+                           "uuid" : "0343ede2-9890-4470-b680-0dcda6d9f7e3"
                         },
                         {
-                           "uuid" : "03d781c3-65e3-4a7a-b6cd-a7ce7e23b8c5"
-                        },
-                        {
-                           "uuid" : "03854a28-fafe-428f-964f-760cd1b83f1f"
-                        },
-                        {
-                           "uuid" : "03bae36d-a30a-4640-9a35-f2ccb0e2cddc"
-                        },
-                        {
-                           "uuid" : "03c5c968-410f-432c-b7ac-8c8e6e6c4520"
+                           "uuid" : "03c40911-2f43-4138-bb91-7561a8351353"
                         }
                      ]
                   },
-                  "name" : "Utility network router for zone fi-hel1",
+                  "name" : "Utility network router for zone fi-hel2",
+                  "static_routes" : [],
                   "type" : "service",
-                  "uuid" : "040e9e7c-d773-4b0f-bab0-6b61a26ce96e"
+                  "uuid" : "041e39c9-d2b5-4b26-a9b9-d732fc900189"
                },
                {
                   "attached_networks" : {
                      "network" : [
                         {
-                           "uuid" : "03baf748-c757-4317-90b4-da92f7f94743"
+                           "uuid" : "03e3babd-fc75-49a2-aa41-8eb697c3ed6d"
                         },
                         {
-                           "uuid" : "03a002de-994e-45aa-9e1c-9918f0908c57"
+                           "uuid" : "03ae51b3-5f99-4de3-92ee-7ced572e13b9"
                         }
                      ]
                   },
-                  "name" : "Utility network router for zone fi-hel2",
+                  "name" : "Utility network router for zone fi-hel1",
+                  "static_routes" : [],
                   "type" : "service",
-                  "uuid" : "0495fef9-b234-4819-ac51-431b934037c0"
+                  "uuid" : "04338d3f-4e7a-481f-9382-d6be773d111e"
+               },
+               {
+                  "attached_networks" : {
+                     "network" : [
+                        {
+                           "uuid" : "03e67063-2be4-42ba-b1b1-9beb73b8f02f"
+                        }
+                     ]
+                  },
+                  "name" : "Utility network router for zone pl-waw1",
+                  "static_routes" : [],
+                  "type" : "service",
+                  "uuid" : "047d6685-89bc-42e5-a7cb-4a16d098260f"
+               },
+               {
+                  "attached_networks" : {
+                     "network" : []
+                  },
+                  "name" : "test router (test)",
+                  "static_routes" : [],
+                  "type" : "normal",
+                  "uuid" : "047fcaee-06f1-4876-8347-47e73d340c34"
+               },
+               {
+                  "attached_networks" : {
+                     "network" : [
+                        {
+                           "uuid" : "03f32d48-8628-4b10-94c3-3c1310340d10"
+                        },
+                        {
+                           "uuid" : "03b89ee9-ddb9-44f3-aea2-c4329a1264de"
+                        },
+                        {
+                           "uuid" : "03e9ef62-75f1-4c89-8e2e-88890aa5e713"
+                        },
+                        {
+                           "uuid" : "033b368e-af2e-4211-9970-30af766b1bf9"
+                        },
+                        {
+                           "uuid" : "03c9db27-38a2-427e-8c5e-5f4fcbc9570e"
+                        },
+                        {
+                           "uuid" : "03df6d37-931a-42cc-b6b8-035b58d8b0f0"
+                        }
+                     ]
+                  },
+                  "name" : "Utility network router for zone de-fra1",
+                  "static_routes" : [],
+                  "type" : "service",
+                  "uuid" : "048618ec-8f68-4674-a7bd-f0c0916ae8ab"
+               },
+               {
+                  "attached_networks" : {
+                     "network" : []
+                  },
+                  "name" : "test router (test)",
+                  "static_routes" : [],
+                  "type" : "normal",
+                  "uuid" : "04b9fe4b-309e-46e8-a526-ed1474d88d4e"
                }
             ]
          }
       }
     headers:
       Content-Length:
-      - "1372"
+      - "3042"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 19 Aug 2020 14:08:50 GMT
+      - Mon, 24 Oct 2022 13:56:04 GMT
       Server:
       - Apache
       Strict-Transport-Security:
