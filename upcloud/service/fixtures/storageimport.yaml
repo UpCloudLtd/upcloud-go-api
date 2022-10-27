@@ -9,6 +9,8 @@ interactions:
       - application/json
       Content-Type:
       - application/json
+      User-Agent:
+      - upcloud-go-api-ctx/4.9.0
     url: https://api.upcloud.com/1.3/storage
     method: POST
   response:
@@ -20,6 +22,7 @@ interactions:
             "backups" : {
                "backup" : []
             },
+            "created" : "2022-10-27T17:15:46Z",
             "license" : 0,
             "servers" : {
                "server" : []
@@ -29,17 +32,17 @@ interactions:
             "tier" : "maxiops",
             "title" : "Alpine Linux (test)",
             "type" : "normal",
-            "uuid" : "01ed0498-e8df-4f35-aad8-3388bbd75adf",
+            "uuid" : "0117019c-64bb-46c8-b2a1-c7da19f676f0",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "420"
+      - "462"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 19 Aug 2020 14:13:55 GMT
+      - Thu, 27 Oct 2022 17:15:46 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -55,7 +58,9 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/storage/01ed0498-e8df-4f35-aad8-3388bbd75adf/import
+      User-Agent:
+      - upcloud-go-api-ctx/4.9.0
+    url: https://api.upcloud.com/1.3/storage/0117019c-64bb-46c8-b2a1-c7da19f676f0/import
     method: POST
   response:
     body: |
@@ -64,7 +69,7 @@ interactions:
             "client_content_length" : 0,
             "client_content_type" : "",
             "completed" : "",
-            "created" : "2020-08-19T14:14:07Z",
+            "created" : "2022-10-27T17:15:56Z",
             "error_code" : "",
             "error_message" : "",
             "md5sum" : "",
@@ -73,7 +78,7 @@ interactions:
             "source" : "http_import",
             "source_location" : "http://dl-cdn.alpinelinux.org/alpine/v3.12/releases/x86/alpine-standard-3.12.0-x86.iso",
             "state" : "prepared",
-            "uuid" : "073428f2-07df-42cb-81b2-fe554c28f1af",
+            "uuid" : "07768aef-61dd-45a2-9ed5-3b121da53f07",
             "written_bytes" : 0
          }
       }
@@ -83,7 +88,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 19 Aug 2020 14:14:07 GMT
+      - Thu, 27 Oct 2022 17:15:56 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -99,95 +104,9 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/storage/01ed0498-e8df-4f35-aad8-3388bbd75adf/import
-    method: GET
-  response:
-    body: |
-      {
-         "storage_import" : {
-            "client_content_length" : 0,
-            "client_content_type" : "",
-            "completed" : "",
-            "created" : "2020-08-19T14:14:07Z",
-            "error_code" : "",
-            "error_message" : "",
-            "md5sum" : "",
-            "read_bytes" : 0,
-            "sha256sum" : "",
-            "source" : "http_import",
-            "source_location" : "http://dl-cdn.alpinelinux.org/alpine/v3.12/releases/x86/alpine-standard-3.12.0-x86.iso",
-            "state" : "pending",
-            "uuid" : "073428f2-07df-42cb-81b2-fe554c28f1af",
-            "written_bytes" : 0
-         }
-      }
-    headers:
-      Content-Length:
-      - "546"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Wed, 19 Aug 2020 14:14:08 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-    url: https://api.upcloud.com/1.3/storage/01ed0498-e8df-4f35-aad8-3388bbd75adf/import
-    method: GET
-  response:
-    body: |
-      {
-         "storage_import" : {
-            "client_content_length" : 0,
-            "client_content_type" : "",
-            "completed" : "",
-            "created" : "2020-08-19T14:14:07Z",
-            "error_code" : "",
-            "error_message" : "",
-            "md5sum" : "",
-            "read_bytes" : 0,
-            "sha256sum" : "",
-            "source" : "http_import",
-            "source_location" : "http://dl-cdn.alpinelinux.org/alpine/v3.12/releases/x86/alpine-standard-3.12.0-x86.iso",
-            "state" : "pending",
-            "uuid" : "073428f2-07df-42cb-81b2-fe554c28f1af",
-            "written_bytes" : 0
-         }
-      }
-    headers:
-      Content-Length:
-      - "546"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Wed, 19 Aug 2020 14:14:13 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-    url: https://api.upcloud.com/1.3/storage/01ed0498-e8df-4f35-aad8-3388bbd75adf/import
+      User-Agent:
+      - upcloud-go-api-ctx/4.9.0
+    url: https://api.upcloud.com/1.3/storage/0117019c-64bb-46c8-b2a1-c7da19f676f0/import
     method: GET
   response:
     body: |
@@ -195,52 +114,8 @@ interactions:
          "storage_import" : {
             "client_content_length" : 120586240,
             "client_content_type" : "application/octet-stream",
-            "completed" : "",
-            "created" : "2020-08-19T14:14:07Z",
-            "error_code" : "",
-            "error_message" : "",
-            "md5sum" : "",
-            "read_bytes" : 111111824,
-            "sha256sum" : "",
-            "source" : "http_import",
-            "source_location" : "http://dl-cdn.alpinelinux.org/alpine/v3.12/releases/x86/alpine-standard-3.12.0-x86.iso",
-            "state" : "importing",
-            "uuid" : "073428f2-07df-42cb-81b2-fe554c28f1af",
-            "written_bytes" : 111111824
-         }
-      }
-    headers:
-      Content-Length:
-      - "596"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Wed, 19 Aug 2020 14:14:18 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-    url: https://api.upcloud.com/1.3/storage/01ed0498-e8df-4f35-aad8-3388bbd75adf/import
-    method: GET
-  response:
-    body: |
-      {
-         "storage_import" : {
-            "client_content_length" : 120586240,
-            "client_content_type" : "application/octet-stream",
-            "completed" : "2020-08-19T14:14:23Z",
-            "created" : "2020-08-19T14:14:07Z",
+            "completed" : "2022-10-27T17:16:06Z",
+            "created" : "2022-10-27T17:15:56Z",
             "error_code" : "",
             "error_message" : "",
             "md5sum" : "77ba289bdc966ec996278a5a740d96d8",
@@ -249,7 +124,7 @@ interactions:
             "source" : "http_import",
             "source_location" : "http://dl-cdn.alpinelinux.org/alpine/v3.12/releases/x86/alpine-standard-3.12.0-x86.iso",
             "state" : "completed",
-            "uuid" : "073428f2-07df-42cb-81b2-fe554c28f1af",
+            "uuid" : "07768aef-61dd-45a2-9ed5-3b121da53f07",
             "written_bytes" : 120586240
          }
       }
@@ -259,7 +134,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 19 Aug 2020 14:14:23 GMT
+      - Thu, 27 Oct 2022 17:16:07 GMT
       Server:
       - Apache
       Strict-Transport-Security:

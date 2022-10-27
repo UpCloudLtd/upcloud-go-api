@@ -10,7 +10,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/4.8.0
+      - upcloud-go-api-ctx/4.9.0
     url: https://api.upcloud.com/1.3/server
     method: POST
   response:
@@ -19,24 +19,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1662692928,
+            "created" : 1666894945,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "utility",
-                     "address" : "10.6.6.167",
+                     "address" : "10.6.6.214",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
+                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:4713",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.14.133",
+                     "address" : "94.237.13.191",
                      "family" : "IPv4"
                   }
                ]
@@ -65,13 +65,14 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "10.6.6.167",
+                                 "address" : "10.6.6.214",
+                                 "dhcp_provided" : "yes",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "da:45:c4:5c:b6:76",
+                        "mac" : "da:45:c4:5c:f8:f8",
                         "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
                         "source_ip_filtering" : "yes",
                         "type" : "utility"
@@ -82,13 +83,14 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "94.237.14.133",
+                                 "address" : "94.237.13.191",
+                                 "dhcp_provided" : "yes",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "da:45:c4:5c:78:d8",
+                        "mac" : "da:45:c4:5c:41:77",
                         "network" : "03000000-0000-4000-8095-000000000000",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -99,13 +101,14 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
+                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:4713",
+                                 "dhcp_provided" : "yes",
                                  "family" : "IPv6",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "da:45:c4:5c:3a:b7",
+                        "mac" : "da:45:c4:5c:47:13",
                         "network" : "03000000-0000-4000-8046-000000000000",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -114,13 +117,13 @@ interactions:
                }
             },
             "nic_model" : "virtio",
-            "password" : "trr4b9g37k5ckpz3",
+            "password" : "vu9va9cw9xy59xy5",
             "plan" : "custom",
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
             "progress" : "0",
             "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
+            "remote_access_password" : "6nh3Jg3A",
             "remote_access_type" : "vnc",
             "simple_backup" : "no",
             "state" : "maintenance",
@@ -129,7 +132,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
+                     "storage" : "01cfbcfb-ea10-4156-b86a-0b8c4bc51c41",
                      "storage_size" : 10,
                      "storage_tier" : "maxiops",
                      "storage_title" : "disk1",
@@ -143,18 +146,18 @@ interactions:
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
             "username" : "root",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
+            "uuid" : "003a4501-8ee1-418c-b5f7-ea12c91f1333",
             "video_model" : "cirrus",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "4163"
+      - "4319"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Fri, 09 Sep 2022 03:08:48 GMT
+      - Thu, 27 Oct 2022 18:22:25 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -171,8 +174,8 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44
+      - upcloud-go-api-ctx/4.9.0
+    url: https://api.upcloud.com/1.3/server/003a4501-8ee1-418c-b5f7-ea12c91f1333
     method: GET
   response:
     body: |
@@ -180,24 +183,25 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1662692928,
+            "created" : 1666894945,
             "firewall" : "off",
+            "host" : 5872304771,
             "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "utility",
-                     "address" : "10.6.6.167",
+                     "address" : "10.6.6.214",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
+                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:4713",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.14.133",
+                     "address" : "94.237.13.191",
                      "family" : "IPv4"
                   }
                ]
@@ -226,13 +230,14 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "10.6.6.167",
+                                 "address" : "10.6.6.214",
+                                 "dhcp_provided" : "yes",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "da:45:c4:5c:b6:76",
+                        "mac" : "da:45:c4:5c:f8:f8",
                         "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
                         "source_ip_filtering" : "yes",
                         "type" : "utility"
@@ -243,13 +248,14 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "94.237.14.133",
+                                 "address" : "94.237.13.191",
+                                 "dhcp_provided" : "yes",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "da:45:c4:5c:78:d8",
+                        "mac" : "da:45:c4:5c:41:77",
                         "network" : "03000000-0000-4000-8095-000000000000",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -260,1603 +266,14 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
+                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:4713",
+                                 "dhcp_provided" : "yes",
                                  "family" : "IPv6",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "da:45:c4:5c:3a:b7",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "progress" : "85",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
-                     "storage_size" : 10,
-                     "storage_tier" : "maxiops",
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "4098"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Fri, 09 Sep 2022 03:08:56 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1662692928,
-            "firewall" : "off",
-            "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.167",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.14.133",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "labels" : {
-               "label" : [
-                  {
-                     "key" : "managedBy",
-                     "value" : "upcloud-sdk-integration-test"
-                  },
-                  {
-                     "key" : "testName",
-                     "value" : "TestAttachDetachStorage"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.167",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:b6:76",
-                        "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.14.133",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:78:d8",
-                        "network" : "03000000-0000-4000-8095-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:3a:b7",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "progress" : "85",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
-                     "storage_size" : 10,
-                     "storage_tier" : "maxiops",
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "4098"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Fri, 09 Sep 2022 03:09:01 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1662692928,
-            "firewall" : "off",
-            "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.167",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.14.133",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "labels" : {
-               "label" : [
-                  {
-                     "key" : "managedBy",
-                     "value" : "upcloud-sdk-integration-test"
-                  },
-                  {
-                     "key" : "testName",
-                     "value" : "TestAttachDetachStorage"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.167",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:b6:76",
-                        "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.14.133",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:78:d8",
-                        "network" : "03000000-0000-4000-8095-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:3a:b7",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "progress" : "85",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
-                     "storage_size" : 10,
-                     "storage_tier" : "maxiops",
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "4098"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Fri, 09 Sep 2022 03:09:06 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1662692928,
-            "firewall" : "off",
-            "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.167",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.14.133",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "labels" : {
-               "label" : [
-                  {
-                     "key" : "managedBy",
-                     "value" : "upcloud-sdk-integration-test"
-                  },
-                  {
-                     "key" : "testName",
-                     "value" : "TestAttachDetachStorage"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.167",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:b6:76",
-                        "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.14.133",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:78:d8",
-                        "network" : "03000000-0000-4000-8095-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:3a:b7",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "progress" : "95",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
-                     "storage_size" : 10,
-                     "storage_tier" : "maxiops",
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "4098"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Fri, 09 Sep 2022 03:09:11 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1662692928,
-            "firewall" : "off",
-            "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.167",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.14.133",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "labels" : {
-               "label" : [
-                  {
-                     "key" : "managedBy",
-                     "value" : "upcloud-sdk-integration-test"
-                  },
-                  {
-                     "key" : "testName",
-                     "value" : "TestAttachDetachStorage"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.167",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:b6:76",
-                        "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.14.133",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:78:d8",
-                        "network" : "03000000-0000-4000-8095-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:3a:b7",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "progress" : "95",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
-                     "storage_size" : 10,
-                     "storage_tier" : "maxiops",
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "4098"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Fri, 09 Sep 2022 03:09:16 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1662692928,
-            "firewall" : "off",
-            "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.167",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.14.133",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "labels" : {
-               "label" : [
-                  {
-                     "key" : "managedBy",
-                     "value" : "upcloud-sdk-integration-test"
-                  },
-                  {
-                     "key" : "testName",
-                     "value" : "TestAttachDetachStorage"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.167",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:b6:76",
-                        "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.14.133",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:78:d8",
-                        "network" : "03000000-0000-4000-8095-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:3a:b7",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "progress" : "95",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
-                     "storage_size" : 10,
-                     "storage_tier" : "maxiops",
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "4098"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Fri, 09 Sep 2022 03:09:22 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1662692928,
-            "firewall" : "off",
-            "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.167",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.14.133",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "labels" : {
-               "label" : [
-                  {
-                     "key" : "managedBy",
-                     "value" : "upcloud-sdk-integration-test"
-                  },
-                  {
-                     "key" : "testName",
-                     "value" : "TestAttachDetachStorage"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.167",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:b6:76",
-                        "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.14.133",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:78:d8",
-                        "network" : "03000000-0000-4000-8095-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:3a:b7",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "progress" : "95",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
-                     "storage_size" : 10,
-                     "storage_tier" : "maxiops",
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "4098"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Fri, 09 Sep 2022 03:09:27 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1662692928,
-            "firewall" : "off",
-            "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.167",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.14.133",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "labels" : {
-               "label" : [
-                  {
-                     "key" : "managedBy",
-                     "value" : "upcloud-sdk-integration-test"
-                  },
-                  {
-                     "key" : "testName",
-                     "value" : "TestAttachDetachStorage"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.167",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:b6:76",
-                        "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.14.133",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:78:d8",
-                        "network" : "03000000-0000-4000-8095-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:3a:b7",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "progress" : "95",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
-                     "storage_size" : 10,
-                     "storage_tier" : "maxiops",
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "4098"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Fri, 09 Sep 2022 03:09:32 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1662692928,
-            "firewall" : "off",
-            "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.167",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.14.133",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "labels" : {
-               "label" : [
-                  {
-                     "key" : "managedBy",
-                     "value" : "upcloud-sdk-integration-test"
-                  },
-                  {
-                     "key" : "testName",
-                     "value" : "TestAttachDetachStorage"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.167",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:b6:76",
-                        "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.14.133",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:78:d8",
-                        "network" : "03000000-0000-4000-8095-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:3a:b7",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "progress" : "95",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
-                     "storage_size" : 10,
-                     "storage_tier" : "maxiops",
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "4098"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Fri, 09 Sep 2022 03:09:37 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1662692928,
-            "firewall" : "off",
-            "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.167",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.14.133",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "labels" : {
-               "label" : [
-                  {
-                     "key" : "managedBy",
-                     "value" : "upcloud-sdk-integration-test"
-                  },
-                  {
-                     "key" : "testName",
-                     "value" : "TestAttachDetachStorage"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.167",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:b6:76",
-                        "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.14.133",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:78:d8",
-                        "network" : "03000000-0000-4000-8095-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:3a:b7",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "progress" : "95",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
-                     "storage_size" : 10,
-                     "storage_tier" : "maxiops",
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "4098"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Fri, 09 Sep 2022 03:09:42 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1662692928,
-            "firewall" : "off",
-            "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.167",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.14.133",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "labels" : {
-               "label" : [
-                  {
-                     "key" : "managedBy",
-                     "value" : "upcloud-sdk-integration-test"
-                  },
-                  {
-                     "key" : "testName",
-                     "value" : "TestAttachDetachStorage"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.167",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:b6:76",
-                        "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.14.133",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:78:d8",
-                        "network" : "03000000-0000-4000-8095-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:3a:b7",
+                        "mac" : "da:45:c4:5c:47:13",
                         "network" : "03000000-0000-4000-8046-000000000000",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -1869,1272 +286,7 @@ interactions:
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
             "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
-                     "storage_size" : 10,
-                     "storage_tier" : "maxiops",
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "4073"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Fri, 09 Sep 2022 03:09:48 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1662692928,
-            "firewall" : "off",
-            "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.167",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.14.133",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "labels" : {
-               "label" : [
-                  {
-                     "key" : "managedBy",
-                     "value" : "upcloud-sdk-integration-test"
-                  },
-                  {
-                     "key" : "testName",
-                     "value" : "TestAttachDetachStorage"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.167",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:b6:76",
-                        "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.14.133",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:78:d8",
-                        "network" : "03000000-0000-4000-8095-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:3a:b7",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
-                     "storage_size" : 10,
-                     "storage_tier" : "maxiops",
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "4073"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Fri, 09 Sep 2022 03:09:53 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1662692928,
-            "firewall" : "off",
-            "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.167",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.14.133",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "labels" : {
-               "label" : [
-                  {
-                     "key" : "managedBy",
-                     "value" : "upcloud-sdk-integration-test"
-                  },
-                  {
-                     "key" : "testName",
-                     "value" : "TestAttachDetachStorage"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.167",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:b6:76",
-                        "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.14.133",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:78:d8",
-                        "network" : "03000000-0000-4000-8095-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:3a:b7",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
-                     "storage_size" : 10,
-                     "storage_tier" : "maxiops",
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "4073"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Fri, 09 Sep 2022 03:09:58 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1662692928,
-            "firewall" : "off",
-            "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.167",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.14.133",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "labels" : {
-               "label" : [
-                  {
-                     "key" : "managedBy",
-                     "value" : "upcloud-sdk-integration-test"
-                  },
-                  {
-                     "key" : "testName",
-                     "value" : "TestAttachDetachStorage"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.167",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:b6:76",
-                        "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.14.133",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:78:d8",
-                        "network" : "03000000-0000-4000-8095-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:3a:b7",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
-                     "storage_size" : 10,
-                     "storage_tier" : "maxiops",
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "4073"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Fri, 09 Sep 2022 03:10:03 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1662692928,
-            "firewall" : "off",
-            "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.167",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.14.133",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "labels" : {
-               "label" : [
-                  {
-                     "key" : "managedBy",
-                     "value" : "upcloud-sdk-integration-test"
-                  },
-                  {
-                     "key" : "testName",
-                     "value" : "TestAttachDetachStorage"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.167",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:b6:76",
-                        "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.14.133",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:78:d8",
-                        "network" : "03000000-0000-4000-8095-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:3a:b7",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
-                     "storage_size" : 10,
-                     "storage_tier" : "maxiops",
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "4073"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Fri, 09 Sep 2022 03:10:08 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1662692928,
-            "firewall" : "off",
-            "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.167",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.14.133",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "labels" : {
-               "label" : [
-                  {
-                     "key" : "managedBy",
-                     "value" : "upcloud-sdk-integration-test"
-                  },
-                  {
-                     "key" : "testName",
-                     "value" : "TestAttachDetachStorage"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.167",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:b6:76",
-                        "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.14.133",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:78:d8",
-                        "network" : "03000000-0000-4000-8095-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:3a:b7",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
-                     "storage_size" : 10,
-                     "storage_tier" : "maxiops",
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "4073"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Fri, 09 Sep 2022 03:10:13 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1662692928,
-            "firewall" : "off",
-            "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.167",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.14.133",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "labels" : {
-               "label" : [
-                  {
-                     "key" : "managedBy",
-                     "value" : "upcloud-sdk-integration-test"
-                  },
-                  {
-                     "key" : "testName",
-                     "value" : "TestAttachDetachStorage"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.167",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:b6:76",
-                        "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.14.133",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:78:d8",
-                        "network" : "03000000-0000-4000-8095-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:3a:b7",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
-                     "storage_size" : 10,
-                     "storage_tier" : "maxiops",
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "4073"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Fri, 09 Sep 2022 03:10:19 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1662692928,
-            "firewall" : "off",
-            "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.167",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.14.133",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "labels" : {
-               "label" : [
-                  {
-                     "key" : "managedBy",
-                     "value" : "upcloud-sdk-integration-test"
-                  },
-                  {
-                     "key" : "testName",
-                     "value" : "TestAttachDetachStorage"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.167",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:b6:76",
-                        "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.14.133",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:78:d8",
-                        "network" : "03000000-0000-4000-8095-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:3a:b7",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
-                     "storage_size" : 10,
-                     "storage_tier" : "maxiops",
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "4073"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Fri, 09 Sep 2022 03:10:24 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1662692928,
-            "firewall" : "off",
-            "host" : 6325289603,
-            "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.167",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.14.133",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "labels" : {
-               "label" : [
-                  {
-                     "key" : "managedBy",
-                     "value" : "upcloud-sdk-integration-test"
-                  },
-                  {
-                     "key" : "testName",
-                     "value" : "TestAttachDetachStorage"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.167",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:b6:76",
-                        "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.14.133",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:78:d8",
-                        "network" : "03000000-0000-4000-8095-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:3a:b7",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
+            "remote_access_password" : "6nh3Jg3A",
             "remote_access_type" : "vnc",
             "simple_backup" : "no",
             "state" : "started",
@@ -3143,7 +295,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
+                     "storage" : "01cfbcfb-ea10-4156-b86a-0b8c4bc51c41",
                      "storage_size" : 10,
                      "storage_tier" : "maxiops",
                      "storage_title" : "disk1",
@@ -3156,18 +308,18 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
+            "uuid" : "003a4501-8ee1-418c-b5f7-ea12c91f1333",
             "video_model" : "cirrus",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "4096"
+      - "4252"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Fri, 09 Sep 2022 03:10:29 GMT
+      - Thu, 27 Oct 2022 18:22:48 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -3184,8 +336,8 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44/stop
+      - upcloud-go-api-ctx/4.9.0
+    url: https://api.upcloud.com/1.3/server/003a4501-8ee1-418c-b5f7-ea12c91f1333/stop
     method: POST
   response:
     body: |
@@ -3193,25 +345,25 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1662692928,
+            "created" : 1666894945,
             "firewall" : "off",
-            "host" : 6325289603,
+            "host" : 5872304771,
             "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "utility",
-                     "address" : "10.6.6.167",
+                     "address" : "10.6.6.214",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
+                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:4713",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.14.133",
+                     "address" : "94.237.13.191",
                      "family" : "IPv4"
                   }
                ]
@@ -3240,13 +392,14 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "10.6.6.167",
+                                 "address" : "10.6.6.214",
+                                 "dhcp_provided" : "yes",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "da:45:c4:5c:b6:76",
+                        "mac" : "da:45:c4:5c:f8:f8",
                         "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
                         "source_ip_filtering" : "yes",
                         "type" : "utility"
@@ -3257,13 +410,14 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "94.237.14.133",
+                                 "address" : "94.237.13.191",
+                                 "dhcp_provided" : "yes",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "da:45:c4:5c:78:d8",
+                        "mac" : "da:45:c4:5c:41:77",
                         "network" : "03000000-0000-4000-8095-000000000000",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -3274,13 +428,14 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
+                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:4713",
+                                 "dhcp_provided" : "yes",
                                  "family" : "IPv6",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "da:45:c4:5c:3a:b7",
+                        "mac" : "da:45:c4:5c:47:13",
                         "network" : "03000000-0000-4000-8046-000000000000",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -3293,7 +448,7 @@ interactions:
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
             "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
+            "remote_access_password" : "6nh3Jg3A",
             "remote_access_type" : "vnc",
             "simple_backup" : "no",
             "state" : "started",
@@ -3302,7 +457,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
+                     "storage" : "01cfbcfb-ea10-4156-b86a-0b8c4bc51c41",
                      "storage_size" : 10,
                      "storage_tier" : "maxiops",
                      "storage_title" : "disk1",
@@ -3315,971 +470,18 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
+            "uuid" : "003a4501-8ee1-418c-b5f7-ea12c91f1333",
             "video_model" : "cirrus",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "4096"
+      - "4252"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Fri, 09 Sep 2022 03:10:29 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1662692928,
-            "firewall" : "off",
-            "host" : 6325289603,
-            "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.167",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.14.133",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "labels" : {
-               "label" : [
-                  {
-                     "key" : "managedBy",
-                     "value" : "upcloud-sdk-integration-test"
-                  },
-                  {
-                     "key" : "testName",
-                     "value" : "TestAttachDetachStorage"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.167",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:b6:76",
-                        "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.14.133",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:78:d8",
-                        "network" : "03000000-0000-4000-8095-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:3a:b7",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
-                     "storage_size" : 10,
-                     "storage_tier" : "maxiops",
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "4100"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Fri, 09 Sep 2022 03:10:34 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1662692928,
-            "firewall" : "off",
-            "host" : 6325289603,
-            "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.167",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.14.133",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "labels" : {
-               "label" : [
-                  {
-                     "key" : "managedBy",
-                     "value" : "upcloud-sdk-integration-test"
-                  },
-                  {
-                     "key" : "testName",
-                     "value" : "TestAttachDetachStorage"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.167",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:b6:76",
-                        "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.14.133",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:78:d8",
-                        "network" : "03000000-0000-4000-8095-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:3a:b7",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
-                     "storage_size" : 10,
-                     "storage_tier" : "maxiops",
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "4100"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Fri, 09 Sep 2022 03:10:39 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1662692928,
-            "firewall" : "off",
-            "host" : 6325289603,
-            "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.167",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.14.133",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "labels" : {
-               "label" : [
-                  {
-                     "key" : "managedBy",
-                     "value" : "upcloud-sdk-integration-test"
-                  },
-                  {
-                     "key" : "testName",
-                     "value" : "TestAttachDetachStorage"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.167",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:b6:76",
-                        "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.14.133",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:78:d8",
-                        "network" : "03000000-0000-4000-8095-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:3a:b7",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
-                     "storage_size" : 10,
-                     "storage_tier" : "maxiops",
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "4100"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Fri, 09 Sep 2022 03:10:45 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1662692928,
-            "firewall" : "off",
-            "host" : 6325289603,
-            "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.167",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.14.133",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "labels" : {
-               "label" : [
-                  {
-                     "key" : "managedBy",
-                     "value" : "upcloud-sdk-integration-test"
-                  },
-                  {
-                     "key" : "testName",
-                     "value" : "TestAttachDetachStorage"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.167",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:b6:76",
-                        "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.14.133",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:78:d8",
-                        "network" : "03000000-0000-4000-8095-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:3a:b7",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
-                     "storage_size" : 10,
-                     "storage_tier" : "maxiops",
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "4100"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Fri, 09 Sep 2022 03:10:50 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1662692928,
-            "firewall" : "off",
-            "host" : 6325289603,
-            "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.167",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.14.133",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "labels" : {
-               "label" : [
-                  {
-                     "key" : "managedBy",
-                     "value" : "upcloud-sdk-integration-test"
-                  },
-                  {
-                     "key" : "testName",
-                     "value" : "TestAttachDetachStorage"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.167",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:b6:76",
-                        "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.14.133",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:78:d8",
-                        "network" : "03000000-0000-4000-8095-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:3a:b7",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "maintenance",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
-                     "storage_size" : 10,
-                     "storage_tier" : "maxiops",
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "4100"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Fri, 09 Sep 2022 03:10:55 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44
-    method: GET
-  response:
-    body: |
-      {
-         "server" : {
-            "boot_order" : "disk",
-            "core_number" : "1",
-            "created" : 1662692928,
-            "firewall" : "off",
-            "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
-            "ip_addresses" : {
-               "ip_address" : [
-                  {
-                     "access" : "utility",
-                     "address" : "10.6.6.167",
-                     "family" : "IPv4"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                     "family" : "IPv6"
-                  },
-                  {
-                     "access" : "public",
-                     "address" : "94.237.14.133",
-                     "family" : "IPv4"
-                  }
-               ]
-            },
-            "labels" : {
-               "label" : [
-                  {
-                     "key" : "managedBy",
-                     "value" : "upcloud-sdk-integration-test"
-                  },
-                  {
-                     "key" : "testName",
-                     "value" : "TestAttachDetachStorage"
-                  }
-               ]
-            },
-            "license" : 0,
-            "memory_amount" : "1024",
-            "metadata" : "no",
-            "networking" : {
-               "interfaces" : {
-                  "interface" : [
-                     {
-                        "bootable" : "no",
-                        "index" : 1,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "10.6.6.167",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:b6:76",
-                        "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
-                        "source_ip_filtering" : "yes",
-                        "type" : "utility"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 2,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "94.237.14.133",
-                                 "family" : "IPv4",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:78:d8",
-                        "network" : "03000000-0000-4000-8095-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     },
-                     {
-                        "bootable" : "no",
-                        "index" : 3,
-                        "ip_addresses" : {
-                           "ip_address" : [
-                              {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
-                                 "family" : "IPv6",
-                                 "floating" : "no"
-                              }
-                           ]
-                        },
-                        "mac" : "da:45:c4:5c:3a:b7",
-                        "network" : "03000000-0000-4000-8046-000000000000",
-                        "source_ip_filtering" : "yes",
-                        "type" : "public"
-                     }
-                  ]
-               }
-            },
-            "nic_model" : "virtio",
-            "plan" : "custom",
-            "plan_ipv4_bytes" : "0",
-            "plan_ipv6_bytes" : "0",
-            "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
-            "remote_access_type" : "vnc",
-            "simple_backup" : "no",
-            "state" : "stopped",
-            "storage_devices" : {
-               "storage_device" : [
-                  {
-                     "address" : "virtio:0",
-                     "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
-                     "storage_size" : 10,
-                     "storage_tier" : "maxiops",
-                     "storage_title" : "disk1",
-                     "type" : "disk"
-                  }
-               ]
-            },
-            "tags" : {
-               "tag" : []
-            },
-            "timezone" : "UTC",
-            "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
-            "video_model" : "cirrus",
-            "zone" : "fi-hel2"
-         }
-      }
-    headers:
-      Content-Length:
-      - "4069"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Fri, 09 Sep 2022 03:11:00 GMT
+      - Thu, 27 Oct 2022 18:22:48 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -4296,7 +498,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/4.8.0
+      - upcloud-go-api-ctx/4.9.0
     url: https://api.upcloud.com/1.3/storage
     method: POST
   response:
@@ -4312,7 +514,7 @@ interactions:
             "backups" : {
                "backup" : []
             },
-            "created" : "2022-09-09T03:11:00Z",
+            "created" : "2022-10-27T18:22:59Z",
             "license" : 0,
             "servers" : {
                "server" : []
@@ -4322,7 +524,7 @@ interactions:
             "tier" : "maxiops",
             "title" : "Test storage",
             "type" : "normal",
-            "uuid" : "014b4972-72b4-421f-871f-069285ba54bc",
+            "uuid" : "019f3fda-d60d-4744-a69c-9eda9ca28b30",
             "zone" : "fi-hel2"
          }
       }
@@ -4332,7 +534,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Fri, 09 Sep 2022 03:11:00 GMT
+      - Thu, 27 Oct 2022 18:22:59 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -4341,7 +543,7 @@ interactions:
     code: 201
     duration: ""
 - request:
-    body: '{"storage_device":{"type":"disk","address":"scsi:0:0","storage":"014b4972-72b4-421f-871f-069285ba54bc"}}'
+    body: '{"storage_device":{"type":"disk","address":"scsi:0:0","storage":"019f3fda-d60d-4744-a69c-9eda9ca28b30"}}'
     form: {}
     headers:
       Accept:
@@ -4349,8 +551,8 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44/storage/attach
+      - upcloud-go-api-ctx/4.9.0
+    url: https://api.upcloud.com/1.3/server/003a4501-8ee1-418c-b5f7-ea12c91f1333/storage/attach
     method: POST
   response:
     body: |
@@ -4358,24 +560,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1662692928,
+            "created" : 1666894945,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "utility",
-                     "address" : "10.6.6.167",
+                     "address" : "10.6.6.214",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
+                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:4713",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.14.133",
+                     "address" : "94.237.13.191",
                      "family" : "IPv4"
                   }
                ]
@@ -4404,13 +606,14 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "10.6.6.167",
+                                 "address" : "10.6.6.214",
+                                 "dhcp_provided" : "yes",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "da:45:c4:5c:b6:76",
+                        "mac" : "da:45:c4:5c:f8:f8",
                         "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
                         "source_ip_filtering" : "yes",
                         "type" : "utility"
@@ -4421,13 +624,14 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "94.237.14.133",
+                                 "address" : "94.237.13.191",
+                                 "dhcp_provided" : "yes",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "da:45:c4:5c:78:d8",
+                        "mac" : "da:45:c4:5c:41:77",
                         "network" : "03000000-0000-4000-8095-000000000000",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -4438,13 +642,14 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
+                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:4713",
+                                 "dhcp_provided" : "yes",
                                  "family" : "IPv6",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "da:45:c4:5c:3a:b7",
+                        "mac" : "da:45:c4:5c:47:13",
                         "network" : "03000000-0000-4000-8046-000000000000",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -4457,7 +662,7 @@ interactions:
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
             "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
+            "remote_access_password" : "6nh3Jg3A",
             "remote_access_type" : "vnc",
             "simple_backup" : "no",
             "state" : "stopped",
@@ -4466,7 +671,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
+                     "storage" : "01cfbcfb-ea10-4156-b86a-0b8c4bc51c41",
                      "storage_size" : 10,
                      "storage_tier" : "maxiops",
                      "storage_title" : "disk1",
@@ -4475,7 +680,7 @@ interactions:
                   {
                      "address" : "scsi:0:0",
                      "boot_disk" : "0",
-                     "storage" : "014b4972-72b4-421f-871f-069285ba54bc",
+                     "storage" : "019f3fda-d60d-4744-a69c-9eda9ca28b30",
                      "storage_size" : 10,
                      "storage_tier" : "maxiops",
                      "storage_title" : "Test storage",
@@ -4488,18 +693,18 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
+            "uuid" : "003a4501-8ee1-418c-b5f7-ea12c91f1333",
             "video_model" : "cirrus",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "4397"
+      - "4553"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Fri, 09 Sep 2022 03:11:10 GMT
+      - Thu, 27 Oct 2022 18:23:09 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -4516,8 +721,8 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/4.8.0
-    url: https://api.upcloud.com/1.3/server/005e5ecb-3d3f-4699-bfcc-03f774811a44/storage/detach
+      - upcloud-go-api-ctx/4.9.0
+    url: https://api.upcloud.com/1.3/server/003a4501-8ee1-418c-b5f7-ea12c91f1333/storage/detach
     method: POST
   response:
     body: |
@@ -4525,24 +730,24 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1662692928,
+            "created" : 1666894945,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testattachdetachstorage.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "utility",
-                     "address" : "10.6.6.167",
+                     "address" : "10.6.6.214",
                      "family" : "IPv4"
                   },
                   {
                      "access" : "public",
-                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
+                     "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:4713",
                      "family" : "IPv6"
                   },
                   {
                      "access" : "public",
-                     "address" : "94.237.14.133",
+                     "address" : "94.237.13.191",
                      "family" : "IPv4"
                   }
                ]
@@ -4571,13 +776,14 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "10.6.6.167",
+                                 "address" : "10.6.6.214",
+                                 "dhcp_provided" : "yes",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "da:45:c4:5c:b6:76",
+                        "mac" : "da:45:c4:5c:f8:f8",
                         "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
                         "source_ip_filtering" : "yes",
                         "type" : "utility"
@@ -4588,13 +794,14 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "94.237.14.133",
+                                 "address" : "94.237.13.191",
+                                 "dhcp_provided" : "yes",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "da:45:c4:5c:78:d8",
+                        "mac" : "da:45:c4:5c:41:77",
                         "network" : "03000000-0000-4000-8095-000000000000",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -4605,13 +812,14 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:3ab7",
+                                 "address" : "2a04:3545:1000:720:d845:c4ff:fe5c:4713",
+                                 "dhcp_provided" : "yes",
                                  "family" : "IPv6",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "da:45:c4:5c:3a:b7",
+                        "mac" : "da:45:c4:5c:47:13",
                         "network" : "03000000-0000-4000-8046-000000000000",
                         "source_ip_filtering" : "yes",
                         "type" : "public"
@@ -4624,7 +832,7 @@ interactions:
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
             "remote_access_enabled" : "no",
-            "remote_access_password" : "kRM49pP4",
+            "remote_access_password" : "6nh3Jg3A",
             "remote_access_type" : "vnc",
             "simple_backup" : "no",
             "state" : "stopped",
@@ -4633,7 +841,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "01ccf9eb-906a-48b8-87f7-daef7077aab6",
+                     "storage" : "01cfbcfb-ea10-4156-b86a-0b8c4bc51c41",
                      "storage_size" : 10,
                      "storage_tier" : "maxiops",
                      "storage_title" : "disk1",
@@ -4646,18 +854,18 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestAttachDetachStorage",
-            "uuid" : "005e5ecb-3d3f-4699-bfcc-03f774811a44",
+            "uuid" : "003a4501-8ee1-418c-b5f7-ea12c91f1333",
             "video_model" : "cirrus",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "4069"
+      - "4225"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Fri, 09 Sep 2022 03:11:10 GMT
+      - Thu, 27 Oct 2022 18:23:09 GMT
       Server:
       - Apache
       Strict-Transport-Security:

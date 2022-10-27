@@ -6,6 +6,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"io/ioutil"
+	"net/http"
 	"os"
 	"testing"
 	"time"
@@ -66,13 +67,13 @@ func TestAttachDetachStorage(t *testing.T) {
 
 	record(t, "attachdetachstorage", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create a server
-		serverDetails, err := createServer(svc, "TestAttachDetachStorage")
+		serverDetails, err := createServerWithRecorder(rec, svc, "TestAttachDetachStorage")
 		require.NoError(t, err)
 		t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 		// Stop the server
 		t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
-		err = stopServer(svc, serverDetails.UUID)
+		err = stopServerWithRecorder(rec, svc, serverDetails.UUID)
 		require.NoError(t, err)
 		t.Log("Server is now stopped")
 
@@ -129,8 +130,21 @@ func TestCloneStorage(t *testing.T) {
 			Tier:  upcloud.StorageTierMaxIOPS,
 		})
 		require.NoError(t, err)
-		err = waitForStorageOnline(svc, clonedStorageDetails.UUID)
+		if rec.Mode() == recorder.ModeRecording {
+			rec.AddPassthrough(func(h *http.Request) bool {
+				return true
+			})
+
+			err = waitForStorageOnline(svc, clonedStorageDetails.UUID)
+			require.NoError(t, err)
+
+			require.NoError(t, err)
+			rec.Passthroughs = nil
+		}
+
+		details, err := svc.GetStorageDetails(&request.GetStorageDetailsRequest{UUID: clonedStorageDetails.UUID})
 		require.NoError(t, err)
+		assert.Equal(t, upcloud.StorageStateOnline, details.State)
 		t.Logf("Storage cloned as %s", clonedStorageDetails.UUID)
 	})
 }
@@ -146,13 +160,13 @@ func TestTemplatizeServerStorage(t *testing.T) {
 
 	record(t, "templatizeserverstorage", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create server
-		serverDetails, err := createServer(svc, "TestTemplatizeServerStorage")
+		serverDetails, err := createServerWithRecorder(rec, svc, "TestTemplatizeServerStorage")
 		require.NoError(t, err)
 		t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 		// Stop the server
 		t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
-		err = stopServer(svc, serverDetails.UUID)
+		err = stopServerWithRecorder(rec, svc, serverDetails.UUID)
 		require.NoError(t, err)
 		t.Log("Server is now stopped")
 
@@ -172,8 +186,21 @@ func TestTemplatizeServerStorage(t *testing.T) {
 		})
 		require.NoErrorf(t, err, "Error: %#v", err)
 
-		err = waitForStorageOnline(svc, storageDetails.UUID)
+		if rec.Mode() == recorder.ModeRecording {
+			rec.AddPassthrough(func(h *http.Request) bool {
+				return true
+			})
+
+			err = waitForStorageOnline(svc, storageDetails.UUID)
+			require.NoError(t, err)
+
+			require.NoError(t, err)
+			rec.Passthroughs = nil
+		}
+
+		storageDetails, err = svc.GetStorageDetails(&request.GetStorageDetailsRequest{UUID: storageDetails.UUID})
 		require.NoError(t, err)
+		assert.Equal(t, upcloud.StorageStateOnline, storageDetails.State)
 		t.Logf("Storage templatized as %s", storageDetails.UUID)
 	})
 }
@@ -190,13 +217,13 @@ func TestLoadEjectCDROM(t *testing.T) {
 
 	record(t, "loadejectcdrom", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create the server
-		serverDetails, err := createServer(svc, "TestLoadEjectCDROM")
+		serverDetails, err := createServerWithRecorder(rec, svc, "TestLoadEjectCDROM")
 		require.NoError(t, err)
 		t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 		// Stop the server
 		t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
-		err = stopServer(svc, serverDetails.UUID)
+		err = stopServerWithRecorder(rec, svc, serverDetails.UUID)
 		require.NoError(t, err)
 		t.Log("Server is now stopped")
 
@@ -257,8 +284,21 @@ func TestCreateRestoreBackup(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		err = waitForStorageOnline(svc, storageDetails.UUID)
+		if rec.Mode() == recorder.ModeRecording {
+			rec.AddPassthrough(func(h *http.Request) bool {
+				return true
+			})
+
+			err = waitForStorageOnline(svc, storageDetails.UUID)
+			require.NoError(t, err)
+
+			require.NoError(t, err)
+			rec.Passthroughs = nil
+		}
+
+		storageDetails, err = svc.GetStorageDetails(&request.GetStorageDetailsRequest{UUID: storageDetails.UUID})
 		require.NoError(t, err)
+		assert.Equal(t, upcloud.StorageStateOnline, storageDetails.State)
 
 		t.Logf("Created backup with UUID %s", backupDetails.UUID)
 
@@ -286,8 +326,21 @@ func TestCreateRestoreBackup(t *testing.T) {
 		})
 		assert.NoError(t, err)
 
-		err = waitForStorageOnline(svc, backupDetails.Origin)
+		if rec.Mode() == recorder.ModeRecording {
+			rec.AddPassthrough(func(h *http.Request) bool {
+				return true
+			})
+
+			err = waitForStorageOnline(svc, backupDetails.Origin)
+			require.NoError(t, err)
+
+			require.NoError(t, err)
+			rec.Passthroughs = nil
+		}
+
+		storageDetails, err = svc.GetStorageDetails(&request.GetStorageDetailsRequest{UUID: backupDetails.Origin})
 		require.NoError(t, err)
+		assert.Equal(t, upcloud.StorageStateOnline, storageDetails.State)
 	})
 }
 
@@ -310,9 +363,21 @@ func TestStorageImport(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		afterStorageImportDetails, err := svc.WaitForStorageImportCompletion(&request.WaitForStorageImportCompletionRequest{
-			StorageUUID: storage.UUID,
-			Timeout:     15 * time.Minute,
+		if rec.Mode() == recorder.ModeRecording {
+			rec.AddPassthrough(func(h *http.Request) bool {
+				return true
+			})
+			_, err := svc.WaitForStorageImportCompletion(&request.WaitForStorageImportCompletionRequest{
+				StorageUUID: storage.UUID,
+				Timeout:     15 * time.Minute,
+			})
+			require.NoError(t, err)
+
+			rec.Passthroughs = nil
+		}
+
+		afterStorageImportDetails, err := svc.GetStorageImportDetails(&request.GetStorageImportDetailsRequest{
+			UUID: storage.UUID,
 		})
 		require.NoError(t, err)
 		require.Equal(t, upcloud.StorageImportStateCompleted, afterStorageImportDetails.State)
@@ -367,11 +432,22 @@ func TestDirectUploadStorageImport(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		afterStorageImportDetails, err := svc.WaitForStorageImportCompletion(&request.WaitForStorageImportCompletionRequest{
-			StorageUUID: storage.UUID,
-			Timeout:     15 * time.Minute,
-		})
+		if rec.Mode() == recorder.ModeRecording {
+			rec.AddPassthrough(func(h *http.Request) bool {
+				return true
+			})
+			_, err := svc.WaitForStorageImportCompletion(&request.WaitForStorageImportCompletionRequest{
+				StorageUUID: storage.UUID,
+				Timeout:     15 * time.Minute,
+			})
+			require.NoError(t, err)
 
+			rec.Passthroughs = nil
+		}
+
+		afterStorageImportDetails, err := svc.GetStorageImportDetails(&request.GetStorageImportDetailsRequest{
+			UUID: storage.UUID,
+		})
 		require.NoError(t, err)
 		require.Equal(t, upcloud.StorageImportStateCompleted, afterStorageImportDetails.State)
 		require.Equal(t, sha256sum, afterStorageImportDetails.SHA256Sum)
@@ -389,11 +465,11 @@ func TestResizeStorageFilesystem(t *testing.T) {
 
 	record(t, "resizestoragefilesystem", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// start server
-		serverDetails, err := createMinimalServer(svc, "TestResizeStorageFilesystem")
+		serverDetails, err := createMinimalServer(rec, svc, "TestResizeStorageFilesystem")
 		require.NoError(t, err)
 
 		// stop server
-		require.NoError(t, stopServer(svc, serverDetails.UUID))
+		require.NoError(t, stopServerWithRecorder(rec, svc, serverDetails.UUID))
 
 		// modify disk size
 		_, err = svc.ModifyStorage(&request.ModifyStorageRequest{
@@ -403,12 +479,21 @@ func TestResizeStorageFilesystem(t *testing.T) {
 		require.NoError(t, err)
 
 		// wait disk to become back online
-		storageDetails, err := svc.WaitForStorageState(&request.WaitForStorageStateRequest{
-			UUID:         serverDetails.StorageDevices[0].UUID,
-			DesiredState: upcloud.StorageStateOnline,
-			Timeout:      600,
-		})
+		if rec.Mode() == recorder.ModeRecording {
+			rec.AddPassthrough(func(h *http.Request) bool {
+				return true
+			})
+
+			err = waitForStorageOnline(svc, serverDetails.StorageDevices[0].UUID)
+			require.NoError(t, err)
+
+			require.NoError(t, err)
+			rec.Passthroughs = nil
+		}
+
+		storageDetails, err := svc.GetStorageDetails(&request.GetStorageDetailsRequest{UUID: serverDetails.StorageDevices[0].UUID})
 		require.NoError(t, err)
+		assert.Equal(t, upcloud.StorageStateOnline, storageDetails.State)
 
 		// resize storage to populate new disk size
 		resizeBackup, err := svc.ResizeStorageFilesystem(&request.ResizeStorageFilesystemRequest{
@@ -436,12 +521,21 @@ func TestCompressedDirectUploadStorageImport(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		_, err = svc.WaitForStorageState(&request.WaitForStorageStateRequest{
-			UUID:         storage.UUID,
-			DesiredState: upcloud.StorageStateOnline,
-			Timeout:      15 * time.Minute,
-		})
+		if rec.Mode() == recorder.ModeRecording {
+			rec.AddPassthrough(func(h *http.Request) bool {
+				return true
+			})
+
+			err = waitForStorageOnline(svc, storage.UUID)
+			require.NoError(t, err)
+
+			require.NoError(t, err)
+			rec.Passthroughs = nil
+		}
+
+		storageDetails, err := svc.GetStorageDetails(&request.GetStorageDetailsRequest{UUID: storage.UUID})
 		require.NoError(t, err)
+		assert.Equal(t, upcloud.StorageStateOnline, storageDetails.State)
 
 		f, err := ioutil.TempFile(os.TempDir(), "compresseddirectuploadstorageimport-*.raw.gz")
 		require.NoError(t, err)
@@ -463,12 +557,23 @@ func TestCompressedDirectUploadStorageImport(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		afterStorageImportDetails, err := svc.WaitForStorageImportCompletion(&request.WaitForStorageImportCompletionRequest{
-			StorageUUID: storage.UUID,
-			Timeout:     15 * time.Minute,
+		if rec.Mode() == recorder.ModeRecording {
+			rec.AddPassthrough(func(h *http.Request) bool {
+				return true
+			})
+			_, err := svc.WaitForStorageImportCompletion(&request.WaitForStorageImportCompletionRequest{
+				StorageUUID: storage.UUID,
+				Timeout:     15 * time.Minute,
+			})
+			require.NoError(t, err)
+
+			rec.Passthroughs = nil
+		}
+
+		afterStorageImportDetails, err := svc.GetStorageImportDetails(&request.GetStorageImportDetailsRequest{
+			UUID: storage.UUID,
 		})
 		require.NoError(t, err)
-
 		assert.Equal(t, contentType, afterStorageImportDetails.ClientContentType)
 		assert.Equal(t, upcloud.StorageImportStateCompleted, afterStorageImportDetails.State)
 	})
