@@ -164,7 +164,7 @@ func createServerWithNetworkWithContext(ctx context.Context, rec *recorder.Recor
 		})
 
 		// Wait for the server to start
-		_, err = svc.WaitForServerState(ctx, &request.WaitForServerStateRequest{
+		serverDetails, err = svc.WaitForServerState(ctx, &request.WaitForServerStateRequest{
 			UUID:         serverDetails.UUID,
 			DesiredState: upcloud.ServerStateStarted,
 			Timeout:      time.Minute * 15,

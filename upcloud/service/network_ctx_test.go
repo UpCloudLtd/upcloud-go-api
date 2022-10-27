@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"net/http"
 	"testing"
 	"time"
 
@@ -20,7 +21,7 @@ import (
 //   - checks that at least one network has a server in.
 func TestGetNetworksContext(t *testing.T) {
 	recordWithContext(t, "getnetworks", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
-		_, err := createServer(svc, "TestGetNetworks")
+		_, err := createServerWithContext(ctx, rec, svcContext, "TestGetNetworks")
 		require.NoError(t, err)
 
 		networks, err := svcContext.GetNetworks(ctx)
@@ -53,7 +54,7 @@ func TestGetNetworksContext(t *testing.T) {
 //   - checks that at least one network has a server in.
 func TestGetNetworksInZoneContext(t *testing.T) {
 	recordWithContext(t, "getnetworksinzone", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
-		_, err := createServer(svc, "TestGetNetworksInZone")
+		_, err := createServerWithContext(ctx, rec, svcContext, "TestGetNetworksInZone")
 		require.NoError(t, err)
 
 		networks, err := svcContext.GetNetworksInZone(ctx, &request.GetNetworksInZoneRequest{
@@ -131,10 +132,10 @@ func TestCreateModifyDeleteNetworkContext(t *testing.T) {
 		require.NoError(t, err)
 		assert.Equal(t, "modified private network (test)", postModifyNetwork.Name)
 
-		serverDetails, err := createServer(svc, "TestCreateModifyDeleteNetwork")
+		serverDetails, err := createServerWithContext(ctx, rec, svcContext, "TestCreateModifyDeleteNetwork")
 		require.NoError(t, err)
 
-		err = stopServer(svc, serverDetails.UUID)
+		err = stopServerWithContext(ctx, rec, svcContext, serverDetails.UUID)
 		require.NoError(t, err)
 
 		iface, err := svcContext.CreateNetworkInterface(ctx, &request.CreateNetworkInterfaceRequest{
@@ -189,7 +190,7 @@ func TestCreateModifyDeleteNetworkContext(t *testing.T) {
 // match those returned when creating the server.
 func TestGetServerNetworksContext(t *testing.T) {
 	recordWithContext(t, "getservernetworks", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
-		serverDetails, err := createServer(svc, "TestGetServerNetworks")
+		serverDetails, err := createServerWithContext(ctx, rec, svcContext, "TestGetServerNetworks")
 		require.NoError(t, err)
 
 		networking, err := svcContext.GetServerNetworks(ctx, &request.GetServerNetworksRequest{
@@ -216,7 +217,10 @@ func TestGetRoutersContext(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		assert.Equal(t, &(routers.Routers[0]), router)
+		assert.ElementsMatch(t, routers.Routers[0].AttachedNetworks, router.AttachedNetworks)
+		assert.Equal(t, routers.Routers[0].Name, router.Name)
+		assert.Equal(t, routers.Routers[0].Type, router.Type)
+		assert.Equal(t, routers.Routers[0].UUID, router.UUID)
 	})
 }
 
@@ -357,16 +361,16 @@ func TestCreateTwoNetworksTwoServersAndARouterContext(t *testing.T) {
 		require.NoError(t, err)
 		require.Equal(t, network2.Router, router.UUID)
 
-		serverDetails1, err := createServer(svc, "TestCTNTR1")
+		serverDetails1, err := createServerWithContext(ctx, rec, svcContext, "TestCTNTR1")
 		require.NoError(t, err)
 
-		serverDetails2, err := createServer(svc, "TestCTNTR2")
+		serverDetails2, err := createServerWithContext(ctx, rec, svcContext, "TestCTNTR2")
 		require.NoError(t, err)
 
-		err = stopServer(svc, serverDetails1.UUID)
+		err = stopServerWithContext(ctx, rec, svcContext, serverDetails1.UUID)
 		require.NoError(t, err)
 
-		err = stopServer(svc, serverDetails2.UUID)
+		err = stopServerWithContext(ctx, rec, svcContext, serverDetails2.UUID)
 		require.NoError(t, err)
 
 		iface1, err := svcContext.CreateNetworkInterface(ctx, &request.CreateNetworkInterfaceRequest{
@@ -448,13 +452,27 @@ func TestCreateTwoNetworksTwoServersAndARouterContext(t *testing.T) {
 		// try detaching a router
 		err = svcContext.DetachNetworkRouter(ctx, &request.DetachNetworkRouterRequest{NetworkUUID: network1.UUID})
 		require.NoError(t, err)
-		assert.Eventually(t, func() bool {
-			details, err := svcContext.GetNetworkDetails(ctx, &request.GetNetworkDetailsRequest{
-				UUID: network1.UUID,
+
+		if rec.Mode() == recorder.ModeRecording {
+			rec.AddPassthrough(func(h *http.Request) bool {
+				return true
 			})
-			require.NoError(t, err)
-			return err == nil && details.Router == ""
-		}, 15*time.Second, time.Second)
+
+			assert.Eventually(t, func() bool {
+				details, err := svcContext.GetNetworkDetails(ctx, &request.GetNetworkDetailsRequest{
+					UUID: network1.UUID,
+				})
+				require.NoError(t, err)
+				return err == nil && details.Router == ""
+			}, 15*time.Second, time.Second)
+
+			rec.Passthroughs = nil
+		}
+		details, err := svcContext.GetNetworkDetails(ctx, &request.GetNetworkDetailsRequest{
+			UUID: network1.UUID,
+		})
+		require.NoError(t, err)
+		assert.Empty(t, details.Router)
 
 		err = deleteServer(svc, serverDetails1.UUID)
 		require.NoError(t, err)
@@ -501,7 +519,7 @@ func TestCreateNetworkAndServerContext(t *testing.T) {
 		require.NoError(t, err)
 		assert.NotEmpty(t, network.UUID)
 
-		serverDetails, err := createServerWithNetwork(svc, "TestCreateNetworkAndServer", network.UUID)
+		serverDetails, err := createServerWithNetworkWithContext(ctx, rec, svcContext, "TestCreateNetworkAndServer", network.UUID)
 		require.NoError(t, err)
 		assert.NotEmpty(t, serverDetails.UUID)
 		var found bool
