@@ -97,7 +97,7 @@ func TestTaggingContext(t *testing.T) {
 	t.Parallel()
 	recordWithContext(t, "tagging", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 		// Create the server
-		serverDetails, err := createServer(svc, "TestTagging")
+		serverDetails, err := createServerWithContext(ctx, rec, svcContext, "TestTagging")
 		require.NoError(t, err)
 		t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
