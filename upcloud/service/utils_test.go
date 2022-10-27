@@ -401,7 +401,7 @@ func createServerWithNetworkWithRecorder(rec *recorder.Recorder, svc *Service, n
 	})
 }
 
-func createMinimalServer(svc *Service, name string) (*upcloud.ServerDetails, error) {
+func createMinimalServer(rec *recorder.Recorder, svc *Service, name string) (*upcloud.ServerDetails, error) {
 	title := "uploud-go-sdk-integration-test-" + name
 	hostname := strings.ToLower(title + ".example.com")
 
@@ -440,13 +440,21 @@ func createMinimalServer(svc *Service, name string) (*upcloud.ServerDetails, err
 	}
 
 	// Wait for the server to start
-	serverDetails, err = svc.WaitForServerState(&request.WaitForServerStateRequest{
-		UUID:         serverDetails.UUID,
-		DesiredState: upcloud.ServerStateStarted,
-		Timeout:      waitTimeout,
-	})
-	if err != nil {
-		return nil, err
+	if rec.Mode() == recorder.ModeRecording {
+		rec.AddPassthrough(func(h *http.Request) bool {
+			return true
+		})
+
+		serverDetails, err = svc.WaitForServerState(&request.WaitForServerStateRequest{
+			UUID:         serverDetails.UUID,
+			DesiredState: upcloud.ServerStateStarted,
+			Timeout:      waitTimeout,
+		})
+		if err != nil {
+			return nil, err
+		}
+
+		rec.Passthroughs = nil
 	}
 
 	return serverDetails, nil
