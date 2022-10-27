@@ -9,6 +9,8 @@ interactions:
       - application/json
       Content-Type:
       - application/json
+      User-Agent:
+      - upcloud-go-api-ctx/4.9.0
     url: https://api.upcloud.com/1.3/storage
     method: POST
   response:
@@ -24,6 +26,7 @@ interactions:
             "backups" : {
                "backup" : []
             },
+            "created" : "2022-10-27T16:31:12Z",
             "license" : 0,
             "servers" : {
                "server" : []
@@ -33,17 +36,17 @@ interactions:
             "tier" : "maxiops",
             "title" : "Test storage",
             "type" : "normal",
-            "uuid" : "01da9d55-7d8e-4ff4-bf96-cd843fd38603",
+            "uuid" : "01ce904c-0c6a-4cbd-8be9-962a4cc0f6b2",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "505"
+      - "547"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 19 Aug 2020 14:25:25 GMT
+      - Thu, 27 Oct 2022 16:31:12 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -59,7 +62,9 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/storage/01da9d55-7d8e-4ff4-bf96-cd843fd38603
+      User-Agent:
+      - upcloud-go-api-ctx/4.9.0
+    url: https://api.upcloud.com/1.3/storage/01ce904c-0c6a-4cbd-8be9-962a4cc0f6b2
     method: PUT
   response:
     body: |
@@ -74,6 +79,7 @@ interactions:
             "backups" : {
                "backup" : []
             },
+            "created" : "2022-10-27T16:31:12Z",
             "license" : 0,
             "servers" : {
                "server" : []
@@ -83,17 +89,17 @@ interactions:
             "tier" : "maxiops",
             "title" : "New fancy title",
             "type" : "normal",
-            "uuid" : "01da9d55-7d8e-4ff4-bf96-cd843fd38603",
+            "uuid" : "01ce904c-0c6a-4cbd-8be9-962a4cc0f6b2",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "508"
+      - "550"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 19 Aug 2020 14:25:35 GMT
+      - Thu, 27 Oct 2022 16:31:21 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -109,13 +115,15 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.upcloud.com/1.3/storage/01da9d55-7d8e-4ff4-bf96-cd843fd38603
+      User-Agent:
+      - upcloud-go-api-ctx/4.9.0
+    url: https://api.upcloud.com/1.3/storage/01ce904c-0c6a-4cbd-8be9-962a4cc0f6b2
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Wed, 19 Aug 2020 14:25:36 GMT
+      - Thu, 27 Oct 2022 16:31:22 GMT
       Server:
       - Apache
       Strict-Transport-Security:
