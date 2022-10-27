@@ -9,6 +9,8 @@ interactions:
       - application/json
       Content-Type:
       - application/json
+      User-Agent:
+      - upcloud-go-api/4.9.0
     url: https://api.upcloud.com/1.3/tag/testgettags_tag1
     method: DELETE
   response:
@@ -25,7 +27,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 19 Aug 2020 14:13:52 GMT
+      - Thu, 27 Oct 2022 20:14:09 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -41,6 +43,8 @@ interactions:
       - application/json
       Content-Type:
       - application/json
+      User-Agent:
+      - upcloud-go-api/4.9.0
     url: https://api.upcloud.com/1.3/tag/testgettags_tag2
     method: DELETE
   response:
@@ -57,7 +61,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 19 Aug 2020 14:13:53 GMT
+      - Thu, 27 Oct 2022 20:14:09 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -73,6 +77,8 @@ interactions:
       - application/json
       Content-Type:
       - application/json
+      User-Agent:
+      - upcloud-go-api/4.9.0
     url: https://api.upcloud.com/1.3/tag/testgettags_tag3
     method: DELETE
   response:
@@ -89,7 +95,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 19 Aug 2020 14:13:53 GMT
+      - Thu, 27 Oct 2022 20:14:09 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -105,6 +111,8 @@ interactions:
       - application/json
       Content-Type:
       - application/json
+      User-Agent:
+      - upcloud-go-api/4.9.0
     url: https://api.upcloud.com/1.3/tag
     method: POST
   response:
@@ -124,7 +132,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 19 Aug 2020 14:13:53 GMT
+      - Thu, 27 Oct 2022 20:14:09 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -140,6 +148,8 @@ interactions:
       - application/json
       Content-Type:
       - application/json
+      User-Agent:
+      - upcloud-go-api/4.9.0
     url: https://api.upcloud.com/1.3/tag
     method: POST
   response:
@@ -159,7 +169,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 19 Aug 2020 14:13:53 GMT
+      - Thu, 27 Oct 2022 20:14:09 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -175,6 +185,8 @@ interactions:
       - application/json
       Content-Type:
       - application/json
+      User-Agent:
+      - upcloud-go-api/4.9.0
     url: https://api.upcloud.com/1.3/tag
     method: POST
   response:
@@ -194,7 +206,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 19 Aug 2020 14:13:53 GMT
+      - Thu, 27 Oct 2022 20:14:10 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -210,6 +222,8 @@ interactions:
       - application/json
       Content-Type:
       - application/json
+      User-Agent:
+      - upcloud-go-api/4.9.0
     url: https://api.upcloud.com/1.3/tag
     method: GET
   response:
@@ -254,7 +268,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 19 Aug 2020 14:13:53 GMT
+      - Thu, 27 Oct 2022 20:14:10 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -270,13 +284,15 @@ interactions:
       - application/json
       Content-Type:
       - application/json
+      User-Agent:
+      - upcloud-go-api/4.9.0
     url: https://api.upcloud.com/1.3/tag/testgettags_tag1
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Wed, 19 Aug 2020 14:13:54 GMT
+      - Thu, 27 Oct 2022 20:14:10 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -292,13 +308,15 @@ interactions:
       - application/json
       Content-Type:
       - application/json
+      User-Agent:
+      - upcloud-go-api/4.9.0
     url: https://api.upcloud.com/1.3/tag/testgettags_tag2
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Wed, 19 Aug 2020 14:13:54 GMT
+      - Thu, 27 Oct 2022 20:14:10 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -314,13 +332,15 @@ interactions:
       - application/json
       Content-Type:
       - application/json
+      User-Agent:
+      - upcloud-go-api/4.9.0
     url: https://api.upcloud.com/1.3/tag/testgettags_tag3
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Wed, 19 Aug 2020 14:13:54 GMT
+      - Thu, 27 Oct 2022 20:14:10 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -336,13 +356,15 @@ interactions:
       - application/json
       Content-Type:
       - application/json
+      User-Agent:
+      - upcloud-go-api/4.9.0
     url: https://api.upcloud.com/1.3/tag/testTag
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Wed, 19 Aug 2020 14:13:55 GMT
+      - Thu, 27 Oct 2022 20:14:10 GMT
       Server:
       - Apache
       Strict-Transport-Security:
