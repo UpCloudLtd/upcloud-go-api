@@ -67,13 +67,13 @@ func TestAttachDetachStorage(t *testing.T) {
 
 	record(t, "attachdetachstorage", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create a server
-		serverDetails, err := createServerWithRecorder(rec, svc, "TestAttachDetachStorage")
+		serverDetails, err := createServer(rec, svc, "TestAttachDetachStorage")
 		require.NoError(t, err)
 		t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 		// Stop the server
 		t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
-		err = stopServerWithRecorder(rec, svc, serverDetails.UUID)
+		err = stopServer(rec, svc, serverDetails.UUID)
 		require.NoError(t, err)
 		t.Log("Server is now stopped")
 
@@ -160,13 +160,13 @@ func TestTemplatizeServerStorage(t *testing.T) {
 
 	record(t, "templatizeserverstorage", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create server
-		serverDetails, err := createServerWithRecorder(rec, svc, "TestTemplatizeServerStorage")
+		serverDetails, err := createServer(rec, svc, "TestTemplatizeServerStorage")
 		require.NoError(t, err)
 		t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 		// Stop the server
 		t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
-		err = stopServerWithRecorder(rec, svc, serverDetails.UUID)
+		err = stopServer(rec, svc, serverDetails.UUID)
 		require.NoError(t, err)
 		t.Log("Server is now stopped")
 
@@ -217,13 +217,13 @@ func TestLoadEjectCDROM(t *testing.T) {
 
 	record(t, "loadejectcdrom", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create the server
-		serverDetails, err := createServerWithRecorder(rec, svc, "TestLoadEjectCDROM")
+		serverDetails, err := createServer(rec, svc, "TestLoadEjectCDROM")
 		require.NoError(t, err)
 		t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 		// Stop the server
 		t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
-		err = stopServerWithRecorder(rec, svc, serverDetails.UUID)
+		err = stopServer(rec, svc, serverDetails.UUID)
 		require.NoError(t, err)
 		t.Log("Server is now stopped")
 
@@ -469,7 +469,7 @@ func TestResizeStorageFilesystem(t *testing.T) {
 		require.NoError(t, err)
 
 		// stop server
-		require.NoError(t, stopServerWithRecorder(rec, svc, serverDetails.UUID))
+		require.NoError(t, stopServer(rec, svc, serverDetails.UUID))
 
 		// modify disk size
 		_, err = svc.ModifyStorage(&request.ModifyStorageRequest{

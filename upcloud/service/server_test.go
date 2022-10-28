@@ -38,7 +38,7 @@ func TestGetServerConfigurations(t *testing.T) {
 func TestGetServersWithFilters(t *testing.T) {
 	record(t, "getserverswithfilters", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		name := "getserverswithfilters"
-		createdServer, err := createServerWithRecorder(rec, svc, "getserverswithfilters")
+		createdServer, err := createServer(rec, svc, "getserverswithfilters")
 		require.NoError(t, err)
 
 		servers, err := svc.GetServersWithFilters(&request.GetServersWithFiltersRequest{
@@ -70,7 +70,7 @@ func TestGetServerDetails(t *testing.T) {
 	t.Parallel()
 
 	record(t, "getserverdetails", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
-		d, err := createServerWithRecorder(rec, svc, "getserverdetails")
+		d, err := createServer(rec, svc, "getserverdetails")
 		require.NoError(t, err)
 
 		serverDetails, err := svc.GetServerDetails(&request.GetServerDetailsRequest{
@@ -95,7 +95,7 @@ func TestCreateStopStartServer(t *testing.T) {
 	t.Parallel()
 
 	record(t, "createstartstopserver", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
-		d, err := createServerWithRecorder(rec, svc, "createstartstopserver")
+		d, err := createServer(rec, svc, "createstartstopserver")
 		require.NoError(t, err)
 
 		stopServerDetails, err := svc.StopServer(&request.StopServerRequest{
@@ -145,7 +145,7 @@ func TestStartAvoidHost(t *testing.T) {
 	t.Parallel()
 
 	record(t, "startavoidhost", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
-		serverDetails, err := createServerWithRecorder(rec, svc, "TestStartAvoidHost")
+		serverDetails, err := createServer(rec, svc, "TestStartAvoidHost")
 		require.NoError(t, err)
 		assert.NotZero(t, serverDetails.Host)
 
@@ -195,7 +195,7 @@ func TestCreateRestartServer(t *testing.T) {
 	t.Parallel()
 
 	record(t, "createrestartserver", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
-		d, err := createServerWithRecorder(rec, svc, "createrestartserver")
+		d, err := createServer(rec, svc, "createrestartserver")
 		require.NoError(t, err)
 
 		restartServerDetails, err := svc.RestartServer(&request.RestartServerRequest{
@@ -285,7 +285,7 @@ func TestCreateModifyDeleteServer(t *testing.T) {
 
 	record(t, "createmodifydeleteserver", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create a server
-		serverDetails, err := createServerWithRecorder(rec, svc, "TestCreateModifyDeleteServer")
+		serverDetails, err := createServer(rec, svc, "TestCreateModifyDeleteServer")
 		require.NoError(t, err)
 		t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
@@ -338,7 +338,7 @@ func TestCreateModifyDeleteServer(t *testing.T) {
 
 		// Stop the server
 		t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
-		err = stopServerWithRecorder(rec, svc, serverDetails.UUID)
+		err = stopServer(rec, svc, serverDetails.UUID)
 		require.NoError(t, err)
 		t.Log("Server is now stopped")
 
@@ -376,7 +376,7 @@ func TestCreateDeleteServerAndStorage(t *testing.T) {
 
 	record(t, "createdeleteserverandstorage", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create a server
-		serverDetails, err := createServerWithRecorder(rec, svc, "TestCreateDeleteServerAndStorage")
+		serverDetails, err := createServer(rec, svc, "TestCreateDeleteServerAndStorage")
 		require.NoError(t, err)
 		t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
@@ -389,7 +389,7 @@ func TestCreateDeleteServerAndStorage(t *testing.T) {
 
 		// Stop the server
 		t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
-		err = stopServerWithRecorder(rec, svc, serverDetails.UUID)
+		err = stopServer(rec, svc, serverDetails.UUID)
 		require.NoError(t, err)
 		t.Log("Server is now stopped")
 

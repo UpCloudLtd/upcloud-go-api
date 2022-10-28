@@ -119,7 +119,7 @@ func teardown() {
 		// Stop the server if it's still running
 		if serverDetails.State != upcloud.ServerStateStopped {
 			log.Printf("Stopping server with UUID %s ...", server.UUID)
-			err = stopServer(svc, server.UUID)
+			err = stopServerWithoutRecorder(svc, server.UUID)
 			handleError(err)
 		}
 
@@ -201,107 +201,12 @@ func teardown() {
 	}
 }
 
-// Creates a server and returns the details about it, panic if creation fails.
-func createServer(svc *Service, name string) (*upcloud.ServerDetails, error) {
-	return createServerWithNetwork(svc, name, "")
-}
-
-func createServerWithNetwork(svc *Service, name string, network string) (*upcloud.ServerDetails, error) {
-	title := "uploud-go-sdk-integration-test-" + name
-	hostname := strings.ToLower(title + ".example.com")
-
-	createServerRequest := request.CreateServerRequest{
-		Zone:             "fi-hel2",
-		Title:            title,
-		Hostname:         hostname,
-		PasswordDelivery: request.PasswordDeliveryNone,
-		StorageDevices: []request.CreateServerStorageDevice{
-			{
-				Action:  request.CreateServerStorageDeviceActionClone,
-				Storage: "01000000-0000-4000-8000-000020060100",
-				Title:   "disk1",
-				Size:    10,
-				Tier:    upcloud.StorageTierMaxIOPS,
-			},
-		},
-		Networking: &request.CreateServerNetworking{
-			Interfaces: []request.CreateServerInterface{
-				{
-					IPAddresses: []request.CreateServerIPAddress{
-						{
-							Family: upcloud.IPAddressFamilyIPv4,
-						},
-					},
-					Type: upcloud.NetworkTypeUtility,
-				},
-				{
-					IPAddresses: []request.CreateServerIPAddress{
-						{
-							Family: upcloud.IPAddressFamilyIPv4,
-						},
-					},
-					Type: upcloud.NetworkTypePublic,
-				},
-				{
-					IPAddresses: []request.CreateServerIPAddress{
-						{
-							Family: upcloud.IPAddressFamilyIPv6,
-						},
-					},
-					Type: upcloud.NetworkTypePublic,
-				},
-			},
-		},
-		Labels: &upcloud.LabelSlice{
-			upcloud.Label{
-				Key:   "managedBy",
-				Value: "upcloud-sdk-integration-test",
-			},
-			upcloud.Label{
-				Key:   "testName",
-				Value: name,
-			},
-		},
-	}
-
-	if network != "" {
-		createServerRequest.Networking.Interfaces = append(createServerRequest.Networking.Interfaces,
-			request.CreateServerInterface{
-				IPAddresses: []request.CreateServerIPAddress{
-					{
-						Family: upcloud.IPAddressFamilyIPv4,
-					},
-				},
-				Type:    upcloud.NetworkTypePrivate,
-				Network: network,
-			})
-	}
-
-	// Create the server and block until it has started
-	serverDetails, err := svc.CreateServer(&createServerRequest)
-	if err != nil {
-		return nil, err
-	}
-
-	// Wait for the server to start
-	serverDetails, err = svc.WaitForServerState(&request.WaitForServerStateRequest{
-		UUID:         serverDetails.UUID,
-		DesiredState: upcloud.ServerStateStarted,
-		Timeout:      waitTimeout,
-	})
-	if err != nil {
-		return nil, err
-	}
-
-	return serverDetails, nil
-}
-
 // Creates a server with recorder and returns the details about it, panic if creation fails.
-func createServerWithRecorder(rec *recorder.Recorder, svc *Service, name string) (*upcloud.ServerDetails, error) {
-	return createServerWithNetworkWithRecorder(rec, svc, name, "")
+func createServer(rec *recorder.Recorder, svc *Service, name string) (*upcloud.ServerDetails, error) {
+	return createServerWithNetwork(rec, svc, name, "")
 }
 
-func createServerWithNetworkWithRecorder(rec *recorder.Recorder, svc *Service, name, network string) (*upcloud.ServerDetails, error) {
+func createServerWithNetwork(rec *recorder.Recorder, svc *Service, name, network string) (*upcloud.ServerDetails, error) {
 	title := "uploud-go-sdk-integration-test-" + name
 	hostname := strings.ToLower(title + ".example.com")
 
@@ -461,7 +366,7 @@ func createMinimalServer(rec *recorder.Recorder, svc *Service, name string) (*up
 }
 
 // Stops the specified server (forcibly).
-func stopServer(svc *Service, uuid string) error {
+func stopServerWithoutRecorder(svc *Service, uuid string) error {
 	serverDetails, err := svc.StopServer(&request.StopServerRequest{
 		UUID:     uuid,
 		Timeout:  waitTimeout,
@@ -484,7 +389,7 @@ func stopServer(svc *Service, uuid string) error {
 }
 
 // Stops the specified server with recorder (forcibly).
-func stopServerWithRecorder(rec *recorder.Recorder, svc *Service, uuid string) error {
+func stopServer(rec *recorder.Recorder, svc *Service, uuid string) error {
 	serverDetails, err := svc.StopServer(&request.StopServerRequest{
 		UUID:     uuid,
 		Timeout:  waitTimeout,
