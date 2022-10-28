@@ -93,7 +93,7 @@ func TestServerGroups(t *testing.T) {
 		}
 
 		// delete server
-		if err := stopServerWithRecorder(rec, svc, srv.UUID); err != nil {
+		if err := stopServer(rec, svc, srv.UUID); err != nil {
 			t.Log(err)
 		} else {
 			if err := deleteServer(svc, srv.UUID); err != nil {
