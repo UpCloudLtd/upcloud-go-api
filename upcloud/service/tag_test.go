@@ -184,3 +184,23 @@ func TestTagging(t *testing.T) {
 		t.Logf("Server %s is now untagged", serverDetails.Title)
 	})
 }
+
+// deleteAllTags deletes all existing tags.
+func deleteAllTags(svc *Service) error {
+	tags, err := svc.GetTags()
+	if err != nil {
+		return err
+	}
+
+	for _, tagDetails := range tags.Tags {
+		err = svc.DeleteTag(&request.DeleteTagRequest{
+			Name: tagDetails.Name,
+		})
+
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}

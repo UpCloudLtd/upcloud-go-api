@@ -19,14 +19,14 @@ interactions:
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1666890946,
+            "created" : 1666944912,
             "firewall" : "off",
             "hostname" : "uploud-go-sdk-integration-test-testresizestoragefilesystem.example.com",
             "ip_addresses" : {
                "ip_address" : [
                   {
                      "access" : "utility",
-                     "address" : "10.6.6.216",
+                     "address" : "10.6.0.11",
                      "family" : "IPv4"
                   }
                ]
@@ -46,15 +46,15 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "10.6.6.216",
+                                 "address" : "10.6.0.11",
                                  "dhcp_provided" : "yes",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "da:45:c4:5c:dd:05",
-                        "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
+                        "mac" : "da:45:c4:5c:e2:7a",
+                        "network" : "03c40911-2f43-4138-bb91-7561a8351353",
                         "source_ip_filtering" : "yes",
                         "type" : "utility"
                      }
@@ -62,13 +62,13 @@ interactions:
                }
             },
             "nic_model" : "virtio",
-            "password" : "kt87r54828h5xw54",
+            "password" : "q67m36fd6hky334a",
             "plan" : "custom",
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
             "progress" : "0",
             "remote_access_enabled" : "no",
-            "remote_access_password" : "H47cX3bs",
+            "remote_access_password" : "VjAJ8W2p",
             "remote_access_type" : "vnc",
             "simple_backup" : "no",
             "state" : "maintenance",
@@ -77,7 +77,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "01be2346-76be-44e9-9b12-928a50701d9f",
+                     "storage" : "01747698-ae36-4ab7-bf6f-1df8e621cb13",
                      "storage_size" : 10,
                      "storage_tier" : "maxiops",
                      "storage_title" : "disk1",
@@ -91,18 +91,18 @@ interactions:
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestResizeStorageFilesystem",
             "username" : "root",
-            "uuid" : "007eea2f-8067-4a6f-ae0b-89c9a5c2a4c6",
+            "uuid" : "00563630-8c2b-4db2-8831-4be0e4a6911b",
             "video_model" : "cirrus",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "2398"
+      - "2396"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 27 Oct 2022 17:15:46 GMT
+      - Fri, 28 Oct 2022 08:15:12 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -111,7 +111,7 @@ interactions:
     code: 202
     duration: ""
 - request:
-    body: '{"stop_server":{"stop_type":"hard","timeout":"900"}}'
+    body: ""
     form: {}
     headers:
       Accept:
@@ -120,15 +120,15 @@ interactions:
       - application/json
       User-Agent:
       - upcloud-go-api-ctx/4.9.0
-    url: https://api.upcloud.com/1.3/server/007eea2f-8067-4a6f-ae0b-89c9a5c2a4c6/stop
-    method: POST
+    url: https://api.upcloud.com/1.3/server/00563630-8c2b-4db2-8831-4be0e4a6911b
+    method: GET
   response:
     body: |
       {
          "server" : {
             "boot_order" : "disk",
             "core_number" : "1",
-            "created" : 1666890946,
+            "created" : 1666944912,
             "firewall" : "off",
             "host" : 5872304771,
             "hostname" : "uploud-go-sdk-integration-test-testresizestoragefilesystem.example.com",
@@ -136,7 +136,7 @@ interactions:
                "ip_address" : [
                   {
                      "access" : "utility",
-                     "address" : "10.6.6.216",
+                     "address" : "10.6.0.11",
                      "family" : "IPv4"
                   }
                ]
@@ -156,15 +156,15 @@ interactions:
                         "ip_addresses" : {
                            "ip_address" : [
                               {
-                                 "address" : "10.6.6.216",
+                                 "address" : "10.6.0.11",
                                  "dhcp_provided" : "yes",
                                  "family" : "IPv4",
                                  "floating" : "no"
                               }
                            ]
                         },
-                        "mac" : "da:45:c4:5c:dd:05",
-                        "network" : "0343ede2-9890-4470-b680-0dcda6d9f7e3",
+                        "mac" : "da:45:c4:5c:e2:7a",
+                        "network" : "03c40911-2f43-4138-bb91-7561a8351353",
                         "source_ip_filtering" : "yes",
                         "type" : "utility"
                      }
@@ -176,7 +176,7 @@ interactions:
             "plan_ipv4_bytes" : "0",
             "plan_ipv6_bytes" : "0",
             "remote_access_enabled" : "no",
-            "remote_access_password" : "H47cX3bs",
+            "remote_access_password" : "VjAJ8W2p",
             "remote_access_type" : "vnc",
             "simple_backup" : "no",
             "state" : "started",
@@ -185,7 +185,7 @@ interactions:
                   {
                      "address" : "virtio:0",
                      "boot_disk" : "0",
-                     "storage" : "01be2346-76be-44e9-9b12-928a50701d9f",
+                     "storage" : "01747698-ae36-4ab7-bf6f-1df8e621cb13",
                      "storage_size" : 10,
                      "storage_tier" : "maxiops",
                      "storage_title" : "disk1",
@@ -198,18 +198,125 @@ interactions:
             },
             "timezone" : "UTC",
             "title" : "uploud-go-sdk-integration-test-TestResizeStorageFilesystem",
-            "uuid" : "007eea2f-8067-4a6f-ae0b-89c9a5c2a4c6",
+            "uuid" : "00563630-8c2b-4db2-8831-4be0e4a6911b",
             "video_model" : "cirrus",
             "zone" : "fi-hel2"
          }
       }
     headers:
       Content-Length:
-      - "2331"
+      - "2329"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 27 Oct 2022 17:16:35 GMT
+      - Fri, 28 Oct 2022 08:15:35 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"stop_server":{"stop_type":"hard","timeout":"900"}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api-ctx/4.9.0
+    url: https://api.upcloud.com/1.3/server/00563630-8c2b-4db2-8831-4be0e4a6911b/stop
+    method: POST
+  response:
+    body: |
+      {
+         "server" : {
+            "boot_order" : "disk",
+            "core_number" : "1",
+            "created" : 1666944912,
+            "firewall" : "off",
+            "host" : 5872304771,
+            "hostname" : "uploud-go-sdk-integration-test-testresizestoragefilesystem.example.com",
+            "ip_addresses" : {
+               "ip_address" : [
+                  {
+                     "access" : "utility",
+                     "address" : "10.6.0.11",
+                     "family" : "IPv4"
+                  }
+               ]
+            },
+            "labels" : {
+               "label" : []
+            },
+            "license" : 0,
+            "memory_amount" : "1024",
+            "metadata" : "no",
+            "networking" : {
+               "interfaces" : {
+                  "interface" : [
+                     {
+                        "bootable" : "no",
+                        "index" : 1,
+                        "ip_addresses" : {
+                           "ip_address" : [
+                              {
+                                 "address" : "10.6.0.11",
+                                 "dhcp_provided" : "yes",
+                                 "family" : "IPv4",
+                                 "floating" : "no"
+                              }
+                           ]
+                        },
+                        "mac" : "da:45:c4:5c:e2:7a",
+                        "network" : "03c40911-2f43-4138-bb91-7561a8351353",
+                        "source_ip_filtering" : "yes",
+                        "type" : "utility"
+                     }
+                  ]
+               }
+            },
+            "nic_model" : "virtio",
+            "plan" : "custom",
+            "plan_ipv4_bytes" : "0",
+            "plan_ipv6_bytes" : "0",
+            "remote_access_enabled" : "no",
+            "remote_access_password" : "VjAJ8W2p",
+            "remote_access_type" : "vnc",
+            "simple_backup" : "no",
+            "state" : "started",
+            "storage_devices" : {
+               "storage_device" : [
+                  {
+                     "address" : "virtio:0",
+                     "boot_disk" : "0",
+                     "storage" : "01747698-ae36-4ab7-bf6f-1df8e621cb13",
+                     "storage_size" : 10,
+                     "storage_tier" : "maxiops",
+                     "storage_title" : "disk1",
+                     "type" : "disk"
+                  }
+               ]
+            },
+            "tags" : {
+               "tag" : []
+            },
+            "timezone" : "UTC",
+            "title" : "uploud-go-sdk-integration-test-TestResizeStorageFilesystem",
+            "uuid" : "00563630-8c2b-4db2-8831-4be0e4a6911b",
+            "video_model" : "cirrus",
+            "zone" : "fi-hel2"
+         }
+      }
+    headers:
+      Content-Length:
+      - "2329"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Fri, 28 Oct 2022 08:15:35 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -227,7 +334,7 @@ interactions:
       - application/json
       User-Agent:
       - upcloud-go-api-ctx/4.9.0
-    url: https://api.upcloud.com/1.3/storage/01be2346-76be-44e9-9b12-928a50701d9f
+    url: https://api.upcloud.com/1.3/storage/01747698-ae36-4ab7-bf6f-1df8e621cb13
     method: PUT
   response:
     body: |
@@ -238,11 +345,11 @@ interactions:
             "backups" : {
                "backup" : []
             },
-            "created" : "2022-10-27T17:15:48Z",
+            "created" : "2022-10-28T08:15:13Z",
             "license" : 0,
             "servers" : {
                "server" : [
-                  "007eea2f-8067-4a6f-ae0b-89c9a5c2a4c6"
+                  "00563630-8c2b-4db2-8831-4be0e4a6911b"
                ]
             },
             "size" : 20,
@@ -250,7 +357,7 @@ interactions:
             "tier" : "maxiops",
             "title" : "disk1",
             "type" : "normal",
-            "uuid" : "01be2346-76be-44e9-9b12-928a50701d9f",
+            "uuid" : "01747698-ae36-4ab7-bf6f-1df8e621cb13",
             "zone" : "fi-hel2"
          }
       }
@@ -260,7 +367,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 27 Oct 2022 17:16:51 GMT
+      - Fri, 28 Oct 2022 08:15:45 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -278,7 +385,7 @@ interactions:
       - application/json
       User-Agent:
       - upcloud-go-api-ctx/4.9.0
-    url: https://api.upcloud.com/1.3/storage/01be2346-76be-44e9-9b12-928a50701d9f
+    url: https://api.upcloud.com/1.3/storage/01747698-ae36-4ab7-bf6f-1df8e621cb13
     method: GET
   response:
     body: |
@@ -289,11 +396,11 @@ interactions:
             "backups" : {
                "backup" : []
             },
-            "created" : "2022-10-27T17:15:48Z",
+            "created" : "2022-10-28T08:15:13Z",
             "license" : 0,
             "servers" : {
                "server" : [
-                  "007eea2f-8067-4a6f-ae0b-89c9a5c2a4c6"
+                  "00563630-8c2b-4db2-8831-4be0e4a6911b"
                ]
             },
             "size" : 20,
@@ -301,7 +408,7 @@ interactions:
             "tier" : "maxiops",
             "title" : "disk1",
             "type" : "normal",
-            "uuid" : "01be2346-76be-44e9-9b12-928a50701d9f",
+            "uuid" : "01747698-ae36-4ab7-bf6f-1df8e621cb13",
             "zone" : "fi-hel2"
          }
       }
@@ -311,7 +418,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 27 Oct 2022 17:17:01 GMT
+      - Fri, 28 Oct 2022 08:15:56 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -320,7 +427,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"UUID":"01be2346-76be-44e9-9b12-928a50701d9f"}'
+    body: '{"UUID":"01747698-ae36-4ab7-bf6f-1df8e621cb13"}'
     form: {}
     headers:
       Accept:
@@ -329,16 +436,16 @@ interactions:
       - application/json
       User-Agent:
       - upcloud-go-api-ctx/4.9.0
-    url: https://api.upcloud.com/1.3/storage/01be2346-76be-44e9-9b12-928a50701d9f/resize
+    url: https://api.upcloud.com/1.3/storage/01747698-ae36-4ab7-bf6f-1df8e621cb13/resize
     method: POST
   response:
     body: |
       {
          "resize_backup" : {
             "access" : "private",
-            "created" : "2022-10-27T17:17:01Z",
+            "created" : "2022-10-28T08:15:56Z",
             "license" : 0,
-            "origin" : "01be2346-76be-44e9-9b12-928a50701d9f",
+            "origin" : "01747698-ae36-4ab7-bf6f-1df8e621cb13",
             "servers" : {
                "server" : []
             },
@@ -346,7 +453,7 @@ interactions:
             "state" : "online",
             "title" : "Resize Backup",
             "type" : "backup",
-            "uuid" : "0175908a-64bf-4a7a-80a6-fc5f1439e3f5",
+            "uuid" : "017d628f-0381-4410-97a2-7e73223aac25",
             "zone" : "fi-hel2"
          }
       }
@@ -356,7 +463,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 27 Oct 2022 17:17:01 GMT
+      - Fri, 28 Oct 2022 08:15:56 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -374,13 +481,13 @@ interactions:
       - application/json
       User-Agent:
       - upcloud-go-api-ctx/4.9.0
-    url: https://api.upcloud.com/1.3/storage/0175908a-64bf-4a7a-80a6-fc5f1439e3f5
+    url: https://api.upcloud.com/1.3/storage/017d628f-0381-4410-97a2-7e73223aac25
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Thu, 27 Oct 2022 17:17:16 GMT
+      - Fri, 28 Oct 2022 08:16:10 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -398,13 +505,13 @@ interactions:
       - application/json
       User-Agent:
       - upcloud-go-api-ctx/4.9.0
-    url: https://api.upcloud.com/1.3/server/007eea2f-8067-4a6f-ae0b-89c9a5c2a4c6/?storages=1
+    url: https://api.upcloud.com/1.3/server/00563630-8c2b-4db2-8831-4be0e4a6911b/?storages=1
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Thu, 27 Oct 2022 17:17:16 GMT
+      - Fri, 28 Oct 2022 08:16:10 GMT
       Server:
       - Apache
       Strict-Transport-Security:

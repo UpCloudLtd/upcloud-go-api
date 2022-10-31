@@ -15,7 +15,7 @@ func TestServerGroupsContext(t *testing.T) {
 	t.Parallel()
 
 	recordWithContext(t, "servergroups", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
-		srv, err := createMinimalServerWithContext(ctx, rec, svcContext, "TestServerGroups")
+		srv, err := createMinimalServerContext(ctx, rec, svcContext, "TestServerGroups")
 		require.NoError(t, err)
 		// create new server group
 		group, err := svcContext.CreateServerGroup(ctx, &request.CreateServerGroupRequest{
@@ -93,7 +93,7 @@ func TestServerGroupsContext(t *testing.T) {
 		}
 
 		// delete server
-		if err := stopServerWithContext(ctx, rec, svcContext, srv.UUID); err != nil {
+		if err := stopServerContext(ctx, rec, svcContext, srv.UUID); err != nil {
 			t.Log(err)
 		} else {
 			if err := deleteServer(svc, srv.UUID); err != nil {

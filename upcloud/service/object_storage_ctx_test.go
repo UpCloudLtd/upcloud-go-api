@@ -36,7 +36,7 @@ func TestGetObjectStoragesContext(t *testing.T) {
 func TestGetObjectStorageDetailsContext(t *testing.T) {
 	t.Parallel()
 	recordWithContext(t, "getobjectstoragedetails", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
-		d, err := createObjectStorageWithContext(ctx, svcContext, "getobjectstoragedetails", "App object storage", "fi-hel2", 500)
+		d, err := createObjectStorageContext(ctx, svcContext, "getobjectstoragedetails", "App object storage", "fi-hel2", 500)
 		require.NoError(t, err)
 
 		objectStorageDetails, err := svcContext.GetObjectStorageDetails(ctx, &request.GetObjectStorageDetailsRequest{
@@ -50,7 +50,7 @@ func TestGetObjectStorageDetailsContext(t *testing.T) {
 }
 
 // Creates an Object Storage and returns the details about it, panic if creation fails
-func createObjectStorageWithContext(ctx context.Context, svc *ServiceContext, name string, description string, zone string, size int) (*upcloud.ObjectStorageDetails, error) {
+func createObjectStorageContext(ctx context.Context, svc *ServiceContext, name string, description string, zone string, size int) (*upcloud.ObjectStorageDetails, error) {
 	createObjectStorageRequest := request.CreateObjectStorageRequest{
 		Name:        "go-test-" + name,
 		Description: description,

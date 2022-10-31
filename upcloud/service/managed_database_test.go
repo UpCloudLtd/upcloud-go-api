@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 	"testing"
@@ -40,7 +41,6 @@ func getTestCreateRequest(name string) *request.CreateManagedDatabaseRequest {
 }
 
 func TestService_CloneManagedDatabase(t *testing.T) {
-	const timeout = 10 * time.Minute
 	record(t, "clonemanageddatabase", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		var cloneDetails *upcloud.ManagedDatabase
 		createReq := getTestCreateRequest("clonemanageddatabase")
@@ -58,37 +58,12 @@ func TestService_CloneManagedDatabase(t *testing.T) {
 				assert.NoError(t, err)
 			}
 		}()
-		if rec.Mode() == recorder.ModeRecording {
-			rec.AddPassthrough(func(h *http.Request) bool {
-				return true
-			})
-			t.Logf("waiting for service to be deployed (up to %s)", timeout)
-			_, err = svc.WaitForManagedDatabaseState(&request.WaitForManagedDatabaseStateRequest{
-				UUID:         serviceDetails.UUID,
-				DesiredState: upcloud.ManagedDatabaseStateRunning,
-				Timeout:      timeout,
-			})
-			if !assert.NoError(t, err) {
-				return
-			}
-			t.Logf("waiting for initial service service backup (up to %s)", timeout)
-			waitUntil := time.Now().Add(timeout)
-			for {
-				waitForBackupDetails, err := svc.GetManagedDatabase(&request.GetManagedDatabaseRequest{UUID: serviceDetails.UUID})
-				if !assert.NoError(t, err) {
-					return
-				}
-				if len(waitForBackupDetails.Backups) > 0 {
-					break
-				}
-				if time.Now().After(waitUntil) {
-					assert.Fail(t, "timed out after waiting for initial backup")
-					return
-				}
-				time.Sleep(5 * time.Second)
-			}
-			rec.Passthroughs = nil
-		}
+		err = waitForManagedDatabaseRunningState(rec, svc, serviceDetails.UUID)
+		require.NoError(t, err)
+
+		err = waitForManagedDatabaseInitialBackup(rec, svc, serviceDetails.UUID)
+		require.NoError(t, err)
+
 		serviceDetails, err = svc.GetManagedDatabase(&request.GetManagedDatabaseRequest{UUID: serviceDetails.UUID})
 		if !assert.NoError(t, err) {
 			return
@@ -146,7 +121,6 @@ func TestService_CreateManagedDatabase(t *testing.T) {
 }
 
 func TestService_WaitForManagedDatabaseState(t *testing.T) {
-	const timeout = 10 * time.Minute
 	record(t, "waitformanageddatabase", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		details, err := svc.CreateManagedDatabase(getTestCreateRequest("waitformanageddatabase"))
 		if !assert.NoError(t, err) {
@@ -157,26 +131,11 @@ func TestService_WaitForManagedDatabaseState(t *testing.T) {
 			err := svc.DeleteManagedDatabase(&request.DeleteManagedDatabaseRequest{UUID: details.UUID})
 			assert.NoError(t, err)
 		}()
-		var newDetails *upcloud.ManagedDatabase
-		if rec.Mode() == recorder.ModeRecording {
-			t.Logf("waiting for service to be deployed (up to %s)", timeout)
-			rec.AddPassthrough(func(h *http.Request) bool {
-				return true
-			})
-			_, err = svc.WaitForManagedDatabaseState(&request.WaitForManagedDatabaseStateRequest{
-				UUID:         details.UUID,
-				DesiredState: upcloud.ManagedDatabaseStateRunning,
-				Timeout:      timeout,
-			})
-			if !assert.NoError(t, err) {
-				return
-			}
-			rec.Passthroughs = nil
-		}
-		newDetails, err = svc.WaitForManagedDatabaseState(&request.WaitForManagedDatabaseStateRequest{
-			UUID:         details.UUID,
-			DesiredState: upcloud.ManagedDatabaseStateRunning,
-			Timeout:      15 * time.Second,
+		err = waitForManagedDatabaseRunningState(rec, svc, details.UUID)
+		require.NoError(t, err)
+
+		newDetails, err := svc.GetManagedDatabase(&request.GetManagedDatabaseRequest{
+			UUID: details.UUID,
 		})
 		if !assert.NoError(t, err) {
 			return
@@ -257,20 +216,10 @@ func TestService_GetManagedDatabaseLogs(t *testing.T) {
 			err := svc.DeleteManagedDatabase(&request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
 			assert.NoError(t, err)
 		}()
+		err = waitForManagedDatabaseRunningState(rec, svc, serviceDetails.UUID)
+		require.NoError(t, err)
+
 		if rec.Mode() == recorder.ModeRecording {
-			rec.AddPassthrough(func(h *http.Request) bool {
-				return true
-			})
-			t.Logf("waiting for service to be deployed (up to %s)", timeout)
-			_, err = svc.WaitForManagedDatabaseState(&request.WaitForManagedDatabaseStateRequest{
-				UUID:         serviceDetails.UUID,
-				DesiredState: upcloud.ManagedDatabaseStateRunning,
-				Timeout:      timeout,
-			})
-			if !assert.NoError(t, err) {
-				return
-			}
-			rec.Passthroughs = nil
 			t.Logf("waiting for %s for the logs to be available", waitFor)
 			time.Sleep(waitFor)
 		}
@@ -405,20 +354,10 @@ func TestService_GetManagedDatabaseMetrics(t *testing.T) {
 			err := svc.DeleteManagedDatabase(&request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
 			assert.NoError(t, err)
 		}()
+		err = waitForManagedDatabaseRunningState(rec, svc, serviceDetails.UUID)
+		require.NoError(t, err)
+
 		if rec.Mode() == recorder.ModeRecording {
-			rec.AddPassthrough(func(h *http.Request) bool {
-				return true
-			})
-			t.Logf("waiting for service to be deployed (up to %s)", timeout)
-			_, err = svc.WaitForManagedDatabaseState(&request.WaitForManagedDatabaseStateRequest{
-				UUID:         serviceDetails.UUID,
-				DesiredState: upcloud.ManagedDatabaseStateRunning,
-				Timeout:      timeout,
-			})
-			if !assert.NoError(t, err) {
-				return
-			}
-			rec.Passthroughs = nil
 			t.Logf("waiting for %s to gather up some data", waitFor)
 			time.Sleep(waitFor)
 		}
@@ -614,7 +553,6 @@ func TestService_GetManagedDatabaseVersions(t *testing.T) {
 }
 
 func TestService_ShutdownStartManagedDatabase(t *testing.T) {
-	const timeout = 10 * time.Minute
 	record(t, "shutdownstartmanageddatabase", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		details, err := svc.CreateManagedDatabase(getTestCreateRequest("shutdownstartmanageddatabase"))
 		if !assert.NoError(t, err) {
@@ -625,37 +563,12 @@ func TestService_ShutdownStartManagedDatabase(t *testing.T) {
 			err := svc.DeleteManagedDatabase(&request.DeleteManagedDatabaseRequest{UUID: details.UUID})
 			assert.NoError(t, err)
 		}()
-		if rec.Mode() == recorder.ModeRecording {
-			rec.AddPassthrough(func(h *http.Request) bool {
-				return true
-			})
-			t.Logf("waiting for service to be deployed (up to %s)", timeout)
-			_, err = svc.WaitForManagedDatabaseState(&request.WaitForManagedDatabaseStateRequest{
-				UUID:         details.UUID,
-				DesiredState: upcloud.ManagedDatabaseStateRunning,
-				Timeout:      timeout,
-			})
-			if !assert.NoError(t, err) {
-				return
-			}
-			t.Logf("waiting for initial service service backup (up to %s)", timeout)
-			waitUntil := time.Now().Add(timeout)
-			for {
-				waitForBackupDetails, err := svc.GetManagedDatabase(&request.GetManagedDatabaseRequest{UUID: details.UUID})
-				if !assert.NoError(t, err) {
-					return
-				}
-				if len(waitForBackupDetails.Backups) > 0 {
-					break
-				}
-				if time.Now().After(waitUntil) {
-					assert.Fail(t, "timed out after waiting for initial backup")
-					return
-				}
-				time.Sleep(5 * time.Second)
-			}
-			rec.Passthroughs = nil
-		}
+		err = waitForManagedDatabaseRunningState(rec, svc, details.UUID)
+		require.NoError(t, err)
+
+		err = waitForManagedDatabaseInitialBackup(rec, svc, details.UUID)
+		require.NoError(t, err)
+
 		shutdownDetails, err := svc.ShutdownManagedDatabase(&request.ShutdownManagedDatabaseRequest{UUID: details.UUID})
 		if !assert.NoError(t, err) {
 			return
@@ -671,7 +584,6 @@ func TestService_ShutdownStartManagedDatabase(t *testing.T) {
 }
 
 func TestService_ManagedDatabaseUserManager(t *testing.T) {
-	const timeout = 10 * time.Minute
 	record(t, "managemanageddatabaseusers", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
 		serviceDetails, err := svc.CreateManagedDatabase(getTestCreateRequest("managemanageddatabaseusers"))
 		if !assert.NoError(t, err) {
@@ -682,21 +594,9 @@ func TestService_ManagedDatabaseUserManager(t *testing.T) {
 			err := svc.DeleteManagedDatabase(&request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
 			assert.NoError(t, err)
 		}()
-		if rec.Mode() == recorder.ModeRecording {
-			t.Logf("waiting for service to be deployed (up to %s)", timeout)
-			rec.AddPassthrough(func(h *http.Request) bool {
-				return true
-			})
-			_, err = svc.WaitForManagedDatabaseState(&request.WaitForManagedDatabaseStateRequest{
-				UUID:         serviceDetails.UUID,
-				DesiredState: upcloud.ManagedDatabaseStateRunning,
-				Timeout:      timeout,
-			})
-			if !assert.NoError(t, err) {
-				return
-			}
-			rec.Passthroughs = nil
-		}
+		err = waitForManagedDatabaseRunningState(rec, svc, serviceDetails.UUID)
+		require.NoError(t, err)
+
 		t.Run("Create", func(t *testing.T) {
 			userDetails, err := svc.CreateManagedDatabaseUser(&request.CreateManagedDatabaseUserRequest{
 				ServiceUUID: serviceDetails.UUID,
@@ -771,7 +671,6 @@ func TestService_ManagedDatabaseUserManager(t *testing.T) {
 
 func TestService_ManagedDatabaseLogicalDatabaseManager(t *testing.T) {
 	const (
-		timeout   = 10 * time.Minute
 		defaultdb = "defaultdb"
 	)
 	record(t, "managemanageddatabaslogicaldbs", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
@@ -784,21 +683,10 @@ func TestService_ManagedDatabaseLogicalDatabaseManager(t *testing.T) {
 			err := svc.DeleteManagedDatabase(&request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
 			assert.NoError(t, err)
 		}()
-		if rec.Mode() == recorder.ModeRecording {
-			t.Logf("waiting for service to be deployed (up to %s)", timeout)
-			rec.AddPassthrough(func(h *http.Request) bool {
-				return true
-			})
-			_, err = svc.WaitForManagedDatabaseState(&request.WaitForManagedDatabaseStateRequest{
-				UUID:         serviceDetails.UUID,
-				DesiredState: upcloud.ManagedDatabaseStateRunning,
-				Timeout:      timeout,
-			})
-			if !assert.NoError(t, err) {
-				return
-			}
-			rec.Passthroughs = nil
-		}
+
+		err = waitForManagedDatabaseRunningState(rec, svc, serviceDetails.UUID)
+		require.NoError(t, err)
+
 		t.Run("Create", func(t *testing.T) {
 			expected := &upcloud.ManagedDatabaseLogicalDatabase{
 				Name:      "test",
@@ -848,18 +736,55 @@ func TestService_ManagedDatabaseLogicalDatabaseManager(t *testing.T) {
 	})
 }
 
-func waitForManagedDatabaseRunningState(rec *recorder.Recorder, svc *Service, UUID string) error {
-	if rec.Mode() == recorder.ModeRecording {
-		rec.AddPassthrough(func(h *http.Request) bool {
-			return true
-		})
-		_, err := svc.WaitForManagedDatabaseState(&request.WaitForManagedDatabaseStateRequest{
-			UUID:         UUID,
-			DesiredState: upcloud.ManagedDatabaseStateRunning,
-			Timeout:      15 * time.Minute,
-		})
-		rec.Passthroughs = nil
-		return err
+func waitForManagedDatabaseInitialBackup(rec *recorder.Recorder, svc *Service, dbUUID string) error {
+	if rec.Mode() != recorder.ModeRecording {
+		return nil
 	}
+
+	const timeout = 10 * time.Minute
+
+	rec.AddPassthrough(func(h *http.Request) bool {
+		return true
+	})
+	defer func() {
+		rec.Passthroughs = nil
+	}()
+
+	waitUntil := time.Now().Add(timeout)
+	for {
+		waitForBackupDetails, err := svc.GetManagedDatabase(&request.GetManagedDatabaseRequest{UUID: dbUUID})
+		if err != nil {
+			return err
+		}
+		if len(waitForBackupDetails.Backups) > 0 {
+			break
+		}
+		if time.Now().After(waitUntil) {
+			return fmt.Errorf("timeout %s reached", timeout.String())
+		}
+		time.Sleep(5 * time.Second)
+	}
+
 	return nil
+}
+
+func waitForManagedDatabaseRunningState(rec *recorder.Recorder, svc *Service, dbUUID string) error {
+	if rec.Mode() != recorder.ModeRecording {
+		return nil
+	}
+
+	rec.AddPassthrough(func(h *http.Request) bool {
+		return true
+	})
+	defer func() {
+		rec.Passthroughs = nil
+	}()
+
+	_, err := svc.WaitForManagedDatabaseState(&request.WaitForManagedDatabaseStateRequest{
+		UUID:         dbUUID,
+		DesiredState: upcloud.ManagedDatabaseStateRunning,
+		Timeout:      15 * time.Minute,
+	})
+
+	return err
 }
