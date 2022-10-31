@@ -164,3 +164,13 @@ func ExampleNewWithContext() {
 	}
 	fmt.Printf("%d", len(zones.Zones))
 }
+
+// Configures the test environment.
+func getService() *Service {
+	user, password := getCredentials()
+
+	c := client.New(user, password)
+	c.SetTimeout(time.Minute * 5)
+
+	return New(c)
+}

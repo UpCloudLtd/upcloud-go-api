@@ -30,7 +30,7 @@ func TestCreateModifyDeleteStorageContext(t *testing.T) {
 
 	recordWithContext(t, "createmodifydeletestorage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 		// Create some storage
-		storageDetails, err := createStorageWithContext(ctx, svcContext)
+		storageDetails, err := createStorageContext(ctx, svcContext)
 		require.NoError(t, err)
 		t.Logf("Storage %s with UUID %s created", storageDetails.Title, storageDetails.UUID)
 
@@ -48,7 +48,7 @@ func TestCreateModifyDeleteStorageContext(t *testing.T) {
 
 		// Delete the storage
 		t.Log("Deleting the storage ...")
-		err = deleteStorageWithContext(ctx, svcContext, storageDetails.UUID)
+		err = deleteStorageContext(ctx, svcContext, storageDetails.UUID)
 		require.NoError(t, err)
 		t.Log("Storage is now deleted")
 	})
@@ -67,18 +67,18 @@ func TestAttachDetachStorageContext(t *testing.T) {
 	t.Parallel()
 	recordWithContext(t, "attachdetachstorage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 		// Create a server
-		serverDetails, err := createServerWithContext(ctx, rec, svcContext, "TestAttachDetachStorage")
+		serverDetails, err := createServerContext(ctx, rec, svcContext, "TestAttachDetachStorage")
 		require.NoError(t, err)
 		t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 		// Stop the server
 		t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
-		err = stopServerWithContext(ctx, rec, svcContext, serverDetails.UUID)
+		err = stopServerContext(ctx, rec, svcContext, serverDetails.UUID)
 		require.NoError(t, err)
 		t.Log("Server is now stopped")
 
 		// Create some storage
-		storageDetails, err := createStorageWithContext(ctx, svcContext)
+		storageDetails, err := createStorageContext(ctx, svcContext)
 		require.NoError(t, err)
 		t.Logf("Storage %s with UUID %s created", storageDetails.Title, storageDetails.UUID)
 
@@ -115,7 +115,7 @@ func TestCloneStorageContext(t *testing.T) {
 	t.Parallel()
 	recordWithContext(t, "clonestorage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 		// Create storage
-		storageDetails, err := createStorageWithContext(ctx, svcContext)
+		storageDetails, err := createStorageContext(ctx, svcContext)
 		require.NoError(t, err)
 		t.Logf("Storage %s with UUID %s created", storageDetails.Title, storageDetails.UUID)
 
@@ -129,17 +129,9 @@ func TestCloneStorageContext(t *testing.T) {
 			Tier:  upcloud.StorageTierMaxIOPS,
 		})
 		require.NoError(t, err)
-		if rec.Mode() == recorder.ModeRecording {
-			rec.AddPassthrough(func(h *http.Request) bool {
-				return true
-			})
 
-			err = waitForStorageOnline(svc, clonedStorageDetails.UUID)
-			require.NoError(t, err)
-
-			require.NoError(t, err)
-			rec.Passthroughs = nil
-		}
+		err = waitForStorageOnlineStateContext(ctx, rec, svcContext, clonedStorageDetails.UUID)
+		require.NoError(t, err)
 
 		details, err := svcContext.GetStorageDetails(ctx, &request.GetStorageDetailsRequest{UUID: clonedStorageDetails.UUID})
 		require.NoError(t, err)
@@ -158,13 +150,13 @@ func TestTemplatizeServerStorageContext(t *testing.T) {
 	t.Parallel()
 	recordWithContext(t, "templatizeserverstorage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 		// Create server
-		serverDetails, err := createServerWithContext(ctx, rec, svcContext, "TestTemplatizeServerStorage")
+		serverDetails, err := createServerContext(ctx, rec, svcContext, "TestTemplatizeServerStorage")
 		require.NoError(t, err)
 		t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 		// Stop the server
 		t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
-		err = stopServerWithContext(ctx, rec, svcContext, serverDetails.UUID)
+		err = stopServerContext(ctx, rec, svcContext, serverDetails.UUID)
 		require.NoError(t, err)
 		t.Log("Server is now stopped")
 
@@ -184,17 +176,8 @@ func TestTemplatizeServerStorageContext(t *testing.T) {
 		})
 		require.NoErrorf(t, err, "Error: %#v", err)
 
-		if rec.Mode() == recorder.ModeRecording {
-			rec.AddPassthrough(func(h *http.Request) bool {
-				return true
-			})
-
-			err = waitForStorageOnline(svc, storageDetails.UUID)
-			require.NoError(t, err)
-
-			require.NoError(t, err)
-			rec.Passthroughs = nil
-		}
+		err = waitForStorageOnlineStateContext(ctx, rec, svcContext, storageDetails.UUID)
+		require.NoError(t, err)
 
 		storageDetails, err = svcContext.GetStorageDetails(ctx, &request.GetStorageDetailsRequest{UUID: storageDetails.UUID})
 		require.NoError(t, err)
@@ -214,13 +197,13 @@ func TestLoadEjectCDROMContext(t *testing.T) {
 	t.Parallel()
 	recordWithContext(t, "loadejectcdrom", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 		// Create the server
-		serverDetails, err := createServerWithContext(ctx, rec, svcContext, "TestLoadEjectCDROM")
+		serverDetails, err := createServerContext(ctx, rec, svcContext, "TestLoadEjectCDROM")
 		require.NoError(t, err)
 		t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 		// Stop the server
 		t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
-		err = stopServerWithContext(ctx, rec, svcContext, serverDetails.UUID)
+		err = stopServerContext(ctx, rec, svcContext, serverDetails.UUID)
 		require.NoError(t, err)
 		t.Log("Server is now stopped")
 
@@ -262,7 +245,7 @@ func TestCreateRestoreBackupContext(t *testing.T) {
 	t.Parallel()
 	recordWithContext(t, "createrestorebackup", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 		// Create the storage
-		storageDetails, err := createStorageWithContext(ctx, svcContext)
+		storageDetails, err := createStorageContext(ctx, svcContext)
 		require.NoError(t, err)
 		t.Logf("Storage %s with UUID %s created", storageDetails.Title, storageDetails.UUID)
 
@@ -280,17 +263,8 @@ func TestCreateRestoreBackupContext(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		if rec.Mode() == recorder.ModeRecording {
-			rec.AddPassthrough(func(h *http.Request) bool {
-				return true
-			})
-
-			err = waitForStorageOnline(svc, storageDetails.UUID)
-			require.NoError(t, err)
-
-			require.NoError(t, err)
-			rec.Passthroughs = nil
-		}
+		err = waitForStorageOnlineStateContext(ctx, rec, svcContext, storageDetails.UUID)
+		require.NoError(t, err)
 
 		storageDetails, err = svcContext.GetStorageDetails(ctx, &request.GetStorageDetailsRequest{UUID: storageDetails.UUID})
 		require.NoError(t, err)
@@ -322,17 +296,8 @@ func TestCreateRestoreBackupContext(t *testing.T) {
 		})
 		assert.NoError(t, err)
 
-		if rec.Mode() == recorder.ModeRecording {
-			rec.AddPassthrough(func(h *http.Request) bool {
-				return true
-			})
-
-			err = waitForStorageOnline(svc, backupDetails.Origin)
-			require.NoError(t, err)
-
-			require.NoError(t, err)
-			rec.Passthroughs = nil
-		}
+		err = waitForStorageOnlineStateContext(ctx, rec, svcContext, backupDetails.Origin)
+		require.NoError(t, err)
 
 		backupDetails, err = svcContext.GetStorageDetails(ctx, &request.GetStorageDetailsRequest{UUID: backupDetails.Origin})
 		require.NoError(t, err)
@@ -360,19 +325,8 @@ func TestStorageImportContext(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		if rec.Mode() == recorder.ModeRecording {
-			rec.AddPassthrough(func(h *http.Request) bool {
-				return true
-			})
-
-			_, err := svcContext.WaitForStorageImportCompletion(ctx, &request.WaitForStorageImportCompletionRequest{
-				StorageUUID: storage.UUID,
-				Timeout:     15 * time.Minute,
-			})
-
-			require.NoError(t, err)
-			rec.Passthroughs = nil
-		}
+		err = waitForStorageImportCompletionContext(ctx, rec, svcContext, storage.UUID)
+		require.NoError(t, err)
 
 		afterStorageImportDetails, err := svcContext.GetStorageImportDetails(ctx, &request.GetStorageImportDetailsRequest{
 			UUID: storage.UUID,
@@ -432,19 +386,8 @@ func TestDirectUploadStorageImportContext(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		if rec.Mode() == recorder.ModeRecording {
-			rec.AddPassthrough(func(h *http.Request) bool {
-				return true
-			})
-
-			_, err := svcContext.WaitForStorageImportCompletion(ctx, &request.WaitForStorageImportCompletionRequest{
-				StorageUUID: storage.UUID,
-				Timeout:     15 * time.Minute,
-			})
-
-			require.NoError(t, err)
-			rec.Passthroughs = nil
-		}
+		err = waitForStorageImportCompletionContext(ctx, rec, svcContext, storage.UUID)
+		require.NoError(t, err)
 
 		afterStorageImportDetails, err := svcContext.GetStorageImportDetails(ctx, &request.GetStorageImportDetailsRequest{
 			UUID: storage.UUID,
@@ -466,11 +409,11 @@ func TestResizeStorageFilesystemContext(t *testing.T) {
 	t.Parallel()
 	recordWithContext(t, "resizestoragefilesystem", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 		// start server
-		serverDetails, err := createMinimalServerWithContext(ctx, rec, svcContext, "TestResizeStorageFilesystem")
+		serverDetails, err := createMinimalServerContext(ctx, rec, svcContext, "TestResizeStorageFilesystem")
 		require.NoError(t, err)
 
 		// stop server
-		require.NoError(t, stopServerWithContext(ctx, rec, svcContext, serverDetails.UUID))
+		require.NoError(t, stopServerContext(ctx, rec, svcContext, serverDetails.UUID))
 
 		// modify disk size
 		_, err = svcContext.ModifyStorage(ctx, &request.ModifyStorageRequest{
@@ -479,21 +422,8 @@ func TestResizeStorageFilesystemContext(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		if rec.Mode() == recorder.ModeRecording {
-			rec.AddPassthrough(func(h *http.Request) bool {
-				return true
-			})
-
-			// wait disk to become back online
-			_, err := svcContext.WaitForStorageState(ctx, &request.WaitForStorageStateRequest{
-				UUID:         serverDetails.StorageDevices[0].UUID,
-				DesiredState: upcloud.StorageStateOnline,
-				Timeout:      600,
-			})
-			require.NoError(t, err)
-
-			rec.Passthroughs = nil
-		}
+		err = waitForStorageOnlineStateContext(ctx, rec, svcContext, serverDetails.StorageDevices[0].UUID)
+		require.NoError(t, err)
 
 		storageDetails, err := svcContext.GetStorageDetails(ctx, &request.GetStorageDetailsRequest{UUID: serverDetails.StorageDevices[0].UUID})
 		require.NoError(t, err)
@@ -526,21 +456,8 @@ func TestCompressedDirectUploadStorageImportContext(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		if rec.Mode() == recorder.ModeRecording {
-			rec.AddPassthrough(func(h *http.Request) bool {
-				return true
-			})
-
-			// wait disk to become back online
-			_, err := svcContext.WaitForStorageState(ctx, &request.WaitForStorageStateRequest{
-				UUID:         storage.UUID,
-				DesiredState: upcloud.StorageStateOnline,
-				Timeout:      600,
-			})
-			require.NoError(t, err)
-
-			rec.Passthroughs = nil
-		}
+		err = waitForStorageOnlineStateContext(ctx, rec, svcContext, storage.UUID)
+		require.NoError(t, err)
 
 		storageDetails, err := svcContext.GetStorageDetails(ctx, &request.GetStorageDetailsRequest{UUID: storage.UUID})
 		require.NoError(t, err)
@@ -566,20 +483,8 @@ func TestCompressedDirectUploadStorageImportContext(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		if rec.Mode() == recorder.ModeRecording {
-			rec.AddPassthrough(func(h *http.Request) bool {
-				return true
-			})
-
-			_, err := svcContext.WaitForStorageImportCompletion(ctx, &request.WaitForStorageImportCompletionRequest{
-				StorageUUID: storage.UUID,
-				Timeout:     15 * time.Minute,
-			})
-
-			require.NoError(t, err)
-
-			rec.Passthroughs = nil
-		}
+		err = waitForStorageImportCompletionContext(ctx, rec, svcContext, storage.UUID)
+		require.NoError(t, err)
 
 		afterStorageImportDetails, err := svcContext.GetStorageImportDetails(ctx, &request.GetStorageImportDetailsRequest{
 			UUID: storage.UUID,
@@ -589,4 +494,78 @@ func TestCompressedDirectUploadStorageImportContext(t *testing.T) {
 		assert.Equal(t, contentType, afterStorageImportDetails.ClientContentType)
 		assert.Equal(t, upcloud.StorageImportStateCompleted, afterStorageImportDetails.State)
 	})
+}
+
+// Creates a piece of storage and returns the details about it, panic if creation fails.
+func createStorageContext(ctx context.Context, svc *ServiceContext) (*upcloud.StorageDetails, error) {
+	createStorageRequest := request.CreateStorageRequest{
+		Tier:  upcloud.StorageTierMaxIOPS,
+		Title: "Test storage",
+		Size:  10,
+		Zone:  "fi-hel2",
+		BackupRule: &upcloud.BackupRule{
+			Interval:  upcloud.BackupRuleIntervalDaily,
+			Time:      "0430",
+			Retention: 30,
+		},
+	}
+
+	storageDetails, err := svc.CreateStorage(ctx, &createStorageRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	return storageDetails, nil
+}
+
+// Deletes the specified storage.
+func deleteStorageContext(ctx context.Context, svc *ServiceContext, uuid string) error {
+	err := svc.DeleteStorage(ctx, &request.DeleteStorageRequest{
+		UUID: uuid,
+	})
+
+	return err
+}
+
+// Waits for the specified storage to come online.
+func waitForStorageImportCompletionContext(ctx context.Context, rec *recorder.Recorder, svc *ServiceContext, storageUUID string) error {
+	if rec.Mode() != recorder.ModeRecording {
+		return nil
+	}
+
+	rec.AddPassthrough(func(h *http.Request) bool {
+		return true
+	})
+	defer func() {
+		rec.Passthroughs = nil
+	}()
+
+	_, err := svc.WaitForStorageImportCompletion(ctx, &request.WaitForStorageImportCompletionRequest{
+		StorageUUID: storageUUID,
+		Timeout:     15 * time.Minute,
+	})
+
+	return err
+}
+
+// Waits for the specified storage to come online.
+func waitForStorageOnlineStateContext(ctx context.Context, rec *recorder.Recorder, svc *ServiceContext, storageUUID string) error {
+	if rec.Mode() != recorder.ModeRecording {
+		return nil
+	}
+
+	rec.AddPassthrough(func(h *http.Request) bool {
+		return true
+	})
+	defer func() {
+		rec.Passthroughs = nil
+	}()
+
+	_, err := svc.WaitForStorageState(ctx, &request.WaitForStorageStateRequest{
+		UUID:         storageUUID,
+		DesiredState: upcloud.StorageStateOnline,
+		Timeout:      waitTimeout,
+	})
+
+	return err
 }
