@@ -1,14 +1,6 @@
 .PHONY: test 
-test: check-test-env fmt vet
+test: check-test-env
 	go test ./... -v -parallel 8
-
-.PHONY: fmt 
-fmt: 
-	go fmt ./...
-
-.PHONY: vet
-vet:
-	go vet ./...
 
 check-test-env:
 ifndef UPCLOUD_GO_SDK_TEST_USER
