@@ -9,7 +9,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 - Managed Load Balancer private network support
 
 ### Deprecated
-- Managed Load Balancer fields `DNSName` and `network_uuid`
+- Managed Load Balancer fields `DNSName` and `NetworkUUID`
 
 ## [4.9.0]
 
