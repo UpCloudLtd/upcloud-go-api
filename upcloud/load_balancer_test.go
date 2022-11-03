@@ -115,7 +115,9 @@ func TestMarshalLoadBalancer(t *testing.T) {
 								}
 							],
 							"name": "example-network-1",
-							"type": "public"
+							"type": "public",
+							"created_at": "2021-12-07T13:58:30.817272Z",
+							"updated_at": "2022-02-11T17:33:08.490581Z"
 						}
 					]
 				}
@@ -220,6 +222,8 @@ func TestMarshalLoadBalancer(t *testing.T) {
 						Listen:  false,
 					},
 				},
+				CreatedAt: timeParse("2021-12-07T13:58:30.817272Z"),
+				UpdatedAt: timeParse("2022-02-11T17:33:08.490581Z"),
 			}},
 		}},
 	}}
