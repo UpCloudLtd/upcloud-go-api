@@ -58,6 +58,8 @@ type LoadBalancerContext interface {
 	CreateLoadBalancerCertificateBundle(ctx context.Context, r *request.CreateLoadBalancerCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error)
 	ModifyLoadBalancerCertificateBundle(ctx context.Context, r *request.ModifyLoadBalancerCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error)
 	DeleteLoadBalancerCertificateBundle(ctx context.Context, r *request.DeleteLoadBalancerCertificateBundleRequest) error
+	// Networks
+	ModifyLoadBalancerNetwork(ctx context.Context, r *request.ModifyLoadBalancerNetworkRequest) (*upcloud.LoadBalancerNetwork, error)
 }
 
 // GetLoadBalancers retrieves a list of load balancers.
@@ -379,4 +381,9 @@ func (s *ServiceContext) ModifyLoadBalancerCertificateBundle(ctx context.Context
 // DeleteLoadBalancerCertificateBundle deletes an existing load balancer certificate bundle.
 func (s *ServiceContext) DeleteLoadBalancerCertificateBundle(ctx context.Context, r *request.DeleteLoadBalancerCertificateBundleRequest) error {
 	return s.delete(ctx, r)
+}
+
+func (s *ServiceContext) ModifyLoadBalancerNetwork(ctx context.Context, r *request.ModifyLoadBalancerNetworkRequest) (*upcloud.LoadBalancerNetwork, error) {
+	n := upcloud.LoadBalancerNetwork{}
+	return &n, s.modify(ctx, r, &n)
 }

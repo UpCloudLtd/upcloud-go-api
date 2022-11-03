@@ -99,6 +99,26 @@ func TestMarshalLoadBalancer(t *testing.T) {
 						}
 					]
 				}
+			],
+			"nodes": [
+            	{
+					"networks": [
+						{
+							"ip_addresses": [
+								{
+									"address": "100.127.5.146",
+									"listen": true
+								},
+								{
+									"address": "100.127.5.140",
+									"listen": false
+								}
+							],
+							"name": "example-network-1",
+							"type": "public"
+						}
+					]
+				}
 			]
 		}
 	]`
@@ -186,6 +206,22 @@ func TestMarshalLoadBalancer(t *testing.T) {
 				UpdatedAt:    timeParse("2022-02-11T17:33:08.490581Z"),
 			},
 		},
+		Nodes: []LoadBalancerNode{{
+			Networks: []LoadBalancerNetwork{{
+				Name: "example-network-1",
+				Type: LoadBalancerNetworkTypePublic,
+				IPAddresses: []LoadBalancerIPAddress{
+					{
+						Address: "100.127.5.146",
+						Listen:  true,
+					},
+					{
+						Address: "100.127.5.140",
+						Listen:  false,
+					},
+				},
+			}},
+		}},
 	}}
 	actual, err := json.Marshal(lbs)
 	assert.NoError(t, err)
@@ -238,6 +274,35 @@ func TestLoadBalancerFrontend(t *testing.T) {
 				"timeout_client": 10,
 				"inbound_proxy_protocol": false
 			},
+			"created_at": "2021-12-07T13:58:30.817272Z",
+			"updated_at": "2022-02-11T17:33:08.490581Z"
+		}
+		`,
+	)
+	testJSON(t,
+		&LoadBalancerFrontend{},
+		&LoadBalancerFrontend{
+			Networks: []LoadBalancerFrontendNetwork{
+				{
+					Name: "PublicNet",
+				},
+				{
+					Name: "PrivateNet",
+				},
+			},
+			CreatedAt: timeParse("2021-12-07T13:58:30.817272Z"),
+			UpdatedAt: timeParse("2022-02-11T17:33:08.490581Z"),
+		},
+		`
+		{
+			"networks": [
+				{
+					"name": "PublicNet"
+				},
+				{
+					"name": "PrivateNet"
+				}
+			],
 			"created_at": "2021-12-07T13:58:30.817272Z",
 			"updated_at": "2022-02-11T17:33:08.490581Z"
 		}
@@ -871,6 +936,60 @@ func TestLoadBalancerCertificateBundle(t *testing.T) {
 		}
 		`,
 	)
+}
+
+func TestLoadBalancerNetworks(t *testing.T) {
+	testJSON(t,
+		&LoadBalancer{},
+		&LoadBalancer{
+			Networks: []LoadBalancerNetwork{
+				{
+					UUID:      "0aded5c1-c7a3-498a-b9c8-a871611c47a2",
+					Name:      "PublicNet",
+					DNSName:   "public.name",
+					Type:      LoadBalancerNetworkTypePublic,
+					Family:    LoadBalancerAddressFamilyIPv4,
+					CreatedAt: timeParse("2021-12-07T13:58:30.817272Z"),
+					UpdatedAt: timeParse("2022-02-11T17:33:08.490581Z"),
+				},
+				{
+					UUID:      "bf571589-7378-41f8-879e-5505613b070d",
+					Name:      "PrivateNet",
+					DNSName:   "private.name",
+					Type:      LoadBalancerNetworkTypePrivate,
+					Family:    LoadBalancerAddressFamilyIPv4,
+					CreatedAt: timeParse("2021-12-07T13:58:30.817272Z"),
+					UpdatedAt: timeParse("2022-02-11T17:33:08.490581Z"),
+				},
+			},
+			CreatedAt: timeParse("2021-12-07T13:58:30.817272Z"),
+			UpdatedAt: timeParse("2022-02-11T17:33:08.490581Z"),
+		},
+		`
+		{
+			"networks": [
+				{
+					"uuid": "0aded5c1-c7a3-498a-b9c8-a871611c47a2",
+					"name": "PublicNet",
+					"dns_name": "public.name",
+					"type": "public",
+					"family": "IPv4",
+					"created_at": "2021-12-07T13:58:30.817272Z",
+					"updated_at": "2022-02-11T17:33:08.490581Z"
+				},
+				{
+					"uuid": "bf571589-7378-41f8-879e-5505613b070d",
+					"name": "PrivateNet",
+					"dns_name": "private.name",
+					"type": "private",
+					"family": "IPv4",
+					"created_at": "2021-12-07T13:58:30.817272Z",
+					"updated_at": "2022-02-11T17:33:08.490581Z"
+				}
+			],
+			"created_at": "2021-12-07T13:58:30.817272Z",
+			"updated_at": "2022-02-11T17:33:08.490581Z"
+		}`)
 }
 
 func testJSON(t *testing.T, unMarshall, marshall interface{}, want string) {

@@ -2,6 +2,7 @@ package service
 
 import (
 	"fmt"
+	"net/http"
 	"testing"
 	"time"
 
@@ -791,11 +792,17 @@ func TestLoadBalancerPage(t *testing.T) {
 }
 
 func cleanupLoadBalancer(t *testing.T, rec *recorder.Recorder, svc *Service, lb *upcloud.LoadBalancer) {
-	t.Logf("Cleanup LB: %s", lb.Name)
-	// speed up tests if replaying by not waiting LB shutdown
-	waitShutdown := rec.Mode() != recorder.ModeReplaying
-	t.Logf("waitShutdown: %+v", waitShutdown)
-	if err := deleteLoadBalancer(svc, lb, waitShutdown); err != nil {
-		t.Log(err)
+	if rec.Mode() == recorder.ModeRecording {
+		rec.AddPassthrough(func(h *http.Request) bool {
+			return true
+		})
+		t.Logf("Cleanup LB %s", lb.Name)
+		// speed up tests if replaying by not waiting LB shutdown
+		waitShutdown := rec.Mode() != recorder.ModeReplaying
+		t.Logf("waitShutdown: %+v", waitShutdown)
+		if err := deleteLoadBalancer(svc, lb, waitShutdown); err != nil {
+			t.Log(err)
+		}
+		rec.Passthroughs = nil
 	}
 }

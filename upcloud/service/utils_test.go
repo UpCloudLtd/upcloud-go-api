@@ -617,7 +617,6 @@ func waitLoadBalancerToShutdown(svc *Service, lb *upcloud.LoadBalancer) error {
 }
 
 func deleteLoadBalancer(svc *Service, lb *upcloud.LoadBalancer, waitShutdown bool) error {
-	netID := lb.NetworkUUID
 	if err := svc.DeleteLoadBalancer(&request.DeleteLoadBalancerRequest{UUID: lb.UUID}); err != nil {
 		return err
 	}
@@ -626,7 +625,25 @@ func deleteLoadBalancer(svc *Service, lb *upcloud.LoadBalancer, waitShutdown boo
 			return fmt.Errorf("unable to shutdown LB '%s' (%s) (check dangling networks)", lb.UUID, lb.Name)
 		}
 	}
-	return svc.DeleteNetwork(&request.DeleteNetworkRequest{UUID: netID})
+	var errs []error
+	if lb.NetworkUUID != "" {
+		if err := svc.DeleteNetwork(&request.DeleteNetworkRequest{UUID: lb.NetworkUUID}); err != nil {
+			errs = append(errs, err)
+		}
+	}
+	if len(lb.Networks) > 0 {
+		for _, n := range lb.Networks {
+			if n.Type == upcloud.LoadBalancerNetworkTypePrivate && n.UUID != "" {
+				if err := svc.DeleteNetwork(&request.DeleteNetworkRequest{UUID: n.UUID}); err != nil {
+					errs = append(errs, err)
+				}
+			}
+		}
+	}
+	if len(errs) > 0 {
+		return fmt.Errorf("%s", errs)
+	}
+	return nil
 }
 
 func createLoadBalancerBackend(svc *Service, lbUUID string) (*upcloud.LoadBalancerBackend, error) {
