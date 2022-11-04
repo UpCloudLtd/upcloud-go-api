@@ -20,6 +20,7 @@ type (
 	LoadBalancerHealthCheckType                   string
 	LoadBalancerNetworkType                       string
 	LoadBalancerAddressFamily                     string
+	LoadBalancerNodeOperationalState              string
 )
 
 const (
@@ -109,6 +110,16 @@ const (
 	LoadBalancerAddressFamilyIPv4  LoadBalancerAddressFamily = "IPv4"
 	// IPv6 addresses are not supported yet
 	// LoadBalancerAddressFamilyIPv6  LoadBalancerAddressFamily = "IPv6"
+
+	LoadBalancerNodeOperationalStatePending               LoadBalancerNodeOperationalState = "pending"
+	LoadBalancerNodeOperationalStatePullConfig            LoadBalancerNodeOperationalState = "pull-config"
+	LoadBalancerNodeOperationalStateSetupLB               LoadBalancerNodeOperationalState = "setup-lb"
+	LoadBalancerNodeOperationalStateRunning               LoadBalancerNodeOperationalState = "running"
+	LoadBalancerNodeOperationalStateFailing               LoadBalancerNodeOperationalState = "failing"
+	LoadBalancerNodeOperationalStateAgentUpgradeStarting  LoadBalancerNodeOperationalState = "agent-upgrade-starting"
+	LoadBalancerNodeOperationalStateAgentUpgradeFinishing LoadBalancerNodeOperationalState = "agent-upgrade-finishing"
+	LoadBalancerNodeOperationalStateStopped               LoadBalancerNodeOperationalState = "stopped"
+	LoadBalancerNodeOperationalStateNotResponding         LoadBalancerNodeOperationalState = "not-responding"
 )
 
 // LoadBalancerPlan represents load balancer plan details
@@ -357,7 +368,15 @@ type LoadBalancerIPAddress struct {
 
 // LoadBalancerNode represents loadbalancer node
 type LoadBalancerNode struct {
-	Networks []LoadBalancerNetwork `json:"networks,omitempty"`
+	Networks         []LoadBalancerNodeNetwork        `json:"networks,omitempty"`
+	OperationalState LoadBalancerNodeOperationalState `json:"operational_state,omitempty"`
+}
+
+// LoadBalancerNodeNetwork represents node network
+type LoadBalancerNodeNetwork struct {
+	Name        string                  `json:"name,omitempty"`
+	Type        LoadBalancerNetworkType `json:"type,omitempty"`
+	IPAddresses []LoadBalancerIPAddress `json:"ip_addresses,omitempty"`
 }
 
 // LoadBalancerNetwork represents network attached to loadbalancer

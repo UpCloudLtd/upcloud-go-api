@@ -102,6 +102,7 @@ func TestMarshalLoadBalancer(t *testing.T) {
 			],
 			"nodes": [
             	{
+					"operational_state": "running",
 					"networks": [
 						{
 							"ip_addresses": [
@@ -115,9 +116,7 @@ func TestMarshalLoadBalancer(t *testing.T) {
 								}
 							],
 							"name": "example-network-1",
-							"type": "public",
-							"created_at": "2021-12-07T13:58:30.817272Z",
-							"updated_at": "2022-02-11T17:33:08.490581Z"
+							"type": "public"
 						}
 					]
 				}
@@ -209,7 +208,8 @@ func TestMarshalLoadBalancer(t *testing.T) {
 			},
 		},
 		Nodes: []LoadBalancerNode{{
-			Networks: []LoadBalancerNetwork{{
+			OperationalState: LoadBalancerNodeOperationalStateRunning,
+			Networks: []LoadBalancerNodeNetwork{{
 				Name: "example-network-1",
 				Type: LoadBalancerNetworkTypePublic,
 				IPAddresses: []LoadBalancerIPAddress{
@@ -222,8 +222,6 @@ func TestMarshalLoadBalancer(t *testing.T) {
 						Listen:  false,
 					},
 				},
-				CreatedAt: timeParse("2021-12-07T13:58:30.817272Z"),
-				UpdatedAt: timeParse("2022-02-11T17:33:08.490581Z"),
 			}},
 		}},
 	}}
