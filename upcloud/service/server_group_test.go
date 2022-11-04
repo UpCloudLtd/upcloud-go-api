@@ -102,3 +102,12 @@ func TestServerGroups(t *testing.T) {
 		}
 	})
 }
+
+// Deletes the specified server group.
+func deleteServerGroup(svc *Service, uuid string) error {
+	err := svc.DeleteServerGroup(&request.DeleteServerGroupRequest{
+		UUID: uuid,
+	})
+
+	return err
+}

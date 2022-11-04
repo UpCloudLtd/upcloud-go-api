@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"testing"
 	"time"
@@ -20,7 +21,6 @@ func TestKubernetesCtx(t *testing.T) {
 	const clusterName = "go-sdk-test-ctx"
 	const SSHKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO3fnjc8UrsYDNU8365mL3lnOPQJg18V42Lt8U/8Sm+r testy_test"
 	const networkCIDR = "176.16.1.0/24"
-	const waitTimeout = time.Minute * 20
 
 	// set when creating a private network for cluster
 	network := ""
@@ -32,38 +32,10 @@ func TestKubernetesCtx(t *testing.T) {
 		recordWithContext(t, "delete_kubernetes_cluster", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 			if len(uuid) > 0 {
 				err := svcContext.DeleteKubernetesCluster(ctx, &request.DeleteKubernetesClusterRequest{UUID: uuid})
-
 				require.NoError(t, err)
 
-				if rec.Mode() == recorder.ModeRecording {
-					rec.AddPassthrough(func(h *http.Request) bool {
-						return true
-					})
-
-					attempts := 0
-					sleepDuration := time.Second * 5
-
-					for {
-						attempts++
-
-						c, err := svcContext.GetKubernetesCluster(ctx, &request.GetKubernetesClusterRequest{UUID: uuid})
-						if upcloudErr, ok := err.(*upcloud.Error); ok {
-							if upcloudErr.ErrorCode == "NotFound" {
-								break
-							}
-						}
-
-						require.NoError(t, err)
-						require.NotEmpty(t, c)
-						time.Sleep(sleepDuration)
-
-						if time.Duration(attempts)*sleepDuration >= waitTimeout {
-							t.Fail()
-						}
-					} // additional wait period to make sure the network is deletable
-					time.Sleep(waitTimeout)
-					rec.Passthroughs = nil
-				}
+				err = waitForKubernetesClusterNotFoundContext(ctx, rec, svcContext, uuid)
+				require.NoError(t, err)
 			}
 		})
 		recordWithContext(t, "delete_kubernetes_private_network", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
@@ -131,26 +103,8 @@ func TestKubernetesCtx(t *testing.T) {
 			require.NotEmpty(t, uuid)
 
 			t.Run("WaitForKubernetesClusterState", func(t *testing.T) {
-				if rec.Mode() == recorder.ModeRecording {
-					rec.AddPassthrough(func(h *http.Request) bool {
-						return true
-					})
-
-					expected := upcloud.KubernetesClusterStateRunning
-
-					c, err := svcContext.WaitForKubernetesClusterState(ctx, &request.WaitForKubernetesClusterStateRequest{
-						DesiredState: upcloud.KubernetesClusterStateRunning,
-						Timeout:      waitTimeout,
-						UUID:         uuid,
-					})
-					require.NotNil(t, c)
-					actual := c.State
-
-					require.NoError(t, err)
-					require.Equal(t, expected, actual)
-
-					rec.Passthroughs = nil
-				}
+				err := waitForKubernetesClusterStateContext(ctx, rec, svcContext, uuid, upcloud.KubernetesClusterStateRunning)
+				require.NoError(t, err)
 
 				expected := upcloud.KubernetesClusterStateRunning
 
@@ -257,4 +211,65 @@ func TestKubernetesCtx(t *testing.T) {
 			require.NotZero(t, v[0])
 		})
 	})
+}
+
+func waitForKubernetesClusterNotFoundContext(ctx context.Context, rec *recorder.Recorder, svc *ServiceContext, clusterUUID string) error {
+	if rec.Mode() != recorder.ModeRecording {
+		return nil
+	}
+
+	rec.AddPassthrough(func(h *http.Request) bool {
+		return true
+	})
+	defer func() {
+		rec.Passthroughs = nil
+	}()
+
+	attempts := 0
+	sleepDuration := time.Second * 5
+
+	for {
+		attempts++
+
+		_, err := svc.GetKubernetesCluster(ctx, &request.GetKubernetesClusterRequest{UUID: clusterUUID})
+		if upcloudErr, ok := err.(*upcloud.Error); ok {
+			if upcloudErr.ErrorCode == "NotFound" {
+				break
+			}
+		}
+
+		if err != nil {
+			return err
+		}
+		time.Sleep(sleepDuration)
+
+		if time.Duration(attempts)*sleepDuration >= waitTimeout {
+			return fmt.Errorf("timeout %s reached", waitTimeout.String())
+		}
+	}
+	// additional wait period to make sure the attached network is deletable
+	time.Sleep(waitTimeout)
+
+	return nil
+}
+
+func waitForKubernetesClusterStateContext(ctx context.Context, rec *recorder.Recorder, svc *ServiceContext, clusterUUID string, desiredState upcloud.KubernetesClusterState) error {
+	if rec.Mode() != recorder.ModeRecording {
+		return nil
+	}
+
+	rec.AddPassthrough(func(h *http.Request) bool {
+		return true
+	})
+	defer func() {
+		rec.Passthroughs = nil
+	}()
+
+	_, err := svc.WaitForKubernetesClusterState(ctx, &request.WaitForKubernetesClusterStateRequest{
+		UUID:         clusterUUID,
+		DesiredState: desiredState,
+		Timeout:      waitTimeout,
+	})
+
+	return err
 }

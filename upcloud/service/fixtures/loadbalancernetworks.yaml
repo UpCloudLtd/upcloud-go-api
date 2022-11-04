@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"network":{"name":"go-test-lb-1667482704","zone":"pl-waw1","ip_networks":{"ip_network":[{"address":"192.168.54.0/24","dhcp":"yes","dhcp_default_route":"no","family":"IPv4"}]}}}'
+    body: '{"network":{"name":"go-test-lb-1667566873","zone":"pl-waw1","ip_networks":{"ip_network":[{"address":"192.168.55.0/24","dhcp":"yes","dhcp_default_route":"no","family":"IPv4"}]}}}'
     form: {}
     headers:
       Accept:
@@ -20,17 +20,17 @@ interactions:
             "ip_networks" : {
                "ip_network" : [
                   {
-                     "address" : "192.168.54.0/24",
+                     "address" : "192.168.55.0/24",
                      "dhcp" : "yes",
                      "dhcp_default_route" : "no",
                      "family" : "IPv4",
-                     "gateway" : "192.168.54.1"
+                     "gateway" : "192.168.55.1"
                   }
                ]
             },
-            "name" : "go-test-lb-1667482704",
+            "name" : "go-test-lb-1667566873",
             "type" : "private",
-            "uuid" : "034bc867-140f-42e0-a1c0-f103ce249a88",
+            "uuid" : "035d4ba8-02d1-452b-8e16-63b3f2a292c3",
             "zone" : "pl-waw1"
          }
       }
@@ -40,7 +40,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 03 Nov 2022 13:38:24 GMT
+      - Fri, 04 Nov 2022 13:01:13 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -49,7 +49,7 @@ interactions:
     code: 201
     duration: ""
 - request:
-    body: '{"name":"go-test-lb-networks-pl-waw1-1667482704","plan":"development","zone":"pl-waw1","networks":[{"name":"public_net","type":"public","family":"IPv4"},{"name":"private_net","type":"private","family":"IPv4","uuid":"034bc867-140f-42e0-a1c0-f103ce249a88"}],"configured_status":"started","frontends":[{"name":"fe1_network_test","mode":"http","port":80,"default_backend":"be_network_test","networks":[{"name":"public_net"},{"name":"private_net"}]}],"backends":[{"name":"be_network_test","members":[]}],"resolvers":[]}'
+    body: '{"name":"go-test-lb-networks-pl-waw1-1667566873","plan":"development","zone":"pl-waw1","networks":[{"name":"public_net","type":"public","family":"IPv4"},{"name":"private_net","type":"private","family":"IPv4","uuid":"035d4ba8-02d1-452b-8e16-63b3f2a292c3"}],"configured_status":"started","frontends":[{"name":"fe1_network_test","mode":"http","port":80,"default_backend":"be_network_test","networks":[{"name":"public_net"},{"name":"private_net"}]}],"backends":[{"name":"be_network_test","members":[]}],"resolvers":[]}'
     form: {}
     headers:
       Accept:
@@ -61,14 +61,14 @@ interactions:
     url: https://api.upcloud.com/1.3/load-balancer
     method: POST
   response:
-    body: '{"backends":[{"created_at":"2022-11-03T13:38:24.914441Z","members":[],"name":"be_network_test","properties":{"health_check_expected_status":200,"health_check_fall":3,"health_check_interval":10,"health_check_rise":3,"health_check_type":"tcp","health_check_url":"/","sticky_session_cookie_name":"","timeout_server":10,"timeout_tunnel":3600},"updated_at":"2022-11-03T13:38:24.914441Z"}],"configured_status":"started","created_at":"2022-11-03T13:38:24.914441Z","dns_name":"lb-0ab95421c2d440c3bc6f43ee2228bc33-1.upcloudlb.com","frontends":[{"created_at":"2022-11-03T13:38:24.914441Z","default_backend":"be_network_test","mode":"http","name":"fe1_network_test","networks":[{"name":"public_net"},{"name":"private_net"}],"port":80,"properties":{"timeout_client":10},"rules":[],"tls_configs":[],"updated_at":"2022-11-03T13:38:24.914441Z"}],"name":"go-test-lb-networks-pl-waw1-1667482704","networks":[{"created_at":"2022-11-03T13:38:24.914441Z","dns_name":"lb-0ab95421c2d440c3bc6f43ee2228bc33-1.upcloudlb.com","family":"IPv4","name":"public_net","type":"public","updated_at":"2022-11-03T13:38:24.914441Z"},{"created_at":"2022-11-03T13:38:24.914441Z","dns_name":"lb-0ab95421c2d440c3bc6f43ee2228bc33-2.upcloudlb.com","family":"IPv4","name":"private_net","type":"private","updated_at":"2022-11-03T13:38:24.914441Z","uuid":"034bc867-140f-42e0-a1c0-f103ce249a88"}],"nodes":[],"operational_state":"pending","plan":"development","resolvers":[],"updated_at":"2022-11-03T13:38:24.914441Z","uuid":"0ab95421-c2d4-40c3-bc6f-43ee2228bc33","zone":"pl-waw1"}'
+    body: '{"backends":[{"created_at":"2022-11-04T13:01:14.265489Z","members":[],"name":"be_network_test","properties":{"health_check_expected_status":200,"health_check_fall":3,"health_check_interval":10,"health_check_rise":3,"health_check_type":"tcp","health_check_url":"/","sticky_session_cookie_name":"","timeout_server":10,"timeout_tunnel":3600},"updated_at":"2022-11-04T13:01:14.265489Z"}],"configured_status":"started","created_at":"2022-11-04T13:01:14.265489Z","dns_name":"lb-0a6351d4666342fea8ff8c64dcd4ca6e-1.upcloudlb.com","frontends":[{"created_at":"2022-11-04T13:01:14.265489Z","default_backend":"be_network_test","mode":"http","name":"fe1_network_test","networks":[{"name":"public_net"},{"name":"private_net"}],"port":80,"properties":{"timeout_client":10},"rules":[],"tls_configs":[],"updated_at":"2022-11-04T13:01:14.265489Z"}],"name":"go-test-lb-networks-pl-waw1-1667566873","networks":[{"created_at":"2022-11-04T13:01:14.265489Z","dns_name":"lb-0a6351d4666342fea8ff8c64dcd4ca6e-1.upcloudlb.com","family":"IPv4","name":"public_net","type":"public","updated_at":"2022-11-04T13:01:14.265489Z"},{"created_at":"2022-11-04T13:01:14.265489Z","dns_name":"lb-0a6351d4666342fea8ff8c64dcd4ca6e-2.upcloudlb.com","family":"IPv4","name":"private_net","type":"private","updated_at":"2022-11-04T13:01:14.265489Z","uuid":"035d4ba8-02d1-452b-8e16-63b3f2a292c3"}],"nodes":[],"operational_state":"pending","plan":"development","resolvers":[],"updated_at":"2022-11-04T13:01:14.265489Z","uuid":"0a6351d4-6663-42fe-a8ff-8c64dcd4ca6e","zone":"pl-waw1"}'
     headers:
       Content-Length:
       - "1533"
       Content-Type:
       - application/json
       Date:
-      - Thu, 03 Nov 2022 13:38:24 GMT
+      - Fri, 04 Nov 2022 13:01:14 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 201 Created
@@ -84,17 +84,17 @@ interactions:
       - application/json
       User-Agent:
       - upcloud-go-api-ctx/4.9.0
-    url: https://api.upcloud.com/1.3/load-balancer/0ab95421-c2d4-40c3-bc6f-43ee2228bc33/frontends
+    url: https://api.upcloud.com/1.3/load-balancer/0a6351d4-6663-42fe-a8ff-8c64dcd4ca6e/frontends
     method: POST
   response:
-    body: '{"created_at":"2022-11-03T13:38:25.056129Z","default_backend":"be_network_test","mode":"http","name":"fe2_network_test","networks":[{"name":"private_net"}],"port":443,"properties":{"timeout_client":10},"rules":[],"tls_configs":[],"updated_at":"2022-11-03T13:38:25.056129Z"}'
+    body: '{"created_at":"2022-11-04T13:01:14.404417Z","default_backend":"be_network_test","mode":"http","name":"fe2_network_test","networks":[{"name":"private_net"}],"port":443,"properties":{"timeout_client":10},"rules":[],"tls_configs":[],"updated_at":"2022-11-04T13:01:14.404417Z"}'
     headers:
       Content-Length:
       - "273"
       Content-Type:
       - application/json
       Date:
-      - Thu, 03 Nov 2022 13:38:25 GMT
+      - Fri, 04 Nov 2022 13:01:14 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 201 Created
@@ -110,15 +110,15 @@ interactions:
       - application/json
       User-Agent:
       - upcloud-go-api-ctx/4.9.0
-    url: https://api.upcloud.com/1.3/load-balancer/0ab95421-c2d4-40c3-bc6f-43ee2228bc33
+    url: https://api.upcloud.com/1.3/load-balancer/0a6351d4-6663-42fe-a8ff-8c64dcd4ca6e
     method: GET
   response:
-    body: '{"backends":[{"created_at":"2022-11-03T13:38:24.914441Z","members":[],"name":"be_network_test","properties":{"health_check_expected_status":200,"health_check_fall":3,"health_check_interval":10,"health_check_rise":3,"health_check_type":"tcp","health_check_url":"/","sticky_session_cookie_name":"","timeout_server":10,"timeout_tunnel":3600},"updated_at":"2022-11-03T13:38:24.914441Z"}],"configured_status":"started","created_at":"2022-11-03T13:38:24.914441Z","dns_name":"lb-0ab95421c2d440c3bc6f43ee2228bc33-1.upcloudlb.com","frontends":[{"created_at":"2022-11-03T13:38:24.914441Z","default_backend":"be_network_test","mode":"http","name":"fe1_network_test","networks":[{"name":"public_net"},{"name":"private_net"}],"port":80,"properties":{"timeout_client":10},"rules":[],"tls_configs":[],"updated_at":"2022-11-03T13:38:24.914441Z"},{"created_at":"2022-11-03T13:38:25.056129Z","default_backend":"be_network_test","mode":"http","name":"fe2_network_test","networks":[{"name":"private_net"}],"port":443,"properties":{"timeout_client":10},"rules":[],"tls_configs":[],"updated_at":"2022-11-03T13:38:25.056129Z"}],"name":"go-test-lb-networks-pl-waw1-1667482704","networks":[{"created_at":"2022-11-03T13:38:24.914441Z","dns_name":"lb-0ab95421c2d440c3bc6f43ee2228bc33-1.upcloudlb.com","family":"IPv4","name":"public_net","type":"public","updated_at":"2022-11-03T13:38:24.914441Z"},{"created_at":"2022-11-03T13:38:24.914441Z","dns_name":"lb-0ab95421c2d440c3bc6f43ee2228bc33-2.upcloudlb.com","family":"IPv4","name":"private_net","type":"private","updated_at":"2022-11-03T13:38:24.914441Z","uuid":"034bc867-140f-42e0-a1c0-f103ce249a88"}],"nodes":[{"networks":[{"ip_addresses":[{"address":"5.22.220.181","listen":true}],"name":"public_net","type":"public"},{"ip_addresses":[{"address":"192.168.54.2","listen":false},{"address":"192.168.54.3","listen":true}],"name":"private_net","type":"private"}],"operational_state":"running"}],"operational_state":"running","plan":"development","resolvers":[],"updated_at":"2022-11-03T13:40:16.660663Z","uuid":"0ab95421-c2d4-40c3-bc6f-43ee2228bc33","zone":"pl-waw1"}'
+    body: '{"backends":[{"created_at":"2022-11-04T13:01:14.265489Z","members":[],"name":"be_network_test","properties":{"health_check_expected_status":200,"health_check_fall":3,"health_check_interval":10,"health_check_rise":3,"health_check_type":"tcp","health_check_url":"/","sticky_session_cookie_name":"","timeout_server":10,"timeout_tunnel":3600},"updated_at":"2022-11-04T13:01:14.265489Z"}],"configured_status":"started","created_at":"2022-11-04T13:01:14.265489Z","dns_name":"lb-0a6351d4666342fea8ff8c64dcd4ca6e-1.upcloudlb.com","frontends":[{"created_at":"2022-11-04T13:01:14.265489Z","default_backend":"be_network_test","mode":"http","name":"fe1_network_test","networks":[{"name":"public_net"},{"name":"private_net"}],"port":80,"properties":{"timeout_client":10},"rules":[],"tls_configs":[],"updated_at":"2022-11-04T13:01:14.265489Z"},{"created_at":"2022-11-04T13:01:14.404417Z","default_backend":"be_network_test","mode":"http","name":"fe2_network_test","networks":[{"name":"private_net"}],"port":443,"properties":{"timeout_client":10},"rules":[],"tls_configs":[],"updated_at":"2022-11-04T13:01:14.404417Z"}],"name":"go-test-lb-networks-pl-waw1-1667566873","networks":[{"created_at":"2022-11-04T13:01:14.265489Z","dns_name":"lb-0a6351d4666342fea8ff8c64dcd4ca6e-1.upcloudlb.com","family":"IPv4","name":"public_net","type":"public","updated_at":"2022-11-04T13:01:14.265489Z"},{"created_at":"2022-11-04T13:01:14.265489Z","dns_name":"lb-0a6351d4666342fea8ff8c64dcd4ca6e-2.upcloudlb.com","family":"IPv4","name":"private_net","type":"private","updated_at":"2022-11-04T13:01:14.265489Z","uuid":"035d4ba8-02d1-452b-8e16-63b3f2a292c3"}],"nodes":[{"networks":[{"ip_addresses":[{"address":"185.70.198.134","listen":true}],"name":"public_net","type":"public"},{"ip_addresses":[{"address":"192.168.55.2","listen":false},{"address":"192.168.55.3","listen":true}],"name":"private_net","type":"private"}],"operational_state":"running"}],"operational_state":"running","plan":"development","resolvers":[],"updated_at":"2022-11-04T13:03:21.005661Z","uuid":"0a6351d4-6663-42fe-a8ff-8c64dcd4ca6e","zone":"pl-waw1"}'
     headers:
       Content-Type:
       - application/json
       Date:
-      - Thu, 03 Nov 2022 13:40:17 GMT
+      - Fri, 04 Nov 2022 13:03:23 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 200 OK
@@ -134,17 +134,17 @@ interactions:
       - application/json
       User-Agent:
       - upcloud-go-api-ctx/4.9.0
-    url: https://api.upcloud.com/1.3/load-balancer/0ab95421-c2d4-40c3-bc6f-43ee2228bc33/networks/private_net
+    url: https://api.upcloud.com/1.3/load-balancer/0a6351d4-6663-42fe-a8ff-8c64dcd4ca6e/networks/private_net
     method: PATCH
   response:
-    body: '{"created_at":"2022-11-03T13:38:24.914441Z","dns_name":"lb-0ab95421c2d440c3bc6f43ee2228bc33-2.upcloudlb.com","family":"IPv4","name":"internal_net","type":"private","updated_at":"2022-11-03T13:40:17.251583Z","uuid":"034bc867-140f-42e0-a1c0-f103ce249a88"}'
+    body: '{"created_at":"2022-11-04T13:01:14.265489Z","dns_name":"lb-0a6351d4666342fea8ff8c64dcd4ca6e-2.upcloudlb.com","family":"IPv4","name":"internal_net","type":"private","updated_at":"2022-11-04T13:03:23.252855Z","uuid":"035d4ba8-02d1-452b-8e16-63b3f2a292c3"}'
     headers:
       Content-Length:
       - "253"
       Content-Type:
       - application/json
       Date:
-      - Thu, 03 Nov 2022 13:40:17 GMT
+      - Fri, 04 Nov 2022 13:03:23 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 200 OK
@@ -160,17 +160,17 @@ interactions:
       - application/json
       User-Agent:
       - upcloud-go-api/4.9.0
-    url: https://api.upcloud.com/1.3/load-balancer/0ab95421-c2d4-40c3-bc6f-43ee2228bc33/networks/internal_net
+    url: https://api.upcloud.com/1.3/load-balancer/0a6351d4-6663-42fe-a8ff-8c64dcd4ca6e/networks/internal_net
     method: PATCH
   response:
-    body: '{"created_at":"2022-11-03T13:38:24.914441Z","dns_name":"lb-0ab95421c2d440c3bc6f43ee2228bc33-2.upcloudlb.com","family":"IPv4","name":"private_net","type":"private","updated_at":"2022-11-03T13:40:17.34096Z","uuid":"034bc867-140f-42e0-a1c0-f103ce249a88"}'
+    body: '{"created_at":"2022-11-04T13:01:14.265489Z","dns_name":"lb-0a6351d4666342fea8ff8c64dcd4ca6e-2.upcloudlb.com","family":"IPv4","name":"private_net","type":"private","updated_at":"2022-11-04T13:03:23.349226Z","uuid":"035d4ba8-02d1-452b-8e16-63b3f2a292c3"}'
     headers:
       Content-Length:
-      - "251"
+      - "252"
       Content-Type:
       - application/json
       Date:
-      - Thu, 03 Nov 2022 13:40:17 GMT
+      - Fri, 04 Nov 2022 13:03:23 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 200 OK

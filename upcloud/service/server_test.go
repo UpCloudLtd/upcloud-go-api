@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"reflect"
+	"strings"
 	"testing"
 	"time"
 
@@ -108,20 +109,10 @@ func TestCreateStopStartServer(t *testing.T) {
 		assert.Equal(t, "fi-hel2", stopServerDetails.Zone)
 		// We shouldn't have transitioned state yet.
 		assert.Equal(t, upcloud.ServerStateStarted, stopServerDetails.State)
-		if rec.Mode() == recorder.ModeRecording {
-			rec.AddPassthrough(func(h *http.Request) bool {
-				return true
-			})
 
-			_, err := svc.WaitForServerState(&request.WaitForServerStateRequest{
-				UUID:         d.UUID,
-				DesiredState: upcloud.ServerStateStopped,
-				Timeout:      15 * time.Minute,
-			})
-			require.NoError(t, err)
+		err = waitForServerState(rec, svc, d.UUID, upcloud.ServerStateStopped)
+		require.NoError(t, err)
 
-			rec.Passthroughs = nil
-		}
 		getServerDetails, err := svc.GetServerDetails(&request.GetServerDetailsRequest{
 			UUID: d.UUID,
 		})
@@ -155,19 +146,9 @@ func TestStartAvoidHost(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		if rec.Mode() == recorder.ModeRecording {
-			rec.AddPassthrough(func(h *http.Request) bool {
-				return true
-			})
-			_, err = svc.WaitForServerState(&request.WaitForServerStateRequest{
-				UUID:         serverDetails.UUID,
-				DesiredState: upcloud.ServerStateStopped,
-				Timeout:      15 * time.Minute,
-			})
-			require.NoError(t, err)
+		err = waitForServerState(rec, svc, serverDetails.UUID, upcloud.ServerStateStopped)
+		require.NoError(t, err)
 
-			rec.Passthroughs = nil
-		}
 		getServerDetails, err := svc.GetServerDetails(&request.GetServerDetailsRequest{
 			UUID: serverDetails.UUID,
 		})
@@ -210,42 +191,16 @@ func TestCreateRestartServer(t *testing.T) {
 		// We shouldn't have transitioned state yet.
 		assert.Equal(t, upcloud.ServerStateStarted, restartServerDetails.State)
 
-		if rec.Mode() == recorder.ModeRecording {
-			rec.AddPassthrough(func(h *http.Request) bool {
-				return true
-			})
-
-			t.Log("wait for server state maintenance")
-			_, err := svc.WaitForServerState(&request.WaitForServerStateRequest{
-				UUID:         d.UUID,
-				DesiredState: upcloud.ServerStateMaintenance,
-				Timeout:      15 * time.Minute,
-			})
-			require.NoError(t, err)
-
-			rec.Passthroughs = nil
-		}
+		err = waitForServerState(rec, svc, d.UUID, upcloud.ServerStateMaintenance)
+		require.NoError(t, err)
 
 		t.Log("get server, state should be maintenance")
 		getServerDetails, err := svc.GetServerDetails(&request.GetServerDetailsRequest{UUID: d.UUID})
 		require.NoError(t, err)
 		assert.Equal(t, upcloud.ServerStateMaintenance, getServerDetails.State)
 
-		if rec.Mode() == recorder.ModeRecording {
-			rec.AddPassthrough(func(h *http.Request) bool {
-				return true
-			})
-
-			t.Log("wait for server state started")
-			_, err := svc.WaitForServerState(&request.WaitForServerStateRequest{
-				UUID:         d.UUID,
-				DesiredState: upcloud.ServerStateStarted,
-				Timeout:      15 * time.Minute,
-			})
-			require.NoError(t, err)
-
-			rec.Passthroughs = nil
-		}
+		err = waitForServerState(rec, svc, d.UUID, upcloud.ServerStateStarted)
+		require.NoError(t, err)
 
 		t.Log("get server, state should be started")
 		getServerDetails2, err := svc.GetServerDetails(&request.GetServerDetailsRequest{UUID: d.UUID})
@@ -314,21 +269,9 @@ func TestCreateModifyDeleteServer(t *testing.T) {
 		require.NoError(t, err)
 		t.Log("Waiting for the server to exit maintenance state ...")
 
-		if rec.Mode() == recorder.ModeRecording {
-			rec.AddPassthrough(func(h *http.Request) bool {
-				return true
-			})
+		err = waitForServerState(rec, svc, serverDetails.UUID, upcloud.ServerStateStarted)
+		require.NoError(t, err)
 
-			serverDetails, err = svc.WaitForServerState(&request.WaitForServerStateRequest{
-				UUID:         serverDetails.UUID,
-				DesiredState: upcloud.ServerStateStarted,
-				Timeout:      time.Minute * 15,
-			})
-
-			require.NoError(t, err)
-
-			rec.Passthroughs = nil
-		}
 		getServerDetails, err := svc.GetServerDetails(&request.GetServerDetailsRequest{UUID: serverDetails.UUID})
 
 		require.NoError(t, err)
@@ -416,4 +359,221 @@ func TestCreateDeleteServerAndStorage(t *testing.T) {
 
 		t.Log("Storage was deleted, too")
 	})
+}
+
+// Creates a server and returns the details about it, panic if creation fails.
+func createServer(rec *recorder.Recorder, svc *Service, name string) (*upcloud.ServerDetails, error) {
+	return createServerWithNetwork(rec, svc, name, "")
+}
+
+// Creates a server with a network.
+func createServerWithNetwork(rec *recorder.Recorder, svc *Service, name, network string) (*upcloud.ServerDetails, error) {
+	title := "uploud-go-sdk-integration-test-" + name
+	hostname := strings.ToLower(title + ".example.com")
+
+	createServerRequest := request.CreateServerRequest{
+		Zone:             "fi-hel2",
+		Title:            title,
+		Hostname:         hostname,
+		PasswordDelivery: request.PasswordDeliveryNone,
+		StorageDevices: []request.CreateServerStorageDevice{
+			{
+				Action:  request.CreateServerStorageDeviceActionClone,
+				Storage: "01000000-0000-4000-8000-000020060100",
+				Title:   "disk1",
+				Size:    10,
+				Tier:    upcloud.StorageTierMaxIOPS,
+			},
+		},
+		Networking: &request.CreateServerNetworking{
+			Interfaces: []request.CreateServerInterface{
+				{
+					IPAddresses: []request.CreateServerIPAddress{
+						{
+							Family: upcloud.IPAddressFamilyIPv4,
+						},
+					},
+					Type: upcloud.NetworkTypeUtility,
+				},
+				{
+					IPAddresses: []request.CreateServerIPAddress{
+						{
+							Family: upcloud.IPAddressFamilyIPv4,
+						},
+					},
+					Type: upcloud.NetworkTypePublic,
+				},
+				{
+					IPAddresses: []request.CreateServerIPAddress{
+						{
+							Family: upcloud.IPAddressFamilyIPv6,
+						},
+					},
+					Type: upcloud.NetworkTypePublic,
+				},
+			},
+		},
+		Labels: &upcloud.LabelSlice{
+			upcloud.Label{
+				Key:   "managedBy",
+				Value: "upcloud-sdk-integration-test",
+			},
+			upcloud.Label{
+				Key:   "testName",
+				Value: name,
+			},
+		},
+	}
+
+	if network != "" {
+		createServerRequest.Networking.Interfaces = append(createServerRequest.Networking.Interfaces,
+			request.CreateServerInterface{
+				IPAddresses: []request.CreateServerIPAddress{
+					{
+						Family: upcloud.IPAddressFamilyIPv4,
+					},
+				},
+				Type:    upcloud.NetworkTypePrivate,
+				Network: network,
+			})
+	}
+
+	// Create the server
+	serverDetails, err := svc.CreateServer(&createServerRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	// Wait for the server to start
+	err = waitForServerState(rec, svc, serverDetails.UUID, upcloud.ServerStateStarted)
+	if err != nil {
+		return nil, err
+	}
+
+	return svc.GetServerDetails(&request.GetServerDetailsRequest{
+		UUID: serverDetails.UUID,
+	})
+}
+
+// Creates a minimal server with a private utility network interface.
+func createMinimalServer(rec *recorder.Recorder, svc *Service, name string) (*upcloud.ServerDetails, error) {
+	title := "uploud-go-sdk-integration-test-" + name
+	hostname := strings.ToLower(title + ".example.com")
+
+	createServerRequest := request.CreateServerRequest{
+		Zone:             "fi-hel2",
+		Title:            title,
+		Hostname:         hostname,
+		PasswordDelivery: request.PasswordDeliveryNone,
+		StorageDevices: []request.CreateServerStorageDevice{
+			{
+				Action:  request.CreateServerStorageDeviceActionClone,
+				Storage: "01000000-0000-4000-8000-000020060100",
+				Title:   "disk1",
+				Size:    10,
+				Tier:    upcloud.StorageTierMaxIOPS,
+			},
+		},
+		Networking: &request.CreateServerNetworking{
+			Interfaces: []request.CreateServerInterface{
+				{
+					IPAddresses: []request.CreateServerIPAddress{
+						{
+							Family: upcloud.IPAddressFamilyIPv4,
+						},
+					},
+					Type: upcloud.NetworkTypeUtility,
+				},
+			},
+		},
+	}
+
+	// Create the server
+	serverDetails, err := svc.CreateServer(&createServerRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	// Wait for the server to start
+	err = waitForServerState(rec, svc, serverDetails.UUID, upcloud.ServerStateStarted)
+	if err != nil {
+		return nil, err
+	}
+
+	return svc.GetServerDetails(&request.GetServerDetailsRequest{
+		UUID: serverDetails.UUID,
+	})
+}
+
+// Deletes the specified server.
+func deleteServer(svc *Service, uuid string) error {
+	return svc.DeleteServer(&request.DeleteServerRequest{
+		UUID: uuid,
+	})
+}
+
+// Deletes the specified server and storages.
+func deleteServerAndStorages(svc *Service, uuid string) error {
+	err := svc.DeleteServerAndStorages(&request.DeleteServerAndStoragesRequest{
+		UUID: uuid,
+	})
+
+	return err
+}
+
+// Stops the specified server with recorder (forcibly).
+func stopServer(rec *recorder.Recorder, svc *Service, uuid string) error {
+	_, err := svc.StopServer(&request.StopServerRequest{
+		UUID:     uuid,
+		Timeout:  waitTimeout,
+		StopType: request.ServerStopTypeHard,
+	})
+	if err != nil {
+		return err
+	}
+
+	return waitForServerState(rec, svc, uuid, upcloud.ServerStateStopped)
+}
+
+// Stops the specified server (forcibly).
+func stopServerWithoutRecorder(svc *Service, uuid string) error {
+	serverDetails, err := svc.StopServer(&request.StopServerRequest{
+		UUID:     uuid,
+		Timeout:  waitTimeout,
+		StopType: request.ServerStopTypeHard,
+	})
+	if err != nil {
+		return err
+	}
+
+	_, err = svc.WaitForServerState(&request.WaitForServerStateRequest{
+		UUID:         serverDetails.UUID,
+		DesiredState: upcloud.ServerStateStopped,
+		Timeout:      waitTimeout,
+	})
+
+	return err
+}
+
+// Waits for the server to achieve the desired state.
+func waitForServerState(rec *recorder.Recorder, svc *Service, serverUUID string, desiredState string) error {
+	if rec.Mode() != recorder.ModeRecording {
+		return nil
+	}
+
+	rec.AddPassthrough(func(h *http.Request) bool {
+		return true
+	})
+	defer func() {
+		rec.Passthroughs = nil
+	}()
+
+	// Wait for the server to start
+	_, err := svc.WaitForServerState(&request.WaitForServerStateRequest{
+		UUID:         serverUUID,
+		DesiredState: desiredState,
+		Timeout:      waitTimeout,
+	})
+
+	return err
 }

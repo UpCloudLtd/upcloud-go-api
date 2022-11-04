@@ -22,7 +22,7 @@ func TestFirewallRulesContext(t *testing.T) {
 	t.Parallel()
 	recordWithContext(t, "firewallrules", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
 		// Create the server
-		serverDetails, err := createServerWithContext(ctx, rec, svcContext, "TestFirewallRules")
+		serverDetails, err := createServerContext(ctx, rec, svcContext, "TestFirewallRules")
 		require.NoError(t, err)
 		t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
