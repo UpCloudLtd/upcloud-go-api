@@ -98,13 +98,6 @@ func (r *GetKubernetesKubeconfigRequest) RequestURL() string {
 	return fmt.Sprintf("%s/%s/kubeconfig", kubernetesClusterBasePath, r.UUID)
 }
 
-// GetKubernetesPlansRequest represents a request to list available Kubernetes cluster plans
-type GetKubernetesPlansRequest struct{}
-
-func (r *GetKubernetesPlansRequest) RequestURL() string {
-	return fmt.Sprintf("%s/plans", kubernetesClusterBasePath)
-}
-
 // GetKubernetesVersionsRequest represents a request to list available Kubernetes cluster versions
 type GetKubernetesVersionsRequest struct{}
 

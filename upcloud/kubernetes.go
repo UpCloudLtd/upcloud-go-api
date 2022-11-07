@@ -40,11 +40,6 @@ type KubernetesNodeGroup struct {
 	Taints      []KubernetesTaint      `json:"taints,omitempty"`
 }
 
-type KubernetesPlan struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
-}
-
 type KubernetesKubeletArg struct {
 	Key   string `json:"key"`
 	Value string `json:"value"`
