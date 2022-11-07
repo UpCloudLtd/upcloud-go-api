@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Removed
+- separate kubernetes plans
+
 ## [4.9.0]
 
 ### Added
