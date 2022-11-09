@@ -1,6 +1,8 @@
 package service
 
 import (
+	"errors"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -223,4 +225,63 @@ func utcTimeWithSecondPrecision() (time.Time, error) {
 	t := time.Now().In(utc).Truncate(time.Second)
 
 	return t, err
+}
+
+func waitLoadBalancerToShutdown(svc *Service, lb *upcloud.LoadBalancer) error {
+	const maxRetries int = 100
+	// wait delete request
+	for i := 0; i <= maxRetries; i++ {
+		_, err := svc.GetLoadBalancer(&request.GetLoadBalancerRequest{UUID: lb.UUID})
+		if err != nil {
+			if svcErr, ok := err.(*upcloud.Problem); ok && svcErr.Status == http.StatusNotFound {
+				return nil
+			}
+		}
+		time.Sleep(2 * time.Second)
+	}
+	return errors.New("max retries reached while waiting for load balancer instance to shutdown")
+}
+
+func deleteLoadBalancer(svc *Service, lb *upcloud.LoadBalancer) error {
+	if err := svc.DeleteLoadBalancer(&request.DeleteLoadBalancerRequest{UUID: lb.UUID}); err != nil {
+		return err
+	}
+
+	if err := waitLoadBalancerToShutdown(svc, lb); err != nil {
+		return fmt.Errorf("unable to shutdown LB '%s' (%s) (check dangling networks)", lb.UUID, lb.Name)
+	}
+
+	var errs []error
+	if lb.NetworkUUID != "" {
+		if err := svc.DeleteNetwork(&request.DeleteNetworkRequest{UUID: lb.NetworkUUID}); err != nil {
+			errs = append(errs, err)
+		}
+	}
+	if len(lb.Networks) > 0 {
+		for _, n := range lb.Networks {
+			if n.Type == upcloud.LoadBalancerNetworkTypePrivate && n.UUID != "" {
+				if err := svc.DeleteNetwork(&request.DeleteNetworkRequest{UUID: n.UUID}); err != nil {
+					errs = append(errs, err)
+				}
+			}
+		}
+	}
+	if len(errs) > 0 {
+		return fmt.Errorf("%s", errs)
+	}
+	return nil
+}
+
+func createLoadBalancerPrivateNetwork(svc *Service, zone, addr string) (*upcloud.Network, error) {
+	return svc.CreateNetwork(&request.CreateNetworkRequest{
+		Name: fmt.Sprintf("go-test-lb-%d", time.Now().Unix()),
+		Zone: zone,
+		IPNetworks: []upcloud.IPNetwork{
+			{
+				Address: addr,
+				DHCP:    upcloud.True,
+				Family:  upcloud.IPAddressFamilyIPv4,
+			},
+		},
+	})
 }

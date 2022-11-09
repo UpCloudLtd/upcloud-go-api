@@ -18,6 +18,9 @@ type (
 	LoadBalancerCertificateBundleType             string
 	LoadBalancerProxyProtocolVersion              string
 	LoadBalancerHealthCheckType                   string
+	LoadBalancerNetworkType                       string
+	LoadBalancerAddressFamily                     string
+	LoadBalancerNodeOperationalState              string
 )
 
 const (
@@ -101,6 +104,22 @@ const (
 
 	LoadBalancerHealthCheckTypeTCP  LoadBalancerHealthCheckType = "tcp"
 	LoadBalancerHealthCheckTypeHTTP LoadBalancerHealthCheckType = "http"
+
+	LoadBalancerNetworkTypePublic  LoadBalancerNetworkType   = "public"
+	LoadBalancerNetworkTypePrivate LoadBalancerNetworkType   = "private"
+	LoadBalancerAddressFamilyIPv4  LoadBalancerAddressFamily = "IPv4"
+	// IPv6 addresses are not supported yet
+	// LoadBalancerAddressFamilyIPv6  LoadBalancerAddressFamily = "IPv6"
+
+	LoadBalancerNodeOperationalStatePending               LoadBalancerNodeOperationalState = "pending"
+	LoadBalancerNodeOperationalStatePullConfig            LoadBalancerNodeOperationalState = "pull-config"
+	LoadBalancerNodeOperationalStateSetupLB               LoadBalancerNodeOperationalState = "setup-lb"
+	LoadBalancerNodeOperationalStateRunning               LoadBalancerNodeOperationalState = "running"
+	LoadBalancerNodeOperationalStateFailing               LoadBalancerNodeOperationalState = "failing"
+	LoadBalancerNodeOperationalStateAgentUpgradeStarting  LoadBalancerNodeOperationalState = "agent-upgrade-starting"
+	LoadBalancerNodeOperationalStateAgentUpgradeFinishing LoadBalancerNodeOperationalState = "agent-upgrade-finishing"
+	LoadBalancerNodeOperationalStateStopped               LoadBalancerNodeOperationalState = "stopped"
+	LoadBalancerNodeOperationalStateNotResponding         LoadBalancerNodeOperationalState = "not-responding"
 )
 
 // LoadBalancerPlan represents load balancer plan details
@@ -115,6 +134,7 @@ type LoadBalancerFrontend struct {
 	Name           string                          `json:"name,omitempty"`
 	Mode           LoadBalancerMode                `json:"mode,omitempty"`
 	Port           int                             `json:"port,omitempty"`
+	Networks       []LoadBalancerFrontendNetwork   `json:"networks,omitempty"`
 	DefaultBackend string                          `json:"default_backend,omitempty"`
 	Rules          []LoadBalancerFrontendRule      `json:"rules,omitempty"`
 	TLSConfigs     []LoadBalancerFrontendTLSConfig `json:"tls_configs,omitempty"`
@@ -203,13 +223,15 @@ type LoadBalancer struct {
 	Name             string                       `json:"name,omitempty"`
 	Zone             string                       `json:"zone,omitempty"`
 	Plan             string                       `json:"plan,omitempty"`
-	NetworkUUID      string                       `json:"network_uuid,omitempty"`
-	DNSName          string                       `json:"dns_name,omitempty"`
+	NetworkUUID      string                       `json:"network_uuid,omitempty"` // deprecated
+	Networks         []LoadBalancerNetwork        `json:"networks,omitempty"`
+	DNSName          string                       `json:"dns_name,omitempty"` // deprecated
 	ConfiguredStatus LoadBalancerConfiguredStatus `json:"configured_status,omitempty"`
 	OperationalState LoadBalancerOperationalState `json:"operational_state,omitempty"`
 	Frontends        []LoadBalancerFrontend       `json:"frontends,omitempty"`
 	Backends         []LoadBalancerBackend        `json:"backends,omitempty"`
 	Resolvers        []LoadBalancerResolver       `json:"resolvers,omitempty"`
+	Nodes            []LoadBalancerNode           `json:"nodes,omitempty"`
 	CreatedAt        time.Time                    `json:"created_at,omitempty"`
 	UpdatedAt        time.Time                    `json:"updated_at,omitempty"`
 }
@@ -324,4 +346,40 @@ type LoadBalancerCertificateBundle struct {
 
 	Type             LoadBalancerCertificateBundleType             `json:"type,omitempty"`
 	OperationalState LoadBalancerCertificateBundleOperationalState `json:"operational_state,omitempty"`
+}
+
+// LoadBalancerNetwork represents network attached to loadbalancer
+type LoadBalancerNetwork struct {
+	UUID        string                    `json:"uuid,omitempty"`
+	Name        string                    `json:"name,omitempty"`
+	Type        LoadBalancerNetworkType   `json:"type,omitempty"`
+	Family      LoadBalancerAddressFamily `json:"family,omitempty"`
+	IPAddresses []LoadBalancerIPAddress   `json:"ip_addresses,omitempty"`
+	DNSName     string                    `json:"dns_name,omitempty"`
+	CreatedAt   time.Time                 `json:"created_at,omitempty"`
+	UpdatedAt   time.Time                 `json:"updated_at,omitempty"`
+}
+
+// LoadBalancerIPAddress represents IP address inside loadbalancer service
+type LoadBalancerIPAddress struct {
+	Address string `json:"address,omitempty"`
+	Listen  bool   `json:"listen"`
+}
+
+// LoadBalancerNode represents loadbalancer node
+type LoadBalancerNode struct {
+	Networks         []LoadBalancerNodeNetwork        `json:"networks,omitempty"`
+	OperationalState LoadBalancerNodeOperationalState `json:"operational_state,omitempty"`
+}
+
+// LoadBalancerNodeNetwork represents node network
+type LoadBalancerNodeNetwork struct {
+	Name        string                  `json:"name,omitempty"`
+	Type        LoadBalancerNetworkType `json:"type,omitempty"`
+	IPAddresses []LoadBalancerIPAddress `json:"ip_addresses,omitempty"`
+}
+
+// LoadBalancerNetwork represents network attached to loadbalancer
+type LoadBalancerFrontendNetwork struct {
+	Name string `json:"name,omitempty"`
 }

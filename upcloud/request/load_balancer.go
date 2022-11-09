@@ -31,12 +31,21 @@ func (r *GetLoadBalancerRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s", r.UUID)
 }
 
+// LoadBalancerNetwork represents the network payload for CreateLoadBalancerRequest
+type LoadBalancerNetwork struct {
+	Name   string                            `json:"name,omitempty"`
+	Type   upcloud.LoadBalancerNetworkType   `json:"type,omitempty"`
+	Family upcloud.LoadBalancerAddressFamily `json:"family,omitempty"`
+	UUID   string                            `json:"uuid,omitempty"`
+}
+
 // CreateLoadBalancerRequest represents a request to create load balancer
 type CreateLoadBalancerRequest struct {
 	Name             string                               `json:"name,omitempty"`
 	Plan             string                               `json:"plan,omitempty"`
 	Zone             string                               `json:"zone,omitempty"`
 	NetworkUUID      string                               `json:"network_uuid,omitempty"`
+	Networks         []LoadBalancerNetwork                `json:"networks,omitempty"`
 	ConfiguredStatus upcloud.LoadBalancerConfiguredStatus `json:"configured_status,omitempty"`
 	Frontends        []LoadBalancerFrontend               `json:"frontends"`
 	Backends         []LoadBalancerBackend                `json:"backends"`
@@ -336,6 +345,7 @@ type LoadBalancerFrontend struct {
 	Rules          []LoadBalancerFrontendRule              `json:"rules,omitempty"`
 	TLSConfigs     []LoadBalancerFrontendTLSConfig         `json:"tls_configs,omitempty"`
 	Properties     *upcloud.LoadBalancerFrontendProperties `json:"properties,omitempty"`
+	Networks       []upcloud.LoadBalancerFrontendNetwork   `json:"networks,omitempty"`
 }
 
 // CreateLoadBalancerFrontendRequest represents a request to create load balancer frontend
@@ -359,6 +369,7 @@ type ModifyLoadBalancerFrontend struct {
 	Port           int                                     `json:"port,omitempty"`
 	DefaultBackend string                                  `json:"default_backend,omitempty"`
 	Properties     *upcloud.LoadBalancerFrontendProperties `json:"properties,omitempty"`
+	Networks       []upcloud.LoadBalancerFrontendNetwork   `json:"networks,omitempty"`
 }
 
 // ModifyLoadBalancerFrontendRequest represents a request to modify load balancer frontend
@@ -613,4 +624,22 @@ type DeleteLoadBalancerCertificateBundleRequest struct {
 
 func (r *DeleteLoadBalancerCertificateBundleRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/certificate-bundles/%s", r.UUID)
+}
+
+type ModifyLoadBalancerNetwork struct {
+	Name string `json:"name,omitempty"`
+}
+
+type ModifyLoadBalancerNetworkRequest struct {
+	ServiceUUID string `json:"-"`
+	Name        string `json:"_"`
+	Network     ModifyLoadBalancerNetwork
+}
+
+func (r *ModifyLoadBalancerNetworkRequest) RequestURL() string {
+	return fmt.Sprintf("/load-balancer/%s/networks/%s", r.ServiceUUID, r.Name)
+}
+
+func (r *ModifyLoadBalancerNetworkRequest) MarshalJSON() ([]byte, error) {
+	return json.Marshal(r.Network)
 }

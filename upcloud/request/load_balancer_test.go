@@ -99,6 +99,63 @@ func TestCreateLoadBalancerRequest(t *testing.T) {
 	actual, err := json.Marshal(&r)
 	assert.NoError(t, err)
 	assert.JSONEq(t, expected, string(actual))
+
+	expected = `
+	{
+		"frontends": [
+			{
+				"networks": [
+					{
+						"name":   "PublicNet"
+					}
+				]
+			}
+		],
+		"backends": [],
+		"resolvers": [],
+		"networks": [
+			{
+				"name":   "PublicNet",
+				"type":   "public",
+				"family": "ipv4"
+			},
+			{
+				"name":   "PrivateNet",
+				"type":   "private",
+				"family": "ipv4",
+				"uuid":   "123456"
+			}
+		]
+	}
+	`
+	r = CreateLoadBalancerRequest{
+		Backends:  make([]LoadBalancerBackend, 0),
+		Resolvers: make([]LoadBalancerResolver, 0),
+		Frontends: []LoadBalancerFrontend{{
+			Networks: []upcloud.LoadBalancerFrontendNetwork{
+				{
+					Name: "PublicNet",
+				},
+			},
+		}},
+		Networks: []LoadBalancerNetwork{
+			{
+				Name:   "PublicNet",
+				Type:   upcloud.LoadBalancerNetworkTypePublic,
+				Family: "ipv4",
+			},
+			{
+				Name:   "PrivateNet",
+				Type:   upcloud.LoadBalancerNetworkTypePrivate,
+				Family: "ipv4",
+				UUID:   "123456",
+			},
+		},
+	}
+	actual, err = json.Marshal(&r)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expected, string(actual))
+
 	assert.Equal(t, "/load-balancer", r.RequestURL())
 }
 
@@ -1138,21 +1195,20 @@ func TestDeleteLoadBalancerCertificateBundleRequest(t *testing.T) {
 	assert.Equal(t, "/load-balancer/certificate-bundles/id", r.RequestURL())
 }
 
-func ExampleLoadBalancerFrontendRule() {
-	rule := LoadBalancerFrontendRule{
-		Name:     "rule-name",
-		Priority: 0,
-		Matchers: []upcloud.LoadBalancerMatcher{
-			NewLoadBalancerHostMatcher("example.com"),
-			NewLoadBalancerSrcPortRangeMatcher(8000, 9000),
-		},
-		Actions: []upcloud.LoadBalancerAction{
-			NewLoadBalancerHTTPRedirectAction("https://internal.example.com"),
-		},
+func TestModifyLoadBalancerNetworkRequest(t *testing.T) {
+	r := ModifyLoadBalancerNetworkRequest{
+		ServiceUUID: "sid",
+		Name:        "net1",
+		Network:     ModifyLoadBalancerNetwork{Name: "net2"},
 	}
-	if js, err := json.Marshal(rule); err == nil {
-		fmt.Println(string(js))
-	}
+	assert.Equal(t, "/load-balancer/sid/networks/net1", r.RequestURL())
+	expected := `
+	{
+		"name": "net2"
+	}`
+	actual, err := json.Marshal(&r)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expected, string(actual))
 }
 
 func ExampleCreateLoadBalancerRequest() {

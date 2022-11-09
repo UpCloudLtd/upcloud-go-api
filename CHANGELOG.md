@@ -5,6 +5,12 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- Managed Load Balancer private network support
+
+### Deprecated
+- Managed Load Balancer fields `DNSName` and `NetworkUUID`
+
 ### Removed
 - separate kubernetes plans
 

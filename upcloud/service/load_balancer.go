@@ -58,6 +58,8 @@ type LoadBalancer interface {
 	CreateLoadBalancerCertificateBundle(r *request.CreateLoadBalancerCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error)
 	ModifyLoadBalancerCertificateBundle(r *request.ModifyLoadBalancerCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error)
 	DeleteLoadBalancerCertificateBundle(r *request.DeleteLoadBalancerCertificateBundleRequest) error
+	// Networks
+	ModifyLoadBalancerNetwork(r *request.ModifyLoadBalancerNetworkRequest) (*upcloud.LoadBalancerNetwork, error)
 }
 
 var _ LoadBalancer = (*Service)(nil)
@@ -709,4 +711,18 @@ func (s *Service) DeleteLoadBalancerCertificateBundle(r *request.DeleteLoadBalan
 		return parseJSONServiceError(err)
 	}
 	return nil
+}
+
+// ModifyLoadBalancerNetwork modifies an existing load balancer network.
+func (s *Service) ModifyLoadBalancerNetwork(r *request.ModifyLoadBalancerNetworkRequest) (*upcloud.LoadBalancerNetwork, error) {
+	reqBody, err := json.Marshal(r)
+	if err != nil {
+		return nil, err
+	}
+	n := upcloud.LoadBalancerNetwork{}
+	res, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
+	if err != nil {
+		return nil, parseJSONServiceError(err)
+	}
+	return &n, json.Unmarshal(res, &n)
 }

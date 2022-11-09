@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"fmt"
+	"net/http"
 	"testing"
 	"time"
 
@@ -808,6 +809,148 @@ func TestLoadBalancerPageContext(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Len(t, list, 0)
 	})
+}
+
+func TestLoadBalancerNetworkContext(t *testing.T) {
+	t.Parallel()
+
+	recordWithContext(t, "loadbalancernetworks", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+		const zone string = "pl-waw1"
+		net, err := createLoadBalancerPrivateNetwork(svc, zone, "192.168.55.0/24")
+		require.NoError(t, err)
+		t.Log("Creating LB for testing networks")
+		lb, err := svcContext.CreateLoadBalancer(ctx, &request.CreateLoadBalancerRequest{
+			Name:             fmt.Sprintf("go-test-lb-networks-%s-%d", zone, time.Now().Unix()),
+			Zone:             zone,
+			Plan:             "development",
+			ConfiguredStatus: "started",
+			Networks: []request.LoadBalancerNetwork{
+				{
+					Name:   "public_net",
+					Type:   upcloud.LoadBalancerNetworkTypePublic,
+					Family: upcloud.LoadBalancerAddressFamilyIPv4,
+				},
+				{
+					Name:   "private_net",
+					Type:   upcloud.LoadBalancerNetworkTypePrivate,
+					Family: upcloud.LoadBalancerAddressFamilyIPv4,
+					UUID:   net.UUID,
+				},
+			},
+			Frontends: []request.LoadBalancerFrontend{{
+				Name:           "fe1_network_test",
+				Mode:           upcloud.LoadBalancerModeHTTP,
+				DefaultBackend: "be_network_test",
+				Port:           80,
+				Networks: []upcloud.LoadBalancerFrontendNetwork{
+					{
+						Name: "public_net",
+					},
+					{
+						Name: "private_net",
+					},
+				},
+			}},
+			Backends: []request.LoadBalancerBackend{{
+				Name:    "be_network_test",
+				Members: make([]request.LoadBalancerBackendMember, 0),
+			}},
+			Resolvers: make([]request.LoadBalancerResolver, 0),
+		})
+		require.NoError(t, err)
+		t.Cleanup(func() {
+			err := cleanupLoadBalancer(rec, svc, lb)
+			assert.NoError(t, err)
+		})
+
+		t.Logf("Testing LB %s properties", lb.Name)
+		assert.Len(t, lb.Networks, 2)
+		assert.Len(t, lb.Frontends[0].Networks, 2)
+		assert.Equal(t, upcloud.LoadBalancerNetworkTypePublic, lb.Networks[0].Type)
+		assert.Equal(t, upcloud.LoadBalancerNetworkTypePrivate, lb.Networks[1].Type)
+		assert.Equal(t, "public_net", lb.Frontends[0].Networks[0].Name)
+		assert.Equal(t, "private_net", lb.Frontends[0].Networks[1].Name)
+
+		t.Logf("Creating new LB %s frontend", lb.Name)
+		fe, err := svcContext.CreateLoadBalancerFrontend(ctx, &request.CreateLoadBalancerFrontendRequest{
+			ServiceUUID: lb.UUID,
+			Frontend: request.LoadBalancerFrontend{
+				Name:           "fe2_network_test",
+				Mode:           upcloud.LoadBalancerModeHTTP,
+				Port:           443,
+				DefaultBackend: lb.Frontends[0].DefaultBackend,
+				Networks: []upcloud.LoadBalancerFrontendNetwork{
+					{
+						Name: "private_net",
+					},
+				},
+			},
+		})
+		require.NoError(t, err)
+		assert.Len(t, fe.Networks, 1)
+
+		t.Logf("Waiting LB %s to become online", lb.Name)
+		if err = waitLoadBalancerOnline(ctx, t, rec, svcContext, lb.UUID); err != nil {
+			t.Error(err)
+			return
+		}
+
+		t.Logf("Getting LB %s details", lb.Name)
+		lb, err = svcContext.GetLoadBalancer(ctx, &request.GetLoadBalancerRequest{UUID: lb.UUID})
+		require.NoError(t, err)
+		require.Len(t, lb.Nodes, 1)
+		require.Len(t, lb.Frontends, 2)
+		require.Len(t, lb.Nodes[0].Networks, 2)
+		assert.Len(t, lb.Networks, 2)
+		assert.Len(t, lb.Frontends[0].Networks, 2)
+		assert.Len(t, lb.Frontends[1].Networks, 1)
+		assert.Equal(t, "private_net", lb.Frontends[1].Networks[0].Name)
+
+		t.Logf("Modifying LB %s network", lb.Name)
+		lbNet, err := svcContext.ModifyLoadBalancerNetwork(ctx, &request.ModifyLoadBalancerNetworkRequest{
+			ServiceUUID: lb.UUID,
+			Name:        "private_net",
+			Network: request.ModifyLoadBalancerNetwork{
+				Name: "internal_net",
+			},
+		})
+		require.NoError(t, err)
+		assert.Equal(t, "internal_net", lbNet.Name)
+
+		t.Logf("Modifying LB %s network using context-less service", lb.Name)
+		lbNet, err = svc.ModifyLoadBalancerNetwork(&request.ModifyLoadBalancerNetworkRequest{
+			ServiceUUID: lb.UUID,
+			Name:        "internal_net",
+			Network: request.ModifyLoadBalancerNetwork{
+				Name: "private_net",
+			},
+		})
+		require.NoError(t, err)
+		assert.Equal(t, "private_net", lbNet.Name)
+	})
+}
+
+func waitLoadBalancerOnline(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *ServiceContext, UUID string) error {
+	t.Helper()
+	if rec.Mode() == recorder.ModeRecording {
+		rec.AddPassthrough(func(h *http.Request) bool {
+			return true
+		})
+		defer func() {
+			rec.Passthroughs = nil
+		}()
+		for s := time.Now(); time.Since(s) < time.Minute*20; {
+			lb, err := svc.GetLoadBalancer(ctx, &request.GetLoadBalancerRequest{UUID: UUID})
+			if err != nil {
+				return err
+			}
+			if lb.OperationalState == upcloud.LoadBalancerOperationalStateRunning {
+				return nil
+			}
+			time.Sleep(time.Second * 2)
+		}
+	}
+	return nil
 }
 
 func createLoadBalancerBackendContext(ctx context.Context, svc *ServiceContext, lbUUID string) (*upcloud.LoadBalancerBackend, error) {

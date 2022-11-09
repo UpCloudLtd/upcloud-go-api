@@ -806,16 +806,15 @@ func TestLoadBalancerPage(t *testing.T) {
 }
 
 func cleanupLoadBalancer(rec *recorder.Recorder, svc *Service, lb *upcloud.LoadBalancer) error {
-	netID := lb.NetworkUUID
-	if err := svc.DeleteLoadBalancer(&request.DeleteLoadBalancerRequest{UUID: lb.UUID}); err != nil {
-		return err
+	if rec.Mode() != recorder.ModeRecording {
+		return nil
 	}
-
-	if err := waitForLoadBalancerToShutdown(rec, svc, lb); err != nil {
-		return fmt.Errorf("unable to shutdown LB '%s' (%s) (check dangling networks)", lb.UUID, lb.Name)
-	}
-
-	return svc.DeleteNetwork(&request.DeleteNetworkRequest{UUID: netID})
+	rec.AddPassthrough(func(h *http.Request) bool {
+		return true
+	})
+	err := deleteLoadBalancer(svc, lb)
+	rec.Passthroughs = nil
+	return err
 }
 
 func createLoadBalancer(svc *Service, networkUUID, zone string) (*upcloud.LoadBalancer, error) {
