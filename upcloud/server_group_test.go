@@ -55,7 +55,7 @@ func TestUnmarshalServerGroup(t *testing.T) {
 		Members:      []string{"x", "y"},
 		Title:        "my group",
 		UUID:         "server_group_uuid",
-		AntiAffinity: 1,
+		AntiAffinity: True,
 		AntiAffinityStatus: []ServerGroupMemberAntiAffinityStatus{
 			{
 				ServerUUID: "x",
@@ -147,14 +147,14 @@ func TestUnmarshalServerGroups(t *testing.T) {
 			Members:      []string{"x"},
 			Title:        "my group 1",
 			UUID:         "id",
-			AntiAffinity: 0,
+			AntiAffinity: False,
 		},
 		{
 			Labels:       LabelSlice{Label{Key: "managedBy", Value: "upcloud-go-sdk-unit-test"}, Label{Key: "isSecondTestCase", Value: "true"}},
 			Members:      []string{"a", "b", "c"},
 			Title:        "my group 2",
 			UUID:         "id",
-			AntiAffinity: 1,
+			AntiAffinity: True,
 			AntiAffinityStatus: []ServerGroupMemberAntiAffinityStatus{
 				{
 					ServerUUID: "a",
