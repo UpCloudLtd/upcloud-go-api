@@ -57,9 +57,10 @@ func (s GetServerGroupRequest) RequestURL() string {
 
 // CreateServerGroupRequest represents a request to create server group
 type CreateServerGroupRequest struct {
-	Labels  *upcloud.LabelSlice     `json:"labels,omitempty"`
-	Members upcloud.ServerUUIDSlice `json:"servers,omitempty"`
-	Title   string                  `json:"title,omitempty"`
+	Labels       *upcloud.LabelSlice     `json:"labels,omitempty"`
+	Members      upcloud.ServerUUIDSlice `json:"servers,omitempty"`
+	AntiAffinity upcloud.Boolean         `json:"anti_affinity,omitempty"`
+	Title        string                  `json:"title,omitempty"`
 }
 
 func (s CreateServerGroupRequest) RequestURL() string {
@@ -68,21 +69,41 @@ func (s CreateServerGroupRequest) RequestURL() string {
 
 // MarshalJSON is a custom marshaller that deals with deeply embedded values.
 func (r CreateServerGroupRequest) MarshalJSON() ([]byte, error) {
-	type c CreateServerGroupRequest
+	type c struct {
+		Labels       *upcloud.LabelSlice     `json:"labels,omitempty"`
+		Members      upcloud.ServerUUIDSlice `json:"servers,omitempty"`
+		AntiAffinity string                  `json:"anti_affinity,omitempty"`
+		Title        string                  `json:"title,omitempty"`
+	}
+
 	v := struct {
 		ServerGroup c `json:"server_group"`
 	}{}
-	v.ServerGroup = c(r)
+
+	v.ServerGroup = c{
+		Labels:  r.Labels,
+		Members: r.Members,
+		Title:   r.Title,
+	}
+
+	if !r.AntiAffinity.Empty() {
+		if r.AntiAffinity.Bool() {
+			v.ServerGroup.AntiAffinity = "yes"
+		} else {
+			v.ServerGroup.AntiAffinity = "no"
+		}
+	}
 
 	return json.Marshal(&v)
 }
 
 // ModifyServerGroupRequest represents a request to modify server group
 type ModifyServerGroupRequest struct {
-	Labels  *upcloud.LabelSlice      `json:"labels,omitempty"`
-	Members *upcloud.ServerUUIDSlice `json:"servers,omitempty"`
-	Title   string                   `json:"title,omitempty"`
-	UUID    string                   `json:"-"`
+	Labels       *upcloud.LabelSlice      `json:"labels,omitempty"`
+	Members      *upcloud.ServerUUIDSlice `json:"servers,omitempty"`
+	AntiAffinity upcloud.Boolean          `json:"anti_affinity,omitempty"`
+	Title        string                   `json:"title,omitempty"`
+	UUID         string                   `json:"-"`
 }
 
 func (s ModifyServerGroupRequest) RequestURL() string {
@@ -91,11 +112,30 @@ func (s ModifyServerGroupRequest) RequestURL() string {
 
 // MarshalJSON is a custom marshaller that deals with deeply embedded values.
 func (r ModifyServerGroupRequest) MarshalJSON() ([]byte, error) {
-	type c ModifyServerGroupRequest
+	type c struct {
+		Labels       *upcloud.LabelSlice      `json:"labels,omitempty"`
+		Members      *upcloud.ServerUUIDSlice `json:"servers,omitempty"`
+		AntiAffinity string                   `json:"anti_affinity,omitempty"`
+		Title        string                   `json:"title,omitempty"`
+	}
+
 	v := struct {
 		ServerGroup c `json:"server_group"`
 	}{}
-	v.ServerGroup = c(r)
+
+	v.ServerGroup = c{
+		Labels:  r.Labels,
+		Members: r.Members,
+		Title:   r.Title,
+	}
+
+	if !r.AntiAffinity.Empty() {
+		if r.AntiAffinity.Bool() {
+			v.ServerGroup.AntiAffinity = "yes"
+		} else {
+			v.ServerGroup.AntiAffinity = "no"
+		}
+	}
 
 	return json.Marshal(&v)
 }
