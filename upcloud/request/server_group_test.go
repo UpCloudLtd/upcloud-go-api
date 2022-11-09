@@ -60,6 +60,7 @@ func TestCreateServerGroupRequest(t *testing.T) {
 		Title:   "test",
 		Members: upcloud.ServerUUIDSlice{},
 	}
+
 	actual, err := json.Marshal(&r)
 	assert.NoError(t, err)
 	assert.JSONEq(t, expected, string(actual))
