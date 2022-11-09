@@ -2,6 +2,45 @@ package upcloud
 
 import "encoding/json"
 
+const (
+	ServerAntiAffinityStatusMet   ServerAntiAffinityStatus = "met"
+	ServerAntiAffinityStatusUnmet ServerAntiAffinityStatus = "unmet"
+)
+
+// ServerAntiAffinityStatus represents the current status of anti affinity setting for a single server. Can be "met" or "unmet"
+type ServerAntiAffinityStatus string
+
+// ServerGroupMemberAntiAffinityStatus represents all the data related to an anti affinity status for a single member within the server group
+type ServerGroupMemberAntiAffinityStatus struct {
+	ServerUUID string                   `json:"uuid"`
+	Status     ServerAntiAffinityStatus `json:"status"`
+}
+
+// ServerGroup represents server group
+type ServerGroup struct {
+	Labels             LabelSlice                            `json:"labels,omitempty"`
+	Members            ServerUUIDSlice                       `json:"servers,omitempty"`
+	Title              string                                `json:"title,omitempty"`
+	UUID               string                                `json:"uuid,omitempty"`
+	AntiAffinity       Boolean                               `json:"anti_affinity"`
+	AntiAffinityStatus []ServerGroupMemberAntiAffinityStatus `json:"anti_affinity_status"`
+}
+
+// UnmarshalJSON is a custom unmarshaller that deals with deeply embedded values.
+func (s *ServerGroup) UnmarshalJSON(b []byte) error {
+	type sg ServerGroup
+	v := struct {
+		ServerGroup sg `json:"server_group"`
+	}{}
+
+	if err := json.Unmarshal(b, &v); err != nil {
+		return err
+	}
+
+	*s = ServerGroup(v.ServerGroup)
+	return nil
+}
+
 // ServerGroups represents list of server groups
 type ServerGroups []ServerGroup
 
@@ -22,28 +61,5 @@ func (s *ServerGroups) UnmarshalJSON(b []byte) error {
 		*s = append(*s, ServerGroup(val))
 	}
 
-	return nil
-}
-
-// ServerGroup represents server group
-type ServerGroup struct {
-	Labels  LabelSlice      `json:"labels,omitempty"`
-	Members ServerUUIDSlice `json:"servers,omitempty"`
-	Title   string          `json:"title,omitempty"`
-	UUID    string          `json:"uuid,omitempty"`
-}
-
-// UnmarshalJSON is a custom unmarshaller that deals with deeply embedded values.
-func (s *ServerGroup) UnmarshalJSON(b []byte) error {
-	type sg ServerGroup
-	v := struct {
-		ServerGroup sg `json:"server_group"`
-	}{}
-
-	if err := json.Unmarshal(b, &v); err != nil {
-		return err
-	}
-
-	*s = ServerGroup(v.ServerGroup)
 	return nil
 }
