@@ -11,6 +11,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 ### Deprecated
 - Managed Load Balancer fields `DNSName` and `NetworkUUID`
 
+### Removed
+- separate kubernetes plans
+
 ## [4.9.0]
 
 ### Added

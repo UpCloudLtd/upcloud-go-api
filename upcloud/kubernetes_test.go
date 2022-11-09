@@ -68,11 +68,6 @@ const exampleKubernetesClusterJSON string = `{
 	]
 }`
 
-const exampleKubenetesPlanJSON string = `{
-		"description": "K8S-2xCPU-4GB",
-		"name": "small"
-}`
-
 func TestKubernetes(t *testing.T) {
 	t.Parallel()
 
@@ -83,26 +78,6 @@ func TestKubernetes(t *testing.T) {
 
 		s := exampleKubernetesClusterJSON
 		actual := KubernetesCluster{}
-		err := json.Unmarshal([]byte(s), &actual)
-
-		assert.NoError(t, err)
-		assert.Equal(
-			t,
-			expected,
-			actual,
-		)
-	})
-
-	t.Run("KubernetesPlanUnMarshal", func(t *testing.T) {
-		t.Parallel()
-
-		expected := KubernetesPlan{
-			Description: "K8S-2xCPU-4GB",
-			Name:        "small",
-		}
-
-		s := exampleKubenetesPlanJSON
-		actual := KubernetesPlan{}
 		err := json.Unmarshal([]byte(s), &actual)
 
 		assert.NoError(t, err)
