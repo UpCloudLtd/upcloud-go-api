@@ -183,24 +183,6 @@ func TestKubernetes(t *testing.T) {
 		)
 	})
 
-	t.Run("GetKubernetesPlansRequest", func(t *testing.T) {
-		t.Parallel()
-
-		expected := fmt.Sprintf(
-			"%s/plans",
-			kubernetesClusterBasePath,
-		)
-
-		r := GetKubernetesPlansRequest{}
-		actual := r.RequestURL()
-
-		assert.Equal(
-			t,
-			expected,
-			actual,
-		)
-	})
-
 	t.Run("GetKubernetesVersionsRequest", func(t *testing.T) {
 		t.Parallel()
 

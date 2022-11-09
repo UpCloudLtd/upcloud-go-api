@@ -14,7 +14,6 @@ type Kubernetes interface {
 	GetKubernetesCluster(r *request.GetKubernetesClusterRequest) (*upcloud.KubernetesCluster, error)
 	GetKubernetesClusters(r *request.GetKubernetesClustersRequest) ([]upcloud.KubernetesCluster, error)
 	GetKubernetesKubeconfig(r *request.GetKubernetesKubeconfigRequest) (string, error)
-	GetKubernetesPlans(r *request.GetKubernetesPlansRequest) ([]upcloud.KubernetesPlan, error)
 	GetKubernetesVersions(r *request.GetKubernetesVersionsRequest) ([]string, error)
 	WaitForKubernetesClusterState(r *request.WaitForKubernetesClusterStateRequest) (*upcloud.KubernetesCluster, error)
 }
@@ -93,12 +92,6 @@ func (s *Service) WaitForKubernetesClusterState(r *request.WaitForKubernetesClus
 			return nil, fmt.Errorf("timeout reached while waiting for Kubernetes cluster to enter state \"%s\"", r.DesiredState)
 		}
 	}
-}
-
-// GetKubernetesPlans retrieves a list of Kubernetes cluster plans (EXPERIMENTAL).
-func (s *Service) GetKubernetesPlans(r *request.GetKubernetesPlansRequest) ([]upcloud.KubernetesPlan, error) {
-	plans := make([]upcloud.KubernetesPlan, 0)
-	return plans, s.get(r.RequestURL(), &plans)
 }
 
 // GetKubernetesKubeconfig retrieves kubeconfig of a Kubernetes cluster (EXPERIMENTAL).

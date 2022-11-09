@@ -184,21 +184,6 @@ func TestKubernetes(t *testing.T) {
 		})
 	})
 
-	t.Run("GetKubernetesPlans", func(t *testing.T) {
-		t.Parallel()
-
-		recordWithContext(t, "get_kubernetes_plans", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
-			p, err := svc.GetKubernetesPlans(&request.GetKubernetesPlansRequest{})
-
-			require.NoError(t, err)
-			require.NotZero(t, p)
-
-			firstPlan := p[0]
-			require.NotZero(t, firstPlan.Description)
-			require.NotZero(t, firstPlan.Name)
-		})
-	})
-
 	t.Run("GetKubernetesVersions", func(t *testing.T) {
 		t.Parallel()
 

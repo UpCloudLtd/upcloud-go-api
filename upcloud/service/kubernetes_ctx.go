@@ -15,7 +15,6 @@ type KubernetesContext interface {
 	CreateKubernetesCluster(ctx context.Context, r *request.CreateKubernetesClusterRequest) (*upcloud.KubernetesCluster, error)
 	DeleteKubernetesCluster(ctx context.Context, r *request.DeleteKubernetesClusterRequest) error
 	GetKubernetesKubeconfig(ctx context.Context, r *request.GetKubernetesKubeconfigRequest) (string, error)
-	GetKubernetesPlans(ctx context.Context, r *request.GetKubernetesPlansRequest) ([]upcloud.KubernetesPlan, error)
 	GetKubernetesVersions(ctx context.Context, r *request.GetKubernetesVersionsRequest) ([]string, error)
 	WaitForKubernetesClusterState(ctx context.Context, r *request.WaitForKubernetesClusterStateRequest) (*upcloud.KubernetesCluster, error)
 }
@@ -85,12 +84,6 @@ func (s *ServiceContext) WaitForKubernetesClusterState(ctx context.Context, r *r
 			return nil, fmt.Errorf("timeout reached while waiting for Kubernetes cluster to enter state \"%s\"", r.DesiredState)
 		}
 	}
-}
-
-// GetKubernetesPlans retrieves a list of Kubernetes cluster plans (EXPERIMENTAL).
-func (s *ServiceContext) GetKubernetesPlans(ctx context.Context, r *request.GetKubernetesPlansRequest) ([]upcloud.KubernetesPlan, error) {
-	plans := make([]upcloud.KubernetesPlan, 0)
-	return plans, s.get(ctx, r.RequestURL(), &plans)
 }
 
 // GetKubernetesKubeconfig retrieves kubeconfig of a Kubernetes cluster (EXPERIMENTAL).
