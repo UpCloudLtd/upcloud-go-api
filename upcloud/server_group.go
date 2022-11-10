@@ -22,8 +22,8 @@ type ServerGroup struct {
 	Members            ServerUUIDSlice                       `json:"servers,omitempty"`
 	Title              string                                `json:"title,omitempty"`
 	UUID               string                                `json:"uuid,omitempty"`
-	AntiAffinity       Boolean                               `json:"anti_affinity"`
-	AntiAffinityStatus []ServerGroupMemberAntiAffinityStatus `json:"anti_affinity_status"`
+	AntiAffinity       Boolean                               `json:"anti_affinity,omitempty"`
+	AntiAffinityStatus []ServerGroupMemberAntiAffinityStatus `json:"anti_affinity_status,omitempty"`
 }
 
 // UnmarshalJSON is a custom unmarshaller that deals with deeply embedded values.
