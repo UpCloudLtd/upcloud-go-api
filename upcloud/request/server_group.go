@@ -55,15 +55,6 @@ func (s GetServerGroupRequest) RequestURL() string {
 	return fmt.Sprintf("%s/%s", serverGroupBasePath, s.UUID)
 }
 
-// serverGroupPayload represents the data that we send to server group API.
-// It exists to allow some type transformations for improved user experience.
-type serverGroupPayload struct {
-	Labels       *upcloud.LabelSlice      `json:"labels,omitempty"`
-	Members      *upcloud.ServerUUIDSlice `json:"servers,omitempty"`
-	AntiAffinity string                   `json:"anti_affinity,omitempty"`
-	Title        string                   `json:"title,omitempty"`
-}
-
 // CreateServerGroupRequest represents a request to create server group
 type CreateServerGroupRequest struct {
 	Labels       *upcloud.LabelSlice     `json:"labels,omitempty"`
@@ -78,26 +69,12 @@ func (s CreateServerGroupRequest) RequestURL() string {
 
 // MarshalJSON is a custom marshaller that deals with deeply embedded values.
 func (r CreateServerGroupRequest) MarshalJSON() ([]byte, error) {
+	type c CreateServerGroupRequest
 	v := struct {
-		ServerGroup serverGroupPayload `json:"server_group"`
+		ServerGroup c `json:"server_group"`
 	}{}
 
-	v.ServerGroup = serverGroupPayload{
-		Labels: r.Labels,
-		Title:  r.Title,
-	}
-
-	if len(r.Members) > 0 {
-		v.ServerGroup.Members = &r.Members
-	}
-
-	if !r.AntiAffinity.Empty() {
-		if r.AntiAffinity.Bool() {
-			v.ServerGroup.AntiAffinity = "yes"
-		} else {
-			v.ServerGroup.AntiAffinity = "no"
-		}
-	}
+	v.ServerGroup = c(r)
 
 	return json.Marshal(&v)
 }
@@ -117,23 +94,12 @@ func (s ModifyServerGroupRequest) RequestURL() string {
 
 // MarshalJSON is a custom marshaller that deals with deeply embedded values.
 func (r ModifyServerGroupRequest) MarshalJSON() ([]byte, error) {
+	type c ModifyServerGroupRequest
 	v := struct {
-		ServerGroup serverGroupPayload `json:"server_group"`
+		ServerGroup c `json:"server_group"`
 	}{}
 
-	v.ServerGroup = serverGroupPayload{
-		Labels:  r.Labels,
-		Members: r.Members,
-		Title:   r.Title,
-	}
-
-	if !r.AntiAffinity.Empty() {
-		if r.AntiAffinity.Bool() {
-			v.ServerGroup.AntiAffinity = "yes"
-		} else {
-			v.ServerGroup.AntiAffinity = "no"
-		}
-	}
+	v.ServerGroup = c(r)
 
 	return json.Marshal(&v)
 }
