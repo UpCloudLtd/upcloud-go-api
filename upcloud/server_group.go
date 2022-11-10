@@ -2,13 +2,13 @@ package upcloud
 
 import "encoding/json"
 
+// ServerAntiAffinityStatus represents the current status of anti affinity setting for a single server. Can be "met" or "unmet"
+type ServerAntiAffinityStatus string
+
 const (
 	ServerAntiAffinityStatusMet   ServerAntiAffinityStatus = "met"
 	ServerAntiAffinityStatusUnmet ServerAntiAffinityStatus = "unmet"
 )
-
-// ServerAntiAffinityStatus represents the current status of anti affinity setting for a single server. Can be "met" or "unmet"
-type ServerAntiAffinityStatus string
 
 // ServerGroupMemberAntiAffinityStatus represents all the data related to an anti affinity status for a single member within the server group
 type ServerGroupMemberAntiAffinityStatus struct {
