@@ -11,12 +11,12 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// TestGetIPAddressesContext performs the following actions:
+// TestGetIPAddresses performs the following actions:
 //   - creates a server
 //   - retrieves all IP addresses
 //   - compares the retrieved IP addresses with the created server's
 //     ip addresses
-func TestGetIPAddressesContext(t *testing.T) {
+func TestGetIPAddresses(t *testing.T) {
 	recordWithContext(t, "getipaddresses", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		serverDetails, err := createServerContext(ctx, rec, svc, "TestGetIPAddresses")
 		require.NoError(t, err)
@@ -51,13 +51,13 @@ func TestGetIPAddressesContext(t *testing.T) {
 	})
 }
 
-// TestAttachModifyReleaseIPAddressContext performs the following actions
+// TestAttachModifyReleaseIPAddress performs the following actions
 //
 // - creates a server
 // - assigns an additional IP address to it
 // - modifies the PTR record of the IP address
 // - deletes the IP address
-func TestAttachModifyReleaseIPAddressContext(t *testing.T) {
+func TestAttachModifyReleaseIPAddress(t *testing.T) {
 	t.Parallel()
 	recordWithContext(t, "attachmodifyreleaseipaddress", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create the server
@@ -100,7 +100,7 @@ func TestAttachModifyReleaseIPAddressContext(t *testing.T) {
 	})
 }
 
-func TestAttachModifyReleaseFloatingIPAddressContext(t *testing.T) {
+func TestAttachModifyReleaseFloatingIPAddress(t *testing.T) {
 	recordWithContext(t, "attachmodifyreleasefloatingipaddress", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create the first server
 		serverDetails1, err := createServerContext(ctx, rec, svc, "TestAttachModifyReleaseIPAddress1")

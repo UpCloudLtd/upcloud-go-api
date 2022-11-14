@@ -12,13 +12,13 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// TestFirewallRulesContext performs the following actions with context:
+// TestFirewallRules performs the following actions with context:
 //
 // - creates a server
 // - adds a firewall rule to the server
 // - gets details about the firewall rule
 // - deletes the firewall rule
-func TestFirewallRulesContext(t *testing.T) {
+func TestFirewallRules(t *testing.T) {
 	t.Parallel()
 	recordWithContext(t, "firewallrules", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create the server

@@ -10,7 +10,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestPermissionsContext(t *testing.T) {
+func TestPermissions(t *testing.T) {
 	recordWithContext(t, "permissions", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		subAccount, err := svc.CreateSubaccount(ctx, &request.CreateSubaccountRequest{
 			Subaccount: request.CreateSubaccount{

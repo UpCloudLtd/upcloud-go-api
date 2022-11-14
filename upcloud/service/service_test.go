@@ -29,16 +29,6 @@ func TestMain(m *testing.M) {
 func ExampleNew() {
 	client := client.NewWithContext("<username>", "<password>")
 	svc := New(client)
-	zones, err := svc.GetZones(context.TODO())
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Printf("%d", len(zones.Zones))
-}
-
-func ExampleNewWithContext() {
-	client := client.NewWithContext("<username>", "<password>")
-	svc := New(client)
 	ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(10*time.Second))
 	defer cancel()
 	zones, err := svc.GetZones(ctx)

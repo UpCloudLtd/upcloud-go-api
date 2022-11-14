@@ -15,7 +15,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestLoadBalancerContext(t *testing.T) {
+func TestLoadBalancer(t *testing.T) {
 	t.Parallel()
 
 	recordWithContext(t, "loadbalancer", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
@@ -56,7 +56,7 @@ func TestLoadBalancerContext(t *testing.T) {
 	})
 }
 
-func TestLoadBalancerBackendContext(t *testing.T) {
+func TestLoadBalancerBackend(t *testing.T) {
 	t.Parallel()
 
 	recordWithContext(t, "loadbalancerbackend", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
@@ -69,7 +69,7 @@ func TestLoadBalancerBackendContext(t *testing.T) {
 
 		t.Logf("Created load balancer for testing LB backend CRUD: %s", lb.Name)
 
-		backend, err := createLoadBalancerBackendContext(ctx, svc, lb.UUID)
+		backend, err := createLoadBalancerBackend(ctx, svc, lb.UUID)
 		require.NoError(t, err)
 		assert.Equal(t, 30, backend.Properties.TimeoutServer)
 		t.Logf("Created LB backend: %s", backend.Name)
@@ -120,7 +120,7 @@ func TestLoadBalancerBackendContext(t *testing.T) {
 	})
 }
 
-func TestLoadBalancerBackendMemberContext(t *testing.T) {
+func TestLoadBalancerBackendMember(t *testing.T) {
 	t.Parallel()
 
 	recordWithContext(t, "loadbalancerbackendmember", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
@@ -132,7 +132,7 @@ func TestLoadBalancerBackendMemberContext(t *testing.T) {
 		})
 		t.Logf("Created load balancer for testing LB backend members CRUD: %s", lb.Name)
 
-		backend, err := createLoadBalancerBackendContext(ctx, svc, lb.UUID)
+		backend, err := createLoadBalancerBackend(ctx, svc, lb.UUID)
 		require.NoError(t, err)
 		t.Logf("Created new backend %s for load balancer %s", backend.Name, lb.Name)
 
@@ -242,7 +242,7 @@ func TestLoadBalancerBackendMemberContext(t *testing.T) {
 	})
 }
 
-func TestLoadBalancerResolverContext(t *testing.T) {
+func TestLoadBalancerResolver(t *testing.T) {
 	t.Parallel()
 
 	recordWithContext(t, "loadbalancerresolver", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
@@ -362,7 +362,7 @@ func TestLoadBalancerResolverContext(t *testing.T) {
 	})
 }
 
-func TestGetLoadBalancerPlansContext(t *testing.T) {
+func TestGetLoadBalancerPlans(t *testing.T) {
 	recordWithContext(t, "getloadbalancerplans", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		plans, err := svc.GetLoadBalancerPlans(ctx, &request.GetLoadBalancerPlansRequest{})
 		require.NoError(t, err)
@@ -376,7 +376,7 @@ func TestGetLoadBalancerPlansContext(t *testing.T) {
 	})
 }
 
-func TestLoadBalancerFrontendContext(t *testing.T) {
+func TestLoadBalancerFrontend(t *testing.T) {
 	t.Parallel()
 
 	recordWithContext(t, "loadbalancerfrontend", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
@@ -387,7 +387,7 @@ func TestLoadBalancerFrontendContext(t *testing.T) {
 			assert.NoError(t, err)
 		})
 		t.Logf("Created LB for testing frontends: %s", lb.Name)
-		be, err := createLoadBalancerBackendContext(ctx, svc, lb.UUID)
+		be, err := createLoadBalancerBackend(ctx, svc, lb.UUID)
 		require.NoError(t, err)
 		t.Logf("Created backend %s for testing LB frontends", be.Name)
 
@@ -449,7 +449,7 @@ func TestLoadBalancerFrontendContext(t *testing.T) {
 	})
 }
 
-func TestLoadBalancerFrontendRuleContext(t *testing.T) {
+func TestLoadBalancerFrontendRule(t *testing.T) {
 	t.Parallel()
 	const zone = "fi-hel2"
 	recordWithContext(t, "loadbalancerfrontendrule", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
@@ -591,7 +591,7 @@ func TestLoadBalancerFrontendRuleContext(t *testing.T) {
 //   - TLS config CRUD
 //   - add TLS config to LB frontend
 //   - remove TLS config to LB frontend
-func TestLoadBalancerCerticateBundlesAndFrontendTLSConfigsContext(t *testing.T) {
+func TestLoadBalancerCerticateBundlesAndFrontendTLSConfigs(t *testing.T) {
 	t.Parallel()
 
 	recordWithContext(t, "loadbalancercerticatebundlesandfrontendtlsconfigs", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
@@ -749,7 +749,7 @@ func TestLoadBalancerCerticateBundlesAndFrontendTLSConfigsContext(t *testing.T) 
 	})
 }
 
-func TestLoadBalancerPageContext(t *testing.T) {
+func TestLoadBalancerPage(t *testing.T) {
 	// do not run this test in parallel because it alters request.DefaultPage config which might cause unexpected results
 	const zone = "fi-hel2"
 	recordWithContext(t, "loadbalancerpage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
@@ -812,7 +812,7 @@ func TestLoadBalancerPageContext(t *testing.T) {
 	})
 }
 
-func TestLoadBalancerNetworkContext(t *testing.T) {
+func TestLoadBalancerNetwork(t *testing.T) {
 	t.Parallel()
 
 	recordWithContext(t, "loadbalancernetworks", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
@@ -954,7 +954,7 @@ func waitLoadBalancerOnline(ctx context.Context, t *testing.T, rec *recorder.Rec
 	return nil
 }
 
-func createLoadBalancerBackendContext(ctx context.Context, svc *Service, lbUUID string) (*upcloud.LoadBalancerBackend, error) {
+func createLoadBalancerBackend(ctx context.Context, svc *Service, lbUUID string) (*upcloud.LoadBalancerBackend, error) {
 	req := request.CreateLoadBalancerBackendRequest{
 		ServiceUUID: lbUUID,
 		Backend: request.LoadBalancerBackend{

@@ -11,13 +11,13 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 )
 
-// TestGetModifyHostsContext tests host functionality works correctly with context.
+// TestGetModifyHosts tests host functionality works correctly with context.
 // The test:
 //   - Gets all available hosts
 //   - Gets the details of a single host and compares to details from all hosts list
 //   - Modifies a host
 //   - Modifies the host back
-func TestGetModifyHostsContext(t *testing.T) {
+func TestGetModifyHosts(t *testing.T) {
 	recordWithContext(t, "getmodifyhosts", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		hosts, err := svc.GetHosts(ctx)
 		require.NoError(t, err)

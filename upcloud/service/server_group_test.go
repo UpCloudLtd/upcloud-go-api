@@ -11,11 +11,11 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestServerGroupsContext(t *testing.T) {
+func TestServerGroups(t *testing.T) {
 	t.Parallel()
 
 	recordWithContext(t, "servergroups", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		srv, err := createMinimalServerContext(ctx, rec, svc, "TestServerGroups")
+		srv, err := createMinimalServer(ctx, rec, svc, "TestServerGroups")
 		require.NoError(t, err)
 		// create new server group
 		group, err := svc.CreateServerGroup(ctx, &request.CreateServerGroupRequest{

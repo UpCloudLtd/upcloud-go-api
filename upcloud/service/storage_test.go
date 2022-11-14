@@ -20,12 +20,12 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 )
 
-// TestCreateModifyDeleteStorageContext performs the following actions:
+// TestCreateModifyDeleteStorage performs the following actions:
 //
 // - creates a new storage disk
 // - modifies the storage
 // - deletes the storage
-func TestCreateModifyDeleteStorageContext(t *testing.T) {
+func TestCreateModifyDeleteStorage(t *testing.T) {
 	t.Parallel()
 
 	recordWithContext(t, "createmodifydeletestorage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
@@ -54,7 +54,7 @@ func TestCreateModifyDeleteStorageContext(t *testing.T) {
 	})
 }
 
-// TestAttachDetachStorageContext performs the following actions:
+// TestAttachDetachStorage performs the following actions:
 //
 // - creates a server
 // - stops the server
@@ -63,7 +63,7 @@ func TestCreateModifyDeleteStorageContext(t *testing.T) {
 // - detaches the storage
 // - deletes the storage
 // - deletes the server
-func TestAttachDetachStorageContext(t *testing.T) {
+func TestAttachDetachStorage(t *testing.T) {
 	t.Parallel()
 	recordWithContext(t, "attachdetachstorage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create a server
@@ -106,12 +106,12 @@ func TestAttachDetachStorageContext(t *testing.T) {
 	})
 }
 
-// TestCloneStorageContext performs the following actions:
+// TestCloneStorage performs the following actions:
 //
 // - creates a storage device
 // - clones the storage device
 // - deletes the clone and the storage device
-func TestCloneStorageContext(t *testing.T) {
+func TestCloneStorage(t *testing.T) {
 	t.Parallel()
 	recordWithContext(t, "clonestorage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create storage
@@ -140,13 +140,13 @@ func TestCloneStorageContext(t *testing.T) {
 	})
 }
 
-// TestTemplatizeServerStorageContext performs the following actions:
+// TestTemplatizeServerStorage performs the following actions:
 //
 // - creates a server
 // - templatizes the server's storage
 // - deletes the new storage
 // - stops and deletes the server
-func TestTemplatizeServerStorageContext(t *testing.T) {
+func TestTemplatizeServerStorage(t *testing.T) {
 	t.Parallel()
 	recordWithContext(t, "templatizeserverstorage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create server
@@ -186,14 +186,14 @@ func TestTemplatizeServerStorageContext(t *testing.T) {
 	})
 }
 
-// TestLoadEjectCDROMContext performs the following actions:
+// TestLoadEjectCDROM performs the following actions:
 //
 // - creates a server
 // - stops the server
 // - attaches a CD-ROM device
 // - loads a CD-ROM
 // - ejects the CD-ROM
-func TestLoadEjectCDROMContext(t *testing.T) {
+func TestLoadEjectCDROM(t *testing.T) {
 	t.Parallel()
 	recordWithContext(t, "loadejectcdrom", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create the server
@@ -235,13 +235,13 @@ func TestLoadEjectCDROMContext(t *testing.T) {
 	})
 }
 
-// TestCreateRestoreBackupContext performs the following actions:
+// TestCreateRestoreBackup performs the following actions:
 //
 // - creates a storage device
 // - creates a backup of the storage device
 // - gets backup storage details
 // - restores the backup
-func TestCreateRestoreBackupContext(t *testing.T) {
+func TestCreateRestoreBackup(t *testing.T) {
 	t.Parallel()
 	recordWithContext(t, "createrestorebackup", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create the storage
@@ -305,7 +305,7 @@ func TestCreateRestoreBackupContext(t *testing.T) {
 	})
 }
 
-func TestStorageImportContext(t *testing.T) {
+func TestStorageImport(t *testing.T) {
 	t.Parallel()
 	recordWithContext(t, "storageimport", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		storage, err := svc.CreateStorage(ctx, &request.CreateStorageRequest{
@@ -338,7 +338,7 @@ func TestStorageImportContext(t *testing.T) {
 	})
 }
 
-func TestDirectUploadStorageImportContext(t *testing.T) {
+func TestDirectUploadStorageImport(t *testing.T) {
 	t.Parallel()
 	recordWithContext(t, "directuploadstorageimport", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		storage, err := svc.CreateStorage(ctx, &request.CreateStorageRequest{
@@ -405,11 +405,11 @@ func TestDirectUploadStorageImportContext(t *testing.T) {
 // - resizes the storage disk
 // - resizes the storage
 // - cleanup
-func TestResizeStorageFilesystemContext(t *testing.T) {
+func TestResizeStorageFilesystem(t *testing.T) {
 	t.Parallel()
 	recordWithContext(t, "resizestoragefilesystem", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// start server
-		serverDetails, err := createMinimalServerContext(ctx, rec, svc, "TestResizeStorageFilesystem")
+		serverDetails, err := createMinimalServer(ctx, rec, svc, "TestResizeStorageFilesystem")
 		require.NoError(t, err)
 
 		// stop server
@@ -445,7 +445,7 @@ func TestResizeStorageFilesystemContext(t *testing.T) {
 	})
 }
 
-func TestCompressedDirectUploadStorageImportContext(t *testing.T) {
+func TestCompressedDirectUploadStorageImport(t *testing.T) {
 	t.Parallel()
 	recordWithContext(t, "compresseddirectuploadstorageimport", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		storage, err := svc.CreateStorage(ctx, &request.CreateStorageRequest{

@@ -16,8 +16,8 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// TestGetAccountContext tests that the GetAccount() method returns proper data
-func TestGetAccountContext(t *testing.T) {
+// TestGetAccount tests that the GetAccount() method returns proper data
+func TestGetAccount(t *testing.T) {
 	if os.Getenv("UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS") == "yes" || testing.Short() {
 		t.Skip("Skipping TestGetAccount...")
 	}
@@ -48,7 +48,7 @@ func TestGetAccountContext(t *testing.T) {
 //   - Get user details to check modifications
 //   - Get account list and check that subaccount and main account is listed
 //   - Delete tag and subaccount
-func TestListDetailsCreateModifyDeleteSubaccountContext(t *testing.T) {
+func TestListDetailsCreateModifyDeleteSubaccount(t *testing.T) {
 	recordWithContext(t, "createmodifydeletesubaccount", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		var err error
 		mainAccount := "testuser"

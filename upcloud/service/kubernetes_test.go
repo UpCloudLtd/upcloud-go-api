@@ -13,7 +13,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestKubernetesCtx(t *testing.T) {
+func TestKubernetes(t *testing.T) {
 	t.Parallel()
 
 	const zone = "de-fra1"
@@ -34,7 +34,7 @@ func TestKubernetesCtx(t *testing.T) {
 				err := svc.DeleteKubernetesCluster(ctx, &request.DeleteKubernetesClusterRequest{UUID: uuid})
 				require.NoError(t, err)
 
-				err = waitForKubernetesClusterNotFoundContext(ctx, rec, svc, uuid)
+				err = waitForKubernetesClusterNotFound(ctx, rec, svc, uuid)
 				require.NoError(t, err)
 			}
 		})
@@ -198,7 +198,7 @@ func TestKubernetesCtx(t *testing.T) {
 	})
 }
 
-func waitForKubernetesClusterNotFoundContext(ctx context.Context, rec *recorder.Recorder, svc *Service, clusterUUID string) error {
+func waitForKubernetesClusterNotFound(ctx context.Context, rec *recorder.Recorder, svc *Service, clusterUUID string) error {
 	if rec.Mode() != recorder.ModeRecording {
 		return nil
 	}

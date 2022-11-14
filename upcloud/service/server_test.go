@@ -16,8 +16,8 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// TestGetServerConfigurationsContext ensures that the GetServerConfigurations() function returns proper data.
-func TestGetServerConfigurationsContext(t *testing.T) {
+// TestGetServerConfigurations ensures that the GetServerConfigurations() function returns proper data.
+func TestGetServerConfigurations(t *testing.T) {
 	t.Parallel()
 
 	recordWithContext(t, "getserverconfigurations", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
@@ -37,7 +37,7 @@ func TestGetServerConfigurationsContext(t *testing.T) {
 }
 
 // TestGetServersWithFilters ensures that the GetServersWithFilters() function returns proper data.
-func TestGetServersWithFiltersContext(t *testing.T) {
+func TestGetServersWithFilters(t *testing.T) {
 	recordWithContext(t, "getserverswithfilters", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		name := "getserverswithfilters"
 		createdServer, err := createServerContext(ctx, rec, svc, "getserverswithfilters")
@@ -67,8 +67,8 @@ func TestGetServersWithFiltersContext(t *testing.T) {
 	})
 }
 
-// TestGetServerDetailsContext ensures that the GetServerDetails() function returns proper data.
-func TestGetServerDetailsContext(t *testing.T) {
+// TestGetServerDetails ensures that the GetServerDetails() function returns proper data.
+func TestGetServerDetails(t *testing.T) {
 	t.Parallel()
 
 	recordWithContext(t, "getserverdetails", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
@@ -85,7 +85,7 @@ func TestGetServerDetailsContext(t *testing.T) {
 	})
 }
 
-// TestCreateStopStartServerContext ensures that StartServer() and StopServer() behave
+// TestCreateStopStartServer ensures that StartServer() and StopServer() behave
 // as expect and return proper data
 // The test:
 //   - Creates a server
@@ -93,7 +93,7 @@ func TestGetServerDetailsContext(t *testing.T) {
 //   - Starts the server
 //   - Checks the details of the started server and that it is in the
 //     correct state.
-func TestCreateStopStartServerContext(t *testing.T) {
+func TestCreateStopStartServer(t *testing.T) {
 	t.Parallel()
 
 	recordWithContext(t, "createstartstopserver", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
@@ -133,7 +133,7 @@ func TestCreateStopStartServerContext(t *testing.T) {
 	})
 }
 
-func TestStartAvoidHostContext(t *testing.T) {
+func TestStartAvoidHost(t *testing.T) {
 	t.Parallel()
 
 	recordWithContext(t, "startavoidhost", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
@@ -173,7 +173,7 @@ func TestStartAvoidHostContext(t *testing.T) {
 //   - Restarts the server
 //   - Checks the details of the restarted server and that it is in the
 //     correct state.
-func TestCreateRestartServerContext(t *testing.T) {
+func TestCreateRestartServer(t *testing.T) {
 	t.Parallel()
 
 	recordWithContext(t, "createrestartserver", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
@@ -213,7 +213,7 @@ func TestCreateRestartServerContext(t *testing.T) {
 }
 
 // TestErrorHandlingContext checks that the correct error type is returned from service methods.
-func TestErrorHandlingContext(t *testing.T) {
+func TestErrorHandling(t *testing.T) {
 	t.Parallel()
 
 	recordWithContext(t, "errorhandling", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
@@ -238,7 +238,7 @@ func TestErrorHandlingContext(t *testing.T) {
 // - modifies the server
 // - stops the server
 // - deletes the server.
-func TestCreateModifyDeleteServerContext(t *testing.T) {
+func TestCreateModifyDeleteServer(t *testing.T) {
 	t.Parallel()
 
 	recordWithContext(t, "createmodifydeleteserver", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
@@ -315,7 +315,7 @@ func TestCreateModifyDeleteServerContext(t *testing.T) {
 //
 // - creates a server
 // - deletes the server including storage.
-func TestCreateDeleteServerAndStorageContext(t *testing.T) {
+func TestCreateDeleteServerAndStorage(t *testing.T) {
 	t.Parallel()
 
 	recordWithContext(t, "createdeleteserverandstorage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
@@ -363,7 +363,7 @@ func TestCreateDeleteServerAndStorageContext(t *testing.T) {
 }
 
 // Creates a minimal server with a private utility network interface.
-func createMinimalServerContext(ctx context.Context, rec *recorder.Recorder, svc *Service, name string) (*upcloud.ServerDetails, error) {
+func createMinimalServer(ctx context.Context, rec *recorder.Recorder, svc *Service, name string) (*upcloud.ServerDetails, error) {
 	title := "uploud-go-sdk-integration-test-" + name
 	hostname := strings.ToLower(title + ".example.com")
 
