@@ -17,25 +17,25 @@ type AccountContext interface {
 }
 
 // GetAccount returns the current user's account
-func (s *ServiceContext) GetAccount(ctx context.Context) (*upcloud.Account, error) {
+func (s *Service) GetAccount(ctx context.Context) (*upcloud.Account, error) {
 	account := upcloud.Account{}
 	return &account, s.get(ctx, "/account", &account)
 }
 
 // GetAccountList returns the account list
-func (s *ServiceContext) GetAccountList(ctx context.Context) (upcloud.AccountList, error) {
+func (s *Service) GetAccountList(ctx context.Context) (upcloud.AccountList, error) {
 	accountList := make(upcloud.AccountList, 0)
 	return accountList, s.get(ctx, "/account/list", &accountList)
 }
 
 // GetAccountDetails returns account details
-func (s *ServiceContext) GetAccountDetails(ctx context.Context, r *request.GetAccountDetailsRequest) (*upcloud.AccountDetails, error) {
+func (s *Service) GetAccountDetails(ctx context.Context, r *request.GetAccountDetailsRequest) (*upcloud.AccountDetails, error) {
 	account := upcloud.AccountDetails{}
 	return &account, s.get(ctx, r.RequestURL(), &account)
 }
 
 // ModifySubaccount modifies a sub account
-func (s *ServiceContext) ModifySubaccount(ctx context.Context, r *request.ModifySubaccountRequest) (*upcloud.AccountDetails, error) {
+func (s *Service) ModifySubaccount(ctx context.Context, r *request.ModifySubaccountRequest) (*upcloud.AccountDetails, error) {
 	if err := s.replace(ctx, r, nil); err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (s *ServiceContext) ModifySubaccount(ctx context.Context, r *request.Modify
 }
 
 // CreateSubaccount creates a new sub account
-func (s *ServiceContext) CreateSubaccount(ctx context.Context, r *request.CreateSubaccountRequest) (*upcloud.AccountDetails, error) {
+func (s *Service) CreateSubaccount(ctx context.Context, r *request.CreateSubaccountRequest) (*upcloud.AccountDetails, error) {
 	if err := s.create(ctx, r, nil); err != nil {
 		return nil, err
 	}
@@ -51,6 +51,6 @@ func (s *ServiceContext) CreateSubaccount(ctx context.Context, r *request.Create
 }
 
 // DeleteSubaccount deletes a sub account
-func (s *ServiceContext) DeleteSubaccount(ctx context.Context, r *request.DeleteSubaccountRequest) error {
+func (s *Service) DeleteSubaccount(ctx context.Context, r *request.DeleteSubaccountRequest) error {
 	return s.delete(ctx, r)
 }

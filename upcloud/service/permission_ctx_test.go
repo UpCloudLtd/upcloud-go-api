@@ -11,8 +11,8 @@ import (
 )
 
 func TestPermissionsContext(t *testing.T) {
-	recordWithContext(t, "permissions", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
-		subAccount, err := svcContext.CreateSubaccount(ctx, &request.CreateSubaccountRequest{
+	recordWithContext(t, "permissions", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		subAccount, err := svc.CreateSubaccount(ctx, &request.CreateSubaccountRequest{
 			Subaccount: request.CreateSubaccount{
 				Username:   "sdk_test_permissions_subaccount",
 				Password:   "mysecr3tPassword",
@@ -36,7 +36,7 @@ func TestPermissionsContext(t *testing.T) {
 		})
 		assert.NoError(t, err)
 		defer func() {
-			if err := svcContext.DeleteSubaccount(ctx, &request.DeleteSubaccountRequest{Username: subAccount.Username}); err != nil {
+			if err := svc.DeleteSubaccount(ctx, &request.DeleteSubaccountRequest{Username: subAccount.Username}); err != nil {
 				t.Log(err)
 			}
 		}()
@@ -49,17 +49,17 @@ func TestPermissionsContext(t *testing.T) {
 				Storage: upcloud.FromBool(true),
 			},
 		}
-		got, err := svcContext.GrantPermission(ctx, &request.GrantPermissionRequest{
+		got, err := svc.GrantPermission(ctx, &request.GrantPermissionRequest{
 			Permission: want,
 		})
 		assert.NoError(t, err)
 		assert.Equal(t, want, *got)
 
-		p, err := svcContext.GetPermissions(ctx, &request.GetPermissionsRequest{})
+		p, err := svc.GetPermissions(ctx, &request.GetPermissionsRequest{})
 		assert.NoError(t, err)
 		assert.Equal(t, upcloud.Permissions{want}, p)
 
-		assert.NoError(t, svcContext.RevokePermission(ctx, &request.RevokePermissionRequest{
+		assert.NoError(t, svc.RevokePermission(ctx, &request.RevokePermissionRequest{
 			Permission: *got,
 		}))
 	})

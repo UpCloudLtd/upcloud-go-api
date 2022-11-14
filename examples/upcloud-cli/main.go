@@ -52,7 +52,7 @@ func run() int {
 
 	fmt.Println("Creating new client")
 	c := client.NewWithContext(username, password)
-	s := service.NewWithContext(c)
+	s := service.New(c)
 
 	switch command {
 	case "deleteservers":
@@ -75,7 +75,7 @@ func run() int {
 	return 0
 }
 
-func createServer(s *service.ServiceContext) error {
+func createServer(s *service.Service) error {
 	ctx := context.TODO()
 	fmt.Println("Creating server")
 	details, err := s.CreateServer(ctx, &request.CreateServerRequest{
@@ -135,7 +135,7 @@ func createServer(s *service.ServiceContext) error {
 	return nil
 }
 
-func deleteServers(s *service.ServiceContext) error {
+func deleteServers(s *service.Service) error {
 	ctx := context.TODO()
 	fmt.Println("Getting servers")
 	servers, err := s.GetServers(ctx)
@@ -184,7 +184,7 @@ func deleteServers(s *service.ServiceContext) error {
 	return nil
 }
 
-func deleteStorage(s *service.ServiceContext) error {
+func deleteStorage(s *service.Service) error {
 	ctx := context.TODO()
 	fmt.Println("Getting storage")
 	storages, err := s.GetStorages(ctx, &request.GetStoragesRequest{

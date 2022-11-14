@@ -16,8 +16,8 @@ import (
 // TestGetObjectStoragesContext tests that the GetObjectStorages() function returns proper data
 func TestGetObjectStoragesContext(t *testing.T) {
 	t.Parallel()
-	recordWithContext(t, "getobjectstorages", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
-		objectStorages, err := svcContext.GetObjectStorages(ctx)
+	recordWithContext(t, "getobjectstorages", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		objectStorages, err := svc.GetObjectStorages(ctx)
 		require.NoError(t, err)
 		assert.NotEmpty(t, objectStorages.ObjectStorages)
 
@@ -35,11 +35,11 @@ func TestGetObjectStoragesContext(t *testing.T) {
 // TestGetObjectStorageDetailsContext ensures that the GetObjectStorageDetails() function returns proper data
 func TestGetObjectStorageDetailsContext(t *testing.T) {
 	t.Parallel()
-	recordWithContext(t, "getobjectstoragedetails", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
-		d, err := createObjectStorageContext(ctx, svcContext, "getobjectstoragedetails", "App object storage", "fi-hel2", 500)
+	recordWithContext(t, "getobjectstoragedetails", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		d, err := createObjectStorageContext(ctx, svc, "getobjectstoragedetails", "App object storage", "fi-hel2", 500)
 		require.NoError(t, err)
 
-		objectStorageDetails, err := svcContext.GetObjectStorageDetails(ctx, &request.GetObjectStorageDetailsRequest{
+		objectStorageDetails, err := svc.GetObjectStorageDetails(ctx, &request.GetObjectStorageDetailsRequest{
 			UUID: d.UUID,
 		})
 		require.NoError(t, err)
@@ -50,7 +50,7 @@ func TestGetObjectStorageDetailsContext(t *testing.T) {
 }
 
 // Creates an Object Storage and returns the details about it, panic if creation fails
-func createObjectStorageContext(ctx context.Context, svc *ServiceContext, name string, description string, zone string, size int) (*upcloud.ObjectStorageDetails, error) {
+func createObjectStorageContext(ctx context.Context, svc *Service, name string, description string, zone string, size int) (*upcloud.ObjectStorageDetails, error) {
 	createObjectStorageRequest := request.CreateObjectStorageRequest{
 		Name:        "go-test-" + name,
 		Description: description,
@@ -70,8 +70,8 @@ func createObjectStorageContext(ctx context.Context, svc *ServiceContext, name s
 }
 
 // Deletes the specific Object Storage.
-func deleteObjectStorage(ctx context.Context, svcContext *ServiceContext, uuid string) error {
-	err := svcContext.DeleteObjectStorage(ctx, &request.DeleteObjectStorageRequest{
+func deleteObjectStorage(ctx context.Context, svc *Service, uuid string) error {
+	err := svc.DeleteObjectStorage(ctx, &request.DeleteObjectStorageRequest{
 		UUID: uuid,
 	})
 

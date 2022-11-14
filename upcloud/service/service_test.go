@@ -28,7 +28,7 @@ func TestMain(m *testing.M) {
 
 func ExampleNew() {
 	client := client.NewWithContext("<username>", "<password>")
-	svc := NewWithContext(client)
+	svc := New(client)
 	zones, err := svc.GetZones(context.TODO())
 	if err != nil {
 		log.Fatal(err)
@@ -38,7 +38,7 @@ func ExampleNew() {
 
 func ExampleNewWithContext() {
 	client := client.NewWithContext("<username>", "<password>")
-	svc := NewWithContext(client)
+	svc := New(client)
 	ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(10*time.Second))
 	defer cancel()
 	zones, err := svc.GetZones(ctx)
@@ -49,11 +49,11 @@ func ExampleNewWithContext() {
 }
 
 // Configures the test environment.
-func getService() *ServiceContext {
+func getService() *Service {
 	user, password := getCredentials()
 
 	c := client.NewWithContext(user, password)
 	c.SetTimeout(time.Minute * 5)
 
-	return NewWithContext(c)
+	return New(c)
 }

@@ -24,38 +24,38 @@ type ServerContext interface {
 }
 
 // GetServerConfigurations returns the available pre-configured server configurations
-func (s *ServiceContext) GetServerConfigurations(ctx context.Context) (*upcloud.ServerConfigurations, error) {
+func (s *Service) GetServerConfigurations(ctx context.Context) (*upcloud.ServerConfigurations, error) {
 	serverConfigurations := upcloud.ServerConfigurations{}
 	return &serverConfigurations, s.get(ctx, "/server_size", &serverConfigurations)
 }
 
 // GetServers returns the available servers
-func (s *ServiceContext) GetServers(ctx context.Context) (*upcloud.Servers, error) {
+func (s *Service) GetServers(ctx context.Context) (*upcloud.Servers, error) {
 	servers := upcloud.Servers{}
 	return &servers, s.get(ctx, "/server", &servers)
 }
 
 // GetServersWithFilters returns the all the available servers using given filters.
-func (s *ServiceContext) GetServersWithFilters(ctx context.Context, r *request.GetServersWithFiltersRequest) (*upcloud.Servers, error) {
+func (s *Service) GetServersWithFilters(ctx context.Context, r *request.GetServersWithFiltersRequest) (*upcloud.Servers, error) {
 	servers := upcloud.Servers{}
 	return &servers, s.get(ctx, r.RequestURL(), &servers)
 }
 
 // GetServerDetails returns extended details about the specified server
-func (s *ServiceContext) GetServerDetails(ctx context.Context, r *request.GetServerDetailsRequest) (*upcloud.ServerDetails, error) {
+func (s *Service) GetServerDetails(ctx context.Context, r *request.GetServerDetailsRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
 	return &serverDetails, s.get(ctx, r.RequestURL(), &serverDetails)
 }
 
 // CreateServer creates a server and returns the server details for the newly created server
-func (s *ServiceContext) CreateServer(ctx context.Context, r *request.CreateServerRequest) (*upcloud.ServerDetails, error) {
+func (s *Service) CreateServer(ctx context.Context, r *request.CreateServerRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
 	return &serverDetails, s.create(ctx, r, &serverDetails)
 }
 
 // WaitForServerState blocks execution until the specified server has entered the specified state. If the state changes
 // favorably, the new server details are returned. The method will give up after the specified timeout
-func (s *ServiceContext) WaitForServerState(ctx context.Context, r *request.WaitForServerStateRequest) (*upcloud.ServerDetails, error) {
+func (s *Service) WaitForServerState(ctx context.Context, r *request.WaitForServerStateRequest) (*upcloud.ServerDetails, error) {
 	attempts := 0
 	sleepDuration := time.Second * 5
 
@@ -87,7 +87,7 @@ func (s *ServiceContext) WaitForServerState(ctx context.Context, r *request.Wait
 }
 
 // StartServer starts the specified server
-func (s *ServiceContext) StartServer(ctx context.Context, r *request.StartServerRequest) (*upcloud.ServerDetails, error) {
+func (s *Service) StartServer(ctx context.Context, r *request.StartServerRequest) (*upcloud.ServerDetails, error) {
 	// Save previous timeout
 	prevTimeout := s.client.GetTimeout()
 
@@ -102,7 +102,7 @@ func (s *ServiceContext) StartServer(ctx context.Context, r *request.StartServer
 }
 
 // StopServer stops the specified server
-func (s *ServiceContext) StopServer(ctx context.Context, r *request.StopServerRequest) (*upcloud.ServerDetails, error) {
+func (s *Service) StopServer(ctx context.Context, r *request.StopServerRequest) (*upcloud.ServerDetails, error) {
 	// Save previous timeout
 	prevTimeout := s.client.GetTimeout()
 
@@ -118,7 +118,7 @@ func (s *ServiceContext) StopServer(ctx context.Context, r *request.StopServerRe
 }
 
 // RestartServer restarts the specified server
-func (s *ServiceContext) RestartServer(ctx context.Context, r *request.RestartServerRequest) (*upcloud.ServerDetails, error) {
+func (s *Service) RestartServer(ctx context.Context, r *request.RestartServerRequest) (*upcloud.ServerDetails, error) {
 	// Save previous timeout
 	prevTimeout := s.client.GetTimeout()
 
@@ -135,17 +135,17 @@ func (s *ServiceContext) RestartServer(ctx context.Context, r *request.RestartSe
 
 // ModifyServer modifies the configuration of an existing server. Attaching and detaching storages as well as assigning
 // and releasing IP addresses have their own separate operations.
-func (s *ServiceContext) ModifyServer(ctx context.Context, r *request.ModifyServerRequest) (*upcloud.ServerDetails, error) {
+func (s *Service) ModifyServer(ctx context.Context, r *request.ModifyServerRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
 	return &serverDetails, s.replace(ctx, r, &serverDetails)
 }
 
 // DeleteServer deletes the specified server
-func (s *ServiceContext) DeleteServer(ctx context.Context, r *request.DeleteServerRequest) error {
+func (s *Service) DeleteServer(ctx context.Context, r *request.DeleteServerRequest) error {
 	return s.delete(ctx, r)
 }
 
 // DeleteServerAndStorages deletes the specified server and all attached storages
-func (s *ServiceContext) DeleteServerAndStorages(ctx context.Context, r *request.DeleteServerAndStoragesRequest) error {
+func (s *Service) DeleteServerAndStorages(ctx context.Context, r *request.DeleteServerAndStoragesRequest) error {
 	return s.delete(ctx, r)
 }

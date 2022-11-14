@@ -23,7 +23,7 @@ func TestGetAccountContext(t *testing.T) {
 	}
 
 	user, password := getCredentials()
-	svc := NewWithContext(client.NewWithContext(user, password))
+	svc := New(client.NewWithContext(user, password))
 
 	account, err := svc.GetAccount(context.Background())
 	require.NoError(t, err)
@@ -49,7 +49,7 @@ func TestGetAccountContext(t *testing.T) {
 //   - Get account list and check that subaccount and main account is listed
 //   - Delete tag and subaccount
 func TestListDetailsCreateModifyDeleteSubaccountContext(t *testing.T) {
-	recordWithContext(t, "createmodifydeletesubaccount", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
+	recordWithContext(t, "createmodifydeletesubaccount", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		var err error
 		mainAccount := "testuser"
 		rec.AddFilter(func(i *cassette.Interaction) error {
@@ -64,13 +64,13 @@ func TestListDetailsCreateModifyDeleteSubaccountContext(t *testing.T) {
 
 		defer func() {
 			// defer cleanup job
-			err = svcContext.DeleteTag(ctx, &request.DeleteTagRequest{Name: tagName})
+			err = svc.DeleteTag(ctx, &request.DeleteTagRequest{Name: tagName})
 			assert.NoError(t, err)
-			err = svcContext.DeleteSubaccount(ctx, &request.DeleteSubaccountRequest{Username: username})
+			err = svc.DeleteSubaccount(ctx, &request.DeleteSubaccountRequest{Username: username})
 			assert.NoError(t, err)
 		}()
 
-		_, err = svcContext.CreateTag(ctx, &request.CreateTagRequest{
+		_, err = svc.CreateTag(ctx, &request.CreateTagRequest{
 			Tag: upcloud.Tag{
 				Name:        tagName,
 				Description: "test tag",
@@ -79,7 +79,7 @@ func TestListDetailsCreateModifyDeleteSubaccountContext(t *testing.T) {
 		})
 
 		require.NoError(t, err)
-		subAccount, err := svcContext.CreateSubaccount(ctx, &request.CreateSubaccountRequest{
+		subAccount, err := svc.CreateSubaccount(ctx, &request.CreateSubaccountRequest{
 			Subaccount: request.CreateSubaccount{
 				Username:   username,
 				Password:   "mysecr3tPassword",
@@ -152,7 +152,7 @@ func TestListDetailsCreateModifyDeleteSubaccountContext(t *testing.T) {
 		assert.Equal(t, "127.0.0.1", subAccount.IPFilters.IPFilter[0])
 		assert.Equal(t, mainAccount, subAccount.MainAccount)
 
-		subAccount, err = svcContext.ModifySubaccount(ctx, &request.ModifySubaccountRequest{
+		subAccount, err = svc.ModifySubaccount(ctx, &request.ModifySubaccountRequest{
 			Username: subAccount.Username,
 			Subaccount: request.ModifySubaccount{
 				FirstName:  "User",
@@ -218,7 +218,7 @@ func TestListDetailsCreateModifyDeleteSubaccountContext(t *testing.T) {
 		assert.Len(t, subAccount.NetworkAccess.Network, 0)
 		assert.Equal(t, "127.0.0.3", subAccount.IPFilters.IPFilter[0])
 
-		accounts, err := svcContext.GetAccountList(ctx)
+		accounts, err := svc.GetAccountList(ctx)
 		require.NoError(t, err)
 		assert.True(t, len(accounts) > 0)
 		subAccountNotFound := true

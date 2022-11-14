@@ -18,8 +18,8 @@ import (
 //   - Modifies a host
 //   - Modifies the host back
 func TestGetModifyHostsContext(t *testing.T) {
-	recordWithContext(t, "getmodifyhosts", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
-		hosts, err := svcContext.GetHosts(ctx)
+	recordWithContext(t, "getmodifyhosts", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		hosts, err := svc.GetHosts(ctx)
 		require.NoError(t, err)
 
 		assert.NotEmpty(t, hosts.Hosts)
@@ -29,7 +29,7 @@ func TestGetModifyHostsContext(t *testing.T) {
 		assert.NotEmpty(t, hosts.Hosts[0].Stats)
 		assert.NotEmpty(t, hosts.Hosts[0].Zone)
 
-		host, err := svcContext.GetHostDetails(ctx, &request.GetHostDetailsRequest{
+		host, err := svc.GetHostDetails(ctx, &request.GetHostDetailsRequest{
 			ID: hosts.Hosts[0].ID,
 		})
 		require.NoError(t, err)
@@ -41,7 +41,7 @@ func TestGetModifyHostsContext(t *testing.T) {
 
 		oldDescription := host.Description
 
-		modifiedHost, err := svcContext.ModifyHost(ctx, &request.ModifyHostRequest{
+		modifiedHost, err := svc.ModifyHost(ctx, &request.ModifyHostRequest{
 			ID:          host.ID,
 			Description: oldDescription + "(modified)",
 		})
@@ -49,7 +49,7 @@ func TestGetModifyHostsContext(t *testing.T) {
 		assert.Equal(t, oldDescription+"(modified)", modifiedHost.Description)
 		assert.Equal(t, host.ID, modifiedHost.ID)
 
-		_, err = svcContext.ModifyHost(ctx, &request.ModifyHostRequest{
+		_, err = svc.ModifyHost(ctx, &request.ModifyHostRequest{
 			ID:          host.ID,
 			Description: oldDescription,
 		})

@@ -54,7 +54,7 @@ type ManagedDatabaseLogicalDatabaseManagerContext interface {
 // CancelManagedDatabaseConnection (EXPERIMENTAL) cancels a current query of a database connection or terminates it entirely.
 // In case of the server is unable to cancel the query or terminate the connection ErrCancelManagedDatabaseConnection
 // is returned.
-func (s *ServiceContext) CancelManagedDatabaseConnection(ctx context.Context, r *request.CancelManagedDatabaseConnection) error {
+func (s *Service) CancelManagedDatabaseConnection(ctx context.Context, r *request.CancelManagedDatabaseConnection) error {
 	res := struct {
 		Success bool `json:"success"`
 	}{}
@@ -74,49 +74,49 @@ func (s *ServiceContext) CancelManagedDatabaseConnection(ctx context.Context, r 
 }
 
 // CloneManagedDatabase (EXPERIMENTAL) clones en existing managed database instance
-func (s *ServiceContext) CloneManagedDatabase(ctx context.Context, r *request.CloneManagedDatabaseRequest) (*upcloud.ManagedDatabase, error) {
+func (s *Service) CloneManagedDatabase(ctx context.Context, r *request.CloneManagedDatabaseRequest) (*upcloud.ManagedDatabase, error) {
 	managedDatabaseDetails := upcloud.ManagedDatabase{}
 	return &managedDatabaseDetails, s.create(ctx, r, &managedDatabaseDetails)
 }
 
 // CreateManagedDatabase (EXPERIMENTAL) creates a new managed database instance
-func (s *ServiceContext) CreateManagedDatabase(ctx context.Context, r *request.CreateManagedDatabaseRequest) (*upcloud.ManagedDatabase, error) {
+func (s *Service) CreateManagedDatabase(ctx context.Context, r *request.CreateManagedDatabaseRequest) (*upcloud.ManagedDatabase, error) {
 	managedDatabaseDetails := upcloud.ManagedDatabase{}
 	return &managedDatabaseDetails, s.create(ctx, r, &managedDatabaseDetails)
 }
 
 // GetManagedDatabase (EXPERIMENTAL) gets details of an existing managed database instance
-func (s *ServiceContext) GetManagedDatabase(ctx context.Context, r *request.GetManagedDatabaseRequest) (*upcloud.ManagedDatabase, error) {
+func (s *Service) GetManagedDatabase(ctx context.Context, r *request.GetManagedDatabaseRequest) (*upcloud.ManagedDatabase, error) {
 	managedDatabaseDetails := upcloud.ManagedDatabase{}
 	return &managedDatabaseDetails, s.get(ctx, r.RequestURL(), &managedDatabaseDetails)
 }
 
 // GetManagedDatabases (EXPERIMENTAL) returns a slice of all managed database instances within an account
-func (s *ServiceContext) GetManagedDatabases(ctx context.Context, r *request.GetManagedDatabasesRequest) ([]upcloud.ManagedDatabase, error) {
+func (s *Service) GetManagedDatabases(ctx context.Context, r *request.GetManagedDatabasesRequest) ([]upcloud.ManagedDatabase, error) {
 	var services []upcloud.ManagedDatabase
 	return services, s.get(ctx, r.RequestURL(), &services)
 }
 
 // GetManagedDatabaseConnections (EXPERIMENTAL) returns a slice of connections from an existing managed database instance
-func (s *ServiceContext) GetManagedDatabaseConnections(ctx context.Context, r *request.GetManagedDatabaseConnectionsRequest) ([]upcloud.ManagedDatabaseConnection, error) {
+func (s *Service) GetManagedDatabaseConnections(ctx context.Context, r *request.GetManagedDatabaseConnectionsRequest) ([]upcloud.ManagedDatabaseConnection, error) {
 	conns := make([]upcloud.ManagedDatabaseConnection, 0)
 	return conns, s.get(ctx, r.RequestURL(), &conns)
 }
 
 // GetManagedDatabaseMetrics (EXPERIMENTAL) returns metrics collection for the selected period
-func (s *ServiceContext) GetManagedDatabaseMetrics(ctx context.Context, r *request.GetManagedDatabaseMetricsRequest) (*upcloud.ManagedDatabaseMetrics, error) {
+func (s *Service) GetManagedDatabaseMetrics(ctx context.Context, r *request.GetManagedDatabaseMetricsRequest) (*upcloud.ManagedDatabaseMetrics, error) {
 	metrics := upcloud.ManagedDatabaseMetrics{}
 	return &metrics, s.get(ctx, r.RequestURL(), &metrics)
 }
 
 // GetManagedDatabaseLogs (EXPERIMENTAL) returns logs of a managed database instance
-func (s *ServiceContext) GetManagedDatabaseLogs(ctx context.Context, r *request.GetManagedDatabaseLogsRequest) (*upcloud.ManagedDatabaseLogs, error) {
+func (s *Service) GetManagedDatabaseLogs(ctx context.Context, r *request.GetManagedDatabaseLogsRequest) (*upcloud.ManagedDatabaseLogs, error) {
 	logs := upcloud.ManagedDatabaseLogs{}
 	return &logs, s.get(ctx, r.RequestURL(), &logs)
 }
 
 // GetManagedDatabaseQueryStatisticsMySQL (EXPERIMENTAL) returns MySQL query statistics of a managed database instance
-func (s *ServiceContext) GetManagedDatabaseQueryStatisticsMySQL(ctx context.Context, r *request.GetManagedDatabaseQueryStatisticsRequest) ([]upcloud.ManagedDatabaseQueryStatisticsMySQL, error) {
+func (s *Service) GetManagedDatabaseQueryStatisticsMySQL(ctx context.Context, r *request.GetManagedDatabaseQueryStatisticsRequest) ([]upcloud.ManagedDatabaseQueryStatisticsMySQL, error) {
 	var parsed struct {
 		Mysql []upcloud.ManagedDatabaseQueryStatisticsMySQL
 	}
@@ -127,7 +127,7 @@ func (s *ServiceContext) GetManagedDatabaseQueryStatisticsMySQL(ctx context.Cont
 }
 
 // GetManagedDatabaseQueryStatisticsPostgres (EXPERIMENTAL) returns PostgreSQL query statistics of a managed database instance
-func (s *ServiceContext) GetManagedDatabaseQueryStatisticsPostgreSQL(ctx context.Context, r *request.GetManagedDatabaseQueryStatisticsRequest) ([]upcloud.ManagedDatabaseQueryStatisticsPostgreSQL, error) {
+func (s *Service) GetManagedDatabaseQueryStatisticsPostgreSQL(ctx context.Context, r *request.GetManagedDatabaseQueryStatisticsRequest) ([]upcloud.ManagedDatabaseQueryStatisticsPostgreSQL, error) {
 	var parsed struct {
 		Pg []upcloud.ManagedDatabaseQueryStatisticsPostgreSQL
 	}
@@ -138,25 +138,25 @@ func (s *ServiceContext) GetManagedDatabaseQueryStatisticsPostgreSQL(ctx context
 }
 
 // DeleteManagedDatabase (EXPERIMENTAL) deletes an existing managed database instance
-func (s *ServiceContext) DeleteManagedDatabase(ctx context.Context, r *request.DeleteManagedDatabaseRequest) error {
+func (s *Service) DeleteManagedDatabase(ctx context.Context, r *request.DeleteManagedDatabaseRequest) error {
 	return s.delete(ctx, r)
 }
 
 // ModifyManagedDatabase (EXPERIMENTAL) modifies an existing managed database instance
-func (s *ServiceContext) ModifyManagedDatabase(ctx context.Context, r *request.ModifyManagedDatabaseRequest) (*upcloud.ManagedDatabase, error) {
+func (s *Service) ModifyManagedDatabase(ctx context.Context, r *request.ModifyManagedDatabaseRequest) (*upcloud.ManagedDatabase, error) {
 	managedDatabaseDetails := upcloud.ManagedDatabase{}
 	return &managedDatabaseDetails, s.modify(ctx, r, &managedDatabaseDetails)
 }
 
 // UpgradeManagedDatabaseServiceVersion upgrades the version of the database service;
 // for the list of available versions use GetManagedDatabaseVersions function
-func (s *ServiceContext) UpgradeManagedDatabaseVersion(ctx context.Context, r *request.UpgradeManagedDatabaseVersionRequest) (*upcloud.ManagedDatabase, error) {
+func (s *Service) UpgradeManagedDatabaseVersion(ctx context.Context, r *request.UpgradeManagedDatabaseVersionRequest) (*upcloud.ManagedDatabase, error) {
 	managedDatabaseDetails := upcloud.ManagedDatabase{}
 	return &managedDatabaseDetails, s.create(ctx, r, &managedDatabaseDetails)
 }
 
 // GetManagedDatabaseVersions available versions of the specific Managed Database service
-func (s *ServiceContext) GetManagedDatabaseVersions(ctx context.Context, r *request.GetManagedDatabaseVersionsRequest) ([]string, error) {
+func (s *Service) GetManagedDatabaseVersions(ctx context.Context, r *request.GetManagedDatabaseVersionsRequest) ([]string, error) {
 	versions := make([]string, 0)
 	return versions, s.get(ctx, r.RequestURL(), &versions)
 }
@@ -164,7 +164,7 @@ func (s *ServiceContext) GetManagedDatabaseVersions(ctx context.Context, r *requ
 // WaitForManagedDatabaseState (EXPERIMENTAL) blocks execution until the specified managed database instance has entered the
 // specified state. If the state changes favorably, the new managed database details is returned. The method will give up
 // after the specified timeout
-func (s *ServiceContext) WaitForManagedDatabaseState(ctx context.Context, r *request.WaitForManagedDatabaseStateRequest) (*upcloud.ManagedDatabase, error) {
+func (s *Service) WaitForManagedDatabaseState(ctx context.Context, r *request.WaitForManagedDatabaseStateRequest) (*upcloud.ManagedDatabase, error) {
 	attempts := 0
 	sleepDuration := time.Second * 5
 
@@ -191,14 +191,14 @@ func (s *ServiceContext) WaitForManagedDatabaseState(ctx context.Context, r *req
 }
 
 // StartManagedDatabase (EXPERIMENTAL) starts a shut down existing managed database instance
-func (s *ServiceContext) StartManagedDatabase(ctx context.Context, r *request.StartManagedDatabaseRequest) (*upcloud.ManagedDatabase, error) {
+func (s *Service) StartManagedDatabase(ctx context.Context, r *request.StartManagedDatabaseRequest) (*upcloud.ManagedDatabase, error) {
 	managedDatabaseDetails := upcloud.ManagedDatabase{}
 	return &managedDatabaseDetails, s.modify(ctx, r, &managedDatabaseDetails)
 }
 
 // ShutdownManagedDatabase (EXPERIMENTAL) shuts down existing managed database instance. Only a service which has at least one
 // full backup can be shut down.
-func (s *ServiceContext) ShutdownManagedDatabase(ctx context.Context, r *request.ShutdownManagedDatabaseRequest) (*upcloud.ManagedDatabase, error) {
+func (s *Service) ShutdownManagedDatabase(ctx context.Context, r *request.ShutdownManagedDatabaseRequest) (*upcloud.ManagedDatabase, error) {
 	managedDatabaseDetails := upcloud.ManagedDatabase{}
 	return &managedDatabaseDetails, s.modify(ctx, r, &managedDatabaseDetails)
 }
@@ -206,30 +206,30 @@ func (s *ServiceContext) ShutdownManagedDatabase(ctx context.Context, r *request
 /* User Management */
 
 // CreateManagedDatabaseUser (EXPERIMENTAL) creates a new normal user to an existing managed database instance
-func (s *ServiceContext) CreateManagedDatabaseUser(ctx context.Context, r *request.CreateManagedDatabaseUserRequest) (*upcloud.ManagedDatabaseUser, error) {
+func (s *Service) CreateManagedDatabaseUser(ctx context.Context, r *request.CreateManagedDatabaseUserRequest) (*upcloud.ManagedDatabaseUser, error) {
 	userDetails := upcloud.ManagedDatabaseUser{}
 	return &userDetails, s.create(ctx, r, &userDetails)
 }
 
 // GetManagedDatabaseUser (EXPERIMENTAL) returns details of an existing user of an existing managed database instance
-func (s *ServiceContext) GetManagedDatabaseUser(ctx context.Context, r *request.GetManagedDatabaseUserRequest) (*upcloud.ManagedDatabaseUser, error) {
+func (s *Service) GetManagedDatabaseUser(ctx context.Context, r *request.GetManagedDatabaseUserRequest) (*upcloud.ManagedDatabaseUser, error) {
 	userDetails := upcloud.ManagedDatabaseUser{}
 	return &userDetails, s.get(ctx, r.RequestURL(), &userDetails)
 }
 
 // GetManagedDatabaseUsers (EXPERIMENTAL) returns a slice of all users of an existing managed database instance
-func (s *ServiceContext) GetManagedDatabaseUsers(ctx context.Context, r *request.GetManagedDatabaseUsersRequest) ([]upcloud.ManagedDatabaseUser, error) {
+func (s *Service) GetManagedDatabaseUsers(ctx context.Context, r *request.GetManagedDatabaseUsersRequest) ([]upcloud.ManagedDatabaseUser, error) {
 	userList := make([]upcloud.ManagedDatabaseUser, 0)
 	return userList, s.get(ctx, r.RequestURL(), &userList)
 }
 
 // DeleteManagedDatabaseUser (EXPERIMENTAL) deletes an existing user of an existing managed database instance
-func (s *ServiceContext) DeleteManagedDatabaseUser(ctx context.Context, r *request.DeleteManagedDatabaseUserRequest) error {
+func (s *Service) DeleteManagedDatabaseUser(ctx context.Context, r *request.DeleteManagedDatabaseUserRequest) error {
 	return s.delete(ctx, r)
 }
 
 // ModifyManagedDatabaseUser (EXPERIMENTAL) modifies an existing user of an existing managed database instance
-func (s *ServiceContext) ModifyManagedDatabaseUser(ctx context.Context, r *request.ModifyManagedDatabaseUserRequest) (*upcloud.ManagedDatabaseUser, error) {
+func (s *Service) ModifyManagedDatabaseUser(ctx context.Context, r *request.ModifyManagedDatabaseUserRequest) (*upcloud.ManagedDatabaseUser, error) {
 	userDetails := upcloud.ManagedDatabaseUser{}
 	return &userDetails, s.modify(ctx, r, &userDetails)
 }
@@ -237,30 +237,30 @@ func (s *ServiceContext) ModifyManagedDatabaseUser(ctx context.Context, r *reque
 /* Logical Database Management */
 
 // CreateManagedDatabaseLogicalDatabase (EXPERIMENTAL) creates a new logical database to an existing managed database instance
-func (s *ServiceContext) CreateManagedDatabaseLogicalDatabase(ctx context.Context, r *request.CreateManagedDatabaseLogicalDatabaseRequest) (*upcloud.ManagedDatabaseLogicalDatabase, error) {
+func (s *Service) CreateManagedDatabaseLogicalDatabase(ctx context.Context, r *request.CreateManagedDatabaseLogicalDatabaseRequest) (*upcloud.ManagedDatabaseLogicalDatabase, error) {
 	dbDetails := upcloud.ManagedDatabaseLogicalDatabase{}
 	return &dbDetails, s.create(ctx, r, &dbDetails)
 }
 
 // GetManagedDatabaseLogicalDatabases (EXPERIMENTAL) returns a slice of all logical databases of an existing managed database instance
-func (s *ServiceContext) GetManagedDatabaseLogicalDatabases(ctx context.Context, r *request.GetManagedDatabaseLogicalDatabasesRequest) ([]upcloud.ManagedDatabaseLogicalDatabase, error) {
+func (s *Service) GetManagedDatabaseLogicalDatabases(ctx context.Context, r *request.GetManagedDatabaseLogicalDatabasesRequest) ([]upcloud.ManagedDatabaseLogicalDatabase, error) {
 	var dbList []upcloud.ManagedDatabaseLogicalDatabase
 	return dbList, s.get(ctx, r.RequestURL(), &dbList)
 }
 
 // DeleteManagedDatabaseLogicalDatabase (EXPERIMENTAL) deletes an existing logical database of an existing managed database instance
-func (s *ServiceContext) DeleteManagedDatabaseLogicalDatabase(ctx context.Context, r *request.DeleteManagedDatabaseLogicalDatabaseRequest) error {
+func (s *Service) DeleteManagedDatabaseLogicalDatabase(ctx context.Context, r *request.DeleteManagedDatabaseLogicalDatabaseRequest) error {
 	return s.delete(ctx, r)
 }
 
 // GetManagedDatabaseServiceType (EXPERIMENTAL) returns details of requested service type
-func (s *ServiceContext) GetManagedDatabaseServiceType(ctx context.Context, r *request.GetManagedDatabaseServiceTypeRequest) (*upcloud.ManagedDatabaseType, error) {
+func (s *Service) GetManagedDatabaseServiceType(ctx context.Context, r *request.GetManagedDatabaseServiceTypeRequest) (*upcloud.ManagedDatabaseType, error) {
 	var serviceType upcloud.ManagedDatabaseType
 	return &serviceType, s.get(ctx, r.RequestURL(), &serviceType)
 }
 
 // GetManagedDatabaseServiceTypes (EXPERIMENTAL) returns a map of available database service types
-func (s *ServiceContext) GetManagedDatabaseServiceTypes(ctx context.Context, r *request.GetManagedDatabaseServiceTypesRequest) (map[string]upcloud.ManagedDatabaseType, error) {
+func (s *Service) GetManagedDatabaseServiceTypes(ctx context.Context, r *request.GetManagedDatabaseServiceTypesRequest) (map[string]upcloud.ManagedDatabaseType, error) {
 	serviceTypes := make(map[string]upcloud.ManagedDatabaseType)
 	return serviceTypes, s.get(ctx, r.RequestURL(), &serviceTypes)
 }

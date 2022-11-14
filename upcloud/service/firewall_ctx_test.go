@@ -20,15 +20,15 @@ import (
 // - deletes the firewall rule
 func TestFirewallRulesContext(t *testing.T) {
 	t.Parallel()
-	recordWithContext(t, "firewallrules", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
+	recordWithContext(t, "firewallrules", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create the server
-		serverDetails, err := createServerContext(ctx, rec, svcContext, "TestFirewallRules")
+		serverDetails, err := createServerContext(ctx, rec, svc, "TestFirewallRules")
 		require.NoError(t, err)
 		t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 		// Create firewall rule
 		t.Logf("Creating firewall rule #1 for server with UUID %s ...", serverDetails.UUID)
-		_, err = svcContext.CreateFirewallRule(ctx, &request.CreateFirewallRuleRequest{
+		_, err = svc.CreateFirewallRule(ctx, &request.CreateFirewallRuleRequest{
 			ServerUUID: serverDetails.UUID,
 			FirewallRule: upcloud.FirewallRule{
 				Direction: upcloud.FirewallRuleDirectionIn,
@@ -43,7 +43,7 @@ func TestFirewallRulesContext(t *testing.T) {
 		t.Log("Firewall rule created")
 
 		// Get list of firewall rules for this server
-		firewallRules, err := svcContext.GetFirewallRules(ctx, &request.GetFirewallRulesRequest{
+		firewallRules, err := svc.GetFirewallRules(ctx, &request.GetFirewallRulesRequest{
 			ServerUUID: serverDetails.UUID,
 		})
 		require.NoError(t, err)
@@ -52,7 +52,7 @@ func TestFirewallRulesContext(t *testing.T) {
 
 		// Get details about the rule
 		t.Log("Getting details about firewall rule #1 ...")
-		firewallRule, err := svcContext.GetFirewallRuleDetails(ctx, &request.GetFirewallRuleDetailsRequest{
+		firewallRule, err := svc.GetFirewallRuleDetails(ctx, &request.GetFirewallRuleDetailsRequest{
 			ServerUUID: serverDetails.UUID,
 			Position:   1,
 		})
@@ -60,7 +60,7 @@ func TestFirewallRulesContext(t *testing.T) {
 		assert.Equal(t, "This is the comment", firewallRule.Comment)
 		t.Logf("Got firewall rule details, comment is %s", firewallRule.Comment)
 
-		err = svcContext.CreateFirewallRules(ctx, &request.CreateFirewallRulesRequest{
+		err = svc.CreateFirewallRules(ctx, &request.CreateFirewallRulesRequest{
 			ServerUUID: serverDetails.UUID,
 			FirewallRules: []upcloud.FirewallRule{
 				{
@@ -90,7 +90,7 @@ func TestFirewallRulesContext(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		firewallRulesPost, err := svcContext.GetFirewallRules(ctx, &request.GetFirewallRulesRequest{
+		firewallRulesPost, err := svc.GetFirewallRules(ctx, &request.GetFirewallRulesRequest{
 			ServerUUID: serverDetails.UUID,
 		})
 		require.NoError(t, err)
@@ -103,14 +103,14 @@ func TestFirewallRulesContext(t *testing.T) {
 
 		// Delete the firewall rule
 		t.Log("Deleting firewall rule #1 ...")
-		err = svcContext.DeleteFirewallRule(ctx, &request.DeleteFirewallRuleRequest{
+		err = svc.DeleteFirewallRule(ctx, &request.DeleteFirewallRuleRequest{
 			ServerUUID: serverDetails.UUID,
 			Position:   1,
 		})
 		require.NoError(t, err)
 		t.Log("Firewall rule #1 deleted")
 
-		firewallRulesPostDelete, err := svcContext.GetFirewallRules(ctx, &request.GetFirewallRulesRequest{
+		firewallRulesPostDelete, err := svc.GetFirewallRules(ctx, &request.GetFirewallRulesRequest{
 			ServerUUID: serverDetails.UUID,
 		})
 		require.NoError(t, err)

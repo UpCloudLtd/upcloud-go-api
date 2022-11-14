@@ -35,61 +35,61 @@ type StorageContext interface {
 }
 
 // GetStorages returns all available storages
-func (s *ServiceContext) GetStorages(ctx context.Context, r *request.GetStoragesRequest) (*upcloud.Storages, error) {
+func (s *Service) GetStorages(ctx context.Context, r *request.GetStoragesRequest) (*upcloud.Storages, error) {
 	storages := upcloud.Storages{}
 	return &storages, s.get(ctx, r.RequestURL(), &storages)
 }
 
 // GetStorageDetails returns extended details about the specified piece of storage
-func (s *ServiceContext) GetStorageDetails(ctx context.Context, r *request.GetStorageDetailsRequest) (*upcloud.StorageDetails, error) {
+func (s *Service) GetStorageDetails(ctx context.Context, r *request.GetStorageDetailsRequest) (*upcloud.StorageDetails, error) {
 	storageDetails := upcloud.StorageDetails{}
 	return &storageDetails, s.get(ctx, r.RequestURL(), &storageDetails)
 }
 
 // CreateStorage creates the specified storage
-func (s *ServiceContext) CreateStorage(ctx context.Context, r *request.CreateStorageRequest) (*upcloud.StorageDetails, error) {
+func (s *Service) CreateStorage(ctx context.Context, r *request.CreateStorageRequest) (*upcloud.StorageDetails, error) {
 	storageDetails := upcloud.StorageDetails{}
 	return &storageDetails, s.create(ctx, r, &storageDetails)
 }
 
 // ModifyStorage modifies the specified storage device
-func (s *ServiceContext) ModifyStorage(ctx context.Context, r *request.ModifyStorageRequest) (*upcloud.StorageDetails, error) {
+func (s *Service) ModifyStorage(ctx context.Context, r *request.ModifyStorageRequest) (*upcloud.StorageDetails, error) {
 	storageDetails := upcloud.StorageDetails{}
 	return &storageDetails, s.replace(ctx, r, &storageDetails)
 }
 
 // AttachStorage attaches the specified storage to the specified server
-func (s *ServiceContext) AttachStorage(ctx context.Context, r *request.AttachStorageRequest) (*upcloud.ServerDetails, error) {
+func (s *Service) AttachStorage(ctx context.Context, r *request.AttachStorageRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
 	return &serverDetails, s.create(ctx, r, &serverDetails)
 }
 
 // DetachStorage detaches the specified storage from the specified server
-func (s *ServiceContext) DetachStorage(ctx context.Context, r *request.DetachStorageRequest) (*upcloud.ServerDetails, error) {
+func (s *Service) DetachStorage(ctx context.Context, r *request.DetachStorageRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
 	return &serverDetails, s.create(ctx, r, &serverDetails)
 }
 
 // DeleteStorage deletes the specified storage device
-func (s *ServiceContext) DeleteStorage(ctx context.Context, r *request.DeleteStorageRequest) error {
+func (s *Service) DeleteStorage(ctx context.Context, r *request.DeleteStorageRequest) error {
 	return s.delete(ctx, r)
 }
 
 // CloneStorage detaches the specified storage from the specified server
-func (s *ServiceContext) CloneStorage(ctx context.Context, r *request.CloneStorageRequest) (*upcloud.StorageDetails, error) {
+func (s *Service) CloneStorage(ctx context.Context, r *request.CloneStorageRequest) (*upcloud.StorageDetails, error) {
 	storageDetails := upcloud.StorageDetails{}
 	return &storageDetails, s.create(ctx, r, &storageDetails)
 }
 
 // TemplatizeStorage detaches the specified storage from the specified server
-func (s *ServiceContext) TemplatizeStorage(ctx context.Context, r *request.TemplatizeStorageRequest) (*upcloud.StorageDetails, error) {
+func (s *Service) TemplatizeStorage(ctx context.Context, r *request.TemplatizeStorageRequest) (*upcloud.StorageDetails, error) {
 	storageDetails := upcloud.StorageDetails{}
 	return &storageDetails, s.create(ctx, r, &storageDetails)
 }
 
 // WaitForStorageState blocks execution until the specified storage device has entered the specified state. If the
 // state changes favorably, the new storage details is returned. The method will give up after the specified timeout
-func (s *ServiceContext) WaitForStorageState(ctx context.Context, r *request.WaitForStorageStateRequest) (*upcloud.StorageDetails, error) {
+func (s *Service) WaitForStorageState(ctx context.Context, r *request.WaitForStorageStateRequest) (*upcloud.StorageDetails, error) {
 	attempts := 0
 	sleepDuration := time.Second * 5
 
@@ -116,31 +116,31 @@ func (s *ServiceContext) WaitForStorageState(ctx context.Context, r *request.Wai
 }
 
 // LoadCDROM loads a storage as a CD-ROM in the CD-ROM device of a server
-func (s *ServiceContext) LoadCDROM(ctx context.Context, r *request.LoadCDROMRequest) (*upcloud.ServerDetails, error) {
+func (s *Service) LoadCDROM(ctx context.Context, r *request.LoadCDROMRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
 	return &serverDetails, s.create(ctx, r, &serverDetails)
 }
 
 // EjectCDROM ejects the storage from the CD-ROM device of a server
-func (s *ServiceContext) EjectCDROM(ctx context.Context, r *request.EjectCDROMRequest) (*upcloud.ServerDetails, error) {
+func (s *Service) EjectCDROM(ctx context.Context, r *request.EjectCDROMRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
 	return &serverDetails, s.create(ctx, r, &serverDetails)
 }
 
 // CreateBackup creates a backup of the specified storage
-func (s *ServiceContext) CreateBackup(ctx context.Context, r *request.CreateBackupRequest) (*upcloud.StorageDetails, error) {
+func (s *Service) CreateBackup(ctx context.Context, r *request.CreateBackupRequest) (*upcloud.StorageDetails, error) {
 	storageDetails := upcloud.StorageDetails{}
 	return &storageDetails, s.create(ctx, r, &storageDetails)
 }
 
 // RestoreBackup creates a backup of the specified storage
-func (s *ServiceContext) RestoreBackup(ctx context.Context, r *request.RestoreBackupRequest) error {
+func (s *Service) RestoreBackup(ctx context.Context, r *request.RestoreBackupRequest) error {
 	return s.create(ctx, r, nil)
 }
 
 // CreateStorageImport begins the process of importing an image onto a storage device. A `upcloud.StorageImportSourceHTTPImport` source
 // will import from an HTTP source. `upcloud.StorageImportSourceDirectUpload` will directly upload the file specified in `SourceLocation`.
-func (s *ServiceContext) CreateStorageImport(ctx context.Context, r *request.CreateStorageImportRequest) (*upcloud.StorageImportDetails, error) {
+func (s *Service) CreateStorageImport(ctx context.Context, r *request.CreateStorageImportRequest) (*upcloud.StorageImportDetails, error) {
 	if r.Source == request.StorageImportSourceDirectUpload {
 		switch r.SourceLocation.(type) {
 		case string, io.Reader:
@@ -159,14 +159,14 @@ func (s *ServiceContext) CreateStorageImport(ctx context.Context, r *request.Cre
 }
 
 // doCreateStorageImport will POST the CreateStorageImport request and handle the error and normal response.
-func (s *ServiceContext) doCreateStorageImport(ctx context.Context, r *request.CreateStorageImportRequest) (*upcloud.StorageImportDetails, error) {
+func (s *Service) doCreateStorageImport(ctx context.Context, r *request.CreateStorageImportRequest) (*upcloud.StorageImportDetails, error) {
 	storageImport := upcloud.StorageImportDetails{}
 	return &storageImport, s.create(ctx, r, &storageImport)
 }
 
 // directStorageImport handles the direct upload logic including getting the upload URL and PUT the file data
 // to that endpoint.
-func (s *ServiceContext) directStorageImport(ctx context.Context, r *request.CreateStorageImportRequest) (*upcloud.StorageImportDetails, error) {
+func (s *Service) directStorageImport(ctx context.Context, r *request.CreateStorageImportRequest) (*upcloud.StorageImportDetails, error) {
 	var bodyReader io.Reader
 
 	switch v := r.SourceLocation.(type) {
@@ -218,13 +218,13 @@ func (s *ServiceContext) directStorageImport(ctx context.Context, r *request.Cre
 }
 
 // GetStorageImportDetails gets updated details about the specified storage import.
-func (s *ServiceContext) GetStorageImportDetails(ctx context.Context, r *request.GetStorageImportDetailsRequest) (*upcloud.StorageImportDetails, error) {
+func (s *Service) GetStorageImportDetails(ctx context.Context, r *request.GetStorageImportDetailsRequest) (*upcloud.StorageImportDetails, error) {
 	storageDetails := upcloud.StorageImportDetails{}
 	return &storageDetails, s.get(ctx, r.RequestURL(), &storageDetails)
 }
 
 // WaitForStorageImportCompletion waits for the importing storage to complete.
-func (s *ServiceContext) WaitForStorageImportCompletion(ctx context.Context, r *request.WaitForStorageImportCompletionRequest) (*upcloud.StorageImportDetails, error) {
+func (s *Service) WaitForStorageImportCompletion(ctx context.Context, r *request.WaitForStorageImportCompletionRequest) (*upcloud.StorageImportDetails, error) {
 	attempts := 0
 	sleepDuration := time.Second * 5
 
@@ -273,7 +273,7 @@ func (s *ServiceContext) WaitForStorageImportCompletion(ctx context.Context, r *
 //
 // If the resize fails, backup is used to restore the storage to the state where it
 // was before the resize. After that the backup is deleted automatically.
-func (s *ServiceContext) ResizeStorageFilesystem(ctx context.Context, r *request.ResizeStorageFilesystemRequest) (*upcloud.ResizeStorageFilesystemBackup, error) {
+func (s *Service) ResizeStorageFilesystem(ctx context.Context, r *request.ResizeStorageFilesystemRequest) (*upcloud.ResizeStorageFilesystemBackup, error) {
 	resizeBackup := upcloud.ResizeStorageFilesystemBackup{}
 	return &resizeBackup, s.create(ctx, r, &resizeBackup)
 }
