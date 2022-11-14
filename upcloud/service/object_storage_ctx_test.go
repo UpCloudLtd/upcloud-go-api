@@ -16,7 +16,7 @@ import (
 // TestGetObjectStoragesContext tests that the GetObjectStorages() function returns proper data
 func TestGetObjectStoragesContext(t *testing.T) {
 	t.Parallel()
-	recordWithContext(t, "getobjectstorages", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+	recordWithContext(t, "getobjectstorages", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
 		objectStorages, err := svcContext.GetObjectStorages(ctx)
 		require.NoError(t, err)
 		assert.NotEmpty(t, objectStorages.ObjectStorages)
@@ -35,7 +35,7 @@ func TestGetObjectStoragesContext(t *testing.T) {
 // TestGetObjectStorageDetailsContext ensures that the GetObjectStorageDetails() function returns proper data
 func TestGetObjectStorageDetailsContext(t *testing.T) {
 	t.Parallel()
-	recordWithContext(t, "getobjectstoragedetails", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+	recordWithContext(t, "getobjectstoragedetails", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
 		d, err := createObjectStorageContext(ctx, svcContext, "getobjectstoragedetails", "App object storage", "fi-hel2", 500)
 		require.NoError(t, err)
 
@@ -67,4 +67,13 @@ func createObjectStorageContext(ctx context.Context, svc *ServiceContext, name s
 	}
 
 	return objectStorageDetails, nil
+}
+
+// Deletes the specific Object Storage.
+func deleteObjectStorage(ctx context.Context, svcContext *ServiceContext, uuid string) error {
+	err := svcContext.DeleteObjectStorage(ctx, &request.DeleteObjectStorageRequest{
+		UUID: uuid,
+	})
+
+	return err
 }

@@ -49,7 +49,7 @@ func TestGetAccountContext(t *testing.T) {
 //   - Get account list and check that subaccount and main account is listed
 //   - Delete tag and subaccount
 func TestListDetailsCreateModifyDeleteSubaccountContext(t *testing.T) {
-	recordWithContext(t, "createmodifydeletesubaccount", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+	recordWithContext(t, "createmodifydeletesubaccount", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
 		var err error
 		mainAccount := "testuser"
 		rec.AddFilter(func(i *cassette.Interaction) error {
@@ -64,13 +64,13 @@ func TestListDetailsCreateModifyDeleteSubaccountContext(t *testing.T) {
 
 		defer func() {
 			// defer cleanup job
-			err = svc.DeleteTag(&request.DeleteTagRequest{Name: tagName})
+			err = svcContext.DeleteTag(ctx, &request.DeleteTagRequest{Name: tagName})
 			assert.NoError(t, err)
-			err = svc.DeleteSubaccount(&request.DeleteSubaccountRequest{Username: username})
+			err = svcContext.DeleteSubaccount(ctx, &request.DeleteSubaccountRequest{Username: username})
 			assert.NoError(t, err)
 		}()
 
-		_, err = svc.CreateTag(&request.CreateTagRequest{
+		_, err = svcContext.CreateTag(ctx, &request.CreateTagRequest{
 			Tag: upcloud.Tag{
 				Name:        tagName,
 				Description: "test tag",

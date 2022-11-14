@@ -20,7 +20,7 @@ import (
 //   - Gets all networks and verifies details are populated
 //   - checks that at least one network has a server in.
 func TestGetNetworksContext(t *testing.T) {
-	recordWithContext(t, "getnetworks", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+	recordWithContext(t, "getnetworks", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
 		_, err := createServerContext(ctx, rec, svcContext, "TestGetNetworks")
 		require.NoError(t, err)
 
@@ -53,7 +53,7 @@ func TestGetNetworksContext(t *testing.T) {
 //   - Gets all networks in a zone and verifies details are populated
 //   - checks that at least one network has a server in.
 func TestGetNetworksInZoneContext(t *testing.T) {
-	recordWithContext(t, "getnetworksinzone", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+	recordWithContext(t, "getnetworksinzone", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
 		_, err := createServerContext(ctx, rec, svcContext, "TestGetNetworksInZone")
 		require.NoError(t, err)
 
@@ -103,7 +103,7 @@ func TestGetNetworksInZoneContext(t *testing.T) {
 //   - deletes the network
 //   - verifies the network has been deleted.
 func TestCreateModifyDeleteNetworkContext(t *testing.T) {
-	recordWithContext(t, "createmodifydeletenetwork", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+	recordWithContext(t, "createmodifydeletenetwork", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
 		network, err := svcContext.CreateNetwork(ctx, &request.CreateNetworkRequest{
 			Name: "test private network (test)",
 			Zone: "fi-hel2",
@@ -189,7 +189,7 @@ func TestCreateModifyDeleteNetworkContext(t *testing.T) {
 // TestGetServerNetworksContext tests that the server networks retrieved via GetServerNetworks
 // match those returned when creating the server.
 func TestGetServerNetworksContext(t *testing.T) {
-	recordWithContext(t, "getservernetworks", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+	recordWithContext(t, "getservernetworks", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
 		serverDetails, err := createServerContext(ctx, rec, svcContext, "TestGetServerNetworks")
 		require.NoError(t, err)
 
@@ -205,7 +205,7 @@ func TestGetServerNetworksContext(t *testing.T) {
 
 // TestGetRoutersContext tests that some routers are returned when using GetRouters.
 func TestGetRoutersContext(t *testing.T) {
-	recordWithContext(t, "getrouters", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+	recordWithContext(t, "getrouters", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
 		routers, err := svcContext.GetRouters(ctx)
 		require.NoError(t, err)
 
@@ -232,7 +232,7 @@ func TestGetRoutersContext(t *testing.T) {
 //   - deletes the router
 //   - retrieves all routers and ensures our new router can't be found
 func TestCreateModifyDeleteRouterContext(t *testing.T) {
-	recordWithContext(t, "createmodifydeleterouter", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+	recordWithContext(t, "createmodifydeleterouter", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
 		router, err := svcContext.CreateRouter(ctx, &request.CreateRouterRequest{
 			Name: "Testy McRouterface (test)",
 		})
@@ -297,7 +297,7 @@ func TestCreateModifyDeleteRouterContext(t *testing.T) {
 //   - detaches one of the routers and verifies it was detached
 //   - deletes the servers, the routers and the networks
 func TestCreateTwoNetworksTwoServersAndARouterContext(t *testing.T) {
-	recordWithContext(t, "createtwonetworkstwoserversandarouter", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+	recordWithContext(t, "createtwonetworkstwoserversandarouter", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
 		network1, err := svcContext.CreateNetwork(ctx, &request.CreateNetworkRequest{
 			Name: "test private network #1 (test)",
 			Zone: "fi-hel2",
@@ -399,7 +399,7 @@ func TestCreateTwoNetworksTwoServersAndARouterContext(t *testing.T) {
 		require.NoError(t, err)
 		assert.Equal(t, network2.UUID, iface2.Network)
 
-		serverDetails1PostIface, err := svc.GetServerDetails(&request.GetServerDetailsRequest{
+		serverDetails1PostIface, err := svcContext.GetServerDetails(ctx, &request.GetServerDetailsRequest{
 			UUID: serverDetails1.UUID,
 		})
 		require.NoError(t, err)
@@ -411,7 +411,7 @@ func TestCreateTwoNetworksTwoServersAndARouterContext(t *testing.T) {
 		}
 		assert.True(t, found)
 
-		serverDetails2PostIface, err := svc.GetServerDetails(&request.GetServerDetailsRequest{
+		serverDetails2PostIface, err := svcContext.GetServerDetails(ctx, &request.GetServerDetailsRequest{
 			UUID: serverDetails2.UUID,
 		})
 		require.NoError(t, err)
@@ -474,10 +474,10 @@ func TestCreateTwoNetworksTwoServersAndARouterContext(t *testing.T) {
 		require.NoError(t, err)
 		assert.Empty(t, details.Router)
 
-		err = deleteServer(svc, serverDetails1.UUID)
+		err = deleteServer(ctx, svcContext, serverDetails1.UUID)
 		require.NoError(t, err)
 
-		err = deleteServer(svc, serverDetails2.UUID)
+		err = deleteServer(ctx, svcContext, serverDetails2.UUID)
 		require.NoError(t, err)
 
 		err = svcContext.DeleteNetwork(ctx, &request.DeleteNetworkRequest{
@@ -498,7 +498,7 @@ func TestCreateTwoNetworksTwoServersAndARouterContext(t *testing.T) {
 }
 
 func TestCreateNetworkAndServerContext(t *testing.T) {
-	recordWithContext(t, "createnetworkandserver", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+	recordWithContext(t, "createnetworkandserver", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
 		network, err := svcContext.CreateNetwork(ctx, &request.CreateNetworkRequest{
 			Name: "test_network_tcns (test)",
 			Zone: "fi-hel2",

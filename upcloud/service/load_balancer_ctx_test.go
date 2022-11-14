@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"testing"
@@ -17,12 +18,12 @@ import (
 func TestLoadBalancerContext(t *testing.T) {
 	t.Parallel()
 
-	recordWithContext(t, "loadbalancer", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+	recordWithContext(t, "loadbalancer", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
 		// Create Load Balancer
-		lb, err := createLoadBalancerAndNetwork(svc, "fi-hel1", "172.16.1.0/24")
+		lb, err := createLoadBalancerAndNetwork(ctx, svcContext, "fi-hel1", "172.16.1.0/24")
 		require.NoError(t, err)
 		t.Cleanup(func() {
-			err := cleanupLoadBalancer(rec, svc, lb)
+			err := cleanupLoadBalancer(ctx, rec, svcContext, lb)
 			assert.NoError(t, err)
 		})
 		t.Logf("Created load balancer: %s", lb.Name)
@@ -58,11 +59,11 @@ func TestLoadBalancerContext(t *testing.T) {
 func TestLoadBalancerBackendContext(t *testing.T) {
 	t.Parallel()
 
-	recordWithContext(t, "loadbalancerbackend", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
-		lb, err := createLoadBalancerAndNetwork(svc, "fi-hel2", "172.16.2.0/24")
+	recordWithContext(t, "loadbalancerbackend", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
+		lb, err := createLoadBalancerAndNetwork(ctx, svcContext, "fi-hel2", "172.16.2.0/24")
 		require.NoError(t, err)
 		t.Cleanup(func() {
-			err := cleanupLoadBalancer(rec, svc, lb)
+			err := cleanupLoadBalancer(ctx, rec, svcContext, lb)
 			assert.NoError(t, err)
 		})
 
@@ -122,11 +123,11 @@ func TestLoadBalancerBackendContext(t *testing.T) {
 func TestLoadBalancerBackendMemberContext(t *testing.T) {
 	t.Parallel()
 
-	recordWithContext(t, "loadbalancerbackendmember", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
-		lb, err := createLoadBalancerAndNetwork(svc, "nl-ams1", "172.16.3.0/24")
+	recordWithContext(t, "loadbalancerbackendmember", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
+		lb, err := createLoadBalancerAndNetwork(ctx, svcContext, "nl-ams1", "172.16.3.0/24")
 		require.NoError(t, err)
 		t.Cleanup(func() {
-			err := cleanupLoadBalancer(rec, svc, lb)
+			err := cleanupLoadBalancer(ctx, rec, svcContext, lb)
 			assert.NoError(t, err)
 		})
 		t.Logf("Created load balancer for testing LB backend members CRUD: %s", lb.Name)
@@ -244,11 +245,11 @@ func TestLoadBalancerBackendMemberContext(t *testing.T) {
 func TestLoadBalancerResolverContext(t *testing.T) {
 	t.Parallel()
 
-	recordWithContext(t, "loadbalancerresolver", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
-		lb, err := createLoadBalancerAndNetwork(svc, "pl-waw1", "10.0.0.0/24")
+	recordWithContext(t, "loadbalancerresolver", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
+		lb, err := createLoadBalancerAndNetwork(ctx, svcContext, "pl-waw1", "10.0.0.0/24")
 		require.NoError(t, err)
 		t.Cleanup(func() {
-			err := cleanupLoadBalancer(rec, svc, lb)
+			err := cleanupLoadBalancer(ctx, rec, svcContext, lb)
 			assert.NoError(t, err)
 		})
 		t.Logf("Created load balancer for testing LB resolvers CRUD: %s", lb.Name)
@@ -362,7 +363,7 @@ func TestLoadBalancerResolverContext(t *testing.T) {
 }
 
 func TestGetLoadBalancerPlansContext(t *testing.T) {
-	recordWithContext(t, "getloadbalancerplans", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+	recordWithContext(t, "getloadbalancerplans", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
 		plans, err := svcContext.GetLoadBalancerPlans(ctx, &request.GetLoadBalancerPlansRequest{})
 		require.NoError(t, err)
 		assert.GreaterOrEqual(t, len(plans), 2)
@@ -378,11 +379,11 @@ func TestGetLoadBalancerPlansContext(t *testing.T) {
 func TestLoadBalancerFrontendContext(t *testing.T) {
 	t.Parallel()
 
-	recordWithContext(t, "loadbalancerfrontend", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
-		lb, err := createLoadBalancerAndNetwork(svc, "de-fra1", "10.0.0.1/24")
+	recordWithContext(t, "loadbalancerfrontend", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
+		lb, err := createLoadBalancerAndNetwork(ctx, svcContext, "de-fra1", "10.0.0.1/24")
 		require.NoError(t, err)
 		t.Cleanup(func() {
-			err := cleanupLoadBalancer(rec, svc, lb)
+			err := cleanupLoadBalancer(ctx, rec, svcContext, lb)
 			assert.NoError(t, err)
 		})
 		t.Logf("Created LB for testing frontends: %s", lb.Name)
@@ -451,8 +452,8 @@ func TestLoadBalancerFrontendContext(t *testing.T) {
 func TestLoadBalancerFrontendRuleContext(t *testing.T) {
 	t.Parallel()
 	const zone = "fi-hel2"
-	recordWithContext(t, "loadbalancerfrontendrule", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
-		net, err := createLoadBalancerAndPrivateNetwork(svc, zone, "10.0.1.1/24")
+	recordWithContext(t, "loadbalancerfrontendrule", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
+		net, err := createLoadBalancerAndPrivateNetwork(ctx, svcContext, zone, "10.0.1.1/24")
 		require.NoError(t, err)
 		lb, err := svcContext.CreateLoadBalancer(ctx, &request.CreateLoadBalancerRequest{
 			Name:             fmt.Sprintf("go-test-lb-%s-%d", zone, time.Now().Unix()),
@@ -484,7 +485,7 @@ func TestLoadBalancerFrontendRuleContext(t *testing.T) {
 
 		require.NoError(t, err)
 		t.Cleanup(func() {
-			err := cleanupLoadBalancer(rec, svc, lb)
+			err := cleanupLoadBalancer(ctx, rec, svcContext, lb)
 			assert.NoError(t, err)
 		})
 		rule, err := svcContext.CreateLoadBalancerFrontendRule(ctx, &request.CreateLoadBalancerFrontendRuleRequest{
@@ -593,8 +594,8 @@ func TestLoadBalancerFrontendRuleContext(t *testing.T) {
 func TestLoadBalancerCerticateBundlesAndFrontendTLSConfigsContext(t *testing.T) {
 	t.Parallel()
 
-	recordWithContext(t, "loadbalancercerticatebundlesandfrontendtlsconfigs", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
-		net, err := createLoadBalancerAndPrivateNetwork(svc, "fi-hel1", "10.0.1.1/24")
+	recordWithContext(t, "loadbalancercerticatebundlesandfrontendtlsconfigs", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
+		net, err := createLoadBalancerAndPrivateNetwork(ctx, svcContext, "fi-hel1", "10.0.1.1/24")
 		require.NoError(t, err)
 		feName := "fe-1"
 		lb, err := svcContext.CreateLoadBalancer(ctx, &request.CreateLoadBalancerRequest{
@@ -627,7 +628,7 @@ func TestLoadBalancerCerticateBundlesAndFrontendTLSConfigsContext(t *testing.T) 
 
 		require.NoError(t, err)
 		t.Cleanup(func() {
-			err := cleanupLoadBalancer(rec, svc, lb)
+			err := cleanupLoadBalancer(ctx, rec, svcContext, lb)
 			assert.NoError(t, err)
 		})
 
@@ -751,12 +752,12 @@ func TestLoadBalancerCerticateBundlesAndFrontendTLSConfigsContext(t *testing.T) 
 func TestLoadBalancerPageContext(t *testing.T) {
 	// do not run this test in parallel because it alters request.DefaultPage config which might cause unexpected results
 	const zone = "fi-hel2"
-	recordWithContext(t, "loadbalancerpage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
-		net, err := createLoadBalancerAndPrivateNetwork(svc, zone, "172.16.0.0/24")
+	recordWithContext(t, "loadbalancerpage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
+		net, err := createLoadBalancerAndPrivateNetwork(ctx, svcContext, zone, "172.16.0.0/24")
 		require.NoError(t, err)
 		lbs := make([]*upcloud.LoadBalancer, 0)
 		for i := 0; i < 5; i++ {
-			lb, err := createLoadBalancer(svc, net.UUID, zone)
+			lb, err := createLoadBalancer(ctx, svcContext, net.UUID, zone)
 			require.NoError(t, err)
 			lbs = append(lbs, lb)
 			if rec.Mode() != recorder.ModeReplaying {
@@ -796,12 +797,12 @@ func TestLoadBalancerPageContext(t *testing.T) {
 			}
 		}
 		for _, lb := range lbs {
-			if err := waitForLoadBalancerToShutdown(rec, svc, lb); err != nil {
+			if err := waitForLoadBalancerToShutdown(ctx, rec, svcContext, lb); err != nil {
 				t.Log(err)
 				continue
 			}
 		}
-		if err := svc.DeleteNetwork(&request.DeleteNetworkRequest{UUID: net.UUID}); err != nil {
+		if err := svcContext.DeleteNetwork(ctx, &request.DeleteNetworkRequest{UUID: net.UUID}); err != nil {
 			t.Log(err)
 		}
 
@@ -814,9 +815,9 @@ func TestLoadBalancerPageContext(t *testing.T) {
 func TestLoadBalancerNetworkContext(t *testing.T) {
 	t.Parallel()
 
-	recordWithContext(t, "loadbalancernetworks", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+	recordWithContext(t, "loadbalancernetworks", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
 		const zone string = "pl-waw1"
-		net, err := createLoadBalancerPrivateNetwork(svc, zone, "192.168.55.0/24")
+		net, err := createLoadBalancerPrivateNetwork(ctx, svcContext, zone, "192.168.55.0/24")
 		require.NoError(t, err)
 		t.Log("Creating LB for testing networks")
 		lb, err := svcContext.CreateLoadBalancer(ctx, &request.CreateLoadBalancerRequest{
@@ -859,7 +860,7 @@ func TestLoadBalancerNetworkContext(t *testing.T) {
 		})
 		require.NoError(t, err)
 		t.Cleanup(func() {
-			err := cleanupLoadBalancer(rec, svc, lb)
+			err := cleanupLoadBalancer(ctx, rec, svcContext, lb)
 			assert.NoError(t, err)
 		})
 
@@ -918,7 +919,7 @@ func TestLoadBalancerNetworkContext(t *testing.T) {
 		assert.Equal(t, "internal_net", lbNet.Name)
 
 		t.Logf("Modifying LB %s network using context-less service", lb.Name)
-		lbNet, err = svc.ModifyLoadBalancerNetwork(&request.ModifyLoadBalancerNetworkRequest{
+		lbNet, err = svcContext.ModifyLoadBalancerNetwork(ctx, &request.ModifyLoadBalancerNetworkRequest{
 			ServiceUUID: lb.UUID,
 			Name:        "internal_net",
 			Network: request.ModifyLoadBalancerNetwork{
@@ -930,7 +931,7 @@ func TestLoadBalancerNetworkContext(t *testing.T) {
 	})
 }
 
-func waitLoadBalancerOnline(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *ServiceContext, UUID string) error {
+func waitLoadBalancerOnline(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext, UUID string) error {
 	t.Helper()
 	if rec.Mode() == recorder.ModeRecording {
 		rec.AddPassthrough(func(h *http.Request) bool {
@@ -940,7 +941,7 @@ func waitLoadBalancerOnline(ctx context.Context, t *testing.T, rec *recorder.Rec
 			rec.Passthroughs = nil
 		}()
 		for s := time.Now(); time.Since(s) < time.Minute*20; {
-			lb, err := svc.GetLoadBalancer(ctx, &request.GetLoadBalancerRequest{UUID: UUID})
+			lb, err := svcContext.GetLoadBalancer(ctx, &request.GetLoadBalancerRequest{UUID: UUID})
 			if err != nil {
 				return err
 			}
@@ -953,7 +954,7 @@ func waitLoadBalancerOnline(ctx context.Context, t *testing.T, rec *recorder.Rec
 	return nil
 }
 
-func createLoadBalancerBackendContext(ctx context.Context, svc *ServiceContext, lbUUID string) (*upcloud.LoadBalancerBackend, error) {
+func createLoadBalancerBackendContext(ctx context.Context, svcContext *ServiceContext, lbUUID string) (*upcloud.LoadBalancerBackend, error) {
 	req := request.CreateLoadBalancerBackendRequest{
 		ServiceUUID: lbUUID,
 		Backend: request.LoadBalancerBackend{
@@ -975,5 +976,137 @@ func createLoadBalancerBackendContext(ctx context.Context, svc *ServiceContext, 
 		},
 	}
 
-	return svc.CreateLoadBalancerBackend(ctx, &req)
+	return svcContext.CreateLoadBalancerBackend(ctx, &req)
+}
+
+func cleanupLoadBalancer(ctx context.Context, rec *recorder.Recorder, svcContext *ServiceContext, lb *upcloud.LoadBalancer) error {
+	if rec.Mode() != recorder.ModeRecording {
+		return nil
+	}
+	rec.AddPassthrough(func(h *http.Request) bool {
+		return true
+	})
+	err := deleteLoadBalancer(ctx, svcContext, lb)
+	rec.Passthroughs = nil
+	return err
+}
+
+func createLoadBalancer(ctx context.Context, svcContext *ServiceContext, networkUUID, zone string) (*upcloud.LoadBalancer, error) {
+	createLoadBalancerRequest := request.CreateLoadBalancerRequest{
+		Name:             fmt.Sprintf("go-test-lb-%s-%d", zone, time.Now().Unix()),
+		Zone:             zone,
+		Plan:             "development",
+		NetworkUUID:      networkUUID,
+		ConfiguredStatus: "started",
+		Frontends:        []request.LoadBalancerFrontend{},
+		Backends:         []request.LoadBalancerBackend{},
+		Resolvers:        []request.LoadBalancerResolver{},
+	}
+
+	loadBalancerDetails, err := svcContext.CreateLoadBalancer(ctx, &createLoadBalancerRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	return loadBalancerDetails, nil
+}
+
+func createLoadBalancerAndNetwork(ctx context.Context, svcContext *ServiceContext, zone, addr string) (*upcloud.LoadBalancer, error) {
+	n, err := createLoadBalancerAndPrivateNetwork(ctx, svcContext, zone, addr)
+	if err != nil {
+		return nil, err
+	}
+	return createLoadBalancer(ctx, svcContext, n.UUID, zone)
+}
+
+func createLoadBalancerAndPrivateNetwork(ctx context.Context, svcContext *ServiceContext, zone, addr string) (*upcloud.Network, error) {
+	return svcContext.CreateNetwork(ctx, &request.CreateNetworkRequest{
+		Name: fmt.Sprintf("go-test-lb-%d", time.Now().Unix()),
+		Zone: zone,
+		IPNetworks: []upcloud.IPNetwork{
+			{
+				Address: addr,
+				DHCP:    upcloud.True,
+				Family:  upcloud.IPAddressFamilyIPv4,
+			},
+		},
+	})
+}
+
+func waitForLoadBalancerToShutdown(ctx context.Context, rec *recorder.Recorder, svcContext *ServiceContext, lb *upcloud.LoadBalancer) error {
+	if rec.Mode() != recorder.ModeRecording {
+		return nil
+	}
+
+	const maxRetries int = 100
+	// wait delete request
+	for i := 0; i <= maxRetries; i++ {
+		_, err := svcContext.GetLoadBalancer(ctx, &request.GetLoadBalancerRequest{UUID: lb.UUID})
+		if err != nil {
+			if svcErr, ok := err.(*upcloud.Problem); ok && svcErr.Status == http.StatusNotFound {
+				return nil
+			}
+		}
+		time.Sleep(2 * time.Second)
+	}
+	return errors.New("max retries reached while waiting for load balancer instance to shutdown")
+}
+
+func waitLoadBalancerToShutdown(ctx context.Context, svcContext *ServiceContext, lb *upcloud.LoadBalancer) error {
+	const maxRetries int = 100
+	// wait delete request
+	for i := 0; i <= maxRetries; i++ {
+		_, err := svcContext.GetLoadBalancer(ctx, &request.GetLoadBalancerRequest{UUID: lb.UUID})
+		if err != nil {
+			if svcErr, ok := err.(*upcloud.Problem); ok && svcErr.Status == http.StatusNotFound {
+				return nil
+			}
+		}
+		time.Sleep(2 * time.Second)
+	}
+	return errors.New("max retries reached while waiting for load balancer instance to shutdown")
+}
+
+func deleteLoadBalancer(ctx context.Context, svcContext *ServiceContext, lb *upcloud.LoadBalancer) error {
+	if err := svcContext.DeleteLoadBalancer(ctx, &request.DeleteLoadBalancerRequest{UUID: lb.UUID}); err != nil {
+		return err
+	}
+
+	if err := waitLoadBalancerToShutdown(ctx, svcContext, lb); err != nil {
+		return fmt.Errorf("unable to shutdown LB '%s' (%s) (check dangling networks)", lb.UUID, lb.Name)
+	}
+
+	var errs []error
+	if lb.NetworkUUID != "" {
+		if err := svcContext.DeleteNetwork(ctx, &request.DeleteNetworkRequest{UUID: lb.NetworkUUID}); err != nil {
+			errs = append(errs, err)
+		}
+	}
+	if len(lb.Networks) > 0 {
+		for _, n := range lb.Networks {
+			if n.Type == upcloud.LoadBalancerNetworkTypePrivate && n.UUID != "" {
+				if err := svcContext.DeleteNetwork(ctx, &request.DeleteNetworkRequest{UUID: n.UUID}); err != nil {
+					errs = append(errs, err)
+				}
+			}
+		}
+	}
+	if len(errs) > 0 {
+		return fmt.Errorf("%s", errs)
+	}
+	return nil
+}
+
+func createLoadBalancerPrivateNetwork(ctx context.Context, svcContext *ServiceContext, zone, addr string) (*upcloud.Network, error) {
+	return svcContext.CreateNetwork(ctx, &request.CreateNetworkRequest{
+		Name: fmt.Sprintf("go-test-lb-%d", time.Now().Unix()),
+		Zone: zone,
+		IPNetworks: []upcloud.IPNetwork{
+			{
+				Address: addr,
+				DHCP:    upcloud.True,
+				Family:  upcloud.IPAddressFamilyIPv4,
+			},
+		},
+	})
 }

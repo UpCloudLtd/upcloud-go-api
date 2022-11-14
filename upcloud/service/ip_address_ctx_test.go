@@ -17,7 +17,7 @@ import (
 //   - compares the retrieved IP addresses with the created server's
 //     ip addresses
 func TestGetIPAddressesContext(t *testing.T) {
-	recordWithContext(t, "getipaddresses", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+	recordWithContext(t, "getipaddresses", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
 		serverDetails, err := createServerContext(ctx, rec, svcContext, "TestGetIPAddresses")
 		require.NoError(t, err)
 		assert.Greater(t, len(serverDetails.IPAddresses), 0)
@@ -59,7 +59,7 @@ func TestGetIPAddressesContext(t *testing.T) {
 // - deletes the IP address
 func TestAttachModifyReleaseIPAddressContext(t *testing.T) {
 	t.Parallel()
-	recordWithContext(t, "attachmodifyreleaseipaddress", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+	recordWithContext(t, "attachmodifyreleaseipaddress", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
 		// Create the server
 		serverDetails, err := createServerContext(ctx, rec, svcContext, "TestAttachModifyReleaseIPAddress")
 		require.NoError(t, err)
@@ -101,7 +101,7 @@ func TestAttachModifyReleaseIPAddressContext(t *testing.T) {
 }
 
 func TestAttachModifyReleaseFloatingIPAddressContext(t *testing.T) {
-	recordWithContext(t, "attachmodifyreleasefloatingipaddress", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+	recordWithContext(t, "attachmodifyreleasefloatingipaddress", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
 		// Create the first server
 		serverDetails1, err := createServerContext(ctx, rec, svcContext, "TestAttachModifyReleaseIPAddress1")
 		require.NoError(t, err)
@@ -132,7 +132,7 @@ func TestAttachModifyReleaseFloatingIPAddressContext(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		postAssignServerDetails1, err := svc.GetServerDetails(&request.GetServerDetailsRequest{
+		postAssignServerDetails1, err := svcContext.GetServerDetails(ctx, &request.GetServerDetailsRequest{
 			UUID: serverDetails1.UUID,
 		})
 		require.NoError(t, err)
@@ -170,7 +170,7 @@ func TestAttachModifyReleaseFloatingIPAddressContext(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		postModifyServerDetails1, err := svc.GetServerDetails(&request.GetServerDetailsRequest{
+		postModifyServerDetails1, err := svcContext.GetServerDetails(ctx, &request.GetServerDetailsRequest{
 			UUID: serverDetails1.UUID,
 		})
 		require.NoError(t, err)
@@ -189,7 +189,7 @@ func TestAttachModifyReleaseFloatingIPAddressContext(t *testing.T) {
 		}
 		assert.False(t, found)
 
-		postModifyServerDetails2, err := svc.GetServerDetails(&request.GetServerDetailsRequest{
+		postModifyServerDetails2, err := svcContext.GetServerDetails(ctx, &request.GetServerDetailsRequest{
 			UUID: serverDetails2.UUID,
 		})
 		require.NoError(t, err)

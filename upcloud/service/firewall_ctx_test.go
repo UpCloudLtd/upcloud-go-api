@@ -20,7 +20,7 @@ import (
 // - deletes the firewall rule
 func TestFirewallRulesContext(t *testing.T) {
 	t.Parallel()
-	recordWithContext(t, "firewallrules", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+	recordWithContext(t, "firewallrules", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
 		// Create the server
 		serverDetails, err := createServerContext(ctx, rec, svcContext, "TestFirewallRules")
 		require.NoError(t, err)

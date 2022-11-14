@@ -3,10 +3,16 @@ package service
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"net/http"
 
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/client"
 )
+
+type requestable interface {
+	RequestURL() string
+}
 
 type service interface {
 	CloudContext
@@ -105,4 +111,22 @@ func (s *ServiceContext) delete(ctx context.Context, r requestable) error {
 
 func NewWithContext(client *client.ClientContext) *ServiceContext {
 	return &ServiceContext{client}
+}
+
+// Parses an error returned from the client into corresponding error type
+func parseJSONServiceError(err error) error {
+	if clientError, ok := err.(*client.Error); ok {
+		var serviceError error
+		switch clientError.Type {
+		case client.ErrorTypeProblem:
+			serviceError = &upcloud.Problem{}
+		default:
+			serviceError = &upcloud.Error{}
+		}
+		if err := json.Unmarshal(clientError.ResponseBody, serviceError); err != nil {
+			return fmt.Errorf("received malformed client error: %s", string(clientError.ResponseBody))
+		}
+		return serviceError
+	}
+	return err
 }

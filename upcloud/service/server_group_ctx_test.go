@@ -14,7 +14,7 @@ import (
 func TestServerGroupsContext(t *testing.T) {
 	t.Parallel()
 
-	recordWithContext(t, "servergroups", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+	recordWithContext(t, "servergroups", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
 		srv, err := createMinimalServerContext(ctx, rec, svcContext, "TestServerGroups")
 		require.NoError(t, err)
 		// create new server group
@@ -110,9 +110,18 @@ func TestServerGroupsContext(t *testing.T) {
 		if err := stopServerContext(ctx, rec, svcContext, srv.UUID); err != nil {
 			t.Log(err)
 		} else {
-			if err := deleteServer(svc, srv.UUID); err != nil {
+			if err := deleteServer(ctx, svcContext, srv.UUID); err != nil {
 				t.Log(err)
 			}
 		}
 	})
+}
+
+// Deletes the specified server group.
+func deleteServerGroup(ctx context.Context, svcContext *ServiceContext, uuid string) error {
+	err := svcContext.DeleteServerGroup(ctx, &request.DeleteServerGroupRequest{
+		UUID: uuid,
+	})
+
+	return err
 }

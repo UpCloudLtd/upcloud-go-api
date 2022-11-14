@@ -16,7 +16,7 @@ import (
 )
 
 // records the API interactions of the test. Function provides both services to test cases so that old utility functions can be used to initialize environment.
-func recordWithContext(t *testing.T, fixture string, f func(context.Context, *testing.T, *recorder.Recorder, *Service, *ServiceContext)) {
+func recordWithContext(t *testing.T, fixture string, f func(context.Context, *testing.T, *recorder.Recorder, *ServiceContext)) {
 	if testing.Short() {
 		t.Skip("Skipping recorded test in short mode")
 	}
@@ -62,5 +62,5 @@ func recordWithContext(t *testing.T, fixture string, f func(context.Context, *te
 	// just some random timeout value. High enough that it won't be reached during normal test.
 	ctx, cancel := context.WithTimeout(context.Background(), waitTimeout*4)
 	defer cancel()
-	f(ctx, t, r, New(c), NewWithContext(client.NewWithHTTPClientContext(user, password, httpClient)))
+	f(ctx, t, r, NewWithContext(client.NewWithHTTPClientContext(user, password, httpClient)))
 }

@@ -18,7 +18,7 @@ import (
 //   - Modifies a host
 //   - Modifies the host back
 func TestGetModifyHostsContext(t *testing.T) {
-	recordWithContext(t, "getmodifyhosts", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+	recordWithContext(t, "getmodifyhosts", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svcContext *ServiceContext) {
 		hosts, err := svcContext.GetHosts(ctx)
 		require.NoError(t, err)
 
