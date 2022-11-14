@@ -60,6 +60,7 @@ func TestCreateServerGroupRequest(t *testing.T) {
 		Title:   "test",
 		Members: upcloud.ServerUUIDSlice{},
 	}
+
 	actual, err := json.Marshal(&r)
 	assert.NoError(t, err)
 	assert.JSONEq(t, expected, string(actual))
@@ -78,7 +79,8 @@ func TestCreateServerGroupRequest(t *testing.T) {
 			"servers": {
 				"server": ["x", "y"]
 			},
-			"title": "test"
+			"title": "test",
+			"anti_affinity": "yes"
 		}
 	}	
 	`
@@ -89,8 +91,9 @@ func TestCreateServerGroupRequest(t *testing.T) {
 				Value: "upcloud-go-sdk-unit-test",
 			},
 		},
-		Members: upcloud.ServerUUIDSlice{"x", "y"},
-		Title:   "test",
+		Members:      upcloud.ServerUUIDSlice{"x", "y"},
+		Title:        "test",
+		AntiAffinity: upcloud.True,
 	}
 	actual, err = json.Marshal(&r)
 	assert.NoError(t, err)
@@ -139,14 +142,16 @@ func TestModifyServerGroupRequest(t *testing.T) {
 			"title": "test",
 			"servers": {
 				"server": ["x"]
-			}
+			},
+			"anti_affinity": "no"
 		}
 	}	
 	`
 	r = ModifyServerGroupRequest{
-		UUID:    "id",
-		Title:   "test",
-		Members: &upcloud.ServerUUIDSlice{"x"},
+		UUID:         "id",
+		Title:        "test",
+		Members:      &upcloud.ServerUUIDSlice{"x"},
+		AntiAffinity: upcloud.False,
 	}
 	actual, err = json.Marshal(&r)
 	assert.NoError(t, err)
@@ -157,13 +162,15 @@ func TestModifyServerGroupRequest(t *testing.T) {
 		"server_group": {
 			"servers": {
 				"server": ["x"]
-			}
+			},
+			"anti_affinity": "yes"
 		}
 	}	
 	`
 	r = ModifyServerGroupRequest{
-		UUID:    "id",
-		Members: &upcloud.ServerUUIDSlice{"x"},
+		UUID:         "id",
+		Members:      &upcloud.ServerUUIDSlice{"x"},
+		AntiAffinity: upcloud.True,
 	}
 	actual, err = json.Marshal(&r)
 	assert.NoError(t, err)

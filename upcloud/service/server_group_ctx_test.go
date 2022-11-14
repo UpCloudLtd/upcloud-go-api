@@ -19,13 +19,15 @@ func TestServerGroupsContext(t *testing.T) {
 		require.NoError(t, err)
 		// create new server group
 		group, err := svcContext.CreateServerGroup(ctx, &request.CreateServerGroupRequest{
-			Labels:  &upcloud.LabelSlice{upcloud.Label{Key: "managedBy", Value: "upcloud-go-sdk-integration-test"}},
-			Members: upcloud.ServerUUIDSlice{srv.UUID},
-			Title:   "test-title",
+			Labels:       &upcloud.LabelSlice{upcloud.Label{Key: "managedBy", Value: "upcloud-go-sdk-integration-test"}},
+			Members:      upcloud.ServerUUIDSlice{srv.UUID},
+			Title:        "test-title",
+			AntiAffinity: upcloud.True,
 		})
 		assert.NoError(t, err)
 		assert.ElementsMatch(t, upcloud.LabelSlice{upcloud.Label{Key: "managedBy", Value: "upcloud-go-sdk-integration-test"}}, group.Labels)
 		assert.Equal(t, "test-title", group.Title)
+		assert.Equal(t, upcloud.True, group.AntiAffinity)
 		assert.Len(t, group.Members, 1)
 
 		// clear the group of its members
@@ -58,6 +60,18 @@ func TestServerGroupsContext(t *testing.T) {
 		assert.ElementsMatch(t, newLabelSlice, group.Labels)
 		assert.Equal(t, "test-title", group.Title)
 		assert.Len(t, group.Members, 1)
+		assert.Equal(t, upcloud.True, group.AntiAffinity)
+
+		// modify anti affinity setting
+		group, err = svcContext.ModifyServerGroup(ctx, &request.ModifyServerGroupRequest{
+			AntiAffinity: upcloud.False,
+			UUID:         group.UUID,
+		})
+		assert.NoError(t, err)
+		assert.ElementsMatch(t, newLabelSlice, group.Labels) // Labels should not change since the previous modification
+		assert.Equal(t, "test-title", group.Title)
+		assert.Len(t, group.Members, 1)
+		assert.Equal(t, upcloud.False, group.AntiAffinity)
 
 		// get server groups
 		groups, err := svcContext.GetServerGroups(ctx, &request.GetServerGroupsRequest{})
