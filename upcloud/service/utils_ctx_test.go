@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/client"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/client"
 	"github.com/dnaeon/go-vcr/cassette"
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/hashicorp/go-cleanhttp"

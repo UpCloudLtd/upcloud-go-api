@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
 )
 
 /* Service Management */

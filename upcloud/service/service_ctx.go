@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/client"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/client"
 )
 
 type service interface {

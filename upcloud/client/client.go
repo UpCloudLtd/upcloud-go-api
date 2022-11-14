@@ -11,7 +11,7 @@ import (
 	"os"
 	"time"
 
-	globals "github.com/UpCloudLtd/upcloud-go-api/v4/internal"
+	globals "github.com/UpCloudLtd/upcloud-go-api/v5/internal"
 	"github.com/blang/semver"
 	"github.com/hashicorp/go-cleanhttp"
 )

@@ -1,6 +1,6 @@
 package request
 
-import "github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
+import "github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
 
 // GetPermissionsRequest represents a request to get permissions
 type GetPermissionsRequest struct{}

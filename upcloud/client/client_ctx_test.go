@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	globals "github.com/UpCloudLtd/upcloud-go-api/v4/internal"
+	globals "github.com/UpCloudLtd/upcloud-go-api/v5/internal"
 	"github.com/stretchr/testify/assert"
 )
 
