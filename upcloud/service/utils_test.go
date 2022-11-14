@@ -6,10 +6,16 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"testing"
 	"time"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/client"
 	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
+	"github.com/dnaeon/go-vcr/cassette"
+	"github.com/dnaeon/go-vcr/recorder"
+	"github.com/hashicorp/go-cleanhttp"
+	"github.com/stretchr/testify/require"
 )
 
 const waitTimeout = time.Minute * 15
@@ -45,9 +51,8 @@ func handleError(err error) {
 	}
 }
 
-/*
-// records the API interactions of the test.
-func record(t *testing.T, fixture string, f func(*testing.T, *recorder.Recorder, *Service)) {
+// records the API interactions of the test. Function provides both services to test cases so that old utility functions can be used to initialize environment.
+func recordWithContext(t *testing.T, fixture string, f func(context.Context, *testing.T, *recorder.Recorder, *Service)) {
 	if testing.Short() {
 		t.Skip("Skipping recorded test in short mode")
 	}
@@ -90,9 +95,12 @@ func record(t *testing.T, fixture string, f func(*testing.T, *recorder.Recorder,
 		}})
 	}
 
-	f(t, r, New(c))
+	// just some random timeout value. High enough that it won't be reached during normal test.
+	ctx, cancel := context.WithTimeout(context.Background(), waitTimeout*4)
+	defer cancel()
+	f(ctx, t, r, New(client.NewWithHTTPClientContext(user, password, httpClient)))
 }
-*/
+
 // Tears down the test environment by removing all resources.
 func teardown() {
 	svc := getService()
