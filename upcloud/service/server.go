@@ -9,7 +9,7 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 )
 
-type ServerContext interface {
+type Server interface {
 	GetServerConfigurations(ctx context.Context) (*upcloud.ServerConfigurations, error)
 	GetServers(ctx context.Context) (*upcloud.Servers, error)
 	GetServerDetails(ctx context.Context, r *request.GetServerDetailsRequest) (*upcloud.ServerDetails, error)
@@ -88,48 +88,29 @@ func (s *Service) WaitForServerState(ctx context.Context, r *request.WaitForServ
 
 // StartServer starts the specified server
 func (s *Service) StartServer(ctx context.Context, r *request.StartServerRequest) (*upcloud.ServerDetails, error) {
-	// Save previous timeout
-	prevTimeout := s.client.GetTimeout()
-
-	// Increase the client timeout to match the request timeout
-	s.client.SetTimeout(r.Timeout)
-
-	// Restore previous timeout
-	defer s.client.SetTimeout(prevTimeout)
-
 	serverDetails := upcloud.ServerDetails{}
 	return &serverDetails, s.create(ctx, r, &serverDetails)
 }
 
 // StopServer stops the specified server
 func (s *Service) StopServer(ctx context.Context, r *request.StopServerRequest) (*upcloud.ServerDetails, error) {
-	// Save previous timeout
-	prevTimeout := s.client.GetTimeout()
-
-	// Increase the client timeout to match the request timeout
-	// Allow ten seconds to give the API a chance to respond with an error
-	s.client.SetTimeout(r.Timeout + 10*time.Second)
-
-	// Restore previous timeout
-	defer s.client.SetTimeout(prevTimeout)
-
 	serverDetails := upcloud.ServerDetails{}
+	if r.Timeout > 0 {
+		timeoutCtx, cancel := context.WithTimeout(ctx, r.Timeout)
+		defer cancel()
+		return &serverDetails, s.create(timeoutCtx, r, &serverDetails)
+	}
 	return &serverDetails, s.create(ctx, r, &serverDetails)
 }
 
 // RestartServer restarts the specified server
 func (s *Service) RestartServer(ctx context.Context, r *request.RestartServerRequest) (*upcloud.ServerDetails, error) {
-	// Save previous timeout
-	prevTimeout := s.client.GetTimeout()
-
-	// Increase the client timeout to match the request timeout
-	// Allow ten seconds to give the API a chance to respond with an error
-	s.client.SetTimeout(r.Timeout + 10*time.Second)
-
-	// Restore previous timeout
-	defer s.client.SetTimeout(prevTimeout)
-
 	serverDetails := upcloud.ServerDetails{}
+	if r.Timeout > 0 {
+		timeoutCtx, cancel := context.WithTimeout(ctx, r.Timeout)
+		defer cancel()
+		return &serverDetails, s.create(timeoutCtx, r, &serverDetails)
+	}
 	return &serverDetails, s.create(ctx, r, &serverDetails)
 }
 

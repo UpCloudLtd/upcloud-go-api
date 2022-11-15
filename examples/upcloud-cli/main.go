@@ -5,7 +5,6 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"math/rand"
 	"os"
 	"time"
 
@@ -21,7 +20,6 @@ var username, password string
 func init() {
 	flag.StringVar(&username, "username", "", "UpCloud username")
 	flag.StringVar(&password, "password", "", "UpCloud password")
-	rand.Seed(time.Now().Unix())
 }
 
 func main() {
@@ -51,7 +49,7 @@ func run() int {
 	}
 
 	fmt.Println("Creating new client")
-	c := client.NewWithContext(username, password)
+	c := client.New(username, password)
 	s := service.New(c)
 
 	switch command {
@@ -80,7 +78,7 @@ func createServer(s *service.Service) error {
 	fmt.Println("Creating server")
 	details, err := s.CreateServer(ctx, &request.CreateServerRequest{
 		Hostname: "stuart.example.com",
-		Title:    fmt.Sprintf("example-cli-server-%04d", rand.Int31n(1000)),
+		Title:    "example-cli-server",
 		Zone:     "fi-hel2",
 		Plan:     "1xCPU-1GB",
 		StorageDevices: []request.CreateServerStorageDevice{

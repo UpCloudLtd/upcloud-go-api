@@ -9,7 +9,7 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 )
 
-type KubernetesContext interface {
+type Kubernetes interface {
 	GetKubernetesClusters(ctx context.Context, r *request.GetKubernetesClustersRequest) ([]upcloud.KubernetesCluster, error)
 	GetKubernetesCluster(ctx context.Context, r *request.GetKubernetesClusterRequest) (*upcloud.KubernetesCluster, error)
 	CreateKubernetesCluster(ctx context.Context, r *request.CreateKubernetesClusterRequest) (*upcloud.KubernetesCluster, error)
@@ -18,8 +18,6 @@ type KubernetesContext interface {
 	GetKubernetesVersions(ctx context.Context, r *request.GetKubernetesVersionsRequest) ([]string, error)
 	WaitForKubernetesClusterState(ctx context.Context, r *request.WaitForKubernetesClusterStateRequest) (*upcloud.KubernetesCluster, error)
 }
-
-var _ KubernetesContext = (*Service)(nil)
 
 // GetKubernetesClusters retrieves a list of Kubernetes clusters (EXPERIMENTAL).
 func (s *Service) GetKubernetesClusters(ctx context.Context, r *request.GetKubernetesClustersRequest) ([]upcloud.KubernetesCluster, error) {
@@ -88,13 +86,15 @@ func (s *Service) WaitForKubernetesClusterState(ctx context.Context, r *request.
 
 // GetKubernetesKubeconfig retrieves kubeconfig of a Kubernetes cluster (EXPERIMENTAL).
 func (s *Service) GetKubernetesKubeconfig(ctx context.Context, r *request.GetKubernetesKubeconfigRequest) (string, error) {
+	// TODO: should timeout be part of GetKubernetesKubeconfigRequest ?
+	const timeout time.Duration = 10 * time.Minute
 	data := struct {
 		Kubeconfig string `json:"kubeconfig"`
 	}{}
 
 	_, err := s.WaitForKubernetesClusterState(ctx, &request.WaitForKubernetesClusterStateRequest{
 		DesiredState: upcloud.KubernetesClusterStateRunning,
-		Timeout:      s.client.GetTimeout(),
+		Timeout:      timeout,
 		UUID:         r.UUID,
 	})
 	if err != nil {

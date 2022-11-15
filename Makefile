@@ -1,6 +1,6 @@
 .PHONY: test 
 test: check-test-env
-	go test ./... -v -parallel 8
+	go test ./... -parallel 8
 
 check-test-env:
 ifndef UPCLOUD_GO_SDK_TEST_USER

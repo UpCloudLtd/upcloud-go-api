@@ -13,7 +13,7 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 )
 
-type StorageContext interface {
+type Storage interface {
 	GetStorages(ctx context.Context, r *request.GetStoragesRequest) (*upcloud.Storages, error)
 	GetStorageDetails(ctx context.Context, r *request.GetStorageDetailsRequest) (*upcloud.StorageDetails, error)
 	CreateStorage(ctx context.Context, r *request.CreateStorageRequest) (*upcloud.StorageDetails, error)
@@ -201,9 +201,8 @@ func (s *Service) directStorageImport(ctx context.Context, r *request.CreateStor
 		return nil, err
 	}
 
-	s.client.AddRequestHeaders(req)
 	req.Header.Set("Content-Type", r.ContentType)
-	if _, err := s.client.PerformRequest(req); err != nil {
+	if _, err := s.client.Do(req); err != nil {
 		return nil, err
 	}
 

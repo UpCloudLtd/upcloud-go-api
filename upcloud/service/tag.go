@@ -7,7 +7,7 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 )
 
-type TagContext interface {
+type Tag interface {
 	GetTags(ctx context.Context) (*upcloud.Tags, error)
 	CreateTag(ctx context.Context, r *request.CreateTagRequest) (*upcloud.Tag, error)
 	ModifyTag(ctx context.Context, r *request.ModifyTagRequest) (*upcloud.Tag, error)

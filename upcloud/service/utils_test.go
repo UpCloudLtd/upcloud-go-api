@@ -81,9 +81,6 @@ func recordWithContext(t *testing.T, fixture string, f func(context.Context, *te
 	r.SetTransport(origTransport)
 	httpClient.Transport = r
 
-	c := client.NewWithHTTPClient(user, password, httpClient)
-	c.SetTimeout(time.Second * 300)
-
 	customAPI := os.Getenv("UPCLOUD_GO_SDK_API_HOST")
 	if customAPI != "" {
 		// Override api host after the go-vcr to maintain consistent test fixtures
@@ -98,7 +95,7 @@ func recordWithContext(t *testing.T, fixture string, f func(context.Context, *te
 	// just some random timeout value. High enough that it won't be reached during normal test.
 	ctx, cancel := context.WithTimeout(context.Background(), waitTimeout*4)
 	defer cancel()
-	f(ctx, t, r, New(client.NewWithHTTPClientContext(user, password, httpClient)))
+	f(ctx, t, r, New(client.New(user, password, client.WithHTTPClient(httpClient))))
 }
 
 // Tears down the test environment by removing all resources.

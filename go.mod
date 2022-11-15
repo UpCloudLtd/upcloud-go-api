@@ -3,7 +3,6 @@ module github.com/UpCloudLtd/upcloud-go-api/v5
 go 1.14
 
 require (
-	github.com/blang/semver v3.5.1+incompatible
 	github.com/davecgh/go-spew v1.1.1
 	github.com/dnaeon/go-vcr v1.2.0
 	github.com/hashicorp/go-cleanhttp v0.5.1

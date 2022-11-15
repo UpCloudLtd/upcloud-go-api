@@ -7,7 +7,7 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 )
 
-type ObjectStorageContext interface {
+type ObjectStorage interface {
 	GetObjectStorages(ctx context.Context) (*upcloud.ObjectStorages, error)
 	GetObjectStorageDetails(ctx context.Context, r *request.GetObjectStorageDetailsRequest) (*upcloud.ObjectStorageDetails, error)
 	CreateObjectStorage(ctx context.Context, r *request.CreateObjectStorageRequest) (*upcloud.ObjectStorageDetails, error)

@@ -7,7 +7,7 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 )
 
-type PermissionContext interface {
+type Permission interface {
 	GetPermissions(context.Context, *request.GetPermissionsRequest) (upcloud.Permissions, error)
 	GrantPermission(context.Context, *request.GrantPermissionRequest) (*upcloud.Permission, error)
 	RevokePermission(context.Context, *request.RevokePermissionRequest) error

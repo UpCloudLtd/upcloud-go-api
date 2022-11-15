@@ -5,6 +5,19 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Changed
+- bumped module version from `v4` to `v5`
+- context-aware type `client.ClientContext` renamed to `client.Client`
+- context-aware type `service.ServiceContext` renamed to `service.Serivce`
+- `service.Serivce` accepts any client that implements `service.Client` interface 
+- `client.New` constructor allows overwrite `baseURL`, `httpClient` and `httpClient.Timeout` client properties
+
+### Removed
+- `service.Service` type without context support
+- `client.Client` type without context support
+- redundant `Timeout` field from `request.StartServerRequest` type
+
+
 ## [4.10.0]
 
 ### Added

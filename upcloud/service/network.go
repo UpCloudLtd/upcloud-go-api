@@ -7,7 +7,7 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 )
 
-type NetworkContext interface {
+type Network interface {
 	GetNetworks(ctx context.Context) (*upcloud.Networks, error)
 	GetNetworksInZone(ctx context.Context, r *request.GetNetworksInZoneRequest) (*upcloud.Networks, error)
 	CreateNetwork(ctx context.Context, r *request.CreateNetworkRequest) (*upcloud.Network, error)

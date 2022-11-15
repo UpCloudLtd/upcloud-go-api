@@ -7,7 +7,7 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 )
 
-type AccountContext interface {
+type Account interface {
 	GetAccountList(ctx context.Context) (upcloud.AccountList, error)
 	GetAccount(ctx context.Context) (*upcloud.Account, error)
 	GetAccountDetails(ctx context.Context, r *request.GetAccountDetailsRequest) (*upcloud.AccountDetails, error)

@@ -6,7 +6,7 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
 )
 
-type CloudContext interface {
+type Cloud interface {
 	GetZones(ctx context.Context) (*upcloud.Zones, error)
 	GetPriceZones(ctx context.Context) (*upcloud.PriceZones, error)
 	GetTimeZones(ctx context.Context) (*upcloud.TimeZones, error)

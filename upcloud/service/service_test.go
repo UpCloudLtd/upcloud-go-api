@@ -27,8 +27,7 @@ func TestMain(m *testing.M) {
 }
 
 func ExampleNew() {
-	client := client.NewWithContext("<username>", "<password>")
-	svc := New(client)
+	svc := New(client.New("<username>", "<password>"))
 	ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(10*time.Second))
 	defer cancel()
 	zones, err := svc.GetZones(ctx)
@@ -42,8 +41,7 @@ func ExampleNew() {
 func getService() *Service {
 	user, password := getCredentials()
 
-	c := client.NewWithContext(user, password)
-	c.SetTimeout(time.Minute * 5)
+	c := client.New(user, password)
 
 	return New(c)
 }

@@ -23,7 +23,7 @@ func TestGetAccount(t *testing.T) {
 	}
 
 	user, password := getCredentials()
-	svc := New(client.NewWithContext(user, password))
+	svc := New(client.New(user, password))
 
 	account, err := svc.GetAccount(context.Background())
 	require.NoError(t, err)

@@ -7,7 +7,7 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 )
 
-type HostContext interface {
+type Host interface {
 	GetHosts(ctx context.Context) (*upcloud.Hosts, error)
 	GetHostDetails(ctx context.Context, r *request.GetHostDetailsRequest) (*upcloud.Host, error)
 	ModifyHost(ctx context.Context, r *request.ModifyHostRequest) (*upcloud.Host, error)

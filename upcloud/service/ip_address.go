@@ -7,7 +7,7 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 )
 
-type IpAddressContext interface {
+type IPAddress interface {
 	GetIPAddresses(ctx context.Context) (*upcloud.IPAddresses, error)
 	GetIPAddressDetails(ctx context.Context, r *request.GetIPAddressDetailsRequest) (*upcloud.IPAddress, error)
 	AssignIPAddress(ctx context.Context, r *request.AssignIPAddressRequest) (*upcloud.IPAddress, error)

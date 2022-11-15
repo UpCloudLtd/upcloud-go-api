@@ -233,7 +233,7 @@ func waitForKubernetesClusterNotFound(ctx context.Context, rec *recorder.Recorde
 		}
 	}
 	// additional wait period to make sure the attached network is deletable
-	time.Sleep(waitTimeout)
+	time.Sleep(5 * time.Minute)
 
 	return nil
 }

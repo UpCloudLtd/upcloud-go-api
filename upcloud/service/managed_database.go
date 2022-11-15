@@ -13,7 +13,7 @@ import (
 
 var ErrCancelManagedDatabaseConnection = errors.New("managed database connection cancellation failed")
 
-type ManagedDatabaseServiceManagerContext interface {
+type ManagedDatabaseServiceManager interface {
 	CancelManagedDatabaseConnection(ctx context.Context, r *request.CancelManagedDatabaseConnection) error
 	CloneManagedDatabase(ctx context.Context, r *request.CloneManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
 	CreateManagedDatabase(ctx context.Context, r *request.CreateManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
@@ -35,7 +35,7 @@ type ManagedDatabaseServiceManagerContext interface {
 	GetManagedDatabaseServiceTypes(ctx context.Context, r *request.GetManagedDatabaseServiceTypesRequest) (map[string]upcloud.ManagedDatabaseType, error)
 }
 
-type ManagedDatabaseUserManagerContext interface {
+type ManagedDatabaseUserManager interface {
 	CreateManagedDatabaseUser(ctx context.Context, r *request.CreateManagedDatabaseUserRequest) (*upcloud.ManagedDatabaseUser, error)
 	GetManagedDatabaseUser(ctx context.Context, r *request.GetManagedDatabaseUserRequest) (*upcloud.ManagedDatabaseUser, error)
 	GetManagedDatabaseUsers(ctx context.Context, r *request.GetManagedDatabaseUsersRequest) ([]upcloud.ManagedDatabaseUser, error)
@@ -43,7 +43,7 @@ type ManagedDatabaseUserManagerContext interface {
 	ModifyManagedDatabaseUser(ctx context.Context, r *request.ModifyManagedDatabaseUserRequest) (*upcloud.ManagedDatabaseUser, error)
 }
 
-type ManagedDatabaseLogicalDatabaseManagerContext interface {
+type ManagedDatabaseLogicalDatabaseManager interface {
 	CreateManagedDatabaseLogicalDatabase(ctx context.Context, r *request.CreateManagedDatabaseLogicalDatabaseRequest) (*upcloud.ManagedDatabaseLogicalDatabase, error)
 	GetManagedDatabaseLogicalDatabases(ctx context.Context, r *request.GetManagedDatabaseLogicalDatabasesRequest) ([]upcloud.ManagedDatabaseLogicalDatabase, error)
 	DeleteManagedDatabaseLogicalDatabase(ctx context.Context, r *request.DeleteManagedDatabaseLogicalDatabaseRequest) error
@@ -58,7 +58,7 @@ func (s *Service) CancelManagedDatabaseConnection(ctx context.Context, r *reques
 	res := struct {
 		Success bool `json:"success"`
 	}{}
-	response, err := s.client.PerformJSONDeleteRequestWithResponseBody(ctx, s.client.CreateRequestURL(r.RequestURL()))
+	response, err := s.client.Delete(ctx, r.RequestURL())
 	if err != nil {
 		return parseJSONServiceError(err)
 	}

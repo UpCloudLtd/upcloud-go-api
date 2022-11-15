@@ -7,7 +7,7 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 )
 
-type FirewallContext interface {
+type Firewall interface {
 	GetFirewallRules(ctx context.Context, r *request.GetFirewallRulesRequest) (*upcloud.FirewallRules, error)
 	GetFirewallRuleDetails(ctx context.Context, r *request.GetFirewallRuleDetailsRequest) (*upcloud.FirewallRule, error)
 	CreateFirewallRule(ctx context.Context, r *request.CreateFirewallRuleRequest) (*upcloud.FirewallRule, error)
