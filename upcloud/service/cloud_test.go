@@ -15,7 +15,7 @@ const testFiHel1Zone string = "fi-hel1"
 
 // TestGetZones  tests that the GetZones() function returns proper data
 func TestGetZones(t *testing.T) {
-	recordWithContext(t, "getzones", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "getzones", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		zones, err := svc.GetZones(ctx)
 		require.NoError(t, err)
 		assert.NotEmpty(t, zones.Zones)
@@ -34,7 +34,7 @@ func TestGetZones(t *testing.T) {
 
 // TestGetPriceZones tests that GetPriceZones() function returns proper data
 func TestGetPriceZones(t *testing.T) {
-	recordWithContext(t, "getpricezones", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "getpricezones", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		zones, err := svc.GetPriceZones(ctx)
 		require.NoError(t, err)
 		assert.NotEmpty(t, zones.PriceZones)
@@ -58,7 +58,7 @@ func TestGetPriceZones(t *testing.T) {
 
 // TestGetTimeZones ensures that the GetTimeZones() function returns proper data
 func TestGetTimeZones(t *testing.T) {
-	recordWithContext(t, "gettimezones", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "gettimezones", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		zones, err := svc.GetTimeZones(ctx)
 		require.NoError(t, err)
 		assert.NotEmpty(t, zones.TimeZones)
@@ -76,7 +76,7 @@ func TestGetTimeZones(t *testing.T) {
 
 // TestGetPlans ensures that the GetPlans() functions returns proper data
 func TestGetPlans(t *testing.T) {
-	recordWithContext(t, "getplans", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "getplans", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		plans, err := svc.GetPlans(ctx)
 		require.NoError(t, err)
 		assert.NotEmpty(t, plans.Plans)

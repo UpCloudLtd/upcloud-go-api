@@ -14,7 +14,7 @@ import (
 func TestServerGroups(t *testing.T) {
 	t.Parallel()
 
-	recordWithContext(t, "servergroups", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "servergroups", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		srv, err := createMinimalServer(ctx, rec, svc, "TestServerGroups")
 		require.NoError(t, err)
 		// create new server group
@@ -107,7 +107,7 @@ func TestServerGroups(t *testing.T) {
 		}
 
 		// delete server
-		if err := stopServerContext(ctx, rec, svc, srv.UUID); err != nil {
+		if err := stopServer(ctx, rec, svc, srv.UUID); err != nil {
 			t.Log(err)
 		} else {
 			if err := deleteServer(ctx, svc, srv.UUID); err != nil {

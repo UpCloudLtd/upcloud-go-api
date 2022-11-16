@@ -11,7 +11,7 @@ import (
 )
 
 func TestPermissions(t *testing.T) {
-	recordWithContext(t, "permissions", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "permissions", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		subAccount, err := svc.CreateSubaccount(ctx, &request.CreateSubaccountRequest{
 			Subaccount: request.CreateSubaccount{
 				Username:   "sdk_test_permissions_subaccount",

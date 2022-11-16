@@ -18,7 +18,7 @@ import (
 func TestLoadBalancer(t *testing.T) {
 	t.Parallel()
 
-	recordWithContext(t, "loadbalancer", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "loadbalancer", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create Load Balancer
 		lb, err := createLoadBalancerAndNetwork(ctx, svc, "fi-hel1", "172.16.1.0/24")
 		require.NoError(t, err)
@@ -59,7 +59,7 @@ func TestLoadBalancer(t *testing.T) {
 func TestLoadBalancerBackend(t *testing.T) {
 	t.Parallel()
 
-	recordWithContext(t, "loadbalancerbackend", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "loadbalancerbackend", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		lb, err := createLoadBalancerAndNetwork(ctx, svc, "fi-hel2", "172.16.2.0/24")
 		require.NoError(t, err)
 		t.Cleanup(func() {
@@ -123,7 +123,7 @@ func TestLoadBalancerBackend(t *testing.T) {
 func TestLoadBalancerBackendMember(t *testing.T) {
 	t.Parallel()
 
-	recordWithContext(t, "loadbalancerbackendmember", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "loadbalancerbackendmember", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		lb, err := createLoadBalancerAndNetwork(ctx, svc, "nl-ams1", "172.16.3.0/24")
 		require.NoError(t, err)
 		t.Cleanup(func() {
@@ -245,7 +245,7 @@ func TestLoadBalancerBackendMember(t *testing.T) {
 func TestLoadBalancerResolver(t *testing.T) {
 	t.Parallel()
 
-	recordWithContext(t, "loadbalancerresolver", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "loadbalancerresolver", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		lb, err := createLoadBalancerAndNetwork(ctx, svc, "pl-waw1", "10.0.0.0/24")
 		require.NoError(t, err)
 		t.Cleanup(func() {
@@ -363,7 +363,7 @@ func TestLoadBalancerResolver(t *testing.T) {
 }
 
 func TestGetLoadBalancerPlans(t *testing.T) {
-	recordWithContext(t, "getloadbalancerplans", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "getloadbalancerplans", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		plans, err := svc.GetLoadBalancerPlans(ctx, &request.GetLoadBalancerPlansRequest{})
 		require.NoError(t, err)
 		assert.GreaterOrEqual(t, len(plans), 2)
@@ -379,7 +379,7 @@ func TestGetLoadBalancerPlans(t *testing.T) {
 func TestLoadBalancerFrontend(t *testing.T) {
 	t.Parallel()
 
-	recordWithContext(t, "loadbalancerfrontend", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "loadbalancerfrontend", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		lb, err := createLoadBalancerAndNetwork(ctx, svc, "de-fra1", "10.0.0.1/24")
 		require.NoError(t, err)
 		t.Cleanup(func() {
@@ -452,7 +452,7 @@ func TestLoadBalancerFrontend(t *testing.T) {
 func TestLoadBalancerFrontendRule(t *testing.T) {
 	t.Parallel()
 	const zone = "fi-hel2"
-	recordWithContext(t, "loadbalancerfrontendrule", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "loadbalancerfrontendrule", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		net, err := createLoadBalancerAndPrivateNetwork(ctx, svc, zone, "10.0.1.1/24")
 		require.NoError(t, err)
 		lb, err := svc.CreateLoadBalancer(ctx, &request.CreateLoadBalancerRequest{
@@ -594,7 +594,7 @@ func TestLoadBalancerFrontendRule(t *testing.T) {
 func TestLoadBalancerCerticateBundlesAndFrontendTLSConfigs(t *testing.T) {
 	t.Parallel()
 
-	recordWithContext(t, "loadbalancercerticatebundlesandfrontendtlsconfigs", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "loadbalancercerticatebundlesandfrontendtlsconfigs", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		net, err := createLoadBalancerAndPrivateNetwork(ctx, svc, "fi-hel1", "10.0.1.1/24")
 		require.NoError(t, err)
 		feName := "fe-1"
@@ -752,7 +752,7 @@ func TestLoadBalancerCerticateBundlesAndFrontendTLSConfigs(t *testing.T) {
 func TestLoadBalancerPage(t *testing.T) {
 	// do not run this test in parallel because it alters request.DefaultPage config which might cause unexpected results
 	const zone = "fi-hel2"
-	recordWithContext(t, "loadbalancerpage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "loadbalancerpage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		net, err := createLoadBalancerAndPrivateNetwork(ctx, svc, zone, "172.16.0.0/24")
 		require.NoError(t, err)
 		lbs := make([]*upcloud.LoadBalancer, 0)
@@ -815,7 +815,7 @@ func TestLoadBalancerPage(t *testing.T) {
 func TestLoadBalancerNetwork(t *testing.T) {
 	t.Parallel()
 
-	recordWithContext(t, "loadbalancernetworks", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "loadbalancernetworks", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		const zone string = "pl-waw1"
 		net, err := createLoadBalancerPrivateNetwork(ctx, svc, zone, "192.168.55.0/24")
 		require.NoError(t, err)

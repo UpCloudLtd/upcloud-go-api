@@ -49,7 +49,7 @@ func TestGetAccount(t *testing.T) {
 //   - Get account list and check that subaccount and main account is listed
 //   - Delete tag and subaccount
 func TestListDetailsCreateModifyDeleteSubaccount(t *testing.T) {
-	recordWithContext(t, "createmodifydeletesubaccount", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "createmodifydeletesubaccount", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		var err error
 		mainAccount := "testuser"
 		rec.AddFilter(func(i *cassette.Interaction) error {

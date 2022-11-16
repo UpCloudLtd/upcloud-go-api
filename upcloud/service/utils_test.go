@@ -52,7 +52,7 @@ func handleError(err error) {
 }
 
 // records the API interactions of the test. Function provides both services to test cases so that old utility functions can be used to initialize environment.
-func recordWithContext(t *testing.T, fixture string, f func(context.Context, *testing.T, *recorder.Recorder, *Service)) {
+func record(t *testing.T, fixture string, f func(context.Context, *testing.T, *recorder.Recorder, *Service)) {
 	if testing.Short() {
 		t.Skip("Skipping recorded test in short mode")
 	}
@@ -163,7 +163,7 @@ func teardown() {
 		}
 
 		log.Printf("Deleting the storage with UUID %s ...", storage.UUID)
-		err = deleteStorageContext(ctx, svc, storage.UUID)
+		err = deleteStorage(ctx, svc, storage.UUID)
 		handleError(err)
 	}
 

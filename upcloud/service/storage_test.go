@@ -27,9 +27,9 @@ import (
 func TestCreateModifyDeleteStorage(t *testing.T) {
 	t.Parallel()
 
-	recordWithContext(t, "createmodifydeletestorage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "createmodifydeletestorage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create some storage
-		storageDetails, err := createStorageContext(ctx, svc)
+		storageDetails, err := createStorage(ctx, svc)
 		require.NoError(t, err)
 		t.Logf("Storage %s with UUID %s created", storageDetails.Title, storageDetails.UUID)
 
@@ -47,7 +47,7 @@ func TestCreateModifyDeleteStorage(t *testing.T) {
 
 		// Delete the storage
 		t.Log("Deleting the storage ...")
-		err = deleteStorageContext(ctx, svc, storageDetails.UUID)
+		err = deleteStorage(ctx, svc, storageDetails.UUID)
 		require.NoError(t, err)
 		t.Log("Storage is now deleted")
 	})
@@ -64,20 +64,20 @@ func TestCreateModifyDeleteStorage(t *testing.T) {
 // - deletes the server
 func TestAttachDetachStorage(t *testing.T) {
 	t.Parallel()
-	recordWithContext(t, "attachdetachstorage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "attachdetachstorage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create a server
-		serverDetails, err := createServerContext(ctx, rec, svc, "TestAttachDetachStorage")
+		serverDetails, err := createServer(ctx, rec, svc, "TestAttachDetachStorage")
 		require.NoError(t, err)
 		t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 		// Stop the server
 		t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
-		err = stopServerContext(ctx, rec, svc, serverDetails.UUID)
+		err = stopServer(ctx, rec, svc, serverDetails.UUID)
 		require.NoError(t, err)
 		t.Log("Server is now stopped")
 
 		// Create some storage
-		storageDetails, err := createStorageContext(ctx, svc)
+		storageDetails, err := createStorage(ctx, svc)
 		require.NoError(t, err)
 		t.Logf("Storage %s with UUID %s created", storageDetails.Title, storageDetails.UUID)
 
@@ -112,9 +112,9 @@ func TestAttachDetachStorage(t *testing.T) {
 // - deletes the clone and the storage device
 func TestCloneStorage(t *testing.T) {
 	t.Parallel()
-	recordWithContext(t, "clonestorage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "clonestorage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create storage
-		storageDetails, err := createStorageContext(ctx, svc)
+		storageDetails, err := createStorage(ctx, svc)
 		require.NoError(t, err)
 		t.Logf("Storage %s with UUID %s created", storageDetails.Title, storageDetails.UUID)
 
@@ -129,7 +129,7 @@ func TestCloneStorage(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		err = waitForStorageOnlineStateContext(ctx, rec, svc, clonedStorageDetails.UUID)
+		err = waitForStorageOnlineState(ctx, rec, svc, clonedStorageDetails.UUID)
 		require.NoError(t, err)
 
 		details, err := svc.GetStorageDetails(ctx, &request.GetStorageDetailsRequest{UUID: clonedStorageDetails.UUID})
@@ -147,15 +147,15 @@ func TestCloneStorage(t *testing.T) {
 // - stops and deletes the server
 func TestTemplatizeServerStorage(t *testing.T) {
 	t.Parallel()
-	recordWithContext(t, "templatizeserverstorage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "templatizeserverstorage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create server
-		serverDetails, err := createServerContext(ctx, rec, svc, "TestTemplatizeServerStorage")
+		serverDetails, err := createServer(ctx, rec, svc, "TestTemplatizeServerStorage")
 		require.NoError(t, err)
 		t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 		// Stop the server
 		t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
-		err = stopServerContext(ctx, rec, svc, serverDetails.UUID)
+		err = stopServer(ctx, rec, svc, serverDetails.UUID)
 		require.NoError(t, err)
 		t.Log("Server is now stopped")
 
@@ -175,7 +175,7 @@ func TestTemplatizeServerStorage(t *testing.T) {
 		})
 		require.NoErrorf(t, err, "Error: %#v", err)
 
-		err = waitForStorageOnlineStateContext(ctx, rec, svc, storageDetails.UUID)
+		err = waitForStorageOnlineState(ctx, rec, svc, storageDetails.UUID)
 		require.NoError(t, err)
 
 		storageDetails, err = svc.GetStorageDetails(ctx, &request.GetStorageDetailsRequest{UUID: storageDetails.UUID})
@@ -194,15 +194,15 @@ func TestTemplatizeServerStorage(t *testing.T) {
 // - ejects the CD-ROM
 func TestLoadEjectCDROM(t *testing.T) {
 	t.Parallel()
-	recordWithContext(t, "loadejectcdrom", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "loadejectcdrom", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create the server
-		serverDetails, err := createServerContext(ctx, rec, svc, "TestLoadEjectCDROM")
+		serverDetails, err := createServer(ctx, rec, svc, "TestLoadEjectCDROM")
 		require.NoError(t, err)
 		t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 		// Stop the server
 		t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
-		err = stopServerContext(ctx, rec, svc, serverDetails.UUID)
+		err = stopServer(ctx, rec, svc, serverDetails.UUID)
 		require.NoError(t, err)
 		t.Log("Server is now stopped")
 
@@ -242,9 +242,9 @@ func TestLoadEjectCDROM(t *testing.T) {
 // - restores the backup
 func TestCreateRestoreBackup(t *testing.T) {
 	t.Parallel()
-	recordWithContext(t, "createrestorebackup", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "createrestorebackup", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create the storage
-		storageDetails, err := createStorageContext(ctx, svc)
+		storageDetails, err := createStorage(ctx, svc)
 		require.NoError(t, err)
 		t.Logf("Storage %s with UUID %s created", storageDetails.Title, storageDetails.UUID)
 
@@ -262,7 +262,7 @@ func TestCreateRestoreBackup(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		err = waitForStorageOnlineStateContext(ctx, rec, svc, storageDetails.UUID)
+		err = waitForStorageOnlineState(ctx, rec, svc, storageDetails.UUID)
 		require.NoError(t, err)
 
 		storageDetails, err = svc.GetStorageDetails(ctx, &request.GetStorageDetailsRequest{UUID: storageDetails.UUID})
@@ -295,7 +295,7 @@ func TestCreateRestoreBackup(t *testing.T) {
 		})
 		assert.NoError(t, err)
 
-		err = waitForStorageOnlineStateContext(ctx, rec, svc, backupDetails.Origin)
+		err = waitForStorageOnlineState(ctx, rec, svc, backupDetails.Origin)
 		require.NoError(t, err)
 
 		backupDetails, err = svc.GetStorageDetails(ctx, &request.GetStorageDetailsRequest{UUID: backupDetails.Origin})
@@ -306,7 +306,7 @@ func TestCreateRestoreBackup(t *testing.T) {
 
 func TestStorageImport(t *testing.T) {
 	t.Parallel()
-	recordWithContext(t, "storageimport", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "storageimport", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		storage, err := svc.CreateStorage(ctx, &request.CreateStorageRequest{
 			Size:  10,
 			Tier:  upcloud.StorageTierMaxIOPS,
@@ -324,7 +324,7 @@ func TestStorageImport(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		err = waitForStorageImportCompletionContext(ctx, rec, svc, storage.UUID)
+		err = waitForStorageImportCompletion(ctx, rec, svc, storage.UUID)
 		require.NoError(t, err)
 
 		afterStorageImportDetails, err := svc.GetStorageImportDetails(ctx, &request.GetStorageImportDetailsRequest{
@@ -339,7 +339,7 @@ func TestStorageImport(t *testing.T) {
 
 func TestDirectUploadStorageImport(t *testing.T) {
 	t.Parallel()
-	recordWithContext(t, "directuploadstorageimport", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "directuploadstorageimport", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		storage, err := svc.CreateStorage(ctx, &request.CreateStorageRequest{
 			Size:  10,
 			Tier:  upcloud.StorageTierMaxIOPS,
@@ -385,7 +385,7 @@ func TestDirectUploadStorageImport(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		err = waitForStorageImportCompletionContext(ctx, rec, svc, storage.UUID)
+		err = waitForStorageImportCompletion(ctx, rec, svc, storage.UUID)
 		require.NoError(t, err)
 
 		afterStorageImportDetails, err := svc.GetStorageImportDetails(ctx, &request.GetStorageImportDetailsRequest{
@@ -406,13 +406,13 @@ func TestDirectUploadStorageImport(t *testing.T) {
 // - cleanup
 func TestResizeStorageFilesystem(t *testing.T) {
 	t.Parallel()
-	recordWithContext(t, "resizestoragefilesystem", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "resizestoragefilesystem", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// start server
 		serverDetails, err := createMinimalServer(ctx, rec, svc, "TestResizeStorageFilesystem")
 		require.NoError(t, err)
 
 		// stop server
-		require.NoError(t, stopServerContext(ctx, rec, svc, serverDetails.UUID))
+		require.NoError(t, stopServer(ctx, rec, svc, serverDetails.UUID))
 
 		// modify disk size
 		_, err = svc.ModifyStorage(ctx, &request.ModifyStorageRequest{
@@ -421,7 +421,7 @@ func TestResizeStorageFilesystem(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		err = waitForStorageOnlineStateContext(ctx, rec, svc, serverDetails.StorageDevices[0].UUID)
+		err = waitForStorageOnlineState(ctx, rec, svc, serverDetails.StorageDevices[0].UUID)
 		require.NoError(t, err)
 
 		storageDetails, err := svc.GetStorageDetails(ctx, &request.GetStorageDetailsRequest{UUID: serverDetails.StorageDevices[0].UUID})
@@ -446,7 +446,7 @@ func TestResizeStorageFilesystem(t *testing.T) {
 
 func TestCompressedDirectUploadStorageImport(t *testing.T) {
 	t.Parallel()
-	recordWithContext(t, "compresseddirectuploadstorageimport", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "compresseddirectuploadstorageimport", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		storage, err := svc.CreateStorage(ctx, &request.CreateStorageRequest{
 			Size:  10,
 			Tier:  upcloud.StorageTierMaxIOPS,
@@ -455,7 +455,7 @@ func TestCompressedDirectUploadStorageImport(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		err = waitForStorageOnlineStateContext(ctx, rec, svc, storage.UUID)
+		err = waitForStorageOnlineState(ctx, rec, svc, storage.UUID)
 		require.NoError(t, err)
 
 		storageDetails, err := svc.GetStorageDetails(ctx, &request.GetStorageDetailsRequest{UUID: storage.UUID})
@@ -482,7 +482,7 @@ func TestCompressedDirectUploadStorageImport(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		err = waitForStorageImportCompletionContext(ctx, rec, svc, storage.UUID)
+		err = waitForStorageImportCompletion(ctx, rec, svc, storage.UUID)
 		require.NoError(t, err)
 
 		afterStorageImportDetails, err := svc.GetStorageImportDetails(ctx, &request.GetStorageImportDetailsRequest{
@@ -496,7 +496,7 @@ func TestCompressedDirectUploadStorageImport(t *testing.T) {
 }
 
 // Creates a piece of storage and returns the details about it, panic if creation fails.
-func createStorageContext(ctx context.Context, svc *Service) (*upcloud.StorageDetails, error) {
+func createStorage(ctx context.Context, svc *Service) (*upcloud.StorageDetails, error) {
 	createStorageRequest := request.CreateStorageRequest{
 		Tier:  upcloud.StorageTierMaxIOPS,
 		Title: "Test storage",
@@ -518,7 +518,7 @@ func createStorageContext(ctx context.Context, svc *Service) (*upcloud.StorageDe
 }
 
 // Deletes the specified storage.
-func deleteStorageContext(ctx context.Context, svc *Service, uuid string) error {
+func deleteStorage(ctx context.Context, svc *Service, uuid string) error {
 	err := svc.DeleteStorage(ctx, &request.DeleteStorageRequest{
 		UUID: uuid,
 	})
@@ -527,7 +527,7 @@ func deleteStorageContext(ctx context.Context, svc *Service, uuid string) error 
 }
 
 // Waits for the specified storage to come online.
-func waitForStorageImportCompletionContext(ctx context.Context, rec *recorder.Recorder, svc *Service, storageUUID string) error {
+func waitForStorageImportCompletion(ctx context.Context, rec *recorder.Recorder, svc *Service, storageUUID string) error {
 	if rec.Mode() != recorder.ModeRecording {
 		return nil
 	}
@@ -548,7 +548,7 @@ func waitForStorageImportCompletionContext(ctx context.Context, rec *recorder.Re
 }
 
 // Waits for the specified storage to come online.
-func waitForStorageOnlineStateContext(ctx context.Context, rec *recorder.Recorder, svc *Service, storageUUID string) error {
+func waitForStorageOnlineState(ctx context.Context, rec *recorder.Recorder, svc *Service, storageUUID string) error {
 	if rec.Mode() != recorder.ModeRecording {
 		return nil
 	}

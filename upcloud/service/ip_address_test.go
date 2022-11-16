@@ -17,8 +17,8 @@ import (
 //   - compares the retrieved IP addresses with the created server's
 //     ip addresses
 func TestGetIPAddresses(t *testing.T) {
-	recordWithContext(t, "getipaddresses", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		serverDetails, err := createServerContext(ctx, rec, svc, "TestGetIPAddresses")
+	record(t, "getipaddresses", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		serverDetails, err := createServer(ctx, rec, svc, "TestGetIPAddresses")
 		require.NoError(t, err)
 		assert.Greater(t, len(serverDetails.IPAddresses), 0)
 
@@ -59,15 +59,15 @@ func TestGetIPAddresses(t *testing.T) {
 // - deletes the IP address
 func TestAttachModifyReleaseIPAddress(t *testing.T) {
 	t.Parallel()
-	recordWithContext(t, "attachmodifyreleaseipaddress", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "attachmodifyreleaseipaddress", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create the server
-		serverDetails, err := createServerContext(ctx, rec, svc, "TestAttachModifyReleaseIPAddress")
+		serverDetails, err := createServer(ctx, rec, svc, "TestAttachModifyReleaseIPAddress")
 		require.NoError(t, err)
 		t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 		// Stop the server
 		t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
-		err = stopServerContext(ctx, rec, svc, serverDetails.UUID)
+		err = stopServer(ctx, rec, svc, serverDetails.UUID)
 		require.NoError(t, err)
 		t.Log("Server is now stopped")
 
@@ -101,14 +101,14 @@ func TestAttachModifyReleaseIPAddress(t *testing.T) {
 }
 
 func TestAttachModifyReleaseFloatingIPAddress(t *testing.T) {
-	recordWithContext(t, "attachmodifyreleasefloatingipaddress", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "attachmodifyreleasefloatingipaddress", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create the first server
-		serverDetails1, err := createServerContext(ctx, rec, svc, "TestAttachModifyReleaseIPAddress1")
+		serverDetails1, err := createServer(ctx, rec, svc, "TestAttachModifyReleaseIPAddress1")
 		require.NoError(t, err)
 		t.Logf("Server 1 %s with UUID %s created", serverDetails1.Title, serverDetails1.UUID)
 
 		// Create the second server
-		serverDetails2, err := createServerContext(ctx, rec, svc, "TestAttachModifyReleaseIPAddress2")
+		serverDetails2, err := createServer(ctx, rec, svc, "TestAttachModifyReleaseIPAddress2")
 		require.NoError(t, err)
 		t.Logf("Server 2 %s with UUID %s created", serverDetails2.Title, serverDetails2.UUID)
 

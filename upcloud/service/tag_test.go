@@ -11,10 +11,10 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// TestCreateTagContext tests the creation of a single tag
-func TestCreateTagContext(t *testing.T) {
+// TestCreateTag tests the creation of a single tag
+func TestCreateTag(t *testing.T) {
 	t.Parallel()
-	recordWithContext(t, "createtag", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "createtag", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// ignore errors, but delete the tag if it happens to exist
 		_ = svc.DeleteTag(ctx, &request.DeleteTagRequest{
 			Name: "testTag",
@@ -30,11 +30,11 @@ func TestCreateTagContext(t *testing.T) {
 	})
 }
 
-// TestGetTagsContext tests that GetTags returns multiple tags and it, at least, contains the 3
+// TestGetTags tests that GetTags returns multiple tags and it, at least, contains the 3
 // we create.
-func TestGetTagsContext(t *testing.T) {
+func TestGetTags(t *testing.T) {
 	t.Parallel()
-	recordWithContext(t, "gettags", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "gettags", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		testData := []string{
 			"testgettags_tag1",
 			"testgettags_tag2",
@@ -86,18 +86,18 @@ func TestGetTagsContext(t *testing.T) {
 	})
 }
 
-// TestTaggingContext tests that all tagging-related functionality works correctly. It performs the following actions:
+// TestTagging tests that all tagging-related functionality works correctly. It performs the following actions:
 //   - creates a server
 //   - creates three tags
 //   - assigns the first tag to the server
 //   - renames the second tag
 //   - deletes the third tag
 //   - untags the first tag from the server
-func TestTaggingContext(t *testing.T) {
+func TestTagging(t *testing.T) {
 	t.Parallel()
-	recordWithContext(t, "tagging", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "tagging", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create the server
-		serverDetails, err := createServerContext(ctx, rec, svc, "TestTagging")
+		serverDetails, err := createServer(ctx, rec, svc, "TestTagging")
 		require.NoError(t, err)
 		t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 

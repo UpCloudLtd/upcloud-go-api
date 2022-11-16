@@ -16,7 +16,7 @@ import (
 // TestGetObjectStorages tests that the GetObjectStorages() function returns proper data
 func TestGetObjectStorages(t *testing.T) {
 	t.Parallel()
-	recordWithContext(t, "getobjectstorages", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "getobjectstorages", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		objectStorages, err := svc.GetObjectStorages(ctx)
 		require.NoError(t, err)
 		assert.NotEmpty(t, objectStorages.ObjectStorages)
@@ -35,7 +35,7 @@ func TestGetObjectStorages(t *testing.T) {
 // TestGetObjectStorageDetails ensures that the GetObjectStorageDetails() function returns proper data
 func TestGetObjectStorageDetails(t *testing.T) {
 	t.Parallel()
-	recordWithContext(t, "getobjectstoragedetails", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "getobjectstoragedetails", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		d, err := createObjectStorage(ctx, svc, "getobjectstoragedetails", "App object storage", "fi-hel2", 500)
 		require.NoError(t, err)
 
