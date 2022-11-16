@@ -6,11 +6,12 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 ## [Unreleased]
 
 ### Changed
-- bumped module version from `v4` to `v5`
 - context-aware type `client.ClientContext` renamed to `client.Client`
-- context-aware type `service.ServiceContext` renamed to `service.Serivce`
-- `service.Serivce` accepts any client that implements `service.Client` interface 
+- context-aware type `service.ServiceContext` renamed to `service.Service`
+- `service.Service` accepts any client that implements `service.Client` interface 
 - `client.New` constructor allows overwrite `baseURL`, `httpClient` and `httpClient.Timeout` client properties
+- bump Go version to 1.18
+- bump module version from `v4` to `v5`
 
 ### Removed
 - `service.Service` type without context support
