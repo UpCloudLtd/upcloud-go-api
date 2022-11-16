@@ -6,7 +6,6 @@ import (
 	"crypto/tls"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"os"
@@ -214,7 +213,7 @@ func handleResponse(response *http.Response) ([]byte, error) {
 
 	// Return an error on unsuccessful requests
 	if response.StatusCode < 200 || response.StatusCode > 299 {
-		errorBody, _ := ioutil.ReadAll(response.Body)
+		errorBody, _ := io.ReadAll(response.Body)
 		var errorType ErrorType
 		switch response.Header.Get("Content-Type") {
 		case "application/problem+json":
@@ -225,7 +224,7 @@ func handleResponse(response *http.Response) ([]byte, error) {
 		return nil, &Error{response.StatusCode, response.Status, errorBody, errorType}
 	}
 
-	responseBody, err := ioutil.ReadAll(response.Body)
+	responseBody, err := io.ReadAll(response.Body)
 
 	return responseBody, err
 }

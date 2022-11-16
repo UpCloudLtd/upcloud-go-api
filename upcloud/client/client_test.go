@@ -82,6 +82,91 @@ func TestClientUserAgent(t *testing.T) {
 	assert.Equal(t, fmt.Sprintf("upcloud-go-api/%s", Version), c1.UserAgent)
 }
 
+func TestClientGet(t *testing.T) {
+	t.Parallel()
+
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		assert.Equal(t, http.MethodGet, r.Method)
+		assert.Equal(t, fmt.Sprintf("/%s%s", APIVersion, "/test"), r.URL.Path)
+		fmt.Fprint(w, string("ok"))
+	}))
+	defer srv.Close()
+	c := New("", "", WithBaseURL(srv.URL))
+	res, err := c.Get(context.TODO(), "/test")
+	require.NoError(t, err)
+	assert.Equal(t, "ok", string(res))
+}
+
+func TestClientPut(t *testing.T) {
+	t.Parallel()
+
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		assert.Equal(t, http.MethodPut, r.Method)
+		assert.Equal(t, fmt.Sprintf("/%s%s", APIVersion, "/test"), r.URL.Path)
+		fmt.Fprint(w, string("ok"))
+	}))
+	defer srv.Close()
+	c := New("", "", WithBaseURL(srv.URL))
+	res, err := c.Put(context.TODO(), "/test", nil)
+	require.NoError(t, err)
+	assert.Equal(t, "ok", string(res))
+}
+
+func TestClientPatch(t *testing.T) {
+	t.Parallel()
+
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		assert.Equal(t, http.MethodPatch, r.Method)
+		assert.Equal(t, fmt.Sprintf("/%s%s", APIVersion, "/test"), r.URL.Path)
+		fmt.Fprint(w, string("ok"))
+	}))
+	defer srv.Close()
+	c := New("", "", WithBaseURL(srv.URL))
+	res, err := c.Patch(context.TODO(), "/test", nil)
+	require.NoError(t, err)
+	assert.Equal(t, "ok", string(res))
+}
+
+func TestClientDelete(t *testing.T) {
+	t.Parallel()
+
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		assert.Equal(t, http.MethodDelete, r.Method)
+		assert.Equal(t, fmt.Sprintf("/%s%s", APIVersion, "/test"), r.URL.Path)
+		fmt.Fprint(w, string("ok"))
+	}))
+	defer srv.Close()
+	c := New("", "", WithBaseURL(srv.URL))
+	res, err := c.Delete(context.TODO(), "/test")
+	require.NoError(t, err)
+	assert.Equal(t, "ok", string(res))
+}
+
+func TestClientDo(t *testing.T) {
+	t.Parallel()
+
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		assert.Equal(t, http.MethodGet, r.Method)
+		fmt.Fprint(w, string("ok"))
+		assert.Equal(t, "/test", r.URL.Path)
+		// test that we don't leak credentials when calling something else than baseURL
+		_, _, ok := r.BasicAuth()
+		assert.False(t, ok)
+	}))
+	defer srv.Close()
+	c := New("", "")
+	req, err := http.NewRequestWithContext(
+		context.Background(),
+		http.MethodGet,
+		fmt.Sprintf("%s/test", srv.URL),
+		nil,
+	)
+	require.NoError(t, err)
+	res, err := c.Do(req)
+	require.NoError(t, err)
+	assert.Equal(t, "ok", string(res))
+}
+
 func TestClientPost(t *testing.T) {
 	t.Parallel()
 
@@ -110,7 +195,6 @@ func TestClientPost(t *testing.T) {
 		fmt.Fprint(w, string("ok"))
 	}))
 	defer srv.Close()
-	t.Logf("using base URL %s", srv.URL)
 	c := New(wantUsername, wantPassword, WithBaseURL(srv.URL))
 	res, err := c.Post(timeout, wantPath, wantBody)
 	require.NoError(t, err)

@@ -6,7 +6,6 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"testing"
@@ -371,7 +370,7 @@ func TestDirectUploadStorageImport(t *testing.T) {
 		sum := sha256.Sum256(buf)
 		sha256sum := hex.EncodeToString(sum[:])
 
-		tempf, err := ioutil.TempFile(os.TempDir(), "temp_file.txt")
+		tempf, err := os.CreateTemp(os.TempDir(), "temp_file.txt")
 		require.NoError(t, err)
 		defer func() {
 			if err := tempf.Close(); err == nil {
@@ -463,7 +462,7 @@ func TestCompressedDirectUploadStorageImport(t *testing.T) {
 		require.NoError(t, err)
 		assert.Equal(t, upcloud.StorageStateOnline, storageDetails.State)
 
-		f, err := ioutil.TempFile(os.TempDir(), "compresseddirectuploadstorageimport-*.raw.gz")
+		f, err := os.CreateTemp(os.TempDir(), "compresseddirectuploadstorageimport-*.raw.gz")
 		require.NoError(t, err)
 		defer f.Close()
 		defer os.Remove(f.Name())
