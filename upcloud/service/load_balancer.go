@@ -151,13 +151,13 @@ func (s *Service) GetLoadBalancerBackendMembers(ctx context.Context, r *request.
 	return members, s.get(ctx, r.RequestURL(), &members)
 }
 
-// GetLoadBalancerBackendMember retrieves details of a load balancer balancer backend member.
+// GetLoadBalancerBackendMember retrieves details of a load balancer backend member.
 func (s *Service) GetLoadBalancerBackendMember(ctx context.Context, r *request.GetLoadBalancerBackendMemberRequest) (*upcloud.LoadBalancerBackendMember, error) {
 	var member upcloud.LoadBalancerBackendMember
 	return &member, s.get(ctx, r.RequestURL(), &member)
 }
 
-// CreateLoadBalancerBackendMember creates a new load balancer balancer backend member.
+// CreateLoadBalancerBackendMember creates a new load balancer backend member.
 func (s *Service) CreateLoadBalancerBackendMember(ctx context.Context, r *request.CreateLoadBalancerBackendMemberRequest) (*upcloud.LoadBalancerBackendMember, error) {
 	var member upcloud.LoadBalancerBackendMember
 	return &member, s.create(ctx, r, &member)
