@@ -1,104 +1,61 @@
 package service
 
 import (
-	"encoding/json"
+	"context"
 	"fmt"
 	"time"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/request"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 )
 
 type Server interface {
-	GetServerConfigurations() (*upcloud.ServerConfigurations, error)
-	GetServers() (*upcloud.Servers, error)
-	GetServerDetails(r *request.GetServerDetailsRequest) (*upcloud.ServerDetails, error)
-	CreateServer(r *request.CreateServerRequest) (*upcloud.ServerDetails, error)
-	WaitForServerState(r *request.WaitForServerStateRequest) (*upcloud.ServerDetails, error)
-	StartServer(r *request.StartServerRequest) (*upcloud.ServerDetails, error)
-	StopServer(r *request.StopServerRequest) (*upcloud.ServerDetails, error)
-	RestartServer(r *request.RestartServerRequest) (*upcloud.ServerDetails, error)
-	ModifyServer(r *request.ModifyServerRequest) (*upcloud.ServerDetails, error)
-	DeleteServer(r *request.DeleteServerRequest) error
-	DeleteServerAndStorages(r *request.DeleteServerAndStoragesRequest) error
+	GetServerConfigurations(ctx context.Context) (*upcloud.ServerConfigurations, error)
+	GetServers(ctx context.Context) (*upcloud.Servers, error)
+	GetServerDetails(ctx context.Context, r *request.GetServerDetailsRequest) (*upcloud.ServerDetails, error)
+	CreateServer(ctx context.Context, r *request.CreateServerRequest) (*upcloud.ServerDetails, error)
+	WaitForServerState(ctx context.Context, r *request.WaitForServerStateRequest) (*upcloud.ServerDetails, error)
+	StartServer(ctx context.Context, r *request.StartServerRequest) (*upcloud.ServerDetails, error)
+	StopServer(ctx context.Context, r *request.StopServerRequest) (*upcloud.ServerDetails, error)
+	RestartServer(ctx context.Context, r *request.RestartServerRequest) (*upcloud.ServerDetails, error)
+	ModifyServer(ctx context.Context, r *request.ModifyServerRequest) (*upcloud.ServerDetails, error)
+	DeleteServer(ctx context.Context, r *request.DeleteServerRequest) error
+	DeleteServerAndStorages(ctx context.Context, r *request.DeleteServerAndStoragesRequest) error
 }
 
-var _ Server = (*Service)(nil)
-
 // GetServerConfigurations returns the available pre-configured server configurations
-func (s *Service) GetServerConfigurations() (*upcloud.ServerConfigurations, error) {
+func (s *Service) GetServerConfigurations(ctx context.Context) (*upcloud.ServerConfigurations, error) {
 	serverConfigurations := upcloud.ServerConfigurations{}
-	response, err := s.basicGetRequest("/server_size")
-	if err != nil {
-		return nil, err
-	}
-
-	err = json.Unmarshal(response, &serverConfigurations)
-	if err != nil {
-		return nil, err
-	}
-
-	return &serverConfigurations, nil
+	return &serverConfigurations, s.get(ctx, "/server_size", &serverConfigurations)
 }
 
 // GetServers returns the available servers
-func (s *Service) GetServers() (*upcloud.Servers, error) {
+func (s *Service) GetServers(ctx context.Context) (*upcloud.Servers, error) {
 	servers := upcloud.Servers{}
-	response, err := s.basicGetRequest("/server")
-	if err != nil {
-		return nil, err
-	}
-
-	err = json.Unmarshal(response, &servers)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %s, %w", string(response), err)
-	}
-
-	return &servers, nil
+	return &servers, s.get(ctx, "/server", &servers)
 }
 
-// GetServersWithFilters returns the available servers that match all the given filters
-func (s *Service) GetServersWithFilters(r *request.GetServersWithFiltersRequest) (*upcloud.Servers, error) {
+// GetServersWithFilters returns the all the available servers using given filters.
+func (s *Service) GetServersWithFilters(ctx context.Context, r *request.GetServersWithFiltersRequest) (*upcloud.Servers, error) {
 	servers := upcloud.Servers{}
-	return &servers, s.get(r.RequestURL(), &servers)
+	return &servers, s.get(ctx, r.RequestURL(), &servers)
 }
 
 // GetServerDetails returns extended details about the specified server
-func (s *Service) GetServerDetails(r *request.GetServerDetailsRequest) (*upcloud.ServerDetails, error) {
+func (s *Service) GetServerDetails(ctx context.Context, r *request.GetServerDetailsRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
-	response, err := s.basicGetRequest(r.RequestURL())
-	if err != nil {
-		return nil, err
-	}
-
-	err = json.Unmarshal(response, &serverDetails)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %s, %w", string(response), err)
-	}
-
-	return &serverDetails, nil
+	return &serverDetails, s.get(ctx, r.RequestURL(), &serverDetails)
 }
 
 // CreateServer creates a server and returns the server details for the newly created server
-func (s *Service) CreateServer(r *request.CreateServerRequest) (*upcloud.ServerDetails, error) {
+func (s *Service) CreateServer(ctx context.Context, r *request.CreateServerRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
-	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &serverDetails)
-	if err != nil {
-		return nil, err
-	}
-
-	return &serverDetails, nil
+	return &serverDetails, s.create(ctx, r, &serverDetails)
 }
 
 // WaitForServerState blocks execution until the specified server has entered the specified state. If the state changes
 // favorably, the new server details are returned. The method will give up after the specified timeout
-func (s *Service) WaitForServerState(r *request.WaitForServerStateRequest) (*upcloud.ServerDetails, error) {
+func (s *Service) WaitForServerState(ctx context.Context, r *request.WaitForServerStateRequest) (*upcloud.ServerDetails, error) {
 	attempts := 0
 	sleepDuration := time.Second * 5
 
@@ -109,7 +66,7 @@ func (s *Service) WaitForServerState(r *request.WaitForServerStateRequest) (*upc
 		attempts++
 		time.Sleep(sleepDuration)
 
-		serverDetails, err := s.GetServerDetails(&request.GetServerDetailsRequest{
+		serverDetails, err := s.GetServerDetails(ctx, &request.GetServerDetailsRequest{
 			UUID: r.UUID,
 		})
 		if err != nil {
@@ -130,122 +87,46 @@ func (s *Service) WaitForServerState(r *request.WaitForServerStateRequest) (*upc
 }
 
 // StartServer starts the specified server
-func (s *Service) StartServer(r *request.StartServerRequest) (*upcloud.ServerDetails, error) {
-	// Save previous timeout
-	prevTimeout := s.client.GetTimeout()
-
-	// Increase the client timeout to match the request timeout
-	s.client.SetTimeout(r.Timeout)
-
-	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
-	// Restore previous timout
-	s.client.SetTimeout(prevTimeout)
-
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
+func (s *Service) StartServer(ctx context.Context, r *request.StartServerRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
-	err = json.Unmarshal(response, &serverDetails)
-	if err != nil {
-		return nil, err
-	}
-
-	return &serverDetails, nil
+	return &serverDetails, s.create(ctx, r, &serverDetails)
 }
 
 // StopServer stops the specified server
-func (s *Service) StopServer(r *request.StopServerRequest) (*upcloud.ServerDetails, error) {
-	// Save previous timeout
-	prevTimeout := s.client.GetTimeout()
-
-	// Increase the client timeout to match the request timeout
-	// Allow ten seconds to give the API a chance to respond with an error
-	s.client.SetTimeout(r.Timeout + 10*time.Second)
-
+func (s *Service) StopServer(ctx context.Context, r *request.StopServerRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
-	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
-	// Restore previous timeout
-	s.client.SetTimeout(prevTimeout)
-
-	if err != nil {
-		return nil, parseJSONServiceError(err)
+	if r.Timeout > 0 {
+		timeoutCtx, cancel := context.WithTimeout(ctx, r.Timeout)
+		defer cancel()
+		return &serverDetails, s.create(timeoutCtx, r, &serverDetails)
 	}
-
-	err = json.Unmarshal(response, &serverDetails)
-	if err != nil {
-		return nil, err
-	}
-
-	return &serverDetails, nil
+	return &serverDetails, s.create(ctx, r, &serverDetails)
 }
 
 // RestartServer restarts the specified server
-func (s *Service) RestartServer(r *request.RestartServerRequest) (*upcloud.ServerDetails, error) {
-	// Save previous timeout
-	prevTimeout := s.client.GetTimeout()
-
-	// Increase the client timeout to match the request timeout
-	// Allow ten seconds to give the API a chance to respond with an error
-	s.client.SetTimeout(r.Timeout + 10*time.Second)
-
+func (s *Service) RestartServer(ctx context.Context, r *request.RestartServerRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
-	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-
-	// Restore previous timeout
-	s.client.SetTimeout(prevTimeout)
-
-	if err != nil {
-		return nil, parseJSONServiceError(err)
+	if r.Timeout > 0 {
+		timeoutCtx, cancel := context.WithTimeout(ctx, r.Timeout)
+		defer cancel()
+		return &serverDetails, s.create(timeoutCtx, r, &serverDetails)
 	}
-
-	err = json.Unmarshal(response, &serverDetails)
-	if err != nil {
-		return nil, err
-	}
-
-	return &serverDetails, nil
+	return &serverDetails, s.create(ctx, r, &serverDetails)
 }
 
 // ModifyServer modifies the configuration of an existing server. Attaching and detaching storages as well as assigning
 // and releasing IP addresses have their own separate operations.
-func (s *Service) ModifyServer(r *request.ModifyServerRequest) (*upcloud.ServerDetails, error) {
+func (s *Service) ModifyServer(ctx context.Context, r *request.ModifyServerRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
-	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPutRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &serverDetails)
-	if err != nil {
-		return nil, err
-	}
-
-	return &serverDetails, nil
+	return &serverDetails, s.replace(ctx, r, &serverDetails)
 }
 
 // DeleteServer deletes the specified server
-func (s *Service) DeleteServer(r *request.DeleteServerRequest) error {
-	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
-	if err != nil {
-		return parseJSONServiceError(err)
-	}
-
-	return nil
+func (s *Service) DeleteServer(ctx context.Context, r *request.DeleteServerRequest) error {
+	return s.delete(ctx, r)
 }
 
 // DeleteServerAndStorages deletes the specified server and all attached storages
-func (s *Service) DeleteServerAndStorages(r *request.DeleteServerAndStoragesRequest) error {
-	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
-	if err != nil {
-		return parseJSONServiceError(err)
-	}
-
-	return nil
+func (s *Service) DeleteServerAndStorages(ctx context.Context, r *request.DeleteServerAndStoragesRequest) error {
+	return s.delete(ctx, r)
 }

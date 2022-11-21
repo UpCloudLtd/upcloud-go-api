@@ -1,10 +1,11 @@
 package service
 
 import (
+	"context"
 	"testing"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/request"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -12,13 +13,14 @@ import (
 
 // TestCreateTag tests the creation of a single tag
 func TestCreateTag(t *testing.T) {
-	record(t, "createtag", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+	t.Parallel()
+	record(t, "createtag", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// ignore errors, but delete the tag if it happens to exist
-		_ = svc.DeleteTag(&request.DeleteTagRequest{
+		_ = svc.DeleteTag(ctx, &request.DeleteTagRequest{
 			Name: "testTag",
 		})
 
-		tag, err := svc.CreateTag(&request.CreateTagRequest{
+		tag, err := svc.CreateTag(ctx, &request.CreateTagRequest{
 			Tag: upcloud.Tag{
 				Name: "testTag",
 			},
@@ -31,7 +33,8 @@ func TestCreateTag(t *testing.T) {
 // TestGetTags tests that GetTags returns multiple tags and it, at least, contains the 3
 // we create.
 func TestGetTags(t *testing.T) {
-	record(t, "gettags", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+	t.Parallel()
+	record(t, "gettags", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		testData := []string{
 			"testgettags_tag1",
 			"testgettags_tag2",
@@ -41,13 +44,13 @@ func TestGetTags(t *testing.T) {
 		for _, tag := range testData {
 			// Delete all the tags we're about to create.
 			// We don't care about errors.
-			_ = svc.DeleteTag(&request.DeleteTagRequest{
+			_ = svc.DeleteTag(ctx, &request.DeleteTagRequest{
 				Name: tag,
 			})
 		}
 
 		for _, tag := range testData {
-			_, err := svc.CreateTag(&request.CreateTagRequest{
+			_, err := svc.CreateTag(ctx, &request.CreateTagRequest{
 				Tag: upcloud.Tag{
 					Name:        tag,
 					Description: tag + " description",
@@ -57,7 +60,7 @@ func TestGetTags(t *testing.T) {
 			require.NoError(t, err)
 		}
 
-		tags, err := svc.GetTags()
+		tags, err := svc.GetTags(ctx)
 		require.NoError(t, err)
 		// There may be other tags so the length must be
 		// greater than or equal to.
@@ -75,7 +78,7 @@ func TestGetTags(t *testing.T) {
 		}
 
 		for _, tag := range tags.Tags {
-			err := svc.DeleteTag(&request.DeleteTagRequest{
+			err := svc.DeleteTag(ctx, &request.DeleteTagRequest{
 				Name: tag.Name,
 			})
 			require.NoError(t, err)
@@ -92,16 +95,15 @@ func TestGetTags(t *testing.T) {
 //   - untags the first tag from the server
 func TestTagging(t *testing.T) {
 	t.Parallel()
-
-	record(t, "tagging", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "tagging", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create the server
-		serverDetails, err := createServer(rec, svc, "TestTagging")
+		serverDetails, err := createServer(ctx, rec, svc, "TestTagging")
 		require.NoError(t, err)
 		t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 		// Remove all existing tags
 		t.Log("Deleting any existing tags ...")
-		err = deleteAllTags(svc)
+		err = deleteAllTags(ctx, svc)
 		require.NoError(t, err)
 
 		// Create three tags
@@ -113,7 +115,7 @@ func TestTagging(t *testing.T) {
 
 		for _, tag := range tags {
 			t.Logf("Creating tag %s", tag)
-			tagDetails, err := svc.CreateTag(&request.CreateTagRequest{
+			tagDetails, err := svc.CreateTag(ctx, &request.CreateTagRequest{
 				Tag: upcloud.Tag{
 					Name: tag,
 				},
@@ -125,7 +127,7 @@ func TestTagging(t *testing.T) {
 		}
 
 		// Assign the first tag to the server
-		serverDetails, err = svc.TagServer(&request.TagServerRequest{
+		serverDetails, err = svc.TagServer(ctx, &request.TagServerRequest{
 			UUID: serverDetails.UUID,
 			Tags: []string{
 				"tag1",
@@ -144,7 +146,7 @@ func TestTagging(t *testing.T) {
 		t.Logf("Server %s is now tagged with tag %s", serverDetails.Title, "tag1")
 
 		// Rename the second tag
-		tagDetails, err := svc.ModifyTag(&request.ModifyTagRequest{
+		tagDetails, err := svc.ModifyTag(ctx, &request.ModifyTagRequest{
 			Name: "tag2",
 			Tag: upcloud.Tag{
 				Name: "tag2_renamed",
@@ -156,7 +158,7 @@ func TestTagging(t *testing.T) {
 		t.Logf("Tag tag2 renamed to %s", tagDetails.Name)
 
 		// Delete the third tag
-		err = svc.DeleteTag(&request.DeleteTagRequest{
+		err = svc.DeleteTag(ctx, &request.DeleteTagRequest{
 			Name: "tag3",
 		})
 
@@ -165,7 +167,7 @@ func TestTagging(t *testing.T) {
 
 		// Untag the server
 		t.Logf("Removing tag %s from server %s", "tag1", serverDetails.UUID)
-		serverDetails, err = svc.UntagServer(&request.UntagServerRequest{
+		serverDetails, err = svc.UntagServer(ctx, &request.UntagServerRequest{
 			UUID: serverDetails.UUID,
 			Tags: []string{
 				"tag1",
@@ -186,14 +188,14 @@ func TestTagging(t *testing.T) {
 }
 
 // deleteAllTags deletes all existing tags.
-func deleteAllTags(svc *Service) error {
-	tags, err := svc.GetTags()
+func deleteAllTags(ctx context.Context, svc *Service) error {
+	tags, err := svc.GetTags(ctx)
 	if err != nil {
 		return err
 	}
 
 	for _, tagDetails := range tags.Tags {
-		err = svc.DeleteTag(&request.DeleteTagRequest{
+		err = svc.DeleteTag(ctx, &request.DeleteTagRequest{
 			Name: tagDetails.Name,
 		})
 

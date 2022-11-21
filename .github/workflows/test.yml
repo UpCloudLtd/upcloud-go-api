@@ -11,11 +11,10 @@ jobs:
       matrix:
         # support two latest major versions of Go, following the Go security policy
         # in which these versions get security updates. See https://golang.org/security
-        go-version: [ 1.15.x, 1.16.x ]
+        go-version: [1.18.x, 1.19.x]
     steps:
-      - uses: actions/checkout@v2
-
-      - uses: actions/setup-go@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v3
         with:
           go-version: ${{ matrix.go-version }}
 
@@ -25,4 +24,4 @@ jobs:
           UPCLOUD_GO_SDK_TEST_DELETE_RESOURCES: yes
           UPCLOUD_GO_SDK_TEST_USER: ${{ secrets.UPCLOUD_GO_SDK_TEST_USER }}
           UPCLOUD_GO_SDK_TEST_PASSWORD: ${{ secrets.UPCLOUD_GO_SDK_TEST_PASSWORD }}
-        run: go test ./... -v -parallel 1 -timeout 60m
+        run: go test ./... -parallel 1 -timeout 60m

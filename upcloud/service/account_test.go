@@ -1,19 +1,46 @@
 package service
 
 import (
+	"context"
 	"fmt"
+	"os"
 	"strings"
 	"testing"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/request"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/client"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 	"github.com/dnaeon/go-vcr/cassette"
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
-// TestListDetailsCreateModifyDeleteSubaccount tests that subaccount functionality works correctly.
+// TestGetAccount tests that the GetAccount() method returns proper data
+func TestGetAccount(t *testing.T) {
+	if os.Getenv("UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS") == "yes" || testing.Short() {
+		t.Skip("Skipping TestGetAccount...")
+	}
+
+	user, password := getCredentials()
+	svc := New(client.New(user, password))
+
+	account, err := svc.GetAccount(context.Background())
+	require.NoError(t, err)
+
+	if account.UserName != user {
+		t.Errorf("TestGetAccount expected %s, got %s", user, account.UserName)
+	}
+
+	assert.NotZero(t, account.ResourceLimits.Cores)
+	assert.NotZero(t, account.ResourceLimits.Memory)
+	assert.NotZero(t, account.ResourceLimits.Networks)
+	assert.NotZero(t, account.ResourceLimits.PublicIPv6)
+	assert.NotZero(t, account.ResourceLimits.StorageHDD)
+	assert.NotZero(t, account.ResourceLimits.StorageSSD)
+}
+
+// TestListDetailsCreateModifyDeleteSubaccountContext tests that subaccount functionality works correctly with context.
 // The test:
 //   - Create temporary test tag
 //   - Create subaccount
@@ -22,7 +49,7 @@ import (
 //   - Get account list and check that subaccount and main account is listed
 //   - Delete tag and subaccount
 func TestListDetailsCreateModifyDeleteSubaccount(t *testing.T) {
-	record(t, "createmodifydeletesubaccount", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "createmodifydeletesubaccount", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		var err error
 		mainAccount := "testuser"
 		rec.AddFilter(func(i *cassette.Interaction) error {
@@ -37,13 +64,13 @@ func TestListDetailsCreateModifyDeleteSubaccount(t *testing.T) {
 
 		defer func() {
 			// defer cleanup job
-			err = svc.DeleteTag(&request.DeleteTagRequest{Name: tagName})
+			err = svc.DeleteTag(ctx, &request.DeleteTagRequest{Name: tagName})
 			assert.NoError(t, err)
-			err = svc.DeleteSubaccount(&request.DeleteSubaccountRequest{Username: username})
+			err = svc.DeleteSubaccount(ctx, &request.DeleteSubaccountRequest{Username: username})
 			assert.NoError(t, err)
 		}()
 
-		_, err = svc.CreateTag(&request.CreateTagRequest{
+		_, err = svc.CreateTag(ctx, &request.CreateTagRequest{
 			Tag: upcloud.Tag{
 				Name:        tagName,
 				Description: "test tag",
@@ -52,7 +79,7 @@ func TestListDetailsCreateModifyDeleteSubaccount(t *testing.T) {
 		})
 
 		require.NoError(t, err)
-		subAccount, err := svc.CreateSubaccount(&request.CreateSubaccountRequest{
+		subAccount, err := svc.CreateSubaccount(ctx, &request.CreateSubaccountRequest{
 			Subaccount: request.CreateSubaccount{
 				Username:   username,
 				Password:   "mysecr3tPassword",
@@ -125,7 +152,7 @@ func TestListDetailsCreateModifyDeleteSubaccount(t *testing.T) {
 		assert.Equal(t, "127.0.0.1", subAccount.IPFilters.IPFilter[0])
 		assert.Equal(t, mainAccount, subAccount.MainAccount)
 
-		subAccount, err = svc.ModifySubaccount(&request.ModifySubaccountRequest{
+		subAccount, err = svc.ModifySubaccount(ctx, &request.ModifySubaccountRequest{
 			Username: subAccount.Username,
 			Subaccount: request.ModifySubaccount{
 				FirstName:  "User",
@@ -191,7 +218,7 @@ func TestListDetailsCreateModifyDeleteSubaccount(t *testing.T) {
 		assert.Len(t, subAccount.NetworkAccess.Network, 0)
 		assert.Equal(t, "127.0.0.3", subAccount.IPFilters.IPFilter[0])
 
-		accounts, err := svc.GetAccountList()
+		accounts, err := svc.GetAccountList(ctx)
 		require.NoError(t, err)
 		assert.True(t, len(accounts) > 0)
 		subAccountNotFound := true

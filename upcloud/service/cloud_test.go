@@ -8,15 +8,15 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
 )
 
 const testFiHel1Zone string = "fi-hel1"
 
-// TestGetZonesContext tests that the GetZones() function returns proper data
-func TestGetZonesContext(t *testing.T) {
-	recordWithContext(t, "getzones", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
-		zones, err := svcContext.GetZones(ctx)
+// TestGetZones  tests that the GetZones() function returns proper data
+func TestGetZones(t *testing.T) {
+	record(t, "getzones", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		zones, err := svc.GetZones(ctx)
 		require.NoError(t, err)
 		assert.NotEmpty(t, zones.Zones)
 
@@ -32,10 +32,10 @@ func TestGetZonesContext(t *testing.T) {
 	})
 }
 
-// TestGetPriceZonesContext tests that GetPriceZones() function returns proper data
-func TestGetPriceZonesContext(t *testing.T) {
-	recordWithContext(t, "getpricezones", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
-		zones, err := svcContext.GetPriceZones(ctx)
+// TestGetPriceZones tests that GetPriceZones() function returns proper data
+func TestGetPriceZones(t *testing.T) {
+	record(t, "getpricezones", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		zones, err := svc.GetPriceZones(ctx)
 		require.NoError(t, err)
 		assert.NotEmpty(t, zones.PriceZones)
 
@@ -56,10 +56,10 @@ func TestGetPriceZonesContext(t *testing.T) {
 	})
 }
 
-// TestGetTimeZonesContext ensures that the GetTimeZones() function returns proper data
-func TestGetTimeZonesContext(t *testing.T) {
-	recordWithContext(t, "gettimezones", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
-		zones, err := svcContext.GetTimeZones(ctx)
+// TestGetTimeZones ensures that the GetTimeZones() function returns proper data
+func TestGetTimeZones(t *testing.T) {
+	record(t, "gettimezones", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		zones, err := svc.GetTimeZones(ctx)
 		require.NoError(t, err)
 		assert.NotEmpty(t, zones.TimeZones)
 
@@ -74,10 +74,10 @@ func TestGetTimeZonesContext(t *testing.T) {
 	})
 }
 
-// TestGetPlansContext ensures that the GetPlans() functions returns proper data
-func TestGetPlansContext(t *testing.T) {
-	recordWithContext(t, "getplans", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
-		plans, err := svcContext.GetPlans(ctx)
+// TestGetPlans ensures that the GetPlans() functions returns proper data
+func TestGetPlans(t *testing.T) {
+	record(t, "getplans", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		plans, err := svc.GetPlans(ctx)
 		require.NoError(t, err)
 		assert.NotEmpty(t, plans.Plans)
 

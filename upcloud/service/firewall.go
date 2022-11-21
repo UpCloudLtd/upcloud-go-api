@@ -1,88 +1,44 @@
 package service
 
 import (
-	"encoding/json"
+	"context"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/request"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 )
 
 type Firewall interface {
-	GetFirewallRules(r *request.GetFirewallRulesRequest) (*upcloud.FirewallRules, error)
-	GetFirewallRuleDetails(r *request.GetFirewallRuleDetailsRequest) (*upcloud.FirewallRule, error)
-	CreateFirewallRule(r *request.CreateFirewallRuleRequest) (*upcloud.FirewallRule, error)
-	CreateFirewallRules(r *request.CreateFirewallRulesRequest) error
-	DeleteFirewallRule(r *request.DeleteFirewallRuleRequest) error
+	GetFirewallRules(ctx context.Context, r *request.GetFirewallRulesRequest) (*upcloud.FirewallRules, error)
+	GetFirewallRuleDetails(ctx context.Context, r *request.GetFirewallRuleDetailsRequest) (*upcloud.FirewallRule, error)
+	CreateFirewallRule(ctx context.Context, r *request.CreateFirewallRuleRequest) (*upcloud.FirewallRule, error)
+	CreateFirewallRules(ctx context.Context, r *request.CreateFirewallRulesRequest) error
+	DeleteFirewallRule(ctx context.Context, r *request.DeleteFirewallRuleRequest) error
 }
 
-var _ Firewall = (*Service)(nil)
-
 // GetFirewallRules returns the firewall rules for the specified server
-func (s *Service) GetFirewallRules(r *request.GetFirewallRulesRequest) (*upcloud.FirewallRules, error) {
+func (s *Service) GetFirewallRules(ctx context.Context, r *request.GetFirewallRulesRequest) (*upcloud.FirewallRules, error) {
 	firewallRules := upcloud.FirewallRules{}
-	response, err := s.basicGetRequest(r.RequestURL())
-	if err != nil {
-		return nil, err
-	}
-
-	err = json.Unmarshal(response, &firewallRules)
-	if err != nil {
-		return nil, err
-	}
-
-	return &firewallRules, nil
+	return &firewallRules, s.get(ctx, r.RequestURL(), &firewallRules)
 }
 
 // GetFirewallRuleDetails returns extended details about the specified firewall rule
-func (s *Service) GetFirewallRuleDetails(r *request.GetFirewallRuleDetailsRequest) (*upcloud.FirewallRule, error) {
+func (s *Service) GetFirewallRuleDetails(ctx context.Context, r *request.GetFirewallRuleDetailsRequest) (*upcloud.FirewallRule, error) {
 	firewallRule := upcloud.FirewallRule{}
-	response, err := s.basicGetRequest(r.RequestURL())
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &firewallRule)
-	if err != nil {
-		return nil, err
-	}
-
-	return &firewallRule, nil
+	return &firewallRule, s.get(ctx, r.RequestURL(), &firewallRule)
 }
 
 // CreateFirewallRule creates the firewall rule
-func (s *Service) CreateFirewallRule(r *request.CreateFirewallRuleRequest) (*upcloud.FirewallRule, error) {
+func (s *Service) CreateFirewallRule(ctx context.Context, r *request.CreateFirewallRuleRequest) (*upcloud.FirewallRule, error) {
 	firewallRule := upcloud.FirewallRule{}
-	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &firewallRule)
-	if err != nil {
-		return nil, err
-	}
-
-	return &firewallRule, nil
+	return &firewallRule, s.create(ctx, r, &firewallRule)
 }
 
 // CreateFirewallRules creates multiple firewall rules
-func (s *Service) CreateFirewallRules(r *request.CreateFirewallRulesRequest) error {
-	requestBody, _ := json.Marshal(r)
-	_, err := s.client.PerformJSONPutRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-	if err != nil {
-		return parseJSONServiceError(err)
-	}
-
-	return nil
+func (s *Service) CreateFirewallRules(ctx context.Context, r *request.CreateFirewallRulesRequest) error {
+	return s.replace(ctx, r, nil)
 }
 
 // DeleteFirewallRule deletes the specified firewall rule
-func (s *Service) DeleteFirewallRule(r *request.DeleteFirewallRuleRequest) error {
-	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
-	if err != nil {
-		return parseJSONServiceError(err)
-	}
-
-	return nil
+func (s *Service) DeleteFirewallRule(ctx context.Context, r *request.DeleteFirewallRuleRequest) error {
+	return s.delete(ctx, r)
 }

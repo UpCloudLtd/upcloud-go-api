@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -177,8 +177,7 @@ func TestCreateServerRequest(t *testing.T) {
 // when Host and AvoidHost are not specified
 func TestStartServerRequest_OmitValues(t *testing.T) {
 	request := StartServerRequest{
-		UUID:    "foo",
-		Timeout: time.Minute * 5,
+		UUID: "foo",
 	}
 
 	expectedJSON := `
@@ -199,7 +198,6 @@ func TestStartServerRequest_OmitValues(t *testing.T) {
 func TestStartServerRequest_WithValues(t *testing.T) {
 	request := StartServerRequest{
 		UUID:      "foo",
-		Timeout:   time.Minute * 5,
 		Host:      1010,
 		AvoidHost: 1101,
 	}

@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
 )
 
 // Constants
@@ -240,13 +240,9 @@ type WaitForServerStateRequest struct {
 
 // StartServerRequest represents a request to start a server
 type StartServerRequest struct {
-	UUID string `json:"-"`
-
-	// TODO: Start server requests have no timeout in the API
-	Timeout time.Duration `json:"-"`
-
-	AvoidHost int `json:"avoid_host,omitempty"`
-	Host      int `json:"host,omitempty"`
+	UUID      string `json:"-"`
+	AvoidHost int    `json:"avoid_host,omitempty"`
+	Host      int    `json:"host,omitempty"`
 }
 
 // RequestURL implements the Request interface

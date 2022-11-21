@@ -1,10 +1,11 @@
 package service
 
 import (
+	"context"
 	"testing"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/request"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -16,12 +17,12 @@ import (
 //   - compares the retrieved IP addresses with the created server's
 //     ip addresses
 func TestGetIPAddresses(t *testing.T) {
-	record(t, "getipaddresses", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
-		serverDetails, err := createServer(rec, svc, "TestGetIPAddresses")
+	record(t, "getipaddresses", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		serverDetails, err := createServer(ctx, rec, svc, "TestGetIPAddresses")
 		require.NoError(t, err)
 		assert.Greater(t, len(serverDetails.IPAddresses), 0)
 
-		ipAddresses, err := svc.GetIPAddresses()
+		ipAddresses, err := svc.GetIPAddresses(ctx)
 		require.NoError(t, err)
 		var foundCount int
 		for _, sip := range serverDetails.IPAddresses {
@@ -38,7 +39,7 @@ func TestGetIPAddresses(t *testing.T) {
 
 		for _, ip := range serverDetails.IPAddresses {
 			require.NotEmpty(t, ip.Address)
-			ipAddress, err := svc.GetIPAddressDetails(&request.GetIPAddressDetailsRequest{
+			ipAddress, err := svc.GetIPAddressDetails(ctx, &request.GetIPAddressDetailsRequest{
 				Address: ip.Address,
 			})
 			require.NoError(t, err)
@@ -58,22 +59,21 @@ func TestGetIPAddresses(t *testing.T) {
 // - deletes the IP address
 func TestAttachModifyReleaseIPAddress(t *testing.T) {
 	t.Parallel()
-
-	record(t, "attachmodifyreleaseipaddress", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "attachmodifyreleaseipaddress", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create the server
-		serverDetails, err := createServer(rec, svc, "TestAttachModifyReleaseIPAddress")
+		serverDetails, err := createServer(ctx, rec, svc, "TestAttachModifyReleaseIPAddress")
 		require.NoError(t, err)
 		t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 		// Stop the server
 		t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
-		err = stopServer(rec, svc, serverDetails.UUID)
+		err = stopServer(ctx, rec, svc, serverDetails.UUID)
 		require.NoError(t, err)
 		t.Log("Server is now stopped")
 
 		// Assign an IP address
 		t.Log("Assigning IP address to server ...")
-		ipAddress, err := svc.AssignIPAddress(&request.AssignIPAddressRequest{
+		ipAddress, err := svc.AssignIPAddress(ctx, &request.AssignIPAddressRequest{
 			Access:     upcloud.IPAddressAccessPublic,
 			Family:     upcloud.IPAddressFamilyIPv6,
 			ServerUUID: serverDetails.UUID,
@@ -83,7 +83,7 @@ func TestAttachModifyReleaseIPAddress(t *testing.T) {
 
 		// Modify the PTR record
 		t.Logf("Modifying PTR record for address %s ...", ipAddress.Address)
-		ipAddress, err = svc.ModifyIPAddress(&request.ModifyIPAddressRequest{
+		ipAddress, err = svc.ModifyIPAddress(ctx, &request.ModifyIPAddressRequest{
 			IPAddress: ipAddress.Address,
 			PTRRecord: "such.pointer.example.com",
 		})
@@ -92,7 +92,7 @@ func TestAttachModifyReleaseIPAddress(t *testing.T) {
 
 		// Release the IP address
 		t.Log("Releasing the IP address ...")
-		err = svc.ReleaseIPAddress(&request.ReleaseIPAddressRequest{
+		err = svc.ReleaseIPAddress(ctx, &request.ReleaseIPAddressRequest{
 			IPAddress: ipAddress.Address,
 		})
 		require.NoError(t, err)
@@ -101,21 +101,21 @@ func TestAttachModifyReleaseIPAddress(t *testing.T) {
 }
 
 func TestAttachModifyReleaseFloatingIPAddress(t *testing.T) {
-	record(t, "attachmodifyreleasefloatingipaddress", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "attachmodifyreleasefloatingipaddress", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create the first server
-		serverDetails1, err := createServer(rec, svc, "TestAttachModifyReleaseIPAddress1")
+		serverDetails1, err := createServer(ctx, rec, svc, "TestAttachModifyReleaseIPAddress1")
 		require.NoError(t, err)
 		t.Logf("Server 1 %s with UUID %s created", serverDetails1.Title, serverDetails1.UUID)
 
 		// Create the second server
-		serverDetails2, err := createServer(rec, svc, "TestAttachModifyReleaseIPAddress2")
+		serverDetails2, err := createServer(ctx, rec, svc, "TestAttachModifyReleaseIPAddress2")
 		require.NoError(t, err)
 		t.Logf("Server 2 %s with UUID %s created", serverDetails2.Title, serverDetails2.UUID)
 
 		var mac string
 		for _, ip := range serverDetails1.IPAddresses {
 			if ip.Access == upcloud.IPAddressAccessPublic && ip.Family == upcloud.IPAddressFamilyIPv4 {
-				ipDetails, err := svc.GetIPAddressDetails(&request.GetIPAddressDetailsRequest{
+				ipDetails, err := svc.GetIPAddressDetails(ctx, &request.GetIPAddressDetailsRequest{
 					Address: ip.Address,
 				})
 				require.NoError(t, err)
@@ -125,14 +125,14 @@ func TestAttachModifyReleaseFloatingIPAddress(t *testing.T) {
 		}
 		require.NotEmpty(t, mac)
 
-		assignedIP, err := svc.AssignIPAddress(&request.AssignIPAddressRequest{
+		assignedIP, err := svc.AssignIPAddress(ctx, &request.AssignIPAddressRequest{
 			Family:   upcloud.IPAddressFamilyIPv4,
 			Floating: upcloud.True,
 			MAC:      mac,
 		})
 		require.NoError(t, err)
 
-		postAssignServerDetails1, err := svc.GetServerDetails(&request.GetServerDetailsRequest{
+		postAssignServerDetails1, err := svc.GetServerDetails(ctx, &request.GetServerDetailsRequest{
 			UUID: serverDetails1.UUID,
 		})
 		require.NoError(t, err)
@@ -154,7 +154,7 @@ func TestAttachModifyReleaseFloatingIPAddress(t *testing.T) {
 		var mac2 string
 		for _, ip := range serverDetails2.IPAddresses {
 			if ip.Access == upcloud.IPAddressAccessPublic && ip.Family == upcloud.IPAddressFamilyIPv4 {
-				ipDetails, err := svc.GetIPAddressDetails(&request.GetIPAddressDetailsRequest{
+				ipDetails, err := svc.GetIPAddressDetails(ctx, &request.GetIPAddressDetailsRequest{
 					Address: ip.Address,
 				})
 				require.NoError(t, err)
@@ -164,13 +164,13 @@ func TestAttachModifyReleaseFloatingIPAddress(t *testing.T) {
 		}
 		require.NotEmpty(t, mac2)
 
-		_, err = svc.ModifyIPAddress(&request.ModifyIPAddressRequest{
+		_, err = svc.ModifyIPAddress(ctx, &request.ModifyIPAddressRequest{
 			IPAddress: assignedIP.Address,
 			MAC:       mac2,
 		})
 		require.NoError(t, err)
 
-		postModifyServerDetails1, err := svc.GetServerDetails(&request.GetServerDetailsRequest{
+		postModifyServerDetails1, err := svc.GetServerDetails(ctx, &request.GetServerDetailsRequest{
 			UUID: serverDetails1.UUID,
 		})
 		require.NoError(t, err)
@@ -189,7 +189,7 @@ func TestAttachModifyReleaseFloatingIPAddress(t *testing.T) {
 		}
 		assert.False(t, found)
 
-		postModifyServerDetails2, err := svc.GetServerDetails(&request.GetServerDetailsRequest{
+		postModifyServerDetails2, err := svc.GetServerDetails(ctx, &request.GetServerDetailsRequest{
 			UUID: serverDetails2.UUID,
 		})
 		require.NoError(t, err)
@@ -209,14 +209,14 @@ func TestAttachModifyReleaseFloatingIPAddress(t *testing.T) {
 		assert.True(t, found)
 
 		// Unassign IP
-		unassignIP, err := svc.ModifyIPAddress(&request.ModifyIPAddressRequest{
+		unassignIP, err := svc.ModifyIPAddress(ctx, &request.ModifyIPAddressRequest{
 			IPAddress: assignedIP.Address,
 		})
 		require.NoError(t, err)
 		assert.Empty(t, unassignIP.ServerUUID)
 		assert.Empty(t, unassignIP.MAC)
 
-		err = svc.ReleaseIPAddress(&request.ReleaseIPAddressRequest{
+		err = svc.ReleaseIPAddress(ctx, &request.ReleaseIPAddressRequest{
 			IPAddress: assignedIP.Address,
 		})
 		require.NoError(t, err)

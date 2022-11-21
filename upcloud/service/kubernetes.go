@@ -1,44 +1,43 @@
 package service
 
 import (
+	"context"
 	"fmt"
 	"time"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/request"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 )
 
 type Kubernetes interface {
-	CreateKubernetesCluster(r *request.CreateKubernetesClusterRequest) (*upcloud.KubernetesCluster, error)
-	DeleteKubernetesCluster(r *request.DeleteKubernetesClusterRequest) error
-	GetKubernetesCluster(r *request.GetKubernetesClusterRequest) (*upcloud.KubernetesCluster, error)
-	GetKubernetesClusters(r *request.GetKubernetesClustersRequest) ([]upcloud.KubernetesCluster, error)
-	GetKubernetesKubeconfig(r *request.GetKubernetesKubeconfigRequest) (string, error)
-	GetKubernetesVersions(r *request.GetKubernetesVersionsRequest) ([]string, error)
-	WaitForKubernetesClusterState(r *request.WaitForKubernetesClusterStateRequest) (*upcloud.KubernetesCluster, error)
+	GetKubernetesClusters(ctx context.Context, r *request.GetKubernetesClustersRequest) ([]upcloud.KubernetesCluster, error)
+	GetKubernetesCluster(ctx context.Context, r *request.GetKubernetesClusterRequest) (*upcloud.KubernetesCluster, error)
+	CreateKubernetesCluster(ctx context.Context, r *request.CreateKubernetesClusterRequest) (*upcloud.KubernetesCluster, error)
+	DeleteKubernetesCluster(ctx context.Context, r *request.DeleteKubernetesClusterRequest) error
+	GetKubernetesKubeconfig(ctx context.Context, r *request.GetKubernetesKubeconfigRequest) (string, error)
+	GetKubernetesVersions(ctx context.Context, r *request.GetKubernetesVersionsRequest) ([]string, error)
+	WaitForKubernetesClusterState(ctx context.Context, r *request.WaitForKubernetesClusterStateRequest) (*upcloud.KubernetesCluster, error)
 }
 
-var _ Kubernetes = (*Service)(nil)
-
 // GetKubernetesClusters retrieves a list of Kubernetes clusters (EXPERIMENTAL).
-func (s *Service) GetKubernetesClusters(r *request.GetKubernetesClustersRequest) ([]upcloud.KubernetesCluster, error) {
+func (s *Service) GetKubernetesClusters(ctx context.Context, r *request.GetKubernetesClustersRequest) ([]upcloud.KubernetesCluster, error) {
 	clusters := make([]upcloud.KubernetesCluster, 0)
-	return clusters, s.get(r.RequestURL(), &clusters)
+	return clusters, s.get(ctx, r.RequestURL(), &clusters)
 }
 
 // GetKubernetesCluster retrieves details of a Kubernetes cluster (EXPERIMENTAL).
-func (s *Service) GetKubernetesCluster(r *request.GetKubernetesClusterRequest) (*upcloud.KubernetesCluster, error) {
+func (s *Service) GetKubernetesCluster(ctx context.Context, r *request.GetKubernetesClusterRequest) (*upcloud.KubernetesCluster, error) {
 	kubernetesCluster := upcloud.KubernetesCluster{}
-	return &kubernetesCluster, s.get(r.RequestURL(), &kubernetesCluster)
+	return &kubernetesCluster, s.get(ctx, r.RequestURL(), &kubernetesCluster)
 }
 
 // CreateKubernetesCluster creates a new Kubernetes cluster (EXPERIMENTAL).
-func (s *Service) CreateKubernetesCluster(r *request.CreateKubernetesClusterRequest) (*upcloud.KubernetesCluster, error) {
+func (s *Service) CreateKubernetesCluster(ctx context.Context, r *request.CreateKubernetesClusterRequest) (*upcloud.KubernetesCluster, error) {
 	if r == nil || len(r.Network) == 0 {
 		return nil, fmt.Errorf("bad request")
 	}
 
-	networkDetails, err := s.GetNetworkDetails(&request.GetNetworkDetailsRequest{UUID: r.Network})
+	networkDetails, err := s.GetNetworkDetails(ctx, &request.GetNetworkDetailsRequest{UUID: r.Network})
 
 	if err != nil || networkDetails == nil || len(networkDetails.IPNetworks) == 0 {
 		return nil, fmt.Errorf("invalid network: %w", err)
@@ -48,34 +47,25 @@ func (s *Service) CreateKubernetesCluster(r *request.CreateKubernetesClusterRequ
 
 	cluster := upcloud.KubernetesCluster{}
 
-	err = s.create(r, &cluster)
-	if err != nil {
-		return nil, err
-	}
-
-	return &cluster, err
+	return &cluster, s.create(ctx, r, &cluster)
 }
 
 // DeleteKubernetesCluster deletes an existing Kubernetes cluster (EXPERIMENTAL).
-func (s *Service) DeleteKubernetesCluster(r *request.DeleteKubernetesClusterRequest) error {
-	if err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL())); err != nil {
-		return parseJSONServiceError(err)
-	}
-
-	return nil
+func (s *Service) DeleteKubernetesCluster(ctx context.Context, r *request.DeleteKubernetesClusterRequest) error {
+	return s.delete(ctx, r)
 }
 
 // WaitForKubernetesClusterState (EXPERIMENTAL) blocks execution until the specified Kubernetes cluster has entered the
 // specified state. If the state changes favorably, cluster details is returned. The method will give up
 // after the specified timeout
-func (s *Service) WaitForKubernetesClusterState(r *request.WaitForKubernetesClusterStateRequest) (*upcloud.KubernetesCluster, error) {
+func (s *Service) WaitForKubernetesClusterState(ctx context.Context, r *request.WaitForKubernetesClusterStateRequest) (*upcloud.KubernetesCluster, error) {
 	attempts := 0
 	sleepDuration := time.Second * 5
 
 	for {
 		attempts++
 
-		details, err := s.GetKubernetesCluster(&request.GetKubernetesClusterRequest{
+		details, err := s.GetKubernetesCluster(ctx, &request.GetKubernetesClusterRequest{
 			UUID: r.UUID,
 		})
 		if err != nil {
@@ -95,26 +85,28 @@ func (s *Service) WaitForKubernetesClusterState(r *request.WaitForKubernetesClus
 }
 
 // GetKubernetesKubeconfig retrieves kubeconfig of a Kubernetes cluster (EXPERIMENTAL).
-func (s *Service) GetKubernetesKubeconfig(r *request.GetKubernetesKubeconfigRequest) (string, error) {
+func (s *Service) GetKubernetesKubeconfig(ctx context.Context, r *request.GetKubernetesKubeconfigRequest) (string, error) {
+	// TODO: should timeout be part of GetKubernetesKubeconfigRequest ?
+	const timeout time.Duration = 10 * time.Minute
 	data := struct {
 		Kubeconfig string `json:"kubeconfig"`
 	}{}
 
-	_, err := s.WaitForKubernetesClusterState(&request.WaitForKubernetesClusterStateRequest{
+	_, err := s.WaitForKubernetesClusterState(ctx, &request.WaitForKubernetesClusterStateRequest{
 		DesiredState: upcloud.KubernetesClusterStateRunning,
-		Timeout:      s.client.GetTimeout(),
+		Timeout:      timeout,
 		UUID:         r.UUID,
 	})
 	if err != nil {
 		return "", err
 	}
 
-	err = s.get(r.RequestURL(), &data)
+	err = s.get(ctx, r.RequestURL(), &data)
 	return data.Kubeconfig, err
 }
 
 // GetKubernetesVersions retrieves a list of Kubernetes cluster versions (EXPERIMENTAL).
-func (s *Service) GetKubernetesVersions(r *request.GetKubernetesVersionsRequest) ([]string, error) {
+func (s *Service) GetKubernetesVersions(ctx context.Context, r *request.GetKubernetesVersionsRequest) ([]string, error) {
 	versions := make([]string, 0)
-	return versions, s.get(r.RequestURL(), &versions)
+	return versions, s.get(ctx, r.RequestURL(), &versions)
 }

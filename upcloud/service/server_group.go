@@ -1,51 +1,51 @@
 package service
 
 import (
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/request"
+	"context"
+
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 )
 
 type ServerGroup interface {
-	GetServerGroups(r *request.GetServerGroupsRequest) (upcloud.ServerGroups, error)
-	GetServerGroup(r *request.GetServerGroupRequest) (*upcloud.ServerGroup, error)
-	CreateServerGroup(r *request.CreateServerGroupRequest) (*upcloud.ServerGroup, error)
-	ModifyServerGroup(r *request.ModifyServerGroupRequest) (*upcloud.ServerGroup, error)
-	DeleteServerGroup(r *request.DeleteServerGroupRequest) error
+	GetServerGroups(ctx context.Context, r *request.GetServerGroupsRequest) (upcloud.ServerGroups, error)
+	GetServerGroup(ctx context.Context, r *request.GetServerGroupRequest) (*upcloud.ServerGroup, error)
+	CreateServerGroup(ctx context.Context, r *request.CreateServerGroupRequest) (*upcloud.ServerGroup, error)
+	ModifyServerGroup(ctx context.Context, r *request.ModifyServerGroupRequest) (*upcloud.ServerGroup, error)
+	DeleteServerGroup(ctx context.Context, r *request.DeleteServerGroupRequest) error
 }
 
-var _ ServerGroup = (*Service)(nil)
-
-// GetServerGroups retrieves a list of server groups (EXPERIMENTAL).
-func (s *Service) GetServerGroups(r *request.GetServerGroupsRequest) (upcloud.ServerGroups, error) {
+// GetServerGroups retrieves a list of server groups with context (EXPERIMENTAL).
+func (s *Service) GetServerGroups(ctx context.Context, r *request.GetServerGroupsRequest) (upcloud.ServerGroups, error) {
 	groups := upcloud.ServerGroups{}
-	return groups, s.get(r.RequestURL(), &groups)
+	return groups, s.get(ctx, r.RequestURL(), &groups)
 }
 
 // GetServerGroupsWithFilters retrieves a list of server groups with filters (EXPERIMENTAL).
-func (s *Service) GetServerGroupsWithFilters(r *request.GetServerGroupsWithFiltersRequest) (upcloud.ServerGroups, error) {
+func (s *Service) GetServerGroupsWithFilters(ctx context.Context, r *request.GetServerGroupsWithFiltersRequest) (upcloud.ServerGroups, error) {
 	groups := upcloud.ServerGroups{}
-	return groups, s.get(r.RequestURL(), &groups)
+	return groups, s.get(ctx, r.RequestURL(), &groups)
 }
 
-// GetServerGroup retrieves details of a server group (EXPERIMENTAL).
-func (s *Service) GetServerGroup(r *request.GetServerGroupRequest) (*upcloud.ServerGroup, error) {
+// GetServerGroup retrieves details of a server group  with context (EXPERIMENTAL).
+func (s *Service) GetServerGroup(ctx context.Context, r *request.GetServerGroupRequest) (*upcloud.ServerGroup, error) {
 	group := upcloud.ServerGroup{}
-	return &group, s.get(r.RequestURL(), &group)
+	return &group, s.get(ctx, r.RequestURL(), &group)
 }
 
-// CreateServerGroup creates a new server group (EXPERIMENTAL).
-func (s *Service) CreateServerGroup(r *request.CreateServerGroupRequest) (*upcloud.ServerGroup, error) {
+// CreateServerGroup creates a new server group  with context (EXPERIMENTAL).
+func (s *Service) CreateServerGroup(ctx context.Context, r *request.CreateServerGroupRequest) (*upcloud.ServerGroup, error) {
 	var group upcloud.ServerGroup
-	return &group, s.create(r, &group)
+	return &group, s.create(ctx, r, &group)
 }
 
-// ModifyServerGroup modifies an existing server group (EXPERIMENTAL).
-func (s *Service) ModifyServerGroup(r *request.ModifyServerGroupRequest) (*upcloud.ServerGroup, error) {
+// ModifyServerGroup modifies an existing server group  with context (EXPERIMENTAL).
+func (s *Service) ModifyServerGroup(ctx context.Context, r *request.ModifyServerGroupRequest) (*upcloud.ServerGroup, error) {
 	var group upcloud.ServerGroup
-	return &group, s.modify(r, &group)
+	return &group, s.modify(ctx, r, &group)
 }
 
-// DeleteServerGroup deletes an existing server group (EXPERIMENTAL).
-func (s *Service) DeleteServerGroup(r *request.DeleteServerGroupRequest) error {
-	return s.delete(r)
+// DeleteServerGroup deletes an existing server group  with context (EXPERIMENTAL).
+func (s *Service) DeleteServerGroup(ctx context.Context, r *request.DeleteServerGroupRequest) error {
+	return s.delete(ctx, r)
 }

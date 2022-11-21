@@ -1,8 +1,7 @@
 package service
 
 import (
-	"errors"
-	"fmt"
+	"context"
 	"log"
 	"net/http"
 	"os"
@@ -10,14 +9,13 @@ import (
 	"testing"
 	"time"
 
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/client"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 	"github.com/dnaeon/go-vcr/cassette"
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/hashicorp/go-cleanhttp"
 	"github.com/stretchr/testify/require"
-
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/client"
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/request"
 )
 
 const waitTimeout = time.Minute * 15
@@ -53,8 +51,8 @@ func handleError(err error) {
 	}
 }
 
-// records the API interactions of the test.
-func record(t *testing.T, fixture string, f func(*testing.T, *recorder.Recorder, *Service)) {
+// records the API interactions of the test. Function provides both services to test cases so that old utility functions can be used to initialize environment.
+func record(t *testing.T, fixture string, f func(context.Context, *testing.T, *recorder.Recorder, *Service)) {
 	if testing.Short() {
 		t.Skip("Skipping recorded test in short mode")
 	}
@@ -83,9 +81,6 @@ func record(t *testing.T, fixture string, f func(*testing.T, *recorder.Recorder,
 	r.SetTransport(origTransport)
 	httpClient.Transport = r
 
-	c := client.NewWithHTTPClient(user, password, httpClient)
-	c.SetTimeout(time.Second * 300)
-
 	customAPI := os.Getenv("UPCLOUD_GO_SDK_API_HOST")
 	if customAPI != "" {
 		// Override api host after the go-vcr to maintain consistent test fixtures
@@ -97,32 +92,38 @@ func record(t *testing.T, fixture string, f func(*testing.T, *recorder.Recorder,
 		}})
 	}
 
-	f(t, r, New(c))
+	// just some random timeout value. High enough that it won't be reached during normal test.
+	ctx, cancel := context.WithTimeout(context.Background(), waitTimeout*4)
+	defer cancel()
+	f(ctx, t, r, New(client.New(user, password, client.WithHTTPClient(httpClient))))
 }
 
 // Tears down the test environment by removing all resources.
 func teardown() {
 	svc := getService()
 
+	ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(1*time.Hour))
+	defer cancel()
+
 	// Delete all server groups
 	log.Print("Deleting all server groups ...")
-	serverGroups, err := svc.GetServerGroups(&request.GetServerGroupsRequest{})
+	serverGroups, err := svc.GetServerGroups(ctx, &request.GetServerGroupsRequest{})
 	handleError(err)
 
 	for _, serverGroup := range serverGroups {
 		log.Printf("Deleting the server group with UUID %s ...", serverGroup.UUID)
-		err = deleteServerGroup(svc, serverGroup.UUID)
+		err = deleteServerGroup(ctx, svc, serverGroup.UUID)
 		handleError(err)
 	}
 
 	log.Print("Deleting all servers ...")
-	servers, err := svc.GetServers()
+	servers, err := svc.GetServers(ctx)
 	handleError(err)
 
 	for _, server := range servers.Servers {
 		// Try to ensure the server is not in maintenance state
 		log.Printf("Waiting for server with UUID %s to leave maintenance state ...", server.UUID)
-		serverDetails, err := svc.WaitForServerState(&request.WaitForServerStateRequest{
+		serverDetails, err := svc.WaitForServerState(ctx, &request.WaitForServerStateRequest{
 			UUID:           server.UUID,
 			UndesiredState: upcloud.ServerStateMaintenance,
 			Timeout:        waitTimeout,
@@ -132,19 +133,19 @@ func teardown() {
 		// Stop the server if it's still running
 		if serverDetails.State != upcloud.ServerStateStopped {
 			log.Printf("Stopping server with UUID %s ...", server.UUID)
-			err = stopServerWithoutRecorder(svc, server.UUID)
+			err = stopServerWithoutRecorder(ctx, svc, server.UUID)
 			handleError(err)
 		}
 
 		// Delete the server
 		log.Printf("Deleting the server with UUID %s ...", server.UUID)
-		err = deleteServer(svc, server.UUID)
+		err = deleteServer(ctx, svc, server.UUID)
 		handleError(err)
 	}
 
 	// Delete all private storage devices
 	log.Print("Deleting all storage devices ...")
-	storages, err := svc.GetStorages(&request.GetStoragesRequest{
+	storages, err := svc.GetStorages(ctx, &request.GetStoragesRequest{
 		Access: upcloud.StorageAccessPrivate,
 	})
 	handleError(err)
@@ -153,7 +154,7 @@ func teardown() {
 		// Wait for the storage to come online so we can delete it
 		if storage.State != upcloud.StorageStateOnline {
 			log.Printf("Waiting for storage %s to come online ...", storage.UUID)
-			_, err = svc.WaitForStorageState(&request.WaitForStorageStateRequest{
+			_, err = svc.WaitForStorageState(ctx, &request.WaitForStorageStateRequest{
 				UUID:         storage.UUID,
 				DesiredState: upcloud.StorageStateOnline,
 				Timeout:      waitTimeout,
@@ -162,22 +163,22 @@ func teardown() {
 		}
 
 		log.Printf("Deleting the storage with UUID %s ...", storage.UUID)
-		err = deleteStorage(svc, storage.UUID)
+		err = deleteStorage(ctx, svc, storage.UUID)
 		handleError(err)
 	}
 
 	// Delete all tags
 	log.Print("Deleting all tags ...")
-	err = deleteAllTags(svc)
+	err = deleteAllTags(ctx, svc)
 	handleError(err)
 
 	log.Print("Deleting all networks...")
-	networks, err := svc.GetNetworks()
+	networks, err := svc.GetNetworks(ctx)
 	handleError(err)
 	var count int
 	for _, network := range networks.Networks {
 		if strings.Contains(network.Name, "(test)") {
-			err := svc.DeleteNetwork(&request.DeleteNetworkRequest{
+			err := svc.DeleteNetwork(ctx, &request.DeleteNetworkRequest{
 				UUID: network.UUID,
 			})
 			count++
@@ -187,12 +188,12 @@ func teardown() {
 	log.Printf("Deleted %d networks...", count)
 
 	log.Print("Deleting all routers...")
-	routers, err := svc.GetRouters()
+	routers, err := svc.GetRouters(ctx)
 	handleError(err)
 	count = 0
 	for _, router := range routers.Routers {
 		if strings.Contains(router.Name, "(test)") {
-			err := svc.DeleteRouter(&request.DeleteRouterRequest{
+			err := svc.DeleteRouter(ctx, &request.DeleteRouterRequest{
 				UUID: router.UUID,
 			})
 			count++
@@ -203,13 +204,13 @@ func teardown() {
 
 	// Delete all object storages
 	log.Print("Delete all object storages...")
-	objectStorages, err := svc.GetObjectStorages()
+	objectStorages, err := svc.GetObjectStorages(ctx)
 	handleError(err)
 
 	for _, objectStorage := range objectStorages.ObjectStorages {
 		// Delete the Object Storage
 		log.Printf("Deleting the object storage with UUID %s ...", objectStorage.UUID)
-		err = deleteObjectStorage(svc, objectStorage.UUID)
+		err = deleteObjectStorage(ctx, svc, objectStorage.UUID)
 		handleError(err)
 	}
 }
@@ -225,63 +226,4 @@ func utcTimeWithSecondPrecision() (time.Time, error) {
 	t := time.Now().In(utc).Truncate(time.Second)
 
 	return t, err
-}
-
-func waitLoadBalancerToShutdown(svc *Service, lb *upcloud.LoadBalancer) error {
-	const maxRetries int = 100
-	// wait delete request
-	for i := 0; i <= maxRetries; i++ {
-		_, err := svc.GetLoadBalancer(&request.GetLoadBalancerRequest{UUID: lb.UUID})
-		if err != nil {
-			if svcErr, ok := err.(*upcloud.Problem); ok && svcErr.Status == http.StatusNotFound {
-				return nil
-			}
-		}
-		time.Sleep(2 * time.Second)
-	}
-	return errors.New("max retries reached while waiting for load balancer instance to shutdown")
-}
-
-func deleteLoadBalancer(svc *Service, lb *upcloud.LoadBalancer) error {
-	if err := svc.DeleteLoadBalancer(&request.DeleteLoadBalancerRequest{UUID: lb.UUID}); err != nil {
-		return err
-	}
-
-	if err := waitLoadBalancerToShutdown(svc, lb); err != nil {
-		return fmt.Errorf("unable to shutdown LB '%s' (%s) (check dangling networks)", lb.UUID, lb.Name)
-	}
-
-	var errs []error
-	if lb.NetworkUUID != "" {
-		if err := svc.DeleteNetwork(&request.DeleteNetworkRequest{UUID: lb.NetworkUUID}); err != nil {
-			errs = append(errs, err)
-		}
-	}
-	if len(lb.Networks) > 0 {
-		for _, n := range lb.Networks {
-			if n.Type == upcloud.LoadBalancerNetworkTypePrivate && n.UUID != "" {
-				if err := svc.DeleteNetwork(&request.DeleteNetworkRequest{UUID: n.UUID}); err != nil {
-					errs = append(errs, err)
-				}
-			}
-		}
-	}
-	if len(errs) > 0 {
-		return fmt.Errorf("%s", errs)
-	}
-	return nil
-}
-
-func createLoadBalancerPrivateNetwork(svc *Service, zone, addr string) (*upcloud.Network, error) {
-	return svc.CreateNetwork(&request.CreateNetworkRequest{
-		Name: fmt.Sprintf("go-test-lb-%d", time.Now().Unix()),
-		Zone: zone,
-		IPNetworks: []upcloud.IPNetwork{
-			{
-				Address: addr,
-				DHCP:    upcloud.True,
-				Family:  upcloud.IPAddressFamilyIPv4,
-			},
-		},
-	})
 }

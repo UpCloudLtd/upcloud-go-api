@@ -1,69 +1,64 @@
 package service
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"time"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/request"
-)
-
-type ManagedDatabaseServiceManager interface {
-	CancelManagedDatabaseConnection(r *request.CancelManagedDatabaseConnection) error
-	CloneManagedDatabase(r *request.CloneManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
-	CreateManagedDatabase(r *request.CreateManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
-	GetManagedDatabase(r *request.GetManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
-	GetManagedDatabases(r *request.GetManagedDatabasesRequest) ([]upcloud.ManagedDatabase, error)
-	GetManagedDatabaseConnections(r *request.GetManagedDatabaseConnectionsRequest) ([]upcloud.ManagedDatabaseConnection, error)
-	GetManagedDatabaseMetrics(r *request.GetManagedDatabaseMetricsRequest) (*upcloud.ManagedDatabaseMetrics, error)
-	GetManagedDatabaseLogs(r *request.GetManagedDatabaseLogsRequest) (*upcloud.ManagedDatabaseLogs, error)
-	GetManagedDatabaseQueryStatisticsMySQL(r *request.GetManagedDatabaseQueryStatisticsRequest) ([]upcloud.ManagedDatabaseQueryStatisticsMySQL, error)
-	GetManagedDatabaseQueryStatisticsPostgreSQL(r *request.GetManagedDatabaseQueryStatisticsRequest) ([]upcloud.ManagedDatabaseQueryStatisticsPostgreSQL, error)
-	GetManagedDatabaseServiceType(r *request.GetManagedDatabaseServiceTypeRequest) (*upcloud.ManagedDatabaseType, error)
-	GetManagedDatabaseServiceTypes(r *request.GetManagedDatabaseServiceTypesRequest) (map[string]upcloud.ManagedDatabaseType, error)
-	DeleteManagedDatabase(r *request.DeleteManagedDatabaseRequest) error
-	ModifyManagedDatabase(r *request.ModifyManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
-	UpgradeManagedDatabaseVersion(r *request.UpgradeManagedDatabaseVersionRequest) (*upcloud.ManagedDatabase, error)
-	GetManagedDatabaseVersions(r *request.GetManagedDatabaseVersionsRequest) ([]string, error)
-	StartManagedDatabase(r *request.StartManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
-	ShutdownManagedDatabase(r *request.ShutdownManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
-	WaitForManagedDatabaseState(r *request.WaitForManagedDatabaseStateRequest) (*upcloud.ManagedDatabase, error)
-}
-
-type ManagedDatabaseUserManager interface {
-	CreateManagedDatabaseUser(r *request.CreateManagedDatabaseUserRequest) (*upcloud.ManagedDatabaseUser, error)
-	GetManagedDatabaseUser(r *request.GetManagedDatabaseUserRequest) (*upcloud.ManagedDatabaseUser, error)
-	GetManagedDatabaseUsers(r *request.GetManagedDatabaseUsersRequest) ([]upcloud.ManagedDatabaseUser, error)
-	DeleteManagedDatabaseUser(r *request.DeleteManagedDatabaseUserRequest) error
-	ModifyManagedDatabaseUser(r *request.ModifyManagedDatabaseUserRequest) (*upcloud.ManagedDatabaseUser, error)
-}
-
-type ManagedDatabaseLogicalDatabaseManager interface {
-	CreateManagedDatabaseLogicalDatabase(r *request.CreateManagedDatabaseLogicalDatabaseRequest) (*upcloud.ManagedDatabaseLogicalDatabase, error)
-	GetManagedDatabaseLogicalDatabases(r *request.GetManagedDatabaseLogicalDatabasesRequest) ([]upcloud.ManagedDatabaseLogicalDatabase, error)
-	DeleteManagedDatabaseLogicalDatabase(r *request.DeleteManagedDatabaseLogicalDatabaseRequest) error
-}
-
-var (
-	_ ManagedDatabaseServiceManager         = (*Service)(nil)
-	_ ManagedDatabaseUserManager            = (*Service)(nil)
-	_ ManagedDatabaseLogicalDatabaseManager = (*Service)(nil)
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 )
 
 var ErrCancelManagedDatabaseConnection = errors.New("managed database connection cancellation failed")
+
+type ManagedDatabaseServiceManager interface {
+	CancelManagedDatabaseConnection(ctx context.Context, r *request.CancelManagedDatabaseConnection) error
+	CloneManagedDatabase(ctx context.Context, r *request.CloneManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
+	CreateManagedDatabase(ctx context.Context, r *request.CreateManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
+	GetManagedDatabase(ctx context.Context, r *request.GetManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
+	GetManagedDatabases(ctx context.Context, r *request.GetManagedDatabasesRequest) ([]upcloud.ManagedDatabase, error)
+	GetManagedDatabaseConnections(ctx context.Context, r *request.GetManagedDatabaseConnectionsRequest) ([]upcloud.ManagedDatabaseConnection, error)
+	GetManagedDatabaseMetrics(ctx context.Context, r *request.GetManagedDatabaseMetricsRequest) (*upcloud.ManagedDatabaseMetrics, error)
+	GetManagedDatabaseLogs(ctx context.Context, r *request.GetManagedDatabaseLogsRequest) (*upcloud.ManagedDatabaseLogs, error)
+	GetManagedDatabaseQueryStatisticsMySQL(ctx context.Context, r *request.GetManagedDatabaseQueryStatisticsRequest) ([]upcloud.ManagedDatabaseQueryStatisticsMySQL, error)
+	GetManagedDatabaseQueryStatisticsPostgreSQL(ctx context.Context, r *request.GetManagedDatabaseQueryStatisticsRequest) ([]upcloud.ManagedDatabaseQueryStatisticsPostgreSQL, error)
+	DeleteManagedDatabase(ctx context.Context, r *request.DeleteManagedDatabaseRequest) error
+	ModifyManagedDatabase(ctx context.Context, r *request.ModifyManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
+	UpgradeManagedDatabaseVersion(ctx context.Context, r *request.UpgradeManagedDatabaseVersionRequest) (*upcloud.ManagedDatabase, error)
+	GetManagedDatabaseVersions(ctx context.Context, r *request.GetManagedDatabaseVersionsRequest) ([]string, error)
+	StartManagedDatabase(ctx context.Context, r *request.StartManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
+	ShutdownManagedDatabase(ctx context.Context, r *request.ShutdownManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
+	WaitForManagedDatabaseState(ctx context.Context, r *request.WaitForManagedDatabaseStateRequest) (*upcloud.ManagedDatabase, error)
+	GetManagedDatabaseServiceType(ctx context.Context, r *request.GetManagedDatabaseServiceTypeRequest) (*upcloud.ManagedDatabaseType, error)
+	GetManagedDatabaseServiceTypes(ctx context.Context, r *request.GetManagedDatabaseServiceTypesRequest) (map[string]upcloud.ManagedDatabaseType, error)
+}
+
+type ManagedDatabaseUserManager interface {
+	CreateManagedDatabaseUser(ctx context.Context, r *request.CreateManagedDatabaseUserRequest) (*upcloud.ManagedDatabaseUser, error)
+	GetManagedDatabaseUser(ctx context.Context, r *request.GetManagedDatabaseUserRequest) (*upcloud.ManagedDatabaseUser, error)
+	GetManagedDatabaseUsers(ctx context.Context, r *request.GetManagedDatabaseUsersRequest) ([]upcloud.ManagedDatabaseUser, error)
+	DeleteManagedDatabaseUser(ctx context.Context, r *request.DeleteManagedDatabaseUserRequest) error
+	ModifyManagedDatabaseUser(ctx context.Context, r *request.ModifyManagedDatabaseUserRequest) (*upcloud.ManagedDatabaseUser, error)
+}
+
+type ManagedDatabaseLogicalDatabaseManager interface {
+	CreateManagedDatabaseLogicalDatabase(ctx context.Context, r *request.CreateManagedDatabaseLogicalDatabaseRequest) (*upcloud.ManagedDatabaseLogicalDatabase, error)
+	GetManagedDatabaseLogicalDatabases(ctx context.Context, r *request.GetManagedDatabaseLogicalDatabasesRequest) ([]upcloud.ManagedDatabaseLogicalDatabase, error)
+	DeleteManagedDatabaseLogicalDatabase(ctx context.Context, r *request.DeleteManagedDatabaseLogicalDatabaseRequest) error
+}
 
 /* Service Management */
 
 // CancelManagedDatabaseConnection (EXPERIMENTAL) cancels a current query of a database connection or terminates it entirely.
 // In case of the server is unable to cancel the query or terminate the connection ErrCancelManagedDatabaseConnection
 // is returned.
-func (s *Service) CancelManagedDatabaseConnection(r *request.CancelManagedDatabaseConnection) error {
+func (s *Service) CancelManagedDatabaseConnection(ctx context.Context, r *request.CancelManagedDatabaseConnection) error {
 	res := struct {
 		Success bool `json:"success"`
 	}{}
-	response, err := s.client.PerformJSONDeleteRequestWithResponseBody(s.client.CreateRequestURL(r.RequestURL()))
+	response, err := s.client.Delete(ctx, r.RequestURL())
 	if err != nil {
 		return parseJSONServiceError(err)
 	}
@@ -79,245 +74,104 @@ func (s *Service) CancelManagedDatabaseConnection(r *request.CancelManagedDataba
 }
 
 // CloneManagedDatabase (EXPERIMENTAL) clones en existing managed database instance
-func (s *Service) CloneManagedDatabase(r *request.CloneManagedDatabaseRequest) (*upcloud.ManagedDatabase, error) {
+func (s *Service) CloneManagedDatabase(ctx context.Context, r *request.CloneManagedDatabaseRequest) (*upcloud.ManagedDatabase, error) {
 	managedDatabaseDetails := upcloud.ManagedDatabase{}
-	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &managedDatabaseDetails)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %w", err)
-	}
-
-	return &managedDatabaseDetails, nil
+	return &managedDatabaseDetails, s.create(ctx, r, &managedDatabaseDetails)
 }
 
 // CreateManagedDatabase (EXPERIMENTAL) creates a new managed database instance
-func (s *Service) CreateManagedDatabase(r *request.CreateManagedDatabaseRequest) (*upcloud.ManagedDatabase, error) {
+func (s *Service) CreateManagedDatabase(ctx context.Context, r *request.CreateManagedDatabaseRequest) (*upcloud.ManagedDatabase, error) {
 	managedDatabaseDetails := upcloud.ManagedDatabase{}
-	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &managedDatabaseDetails)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %w", err)
-	}
-
-	return &managedDatabaseDetails, nil
+	return &managedDatabaseDetails, s.create(ctx, r, &managedDatabaseDetails)
 }
 
 // GetManagedDatabase (EXPERIMENTAL) gets details of an existing managed database instance
-func (s *Service) GetManagedDatabase(r *request.GetManagedDatabaseRequest) (*upcloud.ManagedDatabase, error) {
+func (s *Service) GetManagedDatabase(ctx context.Context, r *request.GetManagedDatabaseRequest) (*upcloud.ManagedDatabase, error) {
 	managedDatabaseDetails := upcloud.ManagedDatabase{}
-	response, err := s.client.PerformJSONGetRequest(s.client.CreateRequestURL(r.RequestURL()))
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &managedDatabaseDetails)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %w", err)
-	}
-
-	return &managedDatabaseDetails, nil
+	return &managedDatabaseDetails, s.get(ctx, r.RequestURL(), &managedDatabaseDetails)
 }
 
 // GetManagedDatabases (EXPERIMENTAL) returns a slice of all managed database instances within an account
-func (s *Service) GetManagedDatabases(r *request.GetManagedDatabasesRequest) ([]upcloud.ManagedDatabase, error) {
+func (s *Service) GetManagedDatabases(ctx context.Context, r *request.GetManagedDatabasesRequest) ([]upcloud.ManagedDatabase, error) {
 	var services []upcloud.ManagedDatabase
-	response, err := s.client.PerformJSONGetRequest(s.client.CreateRequestURL(r.RequestURL()))
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &services)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %w", err)
-	}
-
-	return services, nil
+	return services, s.get(ctx, r.RequestURL(), &services)
 }
 
 // GetManagedDatabaseConnections (EXPERIMENTAL) returns a slice of connections from an existing managed database instance
-func (s *Service) GetManagedDatabaseConnections(r *request.GetManagedDatabaseConnectionsRequest) ([]upcloud.ManagedDatabaseConnection, error) {
-	var conns []upcloud.ManagedDatabaseConnection
-	response, err := s.client.PerformJSONGetRequest(s.client.CreateRequestURL(r.RequestURL()))
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &conns)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %w", err)
-	}
-
-	return conns, nil
+func (s *Service) GetManagedDatabaseConnections(ctx context.Context, r *request.GetManagedDatabaseConnectionsRequest) ([]upcloud.ManagedDatabaseConnection, error) {
+	conns := make([]upcloud.ManagedDatabaseConnection, 0)
+	return conns, s.get(ctx, r.RequestURL(), &conns)
 }
 
 // GetManagedDatabaseMetrics (EXPERIMENTAL) returns metrics collection for the selected period
-func (s *Service) GetManagedDatabaseMetrics(r *request.GetManagedDatabaseMetricsRequest) (*upcloud.ManagedDatabaseMetrics, error) {
+func (s *Service) GetManagedDatabaseMetrics(ctx context.Context, r *request.GetManagedDatabaseMetricsRequest) (*upcloud.ManagedDatabaseMetrics, error) {
 	metrics := upcloud.ManagedDatabaseMetrics{}
-	response, err := s.client.PerformJSONGetRequest(s.client.CreateRequestURL(r.RequestURL()))
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &metrics)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %w", err)
-	}
-
-	return &metrics, nil
+	return &metrics, s.get(ctx, r.RequestURL(), &metrics)
 }
 
 // GetManagedDatabaseLogs (EXPERIMENTAL) returns logs of a managed database instance
-func (s *Service) GetManagedDatabaseLogs(r *request.GetManagedDatabaseLogsRequest) (*upcloud.ManagedDatabaseLogs, error) {
+func (s *Service) GetManagedDatabaseLogs(ctx context.Context, r *request.GetManagedDatabaseLogsRequest) (*upcloud.ManagedDatabaseLogs, error) {
 	logs := upcloud.ManagedDatabaseLogs{}
-	response, err := s.client.PerformJSONGetRequest(s.client.CreateRequestURL(r.RequestURL()))
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &logs)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %w", err)
-	}
-
-	return &logs, nil
-}
-
-// GetManagedDatabaseServiceType (EXPERIMENTAL) returns details of requested service type
-func (s *Service) GetManagedDatabaseServiceType(r *request.GetManagedDatabaseServiceTypeRequest) (*upcloud.ManagedDatabaseType, error) {
-	var serviceType upcloud.ManagedDatabaseType
-	return &serviceType, s.get(r.RequestURL(), &serviceType)
-}
-
-// GetManagedDatabaseServiceTypes (EXPERIMENTAL) returns a map of available database service types
-func (s *Service) GetManagedDatabaseServiceTypes(r *request.GetManagedDatabaseServiceTypesRequest) (map[string]upcloud.ManagedDatabaseType, error) {
-	serviceTypes := make(map[string]upcloud.ManagedDatabaseType)
-	return serviceTypes, s.get(r.RequestURL(), &serviceTypes)
+	return &logs, s.get(ctx, r.RequestURL(), &logs)
 }
 
 // GetManagedDatabaseQueryStatisticsMySQL (EXPERIMENTAL) returns MySQL query statistics of a managed database instance
-func (s *Service) GetManagedDatabaseQueryStatisticsMySQL(r *request.GetManagedDatabaseQueryStatisticsRequest) ([]upcloud.ManagedDatabaseQueryStatisticsMySQL, error) {
+func (s *Service) GetManagedDatabaseQueryStatisticsMySQL(ctx context.Context, r *request.GetManagedDatabaseQueryStatisticsRequest) ([]upcloud.ManagedDatabaseQueryStatisticsMySQL, error) {
 	var parsed struct {
 		Mysql []upcloud.ManagedDatabaseQueryStatisticsMySQL
 	}
-	response, err := s.client.PerformJSONGetRequest(s.client.CreateRequestURL(r.RequestURL()))
-	if err != nil {
-		return nil, parseJSONServiceError(err)
+	if err := s.get(ctx, r.RequestURL(), &parsed); err != nil {
+		return nil, err
 	}
-
-	err = json.Unmarshal(response, &parsed)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %w", err)
-	}
-
 	return parsed.Mysql, nil
 }
 
 // GetManagedDatabaseQueryStatisticsPostgres (EXPERIMENTAL) returns PostgreSQL query statistics of a managed database instance
-func (s *Service) GetManagedDatabaseQueryStatisticsPostgreSQL(r *request.GetManagedDatabaseQueryStatisticsRequest) ([]upcloud.ManagedDatabaseQueryStatisticsPostgreSQL, error) {
+func (s *Service) GetManagedDatabaseQueryStatisticsPostgreSQL(ctx context.Context, r *request.GetManagedDatabaseQueryStatisticsRequest) ([]upcloud.ManagedDatabaseQueryStatisticsPostgreSQL, error) {
 	var parsed struct {
 		Pg []upcloud.ManagedDatabaseQueryStatisticsPostgreSQL
 	}
-	response, err := s.client.PerformJSONGetRequest(s.client.CreateRequestURL(r.RequestURL()))
-	if err != nil {
-		return nil, parseJSONServiceError(err)
+	if err := s.get(ctx, r.RequestURL(), &parsed); err != nil {
+		return nil, err
 	}
-
-	err = json.Unmarshal(response, &parsed)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %w", err)
-	}
-
 	return parsed.Pg, nil
 }
 
 // DeleteManagedDatabase (EXPERIMENTAL) deletes an existing managed database instance
-func (s *Service) DeleteManagedDatabase(r *request.DeleteManagedDatabaseRequest) error {
-	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
-	if err != nil {
-		return parseJSONServiceError(err)
-	}
-
-	return nil
+func (s *Service) DeleteManagedDatabase(ctx context.Context, r *request.DeleteManagedDatabaseRequest) error {
+	return s.delete(ctx, r)
 }
 
 // ModifyManagedDatabase (EXPERIMENTAL) modifies an existing managed database instance
-func (s *Service) ModifyManagedDatabase(r *request.ModifyManagedDatabaseRequest) (*upcloud.ManagedDatabase, error) {
+func (s *Service) ModifyManagedDatabase(ctx context.Context, r *request.ModifyManagedDatabaseRequest) (*upcloud.ManagedDatabase, error) {
 	managedDatabaseDetails := upcloud.ManagedDatabase{}
-	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &managedDatabaseDetails)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %w", err)
-	}
-
-	return &managedDatabaseDetails, nil
+	return &managedDatabaseDetails, s.modify(ctx, r, &managedDatabaseDetails)
 }
 
 // UpgradeManagedDatabaseServiceVersion upgrades the version of the database service;
 // for the list of available versions use GetManagedDatabaseVersions function
-func (s *Service) UpgradeManagedDatabaseVersion(r *request.UpgradeManagedDatabaseVersionRequest) (*upcloud.ManagedDatabase, error) {
+func (s *Service) UpgradeManagedDatabaseVersion(ctx context.Context, r *request.UpgradeManagedDatabaseVersionRequest) (*upcloud.ManagedDatabase, error) {
 	managedDatabaseDetails := upcloud.ManagedDatabase{}
-
-	reqBody, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-
-	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &managedDatabaseDetails)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %w", err)
-	}
-
-	return &managedDatabaseDetails, nil
+	return &managedDatabaseDetails, s.create(ctx, r, &managedDatabaseDetails)
 }
 
 // GetManagedDatabaseVersions available versions of the specific Managed Database service
-func (s *Service) GetManagedDatabaseVersions(r *request.GetManagedDatabaseVersionsRequest) ([]string, error) {
-	versions := []string{}
-
-	res, err := s.basicGetRequest(r.RequestURL())
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &versions)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %w", err)
-	}
-
-	return versions, nil
+func (s *Service) GetManagedDatabaseVersions(ctx context.Context, r *request.GetManagedDatabaseVersionsRequest) ([]string, error) {
+	versions := make([]string, 0)
+	return versions, s.get(ctx, r.RequestURL(), &versions)
 }
 
 // WaitForManagedDatabaseState (EXPERIMENTAL) blocks execution until the specified managed database instance has entered the
 // specified state. If the state changes favorably, the new managed database details is returned. The method will give up
 // after the specified timeout
-func (s *Service) WaitForManagedDatabaseState(r *request.WaitForManagedDatabaseStateRequest) (*upcloud.ManagedDatabase, error) {
+func (s *Service) WaitForManagedDatabaseState(ctx context.Context, r *request.WaitForManagedDatabaseStateRequest) (*upcloud.ManagedDatabase, error) {
 	attempts := 0
 	sleepDuration := time.Second * 5
 
 	for {
 		attempts++
 
-		details, err := s.GetManagedDatabase(&request.GetManagedDatabaseRequest{
+		details, err := s.GetManagedDatabase(ctx, &request.GetManagedDatabaseRequest{
 			UUID: r.UUID,
 		})
 		if err != nil {
@@ -337,159 +191,76 @@ func (s *Service) WaitForManagedDatabaseState(r *request.WaitForManagedDatabaseS
 }
 
 // StartManagedDatabase (EXPERIMENTAL) starts a shut down existing managed database instance
-func (s *Service) StartManagedDatabase(r *request.StartManagedDatabaseRequest) (*upcloud.ManagedDatabase, error) {
+func (s *Service) StartManagedDatabase(ctx context.Context, r *request.StartManagedDatabaseRequest) (*upcloud.ManagedDatabase, error) {
 	managedDatabaseDetails := upcloud.ManagedDatabase{}
-	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &managedDatabaseDetails)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %w", err)
-	}
-
-	return &managedDatabaseDetails, nil
+	return &managedDatabaseDetails, s.modify(ctx, r, &managedDatabaseDetails)
 }
 
 // ShutdownManagedDatabase (EXPERIMENTAL) shuts down existing managed database instance. Only a service which has at least one
 // full backup can be shut down.
-func (s *Service) ShutdownManagedDatabase(r *request.ShutdownManagedDatabaseRequest) (*upcloud.ManagedDatabase, error) {
+func (s *Service) ShutdownManagedDatabase(ctx context.Context, r *request.ShutdownManagedDatabaseRequest) (*upcloud.ManagedDatabase, error) {
 	managedDatabaseDetails := upcloud.ManagedDatabase{}
-	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &managedDatabaseDetails)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %w", err)
-	}
-
-	return &managedDatabaseDetails, nil
+	return &managedDatabaseDetails, s.modify(ctx, r, &managedDatabaseDetails)
 }
 
 /* User Management */
 
 // CreateManagedDatabaseUser (EXPERIMENTAL) creates a new normal user to an existing managed database instance
-func (s *Service) CreateManagedDatabaseUser(r *request.CreateManagedDatabaseUserRequest) (*upcloud.ManagedDatabaseUser, error) {
+func (s *Service) CreateManagedDatabaseUser(ctx context.Context, r *request.CreateManagedDatabaseUserRequest) (*upcloud.ManagedDatabaseUser, error) {
 	userDetails := upcloud.ManagedDatabaseUser{}
-	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &userDetails)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %w", err)
-	}
-
-	return &userDetails, nil
+	return &userDetails, s.create(ctx, r, &userDetails)
 }
 
 // GetManagedDatabaseUser (EXPERIMENTAL) returns details of an existing user of an existing managed database instance
-func (s *Service) GetManagedDatabaseUser(r *request.GetManagedDatabaseUserRequest) (*upcloud.ManagedDatabaseUser, error) {
+func (s *Service) GetManagedDatabaseUser(ctx context.Context, r *request.GetManagedDatabaseUserRequest) (*upcloud.ManagedDatabaseUser, error) {
 	userDetails := upcloud.ManagedDatabaseUser{}
-	response, err := s.client.PerformJSONGetRequest(s.client.CreateRequestURL(r.RequestURL()))
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &userDetails)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %w", err)
-	}
-
-	return &userDetails, nil
+	return &userDetails, s.get(ctx, r.RequestURL(), &userDetails)
 }
 
 // GetManagedDatabaseUsers (EXPERIMENTAL) returns a slice of all users of an existing managed database instance
-func (s *Service) GetManagedDatabaseUsers(r *request.GetManagedDatabaseUsersRequest) ([]upcloud.ManagedDatabaseUser, error) {
-	var userList []upcloud.ManagedDatabaseUser
-	response, err := s.client.PerformJSONGetRequest(s.client.CreateRequestURL(r.RequestURL()))
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &userList)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %w", err)
-	}
-
-	return userList, nil
+func (s *Service) GetManagedDatabaseUsers(ctx context.Context, r *request.GetManagedDatabaseUsersRequest) ([]upcloud.ManagedDatabaseUser, error) {
+	userList := make([]upcloud.ManagedDatabaseUser, 0)
+	return userList, s.get(ctx, r.RequestURL(), &userList)
 }
 
 // DeleteManagedDatabaseUser (EXPERIMENTAL) deletes an existing user of an existing managed database instance
-func (s *Service) DeleteManagedDatabaseUser(r *request.DeleteManagedDatabaseUserRequest) error {
-	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
-	if err != nil {
-		return parseJSONServiceError(err)
-	}
-
-	return nil
+func (s *Service) DeleteManagedDatabaseUser(ctx context.Context, r *request.DeleteManagedDatabaseUserRequest) error {
+	return s.delete(ctx, r)
 }
 
 // ModifyManagedDatabaseUser (EXPERIMENTAL) modifies an existing user of an existing managed database instance
-func (s *Service) ModifyManagedDatabaseUser(r *request.ModifyManagedDatabaseUserRequest) (*upcloud.ManagedDatabaseUser, error) {
+func (s *Service) ModifyManagedDatabaseUser(ctx context.Context, r *request.ModifyManagedDatabaseUserRequest) (*upcloud.ManagedDatabaseUser, error) {
 	userDetails := upcloud.ManagedDatabaseUser{}
-	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &userDetails)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %w", err)
-	}
-
-	return &userDetails, nil
+	return &userDetails, s.modify(ctx, r, &userDetails)
 }
 
 /* Logical Database Management */
 
 // CreateManagedDatabaseLogicalDatabase (EXPERIMENTAL) creates a new logical database to an existing managed database instance
-func (s *Service) CreateManagedDatabaseLogicalDatabase(r *request.CreateManagedDatabaseLogicalDatabaseRequest) (*upcloud.ManagedDatabaseLogicalDatabase, error) {
+func (s *Service) CreateManagedDatabaseLogicalDatabase(ctx context.Context, r *request.CreateManagedDatabaseLogicalDatabaseRequest) (*upcloud.ManagedDatabaseLogicalDatabase, error) {
 	dbDetails := upcloud.ManagedDatabaseLogicalDatabase{}
-	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &dbDetails)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %w", err)
-	}
-
-	return &dbDetails, nil
+	return &dbDetails, s.create(ctx, r, &dbDetails)
 }
 
 // GetManagedDatabaseLogicalDatabases (EXPERIMENTAL) returns a slice of all logical databases of an existing managed database instance
-func (s *Service) GetManagedDatabaseLogicalDatabases(r *request.GetManagedDatabaseLogicalDatabasesRequest) ([]upcloud.ManagedDatabaseLogicalDatabase, error) {
+func (s *Service) GetManagedDatabaseLogicalDatabases(ctx context.Context, r *request.GetManagedDatabaseLogicalDatabasesRequest) ([]upcloud.ManagedDatabaseLogicalDatabase, error) {
 	var dbList []upcloud.ManagedDatabaseLogicalDatabase
-	response, err := s.client.PerformJSONGetRequest(s.client.CreateRequestURL(r.RequestURL()))
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &dbList)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %w", err)
-	}
-
-	return dbList, nil
+	return dbList, s.get(ctx, r.RequestURL(), &dbList)
 }
 
 // DeleteManagedDatabaseLogicalDatabase (EXPERIMENTAL) deletes an existing logical database of an existing managed database instance
-func (s *Service) DeleteManagedDatabaseLogicalDatabase(r *request.DeleteManagedDatabaseLogicalDatabaseRequest) error {
-	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
-	if err != nil {
-		return parseJSONServiceError(err)
-	}
+func (s *Service) DeleteManagedDatabaseLogicalDatabase(ctx context.Context, r *request.DeleteManagedDatabaseLogicalDatabaseRequest) error {
+	return s.delete(ctx, r)
+}
 
-	return nil
+// GetManagedDatabaseServiceType (EXPERIMENTAL) returns details of requested service type
+func (s *Service) GetManagedDatabaseServiceType(ctx context.Context, r *request.GetManagedDatabaseServiceTypeRequest) (*upcloud.ManagedDatabaseType, error) {
+	var serviceType upcloud.ManagedDatabaseType
+	return &serviceType, s.get(ctx, r.RequestURL(), &serviceType)
+}
+
+// GetManagedDatabaseServiceTypes (EXPERIMENTAL) returns a map of available database service types
+func (s *Service) GetManagedDatabaseServiceTypes(ctx context.Context, r *request.GetManagedDatabaseServiceTypesRequest) (map[string]upcloud.ManagedDatabaseType, error) {
+	serviceTypes := make(map[string]upcloud.ManagedDatabaseType)
+	return serviceTypes, s.get(ctx, r.RequestURL(), &serviceTypes)
 }

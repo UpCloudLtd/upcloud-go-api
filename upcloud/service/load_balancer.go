@@ -1,74 +1,72 @@
 package service
 
 import (
-	"encoding/json"
+	"context"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/request"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 )
 
 type LoadBalancer interface {
-	GetLoadBalancers(r *request.GetLoadBalancersRequest) ([]upcloud.LoadBalancer, error)
-	GetLoadBalancer(r *request.GetLoadBalancerRequest) (*upcloud.LoadBalancer, error)
-	CreateLoadBalancer(r *request.CreateLoadBalancerRequest) (*upcloud.LoadBalancer, error)
-	ModifyLoadBalancer(r *request.ModifyLoadBalancerRequest) (*upcloud.LoadBalancer, error)
-	DeleteLoadBalancer(r *request.DeleteLoadBalancerRequest) error
+	GetLoadBalancers(ctx context.Context, r *request.GetLoadBalancersRequest) ([]upcloud.LoadBalancer, error)
+	GetLoadBalancer(ctx context.Context, r *request.GetLoadBalancerRequest) (*upcloud.LoadBalancer, error)
+	CreateLoadBalancer(ctx context.Context, r *request.CreateLoadBalancerRequest) (*upcloud.LoadBalancer, error)
+	ModifyLoadBalancer(ctx context.Context, r *request.ModifyLoadBalancerRequest) (*upcloud.LoadBalancer, error)
+	DeleteLoadBalancer(ctx context.Context, r *request.DeleteLoadBalancerRequest) error
 	// Backends
-	GetLoadBalancerBackends(r *request.GetLoadBalancerBackendsRequest) ([]upcloud.LoadBalancerBackend, error)
-	GetLoadBalancerBackend(r *request.GetLoadBalancerBackendRequest) (*upcloud.LoadBalancerBackend, error)
-	CreateLoadBalancerBackend(r *request.CreateLoadBalancerBackendRequest) (*upcloud.LoadBalancerBackend, error)
-	ModifyLoadBalancerBackend(r *request.ModifyLoadBalancerBackendRequest) (*upcloud.LoadBalancerBackend, error)
-	DeleteLoadBalancerBackend(r *request.DeleteLoadBalancerBackendRequest) error
+	GetLoadBalancerBackends(ctx context.Context, r *request.GetLoadBalancerBackendsRequest) ([]upcloud.LoadBalancerBackend, error)
+	GetLoadBalancerBackend(ctx context.Context, r *request.GetLoadBalancerBackendRequest) (*upcloud.LoadBalancerBackend, error)
+	CreateLoadBalancerBackend(ctx context.Context, r *request.CreateLoadBalancerBackendRequest) (*upcloud.LoadBalancerBackend, error)
+	ModifyLoadBalancerBackend(ctx context.Context, r *request.ModifyLoadBalancerBackendRequest) (*upcloud.LoadBalancerBackend, error)
+	DeleteLoadBalancerBackend(ctx context.Context, r *request.DeleteLoadBalancerBackendRequest) error
 	// Backend members
-	GetLoadBalancerBackendMembers(r *request.GetLoadBalancerBackendMembersRequest) ([]upcloud.LoadBalancerBackendMember, error)
-	GetLoadBalancerBackendMember(r *request.GetLoadBalancerBackendMemberRequest) (*upcloud.LoadBalancerBackendMember, error)
-	CreateLoadBalancerBackendMember(r *request.CreateLoadBalancerBackendMemberRequest) (*upcloud.LoadBalancerBackendMember, error)
-	ModifyLoadBalancerBackendMember(r *request.ModifyLoadBalancerBackendMemberRequest) (*upcloud.LoadBalancerBackendMember, error)
-	DeleteLoadBalancerBackendMember(r *request.DeleteLoadBalancerBackendMemberRequest) error
+	GetLoadBalancerBackendMembers(ctx context.Context, r *request.GetLoadBalancerBackendMembersRequest) ([]upcloud.LoadBalancerBackendMember, error)
+	GetLoadBalancerBackendMember(ctx context.Context, r *request.GetLoadBalancerBackendMemberRequest) (*upcloud.LoadBalancerBackendMember, error)
+	CreateLoadBalancerBackendMember(ctx context.Context, r *request.CreateLoadBalancerBackendMemberRequest) (*upcloud.LoadBalancerBackendMember, error)
+	ModifyLoadBalancerBackendMember(ctx context.Context, r *request.ModifyLoadBalancerBackendMemberRequest) (*upcloud.LoadBalancerBackendMember, error)
+	DeleteLoadBalancerBackendMember(ctx context.Context, r *request.DeleteLoadBalancerBackendMemberRequest) error
 	// Resolvers
-	GetLoadBalancerResolvers(r *request.GetLoadBalancerResolversRequest) ([]upcloud.LoadBalancerResolver, error)
-	CreateLoadBalancerResolver(r *request.CreateLoadBalancerResolverRequest) (*upcloud.LoadBalancerResolver, error)
-	GetLoadBalancerResolver(r *request.GetLoadBalancerResolverRequest) (*upcloud.LoadBalancerResolver, error)
-	ModifyLoadBalancerResolver(r *request.ModifyLoadBalancerResolverRequest) (*upcloud.LoadBalancerResolver, error)
-	DeleteLoadBalancerResolver(r *request.DeleteLoadBalancerResolverRequest) error
+	GetLoadBalancerResolvers(ctx context.Context, r *request.GetLoadBalancerResolversRequest) ([]upcloud.LoadBalancerResolver, error)
+	CreateLoadBalancerResolver(ctx context.Context, r *request.CreateLoadBalancerResolverRequest) (*upcloud.LoadBalancerResolver, error)
+	GetLoadBalancerResolver(ctx context.Context, r *request.GetLoadBalancerResolverRequest) (*upcloud.LoadBalancerResolver, error)
+	ModifyLoadBalancerResolver(ctx context.Context, r *request.ModifyLoadBalancerResolverRequest) (*upcloud.LoadBalancerResolver, error)
+	DeleteLoadBalancerResolver(ctx context.Context, r *request.DeleteLoadBalancerResolverRequest) error
 	// Plans
-	GetLoadBalancerPlans(r *request.GetLoadBalancerPlansRequest) ([]upcloud.LoadBalancerPlan, error)
+	GetLoadBalancerPlans(ctx context.Context, r *request.GetLoadBalancerPlansRequest) ([]upcloud.LoadBalancerPlan, error)
 	// Frontends
-	GetLoadBalancerFrontends(r *request.GetLoadBalancerFrontendsRequest) ([]upcloud.LoadBalancerFrontend, error)
-	GetLoadBalancerFrontend(r *request.GetLoadBalancerFrontendRequest) (*upcloud.LoadBalancerFrontend, error)
-	CreateLoadBalancerFrontend(r *request.CreateLoadBalancerFrontendRequest) (*upcloud.LoadBalancerFrontend, error)
-	ModifyLoadBalancerFrontend(r *request.ModifyLoadBalancerFrontendRequest) (*upcloud.LoadBalancerFrontend, error)
-	DeleteLoadBalancerFrontend(r *request.DeleteLoadBalancerFrontendRequest) error
+	GetLoadBalancerFrontends(ctx context.Context, r *request.GetLoadBalancerFrontendsRequest) ([]upcloud.LoadBalancerFrontend, error)
+	GetLoadBalancerFrontend(ctx context.Context, r *request.GetLoadBalancerFrontendRequest) (*upcloud.LoadBalancerFrontend, error)
+	CreateLoadBalancerFrontend(ctx context.Context, r *request.CreateLoadBalancerFrontendRequest) (*upcloud.LoadBalancerFrontend, error)
+	ModifyLoadBalancerFrontend(ctx context.Context, r *request.ModifyLoadBalancerFrontendRequest) (*upcloud.LoadBalancerFrontend, error)
+	DeleteLoadBalancerFrontend(ctx context.Context, r *request.DeleteLoadBalancerFrontendRequest) error
 	// Frontend rules
-	GetLoadBalancerFrontendRules(r *request.GetLoadBalancerFrontendRulesRequest) ([]upcloud.LoadBalancerFrontendRule, error)
-	GetLoadBalancerFrontendRule(r *request.GetLoadBalancerFrontendRuleRequest) (*upcloud.LoadBalancerFrontendRule, error)
-	CreateLoadBalancerFrontendRule(r *request.CreateLoadBalancerFrontendRuleRequest) (*upcloud.LoadBalancerFrontendRule, error)
-	ModifyLoadBalancerFrontendRule(r *request.ModifyLoadBalancerFrontendRuleRequest) (*upcloud.LoadBalancerFrontendRule, error)
-	ReplaceLoadBalancerFrontendRule(r *request.ReplaceLoadBalancerFrontendRuleRequest) (*upcloud.LoadBalancerFrontendRule, error)
-	DeleteLoadBalancerFrontendRule(r *request.DeleteLoadBalancerFrontendRuleRequest) error
+	GetLoadBalancerFrontendRules(ctx context.Context, r *request.GetLoadBalancerFrontendRulesRequest) ([]upcloud.LoadBalancerFrontendRule, error)
+	GetLoadBalancerFrontendRule(ctx context.Context, r *request.GetLoadBalancerFrontendRuleRequest) (*upcloud.LoadBalancerFrontendRule, error)
+	CreateLoadBalancerFrontendRule(ctx context.Context, r *request.CreateLoadBalancerFrontendRuleRequest) (*upcloud.LoadBalancerFrontendRule, error)
+	ModifyLoadBalancerFrontendRule(ctx context.Context, r *request.ModifyLoadBalancerFrontendRuleRequest) (*upcloud.LoadBalancerFrontendRule, error)
+	ReplaceLoadBalancerFrontendRule(ctx context.Context, r *request.ReplaceLoadBalancerFrontendRuleRequest) (*upcloud.LoadBalancerFrontendRule, error)
+	DeleteLoadBalancerFrontendRule(ctx context.Context, r *request.DeleteLoadBalancerFrontendRuleRequest) error
 	// TLS Config
-	GetLoadBalancerFrontendTLSConfigs(r *request.GetLoadBalancerFrontendTLSConfigsRequest) ([]upcloud.LoadBalancerFrontendTLSConfig, error)
-	GetLoadBalancerFrontendTLSConfig(r *request.GetLoadBalancerFrontendTLSConfigRequest) (*upcloud.LoadBalancerFrontendTLSConfig, error)
-	CreateLoadBalancerFrontendTLSConfig(r *request.CreateLoadBalancerFrontendTLSConfigRequest) (*upcloud.LoadBalancerFrontendTLSConfig, error)
-	ModifyLoadBalancerFrontendTLSConfig(r *request.ModifyLoadBalancerFrontendTLSConfigRequest) (*upcloud.LoadBalancerFrontendTLSConfig, error)
-	DeleteLoadBalancerFrontendTLSConfig(r *request.DeleteLoadBalancerFrontendTLSConfigRequest) error
+	GetLoadBalancerFrontendTLSConfigs(ctx context.Context, r *request.GetLoadBalancerFrontendTLSConfigsRequest) ([]upcloud.LoadBalancerFrontendTLSConfig, error)
+	GetLoadBalancerFrontendTLSConfig(ctx context.Context, r *request.GetLoadBalancerFrontendTLSConfigRequest) (*upcloud.LoadBalancerFrontendTLSConfig, error)
+	CreateLoadBalancerFrontendTLSConfig(ctx context.Context, r *request.CreateLoadBalancerFrontendTLSConfigRequest) (*upcloud.LoadBalancerFrontendTLSConfig, error)
+	ModifyLoadBalancerFrontendTLSConfig(ctx context.Context, r *request.ModifyLoadBalancerFrontendTLSConfigRequest) (*upcloud.LoadBalancerFrontendTLSConfig, error)
+	DeleteLoadBalancerFrontendTLSConfig(ctx context.Context, r *request.DeleteLoadBalancerFrontendTLSConfigRequest) error
 	// Certificate bundles
-	GetLoadBalancerCertificateBundles(r *request.GetLoadBalancerCertificateBundlesRequest) ([]upcloud.LoadBalancerCertificateBundle, error)
-	GetLoadBalancerCertificateBundle(r *request.GetLoadBalancerCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error)
-	CreateLoadBalancerCertificateBundle(r *request.CreateLoadBalancerCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error)
-	ModifyLoadBalancerCertificateBundle(r *request.ModifyLoadBalancerCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error)
-	DeleteLoadBalancerCertificateBundle(r *request.DeleteLoadBalancerCertificateBundleRequest) error
+	GetLoadBalancerCertificateBundles(ctx context.Context, r *request.GetLoadBalancerCertificateBundlesRequest) ([]upcloud.LoadBalancerCertificateBundle, error)
+	GetLoadBalancerCertificateBundle(ctx context.Context, r *request.GetLoadBalancerCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error)
+	CreateLoadBalancerCertificateBundle(ctx context.Context, r *request.CreateLoadBalancerCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error)
+	ModifyLoadBalancerCertificateBundle(ctx context.Context, r *request.ModifyLoadBalancerCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error)
+	DeleteLoadBalancerCertificateBundle(ctx context.Context, r *request.DeleteLoadBalancerCertificateBundleRequest) error
 	// Networks
-	ModifyLoadBalancerNetwork(r *request.ModifyLoadBalancerNetworkRequest) (*upcloud.LoadBalancerNetwork, error)
+	ModifyLoadBalancerNetwork(ctx context.Context, r *request.ModifyLoadBalancerNetworkRequest) (*upcloud.LoadBalancerNetwork, error)
 }
 
-var _ LoadBalancer = (*Service)(nil)
-
 // GetLoadBalancers retrieves a list of load balancers.
-func (s *Service) GetLoadBalancers(r *request.GetLoadBalancersRequest) ([]upcloud.LoadBalancer, error) {
+func (s *Service) GetLoadBalancers(ctx context.Context, r *request.GetLoadBalancersRequest) ([]upcloud.LoadBalancer, error) {
 	loadBalancers := make([]upcloud.LoadBalancer, 0)
 	if r.Page != nil {
-		return loadBalancers, s.get(r.RequestURL(), &loadBalancers)
+		return loadBalancers, s.get(ctx, r.RequestURL(), &loadBalancers)
 	}
 
 	// copy request value so that we are not altering original request
@@ -80,7 +78,7 @@ func (s *Service) GetLoadBalancers(r *request.GetLoadBalancersRequest) ([]upclou
 	// loop until max result is reached or until response doesn't fill our page anymore
 	for len(loadBalancers) <= request.PageResultMaxSize {
 		lbs := make([]upcloud.LoadBalancer, 0)
-		if err := s.get(req.RequestURL(), &lbs); err != nil || len(lbs) < 1 {
+		if err := s.get(ctx, req.RequestURL(), &lbs); err != nil || len(lbs) < 1 {
 			return loadBalancers, err
 		}
 
@@ -96,284 +94,121 @@ func (s *Service) GetLoadBalancers(r *request.GetLoadBalancersRequest) ([]upclou
 }
 
 // GetLoadBalancer retrieves details of a load balancer.
-func (s *Service) GetLoadBalancer(r *request.GetLoadBalancerRequest) (*upcloud.LoadBalancer, error) {
+func (s *Service) GetLoadBalancer(ctx context.Context, r *request.GetLoadBalancerRequest) (*upcloud.LoadBalancer, error) {
 	loadBalancer := upcloud.LoadBalancer{}
-	res, err := s.basicGetRequest(r.RequestURL())
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &loadBalancer)
-	if err != nil {
-		return nil, err
-	}
-
-	return &loadBalancer, nil
+	return &loadBalancer, s.get(ctx, r.RequestURL(), &loadBalancer)
 }
 
 // CreateLoadBalancer creates a new load balancer.
-func (s *Service) CreateLoadBalancer(r *request.CreateLoadBalancerRequest) (*upcloud.LoadBalancer, error) {
+func (s *Service) CreateLoadBalancer(ctx context.Context, r *request.CreateLoadBalancerRequest) (*upcloud.LoadBalancer, error) {
 	loadBalancer := upcloud.LoadBalancer{}
-	requestBody, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-
-	res, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &loadBalancer)
-	if err != nil {
-		return nil, err
-	}
-
-	return &loadBalancer, nil
+	return &loadBalancer, s.create(ctx, r, &loadBalancer)
 }
 
 // ModifyLoadBalancer modifies an existing load balancer.
-func (s *Service) ModifyLoadBalancer(r *request.ModifyLoadBalancerRequest) (*upcloud.LoadBalancer, error) {
+func (s *Service) ModifyLoadBalancer(ctx context.Context, r *request.ModifyLoadBalancerRequest) (*upcloud.LoadBalancer, error) {
 	loadBalancer := upcloud.LoadBalancer{}
-	requestBody, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-
-	res, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &loadBalancer)
-	if err != nil {
-		return nil, err
-	}
-
-	return &loadBalancer, nil
+	return &loadBalancer, s.modify(ctx, r, &loadBalancer)
 }
 
 // DeleteLoadBalancer deletes an existing load balancer.
-func (s *Service) DeleteLoadBalancer(r *request.DeleteLoadBalancerRequest) error {
-	if err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL())); err != nil {
-		return parseJSONServiceError(err)
-	}
-
-	return nil
+func (s *Service) DeleteLoadBalancer(ctx context.Context, r *request.DeleteLoadBalancerRequest) error {
+	return s.delete(ctx, r)
 }
 
 // GetLoadBalancerBackends retrieves a list of load balancer backends.
-func (s *Service) GetLoadBalancerBackends(r *request.GetLoadBalancerBackendsRequest) ([]upcloud.LoadBalancerBackend, error) {
+func (s *Service) GetLoadBalancerBackends(ctx context.Context, r *request.GetLoadBalancerBackendsRequest) ([]upcloud.LoadBalancerBackend, error) {
 	backends := make([]upcloud.LoadBalancerBackend, 0)
-	res, err := s.basicGetRequest(r.RequestURL())
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &backends)
-	return backends, err
+	return backends, s.get(ctx, r.RequestURL(), &backends)
 }
 
 // GetLoadBalancerBackend retrieves details of a load balancer backend.
-func (s *Service) GetLoadBalancerBackend(r *request.GetLoadBalancerBackendRequest) (*upcloud.LoadBalancerBackend, error) {
+func (s *Service) GetLoadBalancerBackend(ctx context.Context, r *request.GetLoadBalancerBackendRequest) (*upcloud.LoadBalancerBackend, error) {
 	var backend upcloud.LoadBalancerBackend
-	res, err := s.basicGetRequest(r.RequestURL())
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &backend)
-	return &backend, err
+	return &backend, s.get(ctx, r.RequestURL(), &backend)
 }
 
 // CreateLoadBalancerBackend creates a new load balancer backend.
-func (s *Service) CreateLoadBalancerBackend(r *request.CreateLoadBalancerBackendRequest) (*upcloud.LoadBalancerBackend, error) {
+func (s *Service) CreateLoadBalancerBackend(ctx context.Context, r *request.CreateLoadBalancerBackendRequest) (*upcloud.LoadBalancerBackend, error) {
 	var backend upcloud.LoadBalancerBackend
-
-	reqBody, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-
-	res, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &backend)
-	return &backend, err
+	return &backend, s.create(ctx, r, &backend)
 }
 
 // ModifyLoadBalancerBackend modifies an existing load balancer backend.
-func (s *Service) ModifyLoadBalancerBackend(r *request.ModifyLoadBalancerBackendRequest) (*upcloud.LoadBalancerBackend, error) {
+func (s *Service) ModifyLoadBalancerBackend(ctx context.Context, r *request.ModifyLoadBalancerBackendRequest) (*upcloud.LoadBalancerBackend, error) {
 	var backend upcloud.LoadBalancerBackend
-
-	reqBody, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-
-	res, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &backend)
-	return &backend, err
+	return &backend, s.modify(ctx, r, &backend)
 }
 
 // DeleteLoadBalancerBackend deletes an existing load balancer backend.
-func (s *Service) DeleteLoadBalancerBackend(r *request.DeleteLoadBalancerBackendRequest) error {
-	if err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL())); err != nil {
-		return parseJSONServiceError(err)
-	}
-	return nil
+func (s *Service) DeleteLoadBalancerBackend(ctx context.Context, r *request.DeleteLoadBalancerBackendRequest) error {
+	return s.delete(ctx, r)
 }
 
 // GetLoadBalancerBackendMembers retrieves a list of load balancer backend members.
-func (s *Service) GetLoadBalancerBackendMembers(r *request.GetLoadBalancerBackendMembersRequest) ([]upcloud.LoadBalancerBackendMember, error) {
+func (s *Service) GetLoadBalancerBackendMembers(ctx context.Context, r *request.GetLoadBalancerBackendMembersRequest) ([]upcloud.LoadBalancerBackendMember, error) {
 	members := make([]upcloud.LoadBalancerBackendMember, 0)
-	res, err := s.basicGetRequest(r.RequestURL())
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &members)
-	return members, err
+	return members, s.get(ctx, r.RequestURL(), &members)
 }
 
-// GetLoadBalancerBackendMember retrieves details of a load balancer balancer backend member.
-func (s *Service) GetLoadBalancerBackendMember(r *request.GetLoadBalancerBackendMemberRequest) (*upcloud.LoadBalancerBackendMember, error) {
+// GetLoadBalancerBackendMember retrieves details of a load balancer backend member.
+func (s *Service) GetLoadBalancerBackendMember(ctx context.Context, r *request.GetLoadBalancerBackendMemberRequest) (*upcloud.LoadBalancerBackendMember, error) {
 	var member upcloud.LoadBalancerBackendMember
-	res, err := s.basicGetRequest(r.RequestURL())
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &member)
-	return &member, err
+	return &member, s.get(ctx, r.RequestURL(), &member)
 }
 
-// CreateLoadBalancerBackendMember creates a new load balancer balancer backend member.
-func (s *Service) CreateLoadBalancerBackendMember(r *request.CreateLoadBalancerBackendMemberRequest) (*upcloud.LoadBalancerBackendMember, error) {
+// CreateLoadBalancerBackendMember creates a new load balancer backend member.
+func (s *Service) CreateLoadBalancerBackendMember(ctx context.Context, r *request.CreateLoadBalancerBackendMemberRequest) (*upcloud.LoadBalancerBackendMember, error) {
 	var member upcloud.LoadBalancerBackendMember
-
-	reqBody, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-
-	res, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &member)
-	return &member, err
+	return &member, s.create(ctx, r, &member)
 }
 
 // ModifyLoadBalancerBackendMember modifies an existing load balancer backend member.
-func (s *Service) ModifyLoadBalancerBackendMember(r *request.ModifyLoadBalancerBackendMemberRequest) (*upcloud.LoadBalancerBackendMember, error) {
+func (s *Service) ModifyLoadBalancerBackendMember(ctx context.Context, r *request.ModifyLoadBalancerBackendMemberRequest) (*upcloud.LoadBalancerBackendMember, error) {
 	var member upcloud.LoadBalancerBackendMember
-
-	reqBody, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-
-	res, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &member)
-	return &member, err
+	return &member, s.modify(ctx, r, &member)
 }
 
 // DeleteLoadBalancerBackendMember deletes an existing load balancer backend member.
-func (s *Service) DeleteLoadBalancerBackendMember(r *request.DeleteLoadBalancerBackendMemberRequest) error {
-	if err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL())); err != nil {
-		return parseJSONServiceError(err)
-	}
-	return nil
+func (s *Service) DeleteLoadBalancerBackendMember(ctx context.Context, r *request.DeleteLoadBalancerBackendMemberRequest) error {
+	return s.delete(ctx, r)
 }
 
 // CreateLoadBalancerResolver creates a new load balancer resolver.
-func (s *Service) CreateLoadBalancerResolver(r *request.CreateLoadBalancerResolverRequest) (*upcloud.LoadBalancerResolver, error) {
+func (s *Service) CreateLoadBalancerResolver(ctx context.Context, r *request.CreateLoadBalancerResolverRequest) (*upcloud.LoadBalancerResolver, error) {
 	var resolver upcloud.LoadBalancerResolver
-
-	reqBody, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-
-	res, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &resolver)
-	return &resolver, err
+	return &resolver, s.create(ctx, r, &resolver)
 }
 
 // GetLoadBalancerResolvers retrieves a list of load balancer resolvers.
-func (s *Service) GetLoadBalancerResolvers(r *request.GetLoadBalancerResolversRequest) ([]upcloud.LoadBalancerResolver, error) {
+func (s *Service) GetLoadBalancerResolvers(ctx context.Context, r *request.GetLoadBalancerResolversRequest) ([]upcloud.LoadBalancerResolver, error) {
 	resolvers := make([]upcloud.LoadBalancerResolver, 0)
-
-	res, err := s.basicGetRequest(r.RequestURL())
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &resolvers)
-	return resolvers, err
+	return resolvers, s.get(ctx, r.RequestURL(), &resolvers)
 }
 
 // GetLoadBalancerResolver retrieves details of a load balancer resolver.
-func (s *Service) GetLoadBalancerResolver(r *request.GetLoadBalancerResolverRequest) (*upcloud.LoadBalancerResolver, error) {
+func (s *Service) GetLoadBalancerResolver(ctx context.Context, r *request.GetLoadBalancerResolverRequest) (*upcloud.LoadBalancerResolver, error) {
 	var resolver upcloud.LoadBalancerResolver
-
-	res, err := s.basicGetRequest(r.RequestURL())
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &resolver)
-	return &resolver, err
+	return &resolver, s.get(ctx, r.RequestURL(), &resolver)
 }
 
 // ModifyLoadBalancerResolver modifies an existing load balancer resolver.
-func (s *Service) ModifyLoadBalancerResolver(r *request.ModifyLoadBalancerResolverRequest) (*upcloud.LoadBalancerResolver, error) {
+func (s *Service) ModifyLoadBalancerResolver(ctx context.Context, r *request.ModifyLoadBalancerResolverRequest) (*upcloud.LoadBalancerResolver, error) {
 	var resolver upcloud.LoadBalancerResolver
-
-	reqBody, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-
-	res, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &resolver)
-	return &resolver, err
+	return &resolver, s.modify(ctx, r, &resolver)
 }
 
 // DeleteLoadBalancerResolver deletes an existing load balancer resolver.
-func (s *Service) DeleteLoadBalancerResolver(r *request.DeleteLoadBalancerResolverRequest) error {
-	if err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL())); err != nil {
-		return parseJSONServiceError(err)
-	}
-	return nil
+func (s *Service) DeleteLoadBalancerResolver(ctx context.Context, r *request.DeleteLoadBalancerResolverRequest) error {
+	return s.delete(ctx, r)
 }
 
 // GetLoadBalancerPlans retrieves a list of load balancer plans.
-func (s *Service) GetLoadBalancerPlans(r *request.GetLoadBalancerPlansRequest) ([]upcloud.LoadBalancerPlan, error) {
+func (s *Service) GetLoadBalancerPlans(ctx context.Context, r *request.GetLoadBalancerPlansRequest) ([]upcloud.LoadBalancerPlan, error) {
 	plans := make([]upcloud.LoadBalancerPlan, 0)
 
 	if r.Page != nil {
-		return plans, s.get(r.RequestURL(), &plans)
+		return plans, s.get(ctx, r.RequestURL(), &plans)
 	}
 
 	// copy request value so that we are not altering original request
@@ -385,7 +220,7 @@ func (s *Service) GetLoadBalancerPlans(r *request.GetLoadBalancerPlansRequest) (
 	// loop until max result is reached or until response doesn't fill our page anymore
 	for len(plans) <= request.PageResultMaxSize {
 		p := make([]upcloud.LoadBalancerPlan, 0)
-		if err := s.get(req.RequestURL(), &p); err != nil || len(p) < 1 {
+		if err := s.get(ctx, req.RequestURL(), &p); err != nil || len(p) < 1 {
 			return plans, err
 		}
 
@@ -401,238 +236,104 @@ func (s *Service) GetLoadBalancerPlans(r *request.GetLoadBalancerPlansRequest) (
 }
 
 // GetLoadBalancerFrontends retrieves a list of load balancer frontends.
-func (s *Service) GetLoadBalancerFrontends(r *request.GetLoadBalancerFrontendsRequest) ([]upcloud.LoadBalancerFrontend, error) {
+func (s *Service) GetLoadBalancerFrontends(ctx context.Context, r *request.GetLoadBalancerFrontendsRequest) ([]upcloud.LoadBalancerFrontend, error) {
 	fes := make([]upcloud.LoadBalancerFrontend, 0)
-	res, err := s.basicGetRequest(r.RequestURL())
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &fes)
-	if err != nil {
-		return nil, err
-	}
-
-	return fes, nil
+	return fes, s.get(ctx, r.RequestURL(), &fes)
 }
 
 // GetLoadBalancerFrontend retrieves details of a load balancer frontend.
-func (s *Service) GetLoadBalancerFrontend(r *request.GetLoadBalancerFrontendRequest) (*upcloud.LoadBalancerFrontend, error) {
+func (s *Service) GetLoadBalancerFrontend(ctx context.Context, r *request.GetLoadBalancerFrontendRequest) (*upcloud.LoadBalancerFrontend, error) {
 	var fe upcloud.LoadBalancerFrontend
-	res, err := s.basicGetRequest(r.RequestURL())
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &fe)
-	return &fe, err
+	return &fe, s.get(ctx, r.RequestURL(), &fe)
 }
 
 // CreateLoadBalancerFrontend creates a new load balancer frontend.
-func (s *Service) CreateLoadBalancerFrontend(r *request.CreateLoadBalancerFrontendRequest) (*upcloud.LoadBalancerFrontend, error) {
+func (s *Service) CreateLoadBalancerFrontend(ctx context.Context, r *request.CreateLoadBalancerFrontendRequest) (*upcloud.LoadBalancerFrontend, error) {
 	var fe upcloud.LoadBalancerFrontend
-	reqBody, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-
-	res, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &fe)
-	return &fe, err
+	return &fe, s.create(ctx, r, &fe)
 }
 
 // ModifyLoadBalancerFrontend modifies an existing load balancer frontend.
-func (s *Service) ModifyLoadBalancerFrontend(r *request.ModifyLoadBalancerFrontendRequest) (*upcloud.LoadBalancerFrontend, error) {
+func (s *Service) ModifyLoadBalancerFrontend(ctx context.Context, r *request.ModifyLoadBalancerFrontendRequest) (*upcloud.LoadBalancerFrontend, error) {
 	var fe upcloud.LoadBalancerFrontend
-
-	reqBody, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-
-	res, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &fe)
-	return &fe, err
+	return &fe, s.modify(ctx, r, &fe)
 }
 
 // DeleteLoadBalancerFrontend deletes an existing load balancer frontend.
-func (s *Service) DeleteLoadBalancerFrontend(r *request.DeleteLoadBalancerFrontendRequest) error {
-	if err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL())); err != nil {
-		return parseJSONServiceError(err)
-	}
-	return nil
+func (s *Service) DeleteLoadBalancerFrontend(ctx context.Context, r *request.DeleteLoadBalancerFrontendRequest) error {
+	return s.delete(ctx, r)
 }
 
 // GetLoadBalancerFrontendRules retrieves a list of load balancer frontend rules.
-func (s *Service) GetLoadBalancerFrontendRules(r *request.GetLoadBalancerFrontendRulesRequest) ([]upcloud.LoadBalancerFrontendRule, error) {
+func (s *Service) GetLoadBalancerFrontendRules(ctx context.Context, r *request.GetLoadBalancerFrontendRulesRequest) ([]upcloud.LoadBalancerFrontendRule, error) {
 	rules := make([]upcloud.LoadBalancerFrontendRule, 0)
-
-	res, err := s.basicGetRequest(r.RequestURL())
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &rules)
-	return rules, err
+	return rules, s.get(ctx, r.RequestURL(), &rules)
 }
 
 // GetLoadBalancerFrontendRule retrieves details of a load balancer frontend rule.
-func (s *Service) GetLoadBalancerFrontendRule(r *request.GetLoadBalancerFrontendRuleRequest) (*upcloud.LoadBalancerFrontendRule, error) {
+func (s *Service) GetLoadBalancerFrontendRule(ctx context.Context, r *request.GetLoadBalancerFrontendRuleRequest) (*upcloud.LoadBalancerFrontendRule, error) {
 	var rule upcloud.LoadBalancerFrontendRule
-	res, err := s.basicGetRequest(r.RequestURL())
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &rule)
-	return &rule, err
+	return &rule, s.get(ctx, r.RequestURL(), &rule)
 }
 
 // CreateLoadBalancerFrontendRule creates a new load balancer frontend rule.
-func (s *Service) CreateLoadBalancerFrontendRule(r *request.CreateLoadBalancerFrontendRuleRequest) (*upcloud.LoadBalancerFrontendRule, error) {
+func (s *Service) CreateLoadBalancerFrontendRule(ctx context.Context, r *request.CreateLoadBalancerFrontendRuleRequest) (*upcloud.LoadBalancerFrontendRule, error) {
 	var rule upcloud.LoadBalancerFrontendRule
-
-	reqBody, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-
-	res, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &rule)
-	return &rule, err
+	return &rule, s.create(ctx, r, &rule)
 }
 
 // ModifyLoadBalancerFrontendRule modifies an existing load balancer frontend rule.
-func (s *Service) ModifyLoadBalancerFrontendRule(r *request.ModifyLoadBalancerFrontendRuleRequest) (*upcloud.LoadBalancerFrontendRule, error) {
+func (s *Service) ModifyLoadBalancerFrontendRule(ctx context.Context, r *request.ModifyLoadBalancerFrontendRuleRequest) (*upcloud.LoadBalancerFrontendRule, error) {
 	var rule upcloud.LoadBalancerFrontendRule
-
-	reqBody, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-
-	res, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &rule)
-	return &rule, err
+	return &rule, s.modify(ctx, r, &rule)
 }
 
 // ReplaceLoadBalancerFrontendRule replaces an existing load balancer frontend rule.
-func (s *Service) ReplaceLoadBalancerFrontendRule(r *request.ReplaceLoadBalancerFrontendRuleRequest) (*upcloud.LoadBalancerFrontendRule, error) {
+func (s *Service) ReplaceLoadBalancerFrontendRule(ctx context.Context, r *request.ReplaceLoadBalancerFrontendRuleRequest) (*upcloud.LoadBalancerFrontendRule, error) {
 	var rule upcloud.LoadBalancerFrontendRule
-
-	reqBody, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-
-	res, err := s.client.PerformJSONPutRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &rule)
-	return &rule, err
+	return &rule, s.replace(ctx, r, &rule)
 }
 
 // DeleteLoadBalancerFrontendRule deletes an existing load balancer frontend rule.
-func (s *Service) DeleteLoadBalancerFrontendRule(r *request.DeleteLoadBalancerFrontendRuleRequest) error {
-	if err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL())); err != nil {
-		return parseJSONServiceError(err)
-	}
-	return nil
+func (s *Service) DeleteLoadBalancerFrontendRule(ctx context.Context, r *request.DeleteLoadBalancerFrontendRuleRequest) error {
+	return s.delete(ctx, r)
 }
 
 // GetLoadBalancerFrontendTLSConfigs retrieves a list of load balancer frontend TLS configs.
-func (s *Service) GetLoadBalancerFrontendTLSConfigs(r *request.GetLoadBalancerFrontendTLSConfigsRequest) ([]upcloud.LoadBalancerFrontendTLSConfig, error) {
+func (s *Service) GetLoadBalancerFrontendTLSConfigs(ctx context.Context, r *request.GetLoadBalancerFrontendTLSConfigsRequest) ([]upcloud.LoadBalancerFrontendTLSConfig, error) {
 	configs := make([]upcloud.LoadBalancerFrontendTLSConfig, 0)
-
-	res, err := s.basicGetRequest(r.RequestURL())
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &configs)
-	return configs, err
+	return configs, s.get(ctx, r.RequestURL(), &configs)
 }
 
 // GetLoadBalancerFrontendTLSConfig retrieves details of a load balancer frontend TLS config.
-func (s *Service) GetLoadBalancerFrontendTLSConfig(r *request.GetLoadBalancerFrontendTLSConfigRequest) (*upcloud.LoadBalancerFrontendTLSConfig, error) {
+func (s *Service) GetLoadBalancerFrontendTLSConfig(ctx context.Context, r *request.GetLoadBalancerFrontendTLSConfigRequest) (*upcloud.LoadBalancerFrontendTLSConfig, error) {
 	var config upcloud.LoadBalancerFrontendTLSConfig
-	res, err := s.basicGetRequest(r.RequestURL())
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &config)
-	return &config, err
+	return &config, s.get(ctx, r.RequestURL(), &config)
 }
 
 // CreateLoadBalancerFrontendTLSConfig creates a new load balancer frontend TLS config.
-func (s *Service) CreateLoadBalancerFrontendTLSConfig(r *request.CreateLoadBalancerFrontendTLSConfigRequest) (*upcloud.LoadBalancerFrontendTLSConfig, error) {
+func (s *Service) CreateLoadBalancerFrontendTLSConfig(ctx context.Context, r *request.CreateLoadBalancerFrontendTLSConfigRequest) (*upcloud.LoadBalancerFrontendTLSConfig, error) {
 	var config upcloud.LoadBalancerFrontendTLSConfig
-
-	reqBody, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-
-	res, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &config)
-	return &config, err
+	return &config, s.create(ctx, r, &config)
 }
 
 // ModifyLoadBalancerFrontendTLSConfig modifies an existing load balancer frontend TLS Config.
-func (s *Service) ModifyLoadBalancerFrontendTLSConfig(r *request.ModifyLoadBalancerFrontendTLSConfigRequest) (*upcloud.LoadBalancerFrontendTLSConfig, error) {
+func (s *Service) ModifyLoadBalancerFrontendTLSConfig(ctx context.Context, r *request.ModifyLoadBalancerFrontendTLSConfigRequest) (*upcloud.LoadBalancerFrontendTLSConfig, error) {
 	var config upcloud.LoadBalancerFrontendTLSConfig
-
-	reqBody, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-
-	res, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &config)
-	return &config, err
+	return &config, s.modify(ctx, r, &config)
 }
 
 // DeleteLoadBalancerFrontendTLSConfig deletes an existing load balancer frontend TLS config.
-func (s *Service) DeleteLoadBalancerFrontendTLSConfig(r *request.DeleteLoadBalancerFrontendTLSConfigRequest) error {
-	if err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL())); err != nil {
-		return parseJSONServiceError(err)
-	}
-	return nil
+func (s *Service) DeleteLoadBalancerFrontendTLSConfig(ctx context.Context, r *request.DeleteLoadBalancerFrontendTLSConfigRequest) error {
+	return s.delete(ctx, r)
 }
 
 // GetLoadBalancerCertificateBundles retrieves details of a load balancer certificate bundles.
-func (s *Service) GetLoadBalancerCertificateBundles(r *request.GetLoadBalancerCertificateBundlesRequest) ([]upcloud.LoadBalancerCertificateBundle, error) {
+func (s *Service) GetLoadBalancerCertificateBundles(ctx context.Context, r *request.GetLoadBalancerCertificateBundlesRequest) ([]upcloud.LoadBalancerCertificateBundle, error) {
 	certs := make([]upcloud.LoadBalancerCertificateBundle, 0)
 
 	if r.Page != nil {
-		return certs, s.get(r.RequestURL(), &certs)
+		return certs, s.get(ctx, r.RequestURL(), &certs)
 	}
 
 	// copy request value so that we are not altering original request
@@ -644,7 +345,7 @@ func (s *Service) GetLoadBalancerCertificateBundles(r *request.GetLoadBalancerCe
 	// loop until max result is reached or until response doesn't fill our page anymore
 	for len(certs) <= request.PageResultMaxSize {
 		c := make([]upcloud.LoadBalancerCertificateBundle, 0)
-		if err := s.get(req.RequestURL(), &c); err != nil || len(c) < 1 {
+		if err := s.get(ctx, req.RequestURL(), &c); err != nil || len(c) < 1 {
 			return certs, err
 		}
 
@@ -660,69 +361,29 @@ func (s *Service) GetLoadBalancerCertificateBundles(r *request.GetLoadBalancerCe
 }
 
 // GetLoadBalancerCertificateBundle retrieves details of a load balancer certificate bundle.
-func (s *Service) GetLoadBalancerCertificateBundle(r *request.GetLoadBalancerCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error) {
+func (s *Service) GetLoadBalancerCertificateBundle(ctx context.Context, r *request.GetLoadBalancerCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error) {
 	var cert upcloud.LoadBalancerCertificateBundle
-	res, err := s.basicGetRequest(r.RequestURL())
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &cert)
-	return &cert, err
+	return &cert, s.get(ctx, r.RequestURL(), &cert)
 }
 
 // CreateLoadBalancerCertificateBundle creates a new load balancer certificate bundle.
-func (s *Service) CreateLoadBalancerCertificateBundle(r *request.CreateLoadBalancerCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error) {
+func (s *Service) CreateLoadBalancerCertificateBundle(ctx context.Context, r *request.CreateLoadBalancerCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error) {
 	var cert upcloud.LoadBalancerCertificateBundle
-	reqBody, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-
-	res, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &cert)
-	return &cert, err
+	return &cert, s.create(ctx, r, &cert)
 }
 
 // ModifyLoadBalancerCertificateBundle modifies an existing load balancer certificate bundle.
-func (s *Service) ModifyLoadBalancerCertificateBundle(r *request.ModifyLoadBalancerCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error) {
+func (s *Service) ModifyLoadBalancerCertificateBundle(ctx context.Context, r *request.ModifyLoadBalancerCertificateBundleRequest) (*upcloud.LoadBalancerCertificateBundle, error) {
 	var cert upcloud.LoadBalancerCertificateBundle
-	reqBody, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-
-	res, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(res, &cert)
-	return &cert, err
+	return &cert, s.modify(ctx, r, &cert)
 }
 
 // DeleteLoadBalancerCertificateBundle deletes an existing load balancer certificate bundle.
-func (s *Service) DeleteLoadBalancerCertificateBundle(r *request.DeleteLoadBalancerCertificateBundleRequest) error {
-	if err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL())); err != nil {
-		return parseJSONServiceError(err)
-	}
-	return nil
+func (s *Service) DeleteLoadBalancerCertificateBundle(ctx context.Context, r *request.DeleteLoadBalancerCertificateBundleRequest) error {
+	return s.delete(ctx, r)
 }
 
-// ModifyLoadBalancerNetwork modifies an existing load balancer network.
-func (s *Service) ModifyLoadBalancerNetwork(r *request.ModifyLoadBalancerNetworkRequest) (*upcloud.LoadBalancerNetwork, error) {
-	reqBody, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
+func (s *Service) ModifyLoadBalancerNetwork(ctx context.Context, r *request.ModifyLoadBalancerNetworkRequest) (*upcloud.LoadBalancerNetwork, error) {
 	n := upcloud.LoadBalancerNetwork{}
-	res, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), reqBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-	return &n, json.Unmarshal(res, &n)
+	return &n, s.modify(ctx, r, &n)
 }

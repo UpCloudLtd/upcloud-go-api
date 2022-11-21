@@ -1,279 +1,125 @@
 package service
 
 import (
-	"encoding/json"
-	"fmt"
+	"context"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/request"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 )
 
 type Network interface {
-	GetNetworks() (*upcloud.Networks, error)
-	GetNetworksInZone(r *request.GetNetworksInZoneRequest) (*upcloud.Networks, error)
-	CreateNetwork(r *request.CreateNetworkRequest) (*upcloud.Network, error)
-	GetNetworkDetails(r *request.GetNetworkDetailsRequest) (*upcloud.Network, error)
-	ModifyNetwork(r *request.ModifyNetworkRequest) (*upcloud.Network, error)
-	DeleteNetwork(r *request.DeleteNetworkRequest) error
-	AttachNetworkRouter(r *request.AttachNetworkRouterRequest) error
-	DetachNetworkRouter(r *request.DetachNetworkRouterRequest) error
-	GetServerNetworks(r *request.GetServerNetworksRequest) (*upcloud.Networking, error)
-	CreateNetworkInterface(r *request.CreateNetworkInterfaceRequest) (*upcloud.Interface, error)
-	ModifyNetworkInterface(r *request.ModifyNetworkInterfaceRequest) (*upcloud.Interface, error)
-	DeleteNetworkInterface(r *request.DeleteNetworkInterfaceRequest) error
-	GetRouters() (*upcloud.Routers, error)
-	GetRouterDetails(r *request.GetRouterDetailsRequest) (*upcloud.Router, error)
-	CreateRouter(r *request.CreateRouterRequest) (*upcloud.Router, error)
-	ModifyRouter(r *request.ModifyRouterRequest) (*upcloud.Router, error)
-	DeleteRouter(r *request.DeleteRouterRequest) error
+	GetNetworks(ctx context.Context) (*upcloud.Networks, error)
+	GetNetworksInZone(ctx context.Context, r *request.GetNetworksInZoneRequest) (*upcloud.Networks, error)
+	CreateNetwork(ctx context.Context, r *request.CreateNetworkRequest) (*upcloud.Network, error)
+	GetNetworkDetails(ctx context.Context, r *request.GetNetworkDetailsRequest) (*upcloud.Network, error)
+	ModifyNetwork(ctx context.Context, r *request.ModifyNetworkRequest) (*upcloud.Network, error)
+	DeleteNetwork(ctx context.Context, r *request.DeleteNetworkRequest) error
+	AttachNetworkRouter(ctx context.Context, r *request.AttachNetworkRouterRequest) error
+	DetachNetworkRouter(ctx context.Context, r *request.DetachNetworkRouterRequest) error
+	GetServerNetworks(ctx context.Context, r *request.GetServerNetworksRequest) (*upcloud.Networking, error)
+	CreateNetworkInterface(ctx context.Context, r *request.CreateNetworkInterfaceRequest) (*upcloud.Interface, error)
+	ModifyNetworkInterface(ctx context.Context, r *request.ModifyNetworkInterfaceRequest) (*upcloud.Interface, error)
+	DeleteNetworkInterface(ctx context.Context, r *request.DeleteNetworkInterfaceRequest) error
+	GetRouters(ctx context.Context) (*upcloud.Routers, error)
+	GetRouterDetails(ctx context.Context, r *request.GetRouterDetailsRequest) (*upcloud.Router, error)
+	CreateRouter(ctx context.Context, r *request.CreateRouterRequest) (*upcloud.Router, error)
+	ModifyRouter(ctx context.Context, r *request.ModifyRouterRequest) (*upcloud.Router, error)
+	DeleteRouter(ctx context.Context, r *request.DeleteRouterRequest) error
 }
 
-var _ Network = (*Service)(nil)
-
 // GetNetworks returns the all the available networks
-func (s *Service) GetNetworks() (*upcloud.Networks, error) {
+func (s *Service) GetNetworks(ctx context.Context) (*upcloud.Networks, error) {
 	networks := upcloud.Networks{}
-	response, err := s.basicGetRequest("/network")
-	if err != nil {
-		return nil, err
-	}
-
-	err = json.Unmarshal(response, &networks)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %s, %w", string(response), err)
-	}
-
-	return &networks, nil
+	return &networks, s.get(ctx, "/network", &networks)
 }
 
 // GetNetworksInZone returns the all the available networks within the specified zone.
-func (s *Service) GetNetworksInZone(r *request.GetNetworksInZoneRequest) (*upcloud.Networks, error) {
+func (s *Service) GetNetworksInZone(ctx context.Context, r *request.GetNetworksInZoneRequest) (*upcloud.Networks, error) {
 	networks := upcloud.Networks{}
-	response, err := s.basicGetRequest(r.RequestURL())
-	if err != nil {
-		return nil, err
-	}
-
-	err = json.Unmarshal(response, &networks)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %s, %w", string(response), err)
-	}
-
-	return &networks, nil
+	return &networks, s.get(ctx, r.RequestURL(), &networks)
 }
 
 // CreateNetwork creates a new network and returns the network details for the new network.
-func (s *Service) CreateNetwork(r *request.CreateNetworkRequest) (*upcloud.Network, error) {
+func (s *Service) CreateNetwork(ctx context.Context, r *request.CreateNetworkRequest) (*upcloud.Network, error) {
 	network := upcloud.Network{}
-	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &network)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %s, %w", string(response), err)
-	}
-
-	return &network, nil
+	return &network, s.create(ctx, r, &network)
 }
 
 // GetNetworkDetails returns the details for the specified network.
-func (s *Service) GetNetworkDetails(r *request.GetNetworkDetailsRequest) (*upcloud.Network, error) {
+func (s *Service) GetNetworkDetails(ctx context.Context, r *request.GetNetworkDetailsRequest) (*upcloud.Network, error) {
 	network := upcloud.Network{}
-	response, err := s.basicGetRequest(r.RequestURL())
-	if err != nil {
-		return nil, err
-	}
-
-	err = json.Unmarshal(response, &network)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %s, %w", string(response), err)
-	}
-
-	return &network, nil
+	return &network, s.get(ctx, r.RequestURL(), &network)
 }
 
 // ModifyNetwork modifies the existing specified network.
-func (s *Service) ModifyNetwork(r *request.ModifyNetworkRequest) (*upcloud.Network, error) {
+func (s *Service) ModifyNetwork(ctx context.Context, r *request.ModifyNetworkRequest) (*upcloud.Network, error) {
 	network := upcloud.Network{}
-	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPutRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &network)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %s, %w", string(response), err)
-	}
-
-	return &network, nil
+	return &network, s.replace(ctx, r, &network)
 }
 
 // DeleteNetwork deletes the specified network.
-func (s *Service) DeleteNetwork(r *request.DeleteNetworkRequest) error {
-	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
-	if err != nil {
-		return parseJSONServiceError(err)
-	}
-
-	return nil
+func (s *Service) DeleteNetwork(ctx context.Context, r *request.DeleteNetworkRequest) error {
+	return s.delete(ctx, r)
 }
 
 // AttachNetworkRouter attaches a router to the specified network.
-func (s *Service) AttachNetworkRouter(r *request.AttachNetworkRouterRequest) error {
-	requestBody, _ := json.Marshal(r)
-	_, err := s.client.PerformJSONPutRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-	if err != nil {
-		return parseJSONServiceError(err)
-	}
-	return nil
+func (s *Service) AttachNetworkRouter(ctx context.Context, r *request.AttachNetworkRouterRequest) error {
+	return s.replace(ctx, r, nil)
 }
 
 // DetachNetworkRouter detaches a router from the specified network.
-func (s *Service) DetachNetworkRouter(r *request.DetachNetworkRouterRequest) error {
-	requestBody, _ := json.Marshal(r)
-	_, err := s.client.PerformJSONPutRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-	if err != nil {
-		return parseJSONServiceError(err)
-	}
-	return nil
+func (s *Service) DetachNetworkRouter(ctx context.Context, r *request.DetachNetworkRouterRequest) error {
+	return s.replace(ctx, r, nil)
 }
 
 // GetServerNetworks returns all the networks associated with the specified server.
-func (s *Service) GetServerNetworks(r *request.GetServerNetworksRequest) (*upcloud.Networking, error) {
+func (s *Service) GetServerNetworks(ctx context.Context, r *request.GetServerNetworksRequest) (*upcloud.Networking, error) {
 	networking := upcloud.Networking{}
-	response, err := s.basicGetRequest(r.RequestURL())
-	if err != nil {
-		return nil, err
-	}
-
-	err = json.Unmarshal(response, &networking)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %s, %w", string(response), err)
-	}
-
-	return &networking, nil
+	return &networking, s.get(ctx, r.RequestURL(), &networking)
 }
 
 // CreateNetworkInterface creates a new network interface on the specified server.
-func (s *Service) CreateNetworkInterface(r *request.CreateNetworkInterfaceRequest) (*upcloud.Interface, error) {
+func (s *Service) CreateNetworkInterface(ctx context.Context, r *request.CreateNetworkInterfaceRequest) (*upcloud.Interface, error) {
 	iface := upcloud.Interface{}
-	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &iface)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %s, %w", string(response), err)
-	}
-
-	return &iface, nil
+	return &iface, s.create(ctx, r, &iface)
 }
 
 // ModifyNetworkInterface modifies the specified network interface on the specified server.
-func (s *Service) ModifyNetworkInterface(r *request.ModifyNetworkInterfaceRequest) (*upcloud.Interface, error) {
+func (s *Service) ModifyNetworkInterface(ctx context.Context, r *request.ModifyNetworkInterfaceRequest) (*upcloud.Interface, error) {
 	iface := upcloud.Interface{}
-	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPutRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &iface)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %s, %w", string(response), err)
-	}
-
-	return &iface, nil
+	return &iface, s.replace(ctx, r, &iface)
 }
 
 // DeleteNetworkInterface removes the specified network interface from the specified server.
-func (s *Service) DeleteNetworkInterface(r *request.DeleteNetworkInterfaceRequest) error {
-	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
-	if err != nil {
-		return parseJSONServiceError(err)
-	}
-
-	return nil
+func (s *Service) DeleteNetworkInterface(ctx context.Context, r *request.DeleteNetworkInterfaceRequest) error {
+	return s.delete(ctx, r)
 }
 
 // GetRouters returns the all the available routers
-func (s *Service) GetRouters() (*upcloud.Routers, error) {
+func (s *Service) GetRouters(ctx context.Context) (*upcloud.Routers, error) {
 	routers := upcloud.Routers{}
-	response, err := s.basicGetRequest("/router")
-	if err != nil {
-		return nil, err
-	}
-
-	err = json.Unmarshal(response, &routers)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %s, %w", string(response), err)
-	}
-
-	return &routers, nil
+	return &routers, s.get(ctx, "/router", &routers)
 }
 
 // GetRouterDetails returns the details for the specified router.
-func (s *Service) GetRouterDetails(r *request.GetRouterDetailsRequest) (*upcloud.Router, error) {
+func (s *Service) GetRouterDetails(ctx context.Context, r *request.GetRouterDetailsRequest) (*upcloud.Router, error) {
 	router := upcloud.Router{}
-	response, err := s.basicGetRequest(r.RequestURL())
-	if err != nil {
-		return nil, err
-	}
-
-	err = json.Unmarshal(response, &router)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %s, %w", string(response), err)
-	}
-
-	return &router, nil
+	return &router, s.get(ctx, r.RequestURL(), &router)
 }
 
 // CreateRouter creates a new router.
-func (s *Service) CreateRouter(r *request.CreateRouterRequest) (*upcloud.Router, error) {
+func (s *Service) CreateRouter(ctx context.Context, r *request.CreateRouterRequest) (*upcloud.Router, error) {
 	router := upcloud.Router{}
-	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &router)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %s, %w", string(response), err)
-	}
-
-	return &router, nil
+	return &router, s.create(ctx, r, &router)
 }
 
 // ModifyRouter modifies the configuration of the specified existing router.
-func (s *Service) ModifyRouter(r *request.ModifyRouterRequest) (*upcloud.Router, error) {
+func (s *Service) ModifyRouter(ctx context.Context, r *request.ModifyRouterRequest) (*upcloud.Router, error) {
 	router := upcloud.Router{}
-	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &router)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %s, %w", string(response), err)
-	}
-
-	return &router, nil
+	return &router, s.modify(ctx, r, &router)
 }
 
 // DeleteRouter deletes the specified router.
-func (s *Service) DeleteRouter(r *request.DeleteRouterRequest) error {
-	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
-	if err != nil {
-		return parseJSONServiceError(err)
-	}
-
-	return nil
+func (s *Service) DeleteRouter(ctx context.Context, r *request.DeleteRouterRequest) error {
+	return s.delete(ctx, r)
 }

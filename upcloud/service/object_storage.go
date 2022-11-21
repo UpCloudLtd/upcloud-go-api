@@ -1,95 +1,45 @@
 package service
 
 import (
-	"encoding/json"
-	"fmt"
+	"context"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/request"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 )
 
 type ObjectStorage interface {
-	GetObjectStorages() (*upcloud.ObjectStorages, error)
-	GetObjectStorageDetails(r *request.GetObjectStorageDetailsRequest) (*upcloud.ObjectStorageDetails, error)
-	CreateObjectStorage(r *request.CreateObjectStorageRequest) (*upcloud.ObjectStorageDetails, error)
-	ModifyObjectStorage(r *request.ModifyObjectStorageRequest) (*upcloud.ObjectStorageDetails, error)
-	DeleteObjectStorage(r *request.DeleteObjectStorageRequest) error
+	GetObjectStorages(ctx context.Context) (*upcloud.ObjectStorages, error)
+	GetObjectStorageDetails(ctx context.Context, r *request.GetObjectStorageDetailsRequest) (*upcloud.ObjectStorageDetails, error)
+	CreateObjectStorage(ctx context.Context, r *request.CreateObjectStorageRequest) (*upcloud.ObjectStorageDetails, error)
+	ModifyObjectStorage(ctx context.Context, r *request.ModifyObjectStorageRequest) (*upcloud.ObjectStorageDetails, error)
+	DeleteObjectStorage(ctx context.Context, r *request.DeleteObjectStorageRequest) error
 }
 
-var _ ObjectStorage = (*Service)(nil)
-
 // GetObjectStorages returns the available objects storages
-func (s *Service) GetObjectStorages() (*upcloud.ObjectStorages, error) {
+func (s *Service) GetObjectStorages(ctx context.Context) (*upcloud.ObjectStorages, error) {
 	objectStorages := upcloud.ObjectStorages{}
-	response, err := s.basicGetRequest("/object-storage")
-	if err != nil {
-		return nil, err
-	}
-
-	err = json.Unmarshal(response, &objectStorages)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %s, %w", string(response), err)
-	}
-
-	return &objectStorages, nil
+	return &objectStorages, s.get(ctx, "/object-storage", &objectStorages)
 }
 
 // GetObjectStorageDetails returns extended details about the specified Object Storage
-func (s *Service) GetObjectStorageDetails(r *request.GetObjectStorageDetailsRequest) (*upcloud.ObjectStorageDetails, error) {
+func (s *Service) GetObjectStorageDetails(ctx context.Context, r *request.GetObjectStorageDetailsRequest) (*upcloud.ObjectStorageDetails, error) {
 	objectStorageDetails := upcloud.ObjectStorageDetails{}
-	response, err := s.basicGetRequest(r.RequestURL())
-	if err != nil {
-		return nil, err
-	}
-
-	err = json.Unmarshal(response, &objectStorageDetails)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %s, %w", string(response), err)
-	}
-
-	return &objectStorageDetails, nil
+	return &objectStorageDetails, s.get(ctx, r.RequestURL(), &objectStorageDetails)
 }
 
 // CreateObjectStorage creates a Object Storage and return the Object Storage details for the newly created device
-func (s *Service) CreateObjectStorage(r *request.CreateObjectStorageRequest) (*upcloud.ObjectStorageDetails, error) {
+func (s *Service) CreateObjectStorage(ctx context.Context, r *request.CreateObjectStorageRequest) (*upcloud.ObjectStorageDetails, error) {
 	objectStorageDetails := upcloud.ObjectStorageDetails{}
-	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &objectStorageDetails)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %s, %w", string(response), err)
-	}
-
-	return &objectStorageDetails, nil
+	return &objectStorageDetails, s.create(ctx, r, &objectStorageDetails)
 }
 
 // ModifyObjectStorage modifies the configuration of an existing Object Storage
-func (s *Service) ModifyObjectStorage(r *request.ModifyObjectStorageRequest) (*upcloud.ObjectStorageDetails, error) {
+func (s *Service) ModifyObjectStorage(ctx context.Context, r *request.ModifyObjectStorageRequest) (*upcloud.ObjectStorageDetails, error) {
 	objectStorageDetails := upcloud.ObjectStorageDetails{}
-	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &objectStorageDetails)
-	if err != nil {
-		return nil, fmt.Errorf("unable to unmarshal JSON: %s, %w", string(response), err)
-	}
-
-	return &objectStorageDetails, nil
+	return &objectStorageDetails, s.modify(ctx, r, &objectStorageDetails)
 }
 
 // DeleteObjectStorage deletes the specific Object Storage
-func (s *Service) DeleteObjectStorage(r *request.DeleteObjectStorageRequest) error {
-	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
-	if err != nil {
-		return parseJSONServiceError(err)
-	}
-
-	return nil
+func (s *Service) DeleteObjectStorage(ctx context.Context, r *request.DeleteObjectStorageRequest) error {
+	return s.delete(ctx, r)
 }

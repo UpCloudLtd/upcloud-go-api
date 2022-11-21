@@ -2,10 +2,10 @@ package service
 
 import (
 	"compress/gzip"
+	"context"
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"testing"
@@ -15,8 +15,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/request"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 )
 
 // TestCreateModifyDeleteStorage performs the following actions:
@@ -27,9 +27,9 @@ import (
 func TestCreateModifyDeleteStorage(t *testing.T) {
 	t.Parallel()
 
-	record(t, "createmodifydeletestorage", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "createmodifydeletestorage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create some storage
-		storageDetails, err := createStorage(svc)
+		storageDetails, err := createStorage(ctx, svc)
 		require.NoError(t, err)
 		t.Logf("Storage %s with UUID %s created", storageDetails.Title, storageDetails.UUID)
 
@@ -37,7 +37,7 @@ func TestCreateModifyDeleteStorage(t *testing.T) {
 		t.Log("Modifying the storage ...")
 
 		newTitle := "New fancy title"
-		storageDetails, err = svc.ModifyStorage(&request.ModifyStorageRequest{
+		storageDetails, err = svc.ModifyStorage(ctx, &request.ModifyStorageRequest{
 			UUID:  storageDetails.UUID,
 			Title: newTitle,
 		})
@@ -47,7 +47,7 @@ func TestCreateModifyDeleteStorage(t *testing.T) {
 
 		// Delete the storage
 		t.Log("Deleting the storage ...")
-		err = deleteStorage(svc, storageDetails.UUID)
+		err = deleteStorage(ctx, svc, storageDetails.UUID)
 		require.NoError(t, err)
 		t.Log("Storage is now deleted")
 	})
@@ -64,28 +64,27 @@ func TestCreateModifyDeleteStorage(t *testing.T) {
 // - deletes the server
 func TestAttachDetachStorage(t *testing.T) {
 	t.Parallel()
-
-	record(t, "attachdetachstorage", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "attachdetachstorage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create a server
-		serverDetails, err := createServer(rec, svc, "TestAttachDetachStorage")
+		serverDetails, err := createServer(ctx, rec, svc, "TestAttachDetachStorage")
 		require.NoError(t, err)
 		t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 		// Stop the server
 		t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
-		err = stopServer(rec, svc, serverDetails.UUID)
+		err = stopServer(ctx, rec, svc, serverDetails.UUID)
 		require.NoError(t, err)
 		t.Log("Server is now stopped")
 
 		// Create some storage
-		storageDetails, err := createStorage(svc)
+		storageDetails, err := createStorage(ctx, svc)
 		require.NoError(t, err)
 		t.Logf("Storage %s with UUID %s created", storageDetails.Title, storageDetails.UUID)
 
 		// Attach the storage
 		t.Logf("Attaching storage %s", storageDetails.UUID)
 
-		serverDetails, err = svc.AttachStorage(&request.AttachStorageRequest{
+		serverDetails, err = svc.AttachStorage(ctx, &request.AttachStorageRequest{
 			StorageUUID: storageDetails.UUID,
 			ServerUUID:  serverDetails.UUID,
 			Type:        upcloud.StorageTypeDisk,
@@ -97,7 +96,7 @@ func TestAttachDetachStorage(t *testing.T) {
 		// Detach the storage
 		t.Logf("Detaching storage %s", storageDetails.UUID)
 
-		_, err = svc.DetachStorage(&request.DetachStorageRequest{
+		_, err = svc.DetachStorage(ctx, &request.DetachStorageRequest{
 			ServerUUID: serverDetails.UUID,
 			Address:    "scsi:0:0",
 		})
@@ -113,17 +112,16 @@ func TestAttachDetachStorage(t *testing.T) {
 // - deletes the clone and the storage device
 func TestCloneStorage(t *testing.T) {
 	t.Parallel()
-
-	record(t, "clonestorage", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "clonestorage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create storage
-		storageDetails, err := createStorage(svc)
+		storageDetails, err := createStorage(ctx, svc)
 		require.NoError(t, err)
 		t.Logf("Storage %s with UUID %s created", storageDetails.Title, storageDetails.UUID)
 
 		// Clone the storage
 		t.Log("Cloning storage ...")
 
-		clonedStorageDetails, err := svc.CloneStorage(&request.CloneStorageRequest{
+		clonedStorageDetails, err := svc.CloneStorage(ctx, &request.CloneStorageRequest{
 			UUID:  storageDetails.UUID,
 			Title: "Cloned storage",
 			Zone:  "fi-hel2",
@@ -131,10 +129,10 @@ func TestCloneStorage(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		err = waitForStorageOnlineState(rec, svc, clonedStorageDetails.UUID)
+		err = waitForStorageOnlineState(ctx, rec, svc, clonedStorageDetails.UUID)
 		require.NoError(t, err)
 
-		details, err := svc.GetStorageDetails(&request.GetStorageDetailsRequest{UUID: clonedStorageDetails.UUID})
+		details, err := svc.GetStorageDetails(ctx, &request.GetStorageDetailsRequest{UUID: clonedStorageDetails.UUID})
 		require.NoError(t, err)
 		assert.Equal(t, upcloud.StorageStateOnline, details.State)
 		t.Logf("Storage cloned as %s", clonedStorageDetails.UUID)
@@ -149,21 +147,20 @@ func TestCloneStorage(t *testing.T) {
 // - stops and deletes the server
 func TestTemplatizeServerStorage(t *testing.T) {
 	t.Parallel()
-
-	record(t, "templatizeserverstorage", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "templatizeserverstorage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create server
-		serverDetails, err := createServer(rec, svc, "TestTemplatizeServerStorage")
+		serverDetails, err := createServer(ctx, rec, svc, "TestTemplatizeServerStorage")
 		require.NoError(t, err)
 		t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 		// Stop the server
 		t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
-		err = stopServer(rec, svc, serverDetails.UUID)
+		err = stopServer(ctx, rec, svc, serverDetails.UUID)
 		require.NoError(t, err)
 		t.Log("Server is now stopped")
 
 		// Get extended service details
-		serverDetails, err = svc.GetServerDetails(&request.GetServerDetailsRequest{
+		serverDetails, err = svc.GetServerDetails(ctx, &request.GetServerDetailsRequest{
 			UUID: serverDetails.UUID,
 		})
 		require.NoError(t, err)
@@ -172,16 +169,16 @@ func TestTemplatizeServerStorage(t *testing.T) {
 		require.NotEmpty(t, serverDetails.StorageDevices)
 		t.Log("Templatizing storage ...")
 
-		storageDetails, err := svc.TemplatizeStorage(&request.TemplatizeStorageRequest{
+		storageDetails, err := svc.TemplatizeStorage(ctx, &request.TemplatizeStorageRequest{
 			UUID:  serverDetails.StorageDevices[0].UUID,
 			Title: "Templatized storage",
 		})
 		require.NoErrorf(t, err, "Error: %#v", err)
 
-		err = waitForStorageOnlineState(rec, svc, storageDetails.UUID)
+		err = waitForStorageOnlineState(ctx, rec, svc, storageDetails.UUID)
 		require.NoError(t, err)
 
-		storageDetails, err = svc.GetStorageDetails(&request.GetStorageDetailsRequest{UUID: storageDetails.UUID})
+		storageDetails, err = svc.GetStorageDetails(ctx, &request.GetStorageDetailsRequest{UUID: storageDetails.UUID})
 		require.NoError(t, err)
 		assert.Equal(t, upcloud.StorageStateOnline, storageDetails.State)
 		t.Logf("Storage templatized as %s", storageDetails.UUID)
@@ -197,22 +194,21 @@ func TestTemplatizeServerStorage(t *testing.T) {
 // - ejects the CD-ROM
 func TestLoadEjectCDROM(t *testing.T) {
 	t.Parallel()
-
-	record(t, "loadejectcdrom", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "loadejectcdrom", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create the server
-		serverDetails, err := createServer(rec, svc, "TestLoadEjectCDROM")
+		serverDetails, err := createServer(ctx, rec, svc, "TestLoadEjectCDROM")
 		require.NoError(t, err)
 		t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
 
 		// Stop the server
 		t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
-		err = stopServer(rec, svc, serverDetails.UUID)
+		err = stopServer(ctx, rec, svc, serverDetails.UUID)
 		require.NoError(t, err)
 		t.Log("Server is now stopped")
 
 		// Attach CD-ROM device
 		t.Logf("Attaching CD-ROM device to server with UUID %s", serverDetails.UUID)
-		_, err = svc.AttachStorage(&request.AttachStorageRequest{
+		_, err = svc.AttachStorage(ctx, &request.AttachStorageRequest{
 			ServerUUID: serverDetails.UUID,
 			Type:       upcloud.StorageTypeCDROM,
 		})
@@ -221,7 +217,7 @@ func TestLoadEjectCDROM(t *testing.T) {
 
 		// Load the CD-ROM
 		t.Log("Loading CD-ROM into CD-ROM device")
-		_, err = svc.LoadCDROM(&request.LoadCDROMRequest{
+		_, err = svc.LoadCDROM(ctx, &request.LoadCDROMRequest{
 			ServerUUID:  serverDetails.UUID,
 			StorageUUID: "01000000-0000-4000-8000-000020060101",
 		})
@@ -230,7 +226,7 @@ func TestLoadEjectCDROM(t *testing.T) {
 
 		// Eject the CD-ROM
 		t.Log("Ejecting CD-ROM from CD-ROM device")
-		_, err = svc.EjectCDROM(&request.EjectCDROMRequest{
+		_, err = svc.EjectCDROM(ctx, &request.EjectCDROMRequest{
 			ServerUUID: serverDetails.UUID,
 		})
 		require.NoError(t, err)
@@ -246,10 +242,9 @@ func TestLoadEjectCDROM(t *testing.T) {
 // - restores the backup
 func TestCreateRestoreBackup(t *testing.T) {
 	t.Parallel()
-
-	record(t, "createrestorebackup", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "createrestorebackup", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// Create the storage
-		storageDetails, err := createStorage(svc)
+		storageDetails, err := createStorage(ctx, svc)
 		require.NoError(t, err)
 		t.Logf("Storage %s with UUID %s created", storageDetails.Title, storageDetails.UUID)
 
@@ -261,16 +256,16 @@ func TestCreateRestoreBackup(t *testing.T) {
 
 		// Because we are recording the API tests we need to store the 'before'
 		// time for the later check. We're storing it in the Title field.
-		backupDetails, err := svc.CreateBackup(&request.CreateBackupRequest{
+		backupDetails, err := svc.CreateBackup(ctx, &request.CreateBackupRequest{
 			UUID:  storageDetails.UUID,
 			Title: fmt.Sprintf("backup-%d", timeBeforeBackup.UnixNano()),
 		})
 		require.NoError(t, err)
 
-		err = waitForStorageOnlineState(rec, svc, storageDetails.UUID)
+		err = waitForStorageOnlineState(ctx, rec, svc, storageDetails.UUID)
 		require.NoError(t, err)
 
-		storageDetails, err = svc.GetStorageDetails(&request.GetStorageDetailsRequest{UUID: storageDetails.UUID})
+		storageDetails, err = svc.GetStorageDetails(ctx, &request.GetStorageDetailsRequest{UUID: storageDetails.UUID})
 		require.NoError(t, err)
 		assert.Equal(t, upcloud.StorageStateOnline, storageDetails.State)
 
@@ -279,7 +274,7 @@ func TestCreateRestoreBackup(t *testing.T) {
 		// Get backup storage details
 		t.Logf("Getting details of backup storage with UUID %s ...", backupDetails.UUID)
 
-		backupStorageDetails, err := svc.GetStorageDetails(&request.GetStorageDetailsRequest{
+		backupStorageDetails, err := svc.GetStorageDetails(ctx, &request.GetStorageDetailsRequest{
 			UUID: backupDetails.UUID,
 		})
 		require.NoError(t, err)
@@ -295,23 +290,24 @@ func TestCreateRestoreBackup(t *testing.T) {
 		)
 		t.Logf("Backup storage origin UUID OK")
 
-		err = svc.RestoreBackup(&request.RestoreBackupRequest{
+		err = svc.RestoreBackup(ctx, &request.RestoreBackupRequest{
 			UUID: backupDetails.UUID,
 		})
 		assert.NoError(t, err)
 
-		err = waitForStorageOnlineState(rec, svc, backupDetails.Origin)
+		err = waitForStorageOnlineState(ctx, rec, svc, backupDetails.Origin)
 		require.NoError(t, err)
 
-		storageDetails, err = svc.GetStorageDetails(&request.GetStorageDetailsRequest{UUID: backupDetails.Origin})
+		backupDetails, err = svc.GetStorageDetails(ctx, &request.GetStorageDetailsRequest{UUID: backupDetails.Origin})
 		require.NoError(t, err)
-		assert.Equal(t, upcloud.StorageStateOnline, storageDetails.State)
+		assert.Equal(t, upcloud.StorageStateOnline, backupDetails.State)
 	})
 }
 
 func TestStorageImport(t *testing.T) {
-	record(t, "storageimport", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
-		storage, err := svc.CreateStorage(&request.CreateStorageRequest{
+	t.Parallel()
+	record(t, "storageimport", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		storage, err := svc.CreateStorage(ctx, &request.CreateStorageRequest{
 			Size:  10,
 			Tier:  upcloud.StorageTierMaxIOPS,
 			Zone:  "fi-hel2",
@@ -321,19 +317,20 @@ func TestStorageImport(t *testing.T) {
 
 		const sha256sum string = "fd805e748f1950a34e354dc8fdfdf2f883237d65f5cdb8bcb47c64b0561d97a5"
 
-		_, err = svc.CreateStorageImport(&request.CreateStorageImportRequest{
+		_, err = svc.CreateStorageImport(ctx, &request.CreateStorageImportRequest{
 			StorageUUID:    storage.UUID,
 			Source:         upcloud.StorageImportSourceHTTPImport,
 			SourceLocation: "http://dl-cdn.alpinelinux.org/alpine/v3.12/releases/x86/alpine-standard-3.12.0-x86.iso",
 		})
 		require.NoError(t, err)
 
-		err = waitForStorageImportCompletion(rec, svc, storage.UUID)
+		err = waitForStorageImportCompletion(ctx, rec, svc, storage.UUID)
 		require.NoError(t, err)
 
-		afterStorageImportDetails, err := svc.GetStorageImportDetails(&request.GetStorageImportDetailsRequest{
+		afterStorageImportDetails, err := svc.GetStorageImportDetails(ctx, &request.GetStorageImportDetailsRequest{
 			UUID: storage.UUID,
 		})
+
 		require.NoError(t, err)
 		require.Equal(t, upcloud.StorageImportStateCompleted, afterStorageImportDetails.State)
 		require.Equal(t, sha256sum, afterStorageImportDetails.SHA256Sum)
@@ -341,8 +338,9 @@ func TestStorageImport(t *testing.T) {
 }
 
 func TestDirectUploadStorageImport(t *testing.T) {
-	record(t, "directuploadstorageimport", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
-		storage, err := svc.CreateStorage(&request.CreateStorageRequest{
+	t.Parallel()
+	record(t, "directuploadstorageimport", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		storage, err := svc.CreateStorage(ctx, &request.CreateStorageRequest{
 			Size:  10,
 			Tier:  upcloud.StorageTierMaxIOPS,
 			Zone:  "fi-hel2",
@@ -351,7 +349,7 @@ func TestDirectUploadStorageImport(t *testing.T) {
 		require.NoError(t, err)
 
 		// Test for an error if SourceLocation is missing
-		_, err = svc.CreateStorageImport(&request.CreateStorageImportRequest{
+		_, err = svc.CreateStorageImport(ctx, &request.CreateStorageImportRequest{
 			StorageUUID: storage.UUID,
 			Source:      upcloud.StorageImportSourceDirectUpload,
 		})
@@ -359,7 +357,7 @@ func TestDirectUploadStorageImport(t *testing.T) {
 		assert.EqualError(t, err, "SourceLocation must be specified")
 
 		// Test for an error if file doesn't exist
-		_, err = svc.CreateStorageImport(&request.CreateStorageImportRequest{
+		_, err = svc.CreateStorageImport(ctx, &request.CreateStorageImportRequest{
 			StorageUUID:    storage.UUID,
 			Source:         upcloud.StorageImportSourceDirectUpload,
 			SourceLocation: "/this/file/doesnt/exists.txt",
@@ -372,7 +370,7 @@ func TestDirectUploadStorageImport(t *testing.T) {
 		sum := sha256.Sum256(buf)
 		sha256sum := hex.EncodeToString(sum[:])
 
-		tempf, err := ioutil.TempFile(os.TempDir(), "temp_file.txt")
+		tempf, err := os.CreateTemp(os.TempDir(), "temp_file.txt")
 		require.NoError(t, err)
 		defer func() {
 			if err := tempf.Close(); err == nil {
@@ -380,26 +378,27 @@ func TestDirectUploadStorageImport(t *testing.T) {
 			}
 		}()
 
-		_, err = svc.CreateStorageImport(&request.CreateStorageImportRequest{
+		_, err = svc.CreateStorageImport(ctx, &request.CreateStorageImportRequest{
 			StorageUUID:    storage.UUID,
 			Source:         upcloud.StorageImportSourceDirectUpload,
 			SourceLocation: tempf.Name(),
 		})
 		require.NoError(t, err)
 
-		err = waitForStorageImportCompletion(rec, svc, storage.UUID)
+		err = waitForStorageImportCompletion(ctx, rec, svc, storage.UUID)
 		require.NoError(t, err)
 
-		afterStorageImportDetails, err := svc.GetStorageImportDetails(&request.GetStorageImportDetailsRequest{
+		afterStorageImportDetails, err := svc.GetStorageImportDetails(ctx, &request.GetStorageImportDetailsRequest{
 			UUID: storage.UUID,
 		})
+
 		require.NoError(t, err)
 		require.Equal(t, upcloud.StorageImportStateCompleted, afterStorageImportDetails.State)
 		require.Equal(t, sha256sum, afterStorageImportDetails.SHA256Sum)
 	})
 }
 
-// TestResizeStorageFilesystem performs the following actions:
+// TestResizeStorageFilesystemContext performs the following actions:
 // - creates a server
 // - stops the server
 // - resizes the storage disk
@@ -407,32 +406,30 @@ func TestDirectUploadStorageImport(t *testing.T) {
 // - cleanup
 func TestResizeStorageFilesystem(t *testing.T) {
 	t.Parallel()
-
-	record(t, "resizestoragefilesystem", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "resizestoragefilesystem", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		// start server
-		serverDetails, err := createMinimalServer(rec, svc, "TestResizeStorageFilesystem")
+		serverDetails, err := createMinimalServer(ctx, rec, svc, "TestResizeStorageFilesystem")
 		require.NoError(t, err)
 
 		// stop server
-		require.NoError(t, stopServer(rec, svc, serverDetails.UUID))
+		require.NoError(t, stopServer(ctx, rec, svc, serverDetails.UUID))
 
 		// modify disk size
-		_, err = svc.ModifyStorage(&request.ModifyStorageRequest{
+		_, err = svc.ModifyStorage(ctx, &request.ModifyStorageRequest{
 			UUID: serverDetails.StorageDevices[0].UUID,
 			Size: serverDetails.StorageDevices[0].Size + 10,
 		})
 		require.NoError(t, err)
 
-		// wait disk to become back online
-		err = waitForStorageOnlineState(rec, svc, serverDetails.StorageDevices[0].UUID)
+		err = waitForStorageOnlineState(ctx, rec, svc, serverDetails.StorageDevices[0].UUID)
 		require.NoError(t, err)
 
-		storageDetails, err := svc.GetStorageDetails(&request.GetStorageDetailsRequest{UUID: serverDetails.StorageDevices[0].UUID})
+		storageDetails, err := svc.GetStorageDetails(ctx, &request.GetStorageDetailsRequest{UUID: serverDetails.StorageDevices[0].UUID})
 		require.NoError(t, err)
 		assert.Equal(t, upcloud.StorageStateOnline, storageDetails.State)
 
 		// resize storage to populate new disk size
-		resizeBackup, err := svc.ResizeStorageFilesystem(&request.ResizeStorageFilesystemRequest{
+		resizeBackup, err := svc.ResizeStorageFilesystem(ctx, &request.ResizeStorageFilesystemRequest{
 			UUID: storageDetails.UUID,
 		})
 		require.NoError(t, err)
@@ -441,15 +438,16 @@ func TestResizeStorageFilesystem(t *testing.T) {
 		assert.Equal(t, upcloud.StorageStateOnline, resizeBackup.State)
 
 		// cleanup
-		assert.NoError(t, svc.DeleteStorage(&request.DeleteStorageRequest{UUID: resizeBackup.UUID}))
-		assert.NoError(t, svc.DeleteServerAndStorages(
+		assert.NoError(t, svc.DeleteStorage(ctx, &request.DeleteStorageRequest{UUID: resizeBackup.UUID}))
+		assert.NoError(t, svc.DeleteServerAndStorages(ctx,
 			&request.DeleteServerAndStoragesRequest{UUID: serverDetails.UUID}))
 	})
 }
 
 func TestCompressedDirectUploadStorageImport(t *testing.T) {
-	record(t, "compresseddirectuploadstorageimport", func(t *testing.T, rec *recorder.Recorder, svc *Service) {
-		storage, err := svc.CreateStorage(&request.CreateStorageRequest{
+	t.Parallel()
+	record(t, "compresseddirectuploadstorageimport", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		storage, err := svc.CreateStorage(ctx, &request.CreateStorageRequest{
 			Size:  10,
 			Tier:  upcloud.StorageTierMaxIOPS,
 			Zone:  "pl-waw1",
@@ -457,14 +455,14 @@ func TestCompressedDirectUploadStorageImport(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		err = waitForStorageOnlineState(rec, svc, storage.UUID)
+		err = waitForStorageOnlineState(ctx, rec, svc, storage.UUID)
 		require.NoError(t, err)
 
-		storageDetails, err := svc.GetStorageDetails(&request.GetStorageDetailsRequest{UUID: storage.UUID})
+		storageDetails, err := svc.GetStorageDetails(ctx, &request.GetStorageDetailsRequest{UUID: storage.UUID})
 		require.NoError(t, err)
 		assert.Equal(t, upcloud.StorageStateOnline, storageDetails.State)
 
-		f, err := ioutil.TempFile(os.TempDir(), "compresseddirectuploadstorageimport-*.raw.gz")
+		f, err := os.CreateTemp(os.TempDir(), "compresseddirectuploadstorageimport-*.raw.gz")
 		require.NoError(t, err)
 		defer f.Close()
 		defer os.Remove(f.Name())
@@ -476,7 +474,7 @@ func TestCompressedDirectUploadStorageImport(t *testing.T) {
 
 		contentType := "application/gzip"
 
-		_, err = svc.CreateStorageImport(&request.CreateStorageImportRequest{
+		_, err = svc.CreateStorageImport(ctx, &request.CreateStorageImportRequest{
 			StorageUUID:    storage.UUID,
 			Source:         upcloud.StorageImportSourceDirectUpload,
 			SourceLocation: f.Name(),
@@ -484,20 +482,21 @@ func TestCompressedDirectUploadStorageImport(t *testing.T) {
 		})
 		require.NoError(t, err)
 
-		err = waitForStorageImportCompletion(rec, svc, storage.UUID)
+		err = waitForStorageImportCompletion(ctx, rec, svc, storage.UUID)
 		require.NoError(t, err)
 
-		afterStorageImportDetails, err := svc.GetStorageImportDetails(&request.GetStorageImportDetailsRequest{
+		afterStorageImportDetails, err := svc.GetStorageImportDetails(ctx, &request.GetStorageImportDetailsRequest{
 			UUID: storage.UUID,
 		})
 		require.NoError(t, err)
+
 		assert.Equal(t, contentType, afterStorageImportDetails.ClientContentType)
 		assert.Equal(t, upcloud.StorageImportStateCompleted, afterStorageImportDetails.State)
 	})
 }
 
 // Creates a piece of storage and returns the details about it, panic if creation fails.
-func createStorage(svc *Service) (*upcloud.StorageDetails, error) {
+func createStorage(ctx context.Context, svc *Service) (*upcloud.StorageDetails, error) {
 	createStorageRequest := request.CreateStorageRequest{
 		Tier:  upcloud.StorageTierMaxIOPS,
 		Title: "Test storage",
@@ -510,7 +509,7 @@ func createStorage(svc *Service) (*upcloud.StorageDetails, error) {
 		},
 	}
 
-	storageDetails, err := svc.CreateStorage(&createStorageRequest)
+	storageDetails, err := svc.CreateStorage(ctx, &createStorageRequest)
 	if err != nil {
 		return nil, err
 	}
@@ -519,8 +518,8 @@ func createStorage(svc *Service) (*upcloud.StorageDetails, error) {
 }
 
 // Deletes the specified storage.
-func deleteStorage(svc *Service, uuid string) error {
-	err := svc.DeleteStorage(&request.DeleteStorageRequest{
+func deleteStorage(ctx context.Context, svc *Service, uuid string) error {
+	err := svc.DeleteStorage(ctx, &request.DeleteStorageRequest{
 		UUID: uuid,
 	})
 
@@ -528,7 +527,7 @@ func deleteStorage(svc *Service, uuid string) error {
 }
 
 // Waits for the specified storage to come online.
-func waitForStorageImportCompletion(rec *recorder.Recorder, svc *Service, storageUUID string) error {
+func waitForStorageImportCompletion(ctx context.Context, rec *recorder.Recorder, svc *Service, storageUUID string) error {
 	if rec.Mode() != recorder.ModeRecording {
 		return nil
 	}
@@ -540,7 +539,7 @@ func waitForStorageImportCompletion(rec *recorder.Recorder, svc *Service, storag
 		rec.Passthroughs = nil
 	}()
 
-	_, err := svc.WaitForStorageImportCompletion(&request.WaitForStorageImportCompletionRequest{
+	_, err := svc.WaitForStorageImportCompletion(ctx, &request.WaitForStorageImportCompletionRequest{
 		StorageUUID: storageUUID,
 		Timeout:     15 * time.Minute,
 	})
@@ -549,7 +548,7 @@ func waitForStorageImportCompletion(rec *recorder.Recorder, svc *Service, storag
 }
 
 // Waits for the specified storage to come online.
-func waitForStorageOnlineState(rec *recorder.Recorder, svc *Service, storageUUID string) error {
+func waitForStorageOnlineState(ctx context.Context, rec *recorder.Recorder, svc *Service, storageUUID string) error {
 	if rec.Mode() != recorder.ModeRecording {
 		return nil
 	}
@@ -561,7 +560,7 @@ func waitForStorageOnlineState(rec *recorder.Recorder, svc *Service, storageUUID
 		rec.Passthroughs = nil
 	}()
 
-	_, err := svc.WaitForStorageState(&request.WaitForStorageStateRequest{
+	_, err := svc.WaitForStorageState(ctx, &request.WaitForStorageStateRequest{
 		UUID:         storageUUID,
 		DesiredState: upcloud.StorageStateOnline,
 		Timeout:      waitTimeout,

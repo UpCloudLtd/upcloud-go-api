@@ -1,29 +1,29 @@
 package service
 
 import (
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/request"
+	"context"
+
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 )
 
 type Permission interface {
-	GetPermissions(*request.GetPermissionsRequest) (upcloud.Permissions, error)
-	GrantPermission(*request.GrantPermissionRequest) (*upcloud.Permission, error)
-	RevokePermission(*request.RevokePermissionRequest) error
+	GetPermissions(context.Context, *request.GetPermissionsRequest) (upcloud.Permissions, error)
+	GrantPermission(context.Context, *request.GrantPermissionRequest) (*upcloud.Permission, error)
+	RevokePermission(context.Context, *request.RevokePermissionRequest) error
 }
 
-var _ Permission = (*Service)(nil)
-
-func (s *Service) GetPermissions(r *request.GetPermissionsRequest) (upcloud.Permissions, error) {
+func (s *Service) GetPermissions(ctx context.Context, r *request.GetPermissionsRequest) (upcloud.Permissions, error) {
 	p := make(upcloud.Permissions, 0)
-	return p, s.get(r.RequestURL(), &p)
+	return p, s.get(ctx, r.RequestURL(), &p)
 }
 
-func (s *Service) GrantPermission(r *request.GrantPermissionRequest) (*upcloud.Permission, error) {
+func (s *Service) GrantPermission(ctx context.Context, r *request.GrantPermissionRequest) (*upcloud.Permission, error) {
 	p := upcloud.Permission{}
 	resp := struct{ Permission *upcloud.Permission }{Permission: &p}
-	return &p, s.create(r, &resp)
+	return &p, s.create(ctx, r, &resp)
 }
 
-func (s *Service) RevokePermission(r *request.RevokePermissionRequest) error {
-	return s.create(r, nil)
+func (s *Service) RevokePermission(ctx context.Context, r *request.RevokePermissionRequest) error {
+	return s.create(ctx, r, nil)
 }

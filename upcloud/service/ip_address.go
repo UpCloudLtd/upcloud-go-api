@@ -1,94 +1,45 @@
 package service
 
 import (
-	"encoding/json"
+	"context"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/request"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 )
 
-type IpAddress interface {
-	GetIPAddresses() (*upcloud.IPAddresses, error)
-	GetIPAddressDetails(r *request.GetIPAddressDetailsRequest) (*upcloud.IPAddress, error)
-	AssignIPAddress(r *request.AssignIPAddressRequest) (*upcloud.IPAddress, error)
-	ModifyIPAddress(r *request.ModifyIPAddressRequest) (*upcloud.IPAddress, error)
-	ReleaseIPAddress(r *request.ReleaseIPAddressRequest) error
+type IPAddress interface {
+	GetIPAddresses(ctx context.Context) (*upcloud.IPAddresses, error)
+	GetIPAddressDetails(ctx context.Context, r *request.GetIPAddressDetailsRequest) (*upcloud.IPAddress, error)
+	AssignIPAddress(ctx context.Context, r *request.AssignIPAddressRequest) (*upcloud.IPAddress, error)
+	ModifyIPAddress(ctx context.Context, r *request.ModifyIPAddressRequest) (*upcloud.IPAddress, error)
+	ReleaseIPAddress(ctx context.Context, r *request.ReleaseIPAddressRequest) error
 }
 
-var _ IpAddress = (*Service)(nil)
-
 // GetIPAddresses returns all IP addresses associated with the account
-func (s *Service) GetIPAddresses() (*upcloud.IPAddresses, error) {
+func (s *Service) GetIPAddresses(ctx context.Context) (*upcloud.IPAddresses, error) {
 	ipAddresses := upcloud.IPAddresses{}
-	response, err := s.basicGetRequest("/ip_address")
-	if err != nil {
-		return nil, err
-	}
-
-	err = json.Unmarshal(response, &ipAddresses)
-	if err != nil {
-		return nil, err
-	}
-
-	return &ipAddresses, nil
+	return &ipAddresses, s.get(ctx, "/ip_address", &ipAddresses)
 }
 
 // GetIPAddressDetails returns extended details about the specified IP address
-func (s *Service) GetIPAddressDetails(r *request.GetIPAddressDetailsRequest) (*upcloud.IPAddress, error) {
+func (s *Service) GetIPAddressDetails(ctx context.Context, r *request.GetIPAddressDetailsRequest) (*upcloud.IPAddress, error) {
 	ipAddress := upcloud.IPAddress{}
-	response, err := s.basicGetRequest(r.RequestURL())
-	if err != nil {
-		return nil, err
-	}
-
-	err = json.Unmarshal(response, &ipAddress)
-	if err != nil {
-		return nil, err
-	}
-
-	return &ipAddress, nil
+	return &ipAddress, s.get(ctx, r.RequestURL(), &ipAddress)
 }
 
 // AssignIPAddress assigns the specified IP address to the specified server
-func (s *Service) AssignIPAddress(r *request.AssignIPAddressRequest) (*upcloud.IPAddress, error) {
+func (s *Service) AssignIPAddress(ctx context.Context, r *request.AssignIPAddressRequest) (*upcloud.IPAddress, error) {
 	ipAddress := upcloud.IPAddress{}
-	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPostRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &ipAddress)
-	if err != nil {
-		return nil, err
-	}
-
-	return &ipAddress, nil
+	return &ipAddress, s.create(ctx, r, &ipAddress)
 }
 
 // ModifyIPAddress modifies the specified IP address
-func (s *Service) ModifyIPAddress(r *request.ModifyIPAddressRequest) (*upcloud.IPAddress, error) {
+func (s *Service) ModifyIPAddress(ctx context.Context, r *request.ModifyIPAddressRequest) (*upcloud.IPAddress, error) {
 	ipAddress := upcloud.IPAddress{}
-	requestBody, _ := json.Marshal(r)
-	response, err := s.client.PerformJSONPatchRequest(s.client.CreateRequestURL(r.RequestURL()), requestBody)
-	if err != nil {
-		return nil, parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &ipAddress)
-	if err != nil {
-		return nil, err
-	}
-
-	return &ipAddress, nil
+	return &ipAddress, s.modify(ctx, r, &ipAddress)
 }
 
 // ReleaseIPAddress releases the specified IP address from the server it is attached to
-func (s *Service) ReleaseIPAddress(r *request.ReleaseIPAddressRequest) error {
-	err := s.client.PerformJSONDeleteRequest(s.client.CreateRequestURL(r.RequestURL()))
-	if err != nil {
-		return parseJSONServiceError(err)
-	}
-
-	return nil
+func (s *Service) ReleaseIPAddress(ctx context.Context, r *request.ReleaseIPAddressRequest) error {
+	return s.delete(ctx, r)
 }

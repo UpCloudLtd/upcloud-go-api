@@ -1,17 +1,17 @@
 package main
 
 import (
+	"context"
 	"errors"
 	"flag"
 	"fmt"
-	"math/rand"
 	"os"
 	"time"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/client"
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/request"
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/service"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/client"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/service"
 	"github.com/davecgh/go-spew/spew"
 )
 
@@ -20,7 +20,6 @@ var username, password string
 func init() {
 	flag.StringVar(&username, "username", "", "UpCloud username")
 	flag.StringVar(&password, "password", "", "UpCloud password")
-	rand.Seed(time.Now().Unix())
 }
 
 func main() {
@@ -75,10 +74,11 @@ func run() int {
 }
 
 func createServer(s *service.Service) error {
+	ctx := context.TODO()
 	fmt.Println("Creating server")
-	details, err := s.CreateServer(&request.CreateServerRequest{
+	details, err := s.CreateServer(ctx, &request.CreateServerRequest{
 		Hostname: "stuart.example.com",
-		Title:    fmt.Sprintf("example-cli-server-%04d", rand.Int31n(1000)),
+		Title:    "example-cli-server",
 		Zone:     "fi-hel2",
 		Plan:     "1xCPU-1GB",
 		StorageDevices: []request.CreateServerStorageDevice{
@@ -118,7 +118,7 @@ func createServer(s *service.Service) error {
 		fmt.Fprintf(os.Stderr, "UUID missing")
 		return errors.New("UUID too short")
 	}
-	details, err = s.WaitForServerState(&request.WaitForServerStateRequest{
+	details, err = s.WaitForServerState(ctx, &request.WaitForServerStateRequest{
 		UUID:         details.UUID,
 		DesiredState: upcloud.ServerStateStarted,
 		Timeout:      1 * time.Minute,
@@ -134,8 +134,9 @@ func createServer(s *service.Service) error {
 }
 
 func deleteServers(s *service.Service) error {
+	ctx := context.TODO()
 	fmt.Println("Getting servers")
-	servers, err := s.GetServers()
+	servers, err := s.GetServers(ctx)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to get servers: %#v\n", err)
 		return err
@@ -148,7 +149,7 @@ func deleteServers(s *service.Service) error {
 		for _, server := range servers.Servers {
 			if server.State != upcloud.ServerStateStopped {
 				fmt.Printf("Server %s (%s) is not stopped. Stopping\n", server.Title, server.UUID)
-				_, err := s.StopServer(&request.StopServerRequest{
+				_, err := s.StopServer(ctx, &request.StopServerRequest{
 					UUID:     server.UUID,
 					StopType: request.ServerStopTypeHard,
 				})
@@ -156,7 +157,7 @@ func deleteServers(s *service.Service) error {
 					fmt.Fprintf(os.Stderr, "Unable to stop server: %#v\n", err)
 					return err
 				}
-				_, err = s.WaitForServerState(&request.WaitForServerStateRequest{
+				_, err = s.WaitForServerState(ctx, &request.WaitForServerStateRequest{
 					UUID:         server.UUID,
 					DesiredState: upcloud.ServerStateStopped,
 					Timeout:      1 * time.Minute,
@@ -167,7 +168,7 @@ func deleteServers(s *service.Service) error {
 				}
 			}
 			fmt.Printf("Deleting %s (%s)\n", server.Title, server.UUID)
-			err := s.DeleteServerAndStorages(&request.DeleteServerAndStoragesRequest{
+			err := s.DeleteServerAndStorages(ctx, &request.DeleteServerAndStoragesRequest{
 				UUID: server.UUID,
 			})
 			if err != nil {
@@ -182,8 +183,9 @@ func deleteServers(s *service.Service) error {
 }
 
 func deleteStorage(s *service.Service) error {
+	ctx := context.TODO()
 	fmt.Println("Getting storage")
-	storages, err := s.GetStorages(&request.GetStoragesRequest{
+	storages, err := s.GetStorages(ctx, &request.GetStoragesRequest{
 		Access: upcloud.StorageAccessPrivate,
 	})
 	if err != nil {
@@ -199,7 +201,7 @@ func deleteStorage(s *service.Service) error {
 			err := errors.New("Dummy")
 			for i := 0; err != nil && i < 5; i++ {
 				fmt.Printf("%d: Deleting %s (%s)\n", i, storage.Title, storage.UUID)
-				err = s.DeleteStorage(&request.DeleteStorageRequest{
+				err = s.DeleteStorage(ctx, &request.DeleteStorageRequest{
 					UUID: storage.UUID,
 				})
 			}

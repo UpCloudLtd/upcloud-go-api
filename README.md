@@ -8,7 +8,7 @@ This is the official client for interfacing with UpCloud's API using the Go prog
 
 ## Installation and requirements
 
-You'll need Go 1.15 or higher to use the client. You can use the following command to retrieve the client:
+You'll need Go 1.18 or higher to use the client. You can use the following command to retrieve the client:
 
 ```
 go get github.com/UpCloudLtd/upcloud-go-api
@@ -38,16 +38,6 @@ c.SetTimeout(time.Second * 30)
 // Create the service object
 svc := service.New(c)
 ```
-#### Context support
-Use `client.NewWithContext` and `service.NewWithContext` to create context-aware service object.  
-Context-aware service methods accepts `context.Context` as a first argument which is passed to underlying HTTP request.
-
-```go
-ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(10*time.Second))
-defer cancel()
-svc := service.NewWithContext(client.NewWithContext(user, password))
-zones, err := svc.GetZones(ctx)
-```
 ### Validating credentials
 
 The easiest way to check whether the client credentials are correct is to issue a call to `GetAccount()`.
@@ -58,7 +48,7 @@ password := "invalid"
 
 svc := service.New(client.New(username, password))
 
-_, err := svc.GetAccount()
+_, err := svc.GetAccount(context.Background())
 
 if err != nil {
 	panic("Invalid credentials")
@@ -75,7 +65,7 @@ password := "invalid"
 
 svc := service.New(client.New(username, password))
 
-_, err := svc.GetAccount()
+_, err := svc.GetAccount(context.Background())
 
 // Handle errors in general
 if (err != nil) {
@@ -102,7 +92,7 @@ The following example will retrieve a list of servers the account has access to.
 
 ```go
 // Retrieve the list of servers
-servers, err := svc.GetServers()
+servers, err := svc.GetServers(context.Background())
 
 if err != nil {
 	panic(err)
@@ -120,7 +110,7 @@ Since the request for creating a new server is asynchronous, the server will rep
 
 ```go
 // Create the server
-serverDetails, err := svc.CreateServer(&request.CreateServerRequest{
+serverDetails, err := svc.CreateServer(context.Background(), &request.CreateServerRequest{
 	Zone:             "fi-hel2",
 	Title:            "My new server",
 	Hostname:         "server.example.com",
@@ -157,7 +147,7 @@ if err != nil {
 fmt.Println(fmt.Sprintf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID))
 
 // Block for up to five minutes until the server has entered the "started" state
-err = svc.WaitForServerState(&request.WaitForServerStateRequest{
+err = svc.WaitForServerState(context.Background(), &request.WaitForServerStateRequest{
 	UUID:         serverDetails.UUID,
 	DesiredState: upcloud.ServerStateStarted,
 	Timeout:      time.Minute * 5,
@@ -180,7 +170,7 @@ for i, storage := range serverDetails.StorageDevices {
 	// Find the first device
 	if i == 0 {
 		// Templatize the storage
-		storageDetails, err := svc.TemplatizeStorage(&request.TemplatizeStorageRequest{
+		storageDetails, err := svc.TemplatizeStorage(context.Background(), &request.TemplatizeStorageRequest{
 			UUID:  storage.UUID,
 			Title: "Templatized storage",
 		})
@@ -200,7 +190,7 @@ for i, storage := range serverDetails.StorageDevices {
 In this example, we assume that there is a storage device represented by `storageDetails` and that if it is attached to any server, the server is stopped.
 
 ```go
-backupDetails, err := svc.CreateBackup(&request.CreateBackupRequest{
+backupDetails, err := svc.CreateBackup(context.Background(), &request.CreateBackupRequest{
 	UUID:  storageDetails.UUID,
 	Title: "Backup",
 })
@@ -217,7 +207,7 @@ fmt.Println(fmt.Sprintf("Backup of %s created as %s", storageDetails.UUID, backu
 In this example, we assume that there is a server represented by the variable `serverDetails`.
 
 ```go
-firewallRule, err := svc.CreateFirewallRule(&request.CreateFirewallRuleRequest{
+firewallRule, err := svc.CreateFirewallRule(context.Background(), &request.CreateFirewallRuleRequest{
 	ServerUUID: serverDetails.UUID,
 	FirewallRule: upcloud.FirewallRule{
 		Direction: upcloud.FirewallRuleDirectionIn,

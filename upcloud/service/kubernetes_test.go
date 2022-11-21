@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/v4/upcloud/request"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/stretchr/testify/require"
 )
@@ -24,22 +24,23 @@ func TestKubernetes(t *testing.T) {
 
 	// set when creating a private network for cluster
 	network := ""
+
 	// set when creating a cluster
 	uuid := ""
 
 	t.Cleanup(func() {
-		recordWithContext(t, "delete_kubernetes_cluster", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+		record(t, "delete_kubernetes_cluster", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 			if len(uuid) > 0 {
-				err := svc.DeleteKubernetesCluster(&request.DeleteKubernetesClusterRequest{UUID: uuid})
+				err := svc.DeleteKubernetesCluster(ctx, &request.DeleteKubernetesClusterRequest{UUID: uuid})
 				require.NoError(t, err)
 
-				err = waitForKubernetesClusterNotFound(rec, svc, uuid)
+				err = waitForKubernetesClusterNotFound(ctx, rec, svc, uuid)
 				require.NoError(t, err)
 			}
 		})
-		recordWithContext(t, "delete_kubernetes_private_network", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+		record(t, "delete_kubernetes_private_network", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 			if len(network) > 0 {
-				err := svc.DeleteNetwork(&request.DeleteNetworkRequest{UUID: network})
+				err := svc.DeleteNetwork(ctx, &request.DeleteNetworkRequest{UUID: network})
 				require.NoError(t, err)
 			}
 		})
@@ -47,9 +48,9 @@ func TestKubernetes(t *testing.T) {
 
 	// this group is not to be run in parallel
 	t.Run("Setup", func(t *testing.T) {
-		recordWithContext(t, "create_kubernetes_private_network", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+		record(t, "create_kubernetes_private_network", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 			t.Run("CreateKubernetesPrivateNetwork", func(t *testing.T) {
-				n, err := svc.CreateNetwork(&request.CreateNetworkRequest{
+				n, err := svc.CreateNetwork(ctx, &request.CreateNetworkRequest{
 					Name: "upcloud-go-sdk-test",
 					Zone: zone,
 					IPNetworks: []upcloud.IPNetwork{
@@ -70,9 +71,9 @@ func TestKubernetes(t *testing.T) {
 
 		require.NotEmpty(t, network)
 
-		recordWithContext(t, "create_kubernetes_cluster", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+		record(t, "create_kubernetes_cluster", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 			t.Run("CreateKubernetesCluster", func(t *testing.T) {
-				c, err := svc.CreateKubernetesCluster(&request.CreateKubernetesClusterRequest{
+				c, err := svc.CreateKubernetesCluster(ctx, &request.CreateKubernetesClusterRequest{
 					Name:    clusterName,
 					Network: network,
 					NodeGroups: []upcloud.KubernetesNodeGroup{
@@ -98,16 +99,16 @@ func TestKubernetes(t *testing.T) {
 
 		require.NotEmpty(t, uuid)
 
-		recordWithContext(t, "wait_for_kubernetes_cluster_state", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+		record(t, "wait_for_kubernetes_cluster_state", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 			require.NotEmpty(t, uuid)
 
 			t.Run("WaitForKubernetesClusterState", func(t *testing.T) {
-				err := waitForKubernetesClusterState(rec, svc, uuid, upcloud.KubernetesClusterStateRunning)
+				err := waitForKubernetesClusterState(ctx, rec, svc, uuid, upcloud.KubernetesClusterStateRunning)
 				require.NoError(t, err)
 
 				expected := upcloud.KubernetesClusterStateRunning
 
-				c, err := svcContext.GetKubernetesCluster(ctx, &request.GetKubernetesClusterRequest{
+				c, err := svc.GetKubernetesCluster(ctx, &request.GetKubernetesClusterRequest{
 					UUID: uuid,
 				})
 				require.NotNil(t, c)
@@ -122,7 +123,7 @@ func TestKubernetes(t *testing.T) {
 	t.Run("GetKubernetesCluster", func(t *testing.T) {
 		t.Parallel()
 
-		recordWithContext(t, "get_kubernetes_cluster", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+		record(t, "get_kubernetes_cluster", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 			require.NotEmpty(t, uuid)
 
 			expected := &upcloud.KubernetesCluster{
@@ -147,7 +148,7 @@ func TestKubernetes(t *testing.T) {
 				Zone:  zone,
 			}
 
-			actual, err := svc.GetKubernetesCluster(&request.GetKubernetesClusterRequest{
+			actual, err := svc.GetKubernetesCluster(ctx, &request.GetKubernetesClusterRequest{
 				UUID: uuid,
 			})
 
@@ -159,10 +160,10 @@ func TestKubernetes(t *testing.T) {
 	t.Run("GetKubernetesClusters", func(t *testing.T) {
 		t.Parallel()
 
-		recordWithContext(t, "get_kubernetes_clusters", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+		record(t, "get_kubernetes_clusters", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 			require.NotEmpty(t, uuid)
 
-			c, err := svc.GetKubernetesClusters(&request.GetKubernetesClustersRequest{})
+			c, err := svc.GetKubernetesClusters(ctx, &request.GetKubernetesClustersRequest{})
 
 			require.NoError(t, err)
 			require.Len(t, c, 1)
@@ -172,10 +173,10 @@ func TestKubernetes(t *testing.T) {
 	t.Run("GetKubernetesKubeconfig", func(t *testing.T) {
 		t.Parallel()
 
-		recordWithContext(t, "get_kubernetes_kubeconfig", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
+		record(t, "get_kubernetes_kubeconfig", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 			require.NotEmpty(t, uuid)
 
-			k, err := svc.GetKubernetesKubeconfig(&request.GetKubernetesKubeconfigRequest{
+			k, err := svc.GetKubernetesKubeconfig(ctx, &request.GetKubernetesKubeconfigRequest{
 				UUID: uuid,
 			})
 
@@ -187,8 +188,8 @@ func TestKubernetes(t *testing.T) {
 	t.Run("GetKubernetesVersions", func(t *testing.T) {
 		t.Parallel()
 
-		recordWithContext(t, "get_kubernetes_versions", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, svcContext *ServiceContext) {
-			v, err := svc.GetKubernetesVersions(&request.GetKubernetesVersionsRequest{})
+		record(t, "get_kubernetes_versions", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+			v, err := svc.GetKubernetesVersions(ctx, &request.GetKubernetesVersionsRequest{})
 
 			require.NoError(t, err)
 			require.NotZero(t, v)
@@ -197,7 +198,7 @@ func TestKubernetes(t *testing.T) {
 	})
 }
 
-func waitForKubernetesClusterNotFound(rec *recorder.Recorder, svc *Service, clusterUUID string) error {
+func waitForKubernetesClusterNotFound(ctx context.Context, rec *recorder.Recorder, svc *Service, clusterUUID string) error {
 	if rec.Mode() != recorder.ModeRecording {
 		return nil
 	}
@@ -215,7 +216,7 @@ func waitForKubernetesClusterNotFound(rec *recorder.Recorder, svc *Service, clus
 	for {
 		attempts++
 
-		_, err := svc.GetKubernetesCluster(&request.GetKubernetesClusterRequest{UUID: clusterUUID})
+		_, err := svc.GetKubernetesCluster(ctx, &request.GetKubernetesClusterRequest{UUID: clusterUUID})
 		if upcloudErr, ok := err.(*upcloud.Error); ok {
 			if upcloudErr.ErrorCode == "NotFound" {
 				break
@@ -232,12 +233,12 @@ func waitForKubernetesClusterNotFound(rec *recorder.Recorder, svc *Service, clus
 		}
 	}
 	// additional wait period to make sure the attached network is deletable
-	time.Sleep(waitTimeout)
+	time.Sleep(5 * time.Minute)
 
 	return nil
 }
 
-func waitForKubernetesClusterState(rec *recorder.Recorder, svc *Service, clusterUUID string, desiredState upcloud.KubernetesClusterState) error {
+func waitForKubernetesClusterState(ctx context.Context, rec *recorder.Recorder, svc *Service, clusterUUID string, desiredState upcloud.KubernetesClusterState) error {
 	if rec.Mode() != recorder.ModeRecording {
 		return nil
 	}
@@ -249,7 +250,7 @@ func waitForKubernetesClusterState(rec *recorder.Recorder, svc *Service, cluster
 		rec.Passthroughs = nil
 	}()
 
-	_, err := svc.WaitForKubernetesClusterState(&request.WaitForKubernetesClusterStateRequest{
+	_, err := svc.WaitForKubernetesClusterState(ctx, &request.WaitForKubernetesClusterStateRequest{
 		UUID:         clusterUUID,
 		DesiredState: desiredState,
 		Timeout:      waitTimeout,
