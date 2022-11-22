@@ -156,6 +156,7 @@ type CreateServerRequest struct {
 	Networking           *CreateServerNetworking        `json:"networking"`
 	PasswordDelivery     string                         `json:"password_delivery,omitempty"`
 	Plan                 string                         `json:"plan,omitempty"`
+	ServerGroup          string                         `json:"server_group,omitempty"`
 	SimpleBackup         string                         `json:"simple_backup,omitempty"`
 	StorageDevices       CreateServerStorageDeviceSlice `json:"storage_devices"`
 	TimeZone             string                         `json:"timezone,omitempty"`
