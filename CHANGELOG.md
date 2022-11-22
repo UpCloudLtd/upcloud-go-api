@@ -6,6 +6,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 ## [Unreleased]
 
 ### Added
+- servers: allow adding server to a server group during server creation
 - HTTP status code field to `upcloud.Error` type
 
 ## [5.0.0]
