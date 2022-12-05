@@ -4,12 +4,36 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"testing"
 	"time"
 
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/client"
+	"github.com/stretchr/testify/assert"
 )
+
+func TestParseJSONServiceError(t *testing.T) {
+	want := &upcloud.Error{
+		ErrorCode:    "CODE",
+		ErrorMessage: "msg",
+		Status:       http.StatusNotFound,
+	}
+	got := parseJSONServiceError(&client.Error{
+		ErrorCode: http.StatusNotFound,
+		ResponseBody: []byte(`
+		{
+			"error": {
+			  "error_message": "msg",
+			  "error_code": "CODE"
+			}
+		  }
+		`),
+		Type: client.ErrorTypeError,
+	})
+	assert.Equal(t, want, got)
+}
 
 // TestMain is the main test method
 func TestMain(m *testing.M) {
