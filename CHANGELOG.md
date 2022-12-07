@@ -9,6 +9,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 - servers: allow adding server to a server group during server creation
 - servers: add server group UUID to server details
 - HTTP status code field to `upcloud.Error` type
+- experimental support for internal network peering
 
 ## [5.0.0]
 
