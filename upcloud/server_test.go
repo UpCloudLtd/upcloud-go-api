@@ -208,6 +208,7 @@ func TestUnmarshalServerDetails(t *testing.T) {
           "plan" : "1xCPU-2GB",
           "plan_ipv4_bytes": "3565675343",
           "plan_ipv6_bytes": "4534432",
+          "server_group": "test_group_id",
           "simple_backup": "0100,dailies",
           "state": "started",
           "storage_devices": {
@@ -272,6 +273,7 @@ func TestUnmarshalServerDetails(t *testing.T) {
 	assert.Equal(t, RemoteAccessTypeVNC, serverDetails.RemoteAccessType)
 	assert.Equal(t, "server1.example.com", serverDetails.Hostname)
 	assert.Equal(t, "0100,dailies", serverDetails.SimpleBackup)
+	assert.Equal(t, "test_group_id", serverDetails.ServerGroup)
 	assert.True(t, serverDetails.Metadata.Bool())
 
 	networkingTestData := []ServerInterface{

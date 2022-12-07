@@ -49,6 +49,7 @@ func TestCreateServerRequest(t *testing.T) {
 		Title:            "Integration test server #1",
 		Hostname:         "debian.example.com",
 		PasswordDelivery: PasswordDeliveryNone,
+		ServerGroup:      "test-group",
 		StorageDevices: []CreateServerStorageDevice{
 			{
 				Action:  CreateServerStorageDeviceActionClone,
@@ -108,64 +109,83 @@ func TestCreateServerRequest(t *testing.T) {
 
 	expectedJSON := `
 	{
-      "server": {
-        "hostname": "debian.example.com",
-        "login_user": {
-          "create_password": "no",
-          "ssh_keys": {
-			  "ssh_key": [
-                "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCWf2MmpHweXCNUcW91PWZR5UqOkydBr1Gi1xDI16IW4JndMYkH9OF0sWvPz03kfY6NbcHY0bed1Q8BpAC//WfLltuvjrzk33IoFJZ2Ai+4fVdkevkf7pBeSvzdXSyKAT+suHrp/2Qu5hewIUdDCp+znkwyypIJ/C2hDphwbLR3QquOfn6KyKMPZC4my8dFvLxESI0UqeripaBHUGcvNG2LL563hXmWzUu/cyqCpg5IBzpj/ketg8m1KBO7U0dimIAczuxfHk3kp9bwOFquWA2vSFNuVkr8oavk36pHkU88qojYNEy/zUTINE0w6CE/EbDkQVDZEGgDtAkq4jL+4MPV negge@palinski",
-				"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDJfx4OmD8D6mnPA0BPk2DVlbggEkMvB2cecSttauZuaYX7Vju6PvG+kXrUbTvO09oLQMoNYAk3RinqQLXo9eF7bzZIsgB4ZmKGau84kOpYjguhimkKtZiVTKF53G2pbnpiZUN9wfy3xK2mt/MkacjZ1Tp7lAgRGTfWDoTfQa88kzOJGNPWXd12HIvFtd/1KoS9vm5O0nDLV+5zSBLxEYNDmBlIGu1Y3XXle5ygL1BhfGvqOQnv/TdRZcrOgVGWHADvwEid91/+IycLNMc37uP7TdS6vOihFBMytfmFXAqt4+3AzYNmyc+R392RorFzobZ1UuEFm3gUod2Wvj8pY8d/ negge@palinski"
-			  ]
-		  }
-        },
-        "password_delivery": "none",
-        "storage_devices": {
-          "storage_device": [
-            {
-              "action": "clone",
-              "storage": "01000000-0000-4000-8000-000020060100",
-              "title": "disk1",
-              "size": 10,
-              "tier": "maxiops"
-            }
-          ]
-		},
-		"simple_backup": "0430,monthlies",
-		"labels": {
-			"label": [
-				{
-					"key": "managedBy",
-					"value": "upcloud-go-sdk-unit-test"
-				}
-			]
-		},
-		"metadata": "yes",
-		"networking": {
-			"interfaces": {
-			  "interface": [
-				{
-				  "ip_addresses": { "ip_address": [{ "family": "IPv4" }] },
-				  "type": "public"
-				},
-				{
-				  "ip_addresses": { "ip_address": [{ "family": "IPv4" }] },
-				  "type": "utility"
-				},
-				{
-				  "ip_addresses": { "ip_address": [{ "family": "IPv6" }] },
-				  "type": "public"
-				}
-			  ]
-			}
-		},
-		"title": "Integration test server #1",
-		"remote_access_enabled": "yes",
-		"remote_access_type": "vnc",
-		"remote_access_password": "abcdefgh",
-        "zone": "fi-hel2"
-      }
-    }
+		"server":{
+			 "hostname":"debian.example.com",
+			 "login_user":{
+					"create_password":"no",
+					"ssh_keys":{
+						 "ssh_key":[
+								"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCWf2MmpHweXCNUcW91PWZR5UqOkydBr1Gi1xDI16IW4JndMYkH9OF0sWvPz03kfY6NbcHY0bed1Q8BpAC//WfLltuvjrzk33IoFJZ2Ai+4fVdkevkf7pBeSvzdXSyKAT+suHrp/2Qu5hewIUdDCp+znkwyypIJ/C2hDphwbLR3QquOfn6KyKMPZC4my8dFvLxESI0UqeripaBHUGcvNG2LL563hXmWzUu/cyqCpg5IBzpj/ketg8m1KBO7U0dimIAczuxfHk3kp9bwOFquWA2vSFNuVkr8oavk36pHkU88qojYNEy/zUTINE0w6CE/EbDkQVDZEGgDtAkq4jL+4MPV negge@palinski",
+								"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDJfx4OmD8D6mnPA0BPk2DVlbggEkMvB2cecSttauZuaYX7Vju6PvG+kXrUbTvO09oLQMoNYAk3RinqQLXo9eF7bzZIsgB4ZmKGau84kOpYjguhimkKtZiVTKF53G2pbnpiZUN9wfy3xK2mt/MkacjZ1Tp7lAgRGTfWDoTfQa88kzOJGNPWXd12HIvFtd/1KoS9vm5O0nDLV+5zSBLxEYNDmBlIGu1Y3XXle5ygL1BhfGvqOQnv/TdRZcrOgVGWHADvwEid91/+IycLNMc37uP7TdS6vOihFBMytfmFXAqt4+3AzYNmyc+R392RorFzobZ1UuEFm3gUod2Wvj8pY8d/ negge@palinski"
+						 ]
+					}
+			 },
+			 "password_delivery":"none",
+			 "server_group": "test-group",
+			 "storage_devices":{
+					"storage_device":[
+						 {
+								"action":"clone",
+								"storage":"01000000-0000-4000-8000-000020060100",
+								"title":"disk1",
+								"size":10,
+								"tier":"maxiops"
+						 }
+					]
+			 },
+			 "simple_backup":"0430,monthlies",
+			 "labels":{
+					"label":[
+						 {
+								"key":"managedBy",
+								"value":"upcloud-go-sdk-unit-test"
+						 }
+					]
+			 },
+			 "metadata":"yes",
+			 "networking":{
+					"interfaces":{
+						 "interface":[
+								{
+									 "ip_addresses":{
+											"ip_address":[
+												 {
+														"family":"IPv4"
+												 }
+											]
+									 },
+									 "type":"public"
+								},
+								{
+									 "ip_addresses":{
+											"ip_address":[
+												 {
+														"family":"IPv4"
+												 }
+											]
+									 },
+									 "type":"utility"
+								},
+								{
+									 "ip_addresses":{
+											"ip_address":[
+												 {
+														"family":"IPv6"
+												 }
+											]
+									 },
+									 "type":"public"
+								}
+						 ]
+					}
+			 },
+			 "title":"Integration test server #1",
+			 "remote_access_enabled":"yes",
+			 "remote_access_type":"vnc",
+			 "remote_access_password":"abcdefgh",
+			 "zone":"fi-hel2"
+		}
+ }
 	`
 	actualJSON, err := json.Marshal(&request)
 	assert.NoError(t, err)

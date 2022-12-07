@@ -172,6 +172,7 @@ type ServerDetails struct {
 	Metadata             Boolean                  `json:"metadata"`
 	NICModel             string                   `json:"nic_model"`
 	Networking           ServerNetworking         `json:"networking"`
+	ServerGroup          string                   `json:"server_group"`
 	SimpleBackup         string                   `json:"simple_backup"`
 	StorageDevices       ServerStorageDeviceSlice `json:"storage_devices"`
 	Timezone             string                   `json:"timezone"`
