@@ -2,11 +2,13 @@ package upcloud
 
 import "encoding/json"
 
+// NetworkPeeringConfiguredStatus is configured network peering status set by user.
 type NetworkPeeringConfiguredStatus string
 
-type NetworkPeeringIPNetworkFamily string
-
+// NetworkPeeringState is current state of network peering reported by backend.
 type NetworkPeeringState string
+
+type NetworkPeeringIPNetworkFamily string
 
 const (
 	NetworkPeeringConfiguredStatusActive   NetworkPeeringConfiguredStatus = "active"
