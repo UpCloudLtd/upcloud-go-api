@@ -63,6 +63,38 @@ func TestModifyNetworkPeeringRequest(t *testing.T) {
 		}
 	}
 	`, string(js))
+
+	r = ModifyNetworkPeeringRequest{
+		UUID: "id",
+		NetworkPeering: ModifyNetworkPeering{
+			ConfiguredStatus: upcloud.NetworkPeeringConfiguredStatusActive,
+		},
+	}
+	js, err = json.Marshal(&r)
+	require.NoError(t, err)
+	assert.JSONEq(t, `
+	{
+		"network_peering": {
+		  "configured_status": "active"
+		}
+	}
+	`, string(js))
+
+	r = ModifyNetworkPeeringRequest{
+		UUID: "id",
+		NetworkPeering: ModifyNetworkPeering{
+			Name: "Peering A->B modified",
+		},
+	}
+	js, err = json.Marshal(&r)
+	require.NoError(t, err)
+	assert.JSONEq(t, `
+	{
+		"network_peering": {
+			"name": "Peering A->B modified"
+		}
+	}
+	`, string(js))
 }
 
 func TestDeleteNetworkPeeringRequest(t *testing.T) {
