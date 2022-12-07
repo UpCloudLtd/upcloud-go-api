@@ -7,12 +7,14 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
 )
 
+const networkPeeringBaseURL string = "/network-peering"
+
 type GetNetworkPeeringRequest struct {
 	UUID string
 }
 
 func (r *GetNetworkPeeringRequest) RequestURL() string {
-	return fmt.Sprintf("/network-peering/%s", r.UUID)
+	return fmt.Sprintf("%s/%s", networkPeeringBaseURL, r.UUID)
 }
 
 type NetworkPeeringNetwork struct {
@@ -37,7 +39,7 @@ func (r *CreateNetworkPeeringRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (r *CreateNetworkPeeringRequest) RequestURL() string {
-	return "/network-peering"
+	return networkPeeringBaseURL
 }
 
 type ModifyNetworkPeering struct {
@@ -51,11 +53,11 @@ type ModifyNetworkPeeringRequest struct {
 }
 
 func (r *ModifyNetworkPeeringRequest) RequestURL() string {
-	return fmt.Sprintf("/network-peering/%s", r.UUID)
+	return fmt.Sprintf("%s/%s", networkPeeringBaseURL, r.UUID)
 }
 
 type DeleteNetworkPeeringRequest GetNetworkPeeringRequest
 
 func (r *DeleteNetworkPeeringRequest) RequestURL() string {
-	return fmt.Sprintf("/network-peering/%s", r.UUID)
+	return fmt.Sprintf("%s/%s", networkPeeringBaseURL, r.UUID)
 }
