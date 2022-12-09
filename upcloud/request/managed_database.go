@@ -39,6 +39,9 @@ type CloneManagedDatabaseRequest struct {
 	// CloneTime selects a point-in-time from where to clone the data. Zero value selects the most recent available.
 	CloneTime time.Time `json:"clone_time"`
 
+	// Only for Redis. Create a clone of your database service data from the backups by name.
+	BackupName string `json:"backup_name,omitempty"`
+
 	HostNamePrefix string                                `json:"hostname_prefix"`
 	Maintenance    ManagedDatabaseMaintenanceTimeRequest `json:"maintenance,omitempty"`
 	Plan           string                                `json:"plan"`
@@ -488,7 +491,9 @@ type CreateManagedDatabaseUserRequest struct {
 	// Authentication selects authentication type for the user. See following constants for more information:
 	// 	upcloud.ManagedDatabaseUserAuthenticationCachingSHA2Password
 	// 	upcloud.ManagedDatabaseUserAuthenticationMySQLNativePassword
-	Authentication upcloud.ManagedDatabaseUserAuthenticationType `json:"authentication,omitempty"`
+	Authentication     upcloud.ManagedDatabaseUserAuthenticationType  `json:"authentication,omitempty"`
+	PGAccessControl    *upcloud.ManagedDatabaseUserPGAccessControl    `json:"pg_access_control,omitempty"`
+	RedisAccessControl *upcloud.ManagedDatabaseUserRedisAccessControl `json:"redis_access_control,omitempty"`
 }
 
 // RequestURL implements the request.Request interface
@@ -551,6 +556,21 @@ type ModifyManagedDatabaseUserRequest struct {
 // RequestURL implements the request.Request interface
 func (m *ModifyManagedDatabaseUserRequest) RequestURL() string {
 	return fmt.Sprintf("/database/%s/users/%s", m.ServiceUUID, m.Username)
+}
+
+// ModifyManagedDatabaseUserRequest represents a request to modify an existing user of an existing managed database instance
+type ModifyManagedDatabaseUserAccessControlRequest struct {
+	// ServiceUUID selects a managed database service to modify
+	ServiceUUID string `json:"-"`
+	// Username selects the username to modify. The username itself is immutable. To change it, recreate the user.
+	Username           string                                         `json:"-"`
+	PGAccessControl    *upcloud.ManagedDatabaseUserPGAccessControl    `json:"pg_access_control,omitempty"`
+	RedisAccessControl *upcloud.ManagedDatabaseUserRedisAccessControl `json:"redis_access_control,omitempty"`
+}
+
+// RequestURL implements the request.Request interface
+func (m *ModifyManagedDatabaseUserAccessControlRequest) RequestURL() string {
+	return fmt.Sprintf("/database/%s/users/%s/access-control", m.ServiceUUID, m.Username)
 }
 
 /* Logical Database Management */

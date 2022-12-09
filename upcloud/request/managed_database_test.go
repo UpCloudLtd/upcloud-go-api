@@ -33,6 +33,7 @@ func TestCloneManagedDatabaseRequest_MarshalJSON(t *testing.T) {
 		UUID:           "fakeuuid",
 		CloneTime:      time.Date(2021, 1, 1, 0, 0, 0, 0, time.UTC),
 		HostNamePrefix: "fakename",
+		BackupName:     "backup name",
 		Maintenance: ManagedDatabaseMaintenanceTimeRequest{
 			DayOfWeek: "monday",
 			Time:      "12:00:00",
@@ -49,6 +50,7 @@ func TestCloneManagedDatabaseRequest_MarshalJSON(t *testing.T) {
 	const expect = `{
 	"hostname_prefix": "fakename",
 	"plan": "fakeplan",
+	"backup_name": "backup name",
 	"properties": {
 		"fakeprop": "fakevalue"
 	},
@@ -61,7 +63,7 @@ func TestCloneManagedDatabaseRequest_MarshalJSON(t *testing.T) {
 		"time": "12:00:00"
 	}
 }`
-	assert.Equal(t, expect, string(d))
+	assert.JSONEq(t, expect, string(d))
 }
 
 func TestCloneManagedDatabaseRequest_RequestURL(t *testing.T) {
@@ -375,9 +377,88 @@ func TestManagedDatabasePropertiesRequest_GetPublicAccess(t *testing.T) {
 
 /* User Management */
 
-func TestCreateManagedDatabaseUserRequest_RequestURL(t *testing.T) {
-	req := CreateManagedDatabaseUserRequest{ServiceUUID: "fakeuuid"}
-	assert.Equal(t, "/database/fakeuuid/users", req.RequestURL())
+func TestCreateManagedDatabaseUserRequest(t *testing.T) {
+	want := `
+	{
+		"username": "api-doc-user",
+		"password": "new-password",
+		"authentication": "caching_sha2_password",
+		"redis_access_control": {
+			"categories": ["+@set"],
+			"channels": ["*"],
+			"commands": ["+set"],
+			"keys": ["key_*"]
+		},
+		"pg_access_control": {
+			"allow_replication": true
+		}		
+	}	  
+	`
+	r := CreateManagedDatabaseUserRequest{
+		ServiceUUID:    "fakeuuid",
+		Username:       "api-doc-user",
+		Password:       "new-password",
+		Authentication: upcloud.ManagedDatabaseUserAuthenticationCachingSHA2Password,
+		PGAccessControl: &upcloud.ManagedDatabaseUserPGAccessControl{
+			AllowReplication: true,
+		},
+		RedisAccessControl: &upcloud.ManagedDatabaseUserRedisAccessControl{
+			Categories: []string{"+@set"},
+			Channels:   []string{"*"},
+			Commands:   []string{"+set"},
+			Keys:       []string{"key_*"},
+		},
+	}
+	got, err := json.Marshal(&r)
+	assert.NoError(t, err)
+	assert.JSONEq(t, want, string(got))
+	assert.Equal(t, "/database/fakeuuid/users", r.RequestURL())
+
+	want = `
+	{
+		"username": "api-doc-user"
+	}	  
+	`
+	r = CreateManagedDatabaseUserRequest{
+		ServiceUUID: "fakeuuid",
+		Username:    "api-doc-user",
+	}
+	got, err = json.Marshal(&r)
+	assert.NoError(t, err)
+	assert.JSONEq(t, want, string(got))
+}
+
+func TestModifyManagedDatabaseUserAccessControlRequest(t *testing.T) {
+	want := `
+	{
+		"redis_access_control": {
+			"categories": ["+@set"],
+			"channels": ["*"],
+			"commands": ["+set"],
+			"keys": ["key_*"]
+		},
+		"pg_access_control": {
+			"allow_replication": true
+		}		
+	}	  
+	`
+	r := ModifyManagedDatabaseUserAccessControlRequest{
+		ServiceUUID: "fakeuuid",
+		Username:    "fakeuser",
+		PGAccessControl: &upcloud.ManagedDatabaseUserPGAccessControl{
+			AllowReplication: true,
+		},
+		RedisAccessControl: &upcloud.ManagedDatabaseUserRedisAccessControl{
+			Categories: []string{"+@set"},
+			Channels:   []string{"*"},
+			Commands:   []string{"+set"},
+			Keys:       []string{"key_*"},
+		},
+	}
+	got, err := json.Marshal(&r)
+	assert.NoError(t, err)
+	assert.JSONEq(t, want, string(got))
+	assert.Equal(t, "/database/fakeuuid/users/fakeuser/access-control", r.RequestURL())
 }
 
 func TestDeleteManagedDatabaseUserRequest_RequestURL(t *testing.T) {

@@ -53,6 +53,8 @@ const (
 	ManagedDatabaseServiceTypePostgreSQL ManagedDatabaseServiceType = "pg"
 	// ManagedDatabaseServiceTypeMySQL references a MySQL type of database instance
 	ManagedDatabaseServiceTypeMySQL ManagedDatabaseServiceType = "mysql"
+	// ManagedDatabaseServiceTypeRedis references a Redis type of database instance
+	ManagedDatabaseServiceTypeRedis ManagedDatabaseServiceType = "redis"
 )
 
 // ManagedDatabaseMetricPeriod represents the observation period of database metrics
@@ -131,30 +133,32 @@ const (
 
 // ManagedDatabase represents an existing managed database instance
 type ManagedDatabase struct {
-	Backups          []ManagedDatabaseBackup         `json:"backups"`
-	Components       []ManagedDatabaseComponent      `json:"components"`
-	CreateTime       time.Time                       `json:"create_time"`
-	Maintenance      ManagedDatabaseMaintenanceTime  `json:"maintenance"`
-	Name             string                          `json:"name"`
-	NodeCount        int                             `json:"node_count"`
-	NodeStates       []ManagedDatabaseNodeState      `json:"node_states"`
-	Plan             string                          `json:"plan"`
-	Powered          bool                            `json:"powered"`
-	Properties       ManagedDatabaseProperties       `json:"properties"`
-	State            ManagedDatabaseState            `json:"state"`
-	Title            string                          `json:"title"`
-	Type             ManagedDatabaseServiceType      `json:"type"`
-	UpdateTime       time.Time                       `json:"update_time"`
-	ServiceURI       string                          `json:"service_uri"`
-	ServiceURIParams ManagedDatabaseServiceURIParams `json:"service_uri_params"`
-	Users            []ManagedDatabaseUser           `json:"users"`
-	UUID             string                          `json:"uuid"`
-	Zone             string                          `json:"zone"`
+	Backups          []ManagedDatabaseBackup         `json:"backups,omitempty"`
+	Components       []ManagedDatabaseComponent      `json:"components,omitempty"`
+	CreateTime       time.Time                       `json:"create_time,omitempty"`
+	Maintenance      ManagedDatabaseMaintenanceTime  `json:"maintenance,omitempty"`
+	Name             string                          `json:"name,omitempty"`
+	NodeCount        int                             `json:"node_count,omitempty"`
+	NodeStates       []ManagedDatabaseNodeState      `json:"node_states,omitempty"`
+	Plan             string                          `json:"plan,omitempty"`
+	Powered          bool                            `json:"powered,omitempty"`
+	Properties       ManagedDatabaseProperties       `json:"properties,omitempty"`
+	State            ManagedDatabaseState            `json:"state,omitempty"`
+	Title            string                          `json:"title,omitempty"`
+	Type             ManagedDatabaseServiceType      `json:"type,omitempty"`
+	UpdateTime       time.Time                       `json:"update_time,omitempty"`
+	ServiceURI       string                          `json:"service_uri,omitempty"`
+	ServiceURIParams ManagedDatabaseServiceURIParams `json:"service_uri_params,omitempty"`
+	Users            []ManagedDatabaseUser           `json:"users,omitempty"`
+	UUID             string                          `json:"uuid,omitempty"`
+	Zone             string                          `json:"zone,omitempty"`
+	Metadata         *ManagedDatabaseMetadata        `json:"metadata,omitempty"`
 }
 
 // ManagedDatabaseBackup represents a full backup taken at a point in time. It should be noted that both
 // MySQL and PostgreSQL support restoring to any point in time between full backups.
 type ManagedDatabaseBackup struct {
+	BackupName string    `json:"backup_name"`
 	BackupTime time.Time `json:"backup_time"`
 	DataSize   int       `json:"data_size"`
 }
@@ -535,11 +539,24 @@ type ManagedDatabaseUser struct {
 	// 	upcloud.ManagedDatabaseUserAuthenticationCachingSHA2Password
 	// 	upcloud.ManagedDatabaseUserAuthenticationMySQLNativePassword
 	Authentication ManagedDatabaseUserAuthenticationType `json:"authentication,omitempty"`
-	Type           ManagedDatabaseUserType               `json:"type"`
+	Type           ManagedDatabaseUserType               `json:"type,omitempty"`
 	// Password field is only visible when querying an individual user. It is omitted in main service view and in
 	// get all users view.
-	Password string `json:"password,omitempty"`
-	Username string `json:"username"`
+	Password           string                                 `json:"password,omitempty"`
+	Username           string                                 `json:"username,omitempty"`
+	PGAccessControl    *ManagedDatabaseUserPGAccessControl    `json:"pg_access_control,omitempty"`
+	RedisAccessControl *ManagedDatabaseUserRedisAccessControl `json:"redis_access_control,omitempty"`
+}
+
+type ManagedDatabaseUserPGAccessControl struct {
+	AllowReplication bool `json:"allow_replication"`
+}
+
+type ManagedDatabaseUserRedisAccessControl struct {
+	Categories []string `json:"categories,omitempty"`
+	Channels   []string `json:"channels,omitempty"`
+	Commands   []string `json:"commands,omitempty"`
+	Keys       []string `json:"keys,omitempty"`
 }
 
 // ManagedDatabaseQueryStatisticsMySQL represents statistics reported by a MySQL server.
@@ -672,4 +689,12 @@ type ManagedDatabaseServiceProperty struct {
 	Description string      `json:"description,omitempty"`
 	Enum        interface{} `json:"enum,omitempty"`
 	UserError   string      `json:"user_error,omitempty"`
+}
+
+type ManagedDatabaseMetadata struct {
+	MaxConnections              int    `json:"max_connections,omitempty"`
+	PGVersion                   string `json:"pg_version,omitempty"`
+	MySQLVersion                string `json:"mysql_version,omitempty"`
+	RedisVersion                string `json:"redis_version,omitempty"`
+	WriteBlockThresholdExceeded *bool  `json:"write_block_threshold_exceeded,omitempty"`
 }

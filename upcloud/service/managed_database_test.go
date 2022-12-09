@@ -65,12 +65,16 @@ func TestService_CreateManagedDatabase(t *testing.T) {
 	typesToTest := []upcloud.ManagedDatabaseServiceType{
 		upcloud.ManagedDatabaseServiceTypeMySQL,
 		upcloud.ManagedDatabaseServiceTypePostgreSQL,
+		upcloud.ManagedDatabaseServiceTypeRedis,
 	}
 	record(t, "createmanageddatabase", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		for _, serviceType := range typesToTest {
-			t.Run("Ctx"+string(serviceType), func(t *testing.T) {
+			t.Run(string(serviceType), func(t *testing.T) {
 				req := getTestCreateRequest("createmanageddatabase")
 				req.Type = serviceType
+				if serviceType == upcloud.ManagedDatabaseServiceTypeRedis {
+					req.Plan = "1x1xCPU-2GB"
+				}
 				details, err := svc.CreateManagedDatabase(ctx, req)
 				if !assert.NoError(t, err) {
 					return
@@ -92,6 +96,14 @@ func TestService_CreateManagedDatabase(t *testing.T) {
 				assert.Equal(t, req.Title, details.Title)
 				assert.Equal(t, req.Type, details.Type)
 				assert.Equal(t, req.Zone, details.Zone)
+				switch serviceType {
+				case upcloud.ManagedDatabaseServiceTypeRedis:
+					assert.NotEmpty(t, details.Metadata.RedisVersion)
+				case upcloud.ManagedDatabaseServiceTypeMySQL:
+					assert.NotEmpty(t, details.Metadata.MySQLVersion)
+				case upcloud.ManagedDatabaseServiceTypePostgreSQL:
+					assert.NotEmpty(t, details.Metadata.PGVersion)
+				}
 			})
 		}
 	})
@@ -708,6 +720,46 @@ func TestService_GetManagedDatabaseServiceTypes(t *testing.T) {
 		}
 		assert.Equal(t, "pg", types["pg"].Name)
 		assert.Equal(t, "mysql", types["mysql"].Name)
+	})
+}
+
+func TestService_ModifyManagedDatabaseUserAccessControl(t *testing.T) {
+	record(t, "modifymanageddatabaseuseraccesscontrol", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		db, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("modifyuseraccesscontrol"))
+		if !assert.NoError(t, err) {
+			return
+		}
+		defer func() {
+			if err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: db.UUID}); err != nil {
+				t.Log(err)
+			}
+		}()
+		if !assert.NoError(t, waitForManagedDatabaseRunningState(ctx, rec, svc, db.UUID)) {
+			return
+		}
+		user, err := svc.CreateManagedDatabaseUser(ctx, &request.CreateManagedDatabaseUserRequest{
+			ServiceUUID: db.UUID,
+			Username:    "demouser",
+			PGAccessControl: &upcloud.ManagedDatabaseUserPGAccessControl{
+				AllowReplication: true,
+			},
+		})
+		if !assert.NoError(t, err) {
+			return
+		}
+		assert.True(t, user.PGAccessControl.AllowReplication)
+
+		user, err = svc.ModifyManagedDatabaseUserAccessControl(ctx, &request.ModifyManagedDatabaseUserAccessControlRequest{
+			ServiceUUID: db.UUID,
+			Username:    user.Username,
+			PGAccessControl: &upcloud.ManagedDatabaseUserPGAccessControl{
+				AllowReplication: false,
+			},
+		})
+		if !assert.NoError(t, err) {
+			return
+		}
+		assert.False(t, user.PGAccessControl.AllowReplication)
 	})
 }
 

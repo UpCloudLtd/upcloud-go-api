@@ -41,6 +41,7 @@ type ManagedDatabaseUserManager interface {
 	GetManagedDatabaseUsers(ctx context.Context, r *request.GetManagedDatabaseUsersRequest) ([]upcloud.ManagedDatabaseUser, error)
 	DeleteManagedDatabaseUser(ctx context.Context, r *request.DeleteManagedDatabaseUserRequest) error
 	ModifyManagedDatabaseUser(ctx context.Context, r *request.ModifyManagedDatabaseUserRequest) (*upcloud.ManagedDatabaseUser, error)
+	ModifyManagedDatabaseUserAccessControl(ctx context.Context, r *request.ModifyManagedDatabaseUserAccessControlRequest) (*upcloud.ManagedDatabaseUser, error)
 }
 
 type ManagedDatabaseLogicalDatabaseManager interface {
@@ -263,4 +264,9 @@ func (s *Service) GetManagedDatabaseServiceType(ctx context.Context, r *request.
 func (s *Service) GetManagedDatabaseServiceTypes(ctx context.Context, r *request.GetManagedDatabaseServiceTypesRequest) (map[string]upcloud.ManagedDatabaseType, error) {
 	serviceTypes := make(map[string]upcloud.ManagedDatabaseType)
 	return serviceTypes, s.get(ctx, r.RequestURL(), &serviceTypes)
+}
+
+func (s *Service) ModifyManagedDatabaseUserAccessControl(ctx context.Context, r *request.ModifyManagedDatabaseUserAccessControlRequest) (*upcloud.ManagedDatabaseUser, error) {
+	userDetails := upcloud.ManagedDatabaseUser{}
+	return &userDetails, s.modify(ctx, r, &userDetails)
 }

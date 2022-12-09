@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- experimental support for Managed Redis Database
+
 ## [5.1.0]
 
 ### Added
