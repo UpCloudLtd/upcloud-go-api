@@ -7,6 +7,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ### Added
 - experimental support for Managed Redis Database
+- load-balancer: add `Scheme` property to front-end rule HTTP redirect action.
 
 ## [5.1.0]
 

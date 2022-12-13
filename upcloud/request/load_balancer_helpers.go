@@ -31,6 +31,15 @@ func NewLoadBalancerHTTPRedirectAction(location string) upcloud.LoadBalancerActi
 	}
 }
 
+func NewLoadBalancerHTTPRedirectSchemeAction(scheme upcloud.LoadBalancerActionHTTPRedirectScheme) upcloud.LoadBalancerAction {
+	return upcloud.LoadBalancerAction{
+		Type: upcloud.LoadBalancerActionTypeHTTPRedirect,
+		HTTPRedirect: &upcloud.LoadBalancerActionHTTPRedirect{
+			Scheme: scheme,
+		},
+	}
+}
+
 func NewLoadBalancerUseBackendAction(name string) upcloud.LoadBalancerAction {
 	return upcloud.LoadBalancerAction{
 		Type: upcloud.LoadBalancerActionTypeUseBackend,
