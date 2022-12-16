@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [5.2.0]
+
 ### Added
 - experimental support for Managed Redis Database
 - load-balancer: add `Scheme` property to front-end rule HTTP redirect action.
@@ -224,7 +226,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v5.1.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v5.2.0...HEAD
+[5.2.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v5.1.0...v5.2.0
 [5.1.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v5.0.0...v5.1.0
 [5.0.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.10.0...v5.0.0
 [4.10.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v4.9.0...v4.10.0
