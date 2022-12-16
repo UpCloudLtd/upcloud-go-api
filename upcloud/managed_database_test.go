@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestManagedDatabaseMetricsChartFloat64_MarshalJSON(t *testing.T) {
@@ -566,4 +567,118 @@ func TestUnmarshalManagedDatabaseConnection(t *testing.T) {
 		WaitEventType:   "Client",
 	}
 	assert.Equal(t, expect, c)
+}
+
+func TestManagedDatabaseMetadata(t *testing.T) {
+	got := ManagedDatabase{}
+	require.NoError(t, json.Unmarshal([]byte(`
+	{
+		"metadata": {
+			"redis_version": "7",
+			"mysql_version": "8.0.30",
+			"pg_version": "14.6",
+			"write_block_threshold_exceeded": false,
+			"max_connections": 100
+		}
+	}`), &got))
+	want := ManagedDatabase{
+		Metadata: &ManagedDatabaseMetadata{
+			MaxConnections:              100,
+			PGVersion:                   "14.6",
+			MySQLVersion:                "8.0.30",
+			RedisVersion:                "7",
+			WriteBlockThresholdExceeded: BoolPtr(false),
+		},
+	}
+	assert.Equal(t, want, got)
+
+	got = ManagedDatabase{}
+	require.NoError(t, json.Unmarshal([]byte(`
+	{
+		"metadata": {
+			"mysql_version": "8.0.30",
+			"write_block_threshold_exceeded": null
+		}
+	}`), &got))
+	want = ManagedDatabase{
+		Metadata: &ManagedDatabaseMetadata{
+			MySQLVersion:                "8.0.30",
+			WriteBlockThresholdExceeded: nil,
+		},
+	}
+	assert.Equal(t, want, got)
+
+	got = ManagedDatabase{}
+	require.NoError(t, json.Unmarshal([]byte(`
+	{
+		"metadata": {
+			"write_block_threshold_exceeded": true
+		}
+	}`), &got))
+	want = ManagedDatabase{
+		Metadata: &ManagedDatabaseMetadata{
+			WriteBlockThresholdExceeded: BoolPtr(true),
+		},
+	}
+	assert.Equal(t, want, got)
+}
+
+func TestManagedDatabaseBackups(t *testing.T) {
+	got := ManagedDatabase{}
+	require.NoError(t, json.Unmarshal([]byte(`
+	{
+		"backups": [
+			{
+				"backup_name": "backup-name",
+				"backup_time": "2022-12-08T08:07:40.960849Z",
+				"data_size": 864733663
+			}
+		]
+	}`), &got))
+	want := ManagedDatabase{
+		Backups: []ManagedDatabaseBackup{
+			{
+				BackupName: "backup-name",
+				BackupTime: timeParse("2022-12-08T08:07:40.960849Z"),
+				DataSize:   864733663,
+			},
+		},
+	}
+	assert.Equal(t, want, got)
+}
+
+func TestManagedDatabaseUser(t *testing.T) {
+	got := ManagedDatabaseUser{}
+	require.NoError(t, json.Unmarshal([]byte(`
+	{
+		"username": "api-doc-user",
+		"password": "new-password",
+		"authentication": "caching_sha2_password",
+		"type": "regular",
+		"redis_access_control": {
+			"categories": ["+@set"],
+			"channels": ["*"],
+			"commands": ["+set"],
+			"keys": ["key_*"]
+		},
+		"pg_access_control": {
+			"allow_replication": false
+		}
+	}`), &got))
+	want := ManagedDatabaseUser{
+		Authentication: "caching_sha2_password",
+		Type:           "regular",
+		Password:       "new-password",
+		Username:       "api-doc-user",
+		PGAccessControl: &ManagedDatabaseUserPGAccessControl{
+			AllowReplication: false,
+		},
+		RedisAccessControl: &ManagedDatabaseUserRedisAccessControl{
+			Categories: []string{"+@set"},
+			Channels:   []string{"*"},
+			Commands:   []string{"+set"},
+			Keys:       []string{"key_*"},
+		},
+	}
+	assert.Equal(t, want, got)
 }

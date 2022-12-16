@@ -1,0 +1,117 @@
+---
+version: 1
+interactions:
+  - request:
+      body: '{"hostname_prefix":"modifyuseraccesscontrol","plan":"2x2xCPU-4GB-100GB","properties":{"automatic_utility_network_ip_filter":true,"ip_filter":["10.0.0.1/32"],"public_access":true},"title":"test","type":"pg","zone":"fi-hel2","maintenance":{"dow":"monday","time":"12:00:00"}}'
+      form: {}
+      headers:
+        Accept:
+          - application/json
+        Content-Type:
+          - application/json
+        User-Agent:
+          - upcloud-go-api/5.1.0
+      url: https://api.upcloud.com/1.3/database
+      method: POST
+    response:
+      body: '{"backups":[],"components":[{"component":"pg","host":"modifyuseraccesscontrol-cgtcbepqggbt.db.upclouddatabases.com","port":11550,"route":"dynamic","usage":"primary"},{"component":"pg","host":"replica-modifyuseraccesscontrol-cgtcbepqggbt.db.upclouddatabases.com","port":11550,"route":"dynamic","usage":"replica"},{"component":"pg","host":"public-modifyuseraccesscontrol-cgtcbepqggbt.db.upclouddatabases.com","port":11550,"route":"public","usage":"primary"},{"component":"pg","host":"public-replica-modifyuseraccesscontrol-cgtcbepqggbt.db.upclouddatabases.com","port":11550,"route":"public","usage":"replica"},{"component":"pgbouncer","host":"modifyuseraccesscontrol-cgtcbepqggbt.db.upclouddatabases.com","port":11551,"route":"dynamic","usage":"primary"},{"component":"pgbouncer","host":"replica-modifyuseraccesscontrol-cgtcbepqggbt.db.upclouddatabases.com","port":11551,"route":"dynamic","usage":"replica"},{"component":"pgbouncer","host":"public-modifyuseraccesscontrol-cgtcbepqggbt.db.upclouddatabases.com","port":11551,"route":"public","usage":"primary"},{"component":"pgbouncer","host":"public-replica-modifyuseraccesscontrol-cgtcbepqggbt.db.upclouddatabases.com","port":11551,"route":"public","usage":"replica"}],"create_time":"0001-01-01T00:00:00Z","maintenance":{"dow":"monday","time":"12:00:00","pending_updates":[]},"name":"modifyuseraccesscontrol","node_count":2,"node_states":[],"plan":"2x2xCPU-4GB-100GB","powered":true,"metadata":{"max_connections":100,"pg_version":"14","write_block_threshold_exceeded":null},"properties":{"automatic_utility_network_ip_filter":true,"backup_hour":0,"backup_minute":12,"ip_filter":["10.0.0.1/32"],"pg_stat_monitor_enable":false,"pglookout":{"max_failover_replication_time_lag":60},"public_access":true,"version":"14"},"uuid":"0950d2f4-ee1f-496b-8c7f-48867863ba83","state":"rebuilding","title":"test","type":"pg","update_time":"0001-01-01T00:00:00Z","service_uri":"postgres://modifyuseraccesscontrol-cgtcbepqggbt.db.upclouddatabases.com:11550/defaultdb?sslmode=require","service_uri_params":{"dbname":"defaultdb","host":"modifyuseraccesscontrol-cgtcbepqggbt.db.upclouddatabases.com","password":"xxxxx","port":"11550","ssl_mode":"require","user":"upadmin"},"users":[{"username":"upadmin","type":"primary"}],"databases":[{"name":"defaultdb"}],"zone":"fi-hel2"}'
+      headers:
+        Access-Control-Allow-Methods:
+          - OPTIONS,GET,POST
+        Access-Control-Allow-Origin:
+          - "*"
+        Content-Type:
+          - application/json
+        Date:
+          - Fri, 09 Dec 2022 13:01:58 GMT
+        Strict-Transport-Security:
+          - max-age=63072000
+      status: 200 OK
+      code: 200
+      duration: ""
+  - request:
+      body: '{"username":"demouser","pg_access_control":{"allow_replication":true}}'
+      form: {}
+      headers:
+        Accept:
+          - application/json
+        Content-Type:
+          - application/json
+        User-Agent:
+          - upcloud-go-api/5.1.0
+      url: https://api.upcloud.com/1.3/database/0950d2f4-ee1f-496b-8c7f-48867863ba83/users
+      method: POST
+    response:
+      body: '{"username":"demouser","password":"xxxxx","type":"normal","pg_access_control":{"allow_replication":true}}'
+      headers:
+        Access-Control-Allow-Methods:
+          - OPTIONS,GET,POST
+        Access-Control-Allow-Origin:
+          - "*"
+        Content-Length:
+          - "124"
+        Content-Type:
+          - application/json
+        Date:
+          - Fri, 09 Dec 2022 13:06:09 GMT
+        Strict-Transport-Security:
+          - max-age=63072000
+      status: 200 OK
+      code: 200
+      duration: ""
+  - request:
+      body: '{"pg_access_control":{"allow_replication":false}}'
+      form: {}
+      headers:
+        Accept:
+          - application/json
+        Content-Type:
+          - application/json
+        User-Agent:
+          - upcloud-go-api/5.1.0
+      url: https://api.upcloud.com/1.3/database/0950d2f4-ee1f-496b-8c7f-48867863ba83/users/demouser/access-control
+      method: PATCH
+    response:
+      body: '{"username":"demouser","password":"xxxxx","type":"normal","pg_access_control":{"allow_replication":false}}'
+      headers:
+        Access-Control-Allow-Methods:
+          - OPTIONS,PATCH
+        Access-Control-Allow-Origin:
+          - "*"
+        Content-Length:
+          - "125"
+        Content-Type:
+          - application/json
+        Date:
+          - Fri, 09 Dec 2022 13:06:09 GMT
+        Strict-Transport-Security:
+          - max-age=63072000
+      status: 200 OK
+      code: 200
+      duration: ""
+  - request:
+      body: ""
+      form: {}
+      headers:
+        Accept:
+          - application/json
+        Content-Type:
+          - application/json
+        User-Agent:
+          - upcloud-go-api/5.1.0
+      url: https://api.upcloud.com/1.3/database/0950d2f4-ee1f-496b-8c7f-48867863ba83
+      method: DELETE
+    response:
+      body: ""
+      headers:
+        Access-Control-Allow-Methods:
+          - OPTIONS,DELETE,GET,PATCH
+        Access-Control-Allow-Origin:
+          - "*"
+        Date:
+          - Fri, 09 Dec 2022 13:06:11 GMT
+        Strict-Transport-Security:
+          - max-age=63072000
+      status: 204 No Content
+      code: 204
+      duration: ""
