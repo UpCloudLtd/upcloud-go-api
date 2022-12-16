@@ -8,6 +8,7 @@ type (
 	LoadBalancerMode                              string
 	LoadBalancerMatcherType                       string
 	LoadBalancerActionType                        string
+	LoadBalancerActionHTTPRedirectScheme          string
 	LoadBalancerStringMatcherMethod               string
 	LoadBalancerHTTPMatcherMethod                 string
 	LoadBalancerIntegerMatcherMethod              string
@@ -72,6 +73,9 @@ const (
 	LoadBalancerActionTypeHTTPReturn          LoadBalancerActionType = "http_return"
 	LoadBalancerActionTypeHTTPRedirect        LoadBalancerActionType = "http_redirect"
 	LoadBalancerActionTypeSetForwardedHeaders LoadBalancerActionType = "set_forwarded_headers"
+
+	LoadBalancerActionHTTPRedirectSchemeHTTP  LoadBalancerActionHTTPRedirectScheme = "http"
+	LoadBalancerActionHTTPRedirectSchemeHTTPS LoadBalancerActionHTTPRedirectScheme = "https"
 
 	LoadBalancerStringMatcherMethodExact     LoadBalancerStringMatcherMethod = "exact"
 	LoadBalancerStringMatcherMethodSubstring LoadBalancerStringMatcherMethod = "substring"
@@ -323,9 +327,10 @@ type LoadBalancerActionHTTPReturn struct {
 	Payload     string `json:"payload,omitempty"`
 }
 
-// LoadBalancerActionHTTPRedirect represents 'http_redirect' action
+// LoadBalancerActionHTTPRedirect represents 'http_redirect' action. Only either Location or Scheme should be defined.
 type LoadBalancerActionHTTPRedirect struct {
-	Location string `json:"location,omitempty"`
+	Location string                               `json:"location,omitempty"`
+	Scheme   LoadBalancerActionHTTPRedirectScheme `json:"scheme,omitempty"`
 }
 
 // LoadBalancerActionSetForwardedHeaders represents 'set_forwarded_headers' action

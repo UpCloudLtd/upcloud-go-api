@@ -141,6 +141,12 @@ func TestMatcheresAndActionsHelper(t *testing.T) {
 				"action_http_redirect": {
 					"location": "https://internal.example.com"
 				}
+			},
+			{
+				"type": "http_redirect",
+				"action_http_redirect": {
+					"scheme": "https"
+				}
 			}	
 		]
 	}
@@ -169,6 +175,7 @@ func TestMatcheresAndActionsHelper(t *testing.T) {
 			NewLoadBalancerTCPRejectAction(),
 			NewLoadBalancerHTTPReturnAction(200, "text/html", "PGgxPmFwcGxlYmVlPC9oMT4K"),
 			NewLoadBalancerHTTPRedirectAction("https://internal.example.com"),
+			NewLoadBalancerHTTPRedirectSchemeAction(upcloud.LoadBalancerActionHTTPRedirectSchemeHTTPS),
 		},
 	}
 	actual, err := json.Marshal(&r)
