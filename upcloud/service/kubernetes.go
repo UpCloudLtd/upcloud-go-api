@@ -17,6 +17,11 @@ type Kubernetes interface {
 	GetKubernetesKubeconfig(ctx context.Context, r *request.GetKubernetesKubeconfigRequest) (string, error)
 	GetKubernetesVersions(ctx context.Context, r *request.GetKubernetesVersionsRequest) ([]string, error)
 	WaitForKubernetesClusterState(ctx context.Context, r *request.WaitForKubernetesClusterStateRequest) (*upcloud.KubernetesCluster, error)
+	GetKubernetesNodeGroups(ctx context.Context, r *request.GetKubernetesNodeGroupsRequest) ([]upcloud.KubernetesNodeGroup, error)
+	GetKubernetesNodeGroup(ctx context.Context, r *request.GetKubernetesNodeGroupRequest) (*upcloud.KubernetesNodeGroup, error)
+	CreateKubernetesNodeGroup(ctx context.Context, r *request.CreateKubernetesNodeGroupRequest) (*upcloud.KubernetesNodeGroup, error)
+	ModifyKubernetesNodeGroup(ctx context.Context, r *request.ModifyKubernetesNodeGroupRequest) (*upcloud.KubernetesNodeGroup, error)
+	DeleteKubernetesNodeGroup(ctx context.Context, r *request.DeleteKubernetesNodeGroupRequest) error
 }
 
 // GetKubernetesClusters retrieves a list of Kubernetes clusters (EXPERIMENTAL).
@@ -109,4 +114,33 @@ func (s *Service) GetKubernetesKubeconfig(ctx context.Context, r *request.GetKub
 func (s *Service) GetKubernetesVersions(ctx context.Context, r *request.GetKubernetesVersionsRequest) ([]string, error) {
 	versions := make([]string, 0)
 	return versions, s.get(ctx, r.RequestURL(), &versions)
+}
+
+// GetKubernetesNodeGroups retrieves a list of Kubernetes cluster node groups.
+func (s *Service) GetKubernetesNodeGroups(ctx context.Context, r *request.GetKubernetesNodeGroupsRequest) ([]upcloud.KubernetesNodeGroup, error) {
+	ng := make([]upcloud.KubernetesNodeGroup, 0)
+	return ng, s.get(ctx, r.RequestURL(), &ng)
+}
+
+// GetKubernetesNodeGroup retrieves details of a node group.
+func (s *Service) GetKubernetesNodeGroup(ctx context.Context, r *request.GetKubernetesNodeGroupRequest) (*upcloud.KubernetesNodeGroup, error) {
+	ng := upcloud.KubernetesNodeGroup{}
+	return &ng, s.get(ctx, r.RequestURL(), &ng)
+}
+
+// CreateKubernetesNodeGroup creates a new node group.
+func (s *Service) CreateKubernetesNodeGroup(ctx context.Context, r *request.CreateKubernetesNodeGroupRequest) (*upcloud.KubernetesNodeGroup, error) {
+	ng := upcloud.KubernetesNodeGroup{}
+	return &ng, s.create(ctx, r, &ng)
+}
+
+// ModifyKubernetesNodeGroup modifies an existing node group.
+func (s *Service) ModifyKubernetesNodeGroup(ctx context.Context, r *request.ModifyKubernetesNodeGroupRequest) (*upcloud.KubernetesNodeGroup, error) {
+	ng := upcloud.KubernetesNodeGroup{}
+	return &ng, s.modify(ctx, r, &ng)
+}
+
+// DeleteKubernetesNodeGroup deletes an existing node group.
+func (s *Service) DeleteKubernetesNodeGroup(ctx context.Context, r *request.DeleteKubernetesNodeGroupRequest) error {
+	return s.delete(ctx, r)
 }

@@ -10,7 +10,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api-ctx/4.9.0
+      - upcloud-go-api/5.2.0
     url: https://api.upcloud.com/1.3/kubernetes
     method: GET
   response:
@@ -23,7 +23,7 @@ interactions:
       Content-Type:
       - text/html; charset=utf-8
       Date:
-      - Mon, 24 Oct 2022 12:20:26 GMT
+      - Tue, 03 Jan 2023 14:20:02 GMT
       Location:
       - /1.3/kubernetes/
       Strict-Transport-Security:
@@ -42,22 +42,22 @@ interactions:
       Referer:
       - https://api.upcloud.com/1.3/kubernetes
       User-Agent:
-      - upcloud-go-api-ctx/4.9.0
+      - upcloud-go-api/5.2.0
     url: https://api.upcloud.com/1.3/kubernetes/
     method: GET
   response:
-    body: '[{"name":"go-sdk-test-ctx","network":"03e6deb5-5f39-4df5-8c8e-a74186aba000","network_cidr":"176.16.1.0/24","node_groups":[{"count":2,"kubelet_args":[],"labels":[{"key":"managedBy","value":"go-sdk"}],"name":"testgroup","plan":"K8S-2xCPU-4GB","ssh_keys":["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO3fnjc8UrsYDNU8365mL3lnOPQJg18V42Lt8U/8Sm+r testy_test"],"storage":"01000000-0000-4000-8000-000160010100"}],"state":"running","uuid":"0d102e85-52e3-43cf-960b-9d46ec46ac4e","zone":"de-fra1"}]'
+    body: '[{"name":"go-sdk-test-ctx","network":"03e4970d-7791-4b80-a892-682ae0faf46b","network_cidr":"176.16.1.0/24","node_groups":[{"count":2,"kubelet_args":[],"labels":[],"name":"my-group","plan":"K8S-2xCPU-4GB","ssh_keys":[],"storage":"01000000-0000-4000-8000-000160010100"},{"count":2,"kubelet_args":[],"labels":[{"key":"managedBy","value":"go-sdk"}],"name":"testgroup","plan":"K8S-2xCPU-4GB","ssh_keys":["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO3fnjc8UrsYDNU8365mL3lnOPQJg18V42Lt8U/8Sm+r testy_test"],"storage":"01000000-0000-4000-8000-000160010100"}],"state":"running","uuid":"0dca7a18-98e1-4e2d-aea5-ef5dd5fa450e","zone":"de-fra1"}]'
     headers:
       Content-Length:
-      - "481"
+      - "627"
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Mon, 24 Oct 2022 12:20:27 GMT
+      - Tue, 03 Jan 2023 14:20:03 GMT
       Strict-Transport-Security:
       - max-age=63072000
       X-Request-Id:
-      - 2f6248ec-e191-4537-8393-00165039db7f
+      - 032f9ef7-1057-484b-a69d-0c0f1a376a68
     status: 200 OK
     code: 200
     duration: ""

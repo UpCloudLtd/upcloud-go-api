@@ -223,6 +223,115 @@ func TestKubernetes(t *testing.T) {
 	})
 }
 
+func TestGetKubernetesNodeGroupsRequest(t *testing.T) {
+	t.Parallel()
+	r := GetKubernetesNodeGroupsRequest{ClusterUUID: "id"}
+	assert.Equal(t, fmt.Sprintf("%s/id/node-groups", kubernetesClusterBasePath), r.RequestURL())
+}
+
+func TestGetKubernetesNodeGroupRequest(t *testing.T) {
+	t.Parallel()
+	r := GetKubernetesNodeGroupRequest{ClusterUUID: "id", Name: "nid"}
+	assert.Equal(t, fmt.Sprintf("%s/id/node-groups/nid", kubernetesClusterBasePath), r.RequestURL())
+}
+
+func TestCreateKubernetesNodeGroupRequest(t *testing.T) {
+	t.Parallel()
+	const expectedJSON string = `
+	{
+		"count": 4,
+		"kubelet_args": [
+		  {
+			"key": "log-flush-frequency",
+			"value": "5s"
+		  }
+		],
+		"labels": [
+		  {
+			"key": "environment",
+			"value": "development"
+		  }
+		],
+		"name": "small",
+		"plan": "K8S-2xCPU-4GB",
+		"ssh_keys": [
+		  "ssh-rsa AAAA.."
+		],
+		"storage": "01000000-0000-4000-8000-000160010100",
+		"taints": [
+		  {
+			"effect": "NoSchedule",
+			"key": "environment",
+			"value": "development"
+		  }
+		]
+	}
+	`
+	r := CreateKubernetesNodeGroupRequest{
+		ClusterUUID: "id",
+		NodeGroup: KubernetesNodeGroup{
+			Count: 4,
+			Labels: []upcloud.Label{
+				{
+					Key:   "environment",
+					Value: "development",
+				},
+			},
+			Name:    "small",
+			Plan:    "K8S-2xCPU-4GB",
+			SSHKeys: []string{"ssh-rsa AAAA.."},
+			Storage: "01000000-0000-4000-8000-000160010100",
+			KubeletArgs: []upcloud.KubernetesKubeletArg{
+				{
+					Key:   "log-flush-frequency",
+					Value: "5s",
+				},
+			},
+			Taints: []upcloud.KubernetesTaint{
+				{
+					Effect: "NoSchedule",
+					Key:    "environment",
+					Value:  "development",
+				},
+			},
+		},
+	}
+	assert.Equal(t, fmt.Sprintf("%s/id/node-groups", kubernetesClusterBasePath), r.RequestURL())
+	gotJS, err := json.Marshal(&r)
+	if !assert.NoError(t, err) {
+		return
+	}
+	assert.JSONEq(t, expectedJSON, string(gotJS))
+}
+
+func TestModifyKubernetesNodeGroupRequest(t *testing.T) {
+	t.Parallel()
+	const expectedJSON string = `
+	{
+		"count": 4
+	}
+	`
+	r := ModifyKubernetesNodeGroupRequest{
+		ClusterUUID: "id",
+		Name:        "nid",
+		NodeGroup: ModifyKubernetesNodeGroup{
+			Count: 4,
+		},
+	}
+	assert.Equal(t, fmt.Sprintf("%s/id/node-groups/nid", kubernetesClusterBasePath), r.RequestURL())
+	gotJS, err := json.Marshal(&r)
+	if !assert.NoError(t, err) {
+		return
+	}
+	assert.JSONEq(t, expectedJSON, string(gotJS))
+}
+
+func TestDeleteKubernetesNodeGroupRequest(t *testing.T) {
+	t.Parallel()
+	r := DeleteKubernetesNodeGroupRequest{ClusterUUID: "id", Name: "nid"}
+	assert.Equal(t, fmt.Sprintf("%s/id/node-groups/nid", kubernetesClusterBasePath), r.RequestURL())
+}
+
 func exampleGetKubernetesClustersWithFiltersRequest() GetKubernetesClustersWithFiltersRequest {
 	return GetKubernetesClustersWithFiltersRequest{
 		Filters: []KubernetesFilter{

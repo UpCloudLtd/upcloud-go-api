@@ -10,7 +10,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api-ctx/4.9.0
+      - upcloud-go-api/5.2.0
     url: https://api.upcloud.com/1.3/kubernetes/versions
     method: GET
   response:
@@ -21,11 +21,11 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Mon, 24 Oct 2022 12:20:26 GMT
+      - Tue, 03 Jan 2023 14:20:03 GMT
       Strict-Transport-Security:
       - max-age=63072000
       X-Request-Id:
-      - 236dfb8e-fad3-495e-b559-3a5ee810ec25
+      - 89ef581f-9a9e-4f34-9015-4c918140f729
     status: 200 OK
     code: 200
     duration: ""
