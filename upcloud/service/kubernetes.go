@@ -116,31 +116,31 @@ func (s *Service) GetKubernetesVersions(ctx context.Context, r *request.GetKuber
 	return versions, s.get(ctx, r.RequestURL(), &versions)
 }
 
-// GetKubernetesNodeGroups retrieves a list of Kubernetes cluster node groups.
+// GetKubernetesNodeGroups retrieves a list of Kubernetes cluster node groups (EXPERIMENTAL).
 func (s *Service) GetKubernetesNodeGroups(ctx context.Context, r *request.GetKubernetesNodeGroupsRequest) ([]upcloud.KubernetesNodeGroup, error) {
 	ng := make([]upcloud.KubernetesNodeGroup, 0)
 	return ng, s.get(ctx, r.RequestURL(), &ng)
 }
 
-// GetKubernetesNodeGroup retrieves details of a node group.
+// GetKubernetesNodeGroup retrieves details of a node group (EXPERIMENTAL).
 func (s *Service) GetKubernetesNodeGroup(ctx context.Context, r *request.GetKubernetesNodeGroupRequest) (*upcloud.KubernetesNodeGroup, error) {
 	ng := upcloud.KubernetesNodeGroup{}
 	return &ng, s.get(ctx, r.RequestURL(), &ng)
 }
 
-// CreateKubernetesNodeGroup creates a new node group.
+// CreateKubernetesNodeGroup creates a new node group (EXPERIMENTAL).
 func (s *Service) CreateKubernetesNodeGroup(ctx context.Context, r *request.CreateKubernetesNodeGroupRequest) (*upcloud.KubernetesNodeGroup, error) {
 	ng := upcloud.KubernetesNodeGroup{}
 	return &ng, s.create(ctx, r, &ng)
 }
 
-// ModifyKubernetesNodeGroup modifies an existing node group.
+// ModifyKubernetesNodeGroup modifies an existing node group (EXPERIMENTAL).
 func (s *Service) ModifyKubernetesNodeGroup(ctx context.Context, r *request.ModifyKubernetesNodeGroupRequest) (*upcloud.KubernetesNodeGroup, error) {
 	ng := upcloud.KubernetesNodeGroup{}
 	return &ng, s.modify(ctx, r, &ng)
 }
 
-// DeleteKubernetesNodeGroup deletes an existing node group.
+// DeleteKubernetesNodeGroup deletes an existing node group (EXPERIMENTAL).
 func (s *Service) DeleteKubernetesNodeGroup(ctx context.Context, r *request.DeleteKubernetesNodeGroupRequest) error {
 	return s.delete(ctx, r)
 }
