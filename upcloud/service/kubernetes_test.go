@@ -196,6 +196,51 @@ func TestKubernetes(t *testing.T) {
 			require.NotZero(t, v[0])
 		})
 	})
+
+	t.Run("ModifyKubernetesNodeGroups", func(t *testing.T) {
+		t.Parallel()
+
+		record(t, "modify_kubernetes_node_groups", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+			require.NotEmpty(t, uuid)
+
+			groupName := "my-group"
+			ng, err := svc.CreateKubernetesNodeGroup(ctx, &request.CreateKubernetesNodeGroupRequest{
+				ClusterUUID: uuid,
+				NodeGroup: request.KubernetesNodeGroup{
+					Count:   2,
+					Name:    groupName,
+					Plan:    plan,
+					Storage: "00000000-0000-0000-0000-000000000000",
+				},
+			})
+			require.NoError(t, err)
+			require.Equal(t, 2, ng.Count)
+			require.Equal(t, groupName, ng.Name)
+
+			groups, err := svc.GetKubernetesNodeGroups(ctx, &request.GetKubernetesNodeGroupsRequest{ClusterUUID: uuid})
+			require.NoError(t, err)
+			require.Len(t, groups, 2)
+
+			ng, err = svc.GetKubernetesNodeGroup(ctx, &request.GetKubernetesNodeGroupRequest{ClusterUUID: uuid, Name: groupName})
+			require.NoError(t, err)
+			require.Equal(t, groupName, ng.Name)
+
+			ng, err = svc.ModifyKubernetesNodeGroup(ctx, &request.ModifyKubernetesNodeGroupRequest{
+				ClusterUUID: uuid,
+				Name:        groupName,
+				NodeGroup: request.ModifyKubernetesNodeGroup{
+					Count: 1,
+				},
+			})
+			require.NoError(t, err)
+			require.Equal(t, 1, ng.Count)
+
+			require.NoError(t, svc.DeleteKubernetesNodeGroup(ctx, &request.DeleteKubernetesNodeGroupRequest{
+				ClusterUUID: uuid,
+				Name:        groupName,
+			}))
+		})
+	})
 }
 
 func waitForKubernetesClusterNotFound(ctx context.Context, rec *recorder.Recorder, svc *Service, clusterUUID string) error {

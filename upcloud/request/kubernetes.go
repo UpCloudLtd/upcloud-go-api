@@ -1,6 +1,7 @@
 package request
 
 import (
+	"encoding/json"
 	"fmt"
 	"time"
 
@@ -103,4 +104,72 @@ type GetKubernetesVersionsRequest struct{}
 
 func (r *GetKubernetesVersionsRequest) RequestURL() string {
 	return fmt.Sprintf("%s/versions", kubernetesClusterBasePath)
+}
+
+type GetKubernetesNodeGroupsRequest struct {
+	ClusterUUID string
+}
+
+func (r *GetKubernetesNodeGroupsRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/node-groups", kubernetesClusterBasePath, r.ClusterUUID)
+}
+
+type GetKubernetesNodeGroupRequest struct {
+	ClusterUUID string
+	Name        string
+}
+
+func (r *GetKubernetesNodeGroupRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/node-groups/%s", kubernetesClusterBasePath, r.ClusterUUID, r.Name)
+}
+
+type KubernetesNodeGroup struct {
+	Count       int                            `json:"count,omitempty"`
+	Labels      []upcloud.Label                `json:"labels,omitempty"`
+	Name        string                         `json:"name,omitempty"`
+	Plan        string                         `json:"plan,omitempty"`
+	SSHKeys     []string                       `json:"ssh_keys,omitempty"`
+	Storage     string                         `json:"storage,omitempty"`
+	KubeletArgs []upcloud.KubernetesKubeletArg `json:"kubelet_args,omitempty"`
+	Taints      []upcloud.KubernetesTaint      `json:"taints,omitempty"`
+}
+
+type CreateKubernetesNodeGroupRequest struct {
+	ClusterUUID string `json:"-"`
+	NodeGroup   KubernetesNodeGroup
+}
+
+func (r *CreateKubernetesNodeGroupRequest) MarshalJSON() ([]byte, error) {
+	return json.Marshal(r.NodeGroup)
+}
+
+func (r *CreateKubernetesNodeGroupRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/node-groups", kubernetesClusterBasePath, r.ClusterUUID)
+}
+
+type ModifyKubernetesNodeGroup struct {
+	Count int `json:"count,omitempty"`
+}
+
+type ModifyKubernetesNodeGroupRequest struct {
+	ClusterUUID string `json:"-"`
+	Name        string `json:"-"`
+	NodeGroup   ModifyKubernetesNodeGroup
+}
+
+func (r *ModifyKubernetesNodeGroupRequest) MarshalJSON() ([]byte, error) {
+	return json.Marshal(r.NodeGroup)
+}
+
+func (r *ModifyKubernetesNodeGroupRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/node-groups/%s", kubernetesClusterBasePath, r.ClusterUUID, r.Name)
+}
+
+type DeleteKubernetesNodeGroupRequest struct {
+	ClusterUUID string
+	Name        string
+}
+
+func (r *DeleteKubernetesNodeGroupRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/node-groups/%s", kubernetesClusterBasePath, r.ClusterUUID, r.Name)
 }
