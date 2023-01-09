@@ -18,6 +18,9 @@ jobs:
         with:
           go-version: ${{ matrix.go-version }}
 
+      - name: build
+        run: go build ./...
+
       - name: test
         env:
           UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS: yes
