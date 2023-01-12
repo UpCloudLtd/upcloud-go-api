@@ -5,6 +5,7 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/hex"
+	"errors"
 	"fmt"
 	"net/http"
 	"os"
@@ -301,6 +302,19 @@ func TestCreateRestoreBackup(t *testing.T) {
 		backupDetails, err = svc.GetStorageDetails(ctx, &request.GetStorageDetailsRequest{UUID: backupDetails.Origin})
 		require.NoError(t, err)
 		assert.Equal(t, upcloud.StorageStateOnline, backupDetails.State)
+
+		require.NoError(t, svc.DeleteStorage(ctx, &request.DeleteStorageRequest{
+			UUID:    storageDetails.UUID,
+			Backups: request.DeleteStorageBackupsModeDelete,
+		}))
+
+		var ucErr *upcloud.Error
+		for _, b := range storageDetails.BackupUUIDs {
+			_, err = svc.GetStorageDetails(ctx, &request.GetStorageDetailsRequest{UUID: b})
+			require.Error(t, err)
+			require.True(t, errors.As(err, &ucErr))
+			assert.Equal(t, http.StatusNotFound, ucErr.Status)
+		}
 	})
 }
 

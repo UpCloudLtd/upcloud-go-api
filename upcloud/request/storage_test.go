@@ -140,8 +140,19 @@ func TestDeleteStorageRequest(t *testing.T) {
 	request := DeleteStorageRequest{
 		UUID: "foo",
 	}
-
 	assert.Equal(t, "/storage/foo", request.RequestURL())
+
+	request = DeleteStorageRequest{
+		UUID:    "foo",
+		Backups: "",
+	}
+	assert.Equal(t, "/storage/foo", request.RequestURL())
+
+	request = DeleteStorageRequest{
+		UUID:    "foo",
+		Backups: DeleteStorageBackupsModeDelete,
+	}
+	assert.Equal(t, "/storage/foo?backups=delete", request.RequestURL())
 }
 
 // TestCloneStorageRequest testa that CloneStorageRequest objects behave correctly

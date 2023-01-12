@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- storage: possibility to control what to do with backups related to the storage that is about to be deleted
+
 ## [5.2.1]
 
 ### Added
