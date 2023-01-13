@@ -8,10 +8,16 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
 )
 
+type DeleteStorageBackupsMode string
+
 // Constants
 const (
 	StorageImportSourceDirectUpload = "direct_upload"
 	StorageImportSourceHTTPImport   = "http_import"
+
+	DeleteStorageBackupsModeKeep       DeleteStorageBackupsMode = "keep"
+	DeleteStorageBackupsModeKeepLatest DeleteStorageBackupsMode = "keep_latest"
+	DeleteStorageBackupsModeDelete     DeleteStorageBackupsMode = "delete"
 )
 
 // GetStoragesRequest represents a request for retrieving all or some storages
@@ -156,11 +162,15 @@ func (r DetachStorageRequest) MarshalJSON() ([]byte, error) {
 
 // DeleteStorageRequest represents a request to delete a storage device
 type DeleteStorageRequest struct {
-	UUID string
+	UUID    string
+	Backups DeleteStorageBackupsMode
 }
 
 // RequestURL implements the Request interface
 func (r *DeleteStorageRequest) RequestURL() string {
+	if r.Backups != "" {
+		return fmt.Sprintf("/storage/%s?backups=%s", r.UUID, r.Backups)
+	}
 	return fmt.Sprintf("/storage/%s", r.UUID)
 }
 

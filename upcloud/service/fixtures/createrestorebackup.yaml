@@ -10,7 +10,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api-ctx/4.9.0
+      - upcloud-go-api/5.2.1
     url: https://api.upcloud.com/1.3/storage
     method: POST
   response:
@@ -26,7 +26,7 @@ interactions:
             "backups" : {
                "backup" : []
             },
-            "created" : "2022-10-27T18:22:25Z",
+            "created" : "2023-01-12T07:59:21Z",
             "license" : 0,
             "servers" : {
                "server" : []
@@ -36,7 +36,7 @@ interactions:
             "tier" : "maxiops",
             "title" : "Test storage",
             "type" : "normal",
-            "uuid" : "01e9531b-ab82-444f-a4d2-d4cd5518d2b4",
+            "uuid" : "01a9b582-2254-4683-b408-1d41d6910b75",
             "zone" : "fi-hel2"
          }
       }
@@ -46,7 +46,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 27 Oct 2022 18:22:25 GMT
+      - Thu, 12 Jan 2023 07:59:21 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -55,7 +55,7 @@ interactions:
     code: 201
     duration: ""
 - request:
-    body: '{"storage":{"title":"backup-1666894954000000000"}}'
+    body: '{"storage":{"title":"backup-1673510370000000000"}}'
     form: {}
     headers:
       Accept:
@@ -63,26 +63,26 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api-ctx/4.9.0
-    url: https://api.upcloud.com/1.3/storage/01e9531b-ab82-444f-a4d2-d4cd5518d2b4/backup
+      - upcloud-go-api/5.2.1
+    url: https://api.upcloud.com/1.3/storage/01a9b582-2254-4683-b408-1d41d6910b75/backup
     method: POST
   response:
     body: |
       {
          "storage" : {
             "access" : "private",
-            "created" : "2022-10-27T18:22:34Z",
+            "created" : "2023-01-12T07:59:30Z",
             "license" : 0,
-            "origin" : "01e9531b-ab82-444f-a4d2-d4cd5518d2b4",
+            "origin" : "01a9b582-2254-4683-b408-1d41d6910b75",
             "progress" : "0",
             "servers" : {
                "server" : []
             },
             "size" : 10,
             "state" : "maintenance",
-            "title" : "backup-1666894954000000000",
+            "title" : "backup-1673510370000000000",
             "type" : "backup",
-            "uuid" : "01e2b24b-b76f-4568-b5ca-40b5066eafd7",
+            "uuid" : "0160e290-c379-4183-9f50-586ac8b41500",
             "zone" : "fi-hel2"
          }
       }
@@ -92,7 +92,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 27 Oct 2022 18:22:34 GMT
+      - Thu, 12 Jan 2023 07:59:30 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -109,8 +109,8 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api-ctx/4.9.0
-    url: https://api.upcloud.com/1.3/storage/01e9531b-ab82-444f-a4d2-d4cd5518d2b4
+      - upcloud-go-api/5.2.1
+    url: https://api.upcloud.com/1.3/storage/01a9b582-2254-4683-b408-1d41d6910b75
     method: GET
   response:
     body: |
@@ -124,10 +124,10 @@ interactions:
             },
             "backups" : {
                "backup" : [
-                  "01e2b24b-b76f-4568-b5ca-40b5066eafd7"
+                  "0160e290-c379-4183-9f50-586ac8b41500"
                ]
             },
-            "created" : "2022-10-27T18:22:25Z",
+            "created" : "2023-01-12T07:59:21Z",
             "license" : 0,
             "servers" : {
                "server" : []
@@ -137,7 +137,7 @@ interactions:
             "tier" : "maxiops",
             "title" : "Test storage",
             "type" : "normal",
-            "uuid" : "01e9531b-ab82-444f-a4d2-d4cd5518d2b4",
+            "uuid" : "01a9b582-2254-4683-b408-1d41d6910b75",
             "zone" : "fi-hel2"
          }
       }
@@ -147,7 +147,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 27 Oct 2022 18:22:40 GMT
+      - Thu, 12 Jan 2023 07:59:36 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -164,25 +164,25 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api-ctx/4.9.0
-    url: https://api.upcloud.com/1.3/storage/01e2b24b-b76f-4568-b5ca-40b5066eafd7
+      - upcloud-go-api/5.2.1
+    url: https://api.upcloud.com/1.3/storage/0160e290-c379-4183-9f50-586ac8b41500
     method: GET
   response:
     body: |
       {
          "storage" : {
             "access" : "private",
-            "created" : "2022-10-27T18:22:34Z",
+            "created" : "2023-01-12T07:59:30Z",
             "license" : 0,
-            "origin" : "01e9531b-ab82-444f-a4d2-d4cd5518d2b4",
+            "origin" : "01a9b582-2254-4683-b408-1d41d6910b75",
             "servers" : {
                "server" : []
             },
             "size" : 10,
             "state" : "online",
-            "title" : "backup-1666894954000000000",
+            "title" : "backup-1673510370000000000",
             "type" : "backup",
-            "uuid" : "01e2b24b-b76f-4568-b5ca-40b5066eafd7",
+            "uuid" : "0160e290-c379-4183-9f50-586ac8b41500",
             "zone" : "fi-hel2"
          }
       }
@@ -192,7 +192,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 27 Oct 2022 18:22:40 GMT
+      - Thu, 12 Jan 2023 07:59:36 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -201,7 +201,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"UUID":"01e2b24b-b76f-4568-b5ca-40b5066eafd7"}'
+    body: '{"UUID":"0160e290-c379-4183-9f50-586ac8b41500"}'
     form: {}
     headers:
       Accept:
@@ -209,14 +209,14 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api-ctx/4.9.0
-    url: https://api.upcloud.com/1.3/storage/01e2b24b-b76f-4568-b5ca-40b5066eafd7/restore
+      - upcloud-go-api/5.2.1
+    url: https://api.upcloud.com/1.3/storage/0160e290-c379-4183-9f50-586ac8b41500/restore
     method: POST
   response:
     body: ""
     headers:
       Date:
-      - Thu, 27 Oct 2022 18:22:40 GMT
+      - Thu, 12 Jan 2023 07:59:36 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -233,8 +233,8 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api-ctx/4.9.0
-    url: https://api.upcloud.com/1.3/storage/01e9531b-ab82-444f-a4d2-d4cd5518d2b4
+      - upcloud-go-api/5.2.1
+    url: https://api.upcloud.com/1.3/storage/01a9b582-2254-4683-b408-1d41d6910b75
     method: GET
   response:
     body: |
@@ -248,10 +248,10 @@ interactions:
             },
             "backups" : {
                "backup" : [
-                  "01e2b24b-b76f-4568-b5ca-40b5066eafd7"
+                  "0160e290-c379-4183-9f50-586ac8b41500"
                ]
             },
-            "created" : "2022-10-27T18:22:25Z",
+            "created" : "2023-01-12T07:59:21Z",
             "license" : 0,
             "servers" : {
                "server" : []
@@ -261,7 +261,7 @@ interactions:
             "tier" : "maxiops",
             "title" : "Test storage",
             "type" : "normal",
-            "uuid" : "01e9531b-ab82-444f-a4d2-d4cd5518d2b4",
+            "uuid" : "01a9b582-2254-4683-b408-1d41d6910b75",
             "zone" : "fi-hel2"
          }
       }
@@ -271,11 +271,69 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 27 Oct 2022 18:25:52 GMT
+      - Thu, 12 Jan 2023 08:01:29 GMT
       Server:
       - Apache
       Strict-Transport-Security:
       - max-age=63072000
     status: 200 OK
     code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/5.2.1
+    url: https://api.upcloud.com/1.3/storage/01a9b582-2254-4683-b408-1d41d6910b75?backups=delete
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Thu, 12 Jan 2023 08:01:29 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/5.2.1
+    url: https://api.upcloud.com/1.3/storage/0160e290-c379-4183-9f50-586ac8b41500
+    method: GET
+  response:
+    body: |
+      {
+         "error" : {
+            "error_code" : "STORAGE_NOT_FOUND",
+            "error_message" : "The storage 0160e290-c379-4183-9f50-586ac8b41500 does not exist."
+         }
+      }
+    headers:
+      Content-Length:
+      - "157"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Thu, 12 Jan 2023 08:01:30 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 404 Not Found
+    code: 404
     duration: ""
