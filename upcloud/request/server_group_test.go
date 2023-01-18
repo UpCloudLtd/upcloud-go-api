@@ -33,7 +33,7 @@ func TestGetServerGroupsWithFiltersRequest(t *testing.T) {
 
 	assert.Equal(
 		t,
-		"/server-group?labels=onlyKey1&labels=onlyKey2&labels=pairKey1=pairValue1&labels=pairKey2=pairValue2",
+		"/server-group?label=onlyKey1&label=onlyKey2&label=pairKey1%3DpairValue1&label=pairKey2%3DpairValue2",
 		request.RequestURL(),
 	)
 }

@@ -320,4 +320,24 @@ func TestMarshalModifyRouterRequest(t *testing.T) {
 	assert.JSONEq(t, expectedJSON, string(actualJSON))
 
 	assert.Equal(t, "/router/foo", request.RequestURL())
+
+	request = ModifyRouterRequest{
+		UUID:   "",
+		Name:   "Modified router",
+		Labels: &[]upcloud.Label{},
+	}
+
+	expectedJSON = `
+	  {
+		"router": {
+		  "name": "Modified router",
+		  "labels": []
+		}
+	  }
+	`
+
+	actualJSON, err = json.Marshal(&request)
+	assert.NoError(t, err)
+
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
 }

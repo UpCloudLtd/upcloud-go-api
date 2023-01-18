@@ -19,15 +19,13 @@ func (r *GetKubernetesClustersRequest) RequestURL() string {
 	return kubernetesClusterBasePath
 }
 
-type KubernetesFilter interface {
-	ToQueryParam() string
-}
+type KubernetesFilter = QueryFilter
 
 // GetKubernetesClustersWithFiltersRequest represents a request to get all clusters
 // using labels or label keys as filters.
 // Using multiple filters returns only clusters that match all.
 type GetKubernetesClustersWithFiltersRequest struct {
-	Filters []KubernetesFilter
+	Filters []QueryFilter
 }
 
 // RequestURL implements the Request interface.
@@ -35,16 +33,7 @@ func (r *GetKubernetesClustersWithFiltersRequest) RequestURL() string {
 	if len(r.Filters) == 0 {
 		return kubernetesClusterBasePath
 	}
-
-	params := ""
-	for _, v := range r.Filters {
-		if len(params) > 0 {
-			params += "&"
-		}
-		params += v.ToQueryParam()
-	}
-
-	return fmt.Sprintf("%s?%s", kubernetesClusterBasePath, params)
+	return fmt.Sprintf("%s?%s", kubernetesClusterBasePath, encodeQueryFilters(r.Filters))
 }
 
 // GetKubernetesClusterRequest represents a request to get a Kubernetes cluster details

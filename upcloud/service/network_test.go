@@ -532,3 +532,54 @@ func TestCreateNetworkAndServer(t *testing.T) {
 		assert.True(t, found)
 	})
 }
+
+// TestRoutersFilters tests router labels and filters
+func TestRouterLabelsAndFilters(t *testing.T) {
+	record(t, "routerlabelsandfilters", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		r1, err := svc.CreateRouter(ctx, &request.CreateRouterRequest{
+			Name: "test_router_labels_and_filters_1",
+			Labels: []upcloud.Label{
+				{
+					Key:   "color",
+					Value: "blue",
+				},
+			},
+		})
+		require.NoError(t, err)
+		r2, err := svc.CreateRouter(ctx, &request.CreateRouterRequest{
+			Name: "test_router_labels_and_filters_1",
+			Labels: []upcloud.Label{
+				{
+					Key:   "color",
+					Value: "red",
+				},
+			},
+		})
+		require.NoError(t, err)
+		routers, err := svc.GetRouters(ctx, request.FilterLabelKey{Key: "color"})
+		require.NoError(t, err)
+		assert.Equal(t, len(routers.Routers), 2)
+
+		routers, err = svc.GetRouters(ctx, request.FilterLabel{
+			Label: upcloud.Label{Key: "color", Value: "red"},
+		})
+		assert.NoError(t, err)
+		assert.Equal(t, len(routers.Routers), 1)
+
+		_, err = svc.ModifyRouter(ctx, &request.ModifyRouterRequest{
+			UUID:   r2.UUID,
+			Name:   r2.Name,
+			Labels: &[]upcloud.Label{},
+		})
+		assert.NoError(t, err)
+
+		routers, err = svc.GetRouters(ctx, request.FilterLabel{
+			Label: upcloud.Label{Key: "color", Value: "red"},
+		})
+		assert.NoError(t, err)
+		assert.Equal(t, len(routers.Routers), 0)
+
+		require.NoError(t, svc.DeleteRouter(ctx, &request.DeleteRouterRequest{UUID: r1.UUID}))
+		require.NoError(t, svc.DeleteRouter(ctx, &request.DeleteRouterRequest{UUID: r2.UUID}))
+	})
+}

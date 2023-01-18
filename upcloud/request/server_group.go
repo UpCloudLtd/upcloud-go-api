@@ -18,15 +18,14 @@ func (s GetServerGroupsRequest) RequestURL() string {
 	return serverGroupBasePath
 }
 
-type ServerGroupFilter interface {
-	ToQueryParam() string
-}
+// ServerGroupFilter filter is deprecated. Use QueryFilter instead.
+type ServerGroupFilter = QueryFilter
 
 // GetServerGroupsWithFiltersRequest represents a request to get
 // all server groups using labels or label keys as filters.
 // Using multiple filters returns only groups that match all.
 type GetServerGroupsWithFiltersRequest struct {
-	Filters []ServerGroupFilter
+	Filters []QueryFilter
 }
 
 // RequestURL implements the Request interface.
@@ -34,16 +33,7 @@ func (r *GetServerGroupsWithFiltersRequest) RequestURL() string {
 	if len(r.Filters) == 0 {
 		return serverGroupBasePath
 	}
-
-	params := ""
-	for _, v := range r.Filters {
-		if len(params) > 0 {
-			params += "&"
-		}
-		params += v.ToQueryParam()
-	}
-
-	return fmt.Sprintf("%s?%s", serverGroupBasePath, params)
+	return fmt.Sprintf("%s?%s", serverGroupBasePath, encodeQueryFilters(r.Filters))
 }
 
 // GetServerGroupsRequest represents a request to get server group details

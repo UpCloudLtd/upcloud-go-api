@@ -28,7 +28,7 @@ func TestGetServersWithFiltersRequest(t *testing.T) {
 
 	assert.Equal(
 		t,
-		"/server/?labels=onlyKey1&labels=onlyKey2&labels=pairKey1=pairValue1&labels=pairKey2=pairValue2",
+		"/server/?label=onlyKey1&label=onlyKey2&label=pairKey1%3DpairValue1&label=pairKey2%3DpairValue2",
 		request.RequestURL(),
 	)
 }
