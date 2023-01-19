@@ -44,7 +44,7 @@ func TestGetServersWithFilters(t *testing.T) {
 		require.NoError(t, err)
 
 		servers, err := svc.GetServersWithFilters(ctx, &request.GetServersWithFiltersRequest{
-			Filters: []request.ServerFilter{
+			Filters: []request.QueryFilter{
 				request.FilterLabelKey{Key: "managedBy"},
 				request.FilterLabel{Label: upcloud.Label{
 					Key:   "testName",

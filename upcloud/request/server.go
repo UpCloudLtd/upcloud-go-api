@@ -26,7 +26,7 @@ const (
 	CreateServerStorageDeviceActionAttach = "attach"
 )
 
-// ServerFilter filter is deprecated. Use QueryFilter instead.
+// Deprecated: ServerFilter filter is deprecated. Use QueryFilter instead.
 type ServerFilter = QueryFilter
 
 // GetServersWithFiltersRequest represents a request to get all servers

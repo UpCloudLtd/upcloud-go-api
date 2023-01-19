@@ -18,7 +18,7 @@ func (s GetServerGroupsRequest) RequestURL() string {
 	return serverGroupBasePath
 }
 
-// ServerGroupFilter filter is deprecated. Use QueryFilter instead.
+// Deprecated: ServerGroupFilter filter is deprecated. Use QueryFilter instead.
 type ServerGroupFilter = QueryFilter
 
 // GetServerGroupsWithFiltersRequest represents a request to get

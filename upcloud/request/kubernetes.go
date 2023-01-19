@@ -19,6 +19,7 @@ func (r *GetKubernetesClustersRequest) RequestURL() string {
 	return kubernetesClusterBasePath
 }
 
+// Deprecated: KubernetesFilter filter is deprecated. Use QueryFilter instead.
 type KubernetesFilter = QueryFilter
 
 // GetKubernetesClustersWithFiltersRequest represents a request to get all clusters
