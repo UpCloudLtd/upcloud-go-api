@@ -8,7 +8,7 @@ import (
 )
 
 type NetworkPeering interface {
-	GetNetworkPeerings(ctx context.Context) (upcloud.NetworkPeerings, error)
+	GetNetworkPeerings(ctx context.Context, f ...request.QueryFilter) (upcloud.NetworkPeerings, error)
 	GetNetworkPeering(ctx context.Context, r *request.GetNetworkPeeringRequest) (*upcloud.NetworkPeering, error)
 	CreateNetworkPeering(ctx context.Context, r *request.CreateNetworkPeeringRequest) (*upcloud.NetworkPeering, error)
 	ModifyNetworkPeering(ctx context.Context, r *request.ModifyNetworkPeeringRequest) (*upcloud.NetworkPeering, error)
@@ -16,9 +16,10 @@ type NetworkPeering interface {
 }
 
 // GetNetworkPeerings (EXPERIMENTAL) retrieves a list of network peerings within an account.
-func (s *Service) GetNetworkPeerings(ctx context.Context) (upcloud.NetworkPeerings, error) {
+func (s *Service) GetNetworkPeerings(ctx context.Context, f ...request.QueryFilter) (upcloud.NetworkPeerings, error) {
+	r := request.GetNetworkPeeringsRequest{Filters: f}
 	p := upcloud.NetworkPeerings{}
-	return p, s.get(ctx, "/network-peering", &p)
+	return p, s.get(ctx, r.RequestURL(), &p)
 }
 
 // GetNetworkPeering (EXPERIMENTAL) retrieves details of a network peering.

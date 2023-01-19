@@ -9,6 +9,18 @@ import (
 
 const networkPeeringBaseURL string = "/network-peering"
 
+type GetNetworkPeeringsRequest struct {
+	Filters []QueryFilter
+}
+
+func (r *GetNetworkPeeringsRequest) RequestURL() string {
+	if len(r.Filters) == 0 {
+		return networkPeeringBaseURL
+	}
+
+	return fmt.Sprintf("%s?%s", networkPeeringBaseURL, encodeQueryFilters(r.Filters))
+}
+
 type GetNetworkPeeringRequest struct {
 	UUID string
 }
@@ -26,6 +38,7 @@ type CreateNetworkPeeringRequest struct {
 	ConfiguredStatus upcloud.NetworkPeeringConfiguredStatus `json:"configured_status,omitempty"`
 	Network          NetworkPeeringNetwork                  `json:"network,omitempty"`
 	PeerNetwork      NetworkPeeringNetwork                  `json:"peer_network,omitempty"`
+	Labels           []upcloud.Label                        `json:"labels,omitempty"`
 }
 
 func (r *CreateNetworkPeeringRequest) MarshalJSON() ([]byte, error) {
@@ -45,6 +58,7 @@ func (r *CreateNetworkPeeringRequest) RequestURL() string {
 type ModifyNetworkPeering struct {
 	Name             string                                 `json:"name,omitempty"`
 	ConfiguredStatus upcloud.NetworkPeeringConfiguredStatus `json:"configured_status,omitempty"`
+	Labels           *[]upcloud.Label                       `json:"labels,omitempty"`
 }
 
 type ModifyNetworkPeeringRequest struct {

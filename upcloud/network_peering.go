@@ -58,6 +58,7 @@ type NetworkPeering struct {
 	Network          NetworkPeeringNetwork          `json:"network,omitempty"`
 	PeerNetwork      NetworkPeeringNetwork          `json:"peer_network,omitempty"`
 	State            NetworkPeeringState            `json:"state,omitempty"`
+	Labels           []Label                        `json:"labels,omitempty"`
 }
 
 // UnmarshalJSON is a custom unmarshaller that deals with deeply embedded values.

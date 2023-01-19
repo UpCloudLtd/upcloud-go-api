@@ -8,6 +8,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 ### Added
 - storage: possibility to control what to do with backups related to the storage that is about to be deleted
 - router: label support
+- network peering: label support
 
 ## Deprecated
 - request: `ServerFilter` and `ServerGroupFilter` types will be replaced with `QueryFilter` type in the future

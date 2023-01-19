@@ -106,17 +106,22 @@ func TestCreateNetworkPeering(t *testing.T) {
 		assert.JSONEq(t, `
 		{
 			"network_peering": {
-			"configured_status": "active",
-			"name": "Peering A->B",
-			"network": {
-				"uuid": "03126dc1-a69f-4bc2-8b24-e31c22d64712"
-			},
-			"peer_network": {
-				"uuid": "03585987-bf7d-4544-8e9b-5a1b4d74a333"
+				"configured_status": "active",
+				"name": "Peering A->B",
+				"network": {
+					"uuid": "03126dc1-a69f-4bc2-8b24-e31c22d64712"
+				},
+				"peer_network": {
+					"uuid": "03585987-bf7d-4544-8e9b-5a1b4d74a333"
+				},
+				"labels": [
+					{
+						"key": "managedBy",
+						"value": "upcloud-go-sdk-unit-test"
+					}
+			  	]
 			}
-			}
-		}
-		`, string(body))
+		}`, string(body))
 		fmt.Fprint(w, networkPeeringCommonResponse)
 	}))
 	defer srv.Close()
@@ -130,8 +135,16 @@ func TestCreateNetworkPeering(t *testing.T) {
 		PeerNetwork: request.NetworkPeeringNetwork{
 			UUID: "03585987-bf7d-4544-8e9b-5a1b4d74a333",
 		},
+		Labels: []upcloud.Label{
+			{
+				Key:   "managedBy",
+				Value: "upcloud-go-sdk-unit-test",
+			},
+		},
 	})
-	assert.NoError(t, err)
+	if !assert.NoError(t, err) {
+		return
+	}
 	checkNetworkPeeringResponse(t, p)
 }
 
@@ -147,7 +160,13 @@ func TestModifyNetworkPeering(t *testing.T) {
 		{
 			"network_peering": {
 			  "configured_status": "disabled",
-			  "name": "Peering A->B modified"
+			  "name": "Peering A->B modified",
+			  "labels": [
+				{
+					"key": "managedBy",
+					"value": "upcloud-go-sdk-unit-test"
+				}
+			  ]
 			}
 		}
 		`, string(body))
@@ -160,9 +179,17 @@ func TestModifyNetworkPeering(t *testing.T) {
 		NetworkPeering: request.ModifyNetworkPeering{
 			Name:             "Peering A->B modified",
 			ConfiguredStatus: upcloud.NetworkPeeringConfiguredStatusDisabled,
+			Labels: &[]upcloud.Label{
+				{
+					Key:   "managedBy",
+					Value: "upcloud-go-sdk-unit-test",
+				},
+			},
 		},
 	})
-	assert.NoError(t, err)
+	if !assert.NoError(t, err) {
+		return
+	}
 	checkNetworkPeeringResponse(t, p)
 }
 
@@ -191,6 +218,12 @@ const networkPeeringCommonResponse string = `
 		"uuid": "0f7984bc-5d72-4aaf-b587-90e6a8f32efc",
 		"configured_status": "active",
 		"name": "Peering A->B",
+		"labels": [
+			{
+				"key": "managedBy",
+				"value": "upcloud-go-sdk-unit-test"
+			}
+		],
 		"network": {
 			"ip_networks": {
 				"ip_network": [
