@@ -290,6 +290,7 @@ type Router struct {
 	Name             string             `json:"name"`
 	Type             string             `json:"type"`
 	UUID             string             `json:"uuid"`
+	Labels           []Label            `json:"labels"`
 }
 
 // UnmarshalJSON is a custom unmarshaller that deals with

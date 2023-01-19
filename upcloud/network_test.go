@@ -450,30 +450,35 @@ func TestUnmarshalRouters(t *testing.T) {
 // behaves correctly.
 func TestUnmarshalRouter(t *testing.T) {
 	originalJSON := `
-	  {
+	{
 		"router": {
-		  "attached_networks": {
-			"network": [
-				{
-					"uuid" : "03206c92-50f2-40b0-ad05-5f02cab2e932"
-				},
-				{
-					"uuid" : "03d781c3-65e3-4a7a-b6cd-a7ce7e23b8c5"
-				},
-				{
-					"uuid" : "03854a28-fafe-428f-964f-760cd1b83f1f"
-				},
-				{
-					"uuid" : "03bae36d-a30a-4640-9a35-f2ccb0e2cddc"
-				}
-			]
+		  	"attached_networks": {
+				"network": [
+					{
+						"uuid" : "03206c92-50f2-40b0-ad05-5f02cab2e932"
+					},
+					{
+						"uuid" : "03d781c3-65e3-4a7a-b6cd-a7ce7e23b8c5"
+					},
+					{
+						"uuid" : "03854a28-fafe-428f-964f-760cd1b83f1f"
+					},
+					{
+						"uuid" : "03bae36d-a30a-4640-9a35-f2ccb0e2cddc"
+					}
+				]
 		  },
 		  "name": "Example router",
 		  "type": "normal",
-		  "uuid": "04c0df35-2658-4b0c-8ac7-962090f4e92a"
+		  "uuid": "04c0df35-2658-4b0c-8ac7-962090f4e92a",
+		  "labels": [
+				{
+					"key": "managedBy",
+					"value": "upcloud-go-sdk-unit-test"
+				}
+			]
 		}
-	  }
-	`
+	}`
 
 	var router Router
 	err := json.Unmarshal([]byte(originalJSON), &router)
@@ -497,6 +502,12 @@ func TestUnmarshalRouter(t *testing.T) {
 		Name: "Example router",
 		Type: "normal",
 		UUID: "04c0df35-2658-4b0c-8ac7-962090f4e92a",
+		Labels: LabelSlice{
+			{
+				Key:   "managedBy",
+				Value: "upcloud-go-sdk-unit-test",
+			},
+		},
 	}
 
 	assert.Equal(t, testRouter, router)

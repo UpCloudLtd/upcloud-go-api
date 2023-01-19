@@ -1,0 +1,327 @@
+---
+version: 1
+interactions:
+- request:
+    body: '{"router":{"name":"test_router_labels_and_filters_1","labels":[{"key":"color","value":"blue"}]}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/5.2.1
+    url: https://api.upcloud.com/1.3/router
+    method: POST
+  response:
+    body: |
+      {
+         "router" : {
+            "attached_networks" : {
+               "network" : []
+            },
+            "labels" : [
+               {
+                  "key" : "color",
+                  "value" : "blue"
+               }
+            ],
+            "name" : "test_router_labels_and_filters_1",
+            "static_routes" : [],
+            "type" : "normal",
+            "uuid" : "04841ba6-2fa3-47c7-9306-f6e53ace6b97"
+         }
+      }
+    headers:
+      Content-Length:
+      - "354"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Wed, 18 Jan 2023 13:32:36 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: '{"router":{"name":"test_router_labels_and_filters_1","labels":[{"key":"color","value":"red"}]}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/5.2.1
+    url: https://api.upcloud.com/1.3/router
+    method: POST
+  response:
+    body: |
+      {
+         "router" : {
+            "attached_networks" : {
+               "network" : []
+            },
+            "labels" : [
+               {
+                  "key" : "color",
+                  "value" : "red"
+               }
+            ],
+            "name" : "test_router_labels_and_filters_1",
+            "static_routes" : [],
+            "type" : "normal",
+            "uuid" : "041d21e2-30ca-41eb-8498-a2eddce05796"
+         }
+      }
+    headers:
+      Content-Length:
+      - "353"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Wed, 18 Jan 2023 13:32:37 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/5.2.1
+    url: https://api.upcloud.com/1.3/router?label=color
+    method: GET
+  response:
+    body: |
+      {
+         "routers" : {
+            "router" : [
+               {
+                  "attached_networks" : {
+                     "network" : []
+                  },
+                  "labels" : [
+                     {
+                        "key" : "color",
+                        "value" : "red"
+                     }
+                  ],
+                  "name" : "test_router_labels_and_filters_1",
+                  "static_routes" : [],
+                  "type" : "normal",
+                  "uuid" : "041d21e2-30ca-41eb-8498-a2eddce05796"
+               },
+               {
+                  "attached_networks" : {
+                     "network" : []
+                  },
+                  "labels" : [
+                     {
+                        "key" : "color",
+                        "value" : "blue"
+                     }
+                  ],
+                  "name" : "test_router_labels_and_filters_1",
+                  "static_routes" : [],
+                  "type" : "normal",
+                  "uuid" : "04841ba6-2fa3-47c7-9306-f6e53ace6b97"
+               }
+            ]
+         }
+      }
+    headers:
+      Content-Length:
+      - "911"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Wed, 18 Jan 2023 13:32:37 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/5.2.1
+    url: https://api.upcloud.com/1.3/router?label=color%3Dred
+    method: GET
+  response:
+    body: |
+      {
+         "routers" : {
+            "router" : [
+               {
+                  "attached_networks" : {
+                     "network" : []
+                  },
+                  "labels" : [
+                     {
+                        "key" : "color",
+                        "value" : "red"
+                     }
+                  ],
+                  "name" : "test_router_labels_and_filters_1",
+                  "static_routes" : [],
+                  "type" : "normal",
+                  "uuid" : "041d21e2-30ca-41eb-8498-a2eddce05796"
+               }
+            ]
+         }
+      }
+    headers:
+      Content-Length:
+      - "481"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Wed, 18 Jan 2023 13:32:38 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"router":{"name":"test_router_labels_and_filters_1","labels":[]}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/5.2.1
+    url: https://api.upcloud.com/1.3/router/041d21e2-30ca-41eb-8498-a2eddce05796
+    method: PATCH
+  response:
+    body: |
+      {
+         "router" : {
+            "attached_networks" : {
+               "network" : []
+            },
+            "labels" : [],
+            "name" : "test_router_labels_and_filters_1",
+            "static_routes" : [],
+            "type" : "normal",
+            "uuid" : "041d21e2-30ca-41eb-8498-a2eddce05796"
+         }
+      }
+    headers:
+      Content-Length:
+      - "267"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Wed, 18 Jan 2023 13:32:38 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/5.2.1
+    url: https://api.upcloud.com/1.3/router?label=color%3Dred
+    method: GET
+  response:
+    body: |
+      {
+         "routers" : {
+            "router" : []
+         }
+      }
+    headers:
+      Content-Length:
+      - "46"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Wed, 18 Jan 2023 13:32:38 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/5.2.1
+    url: https://api.upcloud.com/1.3/router/04841ba6-2fa3-47c7-9306-f6e53ace6b97
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Wed, 18 Jan 2023 13:32:38 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/5.2.1
+    url: https://api.upcloud.com/1.3/router/041d21e2-30ca-41eb-8498-a2eddce05796
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Wed, 18 Jan 2023 13:32:38 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""

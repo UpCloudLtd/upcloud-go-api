@@ -26,15 +26,14 @@ const (
 	CreateServerStorageDeviceActionAttach = "attach"
 )
 
-type ServerFilter interface {
-	ToQueryParam() string
-}
+// Deprecated: ServerFilter filter is deprecated. Use QueryFilter instead.
+type ServerFilter = QueryFilter
 
 // GetServersWithFiltersRequest represents a request to get all servers
 // using labels or label keys as filters.
 // Using multiple filters returns only servers that match all.
 type GetServersWithFiltersRequest struct {
-	Filters []ServerFilter
+	Filters []QueryFilter
 }
 
 // RequestURL implements the Request interface.
@@ -45,15 +44,7 @@ func (r *GetServersWithFiltersRequest) RequestURL() string {
 		return basePath
 	}
 
-	params := ""
-	for _, v := range r.Filters {
-		if len(params) > 0 {
-			params += "&"
-		}
-		params += v.ToQueryParam()
-	}
-
-	return fmt.Sprintf("%s?%s", basePath, params)
+	return fmt.Sprintf("%s?%s", basePath, encodeQueryFilters(r.Filters))
 }
 
 // GetServerDetailsRequest represents a request for retrieving details about a server

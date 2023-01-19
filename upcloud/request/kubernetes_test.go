@@ -89,8 +89,8 @@ func TestKubernetes(t *testing.T) {
 		expected := fmt.Sprintf(
 			"%s?%s&%s",
 			kubernetesClusterBasePath,
-			"labels=managedBy",
-			"labels=managedBy=upcloud-go-sdk-unit-test",
+			"label=managedBy",
+			"label=managedBy%3Dupcloud-go-sdk-unit-test",
 		)
 
 		r := exampleGetKubernetesClustersWithFiltersRequest()

@@ -232,6 +232,21 @@ func (r ModifyNetworkInterfaceRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&v)
 }
 
+// GetRouterssequest represents a request to list routers.
+type GetRoutersRequest struct {
+	Filters []QueryFilter
+}
+
+func (r *GetRoutersRequest) RequestURL() string {
+	basePath := "/router"
+
+	if len(r.Filters) == 0 {
+		return basePath
+	}
+
+	return fmt.Sprintf("%s?%s", basePath, encodeQueryFilters(r.Filters))
+}
+
 // GetRouterDetailsRequest represents a request to get details about a single router.
 type GetRouterDetailsRequest struct {
 	UUID string
@@ -244,7 +259,8 @@ func (r *GetRouterDetailsRequest) RequestURL() string {
 
 // CreateRouterRequest represents a request to create a new router.
 type CreateRouterRequest struct {
-	Name string `json:"name"`
+	Name   string          `json:"name"`
+	Labels []upcloud.Label `json:"labels,omitempty"`
 }
 
 // RequestURL implements the Request interface.
@@ -266,9 +282,9 @@ func (r CreateRouterRequest) MarshalJSON() ([]byte, error) {
 
 // ModifyRouterRequest represents a request to modify an existing router.
 type ModifyRouterRequest struct {
-	UUID string `json:"-"`
-
-	Name string `json:"name"`
+	UUID   string           `json:"-"`
+	Name   string           `json:"name"`
+	Labels *[]upcloud.Label `json:"labels,omitempty"`
 }
 
 // RequestURL implements the Request interface.

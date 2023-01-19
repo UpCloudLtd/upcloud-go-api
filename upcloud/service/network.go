@@ -20,7 +20,7 @@ type Network interface {
 	CreateNetworkInterface(ctx context.Context, r *request.CreateNetworkInterfaceRequest) (*upcloud.Interface, error)
 	ModifyNetworkInterface(ctx context.Context, r *request.ModifyNetworkInterfaceRequest) (*upcloud.Interface, error)
 	DeleteNetworkInterface(ctx context.Context, r *request.DeleteNetworkInterfaceRequest) error
-	GetRouters(ctx context.Context) (*upcloud.Routers, error)
+	GetRouters(ctx context.Context, f ...request.QueryFilter) (*upcloud.Routers, error)
 	GetRouterDetails(ctx context.Context, r *request.GetRouterDetailsRequest) (*upcloud.Router, error)
 	CreateRouter(ctx context.Context, r *request.CreateRouterRequest) (*upcloud.Router, error)
 	ModifyRouter(ctx context.Context, r *request.ModifyRouterRequest) (*upcloud.Router, error)
@@ -96,9 +96,10 @@ func (s *Service) DeleteNetworkInterface(ctx context.Context, r *request.DeleteN
 }
 
 // GetRouters returns the all the available routers
-func (s *Service) GetRouters(ctx context.Context) (*upcloud.Routers, error) {
+func (s *Service) GetRouters(ctx context.Context, f ...request.QueryFilter) (*upcloud.Routers, error) {
+	r := request.GetRoutersRequest{Filters: f}
 	routers := upcloud.Routers{}
-	return &routers, s.get(ctx, "/router", &routers)
+	return &routers, s.get(ctx, r.RequestURL(), &routers)
 }
 
 // GetRouterDetails returns the details for the specified router.

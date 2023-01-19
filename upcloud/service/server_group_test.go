@@ -80,7 +80,7 @@ func TestServerGroups(t *testing.T) {
 
 		// get server groups with filters
 		groups, err = svc.GetServerGroupsWithFilters(ctx, &request.GetServerGroupsWithFiltersRequest{
-			Filters: []request.ServerGroupFilter{
+			Filters: []request.QueryFilter{
 				request.FilterLabelKey{Key: "managedBy"},
 				request.FilterLabel{Label: upcloud.Label{
 					Key:   "title",

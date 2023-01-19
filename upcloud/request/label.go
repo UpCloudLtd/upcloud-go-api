@@ -11,7 +11,7 @@ type FilterLabel struct {
 }
 
 func (l FilterLabel) ToQueryParam() string {
-	return fmt.Sprintf("labels=%s=%s", l.Key, l.Value)
+	return fmt.Sprintf("label=%s=%s", l.Key, l.Value)
 }
 
 type FilterLabelKey struct {
@@ -19,5 +19,5 @@ type FilterLabelKey struct {
 }
 
 func (k FilterLabelKey) ToQueryParam() string {
-	return fmt.Sprintf("labels=%s", k.Key)
+	return fmt.Sprintf("label=%s", k.Key)
 }
