@@ -50,7 +50,13 @@ func TestNetworkPeering(t *testing.T) {
 				"uuid": "03585987-bf7d-4544-8e9b-5a1b4d74a333"
 			  },
 			  "state": "active",
-			  "uuid": "0f7984bc-5d72-4aaf-b587-90e6a8f32efc"
+			  "uuid": "0f7984bc-5d72-4aaf-b587-90e6a8f32efc",
+			  "labels": [
+				{
+					"key": "managedBy",
+					"value": "upcloud-go-sdk-unit-test"
+				}
+			  ]
 			}
 		  ]
 		}
@@ -88,6 +94,12 @@ func TestNetworkPeering(t *testing.T) {
 			},
 		},
 		State: NetworkPeeringStateActive,
+		Labels: []Label{
+			{
+				Key:   "managedBy",
+				Value: "upcloud-go-sdk-unit-test",
+			},
+		},
 	}}
 	assert.Equal(t, want, got)
 }
