@@ -163,6 +163,7 @@ type Network struct {
 	Zone       string             `json:"zone"`
 	Router     string             `json:"router"`
 	Servers    NetworkServerSlice `json:"servers"`
+	Labels     []Label            `json:"labels"`
 }
 
 // UnmarshalJSON is a custom unmarshaller that deals with
