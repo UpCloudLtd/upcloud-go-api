@@ -152,6 +152,52 @@ func TestGetNetworksWithFilters(t *testing.T) {
 	assert.Equal(t, "upcloud", res.Networks[1].Labels[1].Value)
 }
 
+func TestGetNetworkDetails(t *testing.T) {
+	t.Parallel()
+
+	srv, svc := setupTestServerAndService(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		assert.Equal(t, http.MethodGet, r.Method)
+		assert.Equal(t, fmt.Sprintf("/%s%s", client.APIVersion, "/network/_UUID_"), r.URL.Path)
+		fmt.Fprint(w, `
+			{
+				"network": {
+					"ip_networks": {
+						"ip_network": [
+							{
+								"address": "172.16.2.0/24",
+								"dhcp": "yes",
+								"dhcp_default_route": "no",
+								"family": "IPv4",
+								"gateway": "172.16.2.1"
+							}
+						]
+					},
+					"labels": [
+						{
+							"key": "env",
+							"value": "test"
+						}
+					],
+					"name": "testnetwork",
+					"type": "private",
+					"uuid": "_UUID_",
+					"zone": "de-fra1"
+				}
+			}
+		`)
+	}))
+
+	defer srv.Close()
+
+	network, err := svc.GetNetworkDetails(context.Background(), &request.GetNetworkDetailsRequest{UUID: "_UUID_"})
+	require.NoError(t, err)
+	assert.Equal(t, "testnetwork", network.Name)
+	assert.Len(t, network.Labels, 1)
+	assert.Equal(t, "env", network.Labels[0].Key)
+	assert.Equal(t, "test", network.Labels[0].Value)
+	assert.Equal(t, "de-fra1", network.Zone)
+}
+
 // TestGetNetworksInZone checks that network details in a zone are retrievable
 // It:
 //   - creates a server
