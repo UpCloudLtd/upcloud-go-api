@@ -9,6 +9,21 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
 )
 
+func TestMarshalGetNetworks(t *testing.T) {
+	request := GetNetworksRequest{}
+	assert.Equal(t, "/network", request.RequestURL())
+
+	request = GetNetworksRequest{Filters: []QueryFilter{
+		FilterLabel{Label: upcloud.Label{
+			Key:   "env",
+			Value: "test",
+		}},
+		FilterLabelKey{Key: "managedBy"},
+	}}
+
+	assert.Equal(t, "/network?label=env%3Dtest&label=managedBy", request.RequestURL())
+}
+
 // TestMarshalGetNetworksInZoneRequest tests that GetNetworksInZoneRequest behaves correctly
 func TestMarshalGetNetworksInZoneRequest(t *testing.T) {
 	request := GetNetworksInZoneRequest{

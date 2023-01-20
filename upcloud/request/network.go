@@ -7,6 +7,19 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
 )
 
+// GetNetworksRequest represents a rwquest to get all networks
+type GetNetworksRequest struct {
+	Filters []QueryFilter
+}
+
+func (r *GetNetworksRequest) RequestURL() string {
+	if len(r.Filters) == 0 {
+		return "/network"
+	}
+
+	return fmt.Sprintf("/network?%s", encodeQueryFilters(r.Filters))
+}
+
 // GetNetworksInZoneRequest represents a request to get all networks
 // within the specified zone.
 type GetNetworksInZoneRequest struct {

@@ -8,7 +8,7 @@ import (
 )
 
 type Network interface {
-	GetNetworks(ctx context.Context) (*upcloud.Networks, error)
+	GetNetworks(ctx context.Context, f ...request.QueryFilter) (*upcloud.Networks, error)
 	GetNetworksInZone(ctx context.Context, r *request.GetNetworksInZoneRequest) (*upcloud.Networks, error)
 	CreateNetwork(ctx context.Context, r *request.CreateNetworkRequest) (*upcloud.Network, error)
 	GetNetworkDetails(ctx context.Context, r *request.GetNetworkDetailsRequest) (*upcloud.Network, error)
@@ -28,9 +28,10 @@ type Network interface {
 }
 
 // GetNetworks returns the all the available networks
-func (s *Service) GetNetworks(ctx context.Context) (*upcloud.Networks, error) {
+func (s *Service) GetNetworks(ctx context.Context, f ...request.QueryFilter) (*upcloud.Networks, error) {
+	req := request.GetNetworksRequest{Filters: f}
 	networks := upcloud.Networks{}
-	return &networks, s.get(ctx, "/network", &networks)
+	return &networks, s.get(ctx, req.RequestURL(), &networks)
 }
 
 // GetNetworksInZone returns the all the available networks within the specified zone.

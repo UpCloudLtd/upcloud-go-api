@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"net/http"
+	"net/http/httptest"
 	"os"
 	"strings"
 	"testing"
@@ -226,4 +227,10 @@ func utcTimeWithSecondPrecision() (time.Time, error) {
 	t := time.Now().In(utc).Truncate(time.Second)
 
 	return t, err
+}
+
+// Returns a mock server with handler for a single endpoint and a new service that targets said mock server
+func setupTestServerAndService(handler http.Handler) (*httptest.Server, *Service) {
+	srv := httptest.NewServer(handler)
+	return srv, New(client.New("user", "pass", client.WithBaseURL(srv.URL)))
 }
