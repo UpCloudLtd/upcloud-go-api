@@ -30,6 +30,12 @@ func TestUnmarshalNetworks(t *testing.T) {
 				  }
 				]
 			  },
+			  "labels": [
+				{
+					"key": "managedBy",
+					"value": "upcloud"
+				}
+  			  ],
 			  "name": "Public 80.69.172.0/22",
 			  "type": "public",
 			  "uuid": "03000000-0000-4000-8001-000000000000",
@@ -91,6 +97,12 @@ func TestUnmarshalNetworks(t *testing.T) {
 					},
 					Family:  IPAddressFamilyIPv4,
 					Gateway: "80.69.172.1",
+				},
+			},
+			Labels: []Label{
+				{
+					Key:   "managedBy",
+					Value: "upcloud",
 				},
 			},
 			Name: "Public 80.69.172.0/22",
@@ -155,6 +167,16 @@ func TestUnmarshalNetwork(t *testing.T) {
 		  "uuid": "034c12bc-cf15-4b19-97b2-0ab4e51bb98d",
 		  "zone": "uk-lon1",
 		  "router": "04c0df35-2658-4b0c-8ac7-962090f4e92a",
+		  "labels": [
+			{
+				"key": "managedBy",
+				"value": "upcloud"
+			},
+			{
+				"key": "env",
+				"value": "test"
+			}
+		  ],
 		  "ip_networks": {
 			"ip_network": [
 			  {
@@ -190,6 +212,16 @@ func TestUnmarshalNetwork(t *testing.T) {
 		UUID:   "034c12bc-cf15-4b19-97b2-0ab4e51bb98d",
 		Zone:   "uk-lon1",
 		Router: "04c0df35-2658-4b0c-8ac7-962090f4e92a",
+		Labels: []Label{
+			{
+				Key:   "managedBy",
+				Value: "upcloud",
+			},
+			{
+				Key:   "env",
+				Value: "test",
+			},
+		},
 		IPNetworks: []IPNetwork{
 			{
 				Address:          "172.16.0.0/22",
