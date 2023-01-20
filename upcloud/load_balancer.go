@@ -230,6 +230,7 @@ type LoadBalancer struct {
 	NetworkUUID      string                       `json:"network_uuid,omitempty"` // deprecated
 	Networks         []LoadBalancerNetwork        `json:"networks,omitempty"`
 	DNSName          string                       `json:"dns_name,omitempty"` // deprecated
+	Labels           []Label                      `json:"labels,omitempty"`
 	ConfiguredStatus LoadBalancerConfiguredStatus `json:"configured_status,omitempty"`
 	OperationalState LoadBalancerOperationalState `json:"operational_state,omitempty"`
 	Frontends        []LoadBalancerFrontend       `json:"frontends,omitempty"`

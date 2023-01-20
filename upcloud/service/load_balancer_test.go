@@ -931,6 +931,73 @@ func TestLoadBalancerNetwork(t *testing.T) {
 	})
 }
 
+func TestLoadBalancerLabels(t *testing.T) {
+	t.Parallel()
+
+	record(t, "loadbalancerlabels", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		// Create Load Balancers
+		lb1, err := createLoadBalancerAndNetwork(ctx, svc, "fi-hel2", "172.16.12.0/24", upcloud.Label{Key: "zone", Value: "hel2"})
+		require.NoError(t, err)
+		t.Logf("Created load balancer: %s", lb1.Name)
+
+		lb2, err := createLoadBalancerAndNetwork(ctx, svc, "fi-hel1", "172.16.14.0/24", upcloud.Label{Key: "zone", Value: "hel1"})
+		require.NoError(t, err)
+		t.Logf("Created load balancer: %s", lb2.Name)
+		t.Cleanup(func() {
+			ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
+			defer cancel()
+			if err := cleanupLoadBalancer(ctx, rec, svc, lb1); err != nil {
+				t.Log(err)
+			}
+			if err := cleanupLoadBalancer(ctx, rec, svc, lb2); err != nil {
+				t.Log(err)
+			}
+		})
+
+		// Get Load Balancers
+		t.Log("Get load balancers labeled as 'zone'")
+		lbs, err := svc.GetLoadBalancers(ctx, &request.GetLoadBalancersRequest{
+			Filters: []request.QueryFilter{
+				request.FilterLabelKey{Key: "zone"},
+			},
+		})
+		require.NoError(t, err)
+		assert.Equal(t, len(lbs), 2)
+
+		t.Log("Get load balancers labeled as 'zone' with limited page")
+		lbs, err = svc.GetLoadBalancers(ctx, &request.GetLoadBalancersRequest{
+			Page: &request.Page{
+				Size: 1,
+			},
+			Filters: []request.QueryFilter{
+				request.FilterLabelKey{Key: "zone"},
+			},
+		})
+		require.NoError(t, err)
+		assert.Equal(t, len(lbs), 1)
+
+		t.Log("Get load balancers labeled as 'zone=hel1'")
+		lbs, err = svc.GetLoadBalancers(ctx, &request.GetLoadBalancersRequest{
+			Filters: []request.QueryFilter{
+				request.FilterLabel{
+					Label: upcloud.Label{Key: "zone", Value: "hel1"},
+				},
+			},
+		})
+		require.NoError(t, err)
+		if assert.Equal(t, len(lbs), 1) {
+			assert.Equal(t, "fi-hel1", lbs[0].Zone)
+		}
+
+		lb1, err = svc.ModifyLoadBalancer(ctx, &request.ModifyLoadBalancerRequest{
+			UUID:   lb1.UUID,
+			Labels: &[]upcloud.Label{},
+		})
+		require.NoError(t, err)
+		assert.Equal(t, 0, len(lb1.Labels))
+	})
+}
+
 func waitLoadBalancerOnline(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, UUID string) error {
 	t.Helper()
 	if rec.Mode() == recorder.ModeRecording {
@@ -991,7 +1058,7 @@ func cleanupLoadBalancer(ctx context.Context, rec *recorder.Recorder, svc *Servi
 	return err
 }
 
-func createLoadBalancer(ctx context.Context, svc *Service, networkUUID, zone string) (*upcloud.LoadBalancer, error) {
+func createLoadBalancer(ctx context.Context, svc *Service, networkUUID, zone string, label ...upcloud.Label) (*upcloud.LoadBalancer, error) {
 	createLoadBalancerRequest := request.CreateLoadBalancerRequest{
 		Name:             fmt.Sprintf("go-test-lb-%s-%d", zone, time.Now().Unix()),
 		Zone:             zone,
@@ -1002,7 +1069,9 @@ func createLoadBalancer(ctx context.Context, svc *Service, networkUUID, zone str
 		Backends:         []request.LoadBalancerBackend{},
 		Resolvers:        []request.LoadBalancerResolver{},
 	}
-
+	if len(label) > 0 {
+		createLoadBalancerRequest.Labels = label
+	}
 	loadBalancerDetails, err := svc.CreateLoadBalancer(ctx, &createLoadBalancerRequest)
 	if err != nil {
 		return nil, err
@@ -1011,12 +1080,12 @@ func createLoadBalancer(ctx context.Context, svc *Service, networkUUID, zone str
 	return loadBalancerDetails, nil
 }
 
-func createLoadBalancerAndNetwork(ctx context.Context, svc *Service, zone, addr string) (*upcloud.LoadBalancer, error) {
+func createLoadBalancerAndNetwork(ctx context.Context, svc *Service, zone, addr string, label ...upcloud.Label) (*upcloud.LoadBalancer, error) {
 	n, err := createLoadBalancerAndPrivateNetwork(ctx, svc, zone, addr)
 	if err != nil {
 		return nil, err
 	}
-	return createLoadBalancer(ctx, svc, n.UUID, zone)
+	return createLoadBalancer(ctx, svc, n.UUID, zone, label...)
 }
 
 func createLoadBalancerAndPrivateNetwork(ctx context.Context, svc *Service, zone, addr string) (*upcloud.Network, error) {
@@ -1084,7 +1153,7 @@ func deleteLoadBalancer(ctx context.Context, svc *Service, lb *upcloud.LoadBalan
 	}
 	if len(lb.Networks) > 0 {
 		for _, n := range lb.Networks {
-			if n.Type == upcloud.LoadBalancerNetworkTypePrivate && n.UUID != "" {
+			if n.Type == upcloud.LoadBalancerNetworkTypePrivate && n.UUID != "" && lb.NetworkUUID != n.UUID {
 				if err := svc.DeleteNetwork(ctx, &request.DeleteNetworkRequest{UUID: n.UUID}); err != nil {
 					errs = append(errs, err)
 				}
