@@ -178,8 +178,14 @@ func TestMarshalModifyNetworkRequest(t *testing.T) {
 				"value": "test"
 			}
 		  ]
-	  }
+	  	}
+	  }	
 	`
+
+	actualJSON, err = json.Marshal(&request)
+	assert.NoError(t, err)
+	assert.Equal(t, "/network/foo", request.RequestURL())
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
 }
 
 // TestMarshalDeleteNetwork tests the DeleteNetworkRequest behaves correctly
