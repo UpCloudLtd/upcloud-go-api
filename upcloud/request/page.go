@@ -65,3 +65,7 @@ func (p *Page) Previous() *Page {
 func (p *Page) String() string {
 	return p.Values().Encode()
 }
+
+func (p *Page) ToQueryParam() string {
+	return p.String()
+}

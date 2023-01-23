@@ -12,14 +12,23 @@ const loadBalancerCertificateBundleBaseURL string = "/load-balancer/certificate-
 // GetLoadBalancersRequest represents a request to list load balancers
 // List size can be filtered using optional Page object
 type GetLoadBalancersRequest struct {
-	Page *Page
+	Page    *Page
+	Filters []QueryFilter
 }
 
 func (r *GetLoadBalancersRequest) RequestURL() string {
+	u := "/load-balancer"
+	f := make([]QueryFilter, len(r.Filters))
+	copy(f, r.Filters)
 	if r.Page != nil {
-		return fmt.Sprintf("/load-balancer?%s", r.Page.String())
+		f = append(f, r.Page)
 	}
-	return "/load-balancer"
+
+	if len(f) == 0 {
+		return u
+	}
+
+	return fmt.Sprintf("%s?%s", u, encodeQueryFilters(f))
 }
 
 // GetLoadBalancerRequest represents a request to get load balancer details
@@ -50,6 +59,7 @@ type CreateLoadBalancerRequest struct {
 	Frontends        []LoadBalancerFrontend               `json:"frontends"`
 	Backends         []LoadBalancerBackend                `json:"backends"`
 	Resolvers        []LoadBalancerResolver               `json:"resolvers"`
+	Labels           []upcloud.Label                      `json:"labels,omitempty"`
 }
 
 func (r *CreateLoadBalancerRequest) RequestURL() string {
@@ -58,10 +68,11 @@ func (r *CreateLoadBalancerRequest) RequestURL() string {
 
 // ModifyLoadBalancerRequest represents a request to modify load balancer
 type ModifyLoadBalancerRequest struct {
-	UUID             string `json:"-"`
-	Name             string `json:"name,omitempty"`
-	Plan             string `json:"plan,omitempty"`
-	ConfiguredStatus string `json:"configured_status,omitempty"`
+	UUID             string           `json:"-"`
+	Name             string           `json:"name,omitempty"`
+	Plan             string           `json:"plan,omitempty"`
+	ConfiguredStatus string           `json:"configured_status,omitempty"`
+	Labels           *[]upcloud.Label `json:"labels,omitempty"`
 }
 
 func (r *ModifyLoadBalancerRequest) RequestURL() string {

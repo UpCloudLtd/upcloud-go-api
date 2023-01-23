@@ -21,6 +21,12 @@ func TestMarshalLoadBalancer(t *testing.T) {
 			"updated_at": "2022-02-11T17:33:59.898714Z",
 			"uuid": "0aff6dac-143c-4300-9b33-ee2756f6592d",
 			"zone": "fi-hel1",
+			"labels": [
+				{
+					"key": "managedby",
+					"value": "upcloud-go-sdk-unit-test"
+				}
+			],
 			"resolvers": [
 				{
 					"cache_invalid": 30,
@@ -134,6 +140,12 @@ func TestMarshalLoadBalancer(t *testing.T) {
 		OperationalState: LoadBalancerOperationalStateRunning,
 		CreatedAt:        timeParse("2021-12-07T13:58:30.817272Z"),
 		UpdatedAt:        timeParse("2022-02-11T17:33:59.898714Z"),
+		Labels: []Label{
+			{
+				Key:   "managedby",
+				Value: "upcloud-go-sdk-unit-test",
+			},
+		},
 		Frontends: []LoadBalancerFrontend{
 			{
 				Name:           "example-frontend",
