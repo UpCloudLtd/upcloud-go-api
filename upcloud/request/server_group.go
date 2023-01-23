@@ -17,14 +17,11 @@ type GetServerGroupsRequest struct {
 }
 
 func (s GetServerGroupsRequest) RequestURL() string {
-	filters := make([]QueryFilter, len(s.Filters))
-	copy(filters, s.Filters)
-
-	if len(filters) == 0 {
+	if len(s.Filters) == 0 {
 		return serverGroupBasePath
 	}
 
-	return fmt.Sprintf("%s?%s", serverGroupBasePath, encodeQueryFilters(filters))
+	return fmt.Sprintf("%s?%s", serverGroupBasePath, encodeQueryFilters(s.Filters))
 }
 
 // Deprecated: ServerGroupFilter filter is deprecated. Use QueryFilter instead.
