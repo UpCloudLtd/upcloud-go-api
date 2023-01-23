@@ -79,6 +79,7 @@ func TestServerGroups(t *testing.T) {
 		assert.Len(t, groups, 1)
 
 		// get server groups with filters
+		//nolint:staticcheck
 		groups, err = svc.GetServerGroupsWithFilters(ctx, &request.GetServerGroupsWithFiltersRequest{
 			Filters: []request.QueryFilter{
 				request.FilterLabelKey{Key: "managedBy"},
