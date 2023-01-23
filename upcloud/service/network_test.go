@@ -2,10 +2,12 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"testing"
 	"time"
 
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/client"
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -45,6 +47,155 @@ func TestGetNetworks(t *testing.T) {
 		}
 		assert.True(t, found)
 	})
+}
+
+// TestGetNetworksWithFilters checks if you can get a networks while filtering by labels
+func TestGetNetworksWithFilters(t *testing.T) {
+	t.Parallel()
+
+	srv, svc := setupTestServerAndService(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		assert.Equal(t, http.MethodGet, r.Method)
+		assert.Equal(t, fmt.Sprintf("/%s%s", client.APIVersion, "/network?label=env%3Dtest&label=managedBy%3Dupcloud"), r.URL.String())
+		fmt.Fprint(w, `
+		{
+			"networks": {
+				"network": [
+					{
+						"ip_networks": {
+							"ip_network": [
+								{
+									"address": "123.54.123.0/22",
+									"dhcp": "yes",
+									"dhcp_default_route": "yes",
+									"dhcp_dns": [
+										"94.123.111.9",
+										"94.123.112.9"
+									],
+									"family": "IPv4",
+									"gateway": "123.54.123.1"
+								}
+							]
+						},
+						"labels": [
+							{
+								"key": "env",
+								"value": "test"
+							},
+							{
+								"key": "managedBy",
+								"value": "upcloud"
+							}
+						],
+						"name": "net1",
+						"type": "public",
+						"uuid": "uuid1",
+						"zone": "fi-hel1"
+					},
+					{
+						"ip_networks": {
+							"ip_network": [
+								{
+									"address": "185.123.136.0/22",
+									"dhcp": "yes",
+									"dhcp_default_route": "yes",
+									"dhcp_dns": [
+										"94.123.127.9",
+										"94.123.40.9"
+									],
+									"family": "IPv4",
+									"gateway": "185.123.136.1"
+								}
+							]
+						},
+						"labels": [
+							{
+								"key": "env",
+								"value": "test"
+							},
+							{
+								"key": "managedBy",
+								"value": "upcloud"
+							}
+						],
+						"name": "net2",
+						"type": "public",
+						"uuid": "uuid2",
+						"zone": "fi-hel1"
+					}
+				]
+			}
+		}
+		`)
+	}))
+
+	defer srv.Close()
+
+	filters := []request.QueryFilter{
+		request.FilterLabel{Label: upcloud.Label{
+			Key:   "env",
+			Value: "test",
+		}},
+		request.FilterLabel{Label: upcloud.Label{
+			Key:   "managedBy",
+			Value: "upcloud",
+		}},
+	}
+
+	res, err := svc.GetNetworks(context.Background(), filters...)
+	assert.NoError(t, err)
+	assert.Len(t, res.Networks, 2)
+	assert.Equal(t, "uuid1", res.Networks[0].UUID)
+	assert.Equal(t, "uuid2", res.Networks[1].UUID)
+	assert.Equal(t, "env", res.Networks[0].Labels[0].Key)
+	assert.Equal(t, "test", res.Networks[0].Labels[0].Value)
+	assert.Equal(t, "managedBy", res.Networks[1].Labels[1].Key)
+	assert.Equal(t, "upcloud", res.Networks[1].Labels[1].Value)
+}
+
+func TestGetNetworkDetails(t *testing.T) {
+	t.Parallel()
+
+	srv, svc := setupTestServerAndService(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		assert.Equal(t, http.MethodGet, r.Method)
+		assert.Equal(t, fmt.Sprintf("/%s%s", client.APIVersion, "/network/_UUID_"), r.URL.Path)
+		fmt.Fprint(w, `
+			{
+				"network": {
+					"ip_networks": {
+						"ip_network": [
+							{
+								"address": "172.16.2.0/24",
+								"dhcp": "yes",
+								"dhcp_default_route": "no",
+								"family": "IPv4",
+								"gateway": "172.16.2.1"
+							}
+						]
+					},
+					"labels": [
+						{
+							"key": "env",
+							"value": "test"
+						}
+					],
+					"name": "testnetwork",
+					"type": "private",
+					"uuid": "_UUID_",
+					"zone": "de-fra1"
+				}
+			}
+		`)
+	}))
+
+	defer srv.Close()
+
+	network, err := svc.GetNetworkDetails(context.Background(), &request.GetNetworkDetailsRequest{UUID: "_UUID_"})
+	require.NoError(t, err)
+	assert.Equal(t, "testnetwork", network.Name)
+	assert.Len(t, network.Labels, 1)
+	assert.Equal(t, "env", network.Labels[0].Key)
+	assert.Equal(t, "test", network.Labels[0].Value)
+	assert.Equal(t, "de-fra1", network.Zone)
 }
 
 // TestGetNetworksInZone checks that network details in a zone are retrievable
@@ -107,23 +258,32 @@ func TestCreateModifyDeleteNetwork(t *testing.T) {
 		network, err := svc.CreateNetwork(ctx, &request.CreateNetworkRequest{
 			Name: "test private network (test)",
 			Zone: "fi-hel2",
+			Labels: []upcloud.Label{
+				{
+					Key:   "env",
+					Value: "test",
+				},
+			},
 			IPNetworks: []upcloud.IPNetwork{
 				{
-					Address:          "172.16.0.0/22",
+					Address:          "172.17.0.0/22",
 					DHCP:             upcloud.True,
 					DHCPDefaultRoute: upcloud.False,
 					DHCPDns: []string{
-						"172.16.0.10",
-						"172.16.1.10",
+						"172.17.0.10",
+						"172.17.1.10",
 					},
 					Family:  upcloud.IPAddressFamilyIPv4,
-					Gateway: "172.16.0.1",
+					Gateway: "172.17.0.1",
 				},
 			},
 		})
 		require.NoError(t, err)
 		assert.NotEmpty(t, network.UUID)
 		assert.Equal(t, "test private network (test)", network.Name)
+		assert.Len(t, network.Labels, 1)
+		assert.Equal(t, "env", network.Labels[0].Key)
+		assert.Equal(t, "test", network.Labels[0].Value)
 
 		postModifyNetwork, err := svc.ModifyNetwork(ctx, &request.ModifyNetworkRequest{
 			UUID: network.UUID,
@@ -131,6 +291,27 @@ func TestCreateModifyDeleteNetwork(t *testing.T) {
 		})
 		require.NoError(t, err)
 		assert.Equal(t, "modified private network (test)", postModifyNetwork.Name)
+		assert.Len(t, postModifyNetwork.Labels, 1) // Make sure labels are not deleted on simple update
+
+		postModifyNetworkWithLabels, err := svc.ModifyNetwork(ctx, &request.ModifyNetworkRequest{
+			UUID: network.UUID,
+			Labels: &[]upcloud.Label{
+				{
+					Key:   "env",
+					Value: "test",
+				},
+				{
+					Key:   "managedBy",
+					Value: "upcloud",
+				},
+			},
+		})
+		require.NoError(t, err)
+		assert.Len(t, postModifyNetworkWithLabels.Labels, 2)
+		assert.Equal(t, "env", postModifyNetworkWithLabels.Labels[0].Key)
+		assert.Equal(t, "test", postModifyNetworkWithLabels.Labels[0].Value)
+		assert.Equal(t, "managedBy", postModifyNetworkWithLabels.Labels[1].Key)
+		assert.Equal(t, "upcloud", postModifyNetworkWithLabels.Labels[1].Value)
 
 		serverDetails, err := createServer(ctx, rec, svc, "TestCreateModifyDeleteNetwork")
 		require.NoError(t, err)

@@ -7,15 +7,33 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
 )
 
+// GetNetworksRequest represents a rwquest to get all networks
+type GetNetworksRequest struct {
+	Filters []QueryFilter
+}
+
+func (r *GetNetworksRequest) RequestURL() string {
+	if len(r.Filters) == 0 {
+		return "/network"
+	}
+
+	return fmt.Sprintf("/network?%s", encodeQueryFilters(r.Filters))
+}
+
 // GetNetworksInZoneRequest represents a request to get all networks
 // within the specified zone.
 type GetNetworksInZoneRequest struct {
-	Zone string
+	Zone    string
+	Filters []QueryFilter
 }
 
 // RequestURL implements the Request interface.
 func (r *GetNetworksInZoneRequest) RequestURL() string {
-	return fmt.Sprintf("/network/?zone=%s", r.Zone)
+	if len(r.Filters) == 0 {
+		return fmt.Sprintf("/network/?zone=%s", r.Zone)
+	}
+
+	return fmt.Sprintf("/network?zone=%s&%s", r.Zone, encodeQueryFilters(r.Filters))
 }
 
 // GetNetworkDetailsRequest represents a request to the the details of
@@ -35,6 +53,7 @@ type CreateNetworkRequest struct {
 	Zone       string                 `json:"zone,omitempty"`
 	Router     string                 `json:"router,omitempty"`
 	IPNetworks upcloud.IPNetworkSlice `json:"ip_networks,omitempty"`
+	Labels     []upcloud.Label        `json:"labels,omitempty"`
 }
 
 // RequestURL implements the Request interface.
@@ -61,6 +80,7 @@ type ModifyNetworkRequest struct {
 	Name       string                 `json:"name,omitempty"`
 	Zone       string                 `json:"zone,omitempty"`
 	IPNetworks upcloud.IPNetworkSlice `json:"ip_networks,omitempty"`
+	Labels     *[]upcloud.Label       `json:"labels,omitempty"`
 }
 
 // RequestURL implements the Request interface.

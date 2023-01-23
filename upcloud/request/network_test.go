@@ -9,6 +9,21 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
 )
 
+func TestMarshalGetNetworks(t *testing.T) {
+	request := GetNetworksRequest{}
+	assert.Equal(t, "/network", request.RequestURL())
+
+	request = GetNetworksRequest{Filters: []QueryFilter{
+		FilterLabel{Label: upcloud.Label{
+			Key:   "env",
+			Value: "test",
+		}},
+		FilterLabelKey{Key: "managedBy"},
+	}}
+
+	assert.Equal(t, "/network?label=env%3Dtest&label=managedBy", request.RequestURL())
+}
+
 // TestMarshalGetNetworksInZoneRequest tests that GetNetworksInZoneRequest behaves correctly
 func TestMarshalGetNetworksInZoneRequest(t *testing.T) {
 	request := GetNetworksInZoneRequest{
@@ -16,6 +31,21 @@ func TestMarshalGetNetworksInZoneRequest(t *testing.T) {
 	}
 
 	assert.Equal(t, "/network/?zone=foo", request.RequestURL())
+
+	requestWithFilters := GetNetworksInZoneRequest{
+		Zone: "fi-hel1",
+		Filters: []QueryFilter{
+			FilterLabel{Label: upcloud.Label{
+				Key:   "env",
+				Value: "test",
+			}},
+			FilterLabelKey{
+				Key: "managed",
+			},
+		},
+	}
+
+	assert.Equal(t, "/network?zone=fi-hel1&label=env%3Dtest&label=managed", requestWithFilters.RequestURL())
 }
 
 // TestMarshalGetNetworkDetailsRequest tests that GetNetworkDetailsRequest behaves correctly
@@ -33,6 +63,12 @@ func TestMarshalCreateNetworkRequest(t *testing.T) {
 		Name:   "Test private net",
 		Zone:   "uk-lon1",
 		Router: "04c0df35-2658-4b0c-8ac7-962090f4e92a",
+		Labels: []upcloud.Label{
+			{
+				Key:   "env",
+				Value: "test",
+			},
+		},
 		IPNetworks: []upcloud.IPNetwork{
 			{
 				Address:          "172.16.0.0/22",
@@ -54,6 +90,12 @@ func TestMarshalCreateNetworkRequest(t *testing.T) {
 		  "name": "Test private net",
 		  "zone": "uk-lon1",
 		  "router": "04c0df35-2658-4b0c-8ac7-962090f4e92a",
+		  "labels": [
+			{
+				"key": "env",
+				"value": "test"
+			}
+		  ],
 		  "ip_networks" : {
 			"ip_network" : [
 			  {
@@ -111,6 +153,36 @@ func TestMarshalModifyNetworkRequest(t *testing.T) {
 	`
 
 	actualJSON, err := json.Marshal(&request)
+	assert.NoError(t, err)
+	assert.Equal(t, "/network/foo", request.RequestURL())
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
+
+	request = ModifyNetworkRequest{
+		UUID: "foo",
+		Name: "supername",
+		Labels: &[]upcloud.Label{
+			{
+				Key:   "env",
+				Value: "test",
+			},
+		},
+	}
+
+	expectedJSON = `
+	  {
+		"network": {
+		  "name": "supername",
+		  "labels": [
+			{
+				"key": "env",
+				"value": "test"
+			}
+		  ]
+	  	}
+	  }	
+	`
+
+	actualJSON, err = json.Marshal(&request)
 	assert.NoError(t, err)
 	assert.Equal(t, "/network/foo", request.RequestURL())
 	assert.JSONEq(t, expectedJSON, string(actualJSON))
