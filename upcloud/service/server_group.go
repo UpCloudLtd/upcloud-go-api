@@ -21,7 +21,7 @@ func (s *Service) GetServerGroups(ctx context.Context, r *request.GetServerGroup
 	return groups, s.get(ctx, r.RequestURL(), &groups)
 }
 
-// GetServerGroupsWithFilters retrieves a list of server groups with filters (EXPERIMENTAL).
+// Deprecated: GetServerGroupsWithFilters is deprecated. User GetServerGroups instead
 func (s *Service) GetServerGroupsWithFilters(ctx context.Context, r *request.GetServerGroupsWithFiltersRequest) (upcloud.ServerGroups, error) {
 	groups := upcloud.ServerGroups{}
 	return groups, s.get(ctx, r.RequestURL(), &groups)
