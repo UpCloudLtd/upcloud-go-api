@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [5.3.0]
+
 ### Added
 - storage: possibility to control what to do with backups related to the storage that is about to be deleted
 - labels support for: load-balancers, networks, network-peerings, routers
@@ -238,7 +240,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v5.2.1...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v5.3.0...HEAD
+[5.3.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v5.2.1...v5.3.0
 [5.2.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v5.2.0...v5.2.1
 [5.2.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v5.1.0...v5.2.0
 [5.1.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v5.0.0...v5.1.0
