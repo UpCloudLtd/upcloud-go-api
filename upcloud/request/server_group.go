@@ -12,10 +12,19 @@ const (
 )
 
 // GetServerGroupsRequest represents a request to list server groups
-type GetServerGroupsRequest struct{}
+type GetServerGroupsRequest struct {
+	Filters []QueryFilter
+}
 
 func (s GetServerGroupsRequest) RequestURL() string {
-	return serverGroupBasePath
+	filters := make([]QueryFilter, len(s.Filters))
+	copy(filters, s.Filters)
+
+	if len(filters) == 0 {
+		return serverGroupBasePath
+	}
+
+	return fmt.Sprintf("%s?%s", serverGroupBasePath, encodeQueryFilters(filters))
 }
 
 // Deprecated: ServerGroupFilter filter is deprecated. Use QueryFilter instead.

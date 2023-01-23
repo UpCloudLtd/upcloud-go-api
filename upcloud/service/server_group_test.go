@@ -91,6 +91,19 @@ func TestServerGroups(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Len(t, groups, 1)
 
+		// get server groups with filters in plain request object
+		groups, err = svc.GetServerGroups(ctx, &request.GetServerGroupsRequest{
+			Filters: []request.QueryFilter{
+				request.FilterLabelKey{Key: "managedBy"},
+				request.FilterLabel{Label: upcloud.Label{
+					Key:   "title",
+					Value: "test-title",
+				}},
+			},
+		})
+		assert.NoError(t, err)
+		assert.Len(t, groups, 1)
+
 		// get server group
 		group, err = svc.GetServerGroup(ctx, &request.GetServerGroupRequest{UUID: group.UUID})
 		assert.NoError(t, err)

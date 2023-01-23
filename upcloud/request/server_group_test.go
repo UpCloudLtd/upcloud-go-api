@@ -12,6 +12,18 @@ import (
 func TestGetServerGroupsRequest(t *testing.T) {
 	r := GetServerGroupsRequest{}
 	assert.Equal(t, "/server-group", r.RequestURL())
+
+	rWithFilters := GetServerGroupsRequest{
+		Filters: []QueryFilter{
+			FilterLabel{Label: upcloud.Label{
+				Key:   "env",
+				Value: "test",
+			}},
+			FilterLabelKey{Key: "managed"},
+		},
+	}
+
+	assert.Equal(t, "/server-group?label=env%3Dtest&label=managed", rWithFilters.RequestURL())
 }
 
 // TestGetServerGroupsWithFiltersRequest tests that GetServerGroupsWithFiltersRequest objects behave correctly
