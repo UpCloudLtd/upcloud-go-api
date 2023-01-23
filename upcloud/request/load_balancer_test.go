@@ -1371,4 +1371,10 @@ func TestModifyLoadBalancerLabelsRequest(t *testing.T) {
 	actual, err = json.Marshal(&r)
 	assert.NoError(t, err)
 	assert.JSONEq(t, expected, string(actual))
+
+	expected = `{}`
+	r = ModifyLoadBalancerRequest{}
+	actual, err = json.Marshal(&r)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expected, string(actual))
 }
