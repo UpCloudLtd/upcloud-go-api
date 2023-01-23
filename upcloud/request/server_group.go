@@ -30,14 +30,11 @@ func (s GetServerGroupsRequest) RequestURL() string {
 // Deprecated: ServerGroupFilter filter is deprecated. Use QueryFilter instead.
 type ServerGroupFilter = QueryFilter
 
-// GetServerGroupsWithFiltersRequest represents a request to get
-// all server groups using labels or label keys as filters.
-// Using multiple filters returns only groups that match all.
+// Deprecated: GetServerGroupsWithFiltersRequest is deprecated. Use GetServerGroupsRequest instead.
 type GetServerGroupsWithFiltersRequest struct {
 	Filters []QueryFilter
 }
 
-// RequestURL implements the Request interface.
 func (r *GetServerGroupsWithFiltersRequest) RequestURL() string {
 	if len(r.Filters) == 0 {
 		return serverGroupBasePath
