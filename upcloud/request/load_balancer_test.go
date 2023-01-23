@@ -13,6 +13,39 @@ import (
 func TestGetLoadBalancersRequest(t *testing.T) {
 	assert.Equal(t, "/load-balancer", (&GetLoadBalancersRequest{}).RequestURL())
 	assert.Equal(t, "/load-balancer?limit=50&offset=450", (&GetLoadBalancersRequest{Page: &Page{Number: 10, Size: 50}}).RequestURL())
+
+	assert.Equal(t, "/load-balancer?label=size&label=color%3Dred&limit=50&offset=450", (&GetLoadBalancersRequest{
+		Page: &Page{
+			Number: 10,
+			Size:   50,
+		},
+		Filters: []QueryFilter{
+			FilterLabelKey{Key: "size"},
+			FilterLabel{
+				upcloud.Label{
+					Key:   "color",
+					Value: "red",
+				},
+			},
+		},
+	}).RequestURL())
+
+	// this should work also because Page is also QueryFilter
+	assert.Equal(t, "/load-balancer?label=size&label=color%3Dred&limit=50&offset=450", (&GetLoadBalancersRequest{
+		Filters: []QueryFilter{
+			&Page{
+				Number: 10,
+				Size:   50,
+			},
+			FilterLabelKey{Key: "size"},
+			FilterLabel{
+				upcloud.Label{
+					Key:   "color",
+					Value: "red",
+				},
+			},
+		},
+	}).RequestURL())
 }
 
 func TestCreateLoadBalancerRequest(t *testing.T) {
@@ -1262,4 +1295,86 @@ func ExampleCreateLoadBalancerRequest() {
 	if js, err := json.Marshal(request); err == nil {
 		fmt.Println(string(js))
 	}
+}
+
+func TestCreateLoadBalancerLabelsRequest(t *testing.T) {
+	expected := `
+	{
+		"name": "example-service",
+		"plan": "development",
+		"zone": "fi-hel1",
+		"network_uuid": "03631160-d57a-4926-ad48-a2f828229dcb",
+		"configured_status": "started",
+		"frontends": [],
+		"backends": [],
+		"resolvers": [],
+		"labels": [
+			{
+				"key": "managedby",
+				"value": "upcloud-go-sdk-unit-test"
+			}
+		]
+	}
+	`
+	r := CreateLoadBalancerRequest{
+		Name:             "example-service",
+		Plan:             "development",
+		Zone:             "fi-hel1",
+		NetworkUUID:      "03631160-d57a-4926-ad48-a2f828229dcb",
+		ConfiguredStatus: upcloud.LoadBalancerConfiguredStatusStarted,
+		Frontends:        []LoadBalancerFrontend{},
+		Backends:         []LoadBalancerBackend{},
+		Resolvers:        []LoadBalancerResolver{},
+		Labels: []upcloud.Label{
+			{
+				Key:   "managedby",
+				Value: "upcloud-go-sdk-unit-test",
+			},
+		},
+	}
+	actual, err := json.Marshal(&r)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expected, string(actual))
+}
+
+func TestModifyLoadBalancerLabelsRequest(t *testing.T) {
+	expected := `
+	{
+		"labels": [
+			{
+				"key": "managedby",
+				"value": "upcloud-go-sdk-unit-test"
+			}
+		]
+	}
+	`
+	r := ModifyLoadBalancerRequest{
+		Labels: &[]upcloud.Label{
+			{
+				Key:   "managedby",
+				Value: "upcloud-go-sdk-unit-test",
+			},
+		},
+	}
+	actual, err := json.Marshal(&r)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expected, string(actual))
+
+	expected = `
+	{
+		"labels": []
+	}
+	`
+	r = ModifyLoadBalancerRequest{
+		Labels: &[]upcloud.Label{},
+	}
+	actual, err = json.Marshal(&r)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expected, string(actual))
+
+	expected = `{}`
+	r = ModifyLoadBalancerRequest{}
+	actual, err = json.Marshal(&r)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expected, string(actual))
 }

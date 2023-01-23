@@ -10,6 +10,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 - router: label support
 - network peering: label support
 - network: label support
+- load-balancer: label support
 
 ## Deprecated
 - request: `ServerFilter` and `ServerGroupFilter` types will be replaced with `QueryFilter` type in the future

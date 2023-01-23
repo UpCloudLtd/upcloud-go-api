@@ -534,7 +534,7 @@ func TestUnmarshalRouter(t *testing.T) {
 		Name: "Example router",
 		Type: "normal",
 		UUID: "04c0df35-2658-4b0c-8ac7-962090f4e92a",
-		Labels: LabelSlice{
+		Labels: []Label{
 			{
 				Key:   "managedBy",
 				Value: "upcloud-go-sdk-unit-test",
