@@ -240,6 +240,7 @@ func TestCreateKubernetesNodeGroupRequest(t *testing.T) {
 	const expectedJSON string = `
 	{
 		"count": 4,
+		"anti_affinity": true,
 		"kubelet_args": [
 		  {
 			"key": "log-flush-frequency",
@@ -270,7 +271,8 @@ func TestCreateKubernetesNodeGroupRequest(t *testing.T) {
 	r := CreateKubernetesNodeGroupRequest{
 		ClusterUUID: "id",
 		NodeGroup: KubernetesNodeGroup{
-			Count: 4,
+			Count:        4,
+			AntiAffinity: true,
 			Labels: []upcloud.Label{
 				{
 					Key:   "environment",
