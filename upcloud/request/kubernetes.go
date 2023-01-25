@@ -114,14 +114,15 @@ func (r *GetKubernetesNodeGroupRequest) RequestURL() string {
 }
 
 type KubernetesNodeGroup struct {
-	Count       int                            `json:"count,omitempty"`
-	Labels      []upcloud.Label                `json:"labels,omitempty"`
-	Name        string                         `json:"name,omitempty"`
-	Plan        string                         `json:"plan,omitempty"`
-	SSHKeys     []string                       `json:"ssh_keys,omitempty"`
-	Storage     string                         `json:"storage,omitempty"`
-	KubeletArgs []upcloud.KubernetesKubeletArg `json:"kubelet_args,omitempty"`
-	Taints      []upcloud.KubernetesTaint      `json:"taints,omitempty"`
+	Count        int                            `json:"count,omitempty"`
+	Labels       []upcloud.Label                `json:"labels,omitempty"`
+	Name         string                         `json:"name,omitempty"`
+	Plan         string                         `json:"plan,omitempty"`
+	SSHKeys      []string                       `json:"ssh_keys,omitempty"`
+	Storage      string                         `json:"storage,omitempty"`
+	KubeletArgs  []upcloud.KubernetesKubeletArg `json:"kubelet_args,omitempty"`
+	Taints       []upcloud.KubernetesTaint      `json:"taints,omitempty"`
+	AntiAffinity bool                           `json:"anti_affinity,omitempty"`
 }
 
 type CreateKubernetesNodeGroupRequest struct {

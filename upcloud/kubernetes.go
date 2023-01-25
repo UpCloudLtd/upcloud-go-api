@@ -30,14 +30,15 @@ type KubernetesCluster struct {
 }
 
 type KubernetesNodeGroup struct {
-	Count       int                    `json:"count,omitempty"`
-	Labels      []Label                `json:"labels,omitempty"`
-	Name        string                 `json:"name,omitempty"`
-	Plan        string                 `json:"plan,omitempty"`
-	SSHKeys     []string               `json:"ssh_keys,omitempty"`
-	Storage     string                 `json:"storage,omitempty"`
-	KubeletArgs []KubernetesKubeletArg `json:"kubelet_args,omitempty"`
-	Taints      []KubernetesTaint      `json:"taints,omitempty"`
+	Count        int                    `json:"count,omitempty"`
+	Labels       []Label                `json:"labels,omitempty"`
+	Name         string                 `json:"name,omitempty"`
+	Plan         string                 `json:"plan,omitempty"`
+	SSHKeys      []string               `json:"ssh_keys,omitempty"`
+	Storage      string                 `json:"storage,omitempty"`
+	KubeletArgs  []KubernetesKubeletArg `json:"kubelet_args,omitempty"`
+	Taints       []KubernetesTaint      `json:"taints,omitempty"`
+	AntiAffinity bool                   `json:"anti_affinity,omitempty"`
 }
 
 type KubernetesKubeletArg struct {
