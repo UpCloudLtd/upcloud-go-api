@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- kubernetes: experimental support for anti-affinity node groups
+
 ## [5.3.1]
 
 ### Deprecated
