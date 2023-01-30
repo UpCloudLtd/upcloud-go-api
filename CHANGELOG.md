@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [5.4.0]
+
 ### Added
 - kubernetes: experimental support for anti-affinity node groups
 
@@ -248,7 +250,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v5.3.1...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v5.4.0...HEAD
+[5.4.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v5.3.1...v5.4.0
 [5.3.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v5.3.0...v5.3.1
 [5.3.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v5.2.1...v5.3.0
 [5.2.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v5.2.0...v5.2.1
