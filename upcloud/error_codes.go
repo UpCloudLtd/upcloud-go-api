@@ -115,4 +115,13 @@ const (
 	ErrCodeUnableToCancel                                 = "UNABLE_TO_CANCEL"
 	ErrCodeStorageTierIllegal                             = "STORAGE_TIER_ILLEGAL"
 	ErrCodeBackupDeletionPolicyInvalid                    = "BACKUP_DELETION_POLICY_INVALID"
+	ErrCodeIpAddressLimitReached                          = "IP_ADDRESS_LIMIT_REACHED"
+	ErrCodeIpAddressInvalid                               = "IP_ADDRESS_INVALID"
+	ErrCodePtrRecordInvalid                               = "PTR_RECORD_INVALID"
+	ErrCodeMacInvalid                                     = "MAC_INVALID"
+	ErrCodeIpAddressForbidden                             = "IP_ADDRESS_FORBIDDEN"
+	ErrCodeIpAddressNotFound                              = "IP_ADDRESS_NOT_FOUND"
+	ErrCodePtrRecordNotSupported                          = "PTR_RECORD_NOT_SUPPORTED"
+	ErrCodeFloatingIpNotAvailable                         = "FLOATING_IP_NOT_AVAILABLE"
+	ErrCodeCannotDeletePrivateAddress                     = "CANNOT_DELETE_PRIVATE_ADDRESS"
 )
