@@ -1,6 +1,8 @@
 package upcloud
 
-import "encoding/json"
+import (
+	"encoding/json"
+)
 
 // Constants
 const (

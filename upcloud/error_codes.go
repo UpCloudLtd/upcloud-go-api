@@ -1,6 +1,8 @@
 package upcloud
 
+// Error codes used in upcloud.Error struct
 const (
+	ErrCodeAuthenticationFailed                           = "AUTHENTICATION_FAILED"
 	ErrCodeActionInvalid                                  = "ACTION_INVALID"
 	ErrCodeActionMissing                                  = "ACTION_MISSING"
 	ErrCodeBootOrderInvalid                               = "BOOT_ORDER_INVALID"
@@ -198,4 +200,12 @@ const (
 	ErrCodeInvalidOptions                                 = "INVALID_OPTIONS"
 	ErrCodeActionForbidden                                = "ACTION_FORBIDDEN"
 	ErrCodeAccountForbidden                               = "ACCOUNT_FORBIDDEN"
+)
+
+// Meaningful json+problem types
+// json+problem `type` field should be a URL to a page that explains the error
+// for the lack of better alternatives we need to use a fragment of that URL for comparing purposes
+const (
+	ProblemTypeAuthenticationFailed  = "ERROR_AUTHENTICATION_FAILED"
+	ProblemTypeResourceAlreadyExists = "ERROR_RESOURCE_ALREADY_EXISTS"
 )
