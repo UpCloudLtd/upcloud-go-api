@@ -5,6 +5,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- errors: constants for API error codes
+- errors: utilities for working with API errors
+
 ## [5.4.0]
 
 ### Added
