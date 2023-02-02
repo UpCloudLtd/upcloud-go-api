@@ -50,7 +50,7 @@ func IsAlreadyExistsError(err error) bool {
 	}
 
 	if uProblem, ok := err.(*upcloud.Problem); ok {
-		problemType := GetJsonProblemType(uProblem)
+		problemType := getJsonProblemType(uProblem)
 		_, problemTypeOk := alreadyExistsJsonProblemTypes[problemType]
 		return uProblem.Status == http.StatusBadRequest && problemTypeOk
 	}
@@ -64,12 +64,11 @@ func IsAuthenticationFailedError(err error) bool {
 	}
 
 	if uError, ok := err.(*upcloud.Error); ok {
-		return uError.Status == http.StatusUnauthorized && uError.ErrorCode == ErrCodeAuthenticationFailed
+		return uError.Status == http.StatusUnauthorized
 	}
 
 	if uProblem, ok := err.(*upcloud.Problem); ok {
-		problemType := GetJsonProblemType(uProblem)
-		return uProblem.Status == http.StatusUnauthorized && problemType == ProblemTypeAuthenticationFailed
+		return uProblem.Status == http.StatusUnauthorized
 	}
 
 	return false
@@ -78,8 +77,8 @@ func IsAuthenticationFailedError(err error) bool {
 // GetJsonProblemType gets the meaningful part of json+problem type field
 // json+problem `type` field should be a URL to a page that explains the error
 // for the lack of better alternatives we need to use a fragment of that URL for comparing purposes
-func GetJsonProblemType(err *upcloud.Problem) string {
-	parts := strings.Split(err.Type, "#")
+func getJsonProblemType(err *upcloud.Problem) string {
+	parts := strings.SplitN(err.Type, "#", 2)
 
 	if len(parts) < 2 {
 		return ""
