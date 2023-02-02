@@ -1,8 +1,10 @@
-package upcloud
+package errorutils
 
 import (
 	"net/http"
 	"strings"
+
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
 )
 
 // IsNotFoundError checks if provided error is API Not Found error
@@ -11,11 +13,11 @@ func IsNotFoundError(err error) bool {
 		return false
 	}
 
-	if uError, ok := err.(*Error); ok {
+	if uError, ok := err.(*upcloud.Error); ok {
 		return uError.Status == http.StatusNotFound
 	}
 
-	if uProblem, ok := err.(*Problem); ok {
+	if uProblem, ok := err.(*upcloud.Problem); ok {
 		return uProblem.Status == http.StatusNotFound
 	}
 
@@ -42,12 +44,12 @@ func IsAlreadyExistsError(err error) bool {
 		return false
 	}
 
-	if uError, ok := err.(*Error); ok {
+	if uError, ok := err.(*upcloud.Error); ok {
 		_, errCodeOk := alreadyExistsErrCodes[uError.ErrorCode]
 		return uError.Status == http.StatusConflict && errCodeOk
 	}
 
-	if uProblem, ok := err.(*Problem); ok {
+	if uProblem, ok := err.(*upcloud.Problem); ok {
 		problemType := GetJsonProblemType(uProblem)
 		_, problemTypeOk := alreadyExistsJsonProblemTypes[problemType]
 		return uProblem.Status == http.StatusBadRequest && problemTypeOk
@@ -61,11 +63,11 @@ func IsAuthenticationFailedError(err error) bool {
 		return false
 	}
 
-	if uError, ok := err.(*Error); ok {
+	if uError, ok := err.(*upcloud.Error); ok {
 		return uError.Status == http.StatusUnauthorized && uError.ErrorCode == ErrCodeAuthenticationFailed
 	}
 
-	if uProblem, ok := err.(*Problem); ok {
+	if uProblem, ok := err.(*upcloud.Problem); ok {
 		problemType := GetJsonProblemType(uProblem)
 		return uProblem.Status == http.StatusUnauthorized && problemType == ProblemTypeAuthenticationFailed
 	}
@@ -76,7 +78,7 @@ func IsAuthenticationFailedError(err error) bool {
 // GetJsonProblemType gets the meaningful part of json+problem type field
 // json+problem `type` field should be a URL to a page that explains the error
 // for the lack of better alternatives we need to use a fragment of that URL for comparing purposes
-func GetJsonProblemType(err *Problem) string {
+func GetJsonProblemType(err *upcloud.Problem) string {
 	parts := strings.Split(err.Type, "#")
 
 	if len(parts) < 2 {

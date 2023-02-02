@@ -1,4 +1,4 @@
-package upcloud
+package errorutils
 
 // Error codes used in upcloud.Error struct
 const (

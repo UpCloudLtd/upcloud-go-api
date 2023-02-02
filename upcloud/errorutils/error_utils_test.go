@@ -1,24 +1,25 @@
-package upcloud
+package errorutils
 
 import (
 	"net/http"
 	"testing"
 
+	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestIsNotFoundError(t *testing.T) {
-	notFoundErr := &Error{
+	notFoundErr := &upcloud.Error{
 		ErrorCode: ErrCodeServerNotFound,
 		Status:    http.StatusNotFound,
 	}
 
-	notFoundErr2 := &Error{
+	notFoundErr2 := &upcloud.Error{
 		ErrorCode: ErrCodeRouterNotFound,
 		Status:    http.StatusNotFound,
 	}
 
-	notFoundProblem := &Problem{
+	notFoundProblem := &upcloud.Problem{
 		Status: http.StatusNotFound,
 	}
 
@@ -26,12 +27,12 @@ func TestIsNotFoundError(t *testing.T) {
 	assert.True(t, IsNotFoundError(notFoundErr2))
 	assert.True(t, IsNotFoundError(notFoundProblem))
 
-	otherError := &Error{
+	otherError := &upcloud.Error{
 		ErrorCode: ErrCodeDBExists,
 		Status:    http.StatusConflict,
 	}
 
-	otherProblem := &Problem{
+	otherProblem := &upcloud.Problem{
 		Status: http.StatusBadRequest,
 	}
 
@@ -40,17 +41,17 @@ func TestIsNotFoundError(t *testing.T) {
 }
 
 func TestIsAlreadyExistsError(t *testing.T) {
-	alreadyExistsErr := &Error{
+	alreadyExistsErr := &upcloud.Error{
 		ErrorCode: ErrCodeDBExists,
 		Status:    http.StatusConflict,
 	}
 
-	alreadyExistsErr2 := &Error{
+	alreadyExistsErr2 := &upcloud.Error{
 		ErrorCode: ErrCodeTagExists,
 		Status:    http.StatusConflict,
 	}
 
-	alreadyExistsProblem := &Problem{
+	alreadyExistsProblem := &upcloud.Problem{
 		Type:   "https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_ALREADY_EXISTS",
 		Status: http.StatusBadRequest,
 	}
@@ -59,12 +60,12 @@ func TestIsAlreadyExistsError(t *testing.T) {
 	assert.True(t, IsAlreadyExistsError(alreadyExistsErr2))
 	assert.True(t, IsAlreadyExistsError(alreadyExistsProblem))
 
-	otherError := &Error{
+	otherError := &upcloud.Error{
 		ErrorCode: ErrCodeAuthenticationFailed,
 		Status:    http.StatusConflict,
 	}
 
-	otherProblem := &Problem{
+	otherProblem := &upcloud.Problem{
 		Status: http.StatusBadRequest,
 	}
 
@@ -73,12 +74,12 @@ func TestIsAlreadyExistsError(t *testing.T) {
 }
 
 func TestIsAuthenticationFailedError(t *testing.T) {
-	authFailedErr := &Error{
+	authFailedErr := &upcloud.Error{
 		ErrorCode: ErrCodeAuthenticationFailed,
 		Status:    http.StatusUnauthorized,
 	}
 
-	authFailedProblem := &Problem{
+	authFailedProblem := &upcloud.Problem{
 		Type:   "https://developers.upcloud.com/1.3/errors#ERROR_AUTHENTICATION_FAILED",
 		Status: http.StatusUnauthorized,
 	}
@@ -86,12 +87,12 @@ func TestIsAuthenticationFailedError(t *testing.T) {
 	assert.True(t, IsAuthenticationFailedError(authFailedErr))
 	assert.True(t, IsAuthenticationFailedError(authFailedProblem))
 
-	otherError := &Error{
+	otherError := &upcloud.Error{
 		ErrorCode: ErrCodeAuthenticationFailed,
 		Status:    http.StatusConflict,
 	}
 
-	otherProblem := &Problem{
+	otherProblem := &upcloud.Problem{
 		Status: http.StatusBadRequest,
 	}
 
