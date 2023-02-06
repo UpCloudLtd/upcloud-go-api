@@ -5,9 +5,11 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
-### Added
-- errors: constants for API error codes
-- errors: utilities for working with API errors
+### Changed
+- errors: all service methods now return `Error` type in case of an error; `Error` type got extended to handle also `json+problem` API responses
+
+### Removed
+- errors: removed `Problem` type
 
 ## [5.4.0]
 
