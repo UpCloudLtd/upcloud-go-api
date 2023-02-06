@@ -14,13 +14,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestParseJSONServiceError(t *testing.T) {
-	want := &upcloud.Error{
-		ErrorCode:    "CODE",
-		ErrorMessage: "msg",
-		Status:       http.StatusNotFound,
-	}
-	got := parseJSONServiceError(&client.Error{
+func TestParseJSONServiceLegacyError(t *testing.T) {
+	parsed := parseJSONServiceError(&client.Error{
 		ErrorCode: http.StatusNotFound,
 		ResponseBody: []byte(`
 		{
@@ -32,7 +27,56 @@ func TestParseJSONServiceError(t *testing.T) {
 		`),
 		Type: client.ErrorTypeError,
 	})
-	assert.Equal(t, want, got)
+
+	ucErr, ok := parsed.(*upcloud.Error)
+	assert.True(t, ok)
+	assert.Equal(t, http.StatusNotFound, ucErr.Status)
+	assert.Equal(t, "CODE", ucErr.Code)
+	assert.Equal(t, "msg", ucErr.Message)
+	assert.False(t, ucErr.IsProblem())
+
+	problem, ok := ucErr.Problem()
+	assert.Nil(t, problem)
+	assert.False(t, ok)
+}
+
+func TestParseJSONServiceProblemError(t *testing.T) {
+	parsed := parseJSONServiceError(&client.Error{
+		ErrorCode: http.StatusBadRequest,
+		ResponseBody: []byte(`
+		{
+			"type": "https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST",
+			"title": "Validation error",
+			"correlation_id": "01GRKDQBGD7FA84MGR9373F093",
+			"invalid_params": [
+				{
+					"name": "plan",
+					"reason": "Plan doesn't exist"
+				}
+			],
+			"status": 400
+		}
+		`),
+		Type: client.ErrorTypeProblem,
+	})
+
+	ucErr, ok := parsed.(*upcloud.Error)
+	assert.True(t, ok)
+	assert.Equal(t, http.StatusBadRequest, ucErr.Status)
+	assert.Equal(t, "INVALID_REQUEST", ucErr.Code)
+	assert.Equal(t, "Validation error", ucErr.Message)
+	assert.True(t, ucErr.IsProblem())
+
+	problem, ok := ucErr.Problem()
+	assert.NotNil(t, problem)
+	assert.True(t, ok)
+	assert.Equal(t, "https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST", problem.Type)
+	assert.Equal(t, "Validation error", problem.Title)
+	assert.Equal(t, "01GRKDQBGD7FA84MGR9373F093", problem.CorrelationID)
+	assert.Equal(t, http.StatusBadRequest, problem.Status)
+	assert.Len(t, problem.InvalidParams, 1)
+	assert.Equal(t, "plan", problem.InvalidParams[0].Name)
+	assert.Equal(t, "Plan doesn't exist", problem.InvalidParams[0].Reason)
 }
 
 // TestMain is the main test method

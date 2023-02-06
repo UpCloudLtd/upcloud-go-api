@@ -1,4 +1,4 @@
-package errorutils
+package upcloud
 
 // Error codes used in upcloud.Error struct
 const (
@@ -200,12 +200,5 @@ const (
 	ErrCodeInvalidOptions                                 string = "INVALID_OPTIONS"
 	ErrCodeActionForbidden                                string = "ACTION_FORBIDDEN"
 	ErrCodeAccountForbidden                               string = "ACCOUNT_FORBIDDEN"
-)
-
-// Meaningful json+problem types
-// json+problem `type` field should be a URL to a page that explains the error
-// for the lack of better alternatives we need to use a fragment of that URL for comparing purposes
-const (
-	ProblemTypeAuthenticationFailed  string = "ERROR_AUTHENTICATION_FAILED"
-	ProblemTypeResourceAlreadyExists string = "ERROR_RESOURCE_ALREADY_EXISTS"
+	ErrCodeResourceAlreadyExists                          string = "RESOURCE_ALREADY_EXISTS"
 )

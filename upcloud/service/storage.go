@@ -245,13 +245,13 @@ func (s *Service) WaitForStorageImportCompletion(ctx context.Context, r *request
 			upcloud.StorageImportStateFailed:
 			if storageImportDetails.ErrorCode != "" || storageImportDetails.ErrorMessage != "" {
 				return storageImportDetails, &upcloud.Error{
-					ErrorCode:    storageImportDetails.ErrorCode,
-					ErrorMessage: storageImportDetails.ErrorMessage,
+					Code:    storageImportDetails.ErrorCode,
+					Message: storageImportDetails.ErrorMessage,
 				}
 			}
 			return storageImportDetails, &upcloud.Error{
-				ErrorCode:    storageImportDetails.State,
-				ErrorMessage: "Storage Import Failed",
+				Code:    storageImportDetails.State,
+				Message: "Storage Import Failed",
 			}
 		default:
 			if time.Duration(attempts)*sleepDuration >= r.Timeout {

@@ -288,7 +288,7 @@ func TestService_GetManagedDatabaseConnections(t *testing.T) {
 			Terminate: true,
 		})
 		assert.Error(t, err)
-		assert.True(t, strings.HasPrefix(err.(*upcloud.Error).ErrorMessage, "Must provide a connection"))
+		assert.True(t, strings.HasPrefix(err.(*upcloud.Error).Message, "Must provide a connection"))
 
 		err = svc.CancelManagedDatabaseConnection(ctx, &request.CancelManagedDatabaseConnection{
 			UUID:      serviceDetails.UUID,
@@ -296,7 +296,7 @@ func TestService_GetManagedDatabaseConnections(t *testing.T) {
 			Terminate: false,
 		})
 		assert.Error(t, err)
-		assert.True(t, strings.HasPrefix(err.(*upcloud.Error).ErrorMessage, "Must provide a connection"))
+		assert.True(t, strings.HasPrefix(err.(*upcloud.Error).Message, "Must provide a connection"))
 	})
 }
 
