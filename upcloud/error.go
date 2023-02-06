@@ -58,6 +58,10 @@ func (err *Error) Problem() (*ProblemError, bool) {
 
 // Error implements the Error interface
 func (err *Error) Error() string {
+	if err.IsProblem() {
+		return err.problemError.Error()
+	}
+
 	return fmt.Sprintf("%s (%s)", err.Message, err.Code)
 }
 
