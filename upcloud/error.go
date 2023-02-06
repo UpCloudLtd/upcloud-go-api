@@ -67,11 +67,11 @@ func (err *Error) UnmarshalJSON(buf []byte) error {
 			ErrorCode    string `json:"error_code,omitempty"`
 			ErrorMessage string `json:"error_message,omitempty"`
 		} `json:"error,omitempty"`
-		ProblemType          string                `json:"type,omitempty"`
-		ProblemTitle         string                `json:"title,omitempty"`
-		ProblemCorrelationID string                `json:"correlation_id,omitempty"`
-		ProblemStatus        int                   `json:"status,omitempty"`
-		ProblemInvalidParams []ProblemInvalidParam `json:"invalid_params,omitempty"`
+		ProblemType          string                     `json:"type,omitempty"`
+		ProblemTitle         string                     `json:"title,omitempty"`
+		ProblemCorrelationID string                     `json:"correlation_id,omitempty"`
+		ProblemStatus        int                        `json:"status,omitempty"`
+		ProblemInvalidParams []ProblemErrorInvalidParam `json:"invalid_params,omitempty"`
 	}{}
 
 	unmarshalErr := json.Unmarshal(buf, &localError)
@@ -110,7 +110,7 @@ type ProblemError struct {
 	Title string `json:"title"`
 	// InvalidParams if set, is a list of ProblemInvalidParam describing a specific part(s) of the request
 	// that caused the problem
-	InvalidParams []ProblemInvalidParam `json:"invalid_params,omitempty"`
+	InvalidParams []ProblemErrorInvalidParam `json:"invalid_params,omitempty"`
 	// CorrelationID is a unique string that identifies the request that caused the problem
 	CorrelationID string `json:"correlation_id,omitempty"`
 	// HTTP Status code

@@ -1112,7 +1112,7 @@ func waitForLoadBalancerToShutdown(ctx context.Context, rec *recorder.Recorder, 
 	for i := 0; i <= maxRetries; i++ {
 		_, err := svc.GetLoadBalancer(ctx, &request.GetLoadBalancerRequest{UUID: lb.UUID})
 		if err != nil {
-			if svcErr, ok := err.(*upcloud.Problem); ok && svcErr.Status == http.StatusNotFound {
+			if svcErr, ok := err.(*upcloud.Error); ok && svcErr.Status == http.StatusNotFound {
 				return nil
 			}
 		}
@@ -1127,7 +1127,7 @@ func waitLoadBalancerToShutdown(ctx context.Context, svc *Service, lb *upcloud.L
 	for i := 0; i <= maxRetries; i++ {
 		_, err := svc.GetLoadBalancer(ctx, &request.GetLoadBalancerRequest{UUID: lb.UUID})
 		if err != nil {
-			if svcErr, ok := err.(*upcloud.Problem); ok && svcErr.Status == http.StatusNotFound {
+			if svcErr, ok := err.(*upcloud.Error); ok && svcErr.Status == http.StatusNotFound {
 				return nil
 			}
 		}
