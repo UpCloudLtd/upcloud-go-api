@@ -14,14 +14,13 @@ func NewError(clientErr *client.Error) error {
 	}
 
 	ucErr := &Error{}
+	ucErr.Status = clientErr.ErrorCode
+	ucErr.clientError = clientErr
 
 	err := json.Unmarshal(clientErr.ResponseBody, ucErr)
 	if err != nil {
 		return fmt.Errorf("received malformed client error: %s", err)
 	}
-
-	ucErr.Status = clientErr.ErrorCode
-	ucErr.clientError = clientErr
 
 	return ucErr
 }
@@ -29,10 +28,10 @@ func NewError(clientErr *client.Error) error {
 // Error represents an error
 type Error struct {
 	// Code is a short, programmatic identifier of an error
-	Code string `json:"code"`
+	Code string `json:"error_code"`
 
 	// Message is a human-readable description of an error
-	Message string `json:"message"`
+	Message string `json:"error_message"`
 
 	// Status is an HTTP Status code from the response
 	Status int `json:"-"`
@@ -66,44 +65,41 @@ func (err *Error) Error() string {
 }
 
 func (err *Error) UnmarshalJSON(buf []byte) error {
-	localError := struct {
-		LegacyError *struct {
-			ErrorCode    string `json:"error_code,omitempty"`
-			ErrorMessage string `json:"error_message,omitempty"`
-		} `json:"error,omitempty"`
-		ProblemType          string                     `json:"type,omitempty"`
-		ProblemTitle         string                     `json:"title,omitempty"`
-		ProblemCorrelationID string                     `json:"correlation_id,omitempty"`
-		ProblemStatus        int                        `json:"status,omitempty"`
-		ProblemInvalidParams []ProblemErrorInvalidParam `json:"invalid_params,omitempty"`
-	}{}
-
-	unmarshalErr := json.Unmarshal(buf, &localError)
-	if unmarshalErr != nil {
-		return unmarshalErr
+	if err.clientError == nil {
+		return fmt.Errorf("cannot unmarshal Error struct that doesn't have clientError field set")
 	}
 
-	// We got the legacy error struct from the API, just populate the main error fields and return
-	if localError.LegacyError != nil {
-		err.Code = localError.LegacyError.ErrorCode
-		err.Message = localError.LegacyError.ErrorMessage
+	if err.clientError.Type == client.ErrorTypeError {
+		type localError Error
+		v := struct {
+			Error localError `json:"error"`
+		}{}
+
+		unmarshalErr := json.Unmarshal(buf, &v)
+		if unmarshalErr != nil {
+			return unmarshalErr
+		}
+
+		err.Code = v.Error.Code
+		err.Message = v.Error.Message
 		return nil
 	}
 
-	// We got a json+problem error from the API, populate the problem fields accordingly
-	err.problemError = &ProblemError{
-		Status:        localError.ProblemStatus,
-		Title:         localError.ProblemTitle,
-		Type:          localError.ProblemType,
-		InvalidParams: localError.ProblemInvalidParams,
-		CorrelationID: localError.ProblemCorrelationID,
+	if err.clientError.Type == client.ErrorTypeProblem {
+		prob := &ProblemError{}
+
+		unmarshalErr := json.Unmarshal(buf, prob)
+		if unmarshalErr != nil {
+			return unmarshalErr
+		}
+
+		err.problemError = prob
+		err.Code = err.problemError.getShortenedType()
+		err.Message = err.problemError.Title
+		return nil
 	}
 
-	// We also need to populate main error fields
-	err.Code = err.problemError.getShortenedType()
-	err.Message = err.problemError.Title
-
-	return nil
+	return fmt.Errorf("failed to unmarshal error of unknown type: %d", err.clientError.Type)
 }
 
 // ProblemError is the type conforming to RFC7807 that represents an error or a problem associated with an HTTP request.
