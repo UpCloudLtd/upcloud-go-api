@@ -14,11 +14,11 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestParseJSONServiceError(t *testing.T) {
-	want := &upcloud.Error{
-		ErrorCode:    "CODE",
-		ErrorMessage: "msg",
-		Status:       http.StatusNotFound,
+func TestParseJSONServiceErrorMinimal(t *testing.T) {
+	want := &upcloud.Problem{
+		Type:   "CODE",
+		Title:  "msg",
+		Status: http.StatusNotFound,
 	}
 	got := parseJSONServiceError(&client.Error{
 		ErrorCode: http.StatusNotFound,
@@ -31,6 +31,41 @@ func TestParseJSONServiceError(t *testing.T) {
 		  }
 		`),
 		Type: client.ErrorTypeError,
+	})
+	assert.Equal(t, want, got)
+}
+
+func TestParseJSONServiceErrorWithProblem(t *testing.T) {
+	want := &upcloud.Problem{
+		Type:          "typexx",
+		Title:         "titlexx",
+		Status:        http.StatusBadRequest,
+		CorrelationID: "corrxx",
+		InvalidParams: []upcloud.ProblemInvalidParam{
+			{
+				Name:   "namex",
+				Reason: "reasonx",
+			},
+		},
+	}
+
+	got := parseJSONServiceError(&client.Error{
+		ErrorCode: http.StatusBadRequest,
+		Type:      client.ErrorTypeProblem,
+		ResponseBody: []byte(`
+			{
+				"type": "typexx",
+				"title": "titlexx",
+				"status": 400,
+				"correlation_id": "corrxx",
+				"invalid_params": [
+					{
+						"name": "namex",
+						"reason": "reasonx"
+					}
+				]
+			}
+		`),
 	})
 	assert.Equal(t, want, got)
 }

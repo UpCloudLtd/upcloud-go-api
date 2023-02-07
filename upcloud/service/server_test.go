@@ -223,7 +223,7 @@ func TestErrorHandling(t *testing.T) {
 		})
 
 		// Check that the correct error type is returned
-		expectedErrorType := "*upcloud.Error"
+		expectedErrorType := "*upcloud.Problem"
 		actualErrorType := reflect.TypeOf(err).String()
 
 		if actualErrorType != expectedErrorType {

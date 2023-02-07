@@ -308,7 +308,7 @@ func TestCreateRestoreBackup(t *testing.T) {
 			Backups: request.DeleteStorageBackupsModeDelete,
 		}))
 
-		var ucErr *upcloud.Error
+		var ucErr *upcloud.Problem
 		for _, b := range storageDetails.BackupUUIDs {
 			_, err = svc.GetStorageDetails(ctx, &request.GetStorageDetailsRequest{UUID: b})
 			require.Error(t, err)
