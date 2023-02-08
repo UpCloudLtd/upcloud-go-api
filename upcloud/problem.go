@@ -2,6 +2,7 @@ package upcloud
 
 import (
 	"fmt"
+	"net/url"
 	"strings"
 )
 
@@ -41,37 +42,18 @@ func (p *Problem) Error() string {
 	return sb.String()
 }
 
-// MatchesProblemType is a helper method for comparing a `Problem.Type` field against a problem type constants defined in this package.
-// Please note that while you can compare the `Type` field directly to those constants, it is not recommended and might not always work reliably.
-// Examples:
-//
-//	res, err := svc.GetServerDetails(ctx, &req)
-//
-//	var problem *upcloud.Problem
-//	if errors.As(err, &problem) {
-//		// This is the recommended way
-//		if problem.MatchesProblemType(upcloud.ProblemTypeResourceAlreadyExists) {
-//			handleStuff(problem)
-//		}
-//
-//		// This might work, but is not guaranteed and not recommended
-//		if problem.Type == upcloud.ProblemTypeResourceAlreadyExists {
-//			handleStuff(problem)
-//		}
-//	}
-func (p *Problem) MatchesProblemType(problemType string) bool {
+// ErrorCode returns a short string that identifies the error; it should be used for programmatic comparisons
+func (p *Problem) ErrorCode() string {
 	// Type is a URL, we need to extract meaningful fragment from it for comparison purposes
-	if strings.Contains(p.Type, "https://") {
-		parts := strings.SplitN(p.Type, "#", 2)
-
-		if len(parts) < 2 {
-			return false
+	if strings.HasPrefix(p.Type, "https://") {
+		parsedURL, err := url.Parse(p.Type)
+		if err != nil {
+			return ""
 		}
 
-		return strings.Replace(parts[1], "ERROR_", "", 1) == problemType
+		return strings.Replace(parsedURL.Fragment, "ERROR_", "", 1)
 	}
 
-	// Type is just bare problem type string (this happens when error returned from the API is not in the json+problem format)
-	// We can just compare
-	return p.Type == problemType
+	// Type is just bare error code string (this happens when error returned from the API is not in the json+problem format)
+	return p.Type
 }

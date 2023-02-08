@@ -32,22 +32,20 @@ func TestProblemUnmarshal(t *testing.T) {
 	assert.Equal(t, "default_backend", p.InvalidParams[0].Name)
 }
 
-func TestProblemTypeMatching(t *testing.T) {
+func TestProblemErrorCodes(t *testing.T) {
 	p := Problem{
 		Type: "https://api.upcloud.com/1.3/errors#ERROR_RESOURCE_ALREADY_EXISTS",
 	}
-	assert.True(t, p.MatchesProblemType(ProblemTypeResourceAlreadyExists))
-	assert.True(t, p.MatchesProblemType("RESOURCE_ALREADY_EXISTS"))
-	assert.False(t, p.MatchesProblemType(ProblemTypeAuthenticationFailed))
+	assert.Equal(t, ErrCodeResourceAlreadyExists, p.ErrorCode())
+	assert.NotEqual(t, ErrCodeAuthenticationFailed, p.ErrorCode())
 
 	p.Type = "https://api.upcloud.com/1.3/errors#ERROR_AUTHENTICATION_FAILED"
-	assert.True(t, p.MatchesProblemType(ProblemTypeAuthenticationFailed))
+	assert.Equal(t, ErrCodeAuthenticationFailed, p.ErrorCode())
 
 	p.Type = "GROUP_NOT_FOUND"
-	assert.True(t, p.MatchesProblemType(ProblemTypeGroupNotFound))
+	assert.Equal(t, ErrCodeGroupNotFound, p.ErrorCode())
 
 	p.Type = "SERVER_NOT_FOUND"
-	assert.True(t, p.MatchesProblemType(ProblemTypeServerNotFound))
-	assert.True(t, p.MatchesProblemType("SERVER_NOT_FOUND"))
-	assert.False(t, p.MatchesProblemType("SOME_UNKNOWN_ERROR_SO_THIS_SHOULD_FAIL"))
+	assert.Equal(t, ErrCodeServerNotFound, p.ErrorCode())
+	assert.NotEqual(t, "SOME_RANDOM_STRING", p.ErrorCode())
 }
