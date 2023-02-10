@@ -42,6 +42,9 @@ func TestProblemErrorCodes(t *testing.T) {
 	p.Type = "https://api.upcloud.com/1.3/errors#ERROR_AUTHENTICATION_FAILED"
 	assert.Equal(t, ErrCodeAuthenticationFailed, p.ErrorCode())
 
+	p.Type = "http://api.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"
+	assert.Equal(t, ErrCodeInvalidRequest, p.ErrorCode())
+
 	p.Type = "GROUP_NOT_FOUND"
 	assert.Equal(t, ErrCodeGroupNotFound, p.ErrorCode())
 

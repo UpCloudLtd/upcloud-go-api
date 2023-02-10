@@ -44,16 +44,13 @@ func (p *Problem) Error() string {
 
 // ErrorCode returns a short string that identifies the error; it should be used for programmatic comparisons
 func (p *Problem) ErrorCode() string {
-	// Type is a URL, we need to extract meaningful fragment from it for comparison purposes
-	if strings.HasPrefix(p.Type, "https://") {
-		parsedURL, err := url.Parse(p.Type)
-		if err != nil {
-			return ""
-		}
-
-		return strings.Replace(parsedURL.Fragment, "ERROR_", "", 1)
+	// First check if the type is a URL.
+	// If it is - we need to extract meaningful fragment from it for comparison purposes
+	// If it isn't - we can just return the value of `Type` field
+	parsedURL, err := url.Parse(p.Type)
+	if err != nil || parsedURL.Scheme == "" || parsedURL.Host == "" {
+		return p.Type
 	}
 
-	// Type is just bare error code string (this happens when error returned from the API is not in the json+problem format)
-	return p.Type
+	return strings.Replace(parsedURL.Fragment, "ERROR_", "", 1)
 }
