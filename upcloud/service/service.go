@@ -135,21 +135,52 @@ func New(client Client) *Service {
 // Parses an error returned from the client into corresponding error type
 func parseJSONServiceError(err error) error {
 	if clientError, ok := err.(*client.Error); ok {
+		prob := &upcloud.Problem{}
+
 		switch clientError.Type {
 		case client.ErrorTypeProblem:
-			p := &upcloud.Problem{}
-			if err := json.Unmarshal(clientError.ResponseBody, p); err != nil {
+			if err := json.Unmarshal(clientError.ResponseBody, prob); err != nil {
 				return fmt.Errorf("received malformed client error: %s", string(clientError.ResponseBody))
 			}
-			return p
+			return prob
 		default:
-			ucError := &upcloud.Error{}
+			ucError := &legacyError{}
 			if err := json.Unmarshal(clientError.ResponseBody, ucError); err != nil {
 				return fmt.Errorf("received malformed client error: %s", string(clientError.ResponseBody))
 			}
-			ucError.Status = clientError.ErrorCode
-			return ucError
+
+			prob.Type = ucError.ErrorCode
+			prob.Title = ucError.ErrorMessage
+			prob.Status = clientError.ErrorCode
+			return prob
 		}
 	}
 	return err
+}
+
+// Error represents a legacy error object
+// It is still returned by UpCloud API, but it is deprecated and in the future all API endpoint should return json+problem conforming errors
+type legacyError struct {
+	ErrorCode    string `json:"error_code"`
+	ErrorMessage string `json:"error_message"`
+
+	// HTTP Status code
+	Status int `json:"-"`
+}
+
+// UnmarshalJSON is a custom unmarshaller that deals with
+// deeply embedded values.
+func (e *legacyError) UnmarshalJSON(b []byte) error {
+	type localError legacyError
+	v := struct {
+		Error localError `json:"error"`
+	}{}
+	err := json.Unmarshal(b, &v)
+	if err != nil {
+		return err
+	}
+
+	*e = legacyError(v.Error)
+
+	return nil
 }

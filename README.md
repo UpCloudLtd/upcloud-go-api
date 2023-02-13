@@ -70,9 +70,14 @@ _, err := svc.GetAccount(context.Background())
 // Handle errors in general
 if (err != nil) {
 	// Handle service errors specifically
-	if serviceError, ok := err.(*upcloud.Error); ok {
-		fmt.Println(serviceError.ErrorCode)
-		fmt.Println(serviceError.ErrorMessage)
+	if serviceError, ok := err.(*upcloud.Problem); ok {
+		fmt.Println(serviceError.Type)
+		fmt.Println(serviceError.Title)
+		fmt.Prinln(serviceError.Status)
+		// You can use ErrorCode() method to compare error against a set of ErrCode constants
+		if serviceError.ErrorCode == upcloud.ErrCodeAuthenticationFailed {
+			// ...
+		}
 	}
 }
 ````

@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestProblem(t *testing.T) {
+func TestProblemUnmarshal(t *testing.T) {
 	p := Problem{}
 	err := json.Unmarshal([]byte(`
 	{
@@ -30,4 +30,25 @@ func TestProblem(t *testing.T) {
 	assert.Equal(t, 400, p.Status)
 	assert.Equal(t, "Backend doesn't exist.", p.InvalidParams[0].Reason)
 	assert.Equal(t, "default_backend", p.InvalidParams[0].Name)
+}
+
+func TestProblemErrorCodes(t *testing.T) {
+	p := Problem{
+		Type: "https://api.upcloud.com/1.3/errors#ERROR_RESOURCE_ALREADY_EXISTS",
+	}
+	assert.Equal(t, ErrCodeResourceAlreadyExists, p.ErrorCode())
+	assert.NotEqual(t, ErrCodeAuthenticationFailed, p.ErrorCode())
+
+	p.Type = "https://api.upcloud.com/1.3/errors#ERROR_AUTHENTICATION_FAILED"
+	assert.Equal(t, ErrCodeAuthenticationFailed, p.ErrorCode())
+
+	p.Type = "http://api.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"
+	assert.Equal(t, ErrCodeInvalidRequest, p.ErrorCode())
+
+	p.Type = "GROUP_NOT_FOUND"
+	assert.Equal(t, ErrCodeGroupNotFound, p.ErrorCode())
+
+	p.Type = "SERVER_NOT_FOUND"
+	assert.Equal(t, ErrCodeServerNotFound, p.ErrorCode())
+	assert.NotEqual(t, "SOME_RANDOM_STRING", p.ErrorCode())
 }

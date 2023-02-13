@@ -10,7 +10,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/4.9.0
+      - upcloud-go-api/5.4.0
     url: https://api.upcloud.com/1.3/server/invalid/start
     method: POST
   response:
@@ -27,7 +27,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Mon, 24 Oct 2022 11:06:08 GMT
+      - Tue, 07 Feb 2023 08:05:53 GMT
       Server:
       - Apache
       Strict-Transport-Security:
