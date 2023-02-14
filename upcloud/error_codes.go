@@ -202,4 +202,12 @@ const (
 	ErrCodeActionForbidden                                string = "ACTION_FORBIDDEN"
 	ErrCodeAccountForbidden                               string = "ACCOUNT_FORBIDDEN"
 	ErrCodeResourceAlreadyExists                          string = "RESOURCE_ALREADY_EXISTS"
+	ErrCodeMethodNotAllowed                               string = "METHOD_NOT_ALLOWED"
+	ErrCodeNotFound                                       string = "NOT_FOUND"
+	ErrCodePeeringNotFound                                string = "PEERING_NOT_FOUND"
+	ErrCodeLocalNetworkNoRouter                           string = "LOCAL_NETWORK_NO_ROUTER"
+	ErrCodePeerNetworkNotFound                            string = "PEER_NETWORK_NOT_FOUND"
+	ErrCodePeeringAccoundInvalid                          string = "PEERING_ACCOUNT_INVALID"
+	ErrCodePeeringConflict                                string = "PEERING_CONFLICT"
+	ErrPeeringNotDisabled                                 string = "PEERING_NOT_DISABLED"
 )
