@@ -160,6 +160,7 @@ const (
 	ErrCodeNetworkTypeMissing                             string = "NETWORK_TYPE_MISSING"
 	ErrCodeNetworkForbidden                               string = "NETWORK_FORBIDDEN"
 	ErrCodeNetworkNotFound                                string = "NETWORK_NOT_FOUND"
+	ErrCodeNetworkInvalid                                 string = "NETWORK_INVALID"
 	ErrCodeUnknownAttribute                               string = "UNKNOWN_ATTRIBUTE"
 	ErrCodeNetworkNotEmpty                                string = "NETWORK_NOT_EMPTY"
 	ErrCodeInterfaceExists                                string = "INTERFACE_EXISTS"
