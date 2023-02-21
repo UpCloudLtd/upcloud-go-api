@@ -7,6 +7,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ### Added
 - labels support for storages
+- support for network gateways
 
 ### Changed
 - errors: all service method now return `Problem` type in case of errors (*BREAKING CHANGE*)
