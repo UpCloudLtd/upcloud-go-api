@@ -6,7 +6,7 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
 )
 
-const gatewayBaseUrl string = "/gateway"
+const gatewayBaseURL string = "/gateway"
 
 type GetGatewaysRequest struct {
 	Filters []QueryFilter
@@ -14,10 +14,10 @@ type GetGatewaysRequest struct {
 
 func (r *GetGatewaysRequest) RequestURL() string {
 	if len(r.Filters) == 0 {
-		return gatewayBaseUrl
+		return gatewayBaseURL
 	}
 
-	return fmt.Sprintf("%s?%s", gatewayBaseUrl, encodeQueryFilters(r.Filters))
+	return fmt.Sprintf("%s?%s", gatewayBaseURL, encodeQueryFilters(r.Filters))
 }
 
 type GetGatewayRequest struct {
@@ -25,7 +25,7 @@ type GetGatewayRequest struct {
 }
 
 func (r *GetGatewayRequest) RequestURL() string {
-	return fmt.Sprintf("%s/%s", gatewayBaseUrl, r.UUID)
+	return fmt.Sprintf("%s/%s", gatewayBaseURL, r.UUID)
 }
 
 type GatewayRouter struct {
@@ -42,7 +42,7 @@ type CreateGatewayRequest struct {
 }
 
 func (r *CreateGatewayRequest) RequestURL() string {
-	return gatewayBaseUrl
+	return gatewayBaseURL
 }
 
 type ModifyGatewayRequest struct {
@@ -53,11 +53,13 @@ type ModifyGatewayRequest struct {
 }
 
 func (r *ModifyGatewayRequest) RequestURL() string {
-	return fmt.Sprintf("%s/%s", gatewayBaseUrl, r.UUID)
+	return fmt.Sprintf("%s/%s", gatewayBaseURL, r.UUID)
 }
 
-type DeleteGatewayRequest GetGatewayRequest
+type DeleteGatewayRequest struct {
+	UUID string
+}
 
 func (r *DeleteGatewayRequest) RequestURL() string {
-	return fmt.Sprintf("%s/%s", gatewayBaseUrl, r.UUID)
+	return fmt.Sprintf("%s/%s", gatewayBaseURL, r.UUID)
 }

@@ -35,7 +35,7 @@ func TestGateway(t *testing.T) {
 	`
 
 	gateway := &Gateway{
-		ConfiguredStatus: GatewayStatusStarted,
+		ConfiguredStatus: GatewayConfiguredStatusStarted,
 		CreatedAt:        timeParse("2022-12-01T09:04:08.529138Z"),
 		Features: []GatewayFeature{
 			GatewayFeatureNAT,

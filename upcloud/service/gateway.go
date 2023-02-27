@@ -40,7 +40,7 @@ func (s *Service) ModifyGateway(ctx context.Context, r *request.ModifyGatewayReq
 	return &p, s.modify(ctx, r, &p)
 }
 
-// DeleteGateway deletes a gateway. Peering can be deleted only when the state is disabled.
+// DeleteGateway deletes a network gateway.
 func (s *Service) DeleteGateway(ctx context.Context, r *request.DeleteGatewayRequest) error {
 	return s.delete(ctx, r)
 }

@@ -28,54 +28,97 @@ func TestGetGatewaysRequest(t *testing.T) {
 }
 
 func TestGetGatewayRequest(t *testing.T) {
-	r := GetGatewayRequest{"id"}
-	assert.Equal(t, "/gateway/id", r.RequestURL())
-}
+	t.Parallel()
 
-func TestCreateGatewayRequest(t *testing.T) {
-	r := CreateGatewayRequest{
-		Name:             "test-create",
-		Zone:             "fi-hel1",
-		Features:         []upcloud.GatewayFeature{upcloud.GatewayFeatureNAT},
-		Routers:          []GatewayRouter{{UUID: "router-uuid"}},
-		Labels:           []upcloud.Label{{Key: "test", Value: "Create request"}},
-		ConfiguredStatus: upcloud.GatewayStatusStarted,
-	}
-	assert.Equal(t, "/gateway", r.RequestURL())
-	js, err := json.Marshal(&r)
-	require.NoError(t, err)
-	assert.JSONEq(t, `
-	{
-		"name": "test-create",
-		"zone": "fi-hel1",
-		"features": ["nat"],
-		"routers": [{ "uuid": "router-uuid" }],
-		"labels": [{ "key": "test", "value": "Create request" }],
-		"configured_status": "started"
-	}
-	`, string(js))
-}
-
-func TestModifyGatewayRequest(t *testing.T) {
-	r := ModifyGatewayRequest{
-		UUID:             "id",
-		Name:             "test-modify",
-		ConfiguredStatus: upcloud.GatewayStatusStopped,
-		Labels:           []upcloud.Label{{Key: "test", Value: "Modify request"}},
-	}
-	assert.Equal(t, "/gateway/id", r.RequestURL())
-	js, err := json.Marshal(&r)
-	require.NoError(t, err)
-	assert.JSONEq(t, `
-	{
-		"name": "test-modify",
-		"configured_status": "stopped",
-		"labels": [{ "key": "test", "value": "Modify request" }]
-	}
-	`, string(js))
+	r := GetGatewayRequest{UUID: "fake"}
+	assert.Equal(t, gatewayBaseURL+"/fake", r.RequestURL())
 }
 
 func TestDeleteGatewayRequest(t *testing.T) {
-	r := DeleteGatewayRequest{"id"}
-	assert.Equal(t, "/gateway/id", r.RequestURL())
+	t.Parallel()
+
+	r := DeleteGatewayRequest{UUID: "fake"}
+	assert.Equal(t, gatewayBaseURL+"/fake", r.RequestURL())
+}
+
+func TestCreateGatewayRequest(t *testing.T) {
+	t.Parallel()
+
+	const want string = `
+	{
+		"name": "example-gateway",
+		"zone": "fi-hel1",
+		"features": [
+		  "nat"
+		],
+		"routers": [
+		  {
+			"uuid": "0485d477-8d8f-4c97-9bef-731933187538"
+		  }
+		],
+		"configured_status": "started"
+	}
+	`
+	r := CreateGatewayRequest{
+		Name:     "example-gateway",
+		Zone:     "fi-hel1",
+		Features: []upcloud.GatewayFeature{upcloud.GatewayFeatureNAT},
+		Routers: []GatewayRouter{
+			{
+				UUID: "0485d477-8d8f-4c97-9bef-731933187538",
+			},
+		},
+		ConfiguredStatus: upcloud.GatewayConfiguredStatusStarted,
+	}
+	got, err := json.Marshal(&r)
+	require.NoError(t, err)
+	assert.Equal(t, gatewayBaseURL, r.RequestURL())
+	assert.JSONEq(t, want, string(got))
+}
+
+func TestModifyGatewayRequest(t *testing.T) {
+	t.Parallel()
+
+	want := `
+	{
+		"name": "example-gateway",
+		"configured_status": "started"
+	}
+	`
+	r := ModifyGatewayRequest{
+		UUID:             "fake",
+		Name:             "example-gateway",
+		ConfiguredStatus: upcloud.GatewayConfiguredStatusStarted,
+	}
+	got, err := json.Marshal(&r)
+	require.NoError(t, err)
+	assert.JSONEq(t, want, string(got))
+
+	want = `
+	{
+		"name": "example-gateway"
+	}
+	`
+	r = ModifyGatewayRequest{
+		UUID: "fake",
+		Name: "example-gateway",
+	}
+	got, err = json.Marshal(&r)
+	require.NoError(t, err)
+	assert.JSONEq(t, want, string(got))
+
+	want = `
+	{
+		"configured_status": "started"
+	}
+	`
+	r = ModifyGatewayRequest{
+		UUID:             "fake",
+		ConfiguredStatus: upcloud.GatewayConfiguredStatusStarted,
+	}
+	got, err = json.Marshal(&r)
+	require.NoError(t, err)
+	assert.JSONEq(t, want, string(got))
+
+	assert.Equal(t, gatewayBaseURL+"/fake", r.RequestURL())
 }
