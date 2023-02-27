@@ -21,6 +21,30 @@ func TestGetStoragesRequest(t *testing.T) {
 	request.Favorite = false
 	request.Type = upcloud.StorageTypeDisk
 	assert.Equal(t, "/storage/disk", request.RequestURL())
+
+	request.Filters = []QueryFilter{
+		FilterLabel{
+			Label: upcloud.Label{
+				Key:   "color",
+				Value: "green",
+			},
+		},
+		FilterLabelKey{Key: "size"},
+	}
+	assert.Equal(t, "/storage/disk"+"?label=color%3Dgreen&label=size", request.RequestURL())
+
+	r := GetStoragesRequest{
+		Filters: []QueryFilter{
+			FilterLabel{
+				Label: upcloud.Label{
+					Key:   "color",
+					Value: "green",
+				},
+			},
+			FilterLabelKey{Key: "size"},
+		},
+	}
+	assert.Equal(t, "/storage?label=color%3Dgreen&label=size", r.RequestURL())
 }
 
 // TestGetStorageDetailsRequest tests that GetStorageDetailsRequest objects behave correctly

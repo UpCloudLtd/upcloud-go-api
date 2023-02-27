@@ -509,8 +509,113 @@ func TestCompressedDirectUploadStorageImport(t *testing.T) {
 	})
 }
 
+func TestStorageLabels(t *testing.T) {
+	t.Parallel()
+
+	record(t, "storagelabels", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		greenStorage, err := createStorage(ctx, svc, upcloud.Label{Key: "color", Value: "green"})
+		require.NoError(t, err)
+		redStorage, err := createStorage(ctx, svc, upcloud.Label{Key: "color", Value: "red"})
+		require.NoError(t, err)
+
+		colorStorages, err := svc.GetStorages(ctx, &request.GetStoragesRequest{
+			Filters: []request.QueryFilter{
+				request.FilterLabelKey{
+					Key: "color",
+				},
+			},
+		})
+		require.NoError(t, err)
+		require.Len(t, colorStorages.Storages, 2)
+
+		greenStorages, err := svc.GetStorages(ctx, &request.GetStoragesRequest{
+			Filters: []request.QueryFilter{
+				request.FilterLabel{
+					Label: upcloud.Label{
+						Key:   "color",
+						Value: "green",
+					},
+				},
+			},
+		})
+		require.NoError(t, err)
+		require.Len(t, greenStorages.Storages, 1)
+
+		redStorages, err := svc.GetStorages(ctx, &request.GetStoragesRequest{
+			Filters: []request.QueryFilter{
+				request.FilterLabel{
+					Label: upcloud.Label{
+						Key:   "color",
+						Value: "red",
+					},
+				},
+			},
+		})
+		require.NoError(t, err)
+		require.Len(t, redStorages.Storages, 1)
+
+		// change red to purple
+		purpleStorage, err := svc.ModifyStorage(ctx, &request.ModifyStorageRequest{
+			UUID: redStorage.UUID,
+			Labels: &[]upcloud.Label{{
+				Key:   "color",
+				Value: "purple",
+			}},
+		})
+		require.NoError(t, err)
+
+		redStorages, err = svc.GetStorages(ctx, &request.GetStoragesRequest{
+			Filters: []request.QueryFilter{
+				request.FilterLabel{
+					Label: upcloud.Label{
+						Key:   "color",
+						Value: "red",
+					},
+				},
+			},
+		})
+		require.NoError(t, err)
+		require.Len(t, redStorages.Storages, 0)
+
+		purpleStorages, err := svc.GetStorages(ctx, &request.GetStoragesRequest{
+			Filters: []request.QueryFilter{
+				request.FilterLabel{
+					Label: upcloud.Label{
+						Key:   "color",
+						Value: "purple",
+					},
+				},
+			},
+		})
+		require.NoError(t, err)
+		require.Len(t, purpleStorages.Storages, 1)
+
+		// remove labels
+		greenStorage, err = svc.ModifyStorage(ctx, &request.ModifyStorageRequest{
+			UUID:   greenStorage.UUID,
+			Labels: &[]upcloud.Label{},
+		})
+		require.NoError(t, err)
+
+		// there should be only one purple storage left
+		colorStorages, err = svc.GetStorages(ctx, &request.GetStoragesRequest{
+			Filters: []request.QueryFilter{
+				request.FilterLabelKey{
+					Key: "color",
+				},
+			},
+		})
+		require.NoError(t, err)
+		require.Len(t, colorStorages.Storages, 1)
+
+		// Delete the storage
+		require.NoError(t, deleteStorage(ctx, svc, greenStorage.UUID))
+		require.NoError(t, deleteStorage(ctx, svc, purpleStorage.UUID))
+	})
+}
+
 // Creates a piece of storage and returns the details about it, panic if creation fails.
-func createStorage(ctx context.Context, svc *Service) (*upcloud.StorageDetails, error) {
+func createStorage(ctx context.Context, svc *Service, label ...upcloud.Label) (*upcloud.StorageDetails, error) {
 	createStorageRequest := request.CreateStorageRequest{
 		Tier:  upcloud.StorageTierMaxIOPS,
 		Title: "Test storage",
@@ -522,7 +627,9 @@ func createStorage(ctx context.Context, svc *Service) (*upcloud.StorageDetails, 
 			Retention: 30,
 		},
 	}
-
+	if len(label) > 0 {
+		createStorageRequest.Labels = label
+	}
 	storageDetails, err := svc.CreateStorage(ctx, &createStorageRequest)
 	if err != nil {
 		return nil, err

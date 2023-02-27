@@ -47,7 +47,13 @@ func TestUnmarshalStorage(t *testing.T) {
         "title": "Databases",
         "type": "normal",
         "uuid": "01f3286c-a5ea-4670-8121-d0b9767d625b",
-        "zone": "fi-hel1"
+        "zone": "fi-hel1",
+		"labels": [
+			{
+				"key": "managedBy",
+				"value": "upcloud-go-sdk"
+			}
+		]
       }
     ]
   }
@@ -92,6 +98,10 @@ func TestUnmarshalStorage(t *testing.T) {
 			Type:       StorageTypeNormal,
 			UUID:       "01f3286c-a5ea-4670-8121-d0b9767d625b",
 			Zone:       "fi-hel1",
+			Labels: []Label{{
+				Key:   "managedBy",
+				Value: "upcloud-go-sdk",
+			}},
 		},
 	}
 
@@ -139,7 +149,13 @@ func TestUnmarshalStorageDetails(t *testing.T) {
 		  "title": "Operating system disk",
 		  "type": "normal",
 		  "uuid": "01d4fcd4-e446-433b-8a9c-551a1284952e",
-		  "zone": "fi-hel1"
+		  "zone": "fi-hel1",
+		  "labels": [
+			{
+				"key": "managedBy",
+				"value": "upcloud-go-sdk"
+			}
+		  ]
 		}
 	  }
 	`
@@ -168,6 +184,9 @@ func TestUnmarshalStorageDetails(t *testing.T) {
 
 	assert.Equal(t, 1, len(storageDeviceDetails.ServerUUIDs))
 	assert.Equal(t, "00798b85-efdc-41ca-8021-f6ef457b8531", storageDeviceDetails.ServerUUIDs[0])
+	assert.Equal(t, 1, len(storageDeviceDetails.Labels))
+	assert.Equal(t, "managedBy", storageDeviceDetails.Labels[0].Key)
+	assert.Equal(t, "upcloud-go-sdk", storageDeviceDetails.Labels[0].Value)
 }
 
 // TestUnmarshalStorageImport tests that StorageImport struct is unmarshaled correctly

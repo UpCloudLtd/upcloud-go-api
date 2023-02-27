@@ -28,23 +28,29 @@ type GetStoragesRequest struct {
 	Type string
 	// If specified, only storages marked as favorite will be retrieved
 	Favorite bool
+
+	Filters []QueryFilter
 }
 
 // RequestURL implements the Request interface
 func (r *GetStoragesRequest) RequestURL() string {
+	url := "/storage"
 	if r.Access != "" {
-		return fmt.Sprintf("/storage/%s", r.Access)
+		url = fmt.Sprintf("%s/%s", url, r.Access)
 	}
 
 	if r.Type != "" {
-		return fmt.Sprintf("/storage/%s", r.Type)
+		url = fmt.Sprintf("%s/%s", url, r.Type)
 	}
 
 	if r.Favorite {
-		return "/storage/favorite"
+		url = url + "/favorite"
 	}
 
-	return "/storage"
+	if len(r.Filters) == 0 {
+		return url
+	}
+	return fmt.Sprintf("%s?%s", url, encodeQueryFilters(r.Filters))
 }
 
 // GetStorageDetailsRequest represents a request for retrieving details about a piece of storage
@@ -64,6 +70,7 @@ type CreateStorageRequest struct {
 	Title      string              `json:"title,omitempty"`
 	Zone       string              `json:"zone"`
 	BackupRule *upcloud.BackupRule `json:"backup_rule,omitempty"`
+	Labels     []upcloud.Label     `json:"labels,omitempty"`
 }
 
 // RequestURL implements the Request interface
@@ -90,6 +97,7 @@ type ModifyStorageRequest struct {
 	Title      string              `json:"title,omitempty"`
 	Size       int                 `json:"size,omitempty,string"`
 	BackupRule *upcloud.BackupRule `json:"backup_rule,omitempty"`
+	Labels     *[]upcloud.Label    `json:"labels,omitempty"`
 }
 
 // MarshalJSON is a custom marshaller that deals with
