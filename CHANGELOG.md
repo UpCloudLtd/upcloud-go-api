@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- labels support for storages
+
 ### Changed
 - errors: all service method now return `Problem` type in case of errors (*BREAKING CHANGE*)
 

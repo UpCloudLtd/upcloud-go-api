@@ -1,0 +1,593 @@
+---
+version: 1
+interactions:
+- request:
+    body: '{"storage":{"size":"10","tier":"maxiops","title":"Test storage","zone":"fi-hel2","backup_rule":{"interval":"daily","time":"0430","retention":"30"},"labels":[{"key":"color","value":"green"}]}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/5.4.0
+    url: https://api.upcloud.com/1.3/storage
+    method: POST
+  response:
+    body: |
+      {
+         "storage" : {
+            "access" : "private",
+            "backup_rule" : {
+               "interval" : "daily",
+               "retention" : "30",
+               "time" : "0430"
+            },
+            "backups" : {
+               "backup" : []
+            },
+            "created" : "2023-02-27T08:35:04Z",
+            "labels" : [
+               {
+                  "key" : "color",
+                  "value" : "green"
+               }
+            ],
+            "license" : 0,
+            "servers" : {
+               "server" : []
+            },
+            "size" : 10,
+            "state" : "online",
+            "tier" : "maxiops",
+            "title" : "Test storage",
+            "type" : "normal",
+            "uuid" : "016bccee-fc59-48da-a150-2c55cf9b2032",
+            "zone" : "fi-hel2"
+         }
+      }
+    headers:
+      Content-Length:
+      - "656"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Mon, 27 Feb 2023 08:35:04 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: '{"storage":{"size":"10","tier":"maxiops","title":"Test storage","zone":"fi-hel2","backup_rule":{"interval":"daily","time":"0430","retention":"30"},"labels":[{"key":"color","value":"red"}]}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/5.4.0
+    url: https://api.upcloud.com/1.3/storage
+    method: POST
+  response:
+    body: |
+      {
+         "storage" : {
+            "access" : "private",
+            "backup_rule" : {
+               "interval" : "daily",
+               "retention" : "30",
+               "time" : "0430"
+            },
+            "backups" : {
+               "backup" : []
+            },
+            "created" : "2023-02-27T08:35:15Z",
+            "labels" : [
+               {
+                  "key" : "color",
+                  "value" : "red"
+               }
+            ],
+            "license" : 0,
+            "servers" : {
+               "server" : []
+            },
+            "size" : 10,
+            "state" : "online",
+            "tier" : "maxiops",
+            "title" : "Test storage",
+            "type" : "normal",
+            "uuid" : "01e27f16-4778-4852-bbfe-6dce43d98682",
+            "zone" : "fi-hel2"
+         }
+      }
+    headers:
+      Content-Length:
+      - "654"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Mon, 27 Feb 2023 08:35:15 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/5.4.0
+    url: https://api.upcloud.com/1.3/storage?label=color
+    method: GET
+  response:
+    body: |
+      {
+         "storages" : {
+            "storage" : [
+               {
+                  "access" : "private",
+                  "created" : "2023-02-27T08:35:04Z",
+                  "labels" : [
+                     {
+                        "key" : "color",
+                        "value" : "green"
+                     }
+                  ],
+                  "license" : 0,
+                  "size" : 10,
+                  "state" : "online",
+                  "tier" : "maxiops",
+                  "title" : "Test storage",
+                  "type" : "normal",
+                  "uuid" : "016bccee-fc59-48da-a150-2c55cf9b2032",
+                  "zone" : "fi-hel2"
+               },
+               {
+                  "access" : "private",
+                  "created" : "2023-02-27T08:35:15Z",
+                  "labels" : [
+                     {
+                        "key" : "color",
+                        "value" : "red"
+                     }
+                  ],
+                  "license" : 0,
+                  "size" : 10,
+                  "state" : "online",
+                  "tier" : "maxiops",
+                  "title" : "Test storage",
+                  "type" : "normal",
+                  "uuid" : "01e27f16-4778-4852-bbfe-6dce43d98682",
+                  "zone" : "fi-hel2"
+               }
+            ]
+         }
+      }
+    headers:
+      Content-Length:
+      - "1106"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Mon, 27 Feb 2023 08:35:27 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/5.4.0
+    url: https://api.upcloud.com/1.3/storage?label=color%3Dgreen
+    method: GET
+  response:
+    body: |
+      {
+         "storages" : {
+            "storage" : [
+               {
+                  "access" : "private",
+                  "created" : "2023-02-27T08:35:04Z",
+                  "labels" : [
+                     {
+                        "key" : "color",
+                        "value" : "green"
+                     }
+                  ],
+                  "license" : 0,
+                  "size" : 10,
+                  "state" : "online",
+                  "tier" : "maxiops",
+                  "title" : "Test storage",
+                  "type" : "normal",
+                  "uuid" : "016bccee-fc59-48da-a150-2c55cf9b2032",
+                  "zone" : "fi-hel2"
+               }
+            ]
+         }
+      }
+    headers:
+      Content-Length:
+      - "581"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Mon, 27 Feb 2023 08:35:27 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/5.4.0
+    url: https://api.upcloud.com/1.3/storage?label=color%3Dred
+    method: GET
+  response:
+    body: |
+      {
+         "storages" : {
+            "storage" : [
+               {
+                  "access" : "private",
+                  "created" : "2023-02-27T08:35:15Z",
+                  "labels" : [
+                     {
+                        "key" : "color",
+                        "value" : "red"
+                     }
+                  ],
+                  "license" : 0,
+                  "size" : 10,
+                  "state" : "online",
+                  "tier" : "maxiops",
+                  "title" : "Test storage",
+                  "type" : "normal",
+                  "uuid" : "01e27f16-4778-4852-bbfe-6dce43d98682",
+                  "zone" : "fi-hel2"
+               }
+            ]
+         }
+      }
+    headers:
+      Content-Length:
+      - "579"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Mon, 27 Feb 2023 08:35:27 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"storage":{"labels":[{"key":"color","value":"purple"}]}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/5.4.0
+    url: https://api.upcloud.com/1.3/storage/01e27f16-4778-4852-bbfe-6dce43d98682
+    method: PUT
+  response:
+    body: |
+      {
+         "storage" : {
+            "access" : "private",
+            "backup_rule" : {
+               "interval" : "daily",
+               "retention" : "30",
+               "time" : "0430"
+            },
+            "backups" : {
+               "backup" : []
+            },
+            "created" : "2023-02-27T08:35:15Z",
+            "labels" : [
+               {
+                  "key" : "color",
+                  "value" : "purple"
+               }
+            ],
+            "license" : 0,
+            "servers" : {
+               "server" : []
+            },
+            "size" : 10,
+            "state" : "online",
+            "tier" : "maxiops",
+            "title" : "Test storage",
+            "type" : "normal",
+            "uuid" : "01e27f16-4778-4852-bbfe-6dce43d98682",
+            "zone" : "fi-hel2"
+         }
+      }
+    headers:
+      Content-Length:
+      - "657"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Mon, 27 Feb 2023 08:35:28 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 202 Accepted
+    code: 202
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/5.4.0
+    url: https://api.upcloud.com/1.3/storage?label=color%3Dred
+    method: GET
+  response:
+    body: |
+      {
+         "storages" : {
+            "storage" : []
+         }
+      }
+    headers:
+      Content-Length:
+      - "48"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Mon, 27 Feb 2023 08:35:28 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/5.4.0
+    url: https://api.upcloud.com/1.3/storage?label=color%3Dpurple
+    method: GET
+  response:
+    body: |
+      {
+         "storages" : {
+            "storage" : [
+               {
+                  "access" : "private",
+                  "created" : "2023-02-27T08:35:15Z",
+                  "labels" : [
+                     {
+                        "key" : "color",
+                        "value" : "purple"
+                     }
+                  ],
+                  "license" : 0,
+                  "size" : 10,
+                  "state" : "online",
+                  "tier" : "maxiops",
+                  "title" : "Test storage",
+                  "type" : "normal",
+                  "uuid" : "01e27f16-4778-4852-bbfe-6dce43d98682",
+                  "zone" : "fi-hel2"
+               }
+            ]
+         }
+      }
+    headers:
+      Content-Length:
+      - "582"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Mon, 27 Feb 2023 08:35:28 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"storage":{"labels":[]}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/5.4.0
+    url: https://api.upcloud.com/1.3/storage/016bccee-fc59-48da-a150-2c55cf9b2032
+    method: PUT
+  response:
+    body: |
+      {
+         "storage" : {
+            "access" : "private",
+            "backup_rule" : {
+               "interval" : "daily",
+               "retention" : "30",
+               "time" : "0430"
+            },
+            "backups" : {
+               "backup" : []
+            },
+            "created" : "2023-02-27T08:35:04Z",
+            "labels" : [],
+            "license" : 0,
+            "servers" : {
+               "server" : []
+            },
+            "size" : 10,
+            "state" : "online",
+            "tier" : "maxiops",
+            "title" : "Test storage",
+            "type" : "normal",
+            "uuid" : "016bccee-fc59-48da-a150-2c55cf9b2032",
+            "zone" : "fi-hel2"
+         }
+      }
+    headers:
+      Content-Length:
+      - "568"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Mon, 27 Feb 2023 08:35:28 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 202 Accepted
+    code: 202
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/5.4.0
+    url: https://api.upcloud.com/1.3/storage?label=color
+    method: GET
+  response:
+    body: |
+      {
+         "storages" : {
+            "storage" : [
+               {
+                  "access" : "private",
+                  "created" : "2023-02-27T08:35:15Z",
+                  "labels" : [
+                     {
+                        "key" : "color",
+                        "value" : "purple"
+                     }
+                  ],
+                  "license" : 0,
+                  "size" : 10,
+                  "state" : "online",
+                  "tier" : "maxiops",
+                  "title" : "Test storage",
+                  "type" : "normal",
+                  "uuid" : "01e27f16-4778-4852-bbfe-6dce43d98682",
+                  "zone" : "fi-hel2"
+               }
+            ]
+         }
+      }
+    headers:
+      Content-Length:
+      - "582"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Mon, 27 Feb 2023 08:35:29 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/5.4.0
+    url: https://api.upcloud.com/1.3/storage/016bccee-fc59-48da-a150-2c55cf9b2032
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Mon, 27 Feb 2023 08:35:29 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/5.4.0
+    url: https://api.upcloud.com/1.3/storage/01e27f16-4778-4852-bbfe-6dce43d98682
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Mon, 27 Feb 2023 08:35:29 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""

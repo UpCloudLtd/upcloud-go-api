@@ -88,6 +88,7 @@ type Storage struct {
 	// Only for type "backup":
 	Origin  string    `json:"origin"`
 	Created time.Time `json:"created"`
+	Labels  []Label   `json:"labels,omitempty"`
 }
 
 // BackupUUIDSlice is a slice of string.
