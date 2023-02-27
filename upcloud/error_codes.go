@@ -211,4 +211,5 @@ const (
 	ErrCodePeeringAccoundInvalid                          string = "PEERING_ACCOUNT_INVALID"
 	ErrCodePeeringConflict                                string = "PEERING_CONFLICT"
 	ErrPeeringNotDisabled                                 string = "PEERING_NOT_DISABLED"
+	ErrCodeDuplicateResource                              string = "DUPLICATE_RESOURCE"
 )
