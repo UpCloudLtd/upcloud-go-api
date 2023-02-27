@@ -9,11 +9,11 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestGetNetworkGatewaysRequest(t *testing.T) {
-	r := GetNetworkGatewaysRequest{}
+func TestGetGatewaysRequest(t *testing.T) {
+	r := GetGatewaysRequest{}
 	assert.Equal(t, "/gateway", r.RequestURL())
 
-	r = GetNetworkGatewaysRequest{
+	r = GetGatewaysRequest{
 		Filters: []QueryFilter{
 			FilterLabel{
 				Label: upcloud.Label{
@@ -27,19 +27,19 @@ func TestGetNetworkGatewaysRequest(t *testing.T) {
 	assert.Equal(t, "/gateway?label=color%3Dgreen&label=size", r.RequestURL())
 }
 
-func TestGetNetworkGatewayRequest(t *testing.T) {
-	r := GetNetworkGatewayRequest{"id"}
+func TestGetGatewayRequest(t *testing.T) {
+	r := GetGatewayRequest{"id"}
 	assert.Equal(t, "/gateway/id", r.RequestURL())
 }
 
-func TestCreateNetworkGatewayRequest(t *testing.T) {
-	r := CreateNetworkGatewayRequest{
+func TestCreateGatewayRequest(t *testing.T) {
+	r := CreateGatewayRequest{
 		Name:             "test-create",
 		Zone:             "fi-hel1",
-		Features:         []upcloud.NetworkGatewayFeature{upcloud.NetworkGatewayFeatureNAT},
-		Routers:          []NetworkGatewayRouter{{UUID: "router-uuid"}},
+		Features:         []upcloud.GatewayFeature{upcloud.GatewayFeatureNAT},
+		Routers:          []GatewayRouter{{UUID: "router-uuid"}},
 		Labels:           []upcloud.Label{{Key: "test", Value: "Create request"}},
-		ConfiguredStatus: upcloud.NetworkGatewayStatusStarted,
+		ConfiguredStatus: upcloud.GatewayStatusStarted,
 	}
 	assert.Equal(t, "/gateway", r.RequestURL())
 	js, err := json.Marshal(&r)
@@ -56,11 +56,11 @@ func TestCreateNetworkGatewayRequest(t *testing.T) {
 	`, string(js))
 }
 
-func TestModifyNetworkGatewayRequest(t *testing.T) {
-	r := ModifyNetworkGatewayRequest{
+func TestModifyGatewayRequest(t *testing.T) {
+	r := ModifyGatewayRequest{
 		UUID:             "id",
 		Name:             "test-modify",
-		ConfiguredStatus: upcloud.NetworkGatewayStatusStopped,
+		ConfiguredStatus: upcloud.GatewayStatusStopped,
 		Labels:           []upcloud.Label{{Key: "test", Value: "Modify request"}},
 	}
 	assert.Equal(t, "/gateway/id", r.RequestURL())
@@ -75,7 +75,7 @@ func TestModifyNetworkGatewayRequest(t *testing.T) {
 	`, string(js))
 }
 
-func TestDeleteNetworkGatewayRequest(t *testing.T) {
-	r := DeleteNetworkGatewayRequest{"id"}
+func TestDeleteGatewayRequest(t *testing.T) {
+	r := DeleteGatewayRequest{"id"}
 	assert.Equal(t, "/gateway/id", r.RequestURL())
 }

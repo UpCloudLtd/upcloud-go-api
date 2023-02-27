@@ -15,44 +15,44 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func setupNetworkGatewayTest(handler http.Handler) (*httptest.Server, *Service) {
+func setupGatewayTest(handler http.Handler) (*httptest.Server, *Service) {
 	srv := httptest.NewServer(handler)
 	return srv, New(client.New("user", "pass", client.WithBaseURL(srv.URL)))
 }
 
-func TestGetNetworkGateways(t *testing.T) {
+func TestGetGateways(t *testing.T) {
 	t.Parallel()
 
-	srv, svc := setupNetworkGatewayTest(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	srv, svc := setupGatewayTest(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		assert.Equal(t, http.MethodGet, r.Method)
 		assert.Equal(t, fmt.Sprintf("/%s%s", client.APIVersion, "/gateway"), r.URL.Path)
 		fmt.Fprintf(w, "[%s]", gatewayCommonResponse)
 	}))
 	defer srv.Close()
-	gw, err := svc.GetNetworkGateways(context.TODO())
+	gw, err := svc.GetGateways(context.TODO())
 	assert.NoError(t, err)
 	assert.Len(t, gw, 1)
-	checkNetworkGatewayResponse(t, &gw[0])
+	checkGatewayResponse(t, &gw[0])
 }
 
-func TestGetNetworkGateway(t *testing.T) {
+func TestGetGateway(t *testing.T) {
 	t.Parallel()
 
-	srv, svc := setupNetworkGatewayTest(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	srv, svc := setupGatewayTest(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		assert.Equal(t, http.MethodGet, r.Method)
 		assert.Equal(t, fmt.Sprintf("/%s%s", client.APIVersion, "/gateway/_UUID_"), r.URL.Path)
 		fmt.Fprint(w, gatewayCommonResponse)
 	}))
 	defer srv.Close()
-	gw, err := svc.GetNetworkGateway(context.TODO(), &request.GetNetworkGatewayRequest{UUID: "_UUID_"})
+	gw, err := svc.GetGateway(context.TODO(), &request.GetGatewayRequest{UUID: "_UUID_"})
 	assert.NoError(t, err)
-	checkNetworkGatewayResponse(t, gw)
+	checkGatewayResponse(t, gw)
 }
 
-func TestCreateNetworkGateway(t *testing.T) {
+func TestCreateGateway(t *testing.T) {
 	t.Parallel()
 
-	srv, svc := setupNetworkGatewayTest(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	srv, svc := setupGatewayTest(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		assert.Equal(t, http.MethodPost, r.Method)
 		assert.Equal(t, fmt.Sprintf("/%s%s", client.APIVersion, "/gateway"), r.URL.Path)
 		body, err := io.ReadAll(r.Body)
@@ -70,24 +70,24 @@ func TestCreateNetworkGateway(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	p, err := svc.CreateNetworkGateway(context.TODO(), &request.CreateNetworkGatewayRequest{
+	p, err := svc.CreateGateway(context.TODO(), &request.CreateGatewayRequest{
 		Name:             "test-create",
 		Zone:             "fi-hel1",
-		Features:         []upcloud.NetworkGatewayFeature{upcloud.NetworkGatewayFeatureNAT},
-		Routers:          []request.NetworkGatewayRouter{{UUID: "router-uuid"}},
+		Features:         []upcloud.GatewayFeature{upcloud.GatewayFeatureNAT},
+		Routers:          []request.GatewayRouter{{UUID: "router-uuid"}},
 		Labels:           []upcloud.Label{{Key: "test", Value: "Create request"}},
-		ConfiguredStatus: upcloud.NetworkGatewayStatusStarted,
+		ConfiguredStatus: upcloud.GatewayStatusStarted,
 	})
 	if !assert.NoError(t, err) {
 		return
 	}
-	checkNetworkGatewayResponse(t, p)
+	checkGatewayResponse(t, p)
 }
 
-func TestModifyNetworkGateway(t *testing.T) {
+func TestModifyGateway(t *testing.T) {
 	t.Parallel()
 
-	srv, svc := setupNetworkGatewayTest(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	srv, svc := setupGatewayTest(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		assert.Equal(t, http.MethodPatch, r.Method)
 		assert.Equal(t, fmt.Sprintf("/%s%s", client.APIVersion, "/gateway/_UUID_"), r.URL.Path)
 		body, err := io.ReadAll(r.Body)
@@ -103,33 +103,33 @@ func TestModifyNetworkGateway(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	p, err := svc.ModifyNetworkGateway(context.TODO(), &request.ModifyNetworkGatewayRequest{
+	p, err := svc.ModifyGateway(context.TODO(), &request.ModifyGatewayRequest{
 		UUID:             "_UUID_",
 		Name:             "test-modify",
-		ConfiguredStatus: upcloud.NetworkGatewayStatusStopped,
+		ConfiguredStatus: upcloud.GatewayStatusStopped,
 		Labels:           []upcloud.Label{{Key: "test", Value: "Modify request"}},
 	})
 	if !assert.NoError(t, err) {
 		return
 	}
-	checkNetworkGatewayResponse(t, p)
+	checkGatewayResponse(t, p)
 }
 
-func TestDeleteNetworkGateway(t *testing.T) {
+func TestDeleteGateway(t *testing.T) {
 	t.Parallel()
 
-	srv, svc := setupNetworkGatewayTest(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	srv, svc := setupGatewayTest(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		assert.Equal(t, http.MethodDelete, r.Method)
 		assert.Equal(t, fmt.Sprintf("/%s%s", client.APIVersion, "/gateway/_UUID_"), r.URL.Path)
 	}))
 	defer srv.Close()
-	assert.NoError(t, svc.DeleteNetworkGateway(context.TODO(), &request.DeleteNetworkGatewayRequest{UUID: "_UUID_"}))
+	assert.NoError(t, svc.DeleteGateway(context.TODO(), &request.DeleteGatewayRequest{UUID: "_UUID_"}))
 }
 
-func checkNetworkGatewayResponse(t *testing.T, gw *upcloud.NetworkGateway) {
+func checkGatewayResponse(t *testing.T, gw *upcloud.Gateway) {
 	assert.Equal(t, "10c153e0-12e4-4dea-8748-4f34850ff76d", gw.UUID)
 	assert.Equal(t, "0485d477-8d8f-4c97-9bef-731933187538", gw.Routers[0].UUID)
-	assert.Equal(t, upcloud.NetworkGatewayStatusStarted, gw.ConfiguredStatus)
+	assert.Equal(t, upcloud.GatewayStatusStarted, gw.ConfiguredStatus)
 }
 
 const gatewayCommonResponse string = `

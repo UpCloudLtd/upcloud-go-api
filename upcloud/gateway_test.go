@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestNetworkGateway(t *testing.T) {
+func TestGateway(t *testing.T) {
 	t.Parallel()
 
 	jsonStr := `
@@ -34,15 +34,15 @@ func TestNetworkGateway(t *testing.T) {
 	}
 	`
 
-	gateway := &NetworkGateway{
-		ConfiguredStatus: NetworkGatewayStatusStarted,
+	gateway := &Gateway{
+		ConfiguredStatus: GatewayStatusStarted,
 		CreatedAt:        timeParse("2022-12-01T09:04:08.529138Z"),
-		Features: []NetworkGatewayFeature{
-			NetworkGatewayFeatureNAT,
+		Features: []GatewayFeature{
+			GatewayFeatureNAT,
 		},
 		Name:             "example-gateway",
 		OperationalState: "running",
-		Routers: []NetworkGatewayRouter{
+		Routers: []GatewayRouter{
 			{
 				CreatedAt: timeParse("2022-12-01T09:04:08.529138Z"),
 				UUID:      "0485d477-8d8f-4c97-9bef-731933187538",
@@ -56,5 +56,5 @@ func TestNetworkGateway(t *testing.T) {
 		Zone:      "fi-hel1",
 	}
 
-	testJSON(t, &NetworkGateway{}, gateway, jsonStr)
+	testJSON(t, &Gateway{}, gateway, jsonStr)
 }
