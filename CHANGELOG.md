@@ -12,6 +12,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ### Changed
 - errors: all service method now return `Problem` type in case of errors (*BREAKING CHANGE*)
+- Type for `NodeGroups` field `CreateKubernetesClusterRequest` is now `request.KubernetesNodeGroup` instead of `upcloud.KubernetesNodeGroup`
 
 ### Removed
 - errors: `Error` type was removed (*BREAKING CHANGE*)

@@ -207,7 +207,7 @@ func TestCreateKubernetesCluster(t *testing.T) {
 		Name:    "test-name",
 		Network: "03e4970d-7791-4b80-a892-682ae0faf46b",
 		Zone:    "de-fra1",
-		NodeGroups: []upcloud.KubernetesNodeGroup{
+		NodeGroups: []request.KubernetesNodeGroup{
 			{
 				Name:         "my-group1",
 				Plan:         "2xCPU-4GB",
