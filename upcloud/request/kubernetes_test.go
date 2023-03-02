@@ -351,7 +351,7 @@ func exampleCreateKubernetesClusterRequest() CreateKubernetesClusterRequest {
 		Name:        "title",
 		Network:     "00000000-0000-0000-0000-000000000000",
 		NetworkCIDR: "172.16.0.1/24",
-		NodeGroups: []upcloud.KubernetesNodeGroup{
+		NodeGroups: []KubernetesNodeGroup{
 			exampleKubernetesNodeGroup(),
 			exampleKubernetesNodeGroup(),
 		},
@@ -359,8 +359,8 @@ func exampleCreateKubernetesClusterRequest() CreateKubernetesClusterRequest {
 	}
 }
 
-func exampleKubernetesNodeGroup() upcloud.KubernetesNodeGroup {
-	return upcloud.KubernetesNodeGroup{
+func exampleKubernetesNodeGroup() KubernetesNodeGroup {
+	return KubernetesNodeGroup{
 		Count: 1,
 		Labels: []upcloud.Label{
 			{

@@ -8,6 +8,12 @@ const (
 	KubernetesClusterStateFailed      KubernetesClusterState = "failed"
 	KubernetesClusterStateUnknown     KubernetesClusterState = "unknown"
 
+	KubernetesNodeGroupStatePending     KubernetesNodeGroupState = "pending"
+	KubernetesNodeGroupStateRunning     KubernetesNodeGroupState = "running"
+	KubernetesNodeGroupStateTerminating KubernetesNodeGroupState = "terminating"
+	KubernetesNodeGroupStateFailed      KubernetesNodeGroupState = "failed"
+	KubernetesNodeGroupStateUnknown     KubernetesNodeGroupState = "unknown"
+
 	KubernetesClusterTaintEffectNoExecute        KubernetesClusterTaintEffect = "NoExecute"
 	KubernetesClusterTaintEffectNoSchedule       KubernetesClusterTaintEffect = "NoSchedule"
 	KubernetesClusterTaintEffectPreferNoSchedule KubernetesClusterTaintEffect = "PreferNoSchedule"
@@ -15,6 +21,7 @@ const (
 
 type (
 	KubernetesClusterState       string
+	KubernetesNodeGroupState     string
 	KubernetesClusterType        string
 	KubernetesClusterTaintEffect string
 )
@@ -30,15 +37,16 @@ type KubernetesCluster struct {
 }
 
 type KubernetesNodeGroup struct {
-	Count        int                    `json:"count,omitempty"`
-	Labels       []Label                `json:"labels,omitempty"`
-	Name         string                 `json:"name,omitempty"`
-	Plan         string                 `json:"plan,omitempty"`
-	SSHKeys      []string               `json:"ssh_keys,omitempty"`
-	Storage      string                 `json:"storage,omitempty"`
-	KubeletArgs  []KubernetesKubeletArg `json:"kubelet_args,omitempty"`
-	Taints       []KubernetesTaint      `json:"taints,omitempty"`
-	AntiAffinity bool                   `json:"anti_affinity,omitempty"`
+	AntiAffinity bool                     `json:"anti_affinity,omitempty"`
+	Count        int                      `json:"count,omitempty"`
+	KubeletArgs  []KubernetesKubeletArg   `json:"kubelet_args,omitempty"`
+	Labels       []Label                  `json:"labels,omitempty"`
+	Name         string                   `json:"name,omitempty"`
+	Plan         string                   `json:"plan,omitempty"`
+	SSHKeys      []string                 `json:"ssh_keys,omitempty"`
+	State        KubernetesNodeGroupState `json:"state,omitempty"`
+	Storage      string                   `json:"storage,omitempty"`
+	Taints       []KubernetesTaint        `json:"taints,omitempty"`
 }
 
 type KubernetesKubeletArg struct {
