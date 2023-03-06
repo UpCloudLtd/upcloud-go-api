@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud"
 )
 
 type Cloud interface {

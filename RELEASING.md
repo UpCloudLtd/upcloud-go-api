@@ -1,6 +1,7 @@
 # Releasing
 
 1. Merge all your changes to the stable branch
+1. If releasing a new major version, ensure that package name has been updated, e.g. if new version is `v6` package name in go.mod and every import should be `github.com/UpCloudLtd/upcloud-go-api/v6`
 1. Update CHANGELOG.md
     1. Add new heading with the correct version e.g. `## [v2.3.5]`
     1. Update links at the bottom of the page
