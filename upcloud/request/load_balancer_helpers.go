@@ -1,7 +1,7 @@
 package request
 
 import (
-	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud"
 )
 
 func NewLoadBalancerTCPRejectAction() upcloud.LoadBalancerAction {

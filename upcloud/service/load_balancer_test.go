@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
+	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud/request"
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

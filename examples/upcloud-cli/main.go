@@ -8,10 +8,10 @@ import (
 	"os"
 	"time"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/client"
-	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/request"
-	"github.com/UpCloudLtd/upcloud-go-api/v5/upcloud/service"
+	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud/client"
+	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud/request"
+	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud/service"
 	"github.com/davecgh/go-spew/spew"
 )
 
