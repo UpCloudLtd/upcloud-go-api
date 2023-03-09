@@ -212,4 +212,8 @@ const (
 	ErrCodePeeringConflict                                string = "PEERING_CONFLICT"
 	ErrPeeringNotDisabled                                 string = "PEERING_NOT_DISABLED"
 	ErrCodeDuplicateResource                              string = "DUPLICATE_RESOURCE"
+	ErrCodeServerIPLimitReached                           string = "SERVER_IP_LIMIT_REACHED"
+	ErrCodeServerCoresLimitReached                        string = "SERVER_CORE_LIMIT_REACHED"
+	ErrCodeServerMemoryLimitReached                       string = "SERVER_MEMORY_LIMIT_REACHED"
+	ErrCodeMaxiOpsStorageLimitReached                     string = "MAXIOPS_STORAGE_LIMIT_REACHED"
 )
