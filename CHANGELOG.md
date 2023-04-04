@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Changed
+- client: overwriting the Transport of the provided HTTP Client when `UPCLOUD_DEBUG_SKIP_CERTIFICATE_VERIFY` environment variable is set to `1`
+
 ## [6.0.0]
 
 ### Added

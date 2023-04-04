@@ -148,6 +148,18 @@ func WithBaseURL(baseURL string) configFn {
 	}
 }
 
+func WithInsecureSkipVerify() configFn {
+	return func(c *config) {
+		if c.httpClient != nil {
+			c.httpClient.Transport = &http.Transport{
+				TLSClientConfig: &tls.Config{
+					InsecureSkipVerify: true, //nolint
+				},
+			}
+		}
+	}
+}
+
 func WithHTTPClient(httpClient *http.Client) configFn {
 	return func(c *config) {
 		c.httpClient = httpClient
@@ -166,8 +178,14 @@ func New(username, password string, c ...configFn) *Client {
 		username:   username,
 		password:   password,
 		baseURL:    clientBaseURL(os.Getenv(EnvDebugAPIBaseURL)),
-		httpClient: httpClient(),
+		httpClient: cleanhttp.DefaultClient(),
 	}
+
+	// If set, replace http client transport with one skipping tls verification
+	if os.Getenv(EnvDebugSkipCertificateVerify) == "1" {
+		c = append(c, WithInsecureSkipVerify())
+	}
+
 	for _, fn := range c {
 		fn(&config)
 	}
@@ -177,34 +195,20 @@ func New(username, password string, c ...configFn) *Client {
 	}
 }
 
-func httpClient() *http.Client {
-	var client *http.Client
-	if os.Getenv(EnvDebugSkipCertificateVerify) == "1" {
-		client = &http.Client{
-			Transport: &http.Transport{
-				TLSClientConfig: &tls.Config{
-					InsecureSkipVerify: true, //nolint
-				},
-			},
-		}
-	} else {
-		client = cleanhttp.DefaultClient()
-	}
-	return client
-}
-
 func userAgent() string {
 	return fmt.Sprintf("upcloud-go-api/%s", Version)
 }
 
 func clientBaseURL(URL string) string {
-	if URL != "" {
-		if u, err := url.Parse(URL); err != nil || u.Scheme == "" || u.Host == "" {
-			return APIBaseURL
-		}
-		return URL
+	if URL == "" {
+		return APIBaseURL
 	}
-	return APIBaseURL
+
+	if u, err := url.Parse(URL); err != nil || u.Scheme == "" || u.Host == "" {
+		return APIBaseURL
+	}
+
+	return URL
 }
 
 // Parses the response and returns either the response body or an error
