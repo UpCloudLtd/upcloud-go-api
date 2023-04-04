@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [6.0.1]
+
 ### Changed
 - client: overwriting the Transport of the provided HTTP Client when `UPCLOUD_DEBUG_SKIP_CERTIFICATE_VERIFY` environment variable is set to `1`
 
@@ -267,7 +269,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.0.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.0.1...HEAD
+[6.0.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.0.0...v6.0.1
 [6.0.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v5.4.0...v6.0.0
 [5.4.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v5.3.1...v5.4.0
 [5.3.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v5.3.0...v5.3.1
