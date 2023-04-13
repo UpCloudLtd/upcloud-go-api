@@ -361,10 +361,28 @@ func (r *DeleteServerRequest) RequestURL() string {
 // DeleteServerAndStoragesRequest represents a request to delete a server and all attached storages
 type DeleteServerAndStoragesRequest struct {
 	UUID string
+
+	// DeleteBackups indicates if backups should be deleted along with the server and storages
+	DeleteBackups bool
+
+	// KeepLatestBackups indicates if the latest backup should be kept;
+	// only relevant if `DeleteBackups` field is set to true
+	KeepLatestBackup bool
 }
 
 // RequestURL implements the Request interface
 func (r *DeleteServerAndStoragesRequest) RequestURL() string {
+	if r.DeleteBackups {
+		backups := "delete"
+
+		if r.KeepLatestBackup {
+			backups = "keep_latest"
+		}
+
+		return fmt.Sprintf("/server/%s/?storages=1&backups=%s", r.UUID, backups)
+	}
+
+	// Default for backups is "keep", so we don't need to add that parameter to request URL if we don't delete backups
 	return fmt.Sprintf("/server/%s/?storages=1", r.UUID)
 }
 

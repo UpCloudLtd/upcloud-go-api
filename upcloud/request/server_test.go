@@ -356,6 +356,21 @@ func TestDeleteServerAndStoragesRequest(t *testing.T) {
 	}
 
 	assert.Equal(t, "/server/foo/?storages=1", request.RequestURL())
+
+	request = DeleteServerAndStoragesRequest{
+		UUID:          "bar",
+		DeleteBackups: true,
+	}
+
+	assert.Equal(t, "/server/bar/?storages=1&backups=delete", request.RequestURL())
+
+	request = DeleteServerAndStoragesRequest{
+		UUID:             "baz",
+		DeleteBackups:    true,
+		KeepLatestBackup: true,
+	}
+
+	assert.Equal(t, "/server/baz/?storages=1&backups=keep_latest", request.RequestURL())
 }
 
 // TestTagServerRequest tests that TestTagServer behaves correctly
