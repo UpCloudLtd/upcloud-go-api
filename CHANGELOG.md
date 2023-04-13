@@ -7,6 +7,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ### Added
 - new `Backups` field for `DeleteServerAndStoragesRequest` that controls if backups should be kept or deleted while deleting the server
+- Kubernetes cluster `Plan` field
 
 ## [6.0.0]
 
