@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [6.1.0]
+
 ### Added
 - new `Backups` field for `DeleteServerAndStoragesRequest` that controls if backups should be kept or deleted while deleting the server
 - Kubernetes cluster `Plan` field
@@ -268,7 +270,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.0.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.1.0...HEAD
+[6.0.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.0.0...v6.1.0
 [6.0.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v5.4.0...v6.0.0
 [5.4.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v5.3.1...v5.4.0
 [5.3.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v5.3.0...v5.3.1
