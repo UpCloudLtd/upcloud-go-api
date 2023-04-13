@@ -34,6 +34,7 @@ type KubernetesCluster struct {
 	State       KubernetesClusterState `json:"state"`
 	UUID        string                 `json:"uuid"`
 	Zone        string                 `json:"zone"`
+	Plan        string                 `json:"plan"`
 }
 
 type KubernetesNodeGroup struct {

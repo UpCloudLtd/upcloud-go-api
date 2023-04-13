@@ -53,6 +53,7 @@ type CreateKubernetesClusterRequest struct {
 	NetworkCIDR string                `json:"network_cidr"`
 	NodeGroups  []KubernetesNodeGroup `json:"node_groups"`
 	Zone        string                `json:"zone"`
+	Plan        string                `json:"plan,omitempty"`
 }
 
 func (r *CreateKubernetesClusterRequest) RequestURL() string {
