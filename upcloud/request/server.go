@@ -360,11 +360,16 @@ func (r *DeleteServerRequest) RequestURL() string {
 
 // DeleteServerAndStoragesRequest represents a request to delete a server and all attached storages
 type DeleteServerAndStoragesRequest struct {
-	UUID string
+	UUID    string
+	Backups DeleteStorageBackupsMode
 }
 
 // RequestURL implements the Request interface
 func (r *DeleteServerAndStoragesRequest) RequestURL() string {
+	if r.Backups != "" {
+		return fmt.Sprintf("/server/%s/?storages=1&backups=%s", r.UUID, r.Backups)
+	}
+
 	return fmt.Sprintf("/server/%s/?storages=1", r.UUID)
 }
 
