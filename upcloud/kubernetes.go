@@ -60,3 +60,9 @@ type KubernetesTaint struct {
 	Key    string                       `json:"key"`
 	Value  string                       `json:"value"`
 }
+
+type KubernetesPlan struct {
+	Name         string `json:"name"`
+	ServerNumber int    `json:"server_number"`
+	MaxNodes     int    `json:"max_nodes"`
+}
