@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- method for fetching available kubernetes plans
+
 ## [6.1.0]
 
 ### Added

@@ -22,6 +22,7 @@ type Kubernetes interface {
 	CreateKubernetesNodeGroup(ctx context.Context, r *request.CreateKubernetesNodeGroupRequest) (*upcloud.KubernetesNodeGroup, error)
 	ModifyKubernetesNodeGroup(ctx context.Context, r *request.ModifyKubernetesNodeGroupRequest) (*upcloud.KubernetesNodeGroup, error)
 	DeleteKubernetesNodeGroup(ctx context.Context, r *request.DeleteKubernetesNodeGroupRequest) error
+	GetKubernetesPlans(ctx context.Context, r *request.GetKubernetesPlansRequest) ([]upcloud.KubernetesPlan, error)
 }
 
 // GetKubernetesClusters retrieves a list of Kubernetes clusters (EXPERIMENTAL).
@@ -143,4 +144,10 @@ func (s *Service) ModifyKubernetesNodeGroup(ctx context.Context, r *request.Modi
 // DeleteKubernetesNodeGroup deletes an existing node group (EXPERIMENTAL).
 func (s *Service) DeleteKubernetesNodeGroup(ctx context.Context, r *request.DeleteKubernetesNodeGroupRequest) error {
 	return s.delete(ctx, r)
+}
+
+// GetKubernetesPlans retrieves a list of Kubernetes plans (EXPERIMENTAL).
+func (s *Service) GetKubernetesPlans(ctx context.Context, r *request.GetKubernetesPlansRequest) ([]upcloud.KubernetesPlan, error) {
+	plans := make([]upcloud.KubernetesPlan, 0)
+	return plans, s.get(ctx, r.RequestURL(), &plans)
 }
