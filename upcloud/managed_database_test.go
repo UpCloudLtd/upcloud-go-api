@@ -321,7 +321,7 @@ func TestManagedDatabaseType_UnmarshalJSON(t *testing.T) {
     "latest_available_version": "8.0.26",
 	"service_plans": [
 		{
-			"backup_config": {
+			"backup_config_mysql": {
 				"interval": 24,
 				"max_count": 2,
 				"recovery_mode": "pitr"
@@ -357,7 +357,7 @@ func TestManagedDatabaseType_UnmarshalJSON(t *testing.T) {
 		Description:            "MySQL - Relational Database Management System",
 		LatestAvailableVersion: "8.0.26",
 		ServicePlans: []ManagedDatabaseServicePlan{{
-			BackupConfig: ManagedDatabaseBackupConfig{
+			BackupConfigMySQL: &ManagedDatabaseBackupConfigMySQL{
 				Interval:     24,
 				MaxCount:     2,
 				RecoveryMode: "pitr",

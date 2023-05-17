@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"hostname_prefix":"getmanageddatabasemetrics","plan":"2x2xCPU-4GB-100GB","properties":{"automatic_utility_network_ip_filter":true,"ip_filter":["0.0.0.0/0"],"public_access":true},"title":"test","type":"pg","zone":"fi-hel2","maintenance":{"dow":"monday","time":"12:00:00"}}'
+    body: '{"hostname_prefix":"getmanageddatabasemetrics","plan":"2x2xCPU-4GB-100GB","properties":{"automatic_utility_network_ip_filter":true,"ip_filter":["10.0.0.1/32"],"public_access":true},"title":"getmanageddatabasemetrics","type":"pg","zone":"fi-hel2","maintenance":{"dow":"monday","time":"12:00:00"}}'
     form: {}
     headers:
       Accept:
@@ -10,20 +10,20 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/4.0.0
+      - upcloud-go-api/6.1.1
     url: https://api.upcloud.com/1.3/database
     method: POST
   response:
-    body: '{"backups":[],"components":[{"component":"pg","host":"getmanageddatabasemetrics-deviyydmahgscgy.db.upclouddatabases.com","port":11550,"route":"dynamic","usage":"primary"},{"component":"pg","host":"public-getmanageddatabasemetrics-deviyydmahgscgy.db.upclouddatabases.com","port":11550,"route":"public","usage":"primary"},{"component":"pg","host":"replica-getmanageddatabasemetrics-deviyydmahgscgy.db.upclouddatabases.com","port":11550,"route":"dynamic","usage":"replica"},{"component":"pg","host":"public-replica-getmanageddatabasemetrics-deviyydmahgscgy.db.upclouddatabases.com","port":11550,"route":"public","usage":"replica"},{"component":"pgbouncer","host":"getmanageddatabasemetrics-deviyydmahgscgy.db.upclouddatabases.com","port":11551,"route":"dynamic","usage":"primary"},{"component":"pgbouncer","host":"public-getmanageddatabasemetrics-deviyydmahgscgy.db.upclouddatabases.com","port":11551,"route":"public","usage":"primary"},{"component":"pgbouncer","host":"replica-getmanageddatabasemetrics-deviyydmahgscgy.db.upclouddatabases.com","port":11551,"route":"dynamic","usage":"replica"},{"component":"pgbouncer","host":"public-replica-getmanageddatabasemetrics-deviyydmahgscgy.db.upclouddatabases.com","port":11551,"route":"public","usage":"replica"}],"create_time":"0001-01-01T00:00:00Z","maintenance":{"dow":"monday","time":"12:00:00"},"name":"getmanageddatabasemetrics","node_count":2,"node_states":[{"name":"getmanageddatabasemetrics-1","role":"standby","state":"setting_up_vm"}],"plan":"2x2xCPU-4GB-100GB","powered":true,"properties":{"automatic_utility_network_ip_filter":true,"ip_filter":["0.0.0.0/0"],"public_access":true},"uuid":"09f37880-386c-408f-a866-0af6cd0978c0","state":"rebuilding","title":"test","type":"pg","update_time":"0001-01-01T00:00:00Z","service_uri":"postgres://upadmin:ATRI5Yp2ulKgR7F-@getmanageddatabasemetrics-deviyydmahgscgy.db.upclouddatabases.com:11550/defaultdb?sslmode=require","service_uri_params":{"dbname":"defaultdb","host":"getmanageddatabasemetrics-deviyydmahgscgy.db.upclouddatabases.com","password":"ATRI5Yp2ulKgR7F-","port":"11550","ssl_mode":"require","user":"upadmin"},"users":null,"zone":"fi-hel2"}'
+    body: '{"backups":[],"components":[{"component":"pg","host":"getmanageddatabasemetrics-zhbmidiechch.db.upclouddatabases.com","port":11550,"route":"dynamic","usage":"primary"},{"component":"pg","host":"replica-getmanageddatabasemetrics-zhbmidiechch.db.upclouddatabases.com","port":11550,"route":"dynamic","usage":"replica"},{"component":"pg","host":"public-getmanageddatabasemetrics-zhbmidiechch.db.upclouddatabases.com","port":11550,"route":"public","usage":"primary"},{"component":"pg","host":"public-replica-getmanageddatabasemetrics-zhbmidiechch.db.upclouddatabases.com","port":11550,"route":"public","usage":"replica"},{"component":"pgbouncer","host":"getmanageddatabasemetrics-zhbmidiechch.db.upclouddatabases.com","port":11551,"route":"dynamic","usage":"primary"},{"component":"pgbouncer","host":"replica-getmanageddatabasemetrics-zhbmidiechch.db.upclouddatabases.com","port":11551,"route":"dynamic","usage":"replica"},{"component":"pgbouncer","host":"public-getmanageddatabasemetrics-zhbmidiechch.db.upclouddatabases.com","port":11551,"route":"public","usage":"primary"},{"component":"pgbouncer","host":"public-replica-getmanageddatabasemetrics-zhbmidiechch.db.upclouddatabases.com","port":11551,"route":"public","usage":"replica"}],"create_time":"0001-01-01T00:00:00Z","maintenance":{"dow":"monday","time":"12:00:00","pending_updates":[]},"name":"getmanageddatabasemetrics","node_count":2,"node_states":[],"plan":"2x2xCPU-4GB-100GB","powered":true,"metadata":{"max_connections":100,"pg_version":"15","write_block_threshold_exceeded":null},"properties":{"automatic_utility_network_ip_filter":true,"backup_hour":8,"backup_minute":0,"ip_filter":["10.0.0.1/32"],"pg_stat_monitor_enable":false,"pglookout":{"max_failover_replication_time_lag":60},"public_access":true,"version":"15"},"uuid":"09d47561-778a-44f7-93fe-02987a31df4e","state":"rebuilding","title":"getmanageddatabasemetrics","type":"pg","update_time":"0001-01-01T00:00:00Z","service_uri":"postgres://upadmin:AVNS_50cD29LozCdtylbMSbf@getmanageddatabasemetrics-zhbmidiechch.db.upclouddatabases.com:11550/defaultdb?sslmode=require","service_uri_params":{"dbname":"defaultdb","host":"getmanageddatabasemetrics-zhbmidiechch.db.upclouddatabases.com","password":"AVNS_50cD29LozCdtylbMSbf","port":"11550","ssl_mode":"require","user":"upadmin"},"users":[{"username":"upadmin","type":"primary"}],"databases":[{"name":"defaultdb"}],"zone":"fi-hel2"}'
     headers:
-      Access-Control-Allow-Methods:
-      - OPTIONS,GET,POST
       Access-Control-Allow-Origin:
       - '*'
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Sep 2021 13:41:33 GMT
+      - Wed, 17 May 2023 06:51:16 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
     status: 200 OK
     code: 200
     duration: ""
@@ -36,20 +36,20 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/4.0.0
-    url: https://api.upcloud.com/1.3/database/09f37880-386c-408f-a866-0af6cd0978c0/metrics?period=hour
+      - upcloud-go-api/6.1.1
+    url: https://api.upcloud.com/1.3/database/09d47561-778a-44f7-93fe-02987a31df4e/metrics?period=hour
     method: GET
   response:
-    body: '{"cpu_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"}],"rows":[["2021-09-14T13:44:00Z",46.51659448674233],["2021-09-14T13:44:30Z",29.866492220094514],["2021-09-14T13:45:00Z",3.0493153256918077],["2021-09-14T13:45:30Z",3.2678913349420924]]},"hints":{"title":"CPU usage %"}},"disk_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"}],"rows":[["2021-09-14T13:43:30Z",0.05988608201318858],["2021-09-14T13:44:00Z",0.05988608201318858],["2021-09-14T13:44:30Z",0.17257821409097027],["2021-09-14T13:45:00Z",0.17258211064129972],["2021-09-14T13:45:30Z",0.17258211064129972]]},"hints":{"title":"Disk space usage %"}},"diskio_reads":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"}],"rows":[["2021-09-14T13:44:00Z",168],["2021-09-14T13:44:30Z",29],["2021-09-14T13:45:00Z",0],["2021-09-14T13:45:30Z",0]]},"hints":{"title":"Disk iops (reads)"}},"diskio_writes":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"}],"rows":[["2021-09-14T13:44:00Z",292],["2021-09-14T13:44:30Z",109],["2021-09-14T13:45:00Z",4],["2021-09-14T13:45:30Z",3]]},"hints":{"title":"Disk iops (writes)"}},"load_average":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"}],"rows":[["2021-09-14T13:43:30Z",0.28],["2021-09-14T13:44:00Z",0.35],["2021-09-14T13:44:30Z",0.39],["2021-09-14T13:45:00Z",0.35],["2021-09-14T13:45:30Z",0.35]]},"hints":{"title":"Load average (5 min)"}},"mem_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"}],"rows":[["2021-09-14T13:43:30Z",6.273902179072663],["2021-09-14T13:44:00Z",10.4379939037315],["2021-09-14T13:44:30Z",11.562111581815486],["2021-09-14T13:45:00Z",11.712677272939873],["2021-09-14T13:45:30Z",11.627293688680306]]},"hints":{"title":"Memory usage %"}},"net_receive":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"}],"rows":[["2021-09-14T13:44:00Z",4197044],["2021-09-14T13:44:30Z",18549],["2021-09-14T13:45:00Z",180],["2021-09-14T13:45:30Z",948]]},"hints":{"title":"Network receive (bytes/s)"}},"net_send":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"}],"rows":[["2021-09-14T13:44:00Z",18829],["2021-09-14T13:44:30Z",94892],["2021-09-14T13:45:00Z",371],["2021-09-14T13:45:30Z",867]]},"hints":{"title":"Network transmit (bytes/s)"}}}'
+    body: '{"cpu_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2023-05-17T06:54:00Z",35.83583024060317,null],["2023-05-17T06:54:30Z",4.457534568243588,null],["2023-05-17T06:55:00Z",4.89928886990306,null],["2023-05-17T06:55:30Z",3.970292888457621,null],["2023-05-17T06:56:00Z",5.04489141653896,39.375611318934936],["2023-05-17T06:56:30Z",4.116019986404197,3.0196635025683207],["2023-05-17T06:57:00Z",3.292040675474297,3.611269093116661]]},"hints":{"title":"CPU usage %"}},"disk_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2023-05-17T06:53:30Z",0.000035089954658320145,null],["2023-05-17T06:54:00Z",0.12667473631653572,null],["2023-05-17T06:54:30Z",0.12667473631653572,null],["2023-05-17T06:55:00Z",0.12661235417492095,null],["2023-05-17T06:55:30Z",0.12661235417492095,0.000035089954658320145],["2023-05-17T06:56:00Z",0.12661625305877183,0.09436858472777564],["2023-05-17T06:56:30Z",0.12661625305877183,0.09452454008181263],["2023-05-17T06:57:00Z",0.12661625305877183,0.09452454008181263]]},"hints":{"title":"Disk space usage %"}},"diskio_reads":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2023-05-17T06:54:00Z",34,null],["2023-05-17T06:54:30Z",0,null],["2023-05-17T06:55:00Z",0,null],["2023-05-17T06:55:30Z",0,null],["2023-05-17T06:56:00Z",0,31],["2023-05-17T06:56:30Z",0,0],["2023-05-17T06:57:00Z",0,0]]},"hints":{"title":"Disk iops (reads)"}},"diskio_writes":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2023-05-17T06:54:00Z",84,null],["2023-05-17T06:54:30Z",11,null],["2023-05-17T06:55:00Z",5,null],["2023-05-17T06:55:30Z",5,null],["2023-05-17T06:56:00Z",4,89],["2023-05-17T06:56:30Z",4,7],["2023-05-17T06:57:00Z",3,4]]},"hints":{"title":"Disk iops (writes)"}},"load_average":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2023-05-17T06:53:30Z",0.42,null],["2023-05-17T06:54:00Z",0.44,null],["2023-05-17T06:54:30Z",0.42,null],["2023-05-17T06:55:00Z",0.39,null],["2023-05-17T06:55:30Z",0.35,0.33],["2023-05-17T06:56:00Z",0.31,0.34],["2023-05-17T06:56:30Z",0.28,0.305],["2023-05-17T06:57:00Z",0.25,0.27]]},"hints":{"title":"Load average (5 min)"}},"mem_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2023-05-17T06:53:30Z",9.615868451338656,null],["2023-05-17T06:54:00Z",27.516780557893558,null],["2023-05-17T06:54:30Z",27.028090699382734,null],["2023-05-17T06:55:00Z",27.77726695409761,null],["2023-05-17T06:55:30Z",27.117613952694136,19.50224616696609],["2023-05-17T06:56:00Z",27.301055788345206,34.1590160919726],["2023-05-17T06:56:30Z",27.751905400394268,33.66522311116859],["2023-05-17T06:57:00Z",27.245381620653802,34.24874152003767],["2023-05-17T06:57:30Z",27.257809792388908,null]]},"hints":{"title":"Memory usage %"}},"net_receive":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2023-05-17T06:54:00Z",4725,null],["2023-05-17T06:54:30Z",94,null],["2023-05-17T06:55:00Z",153,null],["2023-05-17T06:55:30Z",631,null],["2023-05-17T06:56:00Z",1567,72642],["2023-05-17T06:56:30Z",1673,946],["2023-05-17T06:57:00Z",575,null]]},"hints":{"title":"Network receive (bytes/s)"}},"net_send":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2023-05-17T06:54:00Z",66589,null],["2023-05-17T06:54:30Z",963,null],["2023-05-17T06:55:00Z",4918,null],["2023-05-17T06:55:30Z",1291,null],["2023-05-17T06:56:00Z",1764,7798],["2023-05-17T06:56:30Z",7527,1724],["2023-05-17T06:57:00Z",1107,null]]},"hints":{"title":"Network transmit (bytes/s)"}}}'
     headers:
-      Access-Control-Allow-Methods:
-      - OPTIONS,GET,POST
       Access-Control-Allow-Origin:
       - '*'
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Sep 2021 13:46:22 GMT
+      - Wed, 17 May 2023 06:58:13 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
     status: 200 OK
     code: 200
     duration: ""
@@ -62,22 +62,22 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/4.0.0
-    url: https://api.upcloud.com/1.3/database/09f37880-386c-408f-a866-0af6cd0978c0/metrics?period=day
+      - upcloud-go-api/6.1.1
+    url: https://api.upcloud.com/1.3/database/09d47561-778a-44f7-93fe-02987a31df4e/metrics?period=day
     method: GET
   response:
-    body: '{"cpu_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"}],"rows":[["2021-09-14T13:40:00Z",38.191543353418425]]},"hints":{"title":"CPU usage %"}},"disk_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"}],"rows":[["2021-09-14T13:40:00Z",0.0974501260391158]]},"hints":{"title":"Disk space usage %"}},"load_average":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"}],"rows":[["2021-09-14T13:40:00Z",0.34]]},"hints":{"title":"Load average (5 min)"}},"mem_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"}],"rows":[["2021-09-14T13:40:00Z",9.43886664736082]]},"hints":{"title":"Memory usage %"}}}'
+    body: '{"cpu_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"}],"rows":[["2023-05-17T06:50:00Z",20.14668240442338]]},"hints":{"title":"CPU usage %"}},"disk_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"}],"rows":[["2023-05-17T06:50:00Z",0.08446152086257659]]},"hints":{"title":"Disk space usage %"}},"load_average":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"}],"rows":[["2023-05-17T06:50:00Z",0.4266666666666667]]},"hints":{"title":"Load average (5 min)"}},"mem_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"}],"rows":[["2023-05-17T06:50:00Z",21.537381683973482]]},"hints":{"title":"Memory usage %"}}}'
     headers:
-      Access-Control-Allow-Methods:
-      - OPTIONS,GET,POST
       Access-Control-Allow-Origin:
       - '*'
       Content-Length:
-      - "860"
+      - "876"
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Sep 2021 13:46:22 GMT
+      - Wed, 17 May 2023 06:58:14 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
     status: 200 OK
     code: 200
     duration: ""
@@ -90,14 +90,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/4.0.0
-    url: https://api.upcloud.com/1.3/database/09f37880-386c-408f-a866-0af6cd0978c0/metrics?period=week
+      - upcloud-go-api/6.1.1
+    url: https://api.upcloud.com/1.3/database/09d47561-778a-44f7-93fe-02987a31df4e/metrics?period=week
     method: GET
   response:
     body: '{}'
     headers:
-      Access-Control-Allow-Methods:
-      - OPTIONS,GET,POST
       Access-Control-Allow-Origin:
       - '*'
       Content-Length:
@@ -105,7 +103,9 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Sep 2021 13:46:23 GMT
+      - Wed, 17 May 2023 06:58:14 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
     status: 200 OK
     code: 200
     duration: ""
@@ -118,14 +118,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/4.0.0
-    url: https://api.upcloud.com/1.3/database/09f37880-386c-408f-a866-0af6cd0978c0/metrics?period=month
+      - upcloud-go-api/6.1.1
+    url: https://api.upcloud.com/1.3/database/09d47561-778a-44f7-93fe-02987a31df4e/metrics?period=month
     method: GET
   response:
     body: '{}'
     headers:
-      Access-Control-Allow-Methods:
-      - OPTIONS,GET,POST
       Access-Control-Allow-Origin:
       - '*'
       Content-Length:
@@ -133,7 +131,9 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Sep 2021 13:46:23 GMT
+      - Wed, 17 May 2023 06:58:15 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
     status: 200 OK
     code: 200
     duration: ""
@@ -146,14 +146,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/4.0.0
-    url: https://api.upcloud.com/1.3/database/09f37880-386c-408f-a866-0af6cd0978c0/metrics?period=year
+      - upcloud-go-api/6.1.1
+    url: https://api.upcloud.com/1.3/database/09d47561-778a-44f7-93fe-02987a31df4e/metrics?period=year
     method: GET
   response:
     body: '{}'
     headers:
-      Access-Control-Allow-Methods:
-      - OPTIONS,GET,POST
       Access-Control-Allow-Origin:
       - '*'
       Content-Length:
@@ -161,7 +159,9 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Sep 2021 13:46:23 GMT
+      - Wed, 17 May 2023 06:58:15 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
     status: 200 OK
     code: 200
     duration: ""
@@ -174,18 +174,16 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/4.0.0
-    url: https://api.upcloud.com/1.3/database/09f37880-386c-408f-a866-0af6cd0978c0
+      - upcloud-go-api/6.1.1
+    url: https://api.upcloud.com/1.3/database/09d47561-778a-44f7-93fe-02987a31df4e
     method: DELETE
   response:
     body: ""
     headers:
-      Access-Control-Allow-Methods:
-      - OPTIONS,DELETE,GET,PATCH
-      Access-Control-Allow-Origin:
-      - '*'
       Date:
-      - Tue, 14 Sep 2021 13:46:24 GMT
+      - Wed, 17 May 2023 06:58:16 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
     status: 204 No Content
     code: 204
     duration: ""
