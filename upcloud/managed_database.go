@@ -523,7 +523,7 @@ func (m *ManagedDatabaseProperties) GetPublicAccess() bool {
 	return v
 }
 
-// GetMaxIndexCount returns
+// GetMaxIndexCount returns the maximum index count of the service.
 // See upcloud.ManagedDatabasePropertyMaxIndexCount for more information.
 func (m *ManagedDatabaseProperties) GetMaxIndexCount() int {
 	v, _ := m.GetInt(ManagedDatabasePropertyMaxIndexCount)
