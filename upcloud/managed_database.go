@@ -116,8 +116,8 @@ const (
 	// ManagedDatabasePropertyPublicAccess enables public access via internet to the service. A separate public
 	// endpoint DNS name will be available under Components after enabling.
 	ManagedDatabasePropertyPublicAccess ManagedDatabasePropertyKey = "public_access"
-	// ManagedDatabasePropertyMaxIndexCount allows adjusting the maximum number of indices of an OpenSearch
-	// Managed Database service.
+	// Deprecated: ManagedDatabasePropertyMaxIndexCount allows adjusting the maximum number of indices of an OpenSearch
+	// Managed Database service. Use ManagedDatabaseUserOpenSearchAccessControlRule instead.
 	ManagedDatabasePropertyMaxIndexCount ManagedDatabasePropertyKey = "max_index_count"
 
 	// ManagedDatabaseAllIPv4 property value can be used together with ManagedDatabasePropertyIPFilter to allow access from all
@@ -523,7 +523,7 @@ func (m *ManagedDatabaseProperties) GetPublicAccess() bool {
 	return v
 }
 
-// GetMaxIndexCount returns the maximum index count of the service.
+// Deprecated: GetMaxIndexCount returns the maximum index count of the service.
 // See upcloud.ManagedDatabasePropertyMaxIndexCount for more information.
 func (m *ManagedDatabaseProperties) GetMaxIndexCount() int {
 	v, _ := m.GetInt(ManagedDatabasePropertyMaxIndexCount)
