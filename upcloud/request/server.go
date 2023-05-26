@@ -144,7 +144,7 @@ type CreateServerRequest struct {
 	LoginUser            *LoginUser                     `json:"login_user,omitempty"`
 	MemoryAmount         int                            `json:"memory_amount,omitempty"`
 	Metadata             upcloud.Boolean                `json:"metadata"`
-	NICModel             string                         `json:"nic_model"`
+	NICModel             string                         `json:"nic_model,omitempty"`
 	Networking           *CreateServerNetworking        `json:"networking"`
 	PasswordDelivery     string                         `json:"password_delivery,omitempty"`
 	Plan                 string                         `json:"plan,omitempty"`
