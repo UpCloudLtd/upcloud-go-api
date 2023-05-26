@@ -140,10 +140,10 @@ func (c *Client) getBaseURL() string {
 	return fmt.Sprintf("%s/%s", c.config.baseURL, APIVersion)
 }
 
-type configFn func(o *config)
+type ConfigFn func(o *config)
 
 // WithBaseURL modifies the client baseURL
-func WithBaseURL(baseURL string) configFn {
+func WithBaseURL(baseURL string) ConfigFn {
 	return func(c *config) {
 		c.baseURL = baseURL
 	}
@@ -151,7 +151,7 @@ func WithBaseURL(baseURL string) configFn {
 
 // WithInsecureSkipVerify modifies the client's httpClient to skip verifying
 // the server's certificate chain and host name. This should be used only for testing.
-func WithInsecureSkipVerify() configFn {
+func WithInsecureSkipVerify() ConfigFn {
 	return func(c *config) {
 		if c.httpClient != nil { // #nosec G402 // allow setting InsecureSkipVerify to true as explicitly requested
 			c.httpClient.Transport = &http.Transport{
@@ -164,14 +164,14 @@ func WithInsecureSkipVerify() configFn {
 }
 
 // WithHTTPClient replaces the client's default httpClient with the specified one
-func WithHTTPClient(httpClient *http.Client) configFn {
+func WithHTTPClient(httpClient *http.Client) ConfigFn {
 	return func(c *config) {
 		c.httpClient = httpClient
 	}
 }
 
 // WithTimeout modifies the client's httpClient timeout
-func WithTimeout(timeout time.Duration) configFn {
+func WithTimeout(timeout time.Duration) ConfigFn {
 	return func(c *config) {
 		c.httpClient.Timeout = timeout
 	}
@@ -179,7 +179,7 @@ func WithTimeout(timeout time.Duration) configFn {
 
 // New creates and returns a new client configured with the specified user and password and optional
 // config functions.
-func New(username, password string, c ...configFn) *Client {
+func New(username, password string, c ...ConfigFn) *Client {
 	config := config{
 		username:   username,
 		password:   password,
