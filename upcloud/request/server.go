@@ -321,7 +321,7 @@ type ModifyServerRequest struct {
 	Labels               *upcloud.LabelSlice `json:"labels,omitempty"`
 	MemoryAmount         int                 `json:"memory_amount,omitempty,string"`
 	Metadata             upcloud.Boolean     `json:"metadata"`
-	NICModel             string              `json:"string"`
+	NICModel             string              `json:"nic_model,omitempty"`
 	Plan                 string              `json:"plan,omitempty"`
 	SimpleBackup         string              `json:"simple_backup,omitempty"`
 	TimeZone             string              `json:"timezone,omitempty"`
