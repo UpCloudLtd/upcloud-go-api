@@ -15,6 +15,7 @@ const exampleKubernetesClusterJSON string = `{
 	"network": "03a98be3-7daa-443f-bb25-4bc6854b396c",
 	"network_cidr": "172.16.0.0/24",
 	"plan": "development",
+	"private_node_groups": false,
 	"node_groups": [
 		{
 			"name": "upcloud-go-sdk-unit-test",
@@ -101,10 +102,11 @@ func exampleKubernetesCluster() KubernetesCluster {
 			exampleKubernetesNodeGroup(true),
 			exampleKubernetesNodeGroup(false),
 		},
-		State: KubernetesClusterStateRunning,
-		UUID:  "0ddab8f4-97c0-4222-91ba-85a4fff7499b",
-		Zone:  "de-fra1",
-		Plan:  "development",
+		State:             KubernetesClusterStateRunning,
+		UUID:              "0ddab8f4-97c0-4222-91ba-85a4fff7499b",
+		Zone:              "de-fra1",
+		Plan:              "development",
+		PrivateNodeGroups: false,
 	}
 }
 

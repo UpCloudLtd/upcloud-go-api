@@ -48,12 +48,13 @@ func (r *GetKubernetesClusterRequest) RequestURL() string {
 
 // CreateKubernetesClusterRequest represents a request to create a Kubernetes cluster
 type CreateKubernetesClusterRequest struct {
-	Name        string                `json:"name"`
-	Network     string                `json:"network"`
-	NetworkCIDR string                `json:"network_cidr"`
-	NodeGroups  []KubernetesNodeGroup `json:"node_groups"`
-	Zone        string                `json:"zone"`
-	Plan        string                `json:"plan,omitempty"`
+	Name              string                `json:"name"`
+	Network           string                `json:"network"`
+	NetworkCIDR       string                `json:"network_cidr"`
+	NodeGroups        []KubernetesNodeGroup `json:"node_groups"`
+	Zone              string                `json:"zone"`
+	Plan              string                `json:"plan,omitempty"`
+	PrivateNodeGroups bool                  `json:"private_node_groups"`
 }
 
 func (r *CreateKubernetesClusterRequest) RequestURL() string {

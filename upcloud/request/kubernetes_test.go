@@ -13,6 +13,7 @@ const exampleCreateKubernetesClusterRequestJSON string = `{
 	"network": "00000000-0000-0000-0000-000000000000",
 	"network_cidr": "172.16.0.1/24",
 	"plan": "production",
+	"private_node_groups": false,
 	"node_groups": [
 		{
 			"count": 1,
@@ -356,8 +357,9 @@ func exampleCreateKubernetesClusterRequest() CreateKubernetesClusterRequest {
 			exampleKubernetesNodeGroup(),
 			exampleKubernetesNodeGroup(),
 		},
-		Zone: "zone",
-		Plan: "production",
+		Zone:              "zone",
+		Plan:              "production",
+		PrivateNodeGroups: false,
 	}
 }
 
