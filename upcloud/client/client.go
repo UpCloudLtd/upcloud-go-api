@@ -16,7 +16,7 @@ import (
 )
 
 const (
-	Version    string = "6.1.1"
+	Version    string = "6.2.0"
 	APIVersion string = "1.3"
 	APIBaseURL string = "https://api.upcloud.com"
 
