@@ -14,6 +14,10 @@ const (
 	VideoModelVGA    = "vga"
 	VideoModelCirrus = "cirrus"
 
+	NICModelE1000   = "e1000"
+	NICModelVirtio  = "virtio"
+	NICModelRTL8139 = "rtl8139"
+
 	StopTypeSoft = "soft"
 	StopTypeHard = "hard"
 

@@ -254,7 +254,7 @@ func TestUnmarshalServerDetails(t *testing.T) {
 	assert.Len(t, serverDetails.IPAddresses, 3)
 	assert.Equal(t, "managedBy", serverDetails.Labels[0].Key)
 	assert.Equal(t, "upcloud-go-sdk-unit-test", serverDetails.Labels[0].Value)
-	assert.Equal(t, "virtio", serverDetails.NICModel)
+	assert.Equal(t, NICModelVirtio, serverDetails.NICModel)
 	assert.Len(t, serverDetails.StorageDevices, 1)
 	assert.Equal(t, "012580a1-32a1-466e-a323-689ca16f2d43", serverDetails.StorageDevices[0].UUID)
 	assert.Equal(t, "virtio:0", serverDetails.StorageDevices[0].Address)
