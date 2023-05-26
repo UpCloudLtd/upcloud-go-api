@@ -142,37 +142,43 @@ func (c *Client) getBaseURL() string {
 
 type configFn func(o *config)
 
+// WithBaseURL modifies the client baseURL
 func WithBaseURL(baseURL string) configFn {
 	return func(c *config) {
 		c.baseURL = baseURL
 	}
 }
 
+// WithInsecureSkipVerify modifies the client's httpClient to skip verifying
+// the server's certificate chain and host name. This should be used only for testing.
 func WithInsecureSkipVerify() configFn {
 	return func(c *config) {
-		if c.httpClient != nil {
+		if c.httpClient != nil { // #nosec G402 // allow setting InsecureSkipVerify to true as explicitly requested
 			c.httpClient.Transport = &http.Transport{
 				TLSClientConfig: &tls.Config{
-					InsecureSkipVerify: true, //nolint
+					InsecureSkipVerify: true,
 				},
 			}
 		}
 	}
 }
 
+// WithHTTPClient replaces the client's default httpClient with the specified one
 func WithHTTPClient(httpClient *http.Client) configFn {
 	return func(c *config) {
 		c.httpClient = httpClient
 	}
 }
 
+// WithTimeout modifies the client's httpClient timeout
 func WithTimeout(timeout time.Duration) configFn {
 	return func(c *config) {
 		c.httpClient.Timeout = timeout
 	}
 }
 
-// New creates and returns a new client configured with the specified user and password
+// New creates and returns a new client configured with the specified user and password and optional
+// config functions.
 func New(username, password string, c ...configFn) *Client {
 	config := config{
 		username:   username,
