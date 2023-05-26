@@ -67,6 +67,7 @@ func TestCreateServerRequest(t *testing.T) {
 			},
 		},
 		Metadata: upcloud.True,
+		NICModel: upcloud.NICModelVirtio,
 		Networking: &CreateServerNetworking{
 			Interfaces: []CreateServerInterface{
 				{
@@ -143,6 +144,7 @@ func TestCreateServerRequest(t *testing.T) {
 					]
 			 },
 			 "metadata":"yes",
+			 "nic_model":"virtio",
 			 "networking":{
 					"interfaces":{
 						 "interface":[

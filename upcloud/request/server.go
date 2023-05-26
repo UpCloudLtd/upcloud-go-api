@@ -144,6 +144,7 @@ type CreateServerRequest struct {
 	LoginUser            *LoginUser                     `json:"login_user,omitempty"`
 	MemoryAmount         int                            `json:"memory_amount,omitempty"`
 	Metadata             upcloud.Boolean                `json:"metadata"`
+	NICModel             string                         `json:"nic_model"`
 	Networking           *CreateServerNetworking        `json:"networking"`
 	PasswordDelivery     string                         `json:"password_delivery,omitempty"`
 	Plan                 string                         `json:"plan,omitempty"`
@@ -320,6 +321,7 @@ type ModifyServerRequest struct {
 	Labels               *upcloud.LabelSlice `json:"labels,omitempty"`
 	MemoryAmount         int                 `json:"memory_amount,omitempty,string"`
 	Metadata             upcloud.Boolean     `json:"metadata"`
+	NICModel             string              `json:"string"`
 	Plan                 string              `json:"plan,omitempty"`
 	SimpleBackup         string              `json:"simple_backup,omitempty"`
 	TimeZone             string              `json:"timezone,omitempty"`
