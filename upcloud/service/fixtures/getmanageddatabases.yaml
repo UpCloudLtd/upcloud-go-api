@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"hostname_prefix":"getmanageddatabases","plan":"2x2xCPU-4GB-100GB","properties":{"automatic_utility_network_ip_filter":true,"ip_filter":["10.0.0.1/32"],"public_access":true},"title":"test","type":"pg","zone":"fi-hel2","maintenance":{"dow":"monday","time":"12:00:00"}}'
+    body: '{"hostname_prefix":"getmanageddatabases","plan":"2x2xCPU-4GB-100GB","properties":{"automatic_utility_network_ip_filter":true,"ip_filter":["10.0.0.1/32"],"public_access":true},"title":"getmanageddatabases","type":"pg","zone":"fi-hel2","maintenance":{"dow":"monday","time":"12:00:00"}}'
     form: {}
     headers:
       Accept:
@@ -10,22 +10,20 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/4.0.0
+      - upcloud-go-api/6.1.1
     url: https://api.upcloud.com/1.3/database
     method: POST
   response:
-    body: '{"backups":[],"components":[{"component":"pg","host":"getmanageddatabases-deviyydmahgscgy.db.upclouddatabases.com","port":11550,"route":"dynamic","usage":"primary"},{"component":"pg","host":"public-getmanageddatabases-deviyydmahgscgy.db.upclouddatabases.com","port":11550,"route":"public","usage":"primary"},{"component":"pg","host":"replica-getmanageddatabases-deviyydmahgscgy.db.upclouddatabases.com","port":11550,"route":"dynamic","usage":"replica"},{"component":"pg","host":"public-replica-getmanageddatabases-deviyydmahgscgy.db.upclouddatabases.com","port":11550,"route":"public","usage":"replica"},{"component":"pgbouncer","host":"getmanageddatabases-deviyydmahgscgy.db.upclouddatabases.com","port":11551,"route":"dynamic","usage":"primary"},{"component":"pgbouncer","host":"public-getmanageddatabases-deviyydmahgscgy.db.upclouddatabases.com","port":11551,"route":"public","usage":"primary"},{"component":"pgbouncer","host":"replica-getmanageddatabases-deviyydmahgscgy.db.upclouddatabases.com","port":11551,"route":"dynamic","usage":"replica"},{"component":"pgbouncer","host":"public-replica-getmanageddatabases-deviyydmahgscgy.db.upclouddatabases.com","port":11551,"route":"public","usage":"replica"}],"create_time":"0001-01-01T00:00:00Z","maintenance":{"dow":"monday","time":"12:00:00"},"name":"getmanageddatabases","node_count":2,"node_states":[],"plan":"2x2xCPU-4GB-100GB","powered":true,"properties":{"automatic_utility_network_ip_filter":true,"ip_filter":["10.0.0.1/32"],"public_access":true},"uuid":"09cbbb6b-ef55-45ce-bd01-e3171581fe11","state":"rebuilding","title":"test","type":"pg","update_time":"0001-01-01T00:00:00Z","service_uri":"postgres://upadmin:BWz63YFwuc2TvENp@getmanageddatabases-deviyydmahgscgy.db.upclouddatabases.com:11550/defaultdb?sslmode=require","service_uri_params":{"dbname":"defaultdb","host":"getmanageddatabases-deviyydmahgscgy.db.upclouddatabases.com","password":"BWz63YFwuc2TvENp","port":"11550","ssl_mode":"require","user":"upadmin"},"users":null,"zone":"fi-hel2"}'
+    body: '{"backups":[],"components":[{"component":"pg","host":"getmanageddatabases-zhbmidiechch.db.upclouddatabases.com","port":11550,"route":"dynamic","usage":"primary"},{"component":"pg","host":"replica-getmanageddatabases-zhbmidiechch.db.upclouddatabases.com","port":11550,"route":"dynamic","usage":"replica"},{"component":"pg","host":"public-getmanageddatabases-zhbmidiechch.db.upclouddatabases.com","port":11550,"route":"public","usage":"primary"},{"component":"pg","host":"public-replica-getmanageddatabases-zhbmidiechch.db.upclouddatabases.com","port":11550,"route":"public","usage":"replica"},{"component":"pgbouncer","host":"getmanageddatabases-zhbmidiechch.db.upclouddatabases.com","port":11551,"route":"dynamic","usage":"primary"},{"component":"pgbouncer","host":"replica-getmanageddatabases-zhbmidiechch.db.upclouddatabases.com","port":11551,"route":"dynamic","usage":"replica"},{"component":"pgbouncer","host":"public-getmanageddatabases-zhbmidiechch.db.upclouddatabases.com","port":11551,"route":"public","usage":"primary"},{"component":"pgbouncer","host":"public-replica-getmanageddatabases-zhbmidiechch.db.upclouddatabases.com","port":11551,"route":"public","usage":"replica"}],"create_time":"0001-01-01T00:00:00Z","maintenance":{"dow":"monday","time":"12:00:00","pending_updates":[]},"name":"getmanageddatabases","node_count":2,"node_states":[],"plan":"2x2xCPU-4GB-100GB","powered":true,"metadata":{"max_connections":100,"pg_version":"15","write_block_threshold_exceeded":null},"properties":{"automatic_utility_network_ip_filter":true,"backup_hour":15,"backup_minute":53,"ip_filter":["10.0.0.1/32"],"pg_stat_monitor_enable":false,"pglookout":{"max_failover_replication_time_lag":60},"public_access":true,"version":"15"},"uuid":"09ea481d-a4a4-4457-a58e-fc4a3f361701","state":"rebuilding","title":"getmanageddatabases","type":"pg","update_time":"0001-01-01T00:00:00Z","service_uri":"postgres://upadmin:AVNS_69SXqqRbRl8wdZmpQT0@getmanageddatabases-zhbmidiechch.db.upclouddatabases.com:11550/defaultdb?sslmode=require","service_uri_params":{"dbname":"defaultdb","host":"getmanageddatabases-zhbmidiechch.db.upclouddatabases.com","password":"AVNS_69SXqqRbRl8wdZmpQT0","port":"11550","ssl_mode":"require","user":"upadmin"},"users":[{"username":"upadmin","type":"primary"}],"databases":[{"name":"defaultdb"}],"zone":"fi-hel2"}'
     headers:
-      Access-Control-Allow-Methods:
-      - OPTIONS,GET,POST
       Access-Control-Allow-Origin:
       - '*'
-      Content-Length:
-      - "2006"
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Sep 2021 13:35:08 GMT
+      - Wed, 17 May 2023 06:39:07 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
     status: 200 OK
     code: 200
     duration: ""
@@ -38,20 +36,18 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/4.0.0
+      - upcloud-go-api/6.1.1
     url: https://api.upcloud.com/1.3/database
     method: GET
   response:
-    body: '[{"backups":[{"backup_time":"2021-09-12T15:16:05.447755Z","data_size":2349235434},{"backup_time":"2021-09-13T15:16:05.725335Z","data_size":2349235434}],"components":[{"component":"mysql","host":"testmysql-deviyydmahgscgy.db.upclouddatabases.com","port":11550,"route":"dynamic","usage":"primary"},{"component":"mysql","host":"public-testmysql-deviyydmahgscgy.db.upclouddatabases.com","port":11550,"route":"public","usage":"primary"},{"component":"mysqlx","host":"testmysql-deviyydmahgscgy.db.upclouddatabases.com","port":11554,"route":"dynamic","usage":"primary"},{"component":"mysqlx","host":"public-testmysql-deviyydmahgscgy.db.upclouddatabases.com","port":11554,"route":"public","usage":"primary"},{"component":"mysql","host":"replica-testmysql-deviyydmahgscgy.db.upclouddatabases.com","port":11550,"route":"dynamic","usage":"replica"},{"component":"mysql","host":"public-replica-testmysql-deviyydmahgscgy.db.upclouddatabases.com","port":11550,"route":"public","usage":"replica"},{"component":"mysqlx","host":"replica-testmysql-deviyydmahgscgy.db.upclouddatabases.com","port":11554,"route":"dynamic","usage":"replica"},{"component":"mysqlx","host":"public-replica-testmysql-deviyydmahgscgy.db.upclouddatabases.com","port":11554,"route":"public","usage":"replica"}],"create_time":"2021-08-25T08:47:06Z","maintenance":{"dow":"thursday","time":"17:53:14"},"name":"testmysql","node_count":2,"node_states":[{"name":"testmysql-2","role":"standby","state":"running"},{"name":"testmysql-3","role":"master","state":"running"}],"plan":"2x2xCPU-4GB-50GB","powered":true,"properties":{"automatic_utility_network_ip_filter":true,"backup_hour":15,"backup_minute":16,"ip_filter":["0.0.0.0/0"],"public_access":true},"uuid":"09e69439-573e-49a8-ba1b-e54156190417","state":"running","title":"","type":"mysql","update_time":"2021-09-14T10:46:27Z","service_uri":"mysql://test:au8fmdprm3xhpjdq@testmysql-deviyydmahgscgy.db.upclouddatabases.com:11550/defaultdb?ssl-mode=REQUIRED","service_uri_params":{"dbname":"defaultdb","host":"testmysql-deviyydmahgscgy.db.upclouddatabases.com","password":"au8fmdprm3xhpjdq","port":"11550","ssl_mode":"REQUIRED","user":"test"},"users":[{"username":"test","authentication":"caching_sha2_password","type":"primary"}],"zone":"de-fra1"},{"backups":[{"backup_time":"2021-09-11T15:16:04.193000Z","data_size":36864000},{"backup_time":"2021-09-12T15:16:02.757000Z","data_size":36904960},{"backup_time":"2021-09-13T15:16:04.848000Z","data_size":36935680}],"components":[{"component":"pg","host":"foo-deviyydmahgscgy-d815.db.upclouddatabases.com","port":11550,"route":"dynamic","usage":"primary"},{"component":"pg","host":"public-foo-deviyydmahgscgy-d65e.db.upclouddatabases.com","port":11550,"route":"public","usage":"primary"},{"component":"pgbouncer","host":"foo-deviyydmahgscgy-d815.db.upclouddatabases.com","port":11551,"route":"dynamic","usage":"primary"},{"component":"pgbouncer","host":"public-foo-deviyydmahgscgy-d65e.db.upclouddatabases.com","port":11551,"route":"public","usage":"primary"}],"create_time":"2021-08-24T14:35:33Z","maintenance":{"dow":"sunday","time":"05:21:13"},"name":"foo","node_count":1,"node_states":[{"name":"foo-1","role":"master","state":"running"}],"plan":"1x1xCPU-2GB-25GB","powered":true,"properties":{"automatic_utility_network_ip_filter":true,"backup_hour":15,"backup_minute":16,"ip_filter":["0.0.0.0/0"],"public_access":true,"version":"12"},"uuid":"09e69439-573e-49a8-ba1b-e54156190415","state":"running","title":"","type":"pg","update_time":"2021-08-25T07:25:08Z","service_uri":"postgres://upadmin:rhjd39o2vippi2zn@foo-deviyydmahgscgy-d815.db.upclouddatabases.com:11550/defaultdb?sslmode=require","service_uri_params":{"dbname":"defaultdb","host":"foo-deviyydmahgscgy-d815.db.upclouddatabases.com","password":"rhjd39o2vippi2zn","port":"11550","ssl_mode":"require","user":"upadmin"},"users":[{"username":"upadmin","type":"primary"}],"zone":"fi-hel2"},{"backups":[],"components":[{"component":"pg","host":"getmanageddatabases-deviyydmahgscgy.db.upclouddatabases.com","port":11550,"route":"dynamic","usage":"primary"},{"component":"pg","host":"public-getmanageddatabases-deviyydmahgscgy.db.upclouddatabases.com","port":11550,"route":"public","usage":"primary"},{"component":"pg","host":"replica-getmanageddatabases-deviyydmahgscgy.db.upclouddatabases.com","port":11550,"route":"dynamic","usage":"replica"},{"component":"pg","host":"public-replica-getmanageddatabases-deviyydmahgscgy.db.upclouddatabases.com","port":11550,"route":"public","usage":"replica"},{"component":"pgbouncer","host":"getmanageddatabases-deviyydmahgscgy.db.upclouddatabases.com","port":11551,"route":"dynamic","usage":"primary"},{"component":"pgbouncer","host":"public-getmanageddatabases-deviyydmahgscgy.db.upclouddatabases.com","port":11551,"route":"public","usage":"primary"},{"component":"pgbouncer","host":"replica-getmanageddatabases-deviyydmahgscgy.db.upclouddatabases.com","port":11551,"route":"dynamic","usage":"replica"},{"component":"pgbouncer","host":"public-replica-getmanageddatabases-deviyydmahgscgy.db.upclouddatabases.com","port":11551,"route":"public","usage":"replica"}],"create_time":"2021-09-14T13:35:07Z","maintenance":{"dow":"monday","time":"12:00:00"},"name":"getmanageddatabases","node_count":2,"node_states":[{"name":"getmanageddatabases-1","role":"standby","state":"setting_up_vm"}],"plan":"2x2xCPU-4GB-100GB","powered":true,"properties":{"automatic_utility_network_ip_filter":true,"ip_filter":["10.0.0.1/32"],"public_access":true},"uuid":"09cbbb6b-ef55-45ce-bd01-e3171581fe11","state":"rebuilding","title":"test","type":"pg","update_time":"2021-09-14T13:35:07Z","service_uri":"postgres://upadmin:BWz63YFwuc2TvENp@getmanageddatabases-deviyydmahgscgy.db.upclouddatabases.com:11550/defaultdb?sslmode=require","service_uri_params":{"dbname":"defaultdb","host":"getmanageddatabases-deviyydmahgscgy.db.upclouddatabases.com","password":"BWz63YFwuc2TvENp","port":"11550","ssl_mode":"require","user":"upadmin"},"users":null,"zone":"fi-hel2"}]'
+    body: '[{"backups":[],"components":[{"component":"pg","host":"getmanageddatabases-zhbmidiechch.db.upclouddatabases.com","port":11550,"route":"dynamic","usage":"primary"},{"component":"pg","host":"replica-getmanageddatabases-zhbmidiechch.db.upclouddatabases.com","port":11550,"route":"dynamic","usage":"replica"},{"component":"pg","host":"public-getmanageddatabases-zhbmidiechch.db.upclouddatabases.com","port":11550,"route":"public","usage":"primary"},{"component":"pg","host":"public-replica-getmanageddatabases-zhbmidiechch.db.upclouddatabases.com","port":11550,"route":"public","usage":"replica"},{"component":"pgbouncer","host":"getmanageddatabases-zhbmidiechch.db.upclouddatabases.com","port":11551,"route":"dynamic","usage":"primary"},{"component":"pgbouncer","host":"replica-getmanageddatabases-zhbmidiechch.db.upclouddatabases.com","port":11551,"route":"dynamic","usage":"replica"},{"component":"pgbouncer","host":"public-getmanageddatabases-zhbmidiechch.db.upclouddatabases.com","port":11551,"route":"public","usage":"primary"},{"component":"pgbouncer","host":"public-replica-getmanageddatabases-zhbmidiechch.db.upclouddatabases.com","port":11551,"route":"public","usage":"replica"}],"create_time":"2023-05-17T06:39:06Z","maintenance":{"dow":"monday","time":"12:00:00","pending_updates":[]},"name":"getmanageddatabases","node_count":2,"node_states":[{"name":"getmanageddatabases-1","role":"standby","state":"setting_up_vm"}],"plan":"2x2xCPU-4GB-100GB","powered":true,"metadata":{"max_connections":100,"pg_version":"15","write_block_threshold_exceeded":null},"properties":{"automatic_utility_network_ip_filter":true,"backup_hour":15,"backup_minute":53,"ip_filter":["10.0.0.1/32"],"pg_stat_monitor_enable":false,"pglookout":{"max_failover_replication_time_lag":60},"public_access":true,"version":"15"},"uuid":"09ea481d-a4a4-4457-a58e-fc4a3f361701","state":"rebuilding","title":"getmanageddatabases","type":"pg","update_time":"2023-05-17T06:39:06Z","service_uri":"postgres://upadmin:AVNS_69SXqqRbRl8wdZmpQT0@getmanageddatabases-zhbmidiechch.db.upclouddatabases.com:11550/defaultdb?sslmode=require","service_uri_params":{"dbname":"defaultdb","host":"getmanageddatabases-zhbmidiechch.db.upclouddatabases.com","password":"AVNS_69SXqqRbRl8wdZmpQT0","port":"11550","ssl_mode":"require","user":"upadmin"},"users":[{"username":"upadmin","type":"primary"}],"databases":[{"name":"defaultdb"}],"zone":"fi-hel2"}]'
     headers:
-      Access-Control-Allow-Methods:
-      - OPTIONS,GET,POST
-      Access-Control-Allow-Origin:
-      - '*'
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Sep 2021 13:35:08 GMT
+      - Wed, 17 May 2023 06:39:07 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
     status: 200 OK
     code: 200
     duration: ""
@@ -64,18 +60,16 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/4.0.0
-    url: https://api.upcloud.com/1.3/database/09cbbb6b-ef55-45ce-bd01-e3171581fe11
+      - upcloud-go-api/6.1.1
+    url: https://api.upcloud.com/1.3/database/09ea481d-a4a4-4457-a58e-fc4a3f361701
     method: DELETE
   response:
     body: ""
     headers:
-      Access-Control-Allow-Methods:
-      - OPTIONS,DELETE,GET,PATCH
-      Access-Control-Allow-Origin:
-      - '*'
       Date:
-      - Tue, 14 Sep 2021 13:35:09 GMT
+      - Wed, 17 May 2023 06:39:08 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
     status: 204 No Content
     code: 204
     duration: ""

@@ -130,6 +130,18 @@ func (g *GetManagedDatabasesRequest) RequestURL() string {
 	return "/database"
 }
 
+// GetManagedDatabaseAccessControlRequest represents a request to get access control settings of an existing OpenSearch
+// Managed Database service
+type GetManagedDatabaseAccessControlRequest struct {
+	// ServiceUUID selects a managed database service to query
+	ServiceUUID string `json:"-"`
+}
+
+// RequestURL implements the request.Request interface
+func (g *GetManagedDatabaseAccessControlRequest) RequestURL() string {
+	return fmt.Sprintf("/database/%s/access-control", g.ServiceUUID)
+}
+
 // GetManagedDatabaseConnectionsRequest represents a request to get managed database instance's current connections
 type GetManagedDatabaseConnectionsRequest struct {
 	// UUID selects a managed database instance to query connections from
@@ -259,7 +271,7 @@ type ManagedDatabaseMaintenanceTimeRequest struct {
 //	req := CreateManagedDatabaseRequest{}; req.Properties.SetString("foo", "bar").Set("test", customValue)
 type ManagedDatabasePropertiesRequest map[upcloud.ManagedDatabasePropertyKey]interface{}
 
-// Set associates key with a any type of value. The underlying map is initialised if it's nil
+// Set associates key with an any type of value. The underlying map is initialised if it's nil
 func (m *ManagedDatabasePropertiesRequest) Set(name upcloud.ManagedDatabasePropertyKey, value interface{}) *ManagedDatabasePropertiesRequest {
 	if m == nil {
 		return nil
@@ -421,6 +433,19 @@ func (m *ModifyManagedDatabaseRequest) RequestURL() string {
 	return fmt.Sprintf("/database/%s", m.UUID)
 }
 
+// ModifyManagedDatabaseAccessControlRequest represents a request to modify existing user access control of an existing managed database instance
+type ModifyManagedDatabaseAccessControlRequest struct {
+	// ServiceUUID selects a managed database service to modify
+	ServiceUUID         string `json:"-"`
+	ACLsEnabled         *bool  `json:"access_control"`
+	ExtendedACLsEnabled *bool  `json:"extended_access_control"`
+}
+
+// RequestURL implements the request.Request interface
+func (m *ModifyManagedDatabaseAccessControlRequest) RequestURL() string {
+	return fmt.Sprintf("/database/%s/access-control", m.ServiceUUID)
+}
+
 // UpgradeManagedDatabaseVersionRequest represents a request to upgrade an existing managed database version;
 // for a list of available versions use GetManagedDatabaseVersionsRequest
 type UpgradeManagedDatabaseVersionRequest struct {
@@ -491,9 +516,10 @@ type CreateManagedDatabaseUserRequest struct {
 	// Authentication selects authentication type for the user. See following constants for more information:
 	// 	upcloud.ManagedDatabaseUserAuthenticationCachingSHA2Password
 	// 	upcloud.ManagedDatabaseUserAuthenticationMySQLNativePassword
-	Authentication     upcloud.ManagedDatabaseUserAuthenticationType  `json:"authentication,omitempty"`
-	PGAccessControl    *upcloud.ManagedDatabaseUserPGAccessControl    `json:"pg_access_control,omitempty"`
-	RedisAccessControl *upcloud.ManagedDatabaseUserRedisAccessControl `json:"redis_access_control,omitempty"`
+	Authentication          upcloud.ManagedDatabaseUserAuthenticationType       `json:"authentication,omitempty"`
+	OpenSearchAccessControl *upcloud.ManagedDatabaseUserOpenSearchAccessControl `json:"opensearch_access_control,omitempty"`
+	PGAccessControl         *upcloud.ManagedDatabaseUserPGAccessControl         `json:"pg_access_control,omitempty"`
+	RedisAccessControl      *upcloud.ManagedDatabaseUserRedisAccessControl      `json:"redis_access_control,omitempty"`
 }
 
 // RequestURL implements the request.Request interface
@@ -558,14 +584,15 @@ func (m *ModifyManagedDatabaseUserRequest) RequestURL() string {
 	return fmt.Sprintf("/database/%s/users/%s", m.ServiceUUID, m.Username)
 }
 
-// ModifyManagedDatabaseUserRequest represents a request to modify an existing user of an existing managed database instance
+// ModifyManagedDatabaseUserAccessControlRequest represents a request to modify existing user access control of an existing managed database instance
 type ModifyManagedDatabaseUserAccessControlRequest struct {
 	// ServiceUUID selects a managed database service to modify
 	ServiceUUID string `json:"-"`
 	// Username selects the username to modify. The username itself is immutable. To change it, recreate the user.
-	Username           string                                         `json:"-"`
-	PGAccessControl    *upcloud.ManagedDatabaseUserPGAccessControl    `json:"pg_access_control,omitempty"`
-	RedisAccessControl *upcloud.ManagedDatabaseUserRedisAccessControl `json:"redis_access_control,omitempty"`
+	Username                string                                              `json:"-"`
+	OpenSearchAccessControl *upcloud.ManagedDatabaseUserOpenSearchAccessControl `json:"opensearch_access_control,omitempty"`
+	PGAccessControl         *upcloud.ManagedDatabaseUserPGAccessControl         `json:"pg_access_control,omitempty"`
+	RedisAccessControl      *upcloud.ManagedDatabaseUserRedisAccessControl      `json:"redis_access_control,omitempty"`
 }
 
 // RequestURL implements the request.Request interface
@@ -615,4 +642,44 @@ type DeleteManagedDatabaseLogicalDatabaseRequest struct {
 // RequestURL implements the request.Request interface
 func (d *DeleteManagedDatabaseLogicalDatabaseRequest) RequestURL() string {
 	return fmt.Sprintf("/database/%s/databases/%s", d.ServiceUUID, d.Name)
+}
+
+/* OpenSearch index Management */
+
+// GetManagedDatabaseIndicesRequest represents a request to get the indices of an existing managed database
+// instance.
+type GetManagedDatabaseIndicesRequest struct {
+	// ServiceUUID selects a managed database service to query
+	ServiceUUID string `json:"-"`
+}
+
+// RequestURL implements the request.Request interface
+func (g *GetManagedDatabaseIndicesRequest) RequestURL() string {
+	return fmt.Sprintf("/database/%s/indices", g.ServiceUUID)
+}
+
+// GetManagedDatabaseIndexRequest represents a request to get details of an index of an existing managed database
+// instance.
+type GetManagedDatabaseIndexRequest struct {
+	// ServiceUUID selects a managed database service to query
+	ServiceUUID string `json:"-"`
+	IndexName   string `json:"-"`
+}
+
+// RequestURL implements the request.Request interface
+func (g *GetManagedDatabaseIndexRequest) RequestURL() string {
+	return fmt.Sprintf("/database/%s/indices/%s", g.ServiceUUID, g.IndexName)
+}
+
+// DeleteManagedDatabaseIndexRequest represents a request to delete an index from an existing managed database instance.
+type DeleteManagedDatabaseIndexRequest struct {
+	// ServiceUUID selects a managed database service to modify
+	ServiceUUID string `json:"-"`
+	// IndexName selects the index to delete
+	IndexName string `json:"-"`
+}
+
+// RequestURL implements the request.Request interface
+func (m *DeleteManagedDatabaseIndexRequest) RequestURL() string {
+	return fmt.Sprintf("/database/%s/indices/%s", m.ServiceUUID, m.IndexName)
 }

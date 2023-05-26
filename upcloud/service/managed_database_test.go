@@ -16,10 +16,18 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud/request"
 )
 
+const (
+	managedDatabaseTestPlanMySQL      = "2x2xCPU-4GB-100GB"
+	managedDatabaseTestPlanOpenSearch = "1x2xCPU-4GB-80GB-1D"
+	managedDatabaseTestPlanPostgreSQL = "2x2xCPU-4GB-100GB"
+	managedDatabaseTestPlanRedis      = "1x1xCPU-2GB"
+	managedDatabaseTestZone           = "fi-hel2"
+)
+
 func TestService_CloneManagedDatabase(t *testing.T) {
 	record(t, "clonemanageddatabase", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		var cloneDetails *upcloud.ManagedDatabase
-		createReq := getTestCreateRequest("clonemanageddatabase")
+		createReq := getTestCreateRequest("clonemanageddatabase", upcloud.ManagedDatabaseServiceTypePostgreSQL)
 		serviceDetails, err := svc.CreateManagedDatabase(ctx, createReq)
 		if !assert.NoError(t, err) {
 			return
@@ -49,8 +57,8 @@ func TestService_CloneManagedDatabase(t *testing.T) {
 		cloneReq := &request.CloneManagedDatabaseRequest{
 			UUID:           serviceDetails.UUID,
 			CloneTime:      serviceDetails.Backups[0].BackupTime.Add(1 * time.Second),
-			HostNamePrefix: "testclone",
-			Title:          "testclone",
+			HostNamePrefix: fmt.Sprintf("%s-clone", serviceDetails.Name),
+			Title:          fmt.Sprintf("%s-clone", serviceDetails.Title),
 			Zone:           createReq.Zone,
 			Plan:           createReq.Plan,
 		}
@@ -66,15 +74,12 @@ func TestService_CreateManagedDatabase(t *testing.T) {
 		upcloud.ManagedDatabaseServiceTypeMySQL,
 		upcloud.ManagedDatabaseServiceTypePostgreSQL,
 		upcloud.ManagedDatabaseServiceTypeRedis,
+		upcloud.ManagedDatabaseServiceTypeOpenSearch,
 	}
 	record(t, "createmanageddatabase", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		for _, serviceType := range typesToTest {
+		for i, serviceType := range typesToTest {
 			t.Run(string(serviceType), func(t *testing.T) {
-				req := getTestCreateRequest("createmanageddatabase")
-				req.Type = serviceType
-				if serviceType == upcloud.ManagedDatabaseServiceTypeRedis {
-					req.Plan = "1x1xCPU-2GB"
-				}
+				req := getTestCreateRequest(fmt.Sprintf("createmanageddatabase%d", i), serviceType)
 				details, err := svc.CreateManagedDatabase(ctx, req)
 				if !assert.NoError(t, err) {
 					return
@@ -97,12 +102,14 @@ func TestService_CreateManagedDatabase(t *testing.T) {
 				assert.Equal(t, req.Type, details.Type)
 				assert.Equal(t, req.Zone, details.Zone)
 				switch serviceType {
-				case upcloud.ManagedDatabaseServiceTypeRedis:
-					assert.NotEmpty(t, details.Metadata.RedisVersion)
 				case upcloud.ManagedDatabaseServiceTypeMySQL:
 					assert.NotEmpty(t, details.Metadata.MySQLVersion)
+				case upcloud.ManagedDatabaseServiceTypeOpenSearch:
+					assert.NotEmpty(t, details.Metadata.OpenSearchVersion)
 				case upcloud.ManagedDatabaseServiceTypePostgreSQL:
 					assert.NotEmpty(t, details.Metadata.PGVersion)
+				case upcloud.ManagedDatabaseServiceTypeRedis:
+					assert.NotEmpty(t, details.Metadata.RedisVersion)
 				}
 			})
 		}
@@ -111,7 +118,7 @@ func TestService_CreateManagedDatabase(t *testing.T) {
 
 func TestService_WaitForManagedDatabaseState(t *testing.T) {
 	record(t, "waitformanageddatabase", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		details, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("waitformanageddatabase"))
+		details, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("waitformanageddatabase", upcloud.ManagedDatabaseServiceTypePostgreSQL))
 		if !assert.NoError(t, err) {
 			return
 		}
@@ -133,7 +140,7 @@ func TestService_WaitForManagedDatabaseState(t *testing.T) {
 
 func TestService_GetManagedDatabase(t *testing.T) {
 	record(t, "getmanageddatabase", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		req := getTestCreateRequest("getmanageddatabase")
+		req := getTestCreateRequest("getmanageddatabase", upcloud.ManagedDatabaseServiceTypePostgreSQL)
 		details, err := svc.CreateManagedDatabase(ctx, req)
 		if !assert.NoError(t, err) {
 			return
@@ -162,7 +169,7 @@ func TestService_GetManagedDatabase(t *testing.T) {
 
 func TestService_GetManagedDatabases(t *testing.T) {
 	record(t, "getmanageddatabases", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		details, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("getmanageddatabases"))
+		details, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("getmanageddatabases", upcloud.ManagedDatabaseServiceTypePostgreSQL))
 		if !assert.NoError(t, err) {
 			return
 		}
@@ -192,7 +199,7 @@ func TestService_GetManagedDatabaseLogs(t *testing.T) {
 		waitFor   = 30 * time.Second
 	)
 	record(t, "getmanageddatabaselogs", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		createReq := getTestCreateRequest("getmanageddatabaselogs")
+		createReq := getTestCreateRequest("getmanageddatabaselogs", upcloud.ManagedDatabaseServiceTypePostgreSQL)
 		serviceDetails, err := svc.CreateManagedDatabase(ctx, createReq)
 		if !assert.NoError(t, err) {
 			return
@@ -259,7 +266,7 @@ func TestService_GetManagedDatabaseLogs(t *testing.T) {
 
 func TestService_GetManagedDatabaseConnections(t *testing.T) {
 	record(t, "getmanageddatabaseconnections", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		createReq := getTestCreateRequest("getmanageddatabaseconnections")
+		createReq := getTestCreateRequest("getmanageddatabaseconnections", upcloud.ManagedDatabaseServiceTypePostgreSQL)
 		createReq.Type = upcloud.ManagedDatabaseServiceTypePostgreSQL
 		createReq.Properties.SetPublicAccess(true).SetIPFilter(upcloud.ManagedDatabaseAllIPv4)
 		serviceDetails, err := svc.CreateManagedDatabase(ctx, createReq)
@@ -301,12 +308,10 @@ func TestService_GetManagedDatabaseConnections(t *testing.T) {
 }
 
 func TestService_GetManagedDatabaseMetrics(t *testing.T) {
-	const (
-		timeout = 10 * time.Minute
-		waitFor = 2 * time.Minute
-	)
+	const waitFor = 2 * time.Minute
+
 	record(t, "getmanageddatabasemetrics", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		createReq := getTestCreateRequest("getmanageddatabasemetrics")
+		createReq := getTestCreateRequest("getmanageddatabasemetrics", upcloud.ManagedDatabaseServiceTypePostgreSQL)
 		serviceDetails, err := svc.CreateManagedDatabase(ctx, createReq)
 		if !assert.NoError(t, err) {
 			return
@@ -373,8 +378,7 @@ func TestService_GetManagedDatabaseMetrics(t *testing.T) {
 
 func TestService_GetManagedDatabaseQueryStatisticsMySQL(t *testing.T) {
 	record(t, "getmanageddatabasequerystatisticsmysql", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		createReq := getTestCreateRequest("querystatisticsmysql")
-		createReq.Type = upcloud.ManagedDatabaseServiceTypeMySQL
+		createReq := getTestCreateRequest("querystatisticsmysql", upcloud.ManagedDatabaseServiceTypeMySQL)
 		createReq.Properties.SetPublicAccess(true).SetIPFilter(upcloud.ManagedDatabaseAllIPv4)
 		serviceDetails, err := svc.CreateManagedDatabase(ctx, createReq)
 		if !assert.NoError(t, err) {
@@ -400,8 +404,7 @@ func TestService_GetManagedDatabaseQueryStatisticsMySQL(t *testing.T) {
 
 func TestService_GetManagedDatabaseQueryStatisticsPostgreSQL(t *testing.T) {
 	record(t, "getmanageddatabasequerystatisticspostgres", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		createReq := getTestCreateRequest("querystatisticspostgres")
-		createReq.Type = upcloud.ManagedDatabaseServiceTypePostgreSQL
+		createReq := getTestCreateRequest("querystatisticspostgres", upcloud.ManagedDatabaseServiceTypePostgreSQL)
 		createReq.Properties.SetPublicAccess(true).SetIPFilter(upcloud.ManagedDatabaseAllIPv4)
 		serviceDetails, err := svc.CreateManagedDatabase(ctx, createReq)
 		if !assert.NoError(t, err) {
@@ -428,7 +431,7 @@ func TestService_GetManagedDatabaseQueryStatisticsPostgreSQL(t *testing.T) {
 
 func TestService_ModifyManagedDatabase(t *testing.T) {
 	record(t, "modifymanageddatabase", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		details, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("modifymanageddatabase"))
+		details, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("modifymanageddatabase", upcloud.ManagedDatabaseServiceTypePostgreSQL))
 		if !assert.NoError(t, err) {
 			return
 		}
@@ -491,7 +494,7 @@ func TestService_UpgradeManagedDatabaseVersion(t *testing.T) {
 
 func TestService_GetManagedDatabaseVersions(t *testing.T) {
 	record(t, "getmanageddatabaseversions", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		details, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("getmanageddatabaseversions"))
+		details, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("getmanageddatabaseversions", upcloud.ManagedDatabaseServiceTypePostgreSQL))
 		require.NoError(t, err)
 
 		defer func() {
@@ -516,7 +519,7 @@ func TestService_GetManagedDatabaseVersions(t *testing.T) {
 
 func TestService_ShutdownStartManagedDatabase(t *testing.T) {
 	record(t, "shutdownstartmanageddatabase", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		details, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("shutdownstartmanageddatabase"))
+		details, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("shutdownstartmanageddatabase", upcloud.ManagedDatabaseServiceTypePostgreSQL))
 		if !assert.NoError(t, err) {
 			return
 		}
@@ -547,7 +550,7 @@ func TestService_ShutdownStartManagedDatabase(t *testing.T) {
 
 func TestService_ManagedDatabaseUserManager(t *testing.T) {
 	record(t, "managemanageddatabaseusers", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		serviceDetails, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("managemanageddatabaseusers"))
+		serviceDetails, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("managemanageddatabaseusers", upcloud.ManagedDatabaseServiceTypePostgreSQL))
 		if !assert.NoError(t, err) {
 			return
 		}
@@ -636,7 +639,7 @@ func TestService_ManagedDatabaseLogicalDatabaseManager(t *testing.T) {
 		defaultdb = "defaultdb"
 	)
 	record(t, "managemanageddatabaslogicaldbs", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		serviceDetails, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("managemanageddatabaslogicaldbs"))
+		serviceDetails, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("managemanageddatabaslogicaldbs", upcloud.ManagedDatabaseServiceTypePostgreSQL))
 		if !assert.NoError(t, err) {
 			return
 		}
@@ -725,7 +728,7 @@ func TestService_GetManagedDatabaseServiceTypes(t *testing.T) {
 
 func TestService_ModifyManagedDatabaseUserAccessControl(t *testing.T) {
 	record(t, "modifymanageddatabaseuseraccesscontrol", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		db, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("modifyuseraccesscontrol"))
+		db, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("modifyuseraccesscontrol", upcloud.ManagedDatabaseServiceTypePostgreSQL))
 		if !assert.NoError(t, err) {
 			return
 		}
@@ -760,6 +763,114 @@ func TestService_ModifyManagedDatabaseUserAccessControl(t *testing.T) {
 			return
 		}
 		assert.False(t, user.PGAccessControl.AllowReplication)
+	})
+}
+
+func TestService_ModifyManagedDatabaseUserOpenSearchAccessControl(t *testing.T) {
+	record(t, "modifymanageddatabaseuseraccesscontrolos", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		db, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("modifyuseraccesscontrolos", upcloud.ManagedDatabaseServiceTypeOpenSearch))
+		if !assert.NoError(t, err) {
+			return
+		}
+		defer func() {
+			if err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: db.UUID}); err != nil {
+				t.Log(err)
+			}
+		}()
+		if !assert.NoError(t, waitForManagedDatabaseRunningState(ctx, rec, svc, db.UUID)) {
+			return
+		}
+		user, err := svc.CreateManagedDatabaseUser(ctx, &request.CreateManagedDatabaseUserRequest{
+			ServiceUUID: db.UUID,
+			Username:    "demouser",
+			OpenSearchAccessControl: &upcloud.ManagedDatabaseUserOpenSearchAccessControl{
+				Rules: []upcloud.ManagedDatabaseUserOpenSearchAccessControlRule{
+					{
+						Index:      "index_1",
+						Permission: upcloud.ManagedDatabaseUserOpenSearchAccessControlRulePermissionReadWrite,
+					},
+				},
+			},
+		})
+		if !assert.NoError(t, err) {
+			return
+		}
+		assert.Equal(t, "index_1", user.OpenSearchAccessControl.Rules[0].Index)
+		assert.Equal(t, "readwrite", string(user.OpenSearchAccessControl.Rules[0].Permission))
+
+		user, err = svc.ModifyManagedDatabaseUserAccessControl(ctx, &request.ModifyManagedDatabaseUserAccessControlRequest{
+			ServiceUUID: db.UUID,
+			Username:    user.Username,
+			OpenSearchAccessControl: &upcloud.ManagedDatabaseUserOpenSearchAccessControl{
+				Rules: []upcloud.ManagedDatabaseUserOpenSearchAccessControlRule{
+					{
+						Index:      "index_1",
+						Permission: upcloud.ManagedDatabaseUserOpenSearchAccessControlRulePermissionRead,
+					},
+				},
+			},
+		})
+		if !assert.NoError(t, err) {
+			return
+		}
+		assert.Equal(t, "index_1", user.OpenSearchAccessControl.Rules[0].Index)
+		assert.Equal(t, "read", string(user.OpenSearchAccessControl.Rules[0].Permission))
+	})
+}
+
+func TestService_ModifyManagedDatabaseAccessControl(t *testing.T) {
+	record(t, "modifymanageddatabaseaccesscontrol", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		db, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("modifyaccesscontrol", upcloud.ManagedDatabaseServiceTypeOpenSearch))
+		if !assert.NoError(t, err) {
+			return
+		}
+		defer func() {
+			if err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: db.UUID}); err != nil {
+				t.Log(err)
+			}
+		}()
+		if !assert.NoError(t, waitForManagedDatabaseRunningState(ctx, rec, svc, db.UUID)) {
+			return
+		}
+		ac, err := svc.GetManagedDatabaseAccessControl(ctx, &request.GetManagedDatabaseAccessControlRequest{ServiceUUID: db.UUID})
+		if !assert.NoError(t, err) {
+			return
+		}
+		assert.False(t, *ac.ACLsEnabled)
+		assert.False(t, *ac.ExtendedACLsEnabled)
+
+		ac, err = svc.ModifyManagedDatabaseAccessControl(ctx, &request.ModifyManagedDatabaseAccessControlRequest{
+			ServiceUUID:         db.UUID,
+			ACLsEnabled:         upcloud.BoolPtr(true),
+			ExtendedACLsEnabled: upcloud.BoolPtr(true),
+		})
+		if !assert.NoError(t, err) {
+			return
+		}
+		assert.True(t, *ac.ACLsEnabled)
+		assert.True(t, *ac.ExtendedACLsEnabled)
+	})
+}
+
+func TestService_GetManagedDatabaseIndices(t *testing.T) {
+	record(t, "getmanageddatabaseincices", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		db, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("getindices", upcloud.ManagedDatabaseServiceTypeOpenSearch))
+		if !assert.NoError(t, err) {
+			return
+		}
+		defer func() {
+			if err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: db.UUID}); err != nil {
+				t.Log(err)
+			}
+		}()
+		if !assert.NoError(t, waitForManagedDatabaseRunningState(ctx, rec, svc, db.UUID)) {
+			return
+		}
+		indices, err := svc.GetManagedDatabaseIndices(ctx, &request.GetManagedDatabaseIndicesRequest{ServiceUUID: db.UUID})
+		if !assert.NoError(t, err) {
+			return
+		}
+		assert.NotEmpty(t, indices)
 	})
 }
 
@@ -816,26 +927,35 @@ func waitForManagedDatabaseRunningState(ctx context.Context, rec *recorder.Recor
 	return err
 }
 
-const (
-	managedDatabaseTestPlan = "2x2xCPU-4GB-100GB"
-	managedDatabaseTestZone = "fi-hel2"
-)
+func getTestCreateRequest(name string, serviceType upcloud.ManagedDatabaseServiceType) *request.CreateManagedDatabaseRequest {
+	var plan string
+	switch serviceType {
+	case upcloud.ManagedDatabaseServiceTypeMySQL:
+		plan = managedDatabaseTestPlanMySQL
+	case upcloud.ManagedDatabaseServiceTypeOpenSearch:
+		plan = managedDatabaseTestPlanOpenSearch
+	case upcloud.ManagedDatabaseServiceTypePostgreSQL:
+		plan = managedDatabaseTestPlanPostgreSQL
+	case upcloud.ManagedDatabaseServiceTypeRedis:
+		plan = managedDatabaseTestPlanRedis
+	default:
+		return nil
+	}
 
-func getTestCreateRequest(name string) *request.CreateManagedDatabaseRequest {
 	r := request.CreateManagedDatabaseRequest{
 		HostNamePrefix: name,
 		Maintenance: request.ManagedDatabaseMaintenanceTimeRequest{
 			DayOfWeek: "monday",
 			Time:      "12:00:00",
 		},
-		Plan: managedDatabaseTestPlan,
+		Plan: plan,
 		Properties: request.ManagedDatabasePropertiesRequest{
 			upcloud.ManagedDatabasePropertyAutoUtilityIPFilter: true,
 			upcloud.ManagedDatabasePropertyIPFilter:            []string{"10.0.0.1/32"},
 			upcloud.ManagedDatabasePropertyPublicAccess:        true,
 		},
-		Title: "test",
-		Type:  upcloud.ManagedDatabaseServiceTypePostgreSQL,
+		Title: name,
+		Type:  serviceType,
 		Zone:  managedDatabaseTestZone,
 	}
 	return &r

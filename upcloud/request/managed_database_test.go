@@ -174,6 +174,35 @@ func TestGetManagedDatabaseQueryStatisticsRequest_RequestURL(t *testing.T) {
 	assert.Equal(t, "/database/fake/query-statistics?limit=1000&offset=42", req.RequestURL())
 }
 
+func TestGetManagedDatabaseAccessControlRequest_RequestURL(t *testing.T) {
+	req := GetManagedDatabaseAccessControlRequest{ServiceUUID: "fake"}
+	assert.Equal(t, "/database/fake/access-control", req.RequestURL())
+}
+
+func TestModifyManagedDatabaseAccessControlRequest(t *testing.T) {
+	want := `
+	{
+		"access_control": true,
+		"extended_access_control": true
+	}
+	`
+
+	r := ModifyManagedDatabaseAccessControlRequest{
+		ServiceUUID:         "fakeuuid",
+		ACLsEnabled:         upcloud.BoolPtr(true),
+		ExtendedACLsEnabled: upcloud.BoolPtr(true),
+	}
+	got, err := json.Marshal(&r)
+	assert.NoError(t, err)
+	assert.JSONEq(t, want, string(got))
+	assert.Equal(t, "/database/fakeuuid/access-control", r.RequestURL())
+}
+
+func TestModifyManagedDatabaseAccessControlRequest_RequestURL(t *testing.T) {
+	req := ModifyManagedDatabaseAccessControlRequest{ServiceUUID: "fakeuuid", ACLsEnabled: upcloud.BoolPtr(true), ExtendedACLsEnabled: upcloud.BoolPtr(true)}
+	assert.Equal(t, "/database/fakeuuid/access-control", req.RequestURL())
+}
+
 func TestModifyManagedDatabaseRequest_MarshalJSON(t *testing.T) {
 	t.Run("TestEmpty", func(t *testing.T) {
 		req := ModifyManagedDatabaseRequest{}
@@ -563,4 +592,16 @@ func TestCreateManagedDatabaseRequestMaintenanceTime_MarshalJSON(t *testing.T) {
 		}
 	}`
 	assert.JSONEq(t, expect, string(d))
+}
+
+/* OpenSearch index Management */
+
+func TestGetManagedDatabaseServiceIndicesRequest_RequestURL(t *testing.T) {
+	req := GetManagedDatabaseIndicesRequest{ServiceUUID: "fakeuuid"}
+	assert.Equal(t, "/database/fakeuuid/indices", req.RequestURL())
+}
+
+func TestDeleteManagedDatabaseServiceIndexRequest_RequestURL(t *testing.T) {
+	req := DeleteManagedDatabaseIndexRequest{ServiceUUID: "fakeuuid", IndexName: "fakeindex"}
+	assert.Equal(t, "/database/fakeuuid/indices/fakeindex", req.RequestURL())
 }

@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"hostname_prefix":"managemanageddatabaslogicaldbs","plan":"2x2xCPU-4GB-100GB","properties":{"automatic_utility_network_ip_filter":true,"ip_filter":["0.0.0.0/0"],"public_access":true},"title":"test","type":"pg","zone":"fi-hel2","maintenance":{"dow":"monday","time":"12:00:00"}}'
+    body: '{"hostname_prefix":"managemanageddatabaslogicaldbs","plan":"2x2xCPU-4GB-100GB","properties":{"automatic_utility_network_ip_filter":true,"ip_filter":["10.0.0.1/32"],"public_access":true},"title":"managemanageddatabaslogicaldbs","type":"pg","zone":"fi-hel2","maintenance":{"dow":"monday","time":"12:00:00"}}'
     form: {}
     headers:
       Accept:
@@ -10,20 +10,20 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/4.0.0
+      - upcloud-go-api/6.1.1
     url: https://api.upcloud.com/1.3/database
     method: POST
   response:
-    body: '{"backups":[],"components":[{"component":"pg","host":"managemanageddatabaslogicaldbs-deviyydmahgscgy.db.upclouddatabases.com","port":11550,"route":"dynamic","usage":"primary"},{"component":"pg","host":"public-managemanageddatabaslogicaldbs-deviyydmahgscgy.db.upclouddatabases.com","port":11550,"route":"public","usage":"primary"},{"component":"pg","host":"replica-managemanageddatabaslogicaldbs-deviyydmahgscgy.db.upclouddatabases.com","port":11550,"route":"dynamic","usage":"replica"},{"component":"pg","host":"public-replica-managemanageddatabaslogicaldbs-deviyydmahgscgy.db.upclouddatabases.com","port":11550,"route":"public","usage":"replica"},{"component":"pgbouncer","host":"managemanageddatabaslogicaldbs-deviyydmahgscgy.db.upclouddatabases.com","port":11551,"route":"dynamic","usage":"primary"},{"component":"pgbouncer","host":"public-managemanageddatabaslogicaldbs-deviyydmahgscgy.db.upclouddatabases.com","port":11551,"route":"public","usage":"primary"},{"component":"pgbouncer","host":"replica-managemanageddatabaslogicaldbs-deviyydmahgscgy.db.upclouddatabases.com","port":11551,"route":"dynamic","usage":"replica"},{"component":"pgbouncer","host":"public-replica-managemanageddatabaslogicaldbs-deviyydmahgscgy.db.upclouddatabases.com","port":11551,"route":"public","usage":"replica"}],"create_time":"0001-01-01T00:00:00Z","maintenance":{"dow":"monday","time":"12:00:00"},"name":"managemanageddatabaslogicaldbs","node_count":2,"node_states":[],"plan":"2x2xCPU-4GB-100GB","powered":true,"properties":{"automatic_utility_network_ip_filter":true,"ip_filter":["0.0.0.0/0"],"public_access":true},"uuid":"09991071-3adb-44b6-970f-6089da5969e6","state":"rebuilding","title":"test","type":"pg","update_time":"0001-01-01T00:00:00Z","service_uri":"postgres://upadmin:MagnuUNU_a0KcKEt@managemanageddatabaslogicaldbs-deviyydmahgscgy.db.upclouddatabases.com:11550/defaultdb?sslmode=require","service_uri_params":{"dbname":"defaultdb","host":"managemanageddatabaslogicaldbs-deviyydmahgscgy.db.upclouddatabases.com","password":"MagnuUNU_a0KcKEt","port":"11550","ssl_mode":"require","user":"upadmin"},"users":null,"zone":"fi-hel2"}'
+    body: '{"backups":[],"components":[{"component":"pg","host":"managemanageddatabaslogicaldbs-zhbmidiechch.db.upclouddatabases.com","port":11550,"route":"dynamic","usage":"primary"},{"component":"pg","host":"replica-managemanageddatabaslogicaldbs-zhbmidiechch.db.upclouddatabases.com","port":11550,"route":"dynamic","usage":"replica"},{"component":"pg","host":"public-managemanageddatabaslogicaldbs-zhbmidiechch.db.upclouddatabases.com","port":11550,"route":"public","usage":"primary"},{"component":"pg","host":"public-replica-managemanageddatabaslogicaldbs-zhbmidiechch.db.upclouddatabases.com","port":11550,"route":"public","usage":"replica"},{"component":"pgbouncer","host":"managemanageddatabaslogicaldbs-zhbmidiechch.db.upclouddatabases.com","port":11551,"route":"dynamic","usage":"primary"},{"component":"pgbouncer","host":"replica-managemanageddatabaslogicaldbs-zhbmidiechch.db.upclouddatabases.com","port":11551,"route":"dynamic","usage":"replica"},{"component":"pgbouncer","host":"public-managemanageddatabaslogicaldbs-zhbmidiechch.db.upclouddatabases.com","port":11551,"route":"public","usage":"primary"},{"component":"pgbouncer","host":"public-replica-managemanageddatabaslogicaldbs-zhbmidiechch.db.upclouddatabases.com","port":11551,"route":"public","usage":"replica"}],"create_time":"0001-01-01T00:00:00Z","maintenance":{"dow":"monday","time":"12:00:00","pending_updates":[]},"name":"managemanageddatabaslogicaldbs","node_count":2,"node_states":[],"plan":"2x2xCPU-4GB-100GB","powered":true,"metadata":{"max_connections":100,"pg_version":"15","write_block_threshold_exceeded":null},"properties":{"automatic_utility_network_ip_filter":true,"backup_hour":0,"backup_minute":9,"ip_filter":["10.0.0.1/32"],"pg_stat_monitor_enable":false,"pglookout":{"max_failover_replication_time_lag":60},"public_access":true,"version":"15"},"uuid":"09490936-adbc-42bb-bd4a-81f7c5a13ddf","state":"rebuilding","title":"managemanageddatabaslogicaldbs","type":"pg","update_time":"0001-01-01T00:00:00Z","service_uri":"postgres://upadmin:AVNS_9itxenFK6EOdBlv2M9-@managemanageddatabaslogicaldbs-zhbmidiechch.db.upclouddatabases.com:11550/defaultdb?sslmode=require","service_uri_params":{"dbname":"defaultdb","host":"managemanageddatabaslogicaldbs-zhbmidiechch.db.upclouddatabases.com","password":"AVNS_9itxenFK6EOdBlv2M9-","port":"11550","ssl_mode":"require","user":"upadmin"},"users":[{"username":"upadmin","type":"primary"}],"databases":[{"name":"defaultdb"}],"zone":"fi-hel2"}'
     headers:
-      Access-Control-Allow-Methods:
-      - OPTIONS,GET,POST
       Access-Control-Allow-Origin:
       - '*'
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Sep 2021 14:07:12 GMT
+      - Wed, 17 May 2023 07:14:27 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
     status: 200 OK
     code: 200
     duration: ""
@@ -36,14 +36,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/4.0.0
-    url: https://api.upcloud.com/1.3/database/09991071-3adb-44b6-970f-6089da5969e6/databases
+      - upcloud-go-api/6.1.1
+    url: https://api.upcloud.com/1.3/database/09490936-adbc-42bb-bd4a-81f7c5a13ddf/databases
     method: POST
   response:
     body: '{"name":"test","lc_collate":"fr_FR.UTF-8","lc_ctype":"fr_FR.UTF-8"}'
     headers:
-      Access-Control-Allow-Methods:
-      - OPTIONS,GET,POST
       Access-Control-Allow-Origin:
       - '*'
       Content-Length:
@@ -51,7 +49,9 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Sep 2021 14:10:11 GMT
+      - Wed, 17 May 2023 07:19:31 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
     status: 200 OK
     code: 200
     duration: ""
@@ -64,22 +64,20 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/4.0.0
-    url: https://api.upcloud.com/1.3/database/09991071-3adb-44b6-970f-6089da5969e6/databases
+      - upcloud-go-api/6.1.1
+    url: https://api.upcloud.com/1.3/database/09490936-adbc-42bb-bd4a-81f7c5a13ddf/databases
     method: GET
   response:
-    body: '[{"name":"defaultdb","lc_collate":"en_US.UTF-8","lc_ctype":"en_US.UTF-8"},{"name":"test","lc_collate":"fr_FR.UTF-8","lc_ctype":"fr_FR.UTF-8"}]'
+    body: '[{"name":"defaultdb"},{"name":"test","lc_collate":"fr_FR.UTF-8","lc_ctype":"fr_FR.UTF-8"}]'
     headers:
-      Access-Control-Allow-Methods:
-      - OPTIONS,GET,POST
-      Access-Control-Allow-Origin:
-      - '*'
       Content-Length:
-      - "142"
+      - "90"
       Content-Type:
       - application/json
       Date:
-      - Tue, 14 Sep 2021 14:10:11 GMT
+      - Wed, 17 May 2023 07:19:32 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
     status: 200 OK
     code: 200
     duration: ""
@@ -92,18 +90,16 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/4.0.0
-    url: https://api.upcloud.com/1.3/database/09991071-3adb-44b6-970f-6089da5969e6/databases/test
+      - upcloud-go-api/6.1.1
+    url: https://api.upcloud.com/1.3/database/09490936-adbc-42bb-bd4a-81f7c5a13ddf/databases/test
     method: DELETE
   response:
     body: ""
     headers:
-      Access-Control-Allow-Methods:
-      - OPTIONS,DELETE
-      Access-Control-Allow-Origin:
-      - '*'
       Date:
-      - Tue, 14 Sep 2021 14:10:12 GMT
+      - Wed, 17 May 2023 07:19:33 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
     status: 204 No Content
     code: 204
     duration: ""
@@ -116,18 +112,16 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/4.0.0
-    url: https://api.upcloud.com/1.3/database/09991071-3adb-44b6-970f-6089da5969e6
+      - upcloud-go-api/6.1.1
+    url: https://api.upcloud.com/1.3/database/09490936-adbc-42bb-bd4a-81f7c5a13ddf
     method: DELETE
   response:
     body: ""
     headers:
-      Access-Control-Allow-Methods:
-      - OPTIONS,DELETE,GET,PATCH
-      Access-Control-Allow-Origin:
-      - '*'
       Date:
-      - Tue, 14 Sep 2021 14:10:12 GMT
+      - Wed, 17 May 2023 07:19:35 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
     status: 204 No Content
     code: 204
     duration: ""

@@ -55,6 +55,25 @@ const (
 	ManagedDatabaseServiceTypeMySQL ManagedDatabaseServiceType = "mysql"
 	// ManagedDatabaseServiceTypeRedis references a Redis type of database instance
 	ManagedDatabaseServiceTypeRedis ManagedDatabaseServiceType = "redis"
+	// ManagedDatabaseServiceTypeOpenSearch references an OpenSearch type of database instance
+	ManagedDatabaseServiceTypeOpenSearch ManagedDatabaseServiceType = "opensearch"
+)
+
+// ManagedDatabaseUserOpenSearchAccessControlRulePermission represents a permission for user access control rule in an
+// OpenSearch Managed Database service.
+type ManagedDatabaseUserOpenSearchAccessControlRulePermission string
+
+const (
+	// ManagedDatabaseUserOpenSearchAccessControlRulePermissionAdmin references "admin" permission
+	ManagedDatabaseUserOpenSearchAccessControlRulePermissionAdmin ManagedDatabaseUserOpenSearchAccessControlRulePermission = "admin"
+	// ManagedDatabaseUserOpenSearchAccessControlRulePermissionDeny references "deny" permission
+	ManagedDatabaseUserOpenSearchAccessControlRulePermissionDeny ManagedDatabaseUserOpenSearchAccessControlRulePermission = "deny"
+	// ManagedDatabaseUserOpenSearchAccessControlRulePermissionReadWrite references "read-write" permission
+	ManagedDatabaseUserOpenSearchAccessControlRulePermissionReadWrite ManagedDatabaseUserOpenSearchAccessControlRulePermission = "readwrite"
+	// ManagedDatabaseUserOpenSearchAccessControlRulePermissionRead references "read" permission
+	ManagedDatabaseUserOpenSearchAccessControlRulePermissionRead ManagedDatabaseUserOpenSearchAccessControlRulePermission = "read"
+	// ManagedDatabaseUserOpenSearchAccessControlRulePermissionWrite references "write" permission
+	ManagedDatabaseUserOpenSearchAccessControlRulePermissionWrite ManagedDatabaseUserOpenSearchAccessControlRulePermission = "write"
 )
 
 // ManagedDatabaseMetricPeriod represents the observation period of database metrics
@@ -92,32 +111,35 @@ const (
 	ManagedDatabasePropertyAutoUtilityIPFilter ManagedDatabasePropertyKey = "automatic_utility_network_ip_filter"
 	// ManagedDatabasePropertyIPFilter allows adjusting the custom IP filter of a service. The value should
 	// contain a slice of strings representing individual IP addresses or IP addresses with CIDR mask.
-	// Currently IPv4 addresses or networks are supported.
+	// Currently, IPv4 addresses or networks are supported.
 	ManagedDatabasePropertyIPFilter ManagedDatabasePropertyKey = "ip_filter"
 	// ManagedDatabasePropertyPublicAccess enables public access via internet to the service. A separate public
 	// endpoint DNS name will be available under Components after enabling.
 	ManagedDatabasePropertyPublicAccess ManagedDatabasePropertyKey = "public_access"
+	// Deprecated: ManagedDatabasePropertyMaxIndexCount allows adjusting the maximum number of indices of an OpenSearch
+	// Managed Database service. Use ManagedDatabaseUserOpenSearchAccessControlRule instead.
+	ManagedDatabasePropertyMaxIndexCount ManagedDatabasePropertyKey = "max_index_count"
 
 	// ManagedDatabaseAllIPv4 property value can be used together with ManagedDatabasePropertyIPFilter to allow access from all
 	// IPv4 hosts.
 	ManagedDatabaseAllIPv4 = "0.0.0.0/0"
 )
 
-// ManagedDatabaseUserType represents the type of an internal database user
+// ManagedDatabaseUserType represents the type of internal database user
 type ManagedDatabaseUserType string
 
 const (
 	// ManagedDatabaseUserTypePrimary is a type of the primary user of a managed database service. There can be only
 	// one primary user per service. The primary user has administrative privileges to manage logical databases and
-	// users thru the database's native API.
+	// users through the database's native API.
 	ManagedDatabaseUserTypePrimary ManagedDatabaseUserType = "primary"
-	// ManagedDatabaseUserTypeNormal is a type of a normal database user of a managed database service. There can
-	// be multiple normal users and the primary user can manage the privileges of these users thru the database's
+	// ManagedDatabaseUserTypeNormal is a type of normal database user of a managed database service. There can
+	// be multiple normal users and the primary user can manage the privileges of these users through the database's
 	// native API.
 	ManagedDatabaseUserTypeNormal ManagedDatabaseUserType = "normal"
 )
 
-// ManagedDatabaseUserAuthenticationType represents the type of an authentication method for an internal database user
+// ManagedDatabaseUserAuthenticationType represents the type of authentication method for an internal database user
 type ManagedDatabaseUserAuthenticationType string
 
 const (
@@ -413,7 +435,7 @@ type ManagedDatabaseNodeState struct {
 	// generation of a node. Certain modifications require re-provisioning of a node.
 	Name string `json:"name"`
 	// Role represents the role of a node
-	Role ManagedDatabaseNodeRole `json:"role"`
+	Role ManagedDatabaseNodeRole `json:"role,omitempty"`
 	// State represents the current state of a node
 	State string `json:"state"`
 }
@@ -501,6 +523,13 @@ func (m *ManagedDatabaseProperties) GetPublicAccess() bool {
 	return v
 }
 
+// Deprecated: GetMaxIndexCount returns the maximum index count of the service.
+// See upcloud.ManagedDatabasePropertyMaxIndexCount for more information.
+func (m *ManagedDatabaseProperties) GetMaxIndexCount() int {
+	v, _ := m.GetInt(ManagedDatabasePropertyMaxIndexCount)
+	return v
+}
+
 type ManagedDatabaseLogs struct {
 	// Offset describes the next available offset. Use this to query more logs.
 	Offset string `json:"offset"`
@@ -542,10 +571,11 @@ type ManagedDatabaseUser struct {
 	Type           ManagedDatabaseUserType               `json:"type,omitempty"`
 	// Password field is only visible when querying an individual user. It is omitted in main service view and in
 	// get all users view.
-	Password           string                                 `json:"password,omitempty"`
-	Username           string                                 `json:"username,omitempty"`
-	PGAccessControl    *ManagedDatabaseUserPGAccessControl    `json:"pg_access_control,omitempty"`
-	RedisAccessControl *ManagedDatabaseUserRedisAccessControl `json:"redis_access_control,omitempty"`
+	Password                string                                      `json:"password,omitempty"`
+	Username                string                                      `json:"username,omitempty"`
+	PGAccessControl         *ManagedDatabaseUserPGAccessControl         `json:"pg_access_control,omitempty"`
+	RedisAccessControl      *ManagedDatabaseUserRedisAccessControl      `json:"redis_access_control,omitempty"`
+	OpenSearchAccessControl *ManagedDatabaseUserOpenSearchAccessControl `json:"opensearch_access_control,omitempty"`
 }
 
 type ManagedDatabaseUserPGAccessControl struct {
@@ -557,6 +587,15 @@ type ManagedDatabaseUserRedisAccessControl struct {
 	Channels   []string `json:"channels,omitempty"`
 	Commands   []string `json:"commands,omitempty"`
 	Keys       []string `json:"keys,omitempty"`
+}
+
+type ManagedDatabaseUserOpenSearchAccessControl struct {
+	Rules []ManagedDatabaseUserOpenSearchAccessControlRule `json:"rules"`
+}
+
+type ManagedDatabaseUserOpenSearchAccessControlRule struct {
+	Index      string                                                   `json:"index"`
+	Permission ManagedDatabaseUserOpenSearchAccessControlRulePermission `json:"permission"`
 }
 
 // ManagedDatabaseQueryStatisticsMySQL represents statistics reported by a MySQL server.
@@ -635,19 +674,53 @@ type ManagedDatabaseType struct {
 	Properties             map[string]ManagedDatabaseServiceProperty `json:"properties"`
 }
 
-// ManagedDatabaseType represets details of a database service plan.
+// ManagedDatabaseServicePlan represents details of a database service plan.
 type ManagedDatabaseServicePlan struct {
-	BackupConfig ManagedDatabaseBackupConfig     `json:"backup_config"`
-	NodeCount    int                             `json:"node_count"`
-	Plan         string                          `json:"plan"`
-	CoreNumber   int                             `json:"core_number"`
-	StorageSize  int                             `json:"storage_size"`
-	MemoryAmount int                             `json:"memory_amount"`
-	Zones        ManagedDatabaseServicePlanZones `json:"zones"`
+	BackupConfig           ManagedDatabaseBackupConfig            `json:"backup_config"`
+	BackupConfigMySQL      *ManagedDatabaseBackupConfigMySQL      `json:"backup_config_mysql,omitempty"`
+	BackupConfigOpenSearch *ManagedDatabaseBackupConfigOpenSearch `json:"backup_config_opensearch,omitempty"`
+	BackupConfigPostgreSQL *ManagedDatabaseBackupConfigPostgreSQL `json:"backup_config_pg,omitempty"`
+	BackupConfigRedis      *ManagedDatabaseBackupConfigRedis      `json:"backup_config_redis,omitempty"`
+	NodeCount              int                                    `json:"node_count"`
+	Plan                   string                                 `json:"plan"`
+	CoreNumber             int                                    `json:"core_number"`
+	StorageSize            int                                    `json:"storage_size"`
+	MemoryAmount           int                                    `json:"memory_amount"`
+	Zones                  ManagedDatabaseServicePlanZones        `json:"zones"`
 }
 
-// ManagedDatabaseType represets backup configuration of a database service plan
+// Deprecated: ManagedDatabaseBackupConfig represents backup configuration of a database service plan.
 type ManagedDatabaseBackupConfig struct {
+	Interval     int    `json:"interval"`
+	MaxCount     int    `json:"max_count"`
+	RecoveryMode string `json:"recovery_mode"`
+}
+
+// ManagedDatabaseBackupConfigMySQL represents backup configuration of a MySQL database service plan
+type ManagedDatabaseBackupConfigMySQL struct {
+	Interval     int    `json:"interval"`
+	MaxCount     int    `json:"max_count"`
+	RecoveryMode string `json:"recovery_mode"`
+}
+
+// ManagedDatabaseBackupConfigOpenSearch represents backup configuration of a OpenSearch database service plan
+type ManagedDatabaseBackupConfigOpenSearch struct {
+	FrequentIntervalMinutes    int    `json:"frequent_interval_minutes"`
+	FrequentOldestAgeMinutes   int    `json:"frequent_oldest_age_minutes"`
+	InfrequentIntervalMinutes  int    `json:"infrequent_interval_minutes"`
+	InfrequentOldestAgeMinutes int    `json:"infrequent_oldest_age_minutes"`
+	RecoveryMode               string `json:"recovery_mode"`
+}
+
+// ManagedDatabaseBackupConfigPostgreSQL represents backup configuration of a PostgreSQL database service plan
+type ManagedDatabaseBackupConfigPostgreSQL struct {
+	Interval     int    `json:"interval"`
+	MaxCount     int    `json:"max_count"`
+	RecoveryMode string `json:"recovery_mode"`
+}
+
+// ManagedDatabaseBackupConfigRedis represents backup configuration of a Redis database service plan
+type ManagedDatabaseBackupConfigRedis struct {
 	Interval     int    `json:"interval"`
 	MaxCount     int    `json:"max_count"`
 	RecoveryMode string `json:"recovery_mode"`
@@ -691,10 +764,32 @@ type ManagedDatabaseServiceProperty struct {
 	UserError   string      `json:"user_error,omitempty"`
 }
 
+// ManagedDatabaseMetadata contains additional read-only informational data about the managed database
 type ManagedDatabaseMetadata struct {
 	MaxConnections              int    `json:"max_connections,omitempty"`
 	PGVersion                   string `json:"pg_version,omitempty"`
 	MySQLVersion                string `json:"mysql_version,omitempty"`
 	RedisVersion                string `json:"redis_version,omitempty"`
 	WriteBlockThresholdExceeded *bool  `json:"write_block_threshold_exceeded,omitempty"`
+	OpenSearchVersion           string `json:"opensearch_version,omitempty"`
+	UpgradeVersion              string `json:"upgrade_version,omitempty"`
+}
+
+// ManagedDatabaseIndex represents an index of an OpenSearch Managed Database
+type ManagedDatabaseIndex struct {
+	CreateTime          time.Time `json:"create_time"`
+	Docs                int       `json:"docs"`
+	Health              string    `json:"health"`
+	IndexName           string    `json:"index_name"`
+	NumberOfReplicas    int       `json:"number_of_replicas"`
+	NumberOfShards      int       `json:"number_of_shards"`
+	ReadOnlyAllowDelete bool      `json:"read_only_allow_delete"`
+	Size                int       `json:"size"`
+	Status              string    `json:"status"`
+}
+
+// ManagedDatabaseAccessControl contains access controls settings for an OpenSearch Managed Database service
+type ManagedDatabaseAccessControl struct {
+	ACLsEnabled         *bool `json:"access_control"`
+	ExtendedACLsEnabled *bool `json:"extended_access_control"`
 }
