@@ -154,10 +154,15 @@ func WithBaseURL(baseURL string) ConfigFn {
 func WithInsecureSkipVerify() ConfigFn {
 	return func(c *config) {
 		if c.httpClient != nil { // #nosec G402 // allow setting InsecureSkipVerify to true as explicitly requested
-			c.httpClient.Transport = &http.Transport{
-				TLSClientConfig: &tls.Config{
-					InsecureSkipVerify: true,
-				},
+			if t, ok := c.httpClient.Transport.(*http.Transport); ok {
+				cfg := &tls.Config{InsecureSkipVerify: true}
+				if t.TLSClientConfig == nil {
+					t.TLSClientConfig = cfg
+
+					return
+				}
+
+				t.TLSClientConfig.InsecureSkipVerify = cfg.InsecureSkipVerify
 			}
 		}
 	}
