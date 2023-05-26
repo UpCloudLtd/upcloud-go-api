@@ -9,6 +9,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 - Managed Database OpenSearch support
 - Support for defining NIC model upon creating or modifying a server. Also exported constants for each support NIC model.
 
+### Changed
+- client: overwrite the HTTP Client Transport accordingly when `UPCLOUD_DEBUG_SKIP_CERTIFICATE_VERIFY` is set to `1`
+
 ## [6.1.1]
 
 ### Added
