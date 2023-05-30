@@ -19,13 +19,18 @@ type ManagedDatabaseServiceManager interface {
 	CreateManagedDatabase(ctx context.Context, r *request.CreateManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
 	GetManagedDatabase(ctx context.Context, r *request.GetManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
 	GetManagedDatabases(ctx context.Context, r *request.GetManagedDatabasesRequest) ([]upcloud.ManagedDatabase, error)
+	GetManagedDatabaseAccessControl(ctx context.Context, r *request.GetManagedDatabaseAccessControlRequest) (*upcloud.ManagedDatabaseAccessControl, error)
 	GetManagedDatabaseConnections(ctx context.Context, r *request.GetManagedDatabaseConnectionsRequest) ([]upcloud.ManagedDatabaseConnection, error)
+	GetManagedDatabaseIndex(ctx context.Context, r *request.GetManagedDatabaseIndexRequest) (*upcloud.ManagedDatabaseIndex, error)
+	GetManagedDatabaseIndices(ctx context.Context, r *request.GetManagedDatabaseIndicesRequest) ([]upcloud.ManagedDatabaseIndex, error)
 	GetManagedDatabaseMetrics(ctx context.Context, r *request.GetManagedDatabaseMetricsRequest) (*upcloud.ManagedDatabaseMetrics, error)
 	GetManagedDatabaseLogs(ctx context.Context, r *request.GetManagedDatabaseLogsRequest) (*upcloud.ManagedDatabaseLogs, error)
 	GetManagedDatabaseQueryStatisticsMySQL(ctx context.Context, r *request.GetManagedDatabaseQueryStatisticsRequest) ([]upcloud.ManagedDatabaseQueryStatisticsMySQL, error)
 	GetManagedDatabaseQueryStatisticsPostgreSQL(ctx context.Context, r *request.GetManagedDatabaseQueryStatisticsRequest) ([]upcloud.ManagedDatabaseQueryStatisticsPostgreSQL, error)
 	DeleteManagedDatabase(ctx context.Context, r *request.DeleteManagedDatabaseRequest) error
+	DeleteManagedDatabaseIndex(ctx context.Context, r *request.DeleteManagedDatabaseIndexRequest) error
 	ModifyManagedDatabase(ctx context.Context, r *request.ModifyManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
+	ModifyManagedDatabaseAccessControl(ctx context.Context, r *request.ModifyManagedDatabaseAccessControlRequest) (*upcloud.ManagedDatabaseAccessControl, error)
 	UpgradeManagedDatabaseVersion(ctx context.Context, r *request.UpgradeManagedDatabaseVersionRequest) (*upcloud.ManagedDatabase, error)
 	GetManagedDatabaseVersions(ctx context.Context, r *request.GetManagedDatabaseVersionsRequest) ([]string, error)
 	StartManagedDatabase(ctx context.Context, r *request.StartManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
@@ -284,8 +289,19 @@ func (s *Service) ModifyManagedDatabaseAccessControl(ctx context.Context, r *req
 	return &ac, s.modify(ctx, r, &ac)
 }
 
-// GetManagedDatabaseIndices returns details of access control for an existing user
-func (s *Service) GetManagedDatabaseIndices(ctx context.Context, r *request.GetManagedDatabaseIndicesRequest) ([]*upcloud.ManagedDatabaseIndex, error) {
-	var indices []*upcloud.ManagedDatabaseIndex
+// GetManagedDatabaseIndices returns indices of an existing OpenSearch Managed Database service
+func (s *Service) GetManagedDatabaseIndices(ctx context.Context, r *request.GetManagedDatabaseIndicesRequest) ([]upcloud.ManagedDatabaseIndex, error) {
+	indices := make([]upcloud.ManagedDatabaseIndex, 0)
 	return indices, s.get(ctx, r.RequestURL(), &indices)
+}
+
+// GetManagedDatabaseIndex returns details of an index existing OpenSearch Managed Database service
+func (s *Service) GetManagedDatabaseIndex(ctx context.Context, r *request.GetManagedDatabaseIndexRequest) (*upcloud.ManagedDatabaseIndex, error) {
+	index := upcloud.ManagedDatabaseIndex{}
+	return &index, s.get(ctx, r.RequestURL(), &index)
+}
+
+// DeleteManagedDatabaseIndex returns details of an index existing OpenSearch Managed Database service
+func (s *Service) DeleteManagedDatabaseIndex(ctx context.Context, r *request.DeleteManagedDatabaseIndexRequest) error {
+	return s.delete(ctx, r)
 }
