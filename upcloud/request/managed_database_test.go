@@ -189,8 +189,8 @@ func TestModifyManagedDatabaseAccessControlRequest(t *testing.T) {
 
 	r := ModifyManagedDatabaseAccessControlRequest{
 		ServiceUUID:         "fakeuuid",
-		ACLsEnabled:         upcloud.BoolPtr(true),
-		ExtendedACLsEnabled: upcloud.BoolPtr(true),
+		ACLsEnabled:         true,
+		ExtendedACLsEnabled: true,
 	}
 	got, err := json.Marshal(&r)
 	assert.NoError(t, err)
@@ -199,7 +199,7 @@ func TestModifyManagedDatabaseAccessControlRequest(t *testing.T) {
 }
 
 func TestModifyManagedDatabaseAccessControlRequest_RequestURL(t *testing.T) {
-	req := ModifyManagedDatabaseAccessControlRequest{ServiceUUID: "fakeuuid", ACLsEnabled: upcloud.BoolPtr(true), ExtendedACLsEnabled: upcloud.BoolPtr(true)}
+	req := ModifyManagedDatabaseAccessControlRequest{ServiceUUID: "fakeuuid", ACLsEnabled: true, ExtendedACLsEnabled: true}
 	assert.Equal(t, "/database/fakeuuid/access-control", req.RequestURL())
 }
 
