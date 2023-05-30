@@ -21,7 +21,6 @@ type ManagedDatabaseServiceManager interface {
 	GetManagedDatabases(ctx context.Context, r *request.GetManagedDatabasesRequest) ([]upcloud.ManagedDatabase, error)
 	GetManagedDatabaseAccessControl(ctx context.Context, r *request.GetManagedDatabaseAccessControlRequest) (*upcloud.ManagedDatabaseAccessControl, error)
 	GetManagedDatabaseConnections(ctx context.Context, r *request.GetManagedDatabaseConnectionsRequest) ([]upcloud.ManagedDatabaseConnection, error)
-	GetManagedDatabaseIndex(ctx context.Context, r *request.GetManagedDatabaseIndexRequest) (*upcloud.ManagedDatabaseIndex, error)
 	GetManagedDatabaseIndices(ctx context.Context, r *request.GetManagedDatabaseIndicesRequest) ([]upcloud.ManagedDatabaseIndex, error)
 	GetManagedDatabaseMetrics(ctx context.Context, r *request.GetManagedDatabaseMetricsRequest) (*upcloud.ManagedDatabaseMetrics, error)
 	GetManagedDatabaseLogs(ctx context.Context, r *request.GetManagedDatabaseLogsRequest) (*upcloud.ManagedDatabaseLogs, error)
@@ -293,12 +292,6 @@ func (s *Service) ModifyManagedDatabaseAccessControl(ctx context.Context, r *req
 func (s *Service) GetManagedDatabaseIndices(ctx context.Context, r *request.GetManagedDatabaseIndicesRequest) ([]upcloud.ManagedDatabaseIndex, error) {
 	indices := make([]upcloud.ManagedDatabaseIndex, 0)
 	return indices, s.get(ctx, r.RequestURL(), &indices)
-}
-
-// GetManagedDatabaseIndex returns details of an index existing OpenSearch Managed Database service
-func (s *Service) GetManagedDatabaseIndex(ctx context.Context, r *request.GetManagedDatabaseIndexRequest) (*upcloud.ManagedDatabaseIndex, error) {
-	index := upcloud.ManagedDatabaseIndex{}
-	return &index, s.get(ctx, r.RequestURL(), &index)
 }
 
 // DeleteManagedDatabaseIndex returns details of an index existing OpenSearch Managed Database service

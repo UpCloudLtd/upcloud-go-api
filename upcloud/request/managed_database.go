@@ -658,19 +658,6 @@ func (g *GetManagedDatabaseIndicesRequest) RequestURL() string {
 	return fmt.Sprintf("/database/%s/indices", g.ServiceUUID)
 }
 
-// GetManagedDatabaseIndexRequest represents a request to get details of an index of an existing managed database
-// instance.
-type GetManagedDatabaseIndexRequest struct {
-	// ServiceUUID selects a managed database service to query
-	ServiceUUID string `json:"-"`
-	IndexName   string `json:"-"`
-}
-
-// RequestURL implements the request.Request interface
-func (g *GetManagedDatabaseIndexRequest) RequestURL() string {
-	return fmt.Sprintf("/database/%s/indices/%s", g.ServiceUUID, g.IndexName)
-}
-
 // DeleteManagedDatabaseIndexRequest represents a request to delete an index from an existing managed database instance.
 type DeleteManagedDatabaseIndexRequest struct {
 	// ServiceUUID selects a managed database service to modify
