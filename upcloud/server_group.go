@@ -10,6 +10,18 @@ const (
 	ServerAntiAffinityStatusUnmet ServerAntiAffinityStatus = "unmet"
 )
 
+// ServerGroupAntiAffinity represents the anti affinity setting for a server groups. Can be "strict", "yes" or "no"
+type ServerGroupAntiAffinity string
+
+const (
+	// ServerGroupAntiAffinityStrict doesn't allow servers in the same server group to be on the same host
+	ServerGroupAntiAffinityStrict ServerGroupAntiAffinity = "strict"
+	// ServerGroupAntiAffinityYes tries to put servers on different hosts, but this is not guaranteed
+	ServerGroupAntiAffinityYes ServerGroupAntiAffinity = "yes"
+	// ServerGroupAntiAffinityNo doesn't affect server host affinity
+	ServerGroupAntiAffinityNo ServerGroupAntiAffinity = "no"
+)
+
 // ServerGroupMemberAntiAffinityStatus represents all the data related to an anti affinity status for a single member within the server group
 type ServerGroupMemberAntiAffinityStatus struct {
 	ServerUUID string                   `json:"uuid"`
@@ -22,7 +34,7 @@ type ServerGroup struct {
 	Members            ServerUUIDSlice                       `json:"servers,omitempty"`
 	Title              string                                `json:"title,omitempty"`
 	UUID               string                                `json:"uuid,omitempty"`
-	AntiAffinity       Boolean                               `json:"anti_affinity,omitempty"`
+	AntiAffinity       ServerGroupAntiAffinity               `json:"anti_affinity,omitempty"`
 	AntiAffinityStatus []ServerGroupMemberAntiAffinityStatus `json:"anti_affinity_status,omitempty"`
 }
 

@@ -105,7 +105,7 @@ func TestCreateServerGroupRequest(t *testing.T) {
 		},
 		Members:      upcloud.ServerUUIDSlice{"x", "y"},
 		Title:        "test",
-		AntiAffinity: upcloud.True,
+		AntiAffinity: upcloud.ServerGroupAntiAffinityStrict,
 	}
 	actual, err = json.Marshal(&r)
 	assert.NoError(t, err)
@@ -163,7 +163,7 @@ func TestModifyServerGroupRequest(t *testing.T) {
 		UUID:         "id",
 		Title:        "test",
 		Members:      &upcloud.ServerUUIDSlice{"x"},
-		AntiAffinity: upcloud.False,
+		AntiAffinity: upcloud.ServerGroupAntiAffinityNo,
 	}
 	actual, err = json.Marshal(&r)
 	assert.NoError(t, err)
@@ -182,7 +182,28 @@ func TestModifyServerGroupRequest(t *testing.T) {
 	r = ModifyServerGroupRequest{
 		UUID:         "id",
 		Members:      &upcloud.ServerUUIDSlice{"x"},
-		AntiAffinity: upcloud.True,
+		AntiAffinity: upcloud.ServerGroupAntiAffinityYes,
+	}
+	actual, err = json.Marshal(&r)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expected, string(actual))
+
+	assert.Equal(t, "/server-group/id", r.RequestURL())
+
+	expected = `
+	{
+		"server_group": {
+			"servers": {
+				"server": ["x"]
+			},
+			"anti_affinity": "strict"
+		}
+	}	
+	`
+	r = ModifyServerGroupRequest{
+		UUID:         "id",
+		Members:      &upcloud.ServerUUIDSlice{"x"},
+		AntiAffinity: upcloud.ServerGroupAntiAffinityStrict,
 	}
 	actual, err = json.Marshal(&r)
 	assert.NoError(t, err)
