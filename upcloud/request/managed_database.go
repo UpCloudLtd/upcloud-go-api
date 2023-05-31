@@ -437,8 +437,8 @@ func (m *ModifyManagedDatabaseRequest) RequestURL() string {
 type ModifyManagedDatabaseAccessControlRequest struct {
 	// ServiceUUID selects a managed database service to modify
 	ServiceUUID         string `json:"-"`
-	ACLsEnabled         *bool  `json:"access_control"`
-	ExtendedACLsEnabled *bool  `json:"extended_access_control"`
+	ACLsEnabled         *bool  `json:"access_control,omitempty"`
+	ExtendedACLsEnabled *bool  `json:"extended_access_control,omitempty"`
 }
 
 // RequestURL implements the request.Request interface
