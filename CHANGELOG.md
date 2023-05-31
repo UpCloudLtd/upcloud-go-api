@@ -6,8 +6,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 ## [Unreleased]
 
 ### Changed
-- GetManagedDatabaseIndices method to return a slice of structs instead of pointers
-- ManagedDatabaseAccessControl struct fields to non-pointer values
+- GetManagedDatabaseIndices method to return a slice of structs instead of pointers 
 
 ## [6.2.0]
 

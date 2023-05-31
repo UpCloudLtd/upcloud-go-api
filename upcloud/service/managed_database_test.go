@@ -836,19 +836,19 @@ func TestService_ModifyManagedDatabaseAccessControl(t *testing.T) {
 		if !assert.NoError(t, err) {
 			return
 		}
-		assert.False(t, ac.ACLsEnabled)
-		assert.False(t, ac.ExtendedACLsEnabled)
+		assert.False(t, *ac.ACLsEnabled)
+		assert.False(t, *ac.ExtendedACLsEnabled)
 
 		ac, err = svc.ModifyManagedDatabaseAccessControl(ctx, &request.ModifyManagedDatabaseAccessControlRequest{
 			ServiceUUID:         db.UUID,
-			ACLsEnabled:         true,
-			ExtendedACLsEnabled: true,
+			ACLsEnabled:         upcloud.BoolPtr(true),
+			ExtendedACLsEnabled: upcloud.BoolPtr(true),
 		})
 		if !assert.NoError(t, err) {
 			return
 		}
-		assert.True(t, ac.ACLsEnabled)
-		assert.True(t, ac.ExtendedACLsEnabled)
+		assert.True(t, *ac.ACLsEnabled)
+		assert.True(t, *ac.ExtendedACLsEnabled)
 	})
 }
 

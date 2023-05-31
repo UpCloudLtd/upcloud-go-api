@@ -790,6 +790,6 @@ type ManagedDatabaseIndex struct {
 
 // ManagedDatabaseAccessControl contains access controls settings for an OpenSearch Managed Database service
 type ManagedDatabaseAccessControl struct {
-	ACLsEnabled         bool `json:"access_control"`
-	ExtendedACLsEnabled bool `json:"extended_access_control"`
+	ACLsEnabled         *bool `json:"access_control"`
+	ExtendedACLsEnabled *bool `json:"extended_access_control"`
 }
