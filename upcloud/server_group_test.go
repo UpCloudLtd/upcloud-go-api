@@ -32,7 +32,7 @@ func TestUnmarshalServerGroup(t *testing.T) {
 				},
 				"title" : "my group",
 				"uuid" : "server_group_uuid",
-				"anti_affinity": 1,
+				"anti_affinity": "yes",
 				"anti_affinity_status": [
 					{
 						"uuid": "x",
@@ -93,7 +93,7 @@ func TestUnmarshalServerGroups(t *testing.T) {
 					},
 					"title" : "my group 1",
 					"uuid" : "id",
-					"anti_affinity": 0
+					"anti_affinity": "no"
 				},
 				{
 					"labels" : {
@@ -117,7 +117,7 @@ func TestUnmarshalServerGroups(t *testing.T) {
 					},
 					"title" : "my group 2",
 					"uuid" : "id",
-					"anti_affinity": 1,
+					"anti_affinity": "strict",
 					"anti_affinity_status": [
 						{
 							"uuid": "a",
