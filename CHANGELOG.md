@@ -6,7 +6,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 ## [Unreleased]
 
 ### Added
-- Support for server group strict anti-affinity
+- ServerGroup `AntiAffinityPolicy` field to support strict, best-effort and off policies. This replaces `AntiAffinity`
+
+### Removed
+- ServerGroup `AntiAffinity` boolean field in favor of `AntiAffinityPolicy` string enum field
 
 ### Changed
 - GetManagedDatabaseIndices method to return a slice of structs instead of pointers 
