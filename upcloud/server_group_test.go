@@ -51,11 +51,11 @@ func TestUnmarshalServerGroup(t *testing.T) {
 	assert.NoError(t, err)
 
 	expected := ServerGroup{
-		Labels:       LabelSlice{Label{Key: "managedBy", Value: "upcloud-go-sdk-unit-test"}, Label{Key: "env", Value: "test"}},
-		Members:      []string{"x", "y"},
-		Title:        "my group",
-		UUID:         "server_group_uuid",
-		AntiAffinity: ServerGroupAntiAffinityYes,
+		Labels:             LabelSlice{Label{Key: "managedBy", Value: "upcloud-go-sdk-unit-test"}, Label{Key: "env", Value: "test"}},
+		Members:            []string{"x", "y"},
+		Title:              "my group",
+		UUID:               "server_group_uuid",
+		AntiAffinityPolicy: ServerGroupAntiAffinityPolicyBestEffort,
 		AntiAffinityStatus: []ServerGroupMemberAntiAffinityStatus{
 			{
 				ServerUUID: "x",
@@ -143,18 +143,18 @@ func TestUnmarshalServerGroups(t *testing.T) {
 
 	expected := ServerGroups{
 		{
-			Labels:       LabelSlice{Label{Key: "managedBy", Value: "upcloud-go-sdk-unit-test"}},
-			Members:      []string{"x"},
-			Title:        "my group 1",
-			UUID:         "id",
-			AntiAffinity: ServerGroupAntiAffinityNo,
+			Labels:             LabelSlice{Label{Key: "managedBy", Value: "upcloud-go-sdk-unit-test"}},
+			Members:            []string{"x"},
+			Title:              "my group 1",
+			UUID:               "id",
+			AntiAffinityPolicy: ServerGroupAntiAffinityPolicyOff,
 		},
 		{
-			Labels:       LabelSlice{Label{Key: "managedBy", Value: "upcloud-go-sdk-unit-test"}, Label{Key: "isSecondTestCase", Value: "true"}},
-			Members:      []string{"a", "b", "c"},
-			Title:        "my group 2",
-			UUID:         "id",
-			AntiAffinity: ServerGroupAntiAffinityStrict,
+			Labels:             LabelSlice{Label{Key: "managedBy", Value: "upcloud-go-sdk-unit-test"}, Label{Key: "isSecondTestCase", Value: "true"}},
+			Members:            []string{"a", "b", "c"},
+			Title:              "my group 2",
+			UUID:               "id",
+			AntiAffinityPolicy: ServerGroupAntiAffinityPolicyStrict,
 			AntiAffinityStatus: []ServerGroupMemberAntiAffinityStatus{
 				{
 					ServerUUID: "a",
