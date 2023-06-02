@@ -32,7 +32,7 @@ func TestUnmarshalServerGroup(t *testing.T) {
 				},
 				"title" : "my group",
 				"uuid" : "server_group_uuid",
-				"anti_affinity": 1,
+				"anti_affinity": "yes",
 				"anti_affinity_status": [
 					{
 						"uuid": "x",
@@ -51,11 +51,11 @@ func TestUnmarshalServerGroup(t *testing.T) {
 	assert.NoError(t, err)
 
 	expected := ServerGroup{
-		Labels:       LabelSlice{Label{Key: "managedBy", Value: "upcloud-go-sdk-unit-test"}, Label{Key: "env", Value: "test"}},
-		Members:      []string{"x", "y"},
-		Title:        "my group",
-		UUID:         "server_group_uuid",
-		AntiAffinity: True,
+		Labels:             LabelSlice{Label{Key: "managedBy", Value: "upcloud-go-sdk-unit-test"}, Label{Key: "env", Value: "test"}},
+		Members:            []string{"x", "y"},
+		Title:              "my group",
+		UUID:               "server_group_uuid",
+		AntiAffinityPolicy: ServerGroupAntiAffinityPolicyBestEffort,
 		AntiAffinityStatus: []ServerGroupMemberAntiAffinityStatus{
 			{
 				ServerUUID: "x",
@@ -93,7 +93,7 @@ func TestUnmarshalServerGroups(t *testing.T) {
 					},
 					"title" : "my group 1",
 					"uuid" : "id",
-					"anti_affinity": 0
+					"anti_affinity": "no"
 				},
 				{
 					"labels" : {
@@ -117,7 +117,7 @@ func TestUnmarshalServerGroups(t *testing.T) {
 					},
 					"title" : "my group 2",
 					"uuid" : "id",
-					"anti_affinity": 1,
+					"anti_affinity": "strict",
 					"anti_affinity_status": [
 						{
 							"uuid": "a",
@@ -143,18 +143,18 @@ func TestUnmarshalServerGroups(t *testing.T) {
 
 	expected := ServerGroups{
 		{
-			Labels:       LabelSlice{Label{Key: "managedBy", Value: "upcloud-go-sdk-unit-test"}},
-			Members:      []string{"x"},
-			Title:        "my group 1",
-			UUID:         "id",
-			AntiAffinity: False,
+			Labels:             LabelSlice{Label{Key: "managedBy", Value: "upcloud-go-sdk-unit-test"}},
+			Members:            []string{"x"},
+			Title:              "my group 1",
+			UUID:               "id",
+			AntiAffinityPolicy: ServerGroupAntiAffinityPolicyOff,
 		},
 		{
-			Labels:       LabelSlice{Label{Key: "managedBy", Value: "upcloud-go-sdk-unit-test"}, Label{Key: "isSecondTestCase", Value: "true"}},
-			Members:      []string{"a", "b", "c"},
-			Title:        "my group 2",
-			UUID:         "id",
-			AntiAffinity: True,
+			Labels:             LabelSlice{Label{Key: "managedBy", Value: "upcloud-go-sdk-unit-test"}, Label{Key: "isSecondTestCase", Value: "true"}},
+			Members:            []string{"a", "b", "c"},
+			Title:              "my group 2",
+			UUID:               "id",
+			AntiAffinityPolicy: ServerGroupAntiAffinityPolicyStrict,
 			AntiAffinityStatus: []ServerGroupMemberAntiAffinityStatus{
 				{
 					ServerUUID: "a",
