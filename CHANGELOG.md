@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- Managed Load Balancer inverse rule matcher
+
 ### Changed
 - GetManagedDatabaseIndices method to return a slice of structs instead of pointers 
 

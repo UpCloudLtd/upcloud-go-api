@@ -205,6 +205,16 @@ func NewLoadBalancerSrcIPMatcher(IP string) upcloud.LoadBalancerMatcher {
 	}
 }
 
+func NewLoadBalancerInverseSrcIPMatcher(IP string) upcloud.LoadBalancerMatcher {
+	return upcloud.LoadBalancerMatcher{
+		Type:    upcloud.LoadBalancerMatcherTypeSrcIP,
+		Inverse: upcloud.BoolPtr(true),
+		SrcIP: &upcloud.LoadBalancerMatcherSourceIP{
+			Value: IP,
+		},
+	}
+}
+
 func newLoadBalancerBackendMember(t upcloud.LoadBalancerBackendMemberType, name string, weight int, maxSessions int, enabled bool, IP string, port int) LoadBalancerBackendMember {
 	return LoadBalancerBackendMember{
 		Type:        t,
