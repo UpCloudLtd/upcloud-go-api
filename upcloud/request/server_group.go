@@ -50,10 +50,10 @@ func (s GetServerGroupRequest) RequestURL() string {
 
 // CreateServerGroupRequest represents a request to create server group
 type CreateServerGroupRequest struct {
-	Labels       *upcloud.LabelSlice     `json:"labels,omitempty"`
-	Members      upcloud.ServerUUIDSlice `json:"servers,omitempty"`
-	AntiAffinity upcloud.Boolean         `json:"anti_affinity,omitempty"`
-	Title        string                  `json:"title,omitempty"`
+	Labels             *upcloud.LabelSlice                   `json:"labels,omitempty"`
+	Members            upcloud.ServerUUIDSlice               `json:"servers,omitempty"`
+	AntiAffinityPolicy upcloud.ServerGroupAntiAffinityPolicy `json:"anti_affinity,omitempty"`
+	Title              string                                `json:"title,omitempty"`
 }
 
 func (s CreateServerGroupRequest) RequestURL() string {
@@ -74,11 +74,11 @@ func (r CreateServerGroupRequest) MarshalJSON() ([]byte, error) {
 
 // ModifyServerGroupRequest represents a request to modify server group
 type ModifyServerGroupRequest struct {
-	Labels       *upcloud.LabelSlice      `json:"labels,omitempty"`
-	Members      *upcloud.ServerUUIDSlice `json:"servers,omitempty"`
-	AntiAffinity upcloud.Boolean          `json:"anti_affinity,omitempty"`
-	Title        string                   `json:"title,omitempty"`
-	UUID         string                   `json:"-"`
+	Labels             *upcloud.LabelSlice                   `json:"labels,omitempty"`
+	Members            *upcloud.ServerUUIDSlice              `json:"servers,omitempty"`
+	AntiAffinityPolicy upcloud.ServerGroupAntiAffinityPolicy `json:"anti_affinity,omitempty"`
+	Title              string                                `json:"title,omitempty"`
+	UUID               string                                `json:"-"`
 }
 
 func (s ModifyServerGroupRequest) RequestURL() string {

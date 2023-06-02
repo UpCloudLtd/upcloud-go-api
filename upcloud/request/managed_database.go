@@ -437,8 +437,8 @@ func (m *ModifyManagedDatabaseRequest) RequestURL() string {
 type ModifyManagedDatabaseAccessControlRequest struct {
 	// ServiceUUID selects a managed database service to modify
 	ServiceUUID         string `json:"-"`
-	ACLsEnabled         *bool  `json:"access_control"`
-	ExtendedACLsEnabled *bool  `json:"extended_access_control"`
+	ACLsEnabled         *bool  `json:"access_control,omitempty"`
+	ExtendedACLsEnabled *bool  `json:"extended_access_control,omitempty"`
 }
 
 // RequestURL implements the request.Request interface
@@ -656,19 +656,6 @@ type GetManagedDatabaseIndicesRequest struct {
 // RequestURL implements the request.Request interface
 func (g *GetManagedDatabaseIndicesRequest) RequestURL() string {
 	return fmt.Sprintf("/database/%s/indices", g.ServiceUUID)
-}
-
-// GetManagedDatabaseIndexRequest represents a request to get details of an index of an existing managed database
-// instance.
-type GetManagedDatabaseIndexRequest struct {
-	// ServiceUUID selects a managed database service to query
-	ServiceUUID string `json:"-"`
-	IndexName   string `json:"-"`
-}
-
-// RequestURL implements the request.Request interface
-func (g *GetManagedDatabaseIndexRequest) RequestURL() string {
-	return fmt.Sprintf("/database/%s/indices/%s", g.ServiceUUID, g.IndexName)
 }
 
 // DeleteManagedDatabaseIndexRequest represents a request to delete an index from an existing managed database instance.
