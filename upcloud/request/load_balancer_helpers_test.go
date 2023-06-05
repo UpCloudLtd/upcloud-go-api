@@ -177,7 +177,7 @@ func TestMatcheresAndActionsHelper(t *testing.T) {
 			NewLoadBalancerBodySizeRangeMatcher(8000, 9000),
 			NewLoadBalancerBodySizeMatcher(upcloud.LoadBalancerIntegerMatcherMethodEqual, 8000),
 			NewLoadBalancerSrcIPMatcher("127.0.0.1"),
-			NewLoadBalancerInverseSrcIPMatcher("127.0.0.2"),
+			NewLoadBalancerInverseMatcher(NewLoadBalancerSrcIPMatcher("127.0.0.2")),
 		},
 		Actions: []upcloud.LoadBalancerAction{
 			NewLoadBalancerUseBackendAction("example-backend-2"),
