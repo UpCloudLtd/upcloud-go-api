@@ -8,6 +8,7 @@ import (
 )
 
 func TestMarshalLoadBalancer(t *testing.T) {
+	t.Parallel()
 	lbString := `
 	[
 		{
@@ -247,6 +248,7 @@ func TestMarshalLoadBalancer(t *testing.T) {
 }
 
 func TestLoadBalancerPlan(t *testing.T) {
+	t.Parallel()
 	testJSON(t,
 		&LoadBalancerPlan{},
 		&LoadBalancerPlan{
@@ -265,6 +267,7 @@ func TestLoadBalancerPlan(t *testing.T) {
 }
 
 func TestLoadBalancerFrontend(t *testing.T) {
+	t.Parallel()
 	testJSON(t,
 		&LoadBalancerFrontend{},
 		&LoadBalancerFrontend{
@@ -325,6 +328,7 @@ func TestLoadBalancerFrontend(t *testing.T) {
 }
 
 func TestLoadBalancerFrontendProperties(t *testing.T) {
+	t.Parallel()
 	testJSON(t,
 		&LoadBalancerFrontendProperties{},
 		&LoadBalancerFrontendProperties{
@@ -366,6 +370,7 @@ func TestLoadBalancerFrontendProperties(t *testing.T) {
 }
 
 func TestLoadBalancerRule(t *testing.T) {
+	t.Parallel()
 	testJSON(t,
 		&LoadBalancerFrontendRule{},
 		&LoadBalancerFrontendRule{
@@ -446,6 +451,7 @@ func TestLoadBalancerRule(t *testing.T) {
 }
 
 func TestLoadBalancerFrontendTLSConfig(t *testing.T) {
+	t.Parallel()
 	testJSON(t,
 		&LoadBalancerFrontendTLSConfig{},
 		&LoadBalancerFrontendTLSConfig{
@@ -466,6 +472,7 @@ func TestLoadBalancerFrontendTLSConfig(t *testing.T) {
 }
 
 func TestLoadBalancerBackend(t *testing.T) {
+	t.Parallel()
 	testJSON(t,
 		&LoadBalancerBackend{},
 		&LoadBalancerBackend{
@@ -494,6 +501,7 @@ func TestLoadBalancerBackend(t *testing.T) {
 }
 
 func TestLoadBalancerBackendProperties(t *testing.T) {
+	t.Parallel()
 	testJSON(t,
 		&LoadBalancerBackendProperties{},
 		&LoadBalancerBackendProperties{
@@ -531,6 +539,7 @@ func TestLoadBalancerBackendProperties(t *testing.T) {
 }
 
 func TestLoadBalancerBackendMember(t *testing.T) {
+	t.Parallel()
 	members := []LoadBalancerBackendMember{
 		{
 			Name:        "member.example.com",
@@ -588,6 +597,7 @@ func TestLoadBalancerBackendMember(t *testing.T) {
 }
 
 func TestLoadBalancerResolver(t *testing.T) {
+	t.Parallel()
 	testJSON(t,
 		&LoadBalancerResolver{},
 		&LoadBalancerResolver{
@@ -620,6 +630,7 @@ func TestLoadBalancerResolver(t *testing.T) {
 }
 
 func TestLoadBalancerMatcherStringWithArgument(t *testing.T) {
+	t.Parallel()
 	tv := true
 	testJSON(t,
 		&LoadBalancerMatcher{},
@@ -647,6 +658,7 @@ func TestLoadBalancerMatcherStringWithArgument(t *testing.T) {
 }
 
 func TestLoadBalancerMatcherHost(t *testing.T) {
+	t.Parallel()
 	testJSON(t,
 		&LoadBalancerMatcher{},
 		&LoadBalancerMatcher{
@@ -667,6 +679,7 @@ func TestLoadBalancerMatcherHost(t *testing.T) {
 }
 
 func TestLoadBalancerMatcherNumMembersUp(t *testing.T) {
+	t.Parallel()
 	testJSON(t,
 		&LoadBalancerMatcher{},
 		&LoadBalancerMatcher{
@@ -691,6 +704,7 @@ func TestLoadBalancerMatcherNumMembersUp(t *testing.T) {
 }
 
 func TestLoadBalancerMatcherHTTPMethod(t *testing.T) {
+	t.Parallel()
 	testJSON(t,
 		&LoadBalancerMatcher{},
 		&LoadBalancerMatcher{
@@ -711,6 +725,7 @@ func TestLoadBalancerMatcherHTTPMethod(t *testing.T) {
 }
 
 func TestLoadBalancerMatcherInteger(t *testing.T) {
+	t.Parallel()
 	testJSON(t,
 		&LoadBalancerMatcher{},
 		&LoadBalancerMatcher{
@@ -733,6 +748,7 @@ func TestLoadBalancerMatcherInteger(t *testing.T) {
 }
 
 func TestLoadBalancerMatcherIntegerRange(t *testing.T) {
+	t.Parallel()
 	testJSON(t,
 		&LoadBalancerMatcher{},
 		&LoadBalancerMatcher{
@@ -757,6 +773,7 @@ func TestLoadBalancerMatcherIntegerRange(t *testing.T) {
 }
 
 func TestLoadBalancerMatcherString(t *testing.T) {
+	t.Parallel()
 	tv := true
 	testJSON(t,
 		&LoadBalancerMatcher{},
@@ -782,6 +799,7 @@ func TestLoadBalancerMatcherString(t *testing.T) {
 }
 
 func TestLoadBalancerMatcherSourceIP(t *testing.T) {
+	t.Parallel()
 	testJSON(t,
 		&LoadBalancerMatcher{},
 		&LoadBalancerMatcher{
@@ -801,7 +819,31 @@ func TestLoadBalancerMatcherSourceIP(t *testing.T) {
 	)
 }
 
+func TestLoadBalancerMatcherSourceIP_Inverse(t *testing.T) {
+	t.Parallel()
+	testJSON(t,
+		&LoadBalancerMatcher{},
+		&LoadBalancerMatcher{
+			Type:    LoadBalancerMatcherTypeSrcIP,
+			Inverse: BoolPtr(true),
+			SrcIP: &LoadBalancerMatcherSourceIP{
+				Value: "213.3.44.11",
+			},
+		},
+		`
+		{
+			"type": "src_ip",
+			"inverse": true,
+			"match_src_ip": {
+				"value": "213.3.44.11"
+			}
+		}
+		`,
+	)
+}
+
 func TestLoadBalancerActionUseBackend(t *testing.T) {
+	t.Parallel()
 	testJSON(t,
 		&LoadBalancerAction{},
 		&LoadBalancerAction{
@@ -822,6 +864,7 @@ func TestLoadBalancerActionUseBackend(t *testing.T) {
 }
 
 func TestLoadBalancerActionTCPReject(t *testing.T) {
+	t.Parallel()
 	testJSON(t,
 		&LoadBalancerAction{},
 		&LoadBalancerAction{
@@ -838,6 +881,7 @@ func TestLoadBalancerActionTCPReject(t *testing.T) {
 }
 
 func TestLoadBalancerActionHTTPReturn(t *testing.T) {
+	t.Parallel()
 	testJSON(t,
 		&LoadBalancerAction{},
 		&LoadBalancerAction{
@@ -862,6 +906,7 @@ func TestLoadBalancerActionHTTPReturn(t *testing.T) {
 }
 
 func TestLoadBalancerActionHTTPRedirect(t *testing.T) {
+	t.Parallel()
 	testJSON(t,
 		&LoadBalancerAction{},
 		&LoadBalancerAction{
@@ -882,6 +927,7 @@ func TestLoadBalancerActionHTTPRedirect(t *testing.T) {
 }
 
 func TestLoadBalancerCertificateBundle(t *testing.T) {
+	t.Parallel()
 	testJSON(t,
 		&LoadBalancerCertificateBundle{},
 		&LoadBalancerCertificateBundle{
@@ -953,6 +999,7 @@ func TestLoadBalancerCertificateBundle(t *testing.T) {
 }
 
 func TestLoadBalancerNetworks(t *testing.T) {
+	t.Parallel()
 	testJSON(t,
 		&LoadBalancer{},
 		&LoadBalancer{

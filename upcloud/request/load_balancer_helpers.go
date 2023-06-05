@@ -205,6 +205,14 @@ func NewLoadBalancerSrcIPMatcher(IP string) upcloud.LoadBalancerMatcher {
 	}
 }
 
+// NewLoadBalancerInverseMatcher helper converts matcher to inverse matcher.
+//
+// Usage: inverseIPMatch := NewLoadBalancerInverseMatcher(NewLoadBalancerSrcIPMatcher("127.0.0.2"))
+func NewLoadBalancerInverseMatcher(m upcloud.LoadBalancerMatcher) upcloud.LoadBalancerMatcher {
+	m.Inverse = upcloud.BoolPtr(true)
+	return m
+}
+
 func newLoadBalancerBackendMember(t upcloud.LoadBalancerBackendMemberType, name string, weight int, maxSessions int, enabled bool, IP string, port int) LoadBalancerBackendMember {
 	return LoadBalancerBackendMember{
 		Type:        t,

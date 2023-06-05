@@ -9,6 +9,7 @@ import (
 )
 
 func TestMatcheresAndActionsHelper(t *testing.T) {
+	t.Parallel()
 	isTrue := true
 
 	expected := `
@@ -115,6 +116,13 @@ func TestMatcheresAndActionsHelper(t *testing.T) {
 				"match_src_ip": {
 					"value": "127.0.0.1"
 				}
+			},
+			{
+				"type": "src_ip",
+				"inverse": true,
+				"match_src_ip": {
+					"value": "127.0.0.2"
+				}
 			}
 		],
 		"actions": [
@@ -169,6 +177,7 @@ func TestMatcheresAndActionsHelper(t *testing.T) {
 			NewLoadBalancerBodySizeRangeMatcher(8000, 9000),
 			NewLoadBalancerBodySizeMatcher(upcloud.LoadBalancerIntegerMatcherMethodEqual, 8000),
 			NewLoadBalancerSrcIPMatcher("127.0.0.1"),
+			NewLoadBalancerInverseMatcher(NewLoadBalancerSrcIPMatcher("127.0.0.2")),
 		},
 		Actions: []upcloud.LoadBalancerAction{
 			NewLoadBalancerUseBackendAction("example-backend-2"),
@@ -184,6 +193,7 @@ func TestMatcheresAndActionsHelper(t *testing.T) {
 }
 
 func TestNewLoadBalancerBackendMemberHelper(t *testing.T) {
+	t.Parallel()
 	expected := `
 	[
 		{
@@ -215,6 +225,7 @@ func TestNewLoadBalancerBackendMemberHelper(t *testing.T) {
 }
 
 func TestCreateLoadBalancerCertificateBundleRequest(t *testing.T) {
+	t.Parallel()
 	expected := `
 	[
 		{

@@ -453,7 +453,7 @@ func TestLoadBalancerFrontendRule(t *testing.T) {
 	t.Parallel()
 	const zone = "fi-hel2"
 	record(t, "loadbalancerfrontendrule", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		net, err := createLoadBalancerAndPrivateNetwork(ctx, svc, zone, "10.0.1.1/24")
+		net, err := createLoadBalancerAndPrivateNetwork(ctx, svc, zone, "10.0.1.0/24")
 		require.NoError(t, err)
 		lb, err := svc.CreateLoadBalancer(ctx, &request.CreateLoadBalancerRequest{
 			Name:             fmt.Sprintf("go-test-lb-%s-%d", zone, time.Now().Unix()),
@@ -485,7 +485,9 @@ func TestLoadBalancerFrontendRule(t *testing.T) {
 
 		require.NoError(t, err)
 		t.Cleanup(func() {
-			err := cleanupLoadBalancer(ctx, rec, svc, lb)
+			cCtx, cancel := context.WithTimeout(context.Background(), time.Minute*10)
+			defer cancel()
+			err := cleanupLoadBalancer(cCtx, rec, svc, lb)
 			assert.NoError(t, err)
 		})
 		rule, err := svc.CreateLoadBalancerFrontendRule(ctx, &request.CreateLoadBalancerFrontendRuleRequest{
@@ -494,12 +496,21 @@ func TestLoadBalancerFrontendRule(t *testing.T) {
 			Rule: request.LoadBalancerFrontendRule{
 				Name:     "rule-1",
 				Priority: 10,
-				Matchers: []upcloud.LoadBalancerMatcher{{
-					Type: upcloud.LoadBalancerMatcherTypeSrcIP,
-					SrcIP: &upcloud.LoadBalancerMatcherSourceIP{
-						Value: "10.1.1.200",
+				Matchers: []upcloud.LoadBalancerMatcher{
+					{
+						Type: upcloud.LoadBalancerMatcherTypeSrcIP,
+						SrcIP: &upcloud.LoadBalancerMatcherSourceIP{
+							Value: "10.1.1.200",
+						},
 					},
-				}},
+					{
+						Type:    upcloud.LoadBalancerMatcherTypeSrcIP,
+						Inverse: upcloud.BoolPtr(true),
+						SrcIP: &upcloud.LoadBalancerMatcherSourceIP{
+							Value: "10.1.2.200",
+						},
+					},
+				},
 				Actions: []upcloud.LoadBalancerAction{{
 					Type:      upcloud.LoadBalancerActionTypeTCPReject,
 					TCPReject: &upcloud.LoadBalancerActionTCPReject{},
@@ -509,9 +520,10 @@ func TestLoadBalancerFrontendRule(t *testing.T) {
 		require.NoError(t, err)
 		t.Logf("Created frontend rule %s", rule.Name)
 		assert.Len(t, rule.Actions, 1)
-		assert.Len(t, rule.Matchers, 1)
+		assert.Len(t, rule.Matchers, 2)
 		assert.Equal(t, upcloud.LoadBalancerActionTypeTCPReject, rule.Actions[0].Type)
 		assert.Equal(t, upcloud.LoadBalancerMatcherTypeSrcIP, rule.Matchers[0].Type)
+		assert.True(t, *rule.Matchers[1].Inverse)
 		assert.Equal(t, "10.1.1.200", rule.Matchers[0].SrcIP.Value)
 		assert.Equal(t, "rule-1", rule.Name)
 		assert.Equal(t, 10, rule.Priority)

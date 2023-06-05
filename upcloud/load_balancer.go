@@ -256,6 +256,7 @@ type LoadBalancerMatcher struct {
 	Header       *LoadBalancerMatcherStringWithArgument `json:"match_header,omitempty"`
 	URLParam     *LoadBalancerMatcherStringWithArgument `json:"match_url_param,omitempty"`
 	NumMembersUp *LoadBalancerMatcherNumMembersUp       `json:"match_num_members_up,omitempty"`
+	Inverse      *bool                                  `json:"inverse,omitempty"`
 }
 
 // LoadBalancerMatcherStringWithArgument represents 'string with argument' matcher
