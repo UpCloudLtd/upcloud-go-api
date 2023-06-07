@@ -198,6 +198,7 @@ type LoadBalancerBackendMember struct {
 type LoadBalancerBackendProperties struct {
 	TimeoutServer             int                              `json:"timeout_server,omitempty"`
 	TimeoutTunnel             int                              `json:"timeout_tunnel,omitempty"`
+	HealthCheckTLSVerify      *bool                            `json:"health_check_tls_verify,omitempty"`
 	HealthCheckType           LoadBalancerHealthCheckType      `json:"health_check_type,omitempty"`
 	HealthCheckInterval       int                              `json:"health_check_interval,omitempty"`
 	HealthCheckFall           int                              `json:"health_check_fall,omitempty"`

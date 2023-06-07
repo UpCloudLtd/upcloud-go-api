@@ -380,7 +380,7 @@ func TestLoadBalancerFrontend(t *testing.T) {
 	t.Parallel()
 
 	record(t, "loadbalancerfrontend", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		lb, err := createLoadBalancerAndNetwork(ctx, svc, "de-fra1", "10.0.0.1/24")
+		lb, err := createLoadBalancerAndNetwork(ctx, svc, "de-fra1", "10.0.3.0/24")
 		require.NoError(t, err)
 		t.Cleanup(func() {
 			err := cleanupLoadBalancer(ctx, rec, svc, lb)
@@ -607,7 +607,7 @@ func TestLoadBalancerCerticateBundlesAndFrontendTLSConfigs(t *testing.T) {
 	t.Parallel()
 
 	record(t, "loadbalancercerticatebundlesandfrontendtlsconfigs", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		net, err := createLoadBalancerAndPrivateNetwork(ctx, svc, "fi-hel1", "10.0.1.1/24")
+		net, err := createLoadBalancerAndPrivateNetwork(ctx, svc, "fi-hel1", "10.0.4.0/24")
 		require.NoError(t, err)
 		feName := "fe-1"
 		lb, err := svc.CreateLoadBalancer(ctx, &request.CreateLoadBalancerRequest{
