@@ -15,7 +15,6 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud/request"
 	"github.com/dnaeon/go-vcr/cassette"
 	"github.com/dnaeon/go-vcr/recorder"
-	"github.com/hashicorp/go-cleanhttp"
 	"github.com/stretchr/testify/require"
 )
 
@@ -77,7 +76,7 @@ func record(t *testing.T, fixture string, f func(context.Context, *testing.T, *r
 
 	user, password := getCredentials()
 
-	httpClient := cleanhttp.DefaultClient()
+	httpClient := client.NewDefaultHTTPClient()
 	origTransport := httpClient.Transport
 	r.SetTransport(origTransport)
 	httpClient.Transport = r

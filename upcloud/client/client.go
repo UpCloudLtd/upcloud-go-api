@@ -6,13 +6,13 @@ import (
 	"crypto/tls"
 	"fmt"
 	"io"
+	"net"
 	"net/http"
 	"net/url"
 	"os"
+	"runtime"
 	"strings"
 	"time"
-
-	"github.com/hashicorp/go-cleanhttp"
 )
 
 const (
@@ -189,7 +189,7 @@ func New(username, password string, c ...ConfigFn) *Client {
 		username:   username,
 		password:   password,
 		baseURL:    clientBaseURL(os.Getenv(EnvDebugAPIBaseURL)),
-		httpClient: cleanhttp.DefaultClient(),
+		httpClient: NewDefaultHTTPClient(),
 	}
 
 	// If set, replace http client transport with one skipping tls verification
@@ -242,4 +242,33 @@ func handleResponse(response *http.Response) ([]byte, error) {
 	responseBody, err := io.ReadAll(response.Body)
 
 	return responseBody, err
+}
+
+// NewDefaultHTTPClient returns new default http.Client.
+func NewDefaultHTTPClient() *http.Client {
+	transport := NewDefaultHTTPTransport()
+	return &http.Client{
+		Transport: transport,
+	}
+}
+
+// NewDefaultHTTPTransport return new HTTP client transport round tripper.
+func NewDefaultHTTPTransport() http.RoundTripper {
+	transport := &http.Transport{
+		Proxy: http.ProxyFromEnvironment,
+		DialContext: (&net.Dialer{
+			Timeout:   30 * time.Second,
+			KeepAlive: 30 * time.Second,
+			DualStack: true,
+		}).DialContext,
+		ForceAttemptHTTP2:     true,
+		MaxIdleConns:          100,
+		IdleConnTimeout:       90 * time.Second,
+		TLSHandshakeTimeout:   10 * time.Second,
+		ExpectContinueTimeout: 1 * time.Second,
+		MaxIdleConnsPerHost:   runtime.GOMAXPROCS(0) + 1,
+	}
+	transport.DisableKeepAlives = true
+	transport.MaxIdleConnsPerHost = -1
+	return transport
 }
