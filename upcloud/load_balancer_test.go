@@ -507,6 +507,7 @@ func TestLoadBalancerBackendProperties(t *testing.T) {
 		&LoadBalancerBackendProperties{
 			TimeoutServer:             30,
 			TimeoutTunnel:             3600,
+			HealthCheckTLSVerify:      BoolPtr(false),
 			HealthCheckType:           LoadBalancerHealthCheckTypeHTTP,
 			HealthCheckInterval:       20,
 			HealthCheckFall:           3,
@@ -521,6 +522,7 @@ func TestLoadBalancerBackendProperties(t *testing.T) {
 			"timeout_server": 30,
 			"timeout_tunnel": 3600,
 			"health_check_type": "http",
+			"health_check_tls_verify": false,
 			"health_check_interval": 20,
 			"health_check_fall": 3,
 			"health_check_rise": 3,
