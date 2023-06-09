@@ -116,29 +116,6 @@ type Server struct {
 	Zone         string         `json:"zone"`
 }
 
-// IPAddressSlice is a slice of IPAddress.
-// It exists to allow for a custom JSON unmarshaller.
-type IPAddressSlice []IPAddress
-
-// UnmarshalJSON is a custom unmarshaller that deals with
-// deeply embedded values.
-func (i *IPAddressSlice) UnmarshalJSON(b []byte) error {
-	type localIPAddress IPAddress
-	v := struct {
-		IPAddresses []localIPAddress `json:"ip_address"`
-	}{}
-	err := json.Unmarshal(b, &v)
-	if err != nil {
-		return err
-	}
-
-	for _, ip := range v.IPAddresses {
-		(*i) = append((*i), IPAddress(ip))
-	}
-
-	return nil
-}
-
 // ServerStorageDeviceSlice is a slice of ServerStorageDevices.
 // It exists to allow for a custom JSON unmarshaller.
 type ServerStorageDeviceSlice []ServerStorageDevice
