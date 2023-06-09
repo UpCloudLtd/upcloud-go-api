@@ -10,7 +10,6 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"runtime"
 	"strings"
 	"time"
 )
@@ -254,7 +253,7 @@ func NewDefaultHTTPClient() *http.Client {
 
 // NewDefaultHTTPTransport return new HTTP client transport round tripper.
 func NewDefaultHTTPTransport() http.RoundTripper {
-	transport := &http.Transport{
+	return &http.Transport{
 		Proxy: http.ProxyFromEnvironment,
 		DialContext: (&net.Dialer{
 			Timeout:   30 * time.Second,
@@ -266,9 +265,7 @@ func NewDefaultHTTPTransport() http.RoundTripper {
 		IdleConnTimeout:       90 * time.Second,
 		TLSHandshakeTimeout:   10 * time.Second,
 		ExpectContinueTimeout: 1 * time.Second,
-		MaxIdleConnsPerHost:   runtime.GOMAXPROCS(0) + 1,
+		DisableKeepAlives:     true,
+		MaxIdleConnsPerHost:   -1,
 	}
-	transport.DisableKeepAlives = true
-	transport.MaxIdleConnsPerHost = -1
-	return transport
 }
