@@ -40,6 +40,29 @@ func (s *IPAddresses) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+// IPAddressSlice is a slice of IPAddress.
+// It exists to allow for a custom JSON unmarshaller.
+type IPAddressSlice []IPAddress
+
+// UnmarshalJSON is a custom unmarshaller that deals with
+// deeply embedded values.
+func (i *IPAddressSlice) UnmarshalJSON(b []byte) error {
+	type localIPAddress IPAddress
+	v := struct {
+		IPAddresses []localIPAddress `json:"ip_address"`
+	}{}
+	err := json.Unmarshal(b, &v)
+	if err != nil {
+		return err
+	}
+
+	for _, ip := range v.IPAddresses {
+		(*i) = append((*i), IPAddress(ip))
+	}
+
+	return nil
+}
+
 // IPAddress represents an IP address
 type IPAddress struct {
 	Access     string  `json:"access"`
