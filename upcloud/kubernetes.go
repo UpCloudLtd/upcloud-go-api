@@ -56,7 +56,6 @@ type KubernetesNodeGroup struct {
 	State        KubernetesNodeGroupState `json:"state,omitempty"`
 	Storage      string                   `json:"storage,omitempty"`
 	Taints       []KubernetesTaint        `json:"taints,omitempty"`
-	Nodes        []KubernetesNode         `json:"nodes,omitempty"`
 }
 
 type KubernetesNodeGroupDetails struct {
