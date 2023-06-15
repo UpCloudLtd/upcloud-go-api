@@ -12,6 +12,7 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud/client"
 	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud/request"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 const exampleClusterResponse = `
@@ -97,6 +98,27 @@ const exampleNodeGroupResponse = `
 	]
 }
 `
+
+const exampleNodeGroupDetailsResponse = `
+{
+	"anti_affinity": true,
+	"count": 2,
+	"name": "grp-1",
+	"plan": "1xCPU-1GB",
+	"state": "running",
+	"nodes": [
+		{
+			"name": "grp-1-7l7zj",
+			"state": "running",
+			"uuid": "00a02bfa-f565-40c9-b088-f2c7b8a75f97"
+		},
+		{
+			"name": "grp-1-glkwv",
+			"state": "terminating",
+			"uuid": "00b56302-e211-40d9-83fa-177f0171e75a"
+		}
+	]
+}`
 
 const exampleNetworkResponse = `
 {
@@ -305,6 +327,27 @@ func TestGetKubernetesNodeGroup(t *testing.T) {
 	assert.Equal(t, "my-test-group", res.Name)
 }
 
+func TestGetKubernetesNodeGroupDetails(t *testing.T) {
+	t.Parallel()
+
+	srv, svc := setupTestServerAndService(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		assert.Equal(t, http.MethodGet, r.Method)
+		assert.Equal(t, fmt.Sprintf("/%s/kubernetes/_UUID_/node-groups/_NAME_", client.APIVersion), r.URL.Path)
+		fmt.Fprint(w, exampleNodeGroupDetailsResponse)
+	}))
+	defer srv.Close()
+
+	res, err := svc.GetKubernetesNodeGroup(context.Background(), &request.GetKubernetesNodeGroupRequest{
+		ClusterUUID: "_UUID_",
+		Name:        "_NAME_",
+	})
+	require.NoError(t, err)
+	require.Equal(t, "grp-1", res.Name)
+	require.Len(t, res.Nodes, 2)
+	require.Equal(t, upcloud.KubernetesNodeStateRunning, res.Nodes[0].State)
+	require.Equal(t, upcloud.KubernetesNodeStateTerminating, res.Nodes[1].State)
+}
+
 func TestCreateKubernetesNodeGroup(t *testing.T) {
 	t.Parallel()
 
@@ -393,6 +436,23 @@ func TestDeleteKubernetesNodeGroup(t *testing.T) {
 	err := svc.DeleteKubernetesNodeGroup(context.Background(), &request.DeleteKubernetesNodeGroupRequest{
 		ClusterUUID: "_UUID_",
 		Name:        "_NAME_",
+	})
+	assert.NoError(t, err)
+}
+
+func TestDeleteKubernetesNodeGroupNode(t *testing.T) {
+	t.Parallel()
+
+	srv, svc := setupTestServerAndService(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		assert.Equal(t, http.MethodDelete, r.Method)
+		assert.Equal(t, fmt.Sprintf("/%s/kubernetes/_UUID_/node-groups/_NAME_/_NODE_", client.APIVersion), r.URL.Path)
+	}))
+	defer srv.Close()
+
+	err := svc.DeleteKubernetesNodeGroupNode(context.Background(), &request.DeleteKubernetesNodeGroupNodeRequest{
+		ClusterUUID: "_UUID_",
+		Name:        "_NAME_",
+		NodeName:    "_NODE_",
 	})
 	assert.NoError(t, err)
 }

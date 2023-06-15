@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 const exampleKubernetesClusterJSON string = `{
@@ -91,6 +92,59 @@ func TestKubernetes(t *testing.T) {
 			actual,
 		)
 	})
+}
+
+func TestKubernetesNodeGroupDetails(t *testing.T) {
+	t.Parallel()
+
+	const nodeGroupDetailsJSON = `
+	{
+		"anti_affinity": true,
+		"count": 2,
+		"name": "grp-1",
+		"plan": "1xCPU-1GB",
+		"state": "running",
+		"nodes": [
+			{
+				"name": "grp-1-7l7zj",
+				"state": "running",
+				"uuid": "00a02bfa-f565-40c9-b088-f2c7b8a75f97"
+			},
+			{
+				"name": "grp-1-glkwv",
+				"state": "terminating",
+				"uuid": "00b56302-e211-40d9-83fa-177f0171e75a"
+			}
+		]
+	}
+	`
+	got := KubernetesNodeGroupDetails{}
+	err := json.Unmarshal([]byte(nodeGroupDetailsJSON), &got)
+	want := KubernetesNodeGroupDetails{
+		KubernetesNodeGroup: KubernetesNodeGroup{
+			AntiAffinity: true,
+			Count:        2,
+			Name:         "grp-1",
+			Plan:         "1xCPU-1GB",
+			State:        KubernetesNodeGroupStateRunning,
+		},
+		Nodes: []KubernetesNode{
+			{
+				UUID:  "00a02bfa-f565-40c9-b088-f2c7b8a75f97",
+				Name:  "grp-1-7l7zj",
+				State: KubernetesNodeStateRunning,
+			},
+			{
+				UUID:  "00b56302-e211-40d9-83fa-177f0171e75a",
+				Name:  "grp-1-glkwv",
+				State: KubernetesNodeStateTerminating,
+			},
+		},
+	}
+	require.NoError(t, err)
+	require.Equal(t, want, got)
+	// just to check that embedded KubernetesNodeGroup fields are directly available
+	require.Equal(t, KubernetesNodeGroupStateRunning, got.State)
 }
 
 func exampleKubernetesCluster() KubernetesCluster {

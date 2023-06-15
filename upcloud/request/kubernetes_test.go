@@ -330,6 +330,15 @@ func TestModifyKubernetesNodeGroupRequest(t *testing.T) {
 	assert.JSONEq(t, expectedJSON, string(gotJS))
 }
 
+func TestDeleteKubernetesNodeGroupNodeRequest(t *testing.T) {
+	r := DeleteKubernetesNodeGroupNodeRequest{
+		ClusterUUID: "id",
+		Name:        "nid",
+		NodeName:    "name",
+	}
+	assert.Equal(t, fmt.Sprintf("%s/id/node-groups/nid/name", kubernetesClusterBasePath), r.RequestURL())
+}
+
 func TestDeleteKubernetesNodeGroupRequest(t *testing.T) {
 	t.Parallel()
 	r := DeleteKubernetesNodeGroupRequest{ClusterUUID: "id", Name: "nid"}

@@ -18,10 +18,11 @@ type Kubernetes interface {
 	GetKubernetesVersions(ctx context.Context, r *request.GetKubernetesVersionsRequest) ([]string, error)
 	WaitForKubernetesClusterState(ctx context.Context, r *request.WaitForKubernetesClusterStateRequest) (*upcloud.KubernetesCluster, error)
 	GetKubernetesNodeGroups(ctx context.Context, r *request.GetKubernetesNodeGroupsRequest) ([]upcloud.KubernetesNodeGroup, error)
-	GetKubernetesNodeGroup(ctx context.Context, r *request.GetKubernetesNodeGroupRequest) (*upcloud.KubernetesNodeGroup, error)
+	GetKubernetesNodeGroup(ctx context.Context, r *request.GetKubernetesNodeGroupRequest) (*upcloud.KubernetesNodeGroupDetails, error)
 	CreateKubernetesNodeGroup(ctx context.Context, r *request.CreateKubernetesNodeGroupRequest) (*upcloud.KubernetesNodeGroup, error)
 	ModifyKubernetesNodeGroup(ctx context.Context, r *request.ModifyKubernetesNodeGroupRequest) (*upcloud.KubernetesNodeGroup, error)
 	DeleteKubernetesNodeGroup(ctx context.Context, r *request.DeleteKubernetesNodeGroupRequest) error
+	DeleteKubernetesNodeGroupNode(ctx context.Context, r *request.DeleteKubernetesNodeGroupNodeRequest) error
 	GetKubernetesPlans(ctx context.Context, r *request.GetKubernetesPlansRequest) ([]upcloud.KubernetesPlan, error)
 }
 
@@ -124,8 +125,8 @@ func (s *Service) GetKubernetesNodeGroups(ctx context.Context, r *request.GetKub
 }
 
 // GetKubernetesNodeGroup retrieves details of a node group (EXPERIMENTAL).
-func (s *Service) GetKubernetesNodeGroup(ctx context.Context, r *request.GetKubernetesNodeGroupRequest) (*upcloud.KubernetesNodeGroup, error) {
-	ng := upcloud.KubernetesNodeGroup{}
+func (s *Service) GetKubernetesNodeGroup(ctx context.Context, r *request.GetKubernetesNodeGroupRequest) (*upcloud.KubernetesNodeGroupDetails, error) {
+	ng := upcloud.KubernetesNodeGroupDetails{}
 	return &ng, s.get(ctx, r.RequestURL(), &ng)
 }
 
@@ -143,6 +144,11 @@ func (s *Service) ModifyKubernetesNodeGroup(ctx context.Context, r *request.Modi
 
 // DeleteKubernetesNodeGroup deletes an existing node group (EXPERIMENTAL).
 func (s *Service) DeleteKubernetesNodeGroup(ctx context.Context, r *request.DeleteKubernetesNodeGroupRequest) error {
+	return s.delete(ctx, r)
+}
+
+// DeleteKubernetesNodeGroupNode deletes an existing node from the node group (EXPERIMENTAL).
+func (s *Service) DeleteKubernetesNodeGroupNode(ctx context.Context, r *request.DeleteKubernetesNodeGroupNodeRequest) error {
 	return s.delete(ctx, r)
 }
 
