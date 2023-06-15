@@ -17,6 +17,12 @@ const (
 	KubernetesClusterTaintEffectNoExecute        KubernetesClusterTaintEffect = "NoExecute"
 	KubernetesClusterTaintEffectNoSchedule       KubernetesClusterTaintEffect = "NoSchedule"
 	KubernetesClusterTaintEffectPreferNoSchedule KubernetesClusterTaintEffect = "PreferNoSchedule"
+
+	KubernetesNodeStateNodeStateFailed KubernetesNodeState = "failed"
+	KubernetesNodeStatePending         KubernetesNodeState = "pending"
+	KubernetesNodeStateRunning         KubernetesNodeState = "running"
+	KubernetesNodeStateTerminating     KubernetesNodeState = "terminating"
+	KubernetesNodeStateUnknown         KubernetesNodeState = "unknown"
 )
 
 type (
@@ -24,6 +30,7 @@ type (
 	KubernetesNodeGroupState     string
 	KubernetesClusterType        string
 	KubernetesClusterTaintEffect string
+	KubernetesNodeState          string
 )
 
 type KubernetesCluster struct {
@@ -49,6 +56,19 @@ type KubernetesNodeGroup struct {
 	State        KubernetesNodeGroupState `json:"state,omitempty"`
 	Storage      string                   `json:"storage,omitempty"`
 	Taints       []KubernetesTaint        `json:"taints,omitempty"`
+	Nodes        []KubernetesNode         `json:"nodes,omitempty"`
+}
+
+type KubernetesNodeGroupDetails struct {
+	KubernetesNodeGroup
+
+	Nodes []KubernetesNode `json:"nodes,omitempty"`
+}
+
+type KubernetesNode struct {
+	UUID  string              `json:"uuid,omitempty"`
+	Name  string              `json:"name,omitempty"`
+	State KubernetesNodeState `json:"state,omitempty"`
 }
 
 type KubernetesKubeletArg struct {

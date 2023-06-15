@@ -172,3 +172,13 @@ type GetKubernetesPlansRequest struct{}
 func (r *GetKubernetesPlansRequest) RequestURL() string {
 	return fmt.Sprintf("%s/plans", kubernetesClusterBasePath)
 }
+
+type DeleteKubernetesNodeGroupNodeRequest struct {
+	ClusterUUID string
+	Name        string
+	NodeName    string
+}
+
+func (r *DeleteKubernetesNodeGroupNodeRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/node-groups/%s/%s", kubernetesClusterBasePath, r.ClusterUUID, r.Name, r.NodeName)
+}

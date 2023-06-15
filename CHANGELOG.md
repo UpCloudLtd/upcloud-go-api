@@ -7,6 +7,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ### Added
 - client functions `NewDefaultHTTPClient` and `NewDefaultHTTPTransport` to provide HTTP client default properties
+- kubernetes: experimental support for deleting nodes from node groups
+
+### Changed
+- `service.GetKubernetesNodeGroup` method to return `upcloud.KubernetesNodeGroupDetails` type which is extended version of the previous `upcloud.KubernetesNodeGroup`
 
 ## [6.3.2]
 
