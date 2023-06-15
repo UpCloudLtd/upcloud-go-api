@@ -18,11 +18,11 @@ const (
 	KubernetesClusterTaintEffectNoSchedule       KubernetesClusterTaintEffect = "NoSchedule"
 	KubernetesClusterTaintEffectPreferNoSchedule KubernetesClusterTaintEffect = "PreferNoSchedule"
 
-	KubernetesNodeStateNodeStateFailed KubernetesNodeState = "failed"
-	KubernetesNodeStatePending         KubernetesNodeState = "pending"
-	KubernetesNodeStateRunning         KubernetesNodeState = "running"
-	KubernetesNodeStateTerminating     KubernetesNodeState = "terminating"
-	KubernetesNodeStateUnknown         KubernetesNodeState = "unknown"
+	KubernetesNodeStateFailed      KubernetesNodeState = "failed"
+	KubernetesNodeStatePending     KubernetesNodeState = "pending"
+	KubernetesNodeStateRunning     KubernetesNodeState = "running"
+	KubernetesNodeStateTerminating KubernetesNodeState = "terminating"
+	KubernetesNodeStateUnknown     KubernetesNodeState = "unknown"
 )
 
 type (
