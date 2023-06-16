@@ -10,8 +10,6 @@ linters:
     - bidichk
     - bodyclose
     - containedctx
-    - deadcode
-    - depguard
     - dogsled
     - errcheck
     - goconst
@@ -31,13 +29,11 @@ linters:
     - predeclared
     - rowserrcheck
     - staticcheck
-    - structcheck
     # - stylecheck # TODO: re-enable, needs breaking change due to wanting IpAddress -> IPAddress
     - typecheck
     - unconvert
     - unparam
     - unused
-    - varcheck
     - wastedassign
     - whitespace
 
