@@ -10,6 +10,8 @@ const (
 
 	KubernetesNodeGroupStatePending     KubernetesNodeGroupState = "pending"
 	KubernetesNodeGroupStateRunning     KubernetesNodeGroupState = "running"
+	KubernetesNodeGroupStateScalingUp   KubernetesNodeGroupState = "scaling-up"
+	KubernetesNodeGroupStateScalingDown KubernetesNodeGroupState = "scaling-down"
 	KubernetesNodeGroupStateTerminating KubernetesNodeGroupState = "terminating"
 	KubernetesNodeGroupStateFailed      KubernetesNodeGroupState = "failed"
 	KubernetesNodeGroupStateUnknown     KubernetesNodeGroupState = "unknown"
