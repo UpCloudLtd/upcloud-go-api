@@ -41,7 +41,8 @@ const exampleCreateKubernetesClusterRequestJSON string = `{
 			"ssh_keys": [
 				"key",
 				"key"
-			]
+			],
+			"utility_network_access": true
 		},
 		{
 			"count": 1,
@@ -69,7 +70,8 @@ const exampleCreateKubernetesClusterRequestJSON string = `{
 			"ssh_keys": [
 				"key",
 				"key"
-			]
+			],
+			"utility_network_access": true
 		}
 	],
 	"name": "title",
@@ -400,5 +402,6 @@ func exampleKubernetesNodeGroup() KubernetesNodeGroup {
 			"key",
 			"key",
 		},
+		UtilityNetworkAccess: true,
 	}
 }
