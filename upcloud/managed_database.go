@@ -116,8 +116,8 @@ const (
 	// ManagedDatabasePropertyPublicAccess enables public access via internet to the service. A separate public
 	// endpoint DNS name will be available under Components after enabling.
 	ManagedDatabasePropertyPublicAccess ManagedDatabasePropertyKey = "public_access"
-	// Deprecated: ManagedDatabasePropertyMaxIndexCount allows adjusting the maximum number of indices of an OpenSearch
-	// Managed Database service. Use ManagedDatabaseUserOpenSearchAccessControlRule instead.
+	// Deprecated: ManagedDatabasePropertyMaxIndexCount in favor of ManagedDatabaseUserOpenSearchAccessControlRule.
+	// Allows adjusting the maximum number of indices of an OpenSearch Managed Database service. Use ManagedDatabaseUserOpenSearchAccessControlRule instead.
 	ManagedDatabasePropertyMaxIndexCount ManagedDatabasePropertyKey = "max_index_count"
 
 	// ManagedDatabaseAllIPv4 property value can be used together with ManagedDatabasePropertyIPFilter to allow access from all
@@ -224,6 +224,71 @@ type ManagedDatabaseConnection struct {
 	WaitEvent       string        `json:"wait_event"`
 	WaitEventType   string        `json:"wait_event_type"`
 	XactStart       time.Time     `json:"xact_start"`
+}
+
+// ManagedDatabaseSessions represents sessions in the managed database instance by database instance type.
+type ManagedDatabaseSessions struct {
+	MySQL      []ManagedDatabaseSessionMySQL      `json:"mysql,omitempty"`
+	PostgreSQL []ManagedDatabaseSessionPostgreSQL `json:"pg,omitempty"`
+	Redis      []ManagedDatabaseSessionRedis      `json:"redis,omitempty"`
+}
+
+// ManagedDatabaseSessionMySQL represents a session in a managed MySQL database instance.
+type ManagedDatabaseSessionMySQL struct {
+	ApplicationName string        `json:"application_name"`
+	ClientAddr      string        `json:"client_addr"`
+	Datname         string        `json:"datname"`
+	Id              string        `json:"id"`
+	Query           string        `json:"query"`
+	QueryDuration   time.Duration `json:"query_duration"`
+	State           string        `json:"state"`
+	Usename         string        `json:"usename"`
+}
+
+// ManagedDatabaseSessionPostgreSQL represents a session in a managed PostgreSQL database instance.
+type ManagedDatabaseSessionPostgreSQL struct {
+	ApplicationName string        `json:"application_name"`
+	BackendStart    time.Time     `json:"backend_start"`
+	BackendType     string        `json:"backend_type"`
+	BackendXid      *int          `json:"backend_xid"`
+	BackendXmin     *int          `json:"backend_xmin"`
+	ClientAddr      string        `json:"client_addr"`
+	ClientHostname  *string       `json:"client_hostname"`
+	ClientPort      int           `json:"client_port"`
+	Datid           int           `json:"datid"`
+	Datname         string        `json:"datname"`
+	Id              string        `json:"id"`
+	Query           string        `json:"query"`
+	QueryDuration   time.Duration `json:"query_duration"`
+	QueryStart      time.Time     `json:"query_start"`
+	State           string        `json:"state"`
+	StateChange     time.Time     `json:"state_change"`
+	Usename         string        `json:"usename"`
+	Usesysid        int           `json:"usesysid"`
+	WaitEvent       string        `json:"wait_event"`
+	WaitEventType   string        `json:"wait_event_type"`
+	XactStart       *time.Time    `json:"xact_start"`
+}
+
+// ManagedDatabaseSessionRedis represents a session in a managed Redis database instance.
+type ManagedDatabaseSessionRedis struct {
+	ActiveChannelSubscriptions                int           `json:"active_channel_subscriptions"`
+	ActiveDatabase                            string        `json:"active_database"`
+	ActivePatternMatchingChannelSubscriptions int           `json:"active_pattern_matching_channel_subscriptions"`
+	ApplicationName                           string        `json:"application_name"`
+	ClientAddr                                string        `json:"client_addr"`
+	ConnectionAge                             time.Duration `json:"connection_age"`
+	ConnectionIdle                            time.Duration `json:"connection_idle"`
+	Flags                                     []string      `json:"flags"`
+	FlagsRaw                                  string        `json:"flags_raw"`
+	Id                                        string        `json:"id"`
+	MultiExecCommands                         int           `json:"multi_exec_commands"`
+	OutputBuffer                              int           `json:"output_buffer"`
+	OutputBufferMemory                        int           `json:"output_buffer_memory"`
+	OutputListLength                          int           `json:"output_list_length"`
+	Query                                     string        `json:"query"`
+	QueryBuffer                               int           `json:"query_buffer"`
+	QueryBufferFree                           int           `json:"query_buffer_free"`
 }
 
 // ManagedDatabaseMaintenanceTime represents the set time of week when automatic maintenance operations are allowed
@@ -523,8 +588,8 @@ func (m *ManagedDatabaseProperties) GetPublicAccess() bool {
 	return v
 }
 
-// Deprecated: GetMaxIndexCount returns the maximum index count of the service.
-// See upcloud.ManagedDatabasePropertyMaxIndexCount for more information.
+// Deprecated: GetMaxIndexCount is deprecated in favor of field upcloud.ManagedDatabasePropertyMaxIndexCount.
+// Returns the maximum index count of the service.
 func (m *ManagedDatabaseProperties) GetMaxIndexCount() int {
 	v, _ := m.GetInt(ManagedDatabasePropertyMaxIndexCount)
 	return v
@@ -689,7 +754,8 @@ type ManagedDatabaseServicePlan struct {
 	Zones                  ManagedDatabaseServicePlanZones        `json:"zones"`
 }
 
-// Deprecated: ManagedDatabaseBackupConfig represents backup configuration of a database service plan.
+// Deprecated: ManagedDatabaseBackupConfig is deprecated in favor of service specific ManagedDatabaseBackupConfig<ServiceType> types.
+// Represents backup configuration of a database service plan.
 type ManagedDatabaseBackupConfig struct {
 	Interval     int    `json:"interval"`
 	MaxCount     int    `json:"max_count"`

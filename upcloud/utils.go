@@ -1,6 +1,9 @@
 package upcloud
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"time"
+)
 
 // Constants
 const (
@@ -82,6 +85,10 @@ func BoolPtr(v bool) *bool {
 }
 
 func IntPtr(v int) *int {
+	return &v
+}
+
+func TimePtr(v time.Time) *time.Time {
 	return &v
 }
 

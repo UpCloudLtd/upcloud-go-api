@@ -9,9 +9,13 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 - client functions `NewDefaultHTTPClient` and `NewDefaultHTTPTransport` to provide HTTP client default properties
 - kubernetes: experimental support for deleting nodes from node groups
 - kubernetes: consts for `scaling-up` and `scaling-down` node-group states
+- Managed Database session support, including methods `GetManagedDatabaseSessions` & `CancelManagedDatabaseSession`.
 
 ### Changed
 - `service.GetKubernetesNodeGroup` method to return `upcloud.KubernetesNodeGroupDetails` type which is extended version of the previous `upcloud.KubernetesNodeGroup`
+
+### Deprecated
+- `GetManagedDatabaseConnections` and `CancelManagedDatabaseConnection` in favor or `GetManagedDatabaseSessions` and `CancelManagedDatabaseSession`
 
 ## [6.3.2]
 

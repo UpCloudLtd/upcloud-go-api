@@ -5,9 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stretchr/testify/assert"
-
 	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud"
+	"github.com/stretchr/testify/assert"
 )
 
 /* Service Management */
@@ -19,6 +18,15 @@ func TestCancelManagedDatabaseConnection_RequestURL(t *testing.T) {
 		Terminate: true,
 	}
 	assert.Equal(t, "/database/fake/connections/42?terminate=true", req.RequestURL())
+}
+
+func TestCancelManagedDatabaseSession_RequestURL(t *testing.T) {
+	req := &CancelManagedDatabaseSession{
+		UUID:      "fake",
+		Pid:       42,
+		Terminate: true,
+	}
+	assert.Equal(t, "/database/fake/sessions/42?terminate=true", req.RequestURL())
 }
 
 func TestCloneManagedDatabaseRequest_MarshalJSON(t *testing.T) {
@@ -148,6 +156,11 @@ func TestGetManagedDatabasesRequest_RequestURL(t *testing.T) {
 	assert.Equal(t, "/database", (&GetManagedDatabasesRequest{}).RequestURL())
 }
 
+func TestGetManagedDatabaseAccessControlRequest_RequestURL(t *testing.T) {
+	req := GetManagedDatabaseAccessControlRequest{ServiceUUID: "fake"}
+	assert.Equal(t, "/database/fake/access-control", req.RequestURL())
+}
+
 func TestGetManagedDatabaseConnectionsRequest_RequestURL(t *testing.T) {
 	req := &GetManagedDatabaseConnectionsRequest{
 		UUID:   "fake",
@@ -174,9 +187,14 @@ func TestGetManagedDatabaseQueryStatisticsRequest_RequestURL(t *testing.T) {
 	assert.Equal(t, "/database/fake/query-statistics?limit=1000&offset=42", req.RequestURL())
 }
 
-func TestGetManagedDatabaseAccessControlRequest_RequestURL(t *testing.T) {
-	req := GetManagedDatabaseAccessControlRequest{ServiceUUID: "fake"}
-	assert.Equal(t, "/database/fake/access-control", req.RequestURL())
+func TestGetManagedDatabaseSessionsRequest_RequestURL(t *testing.T) {
+	req := &GetManagedDatabaseSessionsRequest{
+		UUID:   "fake",
+		Limit:  1000,
+		Offset: 42,
+		Order:  "pid:desc",
+	}
+	assert.Equal(t, "/database/fake/sessions?limit=1000&offset=42&order=pid%3Adesc", req.RequestURL())
 }
 
 func TestModifyManagedDatabaseAccessControlRequest(t *testing.T) {

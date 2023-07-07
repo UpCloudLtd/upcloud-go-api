@@ -32,6 +32,26 @@ func (c *CancelManagedDatabaseConnection) RequestURL() string {
 	return fmt.Sprintf("/database/%s/connections/%d?%s", c.UUID, c.Pid, qv.Encode())
 }
 
+// CancelManagedDatabaseSession represents a request to cancel the current query of a connection or terminate
+// the entire connection.
+type CancelManagedDatabaseSession struct {
+	// UUID selects a managed database instance to manage queries of
+	UUID string
+	// Pid selects a connection pid to cancel or terminate
+	Pid int
+	// Terminate selects whether the connection will be forcefully terminated
+	Terminate bool
+}
+
+// RequestURL implements the request.Request interface
+func (c *CancelManagedDatabaseSession) RequestURL() string {
+	qv := url.Values{}
+	if c.Terminate {
+		qv.Set("terminate", "true")
+	}
+	return fmt.Sprintf("/database/%s/sessions/%d?%s", c.UUID, c.Pid, qv.Encode())
+}
+
 // CloneManagedDatabaseRequest represents a request to cancel
 type CloneManagedDatabaseRequest struct {
 	// UUID selects an existing managed database instance to clone
@@ -255,6 +275,33 @@ type GetManagedDatabaseServiceTypesRequest struct{}
 // RequestURL implements the request.Request interface
 func (g *GetManagedDatabaseServiceTypesRequest) RequestURL() string {
 	return "/database/service-types"
+}
+
+// GetManagedDatabaseSessionsRequest represents a request to get managed database instance's current connections
+type GetManagedDatabaseSessionsRequest struct {
+	// UUID selects a managed database instance to query connections from
+	UUID string
+	// Limit sets the upper bound how many connections to fetch
+	Limit int
+	// Offset skips n connections before returning them. It can be used to iteratively fetch connections.
+	Offset int
+	//  Order by Session content variable and sort retrieved results. Limited variables can be used for ordering.
+	Order string
+}
+
+// RequestURL implements the request.Request interface
+func (g *GetManagedDatabaseSessionsRequest) RequestURL() string {
+	qv := url.Values{}
+	if g.Limit != 0 {
+		qv.Set("limit", strconv.Itoa(g.Limit))
+	}
+	if g.Offset != 0 {
+		qv.Set("offset", strconv.Itoa(g.Offset))
+	}
+	if len(g.Order) > 0 {
+		qv.Set("order", g.Order)
+	}
+	return fmt.Sprintf("/database/%s/sessions?%s", g.UUID, qv.Encode())
 }
 
 // ManagedDatabaseMaintenanceTimeRequest represents the set time of week when automatic maintenance operations are allowed
