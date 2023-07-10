@@ -36,7 +36,7 @@ const exampleCreateKubernetesClusterRequestJSON string = `{
 					"value": "sometaintvalue"
 				}
 			],
-			"name": "name",
+			"name": "withExplicitUtilityTrue",
 			"plan": "plan",
 			"ssh_keys": [
 				"key",
@@ -65,13 +65,41 @@ const exampleCreateKubernetesClusterRequestJSON string = `{
 					"value": "sometaintvalue"
 				}
 			],
-			"name": "name",
+			"name": "withExplicitUtilityFalse",
 			"plan": "plan",
 			"ssh_keys": [
 				"key",
 				"key"
 			],
-			"utility_network_access": true
+			"utility_network_access": false
+		},
+		{
+			"count": 1,
+			"labels": [
+				{
+					"key": "managedBy",
+					"value": "upcloud-go-sdk-unit-test"
+				}
+			],
+			"kubelet_args": [
+				{
+					"key": "somekubeletkey",
+					"value": "somekubeletvalue"
+				}
+			],
+			"taints": [
+				{
+					"effect": "NoExecute",
+					"key": "sometaintkey",
+					"value": "sometaintvalue"
+				}
+			],
+			"name": "withoutExplicitUtility",
+			"plan": "plan",
+			"ssh_keys": [
+				"key",
+				"key"
+			]
 		}
 	],
 	"name": "title",
@@ -349,7 +377,7 @@ func TestDeleteKubernetesNodeGroupRequest(t *testing.T) {
 
 func exampleGetKubernetesClustersWithFiltersRequest() GetKubernetesClustersWithFiltersRequest {
 	return GetKubernetesClustersWithFiltersRequest{
-		Filters: []KubernetesFilter{
+		Filters: []QueryFilter{
 			FilterLabelKey{"managedBy"},
 			FilterLabel{Label: upcloud.Label{
 				Key:   "managedBy",
@@ -365,8 +393,9 @@ func exampleCreateKubernetesClusterRequest() CreateKubernetesClusterRequest {
 		Network:     "00000000-0000-0000-0000-000000000000",
 		NetworkCIDR: "172.16.0.1/24",
 		NodeGroups: []KubernetesNodeGroup{
-			exampleKubernetesNodeGroup(),
-			exampleKubernetesNodeGroup(),
+			exampleKubernetesNodeGroup("withExplicitUtilityTrue", upcloud.BoolPtr(true)),
+			exampleKubernetesNodeGroup("withExplicitUtilityFalse", upcloud.BoolPtr(false)),
+			exampleKubernetesNodeGroup("withoutExplicitUtility", nil),
 		},
 		Zone:              "zone",
 		Plan:              "production",
@@ -374,8 +403,8 @@ func exampleCreateKubernetesClusterRequest() CreateKubernetesClusterRequest {
 	}
 }
 
-func exampleKubernetesNodeGroup() KubernetesNodeGroup {
-	return KubernetesNodeGroup{
+func exampleKubernetesNodeGroup(name string, utilityNetworkAccess *bool) KubernetesNodeGroup {
+	ng := KubernetesNodeGroup{
 		Count: 1,
 		Labels: []upcloud.Label{
 			{
@@ -396,12 +425,17 @@ func exampleKubernetesNodeGroup() KubernetesNodeGroup {
 				Value:  "sometaintvalue",
 			},
 		},
-		Name: "name",
+		Name: name,
 		Plan: "plan",
 		SSHKeys: []string{
 			"key",
 			"key",
 		},
-		UtilityNetworkAccess: true,
 	}
+
+	if utilityNetworkAccess != nil {
+		ng.UtilityNetworkAccess = utilityNetworkAccess
+	}
+
+	return ng
 }

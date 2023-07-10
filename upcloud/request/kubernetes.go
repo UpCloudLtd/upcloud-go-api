@@ -125,7 +125,7 @@ type KubernetesNodeGroup struct {
 	KubeletArgs          []upcloud.KubernetesKubeletArg `json:"kubelet_args,omitempty"`
 	Taints               []upcloud.KubernetesTaint      `json:"taints,omitempty"`
 	AntiAffinity         bool                           `json:"anti_affinity,omitempty"`
-	UtilityNetworkAccess bool                           `json:"utility_network_access,omitempty"`
+	UtilityNetworkAccess *bool                          `json:"utility_network_access,omitempty"`
 }
 
 type CreateKubernetesNodeGroupRequest struct {

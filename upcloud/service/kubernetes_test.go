@@ -242,7 +242,7 @@ func TestCreateKubernetesCluster(t *testing.T) {
 				Count:                2,
 				Storage:              "01000000-0000-4000-8000-000160010100",
 				AntiAffinity:         false,
-				UtilityNetworkAccess: true,
+				UtilityNetworkAccess: upcloud.BoolPtr(true),
 			},
 			{
 				Name:         "my-group2",
@@ -272,7 +272,7 @@ func TestCreateKubernetesCluster(t *testing.T) {
 				SSHKeys: []string{
 					"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO3fnjc8UrsYDNU8365mL3lnOPQJg18V42Lt8U/8Sm+r testy_test",
 				},
-				UtilityNetworkAccess: false,
+				UtilityNetworkAccess: upcloud.BoolPtr(false),
 			},
 		},
 	})
@@ -401,7 +401,7 @@ func TestCreateKubernetesNodeGroup(t *testing.T) {
 			SSHKeys: []string{
 				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO3fnjc8UrsYDNU8365mL3lnOPQJg18V42Lt8U/8Sm+r testy_test",
 			},
-			UtilityNetworkAccess: true,
+			UtilityNetworkAccess: upcloud.BoolPtr(true),
 		},
 	})
 	assert.NoError(t, err)
