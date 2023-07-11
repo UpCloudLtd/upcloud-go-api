@@ -13,6 +13,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 ### Changed
 - `service.GetKubernetesNodeGroup` method to return `upcloud.KubernetesNodeGroupDetails` type which is extended version of the previous `upcloud.KubernetesNodeGroup`
 
+### Fixed
+- `request.ModifyServerRequest` does not set boolean properties `Metadata` and `RemoteAccessEnabled` to `"no"` by default.
+
 ## [6.3.2]
 
 ### Added
