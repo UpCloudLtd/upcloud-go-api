@@ -9,7 +9,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 - Managed Database session support, including methods `service.GetManagedDatabaseSessions` & `service.CancelManagedDatabaseSession`.
 
 ### Deprecated
-- `service.GetManagedDatabaseConnections` and `service.CancelManagedDatabaseConnection` in favor or `service.GetManagedDatabaseSessions` and `service.CancelManagedDatabaseSession`
+- `service.GetManagedDatabaseConnections` and `service.CancelManagedDatabaseConnection` in favor of `service.GetManagedDatabaseSessions` and `service.CancelManagedDatabaseSession`
 
 ## [6.4.0]
 
