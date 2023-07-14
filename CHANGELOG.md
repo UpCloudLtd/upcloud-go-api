@@ -6,6 +6,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 ## [Unreleased]
 
 ### Added
+- kubernetes: `utility_network_access` field to node group for configuring utility network access on the given group
 - Managed Database session support, including methods `service.GetManagedDatabaseSessions` & `service.CancelManagedDatabaseSession`.
 
 ### Deprecated
@@ -17,7 +18,6 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 - client functions `NewDefaultHTTPClient` and `NewDefaultHTTPTransport` to provide HTTP client default properties
 - kubernetes: experimental support for deleting nodes from node groups
 - kubernetes: consts for `scaling-up` and `scaling-down` node-group states
-- kubernetes: `utility_network_access` field to node group for configuring utility network access on the given group
 
 ### Changed
 - `service.GetKubernetesNodeGroup` method to return `upcloud.KubernetesNodeGroupDetails` type which is extended version of the previous `upcloud.KubernetesNodeGroup`
