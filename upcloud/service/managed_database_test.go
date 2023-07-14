@@ -307,6 +307,52 @@ func TestService_GetManagedDatabaseConnections(t *testing.T) {
 	})
 }
 
+func TestService_GetManagedDatabaseSessions(t *testing.T) {
+	record(t, "getmanageddatabasesessions", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		createReq := getTestCreateRequest("getmanageddatabasesessions", upcloud.ManagedDatabaseServiceTypePostgreSQL)
+		createReq.Type = upcloud.ManagedDatabaseServiceTypePostgreSQL
+		createReq.Properties.SetPublicAccess(true).SetIPFilter(upcloud.ManagedDatabaseAllIPv4)
+		serviceDetails, err := svc.CreateManagedDatabase(ctx, createReq)
+		if !assert.NoError(t, err) {
+			return
+		}
+		defer func() {
+			t.Logf("deleting %s", serviceDetails.UUID)
+			err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
+			assert.NoError(t, err)
+		}()
+		require.NoError(t, waitForManagedDatabaseRunningState(ctx, rec, svc, serviceDetails.UUID))
+		sessions, err := svc.GetManagedDatabaseSessions(ctx, &request.GetManagedDatabaseSessionsRequest{
+			UUID:   serviceDetails.UUID,
+			Limit:  1000,
+			Offset: 0,
+			Order:  "pid:desc",
+		})
+		if !assert.NoError(t, err) {
+			return
+		}
+		assert.Len(t, sessions.MySQL, 0)
+		assert.Len(t, sessions.PostgreSQL, 0)
+		assert.Len(t, sessions.Redis, 0)
+
+		err = svc.CancelManagedDatabaseSession(ctx, &request.CancelManagedDatabaseSession{
+			UUID:      serviceDetails.UUID,
+			Pid:       0,
+			Terminate: true,
+		})
+		assert.Error(t, err)
+		assert.True(t, strings.HasPrefix(err.(*upcloud.Problem).Title, "Must provide a connection"))
+
+		err = svc.CancelManagedDatabaseSession(ctx, &request.CancelManagedDatabaseSession{
+			UUID:      serviceDetails.UUID,
+			Pid:       0,
+			Terminate: false,
+		})
+		assert.Error(t, err)
+		assert.True(t, strings.HasPrefix(err.(*upcloud.Problem).Title, "Must provide a connection"))
+	})
+}
+
 func TestService_GetManagedDatabaseMetrics(t *testing.T) {
 	const waitFor = 2 * time.Minute
 

@@ -569,6 +569,128 @@ func TestUnmarshalManagedDatabaseConnection(t *testing.T) {
 	assert.Equal(t, expect, c)
 }
 
+func TestUnmarshalManagedDatabaseSessions(t *testing.T) {
+	const d = `{
+	"mysql": [
+		{
+			"application_name": "",
+			"client_addr": "111.111.111.111:63244",
+			"datname": "defaultdb",
+			"id": "pid_23325",
+			"query": "select\n            ordinal_position,\n            column_name,\n            column_type,\n            column_default,\n            generation_expression,\n            table_name,\n            column_comment,\n            is_nullable,\n            extra,\n            collation_name\n          from information_schema.columns\n          where table_schema = 'performance_schema'\n          order by table_name, ordinal_position",
+			"query_duration": 0,
+			"state": "active",
+			"usename": "upadmin"
+		}
+	],
+	"pg": [
+		{
+			"application_name": "client 1.5.14",
+			"backend_start": "2022-01-21T13:26:26.682858Z",
+			"backend_type": "client backend",
+			"backend_xid": 2,
+			"backend_xmin": 1,
+			"client_addr": "111.111.111.111",
+			"client_hostname": "client.host.com",
+			"client_port": 61264,
+			"datid": 16401,
+			"datname": "defaultdb",
+			"id": "pid_2065031",
+			"query": "SELECT \trel.relname, \trel.relkind, \trel.reltuples, \tcoalesce(rel.relpages,0) + coalesce(toast.relpages,0) AS num_total_pages, \tSUM(ind.relpages) AS index_pages, \tpg_roles.rolname AS owner FROM pg_class rel \tleft join pg_class toast on (toast.oid = rel.reltoastrelid) \tleft join pg_index on (indrelid=rel.oid) \tleft join pg_class ind on (ind.oid = indexrelid) \tjoin pg_namespace on (rel.relnamespace =pg_namespace.oid ) \tleft join pg_roles on ( rel.relowner = pg_roles.oid ) WHERE rel.relkind IN ('r','v','m','f','p') AND nspname = 'public'GROUP BY rel.relname, rel.relkind, rel.reltuples, coalesce(rel.relpages,0) + coalesce(toast.relpages,0), pg_roles.rolname;\n",
+			"query_duration": 12225858000,
+			"query_start": "2022-01-21T13:26:28.63132Z",
+			"state": "idle",
+			"state_change": "2022-01-21T13:26:28.63388Z",
+			"usename": "upadmin",
+			"usesysid": 16400,
+			"wait_event": "ClientRead",
+			"wait_event_type": "Client",
+			"xact_start": "2022-01-21T13:26:28.63383Z"
+		}
+	],
+	"redis": [
+		{
+			"active_channel_subscriptions": 0,
+			"active_database": "",
+			"active_pattern_matching_channel_subscriptions": 0,
+			"client_addr": "[fff0:fff0:fff0:fff0:0:fff0:fff0:fff0]:39956",
+			"connection_age": 2079483000000000,
+			"connection_idle": 3000000000,
+			"flags": [],
+			"flags_raw": "N",
+			"id": "15",
+			"multi_exec_commands": -1,
+			"application_name": "",
+			"output_buffer": 0,
+			"output_buffer_memory": 0,
+			"output_list_length": 0,
+			"query": "info",
+			"query_buffer": 0,
+			"query_buffer_free": 0
+		}
+	]
+}`
+
+	var c ManagedDatabaseSessions
+	assert.NoError(t, json.Unmarshal([]byte(d), &c))
+
+	expect := ManagedDatabaseSessions{
+		MySQL: []ManagedDatabaseSessionMySQL{{
+			ApplicationName: "",
+			ClientAddr:      "111.111.111.111:63244",
+			Datname:         "defaultdb",
+			Id:              "pid_23325",
+			Query:           "select\n            ordinal_position,\n            column_name,\n            column_type,\n            column_default,\n            generation_expression,\n            table_name,\n            column_comment,\n            is_nullable,\n            extra,\n            collation_name\n          from information_schema.columns\n          where table_schema = 'performance_schema'\n          order by table_name, ordinal_position",
+			QueryDuration:   0,
+			State:           "active",
+			Usename:         "upadmin",
+		}},
+		PostgreSQL: []ManagedDatabaseSessionPostgreSQL{{
+			ApplicationName: "client 1.5.14",
+			BackendStart:    time.Date(2022, 0o1, 21, 13, 26, 26, 682858000, time.UTC),
+			BackendType:     "client backend",
+			BackendXid:      IntPtr(2),
+			BackendXmin:     IntPtr(1),
+			ClientAddr:      "111.111.111.111",
+			ClientHostname:  StringPtr("client.host.com"),
+			ClientPort:      61264,
+			Datid:           16401,
+			Datname:         "defaultdb",
+			Id:              "pid_2065031",
+			Query:           "SELECT \trel.relname, \trel.relkind, \trel.reltuples, \tcoalesce(rel.relpages,0) + coalesce(toast.relpages,0) AS num_total_pages, \tSUM(ind.relpages) AS index_pages, \tpg_roles.rolname AS owner FROM pg_class rel \tleft join pg_class toast on (toast.oid = rel.reltoastrelid) \tleft join pg_index on (indrelid=rel.oid) \tleft join pg_class ind on (ind.oid = indexrelid) \tjoin pg_namespace on (rel.relnamespace =pg_namespace.oid ) \tleft join pg_roles on ( rel.relowner = pg_roles.oid ) WHERE rel.relkind IN ('r','v','m','f','p') AND nspname = 'public'GROUP BY rel.relname, rel.relkind, rel.reltuples, coalesce(rel.relpages,0) + coalesce(toast.relpages,0), pg_roles.rolname;\n",
+			QueryDuration:   12225858000,
+			QueryStart:      time.Date(2022, 0o1, 21, 13, 26, 28, 631320000, time.UTC),
+			State:           "idle",
+			StateChange:     time.Date(2022, 0o1, 21, 13, 26, 28, 633880000, time.UTC),
+			Usename:         "upadmin",
+			Usesysid:        16400,
+			WaitEvent:       "ClientRead",
+			WaitEventType:   "Client",
+			XactStart:       TimePtr(time.Date(2022, 0o1, 21, 13, 26, 28, 633830000, time.UTC)),
+		}},
+		Redis: []ManagedDatabaseSessionRedis{{
+			ActiveChannelSubscriptions:                0,
+			ActiveDatabase:                            "",
+			ActivePatternMatchingChannelSubscriptions: 0,
+			ApplicationName:                           "",
+			ClientAddr:                                "[fff0:fff0:fff0:fff0:0:fff0:fff0:fff0]:39956",
+			ConnectionAge:                             2079483000000000,
+			ConnectionIdle:                            3000000000,
+			Flags:                                     []string{},
+			FlagsRaw:                                  "N",
+			Id:                                        "15",
+			MultiExecCommands:                         -1,
+			OutputBuffer:                              0,
+			OutputBufferMemory:                        0,
+			OutputListLength:                          0,
+			Query:                                     "info",
+			QueryBuffer:                               0,
+			QueryBufferFree:                           0,
+		}},
+	}
+	assert.Equal(t, expect, c)
+}
+
 func TestManagedDatabaseMetadata(t *testing.T) {
 	got := ManagedDatabase{}
 	require.NoError(t, json.Unmarshal([]byte(`

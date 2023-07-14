@@ -5,12 +5,18 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- Managed Database session support, including methods `service.GetManagedDatabaseSessions` & `service.CancelManagedDatabaseSession`.
+
+### Deprecated
+- `service.GetManagedDatabaseConnections` and `service.CancelManagedDatabaseConnection` in favor of `service.GetManagedDatabaseSessions` and `service.CancelManagedDatabaseSession`
+
 ## [6.4.0]
 
 ### Added
 - client functions `NewDefaultHTTPClient` and `NewDefaultHTTPTransport` to provide HTTP client default properties
 - kubernetes: experimental support for deleting nodes from node groups
-- kubernetes: consts for `scaling-up` and `scaling-down` node group states
+- kubernetes: consts for `scaling-up` and `scaling-down` node-group states
 - kubernetes: `utility_network_access` field to node group for configuring utility network access on the given group
 
 ### Changed
@@ -320,8 +326,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.4.0...HEAD
-[6.4.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.3.2...v6.4.0
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.3.2...HEAD
 [6.3.2]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.3.1...v6.3.2
 [6.3.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.3.0...v6.3.1
 [6.3.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.2.0...v6.3.0
