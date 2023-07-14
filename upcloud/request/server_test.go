@@ -331,8 +331,32 @@ func TestModifyServerRequest(t *testing.T) {
 		  "core_number": "8",
 		  "memory_amount": "16384",
 		  "plan" : "custom",
-		  "metadata": "yes",
-		  "remote_access_enabled": "no"
+		  "metadata": "yes"
+		}
+	  }
+	`
+	actualJSON, err := json.Marshal(&request)
+	assert.Nil(t, err)
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
+	assert.Equal(t, "/server/foo", request.RequestURL())
+}
+
+func TestModifyServerRequest_BooleanDefaults(t *testing.T) {
+	request := ModifyServerRequest{
+		UUID:         "foo",
+		Title:        "Modified server",
+		CoreNumber:   8,
+		MemoryAmount: 16384,
+		Plan:         "custom",
+	}
+
+	expectedJSON := `
+	  {
+		"server" : {
+          "title": "Modified server",
+		  "core_number": "8",
+		  "memory_amount": "16384",
+		  "plan" : "custom"
 		}
 	  }
 	`

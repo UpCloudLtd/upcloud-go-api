@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [6.4.0]
+
 ### Added
 - client functions `NewDefaultHTTPClient` and `NewDefaultHTTPTransport` to provide HTTP client default properties
 - kubernetes: experimental support for deleting nodes from node groups
@@ -13,6 +15,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ### Changed
 - `service.GetKubernetesNodeGroup` method to return `upcloud.KubernetesNodeGroupDetails` type which is extended version of the previous `upcloud.KubernetesNodeGroup`
+
+### Fixed
+- `request.ModifyServerRequest` does not set boolean properties `Metadata` and `RemoteAccessEnabled` to `"no"` by default.
 
 ## [6.3.2]
 
@@ -315,7 +320,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.3.2...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.4.0...HEAD
+[6.4.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.3.2...v6.4.0
 [6.3.2]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.3.1...v6.3.2
 [6.3.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.3.0...v6.3.1
 [6.3.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.2.0...v6.3.0
