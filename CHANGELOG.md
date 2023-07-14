@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+
+## [6.5.0]
+
 ### Added
 - kubernetes: `utility_network_access` field to node group for configuring utility network access on the given group
 - Managed Database session support, including methods `service.GetManagedDatabaseSessions` & `service.CancelManagedDatabaseSession`.
@@ -326,7 +329,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.3.2...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.5.0...HEAD
+[6.5.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.4.0...v6.5.0
+[6.4.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.3.2...v6.4.0
 [6.3.2]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.3.1...v6.3.2
 [6.3.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.3.0...v6.3.1
 [6.3.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.2.0...v6.3.0
