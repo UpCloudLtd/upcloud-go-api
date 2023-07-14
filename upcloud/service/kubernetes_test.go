@@ -32,7 +32,8 @@ const exampleClusterResponse = `
 			"anti_affinity": false,
 			"kubelet_args":[],
 			"labels":[],
-			"ssh_keys":[]
+			"ssh_keys":[],
+			"utility_network_access": true
 		},
 		{
 			"name":"my-group2",
@@ -61,7 +62,8 @@ const exampleClusterResponse = `
 			],
 			"ssh_keys":[
 				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO3fnjc8UrsYDNU8365mL3lnOPQJg18V42Lt8U/8Sm+r testy_test"
-			]
+			],
+			"utility_network_access": false
 		}
 	]
 }
@@ -95,7 +97,8 @@ const exampleNodeGroupResponse = `
 	],
 	"ssh_keys": [
 		"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO3fnjc8UrsYDNU8365mL3lnOPQJg18V42Lt8U/8Sm+r testy_test"
-	]
+	],
+	"utility_network_access": true
 }
 `
 
@@ -117,7 +120,8 @@ const exampleNodeGroupDetailsResponse = `
 			"state": "terminating",
 			"uuid": "00b56302-e211-40d9-83fa-177f0171e75a"
 		}
-	]
+	],
+	"utility_network_access": true
 }`
 
 const exampleNetworkResponse = `
@@ -173,6 +177,7 @@ func TestGetKubernetesClusters(t *testing.T) {
 	assert.Len(t, res[0].NodeGroups[0].Labels, 0)
 	assert.Len(t, res[0].NodeGroups[0].KubeletArgs, 0)
 	assert.Len(t, res[0].NodeGroups[0].Taints, 0)
+	assert.Equal(t, true, res[0].NodeGroups[0].UtilityNetworkAccess)
 
 	// Check second group properties
 	assert.Equal(t, "my-group2", res[0].NodeGroups[1].Name)
@@ -182,6 +187,7 @@ func TestGetKubernetesClusters(t *testing.T) {
 	assert.Len(t, res[0].NodeGroups[1].Labels, 1)
 	assert.Len(t, res[0].NodeGroups[1].KubeletArgs, 1)
 	assert.Len(t, res[0].NodeGroups[1].Taints, 1)
+	assert.Equal(t, false, res[0].NodeGroups[1].UtilityNetworkAccess)
 }
 
 func TestGetKubernetesClusterDetails(t *testing.T) {
@@ -231,11 +237,12 @@ func TestCreateKubernetesCluster(t *testing.T) {
 		Zone:    "de-fra1",
 		NodeGroups: []request.KubernetesNodeGroup{
 			{
-				Name:         "my-group1",
-				Plan:         "2xCPU-4GB",
-				Count:        2,
-				Storage:      "01000000-0000-4000-8000-000160010100",
-				AntiAffinity: false,
+				Name:                 "my-group1",
+				Plan:                 "2xCPU-4GB",
+				Count:                2,
+				Storage:              "01000000-0000-4000-8000-000160010100",
+				AntiAffinity:         false,
+				UtilityNetworkAccess: upcloud.BoolPtr(true),
 			},
 			{
 				Name:         "my-group2",
@@ -265,6 +272,7 @@ func TestCreateKubernetesCluster(t *testing.T) {
 				SSHKeys: []string{
 					"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO3fnjc8UrsYDNU8365mL3lnOPQJg18V42Lt8U/8Sm+r testy_test",
 				},
+				UtilityNetworkAccess: upcloud.BoolPtr(false),
 			},
 		},
 	})
@@ -393,10 +401,12 @@ func TestCreateKubernetesNodeGroup(t *testing.T) {
 			SSHKeys: []string{
 				"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO3fnjc8UrsYDNU8365mL3lnOPQJg18V42Lt8U/8Sm+r testy_test",
 			},
+			UtilityNetworkAccess: upcloud.BoolPtr(true),
 		},
 	})
 	assert.NoError(t, err)
 	assert.Equal(t, "my-test-group", res.Name)
+	assert.Equal(t, true, res.UtilityNetworkAccess)
 }
 
 func TestModifyKubernetesNodeGroup(t *testing.T) {

@@ -26,19 +26,19 @@ type Kubernetes interface {
 	GetKubernetesPlans(ctx context.Context, r *request.GetKubernetesPlansRequest) ([]upcloud.KubernetesPlan, error)
 }
 
-// GetKubernetesClusters retrieves a list of Kubernetes clusters (EXPERIMENTAL).
+// GetKubernetesClusters retrieves a list of Kubernetes clusters.
 func (s *Service) GetKubernetesClusters(ctx context.Context, r *request.GetKubernetesClustersRequest) ([]upcloud.KubernetesCluster, error) {
 	clusters := make([]upcloud.KubernetesCluster, 0)
 	return clusters, s.get(ctx, r.RequestURL(), &clusters)
 }
 
-// GetKubernetesCluster retrieves details of a Kubernetes cluster (EXPERIMENTAL).
+// GetKubernetesCluster retrieves details of a Kubernetes cluster.
 func (s *Service) GetKubernetesCluster(ctx context.Context, r *request.GetKubernetesClusterRequest) (*upcloud.KubernetesCluster, error) {
 	kubernetesCluster := upcloud.KubernetesCluster{}
 	return &kubernetesCluster, s.get(ctx, r.RequestURL(), &kubernetesCluster)
 }
 
-// CreateKubernetesCluster creates a new Kubernetes cluster (EXPERIMENTAL).
+// CreateKubernetesCluster creates a new Kubernetes cluster.
 func (s *Service) CreateKubernetesCluster(ctx context.Context, r *request.CreateKubernetesClusterRequest) (*upcloud.KubernetesCluster, error) {
 	if r == nil || len(r.Network) == 0 {
 		return nil, fmt.Errorf("bad request")
@@ -57,7 +57,7 @@ func (s *Service) CreateKubernetesCluster(ctx context.Context, r *request.Create
 	return &cluster, s.create(ctx, r, &cluster)
 }
 
-// DeleteKubernetesCluster deletes an existing Kubernetes cluster (EXPERIMENTAL).
+// DeleteKubernetesCluster deletes an existing Kubernetes cluster.
 func (s *Service) DeleteKubernetesCluster(ctx context.Context, r *request.DeleteKubernetesClusterRequest) error {
 	return s.delete(ctx, r)
 }
@@ -91,7 +91,7 @@ func (s *Service) WaitForKubernetesClusterState(ctx context.Context, r *request.
 	}
 }
 
-// GetKubernetesKubeconfig retrieves kubeconfig of a Kubernetes cluster (EXPERIMENTAL).
+// GetKubernetesKubeconfig retrieves kubeconfig of a Kubernetes cluster.
 func (s *Service) GetKubernetesKubeconfig(ctx context.Context, r *request.GetKubernetesKubeconfigRequest) (string, error) {
 	// TODO: should timeout be part of GetKubernetesKubeconfigRequest ?
 	const timeout time.Duration = 10 * time.Minute
@@ -112,47 +112,47 @@ func (s *Service) GetKubernetesKubeconfig(ctx context.Context, r *request.GetKub
 	return data.Kubeconfig, err
 }
 
-// GetKubernetesVersions retrieves a list of Kubernetes cluster versions (EXPERIMENTAL).
+// GetKubernetesVersions retrieves a list of Kubernetes cluster versions.
 func (s *Service) GetKubernetesVersions(ctx context.Context, r *request.GetKubernetesVersionsRequest) ([]string, error) {
 	versions := make([]string, 0)
 	return versions, s.get(ctx, r.RequestURL(), &versions)
 }
 
-// GetKubernetesNodeGroups retrieves a list of Kubernetes cluster node groups (EXPERIMENTAL).
+// GetKubernetesNodeGroups retrieves a list of Kubernetes cluster node groups.
 func (s *Service) GetKubernetesNodeGroups(ctx context.Context, r *request.GetKubernetesNodeGroupsRequest) ([]upcloud.KubernetesNodeGroup, error) {
 	ng := make([]upcloud.KubernetesNodeGroup, 0)
 	return ng, s.get(ctx, r.RequestURL(), &ng)
 }
 
-// GetKubernetesNodeGroup retrieves details of a node group (EXPERIMENTAL).
+// GetKubernetesNodeGroup retrieves details of a node group.
 func (s *Service) GetKubernetesNodeGroup(ctx context.Context, r *request.GetKubernetesNodeGroupRequest) (*upcloud.KubernetesNodeGroupDetails, error) {
 	ng := upcloud.KubernetesNodeGroupDetails{}
 	return &ng, s.get(ctx, r.RequestURL(), &ng)
 }
 
-// CreateKubernetesNodeGroup creates a new node group (EXPERIMENTAL).
+// CreateKubernetesNodeGroup creates a new node group.
 func (s *Service) CreateKubernetesNodeGroup(ctx context.Context, r *request.CreateKubernetesNodeGroupRequest) (*upcloud.KubernetesNodeGroup, error) {
 	ng := upcloud.KubernetesNodeGroup{}
 	return &ng, s.create(ctx, r, &ng)
 }
 
-// ModifyKubernetesNodeGroup modifies an existing node group (EXPERIMENTAL).
+// ModifyKubernetesNodeGroup modifies an existing node group.
 func (s *Service) ModifyKubernetesNodeGroup(ctx context.Context, r *request.ModifyKubernetesNodeGroupRequest) (*upcloud.KubernetesNodeGroup, error) {
 	ng := upcloud.KubernetesNodeGroup{}
 	return &ng, s.modify(ctx, r, &ng)
 }
 
-// DeleteKubernetesNodeGroup deletes an existing node group (EXPERIMENTAL).
+// DeleteKubernetesNodeGroup deletes an existing node group.
 func (s *Service) DeleteKubernetesNodeGroup(ctx context.Context, r *request.DeleteKubernetesNodeGroupRequest) error {
 	return s.delete(ctx, r)
 }
 
-// DeleteKubernetesNodeGroupNode deletes an existing node from the node group (EXPERIMENTAL).
+// DeleteKubernetesNodeGroupNode deletes an existing node from the node group.
 func (s *Service) DeleteKubernetesNodeGroupNode(ctx context.Context, r *request.DeleteKubernetesNodeGroupNodeRequest) error {
 	return s.delete(ctx, r)
 }
 
-// GetKubernetesPlans retrieves a list of Kubernetes plans (EXPERIMENTAL).
+// GetKubernetesPlans retrieves a list of Kubernetes plans.
 func (s *Service) GetKubernetesPlans(ctx context.Context, r *request.GetKubernetesPlansRequest) ([]upcloud.KubernetesPlan, error) {
 	plans := make([]upcloud.KubernetesPlan, 0)
 	return plans, s.get(ctx, r.RequestURL(), &plans)

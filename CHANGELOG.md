@@ -6,16 +6,24 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 ## [Unreleased]
 
 ### Added
+- Managed Database session support, including methods `service.GetManagedDatabaseSessions` & `service.CancelManagedDatabaseSession`.
+
+### Deprecated
+- `service.GetManagedDatabaseConnections` and `service.CancelManagedDatabaseConnection` in favor or `service.GetManagedDatabaseSessions` and `service.CancelManagedDatabaseSession`
+
+## [6.4.0]
+
+### Added
 - client functions `NewDefaultHTTPClient` and `NewDefaultHTTPTransport` to provide HTTP client default properties
 - kubernetes: experimental support for deleting nodes from node groups
 - kubernetes: consts for `scaling-up` and `scaling-down` node-group states
-- Managed Database session support, including methods `GetManagedDatabaseSessions` & `CancelManagedDatabaseSession`.
+- kubernetes: `utility_network_access` field to node group for configuring utility network access on the given group
 
 ### Changed
 - `service.GetKubernetesNodeGroup` method to return `upcloud.KubernetesNodeGroupDetails` type which is extended version of the previous `upcloud.KubernetesNodeGroup`
 
-### Deprecated
-- `GetManagedDatabaseConnections` and `CancelManagedDatabaseConnection` in favor or `GetManagedDatabaseSessions` and `CancelManagedDatabaseSession`
+### Fixed
+- `request.ModifyServerRequest` does not set boolean properties `Metadata` and `RemoteAccessEnabled` to `"no"` by default.
 
 ## [6.3.2]
 
