@@ -13,6 +13,7 @@ type Kubernetes interface {
 	GetKubernetesClusters(ctx context.Context, r *request.GetKubernetesClustersRequest) ([]upcloud.KubernetesCluster, error)
 	GetKubernetesCluster(ctx context.Context, r *request.GetKubernetesClusterRequest) (*upcloud.KubernetesCluster, error)
 	CreateKubernetesCluster(ctx context.Context, r *request.CreateKubernetesClusterRequest) (*upcloud.KubernetesCluster, error)
+	ModifyKubernetesCluster(ctx context.Context, r *request.ModifyKubernetesClusterRequest) (*upcloud.KubernetesCluster, error)
 	DeleteKubernetesCluster(ctx context.Context, r *request.DeleteKubernetesClusterRequest) error
 	GetKubernetesKubeconfig(ctx context.Context, r *request.GetKubernetesKubeconfigRequest) (string, error)
 	GetKubernetesVersions(ctx context.Context, r *request.GetKubernetesVersionsRequest) ([]string, error)
@@ -55,6 +56,12 @@ func (s *Service) CreateKubernetesCluster(ctx context.Context, r *request.Create
 	cluster := upcloud.KubernetesCluster{}
 
 	return &cluster, s.create(ctx, r, &cluster)
+}
+
+// ModifyKubernetesCluster modifies an existing node group.
+func (s *Service) ModifyKubernetesCluster(ctx context.Context, r *request.ModifyKubernetesClusterRequest) (*upcloud.KubernetesCluster, error) {
+	cluster := upcloud.KubernetesCluster{}
+	return &cluster, s.modify(ctx, r, &cluster)
 }
 
 // DeleteKubernetesCluster deletes an existing Kubernetes cluster.

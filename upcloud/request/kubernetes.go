@@ -48,17 +48,35 @@ func (r *GetKubernetesClusterRequest) RequestURL() string {
 
 // CreateKubernetesClusterRequest represents a request to create a Kubernetes cluster
 type CreateKubernetesClusterRequest struct {
-	Name              string                `json:"name"`
-	Network           string                `json:"network"`
-	NetworkCIDR       string                `json:"network_cidr"`
-	NodeGroups        []KubernetesNodeGroup `json:"node_groups"`
-	Zone              string                `json:"zone"`
-	Plan              string                `json:"plan,omitempty"`
-	PrivateNodeGroups bool                  `json:"private_node_groups"`
+	ControlPlaneIPFilter []string              `json:"control_plane_ip_filter"`
+	Name                 string                `json:"name"`
+	Network              string                `json:"network"`
+	NetworkCIDR          string                `json:"network_cidr"`
+	NodeGroups           []KubernetesNodeGroup `json:"node_groups"`
+	Zone                 string                `json:"zone"`
+	Plan                 string                `json:"plan,omitempty"`
+	PrivateNodeGroups    bool                  `json:"private_node_groups"`
 }
 
 func (r *CreateKubernetesClusterRequest) RequestURL() string {
 	return kubernetesClusterBasePath
+}
+
+type ModifyKubernetesCluster struct {
+	ControlPlaneIPFilter []string `json:"control_plane_ip_filter"`
+}
+
+type ModifyKubernetesClusterRequest struct {
+	ClusterUUID string `json:"-"`
+	Cluster     ModifyKubernetesCluster
+}
+
+func (r *ModifyKubernetesClusterRequest) MarshalJSON() ([]byte, error) {
+	return json.Marshal(r.Cluster)
+}
+
+func (r *ModifyKubernetesClusterRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s", kubernetesClusterBasePath, r.ClusterUUID)
 }
 
 // DeleteKubernetesClusterRequest represents a request to delete a Kubernetes cluster
