@@ -9,6 +9,12 @@ func TestGateway(t *testing.T) {
 
 	jsonStr := `
 	{
+		"addresses": [
+			{
+				"address": "192.0.2.96",
+				"name": "public-ip-1"
+			}
+		],
 		"configured_status": "started",
 		"created_at": "2022-12-01T09:04:08.529138Z",
 		"features": [
@@ -35,6 +41,10 @@ func TestGateway(t *testing.T) {
 	`
 
 	gateway := &Gateway{
+		Addresses: []GateWayAdress{{
+			Address: "192.0.2.96",
+			Name:    "public-ip-1",
+		}},
 		ConfiguredStatus: GatewayConfiguredStatusStarted,
 		CreatedAt:        timeParse("2022-12-01T09:04:08.529138Z"),
 		Features: []GatewayFeature{

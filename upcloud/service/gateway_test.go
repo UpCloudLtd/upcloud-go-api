@@ -57,6 +57,7 @@ func TestGateway(t *testing.T) {
 		if assert.Len(t, gw.Routers, 1) {
 			assert.Equal(t, router.UUID, gw.Routers[0].UUID)
 		}
+		assert.Len(t, gw.Addresses, 1)
 		gw, err = svc.ModifyGateway(ctx, &request.ModifyGatewayRequest{
 			UUID:             gw.UUID,
 			Name:             "new-name",

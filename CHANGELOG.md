@@ -7,6 +7,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ### Added
 - kubernetes: `control_plane_ip_filter` field to cluster for configuring and reading IP addresses and ranges allowed to access cluster control-plane
+- gateway: `addresses` list to provide IP addresses assigned to the gateway
 
 ## [6.5.0]
 
