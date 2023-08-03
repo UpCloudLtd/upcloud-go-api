@@ -45,10 +45,10 @@ type Gateway struct {
 	Routers          []GatewayRouter         `json:"routers,omitempty"`
 	CreatedAt        time.Time               `json:"created_at,omitempty"`
 	UpdatedAt        time.Time               `json:"updated_at,omitempty"`
-	Addresses        []GateWayAdress         `json:"addresses,omitempty"`
+	Addresses        []GatewayAddress        `json:"addresses,omitempty"`
 }
 
-type GateWayAdress struct {
+type GatewayAddress struct {
 	Address string `json:"address,omitempty"`
 	Name    string `json:"name,omitempty"`
 }

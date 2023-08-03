@@ -41,7 +41,7 @@ func TestGateway(t *testing.T) {
 	`
 
 	gateway := &Gateway{
-		Addresses: []GateWayAdress{{
+		Addresses: []GatewayAddress{{
 			Address: "192.0.2.96",
 			Name:    "public-ip-1",
 		}},
