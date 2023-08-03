@@ -45,6 +45,12 @@ type Gateway struct {
 	Routers          []GatewayRouter         `json:"routers,omitempty"`
 	CreatedAt        time.Time               `json:"created_at,omitempty"`
 	UpdatedAt        time.Time               `json:"updated_at,omitempty"`
+	Addresses        []GatewayAddress        `json:"addresses,omitempty"`
+}
+
+type GatewayAddress struct {
+	Address string `json:"address,omitempty"`
+	Name    string `json:"name,omitempty"`
 }
 
 type GatewayRouter struct {
