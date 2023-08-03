@@ -36,15 +36,16 @@ type (
 )
 
 type KubernetesCluster struct {
-	Name              string                 `json:"name"`
-	Network           string                 `json:"network"`
-	NetworkCIDR       string                 `json:"network_cidr"`
-	NodeGroups        []KubernetesNodeGroup  `json:"node_groups"`
-	State             KubernetesClusterState `json:"state"`
-	UUID              string                 `json:"uuid"`
-	Zone              string                 `json:"zone"`
-	Plan              string                 `json:"plan"`
-	PrivateNodeGroups bool                   `json:"private_node_groups"`
+	ControlPlaneIPFilter []string               `json:"control_plane_ip_filter"`
+	Name                 string                 `json:"name"`
+	Network              string                 `json:"network"`
+	NetworkCIDR          string                 `json:"network_cidr"`
+	NodeGroups           []KubernetesNodeGroup  `json:"node_groups"`
+	State                KubernetesClusterState `json:"state"`
+	UUID                 string                 `json:"uuid"`
+	Zone                 string                 `json:"zone"`
+	Plan                 string                 `json:"plan"`
+	PrivateNodeGroups    bool                   `json:"private_node_groups"`
 }
 
 type KubernetesNodeGroup struct {

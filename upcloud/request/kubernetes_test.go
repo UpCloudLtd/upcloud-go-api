@@ -10,6 +10,7 @@ import (
 )
 
 const exampleCreateKubernetesClusterRequestJSON string = `{
+	"control_plane_ip_filter": null,
 	"network": "00000000-0000-0000-0000-000000000000",
 	"network_cidr": "172.16.0.1/24",
 	"plan": "production",
@@ -163,6 +164,32 @@ func TestKubernetes(t *testing.T) {
 
 		r := exampleCreateKubernetesClusterRequest()
 		b, err := json.Marshal(r)
+		actual := string(b)
+
+		assert.NoError(t, err)
+		assert.JSONEq(
+			t,
+			expected,
+			actual,
+		)
+	})
+
+	t.Run("ModifyKubernetesClusterRequestMarshal", func(t *testing.T) {
+		t.Parallel()
+
+		expected := `{ "control_plane_ip_filter": ["0.0.0.0/0"] }`
+
+		uuid := "this-is-the-uuid-you-are-looking-for"
+		r := ModifyKubernetesClusterRequest{
+			ClusterUUID: uuid,
+			Cluster: ModifyKubernetesCluster{
+				ControlPlaneIPFilter: []string{"0.0.0.0/0"},
+			},
+		}
+
+		assert.Equal(t, fmt.Sprintf("%s/%s", kubernetesClusterBasePath, uuid), r.RequestURL())
+
+		b, err := json.Marshal(&r)
 		actual := string(b)
 
 		assert.NoError(t, err)

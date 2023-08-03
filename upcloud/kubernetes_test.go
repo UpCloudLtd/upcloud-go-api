@@ -9,6 +9,7 @@ import (
 )
 
 const exampleKubernetesClusterJSON string = `{
+	"control_plane_ip_filter": ["0.0.0.0/0"],
 	"name": "upcloud-go-sdk-unit-test",
 	"zone": "de-fra1",
 	"uuid": "0ddab8f4-97c0-4222-91ba-85a4fff7499b",
@@ -151,9 +152,10 @@ func TestKubernetesNodeGroupDetails(t *testing.T) {
 
 func exampleKubernetesCluster() KubernetesCluster {
 	return KubernetesCluster{
-		Name:        "upcloud-go-sdk-unit-test",
-		Network:     "03a98be3-7daa-443f-bb25-4bc6854b396c",
-		NetworkCIDR: "172.16.0.0/24",
+		ControlPlaneIPFilter: []string{"0.0.0.0/0"},
+		Name:                 "upcloud-go-sdk-unit-test",
+		Network:              "03a98be3-7daa-443f-bb25-4bc6854b396c",
+		NetworkCIDR:          "172.16.0.0/24",
 		NodeGroups: []KubernetesNodeGroup{
 			exampleKubernetesNodeGroup(true),
 			exampleKubernetesNodeGroup(false),
