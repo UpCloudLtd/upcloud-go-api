@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [6.6.0]
+
 ### Added
 - kubernetes: `control_plane_ip_filter` field to cluster for configuring and reading IP addresses and ranges allowed to access cluster control-plane
 - gateway: `addresses` list to provide IP addresses assigned to the gateway
@@ -332,7 +334,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.5.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.6.0...HEAD
+[6.6.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.5.0...v6.6.0
 [6.5.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.4.0...v6.5.0
 [6.4.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.3.2...v6.4.0
 [6.3.2]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.3.1...v6.3.2
