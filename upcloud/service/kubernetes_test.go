@@ -17,12 +17,10 @@ import (
 
 const exampleClusterResponse = `
 {
+	"control_plane_ip_filter":null,
 	"name":"test-name",
 	"network":"03e4970d-7791-4b80-a892-682ae0faf46b",
 	"network_cidr":"176.16.1.0/24",
-	"state":"running",
-	"uuid":"0dca7a18-98e1-4e2d-aea5-ef5dd5fa450e",
-	"zone":"de-fra1",
 	"node_groups":[
 		{
 			"name":"my-group1",
@@ -65,7 +63,10 @@ const exampleClusterResponse = `
 			],
 			"utility_network_access": false
 		}
-	]
+	],
+	"state":"running",
+	"uuid":"0dca7a18-98e1-4e2d-aea5-ef5dd5fa450e",
+	"zone":"de-fra1"
 }
 `
 

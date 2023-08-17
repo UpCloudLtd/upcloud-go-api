@@ -58,7 +58,7 @@ func (s *Service) CreateKubernetesCluster(ctx context.Context, r *request.Create
 	return &cluster, s.create(ctx, r, &cluster)
 }
 
-// ModifyKubernetesCluster modifies an existing node group.
+// ModifyKubernetesCluster modifies an existing Kubernetes cluster.
 func (s *Service) ModifyKubernetesCluster(ctx context.Context, r *request.ModifyKubernetesClusterRequest) (*upcloud.KubernetesCluster, error) {
 	cluster := upcloud.KubernetesCluster{}
 	return &cluster, s.modify(ctx, r, &cluster)
