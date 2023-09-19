@@ -439,6 +439,13 @@ func TestUnmarshalRouters(t *testing.T) {
 				 ]
 			  },
 			  "name": "Example router",
+			  "static_routes": [
+                {
+			      "route": "0.0.0.0/0",
+			      "nexthop": "10.0.0.100",
+			      "name": "static_route_0"
+			    }
+			  ],
 			  "type": "normal",
 			  "uuid": "04c0df35-2658-4b0c-8ac7-962090f4e92a"
 			}
@@ -465,6 +472,13 @@ func TestUnmarshalRouters(t *testing.T) {
 			},
 			Name: "Example router",
 			Type: "normal",
+			StaticRoutes: []StaticRoute{
+				{
+					Name:    "static_route_0",
+					Route:   "0.0.0.0/0",
+					Nexthop: "10.0.0.100",
+				},
+			},
 			UUID: "04c0df35-2658-4b0c-8ac7-962090f4e92a",
 		},
 	}

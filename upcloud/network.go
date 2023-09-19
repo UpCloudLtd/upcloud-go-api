@@ -292,6 +292,14 @@ type Router struct {
 	Type             string             `json:"type"`
 	UUID             string             `json:"uuid"`
 	Labels           []Label            `json:"labels"`
+	StaticRoutes     []StaticRoute      `json:"static_routes"`
+}
+
+// StaticRoute represents a Static route
+type StaticRoute struct {
+	Name    string `json:"name"`
+	Route   string `json:"route"`
+	Nexthop string `json:"nexthop"`
 }
 
 // UnmarshalJSON is a custom unmarshaller that deals with

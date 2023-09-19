@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- network: `static_routes` field to router for defining static routes
+
 ## [6.6.0]
 
 ### Added

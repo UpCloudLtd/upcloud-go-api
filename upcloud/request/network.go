@@ -279,8 +279,9 @@ func (r *GetRouterDetailsRequest) RequestURL() string {
 
 // CreateRouterRequest represents a request to create a new router.
 type CreateRouterRequest struct {
-	Name   string          `json:"name"`
-	Labels []upcloud.Label `json:"labels,omitempty"`
+	Name         string                `json:"name"`
+	Labels       []upcloud.Label       `json:"labels,omitempty"`
+	StaticRoutes []upcloud.StaticRoute `json:"static_routes,omitempty"`
 }
 
 // RequestURL implements the Request interface.
@@ -302,9 +303,10 @@ func (r CreateRouterRequest) MarshalJSON() ([]byte, error) {
 
 // ModifyRouterRequest represents a request to modify an existing router.
 type ModifyRouterRequest struct {
-	UUID   string           `json:"-"`
-	Name   string           `json:"name"`
-	Labels *[]upcloud.Label `json:"labels,omitempty"`
+	UUID         string                 `json:"-"`
+	Name         string                 `json:"name"`
+	Labels       *[]upcloud.Label       `json:"labels,omitempty"`
+	StaticRoutes *[]upcloud.StaticRoute `json:"static_routes,omitempty"`
 }
 
 // RequestURL implements the Request interface.

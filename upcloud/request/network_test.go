@@ -353,12 +353,26 @@ func TestMarshalGetRouterDetailsRequest(t *testing.T) {
 func TestMarshalCreateRouterRequest(t *testing.T) {
 	request := CreateRouterRequest{
 		Name: "Example router",
+		StaticRoutes: []upcloud.StaticRoute{
+			{
+				Name:    "example_static_route",
+				Route:   "0.0.0.0/0",
+				Nexthop: "10.0.0.100",
+			},
+		},
 	}
 
 	expectedJSON := `
 	  {
 		"router": {
-		  "name": "Example router"
+		  "name": "Example router",
+		  "static_routes": [
+            {
+			  "route": "0.0.0.0/0",
+			  "nexthop": "10.0.0.100",
+			  "name": "example_static_route"
+            }
+          ]
 		}
 	  }
 	`
@@ -375,13 +389,27 @@ func TestMarshalCreateRouterRequest(t *testing.T) {
 func TestMarshalModifyRouterRequest(t *testing.T) {
 	request := ModifyRouterRequest{
 		Name: "Modified router",
+		StaticRoutes: &[]upcloud.StaticRoute{
+			{
+				Name:    "example_static_route",
+				Route:   "0.0.0.0/0",
+				Nexthop: "10.0.0.100",
+			},
+		},
 		UUID: "foo",
 	}
 
 	expectedJSON := `
 	  {
 		"router": {
-		  "name": "Modified router"
+		  "name": "Modified router",
+		  "static_routes": [
+            {
+			  "route": "0.0.0.0/0",
+			  "nexthop": "10.0.0.100",
+			  "name": "example_static_route"
+            }
+		  ]
 		}
 	  }
 	`
@@ -395,14 +423,14 @@ func TestMarshalModifyRouterRequest(t *testing.T) {
 
 	request = ModifyRouterRequest{
 		UUID:   "",
-		Name:   "Modified router",
+		Name:   "Modified router name",
 		Labels: &[]upcloud.Label{},
 	}
 
 	expectedJSON = `
 	  {
 		"router": {
-		  "name": "Modified router",
+		  "name": "Modified router name",
 		  "labels": []
 		}
 	  }
