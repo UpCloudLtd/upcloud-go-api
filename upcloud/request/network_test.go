@@ -78,6 +78,10 @@ func TestMarshalCreateNetworkRequest(t *testing.T) {
 					"172.16.0.10",
 					"172.16.1.10",
 				},
+				DHCPRoutes: []string{
+					"192.168.0.0/24",
+					"192.168.100.100/32",
+				},
 				Family:  upcloud.IPAddressFamilyIPv4,
 				Gateway: "172.16.0.1",
 			},
@@ -105,6 +109,10 @@ func TestMarshalCreateNetworkRequest(t *testing.T) {
 				"dhcp_dns" : [
 				  "172.16.0.10",
 				  "172.16.1.10"
+				],
+				"dhcp_routes" : [
+				  "192.168.0.0/24",
+				  "192.168.100.100/32"
 				],
 				"family" : "IPv4",
 				"gateway" : "172.16.0.1"
