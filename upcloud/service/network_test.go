@@ -422,7 +422,8 @@ func TestCreateModifyDeleteRouter(t *testing.T) {
 					Route:   "0.0.0.0/0",
 					Nexthop: "10.0.0.100",
 				},
-			}})
+			},
+		})
 		require.NoError(t, err)
 
 		assert.NotEmpty(t, router.UUID)
