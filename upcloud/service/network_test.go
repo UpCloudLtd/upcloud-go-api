@@ -273,6 +273,10 @@ func TestCreateModifyDeleteNetwork(t *testing.T) {
 						"172.17.0.10",
 						"172.17.1.10",
 					},
+					DHCPRoutes: []string{
+						"192.168.0.0/24",
+						"192.168.100.100/32",
+					},
 					Family:  upcloud.IPAddressFamilyIPv4,
 					Gateway: "172.17.0.1",
 				},
@@ -284,6 +288,7 @@ func TestCreateModifyDeleteNetwork(t *testing.T) {
 		assert.Len(t, network.Labels, 1)
 		assert.Equal(t, "env", network.Labels[0].Key)
 		assert.Equal(t, "test", network.Labels[0].Value)
+		assert.Equal(t, []string{"192.168.0.0/24", "192.168.100.100/32"}, network.IPNetworks[0].DHCPRoutes)
 
 		postModifyNetwork, err := svc.ModifyNetwork(ctx, &request.ModifyNetworkRequest{
 			UUID: network.UUID,
@@ -291,6 +296,7 @@ func TestCreateModifyDeleteNetwork(t *testing.T) {
 		})
 		require.NoError(t, err)
 		assert.Equal(t, "modified private network (test)", postModifyNetwork.Name)
+		assert.Equal(t, network.IPNetworks, postModifyNetwork.IPNetworks)
 		assert.Len(t, postModifyNetwork.Labels, 1) // Make sure labels are not deleted on simple update
 
 		postModifyNetworkWithLabels, err := svc.ModifyNetwork(ctx, &request.ModifyNetworkRequest{
