@@ -90,6 +90,7 @@ type IPNetwork struct {
 	DHCP             Boolean  `json:"dhcp"`
 	DHCPDefaultRoute Boolean  `json:"dhcp_default_route"`
 	DHCPDns          []string `json:"dhcp_dns,omitempty"`
+	DHCPRoutes       []string `json:"dhcp_routes,omitempty"`
 	Family           string   `json:"family,omitempty"`
 	Gateway          string   `json:"gateway,omitempty"`
 }
