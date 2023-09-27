@@ -422,12 +422,27 @@ func TestCreateModifyDeleteRouter(t *testing.T) {
 	record(t, "createmodifydeleterouter", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		router, err := svc.CreateRouter(ctx, &request.CreateRouterRequest{
 			Name: "Testy McRouterface (test)",
+			StaticRoutes: []upcloud.StaticRoute{
+				{
+					Name:    "static_route_0",
+					Route:   "0.0.0.0/0",
+					Nexthop: "10.0.0.100",
+				},
+			},
 		})
 		require.NoError(t, err)
 
 		assert.NotEmpty(t, router.UUID)
 		assert.NotEmpty(t, router.Type)
 		assert.Equal(t, "Testy McRouterface (test)", router.Name)
+		assert.Equal(t,
+			[]upcloud.StaticRoute{{
+				Name:    "static_route_0",
+				Route:   "0.0.0.0/0",
+				Nexthop: "10.0.0.100",
+			}},
+			router.StaticRoutes,
+		)
 
 		modifiedRouter, err := svc.ModifyRouter(ctx, &request.ModifyRouterRequest{
 			UUID: router.UUID,
@@ -437,6 +452,7 @@ func TestCreateModifyDeleteRouter(t *testing.T) {
 
 		assert.Equal(t, router.UUID, modifiedRouter.UUID)
 		assert.Equal(t, router.Type, modifiedRouter.Type)
+		assert.Equal(t, router.StaticRoutes, modifiedRouter.StaticRoutes)
 		assert.NotEqual(t, router.Name, modifiedRouter.Name)
 		assert.Equal(t, "Modified name (test)", modifiedRouter.Name)
 
