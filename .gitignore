@@ -2,3 +2,6 @@
 /go.work
 /go.work.sum
 temp/
+
+# Generated release notes
+.release_notes
