@@ -5,6 +5,11 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [6.7.1]
+
+### Changed
+- `.gitignore` editorial commit
+
 ## [6.7.0]
 
 ### Added
@@ -340,7 +345,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.7.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.7.1...HEAD
+[6.7.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.7.0...v6.7.1
 [6.7.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.6.0...v6.7.0
 [6.6.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.5.0...v6.6.0
 [6.5.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.4.0...v6.5.0
