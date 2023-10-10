@@ -61,13 +61,13 @@ func (r *GetManagedObjectStoragesRequest) RequestURL() string {
 	return managedObjectStorageBasePath
 }
 
-// GetManagedObjectStorageDetailsRequest represents a request for retrieving details about a Managed Object Storage service
-type GetManagedObjectStorageDetailsRequest struct {
+// GetManagedObjectStorageRequest represents a request for retrieving details about a Managed Object Storage service
+type GetManagedObjectStorageRequest struct {
 	UUID string `json:"-"`
 }
 
 // RequestURL implements the Request interface
-func (r *GetManagedObjectStorageDetailsRequest) RequestURL() string {
+func (r *GetManagedObjectStorageRequest) RequestURL() string {
 	return fmt.Sprintf("%s/%s", managedObjectStorageBasePath, r.UUID)
 }
 

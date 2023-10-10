@@ -75,7 +75,7 @@ func TestGetManagedObjectStorageDetails(t *testing.T) {
 		storage, err := createManagedObjectStorage(ctx, svc)
 		require.NoError(t, err)
 
-		storage, err = svc.GetManagedObjectStorageDetails(ctx, &request.GetManagedObjectStorageDetailsRequest{UUID: storage.UUID})
+		storage, err = svc.GetManagedObjectStorage(ctx, &request.GetManagedObjectStorageRequest{UUID: storage.UUID})
 		require.NoError(t, err)
 		require.Equal(t, storage.ConfiguredStatus, upcloud.ManagedObjectStorageConfiguredStatusStarted)
 		require.Len(t, storage.Labels, 1)

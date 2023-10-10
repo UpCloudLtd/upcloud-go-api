@@ -29,7 +29,7 @@ func TestGetManagedObjectStoragesRequest_RequestURL(t *testing.T) {
 }
 
 func TestGetManagedObjectStorageDetailsRequest_RequestURL(t *testing.T) {
-	req := &GetManagedObjectStorageDetailsRequest{
+	req := &GetManagedObjectStorageRequest{
 		UUID: "service",
 	}
 	assert.Equal(t, "/object-storage-2/service", req.RequestURL())

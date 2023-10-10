@@ -16,7 +16,7 @@ type ManagedObjectStorage interface {
 	GetManagedObjectStorageRegion(ctx context.Context, r *request.GetManagedObjectStorageRegionRequest) (*upcloud.ManagedObjectStorageRegion, error)
 	CreateManagedObjectStorage(ctx context.Context, r *request.CreateManagedObjectStorageRequest) (*upcloud.ManagedObjectStorage, error)
 	GetManagedObjectStorages(ctx context.Context, r *request.GetManagedObjectStoragesRequest) ([]upcloud.ManagedObjectStorage, error)
-	GetManagedObjectStorageDetails(ctx context.Context, r *request.GetManagedObjectStorageDetailsRequest) (*upcloud.ManagedObjectStorage, error)
+	GetManagedObjectStorage(ctx context.Context, r *request.GetManagedObjectStorageRequest) (*upcloud.ManagedObjectStorage, error)
 	ReplaceManagedObjectStorage(ctx context.Context, r *request.ReplaceManagedObjectStorageRequest) (*upcloud.ManagedObjectStorage, error)
 	ModifyManagedObjectStorage(ctx context.Context, r *request.ModifyManagedObjectStorageRequest) (*upcloud.ManagedObjectStorage, error)
 	DeleteManagedObjectStorage(ctx context.Context, r *request.DeleteManagedObjectStorageRequest) error
@@ -59,7 +59,7 @@ func (s *Service) GetManagedObjectStorages(ctx context.Context, r *request.GetMa
 	return storages, s.get(ctx, r.RequestURL(), &storages)
 }
 
-func (s *Service) GetManagedObjectStorageDetails(ctx context.Context, r *request.GetManagedObjectStorageDetailsRequest) (*upcloud.ManagedObjectStorage, error) {
+func (s *Service) GetManagedObjectStorage(ctx context.Context, r *request.GetManagedObjectStorageRequest) (*upcloud.ManagedObjectStorage, error) {
 	storage := upcloud.ManagedObjectStorage{}
 	return &storage, s.get(ctx, r.RequestURL(), &storage)
 }
@@ -160,7 +160,7 @@ func (s *Service) WaitForManagedObjectStorageOperationalState(ctx context.Contex
 	for {
 		attempts++
 
-		details, err := s.GetManagedObjectStorageDetails(ctx, &request.GetManagedObjectStorageDetailsRequest{
+		details, err := s.GetManagedObjectStorage(ctx, &request.GetManagedObjectStorageRequest{
 			UUID: r.UUID,
 		})
 		if err != nil {
@@ -218,7 +218,7 @@ func (s *Service) WaitForManagedObjectStorageDeletion(ctx context.Context, r *re
 	for {
 		attempts++
 
-		_, err := s.GetManagedObjectStorageDetails(ctx, &request.GetManagedObjectStorageDetailsRequest{
+		_, err := s.GetManagedObjectStorage(ctx, &request.GetManagedObjectStorageRequest{
 			UUID: r.UUID,
 		})
 		if err != nil {
