@@ -21,6 +21,10 @@ func TestManagedObjectStorage(t *testing.T) {
 					Type:       "private",
 				},
 			},
+			Labels: []Label{{
+				Key:   "managedBy",
+				Value: "upcloud-go-sdk-unit-test",
+			}},
 			Networks: []ManagedObjectStorageNetwork{
 				{
 					Family: "IPv4",
@@ -70,6 +74,12 @@ func TestManagedObjectStorage(t *testing.T) {
 				{
 					"domain_name": "7mf5k-private.upbucket.com",
 					"type": "private"
+				}
+			],
+			"labels": [
+				{
+					"key": "managedBy",
+					"value": "upcloud-go-sdk-unit-test"
 				}
 			],
 			"networks": [
