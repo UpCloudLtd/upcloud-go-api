@@ -138,7 +138,7 @@ func TestGetManagedObjectStorageMetrics(t *testing.T) {
 		storage, err := createManagedObjectStorage(ctx, svc)
 		require.NoError(t, err)
 
-		m, err := svc.GetManagedObjectStorageMetrics(ctx, &request.GetManagedObjectStorageMetricsRequest{UUID: storage.UUID})
+		m, err := svc.GetManagedObjectStorageMetrics(ctx, &request.GetManagedObjectStorageMetricsRequest{ServiceUUID: storage.UUID})
 		require.NoError(t, err)
 		require.Equal(t, m.TotalObjects, 0)
 		require.Equal(t, m.TotalSizeBytes, 0)

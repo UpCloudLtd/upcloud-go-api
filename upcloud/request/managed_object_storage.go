@@ -110,12 +110,12 @@ func (r *DeleteManagedObjectStorageRequest) RequestURL() string {
 
 // GetManagedObjectStorageMetricsRequest represents a request for retrieving metrics
 type GetManagedObjectStorageMetricsRequest struct {
-	UUID string `json:"-"`
+	ServiceUUID string `json:"-"`
 }
 
 // RequestURL implements the Request interface
 func (r *GetManagedObjectStorageMetricsRequest) RequestURL() string {
-	return fmt.Sprintf("%s/%s/metrics", managedObjectStorageBasePath, r.UUID)
+	return fmt.Sprintf("%s/%s/metrics", managedObjectStorageBasePath, r.ServiceUUID)
 }
 
 // GetManagedObjectStorageBucketMetricsRequest represents a request for retrieving buckets' metrics
