@@ -15,6 +15,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 ### Added
 - network: `dhcp_routes` field to IP network for additional DHCP classless static routes to be delivered if the DHCP is enabled
 - network: `static_routes` field to router for defining static routes
+- Managed Object Storage support
 
 ## [6.6.0]
 

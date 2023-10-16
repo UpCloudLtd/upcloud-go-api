@@ -47,6 +47,7 @@ type service interface {
 	ManagedDatabaseLogicalDatabaseManager
 	Permission
 	Kubernetes
+	ManagedObjectStorage
 }
 
 var _ service = (*Service)(nil)
