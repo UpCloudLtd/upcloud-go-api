@@ -2,7 +2,10 @@ package service
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"log"
+	"net/http"
 	"time"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud"
@@ -83,7 +86,13 @@ func (s *Service) WaitForKubernetesClusterState(ctx context.Context, r *request.
 			UUID: r.UUID,
 		})
 		if err != nil {
-			return nil, err
+			// Ignore first two 404 responses to avoid errors caused by possible false NOT_FOUND responses right after cluster has been created.
+			var ucErr *upcloud.Problem
+			if errors.As(err, &ucErr) && ucErr.Status == http.StatusNotFound && attempts < 3 {
+				log.Printf("ERROR: %+v", err)
+			} else {
+				return nil, err
+			}
 		}
 
 		if details.State == r.DesiredState {
