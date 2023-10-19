@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Changed
+- kubernetes: `WaitForKubernetesClusterState` ignores two first 404 responses to avoid errors caused by possible false _not found_ responses right after cluster has been created.
+
 ## [6.8.0]
 - Managed Object Storage support
 
