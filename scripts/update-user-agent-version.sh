@@ -1,4 +1,5 @@
 #!/bin/sh -x
+# This script should work on Ubuntu sh. On other systems (e.g., alpine or macOS) there might be differences in echo and sed commands that can cause unexpected changes.
 
 version_re="[0-9]+\.[0-9]+\.[0-9]+"
 
