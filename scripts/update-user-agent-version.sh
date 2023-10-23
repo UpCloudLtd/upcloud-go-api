@@ -9,7 +9,7 @@ if [ "$changelog" = "$user_agent" ]; then
     exit 0;
 fi;
 
-latest=$(echo -e "$changelog\n$user_agent" | sort -V | tail -n1)
+latest=$(echo "$changelog\n$user_agent" | sort -V | tail -n1)
 
 sed -Ei "s/(##.*)$changelog(.*)/\1$latest\2/" CHANGELOG.md;
 sed -Ei "s/(.*Version.*\")$user_agent(\".*)/\1$latest\2/" upcloud/client/client.go;
