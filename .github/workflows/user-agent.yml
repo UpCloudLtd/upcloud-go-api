@@ -1,0 +1,16 @@
+name: Lint
+on:
+  pull_request:
+    paths:
+      - CHANGELOG.md
+jobs:
+  update_user_agent:
+    name: Check version in User-Agent
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: ./scripts/update-user-agent-version.sh
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update version in `User-Agent`"
+          file_pattern: upcloud/client/client.go
