@@ -23,11 +23,15 @@ type ResourceLimits struct {
 	Cores               int `json:"cores,omitempty"`
 	DetachedFloatingIps int `json:"detached_floating_ips,omitempty"`
 	Memory              int `json:"memory,omitempty"`
+	NetworkPeerings     int `json:"network_peerings,omitempty"`
 	Networks            int `json:"networks,omitempty"`
+	NTPExcessGiB        int `json:"ntp_excess_gib,omitempty"`
 	PublicIPv4          int `json:"public_ipv4,omitempty"`
 	PublicIPv6          int `json:"public_ipv6,omitempty"`
 	StorageHDD          int `json:"storage_hdd,omitempty"`
+	StorageMaxIOPS      int `json:"storage_maxiops,omitempty"`
 	StorageSSD          int `json:"storage_ssd,omitempty"`
+	LoadBalancers       int `json:"load_balancers,omitempty"`
 }
 
 // UnmarshalJSON is a custom unmarshaller that deals with

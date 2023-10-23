@@ -18,11 +18,15 @@ func TestUnmarshalAccount(t *testing.T) {
 			"cores": 200,
 			"detached_floating_ips": 10,
 			"memory": 1048576,
+			"network_peerings": 100,
 			"networks": 100,
+			"ntp_excess_gib": 20000,
 			"public_ipv4": 100,
 			"public_ipv6": 100,
 			"storage_hdd": 10240,
-			"storage_ssd": 10240
+			"storage_maxiops": 10240,
+			"storage_ssd": 10240,
+			"load_balancers": 50
 		  }
 		}
 	  }
@@ -36,11 +40,15 @@ func TestUnmarshalAccount(t *testing.T) {
 	assert.Equal(t, 200, account.ResourceLimits.Cores)
 	assert.Equal(t, 10, account.ResourceLimits.DetachedFloatingIps)
 	assert.Equal(t, 1048576, account.ResourceLimits.Memory)
+	assert.Equal(t, 100, account.ResourceLimits.NetworkPeerings)
 	assert.Equal(t, 100, account.ResourceLimits.Networks)
+	assert.Equal(t, 20000, account.ResourceLimits.NTPExcessGiB)
 	assert.Equal(t, 100, account.ResourceLimits.PublicIPv4)
 	assert.Equal(t, 100, account.ResourceLimits.PublicIPv6)
 	assert.Equal(t, 10240, account.ResourceLimits.StorageHDD)
+	assert.Equal(t, 10240, account.ResourceLimits.StorageMaxIOPS)
 	assert.Equal(t, 10240, account.ResourceLimits.StorageSSD)
+	assert.Equal(t, 50, account.ResourceLimits.LoadBalancers)
 }
 
 // TestMarshalAccount tests that Account objects marshal correctly
