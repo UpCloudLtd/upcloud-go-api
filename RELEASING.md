@@ -6,7 +6,7 @@
    1. Add new heading with the correct version e.g. `## [6.7.0]`
    2. Update links at the bottom of the page
    3. Leave `## Unreleased` section at the top empty
-4. Update `Version` in [upcloud/client/client.go](./upcloud/client/client.go)
+   4. Check that `Version` in [upcloud/client/client.go](./upcloud/client/client.go) is up-to-date. The value is automatically updated by GitHub Actions.
 5. Test GoReleaser config with `goreleaser check`
 6. Tag a commit with the version you want to release e.g. `v6.7.0`
 7. Push the tag & commit to GitHub

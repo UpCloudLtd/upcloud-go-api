@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
+## [6.8.2]
 ### Added
 - account: `NetworkPeerings`, `NTPExcessGiB`, `StorageMaxIOPS`, and `LoadBalancers` fields to the `ResourceLimits` struct.
 
