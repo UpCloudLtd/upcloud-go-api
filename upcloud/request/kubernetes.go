@@ -100,6 +100,19 @@ func (r *WaitForKubernetesClusterStateRequest) RequestURL() string {
 	return fmt.Sprintf("%s/%s", kubernetesClusterBasePath, r.UUID)
 }
 
+// WaitForKubernetesNodeGroupStateRequest represents a request to wait for a Kubernetes node group
+// to enter a desired state
+type WaitForKubernetesNodeGroupStateRequest struct {
+	DesiredState upcloud.KubernetesNodeGroupState `json:"-"`
+	Timeout      time.Duration                    `json:"-"`
+	ClusterUUID  string                           `json:"-"`
+	Name         string                           `json:"-"`
+}
+
+func (r *WaitForKubernetesNodeGroupStateRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/node-groups/%s", kubernetesClusterBasePath, r.ClusterUUID, r.Name)
+}
+
 // GetKubernetesKubeconfigRequest represents a request to get kubeconfig for a Kubernetes cluster
 type GetKubernetesKubeconfigRequest struct {
 	UUID string `json:"-"`
