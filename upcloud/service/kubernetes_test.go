@@ -537,13 +537,6 @@ func TestWaitForKubernetesNodeGroupState(t *testing.T) {
 				"kubelet_args": [],
 				"labels": [],
 				"name": "test-name",
-				"nodes": [
-					{
-						"name": "test-name-p6w9h",
-						"state": "running",
-						"uuid": "107b7750-752a-4b71-a4c5-025198178e09"
-					}
-				],
 				"plan": "1xCPU-1GB",
 				"ssh_keys": [
 					"test-key"
@@ -562,13 +555,6 @@ func TestWaitForKubernetesNodeGroupState(t *testing.T) {
 				"kubelet_args": [],
 				"labels": [],
 				"name": "test-name",
-				"nodes": [
-					{
-						"name": "test-name-p6w9h",
-						"state": "running",
-						"uuid": "107b7750-752a-4b71-a4c5-025198178e09"
-					}
-				],
 				"plan": "1xCPU-1GB",
 				"ssh_keys": [
 					"test-key"
