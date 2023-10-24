@@ -157,7 +157,7 @@ func TestGetKubernetesClusters(t *testing.T) {
 	srv, svc := setupTestServerAndService(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		assert.Equal(t, http.MethodGet, r.Method)
 		assert.Equal(t, fmt.Sprintf("/%s/kubernetes", client.APIVersion), r.URL.Path)
-		fmt.Fprintf(w, "[%s]", exampleClusterResponse)
+		_, _ = fmt.Fprintf(w, "[%s]", exampleClusterResponse)
 	}))
 	defer srv.Close()
 	res, err := svc.GetKubernetesClusters(context.Background(), &request.GetKubernetesClustersRequest{})
@@ -197,7 +197,7 @@ func TestGetKubernetesClusterDetails(t *testing.T) {
 	srv, svc := setupTestServerAndService(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		assert.Equal(t, http.MethodGet, r.Method)
 		assert.Equal(t, fmt.Sprintf("/%s/kubernetes/_UUID_", client.APIVersion), r.URL.Path)
-		fmt.Fprint(w, exampleClusterResponse)
+		_, _ = fmt.Fprint(w, exampleClusterResponse)
 	}))
 	defer srv.Close()
 	res, err := svc.GetKubernetesCluster(context.Background(), &request.GetKubernetesClusterRequest{UUID: "_UUID_"})
@@ -216,7 +216,7 @@ func TestCreateKubernetesCluster(t *testing.T) {
 	srv, svc := setupTestServerAndService(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// CreateKubernetesCluster method first makes a request to /network/:uuid to check network CIDR
 		if r.Method == http.MethodGet && r.URL.Path == fmt.Sprintf("/%s/network/03e4970d-7791-4b80-a892-682ae0faf46b", client.APIVersion) {
-			fmt.Fprint(w, exampleNetworkResponse)
+			_, _ = fmt.Fprint(w, exampleNetworkResponse)
 			return
 		}
 
@@ -225,7 +225,7 @@ func TestCreateKubernetesCluster(t *testing.T) {
 			err := json.NewDecoder(r.Body).Decode(&payload)
 			assert.NoError(t, err)
 
-			fmt.Fprint(w, exampleClusterResponse)
+			_, _ = fmt.Fprint(w, exampleClusterResponse)
 			return
 		}
 
@@ -307,7 +307,7 @@ func TestGetKubernetesNodeGroups(t *testing.T) {
 	srv, svc := setupTestServerAndService(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		assert.Equal(t, http.MethodGet, r.Method)
 		assert.Equal(t, fmt.Sprintf("/%s/kubernetes/_UUID_/node-groups", client.APIVersion), r.URL.Path)
-		fmt.Fprintf(w, "[%s]", exampleNodeGroupResponse)
+		_, _ = fmt.Fprintf(w, "[%s]", exampleNodeGroupResponse)
 	}))
 	defer srv.Close()
 
@@ -324,7 +324,7 @@ func TestGetKubernetesNodeGroup(t *testing.T) {
 	srv, svc := setupTestServerAndService(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		assert.Equal(t, http.MethodGet, r.Method)
 		assert.Equal(t, fmt.Sprintf("/%s/kubernetes/_UUID_/node-groups/_NAME_", client.APIVersion), r.URL.Path)
-		fmt.Fprint(w, exampleNodeGroupResponse)
+		_, _ = fmt.Fprint(w, exampleNodeGroupResponse)
 	}))
 	defer srv.Close()
 
@@ -342,7 +342,7 @@ func TestGetKubernetesNodeGroupDetails(t *testing.T) {
 	srv, svc := setupTestServerAndService(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		assert.Equal(t, http.MethodGet, r.Method)
 		assert.Equal(t, fmt.Sprintf("/%s/kubernetes/_UUID_/node-groups/_NAME_", client.APIVersion), r.URL.Path)
-		fmt.Fprint(w, exampleNodeGroupDetailsResponse)
+		_, _ = fmt.Fprint(w, exampleNodeGroupDetailsResponse)
 	}))
 	defer srv.Close()
 
@@ -368,7 +368,7 @@ func TestCreateKubernetesNodeGroup(t *testing.T) {
 		err := json.NewDecoder(r.Body).Decode(&payload)
 		assert.NoError(t, err)
 
-		fmt.Fprint(w, exampleNodeGroupResponse)
+		_, _ = fmt.Fprint(w, exampleNodeGroupResponse)
 	}))
 	defer srv.Close()
 
@@ -421,7 +421,7 @@ func TestModifyKubernetesNodeGroup(t *testing.T) {
 		err := json.NewDecoder(r.Body).Decode(&payload)
 		assert.NoError(t, err)
 
-		fmt.Fprint(w, exampleNodeGroupResponse)
+		_, _ = fmt.Fprint(w, exampleNodeGroupResponse)
 	}))
 	defer srv.Close()
 
@@ -440,7 +440,7 @@ func TestDeleteKubernetesNodeGroup(t *testing.T) {
 	srv, svc := setupTestServerAndService(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		assert.Equal(t, http.MethodDelete, r.Method)
 		assert.Equal(t, fmt.Sprintf("/%s/kubernetes/_UUID_/node-groups/_NAME_", client.APIVersion), r.URL.Path)
-		fmt.Fprint(w, exampleNodeGroupResponse)
+		_, _ = fmt.Fprint(w, exampleNodeGroupResponse)
 	}))
 	defer srv.Close()
 
@@ -480,7 +480,7 @@ func TestWaitForKubernetesClusterState(t *testing.T) {
 		requestsMade++
 
 		if requestsCounter >= 2 {
-			fmt.Fprint(w, `
+			_, _ = fmt.Fprint(w, `
 			{
 				"name":"test-name",
 				"network":"03e4970d-7791-4b80-a892-682ae0faf46b",
@@ -493,7 +493,7 @@ func TestWaitForKubernetesClusterState(t *testing.T) {
 			`)
 		} else {
 			requestsCounter++
-			fmt.Fprint(w, `
+			_, _ = fmt.Fprint(w, `
 			{
 				"name":"test-name",
 				"network":"03e4970d-7791-4b80-a892-682ae0faf46b",
@@ -517,6 +517,81 @@ func TestWaitForKubernetesClusterState(t *testing.T) {
 	assert.Equal(t, 3, requestsMade)
 }
 
+func TestWaitForKubernetesNodeGroupState(t *testing.T) {
+	t.Parallel()
+
+	requestsCounter := 0
+	requestsMade := 0
+
+	srv, svc := setupTestServerAndService(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		assert.Equal(t, http.MethodGet, r.Method)
+		assert.Equal(t, fmt.Sprintf("/%s/kubernetes/_UUID_/node-groups/_NAME_", client.APIVersion), r.URL.Path)
+
+		requestsMade++
+
+		if requestsCounter >= 2 {
+			_, _ = fmt.Fprint(w, `
+			{
+				"anti_affinity": false,
+				"count": 1,
+				"kubelet_args": [],
+				"labels": [],
+				"name": "test-name",
+				"nodes": [
+					{
+						"name": "test-name-p6w9h",
+						"state": "running",
+						"uuid": "107b7750-752a-4b71-a4c5-025198178e09"
+					}
+				],
+				"plan": "1xCPU-1GB",
+				"ssh_keys": [
+					"test-key"
+				],
+				"state": "running",
+				"storage": "01000000-0000-4000-8000-000160020100",
+				"utility_network_access": false
+			}
+			`)
+		} else {
+			requestsCounter++
+			_, _ = fmt.Fprint(w, `
+			{
+				"anti_affinity": false,
+				"count": 1,
+				"kubelet_args": [],
+				"labels": [],
+				"name": "test-name",
+				"nodes": [
+					{
+						"name": "test-name-p6w9h",
+						"state": "running",
+						"uuid": "107b7750-752a-4b71-a4c5-025198178e09"
+					}
+				],
+				"plan": "1xCPU-1GB",
+				"ssh_keys": [
+					"test-key"
+				],
+				"state": "scaling-up",
+				"storage": "01000000-0000-4000-8000-000160020100",
+				"utility_network_access": false
+			}
+			`)
+		}
+	}))
+	defer srv.Close()
+
+	_, err := svc.WaitForKubernetesNodeGroupState(context.Background(), &request.WaitForKubernetesNodeGroupStateRequest{
+		ClusterUUID:  "_UUID_",
+		DesiredState: upcloud.KubernetesNodeGroupStateRunning,
+		Timeout:      time.Second * 20,
+		Name:         "_NAME_",
+	})
+	assert.NoError(t, err)
+	assert.Equal(t, 3, requestsMade)
+}
+
 func TestGetKubernetesKubeconfig(t *testing.T) {
 	t.Parallel()
 
@@ -524,12 +599,12 @@ func TestGetKubernetesKubeconfig(t *testing.T) {
 		// GetKubernetesKubeconfig first fetches cluster details to check for running state, so we must
 		// take care of both requests
 		if r.Method == http.MethodGet && r.URL.Path == fmt.Sprintf("/%s/kubernetes/_UUID_", client.APIVersion) {
-			fmt.Fprint(w, exampleClusterResponse)
+			_, _ = fmt.Fprint(w, exampleClusterResponse)
 			return
 		}
 
 		if r.Method == http.MethodGet && r.URL.Path == fmt.Sprintf("/%s/kubernetes/_UUID_/kubeconfig", client.APIVersion) {
-			fmt.Fprint(w, exampleKubeconfigResponse)
+			_, _ = fmt.Fprint(w, exampleKubeconfigResponse)
 			return
 		}
 
