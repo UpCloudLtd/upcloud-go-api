@@ -117,17 +117,16 @@ func (s *Service) WaitForKubernetesNodeGroupState(ctx context.Context, r *reques
 
 	for {
 		attempts++
+		time.Sleep(sleepDuration)
 
 		ng, err := s.GetKubernetesNodeGroup(ctx, &request.GetKubernetesNodeGroupRequest{
 			ClusterUUID: r.ClusterUUID,
 			Name:        r.Name,
 		})
 		if err != nil {
-			// Ignore first two 404 responses to avoid errors caused by possible false NOT_FOUND responses right after cluster has been created.
+			// Ignore first two 404 responses to avoid errors caused by possible false NOT_FOUND responses right after cluster or node group has been created.
 			var ucErr *upcloud.Problem
-			if errors.As(err, &ucErr) && ucErr.Status == http.StatusNotFound && attempts < 3 {
-				log.Printf("ERROR: %+v", err)
-			} else {
+			if !(errors.As(err, &ucErr) && ucErr.Status == http.StatusNotFound) || attempts >= 3 {
 				return nil, err
 			}
 		}
@@ -135,8 +134,6 @@ func (s *Service) WaitForKubernetesNodeGroupState(ctx context.Context, r *reques
 		if ng.State == r.DesiredState {
 			return &ng.KubernetesNodeGroup, nil
 		}
-
-		time.Sleep(sleepDuration)
 
 		if time.Duration(attempts)*sleepDuration >= r.Timeout {
 			return nil, fmt.Errorf("timeout reached while waiting for Kubernetes node group to enter state \"%s\"", r.DesiredState)
