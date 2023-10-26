@@ -7,6 +7,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 ## Added
 - kubernetes: `WaitForKubernetesNodeGroupState` method for waiting the node group to achieve a desired state
 
+### Changed
+- kubernetes: sleep before `GET` request in `WaitForKubernetesClusterState`
+
 ## [6.8.2]
 ### Added
 - account: `NetworkPeerings`, `NTPExcessGiB`, `StorageMaxIOPS`, and `LoadBalancers` fields to the `ResourceLimits` struct.
