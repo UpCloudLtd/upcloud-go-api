@@ -82,6 +82,7 @@ func (s *Service) WaitForKubernetesClusterState(ctx context.Context, r *request.
 
 	for {
 		attempts++
+		time.Sleep(sleepDuration)
 
 		details, err := s.GetKubernetesCluster(ctx, &request.GetKubernetesClusterRequest{
 			UUID: r.UUID,
@@ -99,8 +100,6 @@ func (s *Service) WaitForKubernetesClusterState(ctx context.Context, r *request.
 		if details.State == r.DesiredState {
 			return details, nil
 		}
-
-		time.Sleep(sleepDuration)
 
 		if time.Duration(attempts)*sleepDuration >= r.Timeout {
 			return nil, fmt.Errorf("timeout reached while waiting for Kubernetes cluster to enter state \"%s\"", r.DesiredState)
