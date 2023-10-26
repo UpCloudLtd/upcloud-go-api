@@ -6,7 +6,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 ## [Unreleased]
 
 ## [6.8.3]
-## Added
+### Added
 - kubernetes: `WaitForKubernetesNodeGroupState` method for waiting the node group to achieve a desired state
 
 ### Changed
