@@ -4,7 +4,9 @@ All notable changes to this project will be documented in this file.
 See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
-## Added
+
+## [6.8.3]
+### Added
 - kubernetes: `WaitForKubernetesNodeGroupState` method for waiting the node group to achieve a desired state
 
 ### Changed
@@ -361,7 +363,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.8.1...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.8.3...HEAD
+[6.8.3]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.8.2...v6.8.3
+[6.8.2]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.8.1...v6.8.2
 [6.8.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.8.0...v6.8.1
 [6.8.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.7.1...v6.8.0
 [6.7.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.7.0...v6.7.1
