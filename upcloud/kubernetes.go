@@ -91,3 +91,8 @@ type KubernetesPlan struct {
 	ServerNumber int    `json:"server_number"`
 	MaxNodes     int    `json:"max_nodes"`
 }
+
+type KubernetesVersion struct {
+	Id      string `json:"id"`
+	Version string `json:"version"`
+}
