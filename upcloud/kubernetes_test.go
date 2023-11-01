@@ -11,6 +11,7 @@ import (
 const exampleKubernetesClusterJSON string = `{
 	"control_plane_ip_filter": ["0.0.0.0/0"],
 	"name": "upcloud-go-sdk-unit-test",
+	"version": "1.27",
 	"zone": "de-fra1",
 	"uuid": "0ddab8f4-97c0-4222-91ba-85a4fff7499b",
 	"state": "running",
@@ -162,6 +163,7 @@ func exampleKubernetesCluster() KubernetesCluster {
 		},
 		State:             KubernetesClusterStateRunning,
 		UUID:              "0ddab8f4-97c0-4222-91ba-85a4fff7499b",
+		Version:           "1.27",
 		Zone:              "de-fra1",
 		Plan:              "development",
 		PrivateNodeGroups: false,

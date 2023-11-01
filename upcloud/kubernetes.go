@@ -43,6 +43,7 @@ type KubernetesCluster struct {
 	NodeGroups           []KubernetesNodeGroup  `json:"node_groups"`
 	State                KubernetesClusterState `json:"state"`
 	UUID                 string                 `json:"uuid"`
+	Version              string                 `json:"version"`
 	Zone                 string                 `json:"zone"`
 	Plan                 string                 `json:"plan"`
 	PrivateNodeGroups    bool                   `json:"private_node_groups"`

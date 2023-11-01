@@ -104,6 +104,7 @@ const exampleCreateKubernetesClusterRequestJSON string = `{
 		}
 	],
 	"name": "title",
+	"version": "1.26",
 	"zone": "zone"
 }`
 
@@ -424,6 +425,7 @@ func exampleCreateKubernetesClusterRequest() CreateKubernetesClusterRequest {
 			exampleKubernetesNodeGroup("withExplicitUtilityFalse", upcloud.BoolPtr(false)),
 			exampleKubernetesNodeGroup("withoutExplicitUtility", nil),
 		},
+		Version:           "1.26",
 		Zone:              "zone",
 		Plan:              "production",
 		PrivateNodeGroups: false,
