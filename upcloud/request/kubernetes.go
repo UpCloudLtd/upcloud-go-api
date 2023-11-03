@@ -53,6 +53,7 @@ type CreateKubernetesClusterRequest struct {
 	Network              string                `json:"network"`
 	NetworkCIDR          string                `json:"network_cidr"`
 	NodeGroups           []KubernetesNodeGroup `json:"node_groups"`
+	Version              string                `json:"version"`
 	Zone                 string                `json:"zone"`
 	Plan                 string                `json:"plan,omitempty"`
 	PrivateNodeGroups    bool                  `json:"private_node_groups"`

@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
+### Added
+- kubernetes: add `Version` field to `request.CreateKubernetesClusterRequest` and `upcloud.KubernetesCluster`
+
+### Changed
+- **Breaking**, kubernetes: update `GetKubernetesVersions` return value from `[]string` to `[]upcloud.KubernetesVersion`. (No major version bump, because this end-point has not been included in the API docs)
 
 ## [6.8.3]
 ### Added

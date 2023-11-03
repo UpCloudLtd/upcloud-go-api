@@ -19,7 +19,7 @@ type Kubernetes interface {
 	ModifyKubernetesCluster(ctx context.Context, r *request.ModifyKubernetesClusterRequest) (*upcloud.KubernetesCluster, error)
 	DeleteKubernetesCluster(ctx context.Context, r *request.DeleteKubernetesClusterRequest) error
 	GetKubernetesKubeconfig(ctx context.Context, r *request.GetKubernetesKubeconfigRequest) (string, error)
-	GetKubernetesVersions(ctx context.Context, r *request.GetKubernetesVersionsRequest) ([]string, error)
+	GetKubernetesVersions(ctx context.Context, r *request.GetKubernetesVersionsRequest) ([]upcloud.KubernetesVersion, error)
 	WaitForKubernetesClusterState(ctx context.Context, r *request.WaitForKubernetesClusterStateRequest) (*upcloud.KubernetesCluster, error)
 	GetKubernetesNodeGroups(ctx context.Context, r *request.GetKubernetesNodeGroupsRequest) ([]upcloud.KubernetesNodeGroup, error)
 	GetKubernetesNodeGroup(ctx context.Context, r *request.GetKubernetesNodeGroupRequest) (*upcloud.KubernetesNodeGroupDetails, error)
@@ -162,8 +162,8 @@ func (s *Service) GetKubernetesKubeconfig(ctx context.Context, r *request.GetKub
 }
 
 // GetKubernetesVersions retrieves a list of Kubernetes cluster versions.
-func (s *Service) GetKubernetesVersions(ctx context.Context, r *request.GetKubernetesVersionsRequest) ([]string, error) {
-	versions := make([]string, 0)
+func (s *Service) GetKubernetesVersions(ctx context.Context, r *request.GetKubernetesVersionsRequest) ([]upcloud.KubernetesVersion, error) {
+	versions := make([]upcloud.KubernetesVersion, 0)
 	return versions, s.get(ctx, r.RequestURL(), &versions)
 }
 
