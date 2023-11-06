@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
+
+## [6.9.0]
 ### Added
 - kubernetes: add `Version` field to `request.CreateKubernetesClusterRequest` and `upcloud.KubernetesCluster`
 
@@ -368,7 +370,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.8.3...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.9.0...HEAD
+[6.9.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.8.3...v6.9.0
 [6.8.3]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.8.2...v6.8.3
 [6.8.2]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.8.1...v6.8.2
 [6.8.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.8.0...v6.8.1
