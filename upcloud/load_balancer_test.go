@@ -61,6 +61,14 @@ func TestMarshalLoadBalancer(t *testing.T) {
 							"updated_at": "2022-02-11T17:33:08.490581Z",
 							"weight": 100
 						}
+					],
+					"tls_configs": [
+						{
+							"certificate_bundle_uuid": "0aded5c1-c7a3-498a-b9c8-a871611c47a3",
+							"created_at": "2023-02-11T17:33:08.490581Z",
+							"name": "example-tls-config",
+							"updated_at": "2023-02-11T17:33:08.490581Z"
+						}
 					]
 				}
 			],
@@ -205,6 +213,12 @@ func TestMarshalLoadBalancer(t *testing.T) {
 						UpdatedAt:   timeParse("2022-02-11T17:33:08.490581Z"),
 					},
 				},
+				TLSConfigs: []LoadBalancerBackendTLSConfig{{
+					Name:                  "example-tls-config",
+					CertificateBundleUUID: "0aded5c1-c7a3-498a-b9c8-a871611c47a3",
+					CreatedAt:             timeParse("2023-02-11T17:33:08.490581Z"),
+					UpdatedAt:             timeParse("2023-02-11T17:33:08.490581Z"),
+				}},
 			},
 		},
 		Resolvers: []LoadBalancerResolver{
@@ -495,6 +509,27 @@ func TestLoadBalancerBackend(t *testing.T) {
 			"created_at": "2022-02-11T17:33:08.490581Z",
 			"updated_at": "2022-02-11T17:33:08.490581Z",
 			"members": []
+		}
+		`,
+	)
+}
+
+func TestLoadBalancerBackendTLSConfig(t *testing.T) {
+	t.Parallel()
+	testJSON(t,
+		&LoadBalancerBackendTLSConfig{},
+		&LoadBalancerBackendTLSConfig{
+			Name:                  "example-tls-config",
+			CertificateBundleUUID: "0aded5c1-c7a3-498a-b9c8-a871611c47a3",
+			CreatedAt:             timeParse("2023-02-11T17:33:08.490581Z"),
+			UpdatedAt:             timeParse("2023-02-11T17:33:08.490581Z"),
+		},
+		`
+		{
+			"certificate_bundle_uuid": "0aded5c1-c7a3-498a-b9c8-a871611c47a3",
+			"name": "example-tls-config",
+			"created_at": "2023-02-11T17:33:08.490581Z",
+			"updated_at": "2023-02-11T17:33:08.490581Z"
 		}
 		`,
 	)

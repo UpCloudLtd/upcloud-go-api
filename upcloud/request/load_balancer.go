@@ -103,6 +103,7 @@ type LoadBalancerBackend struct {
 	Resolver   string                                 `json:"resolver,omitempty"`
 	Members    []LoadBalancerBackendMember            `json:"members"`
 	Properties *upcloud.LoadBalancerBackendProperties `json:"properties,omitempty"`
+	TLSConfigs []LoadBalancerBackendTLSConfig         `json:"tls_configs,omitempty"`
 }
 
 // CreateLoadBalancerBackendRequest represents a request to create load balancer backend
@@ -574,6 +575,75 @@ type DeleteLoadBalancerFrontendTLSConfigRequest struct {
 
 func (r *DeleteLoadBalancerFrontendTLSConfigRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/frontends/%s/tls-configs/%s", r.ServiceUUID, r.FrontendName, r.Name)
+}
+
+// LoadBalancerBackendTLSConfig represents TLS config payload
+type LoadBalancerBackendTLSConfig struct {
+	Name                  string `json:"name,omitempty"`
+	CertificateBundleUUID string `json:"certificate_bundle_uuid,omitempty"`
+}
+
+// GetLoadBalancerBackendTLSConfigsRequest represents a request to get backend TLS configs
+type GetLoadBalancerBackendTLSConfigsRequest struct {
+	ServiceUUID string `json:"-"`
+	BackendName string `json:"-"`
+}
+
+func (r *GetLoadBalancerBackendTLSConfigsRequest) RequestURL() string {
+	return fmt.Sprintf("/load-balancer/%s/backends/%s/tls-configs", r.ServiceUUID, r.BackendName)
+}
+
+// GetLoadBalancerBackendTLSConfigRequest represents a request to get backend TLS config
+type GetLoadBalancerBackendTLSConfigRequest struct {
+	ServiceUUID string `json:"-"`
+	BackendName string `json:"-"`
+	Name        string `json:"-"`
+}
+
+func (r *GetLoadBalancerBackendTLSConfigRequest) RequestURL() string {
+	return fmt.Sprintf("/load-balancer/%s/backends/%s/tls-configs/%s", r.ServiceUUID, r.BackendName, r.Name)
+}
+
+// CreateLoadBalancerBackendTLSConfigRequest represents a request to create backend TLS config
+type CreateLoadBalancerBackendTLSConfigRequest struct {
+	ServiceUUID string `json:"-"`
+	BackendName string `json:"-"`
+	Config      LoadBalancerBackendTLSConfig
+}
+
+func (r *CreateLoadBalancerBackendTLSConfigRequest) MarshalJSON() ([]byte, error) {
+	return json.Marshal(r.Config)
+}
+
+func (r *CreateLoadBalancerBackendTLSConfigRequest) RequestURL() string {
+	return fmt.Sprintf("/load-balancer/%s/backends/%s/tls-configs", r.ServiceUUID, r.BackendName)
+}
+
+// ModifyLoadBalancerBackendTLSConfigRequest represents a request to modify backend TLS config
+type ModifyLoadBalancerBackendTLSConfigRequest struct {
+	ServiceUUID string `json:"-"`
+	BackendName string `json:"-"`
+	Name        string `json:"-"`
+	Config      LoadBalancerBackendTLSConfig
+}
+
+func (r *ModifyLoadBalancerBackendTLSConfigRequest) MarshalJSON() ([]byte, error) {
+	return json.Marshal(r.Config)
+}
+
+func (r *ModifyLoadBalancerBackendTLSConfigRequest) RequestURL() string {
+	return fmt.Sprintf("/load-balancer/%s/backends/%s/tls-configs/%s", r.ServiceUUID, r.BackendName, r.Name)
+}
+
+// DeleteLoadBalancerBackendTLSConfigRequest represents a request to delete backend TLS config
+type DeleteLoadBalancerBackendTLSConfigRequest struct {
+	ServiceUUID string `json:"-"`
+	BackendName string `json:"-"`
+	Name        string `json:"-"`
+}
+
+func (r *DeleteLoadBalancerBackendTLSConfigRequest) RequestURL() string {
+	return fmt.Sprintf("/load-balancer/%s/backends/%s/tls-configs/%s", r.ServiceUUID, r.BackendName, r.Name)
 }
 
 // CreateLoadBalancerCertificateBundleRequest represents a request to create certificate bundle

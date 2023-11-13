@@ -25,6 +25,12 @@ type LoadBalancer interface {
 	CreateLoadBalancerBackendMember(ctx context.Context, r *request.CreateLoadBalancerBackendMemberRequest) (*upcloud.LoadBalancerBackendMember, error)
 	ModifyLoadBalancerBackendMember(ctx context.Context, r *request.ModifyLoadBalancerBackendMemberRequest) (*upcloud.LoadBalancerBackendMember, error)
 	DeleteLoadBalancerBackendMember(ctx context.Context, r *request.DeleteLoadBalancerBackendMemberRequest) error
+	// Backend TLS Config
+	GetLoadBalancerBackendTLSConfigs(ctx context.Context, r *request.GetLoadBalancerBackendTLSConfigsRequest) ([]upcloud.LoadBalancerBackendTLSConfig, error)
+	GetLoadBalancerBackendTLSConfig(ctx context.Context, r *request.GetLoadBalancerBackendTLSConfigRequest) (*upcloud.LoadBalancerBackendTLSConfig, error)
+	CreateLoadBalancerBackendTLSConfig(ctx context.Context, r *request.CreateLoadBalancerBackendTLSConfigRequest) (*upcloud.LoadBalancerBackendTLSConfig, error)
+	ModifyLoadBalancerBackendTLSConfig(ctx context.Context, r *request.ModifyLoadBalancerBackendTLSConfigRequest) (*upcloud.LoadBalancerBackendTLSConfig, error)
+	DeleteLoadBalancerBackendTLSConfig(ctx context.Context, r *request.DeleteLoadBalancerBackendTLSConfigRequest) error
 	// Resolvers
 	GetLoadBalancerResolvers(ctx context.Context, r *request.GetLoadBalancerResolversRequest) ([]upcloud.LoadBalancerResolver, error)
 	CreateLoadBalancerResolver(ctx context.Context, r *request.CreateLoadBalancerResolverRequest) (*upcloud.LoadBalancerResolver, error)
@@ -46,7 +52,7 @@ type LoadBalancer interface {
 	ModifyLoadBalancerFrontendRule(ctx context.Context, r *request.ModifyLoadBalancerFrontendRuleRequest) (*upcloud.LoadBalancerFrontendRule, error)
 	ReplaceLoadBalancerFrontendRule(ctx context.Context, r *request.ReplaceLoadBalancerFrontendRuleRequest) (*upcloud.LoadBalancerFrontendRule, error)
 	DeleteLoadBalancerFrontendRule(ctx context.Context, r *request.DeleteLoadBalancerFrontendRuleRequest) error
-	// TLS Config
+	// Frontend TLS Config
 	GetLoadBalancerFrontendTLSConfigs(ctx context.Context, r *request.GetLoadBalancerFrontendTLSConfigsRequest) ([]upcloud.LoadBalancerFrontendTLSConfig, error)
 	GetLoadBalancerFrontendTLSConfig(ctx context.Context, r *request.GetLoadBalancerFrontendTLSConfigRequest) (*upcloud.LoadBalancerFrontendTLSConfig, error)
 	CreateLoadBalancerFrontendTLSConfig(ctx context.Context, r *request.CreateLoadBalancerFrontendTLSConfigRequest) (*upcloud.LoadBalancerFrontendTLSConfig, error)
@@ -142,6 +148,35 @@ func (s *Service) ModifyLoadBalancerBackend(ctx context.Context, r *request.Modi
 
 // DeleteLoadBalancerBackend deletes an existing load balancer backend.
 func (s *Service) DeleteLoadBalancerBackend(ctx context.Context, r *request.DeleteLoadBalancerBackendRequest) error {
+	return s.delete(ctx, r)
+}
+
+// GetLoadBalancerBackendTLSConfigs retrieves a list of load balancer backend TLS configs.
+func (s *Service) GetLoadBalancerBackendTLSConfigs(ctx context.Context, r *request.GetLoadBalancerBackendTLSConfigsRequest) ([]upcloud.LoadBalancerBackendTLSConfig, error) {
+	configs := make([]upcloud.LoadBalancerBackendTLSConfig, 0)
+	return configs, s.get(ctx, r.RequestURL(), &configs)
+}
+
+// GetLoadBalancerBackendTLSConfig retrieves details of a load balancer backend TLS config.
+func (s *Service) GetLoadBalancerBackendTLSConfig(ctx context.Context, r *request.GetLoadBalancerBackendTLSConfigRequest) (*upcloud.LoadBalancerBackendTLSConfig, error) {
+	var config upcloud.LoadBalancerBackendTLSConfig
+	return &config, s.get(ctx, r.RequestURL(), &config)
+}
+
+// CreateLoadBalancerBackendTLSConfig creates a new load balancer backend TLS config.
+func (s *Service) CreateLoadBalancerBackendTLSConfig(ctx context.Context, r *request.CreateLoadBalancerBackendTLSConfigRequest) (*upcloud.LoadBalancerBackendTLSConfig, error) {
+	var config upcloud.LoadBalancerBackendTLSConfig
+	return &config, s.create(ctx, r, &config)
+}
+
+// ModifyLoadBalancerBackendTLSConfig modifies an existing load balancer backend TLS Config.
+func (s *Service) ModifyLoadBalancerBackendTLSConfig(ctx context.Context, r *request.ModifyLoadBalancerBackendTLSConfigRequest) (*upcloud.LoadBalancerBackendTLSConfig, error) {
+	var config upcloud.LoadBalancerBackendTLSConfig
+	return &config, s.modify(ctx, r, &config)
+}
+
+// DeleteLoadBalancerBackendTLSConfig deletes an existing load balancer backend TLS config.
+func (s *Service) DeleteLoadBalancerBackendTLSConfig(ctx context.Context, r *request.DeleteLoadBalancerBackendTLSConfigRequest) error {
 	return s.delete(ctx, r)
 }
 

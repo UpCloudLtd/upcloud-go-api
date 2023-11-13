@@ -34,8 +34,9 @@ const (
 	LoadBalancerConfiguredStatusStarted LoadBalancerConfiguredStatus = "started"
 	LoadBalancerConfiguredStatusStopped LoadBalancerConfiguredStatus = "stopped"
 
-	LoadBalancerCertificateBundleTypeManual  LoadBalancerCertificateBundleType = "manual"
-	LoadBalancerCertificateBundleTypeDynamic LoadBalancerCertificateBundleType = "dynamic"
+	LoadBalancerCertificateBundleTypeManual    LoadBalancerCertificateBundleType = "manual"
+	LoadBalancerCertificateBundleTypeDynamic   LoadBalancerCertificateBundleType = "dynamic"
+	LoadBalancerCertificateBundleTypeAuthority LoadBalancerCertificateBundleType = "authority"
 
 	LoadBalancerOperationalStatePending       LoadBalancerOperationalState = "pending"
 	LoadBalancerOperationalStateSetupAgent    LoadBalancerOperationalState = "setup-agent"
@@ -157,7 +158,7 @@ type LoadBalancerFrontendRule struct {
 	UpdatedAt time.Time             `json:"updated_at,omitempty"`
 }
 
-// LoadBalancerFrontendTLSConfig represents TLS configuration
+// LoadBalancerFrontendTLSConfig represents frontend TLS configuration
 type LoadBalancerFrontendTLSConfig struct {
 	Name                  string    `json:"name,omitempty"`
 	CertificateBundleUUID string    `json:"certificate_bundle_uuid,omitempty"`
@@ -177,6 +178,7 @@ type LoadBalancerBackend struct {
 	Members    []LoadBalancerBackendMember    `json:"members"`
 	Resolver   string                         `json:"resolver,omitempty"`
 	Properties *LoadBalancerBackendProperties `json:"properties,omitempty"`
+	TLSConfigs []LoadBalancerBackendTLSConfig `json:"tls_configs,omitempty"`
 	CreatedAt  time.Time                      `json:"created_at,omitempty"`
 	UpdatedAt  time.Time                      `json:"updated_at,omitempty"`
 }
@@ -192,6 +194,14 @@ type LoadBalancerBackendMember struct {
 	Enabled     bool                          `json:"enabled"`
 	CreatedAt   time.Time                     `json:"created_at,omitempty"`
 	UpdatedAt   time.Time                     `json:"updated_at,omitempty"`
+}
+
+// LoadBalancerBackendTLSConfig represents backend TLS configuration
+type LoadBalancerBackendTLSConfig struct {
+	Name                  string    `json:"name,omitempty"`
+	CertificateBundleUUID string    `json:"certificate_bundle_uuid,omitempty"`
+	CreatedAt             time.Time `json:"created_at,omitempty"`
+	UpdatedAt             time.Time `json:"updated_at,omitempty"`
 }
 
 // LoadBalancerBackendProperties represents backend properties
@@ -268,7 +278,7 @@ type LoadBalancerMatcherStringWithArgument struct {
 	IgnoreCase *bool                           `json:"ignore_case,omitempty"`
 }
 
-// LoadBalancerMatcherHost represents represents 'host' matcher
+// LoadBalancerMatcherHost represents 'host' matcher
 type LoadBalancerMatcherHost struct {
 	Value string `json:"value,omitempty"`
 }
@@ -387,7 +397,7 @@ type LoadBalancerNodeNetwork struct {
 	IPAddresses []LoadBalancerIPAddress `json:"ip_addresses,omitempty"`
 }
 
-// LoadBalancerNetwork represents network attached to loadbalancer
+// LoadBalancerFrontendNetwork represents network attached to loadbalancer
 type LoadBalancerFrontendNetwork struct {
 	Name string `json:"name,omitempty"`
 }
