@@ -297,6 +297,7 @@ func TestModifyLoadBalancerBackendRequest(t *testing.T) {
 				HealthCheckExpectedStatus: 200,
 				StickySessionCookieName:   "SERVERID",
 				OutboundProxyProtocol:     upcloud.LoadBalancerProxyProtocolVersion1,
+				HTTP2Enabled:              upcloud.BoolPtr(true),
 			},
 		},
 	}
@@ -315,7 +316,8 @@ func TestModifyLoadBalancerBackendRequest(t *testing.T) {
 			"health_check_url": "/health",
 			"health_check_expected_status": 200,
 			"sticky_session_cookie_name": "SERVERID",
-			"outbound_proxy_protocol": "v1"
+			"outbound_proxy_protocol": "v1",
+			"http2_enabled": true
 		}
 	}`
 
@@ -748,7 +750,7 @@ func TestCreateLoadBalancerFrontendRequest(t *testing.T) {
 			DefaultBackend: "example-backend",
 			Properties: &upcloud.LoadBalancerFrontendProperties{
 				TimeoutClient:        10,
-				InboundProxyProtocol: false,
+				InboundProxyProtocol: upcloud.BoolPtr(false),
 			},
 			Rules: []LoadBalancerFrontendRule{{
 				Name:     "example-rule-1",
@@ -788,7 +790,8 @@ func TestModifyLoadBalancerFrontendRequest(t *testing.T) {
 		"default_backend": "example-backend",
 		"properties": {
 			"timeout_client": 10,
-			"inbound_proxy_protocol": false
+			"inbound_proxy_protocol": false,
+			"http2_enabled": false
 		}
 	}`
 	r := ModifyLoadBalancerFrontendRequest{
@@ -801,7 +804,8 @@ func TestModifyLoadBalancerFrontendRequest(t *testing.T) {
 			DefaultBackend: "example-backend",
 			Properties: &upcloud.LoadBalancerFrontendProperties{
 				TimeoutClient:        10,
-				InboundProxyProtocol: false,
+				InboundProxyProtocol: upcloud.BoolPtr(false),
+				HTTP2Enabled:         upcloud.BoolPtr(false),
 			},
 		},
 	}

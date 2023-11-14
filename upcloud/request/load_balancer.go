@@ -97,7 +97,7 @@ func (r *GetLoadBalancerBackendsRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/backends", r.ServiceUUID)
 }
 
-// BalancerBackend represents the payload for CreateLoadBalancerBackendRequest
+// LoadBalancerBackend represents the payload for CreateLoadBalancerBackendRequest
 type LoadBalancerBackend struct {
 	Name       string                                 `json:"name"`
 	Resolver   string                                 `json:"resolver,omitempty"`

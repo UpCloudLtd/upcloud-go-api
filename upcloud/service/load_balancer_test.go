@@ -72,6 +72,10 @@ func TestLoadBalancerBackend(t *testing.T) {
 		backend, err := createLoadBalancerBackend(ctx, svc, lb.UUID)
 		require.NoError(t, err)
 		assert.Equal(t, 30, backend.Properties.TimeoutServer)
+		assert.Equal(t, upcloud.BoolPtr(true), backend.Properties.TLSEnabled)
+		assert.Equal(t, upcloud.BoolPtr(true), backend.Properties.TLSVerify)
+		assert.Equal(t, upcloud.BoolPtr(true), backend.Properties.TLSUseSystemCA)
+		assert.Equal(t, upcloud.BoolPtr(false), backend.Properties.HTTP2Enabled)
 		t.Logf("Created LB backend: %s", backend.Name)
 
 		t.Logf("Modifying LB backend: %s", backend.Name)
@@ -90,6 +94,10 @@ func TestLoadBalancerBackend(t *testing.T) {
 		require.NoError(t, err)
 		assert.EqualValues(t, backend.Name, newName)
 		assert.Equal(t, 30, backend.Properties.TimeoutServer)
+		assert.Equal(t, upcloud.BoolPtr(true), backend.Properties.TLSEnabled)
+		assert.Equal(t, upcloud.BoolPtr(true), backend.Properties.TLSVerify)
+		assert.Equal(t, upcloud.BoolPtr(true), backend.Properties.TLSUseSystemCA)
+		assert.Equal(t, upcloud.BoolPtr(false), backend.Properties.HTTP2Enabled)
 		assert.Equal(t, upcloud.LoadBalancerHealthCheckType("tcp"), backend.Properties.HealthCheckType)
 		t.Logf("Modified LB backend, new name is: %s", backend.Name)
 
@@ -125,6 +133,7 @@ func TestLoadBalancerBackend(t *testing.T) {
 //   - certificate bundle CRUD
 //   - TLS config CRUD
 //   - add TLS config to LB backend
+//   - enable HTTP/2 for LB backend
 //   - remove TLS config to LB backend
 func TestLoadBalancerCerticateBundlesAndBackendTLSConfigs(t *testing.T) {
 	t.Parallel()
@@ -251,6 +260,24 @@ func TestLoadBalancerCerticateBundlesAndBackendTLSConfigs(t *testing.T) {
 		t.Logf("Modified TLS config %s", tls.Name)
 		assert.Equal(t, ac.Name, tls.Name)
 
+		be, err := svc.ModifyLoadBalancerBackend(ctx, &request.ModifyLoadBalancerBackendRequest{
+			ServiceUUID: lb.UUID,
+			Name:        beName,
+			Backend: request.ModifyLoadBalancerBackend{
+				Name:     beName,
+				Resolver: upcloud.StringPtr("ns-1"),
+				Properties: &upcloud.LoadBalancerBackendProperties{
+					TLSEnabled:   upcloud.BoolPtr(true),
+					HTTP2Enabled: upcloud.BoolPtr(true),
+				},
+			},
+		})
+		assert.NoError(t, err)
+		t.Logf("Modified Backend %s", be.Name)
+		assert.Equal(t, upcloud.BoolPtr(true), be.Properties.TLSEnabled)
+		assert.Equal(t, upcloud.BoolPtr(true), be.Properties.HTTP2Enabled)
+		assert.Len(t, be.TLSConfigs, 1)
+
 		configs, err := svc.GetLoadBalancerBackendTLSConfigs(ctx, &request.GetLoadBalancerBackendTLSConfigsRequest{
 			ServiceUUID: lb.UUID,
 			BackendName: beName,
@@ -267,6 +294,30 @@ func TestLoadBalancerCerticateBundlesAndBackendTLSConfigs(t *testing.T) {
 		assert.NoError(t, err)
 		t.Logf("Fetched TLS Config %s", tls.Name)
 		assert.Equal(t, ac.UUID, tls.CertificateBundleUUID)
+
+		err = svc.DeleteLoadBalancerBackendTLSConfig(ctx, &request.DeleteLoadBalancerBackendTLSConfigRequest{
+			ServiceUUID: lb.UUID,
+			BackendName: feName,
+			Name:        tls.Name,
+		})
+		assert.Error(t, err)
+		t.Logf("Backend TLS config %s deletion failed, like it should", tls.Name)
+
+		be, err = svc.ModifyLoadBalancerBackend(ctx, &request.ModifyLoadBalancerBackendRequest{
+			ServiceUUID: lb.UUID,
+			Name:        beName,
+			Backend: request.ModifyLoadBalancerBackend{
+				Name:     beName,
+				Resolver: upcloud.StringPtr("ns-1"),
+				Properties: &upcloud.LoadBalancerBackendProperties{
+					HTTP2Enabled: upcloud.BoolPtr(false),
+				},
+			},
+		})
+		assert.NoError(t, err)
+		t.Logf("Modified Backend %s", be.Name)
+		assert.Equal(t, upcloud.BoolPtr(false), be.Properties.HTTP2Enabled)
+		assert.Len(t, be.TLSConfigs, 1)
 
 		assert.NoError(t, svc.DeleteLoadBalancerBackendTLSConfig(ctx, &request.DeleteLoadBalancerBackendTLSConfigRequest{
 			ServiceUUID: lb.UUID,
@@ -563,14 +614,16 @@ func TestLoadBalancerFrontend(t *testing.T) {
 				TLSConfigs:     []request.LoadBalancerFrontendTLSConfig{},
 				Properties: &upcloud.LoadBalancerFrontendProperties{
 					TimeoutClient:        10,
-					InboundProxyProtocol: false,
+					InboundProxyProtocol: upcloud.BoolPtr(true),
+					HTTP2Enabled:         upcloud.BoolPtr(false),
 				},
 			},
 		})
 		require.NoError(t, err)
 		assert.Equal(t, "fe-1", fe.Name)
 		assert.Equal(t, 10, fe.Properties.TimeoutClient)
-		assert.Equal(t, false, fe.Properties.InboundProxyProtocol)
+		assert.Equal(t, upcloud.BoolPtr(true), fe.Properties.InboundProxyProtocol)
+		assert.Equal(t, upcloud.BoolPtr(false), fe.Properties.HTTP2Enabled)
 		t.Logf("Created frontend %s for load balancer %s", fe.Name, lb.Name)
 		fe, err = svc.ModifyLoadBalancerFrontend(ctx, &request.ModifyLoadBalancerFrontendRequest{
 			ServiceUUID: lb.UUID,
@@ -580,11 +633,14 @@ func TestLoadBalancerFrontend(t *testing.T) {
 				Mode: upcloud.LoadBalancerModeTCP,
 				Port: 80,
 				Properties: &upcloud.LoadBalancerFrontendProperties{
-					InboundProxyProtocol: true,
+					HTTP2Enabled: upcloud.BoolPtr(false),
 				},
 			},
 		})
 		require.NoError(t, err)
+		assert.Equal(t, 10, fe.Properties.TimeoutClient)
+		assert.Equal(t, upcloud.BoolPtr(true), fe.Properties.InboundProxyProtocol)
+		assert.Equal(t, upcloud.BoolPtr(false), fe.Properties.HTTP2Enabled)
 		t.Logf("Modified frontend %s", fe.Name)
 		fe, err = svc.GetLoadBalancerFrontend(ctx, &request.GetLoadBalancerFrontendRequest{
 			ServiceUUID: lb.UUID,
@@ -596,7 +652,8 @@ func TestLoadBalancerFrontend(t *testing.T) {
 		assert.Equal(t, 80, fe.Port)
 		assert.Equal(t, be.Name, fe.DefaultBackend)
 		assert.Equal(t, 10, fe.Properties.TimeoutClient)
-		assert.Equal(t, true, fe.Properties.InboundProxyProtocol)
+		assert.Equal(t, upcloud.BoolPtr(true), fe.Properties.InboundProxyProtocol)
+		assert.Equal(t, upcloud.BoolPtr(false), fe.Properties.HTTP2Enabled)
 
 		fes, err := svc.GetLoadBalancerFrontends(ctx, &request.GetLoadBalancerFrontendsRequest{ServiceUUID: lb.UUID})
 		require.NoError(t, err)
@@ -761,6 +818,7 @@ func TestLoadBalancerFrontendRule(t *testing.T) {
 //   - certificate bundle CRUD
 //   - TLS config CRUD
 //   - add TLS config to LB frontend
+//   - enable HTTP/2 for LB frontend
 //   - remove TLS config to LB frontend
 func TestLoadBalancerCerticateBundlesAndFrontendTLSConfigs(t *testing.T) {
 	t.Parallel()
@@ -890,6 +948,25 @@ func TestLoadBalancerCerticateBundlesAndFrontendTLSConfigs(t *testing.T) {
 		t.Logf("Modified TLS config %s", tls.Name)
 		assert.Equal(t, dc.Name, tls.Name)
 
+		fe, err := svc.ModifyLoadBalancerFrontend(ctx, &request.ModifyLoadBalancerFrontendRequest{
+			ServiceUUID: lb.UUID,
+			Name:        feName,
+			Frontend: request.ModifyLoadBalancerFrontend{
+				Name: feName,
+				Mode: upcloud.LoadBalancerModeTCP,
+				Port: 80,
+				Properties: &upcloud.LoadBalancerFrontendProperties{
+					InboundProxyProtocol: upcloud.BoolPtr(true),
+					HTTP2Enabled:         upcloud.BoolPtr(true),
+				},
+			},
+		})
+		assert.NoError(t, err)
+		t.Logf("Modified Frontend %s", fe.Name)
+		assert.Equal(t, upcloud.BoolPtr(true), fe.Properties.InboundProxyProtocol)
+		assert.Equal(t, upcloud.BoolPtr(true), fe.Properties.HTTP2Enabled)
+		assert.Len(t, fe.TLSConfigs, 1)
+
 		configs, err := svc.GetLoadBalancerFrontendTLSConfigs(ctx, &request.GetLoadBalancerFrontendTLSConfigsRequest{
 			ServiceUUID:  lb.UUID,
 			FrontendName: feName,
@@ -906,6 +983,33 @@ func TestLoadBalancerCerticateBundlesAndFrontendTLSConfigs(t *testing.T) {
 		assert.NoError(t, err)
 		t.Logf("Fetched TLS Config %s", tls.Name)
 		assert.Equal(t, dc.UUID, tls.CertificateBundleUUID)
+
+		err = svc.DeleteLoadBalancerFrontendTLSConfig(ctx, &request.DeleteLoadBalancerFrontendTLSConfigRequest{
+			ServiceUUID:  lb.UUID,
+			FrontendName: feName,
+			Name:         tls.Name,
+		})
+		assert.Error(t, err)
+		t.Logf("Frontend TLS config %s deletion failed, like it should", tls.Name)
+
+		fe, err = svc.ModifyLoadBalancerFrontend(ctx, &request.ModifyLoadBalancerFrontendRequest{
+			ServiceUUID: lb.UUID,
+			Name:        feName,
+			Frontend: request.ModifyLoadBalancerFrontend{
+				Name: feName,
+				Mode: upcloud.LoadBalancerModeTCP,
+				Port: 80,
+				Properties: &upcloud.LoadBalancerFrontendProperties{
+					InboundProxyProtocol: upcloud.BoolPtr(true),
+					HTTP2Enabled:         upcloud.BoolPtr(false),
+				},
+			},
+		})
+		assert.NoError(t, err)
+		t.Logf("Modified Frontend %s", fe.Name)
+		assert.Equal(t, upcloud.BoolPtr(true), fe.Properties.InboundProxyProtocol)
+		assert.Equal(t, upcloud.BoolPtr(false), fe.Properties.HTTP2Enabled)
+		assert.Len(t, fe.TLSConfigs, 1)
 
 		assert.NoError(t, svc.DeleteLoadBalancerFrontendTLSConfig(ctx, &request.DeleteLoadBalancerFrontendTLSConfigRequest{
 			ServiceUUID:  lb.UUID,
@@ -1196,7 +1300,10 @@ func createLoadBalancerBackend(ctx context.Context, svc *Service, lbUUID string)
 		Backend: request.LoadBalancerBackend{
 			Name: fmt.Sprintf("go-api-lb-backend-%d", time.Now().Unix()),
 			Properties: &upcloud.LoadBalancerBackendProperties{
-				TimeoutServer: 30,
+				TimeoutServer:  30,
+				TLSEnabled:     upcloud.BoolPtr(true),
+				TLSUseSystemCA: upcloud.BoolPtr(true),
+				TLSVerify:      upcloud.BoolPtr(true),
 			},
 			Members: []request.LoadBalancerBackendMember{
 				{

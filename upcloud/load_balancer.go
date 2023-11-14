@@ -168,8 +168,9 @@ type LoadBalancerFrontendTLSConfig struct {
 
 // LoadBalancerFrontendProperties represents frontend properties
 type LoadBalancerFrontendProperties struct {
-	TimeoutClient        int  `json:"timeout_client,omitempty"`
-	InboundProxyProtocol bool `json:"inbound_proxy_protocol"`
+	TimeoutClient        int   `json:"timeout_client,omitempty"`
+	InboundProxyProtocol *bool `json:"inbound_proxy_protocol,omitempty"`
+	HTTP2Enabled         *bool `json:"http2_enabled,omitempty"`
 }
 
 // LoadBalancerBackend represents service backend
@@ -217,6 +218,10 @@ type LoadBalancerBackendProperties struct {
 	HealthCheckExpectedStatus int                              `json:"health_check_expected_status,omitempty"`
 	StickySessionCookieName   string                           `json:"sticky_session_cookie_name,omitempty"`
 	OutboundProxyProtocol     LoadBalancerProxyProtocolVersion `json:"outbound_proxy_protocol,omitempty"`
+	TLSEnabled                *bool                            `json:"tls_enabled,omitempty"`
+	TLSVerify                 *bool                            `json:"tls_verify,omitempty"`
+	TLSUseSystemCA            *bool                            `json:"tls_use_system_ca,omitempty"`
+	HTTP2Enabled              *bool                            `json:"http2_enabled,omitempty"`
 }
 
 // LoadBalancerResolver represents domain name resolver
