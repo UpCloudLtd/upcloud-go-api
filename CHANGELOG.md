@@ -5,6 +5,11 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- Managed Load Balancer: `TLSConfigs` field to `LoadBalancerBackend` to control backend TLS configurations
+- Managed Load Balancer: `TLSEnabled`,  `TLSUseSystemCA`, `TLSVerify` & `HTTP2Enabled` fields to `LoadBalancerBackendProperties`
+- Managed Load Balancer: `HTTP2Enabled` field to `LoadBalancerFrontendProperties`
+
 ## [6.9.0]
 ### Added
 - kubernetes: add `Version` field to `request.CreateKubernetesClusterRequest` and `upcloud.KubernetesCluster`

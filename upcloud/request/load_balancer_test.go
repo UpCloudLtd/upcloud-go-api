@@ -211,6 +211,12 @@ func TestCreateLoadBalancerBackendRequest(t *testing.T) {
 				StickySessionCookieName:   "SERVERID",
 				OutboundProxyProtocol:     upcloud.LoadBalancerProxyProtocolVersion1,
 			},
+			TLSConfigs: []LoadBalancerBackendTLSConfig{
+				{
+					Name:                  "example-tls-config",
+					CertificateBundleUUID: "0aded5c1-c7a3-498a-b9c8-a871611c47a3",
+				},
+			},
 		},
 	}
 
@@ -230,7 +236,13 @@ func TestCreateLoadBalancerBackendRequest(t *testing.T) {
 			"health_check_expected_status": 200,
 			"sticky_session_cookie_name": "SERVERID",
 			"outbound_proxy_protocol": "v1"
-		}
+		},
+		"tls_configs": [
+			{
+				"name": "example-tls-config",
+				"certificate_bundle_uuid": "0aded5c1-c7a3-498a-b9c8-a871611c47a3"
+			}
+		]
 	}`
 
 	actualJson, err := json.Marshal(&r)
@@ -285,6 +297,7 @@ func TestModifyLoadBalancerBackendRequest(t *testing.T) {
 				HealthCheckExpectedStatus: 200,
 				StickySessionCookieName:   "SERVERID",
 				OutboundProxyProtocol:     upcloud.LoadBalancerProxyProtocolVersion1,
+				HTTP2Enabled:              upcloud.BoolPtr(true),
 			},
 		},
 	}
@@ -303,7 +316,8 @@ func TestModifyLoadBalancerBackendRequest(t *testing.T) {
 			"health_check_url": "/health",
 			"health_check_expected_status": 200,
 			"sticky_session_cookie_name": "SERVERID",
-			"outbound_proxy_protocol": "v1"
+			"outbound_proxy_protocol": "v1",
+			"http2_enabled": true
 		}
 	}`
 
@@ -776,7 +790,8 @@ func TestModifyLoadBalancerFrontendRequest(t *testing.T) {
 		"default_backend": "example-backend",
 		"properties": {
 			"timeout_client": 10,
-			"inbound_proxy_protocol": false
+			"inbound_proxy_protocol": false,
+			"http2_enabled": false
 		}
 	}`
 	r := ModifyLoadBalancerFrontendRequest{
@@ -790,6 +805,7 @@ func TestModifyLoadBalancerFrontendRequest(t *testing.T) {
 			Properties: &upcloud.LoadBalancerFrontendProperties{
 				TimeoutClient:        10,
 				InboundProxyProtocol: false,
+				HTTP2Enabled:         upcloud.BoolPtr(false),
 			},
 		},
 	}
@@ -1076,6 +1092,75 @@ func TestDeleteLoadBalancerFrontendTLSConfigRequest(t *testing.T) {
 		Name:         "cfg",
 	}
 	assert.Equal(t, "/load-balancer/sid/frontends/fename/tls-configs/cfg", r.RequestURL())
+}
+
+func TestGetLoadBalancerBackendTLSConfigsRequest(t *testing.T) {
+	r := GetLoadBalancerBackendTLSConfigsRequest{
+		ServiceUUID: "sid",
+		BackendName: "bename",
+	}
+	assert.Equal(t, "/load-balancer/sid/backends/bename/tls-configs", r.RequestURL())
+}
+
+func TestGetLoadBalancerBackendTLSConfigRequest(t *testing.T) {
+	r := GetLoadBalancerBackendTLSConfigRequest{
+		ServiceUUID: "sid",
+		BackendName: "bename",
+		Name:        "cfg",
+	}
+	assert.Equal(t, "/load-balancer/sid/backends/bename/tls-configs/cfg", r.RequestURL())
+}
+
+func TestCreateLoadBalancerBackendTLSConfigRequest(t *testing.T) {
+	expected := `
+	{
+		"name": "example-tls-config",
+		"certificate_bundle_uuid": "0aded5c1-c7a3-498a-b9c8-a871611c47a3"
+	}
+	`
+	r := CreateLoadBalancerBackendTLSConfigRequest{
+		ServiceUUID: "sid",
+		BackendName: "bename",
+		Config: LoadBalancerBackendTLSConfig{
+			Name:                  "example-tls-config",
+			CertificateBundleUUID: "0aded5c1-c7a3-498a-b9c8-a871611c47a3",
+		},
+	}
+	actual, err := json.Marshal(&r)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expected, string(actual))
+	assert.Equal(t, "/load-balancer/sid/backends/bename/tls-configs", r.RequestURL())
+}
+
+func TestModifyLoadBalancerBackendTLSConfigRequest(t *testing.T) {
+	expected := `
+	{
+		"name": "example-tls-config",
+		"certificate_bundle_uuid": "0aded5c1-c7a3-498a-b9c8-a871611c47a3"
+	}
+	`
+	r := ModifyLoadBalancerBackendTLSConfigRequest{
+		ServiceUUID: "sid",
+		BackendName: "bename",
+		Name:        "cfg",
+		Config: LoadBalancerBackendTLSConfig{
+			Name:                  "example-tls-config",
+			CertificateBundleUUID: "0aded5c1-c7a3-498a-b9c8-a871611c47a3",
+		},
+	}
+	actual, err := json.Marshal(&r)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expected, string(actual))
+	assert.Equal(t, "/load-balancer/sid/backends/bename/tls-configs/cfg", r.RequestURL())
+}
+
+func TestDeleteLoadBalancerBackendTLSConfigRequest(t *testing.T) {
+	r := GetLoadBalancerBackendTLSConfigRequest{
+		ServiceUUID: "sid",
+		BackendName: "bename",
+		Name:        "cfg",
+	}
+	assert.Equal(t, "/load-balancer/sid/backends/bename/tls-configs/cfg", r.RequestURL())
 }
 
 func TestCreateLoadBalancerManualCertificateBundleRequest(t *testing.T) {
