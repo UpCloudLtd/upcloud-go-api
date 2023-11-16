@@ -10,9 +10,6 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 - Managed Load Balancer: `TLSEnabled`,  `TLSUseSystemCA`, `TLSVerify` & `HTTP2Enabled` fields to `LoadBalancerBackendProperties`
 - Managed Load Balancer: `HTTP2Enabled` field to `LoadBalancerFrontendProperties`
 
-### Changed
--  **Breaking**, Managed Load Balancer: `InboundProxyProtocol` field to a boolean pointer in `LoadBalancerFrontendProperties`
-
 ## [6.9.0]
 ### Added
 - kubernetes: add `Version` field to `request.CreateKubernetesClusterRequest` and `upcloud.KubernetesCluster`

@@ -302,7 +302,8 @@ func TestLoadBalancerFrontend(t *testing.T) {
 			"port": 443,
 			"default_backend": "example-backend",
 			"properties": {
-				"timeout_client": 10
+				"timeout_client": 10,
+				"inbound_proxy_protocol": false
 			},
 			"created_at": "2021-12-07T13:58:30.817272Z",
 			"updated_at": "2022-02-11T17:33:08.490581Z"
@@ -349,7 +350,8 @@ func TestLoadBalancerFrontendProperties(t *testing.T) {
 		},
 		`
 		{
-			"timeout_client": 10
+			"timeout_client": 10,
+			"inbound_proxy_protocol": false
 		}
 		`,
 	)
@@ -357,7 +359,7 @@ func TestLoadBalancerFrontendProperties(t *testing.T) {
 		&LoadBalancerFrontendProperties{},
 		&LoadBalancerFrontendProperties{
 			TimeoutClient:        10,
-			InboundProxyProtocol: BoolPtr(true),
+			InboundProxyProtocol: true,
 		},
 		`
 		{
@@ -370,7 +372,7 @@ func TestLoadBalancerFrontendProperties(t *testing.T) {
 		&LoadBalancerFrontendProperties{},
 		&LoadBalancerFrontendProperties{
 			TimeoutClient:        10,
-			InboundProxyProtocol: BoolPtr(false),
+			InboundProxyProtocol: false,
 		},
 		`
 		{
@@ -383,7 +385,7 @@ func TestLoadBalancerFrontendProperties(t *testing.T) {
 		&LoadBalancerFrontendProperties{},
 		&LoadBalancerFrontendProperties{
 			TimeoutClient:        10,
-			InboundProxyProtocol: BoolPtr(false),
+			InboundProxyProtocol: false,
 			HTTP2Enabled:         BoolPtr(false),
 		},
 		`
@@ -398,7 +400,7 @@ func TestLoadBalancerFrontendProperties(t *testing.T) {
 		&LoadBalancerFrontendProperties{},
 		&LoadBalancerFrontendProperties{
 			TimeoutClient:        10,
-			InboundProxyProtocol: BoolPtr(false),
+			InboundProxyProtocol: false,
 			HTTP2Enabled:         BoolPtr(true),
 		},
 		`

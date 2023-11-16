@@ -614,7 +614,7 @@ func TestLoadBalancerFrontend(t *testing.T) {
 				TLSConfigs:     []request.LoadBalancerFrontendTLSConfig{},
 				Properties: &upcloud.LoadBalancerFrontendProperties{
 					TimeoutClient:        10,
-					InboundProxyProtocol: upcloud.BoolPtr(true),
+					InboundProxyProtocol: true,
 					HTTP2Enabled:         upcloud.BoolPtr(false),
 				},
 			},
@@ -622,7 +622,7 @@ func TestLoadBalancerFrontend(t *testing.T) {
 		require.NoError(t, err)
 		assert.Equal(t, "fe-1", fe.Name)
 		assert.Equal(t, 10, fe.Properties.TimeoutClient)
-		assert.Equal(t, upcloud.BoolPtr(true), fe.Properties.InboundProxyProtocol)
+		assert.Equal(t, true, fe.Properties.InboundProxyProtocol)
 		assert.Equal(t, upcloud.BoolPtr(false), fe.Properties.HTTP2Enabled)
 		t.Logf("Created frontend %s for load balancer %s", fe.Name, lb.Name)
 		fe, err = svc.ModifyLoadBalancerFrontend(ctx, &request.ModifyLoadBalancerFrontendRequest{
@@ -639,7 +639,7 @@ func TestLoadBalancerFrontend(t *testing.T) {
 		})
 		require.NoError(t, err)
 		assert.Equal(t, 10, fe.Properties.TimeoutClient)
-		assert.Equal(t, upcloud.BoolPtr(true), fe.Properties.InboundProxyProtocol)
+		assert.Equal(t, true, fe.Properties.InboundProxyProtocol)
 		assert.Equal(t, upcloud.BoolPtr(false), fe.Properties.HTTP2Enabled)
 		t.Logf("Modified frontend %s", fe.Name)
 		fe, err = svc.GetLoadBalancerFrontend(ctx, &request.GetLoadBalancerFrontendRequest{
@@ -652,7 +652,7 @@ func TestLoadBalancerFrontend(t *testing.T) {
 		assert.Equal(t, 80, fe.Port)
 		assert.Equal(t, be.Name, fe.DefaultBackend)
 		assert.Equal(t, 10, fe.Properties.TimeoutClient)
-		assert.Equal(t, upcloud.BoolPtr(true), fe.Properties.InboundProxyProtocol)
+		assert.Equal(t, true, fe.Properties.InboundProxyProtocol)
 		assert.Equal(t, upcloud.BoolPtr(false), fe.Properties.HTTP2Enabled)
 
 		fes, err := svc.GetLoadBalancerFrontends(ctx, &request.GetLoadBalancerFrontendsRequest{ServiceUUID: lb.UUID})
@@ -956,14 +956,14 @@ func TestLoadBalancerCerticateBundlesAndFrontendTLSConfigs(t *testing.T) {
 				Mode: upcloud.LoadBalancerModeTCP,
 				Port: 80,
 				Properties: &upcloud.LoadBalancerFrontendProperties{
-					InboundProxyProtocol: upcloud.BoolPtr(true),
+					InboundProxyProtocol: true,
 					HTTP2Enabled:         upcloud.BoolPtr(true),
 				},
 			},
 		})
 		assert.NoError(t, err)
 		t.Logf("Modified Frontend %s", fe.Name)
-		assert.Equal(t, upcloud.BoolPtr(true), fe.Properties.InboundProxyProtocol)
+		assert.Equal(t, true, fe.Properties.InboundProxyProtocol)
 		assert.Equal(t, upcloud.BoolPtr(true), fe.Properties.HTTP2Enabled)
 		assert.Len(t, fe.TLSConfigs, 1)
 
@@ -1000,14 +1000,14 @@ func TestLoadBalancerCerticateBundlesAndFrontendTLSConfigs(t *testing.T) {
 				Mode: upcloud.LoadBalancerModeTCP,
 				Port: 80,
 				Properties: &upcloud.LoadBalancerFrontendProperties{
-					InboundProxyProtocol: upcloud.BoolPtr(true),
+					InboundProxyProtocol: true,
 					HTTP2Enabled:         upcloud.BoolPtr(false),
 				},
 			},
 		})
 		assert.NoError(t, err)
 		t.Logf("Modified Frontend %s", fe.Name)
-		assert.Equal(t, upcloud.BoolPtr(true), fe.Properties.InboundProxyProtocol)
+		assert.Equal(t, true, fe.Properties.InboundProxyProtocol)
 		assert.Equal(t, upcloud.BoolPtr(false), fe.Properties.HTTP2Enabled)
 		assert.Len(t, fe.TLSConfigs, 1)
 
