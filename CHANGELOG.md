@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [6.10.0]
+
 ### Added
 - Managed Load Balancer: `TLSConfigs` field to `LoadBalancerBackend` to control backend TLS configurations
 - Managed Load Balancer: `TLSEnabled`,  `TLSUseSystemCA`, `TLSVerify` & `HTTP2Enabled` fields to `LoadBalancerBackendProperties`
@@ -375,7 +377,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.9.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.10.0...HEAD
+[6.10.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.9.0...v6.10.0
 [6.9.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.8.3...v6.9.0
 [6.8.3]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.8.2...v6.8.3
 [6.8.2]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.8.1...v6.8.2
