@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- Managed Database sub-properties support. E.g., PostgreSQL property `timescaledb` is of type `object` and has `max_background_workers` sub-property.
+
 ## [6.10.0]
 
 ### Added

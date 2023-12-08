@@ -817,17 +817,20 @@ func (s *ManagedDatabaseServicePlanZones) UnmarshalJSON(b []byte) error {
 
 // ManagedDatabaseServiceProperty contains help for database property usage and validation
 type ManagedDatabaseServiceProperty struct {
-	CreateOnly  bool        `json:"createOnly,omitempty"`
-	Default     interface{} `json:"default,omitempty"`
-	Example     interface{} `json:"example,omitempty"`
-	MaxLength   int         `json:"maxLength,omitempty"`
-	MinLength   int         `json:"minLength,omitempty"`
-	Pattern     string      `json:"pattern,omitempty"`
-	Type        interface{} `json:"type"`
-	Title       string      `json:"title"`
-	Description string      `json:"description,omitempty"`
-	Enum        interface{} `json:"enum,omitempty"`
-	UserError   string      `json:"user_error,omitempty"`
+	CreateOnly  bool                                      `json:"createOnly,omitempty"`
+	Default     interface{}                               `json:"default,omitempty"`
+	Example     interface{}                               `json:"example,omitempty"`
+	MaxLength   int                                       `json:"maxLength,omitempty"`
+	Maximum     *float64                                  `json:"maximum,omitempty"`
+	MinLength   int                                       `json:"minLength,omitempty"`
+	Minimum     *float64                                  `json:"minimum,omitempty"`
+	Pattern     string                                    `json:"pattern,omitempty"`
+	Type        interface{}                               `json:"type"`
+	Title       string                                    `json:"title"`
+	Description string                                    `json:"description,omitempty"`
+	Enum        interface{}                               `json:"enum,omitempty"`
+	UserError   string                                    `json:"user_error,omitempty"`
+	Properties  map[string]ManagedDatabaseServiceProperty `json:"properties,omitempty"`
 }
 
 // ManagedDatabaseMetadata contains additional read-only informational data about the managed database
