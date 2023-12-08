@@ -37,7 +37,7 @@ func (r *GetManagedObjectStorageRegionRequest) RequestURL() string {
 // CreateManagedObjectStorageRequest represents a request for creating a new Managed Object Storage service
 type CreateManagedObjectStorageRequest struct {
 	ConfiguredStatus upcloud.ManagedObjectStorageConfiguredStatus `json:"configured_status"`
-	Labels           []upcloud.Label                              `json:"labels"`
+	Labels           []upcloud.Label                              `json:"labels,omitempty"`
 	Networks         []upcloud.ManagedObjectStorageNetwork        `json:"networks"`
 	Region           string                                       `json:"region"`
 	Users            []ManagedObjectStorageUser                   `json:"users"`
