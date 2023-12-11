@@ -349,6 +349,22 @@ func TestManagedDatabaseType_UnmarshalJSON(t *testing.T) {
 			"title": "Public Access",
 			"type": "boolean",
 			"description": "Allow access to the service from the public Internet"
+		},
+		"timescaledb": {
+			"title": "TimescaleDB extension configuration values",
+			"type": "object",
+			"properties": {
+				"max_background_workers": {
+					"default": 16,
+					"example": 8,
+					"title": "timescaledb.max_background_workers",
+					"type": "integer",
+					"description": "The number of background workers for timescaledb operations. You should configure this setting to the sum of your number of databases and the total number of concurrent background workers you want running at any given point in time.",
+					"minimum": 1,
+					"maximum": 4096
+				}
+			},
+			"description": "System-wide settings for the timescaledb extension"
 		}
 	}
 }`
@@ -375,6 +391,23 @@ func TestManagedDatabaseType_UnmarshalJSON(t *testing.T) {
 				Title:       "Public Access",
 				Type:        "boolean",
 				Description: "Allow access to the service from the public Internet",
+			},
+			// `timescaledb` is a PostgreSQL property (not MySQL), but that shouldn't make difference from marshaling point-of-view.
+			"timescaledb": {
+				Title:       "TimescaleDB extension configuration values",
+				Description: "System-wide settings for the timescaledb extension",
+				Type:        "object",
+				Properties: map[string]ManagedDatabaseServiceProperty{
+					"max_background_workers": {
+						Default:     16.0,
+						Example:     8.0,
+						Title:       "timescaledb.max_background_workers",
+						Type:        "integer",
+						Description: "The number of background workers for timescaledb operations. You should configure this setting to the sum of your number of databases and the total number of concurrent background workers you want running at any given point in time.",
+						Minimum:     Float64Ptr(1),
+						Maximum:     Float64Ptr(4096),
+					},
+				},
 			},
 		},
 	}
