@@ -38,6 +38,7 @@ func (r *GetManagedObjectStorageRegionRequest) RequestURL() string {
 type CreateManagedObjectStorageRequest struct {
 	ConfiguredStatus upcloud.ManagedObjectStorageConfiguredStatus `json:"configured_status"`
 	Labels           []upcloud.Label                              `json:"labels,omitempty"`
+	Name             string                                       `json:"name,omitempty"`
 	Networks         []upcloud.ManagedObjectStorageNetwork        `json:"networks"`
 	Region           string                                       `json:"region"`
 	Users            []ManagedObjectStorageUser                   `json:"users"`
@@ -75,6 +76,7 @@ func (r *GetManagedObjectStorageRequest) RequestURL() string {
 type ReplaceManagedObjectStorageRequest struct {
 	ConfiguredStatus upcloud.ManagedObjectStorageConfiguredStatus `json:"configured_status"`
 	Labels           []upcloud.Label                              `json:"labels,omitempty"`
+	Name             string                                       `json:"name,omitempty"`
 	Networks         []upcloud.ManagedObjectStorageNetwork        `json:"networks"`
 	Users            []ManagedObjectStorageUser                   `json:"users"`
 	UUID             string                                       `json:"-"`
@@ -88,6 +90,7 @@ func (r *ReplaceManagedObjectStorageRequest) RequestURL() string {
 type ModifyManagedObjectStorageRequest struct {
 	ConfiguredStatus *upcloud.ManagedObjectStorageConfiguredStatus `json:"configured_status,omitempty"`
 	Labels           *[]upcloud.Label                              `json:"labels,omitempty"`
+	Name             *string                                       `json:"name,omitempty"`
 	Networks         *[]upcloud.ManagedObjectStorageNetwork        `json:"networks,omitempty"`
 	Users            *[]ManagedObjectStorageUser                   `json:"users,omitempty"`
 	UUID             string                                        `json:"-"`
