@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [6.11.0]
+
 ### Added
 - Managed Database sub-properties support. E.g., PostgreSQL property `timescaledb` is of type `object` and has `max_background_workers` sub-property.
 - Managed Object Storage: add `name` property
@@ -385,7 +387,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.10.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.11.0...HEAD
+[6.11.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.10.0...v6.11.0
 [6.10.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.9.0...v6.10.0
 [6.9.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.8.3...v6.9.0
 [6.8.3]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.8.2...v6.8.3
