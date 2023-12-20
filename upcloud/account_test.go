@@ -17,6 +17,7 @@ func TestUnmarshalAccount(t *testing.T) {
 		  "resource_limits": {
 			"cores": 200,
 			"detached_floating_ips": 10,
+			"managed_object_storages": 7,
 			"memory": 1048576,
 			"network_peerings": 100,
 			"networks": 100,
@@ -39,6 +40,7 @@ func TestUnmarshalAccount(t *testing.T) {
 	assert.Equal(t, "username", account.UserName)
 	assert.Equal(t, 200, account.ResourceLimits.Cores)
 	assert.Equal(t, 10, account.ResourceLimits.DetachedFloatingIps)
+	assert.Equal(t, 7, account.ResourceLimits.ManagedObjectStorages)
 	assert.Equal(t, 1048576, account.ResourceLimits.Memory)
 	assert.Equal(t, 100, account.ResourceLimits.NetworkPeerings)
 	assert.Equal(t, 100, account.ResourceLimits.Networks)
