@@ -60,6 +60,7 @@ type ManagedObjectStorage struct {
 	CreatedAt        time.Time                            `json:"created_at"`
 	Endpoints        []ManagedObjectStorageEndpoint       `json:"endpoints"`
 	Labels           []Label                              `json:"labels"`
+	Name             string                               `json:"name,omitempty"`
 	Networks         []ManagedObjectStorageNetwork        `json:"networks"`
 	OperationalState ManagedObjectStorageOperationalState `json:"operational_state"`
 	Region           string                               `json:"region"`

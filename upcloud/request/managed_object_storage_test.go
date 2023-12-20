@@ -40,6 +40,24 @@ func TestCreateManagedObjectStorageRequest_MarshalJSON(t *testing.T) {
 		}`
 		assert.JSONEq(t, expected, string(d))
 	})
+
+	t.Run("TestWithName", func(t *testing.T) {
+		req := CreateManagedObjectStorageRequest{
+			Name:   "test-objsto-name",
+			Region: "europe-1",
+		}
+		d, err := json.Marshal(&req)
+		assert.NoError(t, err)
+
+		const expected = `{
+			"configured_status":"",
+			"name":"test-objsto-name",
+			"networks":null,
+			"region":"europe-1",
+			"users":null
+		}`
+		assert.JSONEq(t, expected, string(d))
+	})
 }
 
 func TestGetManagedObjectStoragesRequest_RequestURL(t *testing.T) {

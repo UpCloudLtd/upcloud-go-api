@@ -25,6 +25,7 @@ func TestManagedObjectStorage(t *testing.T) {
 				Key:   "managedBy",
 				Value: "upcloud-go-sdk-unit-test",
 			}},
+			Name: "go-sdk-test-objsto",
 			Networks: []ManagedObjectStorageNetwork{
 				{
 					Family: "IPv4",
@@ -82,6 +83,7 @@ func TestManagedObjectStorage(t *testing.T) {
 					"value": "upcloud-go-sdk-unit-test"
 				}
 			],
+			"name": "go-sdk-test-objsto",
 			"networks": [
 				{
 					"family": "IPv4",
