@@ -1,6 +1,7 @@
 package request
 
 import (
+	"encoding/json"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -21,6 +22,24 @@ func TestGetManagedObjectStorageRegionRequest_RequestURL(t *testing.T) {
 func TestCreateManagedObjectStorageRequest_RequestURL(t *testing.T) {
 	req := &CreateManagedObjectStorageRequest{}
 	assert.Equal(t, "/object-storage-2", req.RequestURL())
+}
+
+func TestCreateManagedObjectStorageRequest_MarshalJSON(t *testing.T) {
+	t.Run("TestMinimal", func(t *testing.T) {
+		req := CreateManagedObjectStorageRequest{
+			Region: "europe-1",
+		}
+		d, err := json.Marshal(&req)
+		assert.NoError(t, err)
+
+		const expected = `{
+			"configured_status":"",
+			"networks":null,
+			"region":"europe-1",
+			"users":null
+		}`
+		assert.JSONEq(t, expected, string(d))
+	})
 }
 
 func TestGetManagedObjectStoragesRequest_RequestURL(t *testing.T) {
