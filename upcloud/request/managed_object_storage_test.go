@@ -105,7 +105,7 @@ func TestGetManagedObjectStorageBucketMetricsRequest_RequestURL(t *testing.T) {
 		ServiceUUID: "service",
 		Page:        DefaultPage,
 	}
-	assert.Equal(t, "/object-storage-2/service/metrics/buckets?limit=100&offset=0", req.RequestURL())
+	assert.Equal(t, "/object-storage-2/service/buckets?limit=100&offset=0", req.RequestURL())
 }
 
 func TestCreateManagedObjectStorageNetworkRequest_RequestURL(t *testing.T) {

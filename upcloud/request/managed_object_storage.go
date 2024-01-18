@@ -129,7 +129,7 @@ type GetManagedObjectStorageBucketMetricsRequest struct {
 
 // RequestURL implements the Request interface
 func (r *GetManagedObjectStorageBucketMetricsRequest) RequestURL() string {
-	path := fmt.Sprintf("%s/%s/metrics/buckets", managedObjectStorageBasePath, r.ServiceUUID)
+	path := fmt.Sprintf("%s/%s/buckets", managedObjectStorageBasePath, r.ServiceUUID)
 	if r.Page != nil {
 		return fmt.Sprintf("%s?%s", path, r.Page.String())
 	}

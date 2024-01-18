@@ -8,6 +8,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 ### Added
 - Server groups: Add `AddServerToServerGroup` and `RemoveServerFromServerGroup` methods.
 
+### Fixed
+- Managed Object Storage: use correct path for `GetManagedObjectStorageBucketMetricsRequest` 
+
 ## [6.11.0]
 
 ### Added
