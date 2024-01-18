@@ -366,7 +366,7 @@ func TestGetManagedObjectStorageUser(t *testing.T) {
 		require.NoError(t, err)
 		require.Equal(t, user.Username, "test2")
 
-		user, err = svc.GetManagedObjectStorageUser(ctx, &request.GetManagedObjectStorageUserRequest{ServiceUUID: storage.UUID, Username: user.Username})
+		_, err = svc.GetManagedObjectStorageUser(ctx, &request.GetManagedObjectStorageUserRequest{ServiceUUID: storage.UUID, Username: user.Username})
 		require.NoError(t, err)
 	})
 }
