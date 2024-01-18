@@ -10,7 +10,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/6.6.0
+      - upcloud-go-api/6.11.0
     url: https://api.upcloud.com/1.3/object-storage-2/regions
     method: GET
   response:
@@ -21,14 +21,14 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 10 Oct 2023 01:11:17 GMT
+      - Thu, 18 Jan 2024 15:59:11 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"sub_account":{"username":"managedobjectstorage","password":"","first_name":"","last_name":"","company":"","address":"","postal_code":"","city":"","email":"managedobjectstorage@example.com","phone":"+358.123456789","state":"","country":"","currency":"EUR","language":"en","vat_number":"","timezone":"Europe/Helsinki","allow_api":"no","allow_gui":"no","tag_access":{"tag":null},"roles":{"role":null},"server_access":{"server":null},"storage_access":{"storage":null},"network_access":{"network":null},"ip_filters":{"ip_filter":null}}}'
+    body: '{"configured_status":"started","labels":[{"key":"example-key","value":"example-value"}],"name":"go-sdk-integration-test","networks":[{"family":"IPv4","name":"example-public-network","type":"public"}],"region":"europe-1","users":[{"username":"test"}]}'
     form: {}
     headers:
       Accept:
@@ -36,116 +36,18 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/6.6.0
-    url: https://api.upcloud.com/1.3/account/sub
-    method: POST
-  response:
-    body: ""
-    headers:
-      Date:
-      - Tue, 10 Oct 2023 01:11:17 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 204 No Content
-    code: 204
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/6.6.0
-    url: https://api.upcloud.com/1.3/account/details/managedobjectstorage
-    method: GET
-  response:
-    body: |
-      {
-         "account" : {
-            "address" : "",
-            "allow_api" : "no",
-            "allow_gui" : "no",
-            "campaigns" : {
-               "campaign" : []
-            },
-            "city" : "",
-            "company" : "",
-            "country" : "",
-            "currency" : "EUR",
-            "email" : "managedobjectstorage@example.com",
-            "enable_3rd_party_services" : "yes",
-            "first_name" : "",
-            "ip_filters" : {
-               "ip_filter" : []
-            },
-            "labels" : [],
-            "language" : "en",
-            "last_name" : "",
-            "main_account" : "example",
-            "network_access" : {
-               "network" : []
-            },
-            "phone" : "+358.123456789",
-            "postal_code" : "",
-            "roles" : {
-               "role" : []
-            },
-            "server_access" : {
-               "server" : []
-            },
-            "state" : "",
-            "storage_access" : {
-               "storage" : []
-            },
-            "tag_access" : {
-               "tag" : []
-            },
-            "timezone" : "Europe/Helsinki",
-            "type" : "sub",
-            "username" : "managedobjectstorage",
-            "vat_number" : ""
-         }
-      }
-    headers:
-      Content-Length:
-      - "1013"
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Tue, 10 Oct 2023 01:11:18 GMT
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: '{"configured_status":"started","labels":[{"key":"example-key","value":"example-value"}],"networks":[{"family":"IPv4","name":"example-public-network","type":"public"}],"region":"europe-1","users":[{"username":"managedobjectstorage"}]}'
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/6.6.0
+      - upcloud-go-api/6.11.0
     url: https://api.upcloud.com/1.3/object-storage-2
     method: POST
   response:
-    body: '{"configured_status":"started","created_at":"2023-10-10T01:11:18.284473Z","endpoints":[{"domain_name":"jrqvq.upcloudobjects.com","type":"public"}],"labels":[{"key":"example-key","value":"example-value"}],"networks":[{"family":"IPv4","name":"example-public-network","type":"public"}],"operational_state":"pending","region":"europe-1","updated_at":"2023-10-10T01:11:18.284473Z","users":[{"access_keys":[],"created_at":"2023-10-10T01:11:18.284473Z","operational_state":"pending","updated_at":"2023-10-10T01:11:18.284473Z","username":"managedobjectstorage"}],"uuid":"129ef5fd-6a55-4025-9653-0d741f153d69"}'
+    body: '{"configured_status":"started","created_at":"2024-01-18T15:59:11.619476Z","endpoints":[{"domain_name":"qemnk.upcloudobjects.com","type":"public"}],"labels":[{"key":"example-key","value":"example-value"}],"name":"go-sdk-integration-test","networks":[{"family":"IPv4","name":"example-public-network","type":"public"}],"operational_state":"pending","region":"europe-1","updated_at":"2024-01-18T15:59:11.619476Z","usage":{"total_objects":0,"total_size_bytes":0},"users":[{"access_keys":[],"created_at":"2024-01-18T15:59:11.619476Z","operational_state":"pending","updated_at":"2024-01-18T15:59:11.619476Z","username":"test"}],"uuid":"12d3ad7a-698c-486d-bee5-11a028f3caa8"}'
     headers:
       Content-Length:
-      - "601"
+      - "667"
       Content-Type:
       - application/json
       Date:
-      - Tue, 10 Oct 2023 01:11:18 GMT
+      - Thu, 18 Jan 2024 15:59:11 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 201 Created
@@ -160,18 +62,18 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/6.6.0
-    url: https://api.upcloud.com/1.3/object-storage-2/129ef5fd-6a55-4025-9653-0d741f153d69/users/managedobjectstorage
+      - upcloud-go-api/6.11.0
+    url: https://api.upcloud.com/1.3/object-storage-2/12d3ad7a-698c-486d-bee5-11a028f3caa8/users/test
     method: GET
   response:
-    body: '{"access_keys":[],"created_at":"2023-10-10T01:11:18.284473Z","operational_state":"pending","updated_at":"2023-10-10T01:11:18.284473Z","username":"managedobjectstorage"}'
+    body: '{"access_keys":[],"created_at":"2024-01-18T15:59:11.619476Z","operational_state":"pending","updated_at":"2024-01-18T15:59:11.619476Z","username":"test"}'
     headers:
       Content-Length:
-      - "168"
+      - "152"
       Content-Type:
       - application/json
       Date:
-      - Tue, 10 Oct 2023 01:11:18 GMT
+      - Thu, 18 Jan 2024 15:59:11 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 200 OK
@@ -186,18 +88,18 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/6.6.0
-    url: https://api.upcloud.com/1.3/object-storage-2/129ef5fd-6a55-4025-9653-0d741f153d69/users/managedobjectstorage
+      - upcloud-go-api/6.11.0
+    url: https://api.upcloud.com/1.3/object-storage-2/12d3ad7a-698c-486d-bee5-11a028f3caa8/users/test
     method: GET
   response:
-    body: '{"access_keys":[],"created_at":"2023-10-10T01:11:18.284473Z","operational_state":"ready","updated_at":"2023-10-10T01:11:18.563468Z","username":"managedobjectstorage"}'
+    body: '{"access_keys":[],"created_at":"2024-01-18T15:59:11.619476Z","operational_state":"ready","updated_at":"2024-01-18T15:59:12.045383Z","username":"test"}'
     headers:
       Content-Length:
-      - "166"
+      - "150"
       Content-Type:
       - application/json
       Date:
-      - Tue, 10 Oct 2023 01:11:23 GMT
+      - Thu, 18 Jan 2024 15:59:17 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 200 OK
@@ -212,18 +114,18 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/6.6.0
-    url: https://api.upcloud.com/1.3/object-storage-2/129ef5fd-6a55-4025-9653-0d741f153d69/users/managedobjectstorage/access-keys
+      - upcloud-go-api/6.11.0
+    url: https://api.upcloud.com/1.3/object-storage-2/12d3ad7a-698c-486d-bee5-11a028f3caa8/users/test/access-keys
     method: POST
   response:
-    body: '{"access_key_id":"AKIAF08D38C17C555881","created_at":"2023-10-10T01:11:23.836205Z","enabled":true,"last_used_at":"2023-10-10T01:11:23.836205Z","name":"example-access-key","secret_access_key":"z8XXQuBATRPI1er6DfGGiQOPIsxLG6GoER3ZyK2H","updated_at":"2023-10-10T01:11:23.836205Z"}'
+    body: '{"access_key_id":"AKIA499B64707ECDD0EF","created_at":"2024-01-18T15:59:17.567804Z","enabled":true,"last_used_at":"2024-01-18T15:59:17.567804Z","name":"example-access-key","secret_access_key":"2hP/uqVzO71qo0t1iTgL8S6/k/w3POxhJkF/0fcD","updated_at":"2024-01-18T15:59:17.567804Z"}'
     headers:
       Content-Length:
       - "277"
       Content-Type:
       - application/json
       Date:
-      - Tue, 10 Oct 2023 01:11:23 GMT
+      - Thu, 18 Jan 2024 15:59:17 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 201 Created
@@ -238,18 +140,18 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/6.6.0
-    url: https://api.upcloud.com/1.3/object-storage-2/129ef5fd-6a55-4025-9653-0d741f153d69/users/managedobjectstorage/access-keys/example-access-key
+      - upcloud-go-api/6.11.0
+    url: https://api.upcloud.com/1.3/object-storage-2/12d3ad7a-698c-486d-bee5-11a028f3caa8/users/test/access-keys/example-access-key
     method: PATCH
   response:
-    body: '{"id":24,"name":"example-access-key","user_id":138,"access_key_id":"AKIAF08D38C17C555881","enabled":true,"username":"managedobjectstorage","last_used_at":"2023-10-10T01:11:23.836205Z","created_at":"2023-10-10T01:11:23.836205Z","updated_at":"2023-10-10T01:11:23.992422Z"}'
+    body: '{"id":536,"name":"example-access-key","user_id":1208,"access_key_id":"AKIA499B64707ECDD0EF","enabled":true,"username":"test","last_used_at":"2024-01-18T15:59:17.567804Z","created_at":"2024-01-18T15:59:17.567804Z","updated_at":"2024-01-18T15:59:17.757585Z"}'
     headers:
       Content-Length:
-      - "270"
+      - "256"
       Content-Type:
       - application/json
       Date:
-      - Tue, 10 Oct 2023 01:11:23 GMT
+      - Thu, 18 Jan 2024 15:59:17 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 200 OK
@@ -264,93 +166,14 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/6.6.0
-    url: https://api.upcloud.com/1.3/object-storage-2/129ef5fd-6a55-4025-9653-0d741f153d69/users
-    method: GET
-  response:
-    body: '[{"access_keys":[{"access_key_id":"AKIAF08D38C17C555881","created_at":"2023-10-10T01:11:23.836205Z","enabled":true,"last_used_at":"2023-10-10T01:11:23.836205Z","name":"example-access-key","updated_at":"2023-10-10T01:11:23.992422Z"}],"created_at":"2023-10-10T01:11:18.284473Z","operational_state":"ready","updated_at":"2023-10-10T01:11:18.563468Z","username":"managedobjectstorage"}]'
-    headers:
-      Content-Length:
-      - "382"
-      Content-Type:
-      - application/json
-      Date:
-      - Tue, 10 Oct 2023 01:11:24 GMT
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/6.6.0
-    url: https://api.upcloud.com/1.3/object-storage-2/129ef5fd-6a55-4025-9653-0d741f153d69
+      - upcloud-go-api/6.11.0
+    url: https://api.upcloud.com/1.3/object-storage-2/12d3ad7a-698c-486d-bee5-11a028f3caa8
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Tue, 10 Oct 2023 01:11:24 GMT
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 204 No Content
-    code: 204
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/6.6.0
-    url: https://api.upcloud.com/1.3/object-storage-2/129ef5fd-6a55-4025-9653-0d741f153d69
-    method: GET
-  response:
-    body: |
-      {"type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND","title":"The resource you requested does not exist.","correlation_id":"01HCBJ7M9S7EBGH62TE5CJ9RQH","status":404}
-    headers:
-      Content-Language:
-      - en
-      Content-Length:
-      - "190"
-      Content-Type:
-      - application/problem+json
-      Date:
-      - Tue, 10 Oct 2023 01:11:45 GMT
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 404 Not Found
-    code: 404
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/6.6.0
-    url: https://api.upcloud.com/1.3/account/sub/managedobjectstorage
-    method: DELETE
-  response:
-    body: ""
-    headers:
-      Date:
-      - Tue, 10 Oct 2023 01:11:55 GMT
-      Server:
-      - Apache
+      - Thu, 18 Jan 2024 15:59:18 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 204 No Content
