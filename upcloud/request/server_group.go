@@ -105,3 +105,35 @@ type DeleteServerGroupRequest struct {
 func (s DeleteServerGroupRequest) RequestURL() string {
 	return fmt.Sprintf("%s/%s", serverGroupBasePath, s.UUID)
 }
+
+// AddServerToServerGroupRequest represents a request to add server to a server group
+type AddServerToServerGroupRequest struct {
+	ServerUUID string `json:"uuid,omitempty"`
+	UUID       string `json:"-"`
+}
+
+func (s AddServerToServerGroupRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/servers", serverGroupBasePath, s.UUID)
+}
+
+// MarshalJSON is a custom marshaller that deals with deeply embedded values.
+func (r AddServerToServerGroupRequest) MarshalJSON() ([]byte, error) {
+	type c AddServerToServerGroupRequest
+	v := struct {
+		Server c `json:"server"`
+	}{}
+
+	v.Server = c(r)
+
+	return json.Marshal(&v)
+}
+
+// RemoveServerFromServerGroupRequest represents a request to remove server from a server group
+type RemoveServerFromServerGroupRequest struct {
+	ServerUUID string `json:"-"`
+	UUID       string `json:"-"`
+}
+
+func (s RemoveServerFromServerGroupRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/servers/%s", serverGroupBasePath, s.UUID, s.ServerUUID)
+}

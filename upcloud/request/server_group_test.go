@@ -211,3 +211,22 @@ func TestModifyServerGroupRequest(t *testing.T) {
 
 	assert.Equal(t, "/server-group/id", r.RequestURL())
 }
+
+func TestAddServerToServerGroupRequest(t *testing.T) {
+	expected := `
+	{
+		"server": {
+			"uuid": "test"
+		}
+	}
+	`
+
+	r := AddServerToServerGroupRequest{
+		UUID:       "id",
+		ServerUUID: "test",
+	}
+
+	actual, err := json.Marshal(&r)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expected, string(actual))
+}
