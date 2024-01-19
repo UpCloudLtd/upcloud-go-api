@@ -74,8 +74,9 @@ func (s *Storages) UnmarshalJSON(b []byte) error {
 
 // Storage represents a storage device
 type Storage struct {
-	Access  string  `json:"access"`
-	License float64 `json:"license"`
+	Access    string  `json:"access"`
+	Encrypted Boolean `json:"encrypted"`
+	License   float64 `json:"license"`
 	// TODO: Convert to boolean
 	PartOfPlan string `json:"part_of_plan"`
 	Size       int    `json:"size"`
@@ -148,7 +149,8 @@ type BackupRule struct {
 
 // ServerStorageDevice represents a storage device in the context of server requests or server details
 type ServerStorageDevice struct {
-	Address string `json:"address"`
+	Address   string  `json:"address"`
+	Encrypted Boolean `json:"storage_encrypted"`
 	// TODO: Convert to boolean
 	PartOfPlan string `json:"part_of_plan"`
 	UUID       string `json:"storage"`
@@ -159,7 +161,7 @@ type ServerStorageDevice struct {
 	BootDisk   int    `json:"boot_disk,string"`
 }
 
-// StorageImportDetails represents the details of an ongoing or completed storge import operation.
+// StorageImportDetails represents the details of an ongoing or completed storage import operation.
 type StorageImportDetails struct {
 	ClientContentLength int       `json:"client_content_length"`
 	ClientContentType   string    `json:"client_content_type"`

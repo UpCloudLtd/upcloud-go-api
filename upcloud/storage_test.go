@@ -16,6 +16,7 @@ func TestUnmarshalStorage(t *testing.T) {
     "storage": [
       {
         "access": "private",
+        "encrypted": "yes",
         "license": 0,
         "size": 10,
         "state": "online",
@@ -27,6 +28,7 @@ func TestUnmarshalStorage(t *testing.T) {
       },
       {
         "access" : "private",
+        "encrypted": "no",
         "created" : "2019-09-17T14:34:43Z",
         "license" : 0,
         "origin" : "01eff7ad-168e-413e-83b0-054f6a28fa23",
@@ -66,15 +68,16 @@ func TestUnmarshalStorage(t *testing.T) {
 
 	testData := []Storage{
 		{
-			Access:  StorageAccessPrivate,
-			License: 0.0,
-			Size:    10,
-			State:   StorageStateOnline,
-			Tier:    StorageTierHDD,
-			Title:   "Operating system disk",
-			Type:    StorageTypeNormal,
-			UUID:    "01eff7ad-168e-413e-83b0-054f6a28fa23",
-			Zone:    "uk-lon1",
+			Access:    StorageAccessPrivate,
+			Encrypted: FromBool(true),
+			License:   0.0,
+			Size:      10,
+			State:     StorageStateOnline,
+			Tier:      StorageTierHDD,
+			Title:     "Operating system disk",
+			Type:      StorageTypeNormal,
+			UUID:      "01eff7ad-168e-413e-83b0-054f6a28fa23",
+			Zone:      "uk-lon1",
 		},
 		{
 			Access:  StorageAccessPrivate,

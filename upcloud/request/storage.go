@@ -66,6 +66,7 @@ func (r *GetStorageDetailsRequest) RequestURL() string {
 // CreateStorageRequest represents a request to create a storage device
 type CreateStorageRequest struct {
 	Size       int                 `json:"size,string"`
+	Encrypted  upcloud.Boolean     `json:"encrypted,omitempty"`
 	Tier       string              `json:"tier,omitempty"`
 	Title      string              `json:"title,omitempty"`
 	Zone       string              `json:"zone"`
@@ -186,9 +187,10 @@ func (r *DeleteStorageRequest) RequestURL() string {
 type CloneStorageRequest struct {
 	UUID string `json:"-"`
 
-	Zone  string `json:"zone"`
-	Tier  string `json:"tier,omitempty"`
-	Title string `json:"title"`
+	Encrypted upcloud.Boolean `json:"encrypted,omitempty"`
+	Zone      string          `json:"zone"`
+	Tier      string          `json:"tier,omitempty"`
+	Title     string          `json:"title"`
 }
 
 // RequestURL implements the Request interface
