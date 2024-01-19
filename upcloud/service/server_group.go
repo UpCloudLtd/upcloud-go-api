@@ -13,6 +13,8 @@ type ServerGroup interface {
 	CreateServerGroup(ctx context.Context, r *request.CreateServerGroupRequest) (*upcloud.ServerGroup, error)
 	ModifyServerGroup(ctx context.Context, r *request.ModifyServerGroupRequest) (*upcloud.ServerGroup, error)
 	DeleteServerGroup(ctx context.Context, r *request.DeleteServerGroupRequest) error
+	AddServerToServerGroup(ctx context.Context, r *request.AddServerToServerGroupRequest) error
+	RemoveServerFromServerGroup(ctx context.Context, r *request.RemoveServerFromServerGroupRequest) error
 }
 
 // GetServerGroups retrieves a list of server groups with context (EXPERIMENTAL).
@@ -47,5 +49,16 @@ func (s *Service) ModifyServerGroup(ctx context.Context, r *request.ModifyServer
 
 // DeleteServerGroup deletes an existing server group  with context (EXPERIMENTAL).
 func (s *Service) DeleteServerGroup(ctx context.Context, r *request.DeleteServerGroupRequest) error {
+	return s.delete(ctx, r)
+}
+
+// AddServerToServerGroup adds a server to a server group with context (EXPERIMENTAL).
+func (s *Service) AddServerToServerGroup(ctx context.Context, r *request.AddServerToServerGroupRequest) error {
+	var v interface{}
+	return s.create(ctx, r, v)
+}
+
+// RemoveServerFromServerGroup removes a server from a server group with context (EXPERIMENTAL).
+func (s *Service) RemoveServerFromServerGroup(ctx context.Context, r *request.RemoveServerFromServerGroupRequest) error {
 	return s.delete(ctx, r)
 }
