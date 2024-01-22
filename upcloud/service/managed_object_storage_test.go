@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 	"testing"
 	"time"
 
@@ -41,14 +40,17 @@ func TestCreateManagedObjectStorage(t *testing.T) {
 	record(t, "createmanagedobjectstorage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		storage, err := createManagedObjectStorage(ctx, svc)
 		require.NoError(t, err)
+
+		defer func() {
+			err = svc.DeleteManagedObjectStorage(ctx, &request.DeleteManagedObjectStorageRequest{UUID: storage.UUID})
+			require.NoError(t, err)
+		}()
+
 		require.Equal(t, storage.ConfiguredStatus, upcloud.ManagedObjectStorageConfiguredStatusStarted)
 		require.Len(t, storage.Labels, 1)
 		require.Len(t, storage.Networks, 1)
 		require.Len(t, storage.Users, 1)
 		require.NotEmpty(t, storage.UUID)
-
-		err = deleteManagedObjectStorage(ctx, svc, storage.UUID)
-		require.NoError(t, err)
 	})
 }
 
@@ -61,12 +63,14 @@ func TestGetManagedObjectStorages(t *testing.T) {
 		storage, err := createManagedObjectStorage(ctx, svc)
 		require.NoError(t, err)
 
+		defer func() {
+			err = svc.DeleteManagedObjectStorage(ctx, &request.DeleteManagedObjectStorageRequest{UUID: storage.UUID})
+			require.NoError(t, err)
+		}()
+
 		storages, err = svc.GetManagedObjectStorages(ctx, &request.GetManagedObjectStoragesRequest{})
 		require.NoError(t, err)
 		require.Len(t, storages, 1)
-
-		err = deleteManagedObjectStorage(ctx, svc, storage.UUID)
-		require.NoError(t, err)
 	})
 }
 
@@ -75,6 +79,11 @@ func TestGetManagedObjectStorageDetails(t *testing.T) {
 		storage, err := createManagedObjectStorage(ctx, svc)
 		require.NoError(t, err)
 
+		defer func() {
+			err = svc.DeleteManagedObjectStorage(ctx, &request.DeleteManagedObjectStorageRequest{UUID: storage.UUID})
+			require.NoError(t, err)
+		}()
+
 		storage, err = svc.GetManagedObjectStorage(ctx, &request.GetManagedObjectStorageRequest{UUID: storage.UUID})
 		require.NoError(t, err)
 		require.Equal(t, storage.ConfiguredStatus, upcloud.ManagedObjectStorageConfiguredStatusStarted)
@@ -82,9 +91,6 @@ func TestGetManagedObjectStorageDetails(t *testing.T) {
 		require.Len(t, storage.Networks, 1)
 		require.Len(t, storage.Users, 1)
 		require.NotEmpty(t, storage.UUID)
-
-		err = deleteManagedObjectStorage(ctx, svc, storage.UUID)
-		require.NoError(t, err)
 	})
 }
 
@@ -92,6 +98,11 @@ func TestReplaceManagedObjectStorage(t *testing.T) {
 	record(t, "replacemanagedobjectstorage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		storage, err := createManagedObjectStorage(ctx, svc)
 		require.NoError(t, err)
+
+		defer func() {
+			err = svc.DeleteManagedObjectStorage(ctx, &request.DeleteManagedObjectStorageRequest{UUID: storage.UUID})
+			require.NoError(t, err)
+		}()
 
 		storage, err = svc.ReplaceManagedObjectStorage(ctx, &request.ReplaceManagedObjectStorageRequest{
 			ConfiguredStatus: upcloud.ManagedObjectStorageConfiguredStatusStopped,
@@ -102,14 +113,12 @@ func TestReplaceManagedObjectStorage(t *testing.T) {
 			}},
 			Users: []request.ManagedObjectStorageUser{{Username: storage.Users[0].Username}},
 			UUID:  storage.UUID,
+			Name:  "test2",
 		})
 		require.NoError(t, err)
 		require.Equal(t, upcloud.ManagedObjectStorageConfiguredStatusStopped, storage.ConfiguredStatus)
 		require.Equal(t, storage.Networks[0].Name, "replaced-network")
 		require.Len(t, storage.Labels, 0)
-
-		err = deleteManagedObjectStorage(ctx, svc, storage.UUID)
-		require.NoError(t, err)
 	})
 }
 
@@ -117,6 +126,11 @@ func TestModifyManagedObjectStorage(t *testing.T) {
 	record(t, "modifymanagedobjectstorage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		storage, err := createManagedObjectStorage(ctx, svc)
 		require.NoError(t, err)
+
+		defer func() {
+			err = svc.DeleteManagedObjectStorage(ctx, &request.DeleteManagedObjectStorageRequest{UUID: storage.UUID})
+			require.NoError(t, err)
+		}()
 
 		status := upcloud.ManagedObjectStorageConfiguredStatusStopped
 		storage, err = svc.ModifyManagedObjectStorage(ctx, &request.ModifyManagedObjectStorageRequest{
@@ -127,9 +141,6 @@ func TestModifyManagedObjectStorage(t *testing.T) {
 		require.NoError(t, err)
 		require.Equal(t, upcloud.ManagedObjectStorageConfiguredStatusStopped, storage.ConfiguredStatus)
 		require.Len(t, storage.Labels, 0)
-
-		err = deleteManagedObjectStorage(ctx, svc, storage.UUID)
-		require.NoError(t, err)
 	})
 }
 
@@ -138,13 +149,15 @@ func TestGetManagedObjectStorageMetrics(t *testing.T) {
 		storage, err := createManagedObjectStorage(ctx, svc)
 		require.NoError(t, err)
 
+		defer func() {
+			err = svc.DeleteManagedObjectStorage(ctx, &request.DeleteManagedObjectStorageRequest{UUID: storage.UUID})
+			require.NoError(t, err)
+		}()
+
 		m, err := svc.GetManagedObjectStorageMetrics(ctx, &request.GetManagedObjectStorageMetricsRequest{ServiceUUID: storage.UUID})
 		require.NoError(t, err)
 		require.Equal(t, m.TotalObjects, 0)
 		require.Equal(t, m.TotalSizeBytes, 0)
-
-		err = deleteManagedObjectStorage(ctx, svc, storage.UUID)
-		require.NoError(t, err)
 	})
 }
 
@@ -153,12 +166,14 @@ func TestGetManagedObjectStorageBucketMetrics(t *testing.T) {
 		storage, err := createManagedObjectStorage(ctx, svc)
 		require.NoError(t, err)
 
+		defer func() {
+			err = svc.DeleteManagedObjectStorage(ctx, &request.DeleteManagedObjectStorageRequest{UUID: storage.UUID})
+			require.NoError(t, err)
+		}()
+
 		m, err := svc.GetManagedObjectStorageBucketMetrics(ctx, &request.GetManagedObjectStorageBucketMetricsRequest{ServiceUUID: storage.UUID})
 		require.NoError(t, err)
 		assert.Len(t, m, 0)
-
-		err = deleteManagedObjectStorage(ctx, svc, storage.UUID)
-		require.NoError(t, err)
 	})
 }
 
@@ -166,6 +181,11 @@ func TestCreateManagedObjectStorageNetwork(t *testing.T) {
 	record(t, "createmanagedobjectstoragenetwork", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		storage, err := createManagedObjectStorage(ctx, svc)
 		require.NoError(t, err)
+
+		defer func() {
+			err = svc.DeleteManagedObjectStorage(ctx, &request.DeleteManagedObjectStorageRequest{UUID: storage.UUID})
+			require.NoError(t, err)
+		}()
 
 		router, err := svc.CreateRouter(ctx, &request.CreateRouterRequest{
 			Name: "managed-object-storage-router",
@@ -198,9 +218,6 @@ func TestCreateManagedObjectStorageNetwork(t *testing.T) {
 		require.NoError(t, err)
 		require.Equal(t, network.UUID, *storageNetwork.UUID)
 
-		err = deleteManagedObjectStorage(ctx, svc, storage.UUID)
-		require.NoError(t, err)
-
 		err = svc.DeleteNetwork(ctx, &request.DeleteNetworkRequest{UUID: network.UUID})
 		require.NoError(t, err)
 
@@ -214,12 +231,14 @@ func TestGetManagedObjectStorageNetworks(t *testing.T) {
 		storage, err := createManagedObjectStorage(ctx, svc)
 		require.NoError(t, err)
 
+		defer func() {
+			err = svc.DeleteManagedObjectStorage(ctx, &request.DeleteManagedObjectStorageRequest{UUID: storage.UUID})
+			require.NoError(t, err)
+		}()
+
 		networks, err := svc.GetManagedObjectStorageNetworks(ctx, &request.GetManagedObjectStorageNetworksRequest{ServiceUUID: storage.UUID})
 		require.NoError(t, err)
 		require.Len(t, networks, 1)
-
-		err = deleteManagedObjectStorage(ctx, svc, storage.UUID)
-		require.NoError(t, err)
 	})
 }
 
@@ -228,6 +247,11 @@ func TestGetManagedObjectStorageNetwork(t *testing.T) {
 		storage, err := createManagedObjectStorage(ctx, svc)
 		require.NoError(t, err)
 
+		defer func() {
+			err = svc.DeleteManagedObjectStorage(ctx, &request.DeleteManagedObjectStorageRequest{UUID: storage.UUID})
+			require.NoError(t, err)
+		}()
+
 		networks, err := svc.GetManagedObjectStorageNetworks(ctx, &request.GetManagedObjectStorageNetworksRequest{ServiceUUID: storage.UUID})
 		require.NoError(t, err)
 		require.Len(t, networks, 1)
@@ -235,9 +259,6 @@ func TestGetManagedObjectStorageNetwork(t *testing.T) {
 		network, err := svc.GetManagedObjectStorageNetwork(ctx, &request.GetManagedObjectStorageNetworkRequest{ServiceUUID: storage.UUID, NetworkName: networks[0].Name})
 		require.NoError(t, err)
 		require.Equal(t, networks[0].Name, network.Name)
-
-		err = deleteManagedObjectStorage(ctx, svc, storage.UUID)
-		require.NoError(t, err)
 	})
 }
 
@@ -245,6 +266,11 @@ func TestDeleteManagedObjectStorageNetwork(t *testing.T) {
 	record(t, "deletemanagedobjectstoragenetwork", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		storage, err := createManagedObjectStorage(ctx, svc)
 		require.NoError(t, err)
+
+		defer func() {
+			err = svc.DeleteManagedObjectStorage(ctx, &request.DeleteManagedObjectStorageRequest{UUID: storage.UUID})
+			require.NoError(t, err)
+		}()
 
 		router, err := svc.CreateRouter(ctx, &request.CreateRouterRequest{
 			Name: "managed-object-storage-router",
@@ -280,9 +306,6 @@ func TestDeleteManagedObjectStorageNetwork(t *testing.T) {
 		err = svc.DeleteManagedObjectStorageNetwork(ctx, &request.DeleteManagedObjectStorageNetworkRequest{ServiceUUID: storage.UUID, NetworkName: "private-network"})
 		require.NoError(t, err)
 
-		err = deleteManagedObjectStorage(ctx, svc, storage.UUID)
-		require.NoError(t, err)
-
 		err = svc.DeleteNetwork(ctx, &request.DeleteNetworkRequest{UUID: network.UUID})
 		require.NoError(t, err)
 
@@ -296,18 +319,17 @@ func TestCreateManagedObjectStorageUser(t *testing.T) {
 		storage, err := createManagedObjectStorage(ctx, svc)
 		require.NoError(t, err)
 
-		account, err := createSubAccount(ctx, svc, "managedobjectstorage2")
-		require.NoError(t, err)
+		defer func() {
+			err = svc.DeleteManagedObjectStorage(ctx, &request.DeleteManagedObjectStorageRequest{UUID: storage.UUID})
+			require.NoError(t, err)
+		}()
 
 		user, err := svc.CreateManagedObjectStorageUser(ctx, &request.CreateManagedObjectStorageUserRequest{
-			Username:    account.Username,
+			Username:    "test2",
 			ServiceUUID: storage.UUID,
 		})
 		require.NoError(t, err)
-		require.Equal(t, user.Username, account.Username)
-
-		err = deleteManagedObjectStorage(ctx, svc, storage.UUID)
-		require.NoError(t, err)
+		require.Equal(t, user.Username, "test2")
 	})
 }
 
@@ -316,12 +338,14 @@ func TestGetManagedObjectStorageUsers(t *testing.T) {
 		storage, err := createManagedObjectStorage(ctx, svc)
 		require.NoError(t, err)
 
+		defer func() {
+			err = svc.DeleteManagedObjectStorage(ctx, &request.DeleteManagedObjectStorageRequest{UUID: storage.UUID})
+			require.NoError(t, err)
+		}()
+
 		users, err := svc.GetManagedObjectStorageUsers(ctx, &request.GetManagedObjectStorageUsersRequest{ServiceUUID: storage.UUID})
 		require.NoError(t, err)
 		require.Len(t, users, 1)
-
-		err = deleteManagedObjectStorage(ctx, svc, storage.UUID)
-		require.NoError(t, err)
 	})
 }
 
@@ -330,15 +354,19 @@ func TestGetManagedObjectStorageUser(t *testing.T) {
 		storage, err := createManagedObjectStorage(ctx, svc)
 		require.NoError(t, err)
 
-		users, err := svc.GetManagedObjectStorageUsers(ctx, &request.GetManagedObjectStorageUsersRequest{ServiceUUID: storage.UUID})
-		require.NoError(t, err)
-		require.Len(t, users, 1)
+		defer func() {
+			err = svc.DeleteManagedObjectStorage(ctx, &request.DeleteManagedObjectStorageRequest{UUID: storage.UUID})
+			require.NoError(t, err)
+		}()
 
-		user, err := svc.GetManagedObjectStorageUser(ctx, &request.GetManagedObjectStorageUserRequest{ServiceUUID: storage.UUID, Username: users[0].Username})
+		user, err := svc.CreateManagedObjectStorageUser(ctx, &request.CreateManagedObjectStorageUserRequest{
+			Username:    "test2",
+			ServiceUUID: storage.UUID,
+		})
 		require.NoError(t, err)
-		require.Equal(t, users[0].Username, user.Username)
+		require.Equal(t, user.Username, "test2")
 
-		err = deleteManagedObjectStorage(ctx, svc, storage.UUID)
+		_, err = svc.GetManagedObjectStorageUser(ctx, &request.GetManagedObjectStorageUserRequest{ServiceUUID: storage.UUID, Username: user.Username})
 		require.NoError(t, err)
 	})
 }
@@ -348,11 +376,13 @@ func TestDeleteManagedObjectStorageUser(t *testing.T) {
 		storage, err := createManagedObjectStorage(ctx, svc)
 		require.NoError(t, err)
 
-		account, err := createSubAccount(ctx, svc, "managedobjectstorage2")
-		require.NoError(t, err)
+		defer func() {
+			err = svc.DeleteManagedObjectStorage(ctx, &request.DeleteManagedObjectStorageRequest{UUID: storage.UUID})
+			require.NoError(t, err)
+		}()
 
 		user, err := svc.CreateManagedObjectStorageUser(ctx, &request.CreateManagedObjectStorageUserRequest{
-			Username:    account.Username,
+			Username:    "test2",
 			ServiceUUID: storage.UUID,
 		})
 		require.NoError(t, err)
@@ -362,9 +392,6 @@ func TestDeleteManagedObjectStorageUser(t *testing.T) {
 			Username:    user.Username,
 		})
 		require.NoError(t, err)
-
-		err = deleteManagedObjectStorage(ctx, svc, storage.UUID)
-		require.NoError(t, err)
 	})
 }
 
@@ -373,15 +400,17 @@ func TestCreateManagedObjectStorageUserAccessKey(t *testing.T) {
 		storage, err := createManagedObjectStorage(ctx, svc)
 		require.NoError(t, err)
 
-		account, err := createSubAccount(ctx, svc, "managedobjectstorage2")
-		require.NoError(t, err)
+		defer func() {
+			err = svc.DeleteManagedObjectStorage(ctx, &request.DeleteManagedObjectStorageRequest{UUID: storage.UUID})
+			require.NoError(t, err)
+		}()
 
 		user, err := svc.CreateManagedObjectStorageUser(ctx, &request.CreateManagedObjectStorageUserRequest{
-			Username:    account.Username,
+			Username:    "test2",
 			ServiceUUID: storage.UUID,
 		})
 		require.NoError(t, err)
-		require.Equal(t, user.Username, account.Username)
+		require.Equal(t, user.Username, "test2")
 
 		_, err = svc.WaitForManagedObjectStorageUserOperationalState(context.Background(), &request.WaitForManagedObjectStorageUserOperationalStateRequest{
 			ServiceUUID:  storage.UUID,
@@ -401,9 +430,6 @@ func TestCreateManagedObjectStorageUserAccessKey(t *testing.T) {
 		require.Equal(t, "example-access-key", accessKey.Name)
 		require.NotEmpty(t, accessKey.AccessKeyId)
 		require.NotEmpty(t, accessKey.SecretAccessKey)
-
-		err = deleteManagedObjectStorage(ctx, svc, storage.UUID)
-		require.NoError(t, err)
 	})
 }
 
@@ -411,6 +437,11 @@ func TestGetManagedObjectStorageUserAccesKeys(t *testing.T) {
 	record(t, "getmanagedobjectstorageuseraccesskeys", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		storage, err := createManagedObjectStorage(ctx, svc)
 		require.NoError(t, err)
+
+		defer func() {
+			err = svc.DeleteManagedObjectStorage(ctx, &request.DeleteManagedObjectStorageRequest{UUID: storage.UUID})
+			require.NoError(t, err)
+		}()
 
 		_, err = svc.WaitForManagedObjectStorageUserOperationalState(context.Background(), &request.WaitForManagedObjectStorageUserOperationalStateRequest{
 			ServiceUUID:  storage.UUID,
@@ -434,9 +465,6 @@ func TestGetManagedObjectStorageUserAccesKeys(t *testing.T) {
 		})
 		require.NoError(t, err)
 		require.Len(t, accessKeys, 1)
-
-		err = deleteManagedObjectStorage(ctx, svc, storage.UUID)
-		require.NoError(t, err)
 	})
 }
 
@@ -444,6 +472,11 @@ func TestGetManagedObjectStorageUserAccessKey(t *testing.T) {
 	record(t, "getmanagedobjectstorageuseraccesskey", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		storage, err := createManagedObjectStorage(ctx, svc)
 		require.NoError(t, err)
+
+		defer func() {
+			err = svc.DeleteManagedObjectStorage(ctx, &request.DeleteManagedObjectStorageRequest{UUID: storage.UUID})
+			require.NoError(t, err)
+		}()
 
 		_, err = svc.WaitForManagedObjectStorageUserOperationalState(context.Background(), &request.WaitForManagedObjectStorageUserOperationalStateRequest{
 			ServiceUUID:  storage.UUID,
@@ -475,9 +508,6 @@ func TestGetManagedObjectStorageUserAccessKey(t *testing.T) {
 		})
 		require.NoError(t, err)
 		require.Empty(t, accessKey.SecretAccessKey)
-
-		err = deleteManagedObjectStorage(ctx, svc, storage.UUID)
-		require.NoError(t, err)
 	})
 }
 
@@ -485,6 +515,11 @@ func TestModifyManagedObjectStorageUserAccessKey(t *testing.T) {
 	record(t, "modifymanagedobjectstorageuseraccesskey", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		storage, err := createManagedObjectStorage(ctx, svc)
 		require.NoError(t, err)
+
+		defer func() {
+			err = svc.DeleteManagedObjectStorage(ctx, &request.DeleteManagedObjectStorageRequest{UUID: storage.UUID})
+			require.NoError(t, err)
+		}()
 
 		_, err = svc.WaitForManagedObjectStorageUserOperationalState(context.Background(), &request.WaitForManagedObjectStorageUserOperationalStateRequest{
 			ServiceUUID:  storage.UUID,
@@ -510,9 +545,6 @@ func TestModifyManagedObjectStorageUserAccessKey(t *testing.T) {
 		})
 		require.NoError(t, err)
 		require.Equal(t, true, accessKey.Enabled)
-
-		err = deleteManagedObjectStorage(ctx, svc, storage.UUID)
-		require.NoError(t, err)
 	})
 }
 
@@ -520,6 +552,11 @@ func TestDeleteManagedObjectStorageUserAccessKey(t *testing.T) {
 	record(t, "deletemanagedobjectstorageuseraccesskey", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		storage, err := createManagedObjectStorage(ctx, svc)
 		require.NoError(t, err)
+
+		defer func() {
+			err = svc.DeleteManagedObjectStorage(ctx, &request.DeleteManagedObjectStorageRequest{UUID: storage.UUID})
+			require.NoError(t, err)
+		}()
 
 		_, err = svc.WaitForManagedObjectStorageUserOperationalState(context.Background(), &request.WaitForManagedObjectStorageUserOperationalStateRequest{
 			ServiceUUID:  storage.UUID,
@@ -543,9 +580,6 @@ func TestDeleteManagedObjectStorageUserAccessKey(t *testing.T) {
 			Name:        accessKey.Name,
 		})
 		require.NoError(t, err)
-
-		err = deleteManagedObjectStorage(ctx, svc, storage.UUID)
-		require.NoError(t, err)
 	})
 }
 
@@ -555,12 +589,8 @@ func createManagedObjectStorage(ctx context.Context, svc *Service) (*upcloud.Man
 		return nil, err
 	}
 
-	account, err := createSubAccount(ctx, svc, "managedobjectstorage")
-	if err != nil {
-		return nil, err
-	}
-
 	return svc.CreateManagedObjectStorage(ctx, &request.CreateManagedObjectStorageRequest{
+		Name:             "go-sdk-integration-test",
 		ConfiguredStatus: upcloud.ManagedObjectStorageConfiguredStatusStarted,
 		Labels: []upcloud.Label{
 			{
@@ -576,51 +606,6 @@ func createManagedObjectStorage(ctx context.Context, svc *Service) (*upcloud.Man
 			},
 		},
 		Region: regions[0].Name,
-		Users:  []request.ManagedObjectStorageUser{{Username: account.Username}},
+		Users:  []request.ManagedObjectStorageUser{{Username: "test"}},
 	})
-}
-
-func createSubAccount(ctx context.Context, svc *Service, username string) (*upcloud.AccountDetails, error) {
-	return svc.CreateSubaccount(ctx, &request.CreateSubaccountRequest{Subaccount: request.CreateSubaccount{
-		Username:      username,
-		Email:         fmt.Sprintf("%s@example.com", username),
-		Phone:         "+358.123456789",
-		Currency:      "EUR",
-		Language:      "en",
-		Timezone:      "Europe/Helsinki",
-		AllowAPI:      upcloud.False,
-		AllowGUI:      upcloud.False,
-		TagAccess:     upcloud.AccountTagAccess{},
-		ServerAccess:  upcloud.AccountServerAccess{},
-		StorageAccess: upcloud.AccountStorageAccess{},
-	}})
-}
-
-func deleteManagedObjectStorage(ctx context.Context, svc *Service, uuid string) error {
-	users, err := svc.GetManagedObjectStorageUsers(ctx, &request.GetManagedObjectStorageUsersRequest{ServiceUUID: uuid})
-	if err != nil {
-		return err
-	}
-
-	err = svc.DeleteManagedObjectStorage(ctx, &request.DeleteManagedObjectStorageRequest{UUID: uuid})
-	if err != nil {
-		return err
-	}
-
-	err = svc.WaitForManagedObjectStorageDeletion(context.Background(), &request.WaitForManagedObjectStorageDeletionRequest{
-		UUID:    uuid,
-		Timeout: time.Second * 90,
-	})
-	if err != nil {
-		return err
-	}
-
-	for _, user := range users {
-		err = svc.DeleteSubaccount(ctx, &request.DeleteSubaccountRequest{Username: user.Username})
-		if err != nil {
-			return err
-		}
-	}
-
-	return nil
 }
