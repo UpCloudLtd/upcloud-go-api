@@ -74,10 +74,11 @@ func (s CreateServerIPAddressSlice) MarshalJSON() ([]byte, error) {
 
 // CreateServerStorageDevice represents a storage device for a CreateServerRequest
 type CreateServerStorageDevice struct {
-	Action  string `json:"action"`
-	Address string `json:"address,omitempty"`
-	Storage string `json:"storage"`
-	Title   string `json:"title,omitempty"`
+	Action    string          `json:"action"`
+	Address   string          `json:"address,omitempty"`
+	Encrypted upcloud.Boolean `json:"encrypted,omitempty"`
+	Storage   string          `json:"storage"`
+	Title     string          `json:"title,omitempty"`
 	// Storage size in gigabytes
 	Size       int                 `json:"size,omitempty"`
 	Tier       string              `json:"tier,omitempty"`

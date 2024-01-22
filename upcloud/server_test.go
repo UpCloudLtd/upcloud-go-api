@@ -215,6 +215,7 @@ func TestUnmarshalServerDetails(t *testing.T) {
             "storage_device": [
               {
                 "address": "virtio:0",
+                "storage_encrypted": "yes",
                 "part_of_plan" : "yes",
                 "storage": "012580a1-32a1-466e-a323-689ca16f2d43",
                 "storage_size": 20,
@@ -249,6 +250,7 @@ func TestUnmarshalServerDetails(t *testing.T) {
 	err := json.Unmarshal([]byte(originalJSON), &serverDetails)
 	assert.Nil(t, err)
 
+	assert.Equal(t, true, serverDetails.StorageDevices[0].Encrypted.Bool())
 	assert.Equal(t, "cdrom,disk", serverDetails.BootOrder)
 	assert.Equal(t, "on", serverDetails.Firewall)
 	assert.Len(t, serverDetails.IPAddresses, 3)

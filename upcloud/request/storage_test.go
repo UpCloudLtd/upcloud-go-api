@@ -59,10 +59,11 @@ func TestGetStorageDetailsRequest(t *testing.T) {
 // TestCreateStorageRequest tests that CreateStorageRequest objects behave correctly
 func TestCreateStorageRequest(t *testing.T) {
 	request := CreateStorageRequest{
-		Tier:  upcloud.StorageTierMaxIOPS,
-		Title: "Test storage",
-		Size:  10,
-		Zone:  "fi-hel2",
+		Encrypted: upcloud.FromBool(true),
+		Tier:      upcloud.StorageTierMaxIOPS,
+		Title:     "Test storage",
+		Size:      10,
+		Zone:      "fi-hel2",
 		BackupRule: &upcloud.BackupRule{
 			Interval:  upcloud.BackupRuleIntervalDaily,
 			Time:      "0430",
@@ -73,6 +74,7 @@ func TestCreateStorageRequest(t *testing.T) {
 	expectedJSON := `
 	  {
 		"storage": {
+		  "encrypted": "yes",
 		  "size": "10",
 		  "tier": "maxiops",
 		  "title": "Test storage",
