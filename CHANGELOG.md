@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [6.12.0]
+
 ### Added
 - Server groups: Add `AddServerToServerGroup` and `RemoveServerFromServerGroup` methods.
 - Storages: Add support for encryption at rest
@@ -394,7 +396,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.11.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.12.0...HEAD
+[6.12.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.11.0...v6.12.0
 [6.11.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.10.0...v6.11.0
 [6.10.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.9.0...v6.10.0
 [6.9.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.8.3...v6.9.0
