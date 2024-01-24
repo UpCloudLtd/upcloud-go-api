@@ -7,6 +7,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ### Added
 - Managed Load Balancer: `MaintenanceDOW` and `MaintenanceTime` fields for controlling maintenance window occurrence
+- Kubernetes: support for cluster labels.
 
 ### Changed
 - **Breaking**, Managed Database: `ManagedDatabaseUserOpernSearchAccessControl` fields changed to pointers
@@ -15,6 +16,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 - **Breaking**, Managed Load Balancer: `LoadBalancerFrontendProperties` field `InboundProxyProtocol` to pointer
 - **Breaking**, Managed Object Storage: `CreateManagedObjectStorageUserAccessKeyRequest` field `Enabled` to pointer
 - **Breaking**, Managed Object Storage: `ModifyManagedObjectStorageUserAccessKeyRequest` field `Enabled` to pointer
+- **Breaking** Kubernetes: the `ControlPlaneIPFilter` of `ModifyKubernetesCluster` is changed from `[]string` to `*[]string`.
 
 ### Removed
 - **Breaking**, Managed Database: connection related methods in favor of session

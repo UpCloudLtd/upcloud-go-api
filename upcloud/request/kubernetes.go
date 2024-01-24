@@ -48,6 +48,7 @@ func (r *GetKubernetesClusterRequest) RequestURL() string {
 // CreateKubernetesClusterRequest represents a request to create a Kubernetes cluster
 type CreateKubernetesClusterRequest struct {
 	ControlPlaneIPFilter []string              `json:"control_plane_ip_filter"`
+	Labels               []upcloud.Label       `json:"labels,omitempty"`
 	Name                 string                `json:"name"`
 	Network              string                `json:"network"`
 	NetworkCIDR          string                `json:"network_cidr"`
@@ -63,7 +64,8 @@ func (r *CreateKubernetesClusterRequest) RequestURL() string {
 }
 
 type ModifyKubernetesCluster struct {
-	ControlPlaneIPFilter []string `json:"control_plane_ip_filter"`
+	ControlPlaneIPFilter *[]string        `json:"control_plane_ip_filter,omitempty"`
+	Labels               *[]upcloud.Label `json:"labels,omitempty"`
 }
 
 type ModifyKubernetesClusterRequest struct {
