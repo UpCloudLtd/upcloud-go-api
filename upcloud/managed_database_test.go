@@ -552,56 +552,6 @@ func TestUnmarshalManagedDatabaseQueryStatisticsMySQL(t *testing.T) {
 	assert.Equal(t, expect, c)
 }
 
-func TestUnmarshalManagedDatabaseConnection(t *testing.T) {
-	const d = `{
-		"application_name":"upcloudGoTestSuite",
-		"backend_start":"2021-09-14T13:41:29.369748Z",
-		"backend_type":"client backend",
-		"backend_xid":null,
-		"backend_xmin":null,
-		"client_addr":"85.7.82.158",
-		"client_hostname":null,
-		"client_port":62028,
-		"datid":16401,
-		"datname":"defaultdb",
-		"pid":257,
-		"query":"SELECT 1",
-		"query_duration":291591000,
-		"query_start":"2021-09-14T13:41:29.575568Z",
-		"state":"idle",
-		"state_change":"2021-09-14T13:41:29.575916Z",
-		"usename":"upadmin",
-		"usesysid":16400,
-		"wait_event":"ClientRead",
-		"wait_event_type":"Client",
-		"xact_start":null
-	}`
-
-	var c ManagedDatabaseConnection
-	assert.NoError(t, json.Unmarshal([]byte(d), &c))
-
-	expect := ManagedDatabaseConnection{
-		ApplicationName: "upcloudGoTestSuite",
-		BackendStart:    timeParse("2021-09-14T13:41:29.369748Z"),
-		BackendType:     "client backend",
-		ClientAddr:      "85.7.82.158",
-		ClientPort:      62028,
-		DatId:           16401,
-		DatName:         "defaultdb",
-		Pid:             257,
-		Query:           "SELECT 1",
-		QueryDuration:   291591000,
-		QueryStart:      timeParse("2021-09-14T13:41:29.575568Z"),
-		State:           "idle",
-		StateChange:     timeParse("2021-09-14T13:41:29.575916Z"),
-		Username:        "upadmin",
-		UseSysId:        16400,
-		WaitEvent:       "ClientRead",
-		WaitEventType:   "Client",
-	}
-	assert.Equal(t, expect, c)
-}
-
 func TestUnmarshalManagedDatabaseSessions(t *testing.T) {
 	const d = `{
 	"mysql": [

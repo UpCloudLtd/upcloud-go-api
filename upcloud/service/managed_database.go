@@ -11,22 +11,15 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud/request"
 )
 
-var (
-	ErrCancelManagedDatabaseConnection = errors.New("managed database connection cancellation failed")
-	ErrCancelManagedDatabaseSession    = errors.New("managed database session cancellation failed")
-)
+var ErrCancelManagedDatabaseSession = errors.New("managed database session cancellation failed")
 
 type ManagedDatabaseServiceManager interface {
-	// Deprecated: CancelManagedDatabaseConnection is deprecated in favor or CancelManagedDatabaseSession.
-	CancelManagedDatabaseConnection(ctx context.Context, r *request.CancelManagedDatabaseConnection) error
 	CancelManagedDatabaseSession(ctx context.Context, r *request.CancelManagedDatabaseSession) error
 	CloneManagedDatabase(ctx context.Context, r *request.CloneManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
 	CreateManagedDatabase(ctx context.Context, r *request.CreateManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
 	GetManagedDatabase(ctx context.Context, r *request.GetManagedDatabaseRequest) (*upcloud.ManagedDatabase, error)
 	GetManagedDatabases(ctx context.Context, r *request.GetManagedDatabasesRequest) ([]upcloud.ManagedDatabase, error)
 	GetManagedDatabaseAccessControl(ctx context.Context, r *request.GetManagedDatabaseAccessControlRequest) (*upcloud.ManagedDatabaseAccessControl, error)
-	// Deprecated: GetManagedDatabaseConnections is deprecated in favor or GetManagedDatabaseSessions.
-	GetManagedDatabaseConnections(ctx context.Context, r *request.GetManagedDatabaseConnectionsRequest) ([]upcloud.ManagedDatabaseConnection, error)
 	GetManagedDatabaseSessions(ctx context.Context, r *request.GetManagedDatabaseSessionsRequest) (upcloud.ManagedDatabaseSessions, error)
 	GetManagedDatabaseIndices(ctx context.Context, r *request.GetManagedDatabaseIndicesRequest) ([]upcloud.ManagedDatabaseIndex, error)
 	GetManagedDatabaseMetrics(ctx context.Context, r *request.GetManagedDatabaseMetricsRequest) (*upcloud.ManagedDatabaseMetrics, error)
@@ -62,29 +55,6 @@ type ManagedDatabaseLogicalDatabaseManager interface {
 }
 
 /* Service Management */
-
-// Deprecated: CancelManagedDatabaseConnection is deprecated in favor of CancelManagedDatabaseSession.
-// Cancels a current query of a database connection or terminates it entirely.
-// In case of the server is unable to cancel the query or terminate the connection ErrCancelManagedDatabaseConnection
-// is returned.
-func (s *Service) CancelManagedDatabaseConnection(ctx context.Context, r *request.CancelManagedDatabaseConnection) error {
-	res := struct {
-		Success bool `json:"success"`
-	}{}
-	response, err := s.client.Delete(ctx, r.RequestURL())
-	if err != nil {
-		return parseJSONServiceError(err)
-	}
-
-	err = json.Unmarshal(response, &res)
-	if err != nil {
-		return fmt.Errorf("unable to unmarshal JSON: %w", err)
-	}
-	if !res.Success {
-		return ErrCancelManagedDatabaseConnection
-	}
-	return nil
-}
 
 // CancelManagedDatabaseSession cancels a current query of a database session or terminates it entirely.
 // In case of the server is unable to cancel the query or terminate the session ErrCancelManagedDatabaseSession
@@ -130,13 +100,6 @@ func (s *Service) GetManagedDatabase(ctx context.Context, r *request.GetManagedD
 func (s *Service) GetManagedDatabases(ctx context.Context, r *request.GetManagedDatabasesRequest) ([]upcloud.ManagedDatabase, error) {
 	var services []upcloud.ManagedDatabase
 	return services, s.get(ctx, r.RequestURL(), &services)
-}
-
-// Deprecated: GetManagedDatabaseConnections is deprecated in favor or GetManagedDatabaseSessions.
-// Returns a slice of connections from an existing managed database instance
-func (s *Service) GetManagedDatabaseConnections(ctx context.Context, r *request.GetManagedDatabaseConnectionsRequest) ([]upcloud.ManagedDatabaseConnection, error) {
-	conns := make([]upcloud.ManagedDatabaseConnection, 0)
-	return conns, s.get(ctx, r.RequestURL(), &conns)
 }
 
 // GetManagedDatabaseMetrics returns metrics collection for the selected period
