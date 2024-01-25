@@ -6,7 +6,6 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"time"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud/client"
@@ -121,7 +120,6 @@ func createServer(s *service.Service) error {
 	details, err = s.WaitForServerState(ctx, &request.WaitForServerStateRequest{
 		UUID:         details.UUID,
 		DesiredState: upcloud.ServerStateStarted,
-		Timeout:      1 * time.Minute,
 	})
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to wait for server: %#v", err)
@@ -160,7 +158,6 @@ func deleteServers(s *service.Service) error {
 				_, err = s.WaitForServerState(ctx, &request.WaitForServerStateRequest{
 					UUID:         server.UUID,
 					DesiredState: upcloud.ServerStateStopped,
-					Timeout:      1 * time.Minute,
 				})
 				if err != nil {
 					fmt.Fprintf(os.Stderr, "Failed to wait for server to reach desired state: %#v", err)

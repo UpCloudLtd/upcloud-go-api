@@ -997,7 +997,6 @@ func waitForManagedDatabaseRunningState(ctx context.Context, rec *recorder.Recor
 	_, err := svc.WaitForManagedDatabaseState(ctx, &request.WaitForManagedDatabaseStateRequest{
 		UUID:         dbUUID,
 		DesiredState: upcloud.ManagedDatabaseStateRunning,
-		Timeout:      waitTimeout,
 	})
 
 	return err

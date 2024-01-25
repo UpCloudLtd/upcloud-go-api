@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"time"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud/request"
@@ -77,20 +76,14 @@ func (s *Service) DeleteKubernetesCluster(ctx context.Context, r *request.Delete
 // specified state. If the state changes favorably, cluster details are returned. The method will give up
 // after the specified timeout
 func (s *Service) WaitForKubernetesClusterState(ctx context.Context, r *request.WaitForKubernetesClusterStateRequest) (*upcloud.KubernetesCluster, error) {
-	attempts := 0
-	sleepDuration := time.Second * 5
-
-	for {
-		attempts++
-		time.Sleep(sleepDuration)
-
-		details, err := s.GetKubernetesCluster(ctx, &request.GetKubernetesClusterRequest{
+	return retry(ctx, func(i int, c context.Context) (*upcloud.KubernetesCluster, error) {
+		details, err := s.GetKubernetesCluster(c, &request.GetKubernetesClusterRequest{
 			UUID: r.UUID,
 		})
 		if err != nil {
 			// Ignore first two 404 responses to avoid errors caused by possible false NOT_FOUND responses right after cluster has been created.
 			var ucErr *upcloud.Problem
-			if errors.As(err, &ucErr) && ucErr.Status == http.StatusNotFound && attempts < 3 {
+			if errors.As(err, &ucErr) && ucErr.Status == http.StatusNotFound && i < 3 {
 				log.Printf("ERROR: %+v", err)
 			} else {
 				return nil, err
@@ -100,32 +93,25 @@ func (s *Service) WaitForKubernetesClusterState(ctx context.Context, r *request.
 		if details.State == r.DesiredState {
 			return details, nil
 		}
-
-		if time.Duration(attempts)*sleepDuration >= r.Timeout {
-			return nil, fmt.Errorf("timeout reached while waiting for Kubernetes cluster to enter state \"%s\"", r.DesiredState)
-		}
-	}
+		return nil, nil
+	}, nil)
 }
 
 // WaitForKubernetesNodeGroupState blocks execution until the specified Kubernetes node group has entered the
 // specified state. If the state changes favorably, node group is returned. The method will give up
 // after the specified timeout
 func (s *Service) WaitForKubernetesNodeGroupState(ctx context.Context, r *request.WaitForKubernetesNodeGroupStateRequest) (*upcloud.KubernetesNodeGroup, error) {
-	attempts := 0
-	sleepDuration := time.Second * 5
-
-	for {
-		attempts++
-		time.Sleep(sleepDuration)
-
-		ng, err := s.GetKubernetesNodeGroup(ctx, &request.GetKubernetesNodeGroupRequest{
+	return retry(ctx, func(i int, c context.Context) (*upcloud.KubernetesNodeGroup, error) {
+		ng, err := s.GetKubernetesNodeGroup(c, &request.GetKubernetesNodeGroupRequest{
 			ClusterUUID: r.ClusterUUID,
 			Name:        r.Name,
 		})
 		if err != nil {
-			// Ignore first two 404 responses to avoid errors caused by possible false NOT_FOUND responses right after cluster or node group has been created.
+			// Ignore first two 404 responses to avoid errors caused by possible false NOT_FOUND responses right after cluster has been created.
 			var ucErr *upcloud.Problem
-			if !(errors.As(err, &ucErr) && ucErr.Status == http.StatusNotFound) || attempts >= 3 {
+			if errors.As(err, &ucErr) && ucErr.Status == http.StatusNotFound && i < 3 {
+				log.Printf("ERROR: %+v", err)
+			} else {
 				return nil, err
 			}
 		}
@@ -133,24 +119,18 @@ func (s *Service) WaitForKubernetesNodeGroupState(ctx context.Context, r *reques
 		if ng.State == r.DesiredState {
 			return &ng.KubernetesNodeGroup, nil
 		}
-
-		if time.Duration(attempts)*sleepDuration >= r.Timeout {
-			return nil, fmt.Errorf("timeout reached while waiting for Kubernetes node group to enter state \"%s\"", r.DesiredState)
-		}
-	}
+		return nil, nil
+	}, nil)
 }
 
 // GetKubernetesKubeconfig retrieves kubeconfig of a Kubernetes cluster.
 func (s *Service) GetKubernetesKubeconfig(ctx context.Context, r *request.GetKubernetesKubeconfigRequest) (string, error) {
-	// TODO: should timeout be part of GetKubernetesKubeconfigRequest ?
-	const timeout time.Duration = 10 * time.Minute
 	data := struct {
 		Kubeconfig string `json:"kubeconfig"`
 	}{}
 
 	_, err := s.WaitForKubernetesClusterState(ctx, &request.WaitForKubernetesClusterStateRequest{
 		DesiredState: upcloud.KubernetesClusterStateRunning,
-		Timeout:      timeout,
 		UUID:         r.UUID,
 	})
 	if err != nil {

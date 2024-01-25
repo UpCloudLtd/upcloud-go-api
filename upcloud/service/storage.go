@@ -7,7 +7,6 @@ import (
 	"io"
 	"net/http"
 	"os"
-	"time"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud/request"
@@ -90,29 +89,20 @@ func (s *Service) TemplatizeStorage(ctx context.Context, r *request.TemplatizeSt
 // WaitForStorageState blocks execution until the specified storage device has entered the specified state. If the
 // state changes favorably, the new storage details is returned. The method will give up after the specified timeout
 func (s *Service) WaitForStorageState(ctx context.Context, r *request.WaitForStorageStateRequest) (*upcloud.StorageDetails, error) {
-	attempts := 0
-	sleepDuration := time.Second * 5
-
-	for {
-		attempts++
-
-		storageDetails, err := s.GetStorageDetails(ctx, &request.GetStorageDetailsRequest{
+	return retry(ctx, func(i int, c context.Context) (*upcloud.StorageDetails, error) {
+		details, err := s.GetStorageDetails(c, &request.GetStorageDetailsRequest{
 			UUID: r.UUID,
 		})
 		if err != nil {
 			return nil, err
 		}
 
-		if storageDetails.State == r.DesiredState {
-			return storageDetails, nil
+		if details.State == r.DesiredState {
+			return details, nil
 		}
 
-		time.Sleep(sleepDuration)
-
-		if time.Duration(attempts)*sleepDuration >= r.Timeout {
-			return nil, fmt.Errorf("timeout reached while waiting for storage to enter state \"%s\"", r.DesiredState)
-		}
-	}
+		return nil, nil
+	}, nil)
 }
 
 // LoadCDROM loads a storage as a CD-ROM in the CD-ROM device of a server
@@ -224,43 +214,34 @@ func (s *Service) GetStorageImportDetails(ctx context.Context, r *request.GetSto
 
 // WaitForStorageImportCompletion waits for the importing storage to complete.
 func (s *Service) WaitForStorageImportCompletion(ctx context.Context, r *request.WaitForStorageImportCompletionRequest) (*upcloud.StorageImportDetails, error) {
-	attempts := 0
-	sleepDuration := time.Second * 5
-
-	for {
-		attempts++
-
-		storageImportDetails, err := s.GetStorageImportDetails(ctx, &request.GetStorageImportDetailsRequest{
+	return retry(ctx, func(i int, c context.Context) (*upcloud.StorageImportDetails, error) {
+		details, err := s.GetStorageImportDetails(c, &request.GetStorageImportDetailsRequest{
 			UUID: r.StorageUUID,
 		})
 		if err != nil {
 			return nil, err
 		}
 
-		switch storageImportDetails.State {
+		switch details.State {
 		case upcloud.StorageImportStateCompleted:
-			return storageImportDetails, nil
+			return details, nil
 		case upcloud.StorageImportStateCancelled,
 			upcloud.StorageImportStateCancelling,
 			upcloud.StorageImportStateFailed:
-			if storageImportDetails.ErrorCode != "" || storageImportDetails.ErrorMessage != "" {
-				return storageImportDetails, &upcloud.Problem{
-					Type:  storageImportDetails.ErrorCode,
-					Title: storageImportDetails.ErrorMessage,
+			if details.ErrorCode != "" || details.ErrorMessage != "" {
+				return details, &upcloud.Problem{
+					Type:  details.ErrorCode,
+					Title: details.ErrorMessage,
 				}
 			}
-			return storageImportDetails, &upcloud.Problem{
-				Type:  storageImportDetails.State,
+			return details, &upcloud.Problem{
+				Type:  details.State,
 				Title: "Storage Import Failed",
 			}
 		default:
-			if time.Duration(attempts)*sleepDuration >= r.Timeout {
-				return nil, errors.New("timeout reached while waiting for import to complete")
-			}
-
-			time.Sleep(sleepDuration)
+			return nil, nil
 		}
-	}
+	}, nil)
 }
 
 // ResizeStorageFilesystem resizes the last partition of a storage and the ext3/ext4/XFS/NTFS filesystem

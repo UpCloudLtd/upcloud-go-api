@@ -2,7 +2,6 @@ package request
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud"
 )
@@ -291,7 +290,6 @@ func (r *DeleteManagedObjectStorageUserAccessKeyRequest) RequestURL() string {
 // to enter a desired state
 type WaitForManagedObjectStorageOperationalStateRequest struct {
 	DesiredState upcloud.ManagedObjectStorageOperationalState `json:"-"`
-	Timeout      time.Duration                                `json:"-"`
 	UUID         string                                       `json:"-"`
 }
 
@@ -304,7 +302,6 @@ func (r *WaitForManagedObjectStorageOperationalStateRequest) RequestURL() string
 // to enter a desired state
 type WaitForManagedObjectStorageUserOperationalStateRequest struct {
 	DesiredState upcloud.ManagedObjectStorageUserOperationalState `json:"-"`
-	Timeout      time.Duration                                    `json:"-"`
 	ServiceUUID  string                                           `json:"-"`
 	Username     string                                           `json:"-"`
 }
@@ -318,7 +315,6 @@ func (r *WaitForManagedObjectStorageUserOperationalStateRequest) RequestURL() st
 // to be deleted
 type WaitForManagedObjectStorageDeletionRequest struct {
 	DesiredState upcloud.ManagedObjectStorageOperationalState `json:"-"`
-	Timeout      time.Duration                                `json:"-"`
 	UUID         string                                       `json:"-"`
 }
 

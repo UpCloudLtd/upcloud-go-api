@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"net/http"
 	"testing"
-	"time"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud/client"
@@ -524,7 +523,6 @@ func TestWaitForKubernetesClusterState(t *testing.T) {
 	_, err := svc.WaitForKubernetesClusterState(context.Background(), &request.WaitForKubernetesClusterStateRequest{
 		UUID:         "_UUID_",
 		DesiredState: upcloud.KubernetesClusterStateRunning,
-		Timeout:      time.Second * 20,
 	})
 	assert.NoError(t, err)
 	assert.Equal(t, 3, requestsMade)
@@ -584,7 +582,6 @@ func TestWaitForKubernetesNodeGroupState(t *testing.T) {
 	_, err := svc.WaitForKubernetesNodeGroupState(context.Background(), &request.WaitForKubernetesNodeGroupStateRequest{
 		ClusterUUID:  "_UUID_",
 		DesiredState: upcloud.KubernetesNodeGroupStateRunning,
-		Timeout:      time.Second * 20,
 		Name:         "_NAME_",
 	})
 	assert.NoError(t, err)

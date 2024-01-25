@@ -3,9 +3,7 @@ package service
 import (
 	"context"
 	"errors"
-	"fmt"
 	"net/http"
-	"time"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud/request"
@@ -154,13 +152,8 @@ func (s *Service) DeleteManagedObjectStorageUserAccessKey(ctx context.Context, r
 // has entered the specified state. If the state changes favorably, service details is returned. The method will give up
 // after the specified timeout
 func (s *Service) WaitForManagedObjectStorageOperationalState(ctx context.Context, r *request.WaitForManagedObjectStorageOperationalStateRequest) (*upcloud.ManagedObjectStorage, error) {
-	attempts := 0
-	sleepDuration := time.Second * 5
-
-	for {
-		attempts++
-
-		details, err := s.GetManagedObjectStorage(ctx, &request.GetManagedObjectStorageRequest{
+	return retry(ctx, func(_ int, c context.Context) (*upcloud.ManagedObjectStorage, error) {
+		details, err := s.GetManagedObjectStorage(c, &request.GetManagedObjectStorageRequest{
 			UUID: r.UUID,
 		})
 		if err != nil {
@@ -170,26 +163,16 @@ func (s *Service) WaitForManagedObjectStorageOperationalState(ctx context.Contex
 		if details.OperationalState == r.DesiredState {
 			return details, nil
 		}
-
-		time.Sleep(sleepDuration)
-
-		if time.Duration(attempts)*sleepDuration >= r.Timeout {
-			return nil, fmt.Errorf("timeout reached while waiting for Managed Object Storage service to enter state \"%s\"", r.DesiredState)
-		}
-	}
+		return nil, nil
+	}, nil)
 }
 
 // WaitForManagedObjectStorageUserOperationalState blocks execution until the specified Managed Object Storage service
 // user has entered the specified state. If the state changes favorably, user details is returned. The method will give up
 // after the specified timeout
 func (s *Service) WaitForManagedObjectStorageUserOperationalState(ctx context.Context, r *request.WaitForManagedObjectStorageUserOperationalStateRequest) (*upcloud.ManagedObjectStorageUser, error) {
-	attempts := 0
-	sleepDuration := time.Second * 5
-
-	for {
-		attempts++
-
-		details, err := s.GetManagedObjectStorageUser(ctx, &request.GetManagedObjectStorageUserRequest{
+	return retry(ctx, func(_ int, c context.Context) (*upcloud.ManagedObjectStorageUser, error) {
+		details, err := s.GetManagedObjectStorageUser(c, &request.GetManagedObjectStorageUserRequest{
 			ServiceUUID: r.ServiceUUID,
 			Username:    r.Username,
 		})
@@ -200,40 +183,27 @@ func (s *Service) WaitForManagedObjectStorageUserOperationalState(ctx context.Co
 		if details.OperationalState == r.DesiredState {
 			return details, nil
 		}
-
-		time.Sleep(sleepDuration)
-
-		if time.Duration(attempts)*sleepDuration >= r.Timeout {
-			return nil, fmt.Errorf("timeout reached while waiting for Managed Object Storage service user to enter state \"%s\"", r.DesiredState)
-		}
-	}
+		return nil, nil
+	}, nil)
 }
 
 // WaitForManagedObjectStorageDeletion blocks execution until the specified Managed Object Storage service
 // has been deleted. The method will give upafter the specified timeout
 func (s *Service) WaitForManagedObjectStorageDeletion(ctx context.Context, r *request.WaitForManagedObjectStorageDeletionRequest) error {
-	attempts := 0
-	sleepDuration := time.Second * 5
-
-	for {
-		attempts++
-
-		_, err := s.GetManagedObjectStorage(ctx, &request.GetManagedObjectStorageRequest{
+	_, err := retry(ctx, func(_ int, c context.Context) (*upcloud.ManagedObjectStorage, error) {
+		details, err := s.GetManagedObjectStorage(c, &request.GetManagedObjectStorageRequest{
 			UUID: r.UUID,
 		})
 		if err != nil {
 			var ucErr *upcloud.Problem
 			if errors.As(err, &ucErr) && ucErr.Status == http.StatusNotFound {
-				return nil
+				return nil, nil
 			}
 
-			return err
+			return nil, err
 		}
 
-		time.Sleep(sleepDuration)
-
-		if time.Duration(attempts)*sleepDuration >= r.Timeout {
-			return fmt.Errorf("timeout reached while waiting for Managed Object Storage service to be deleted")
-		}
-	}
+		return details, err
+	}, &retryConfig{inverse: true})
+	return err
 }

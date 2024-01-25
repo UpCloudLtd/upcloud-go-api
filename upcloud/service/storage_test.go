@@ -662,7 +662,6 @@ func waitForStorageImportCompletion(ctx context.Context, rec *recorder.Recorder,
 
 	_, err := svc.WaitForStorageImportCompletion(ctx, &request.WaitForStorageImportCompletionRequest{
 		StorageUUID: storageUUID,
-		Timeout:     15 * time.Minute,
 	})
 
 	return err
@@ -684,7 +683,6 @@ func waitForStorageOnlineState(ctx context.Context, rec *recorder.Recorder, svc 
 	_, err := svc.WaitForStorageState(ctx, &request.WaitForStorageStateRequest{
 		UUID:         storageUUID,
 		DesiredState: upcloud.StorageStateOnline,
-		Timeout:      waitTimeout,
 	})
 
 	return err
