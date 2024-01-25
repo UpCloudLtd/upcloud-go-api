@@ -11,15 +11,6 @@ import (
 
 /* Service Management */
 
-func TestCancelManagedDatabaseConnection_RequestURL(t *testing.T) {
-	req := &CancelManagedDatabaseConnection{
-		UUID:      "fake",
-		Pid:       42,
-		Terminate: true,
-	}
-	assert.Equal(t, "/database/fake/connections/42?terminate=true", req.RequestURL())
-}
-
 func TestCancelManagedDatabaseSession_RequestURL(t *testing.T) {
 	req := &CancelManagedDatabaseSession{
 		UUID:      "fake",
@@ -159,15 +150,6 @@ func TestGetManagedDatabasesRequest_RequestURL(t *testing.T) {
 func TestGetManagedDatabaseAccessControlRequest_RequestURL(t *testing.T) {
 	req := GetManagedDatabaseAccessControlRequest{ServiceUUID: "fake"}
 	assert.Equal(t, "/database/fake/access-control", req.RequestURL())
-}
-
-func TestGetManagedDatabaseConnectionsRequest_RequestURL(t *testing.T) {
-	req := &GetManagedDatabaseConnectionsRequest{
-		UUID:   "fake",
-		Limit:  1000,
-		Offset: 42,
-	}
-	assert.Equal(t, "/database/fake/connections?limit=1000&offset=42", req.RequestURL())
 }
 
 func TestGetManagedDatabaseMetricsRequest_RequestURL(t *testing.T) {

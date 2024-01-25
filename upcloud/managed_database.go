@@ -200,32 +200,6 @@ type ManagedDatabaseComponent struct {
 	Usage ManagedDatabaseComponentUsage `json:"usage"`
 }
 
-// ManagedDatabaseConnection represents a connection to the managed database instance. The available fields
-// vary between database types.
-type ManagedDatabaseConnection struct {
-	ApplicationName string        `json:"application_name"`
-	BackendStart    time.Time     `json:"backend_start"`
-	BackendType     string        `json:"backend_type"`
-	BackendXid      string        `json:"backend_xid"`
-	BackendXmin     string        `json:"backend_xmin"`
-	ClientAddr      string        `json:"client_addr"`
-	ClientHostname  string        `json:"client_hostname"`
-	ClientPort      int           `json:"client_port"`
-	DatId           int           `json:"datid"`
-	DatName         string        `json:"datname"`
-	Pid             int           `json:"pid"`
-	Query           string        `json:"query"`
-	QueryDuration   time.Duration `json:"query_duration"`
-	QueryStart      time.Time     `json:"query_start"`
-	State           string        `json:"state"`
-	StateChange     time.Time     `json:"state_change"`
-	Username        string        `json:"usename"`
-	UseSysId        int           `json:"usesysid"`
-	WaitEvent       string        `json:"wait_event"`
-	WaitEventType   string        `json:"wait_event_type"`
-	XactStart       time.Time     `json:"xact_start"`
-}
-
 // ManagedDatabaseSessions represents sessions in the managed database instance by database instance type.
 type ManagedDatabaseSessions struct {
 	MySQL      []ManagedDatabaseSessionMySQL      `json:"mysql,omitempty"`

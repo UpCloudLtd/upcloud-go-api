@@ -12,26 +12,6 @@ import (
 
 /* Service Management */
 
-// CancelManagedDatabaseConnection represents a request to cancel the current query of a connection or terminate
-// the entire connection.
-type CancelManagedDatabaseConnection struct {
-	// UUID selects a managed database instance to manage queries of
-	UUID string
-	// Pid selects a connection pid to cancel or terminate
-	Pid int
-	// Terminate selects whether the connection will be forcefully terminated
-	Terminate bool
-}
-
-// RequestURL implements the request.Request interface
-func (c *CancelManagedDatabaseConnection) RequestURL() string {
-	qv := url.Values{}
-	if c.Terminate {
-		qv.Set("terminate", "true")
-	}
-	return fmt.Sprintf("/database/%s/connections/%d?%s", c.UUID, c.Pid, qv.Encode())
-}
-
 // CancelManagedDatabaseSession represents a request to cancel the current query of a connection or terminate
 // the entire connection.
 type CancelManagedDatabaseSession struct {
@@ -160,28 +140,6 @@ type GetManagedDatabaseAccessControlRequest struct {
 // RequestURL implements the request.Request interface
 func (g *GetManagedDatabaseAccessControlRequest) RequestURL() string {
 	return fmt.Sprintf("/database/%s/access-control", g.ServiceUUID)
-}
-
-// GetManagedDatabaseConnectionsRequest represents a request to get managed database instance's current connections
-type GetManagedDatabaseConnectionsRequest struct {
-	// UUID selects a managed database instance to query connections from
-	UUID string
-	// Limit sets the upper bound how many connections to fetch
-	Limit int
-	// Offset skips n connections before returning them. It can be used to iteratively fetch connections.
-	Offset int
-}
-
-// RequestURL implements the request.Request interface
-func (g *GetManagedDatabaseConnectionsRequest) RequestURL() string {
-	qv := url.Values{}
-	if g.Limit != 0 {
-		qv.Set("limit", strconv.Itoa(g.Limit))
-	}
-	if g.Offset != 0 {
-		qv.Set("offset", strconv.Itoa(g.Offset))
-	}
-	return fmt.Sprintf("/database/%s/connections?%s", g.UUID, qv.Encode())
 }
 
 // GetManagedDatabaseMetricsRequest represents a request to get managed database instance performance metrics
