@@ -622,10 +622,10 @@ type ManagedDatabaseUserPGAccessControl struct {
 }
 
 type ManagedDatabaseUserRedisAccessControl struct {
-	Categories []string `json:"categories,omitempty"`
-	Channels   []string `json:"channels,omitempty"`
-	Commands   []string `json:"commands,omitempty"`
-	Keys       []string `json:"keys,omitempty"`
+	Categories *[]string `json:"categories,omitempty"`
+	Channels   *[]string `json:"channels,omitempty"`
+	Commands   *[]string `json:"commands,omitempty"`
+	Keys       *[]string `json:"keys,omitempty"`
 }
 
 type ManagedDatabaseUserOpenSearchAccessControl struct {

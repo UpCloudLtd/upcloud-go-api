@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Changed
+- **Breaking**, Managed Database: `ManagedDatabaseUserRedisAccessControl` `[]string` properties changed to `*[]string`
+
 ### Removed
 - **Breaking**, Managed Database: connection related methods in favor of session
 

@@ -779,10 +779,10 @@ func TestManagedDatabaseUser(t *testing.T) {
 			AllowReplication: false,
 		},
 		RedisAccessControl: &ManagedDatabaseUserRedisAccessControl{
-			Categories: []string{"+@set"},
-			Channels:   []string{"*"},
-			Commands:   []string{"+set"},
-			Keys:       []string{"key_*"},
+			Categories: &[]string{"+@set"},
+			Channels:   &[]string{"*"},
+			Commands:   &[]string{"+set"},
+			Keys:       &[]string{"key_*"},
 		},
 	}
 	assert.Equal(t, want, got)

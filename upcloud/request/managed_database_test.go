@@ -432,10 +432,10 @@ func TestCreateManagedDatabaseUserRequest(t *testing.T) {
 			AllowReplication: true,
 		},
 		RedisAccessControl: &upcloud.ManagedDatabaseUserRedisAccessControl{
-			Categories: []string{"+@set"},
-			Channels:   []string{"*"},
-			Commands:   []string{"+set"},
-			Keys:       []string{"key_*"},
+			Categories: &[]string{"+@set"},
+			Channels:   &[]string{"*"},
+			Commands:   &[]string{"+set"},
+			Keys:       &[]string{"key_*"},
 		},
 	}
 	got, err := json.Marshal(&r)
@@ -478,10 +478,10 @@ func TestModifyManagedDatabaseUserAccessControlRequest(t *testing.T) {
 			AllowReplication: true,
 		},
 		RedisAccessControl: &upcloud.ManagedDatabaseUserRedisAccessControl{
-			Categories: []string{"+@set"},
-			Channels:   []string{"*"},
-			Commands:   []string{"+set"},
-			Keys:       []string{"key_*"},
+			Categories: &[]string{"+@set"},
+			Channels:   &[]string{"*"},
+			Commands:   &[]string{"+set"},
+			Keys:       &[]string{"key_*"},
 		},
 	}
 	got, err := json.Marshal(&r)
