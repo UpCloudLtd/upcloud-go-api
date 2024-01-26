@@ -776,13 +776,13 @@ func TestManagedDatabaseUser(t *testing.T) {
 		Password:       "new-password",
 		Username:       "api-doc-user",
 		PGAccessControl: &ManagedDatabaseUserPGAccessControl{
-			AllowReplication: false,
+			AllowReplication: BoolPtr(false),
 		},
 		RedisAccessControl: &ManagedDatabaseUserRedisAccessControl{
-			Categories: []string{"+@set"},
-			Channels:   []string{"*"},
-			Commands:   []string{"+set"},
-			Keys:       []string{"key_*"},
+			Categories: &[]string{"+@set"},
+			Channels:   &[]string{"*"},
+			Commands:   &[]string{"+set"},
+			Keys:       &[]string{"key_*"},
 		},
 	}
 	assert.Equal(t, want, got)

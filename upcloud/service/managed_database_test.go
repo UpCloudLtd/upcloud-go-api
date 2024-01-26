@@ -729,8 +729,8 @@ func TestService_GetManagedDatabaseServiceTypes(t *testing.T) {
 	})
 }
 
-func TestService_ModifyManagedDatabaseUserAccessControl(t *testing.T) {
-	record(t, "modifymanageddatabaseuseraccesscontrol", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+func TestService_ModifyManagedDatabaseUserPostgreSQLAccessControl(t *testing.T) {
+	record(t, "modifymanageddatabaseuserpostgreqlsaccesscontrol", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		db, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("modifyuseraccesscontrol", upcloud.ManagedDatabaseServiceTypePostgreSQL))
 		if !assert.NoError(t, err) {
 			return
@@ -747,30 +747,30 @@ func TestService_ModifyManagedDatabaseUserAccessControl(t *testing.T) {
 			ServiceUUID: db.UUID,
 			Username:    "demouser",
 			PGAccessControl: &upcloud.ManagedDatabaseUserPGAccessControl{
-				AllowReplication: true,
+				AllowReplication: upcloud.BoolPtr(true),
 			},
 		})
 		if !assert.NoError(t, err) {
 			return
 		}
-		assert.True(t, user.PGAccessControl.AllowReplication)
+		assert.True(t, *user.PGAccessControl.AllowReplication)
 
 		user, err = svc.ModifyManagedDatabaseUserAccessControl(ctx, &request.ModifyManagedDatabaseUserAccessControlRequest{
 			ServiceUUID: db.UUID,
 			Username:    user.Username,
 			PGAccessControl: &upcloud.ManagedDatabaseUserPGAccessControl{
-				AllowReplication: false,
+				AllowReplication: upcloud.BoolPtr(false),
 			},
 		})
 		if !assert.NoError(t, err) {
 			return
 		}
-		assert.False(t, user.PGAccessControl.AllowReplication)
+		assert.False(t, *user.PGAccessControl.AllowReplication)
 	})
 }
 
 func TestService_ModifyManagedDatabaseUserOpenSearchAccessControl(t *testing.T) {
-	record(t, "modifymanageddatabaseuseraccesscontrolos", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "modifymanageddatabaseuseropensearchaccesscontrol", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		db, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("modifyuseraccesscontrolos", upcloud.ManagedDatabaseServiceTypeOpenSearch))
 		if !assert.NoError(t, err) {
 			return
@@ -787,7 +787,7 @@ func TestService_ModifyManagedDatabaseUserOpenSearchAccessControl(t *testing.T) 
 			ServiceUUID: db.UUID,
 			Username:    "demouser",
 			OpenSearchAccessControl: &upcloud.ManagedDatabaseUserOpenSearchAccessControl{
-				Rules: []upcloud.ManagedDatabaseUserOpenSearchAccessControlRule{
+				Rules: &[]upcloud.ManagedDatabaseUserOpenSearchAccessControlRule{
 					{
 						Index:      "index_1",
 						Permission: upcloud.ManagedDatabaseUserOpenSearchAccessControlRulePermissionReadWrite,
@@ -798,14 +798,15 @@ func TestService_ModifyManagedDatabaseUserOpenSearchAccessControl(t *testing.T) 
 		if !assert.NoError(t, err) {
 			return
 		}
-		assert.Equal(t, "index_1", user.OpenSearchAccessControl.Rules[0].Index)
-		assert.Equal(t, "readwrite", string(user.OpenSearchAccessControl.Rules[0].Permission))
+		rules := *user.OpenSearchAccessControl.Rules
+		assert.Equal(t, "index_1", rules[0].Index)
+		assert.Equal(t, "readwrite", string(rules[0].Permission))
 
 		user, err = svc.ModifyManagedDatabaseUserAccessControl(ctx, &request.ModifyManagedDatabaseUserAccessControlRequest{
 			ServiceUUID: db.UUID,
 			Username:    user.Username,
 			OpenSearchAccessControl: &upcloud.ManagedDatabaseUserOpenSearchAccessControl{
-				Rules: []upcloud.ManagedDatabaseUserOpenSearchAccessControlRule{
+				Rules: &[]upcloud.ManagedDatabaseUserOpenSearchAccessControlRule{
 					{
 						Index:      "index_1",
 						Permission: upcloud.ManagedDatabaseUserOpenSearchAccessControlRulePermissionRead,
@@ -816,8 +817,71 @@ func TestService_ModifyManagedDatabaseUserOpenSearchAccessControl(t *testing.T) 
 		if !assert.NoError(t, err) {
 			return
 		}
-		assert.Equal(t, "index_1", user.OpenSearchAccessControl.Rules[0].Index)
-		assert.Equal(t, "read", string(user.OpenSearchAccessControl.Rules[0].Permission))
+		rules = *user.OpenSearchAccessControl.Rules
+		assert.Equal(t, "index_1", rules[0].Index)
+		assert.Equal(t, "read", string(rules[0].Permission))
+
+		user, err = svc.ModifyManagedDatabaseUserAccessControl(ctx, &request.ModifyManagedDatabaseUserAccessControlRequest{
+			ServiceUUID:             db.UUID,
+			Username:                user.Username,
+			OpenSearchAccessControl: &upcloud.ManagedDatabaseUserOpenSearchAccessControl{},
+		})
+		if !assert.NoError(t, err) {
+			return
+		}
+		assert.Len(t, *user.OpenSearchAccessControl.Rules, 0)
+	})
+}
+
+func TestService_ModifyManagedDatabaseUserRedisAccessControl(t *testing.T) {
+	record(t, "modifymanageddatabaseuserredisaccesscontrol", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		db, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("modifyuseraccesscontrolredis", upcloud.ManagedDatabaseServiceTypeRedis))
+		if !assert.NoError(t, err) {
+			return
+		}
+		defer func() {
+			if err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: db.UUID}); err != nil {
+				t.Log(err)
+			}
+		}()
+		if !assert.NoError(t, waitForManagedDatabaseRunningState(ctx, rec, svc, db.UUID)) {
+			return
+		}
+		user, err := svc.CreateManagedDatabaseUser(ctx, &request.CreateManagedDatabaseUserRequest{
+			ServiceUUID: db.UUID,
+			Username:    "demouser",
+			RedisAccessControl: &upcloud.ManagedDatabaseUserRedisAccessControl{
+				Categories: &[]string{"+@set"},
+				Channels:   &[]string{"*"},
+				Commands:   &[]string{"+set"},
+				Keys:       &[]string{"key_*"},
+			},
+		})
+		if !assert.NoError(t, err) {
+			return
+		}
+		assert.Equal(t, []string{"+@set"}, *user.RedisAccessControl.Categories)
+		assert.Equal(t, []string{"*"}, *user.RedisAccessControl.Channels)
+		assert.Equal(t, []string{"+set"}, *user.RedisAccessControl.Commands)
+		assert.Equal(t, []string{"key_*"}, *user.RedisAccessControl.Keys)
+
+		user, err = svc.ModifyManagedDatabaseUserAccessControl(ctx, &request.ModifyManagedDatabaseUserAccessControlRequest{
+			ServiceUUID: db.UUID,
+			Username:    user.Username,
+			RedisAccessControl: &upcloud.ManagedDatabaseUserRedisAccessControl{
+				Categories: &[]string{},
+				Channels:   &[]string{},
+				Commands:   &[]string{},
+				Keys:       &[]string{"key_*"},
+			},
+		})
+		if !assert.NoError(t, err) {
+			return
+		}
+		assert.Equal(t, []string{}, *user.RedisAccessControl.Categories)
+		assert.Equal(t, []string{}, *user.RedisAccessControl.Channels)
+		assert.Equal(t, []string{}, *user.RedisAccessControl.Commands)
+		assert.Equal(t, []string{"key_*"}, *user.RedisAccessControl.Keys)
 	})
 }
 

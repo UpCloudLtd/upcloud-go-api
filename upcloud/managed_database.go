@@ -618,18 +618,18 @@ type ManagedDatabaseUser struct {
 }
 
 type ManagedDatabaseUserPGAccessControl struct {
-	AllowReplication bool `json:"allow_replication"`
+	AllowReplication *bool `json:"allow_replication,omitempty"`
 }
 
 type ManagedDatabaseUserRedisAccessControl struct {
-	Categories []string `json:"categories,omitempty"`
-	Channels   []string `json:"channels,omitempty"`
-	Commands   []string `json:"commands,omitempty"`
-	Keys       []string `json:"keys,omitempty"`
+	Categories *[]string `json:"categories,omitempty"`
+	Channels   *[]string `json:"channels,omitempty"`
+	Commands   *[]string `json:"commands,omitempty"`
+	Keys       *[]string `json:"keys,omitempty"`
 }
 
 type ManagedDatabaseUserOpenSearchAccessControl struct {
-	Rules []ManagedDatabaseUserOpenSearchAccessControlRule `json:"rules"`
+	Rules *[]ManagedDatabaseUserOpenSearchAccessControlRule `json:"rules,omitempty"`
 }
 
 type ManagedDatabaseUserOpenSearchAccessControlRule struct {

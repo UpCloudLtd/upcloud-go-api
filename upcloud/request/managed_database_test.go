@@ -429,13 +429,13 @@ func TestCreateManagedDatabaseUserRequest(t *testing.T) {
 		Password:       "new-password",
 		Authentication: upcloud.ManagedDatabaseUserAuthenticationCachingSHA2Password,
 		PGAccessControl: &upcloud.ManagedDatabaseUserPGAccessControl{
-			AllowReplication: true,
+			AllowReplication: upcloud.BoolPtr(true),
 		},
 		RedisAccessControl: &upcloud.ManagedDatabaseUserRedisAccessControl{
-			Categories: []string{"+@set"},
-			Channels:   []string{"*"},
-			Commands:   []string{"+set"},
-			Keys:       []string{"key_*"},
+			Categories: &[]string{"+@set"},
+			Channels:   &[]string{"*"},
+			Commands:   &[]string{"+set"},
+			Keys:       &[]string{"key_*"},
 		},
 	}
 	got, err := json.Marshal(&r)
@@ -475,13 +475,13 @@ func TestModifyManagedDatabaseUserAccessControlRequest(t *testing.T) {
 		ServiceUUID: "fakeuuid",
 		Username:    "fakeuser",
 		PGAccessControl: &upcloud.ManagedDatabaseUserPGAccessControl{
-			AllowReplication: true,
+			AllowReplication: upcloud.BoolPtr(true),
 		},
 		RedisAccessControl: &upcloud.ManagedDatabaseUserRedisAccessControl{
-			Categories: []string{"+@set"},
-			Channels:   []string{"*"},
-			Commands:   []string{"+set"},
-			Keys:       []string{"key_*"},
+			Categories: &[]string{"+@set"},
+			Channels:   &[]string{"*"},
+			Commands:   &[]string{"+set"},
+			Keys:       &[]string{"key_*"},
 		},
 	}
 	got, err := json.Marshal(&r)
