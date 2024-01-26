@@ -231,7 +231,7 @@ type CreateManagedObjectStorageUserAccessKeyRequest struct {
 	Username    string `json:"-"`
 	ServiceUUID string `json:"-"`
 	Name        string `json:"name"`
-	Enabled     bool   `json:"enabled,omitempty"`
+	Enabled     *bool  `json:"enabled,omitempty"`
 }
 
 // RequestURL implements the Request interface
@@ -267,7 +267,7 @@ type ModifyManagedObjectStorageUserAccessKeyRequest struct {
 	Username    string `json:"-"`
 	ServiceUUID string `json:"-"`
 	Name        string `json:"name,omitempty"`
-	Enabled     bool   `json:"enabled,omitempty"`
+	Enabled     *bool  `json:"enabled,omitempty"`
 }
 
 // RequestURL implements the Request interface

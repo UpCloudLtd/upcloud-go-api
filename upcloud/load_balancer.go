@@ -169,7 +169,7 @@ type LoadBalancerFrontendTLSConfig struct {
 // LoadBalancerFrontendProperties represents frontend properties
 type LoadBalancerFrontendProperties struct {
 	TimeoutClient        int   `json:"timeout_client,omitempty"`
-	InboundProxyProtocol bool  `json:"inbound_proxy_protocol"`
+	InboundProxyProtocol *bool `json:"inbound_proxy_protocol,omitempty"`
 	HTTP2Enabled         *bool `json:"http2_enabled,omitempty"`
 }
 

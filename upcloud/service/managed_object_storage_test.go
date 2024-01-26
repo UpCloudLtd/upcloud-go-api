@@ -424,10 +424,11 @@ func TestCreateManagedObjectStorageUserAccessKey(t *testing.T) {
 			Username:    user.Username,
 			ServiceUUID: storage.UUID,
 			Name:        "example-access-key",
-			Enabled:     false,
+			Enabled:     upcloud.BoolPtr(false),
 		})
 		require.NoError(t, err)
 		require.Equal(t, "example-access-key", accessKey.Name)
+		require.Equal(t, false, accessKey.Enabled)
 		require.NotEmpty(t, accessKey.AccessKeyId)
 		require.NotEmpty(t, accessKey.SecretAccessKey)
 	})
@@ -455,7 +456,7 @@ func TestGetManagedObjectStorageUserAccesKeys(t *testing.T) {
 			Username:    storage.Users[0].Username,
 			ServiceUUID: storage.UUID,
 			Name:        "example-access-key",
-			Enabled:     false,
+			Enabled:     upcloud.BoolPtr(false),
 		})
 		require.NoError(t, err)
 
@@ -490,7 +491,7 @@ func TestGetManagedObjectStorageUserAccessKey(t *testing.T) {
 			Username:    storage.Users[0].Username,
 			ServiceUUID: storage.UUID,
 			Name:        "example-access-key",
-			Enabled:     false,
+			Enabled:     upcloud.BoolPtr(false),
 		})
 		require.NoError(t, err)
 
@@ -533,7 +534,7 @@ func TestModifyManagedObjectStorageUserAccessKey(t *testing.T) {
 			Username:    storage.Users[0].Username,
 			ServiceUUID: storage.UUID,
 			Name:        "example-access-key",
-			Enabled:     false,
+			Enabled:     upcloud.BoolPtr(false),
 		})
 		require.NoError(t, err)
 
@@ -541,10 +542,19 @@ func TestModifyManagedObjectStorageUserAccessKey(t *testing.T) {
 			ServiceUUID: storage.UUID,
 			Username:    storage.Users[0].Username,
 			Name:        accessKey.Name,
-			Enabled:     true,
+			Enabled:     upcloud.BoolPtr(true),
 		})
 		require.NoError(t, err)
 		require.Equal(t, true, accessKey.Enabled)
+
+		accessKey, err = svc.ModifyManagedObjectStorageUserAccessKey(ctx, &request.ModifyManagedObjectStorageUserAccessKeyRequest{
+			ServiceUUID: storage.UUID,
+			Username:    storage.Users[0].Username,
+			Name:        accessKey.Name,
+			Enabled:     upcloud.BoolPtr(false),
+		})
+		require.NoError(t, err)
+		require.Equal(t, false, accessKey.Enabled)
 	})
 }
 
@@ -570,7 +580,7 @@ func TestDeleteManagedObjectStorageUserAccessKey(t *testing.T) {
 			Username:    storage.Users[0].Username,
 			ServiceUUID: storage.UUID,
 			Name:        "example-access-key",
-			Enabled:     false,
+			Enabled:     upcloud.BoolPtr(false),
 		})
 		require.NoError(t, err)
 
