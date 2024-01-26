@@ -747,25 +747,25 @@ func TestService_ModifyManagedDatabaseUserPostgreSQLAccessControl(t *testing.T) 
 			ServiceUUID: db.UUID,
 			Username:    "demouser",
 			PGAccessControl: &upcloud.ManagedDatabaseUserPGAccessControl{
-				AllowReplication: true,
+				AllowReplication: upcloud.BoolPtr(true),
 			},
 		})
 		if !assert.NoError(t, err) {
 			return
 		}
-		assert.True(t, user.PGAccessControl.AllowReplication)
+		assert.True(t, *user.PGAccessControl.AllowReplication)
 
 		user, err = svc.ModifyManagedDatabaseUserAccessControl(ctx, &request.ModifyManagedDatabaseUserAccessControlRequest{
 			ServiceUUID: db.UUID,
 			Username:    user.Username,
 			PGAccessControl: &upcloud.ManagedDatabaseUserPGAccessControl{
-				AllowReplication: false,
+				AllowReplication: upcloud.BoolPtr(false),
 			},
 		})
 		if !assert.NoError(t, err) {
 			return
 		}
-		assert.False(t, user.PGAccessControl.AllowReplication)
+		assert.False(t, *user.PGAccessControl.AllowReplication)
 	})
 }
 
@@ -787,7 +787,7 @@ func TestService_ModifyManagedDatabaseUserOpenSearchAccessControl(t *testing.T) 
 			ServiceUUID: db.UUID,
 			Username:    "demouser",
 			OpenSearchAccessControl: &upcloud.ManagedDatabaseUserOpenSearchAccessControl{
-				Rules: []upcloud.ManagedDatabaseUserOpenSearchAccessControlRule{
+				Rules: &[]upcloud.ManagedDatabaseUserOpenSearchAccessControlRule{
 					{
 						Index:      "index_1",
 						Permission: upcloud.ManagedDatabaseUserOpenSearchAccessControlRulePermissionReadWrite,
@@ -798,14 +798,15 @@ func TestService_ModifyManagedDatabaseUserOpenSearchAccessControl(t *testing.T) 
 		if !assert.NoError(t, err) {
 			return
 		}
-		assert.Equal(t, "index_1", user.OpenSearchAccessControl.Rules[0].Index)
-		assert.Equal(t, "readwrite", string(user.OpenSearchAccessControl.Rules[0].Permission))
+		rules := *user.OpenSearchAccessControl.Rules
+		assert.Equal(t, "index_1", rules[0].Index)
+		assert.Equal(t, "readwrite", string(rules[0].Permission))
 
 		user, err = svc.ModifyManagedDatabaseUserAccessControl(ctx, &request.ModifyManagedDatabaseUserAccessControlRequest{
 			ServiceUUID: db.UUID,
 			Username:    user.Username,
 			OpenSearchAccessControl: &upcloud.ManagedDatabaseUserOpenSearchAccessControl{
-				Rules: []upcloud.ManagedDatabaseUserOpenSearchAccessControlRule{
+				Rules: &[]upcloud.ManagedDatabaseUserOpenSearchAccessControlRule{
 					{
 						Index:      "index_1",
 						Permission: upcloud.ManagedDatabaseUserOpenSearchAccessControlRulePermissionRead,
@@ -816,20 +817,19 @@ func TestService_ModifyManagedDatabaseUserOpenSearchAccessControl(t *testing.T) 
 		if !assert.NoError(t, err) {
 			return
 		}
-		assert.Equal(t, "index_1", user.OpenSearchAccessControl.Rules[0].Index)
-		assert.Equal(t, "read", string(user.OpenSearchAccessControl.Rules[0].Permission))
+		rules = *user.OpenSearchAccessControl.Rules
+		assert.Equal(t, "index_1", rules[0].Index)
+		assert.Equal(t, "read", string(rules[0].Permission))
 
 		user, err = svc.ModifyManagedDatabaseUserAccessControl(ctx, &request.ModifyManagedDatabaseUserAccessControlRequest{
-			ServiceUUID: db.UUID,
-			Username:    user.Username,
-			OpenSearchAccessControl: &upcloud.ManagedDatabaseUserOpenSearchAccessControl{
-				Rules: []upcloud.ManagedDatabaseUserOpenSearchAccessControlRule{},
-			},
+			ServiceUUID:             db.UUID,
+			Username:                user.Username,
+			OpenSearchAccessControl: &upcloud.ManagedDatabaseUserOpenSearchAccessControl{},
 		})
 		if !assert.NoError(t, err) {
 			return
 		}
-		assert.Len(t, user.OpenSearchAccessControl.Rules, 0)
+		assert.Len(t, *user.OpenSearchAccessControl.Rules, 0)
 	})
 }
 

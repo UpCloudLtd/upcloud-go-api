@@ -776,7 +776,7 @@ func TestManagedDatabaseUser(t *testing.T) {
 		Password:       "new-password",
 		Username:       "api-doc-user",
 		PGAccessControl: &ManagedDatabaseUserPGAccessControl{
-			AllowReplication: false,
+			AllowReplication: BoolPtr(false),
 		},
 		RedisAccessControl: &ManagedDatabaseUserRedisAccessControl{
 			Categories: &[]string{"+@set"},

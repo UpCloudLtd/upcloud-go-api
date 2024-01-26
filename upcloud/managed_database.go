@@ -618,7 +618,7 @@ type ManagedDatabaseUser struct {
 }
 
 type ManagedDatabaseUserPGAccessControl struct {
-	AllowReplication bool `json:"allow_replication"`
+	AllowReplication *bool `json:"allow_replication,omitempty"`
 }
 
 type ManagedDatabaseUserRedisAccessControl struct {
@@ -629,7 +629,7 @@ type ManagedDatabaseUserRedisAccessControl struct {
 }
 
 type ManagedDatabaseUserOpenSearchAccessControl struct {
-	Rules []ManagedDatabaseUserOpenSearchAccessControlRule `json:"rules"`
+	Rules *[]ManagedDatabaseUserOpenSearchAccessControlRule `json:"rules,omitempty"`
 }
 
 type ManagedDatabaseUserOpenSearchAccessControlRule struct {

@@ -6,7 +6,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 ## [Unreleased]
 
 ### Changed
-- **Breaking**, Managed Database: `ManagedDatabaseUserRedisAccessControl` `[]string` properties changed to `*[]string`
+- **Breaking**, Managed Database: `ManagedDatabaseUserOpernSearchAccessControl` fields changed to pointers
+- **Breaking**, Managed Database: `ManagedDatabaseUserPostgreSQLAccessControl` fields changed to pointers
+- **Breaking**, Managed Database: `ManagedDatabaseUserRedisAccessControl` fields changed to pointers
 
 ### Removed
 - **Breaking**, Managed Database: connection related methods in favor of session
