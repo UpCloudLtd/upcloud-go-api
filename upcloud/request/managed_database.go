@@ -477,7 +477,6 @@ func (r *GetManagedDatabaseVersionsRequest) RequestURL() string {
 type WaitForManagedDatabaseStateRequest struct {
 	UUID         string
 	DesiredState upcloud.ManagedDatabaseState
-	Timeout      time.Duration
 }
 
 // StartManagedDatabaseRequest represents a request to start an existing managed database instance

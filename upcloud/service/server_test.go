@@ -544,7 +544,6 @@ func waitForServerState(ctx context.Context, rec *recorder.Recorder, svc *Servic
 	_, err := svc.WaitForServerState(ctx, &request.WaitForServerStateRequest{
 		UUID:         serverUUID,
 		DesiredState: desiredState,
-		Timeout:      waitTimeout,
 	})
 	if err != nil {
 		return err
@@ -574,7 +573,6 @@ func stopServerWithoutRecorder(ctx context.Context, svc *Service, uuid string) e
 	_, err = svc.WaitForServerState(ctx, &request.WaitForServerStateRequest{
 		UUID:         serverDetails.UUID,
 		DesiredState: upcloud.ServerStateStopped,
-		Timeout:      waitTimeout,
 	})
 
 	return err

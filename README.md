@@ -155,7 +155,6 @@ fmt.Println(fmt.Sprintf("Server %s with UUID %s created", serverDetails.Title, s
 err = svc.WaitForServerState(context.Background(), &request.WaitForServerStateRequest{
 	UUID:         serverDetails.UUID,
 	DesiredState: upcloud.ServerStateStarted,
-	Timeout:      time.Minute * 5,
 })
 
 if err != nil {

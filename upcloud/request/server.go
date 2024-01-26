@@ -229,7 +229,6 @@ type WaitForServerStateRequest struct {
 	UUID           string
 	DesiredState   string
 	UndesiredState string
-	Timeout        time.Duration
 }
 
 // StartServerRequest represents a request to start a server

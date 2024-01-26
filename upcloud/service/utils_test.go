@@ -126,7 +126,6 @@ func teardown() {
 		serverDetails, err := svc.WaitForServerState(ctx, &request.WaitForServerStateRequest{
 			UUID:           server.UUID,
 			UndesiredState: upcloud.ServerStateMaintenance,
-			Timeout:        waitTimeout,
 		})
 		handleError(err)
 
@@ -157,7 +156,6 @@ func teardown() {
 			_, err = svc.WaitForStorageState(ctx, &request.WaitForStorageStateRequest{
 				UUID:         storage.UUID,
 				DesiredState: upcloud.StorageStateOnline,
-				Timeout:      waitTimeout,
 			})
 			handleError(err)
 		}

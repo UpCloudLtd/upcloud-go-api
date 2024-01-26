@@ -3,7 +3,6 @@ package request
 import (
 	"encoding/json"
 	"fmt"
-	"time"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud"
 )
@@ -93,7 +92,6 @@ func (r *DeleteKubernetesClusterRequest) RequestURL() string {
 // to enter a desired state
 type WaitForKubernetesClusterStateRequest struct {
 	DesiredState upcloud.KubernetesClusterState `json:"-"`
-	Timeout      time.Duration                  `json:"-"`
 	UUID         string                         `json:"-"`
 }
 
@@ -105,7 +103,6 @@ func (r *WaitForKubernetesClusterStateRequest) RequestURL() string {
 // to enter a desired state
 type WaitForKubernetesNodeGroupStateRequest struct {
 	DesiredState upcloud.KubernetesNodeGroupState `json:"-"`
-	Timeout      time.Duration                    `json:"-"`
 	ClusterUUID  string                           `json:"-"`
 	Name         string                           `json:"-"`
 }

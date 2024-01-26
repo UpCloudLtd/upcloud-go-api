@@ -3,7 +3,6 @@ package request
 import (
 	"encoding/json"
 	"fmt"
-	"time"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud"
 )
@@ -238,7 +237,6 @@ func (r TemplatizeStorageRequest) MarshalJSON() ([]byte, error) {
 type WaitForStorageStateRequest struct {
 	UUID         string
 	DesiredState string
-	Timeout      time.Duration
 }
 
 // LoadCDROMRequest represents a request to load a storage as a CD-ROM in the CD-ROM device of a server
@@ -355,7 +353,6 @@ func (r *GetStorageImportDetailsRequest) RequestURL() string {
 // for storage import to complete.
 type WaitForStorageImportCompletionRequest struct {
 	StorageUUID string
-	Timeout     time.Duration
 }
 
 // ResizeStorageFilesystemRequest represents a request to resize storage filesystem

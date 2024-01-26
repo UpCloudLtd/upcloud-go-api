@@ -3,7 +3,6 @@ package service
 import (
 	"context"
 	"testing"
-	"time"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud/request"
@@ -414,7 +413,6 @@ func TestCreateManagedObjectStorageUserAccessKey(t *testing.T) {
 
 		_, err = svc.WaitForManagedObjectStorageUserOperationalState(context.Background(), &request.WaitForManagedObjectStorageUserOperationalStateRequest{
 			ServiceUUID:  storage.UUID,
-			Timeout:      time.Second * 90,
 			Username:     user.Username,
 			DesiredState: upcloud.ManagedObjectStorageUserOperationalStateReady,
 		})
@@ -446,7 +444,6 @@ func TestGetManagedObjectStorageUserAccesKeys(t *testing.T) {
 
 		_, err = svc.WaitForManagedObjectStorageUserOperationalState(context.Background(), &request.WaitForManagedObjectStorageUserOperationalStateRequest{
 			ServiceUUID:  storage.UUID,
-			Timeout:      time.Second * 90,
 			Username:     storage.Users[0].Username,
 			DesiredState: upcloud.ManagedObjectStorageUserOperationalStateReady,
 		})
@@ -481,7 +478,6 @@ func TestGetManagedObjectStorageUserAccessKey(t *testing.T) {
 
 		_, err = svc.WaitForManagedObjectStorageUserOperationalState(context.Background(), &request.WaitForManagedObjectStorageUserOperationalStateRequest{
 			ServiceUUID:  storage.UUID,
-			Timeout:      time.Second * 90,
 			Username:     storage.Users[0].Username,
 			DesiredState: upcloud.ManagedObjectStorageUserOperationalStateReady,
 		})
@@ -524,7 +520,6 @@ func TestModifyManagedObjectStorageUserAccessKey(t *testing.T) {
 
 		_, err = svc.WaitForManagedObjectStorageUserOperationalState(context.Background(), &request.WaitForManagedObjectStorageUserOperationalStateRequest{
 			ServiceUUID:  storage.UUID,
-			Timeout:      time.Second * 90,
 			Username:     storage.Users[0].Username,
 			DesiredState: upcloud.ManagedObjectStorageUserOperationalStateReady,
 		})
@@ -570,7 +565,6 @@ func TestDeleteManagedObjectStorageUserAccessKey(t *testing.T) {
 
 		_, err = svc.WaitForManagedObjectStorageUserOperationalState(context.Background(), &request.WaitForManagedObjectStorageUserOperationalStateRequest{
 			ServiceUUID:  storage.UUID,
-			Timeout:      time.Second * 90,
 			Username:     storage.Users[0].Username,
 			DesiredState: upcloud.ManagedObjectStorageUserOperationalStateReady,
 		})

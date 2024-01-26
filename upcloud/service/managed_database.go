@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"time"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud/request"
@@ -170,13 +169,8 @@ func (s *Service) GetManagedDatabaseVersions(ctx context.Context, r *request.Get
 // specified state. If the state changes favorably, the new managed database details is returned. The method will give up
 // after the specified timeout
 func (s *Service) WaitForManagedDatabaseState(ctx context.Context, r *request.WaitForManagedDatabaseStateRequest) (*upcloud.ManagedDatabase, error) {
-	attempts := 0
-	sleepDuration := time.Second * 5
-
-	for {
-		attempts++
-
-		details, err := s.GetManagedDatabase(ctx, &request.GetManagedDatabaseRequest{
+	return retry(ctx, func(_ int, c context.Context) (*upcloud.ManagedDatabase, error) {
+		details, err := s.GetManagedDatabase(c, &request.GetManagedDatabaseRequest{
 			UUID: r.UUID,
 		})
 		if err != nil {
@@ -186,13 +180,8 @@ func (s *Service) WaitForManagedDatabaseState(ctx context.Context, r *request.Wa
 		if details.State == r.DesiredState {
 			return details, nil
 		}
-
-		time.Sleep(sleepDuration)
-
-		if time.Duration(attempts)*sleepDuration >= r.Timeout {
-			return nil, fmt.Errorf("timeout reached while waiting for managed database instance to enter state \"%s\"", r.DesiredState)
-		}
-	}
+		return nil, nil
+	}, nil)
 }
 
 // StartManagedDatabase starts a shut down existing managed database instance
