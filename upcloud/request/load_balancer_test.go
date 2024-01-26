@@ -750,7 +750,7 @@ func TestCreateLoadBalancerFrontendRequest(t *testing.T) {
 			DefaultBackend: "example-backend",
 			Properties: &upcloud.LoadBalancerFrontendProperties{
 				TimeoutClient:        10,
-				InboundProxyProtocol: false,
+				InboundProxyProtocol: upcloud.BoolPtr(false),
 			},
 			Rules: []LoadBalancerFrontendRule{{
 				Name:     "example-rule-1",
@@ -804,7 +804,7 @@ func TestModifyLoadBalancerFrontendRequest(t *testing.T) {
 			DefaultBackend: "example-backend",
 			Properties: &upcloud.LoadBalancerFrontendProperties{
 				TimeoutClient:        10,
-				InboundProxyProtocol: false,
+				InboundProxyProtocol: upcloud.BoolPtr(false),
 				HTTP2Enabled:         upcloud.BoolPtr(false),
 			},
 		},
