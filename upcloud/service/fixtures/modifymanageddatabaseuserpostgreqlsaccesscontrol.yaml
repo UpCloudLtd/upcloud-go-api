@@ -14,14 +14,14 @@ interactions:
     url: https://api.upcloud.com/1.3/database
     method: POST
   response:
-    body: '{"uuid":"099b0bca-8901-4475-b7e5-b44cb09ec5af","zone":"fi-hel2","name":"modifyuseraccesscontrol","title":"modifyuseraccesscontrol","type":"pg","plan":"2x2xCPU-4GB-100GB","state":"pending","powered":true,"termination_protection":false,"node_count":2,"create_time":"2024-01-25T14:48:02Z","update_time":"2024-01-25T14:48:02Z","service_uri":"","service_uri_params":{},"maintenance":{"dow":"monday","time":"12:00:00","pending_updates":[]},"metadata":{},"properties":{"automatic_utility_network_ip_filter":true,"ip_filter":["10.0.0.1/32"],"public_access":true},"networks":[],"node_states":[],"backups":[],"components":[],"users":[],"databases":[]}'
+    body: '{"uuid":"094833a2-a2b9-4cf2-ba51-f8df703311dc","zone":"fi-hel2","name":"modifyuseraccesscontrol","title":"modifyuseraccesscontrol","type":"pg","plan":"2x2xCPU-4GB-100GB","state":"pending","powered":true,"termination_protection":false,"node_count":2,"create_time":"2024-02-01T09:26:51Z","update_time":"2024-02-01T09:26:51Z","service_uri":"","service_uri_params":{},"maintenance":{"dow":"monday","time":"12:00:00","pending_updates":[]},"metadata":{},"properties":{"automatic_utility_network_ip_filter":true,"ip_filter":["10.0.0.1/32"],"public_access":true},"networks":[],"node_states":[],"backups":[],"components":[],"users":[],"databases":[]}'
     headers:
       Content-Length:
       - "641"
       Content-Type:
       - application/json
       Date:
-      - Thu, 25 Jan 2024 14:48:02 GMT
+      - Thu, 01 Feb 2024 09:26:51 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 201 Created
@@ -37,17 +37,17 @@ interactions:
       - application/json
       User-Agent:
       - upcloud-go-api/6.12.0
-    url: https://api.upcloud.com/1.3/database/099b0bca-8901-4475-b7e5-b44cb09ec5af/users
+    url: https://api.upcloud.com/1.3/database/094833a2-a2b9-4cf2-ba51-f8df703311dc/users
     method: POST
   response:
-    body: '{"username":"demouser","password":"AVNS_Y2dS9AeyxEksRmQv5Px","type":"normal","pg_access_control":{"allow_replication":true}}'
+    body: '{"username":"demouser","password":"AVNS_X5jZn6zJ22JZG05x0zt","type":"normal","pg_access_control":{"allow_replication":true}}'
     headers:
       Content-Length:
       - "124"
       Content-Type:
       - application/json
       Date:
-      - Thu, 25 Jan 2024 14:54:34 GMT
+      - Thu, 01 Feb 2024 09:32:58 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 201 Created
@@ -63,17 +63,17 @@ interactions:
       - application/json
       User-Agent:
       - upcloud-go-api/6.12.0
-    url: https://api.upcloud.com/1.3/database/099b0bca-8901-4475-b7e5-b44cb09ec5af/users/demouser/access-control
+    url: https://api.upcloud.com/1.3/database/094833a2-a2b9-4cf2-ba51-f8df703311dc/users/demouser/access-control
     method: PATCH
   response:
-    body: '{"username":"demouser","password":"AVNS_Y2dS9AeyxEksRmQv5Px","type":"normal","pg_access_control":{"allow_replication":false}}'
+    body: '{"username":"demouser","password":"AVNS_X5jZn6zJ22JZG05x0zt","type":"normal","pg_access_control":{"allow_replication":false}}'
     headers:
       Content-Length:
       - "125"
       Content-Type:
       - application/json
       Date:
-      - Thu, 25 Jan 2024 14:54:35 GMT
+      - Thu, 01 Feb 2024 09:32:58 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 200 OK
@@ -89,13 +89,13 @@ interactions:
       - application/json
       User-Agent:
       - upcloud-go-api/6.12.0
-    url: https://api.upcloud.com/1.3/database/099b0bca-8901-4475-b7e5-b44cb09ec5af
+    url: https://api.upcloud.com/1.3/database/094833a2-a2b9-4cf2-ba51-f8df703311dc
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Thu, 25 Jan 2024 14:54:36 GMT
+      - Thu, 01 Feb 2024 09:32:58 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 204 No Content

@@ -39,7 +39,6 @@ func TestCloneManagedDatabaseRequest_MarshalJSON(t *testing.T) {
 		},
 		Plan:  "fakeplan",
 		Title: "faketitle",
-		Type:  "faketype",
 		Zone:  "fakezone",
 	}
 	req.Properties.Set("fakeprop", "fakevalue")
@@ -218,7 +217,6 @@ func TestModifyManagedDatabaseRequest_MarshalJSON(t *testing.T) {
 		},
 		Plan:  "fakeplan",
 		Title: "faketitle",
-		Type:  "faketype",
 		UUID:  "fakeuuid",
 		Zone:  "fakezone",
 	}
@@ -232,7 +230,6 @@ func TestModifyManagedDatabaseRequest_MarshalJSON(t *testing.T) {
 		"fakeprop": "fakevalue"
 	},
 	"title": "faketitle",
-	"type": "faketype",
 	"zone": "fakezone",
 	"maintenance": {
 		"dow": "monday",
