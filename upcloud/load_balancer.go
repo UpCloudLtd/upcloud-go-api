@@ -22,6 +22,7 @@ type (
 	LoadBalancerNetworkType                       string
 	LoadBalancerAddressFamily                     string
 	LoadBalancerNodeOperationalState              string
+	LoadBalancerMaintenanceDOW                    string
 )
 
 const (
@@ -125,6 +126,14 @@ const (
 	LoadBalancerNodeOperationalStateAgentUpgradeFinishing LoadBalancerNodeOperationalState = "agent-upgrade-finishing"
 	LoadBalancerNodeOperationalStateStopped               LoadBalancerNodeOperationalState = "stopped"
 	LoadBalancerNodeOperationalStateNotResponding         LoadBalancerNodeOperationalState = "not-responding"
+
+	LoadBalancerMaintenanceDOWMonday    LoadBalancerMaintenanceDOW = "monday"
+	LoadBalancerMaintenanceDOWTuesday   LoadBalancerMaintenanceDOW = "tuesday"
+	LoadBalancerMaintenanceDOWWednesday LoadBalancerMaintenanceDOW = "wednesday"
+	LoadBalancerMaintenanceDOWThursday  LoadBalancerMaintenanceDOW = "thursday"
+	LoadBalancerMaintenanceDOWFriday    LoadBalancerMaintenanceDOW = "friday"
+	LoadBalancerMaintenanceOWSaturday   LoadBalancerMaintenanceDOW = "saturday"
+	LoadBalancerMaintenanceDOWSunday    LoadBalancerMaintenanceDOW = "sunday"
 )
 
 // LoadBalancerPlan represents load balancer plan details
@@ -255,6 +264,8 @@ type LoadBalancer struct {
 	Nodes            []LoadBalancerNode           `json:"nodes,omitempty"`
 	CreatedAt        time.Time                    `json:"created_at,omitempty"`
 	UpdatedAt        time.Time                    `json:"updated_at,omitempty"`
+	MaintenanceDOW   LoadBalancerMaintenanceDOW   `json:"maintenance_dow,omitempty"`
+	MaintenanceTime  string                       `json:"maintenance_time,omitempty"`
 }
 
 // LoadBalancerMatcher represents rule matcher

@@ -22,6 +22,8 @@ func TestMarshalLoadBalancer(t *testing.T) {
 			"updated_at": "2022-02-11T17:33:59.898714Z",
 			"uuid": "0aff6dac-143c-4300-9b33-ee2756f6592d",
 			"zone": "fi-hel1",
+			"maintenance_dow": "sunday",
+			"maintenance_time": "20:01:01Z",
 			"labels": [
 				{
 					"key": "managedby",
@@ -149,6 +151,8 @@ func TestMarshalLoadBalancer(t *testing.T) {
 		OperationalState: LoadBalancerOperationalStateRunning,
 		CreatedAt:        timeParse("2021-12-07T13:58:30.817272Z"),
 		UpdatedAt:        timeParse("2022-02-11T17:33:59.898714Z"),
+		MaintenanceDOW:   LoadBalancerMaintenanceDOWSunday,
+		MaintenanceTime:  "20:01:01Z",
 		Labels: []Label{
 			{
 				Key:   "managedby",

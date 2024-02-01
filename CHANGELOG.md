@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- Managed Load Balancer: `MaintenanceDOW` and `MaintenanceTime` fields for controlling maintenance window occurrence
+
 ### Changed
 - **Breaking**, Managed Database: `ManagedDatabaseUserOpernSearchAccessControl` fields changed to pointers
 - **Breaking**, Managed Database: `ManagedDatabaseUserPGAccessControl` fields changed to pointers

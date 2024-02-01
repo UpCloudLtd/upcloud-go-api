@@ -22,22 +22,30 @@ func TestLoadBalancer(t *testing.T) {
 		// Create Load Balancer
 		lb, err := createLoadBalancerAndNetwork(ctx, svc, "fi-hel1", "172.16.1.0/24")
 		require.NoError(t, err)
+
 		defer func() {
 			err := cleanupLoadBalancer(ctx, rec, svc, lb)
 			assert.NoError(t, err)
 		}()
+
 		t.Logf("Created load balancer: %s", lb.Name)
+		assert.Equal(t, upcloud.LoadBalancerMaintenanceDOWSunday, lb.MaintenanceDOW)
+		assert.Equal(t, "20:01:01Z", lb.MaintenanceTime)
 
 		// Modify Load Balancer
 		t.Log("Modifying load balancer")
 
 		newName := "new-name-for-lb"
 		lb, err = svc.ModifyLoadBalancer(ctx, &request.ModifyLoadBalancerRequest{
-			UUID: lb.UUID,
-			Name: newName,
+			UUID:            lb.UUID,
+			Name:            newName,
+			MaintenanceDOW:  upcloud.LoadBalancerMaintenanceDOWMonday,
+			MaintenanceTime: "00:01:01Z",
 		})
 		require.NoError(t, err)
 		assert.Equal(t, newName, lb.Name)
+		assert.Equal(t, upcloud.LoadBalancerMaintenanceDOWMonday, lb.MaintenanceDOW)
+		assert.Equal(t, "00:01:01Z", lb.MaintenanceTime)
 		t.Logf("Modified load balancer with UUID: %s", lb.UUID)
 
 		// Get Load Balancer
@@ -1341,6 +1349,8 @@ func createLoadBalancer(ctx context.Context, svc *Service, networkUUID, zone str
 		Frontends:        []request.LoadBalancerFrontend{},
 		Backends:         []request.LoadBalancerBackend{},
 		Resolvers:        []request.LoadBalancerResolver{},
+		MaintenanceDOW:   upcloud.LoadBalancerMaintenanceDOWSunday,
+		MaintenanceTime:  "20:01:01Z",
 	}
 	if len(label) > 0 {
 		createLoadBalancerRequest.Labels = label
