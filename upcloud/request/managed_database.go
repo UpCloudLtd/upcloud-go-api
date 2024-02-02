@@ -47,7 +47,6 @@ type CloneManagedDatabaseRequest struct {
 	Plan           string                                `json:"plan"`
 	Properties     ManagedDatabasePropertiesRequest      `json:"properties,omitempty"`
 	Title          string                                `json:"title,omitempty"`
-	Type           upcloud.ManagedDatabaseServiceType    `json:"type"`
 	Zone           string                                `json:"zone"`
 }
 
@@ -415,7 +414,6 @@ type ModifyManagedDatabaseRequest struct {
 	Plan        string                                `json:"plan,omitempty"`
 	Properties  ManagedDatabasePropertiesRequest      `json:"properties,omitempty"`
 	Title       string                                `json:"title,omitempty"`
-	Type        upcloud.ManagedDatabaseServiceType    `json:"type,omitempty"`
 	UUID        string                                `json:"-"`
 	Zone        string                                `json:"zone,omitempty"`
 }

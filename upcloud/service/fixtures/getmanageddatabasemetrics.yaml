@@ -10,72 +10,42 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/6.1.1
+      - upcloud-go-api/6.12.0
     url: https://api.upcloud.com/1.3/database
     method: POST
   response:
-    body: '{"backups":[],"components":[{"component":"pg","host":"getmanageddatabasemetrics-zhbmidiechch.db.upclouddatabases.com","port":11550,"route":"dynamic","usage":"primary"},{"component":"pg","host":"replica-getmanageddatabasemetrics-zhbmidiechch.db.upclouddatabases.com","port":11550,"route":"dynamic","usage":"replica"},{"component":"pg","host":"public-getmanageddatabasemetrics-zhbmidiechch.db.upclouddatabases.com","port":11550,"route":"public","usage":"primary"},{"component":"pg","host":"public-replica-getmanageddatabasemetrics-zhbmidiechch.db.upclouddatabases.com","port":11550,"route":"public","usage":"replica"},{"component":"pgbouncer","host":"getmanageddatabasemetrics-zhbmidiechch.db.upclouddatabases.com","port":11551,"route":"dynamic","usage":"primary"},{"component":"pgbouncer","host":"replica-getmanageddatabasemetrics-zhbmidiechch.db.upclouddatabases.com","port":11551,"route":"dynamic","usage":"replica"},{"component":"pgbouncer","host":"public-getmanageddatabasemetrics-zhbmidiechch.db.upclouddatabases.com","port":11551,"route":"public","usage":"primary"},{"component":"pgbouncer","host":"public-replica-getmanageddatabasemetrics-zhbmidiechch.db.upclouddatabases.com","port":11551,"route":"public","usage":"replica"}],"create_time":"0001-01-01T00:00:00Z","maintenance":{"dow":"monday","time":"12:00:00","pending_updates":[]},"name":"getmanageddatabasemetrics","node_count":2,"node_states":[],"plan":"2x2xCPU-4GB-100GB","powered":true,"metadata":{"max_connections":100,"pg_version":"15","write_block_threshold_exceeded":null},"properties":{"automatic_utility_network_ip_filter":true,"backup_hour":8,"backup_minute":0,"ip_filter":["10.0.0.1/32"],"pg_stat_monitor_enable":false,"pglookout":{"max_failover_replication_time_lag":60},"public_access":true,"version":"15"},"uuid":"09d47561-778a-44f7-93fe-02987a31df4e","state":"rebuilding","title":"getmanageddatabasemetrics","type":"pg","update_time":"0001-01-01T00:00:00Z","service_uri":"postgres://upadmin:AVNS_50cD29LozCdtylbMSbf@getmanageddatabasemetrics-zhbmidiechch.db.upclouddatabases.com:11550/defaultdb?sslmode=require","service_uri_params":{"dbname":"defaultdb","host":"getmanageddatabasemetrics-zhbmidiechch.db.upclouddatabases.com","password":"AVNS_50cD29LozCdtylbMSbf","port":"11550","ssl_mode":"require","user":"upadmin"},"users":[{"username":"upadmin","type":"primary"}],"databases":[{"name":"defaultdb"}],"zone":"fi-hel2"}'
+    body: '{"uuid":"09b5c17a-567b-438e-941e-e01001f22643","zone":"fi-hel2","name":"getmanageddatabasemetrics","title":"getmanageddatabasemetrics","type":"pg","plan":"2x2xCPU-4GB-100GB","state":"pending","powered":true,"termination_protection":false,"node_count":2,"create_time":"2024-01-31T20:58:22Z","update_time":"2024-01-31T20:58:22Z","service_uri":"","service_uri_params":{},"maintenance":{"dow":"monday","time":"12:00:00","pending_updates":[]},"metadata":{},"properties":{"automatic_utility_network_ip_filter":true,"ip_filter":["10.0.0.1/32"],"public_access":true},"networks":[],"node_states":[],"backups":[],"components":[],"users":[],"databases":[]}'
     headers:
-      Access-Control-Allow-Origin:
-      - '*'
-      Content-Type:
-      - application/json
-      Date:
-      - Wed, 17 May 2023 06:51:16 GMT
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/6.1.1
-    url: https://api.upcloud.com/1.3/database/09d47561-778a-44f7-93fe-02987a31df4e/metrics?period=hour
-    method: GET
-  response:
-    body: '{"cpu_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2023-05-17T06:54:00Z",35.83583024060317,null],["2023-05-17T06:54:30Z",4.457534568243588,null],["2023-05-17T06:55:00Z",4.89928886990306,null],["2023-05-17T06:55:30Z",3.970292888457621,null],["2023-05-17T06:56:00Z",5.04489141653896,39.375611318934936],["2023-05-17T06:56:30Z",4.116019986404197,3.0196635025683207],["2023-05-17T06:57:00Z",3.292040675474297,3.611269093116661]]},"hints":{"title":"CPU usage %"}},"disk_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2023-05-17T06:53:30Z",0.000035089954658320145,null],["2023-05-17T06:54:00Z",0.12667473631653572,null],["2023-05-17T06:54:30Z",0.12667473631653572,null],["2023-05-17T06:55:00Z",0.12661235417492095,null],["2023-05-17T06:55:30Z",0.12661235417492095,0.000035089954658320145],["2023-05-17T06:56:00Z",0.12661625305877183,0.09436858472777564],["2023-05-17T06:56:30Z",0.12661625305877183,0.09452454008181263],["2023-05-17T06:57:00Z",0.12661625305877183,0.09452454008181263]]},"hints":{"title":"Disk space usage %"}},"diskio_reads":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2023-05-17T06:54:00Z",34,null],["2023-05-17T06:54:30Z",0,null],["2023-05-17T06:55:00Z",0,null],["2023-05-17T06:55:30Z",0,null],["2023-05-17T06:56:00Z",0,31],["2023-05-17T06:56:30Z",0,0],["2023-05-17T06:57:00Z",0,0]]},"hints":{"title":"Disk iops (reads)"}},"diskio_writes":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2023-05-17T06:54:00Z",84,null],["2023-05-17T06:54:30Z",11,null],["2023-05-17T06:55:00Z",5,null],["2023-05-17T06:55:30Z",5,null],["2023-05-17T06:56:00Z",4,89],["2023-05-17T06:56:30Z",4,7],["2023-05-17T06:57:00Z",3,4]]},"hints":{"title":"Disk iops (writes)"}},"load_average":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2023-05-17T06:53:30Z",0.42,null],["2023-05-17T06:54:00Z",0.44,null],["2023-05-17T06:54:30Z",0.42,null],["2023-05-17T06:55:00Z",0.39,null],["2023-05-17T06:55:30Z",0.35,0.33],["2023-05-17T06:56:00Z",0.31,0.34],["2023-05-17T06:56:30Z",0.28,0.305],["2023-05-17T06:57:00Z",0.25,0.27]]},"hints":{"title":"Load average (5 min)"}},"mem_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2023-05-17T06:53:30Z",9.615868451338656,null],["2023-05-17T06:54:00Z",27.516780557893558,null],["2023-05-17T06:54:30Z",27.028090699382734,null],["2023-05-17T06:55:00Z",27.77726695409761,null],["2023-05-17T06:55:30Z",27.117613952694136,19.50224616696609],["2023-05-17T06:56:00Z",27.301055788345206,34.1590160919726],["2023-05-17T06:56:30Z",27.751905400394268,33.66522311116859],["2023-05-17T06:57:00Z",27.245381620653802,34.24874152003767],["2023-05-17T06:57:30Z",27.257809792388908,null]]},"hints":{"title":"Memory usage %"}},"net_receive":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2023-05-17T06:54:00Z",4725,null],["2023-05-17T06:54:30Z",94,null],["2023-05-17T06:55:00Z",153,null],["2023-05-17T06:55:30Z",631,null],["2023-05-17T06:56:00Z",1567,72642],["2023-05-17T06:56:30Z",1673,946],["2023-05-17T06:57:00Z",575,null]]},"hints":{"title":"Network receive (bytes/s)"}},"net_send":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2023-05-17T06:54:00Z",66589,null],["2023-05-17T06:54:30Z",963,null],["2023-05-17T06:55:00Z",4918,null],["2023-05-17T06:55:30Z",1291,null],["2023-05-17T06:56:00Z",1764,7798],["2023-05-17T06:56:30Z",7527,1724],["2023-05-17T06:57:00Z",1107,null]]},"hints":{"title":"Network transmit (bytes/s)"}}}'
-    headers:
-      Access-Control-Allow-Origin:
-      - '*'
-      Content-Type:
-      - application/json
-      Date:
-      - Wed, 17 May 2023 06:58:13 GMT
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/6.1.1
-    url: https://api.upcloud.com/1.3/database/09d47561-778a-44f7-93fe-02987a31df4e/metrics?period=day
-    method: GET
-  response:
-    body: '{"cpu_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"}],"rows":[["2023-05-17T06:50:00Z",20.14668240442338]]},"hints":{"title":"CPU usage %"}},"disk_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"}],"rows":[["2023-05-17T06:50:00Z",0.08446152086257659]]},"hints":{"title":"Disk space usage %"}},"load_average":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"}],"rows":[["2023-05-17T06:50:00Z",0.4266666666666667]]},"hints":{"title":"Load average (5 min)"}},"mem_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"}],"rows":[["2023-05-17T06:50:00Z",21.537381683973482]]},"hints":{"title":"Memory usage %"}}}'
-    headers:
-      Access-Control-Allow-Origin:
-      - '*'
       Content-Length:
-      - "876"
+      - "645"
       Content-Type:
       - application/json
       Date:
-      - Wed, 17 May 2023 06:58:14 GMT
+      - Wed, 31 Jan 2024 20:58:22 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/6.12.0
+    url: https://api.upcloud.com/1.3/database/09b5c17a-567b-438e-941e-e01001f22643/metrics?period=hour
+    method: GET
+  response:
+    body: '{"cpu_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2024-01-31T21:01:30Z",34.66288301549696,null],["2024-01-31T21:02:30Z",5.204982717423704,null],["2024-01-31T21:03:00Z",3.6678144296185877,null],["2024-01-31T21:04:00Z",4.842045812597917,null],["2024-01-31T21:04:30Z",5.458861949610039,43.152828164081846],["2024-01-31T21:05:00Z",4.889482051447274,null],["2024-01-31T21:05:30Z",4.2082970263515875,6.739871013892625]]},"hints":{"title":"CPU usage %"}},"disk_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2024-01-31T21:01:00Z",0.000035089954658320145,null],["2024-01-31T21:01:30Z",0.12653437649790242,null],["2024-01-31T21:02:00Z",0.12653437649790242,null],["2024-01-31T21:02:30Z",0.12662794971032462,null],["2024-01-31T21:03:00Z",0.12662794971032462,null],["2024-01-31T21:03:30Z",0.12662794971032462,null],["2024-01-31T21:04:00Z",0.12660065752336816,0.000035089954658320145],["2024-01-31T21:04:30Z",0.12663184859417556,0.09438418026317934],["2024-01-31T21:05:00Z",0.12678780394821254,0.09454013561721632],["2024-01-31T21:05:30Z",0.12678780394821254,0.09454403450106724]]},"hints":{"title":"Disk space usage %"}},"diskio_reads":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2024-01-31T21:01:30Z",26,null],["2024-01-31T21:02:00Z",0,null],["2024-01-31T21:02:30Z",0,null],["2024-01-31T21:03:00Z",0,null],["2024-01-31T21:03:30Z",0,null],["2024-01-31T21:04:00Z",0,null],["2024-01-31T21:04:30Z",0,62],["2024-01-31T21:05:00Z",0,0],["2024-01-31T21:05:30Z",0,0]]},"hints":{"title":"Disk iops (reads)"}},"diskio_writes":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2024-01-31T21:01:30Z",69,null],["2024-01-31T21:02:00Z",11,null],["2024-01-31T21:02:30Z",4,null],["2024-01-31T21:03:00Z",3,null],["2024-01-31T21:03:30Z",2,null],["2024-01-31T21:04:00Z",4,null],["2024-01-31T21:04:30Z",4,41],["2024-01-31T21:05:00Z",4,8],["2024-01-31T21:05:30Z",3,6]]},"hints":{"title":"Disk iops (writes)"}},"load_average":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2024-01-31T21:01:00Z",0.54,null],["2024-01-31T21:01:30Z",0.55,null],["2024-01-31T21:02:00Z",0.52,null],["2024-01-31T21:02:30Z",0.46,null],["2024-01-31T21:03:00Z",0.42,null],["2024-01-31T21:03:30Z",0.4,null],["2024-01-31T21:04:00Z",0.36,0.44],["2024-01-31T21:04:30Z",0.38,0.59],["2024-01-31T21:05:00Z",0.36,0.55],["2024-01-31T21:05:30Z",0.32,0.49]]},"hints":{"title":"Load average (5 min)"}},"mem_available":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2024-01-31T21:01:00Z",72.3626106743147,null],["2024-01-31T21:01:30Z",63.57285811316039,null],["2024-01-31T21:02:00Z",63.47339483194031,null],["2024-01-31T21:02:30Z",62.79377946360369,null],["2024-01-31T21:03:00Z",62.497606633303974,null],["2024-01-31T21:03:30Z",63.17309029492324,null],["2024-01-31T21:04:00Z",62.62034855480961,83.43135278942276],["2024-01-31T21:04:30Z",62.23589828342702,57.50947275072557],["2024-01-31T21:05:00Z",62.20868948309326,57.57658819735569],["2024-01-31T21:05:30Z",62.087559934940735,56.91178248951951]]},"hints":{"title":"Memory available %"}},"mem_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2024-01-31T21:01:00Z",21.274661754302517,null],["2024-01-31T21:01:30Z",27.867454848507446,null],["2024-01-31T21:02:00Z",27.89980308890425,null],["2024-01-31T21:02:30Z",28.5340704566846,null],["2024-01-31T21:03:00Z",28.830142513649747,null],["2024-01-31T21:03:30Z",28.1552634920379,null],["2024-01-31T21:04:00Z",28.705788218791003,10.744517897452434],["2024-01-31T21:04:30Z",29.090339263508163,34.846924379232505],["2024-01-31T21:05:00Z",29.11623801049252,34.71773218316672],["2024-01-31T21:05:30Z",29.23535209195365,35.33084085778781]]},"hints":{"title":"Memory usage %"}},"net_receive":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2024-01-31T21:01:30Z",3874,null],["2024-01-31T21:02:00Z",97,null],["2024-01-31T21:02:30Z",90,null],["2024-01-31T21:03:00Z",30,null],["2024-01-31T21:03:30Z",468,null],["2024-01-31T21:04:00Z",376,null],["2024-01-31T21:04:30Z",1074,46089],["2024-01-31T21:05:00Z",1275,408]]},"hints":{"title":"Network receive (bytes/s)"}},"net_send":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2024-01-31T21:01:30Z",45290,null],["2024-01-31T21:02:00Z",661,null],["2024-01-31T21:02:30Z",3450,null],["2024-01-31T21:03:00Z",296,null],["2024-01-31T21:03:30Z",868,null],["2024-01-31T21:04:00Z",548,null],["2024-01-31T21:04:30Z",813,8647],["2024-01-31T21:05:00Z",5833,1072]]},"hints":{"title":"Network transmit (bytes/s)"}}}'
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 31 Jan 2024 21:06:48 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 200 OK
@@ -90,20 +60,44 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/6.1.1
-    url: https://api.upcloud.com/1.3/database/09d47561-778a-44f7-93fe-02987a31df4e/metrics?period=week
+      - upcloud-go-api/6.12.0
+    url: https://api.upcloud.com/1.3/database/09b5c17a-567b-438e-941e-e01001f22643/metrics?period=day
+    method: GET
+  response:
+    body: '{"cpu_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"}],"rows":[["2024-01-31T21:00:00Z",12.094431493784292]]},"hints":{"title":"CPU usage %"}},"disk_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2024-01-31T21:00:00Z",0.1107775247748726,0.000035089954658320145]]},"hints":{"title":"Disk space usage %"}},"load_average":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2024-01-31T21:00:00Z",0.45375,0.44]]},"hints":{"title":"Load average (5 min)"}},"mem_available":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2024-01-31T21:00:00Z",64.09119835618537,83.43135278942276]]},"hints":{"title":"Memory available %"}},"mem_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"getmanageddatabasemetrics-1 (master)","type":"number"},{"label":"getmanageddatabasemetrics-2 (standby)","type":"number"}],"rows":[["2024-01-31T21:00:00Z",27.544690454548203,10.744517897452434]]},"hints":{"title":"Memory usage %"}}}'
+    headers:
+      Content-Length:
+      - "1418"
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 31 Jan 2024 21:06:48 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/6.12.0
+    url: https://api.upcloud.com/1.3/database/09b5c17a-567b-438e-941e-e01001f22643/metrics?period=week
     method: GET
   response:
     body: '{}'
     headers:
-      Access-Control-Allow-Origin:
-      - '*'
       Content-Length:
       - "2"
       Content-Type:
       - application/json
       Date:
-      - Wed, 17 May 2023 06:58:14 GMT
+      - Wed, 31 Jan 2024 21:06:49 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 200 OK
@@ -118,20 +112,18 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/6.1.1
-    url: https://api.upcloud.com/1.3/database/09d47561-778a-44f7-93fe-02987a31df4e/metrics?period=month
+      - upcloud-go-api/6.12.0
+    url: https://api.upcloud.com/1.3/database/09b5c17a-567b-438e-941e-e01001f22643/metrics?period=month
     method: GET
   response:
     body: '{}'
     headers:
-      Access-Control-Allow-Origin:
-      - '*'
       Content-Length:
       - "2"
       Content-Type:
       - application/json
       Date:
-      - Wed, 17 May 2023 06:58:15 GMT
+      - Wed, 31 Jan 2024 21:06:49 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 200 OK
@@ -146,20 +138,18 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/6.1.1
-    url: https://api.upcloud.com/1.3/database/09d47561-778a-44f7-93fe-02987a31df4e/metrics?period=year
+      - upcloud-go-api/6.12.0
+    url: https://api.upcloud.com/1.3/database/09b5c17a-567b-438e-941e-e01001f22643/metrics?period=year
     method: GET
   response:
     body: '{}'
     headers:
-      Access-Control-Allow-Origin:
-      - '*'
       Content-Length:
       - "2"
       Content-Type:
       - application/json
       Date:
-      - Wed, 17 May 2023 06:58:15 GMT
+      - Wed, 31 Jan 2024 21:06:50 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 200 OK
@@ -174,14 +164,14 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/6.1.1
-    url: https://api.upcloud.com/1.3/database/09d47561-778a-44f7-93fe-02987a31df4e
+      - upcloud-go-api/6.12.0
+    url: https://api.upcloud.com/1.3/database/09b5c17a-567b-438e-941e-e01001f22643
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Wed, 17 May 2023 06:58:16 GMT
+      - Wed, 31 Jan 2024 21:06:50 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 204 No Content

@@ -25,7 +25,7 @@ func TestCloneManagedDatabaseRequest_MarshalJSON(t *testing.T) {
 		req := CloneManagedDatabaseRequest{}
 		d, err := json.Marshal(&req)
 		assert.NoError(t, err)
-		assert.Equal(t, `{"hostname_prefix":"","plan":"","type":"","zone":""}`, string(d))
+		assert.Equal(t, `{"hostname_prefix":"","plan":"","zone":""}`, string(d))
 	})
 
 	req := CloneManagedDatabaseRequest{
@@ -39,7 +39,6 @@ func TestCloneManagedDatabaseRequest_MarshalJSON(t *testing.T) {
 		},
 		Plan:  "fakeplan",
 		Title: "faketitle",
-		Type:  "faketype",
 		Zone:  "fakezone",
 	}
 	req.Properties.Set("fakeprop", "fakevalue")
@@ -54,7 +53,6 @@ func TestCloneManagedDatabaseRequest_MarshalJSON(t *testing.T) {
 		"fakeprop": "fakevalue"
 	},
 	"title": "faketitle",
-	"type": "faketype",
 	"zone": "fakezone",
 	"clone_time": "2021-01-01T00:00:00Z",
 	"maintenance": {
@@ -218,7 +216,6 @@ func TestModifyManagedDatabaseRequest_MarshalJSON(t *testing.T) {
 		},
 		Plan:  "fakeplan",
 		Title: "faketitle",
-		Type:  "faketype",
 		UUID:  "fakeuuid",
 		Zone:  "fakezone",
 	}
@@ -232,7 +229,6 @@ func TestModifyManagedDatabaseRequest_MarshalJSON(t *testing.T) {
 		"fakeprop": "fakevalue"
 	},
 	"title": "faketitle",
-	"type": "faketype",
 	"zone": "fakezone",
 	"maintenance": {
 		"dow": "monday",

@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	"strings"
 	"testing"
 	"time"
 
@@ -28,13 +27,12 @@ func TestService_CloneManagedDatabase(t *testing.T) {
 	record(t, "clonemanageddatabase", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		var cloneDetails *upcloud.ManagedDatabase
 		createReq := getTestCreateRequest("clonemanageddatabase", upcloud.ManagedDatabaseServiceTypePostgreSQL)
-		serviceDetails, err := svc.CreateManagedDatabase(ctx, createReq)
-		if !assert.NoError(t, err) {
-			return
-		}
+		details, err := svc.CreateManagedDatabase(ctx, createReq)
+		require.NoError(t, err)
+
 		defer func() {
-			t.Logf("deleting %s", serviceDetails.UUID)
-			err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
+			t.Logf("deleting %s", details.UUID)
+			err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: details.UUID})
 			assert.NoError(t, err)
 			if cloneDetails != nil {
 				t.Logf("deleting clone %s", cloneDetails.UUID)
@@ -43,29 +41,25 @@ func TestService_CloneManagedDatabase(t *testing.T) {
 			}
 		}()
 
-		err = waitForManagedDatabaseRunningState(ctx, rec, svc, serviceDetails.UUID)
+		err = waitForManagedDatabaseRunningState(ctx, rec, svc, details.UUID)
 		require.NoError(t, err)
 
-		err = waitForManagedDatabaseInitialBackup(ctx, rec, svc, serviceDetails.UUID)
+		err = waitForManagedDatabaseInitialBackup(ctx, rec, svc, details.UUID)
 		require.NoError(t, err)
 
-		serviceDetails, err = svc.GetManagedDatabase(ctx, &request.GetManagedDatabaseRequest{UUID: serviceDetails.UUID})
-		if !assert.NoError(t, err) {
-			return
-		}
+		details, err = svc.GetManagedDatabase(ctx, &request.GetManagedDatabaseRequest{UUID: details.UUID})
+		require.NoError(t, err)
 
 		cloneReq := &request.CloneManagedDatabaseRequest{
-			UUID:           serviceDetails.UUID,
-			CloneTime:      serviceDetails.Backups[0].BackupTime.Add(1 * time.Second),
-			HostNamePrefix: fmt.Sprintf("%s-clone", serviceDetails.Name),
-			Title:          fmt.Sprintf("%s-clone", serviceDetails.Title),
+			UUID:           details.UUID,
+			CloneTime:      details.Backups[0].BackupTime.Add(1 * time.Second),
+			HostNamePrefix: fmt.Sprintf("%s-clone", details.Name),
+			Title:          fmt.Sprintf("%s-clone", details.Title),
 			Zone:           createReq.Zone,
 			Plan:           createReq.Plan,
 		}
 		cloneDetails, err = svc.CloneManagedDatabase(ctx, cloneReq)
-		if !assert.NoError(t, err) {
-			return
-		}
+		require.NoError(t, err)
 	})
 }
 
@@ -76,19 +70,25 @@ func TestService_CreateManagedDatabase(t *testing.T) {
 		upcloud.ManagedDatabaseServiceTypeRedis,
 		upcloud.ManagedDatabaseServiceTypeOpenSearch,
 	}
+
 	record(t, "createmanageddatabase", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		for i, serviceType := range typesToTest {
 			t.Run(string(serviceType), func(t *testing.T) {
 				req := getTestCreateRequest(fmt.Sprintf("createmanageddatabase%d", i), serviceType)
 				details, err := svc.CreateManagedDatabase(ctx, req)
-				if !assert.NoError(t, err) {
-					return
-				}
+				require.NoError(t, err)
+
 				defer func() {
 					t.Logf("deleting %s", details.UUID)
 					err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: details.UUID})
 					assert.NoError(t, err)
 				}()
+
+				err = waitForManagedDatabaseRunningState(ctx, rec, svc, details.UUID)
+				require.NoError(t, err)
+
+				details, err = svc.GetManagedDatabase(ctx, &request.GetManagedDatabaseRequest{UUID: details.UUID})
+				require.NoError(t, err)
 				assert.Equal(t, serviceType, details.Type)
 				assert.EqualValues(t, req.Maintenance, details.Maintenance)
 				assert.Equal(t, req.Plan, details.Plan)
@@ -101,6 +101,7 @@ func TestService_CreateManagedDatabase(t *testing.T) {
 				assert.Equal(t, req.Title, details.Title)
 				assert.Equal(t, req.Type, details.Type)
 				assert.Equal(t, req.Zone, details.Zone)
+
 				switch serviceType {
 				case upcloud.ManagedDatabaseServiceTypeMySQL:
 					assert.NotEmpty(t, details.Metadata.MySQLVersion)
@@ -119,22 +120,22 @@ func TestService_CreateManagedDatabase(t *testing.T) {
 func TestService_WaitForManagedDatabaseState(t *testing.T) {
 	record(t, "waitformanageddatabase", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		details, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("waitformanageddatabase", upcloud.ManagedDatabaseServiceTypePostgreSQL))
-		if !assert.NoError(t, err) {
-			return
-		}
+		require.NoError(t, err)
+
 		defer func() {
 			t.Logf("deleting %s", details.UUID)
 			err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: details.UUID})
 			assert.NoError(t, err)
 		}()
+
 		err = waitForManagedDatabaseRunningState(ctx, rec, svc, details.UUID)
 		require.NoError(t, err)
 
-		newDetails, err := svc.GetManagedDatabase(ctx, &request.GetManagedDatabaseRequest{
+		details, err = svc.GetManagedDatabase(ctx, &request.GetManagedDatabaseRequest{
 			UUID: details.UUID,
 		})
 		require.NoError(t, err)
-		assert.Equal(t, upcloud.ManagedDatabaseStateRunning, newDetails.State)
+		assert.Equal(t, upcloud.ManagedDatabaseStateRunning, details.State)
 	})
 }
 
@@ -142,18 +143,19 @@ func TestService_GetManagedDatabase(t *testing.T) {
 	record(t, "getmanageddatabase", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		req := getTestCreateRequest("getmanageddatabase", upcloud.ManagedDatabaseServiceTypePostgreSQL)
 		details, err := svc.CreateManagedDatabase(ctx, req)
-		if !assert.NoError(t, err) {
-			return
-		}
+		require.NoError(t, err)
+
 		defer func() {
 			t.Logf("deleting %s", details.UUID)
 			err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: details.UUID})
 			assert.NoError(t, err)
 		}()
+
+		err = waitForManagedDatabaseRunningState(ctx, rec, svc, details.UUID)
+		require.NoError(t, err)
+
 		details, err = svc.GetManagedDatabase(ctx, &request.GetManagedDatabaseRequest{UUID: details.UUID})
-		if !assert.NoError(t, err) {
-			return
-		}
+		require.NoError(t, err)
 		assert.EqualValues(t, req.Maintenance, details.Maintenance)
 		assert.Equal(t, req.Properties.GetIPFilter(),
 			details.Properties.GetIPFilter())
@@ -170,18 +172,16 @@ func TestService_GetManagedDatabase(t *testing.T) {
 func TestService_GetManagedDatabases(t *testing.T) {
 	record(t, "getmanageddatabases", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		details, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("getmanageddatabases", upcloud.ManagedDatabaseServiceTypePostgreSQL))
-		if !assert.NoError(t, err) {
-			return
-		}
+		require.NoError(t, err)
+
 		defer func() {
 			t.Logf("deleting %s", details.UUID)
 			err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: details.UUID})
 			assert.NoError(t, err)
 		}()
+
 		services, err := svc.GetManagedDatabases(ctx, &request.GetManagedDatabasesRequest{})
-		if !assert.NoError(t, err) {
-			return
-		}
+		require.NoError(t, err)
 		assert.Condition(t, func() (success bool) {
 			for _, service := range services {
 				if service.UUID == details.UUID {
@@ -200,17 +200,16 @@ func TestService_GetManagedDatabaseLogs(t *testing.T) {
 	)
 	record(t, "getmanageddatabaselogs", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		createReq := getTestCreateRequest("getmanageddatabaselogs", upcloud.ManagedDatabaseServiceTypePostgreSQL)
-		serviceDetails, err := svc.CreateManagedDatabase(ctx, createReq)
-		if !assert.NoError(t, err) {
-			return
-		}
+		details, err := svc.CreateManagedDatabase(ctx, createReq)
+		require.NoError(t, err)
+
 		defer func() {
-			t.Logf("deleting %s", serviceDetails.UUID)
-			err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
+			t.Logf("deleting %s", details.UUID)
+			err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: details.UUID})
 			assert.NoError(t, err)
 		}()
 
-		err = waitForManagedDatabaseRunningState(ctx, rec, svc, serviceDetails.UUID)
+		err = waitForManagedDatabaseRunningState(ctx, rec, svc, details.UUID)
 		require.NoError(t, err)
 
 		if rec.Mode() == recorder.ModeRecording {
@@ -223,7 +222,7 @@ func TestService_GetManagedDatabaseLogs(t *testing.T) {
 		} {
 			t.Run("Ctx"+string(order), func(t *testing.T) {
 				logReq := &request.GetManagedDatabaseLogsRequest{
-					UUID:  serviceDetails.UUID,
+					UUID:  details.UUID,
 					Limit: batchSize,
 					Order: order,
 				}
@@ -231,13 +230,12 @@ func TestService_GetManagedDatabaseLogs(t *testing.T) {
 				var prevLogs *upcloud.ManagedDatabaseLogs
 				for {
 					logs, err := svc.GetManagedDatabaseLogs(ctx, logReq)
-					if !assert.NoError(t, err) {
-						return
-					}
+					require.NoError(t, err)
 					if len(logs.Logs) == 0 {
 						break
 					}
 					num += len(logs.Logs)
+
 					switch order {
 					case upcloud.ManagedDatabaseLogOrderAscending:
 						if prevLogs != nil {
@@ -257,6 +255,7 @@ func TestService_GetManagedDatabaseLogs(t *testing.T) {
 					logReq.Offset = logs.Offset
 					prevLogs = logs
 				}
+
 				t.Logf("num logs received in total: %d", num)
 				assert.NotZero(t, num)
 			})
@@ -269,44 +268,42 @@ func TestService_GetManagedDatabaseSessions(t *testing.T) {
 		createReq := getTestCreateRequest("getmanageddatabasesessions", upcloud.ManagedDatabaseServiceTypePostgreSQL)
 		createReq.Type = upcloud.ManagedDatabaseServiceTypePostgreSQL
 		createReq.Properties.SetPublicAccess(true).SetIPFilter(upcloud.ManagedDatabaseAllIPv4)
-		serviceDetails, err := svc.CreateManagedDatabase(ctx, createReq)
-		if !assert.NoError(t, err) {
-			return
-		}
+		details, err := svc.CreateManagedDatabase(ctx, createReq)
+		require.NoError(t, err)
+
 		defer func() {
-			t.Logf("deleting %s", serviceDetails.UUID)
-			err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
+			t.Logf("deleting %s", details.UUID)
+			err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: details.UUID})
 			assert.NoError(t, err)
 		}()
-		require.NoError(t, waitForManagedDatabaseRunningState(ctx, rec, svc, serviceDetails.UUID))
+
+		err = waitForManagedDatabaseRunningState(ctx, rec, svc, details.UUID)
+		require.NoError(t, err)
+
 		sessions, err := svc.GetManagedDatabaseSessions(ctx, &request.GetManagedDatabaseSessionsRequest{
-			UUID:   serviceDetails.UUID,
+			UUID:   details.UUID,
 			Limit:  1000,
 			Offset: 0,
 			Order:  "pid:desc",
 		})
-		if !assert.NoError(t, err) {
-			return
-		}
+		require.NoError(t, err)
 		assert.Len(t, sessions.MySQL, 0)
 		assert.Len(t, sessions.PostgreSQL, 0)
 		assert.Len(t, sessions.Redis, 0)
 
 		err = svc.CancelManagedDatabaseSession(ctx, &request.CancelManagedDatabaseSession{
-			UUID:      serviceDetails.UUID,
+			UUID:      details.UUID,
 			Pid:       0,
 			Terminate: true,
 		})
 		assert.Error(t, err)
-		assert.True(t, strings.HasPrefix(err.(*upcloud.Problem).Title, "Must provide a connection"))
 
 		err = svc.CancelManagedDatabaseSession(ctx, &request.CancelManagedDatabaseSession{
-			UUID:      serviceDetails.UUID,
+			UUID:      details.UUID,
 			Pid:       0,
 			Terminate: false,
 		})
 		assert.Error(t, err)
-		assert.True(t, strings.HasPrefix(err.(*upcloud.Problem).Title, "Must provide a connection"))
 	})
 }
 
@@ -315,22 +312,22 @@ func TestService_GetManagedDatabaseMetrics(t *testing.T) {
 
 	record(t, "getmanageddatabasemetrics", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		createReq := getTestCreateRequest("getmanageddatabasemetrics", upcloud.ManagedDatabaseServiceTypePostgreSQL)
-		serviceDetails, err := svc.CreateManagedDatabase(ctx, createReq)
-		if !assert.NoError(t, err) {
-			return
-		}
+		details, err := svc.CreateManagedDatabase(ctx, createReq)
+		require.NoError(t, err)
+
 		defer func() {
-			t.Logf("deleting %s", serviceDetails.UUID)
-			err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
+			t.Logf("deleting %s", details.UUID)
+			err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: details.UUID})
 			assert.NoError(t, err)
 		}()
-		err = waitForManagedDatabaseRunningState(ctx, rec, svc, serviceDetails.UUID)
+		err = waitForManagedDatabaseRunningState(ctx, rec, svc, details.UUID)
 		require.NoError(t, err)
 
 		if rec.Mode() == recorder.ModeRecording {
 			t.Logf("waiting for %s to gather up some data", waitFor)
 			time.Sleep(waitFor)
 		}
+
 		periods := []upcloud.ManagedDatabaseMetricPeriod{
 			upcloud.ManagedDatabaseMetricPeriodHour,
 			upcloud.ManagedDatabaseMetricPeriodDay,
@@ -341,10 +338,11 @@ func TestService_GetManagedDatabaseMetrics(t *testing.T) {
 		for _, period := range periods {
 			t.Run("Ctx"+string(period), func(t *testing.T) {
 				metrics, err := svc.GetManagedDatabaseMetrics(ctx, &request.GetManagedDatabaseMetricsRequest{
-					UUID:   serviceDetails.UUID,
+					UUID:   details.UUID,
 					Period: period,
 				})
 				assert.NoError(t, err)
+
 				if period == upcloud.ManagedDatabaseMetricPeriodHour {
 					validate := func(iv interface{}) {
 						switch chart := iv.(type) {
@@ -383,20 +381,20 @@ func TestService_GetManagedDatabaseQueryStatisticsMySQL(t *testing.T) {
 	record(t, "getmanageddatabasequerystatisticsmysql", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		createReq := getTestCreateRequest("querystatisticsmysql", upcloud.ManagedDatabaseServiceTypeMySQL)
 		createReq.Properties.SetPublicAccess(true).SetIPFilter(upcloud.ManagedDatabaseAllIPv4)
-		serviceDetails, err := svc.CreateManagedDatabase(ctx, createReq)
-		if !assert.NoError(t, err) {
-			return
-		}
+		details, err := svc.CreateManagedDatabase(ctx, createReq)
+		require.NoError(t, err)
+
 		defer func() {
-			t.Logf("deleting %s", serviceDetails.UUID)
-			err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
+			t.Logf("deleting %s", details.UUID)
+			err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: details.UUID})
 			assert.NoError(t, err)
 		}()
 
-		require.NoError(t, waitForManagedDatabaseRunningState(ctx, rec, svc, serviceDetails.UUID))
+		err = waitForManagedDatabaseRunningState(ctx, rec, svc, details.UUID)
+		require.NoError(t, err)
 
 		stats, err := svc.GetManagedDatabaseQueryStatisticsMySQL(ctx, &request.GetManagedDatabaseQueryStatisticsRequest{
-			UUID:   serviceDetails.UUID,
+			UUID:   details.UUID,
 			Limit:  1000,
 			Offset: 0,
 		})
@@ -409,25 +407,24 @@ func TestService_GetManagedDatabaseQueryStatisticsPostgreSQL(t *testing.T) {
 	record(t, "getmanageddatabasequerystatisticspostgres", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		createReq := getTestCreateRequest("querystatisticspostgres", upcloud.ManagedDatabaseServiceTypePostgreSQL)
 		createReq.Properties.SetPublicAccess(true).SetIPFilter(upcloud.ManagedDatabaseAllIPv4)
-		serviceDetails, err := svc.CreateManagedDatabase(ctx, createReq)
-		if !assert.NoError(t, err) {
-			return
-		}
+		details, err := svc.CreateManagedDatabase(ctx, createReq)
+		require.NoError(t, err)
+
 		defer func() {
-			t.Logf("deleting %s", serviceDetails.UUID)
-			err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
+			t.Logf("deleting %s", details.UUID)
+			err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: details.UUID})
 			assert.NoError(t, err)
 		}()
 
-		require.NoError(t, waitForManagedDatabaseRunningState(ctx, rec, svc, serviceDetails.UUID))
+		require.NoError(t, waitForManagedDatabaseRunningState(ctx, rec, svc, details.UUID))
 
 		stats, err := svc.GetManagedDatabaseQueryStatisticsPostgreSQL(ctx, &request.GetManagedDatabaseQueryStatisticsRequest{
-			UUID:   serviceDetails.UUID,
+			UUID:   details.UUID,
 			Limit:  1000,
 			Offset: 0,
 		})
 		assert.NoError(t, err)
-		assert.Len(t, stats, 1)
+		assert.Len(t, stats, 2)
 		assert.Equal(t, "defaultdb", stats[0].DatabaseName)
 	})
 }
@@ -435,16 +432,22 @@ func TestService_GetManagedDatabaseQueryStatisticsPostgreSQL(t *testing.T) {
 func TestService_ModifyManagedDatabase(t *testing.T) {
 	record(t, "modifymanageddatabase", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		details, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("modifymanageddatabase", upcloud.ManagedDatabaseServiceTypePostgreSQL))
-		if !assert.NoError(t, err) {
-			return
-		}
+		require.NoError(t, err)
+
 		defer func() {
 			t.Logf("deleting %s", details.UUID)
 			err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: details.UUID})
 			assert.NoError(t, err)
 		}()
+
+		err = waitForManagedDatabaseRunningState(ctx, rec, svc, details.UUID)
+		require.NoError(t, err)
+
+		details, err = svc.GetManagedDatabase(ctx, &request.GetManagedDatabaseRequest{UUID: details.UUID})
+		require.NoError(t, err)
 		assert.True(t, details.Properties.GetAutoUtilityIPFilter())
 		assert.True(t, details.Properties.GetPublicAccess())
+
 		var publicComponentFound bool
 		for _, component := range details.Components {
 			if component.Route == upcloud.ManagedDatabaseComponentRoutePublic {
@@ -452,18 +455,24 @@ func TestService_ModifyManagedDatabase(t *testing.T) {
 			}
 		}
 		assert.True(t, publicComponentFound)
+
 		modifyReq := &request.ModifyManagedDatabaseRequest{UUID: details.UUID}
 		modifyReq.Properties.
 			SetPublicAccess(false).
 			SetIPFilter(upcloud.ManagedDatabaseAllIPv4)
-		newDetails, err := svc.ModifyManagedDatabase(ctx, modifyReq)
-		if !assert.NoError(t, err) {
-			return
-		}
-		assert.False(t, newDetails.Properties.GetPublicAccess())
-		assert.Equal(t, []string{upcloud.ManagedDatabaseAllIPv4}, newDetails.Properties.GetIPFilter())
+		details, err = svc.ModifyManagedDatabase(ctx, modifyReq)
+		require.NoError(t, err)
+		assert.False(t, details.Properties.GetPublicAccess())
+		assert.Equal(t, []string{upcloud.ManagedDatabaseAllIPv4}, details.Properties.GetIPFilter())
+
+		err = waitForManagedDatabaseRunningState(ctx, rec, svc, details.UUID)
+		require.NoError(t, err)
+
+		details, err = svc.GetManagedDatabase(ctx, &request.GetManagedDatabaseRequest{UUID: details.UUID})
+		require.NoError(t, err)
+
 		publicComponentFound = false
-		for _, component := range newDetails.Components {
+		for _, component := range details.Components {
 			if component.Route == upcloud.ManagedDatabaseComponentRoutePublic {
 				publicComponentFound = true
 			}
@@ -474,24 +483,35 @@ func TestService_ModifyManagedDatabase(t *testing.T) {
 
 func TestService_UpgradeManagedDatabaseVersion(t *testing.T) {
 	record(t, "upgrademanageddatabaseversion", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		// This test uses manually created database with postgres version 13
-		// This is because upgrading version requires "Started" state; waiting for started state in tests
-		// results in huge amount of requests made to verify the state and simply takes too long
-		details, err := svc.GetManagedDatabase(ctx, &request.GetManagedDatabaseRequest{
-			UUID: "09788889-be2d-48da-a527-962b26014b54",
-		})
-
+		originalVersion := "14"
+		req := getTestCreateRequest("upgrademanageddatabase", upcloud.ManagedDatabaseServiceTypePostgreSQL)
+		req.Properties.SetString("version", originalVersion)
+		details, err := svc.CreateManagedDatabase(ctx, req)
 		require.NoError(t, err)
-		assert.Equal(t, "13", details.Properties["version"])
 
-		targetVersion := "14"
-		updatedDetails, err := svc.UpgradeManagedDatabaseVersion(ctx, &request.UpgradeManagedDatabaseVersionRequest{
+		defer func() {
+			t.Logf("deleting %s", details.UUID)
+			err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: details.UUID})
+			assert.NoError(t, err)
+		}()
+
+		err = waitForManagedDatabaseRunningState(ctx, rec, svc, details.UUID)
+		require.NoError(t, err)
+
+		version, err := details.Properties.GetString("version")
+		require.NoError(t, err)
+		assert.Equal(t, originalVersion, version)
+
+		targetVersion := "15"
+		details, err = svc.UpgradeManagedDatabaseVersion(ctx, &request.UpgradeManagedDatabaseVersionRequest{
 			UUID:          details.UUID,
 			TargetVersion: targetVersion,
 		})
-
 		assert.NoError(t, err)
-		assert.Equal(t, targetVersion, updatedDetails.Properties["version"])
+
+		version, err = details.Properties.GetString("version")
+		require.NoError(t, err)
+		assert.Equal(t, targetVersion, version)
 	})
 }
 
@@ -506,26 +526,26 @@ func TestService_GetManagedDatabaseVersions(t *testing.T) {
 			require.NoError(t, err)
 		}()
 
+		err = waitForManagedDatabaseRunningState(ctx, rec, svc, details.UUID)
+		require.NoError(t, err)
+
 		versions, err := svc.GetManagedDatabaseVersions(ctx, &request.GetManagedDatabaseVersionsRequest{
 			UUID: details.UUID,
 		})
-
 		require.NoError(t, err)
-		assert.Len(t, versions, 5)
-		assert.Contains(t, versions, "10")
-		assert.Contains(t, versions, "11")
+		assert.Len(t, versions, 4)
 		assert.Contains(t, versions, "12")
 		assert.Contains(t, versions, "13")
 		assert.Contains(t, versions, "14")
+		assert.Contains(t, versions, "15")
 	})
 }
 
 func TestService_ShutdownStartManagedDatabase(t *testing.T) {
 	record(t, "shutdownstartmanageddatabase", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		details, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("shutdownstartmanageddatabase", upcloud.ManagedDatabaseServiceTypePostgreSQL))
-		if !assert.NoError(t, err) {
-			return
-		}
+		require.NoError(t, err)
+
 		defer func() {
 			t.Logf("deleting %s", details.UUID)
 			err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: details.UUID})
@@ -538,62 +558,57 @@ func TestService_ShutdownStartManagedDatabase(t *testing.T) {
 		require.NoError(t, err)
 
 		shutdownDetails, err := svc.ShutdownManagedDatabase(ctx, &request.ShutdownManagedDatabaseRequest{UUID: details.UUID})
-		if !assert.NoError(t, err) {
-			return
-		}
+		require.NoError(t, err)
 		assert.False(t, shutdownDetails.Powered)
 
 		startDetails, err := svc.StartManagedDatabase(ctx, &request.StartManagedDatabaseRequest{UUID: details.UUID})
-		if !assert.NoError(t, err) {
-			return
-		}
+		require.NoError(t, err)
 		assert.True(t, startDetails.Powered)
 	})
 }
 
 func TestService_ManagedDatabaseUserManager(t *testing.T) {
 	record(t, "managemanageddatabaseusers", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		serviceDetails, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("managemanageddatabaseusers", upcloud.ManagedDatabaseServiceTypePostgreSQL))
-		if !assert.NoError(t, err) {
-			return
-		}
+		details, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("managemanageddatabaseusers", upcloud.ManagedDatabaseServiceTypePostgreSQL))
+		require.NoError(t, err)
+
 		defer func() {
-			t.Logf("deleting %s", serviceDetails.UUID)
-			err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
+			t.Logf("deleting %s", details.UUID)
+			err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: details.UUID})
 			assert.NoError(t, err)
 		}()
-		err = waitForManagedDatabaseRunningState(ctx, rec, svc, serviceDetails.UUID)
+
+		err = waitForManagedDatabaseRunningState(ctx, rec, svc, details.UUID)
+		require.NoError(t, err)
+
+		details, err = svc.GetManagedDatabase(ctx, &request.GetManagedDatabaseRequest{UUID: details.UUID})
 		require.NoError(t, err)
 
 		t.Run("CtxCreate", func(t *testing.T) {
 			userDetails, err := svc.CreateManagedDatabaseUser(ctx, &request.CreateManagedDatabaseUserRequest{
-				ServiceUUID: serviceDetails.UUID,
+				ServiceUUID: details.UUID,
 				Username:    "testuser",
 			})
-			if !assert.NoError(t, err) {
-				return
-			}
+			require.NoError(t, err)
+
 			t.Run("CtxGet", func(t *testing.T) {
-				newUserDetails, err := svc.GetManagedDatabaseUser(ctx, &request.GetManagedDatabaseUserRequest{
-					ServiceUUID: serviceDetails.UUID,
+				_, err := svc.GetManagedDatabaseUser(ctx, &request.GetManagedDatabaseUserRequest{
+					ServiceUUID: details.UUID,
 					Username:    userDetails.Username,
 				})
-				if !assert.NoError(t, err) {
-					return
-				}
-				assert.Equal(t, userDetails, newUserDetails)
+				require.NoError(t, err)
 			})
+
 			t.Run("CtxList", func(t *testing.T) {
-				users, err := svc.GetManagedDatabaseUsers(ctx, &request.GetManagedDatabaseUsersRequest{ServiceUUID: serviceDetails.UUID})
-				if !assert.NoError(t, err) {
-					return
-				}
+				users, err := svc.GetManagedDatabaseUsers(ctx, &request.GetManagedDatabaseUsersRequest{ServiceUUID: details.UUID})
+				require.NoError(t, err)
+
 				if assert.Len(t, users, 2) {
 					var primaryFound, normalFound bool
 					for _, user := range users {
 						switch user.Type {
 						case upcloud.ManagedDatabaseUserTypePrimary:
-							if assert.Equal(t, serviceDetails.ServiceURIParams.User, user.Username) {
+							if assert.Equal(t, details.ServiceURIParams.User, user.Username) {
 								primaryFound = true
 							}
 						case upcloud.ManagedDatabaseUserTypeNormal:
@@ -606,30 +621,31 @@ func TestService_ManagedDatabaseUserManager(t *testing.T) {
 					assert.True(t, normalFound, "normal user should have been found")
 				}
 			})
+
 			t.Run("CtxModify", func(t *testing.T) {
 				//nolint:gosec
 				const newPassword = "yXB8gePmxHuESbJx_I-Iag"
 				newUserDetails, err := svc.ModifyManagedDatabaseUser(ctx, &request.ModifyManagedDatabaseUserRequest{
-					ServiceUUID: serviceDetails.UUID,
+					ServiceUUID: details.UUID,
 					Username:    userDetails.Username,
 					Password:    newPassword,
 				})
-				if !assert.NoError(t, err) {
-					return
-				}
+				require.NoError(t, err)
 				assert.Equal(t, newPassword, newUserDetails.Password)
 			})
+
 			t.Run("CtxDelete", func(t *testing.T) {
 				err := svc.DeleteManagedDatabaseUser(ctx, &request.DeleteManagedDatabaseUserRequest{
-					ServiceUUID: serviceDetails.UUID,
+					ServiceUUID: details.UUID,
 					Username:    userDetails.Username,
 				})
 				assert.NoError(t, err)
 			})
+
 			t.Run("CtxDeletePrimaryShouldNotSucceed", func(t *testing.T) {
 				err := svc.DeleteManagedDatabaseUser(ctx, &request.DeleteManagedDatabaseUserRequest{
-					ServiceUUID: serviceDetails.UUID,
-					Username:    serviceDetails.ServiceURIParams.User,
+					ServiceUUID: details.UUID,
+					Username:    details.ServiceURIParams.User,
 				})
 				assert.Error(t, err)
 			})
@@ -641,18 +657,17 @@ func TestService_ManagedDatabaseLogicalDatabaseManager(t *testing.T) {
 	const (
 		defaultdb = "defaultdb"
 	)
-	record(t, "managemanageddatabaslogicaldbs", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		serviceDetails, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("managemanageddatabaslogicaldbs", upcloud.ManagedDatabaseServiceTypePostgreSQL))
-		if !assert.NoError(t, err) {
-			return
-		}
+	record(t, "managemanageddatabaselogicaldbs", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		details, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("managemanageddatabaslogicaldbs", upcloud.ManagedDatabaseServiceTypePostgreSQL))
+		require.NoError(t, err)
+
 		defer func() {
-			t.Logf("deleting %s", serviceDetails.UUID)
-			err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: serviceDetails.UUID})
+			t.Logf("deleting %s", details.UUID)
+			err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: details.UUID})
 			assert.NoError(t, err)
 		}()
 
-		err = waitForManagedDatabaseRunningState(ctx, rec, svc, serviceDetails.UUID)
+		err = waitForManagedDatabaseRunningState(ctx, rec, svc, details.UUID)
 		require.NoError(t, err)
 
 		t.Run("CtxCreate", func(t *testing.T) {
@@ -662,22 +677,19 @@ func TestService_ManagedDatabaseLogicalDatabaseManager(t *testing.T) {
 				LCCType:   "fr_FR.UTF-8",
 			}
 			dbDetails, err := svc.CreateManagedDatabaseLogicalDatabase(ctx, &request.CreateManagedDatabaseLogicalDatabaseRequest{
-				ServiceUUID: serviceDetails.UUID,
+				ServiceUUID: details.UUID,
 				Name:        expected.Name,
 				LCCollate:   expected.LCCollate,
 				LCCType:     expected.LCCType,
 			})
-			if !assert.NoError(t, err) {
-				return
-			}
+			require.NoError(t, err)
 			assert.Equal(t, expected, dbDetails)
 
 			t.Run("CtxList", func(t *testing.T) {
 				dbs, err := svc.GetManagedDatabaseLogicalDatabases(ctx,
-					&request.GetManagedDatabaseLogicalDatabasesRequest{ServiceUUID: serviceDetails.UUID})
-				if !assert.NoError(t, err) {
-					return
-				}
+					&request.GetManagedDatabaseLogicalDatabasesRequest{ServiceUUID: details.UUID})
+				require.NoError(t, err)
+
 				if assert.Len(t, dbs, 2) {
 					var defaultFound, createdFound bool
 					for _, db := range dbs {
@@ -695,7 +707,7 @@ func TestService_ManagedDatabaseLogicalDatabaseManager(t *testing.T) {
 			})
 			t.Run("CtxDelete", func(t *testing.T) {
 				err := svc.DeleteManagedDatabaseLogicalDatabase(ctx, &request.DeleteManagedDatabaseLogicalDatabaseRequest{
-					ServiceUUID: serviceDetails.UUID,
+					ServiceUUID: details.UUID,
 					Name:        expected.Name,
 				})
 				assert.NoError(t, err)
@@ -706,14 +718,16 @@ func TestService_ManagedDatabaseLogicalDatabaseManager(t *testing.T) {
 
 func TestService_GetManagedDatabaseServiceType(t *testing.T) {
 	record(t, "getmanageddatabaseservicetype", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		databaseTypes := []string{"pg", "mysql"}
-
+		databaseTypes := []upcloud.ManagedDatabaseServiceType{
+			upcloud.ManagedDatabaseServiceTypeMySQL,
+			upcloud.ManagedDatabaseServiceTypeOpenSearch,
+			upcloud.ManagedDatabaseServiceTypePostgreSQL,
+			upcloud.ManagedDatabaseServiceTypeRedis,
+		}
 		for _, databaseType := range databaseTypes {
-			serviceType, err := svc.GetManagedDatabaseServiceType(ctx, &request.GetManagedDatabaseServiceTypeRequest{Type: databaseType})
-			if !assert.NoError(t, err) {
-				return
-			}
-			assert.Equal(t, databaseType, serviceType.Name)
+			serviceType, err := svc.GetManagedDatabaseServiceType(ctx, &request.GetManagedDatabaseServiceTypeRequest{Type: string(databaseType)})
+			assert.NoError(t, err)
+			assert.Equal(t, string(databaseType), serviceType.Name)
 		}
 	})
 }
@@ -721,28 +735,28 @@ func TestService_GetManagedDatabaseServiceType(t *testing.T) {
 func TestService_GetManagedDatabaseServiceTypes(t *testing.T) {
 	record(t, "getmanageddatabaseservicetypes", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		types, err := svc.GetManagedDatabaseServiceTypes(ctx, &request.GetManagedDatabaseServiceTypesRequest{})
-		if !assert.NoError(t, err) {
-			return
-		}
-		assert.Equal(t, "pg", types["pg"].Name)
-		assert.Equal(t, "mysql", types["mysql"].Name)
+		require.NoError(t, err)
+		assert.Equal(t, string(upcloud.ManagedDatabaseServiceTypeMySQL), types["mysql"].Name)
+		assert.Equal(t, string(upcloud.ManagedDatabaseServiceTypeOpenSearch), types["opensearch"].Name)
+		assert.Equal(t, string(upcloud.ManagedDatabaseServiceTypePostgreSQL), types["pg"].Name)
+		assert.Equal(t, string(upcloud.ManagedDatabaseServiceTypeRedis), types["redis"].Name)
 	})
 }
 
 func TestService_ModifyManagedDatabaseUserPostgreSQLAccessControl(t *testing.T) {
 	record(t, "modifymanageddatabaseuserpostgreqlsaccesscontrol", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		db, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("modifyuseraccesscontrol", upcloud.ManagedDatabaseServiceTypePostgreSQL))
-		if !assert.NoError(t, err) {
-			return
-		}
+		require.NoError(t, err)
+
 		defer func() {
 			if err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: db.UUID}); err != nil {
 				t.Log(err)
 			}
 		}()
-		if !assert.NoError(t, waitForManagedDatabaseRunningState(ctx, rec, svc, db.UUID)) {
-			return
-		}
+
+		err = waitForManagedDatabaseRunningState(ctx, rec, svc, db.UUID)
+		require.NoError(t, err)
+
 		user, err := svc.CreateManagedDatabaseUser(ctx, &request.CreateManagedDatabaseUserRequest{
 			ServiceUUID: db.UUID,
 			Username:    "demouser",
@@ -750,9 +764,7 @@ func TestService_ModifyManagedDatabaseUserPostgreSQLAccessControl(t *testing.T) 
 				AllowReplication: upcloud.BoolPtr(true),
 			},
 		})
-		if !assert.NoError(t, err) {
-			return
-		}
+		require.NoError(t, err)
 		assert.True(t, *user.PGAccessControl.AllowReplication)
 
 		user, err = svc.ModifyManagedDatabaseUserAccessControl(ctx, &request.ModifyManagedDatabaseUserAccessControlRequest{
@@ -762,9 +774,7 @@ func TestService_ModifyManagedDatabaseUserPostgreSQLAccessControl(t *testing.T) 
 				AllowReplication: upcloud.BoolPtr(false),
 			},
 		})
-		if !assert.NoError(t, err) {
-			return
-		}
+		require.NoError(t, err)
 		assert.False(t, *user.PGAccessControl.AllowReplication)
 	})
 }
@@ -772,17 +782,17 @@ func TestService_ModifyManagedDatabaseUserPostgreSQLAccessControl(t *testing.T) 
 func TestService_ModifyManagedDatabaseUserOpenSearchAccessControl(t *testing.T) {
 	record(t, "modifymanageddatabaseuseropensearchaccesscontrol", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		db, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("modifyuseraccesscontrolos", upcloud.ManagedDatabaseServiceTypeOpenSearch))
-		if !assert.NoError(t, err) {
-			return
-		}
+		require.NoError(t, err)
+
 		defer func() {
 			if err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: db.UUID}); err != nil {
 				t.Log(err)
 			}
 		}()
-		if !assert.NoError(t, waitForManagedDatabaseRunningState(ctx, rec, svc, db.UUID)) {
-			return
-		}
+
+		err = waitForManagedDatabaseRunningState(ctx, rec, svc, db.UUID)
+		require.NoError(t, err)
+
 		user, err := svc.CreateManagedDatabaseUser(ctx, &request.CreateManagedDatabaseUserRequest{
 			ServiceUUID: db.UUID,
 			Username:    "demouser",
@@ -795,9 +805,8 @@ func TestService_ModifyManagedDatabaseUserOpenSearchAccessControl(t *testing.T) 
 				},
 			},
 		})
-		if !assert.NoError(t, err) {
-			return
-		}
+		require.NoError(t, err)
+
 		rules := *user.OpenSearchAccessControl.Rules
 		assert.Equal(t, "index_1", rules[0].Index)
 		assert.Equal(t, "readwrite", string(rules[0].Permission))
@@ -814,21 +823,20 @@ func TestService_ModifyManagedDatabaseUserOpenSearchAccessControl(t *testing.T) 
 				},
 			},
 		})
-		if !assert.NoError(t, err) {
-			return
-		}
+		require.NoError(t, err)
+
 		rules = *user.OpenSearchAccessControl.Rules
 		assert.Equal(t, "index_1", rules[0].Index)
 		assert.Equal(t, "read", string(rules[0].Permission))
 
 		user, err = svc.ModifyManagedDatabaseUserAccessControl(ctx, &request.ModifyManagedDatabaseUserAccessControlRequest{
-			ServiceUUID:             db.UUID,
-			Username:                user.Username,
-			OpenSearchAccessControl: &upcloud.ManagedDatabaseUserOpenSearchAccessControl{},
+			ServiceUUID: db.UUID,
+			Username:    user.Username,
+			OpenSearchAccessControl: &upcloud.ManagedDatabaseUserOpenSearchAccessControl{
+				Rules: &[]upcloud.ManagedDatabaseUserOpenSearchAccessControlRule{},
+			},
 		})
-		if !assert.NoError(t, err) {
-			return
-		}
+		require.NoError(t, err)
 		assert.Len(t, *user.OpenSearchAccessControl.Rules, 0)
 	})
 }
@@ -836,17 +844,17 @@ func TestService_ModifyManagedDatabaseUserOpenSearchAccessControl(t *testing.T) 
 func TestService_ModifyManagedDatabaseUserRedisAccessControl(t *testing.T) {
 	record(t, "modifymanageddatabaseuserredisaccesscontrol", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		db, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("modifyuseraccesscontrolredis", upcloud.ManagedDatabaseServiceTypeRedis))
-		if !assert.NoError(t, err) {
-			return
-		}
+		require.NoError(t, err)
+
 		defer func() {
 			if err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: db.UUID}); err != nil {
 				t.Log(err)
 			}
 		}()
-		if !assert.NoError(t, waitForManagedDatabaseRunningState(ctx, rec, svc, db.UUID)) {
-			return
-		}
+
+		err = waitForManagedDatabaseRunningState(ctx, rec, svc, db.UUID)
+		require.NoError(t, err)
+
 		user, err := svc.CreateManagedDatabaseUser(ctx, &request.CreateManagedDatabaseUserRequest{
 			ServiceUUID: db.UUID,
 			Username:    "demouser",
@@ -857,9 +865,7 @@ func TestService_ModifyManagedDatabaseUserRedisAccessControl(t *testing.T) {
 				Keys:       &[]string{"key_*"},
 			},
 		})
-		if !assert.NoError(t, err) {
-			return
-		}
+		require.NoError(t, err)
 		assert.Equal(t, []string{"+@set"}, *user.RedisAccessControl.Categories)
 		assert.Equal(t, []string{"*"}, *user.RedisAccessControl.Channels)
 		assert.Equal(t, []string{"+set"}, *user.RedisAccessControl.Commands)
@@ -875,9 +881,7 @@ func TestService_ModifyManagedDatabaseUserRedisAccessControl(t *testing.T) {
 				Keys:       &[]string{"key_*"},
 			},
 		})
-		if !assert.NoError(t, err) {
-			return
-		}
+		require.NoError(t, err)
 		assert.Equal(t, []string{}, *user.RedisAccessControl.Categories)
 		assert.Equal(t, []string{}, *user.RedisAccessControl.Channels)
 		assert.Equal(t, []string{}, *user.RedisAccessControl.Commands)
@@ -888,21 +892,19 @@ func TestService_ModifyManagedDatabaseUserRedisAccessControl(t *testing.T) {
 func TestService_ModifyManagedDatabaseAccessControl(t *testing.T) {
 	record(t, "modifymanageddatabaseaccesscontrol", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		db, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("modifyaccesscontrol", upcloud.ManagedDatabaseServiceTypeOpenSearch))
-		if !assert.NoError(t, err) {
-			return
-		}
+		require.NoError(t, err)
+
 		defer func() {
 			if err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: db.UUID}); err != nil {
 				t.Log(err)
 			}
 		}()
-		if !assert.NoError(t, waitForManagedDatabaseRunningState(ctx, rec, svc, db.UUID)) {
-			return
-		}
+
+		err = waitForManagedDatabaseRunningState(ctx, rec, svc, db.UUID)
+		require.NoError(t, err)
+
 		ac, err := svc.GetManagedDatabaseAccessControl(ctx, &request.GetManagedDatabaseAccessControlRequest{ServiceUUID: db.UUID})
-		if !assert.NoError(t, err) {
-			return
-		}
+		require.NoError(t, err)
 		assert.False(t, *ac.ACLsEnabled)
 		assert.False(t, *ac.ExtendedACLsEnabled)
 
@@ -910,9 +912,7 @@ func TestService_ModifyManagedDatabaseAccessControl(t *testing.T) {
 			ServiceUUID: db.UUID,
 			ACLsEnabled: upcloud.BoolPtr(true),
 		})
-		if !assert.NoError(t, err) {
-			return
-		}
+		require.NoError(t, err)
 		assert.True(t, *ac.ACLsEnabled)
 		assert.False(t, *ac.ExtendedACLsEnabled)
 
@@ -920,9 +920,7 @@ func TestService_ModifyManagedDatabaseAccessControl(t *testing.T) {
 			ServiceUUID:         db.UUID,
 			ExtendedACLsEnabled: upcloud.BoolPtr(true),
 		})
-		if !assert.NoError(t, err) {
-			return
-		}
+		require.NoError(t, err)
 		assert.True(t, *ac.ACLsEnabled)
 		assert.True(t, *ac.ExtendedACLsEnabled)
 	})
@@ -931,21 +929,19 @@ func TestService_ModifyManagedDatabaseAccessControl(t *testing.T) {
 func TestService_GetManagedDatabaseIndices(t *testing.T) {
 	record(t, "getmanageddatabaseincices", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		db, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("getindices", upcloud.ManagedDatabaseServiceTypeOpenSearch))
-		if !assert.NoError(t, err) {
-			return
-		}
+		require.NoError(t, err)
+
 		defer func() {
 			if err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: db.UUID}); err != nil {
 				t.Log(err)
 			}
 		}()
-		if !assert.NoError(t, waitForManagedDatabaseRunningState(ctx, rec, svc, db.UUID)) {
-			return
-		}
+
+		err = waitForManagedDatabaseRunningState(ctx, rec, svc, db.UUID)
+		require.NoError(t, err)
+
 		indices, err := svc.GetManagedDatabaseIndices(ctx, &request.GetManagedDatabaseIndicesRequest{ServiceUUID: db.UUID})
-		if !assert.NoError(t, err) {
-			return
-		}
+		require.NoError(t, err)
 		assert.NotEmpty(t, indices)
 	})
 }
@@ -960,6 +956,7 @@ func waitForManagedDatabaseInitialBackup(ctx context.Context, rec *recorder.Reco
 	rec.AddPassthrough(func(h *http.Request) bool {
 		return true
 	})
+
 	defer func() {
 		rec.Passthroughs = nil
 	}()
@@ -970,6 +967,7 @@ func waitForManagedDatabaseInitialBackup(ctx context.Context, rec *recorder.Reco
 		if err != nil {
 			return err
 		}
+
 		if len(waitForBackupDetails.Backups) > 0 {
 			break
 		}

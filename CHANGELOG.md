@@ -16,6 +16,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 ### Removed
 - **Breaking**, Managed Database: connection related methods in favor of session
 - **Breaking**: remove `Timeout` option from `WaitFor*` methods. Use `context.WithTimeout` to define a timeout for these functions.
+- **Breaking**: Managed Database: `Type` field from `CloneManagedDatabaseRequest` and `ModifyManagedDatabaseRequest`
 
 ## [6.12.0]
 

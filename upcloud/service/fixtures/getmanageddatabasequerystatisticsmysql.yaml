@@ -10,22 +10,22 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/6.1.1
+      - upcloud-go-api/6.12.0
     url: https://api.upcloud.com/1.3/database
     method: POST
   response:
-    body: '{"backups":[],"components":[{"component":"mysql","host":"querystatisticsmysql-zhbmidiechch.db.upclouddatabases.com","port":11550,"route":"dynamic","usage":"primary"},{"component":"mysql","host":"replica-querystatisticsmysql-zhbmidiechch.db.upclouddatabases.com","port":11550,"route":"dynamic","usage":"replica"},{"component":"mysql","host":"public-querystatisticsmysql-zhbmidiechch.db.upclouddatabases.com","port":11550,"route":"public","usage":"primary"},{"component":"mysql","host":"public-replica-querystatisticsmysql-zhbmidiechch.db.upclouddatabases.com","port":11550,"route":"public","usage":"replica"},{"component":"mysqlx","host":"querystatisticsmysql-zhbmidiechch.db.upclouddatabases.com","port":11554,"route":"dynamic","usage":"primary"},{"component":"mysqlx","host":"replica-querystatisticsmysql-zhbmidiechch.db.upclouddatabases.com","port":11554,"route":"dynamic","usage":"replica"},{"component":"mysqlx","host":"public-querystatisticsmysql-zhbmidiechch.db.upclouddatabases.com","port":11554,"route":"public","usage":"primary"},{"component":"mysqlx","host":"public-replica-querystatisticsmysql-zhbmidiechch.db.upclouddatabases.com","port":11554,"route":"public","usage":"replica"}],"create_time":"0001-01-01T00:00:00Z","maintenance":{"dow":"monday","time":"12:00:00","pending_updates":[]},"name":"querystatisticsmysql","node_count":2,"node_states":[],"plan":"2x2xCPU-4GB-100GB","powered":true,"metadata":{"mysql_version":"8","write_block_threshold_exceeded":null},"properties":{"automatic_utility_network_ip_filter":true,"backup_hour":11,"backup_minute":57,"ip_filter":["0.0.0.0/0"],"public_access":true,"sql_mode":"ANSI,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION,NO_ZERO_DATE,NO_ZERO_IN_DATE,STRICT_ALL_TABLES","sql_require_primary_key":true,"version":"8"},"uuid":"0935409c-5ac6-471b-a002-b892f590908b","state":"rebuilding","title":"querystatisticsmysql","type":"mysql","update_time":"0001-01-01T00:00:00Z","service_uri":"mysql://upadmin:AVNS_QvA_5oupWh2mQlVScQG@querystatisticsmysql-zhbmidiechch.db.upclouddatabases.com:11550/defaultdb?ssl-mode=REQUIRED","service_uri_params":{"dbname":"defaultdb","host":"querystatisticsmysql-zhbmidiechch.db.upclouddatabases.com","password":"AVNS_QvA_5oupWh2mQlVScQG","port":"11550","ssl_mode":"REQUIRED","user":"upadmin"},"users":[{"username":"upadmin","authentication":"caching_sha2_password","type":"primary"}],"databases":[{"name":"defaultdb"}],"zone":"fi-hel2"}'
+    body: '{"uuid":"094b23cb-1887-483d-8a6b-ef9d6b85f3ae","zone":"fi-hel2","name":"querystatisticsmysql","title":"querystatisticsmysql","type":"mysql","plan":"2x2xCPU-4GB-100GB","state":"pending","powered":true,"termination_protection":false,"node_count":2,"create_time":"2024-01-31T21:06:58Z","update_time":"2024-01-31T21:06:58Z","service_uri":"","service_uri_params":{},"maintenance":{"dow":"monday","time":"12:00:00","pending_updates":[]},"metadata":{},"properties":{"automatic_utility_network_ip_filter":true,"ip_filter":["0.0.0.0/0"],"public_access":true},"networks":[],"node_states":[],"backups":[],"components":[],"users":[],"databases":[]}'
     headers:
-      Access-Control-Allow-Origin:
-      - '*'
+      Content-Length:
+      - "636"
       Content-Type:
       - application/json
       Date:
-      - Wed, 17 May 2023 06:58:18 GMT
+      - Wed, 31 Jan 2024 21:06:58 GMT
       Strict-Transport-Security:
       - max-age=63072000
-    status: 200 OK
-    code: 200
+    status: 201 Created
+    code: 201
     duration: ""
 - request:
     body: ""
@@ -36,20 +36,18 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/6.1.1
-    url: https://api.upcloud.com/1.3/database/0935409c-5ac6-471b-a002-b892f590908b/query-statistics?limit=1000
+      - upcloud-go-api/6.12.0
+    url: https://api.upcloud.com/1.3/database/094b23cb-1887-483d-8a6b-ef9d6b85f3ae/query-statistics?limit=1000
     method: GET
   response:
     body: '{}'
     headers:
-      Access-Control-Allow-Origin:
-      - '*'
       Content-Length:
       - "2"
       Content-Type:
       - application/json
       Date:
-      - Wed, 17 May 2023 07:03:35 GMT
+      - Wed, 31 Jan 2024 21:13:34 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 200 OK
@@ -64,14 +62,14 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/6.1.1
-    url: https://api.upcloud.com/1.3/database/0935409c-5ac6-471b-a002-b892f590908b
+      - upcloud-go-api/6.12.0
+    url: https://api.upcloud.com/1.3/database/094b23cb-1887-483d-8a6b-ef9d6b85f3ae
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Wed, 17 May 2023 07:03:36 GMT
+      - Wed, 31 Jan 2024 21:13:34 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 204 No Content
