@@ -60,6 +60,8 @@ type CreateLoadBalancerRequest struct {
 	Backends         []LoadBalancerBackend                `json:"backends"`
 	Resolvers        []LoadBalancerResolver               `json:"resolvers"`
 	Labels           []upcloud.Label                      `json:"labels,omitempty"`
+	MaintenanceDOW   upcloud.LoadBalancerMaintenanceDOW   `json:"maintenance_dow,omitempty"`
+	MaintenanceTime  string                               `json:"maintenance_time,omitempty"`
 }
 
 func (r *CreateLoadBalancerRequest) RequestURL() string {
@@ -68,11 +70,13 @@ func (r *CreateLoadBalancerRequest) RequestURL() string {
 
 // ModifyLoadBalancerRequest represents a request to modify load balancer
 type ModifyLoadBalancerRequest struct {
-	UUID             string           `json:"-"`
-	Name             string           `json:"name,omitempty"`
-	Plan             string           `json:"plan,omitempty"`
-	ConfiguredStatus string           `json:"configured_status,omitempty"`
-	Labels           *[]upcloud.Label `json:"labels,omitempty"`
+	UUID             string                             `json:"-"`
+	Name             string                             `json:"name,omitempty"`
+	Plan             string                             `json:"plan,omitempty"`
+	ConfiguredStatus string                             `json:"configured_status,omitempty"`
+	Labels           *[]upcloud.Label                   `json:"labels,omitempty"`
+	MaintenanceDOW   upcloud.LoadBalancerMaintenanceDOW `json:"maintenance_dow,omitempty"`
+	MaintenanceTime  string                             `json:"maintenance_time,omitempty"`
 }
 
 func (r *ModifyLoadBalancerRequest) RequestURL() string {

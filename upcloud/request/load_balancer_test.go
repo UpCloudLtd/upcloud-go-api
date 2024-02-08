@@ -92,7 +92,9 @@ func TestCreateLoadBalancerRequest(t *testing.T) {
 				"cache_valid": 180,
 				"cache_invalid": 10
 			}
-		]
+		],
+		"maintenance_dow": "sunday",
+		"maintenance_time": "20:01:01Z"
 	}
 	`
 	r := CreateLoadBalancerRequest{
@@ -128,6 +130,8 @@ func TestCreateLoadBalancerRequest(t *testing.T) {
 			CacheValid:   180,
 			CacheInvalid: 10,
 		}},
+		MaintenanceDOW:  upcloud.LoadBalancerMaintenanceDOWSunday,
+		MaintenanceTime: "20:01:01Z",
 	}
 	actual, err := json.Marshal(&r)
 	assert.NoError(t, err)
