@@ -3,7 +3,7 @@ package request
 import (
 	"fmt"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v7/upcloud"
 )
 
 const (

@@ -8,9 +8,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud/client"
-	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud/request"
+	"github.com/UpCloudLtd/upcloud-go-api/v7/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v7/upcloud/client"
+	"github.com/UpCloudLtd/upcloud-go-api/v7/upcloud/request"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

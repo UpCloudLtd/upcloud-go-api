@@ -5,8 +5,8 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/v6/upcloud/request"
+	"github.com/UpCloudLtd/upcloud-go-api/v7/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v7/upcloud/request"
 )
 
 type ManagedObjectStorage interface {

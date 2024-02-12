@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [7.0.0]
+
 ### Added
 - Managed Load Balancer: `MaintenanceDOW` and `MaintenanceTime` fields for controlling maintenance window occurrence
 - Kubernetes: support for cluster labels.
@@ -414,7 +416,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.12.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v7.0.0...HEAD
+[7.0.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.12.0...v7.0.0
 [6.12.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.11.0...v6.12.0
 [6.11.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.10.0...v6.11.0
 [6.10.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.9.0...v6.10.0
