@@ -178,27 +178,52 @@ func TestKubernetes(t *testing.T) {
 	t.Run("ModifyKubernetesClusterRequestMarshal", func(t *testing.T) {
 		t.Parallel()
 
-		expected := `{ "control_plane_ip_filter": ["0.0.0.0/0"] }`
-
-		uuid := "this-is-the-uuid-you-are-looking-for"
-		r := ModifyKubernetesClusterRequest{
-			ClusterUUID: uuid,
-			Cluster: ModifyKubernetesCluster{
-				ControlPlaneIPFilter: []string{"0.0.0.0/0"},
+		tests := []struct {
+			request  ModifyKubernetesClusterRequest
+			expected string
+		}{
+			{
+				request: ModifyKubernetesClusterRequest{
+					ClusterUUID: "set-filter-omit-labels",
+					Cluster: ModifyKubernetesCluster{
+						ControlPlaneIPFilter: &[]string{"0.0.0.0/0"},
+					},
+				},
+				expected: `{ "control_plane_ip_filter": ["0.0.0.0/0"] }`,
+			},
+			{
+				request: ModifyKubernetesClusterRequest{
+					ClusterUUID: "omit-filter-set-labels",
+					Cluster: ModifyKubernetesCluster{
+						Labels: &[]upcloud.Label{{Key: "tool", Value: "Go SDK"}},
+					},
+				},
+				expected: `{ "labels": [{"key": "tool", "value": "Go SDK"}] }`,
+			},
+			{
+				request: ModifyKubernetesClusterRequest{
+					ClusterUUID: "clear-filter-clear-labels",
+					Cluster: ModifyKubernetesCluster{
+						ControlPlaneIPFilter: &[]string{},
+						Labels:               &[]upcloud.Label{},
+					},
+				},
+				expected: `{ "control_plane_ip_filter": [], "labels": [] }`,
 			},
 		}
+		for _, test := range tests {
+			assert.Equal(t, fmt.Sprintf("%s/%s", kubernetesClusterBasePath, test.request.ClusterUUID), test.request.RequestURL())
 
-		assert.Equal(t, fmt.Sprintf("%s/%s", kubernetesClusterBasePath, uuid), r.RequestURL())
+			b, err := json.Marshal(&test.request)
+			actual := string(b)
 
-		b, err := json.Marshal(&r)
-		actual := string(b)
-
-		assert.NoError(t, err)
-		assert.JSONEq(
-			t,
-			expected,
-			actual,
-		)
+			assert.NoError(t, err)
+			assert.JSONEq(
+				t,
+				test.expected,
+				actual,
+			)
+		}
 	})
 
 	t.Run("DeleteKubernetesClusterRequest", func(t *testing.T) {

@@ -37,6 +37,7 @@ type (
 
 type KubernetesCluster struct {
 	ControlPlaneIPFilter []string               `json:"control_plane_ip_filter"`
+	Labels               []Label                `json:"labels"`
 	Name                 string                 `json:"name"`
 	Network              string                 `json:"network"`
 	NetworkCIDR          string                 `json:"network_cidr"`
