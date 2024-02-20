@@ -153,6 +153,14 @@ const (
 	ManagedDatabaseUserAuthenticationMySQLNativePassword ManagedDatabaseUserAuthenticationType = "mysql_native_password"
 )
 
+// ManagedDatabaseNetwork represents a network from where database can be used
+type ManagedDatabaseNetwork struct {
+	Family string  `json:"family"`
+	Name   string  `json:"name"`
+	Type   string  `json:"type"`
+	UUID   *string `json:"uuid,omitempty"`
+}
+
 // ManagedDatabase represents an existing managed database instance
 type ManagedDatabase struct {
 	Backups          []ManagedDatabaseBackup         `json:"backups,omitempty"`
@@ -160,6 +168,7 @@ type ManagedDatabase struct {
 	CreateTime       time.Time                       `json:"create_time,omitempty"`
 	Maintenance      ManagedDatabaseMaintenanceTime  `json:"maintenance,omitempty"`
 	Name             string                          `json:"name,omitempty"`
+	Networks         []ManagedDatabaseNetwork        `json:"networks,omitempty"`
 	NodeCount        int                             `json:"node_count,omitempty"`
 	NodeStates       []ManagedDatabaseNodeState      `json:"node_states,omitempty"`
 	Plan             string                          `json:"plan,omitempty"`
