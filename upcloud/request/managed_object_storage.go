@@ -40,7 +40,6 @@ type CreateManagedObjectStorageRequest struct {
 	Name             string                                       `json:"name,omitempty"`
 	Networks         []upcloud.ManagedObjectStorageNetwork        `json:"networks"`
 	Region           string                                       `json:"region"`
-	Users            []ManagedObjectStorageUser                   `json:"users"`
 }
 
 // RequestURL implements the Request interface
@@ -229,8 +228,6 @@ func (r *DeleteManagedObjectStorageUserRequest) RequestURL() string {
 type CreateManagedObjectStorageUserAccessKeyRequest struct {
 	Username    string `json:"-"`
 	ServiceUUID string `json:"-"`
-	Name        string `json:"name"`
-	Enabled     *bool  `json:"enabled,omitempty"`
 }
 
 // RequestURL implements the Request interface
@@ -253,37 +250,117 @@ func (r *GetManagedObjectStorageUserAccessKeysRequest) RequestURL() string {
 type GetManagedObjectStorageUserAccessKeyRequest struct {
 	ServiceUUID string `json:"-"`
 	Username    string `json:"-"`
-	Name        string `json:"-"`
+	AccessKeyId string `json:"-"`
 }
 
 // RequestURL implements the Request interface
 func (r *GetManagedObjectStorageUserAccessKeyRequest) RequestURL() string {
-	return fmt.Sprintf("%s/%s/users/%s/access-keys/%s", managedObjectStorageBasePath, r.ServiceUUID, r.Username, r.Name)
+	return fmt.Sprintf("%s/%s/users/%s/access-keys/%s", managedObjectStorageBasePath, r.ServiceUUID, r.Username, r.AccessKeyId)
 }
 
 // ModifyManagedObjectStorageUserAccessKeyRequest represents a request for creating an access key
 type ModifyManagedObjectStorageUserAccessKeyRequest struct {
-	Username    string `json:"-"`
-	ServiceUUID string `json:"-"`
-	Name        string `json:"name,omitempty"`
-	Enabled     *bool  `json:"enabled,omitempty"`
+	Username    string                                          `json:"-"`
+	ServiceUUID string                                          `json:"-"`
+	AccessKeyId string                                          `json:"-"`
+	Status      upcloud.ManagedObjectStorageUserAccessKeyStatus `json:"status,omitempty"`
 }
 
 // RequestURL implements the Request interface
 func (r *ModifyManagedObjectStorageUserAccessKeyRequest) RequestURL() string {
-	return fmt.Sprintf("%s/%s/users/%s/access-keys/%s", managedObjectStorageBasePath, r.ServiceUUID, r.Username, r.Name)
+	return fmt.Sprintf("%s/%s/users/%s/access-keys/%s", managedObjectStorageBasePath, r.ServiceUUID, r.Username, r.AccessKeyId)
 }
 
 // DeleteManagedObjectStorageUserAccessKeyRequest represents a request to delete a Managed Object Storage service
 type DeleteManagedObjectStorageUserAccessKeyRequest struct {
 	ServiceUUID string `json:"-"`
 	Username    string `json:"-"`
-	Name        string `json:"-"`
+	AccessKeyId string `json:"-"`
 }
 
 // RequestURL implements the Request interface
 func (r *DeleteManagedObjectStorageUserAccessKeyRequest) RequestURL() string {
-	return fmt.Sprintf("%s/%s/users/%s/access-keys/%s", managedObjectStorageBasePath, r.ServiceUUID, r.Username, r.Name)
+	return fmt.Sprintf("%s/%s/users/%s/access-keys/%s", managedObjectStorageBasePath, r.ServiceUUID, r.Username, r.AccessKeyId)
+}
+
+// CreateManagedObjectStoragePolicyRequest represents a request for creating a policy
+type CreateManagedObjectStoragePolicyRequest struct {
+	Name        string `json:"name"`
+	Description string `json:"description,omitempty"`
+	Document    string `json:"document"`
+	ServiceUUID string `json:"-"`
+}
+
+// RequestURL implements the Request interface
+func (r *CreateManagedObjectStoragePolicyRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/policies", managedObjectStorageBasePath, r.ServiceUUID)
+}
+
+// GetManagedObjectStoragePoliciesRequest represents a request for retrieving policies
+type GetManagedObjectStoragePoliciesRequest struct {
+	ServiceUUID string `json:"-"`
+}
+
+// RequestURL implements the Request interface
+func (r *GetManagedObjectStoragePoliciesRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/policies", managedObjectStorageBasePath, r.ServiceUUID)
+}
+
+// GetManagedObjectStoragePolicyRequest represents a request for retrieving details about a policy
+type GetManagedObjectStoragePolicyRequest struct {
+	Name        string `json:"-"`
+	ServiceUUID string `json:"-"`
+}
+
+// RequestURL implements the Request interface
+func (r *GetManagedObjectStoragePolicyRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/policies/%s", managedObjectStorageBasePath, r.ServiceUUID, r.Name)
+}
+
+// DeleteManagedObjectStoragePolicyRequest represents a request to delete a policy
+type DeleteManagedObjectStoragePolicyRequest struct {
+	ServiceUUID string `json:"-"`
+	Name        string `json:"-"`
+}
+
+// RequestURL implements the Request interface
+func (r *DeleteManagedObjectStoragePolicyRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/policies/%s", managedObjectStorageBasePath, r.ServiceUUID, r.Name)
+}
+
+// GetManagedObjectStorageUserPoliciesRequest represents a request for retrieving policies attached to a user
+type GetManagedObjectStorageUserPoliciesRequest struct {
+	ServiceUUID string `json:"-"`
+	Username    string `json:"-"`
+}
+
+// RequestURL implements the Request interface
+func (r *GetManagedObjectStorageUserPoliciesRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/users/%s/policies", managedObjectStorageBasePath, r.ServiceUUID, r.Username)
+}
+
+// AttachManagedObjectStorageUserPolicyRequest represents a request for attaching a policy to a user
+type AttachManagedObjectStorageUserPolicyRequest struct {
+	ServiceUUID string `json:"-"`
+	Username    string `json:"-"`
+	Name        string `json:"name"`
+}
+
+// RequestURL implements the Request interface
+func (r *AttachManagedObjectStorageUserPolicyRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/users/%s/policies", managedObjectStorageBasePath, r.ServiceUUID, r.Username)
+}
+
+// DetachManagedObjectStorageUserPolicyRequest represents a request for detaching a policy to a user
+type DetachManagedObjectStorageUserPolicyRequest struct {
+	ServiceUUID string `json:"-"`
+	Username    string `json:"-"`
+	Name        string `json:"-"`
+}
+
+// RequestURL implements the Request interface
+func (r *DetachManagedObjectStorageUserPolicyRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/users/%s/policies/%s", managedObjectStorageBasePath, r.ServiceUUID, r.Username, r.Name)
 }
 
 // WaitForManagedObjectStorageOperationalStateRequest represents a request to wait for a Managed Object Storage service
@@ -296,19 +373,6 @@ type WaitForManagedObjectStorageOperationalStateRequest struct {
 // RequestURL implements the Request interface
 func (r *WaitForManagedObjectStorageOperationalStateRequest) RequestURL() string {
 	return fmt.Sprintf("%s/%s", managedObjectStorageBasePath, r.UUID)
-}
-
-// WaitForManagedObjectStorageUserOperationalStateRequest represents a request to wait for a Managed Object Storage service
-// to enter a desired state
-type WaitForManagedObjectStorageUserOperationalStateRequest struct {
-	DesiredState upcloud.ManagedObjectStorageUserOperationalState `json:"-"`
-	ServiceUUID  string                                           `json:"-"`
-	Username     string                                           `json:"-"`
-}
-
-// RequestURL implements the Request interface
-func (r *WaitForManagedObjectStorageUserOperationalStateRequest) RequestURL() string {
-	return fmt.Sprintf("%s/%s", managedObjectStorageBasePath, r.ServiceUUID)
 }
 
 // WaitForManagedObjectStorageDeletionRequest represents a request to wait for a Managed Object Storage service

@@ -148,6 +148,39 @@ func (s *Service) DeleteManagedObjectStorageUserAccessKey(ctx context.Context, r
 	return s.delete(ctx, r)
 }
 
+func (s *Service) CreateManagedObjectStoragePolicy(ctx context.Context, r *request.CreateManagedObjectStoragePolicyRequest) (*upcloud.ManagedObjectStoragePolicy, error) {
+	policy := upcloud.ManagedObjectStoragePolicy{}
+	return &policy, s.create(ctx, r, &policy)
+}
+
+func (s *Service) GetManagedObjectStoragePolicies(ctx context.Context, r *request.GetManagedObjectStoragePoliciesRequest) ([]upcloud.ManagedObjectStoragePolicy, error) {
+	policies := make([]upcloud.ManagedObjectStoragePolicy, 0)
+	return policies, s.get(ctx, r.RequestURL(), &policies)
+}
+
+func (s *Service) GetManagedObjectStoragePolicy(ctx context.Context, r *request.GetManagedObjectStoragePolicyRequest) (*upcloud.ManagedObjectStoragePolicy, error) {
+	policy := upcloud.ManagedObjectStoragePolicy{}
+	return &policy, s.get(ctx, r.RequestURL(), &policy)
+}
+
+func (s *Service) DeleteManagedObjectStoragePolicy(ctx context.Context, r *request.DeleteManagedObjectStoragePolicyRequest) error {
+	return s.delete(ctx, r)
+}
+
+func (s *Service) AttachManagedObjectStorageUserPolicy(ctx context.Context, r *request.AttachManagedObjectStorageUserPolicyRequest) (*upcloud.ManagedObjectStorageUserPolicy, error) {
+	policy := upcloud.ManagedObjectStorageUserPolicy{}
+	return &policy, s.create(ctx, r, &policy)
+}
+
+func (s *Service) GetManagedObjectStorageUserPolicies(ctx context.Context, r *request.GetManagedObjectStorageUserPoliciesRequest) ([]upcloud.ManagedObjectStorageUserPolicy, error) {
+	policies := make([]upcloud.ManagedObjectStorageUserPolicy, 0)
+	return policies, s.get(ctx, r.RequestURL(), &policies)
+}
+
+func (s *Service) DetachManagedObjectStorageUserPolicy(ctx context.Context, r *request.DetachManagedObjectStorageUserPolicyRequest) error {
+	return s.delete(ctx, r)
+}
+
 // WaitForManagedObjectStorageOperationalState blocks execution until the specified Managed Object Storage service
 // has entered the specified state. If the state changes favorably, service details is returned. The method will give up
 // after the specified timeout
@@ -155,26 +188,6 @@ func (s *Service) WaitForManagedObjectStorageOperationalState(ctx context.Contex
 	return retry(ctx, func(_ int, c context.Context) (*upcloud.ManagedObjectStorage, error) {
 		details, err := s.GetManagedObjectStorage(c, &request.GetManagedObjectStorageRequest{
 			UUID: r.UUID,
-		})
-		if err != nil {
-			return nil, err
-		}
-
-		if details.OperationalState == r.DesiredState {
-			return details, nil
-		}
-		return nil, nil
-	}, nil)
-}
-
-// WaitForManagedObjectStorageUserOperationalState blocks execution until the specified Managed Object Storage service
-// user has entered the specified state. If the state changes favorably, user details is returned. The method will give up
-// after the specified timeout
-func (s *Service) WaitForManagedObjectStorageUserOperationalState(ctx context.Context, r *request.WaitForManagedObjectStorageUserOperationalStateRequest) (*upcloud.ManagedObjectStorageUser, error) {
-	return retry(ctx, func(_ int, c context.Context) (*upcloud.ManagedObjectStorageUser, error) {
-		details, err := s.GetManagedObjectStorageUser(c, &request.GetManagedObjectStorageUserRequest{
-			ServiceUUID: r.ServiceUUID,
-			Username:    r.Username,
 		})
 		if err != nil {
 			return nil, err

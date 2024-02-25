@@ -18,8 +18,6 @@ const (
 	ManagedObjectStorageOperationalStateDeleteNetwork ManagedObjectStorageOperationalState = "delete-network"
 	// ManagedObjectStorageOperationalStateDeleteService indicates that service is being deleted
 	ManagedObjectStorageOperationalStateDeleteService ManagedObjectStorageOperationalState = "delete-service"
-	// ManagedObjectStorageOperationalStateDeleteUser indicates that users are being deleted
-	ManagedObjectStorageOperationalStateDeleteUser ManagedObjectStorageOperationalState = "delete-user"
 	// ManagedObjectStorageOperationalStatePending indicates newly created service or that started reconfiguration
 	ManagedObjectStorageOperationalStatePending ManagedObjectStorageOperationalState = "started"
 	// ManagedObjectStorageOperationalStateRunning indicates that service is up and running
@@ -32,17 +30,15 @@ const (
 	ManagedObjectStorageOperationalStateSetupNetwork ManagedObjectStorageOperationalState = "setup-network"
 	// ManagedObjectStorageOperationalStateSetupService indicates that service is being configured
 	ManagedObjectStorageOperationalStateSetupService ManagedObjectStorageOperationalState = "setup-service"
-	// ManagedObjectStorageOperationalStateSetupUser indicates that users are being configured
-	ManagedObjectStorageOperationalStateSetupUser ManagedObjectStorageOperationalState = "setup-user"
 	// ManagedObjectStorageOperationalStateStopped indicates that service is down
 	ManagedObjectStorageOperationalStateStopped ManagedObjectStorageOperationalState = "stopped"
 )
 
 const (
-	// ManagedObjectStorageUserOperationalStatePending indicates a newly attached user
-	ManagedObjectStorageUserOperationalStatePending ManagedObjectStorageUserOperationalState = "pending"
-	// ManagedObjectStorageUserOperationalStateReady indicates that the user is configured and ready for access keys issuing
-	ManagedObjectStorageUserOperationalStateReady ManagedObjectStorageUserOperationalState = "ready"
+	// ManagedObjectStorageUserAccessKeyStatusActive indicates an active access key
+	ManagedObjectStorageUserAccessKeyStatusActive ManagedObjectStorageUserAccessKeyStatus = "Active"
+	// ManagedObjectStorageUserAccessKeyStatusInactive indicates an inactive access key
+	ManagedObjectStorageUserAccessKeyStatusInactive ManagedObjectStorageUserAccessKeyStatus = "Inactive"
 )
 
 type (
@@ -50,8 +46,8 @@ type (
 	ManagedObjectStorageConfiguredStatus string
 	// ManagedObjectStorageOperationalState indicates the service's current operational, effective state. Managed by the system
 	ManagedObjectStorageOperationalState string
-	// ManagedObjectStorageUserOperationalState indicates the user's current operational, effective state. Managed by the system
-	ManagedObjectStorageUserOperationalState string
+	// ManagedObjectStorageUserAccessKeyStatus indicates the access key's current status. Managed by the customer
+	ManagedObjectStorageUserAccessKeyStatus string
 )
 
 // ManagedObjectStorage represents a Managed Object Storage service
@@ -65,7 +61,6 @@ type ManagedObjectStorage struct {
 	OperationalState ManagedObjectStorageOperationalState `json:"operational_state"`
 	Region           string                               `json:"region"`
 	UpdatedAt        time.Time                            `json:"updated_at"`
-	Users            []ManagedObjectStorageUser           `json:"users"`
 	UUID             string                               `json:"uuid"`
 }
 
@@ -73,6 +68,8 @@ type ManagedObjectStorage struct {
 type ManagedObjectStorageEndpoint struct {
 	DomainName string `json:"domain_name"`
 	Type       string `json:"type"`
+	IamUrl     string `json:"iam_url"`
+	StsUrl     string `json:"sts_url"`
 }
 
 // ManagedObjectStorageNetwork represents a network from where object storage can be used. Private networks must reside in object storage region
@@ -85,11 +82,29 @@ type ManagedObjectStorageNetwork struct {
 
 // ManagedObjectStorageUser represents a user for the Managed Object Storage service
 type ManagedObjectStorageUser struct {
-	AccessKeys       []ManagedObjectStorageUserAccessKey      `json:"access_keys"`
-	CreatedAt        time.Time                                `json:"created_at"`
-	OperationalState ManagedObjectStorageUserOperationalState `json:"operational_state"`
-	UpdatedAt        time.Time                                `json:"updated_at"`
-	Username         string                                   `json:"username"`
+	AccessKeys []ManagedObjectStorageUserAccessKey `json:"access_keys"`
+	Arn        string                              `json:"arn"`
+	CreatedAt  time.Time                           `json:"created_at"`
+	Policies   []ManagedObjectStoragePolicy        `json:"policies"`
+	Username   string                              `json:"username"`
+}
+
+// ManagedObjectStoragePolicy represents a policy for the Managed Object Storage service
+type ManagedObjectStoragePolicy struct {
+	Arn              string    `json:"arn"`
+	AttachmentCount  int       `json:"attachment_count"`
+	CreatedAt        time.Time `json:"created_at"`
+	DefaultVersionId string    `json:"default_version_id"`
+	Description      string    `json:"description"`
+	Name             string    `json:"name"`
+	System           bool      `json:"system"`
+	UpdatedAt        time.Time `json:"updated_at"`
+}
+
+// ManagedObjectStorageUserPolicy represents a policy attached to a Managed Object Storage user
+type ManagedObjectStorageUserPolicy struct {
+	Arn  string `json:"arn"`
+	Name string `json:"name"`
 }
 
 // ManagedObjectStorageRegion represents a region where Managed Object Storage service can be hosted
@@ -108,11 +123,9 @@ type ManagedObjectStorageRegionZone struct {
 type ManagedObjectStorageUserAccessKey struct {
 	AccessKeyId     string    `json:"access_key_id"`
 	CreatedAt       time.Time `json:"created_at"`
-	Enabled         bool      `json:"enabled"`
 	LastUsedAt      time.Time `json:"last_used_at"`
-	Name            string    `json:"name"`
 	SecretAccessKey *string   `json:"secret_access_key,omitempty"`
-	UpdatedAt       time.Time `json:"updated_at"`
+	Status          string    `json:"status"`
 }
 
 // ManagedObjectStorageBucketMetrics represents metrics for a Managed Object Storage service bucket

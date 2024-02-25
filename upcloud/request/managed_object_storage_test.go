@@ -35,8 +35,7 @@ func TestCreateManagedObjectStorageRequest_MarshalJSON(t *testing.T) {
 		const expected = `{
 			"configured_status":"",
 			"networks":null,
-			"region":"europe-1",
-			"users":null
+			"region":"europe-1"
 		}`
 		assert.JSONEq(t, expected, string(d))
 	})
@@ -53,8 +52,7 @@ func TestCreateManagedObjectStorageRequest_MarshalJSON(t *testing.T) {
 			"configured_status":"",
 			"name":"test-objsto-name",
 			"networks":null,
-			"region":"europe-1",
-			"users":null
+			"region":"europe-1"
 		}`
 		assert.JSONEq(t, expected, string(d))
 	})
@@ -188,7 +186,7 @@ func TestGetManagedObjectStorageUserAccessKeyRequest_RequestURL(t *testing.T) {
 	req := &GetManagedObjectStorageUserAccessKeyRequest{
 		ServiceUUID: "service",
 		Username:    "user",
-		Name:        "access",
+		AccessKeyId: "access",
 	}
 	assert.Equal(t, "/object-storage-2/service/users/user/access-keys/access", req.RequestURL())
 }
@@ -197,7 +195,7 @@ func TestModifyManagedObjectStorageUserAccessKeyRequest_RequestURL(t *testing.T)
 	req := &ModifyManagedObjectStorageUserAccessKeyRequest{
 		ServiceUUID: "service",
 		Username:    "user",
-		Name:        "access",
+		AccessKeyId: "access",
 	}
 	assert.Equal(t, "/object-storage-2/service/users/user/access-keys/access", req.RequestURL())
 }
@@ -206,7 +204,63 @@ func TestDeleteManagedObjectStorageUserAccessKeyRequest_RequestURL(t *testing.T)
 	req := &DeleteManagedObjectStorageUserAccessKeyRequest{
 		ServiceUUID: "service",
 		Username:    "user",
-		Name:        "access",
+		AccessKeyId: "access",
 	}
 	assert.Equal(t, "/object-storage-2/service/users/user/access-keys/access", req.RequestURL())
+}
+
+func TestCreateManagedObjectStoragePolicyRequest_RequestURL(t *testing.T) {
+	req := &CreateManagedObjectStoragePolicyRequest{
+		ServiceUUID: "service",
+	}
+	assert.Equal(t, "/object-storage-2/service/policies", req.RequestURL())
+}
+
+func TestGetManagedObjectStoragePoliciesRequest_RequestURL(t *testing.T) {
+	req := &GetManagedObjectStoragePoliciesRequest{
+		ServiceUUID: "service",
+	}
+	assert.Equal(t, "/object-storage-2/service/policies", req.RequestURL())
+}
+
+func TestGetManagedObjectStoragePolicyRequest_RequestURL(t *testing.T) {
+	req := &GetManagedObjectStoragePolicyRequest{
+		ServiceUUID: "service",
+		Name:        "policy",
+	}
+	assert.Equal(t, "/object-storage-2/service/policies/policy", req.RequestURL())
+}
+
+func TestDeleteManagedObjectStoragePolicyRequest_RequestURL(t *testing.T) {
+	req := &DeleteManagedObjectStoragePolicyRequest{
+		ServiceUUID: "service",
+		Name:        "policy",
+	}
+	assert.Equal(t, "/object-storage-2/service/policies/policy", req.RequestURL())
+}
+
+func TestAttachManagedObjectStorageUserPolicyRequest_RequestURL(t *testing.T) {
+	req := &AttachManagedObjectStorageUserPolicyRequest{
+		ServiceUUID: "service",
+		Username:    "user",
+		Name:        "policy",
+	}
+	assert.Equal(t, "/object-storage-2/service/users/user/policies", req.RequestURL())
+}
+
+func TestGetManagedObjectStorageUserPoliciesRequest_RequestURL(t *testing.T) {
+	req := &GetManagedObjectStorageUserPoliciesRequest{
+		ServiceUUID: "service",
+		Username:    "user",
+	}
+	assert.Equal(t, "/object-storage-2/service/users/user/policies", req.RequestURL())
+}
+
+func TestDetachManagedObjectStorageUserPolicyRequest_RequestURL(t *testing.T) {
+	req := &DetachManagedObjectStorageUserPolicyRequest{
+		ServiceUUID: "service",
+		Username:    "user",
+		Name:        "policy",
+	}
+	assert.Equal(t, "/object-storage-2/service/users/user/policies/policy", req.RequestURL())
 }

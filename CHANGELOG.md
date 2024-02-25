@@ -5,6 +5,23 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- Managed Object Storage: `ManagedObjectStoragePolicy` struct
+- Managed Object Storage: `ManagedObjectStorageUserPolicy` struct
+- Managed Object Storage: `IamUrl` field to `ManagedObjectStorageEndpoint`
+- Managed Object Storage: `StsUrl` field to `ManagedObjectStorageEndpoint`
+- Managed Object Storage: `Arn` field to `ManagedObjectStorageUser`
+- Managed Object Storage: `Policies` field to `ManagedObjectStorageUser`
+- Managed Object Storage: `Status` field to `ManagedObjectStorageUserAccessKey`
+
+### Removed
+- **Breaking**, Managed Object Storage: `Users` field removed from `ManagedObjectStorage`
+- **Breaking**, Managed Object Storage: `Arn` field removed from `ManagedObjectStorageUser`
+- **Breaking**, Managed Object Storage: `OperationalState` field removed from `ManagedObjectStorageUser`
+- **Breaking**, Managed Object Storage: `Enabled` field removed from `ManagedObjectStorageUserAccessKey`
+- **Breaking**, Managed Object Storage: `Name` field removed from `ManagedObjectStorageUserAccessKey`
+- **Breaking**, Managed Object Storage: `UpdatedAt` field removed from `ManagedObjectStorageUserAccessKey`
+
 ## [7.0.0]
 
 ### Added
