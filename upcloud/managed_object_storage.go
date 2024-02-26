@@ -96,6 +96,7 @@ type ManagedObjectStoragePolicy struct {
 	CreatedAt        time.Time `json:"created_at"`
 	DefaultVersionId string    `json:"default_version_id"`
 	Description      string    `json:"description"`
+	Document         string    `json:"document"`
 	Name             string    `json:"name"`
 	System           bool      `json:"system"`
 	UpdatedAt        time.Time `json:"updated_at"`
