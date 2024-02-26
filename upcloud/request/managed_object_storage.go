@@ -76,7 +76,6 @@ type ReplaceManagedObjectStorageRequest struct {
 	Labels           []upcloud.Label                              `json:"labels,omitempty"`
 	Name             string                                       `json:"name,omitempty"`
 	Networks         []upcloud.ManagedObjectStorageNetwork        `json:"networks"`
-	Users            []ManagedObjectStorageUser                   `json:"users"`
 	UUID             string                                       `json:"-"`
 }
 
@@ -90,7 +89,6 @@ type ModifyManagedObjectStorageRequest struct {
 	Labels           *[]upcloud.Label                              `json:"labels,omitempty"`
 	Name             *string                                       `json:"name,omitempty"`
 	Networks         *[]upcloud.ManagedObjectStorageNetwork        `json:"networks,omitempty"`
-	Users            *[]ManagedObjectStorageUser                   `json:"users,omitempty"`
 	UUID             string                                        `json:"-"`
 }
 
