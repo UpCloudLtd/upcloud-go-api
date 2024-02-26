@@ -33,6 +33,13 @@ type ManagedObjectStorage interface {
 	GetManagedObjectStorageUserAccessKey(ctx context.Context, r *request.GetManagedObjectStorageUserAccessKeyRequest) (*upcloud.ManagedObjectStorageUserAccessKey, error)
 	ModifyManagedObjectStorageUserAccessKey(ctx context.Context, r *request.ModifyManagedObjectStorageUserAccessKeyRequest) (*upcloud.ManagedObjectStorageUserAccessKey, error)
 	DeleteManagedObjectStorageUserAccessKey(ctx context.Context, r *request.DeleteManagedObjectStorageUserAccessKeyRequest) error
+	CreateManagedObjectStoragePolicy(ctx context.Context, r *request.CreateManagedObjectStoragePolicyRequest) (*upcloud.ManagedObjectStoragePolicy, error)
+	GetManagedObjectStoragePolicies(ctx context.Context, r *request.GetManagedObjectStoragePoliciesRequest) ([]upcloud.ManagedObjectStoragePolicy, error)
+	GetManagedObjectStoragePolicy(ctx context.Context, r *request.GetManagedObjectStoragePolicyRequest) (*upcloud.ManagedObjectStoragePolicy, error)
+	DeleteManagedObjectStoragePolicy(ctx context.Context, r *request.DeleteManagedObjectStoragePolicyRequest) error
+	AttachManagedObjectStorageUserPolicy(ctx context.Context, r *request.AttachManagedObjectStorageUserPolicyRequest) error
+	GetManagedObjectStorageUserPolicies(ctx context.Context, r *request.GetManagedObjectStorageUserPoliciesRequest) ([]upcloud.ManagedObjectStorageUserPolicy, error)
+	DetachManagedObjectStorageUserPolicy(ctx context.Context, r *request.DetachManagedObjectStorageUserPolicyRequest) error
 	WaitForManagedObjectStorageOperationalState(ctx context.Context, r *request.WaitForManagedObjectStorageOperationalStateRequest) (*upcloud.ManagedObjectStorage, error)
 	WaitForManagedObjectStorageDeletion(ctx context.Context, r *request.WaitForManagedObjectStorageDeletionRequest) error
 }
@@ -167,9 +174,8 @@ func (s *Service) DeleteManagedObjectStoragePolicy(ctx context.Context, r *reque
 	return s.delete(ctx, r)
 }
 
-func (s *Service) AttachManagedObjectStorageUserPolicy(ctx context.Context, r *request.AttachManagedObjectStorageUserPolicyRequest) (*upcloud.ManagedObjectStorageUserPolicy, error) {
-	policy := upcloud.ManagedObjectStorageUserPolicy{}
-	return &policy, s.create(ctx, r, &policy)
+func (s *Service) AttachManagedObjectStorageUserPolicy(ctx context.Context, r *request.AttachManagedObjectStorageUserPolicyRequest) error {
+	return s.create(ctx, r, nil)
 }
 
 func (s *Service) GetManagedObjectStorageUserPolicies(ctx context.Context, r *request.GetManagedObjectStorageUserPoliciesRequest) ([]upcloud.ManagedObjectStorageUserPolicy, error) {

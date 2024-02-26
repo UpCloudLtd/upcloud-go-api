@@ -122,11 +122,11 @@ type ManagedObjectStorageRegionZone struct {
 
 // ManagedObjectStorageUserAccessKey represents Access Key details for a Managed Object Storage service user
 type ManagedObjectStorageUserAccessKey struct {
-	AccessKeyId     string    `json:"access_key_id"`
-	CreatedAt       time.Time `json:"created_at"`
-	LastUsedAt      time.Time `json:"last_used_at"`
-	SecretAccessKey *string   `json:"secret_access_key,omitempty"`
-	Status          string    `json:"status"`
+	AccessKeyId     string                                  `json:"access_key_id"`
+	CreatedAt       time.Time                               `json:"created_at"`
+	LastUsedAt      time.Time                               `json:"last_used_at"`
+	SecretAccessKey *string                                 `json:"secret_access_key,omitempty"`
+	Status          ManagedObjectStorageUserAccessKeyStatus `json:"status"`
 }
 
 // ManagedObjectStorageBucketMetrics represents metrics for a Managed Object Storage service bucket
