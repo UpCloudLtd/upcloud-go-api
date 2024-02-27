@@ -10,10 +10,34 @@ import (
 type ManagedDatabaseState string
 
 const (
-	// ManagedDatabaseStateRunning represents a managed database instance in running state
+	// Indicates newly created service or started reconfiguration
+	ManagedDatabaseStatePending ManagedDatabaseState = "pending"
+	// Configuring network
+	ManagedDatabaseStateSetupNetwork ManagedDatabaseState = "setup-network"
+	// Check that the network configuration was applied correctly
+	ManagedDatabaseStateCheckNetwork ManagedDatabaseState = "check-network"
+	// Configuring SDN network peerings if provided
+	ManagedDatabaseStateSetupPeer ManagedDatabaseState = "setup-peer"
+	// Check SDN network peerings was established if provided
+	ManagedDatabaseStateCheckPeer ManagedDatabaseState = "check-peer"
+	// Service is being created or reconfigured
+	ManagedDatabaseStateSetupService ManagedDatabaseState = "setup-service"
+	// Service creation in progress
+	ManagedDatabaseStateRebuilding ManagedDatabaseState = "rebuilding"
+	// Service is being upgraded or migrated
+	ManagedDatabaseStateRebalancing ManagedDatabaseState = "rebalancing"
+	// Service encountered an error that requires user action
+	ManagedDatabaseStateError ManagedDatabaseState = "error"
+	// Indicates service up and running
 	ManagedDatabaseStateRunning ManagedDatabaseState = "running"
-	// ManagedDatabaseStatePoweroff represents a managed database instance in powered off state
-	ManagedDatabaseStatePoweroff ManagedDatabaseState = "poweroff"
+	// Service is stopped
+	ManagedDatabaseStateStopped ManagedDatabaseState = "stopped"
+	// Cleaning up service resources
+	ManagedDatabaseStateCleanupService ManagedDatabaseState = "cleanup-service"
+	// Cleaning up network resources
+	ManagedDatabaseStateCleanupNetwork ManagedDatabaseState = "cleanup-network"
+	// Deleting the service
+	ManagedDatabaseStateDeleteService ManagedDatabaseState = "delete-service"
 )
 
 // ManagedDatabaseComponentRoute represents the access route a component is associated with
