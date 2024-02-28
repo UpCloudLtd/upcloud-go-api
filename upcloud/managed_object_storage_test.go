@@ -15,14 +15,14 @@ func TestManagedObjectStorage(t *testing.T) {
 				{
 					DomainName: "7mf5k.upbucket.com",
 					Type:       "public",
-					IamUrl:     "https://7mf5k.upbucket.com:4443/iam",
-					StsUrl:     "https://7mf5k.upbucket.com:4443/sts",
+					IAMURL:     "https://7mf5k.upbucket.com:4443/iam",
+					STSURL:     "https://7mf5k.upbucket.com:4443/sts",
 				},
 				{
 					DomainName: "7mf5k-private.upbucket.com",
 					Type:       "private",
-					IamUrl:     "https://7mf5k-private.upbucket.com:4443/iam",
-					StsUrl:     "https://7mf5k-private.upbucket.com:4443/sts",
+					IAMURL:     "https://7mf5k-private.upbucket.com:4443/iam",
+					STSURL:     "https://7mf5k-private.upbucket.com:4443/sts",
 				},
 			},
 			Labels: []Label{{

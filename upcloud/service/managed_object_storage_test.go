@@ -427,7 +427,7 @@ func TestCreateManagedObjectStorageUserAccessKey(t *testing.T) {
 		})
 		require.NoError(t, err)
 		require.Equal(t, upcloud.ManagedObjectStorageUserAccessKeyStatusActive, accessKey.Status)
-		require.NotEmpty(t, accessKey.AccessKeyId)
+		require.NotEmpty(t, accessKey.AccessKeyID)
 		require.NotEmpty(t, accessKey.CreatedAt)
 		require.NotEmpty(t, accessKey.SecretAccessKey)
 	})
@@ -504,7 +504,7 @@ func TestGetManagedObjectStorageUserAccessKey(t *testing.T) {
 		accessKey, err = svc.GetManagedObjectStorageUserAccessKey(ctx, &request.GetManagedObjectStorageUserAccessKeyRequest{
 			ServiceUUID: storage.UUID,
 			Username:    user.Username,
-			AccessKeyId: accessKey.AccessKeyId,
+			AccessKeyID: accessKey.AccessKeyID,
 		})
 		require.NoError(t, err)
 		require.Empty(t, accessKey.SecretAccessKey)
@@ -538,7 +538,7 @@ func TestModifyManagedObjectStorageUserAccessKey(t *testing.T) {
 		accessKey, err = svc.ModifyManagedObjectStorageUserAccessKey(ctx, &request.ModifyManagedObjectStorageUserAccessKeyRequest{
 			ServiceUUID: storage.UUID,
 			Username:    user.Username,
-			AccessKeyId: accessKey.AccessKeyId,
+			AccessKeyID: accessKey.AccessKeyID,
 			Status:      upcloud.ManagedObjectStorageUserAccessKeyStatusInactive,
 		})
 		require.NoError(t, err)
@@ -547,7 +547,7 @@ func TestModifyManagedObjectStorageUserAccessKey(t *testing.T) {
 		accessKey, err = svc.ModifyManagedObjectStorageUserAccessKey(ctx, &request.ModifyManagedObjectStorageUserAccessKeyRequest{
 			ServiceUUID: storage.UUID,
 			Username:    user.Username,
-			AccessKeyId: accessKey.AccessKeyId,
+			AccessKeyID: accessKey.AccessKeyID,
 			Status:      upcloud.ManagedObjectStorageUserAccessKeyStatusActive,
 		})
 		require.NoError(t, err)
@@ -581,7 +581,7 @@ func TestDeleteManagedObjectStorageUserAccessKey(t *testing.T) {
 		err = svc.DeleteManagedObjectStorageUserAccessKey(ctx, &request.DeleteManagedObjectStorageUserAccessKeyRequest{
 			ServiceUUID: storage.UUID,
 			Username:    user.Username,
-			AccessKeyId: accessKey.AccessKeyId,
+			AccessKeyID: accessKey.AccessKeyID,
 		})
 		require.NoError(t, err)
 	})

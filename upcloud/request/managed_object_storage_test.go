@@ -186,7 +186,7 @@ func TestGetManagedObjectStorageUserAccessKeyRequest_RequestURL(t *testing.T) {
 	req := &GetManagedObjectStorageUserAccessKeyRequest{
 		ServiceUUID: "service",
 		Username:    "user",
-		AccessKeyId: "access",
+		AccessKeyID: "access",
 	}
 	assert.Equal(t, "/object-storage-2/service/users/user/access-keys/access", req.RequestURL())
 }
@@ -195,7 +195,7 @@ func TestModifyManagedObjectStorageUserAccessKeyRequest_RequestURL(t *testing.T)
 	req := &ModifyManagedObjectStorageUserAccessKeyRequest{
 		ServiceUUID: "service",
 		Username:    "user",
-		AccessKeyId: "access",
+		AccessKeyID: "access",
 	}
 	assert.Equal(t, "/object-storage-2/service/users/user/access-keys/access", req.RequestURL())
 }
@@ -204,7 +204,7 @@ func TestDeleteManagedObjectStorageUserAccessKeyRequest_RequestURL(t *testing.T)
 	req := &DeleteManagedObjectStorageUserAccessKeyRequest{
 		ServiceUUID: "service",
 		Username:    "user",
-		AccessKeyId: "access",
+		AccessKeyID: "access",
 	}
 	assert.Equal(t, "/object-storage-2/service/users/user/access-keys/access", req.RequestURL())
 }

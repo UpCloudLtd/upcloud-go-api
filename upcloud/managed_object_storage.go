@@ -68,8 +68,8 @@ type ManagedObjectStorage struct {
 type ManagedObjectStorageEndpoint struct {
 	DomainName string `json:"domain_name"`
 	Type       string `json:"type"`
-	IamUrl     string `json:"iam_url"`
-	StsUrl     string `json:"sts_url"`
+	IAMURL     string `json:"iam_url"`
+	STSURL     string `json:"sts_url"`
 }
 
 // ManagedObjectStorageNetwork represents a network from where object storage can be used. Private networks must reside in object storage region
@@ -91,10 +91,10 @@ type ManagedObjectStorageUser struct {
 
 // ManagedObjectStoragePolicy represents a policy for the Managed Object Storage service
 type ManagedObjectStoragePolicy struct {
-	Arn              string    `json:"arn"`
+	ARN              string    `json:"arn"`
 	AttachmentCount  int       `json:"attachment_count"`
 	CreatedAt        time.Time `json:"created_at"`
-	DefaultVersionId string    `json:"default_version_id"`
+	DefaultVersionID string    `json:"default_version_id"`
 	Description      string    `json:"description"`
 	Document         string    `json:"document"`
 	Name             string    `json:"name"`
@@ -104,7 +104,7 @@ type ManagedObjectStoragePolicy struct {
 
 // ManagedObjectStorageUserPolicy represents a policy attached to a Managed Object Storage user
 type ManagedObjectStorageUserPolicy struct {
-	Arn  string `json:"arn"`
+	ARN  string `json:"arn"`
 	Name string `json:"name"`
 }
 
@@ -122,7 +122,7 @@ type ManagedObjectStorageRegionZone struct {
 
 // ManagedObjectStorageUserAccessKey represents Access Key details for a Managed Object Storage service user
 type ManagedObjectStorageUserAccessKey struct {
-	AccessKeyId     string                                  `json:"access_key_id"`
+	AccessKeyID     string                                  `json:"access_key_id"`
 	CreatedAt       time.Time                               `json:"created_at"`
 	LastUsedAt      time.Time                               `json:"last_used_at"`
 	SecretAccessKey *string                                 `json:"secret_access_key,omitempty"`

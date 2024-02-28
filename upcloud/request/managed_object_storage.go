@@ -248,37 +248,37 @@ func (r *GetManagedObjectStorageUserAccessKeysRequest) RequestURL() string {
 type GetManagedObjectStorageUserAccessKeyRequest struct {
 	ServiceUUID string `json:"-"`
 	Username    string `json:"-"`
-	AccessKeyId string `json:"-"`
+	AccessKeyID string `json:"-"`
 }
 
 // RequestURL implements the Request interface
 func (r *GetManagedObjectStorageUserAccessKeyRequest) RequestURL() string {
-	return fmt.Sprintf("%s/%s/users/%s/access-keys/%s", managedObjectStorageBasePath, r.ServiceUUID, r.Username, r.AccessKeyId)
+	return fmt.Sprintf("%s/%s/users/%s/access-keys/%s", managedObjectStorageBasePath, r.ServiceUUID, r.Username, r.AccessKeyID)
 }
 
 // ModifyManagedObjectStorageUserAccessKeyRequest represents a request for creating an access key
 type ModifyManagedObjectStorageUserAccessKeyRequest struct {
 	Username    string                                          `json:"-"`
 	ServiceUUID string                                          `json:"-"`
-	AccessKeyId string                                          `json:"-"`
+	AccessKeyID string                                          `json:"-"`
 	Status      upcloud.ManagedObjectStorageUserAccessKeyStatus `json:"status,omitempty"`
 }
 
 // RequestURL implements the Request interface
 func (r *ModifyManagedObjectStorageUserAccessKeyRequest) RequestURL() string {
-	return fmt.Sprintf("%s/%s/users/%s/access-keys/%s", managedObjectStorageBasePath, r.ServiceUUID, r.Username, r.AccessKeyId)
+	return fmt.Sprintf("%s/%s/users/%s/access-keys/%s", managedObjectStorageBasePath, r.ServiceUUID, r.Username, r.AccessKeyID)
 }
 
 // DeleteManagedObjectStorageUserAccessKeyRequest represents a request to delete a Managed Object Storage service
 type DeleteManagedObjectStorageUserAccessKeyRequest struct {
 	ServiceUUID string `json:"-"`
 	Username    string `json:"-"`
-	AccessKeyId string `json:"-"`
+	AccessKeyID string `json:"-"`
 }
 
 // RequestURL implements the Request interface
 func (r *DeleteManagedObjectStorageUserAccessKeyRequest) RequestURL() string {
-	return fmt.Sprintf("%s/%s/users/%s/access-keys/%s", managedObjectStorageBasePath, r.ServiceUUID, r.Username, r.AccessKeyId)
+	return fmt.Sprintf("%s/%s/users/%s/access-keys/%s", managedObjectStorageBasePath, r.ServiceUUID, r.Username, r.AccessKeyID)
 }
 
 // CreateManagedObjectStoragePolicyRequest represents a request for creating a policy
