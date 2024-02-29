@@ -10,7 +10,7 @@ This is the official client for interfacing with UpCloud's API using the Go prog
 
 ### Quickstart
 
-Add SDK to your project. You will need Go 1.18+ to use it.
+Add SDK to your project. You will need Go 1.20+ to use it.
 ```shell
 go get github.com/UpCloudLtd/upcloud-go-api/v8
 ```
