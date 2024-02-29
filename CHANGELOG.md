@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Removed
+- **Breaking**, Managed Load Balancer: remove deprecated `DNSName` and `NetworkUUID` fields.
+
 ## [8.0.0]
 
 ### Added

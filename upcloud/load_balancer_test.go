@@ -13,7 +13,6 @@ func TestMarshalLoadBalancer(t *testing.T) {
 	[
 		{
 			"name": "example-service",
-			"network_uuid": "03631160-d57a-4926-ad48-a2f828229dcb",
 			"operational_state": "running",
 			"plan": "development",
 			"configured_status": "started",
@@ -145,8 +144,6 @@ func TestMarshalLoadBalancer(t *testing.T) {
 		Name:             "example-service",
 		Zone:             "fi-hel1",
 		Plan:             "development",
-		NetworkUUID:      "03631160-d57a-4926-ad48-a2f828229dcb",
-		DNSName:          "lb-0aff6dac143c43009b33ee2756f6592d.upcloudlb.com",
 		ConfiguredStatus: LoadBalancerConfiguredStatusStarted,
 		OperationalState: LoadBalancerOperationalStateRunning,
 		CreatedAt:        timeParse("2021-12-07T13:58:30.817272Z"),

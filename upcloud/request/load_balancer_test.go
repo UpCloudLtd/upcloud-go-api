@@ -54,7 +54,6 @@ func TestCreateLoadBalancerRequest(t *testing.T) {
 		"name": "example-service",
 		"plan": "development",
 		"zone": "fi-hel1",
-		"network_uuid": "03631160-d57a-4926-ad48-a2f828229dcb",
 		"configured_status": "started",
 		"frontends": [
 			{
@@ -101,7 +100,6 @@ func TestCreateLoadBalancerRequest(t *testing.T) {
 		Name:             "example-service",
 		Plan:             "development",
 		Zone:             "fi-hel1",
-		NetworkUUID:      "03631160-d57a-4926-ad48-a2f828229dcb",
 		ConfiguredStatus: upcloud.LoadBalancerConfiguredStatusStarted,
 		Frontends: []LoadBalancerFrontend{{
 			Name:           "example-frontend",
@@ -1338,7 +1336,6 @@ func ExampleCreateLoadBalancerRequest() {
 		Name:             "example-service",
 		Plan:             "development",
 		Zone:             "fi-hel1",
-		NetworkUUID:      "03631160-d57a-4926-ad48-a2f828229dcb",
 		ConfiguredStatus: upcloud.LoadBalancerConfiguredStatusStarted,
 		Frontends: []LoadBalancerFrontend{{
 			Name:           "example-frontend",
@@ -1392,7 +1389,6 @@ func TestCreateLoadBalancerLabelsRequest(t *testing.T) {
 		"name": "example-service",
 		"plan": "development",
 		"zone": "fi-hel1",
-		"network_uuid": "03631160-d57a-4926-ad48-a2f828229dcb",
 		"configured_status": "started",
 		"frontends": [],
 		"backends": [],
@@ -1409,7 +1405,6 @@ func TestCreateLoadBalancerLabelsRequest(t *testing.T) {
 		Name:             "example-service",
 		Plan:             "development",
 		Zone:             "fi-hel1",
-		NetworkUUID:      "03631160-d57a-4926-ad48-a2f828229dcb",
 		ConfiguredStatus: upcloud.LoadBalancerConfiguredStatusStarted,
 		Frontends:        []LoadBalancerFrontend{},
 		Backends:         []LoadBalancerBackend{},
