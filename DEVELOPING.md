@@ -1,6 +1,6 @@
 # Developing
 
-If you spot an issue, or have an idea for a feature that would make your work with this SDK easier - don't hesitate to open an issue or make a pull requests. We are gratefull for all feedback and contributions.
+If you spot an issue, or have an idea for a feature that would make your work with this SDK easier - don't hesitate to open an issue or make a pull requests. We are grateful for all feedback and contributions.
 
 ## Code style & linting
 
