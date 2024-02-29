@@ -7,10 +7,10 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v7/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/v7/upcloud/client"
-	"github.com/UpCloudLtd/upcloud-go-api/v7/upcloud/request"
-	"github.com/UpCloudLtd/upcloud-go-api/v7/upcloud/service"
+	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/client"
+	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/request"
+	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/service"
 	"github.com/davecgh/go-spew/spew"
 )
 

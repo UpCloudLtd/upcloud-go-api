@@ -7,8 +7,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v7/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/v7/upcloud/request"
+	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/request"
 )
 
 type Kubernetes interface {

@@ -6,8 +6,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v7/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/v7/upcloud/request"
+	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/request"
 )
 
 var ErrCancelManagedDatabaseSession = errors.New("managed database session cancellation failed")

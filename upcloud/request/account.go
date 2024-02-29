@@ -3,7 +3,7 @@ package request
 import (
 	"fmt"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v7/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
 )
 
 // CreateSubaccount represents data required to create a sub account

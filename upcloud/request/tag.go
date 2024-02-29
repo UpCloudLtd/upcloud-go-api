@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v7/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
 )
 
 // CreateTagRequest represents a request to create a tag and assign it to zero or more servers
