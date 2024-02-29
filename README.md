@@ -12,7 +12,7 @@ This is the official client for interfacing with UpCloud's API using the Go prog
 
 Add SDK to your project. You will need Go 1.18+ to use it.
 ```shell
-go get github.com/UpCloudLtd/upcloud-go-api/v7
+go get github.com/UpCloudLtd/upcloud-go-api/v8
 ```
 
 Next in your code:
@@ -20,8 +20,8 @@ Next in your code:
 import (
 	"time"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v7/upcloud/client"
-	"github.com/UpCloudLtd/upcloud-go-api/v7/upcloud/service"
+	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/client"
+	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/service"
 )
 
 func main() {
@@ -46,9 +46,9 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v7/upcloud"
-	"github.com/UpCloudLtd/upcloud-go-api/v7/upcloud/client"
-	"github.com/UpCloudLtd/upcloud-go-api/v7/upcloud/service"
+	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/client"
+	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/service"
 )
 
 func main() {
