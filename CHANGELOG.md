@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.0.0]
+
 ### Added
 - Managed Object Storage: `ManagedObjectStoragePolicy` struct
 - Managed Object Storage: `ManagedObjectStorageUserPolicy` struct
@@ -52,7 +54,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 - Storages: Add support for encryption at rest
 
 ### Fixed
-- Managed Object Storage: use correct path for `GetManagedObjectStorageBucketMetricsRequest` 
+- Managed Object Storage: use correct path for `GetManagedObjectStorageBucketMetricsRequest`
 
 ## [6.11.0]
 
@@ -154,7 +156,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 - ServerGroup `AntiAffinity` boolean field in favor of `AntiAffinityPolicy` string enum field
 
 ### Changed
-- GetManagedDatabaseIndices method to return a slice of structs instead of pointers 
+- GetManagedDatabaseIndices method to return a slice of structs instead of pointers
 
 ## [6.2.0]
 
@@ -234,7 +236,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 ### Changed
 - context-aware type `client.ClientContext` renamed to `client.Client`
 - context-aware type `service.ServiceContext` renamed to `service.Service`
-- `service.Service` accepts any client that implements `service.Client` interface 
+- `service.Service` accepts any client that implements `service.Client` interface
 - `client.New` constructor allows overwrite `baseURL`, `httpClient` and `httpClient.Timeout` client properties
 - bump Go version to 1.18
 - bump module version from `v4` to `v5`
@@ -436,7 +438,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v7.0.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.0.0...HEAD
+[8.0.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v7.0.0...v8.0.0
 [7.0.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.12.0...v7.0.0
 [6.12.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.11.0...v6.12.0
 [6.11.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.10.0...v6.11.0
