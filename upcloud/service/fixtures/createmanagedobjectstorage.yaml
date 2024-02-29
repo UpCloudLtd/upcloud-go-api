@@ -10,7 +10,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/6.11.0
+      - upcloud-go-api/7.0.0
     url: https://api.upcloud.com/1.3/object-storage-2/regions
     method: GET
   response:
@@ -21,14 +21,14 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Jan 2024 15:42:50 GMT
+      - Thu, 29 Feb 2024 11:26:11 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"configured_status":"started","labels":[{"key":"example-key","value":"example-value"}],"name":"go-sdk-integration-test","networks":[{"family":"IPv4","name":"example-public-network","type":"public"}],"region":"europe-1","users":[{"username":"test"}]}'
+    body: '{"configured_status":"started","labels":[{"key":"example-key","value":"example-value"}],"name":"go-sdk-integration-test","networks":[{"family":"IPv4","name":"example-public-network","type":"public"}],"region":"europe-1"}'
     form: {}
     headers:
       Accept:
@@ -36,18 +36,18 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/6.11.0
+      - upcloud-go-api/7.0.0
     url: https://api.upcloud.com/1.3/object-storage-2
     method: POST
   response:
-    body: '{"configured_status":"started","created_at":"2024-01-18T15:42:50.934973Z","endpoints":[{"domain_name":"2tt4g.upcloudobjects.com","type":"public"}],"labels":[{"key":"example-key","value":"example-value"}],"name":"go-sdk-integration-test","networks":[{"family":"IPv4","name":"example-public-network","type":"public"}],"operational_state":"pending","region":"europe-1","updated_at":"2024-01-18T15:42:50.934973Z","usage":{"total_objects":0,"total_size_bytes":0},"users":[{"access_keys":[],"created_at":"2024-01-18T15:42:50.934973Z","operational_state":"pending","updated_at":"2024-01-18T15:42:50.934973Z","username":"test"}],"uuid":"12177a48-1a9f-4aa1-a741-75b4ab2613f7"}'
+    body: '{"configured_status":"started","created_at":"2024-02-29T11:26:11.968409Z","endpoints":[{"domain_name":"2c6gm.upcloudobjects.com","iam_url":"https://2c6gm.upcloudobjects.com:4443/iam","sts_url":"https://2c6gm.upcloudobjects.com:4443/sts","type":"public"}],"labels":[{"key":"example-key","value":"example-value"}],"name":"go-sdk-integration-test","networks":[{"family":"IPv4","name":"example-public-network","type":"public"}],"operational_state":"pending","region":"europe-1","updated_at":"2024-02-29T11:26:11.968409Z","usage":{"total_objects":0,"total_size_bytes":0},"users":[],"uuid":"12130d0b-a377-415d-b090-56e1d6559fc5"}'
     headers:
       Content-Length:
-      - "667"
+      - "623"
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Jan 2024 15:42:50 GMT
+      - Thu, 29 Feb 2024 11:26:12 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 201 Created
@@ -62,14 +62,40 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/6.11.0
-    url: https://api.upcloud.com/1.3/object-storage-2/12177a48-1a9f-4aa1-a741-75b4ab2613f7
+      - upcloud-go-api/7.0.0
+    url: https://api.upcloud.com/1.3/object-storage-2/12130d0b-a377-415d-b090-56e1d6559fc5/users
+    method: GET
+  response:
+    body: '[]'
+    headers:
+      Content-Length:
+      - "2"
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 29 Feb 2024 11:26:12 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/7.0.0
+    url: https://api.upcloud.com/1.3/object-storage-2/12130d0b-a377-415d-b090-56e1d6559fc5
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Thu, 18 Jan 2024 15:42:51 GMT
+      - Thu, 29 Feb 2024 11:26:12 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 204 No Content

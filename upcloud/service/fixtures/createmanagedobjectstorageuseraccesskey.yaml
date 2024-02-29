@@ -10,7 +10,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/6.12.0
+      - upcloud-go-api/7.0.0
     url: https://api.upcloud.com/1.3/object-storage-2/regions
     method: GET
   response:
@@ -21,14 +21,14 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 26 Jan 2024 10:36:58 GMT
+      - Thu, 29 Feb 2024 11:34:55 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"configured_status":"started","labels":[{"key":"example-key","value":"example-value"}],"name":"go-sdk-integration-test","networks":[{"family":"IPv4","name":"example-public-network","type":"public"}],"region":"europe-1","users":[{"username":"test"}]}'
+    body: '{"configured_status":"started","labels":[{"key":"example-key","value":"example-value"}],"name":"go-sdk-integration-test","networks":[{"family":"IPv4","name":"example-public-network","type":"public"}],"region":"europe-1"}'
     form: {}
     headers:
       Accept:
@@ -36,25 +36,25 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/6.12.0
+      - upcloud-go-api/7.0.0
     url: https://api.upcloud.com/1.3/object-storage-2
     method: POST
   response:
-    body: '{"configured_status":"started","created_at":"2024-01-26T10:36:58.458676Z","endpoints":[{"domain_name":"gsaq8.upcloudobjects.com","type":"public"}],"labels":[{"key":"example-key","value":"example-value"}],"name":"go-sdk-integration-test","networks":[{"family":"IPv4","name":"example-public-network","type":"public"}],"operational_state":"pending","region":"europe-1","updated_at":"2024-01-26T10:36:58.458676Z","usage":{"total_objects":0,"total_size_bytes":0},"users":[{"access_keys":[],"created_at":"2024-01-26T10:36:58.458676Z","operational_state":"pending","updated_at":"2024-01-26T10:36:58.458676Z","username":"test"}],"uuid":"128715a4-0fa4-42eb-9d9b-ce1b95bf221e"}'
+    body: '{"configured_status":"started","created_at":"2024-02-29T11:34:55.500518Z","endpoints":[{"domain_name":"4ahgg.upcloudobjects.com","iam_url":"https://4ahgg.upcloudobjects.com:4443/iam","sts_url":"https://4ahgg.upcloudobjects.com:4443/sts","type":"public"}],"labels":[{"key":"example-key","value":"example-value"}],"name":"go-sdk-integration-test","networks":[{"family":"IPv4","name":"example-public-network","type":"public"}],"operational_state":"pending","region":"europe-1","updated_at":"2024-02-29T11:34:55.500518Z","usage":{"total_objects":0,"total_size_bytes":0},"users":[],"uuid":"1222a308-29dd-473c-a918-aa1919820247"}'
     headers:
       Content-Length:
-      - "667"
+      - "623"
       Content-Type:
       - application/json
       Date:
-      - Fri, 26 Jan 2024 10:36:58 GMT
+      - Thu, 29 Feb 2024 11:34:55 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 201 Created
     code: 201
     duration: ""
 - request:
-    body: '{"username":"test2"}'
+    body: '{"username":"testuser"}'
     form: {}
     headers:
       Accept:
@@ -62,18 +62,44 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/6.12.0
-    url: https://api.upcloud.com/1.3/object-storage-2/128715a4-0fa4-42eb-9d9b-ce1b95bf221e/users
+      - upcloud-go-api/7.0.0
+    url: https://api.upcloud.com/1.3/object-storage-2/1222a308-29dd-473c-a918-aa1919820247/users
     method: POST
   response:
-    body: '{"access_keys":[],"created_at":"2024-01-26T10:36:58.881467Z","operational_state":"pending","updated_at":"2024-01-26T10:36:58.881467Z","username":"test2"}'
+    body: '{"access_keys":[],"arn":"urn:ecs:iam::1222a30829dd473ca918aa1919820247:user/testuser","created_at":"2024-02-29T11:34:55Z","policies":[],"username":"testuser"}'
     headers:
       Content-Length:
-      - "153"
+      - "158"
       Content-Type:
       - application/json
       Date:
-      - Fri, 26 Jan 2024 10:36:58 GMT
+      - Thu, 29 Feb 2024 11:34:55 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: '{}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/7.0.0
+    url: https://api.upcloud.com/1.3/object-storage-2/1222a308-29dd-473c-a918-aa1919820247/users/testuser/access-keys
+    method: POST
+  response:
+    body: '{"access_key_id":"AKIA00CCB34188A9D27D","created_at":"2024-02-29T11:34:56Z","last_used_at":"0001-01-01T00:00:00Z","secret_access_key":"alsKQejUEGwuo7FxsvJJtFU0i0G3Wyd8JakhXv0f","status":"Active"}'
+    headers:
+      Content-Length:
+      - "195"
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 29 Feb 2024 11:34:56 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 201 Created
@@ -88,50 +114,24 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/6.12.0
-    url: https://api.upcloud.com/1.3/object-storage-2/128715a4-0fa4-42eb-9d9b-ce1b95bf221e/users/test2
+      - upcloud-go-api/7.0.0
+    url: https://api.upcloud.com/1.3/object-storage-2/1222a308-29dd-473c-a918-aa1919820247/users
     method: GET
   response:
-    body: '{"access_keys":[],"created_at":"2024-01-26T10:36:58.881467Z","operational_state":"ready","updated_at":"2024-01-26T10:36:59.233235Z","username":"test2"}'
+    body: '[{"access_keys":[{"access_key_id":"AKIA00CCB34188A9D27D","created_at":"2024-02-29T11:34:56Z","last_used_at":"2024-02-29T11:34:56Z","status":"Active"}],"arn":"urn:ecs:iam::1222a30829dd473ca918aa1919820247:user/testuser","created_at":"2024-02-29T11:34:55Z","policies":[],"username":"testuser"}]'
     headers:
       Content-Length:
-      - "151"
+      - "292"
       Content-Type:
       - application/json
       Date:
-      - Fri, 26 Jan 2024 10:36:59 GMT
+      - Thu, 29 Feb 2024 11:34:56 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"name":"example-access-key","enabled":false}'
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - upcloud-go-api/6.12.0
-    url: https://api.upcloud.com/1.3/object-storage-2/128715a4-0fa4-42eb-9d9b-ce1b95bf221e/users/test2/access-keys
-    method: POST
-  response:
-    body: '{"access_key_id":"AKIA2E7C18E1A9DE67C9","created_at":"2024-01-26T10:36:59.572827Z","enabled":false,"last_used_at":"2024-01-26T10:36:59.572827Z","name":"example-access-key","secret_access_key":"CDos+s2bmIklWj0knLrFeW+lCJjFRG5pWPwHZRDF","updated_at":"2024-01-26T10:36:59.572827Z"}'
-    headers:
-      Content-Length:
-      - "278"
-      Content-Type:
-      - application/json
-      Date:
-      - Fri, 26 Jan 2024 10:36:59 GMT
-      Strict-Transport-Security:
-      - max-age=63072000
-    status: 201 Created
-    code: 201
-    duration: ""
-- request:
     body: ""
     form: {}
     headers:
@@ -140,14 +140,36 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/6.12.0
-    url: https://api.upcloud.com/1.3/object-storage-2/128715a4-0fa4-42eb-9d9b-ce1b95bf221e
+      - upcloud-go-api/7.0.0
+    url: https://api.upcloud.com/1.3/object-storage-2/1222a308-29dd-473c-a918-aa1919820247/users/testuser
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Fri, 26 Jan 2024 10:36:59 GMT
+      - Thu, 29 Feb 2024 11:34:56 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/7.0.0
+    url: https://api.upcloud.com/1.3/object-storage-2/1222a308-29dd-473c-a918-aa1919820247
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Thu, 29 Feb 2024 11:34:57 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 204 No Content

@@ -15,10 +15,14 @@ func TestManagedObjectStorage(t *testing.T) {
 				{
 					DomainName: "7mf5k.upbucket.com",
 					Type:       "public",
+					IAMURL:     "https://7mf5k.upbucket.com:4443/iam",
+					STSURL:     "https://7mf5k.upbucket.com:4443/sts",
 				},
 				{
 					DomainName: "7mf5k-private.upbucket.com",
 					Type:       "private",
+					IAMURL:     "https://7mf5k-private.upbucket.com:4443/iam",
+					STSURL:     "https://7mf5k-private.upbucket.com:4443/sts",
 				},
 			},
 			Labels: []Label{{
@@ -42,26 +46,7 @@ func TestManagedObjectStorage(t *testing.T) {
 			OperationalState: ManagedObjectStorageOperationalStateRunning,
 			Region:           "europe-1",
 			UpdatedAt:        timeParse("2023-05-07T21:38:15.757405Z"),
-			Users: []ManagedObjectStorageUser{
-				{
-					AccessKeys: []ManagedObjectStorageUserAccessKey{
-						{
-							AccessKeyId:     "AKIA63F41D01345BB477",
-							CreatedAt:       timeParse("2023-05-07T20:52:19.705405Z"),
-							Enabled:         true,
-							LastUsedAt:      timeParse("2023-05-07T20:52:17Z"),
-							Name:            "example-access-key",
-							SecretAccessKey: nil,
-							UpdatedAt:       timeParse("2023-05-07T21:06:18.81511Z"),
-						},
-					},
-					CreatedAt:        timeParse("2023-05-07T15:55:24.655776Z"),
-					OperationalState: ManagedObjectStorageUserOperationalStateReady,
-					UpdatedAt:        timeParse("2023-05-07T16:48:14.744079Z"),
-					Username:         "example-user",
-				},
-			},
-			UUID: "1200ecde-db95-4d1c-9133-6508f3232567",
+			UUID:             "1200ecde-db95-4d1c-9133-6508f3232567",
 		},
 		`
 		{
@@ -70,10 +55,14 @@ func TestManagedObjectStorage(t *testing.T) {
 			"endpoints": [
 				{
 					"domain_name": "7mf5k.upbucket.com",
+	                "iam_url": "https://7mf5k.upbucket.com:4443/iam",
+    	            "sts_url": "https://7mf5k.upbucket.com:4443/sts",
 					"type": "public"
 				},
 				{
 					"domain_name": "7mf5k-private.upbucket.com",
+					"iam_url": "https://7mf5k-private.upbucket.com:4443/iam",
+					"sts_url": "https://7mf5k-private.upbucket.com:4443/sts",
 					"type": "private"
 				}
 			],
@@ -100,24 +89,6 @@ func TestManagedObjectStorage(t *testing.T) {
 			"operational_state": "running",
 			"region": "europe-1",
 			"updated_at": "2023-05-07T21:38:15.757405Z",
-			"users": [
-				{
-					"access_keys": [
-						{
-							"access_key_id": "AKIA63F41D01345BB477",
-							"created_at": "2023-05-07T20:52:19.705405Z",
-							"enabled": true,
-							"last_used_at": "2023-05-07T20:52:17Z",
-							"name": "example-access-key",
-							"updated_at": "2023-05-07T21:06:18.81511Z"
-						}
-					],
-					"created_at": "2023-05-07T15:55:24.655776Z",
-					"operational_state": "ready",
-					"updated_at": "2023-05-07T16:48:14.744079Z",
-					"username": "example-user"
-				}
-			],
 			"uuid": "1200ecde-db95-4d1c-9133-6508f3232567"
 		}
 		`,
