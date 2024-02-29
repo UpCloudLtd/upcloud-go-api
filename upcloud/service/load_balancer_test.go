@@ -147,18 +147,31 @@ func TestLoadBalancerCerticateBundlesAndBackendTLSConfigs(t *testing.T) {
 	t.Parallel()
 
 	record(t, "loadbalancercerticatebundlesandbackendtlsconfigs", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		net, err := createLoadBalancerAndPrivateNetwork(ctx, svc, "fi-hel1", "10.0.5.0/24")
+		net, err := createPrivateNetwork(ctx, svc, "fi-hel1", "10.0.5.0/24")
 		require.NoError(t, err)
 		feName := "fe-1"
 		beName := "be-1"
 		lb, err := svc.CreateLoadBalancer(ctx, &request.CreateLoadBalancerRequest{
-			Name:             fmt.Sprintf("go-api-lb-%s-%d", "fi-hel1", time.Now().Unix()),
-			Zone:             "fi-hel1",
-			Plan:             "development",
-			NetworkUUID:      net.UUID,
+			Name: fmt.Sprintf("go-api-lb-%s-%d", "fi-hel1", time.Now().Unix()),
+			Zone: "fi-hel1",
+			Plan: "development",
+			Networks: []request.LoadBalancerNetwork{
+				{
+					Type:   "public",
+					Name:   "public",
+					Family: "IPv4",
+				},
+				{
+					Type:   "private",
+					Name:   "private",
+					Family: "IPv4",
+					UUID:   net.UUID,
+				},
+			},
 			ConfiguredStatus: upcloud.LoadBalancerConfiguredStatusStarted,
 			Frontends: []request.LoadBalancerFrontend{{
 				Name:           feName,
+				Networks:       []upcloud.LoadBalancerFrontendNetwork{{Name: "public"}},
 				Mode:           upcloud.LoadBalancerModeHTTP,
 				Port:           80,
 				DefaultBackend: beName,
@@ -615,6 +628,7 @@ func TestLoadBalancerFrontend(t *testing.T) {
 			ServiceUUID: lb.UUID,
 			Frontend: request.LoadBalancerFrontend{
 				Name:           "fe-1",
+				Networks:       []upcloud.LoadBalancerFrontendNetwork{{Name: "public"}},
 				Mode:           upcloud.LoadBalancerModeHTTP,
 				Port:           443,
 				DefaultBackend: be.Name,
@@ -679,16 +693,29 @@ func TestLoadBalancerFrontendRule(t *testing.T) {
 	t.Parallel()
 	const zone = "fi-hel2"
 	record(t, "loadbalancerfrontendrule", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		net, err := createLoadBalancerAndPrivateNetwork(ctx, svc, zone, "10.0.1.0/24")
+		net, err := createPrivateNetwork(ctx, svc, zone, "10.0.1.0/24")
 		require.NoError(t, err)
 		lb, err := svc.CreateLoadBalancer(ctx, &request.CreateLoadBalancerRequest{
-			Name:             fmt.Sprintf("go-api-lb-%s-%d", zone, time.Now().Unix()),
-			Zone:             zone,
-			Plan:             "development",
-			NetworkUUID:      net.UUID,
+			Name: fmt.Sprintf("go-api-lb-%s-%d", zone, time.Now().Unix()),
+			Zone: zone,
+			Plan: "development",
+			Networks: []request.LoadBalancerNetwork{
+				{
+					Type:   "public",
+					Name:   "public",
+					Family: "IPv4",
+				},
+				{
+					Type:   "private",
+					Name:   "private",
+					Family: "IPv4",
+					UUID:   net.UUID,
+				},
+			},
 			ConfiguredStatus: upcloud.LoadBalancerConfiguredStatusStarted,
 			Frontends: []request.LoadBalancerFrontend{{
 				Name:           "fe-1",
+				Networks:       []upcloud.LoadBalancerFrontendNetwork{{Name: "public"}},
 				Mode:           upcloud.LoadBalancerModeHTTP,
 				Port:           80,
 				DefaultBackend: "be-1",
@@ -832,17 +859,30 @@ func TestLoadBalancerCerticateBundlesAndFrontendTLSConfigs(t *testing.T) {
 	t.Parallel()
 
 	record(t, "loadbalancercerticatebundlesandfrontendtlsconfigs", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		net, err := createLoadBalancerAndPrivateNetwork(ctx, svc, "fi-hel1", "10.0.4.0/24")
+		net, err := createPrivateNetwork(ctx, svc, "fi-hel1", "10.0.4.0/24")
 		require.NoError(t, err)
 		feName := "fe-1"
 		lb, err := svc.CreateLoadBalancer(ctx, &request.CreateLoadBalancerRequest{
-			Name:             fmt.Sprintf("go-api-lb-%s-%d", "fi-hel1", time.Now().Unix()),
-			Zone:             "fi-hel1",
-			Plan:             "development",
-			NetworkUUID:      net.UUID,
+			Name: fmt.Sprintf("go-api-lb-%s-%d", "fi-hel1", time.Now().Unix()),
+			Zone: "fi-hel1",
+			Plan: "development",
+			Networks: []request.LoadBalancerNetwork{
+				{
+					Type:   "public",
+					Name:   "public",
+					Family: "IPv4",
+				},
+				{
+					Type:   "private",
+					Name:   "private",
+					Family: "IPv4",
+					UUID:   net.UUID,
+				},
+			},
 			ConfiguredStatus: upcloud.LoadBalancerConfiguredStatusStarted,
 			Frontends: []request.LoadBalancerFrontend{{
 				Name:           feName,
+				Networks:       []upcloud.LoadBalancerFrontendNetwork{{Name: "public"}},
 				Mode:           upcloud.LoadBalancerModeHTTP,
 				Port:           80,
 				DefaultBackend: "be-1",
@@ -1036,7 +1076,7 @@ func TestLoadBalancerPage(t *testing.T) {
 	// do not run this test in parallel because it alters request.DefaultPage config which might cause unexpected results
 	const zone = "fi-hel2"
 	record(t, "loadbalancerpage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		net, err := createLoadBalancerAndPrivateNetwork(ctx, svc, zone, "172.16.0.0/24")
+		net, err := createPrivateNetwork(ctx, svc, zone, "172.16.0.0/24")
 		require.NoError(t, err)
 		lbs := make([]*upcloud.LoadBalancer, 0)
 		for i := 0; i < 5; i++ {
@@ -1341,10 +1381,22 @@ func cleanupLoadBalancer(ctx context.Context, rec *recorder.Recorder, svc *Servi
 
 func createLoadBalancer(ctx context.Context, svc *Service, networkUUID, zone string, label ...upcloud.Label) (*upcloud.LoadBalancer, error) {
 	createLoadBalancerRequest := request.CreateLoadBalancerRequest{
-		Name:             fmt.Sprintf("go-api-lb-%s-%d", zone, time.Now().Unix()),
-		Zone:             zone,
-		Plan:             "development",
-		NetworkUUID:      networkUUID,
+		Name: fmt.Sprintf("go-api-lb-%s-%d", zone, time.Now().Unix()),
+		Zone: zone,
+		Plan: "development",
+		Networks: []request.LoadBalancerNetwork{
+			{
+				Type:   "public",
+				Name:   "public",
+				Family: "IPv4",
+			},
+			{
+				Type:   "private",
+				Name:   "private",
+				Family: "IPv4",
+				UUID:   networkUUID,
+			},
+		},
 		ConfiguredStatus: "started",
 		Frontends:        []request.LoadBalancerFrontend{},
 		Backends:         []request.LoadBalancerBackend{},
@@ -1364,14 +1416,14 @@ func createLoadBalancer(ctx context.Context, svc *Service, networkUUID, zone str
 }
 
 func createLoadBalancerAndNetwork(ctx context.Context, svc *Service, zone, addr string, label ...upcloud.Label) (*upcloud.LoadBalancer, error) {
-	n, err := createLoadBalancerAndPrivateNetwork(ctx, svc, zone, addr)
+	n, err := createPrivateNetwork(ctx, svc, zone, addr)
 	if err != nil {
 		return nil, err
 	}
 	return createLoadBalancer(ctx, svc, n.UUID, zone, label...)
 }
 
-func createLoadBalancerAndPrivateNetwork(ctx context.Context, svc *Service, zone, addr string) (*upcloud.Network, error) {
+func createPrivateNetwork(ctx context.Context, svc *Service, zone, addr string) (*upcloud.Network, error) {
 	return svc.CreateNetwork(ctx, &request.CreateNetworkRequest{
 		Name: fmt.Sprintf("go-api-lb-%d", time.Now().Unix()),
 		Zone: zone,
@@ -1429,14 +1481,9 @@ func deleteLoadBalancer(ctx context.Context, svc *Service, lb *upcloud.LoadBalan
 	}
 
 	var errs []error
-	if lb.NetworkUUID != "" {
-		if err := svc.DeleteNetwork(ctx, &request.DeleteNetworkRequest{UUID: lb.NetworkUUID}); err != nil {
-			errs = append(errs, err)
-		}
-	}
 	if len(lb.Networks) > 0 {
 		for _, n := range lb.Networks {
-			if n.Type == upcloud.LoadBalancerNetworkTypePrivate && n.UUID != "" && lb.NetworkUUID != n.UUID {
+			if n.Type == upcloud.LoadBalancerNetworkTypePrivate && n.UUID != "" {
 				if err := svc.DeleteNetwork(ctx, &request.DeleteNetworkRequest{UUID: n.UUID}); err != nil {
 					errs = append(errs, err)
 				}

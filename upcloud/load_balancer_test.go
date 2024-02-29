@@ -13,12 +13,27 @@ func TestMarshalLoadBalancer(t *testing.T) {
 	[
 		{
 			"name": "example-service",
-			"network_uuid": "03631160-d57a-4926-ad48-a2f828229dcb",
+			"networks": [
+				{
+					"created_at": "2024-02-29T13:18:56.608082Z",
+					"updated_at": "2024-02-29T13:19:36.163476Z",
+					"name": "public",
+					"type": "public",
+					"family": "IPv4"
+				},
+				{
+					"created_at": "2024-02-29T13:19:28.748406Z",
+					"updated_at": "2024-02-29T13:19:36.163476Z",
+					"name": "private",
+					"type": "private",
+					"family": "IPv4",
+					"uuid": "0302f263-a52e-48c9-aa46-711cfb57a6e7"
+				}
+			],
 			"operational_state": "running",
 			"plan": "development",
 			"configured_status": "started",
 			"created_at": "2021-12-07T13:58:30.817272Z",
-			"dns_name": "lb-0aff6dac143c43009b33ee2756f6592d.upcloudlb.com",
 			"updated_at": "2022-02-11T17:33:59.898714Z",
 			"uuid": "0aff6dac-143c-4300-9b33-ee2756f6592d",
 			"zone": "fi-hel1",
@@ -79,6 +94,11 @@ func TestMarshalLoadBalancer(t *testing.T) {
 					"default_backend": "example-backend-1",
 					"mode": "http",
 					"name": "example-frontend",
+					"networks": [
+						{
+							"name": "public"
+						}
+					],
 					"port": 443,
 					"created_at": "2021-12-07T13:58:30.817272Z",
 					"updated_at": "2022-02-11T17:33:08.490581Z",
@@ -118,7 +138,7 @@ func TestMarshalLoadBalancer(t *testing.T) {
 				}
 			],
 			"nodes": [
-            	{
+				{
 					"operational_state": "running",
 					"networks": [
 						{
@@ -141,12 +161,27 @@ func TestMarshalLoadBalancer(t *testing.T) {
 		}
 	]`
 	lbs := []LoadBalancer{{
-		UUID:             "0aff6dac-143c-4300-9b33-ee2756f6592d",
-		Name:             "example-service",
+		UUID: "0aff6dac-143c-4300-9b33-ee2756f6592d",
+		Name: "example-service",
+		Networks: []LoadBalancerNetwork{
+			{
+				Name:      "public",
+				Type:      "public",
+				Family:    "IPv4",
+				CreatedAt: timeParse("2024-02-29T13:18:56.608082Z"),
+				UpdatedAt: timeParse("2024-02-29T13:19:36.163476Z"),
+			},
+			{
+				Name:      "private",
+				Type:      "private",
+				Family:    "IPv4",
+				UUID:      "0302f263-a52e-48c9-aa46-711cfb57a6e7",
+				CreatedAt: timeParse("2024-02-29T13:19:28.748406Z"),
+				UpdatedAt: timeParse("2024-02-29T13:19:36.163476Z"),
+			},
+		},
 		Zone:             "fi-hel1",
 		Plan:             "development",
-		NetworkUUID:      "03631160-d57a-4926-ad48-a2f828229dcb",
-		DNSName:          "lb-0aff6dac143c43009b33ee2756f6592d.upcloudlb.com",
 		ConfiguredStatus: LoadBalancerConfiguredStatusStarted,
 		OperationalState: LoadBalancerOperationalStateRunning,
 		CreatedAt:        timeParse("2021-12-07T13:58:30.817272Z"),
@@ -162,6 +197,7 @@ func TestMarshalLoadBalancer(t *testing.T) {
 		Frontends: []LoadBalancerFrontend{
 			{
 				Name:           "example-frontend",
+				Networks:       []LoadBalancerFrontendNetwork{{Name: "public"}},
 				Mode:           LoadBalancerModeHTTP,
 				Port:           443,
 				DefaultBackend: "example-backend-1",

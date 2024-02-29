@@ -53,7 +53,6 @@ type CreateLoadBalancerRequest struct {
 	Name             string                               `json:"name,omitempty"`
 	Plan             string                               `json:"plan,omitempty"`
 	Zone             string                               `json:"zone,omitempty"`
-	NetworkUUID      string                               `json:"network_uuid,omitempty"`
 	Networks         []LoadBalancerNetwork                `json:"networks,omitempty"`
 	ConfiguredStatus upcloud.LoadBalancerConfiguredStatus `json:"configured_status,omitempty"`
 	Frontends        []LoadBalancerFrontend               `json:"frontends"`
