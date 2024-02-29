@@ -349,7 +349,7 @@ func TestGetManagedObjectStorageUsers(t *testing.T) {
 		})
 		require.NoError(t, err)
 		require.Equal(t, user.Username, "testuser")
-		require.NotEmpty(t, user.Arn)
+		require.NotEmpty(t, user.ARN)
 
 		users, err := svc.GetManagedObjectStorageUsers(ctx, &request.GetManagedObjectStorageUsersRequest{ServiceUUID: storage.UUID})
 		require.NoError(t, err)
@@ -373,7 +373,7 @@ func TestGetManagedObjectStorageUser(t *testing.T) {
 		})
 		require.NoError(t, err)
 		require.Equal(t, user.Username, "testuser")
-		require.NotEmpty(t, user.Arn)
+		require.NotEmpty(t, user.ARN)
 
 		_, err = svc.GetManagedObjectStorageUser(ctx, &request.GetManagedObjectStorageUserRequest{ServiceUUID: storage.UUID, Username: user.Username})
 		require.NoError(t, err)

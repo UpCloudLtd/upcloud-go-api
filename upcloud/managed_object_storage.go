@@ -83,7 +83,7 @@ type ManagedObjectStorageNetwork struct {
 // ManagedObjectStorageUser represents a user for the Managed Object Storage service
 type ManagedObjectStorageUser struct {
 	AccessKeys []ManagedObjectStorageUserAccessKey `json:"access_keys"`
-	Arn        string                              `json:"arn"`
+	ARN        string                              `json:"arn"`
 	CreatedAt  time.Time                           `json:"created_at"`
 	Policies   []ManagedObjectStoragePolicy        `json:"policies"`
 	Username   string                              `json:"username"`
