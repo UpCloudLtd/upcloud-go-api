@@ -30,8 +30,10 @@ const (
 	GatewayOperationalStateDeleteLinkNetwork GatewayOperationalState = "delete-link-network"
 	GatewayOperationalStateDeleteService     GatewayOperationalState = "delete-service"
 
-	// GatewayFeatureNAT is the network address translation (NAT) feature of the network gateway
+	// GatewayFeatureNAT is a Network Address Translation (NAT) service that offers a way for cloud servers in SDN private networks to connect to the Internet through the public IP assigned to the network gateway service
 	GatewayFeatureNAT GatewayFeature = "nat"
+	// GatewayFeatureVPN is a Virtual Private Network (VPN) service used to establish an encrypted network connection when using public networks
+	GatewayFeatureVPN GatewayFeature = "vpn"
 )
 
 type Gateway struct {
@@ -56,4 +58,13 @@ type GatewayAddress struct {
 type GatewayRouter struct {
 	CreatedAt time.Time `json:"created_at,omitempty"`
 	UUID      string    `json:"uuid,omitempty"`
+}
+
+type GatewayPlan struct {
+	Name                     string           `json:"name,omitempty"`
+	PerGatewayBandwidthMbps  int              `json:"per_gateway_bandwidth_mbps,omitempty"`
+	PerGatewayMaxConnections int              `json:"per_gateway_max_connections,omitempty"`
+	ServerNumber             int              `json:"server_number,omitempty"`
+	SupportedFeatures        []GatewayFeature `json:"supported_features,omitempty"`
+	VPNTunnelAmount          int              `json:"vpn_tunnel_amount,omitempty"`
 }

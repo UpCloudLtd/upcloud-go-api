@@ -68,3 +68,32 @@ func TestGateway(t *testing.T) {
 
 	testJSON(t, &Gateway{}, gateway, jsonStr)
 }
+
+func TestGatewayPlan(t *testing.T) {
+	t.Parallel()
+
+	jsonStr := `
+	{
+		"name": "advanced",
+		"per_gateway_bandwidth_mbps": 10000,
+		"per_gateway_max_connections": 100000,
+		"server_number": 2,
+		"supported_features": [
+			"nat",
+			"vpn"
+		],
+		"vpn_tunnel_amount": 10
+	}
+	`
+
+	plan := &GatewayPlan{
+		Name:                     "advanced",
+		PerGatewayBandwidthMbps:  10000,
+		PerGatewayMaxConnections: 100000,
+		ServerNumber:             2,
+		SupportedFeatures:        []GatewayFeature{GatewayFeatureNAT, GatewayFeatureVPN},
+		VPNTunnelAmount:          10,
+	}
+
+	testJSON(t, &GatewayPlan{}, plan, jsonStr)
+}
