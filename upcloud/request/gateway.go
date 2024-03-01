@@ -8,6 +8,12 @@ import (
 
 const gatewayBaseURL string = "/gateway"
 
+type GetGatewayPlansRequest struct{}
+
+func (r *GetGatewayPlansRequest) RequestURL() string {
+	return fmt.Sprintf("%s/plans", gatewayBaseURL)
+}
+
 type GetGatewaysRequest struct {
 	Filters []QueryFilter
 }

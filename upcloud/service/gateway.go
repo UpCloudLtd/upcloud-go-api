@@ -8,11 +8,18 @@ import (
 )
 
 type Gateway interface {
+	GetGatewayPlans(ctx context.Context) ([]upcloud.GatewayPlan, error)
 	GetGateways(ctx context.Context, f ...request.QueryFilter) ([]upcloud.Gateway, error)
 	GetGateway(ctx context.Context, r *request.GetGatewayRequest) (*upcloud.Gateway, error)
 	CreateGateway(ctx context.Context, r *request.CreateGatewayRequest) (*upcloud.Gateway, error)
 	ModifyGateway(ctx context.Context, r *request.ModifyGatewayRequest) (*upcloud.Gateway, error)
 	DeleteGateway(ctx context.Context, r *request.DeleteGatewayRequest) error
+}
+
+func (s *Service) GetGatewayPlans(ctx context.Context) ([]upcloud.GatewayPlan, error) {
+	r := request.GetGatewayPlansRequest{}
+	p := []upcloud.GatewayPlan{}
+	return p, s.get(ctx, r.RequestURL(), &p)
 }
 
 // GetGateways retrieves a list of network gateways within an account.

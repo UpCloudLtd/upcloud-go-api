@@ -10,10 +10,68 @@ import (
 	"time"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/client"
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/request"
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/stretchr/testify/assert"
 )
+
+func TestGatewayPlans(t *testing.T) {
+	t.Parallel()
+
+	plansResponse := `
+	[
+		{
+		  "name": "advanced",
+		  "per_gateway_bandwidth_mbps": 10000,
+		  "per_gateway_max_connections": 100000,
+		  "server_number": 2,
+		  "supported_features": [
+			  "nat",
+			  "vpn"
+		  ],
+		  "vpn_tunnel_amount": 10
+		},
+		{
+		  "name": "production",
+		  "per_gateway_bandwidth_mbps": 1000,
+		  "per_gateway_max_connections": 50000,
+		  "server_number": 2,
+		  "supported_features": [
+			  "nat",
+			  "vpn"
+		  ],
+		  "vpn_tunnel_amount": 2
+		}
+	]
+	`
+
+	srv, svc := setupTestServerAndService(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		assert.Equal(t, http.MethodGet, r.Method)
+		assert.Equal(t, fmt.Sprintf("/%s/gateway/plans", client.APIVersion), r.URL.Path)
+		_, _ = fmt.Fprint(w, plansResponse)
+	}))
+	defer srv.Close()
+
+	res, err := svc.GetGatewayPlans(context.Background())
+	assert.NoError(t, err)
+	assert.Len(t, res, 2)
+
+	firstPlan := res[0]
+	secondPlan := res[1]
+
+	assert.Equal(t, "advanced", firstPlan.Name)
+	assert.Equal(t, 10000, firstPlan.PerGatewayBandwidthMbps)
+	assert.Equal(t, 100000, firstPlan.PerGatewayMaxConnections)
+	assert.Equal(t, 2, firstPlan.ServerNumber)
+	assert.Len(t, firstPlan.SupportedFeatures, 2)
+	assert.Equal(t, upcloud.GatewayFeatureNAT, firstPlan.SupportedFeatures[0])
+	assert.Equal(t, upcloud.GatewayFeatureVPN, firstPlan.SupportedFeatures[1])
+	assert.Equal(t, 10, firstPlan.VPNTunnelAmount)
+
+	// Just check the name, no need to check all the properties again
+	assert.Equal(t, "production", secondPlan.Name)
+}
 
 func TestGateway(t *testing.T) {
 	t.Parallel()
