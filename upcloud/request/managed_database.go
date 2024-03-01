@@ -123,11 +123,21 @@ func (g *GetManagedDatabaseRequest) RequestURL() string {
 }
 
 // GetManagedDatabasesRequest represents a request to get a slice of existing managed database instances
-type GetManagedDatabasesRequest struct{}
+type GetManagedDatabasesRequest struct {
+	Page *Page
+}
 
 // RequestURL implements the request.Request interface
 func (g *GetManagedDatabasesRequest) RequestURL() string {
-	return "/database"
+	u := "/database"
+
+	if g.Page != nil {
+		f := make([]QueryFilter, 0)
+		f = append(f, g.Page)
+		return fmt.Sprintf("%s?%s", u, encodeQueryFilters(f))
+	}
+
+	return u
 }
 
 // GetManagedDatabaseAccessControlRequest represents a request to get access control settings of an existing OpenSearch

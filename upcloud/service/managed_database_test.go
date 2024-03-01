@@ -171,25 +171,29 @@ func TestService_GetManagedDatabase(t *testing.T) {
 
 func TestService_GetManagedDatabases(t *testing.T) {
 	record(t, "getmanageddatabases", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		details, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("getmanageddatabases", upcloud.ManagedDatabaseServiceTypePostgreSQL))
-		require.NoError(t, err)
+		uuidMap := make(map[string]bool)
+		for i := 0; i < 4; i++ {
+			details, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest(fmt.Sprintf("getmanageddatabases-%d", i), upcloud.ManagedDatabaseServiceTypePostgreSQL))
+			require.NoError(t, err)
+
+			uuidMap[details.UUID] = true
+		}
 
 		defer func() {
-			t.Logf("deleting %s", details.UUID)
-			err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: details.UUID})
-			assert.NoError(t, err)
+			for uuid := range uuidMap {
+				t.Logf("deleting %s", uuid)
+				err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: uuid})
+				assert.NoError(t, err)
+			}
 		}()
 
 		services, err := svc.GetManagedDatabases(ctx, &request.GetManagedDatabasesRequest{})
 		require.NoError(t, err)
-		assert.Condition(t, func() (success bool) {
-			for _, service := range services {
-				if service.UUID == details.UUID {
-					return true
-				}
-			}
-			return false
-		}, "returned slice should contain the created service")
+		assert.GreaterOrEqual(t, len(services), 4)
+
+		services, err = svc.GetManagedDatabases(ctx, &request.GetManagedDatabasesRequest{Page: &request.Page{Size: 2, Number: 1}})
+		require.NoError(t, err)
+		assert.Equal(t, len(services), 2)
 	})
 }
 
