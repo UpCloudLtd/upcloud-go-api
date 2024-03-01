@@ -10,10 +10,34 @@ import (
 type ManagedDatabaseState string
 
 const (
-	// ManagedDatabaseStateRunning represents a managed database instance in running state
+	// Indicates newly created service or started reconfiguration
+	ManagedDatabaseStatePending ManagedDatabaseState = "pending"
+	// Configuring network
+	ManagedDatabaseStateSetupNetwork ManagedDatabaseState = "setup-network"
+	// Check that the network configuration was applied correctly
+	ManagedDatabaseStateCheckNetwork ManagedDatabaseState = "check-network"
+	// Configuring SDN network peerings if provided
+	ManagedDatabaseStateSetupPeer ManagedDatabaseState = "setup-peer"
+	// Check SDN network peerings was established if provided
+	ManagedDatabaseStateCheckPeer ManagedDatabaseState = "check-peer"
+	// Service is being created or reconfigured
+	ManagedDatabaseStateSetupService ManagedDatabaseState = "setup-service"
+	// Service creation in progress
+	ManagedDatabaseStateRebuilding ManagedDatabaseState = "rebuilding"
+	// Service is being upgraded or migrated
+	ManagedDatabaseStateRebalancing ManagedDatabaseState = "rebalancing"
+	// Service encountered an error that requires user action
+	ManagedDatabaseStateError ManagedDatabaseState = "error"
+	// Indicates service up and running
 	ManagedDatabaseStateRunning ManagedDatabaseState = "running"
-	// ManagedDatabaseStatePoweroff represents a managed database instance in powered off state
-	ManagedDatabaseStatePoweroff ManagedDatabaseState = "poweroff"
+	// Service is stopped
+	ManagedDatabaseStateStopped ManagedDatabaseState = "stopped"
+	// Cleaning up service resources
+	ManagedDatabaseStateCleanupService ManagedDatabaseState = "cleanup-service"
+	// Cleaning up network resources
+	ManagedDatabaseStateCleanupNetwork ManagedDatabaseState = "cleanup-network"
+	// Deleting the service
+	ManagedDatabaseStateDeleteService ManagedDatabaseState = "delete-service"
 )
 
 // ManagedDatabaseComponentRoute represents the access route a component is associated with
@@ -153,6 +177,14 @@ const (
 	ManagedDatabaseUserAuthenticationMySQLNativePassword ManagedDatabaseUserAuthenticationType = "mysql_native_password"
 )
 
+// ManagedDatabaseNetwork represents a network from where database can be used
+type ManagedDatabaseNetwork struct {
+	Family string  `json:"family"`
+	Name   string  `json:"name"`
+	Type   string  `json:"type"`
+	UUID   *string `json:"uuid,omitempty"`
+}
+
 // ManagedDatabase represents an existing managed database instance
 type ManagedDatabase struct {
 	Backups          []ManagedDatabaseBackup         `json:"backups,omitempty"`
@@ -160,6 +192,7 @@ type ManagedDatabase struct {
 	CreateTime       time.Time                       `json:"create_time,omitempty"`
 	Maintenance      ManagedDatabaseMaintenanceTime  `json:"maintenance,omitempty"`
 	Name             string                          `json:"name,omitempty"`
+	Networks         []ManagedDatabaseNetwork        `json:"networks,omitempty"`
 	NodeCount        int                             `json:"node_count,omitempty"`
 	NodeStates       []ManagedDatabaseNodeState      `json:"node_states,omitempty"`
 	Plan             string                          `json:"plan,omitempty"`

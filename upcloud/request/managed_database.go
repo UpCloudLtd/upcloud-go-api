@@ -76,6 +76,7 @@ func (c *CloneManagedDatabaseRequest) RequestURL() string {
 type CreateManagedDatabaseRequest struct {
 	HostNamePrefix string                                `json:"hostname_prefix"`
 	Maintenance    ManagedDatabaseMaintenanceTimeRequest `json:"maintenance,omitempty"`
+	Networks       []upcloud.ManagedDatabaseNetwork      `json:"networks,omitempty"`
 	Plan           string                                `json:"plan"`
 	Properties     ManagedDatabasePropertiesRequest      `json:"properties,omitempty"`
 	Title          string                                `json:"title,omitempty"`
@@ -122,11 +123,21 @@ func (g *GetManagedDatabaseRequest) RequestURL() string {
 }
 
 // GetManagedDatabasesRequest represents a request to get a slice of existing managed database instances
-type GetManagedDatabasesRequest struct{}
+type GetManagedDatabasesRequest struct {
+	Page *Page
+}
 
 // RequestURL implements the request.Request interface
 func (g *GetManagedDatabasesRequest) RequestURL() string {
-	return "/database"
+	u := "/database"
+
+	if g.Page != nil {
+		f := make([]QueryFilter, 0)
+		f = append(f, g.Page)
+		return fmt.Sprintf("%s?%s", u, encodeQueryFilters(f))
+	}
+
+	return u
 }
 
 // GetManagedDatabaseAccessControlRequest represents a request to get access control settings of an existing OpenSearch
@@ -411,6 +422,7 @@ func (m *ManagedDatabasePropertiesRequest) GetPublicAccess() bool {
 // ModifyManagedDatabaseRequest represents a request to modify an existing managed database instance
 type ModifyManagedDatabaseRequest struct {
 	Maintenance ManagedDatabaseMaintenanceTimeRequest `json:"maintenance"`
+	Networks    *[]upcloud.ManagedDatabaseNetwork     `json:"networks,omitempty"`
 	Plan        string                                `json:"plan,omitempty"`
 	Properties  ManagedDatabasePropertiesRequest      `json:"properties,omitempty"`
 	Title       string                                `json:"title,omitempty"`

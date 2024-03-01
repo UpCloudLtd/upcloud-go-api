@@ -2,6 +2,7 @@ package request
 
 import (
 	"encoding/json"
+	"fmt"
 	"testing"
 	"time"
 
@@ -143,6 +144,22 @@ func TestGetManagedDatabaseRequest_RequestURL(t *testing.T) {
 
 func TestGetManagedDatabasesRequest_RequestURL(t *testing.T) {
 	assert.Equal(t, "/database", (&GetManagedDatabasesRequest{}).RequestURL())
+}
+
+func TestGetManagedDatabasesRequest_Page(t *testing.T) {
+	tests := []struct {
+		page   int
+		offset int
+	}{
+		{page: 0, offset: 0},
+		{page: 1, offset: 0},
+		{page: 2, offset: 42},
+	}
+	for _, test := range tests {
+		t.Run(fmt.Sprintf("page = %d, offset = %d", test.page, test.offset), func(t *testing.T) {
+			assert.Equal(t, fmt.Sprintf("/database?limit=42&offset=%d", test.offset), (&GetManagedDatabasesRequest{Page: &Page{Size: 42, Number: test.page}}).RequestURL())
+		})
+	}
 }
 
 func TestGetManagedDatabaseAccessControlRequest_RequestURL(t *testing.T) {

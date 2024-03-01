@@ -317,8 +317,8 @@ func TestManagedDatabaseProperties_GetStringSlice(t *testing.T) {
 func TestManagedDatabaseType_UnmarshalJSON(t *testing.T) {
 	const d = `{
 	"name": "mysql",
-    "description": "MySQL - Relational Database Management System",
-    "latest_available_version": "8.0.26",
+	"description": "MySQL - Relational Database Management System",
+	"latest_available_version": "8.0.26",
 	"service_plans": [
 		{
 			"backup_config_mysql": {
