@@ -5,6 +5,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- Managed Database: add support managing attached SDN networks via `networks` field.
+- Managed Database: add paging support to `GetManagedDatabases` method.
+
 ## [8.0.0]
 
 ### Added
