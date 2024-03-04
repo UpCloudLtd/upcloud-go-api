@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.1.0]
+
 ### Added
 - Managed Database: add support managing attached SDN networks via `networks` field.
 - Managed Database: add paging support to `GetManagedDatabases` method.
@@ -442,7 +444,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.0.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.1.0...HEAD
+[8.1.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.0.0...v8.1.0
 [8.0.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v7.0.0...v8.0.0
 [7.0.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.12.0...v7.0.0
 [6.12.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v6.11.0...v6.12.0
