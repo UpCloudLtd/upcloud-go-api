@@ -146,22 +146,20 @@ func TestVPNGateway(t *testing.T) {
 		if !assert.NoError(t, err) {
 			return
 		}
-
 		defer func() {
 			err = svc.DeleteRouter(ctx, &request.DeleteRouterRequest{UUID: router.UUID})
-			if !assert.NoError(t, err) {
-				t.Logf("failed to cleanup router: %s", err.Error())
-			}
+			assert.NoError(t, err)
 		}()
 
 		plans, err := svc.GetGatewayPlans(ctx)
 		if !assert.NoError(t, err) {
 			return
 		}
-		if !assert.GreaterOrEqual(t, len(plans), 1, "plans response is empty") {
+		if !assert.GreaterOrEqual(t, len(plans), 2, "plans response has less than 2 plans") {
 			return
 		}
 
+		psk := "key123wouldkeepitthatwaybuthastobelonger"
 		gw, err := svc.CreateGateway(ctx, &request.CreateGatewayRequest{
 			Name: "test-vpn",
 			Zone: "pl-waw1",
@@ -180,7 +178,7 @@ func TestVPNGateway(t *testing.T) {
 					Name: "my-public-ip",
 				},
 			},
-			Connections: []request.CreateGatewayConnectionRequest{
+			Connections: []request.GatewayConnection{
 				{
 					Name: "example-connection",
 					Type: upcloud.GatewayConnectionTypeIPSec,
@@ -198,7 +196,7 @@ func TestVPNGateway(t *testing.T) {
 							StaticNetwork: "10.0.1.0/24",
 						},
 					},
-					Tunnels: []request.CreateGatewayTunnelRequest{
+					Tunnels: []request.GatewayTunnel{
 						{
 							Name: "example-tunnel",
 							LocalAddress: upcloud.GatewayTunnelLocalAddress{
@@ -210,7 +208,7 @@ func TestVPNGateway(t *testing.T) {
 							IPSec: upcloud.GatewayTunnelIPSec{
 								Authentication: upcloud.GatewayTunnelIPSecAuth{
 									Authentication: upcloud.GatewayTunnelIPSecAuthTypePSK,
-									PSK:            "key123wouldkeepitthatwaybuthastobelonger",
+									PSK:            psk,
 								},
 							},
 						},
@@ -225,14 +223,10 @@ func TestVPNGateway(t *testing.T) {
 
 		defer func() {
 			err = svc.DeleteGateway(ctx, &request.DeleteGatewayRequest{UUID: gw.UUID})
-			if !assert.NoError(t, err) {
-				t.Logf("failed to cleanup gateway: %s", err.Error())
-			}
+			assert.NoError(t, err)
 
 			err = waitGatewayToDelete(ctx, rec, svc, gw.UUID)
-			if !assert.NoError(t, err) {
-				t.Logf("error while waiting for gateway to be deleted: %s", err.Error())
-			}
+			assert.NoError(t, err)
 		}()
 
 		// Check plan
@@ -244,8 +238,115 @@ func TestVPNGateway(t *testing.T) {
 
 		// Check connections
 		assert.Len(t, gw.Connections, 1)
-		assert.Equal(t, "example-connection", gw.Connections[0].Name)
-		assert.Equal(t, upcloud.GatewayConnectionTypeIPSec, gw.Connections[0].Type)
+
+		connection := gw.Connections[0]
+		assert.Equal(t, "example-connection", connection.Name)
+		assert.Equal(t, upcloud.GatewayConnectionTypeIPSec, connection.Type)
+		assert.Len(t, connection.LocalRoutes, 1)
+		assert.Len(t, connection.RemoteRoutes, 1)
+		assert.Len(t, connection.Tunnels, 1)
+
+		// Check connection local routes
+		localRoute := connection.LocalRoutes[0]
+		assert.Equal(t, "local-route", localRoute.Name)
+		assert.Equal(t, upcloud.GatewayRouteTypeStatic, localRoute.Type)
+		assert.Equal(t, "10.0.0.0/24", localRoute.StaticNetwork)
+
+		// Check connection remote routes
+		remoteRoute := connection.RemoteRoutes[0]
+		assert.Equal(t, "remote-route", remoteRoute.Name)
+		assert.Equal(t, upcloud.GatewayRouteTypeStatic, remoteRoute.Type)
+		assert.Equal(t, "10.0.1.0/24", remoteRoute.StaticNetwork)
+
+		// Check connection tunnel
+		tunnel := connection.Tunnels[0]
+		assert.Equal(t, "example-tunnel", tunnel.Name)
+		assert.Equal(t, "my-public-ip", tunnel.LocalAddress.Name)
+		assert.Equal(t, "100.10.0.111", tunnel.RemoteAddress.Address)
+		assert.Equal(t, upcloud.GatewayTunnelIPSecAuthTypePSK, tunnel.IPSec.Authentication.Authentication)
+
+		// Now check that we can modify just name, without affecting other fields
+		gw, err = svc.ModifyGateway(ctx, &request.ModifyGatewayRequest{
+			UUID: gw.UUID,
+			Name: "updated",
+		})
+
+		assert.NoError(t, err)
+		assert.Equal(t, "updated", gw.Name)
+		assert.Len(t, gw.Addresses, 1)
+		assert.Len(t, gw.Connections, 1)
+		assert.Len(t, gw.Connections[0].Tunnels, 1)
+
+		// Now let's see if we can modify other fields
+		gw, err = svc.ModifyGateway(ctx, &request.ModifyGatewayRequest{
+			UUID: gw.UUID,
+			Connections: []request.GatewayConnection{
+				{
+					Name: "example-connection2",
+					Type: upcloud.GatewayConnectionTypeIPSec,
+					LocalRoutes: []upcloud.GatewayRoute{
+						{
+							Name:          "local-route2",
+							Type:          upcloud.GatewayRouteTypeStatic,
+							StaticNetwork: "11.0.0.0/24",
+						},
+					},
+					RemoteRoutes: []upcloud.GatewayRoute{
+						{
+							Name:          "remote-route2",
+							Type:          upcloud.GatewayRouteTypeStatic,
+							StaticNetwork: "11.0.1.0/24",
+						},
+					},
+					Tunnels: []request.GatewayTunnel{
+						{
+							Name: "example-tunnel2",
+							LocalAddress: upcloud.GatewayTunnelLocalAddress{
+								Name: "my-public-ip",
+							},
+							RemoteAddress: upcloud.GatewayTunnelRemoteAddress{
+								Address: "200.10.0.111",
+							},
+							IPSec: upcloud.GatewayTunnelIPSec{
+								Authentication: upcloud.GatewayTunnelIPSecAuth{
+									Authentication: upcloud.GatewayTunnelIPSecAuthTypePSK,
+									PSK:            psk,
+								},
+							},
+						},
+					},
+				},
+			},
+		})
+
+		// Check connections
+		assert.Len(t, gw.Connections, 1)
+
+		connection = gw.Connections[0]
+		assert.Equal(t, "example-connection2", connection.Name)
+		assert.Equal(t, upcloud.GatewayConnectionTypeIPSec, connection.Type)
+		assert.Len(t, connection.LocalRoutes, 1)
+		assert.Len(t, connection.RemoteRoutes, 1)
+		assert.Len(t, connection.Tunnels, 1)
+
+		// Check connection local routes
+		localRoute = connection.LocalRoutes[0]
+		assert.Equal(t, "local-route2", localRoute.Name)
+		assert.Equal(t, upcloud.GatewayRouteTypeStatic, localRoute.Type)
+		assert.Equal(t, "11.0.0.0/24", localRoute.StaticNetwork)
+
+		// Check connection remote routes
+		remoteRoute = connection.RemoteRoutes[0]
+		assert.Equal(t, "remote-route2", remoteRoute.Name)
+		assert.Equal(t, upcloud.GatewayRouteTypeStatic, remoteRoute.Type)
+		assert.Equal(t, "11.0.1.0/24", remoteRoute.StaticNetwork)
+
+		// Check connection tunnel
+		tunnel = connection.Tunnels[0]
+		assert.Equal(t, "example-tunnel2", tunnel.Name)
+		assert.Equal(t, "my-public-ip", tunnel.LocalAddress.Name)
+		assert.Equal(t, "200.10.0.111", tunnel.RemoteAddress.Address)
+		assert.Equal(t, upcloud.GatewayTunnelIPSecAuthTypePSK, tunnel.IPSec.Authentication.Authentication)
 	})
 }
 

@@ -119,7 +119,7 @@ func TestCreateGatewayRequest(t *testing.T) {
 				Name: "my-public-ip",
 			},
 		},
-		Connections: []CreateGatewayConnectionRequest{
+		Connections: []GatewayConnection{
 			{
 				Name: "example-connection",
 				Type: upcloud.GatewayConnectionTypeIPSec,
@@ -137,7 +137,7 @@ func TestCreateGatewayRequest(t *testing.T) {
 						StaticNetwork: "10.0.1.0/24",
 					},
 				},
-				Tunnels: []CreateGatewayTunnelRequest{
+				Tunnels: []GatewayTunnel{
 					{
 						Name: "example-tunnel-1",
 						LocalAddress: upcloud.GatewayTunnelLocalAddress{
