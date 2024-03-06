@@ -171,7 +171,9 @@ type GatewayTunnelIPSec struct {
 
 type GatewayTunnelIPSecAuth struct {
 	Authentication GatewayIPSecAuthType `json:"authentication,omitempty"`
-	PSK            string               `json:"psk,omitempty"`
+	// PSK is a user-provided pre-shared key.
+	// Note that this field is only meant to be used when providing API with your pre-shared key; it will always be empty in API responses
+	PSK string `json:"psk,omitempty"`
 }
 
 type GatewayPlan struct {
