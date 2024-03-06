@@ -84,6 +84,7 @@ type Gateway struct {
 	UUID             string                  `json:"uuid,omitempty"`
 	Name             string                  `json:"name,omitempty"`
 	Zone             string                  `json:"zone,omitempty"`
+	Plan             string                  `json:"plan,omitempty"`
 	Labels           []Label                 `json:"labels,omitempty"`
 	ConfiguredStatus GatewayConfiguredStatus `json:"configured_status,omitempty"`
 	OperationalState GatewayOperationalState `json:"operational_state,omitempty"`
@@ -92,6 +93,7 @@ type Gateway struct {
 	CreatedAt        time.Time               `json:"created_at,omitempty"`
 	UpdatedAt        time.Time               `json:"updated_at,omitempty"`
 	Addresses        []GatewayAddress        `json:"addresses,omitempty"`
+	Connections      []GatewayConnection     `json:"connections,omitempty"`
 }
 
 type GatewayAddress struct {
@@ -108,7 +110,7 @@ type GatewayConnection struct {
 	Name         string                `json:"name,omitempty"`
 	Type         GatewayConnectionType `json:"type,omitempty"`
 	LocalRoutes  []GatewayRoute        `json:"local_routes,omitempty"`
-	RemoteRouter []GatewayRoute        `json:"remote_routes,omitempty"`
+	RemoteRoutes []GatewayRoute        `json:"remote_routes,omitempty"`
 	Tunnels      []GatewayTunnel       `json:"tunnels,omitempty"`
 	CreatedAt    time.Time             `json:"created_at,omitempty"`
 	UpdatedAt    time.Time             `json:"updated_at,omitempty"`
@@ -136,8 +138,8 @@ type GatewayTunnelLocalAddress struct {
 }
 
 type GatewayTunnelRemoteAddress struct {
-	// Name is a remote peer address VPN will connect to; must be global non-private unicast IP address.
-	Name string `json:"name,omitempty"`
+	// Address is a remote peer address VPN will connect to; must be global non-private unicast IP address.
+	Address string `json:"address,omitempty"`
 }
 
 type GatewayTunnelIPSec struct {

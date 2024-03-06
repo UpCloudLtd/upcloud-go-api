@@ -16,6 +16,7 @@ type Gateway interface {
 	DeleteGateway(ctx context.Context, r *request.DeleteGatewayRequest) error
 }
 
+// GetGatewayPlans retrieves a list of all available plans for network gateway service
 func (s *Service) GetGatewayPlans(ctx context.Context) ([]upcloud.GatewayPlan, error) {
 	r := request.GetGatewayPlansRequest{}
 	p := []upcloud.GatewayPlan{}

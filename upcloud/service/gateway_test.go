@@ -73,10 +73,10 @@ func TestGatewayPlans(t *testing.T) {
 	assert.Equal(t, "production", secondPlan.Name)
 }
 
-func TestGateway(t *testing.T) {
+func TestNATGateway(t *testing.T) {
 	t.Parallel()
 
-	record(t, "gateway", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+	record(t, "gatewaynat", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		router, err := svc.CreateRouter(ctx, &request.CreateRouterRequest{
 			Name: "test-router",
 		})
@@ -138,6 +138,117 @@ func TestGateway(t *testing.T) {
 	})
 }
 
+func TestVPNGateway(t *testing.T) {
+	t.Parallel()
+
+	record(t, "gatewayvpn", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		router, err := svc.CreateRouter(ctx, &request.CreateRouterRequest{Name: "test-router-vpn"})
+		if !assert.NoError(t, err) {
+			return
+		}
+
+		defer func() {
+			err = svc.DeleteRouter(ctx, &request.DeleteRouterRequest{UUID: router.UUID})
+			if !assert.NoError(t, err) {
+				t.Logf("failed to cleanup router: %s", err.Error())
+			}
+		}()
+
+		plans, err := svc.GetGatewayPlans(ctx)
+		if !assert.NoError(t, err) {
+			return
+		}
+		if !assert.GreaterOrEqual(t, len(plans), 1, "plans response is empty") {
+			return
+		}
+
+		gw, err := svc.CreateGateway(ctx, &request.CreateGatewayRequest{
+			Name: "test-vpn",
+			Zone: "pl-waw1",
+			Routers: []request.GatewayRouter{
+				{
+					UUID: router.UUID,
+				},
+			},
+			Plan:             plans[0].Name,
+			ConfiguredStatus: upcloud.GatewayConfiguredStatusStarted,
+			Features: []upcloud.GatewayFeature{
+				upcloud.GatewayFeatureVPN,
+			},
+			Addresses: []upcloud.GatewayAddress{
+				{
+					Name: "my-public-ip",
+				},
+			},
+			Connections: []request.CreateGatewayConnectionRequest{
+				{
+					Name: "example-connection",
+					Type: upcloud.GatewayConnectionTypeIPSec,
+					LocalRoutes: []upcloud.GatewayRoute{
+						{
+							Name:          "local-route",
+							Type:          upcloud.GatewayRouteTypeStatic,
+							StaticNetwork: "10.0.0.0/24",
+						},
+					},
+					RemoteRoutes: []upcloud.GatewayRoute{
+						{
+							Name:          "remote-route",
+							Type:          upcloud.GatewayRouteTypeStatic,
+							StaticNetwork: "10.0.1.0/24",
+						},
+					},
+					Tunnels: []request.CreateGatewayTunnelRequest{
+						{
+							Name: "example-tunnel",
+							LocalAddress: upcloud.GatewayTunnelLocalAddress{
+								Name: "my-public-ip",
+							},
+							RemoteAddress: upcloud.GatewayTunnelRemoteAddress{
+								Address: "100.10.0.111",
+							},
+							IPSec: upcloud.GatewayTunnelIPSec{
+								Authentication: upcloud.GatewayTunnelIPSecAuth{
+									Authentication: upcloud.GatewayTunnelIPSecAuthTypePSK,
+									PSK:            "key123wouldkeepitthatwaybuthastobelonger",
+								},
+							},
+						},
+					},
+				},
+			},
+		})
+
+		if !assert.NoError(t, err) {
+			return
+		}
+
+		defer func() {
+			err = svc.DeleteGateway(ctx, &request.DeleteGatewayRequest{UUID: gw.UUID})
+			if !assert.NoError(t, err) {
+				t.Logf("failed to cleanup gateway: %s", err.Error())
+			}
+
+			err = waitGatewayToDelete(ctx, rec, svc, gw.UUID)
+			if !assert.NoError(t, err) {
+				t.Logf("error while waiting for gateway to be deleted: %s", err.Error())
+			}
+		}()
+
+		// Check plan
+		assert.NotEmpty(t, gw.Plan)
+
+		// Check addresses
+		assert.Len(t, gw.Addresses, 1)
+		assert.Equal(t, "my-public-ip", gw.Addresses[0].Name)
+
+		// Check connections
+		assert.Len(t, gw.Connections, 1)
+		assert.Equal(t, "example-connection", gw.Connections[0].Name)
+		assert.Equal(t, upcloud.GatewayConnectionTypeIPSec, gw.Connections[0].Type)
+	})
+}
+
 func waitGatewayToStart(ctx context.Context, rec *recorder.Recorder, svc *Service, UUID string) error {
 	if rec.Mode() != recorder.ModeRecording {
 		return nil
@@ -186,11 +297,11 @@ func waitGatewayToDelete(ctx context.Context, rec *recorder.Recorder, svc *Servi
 	for {
 		_, err := svc.GetGateway(ctx, &request.GetGatewayRequest{UUID: UUID})
 		if err != nil {
-			log.Printf("ERROR: %+v", err)
 			var ucErr *upcloud.Problem
 			if errors.As(err, &ucErr) && ucErr.Status == http.StatusNotFound {
 				return nil
 			}
+			log.Printf("ERROR: %+v", err)
 			return err
 		}
 		if time.Now().After(waitUntil) {

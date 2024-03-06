@@ -39,16 +39,35 @@ type GatewayRouter struct {
 }
 
 type CreateGatewayRequest struct {
-	Name             string                          `json:"name,omitempty"`
-	Zone             string                          `json:"zone,omitempty"`
-	Features         []upcloud.GatewayFeature        `json:"features,omitempty"`
-	Routers          []GatewayRouter                 `json:"routers,omitempty"`
-	Labels           []upcloud.Label                 `json:"labels,omitempty"`
-	ConfiguredStatus upcloud.GatewayConfiguredStatus `json:"configured_status,omitempty"`
+	Name             string                           `json:"name,omitempty"`
+	Zone             string                           `json:"zone,omitempty"`
+	Features         []upcloud.GatewayFeature         `json:"features,omitempty"`
+	Routers          []GatewayRouter                  `json:"routers,omitempty"`
+	Labels           []upcloud.Label                  `json:"labels,omitempty"`
+	ConfiguredStatus upcloud.GatewayConfiguredStatus  `json:"configured_status,omitempty"`
+	Plan             string                           `json:"plan,omitempty"`
+	Addresses        []upcloud.GatewayAddress         `json:"addresses,omitempty"`
+	Connections      []CreateGatewayConnectionRequest `json:"connections,omitempty"`
 }
 
 func (r *CreateGatewayRequest) RequestURL() string {
 	return gatewayBaseURL
+}
+
+type CreateGatewayConnectionRequest struct {
+	Name         string                        `json:"name,omitempty"`
+	Type         upcloud.GatewayConnectionType `json:"type,omitempty"`
+	LocalRoutes  []upcloud.GatewayRoute        `json:"local_routes,omitempty"`
+	RemoteRoutes []upcloud.GatewayRoute        `json:"remote_routes,omitempty"`
+	Tunnels      []CreateGatewayTunnelRequest  `json:"tunnels,omitempty"`
+}
+
+type CreateGatewayTunnelRequest struct {
+	Name             string                                `json:"name,omitempty"`
+	LocalAddress     upcloud.GatewayTunnelLocalAddress     `json:"local_address,omitempty"`
+	RemoteAddress    upcloud.GatewayTunnelRemoteAddress    `json:"remote_address,omitempty"`
+	IPSec            upcloud.GatewayTunnelIPSec            `json:"ipsec,omitempty"`
+	OperationalState upcloud.GatewayTunnelOperationalState `json:"operational_state,omitempty"`
 }
 
 type ModifyGatewayRequest struct {
