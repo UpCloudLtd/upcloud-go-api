@@ -75,3 +75,8 @@ type DeleteNetworkPeeringRequest GetNetworkPeeringRequest
 func (r *DeleteNetworkPeeringRequest) RequestURL() string {
 	return fmt.Sprintf("%s/%s", networkPeeringBaseURL, r.UUID)
 }
+
+type WaitForNetworkPeeringStateRequest struct {
+	UUID         string
+	DesiredState upcloud.NetworkPeeringState
+}
