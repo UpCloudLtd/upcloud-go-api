@@ -506,6 +506,132 @@ func TestVPNGatewayConnections(t *testing.T) {
 	})
 }
 
+func TestVPNGatewayConnectionTunnels(t *testing.T) {
+	t.Parallel()
+
+	record(t, "gatewayvpnconnectiontunnels", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		router, err := svc.CreateRouter(ctx, &request.CreateRouterRequest{Name: "test-router-vpn-conn-tunnels"})
+		if !assert.NoError(t, err) {
+			return
+		}
+		defer func() {
+			err = svc.DeleteRouter(ctx, &request.DeleteRouterRequest{UUID: router.UUID})
+			assert.NoError(t, err)
+		}()
+
+		gw, err := svc.CreateGateway(ctx, &request.CreateGatewayRequest{
+			Name: "test-vpn-conn-tunnels",
+			Zone: "pl-waw1",
+			Routers: []request.GatewayRouter{
+				{
+					UUID: router.UUID,
+				},
+			},
+			Plan:             "advanced",
+			Features:         []upcloud.GatewayFeature{upcloud.GatewayFeatureVPN},
+			ConfiguredStatus: upcloud.GatewayConfiguredStatusStarted,
+			Addresses: []upcloud.GatewayAddress{
+				{
+					Name: "my-ip-address",
+				},
+			},
+			Connections: []request.GatewayConnection{
+				{
+					Name: "example-conn",
+					Type: upcloud.GatewayConnectionTypeIPSec,
+					LocalRoutes: []upcloud.GatewayRoute{
+						{
+							Name:          "local-route",
+							Type:          upcloud.GatewayRouteTypeStatic,
+							StaticNetwork: "10.0.1.0/24",
+						},
+					},
+					RemoteRoutes: []upcloud.GatewayRoute{
+						{
+							Name:          "remote-route",
+							Type:          upcloud.GatewayRouteTypeStatic,
+							StaticNetwork: "10.0.2.0/24",
+						},
+					},
+				},
+			},
+		})
+
+		if !assert.NoError(t, err) {
+			return
+		}
+
+		defer func() {
+			err = svc.DeleteGateway(ctx, &request.DeleteGatewayRequest{UUID: gw.UUID})
+			assert.NoError(t, err)
+
+			err = waitGatewayToDelete(ctx, rec, svc, gw.UUID)
+			assert.NoError(t, err)
+		}()
+
+		// First get tunnels to see if it handles empty response
+		tunnels, err := svc.GetGatewayConnectionTunnels(ctx, &request.GetGatewayConnectionTunnelsRequest{
+			ServiceUUID:    gw.UUID,
+			ConnectionName: gw.Connections[0].Name,
+		})
+
+		assert.NoError(t, err)
+		assert.Len(t, tunnels, 0)
+
+		// Now let's create a tunnel
+		tunnel, err := svc.CreateGatewayConnectionTunnel(ctx, &request.CreateGatewayConnectionTunnelRequest{
+			ServiceUUID:    gw.UUID,
+			ConnectionName: gw.Connections[0].Name,
+			Tunnel: request.GatewayTunnel{
+				Name: "added-tunnel",
+				LocalAddress: upcloud.GatewayTunnelLocalAddress{
+					Name: gw.Addresses[0].Name,
+				},
+				RemoteAddress: upcloud.GatewayTunnelRemoteAddress{
+					Address: "100.10.0.111",
+				},
+				IPSec: upcloud.GatewayTunnelIPSec{
+					Authentication: upcloud.GatewayTunnelIPSecAuth{
+						Authentication: upcloud.GatewayTunnelIPSecAuthTypePSK,
+						PSK:            "psk1234567890psk1234567890",
+					},
+				},
+			},
+		})
+
+		assert.NoError(t, err)
+		assert.Equal(t, "added-tunnel", tunnel.Name)
+		assert.Equal(t, gw.Addresses[0].Name, tunnel.LocalAddress.Name)
+		assert.Equal(t, "100.10.0.111", tunnel.RemoteAddress.Address)
+		assert.Equal(t, upcloud.GatewayTunnelIPSecAuthTypePSK, tunnel.IPSec.Authentication.Authentication)
+
+		// Check if listing tunnels work
+		tunnels, err = svc.GetGatewayConnectionTunnels(ctx, &request.GetGatewayConnectionTunnelsRequest{
+			ServiceUUID:    gw.UUID,
+			ConnectionName: gw.Connections[0].Name,
+		})
+		assert.NoError(t, err)
+		assert.Len(t, tunnels, 1)
+
+		// Check if getting details work
+		tunnel, err = svc.GetGatewayConnectionTunnel(ctx, &request.GetGatewayConnectionTunnelRequest{
+			ServiceUUID:    gw.UUID,
+			ConnectionName: gw.Connections[0].Name,
+			Name:           "added-tunnel",
+		})
+		assert.NoError(t, err)
+		assert.Equal(t, "100.10.0.111", tunnel.RemoteAddress.Address)
+
+		// Delete the tunnel
+		err = svc.DeleteGatewayConnectionTunnel(ctx, &request.DeleteGatewayConnectionTunnelRequest{
+			ServiceUUID:    gw.UUID,
+			ConnectionName: gw.Connections[0].Name,
+			Name:           "added-tunnel",
+		})
+		assert.NoError(t, err)
+	})
+}
+
 func waitGatewayToStart(ctx context.Context, rec *recorder.Recorder, svc *Service, UUID string) error {
 	if rec.Mode() != recorder.ModeRecording {
 		return nil

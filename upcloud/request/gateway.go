@@ -150,3 +150,46 @@ type GatewayTunnel struct {
 	IPSec            upcloud.GatewayTunnelIPSec            `json:"ipsec,omitempty"`
 	OperationalState upcloud.GatewayTunnelOperationalState `json:"operational_state,omitempty"`
 }
+
+type GetGatewayConnectionTunnelsRequest struct {
+	ServiceUUID    string `json:"-"`
+	ConnectionName string `json:"-"`
+}
+
+func (r *GetGatewayConnectionTunnelsRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/connections/%s/tunnels", gatewayBaseURL, r.ServiceUUID, r.ConnectionName)
+}
+
+type GetGatewayConnectionTunnelRequest struct {
+	ServiceUUID    string `json:"-"`
+	ConnectionName string `json:"-"`
+	Name           string `json:"-"`
+}
+
+func (r *GetGatewayConnectionTunnelRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/connections/%s/tunnels/%s", gatewayBaseURL, r.ServiceUUID, r.ConnectionName, r.Name)
+}
+
+type CreateGatewayConnectionTunnelRequest struct {
+	ServiceUUID    string `json:"-"`
+	ConnectionName string `json:"-"`
+	Tunnel         GatewayTunnel
+}
+
+func (r *CreateGatewayConnectionTunnelRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/connections/%s/tunnels", gatewayBaseURL, r.ServiceUUID, r.ConnectionName)
+}
+
+func (r *CreateGatewayConnectionTunnelRequest) MarshalJSON() ([]byte, error) {
+	return json.Marshal(r.Tunnel)
+}
+
+type DeleteGatewayConnectionTunnelRequest struct {
+	ServiceUUID    string `json:"-"`
+	ConnectionName string `json:"-"`
+	Name           string `json:"-"`
+}
+
+func (r *DeleteGatewayConnectionTunnelRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/connections/%s/tunnels/%s", gatewayBaseURL, r.ServiceUUID, r.ConnectionName, r.Name)
+}

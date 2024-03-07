@@ -48,6 +48,7 @@ type service interface {
 	Permission
 	Kubernetes
 	ManagedObjectStorage
+	Gateway
 }
 
 var _ service = (*Service)(nil)
