@@ -17,6 +17,7 @@ type Gateway interface {
 	GetGatewayConnections(ctx context.Context, r *request.GetGatewayConnectionsRequest) ([]upcloud.GatewayConnection, error)
 	GetGatewayConnection(ctx context.Context, r *request.GetGatewayConnectionRequest) (*upcloud.GatewayConnection, error)
 	CreateGatewayConnection(ctx context.Context, r *request.CreateGatewayConnectionRequest) (*upcloud.GatewayConnection, error)
+	ModifyGatewayConnection(ctx context.Context, r *request.ModifyGatewayConnectionRequest) (*upcloud.GatewayConnection, error)
 	DeleteGatewayConnection(ctx context.Context, r *request.DeleteGatewayConnectionRequest) error
 }
 
@@ -73,6 +74,11 @@ func (s *Service) GetGatewayConnection(ctx context.Context, r *request.GetGatewa
 func (s *Service) CreateGatewayConnection(ctx context.Context, r *request.CreateGatewayConnectionRequest) (*upcloud.GatewayConnection, error) {
 	p := upcloud.GatewayConnection{}
 	return &p, s.create(ctx, r, &p)
+}
+
+func (s *Service) ModifyGatewayConnection(ctx context.Context, r *request.ModifyGatewayConnectionRequest) (*upcloud.GatewayConnection, error) {
+	p := upcloud.GatewayConnection{}
+	return &p, s.modify(ctx, r, &p)
 }
 
 // DeleteGatewayConnection deletes a specific connection of a network gateway
