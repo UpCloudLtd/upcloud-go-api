@@ -434,12 +434,30 @@ func TestVPNGatewayConnections(t *testing.T) {
 
 		// Now try to create a connection
 		conn, err := svc.CreateGatewayConnection(ctx, req)
-
 		assert.NoError(t, err)
 		assert.Equal(t, "added-connection", conn.Name)
 		assert.Len(t, conn.LocalRoutes, 1)
 		assert.Len(t, conn.RemoteRoutes, 1)
 		assert.Len(t, conn.Tunnels, 1)
+
+		// Now check if listing and getting the details work
+		connList, err := svc.GetGatewayConnections(ctx, &request.GetGatewayConnectionsRequest{ServiceUUID: gw.UUID})
+		assert.NoError(t, err)
+		assert.Len(t, connList, 1)
+
+		connDetails, err := svc.GetGatewayConnection(ctx, &request.GetGatewayConnectionRequest{
+			ServiceUUID: gw.UUID,
+			Name:        conn.Name,
+		})
+		assert.NoError(t, err)
+		assert.Equal(t, conn.Name, connDetails.Name)
+
+		// Now delete the connection
+		err = svc.DeleteGatewayConnection(ctx, &request.DeleteGatewayConnectionRequest{
+			ServiceUUID: gw.UUID,
+			Name:        conn.Name,
+		})
+		assert.NoError(t, err)
 	})
 }
 
