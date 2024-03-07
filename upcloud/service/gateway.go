@@ -112,9 +112,10 @@ func (s *Service) CreateGatewayConnectionTunnel(ctx context.Context, r *request.
 }
 
 // ModifyGatewayConnectionTunnel modifies a single tunnel for specific connection of specific gateway
-// func (s *Service) ModifyGatewayConnectionTunnel(ctx context.Context, r *request.ModifyGatewayConnectionTunnelRequest) (*upcloud.GatewayTunnel, error) {
-
-// }
+func (s *Service) ModifyGatewayConnectionTunnel(ctx context.Context, r *request.ModifyGatewayConnectionTunnelRequest) (*upcloud.GatewayTunnel, error) {
+	p := upcloud.GatewayTunnel{}
+	return &p, s.modify(ctx, r, &p)
+}
 
 // DeleteGatewayConnectionTunnel deletes a tunnel for specific connection of specific gateway
 func (s *Service) DeleteGatewayConnectionTunnel(ctx context.Context, r *request.DeleteGatewayConnectionTunnelRequest) error {

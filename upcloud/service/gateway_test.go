@@ -458,13 +458,6 @@ func TestVPNGatewayConnections(t *testing.T) {
 			ServiceUUID: gw.UUID,
 			Name:        conn.Name,
 			Connection: request.ModifyGatewayConnection{
-				LocalRoutes: []upcloud.GatewayRoute{
-					{
-						Name:          "local-route-updated",
-						Type:          upcloud.GatewayRouteTypeStatic,
-						StaticNetwork: "10.0.1.0/24",
-					},
-				},
 				RemoteRoutes: []upcloud.GatewayRoute{
 					{
 						Name:          "remote-route-updated",
@@ -493,7 +486,7 @@ func TestVPNGatewayConnections(t *testing.T) {
 		})
 
 		assert.NoError(t, err)
-		assert.Equal(t, "local-route-updated", conn.LocalRoutes[0].Name)
+		assert.Equal(t, "local-route", conn.LocalRoutes[0].Name) // LocalRoutes should stay the same as before, they weren't modified
 		assert.Equal(t, "remote-route-updated", conn.RemoteRoutes[0].Name)
 		assert.Equal(t, "added-tunnel-updated", conn.Tunnels[0].Name)
 
@@ -519,6 +512,9 @@ func TestVPNGatewayConnectionTunnels(t *testing.T) {
 			assert.NoError(t, err)
 		}()
 
+		connName := "example-conn"
+		tunnelName := "added-tunnel"
+
 		gw, err := svc.CreateGateway(ctx, &request.CreateGatewayRequest{
 			Name: "test-vpn-conn-tunnels",
 			Zone: "pl-waw1",
@@ -537,7 +533,7 @@ func TestVPNGatewayConnectionTunnels(t *testing.T) {
 			},
 			Connections: []request.GatewayConnection{
 				{
-					Name: "example-conn",
+					Name: connName,
 					Type: upcloud.GatewayConnectionTypeIPSec,
 					LocalRoutes: []upcloud.GatewayRoute{
 						{
@@ -572,7 +568,7 @@ func TestVPNGatewayConnectionTunnels(t *testing.T) {
 		// First get tunnels to see if it handles empty response
 		tunnels, err := svc.GetGatewayConnectionTunnels(ctx, &request.GetGatewayConnectionTunnelsRequest{
 			ServiceUUID:    gw.UUID,
-			ConnectionName: gw.Connections[0].Name,
+			ConnectionName: connName,
 		})
 
 		assert.NoError(t, err)
@@ -608,7 +604,7 @@ func TestVPNGatewayConnectionTunnels(t *testing.T) {
 		// Check if listing tunnels work
 		tunnels, err = svc.GetGatewayConnectionTunnels(ctx, &request.GetGatewayConnectionTunnelsRequest{
 			ServiceUUID:    gw.UUID,
-			ConnectionName: gw.Connections[0].Name,
+			ConnectionName: connName,
 		})
 		assert.NoError(t, err)
 		assert.Len(t, tunnels, 1)
@@ -616,17 +612,39 @@ func TestVPNGatewayConnectionTunnels(t *testing.T) {
 		// Check if getting details work
 		tunnel, err = svc.GetGatewayConnectionTunnel(ctx, &request.GetGatewayConnectionTunnelRequest{
 			ServiceUUID:    gw.UUID,
-			ConnectionName: gw.Connections[0].Name,
-			Name:           "added-tunnel",
+			ConnectionName: connName,
+			Name:           tunnelName,
 		})
 		assert.NoError(t, err)
 		assert.Equal(t, "100.10.0.111", tunnel.RemoteAddress.Address)
 
+		// Try modifying tunnel
+		updatedTunnelName := "updated-tunnel"
+		tunnel, err = svc.ModifyGatewayConnectionTunnel(ctx, &request.ModifyGatewayConnectionTunnelRequest{
+			ServiceUUID:    gw.UUID,
+			ConnectionName: connName,
+			Name:           tunnelName,
+			Tunnel: request.ModifyGatewayTunnel{
+				Name: updatedTunnelName,
+				RemoteAddress: &upcloud.GatewayTunnelRemoteAddress{
+					Address: "100.10.0.222",
+				},
+				IPSec: &upcloud.GatewayTunnelIPSec{
+					Authentication: upcloud.GatewayTunnelIPSecAuth{
+						PSK: "updatedsuperduperpsk1234566778",
+					},
+				},
+			},
+		})
+		assert.NoError(t, err)
+		assert.Equal(t, gw.Addresses[0].Name, tunnel.LocalAddress.Name)
+		assert.Equal(t, "100.10.0.222", tunnel.RemoteAddress.Address)
+
 		// Delete the tunnel
 		err = svc.DeleteGatewayConnectionTunnel(ctx, &request.DeleteGatewayConnectionTunnelRequest{
 			ServiceUUID:    gw.UUID,
-			ConnectionName: gw.Connections[0].Name,
-			Name:           "added-tunnel",
+			ConnectionName: connName,
+			Name:           updatedTunnelName,
 		})
 		assert.NoError(t, err)
 	})

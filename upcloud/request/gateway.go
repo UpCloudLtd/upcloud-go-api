@@ -184,6 +184,28 @@ func (r *CreateGatewayConnectionTunnelRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(r.Tunnel)
 }
 
+type ModifyGatewayTunnel struct {
+	Name          string                              `json:"name,omitempty"`
+	LocalAddress  *upcloud.GatewayTunnelLocalAddress  `json:"local_address,omitempty"`
+	RemoteAddress *upcloud.GatewayTunnelRemoteAddress `json:"remote_address,omitempty"`
+	IPSec         *upcloud.GatewayTunnelIPSec         `json:"ipsec,omitempty"`
+}
+
+type ModifyGatewayConnectionTunnelRequest struct {
+	ServiceUUID    string `json:"-"`
+	ConnectionName string `json:"-"`
+	Name           string `json:"-"`
+	Tunnel         ModifyGatewayTunnel
+}
+
+func (r *ModifyGatewayConnectionTunnelRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/connections/%s/tunnels/%s", gatewayBaseURL, r.ServiceUUID, r.ConnectionName, r.Name)
+}
+
+func (r *ModifyGatewayConnectionTunnelRequest) MarshalJSON() ([]byte, error) {
+	return json.Marshal(r.Tunnel)
+}
+
 type DeleteGatewayConnectionTunnelRequest struct {
 	ServiceUUID    string `json:"-"`
 	ConnectionName string `json:"-"`
