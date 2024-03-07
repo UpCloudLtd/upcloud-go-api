@@ -13,6 +13,7 @@ type NetworkPeering interface {
 	CreateNetworkPeering(ctx context.Context, r *request.CreateNetworkPeeringRequest) (*upcloud.NetworkPeering, error)
 	ModifyNetworkPeering(ctx context.Context, r *request.ModifyNetworkPeeringRequest) (*upcloud.NetworkPeering, error)
 	DeleteNetworkPeering(ctx context.Context, r *request.DeleteNetworkPeeringRequest) error
+	WaitForNetworkPeeringState(ctx context.Context, r *request.WaitForNetworkPeeringStateRequest) (*upcloud.NetworkPeering, error)
 }
 
 // GetNetworkPeerings (EXPERIMENTAL) retrieves a list of network peerings within an account.
@@ -43,4 +44,20 @@ func (s *Service) ModifyNetworkPeering(ctx context.Context, r *request.ModifyNet
 // DeleteNetworkPeering (EXPERIMENTAL) deletes a peering. Peering can be deleted only when the state is disabled.
 func (s *Service) DeleteNetworkPeering(ctx context.Context, r *request.DeleteNetworkPeeringRequest) error {
 	return s.delete(ctx, r)
+}
+
+func (s *Service) WaitForNetworkPeeringState(ctx context.Context, r *request.WaitForNetworkPeeringStateRequest) (*upcloud.NetworkPeering, error) {
+	return retry(ctx, func(_ int, c context.Context) (*upcloud.NetworkPeering, error) {
+		details, err := s.GetNetworkPeering(c, &request.GetNetworkPeeringRequest{
+			UUID: r.UUID,
+		})
+		if err != nil {
+			return nil, err
+		}
+
+		if details.State == r.DesiredState {
+			return details, nil
+		}
+		return nil, nil
+	}, nil)
 }
