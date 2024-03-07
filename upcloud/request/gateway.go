@@ -1,6 +1,7 @@
 package request
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
@@ -32,10 +33,6 @@ type GetGatewayRequest struct {
 
 func (r *GetGatewayRequest) RequestURL() string {
 	return fmt.Sprintf("%s/%s", gatewayBaseURL, r.UUID)
-}
-
-type GatewayRouter struct {
-	UUID string `json:"uuid,omitempty"`
 }
 
 type CreateGatewayRequest struct {
@@ -75,6 +72,10 @@ func (r *DeleteGatewayRequest) RequestURL() string {
 	return fmt.Sprintf("%s/%s", gatewayBaseURL, r.UUID)
 }
 
+type GatewayRouter struct {
+	UUID string `json:"uuid,omitempty"`
+}
+
 type GatewayConnection struct {
 	Name         string                        `json:"name,omitempty"`
 	Type         upcloud.GatewayConnectionType `json:"type,omitempty"`
@@ -89,4 +90,43 @@ type GatewayTunnel struct {
 	RemoteAddress    upcloud.GatewayTunnelRemoteAddress    `json:"remote_address,omitempty"`
 	IPSec            upcloud.GatewayTunnelIPSec            `json:"ipsec,omitempty"`
 	OperationalState upcloud.GatewayTunnelOperationalState `json:"operational_state,omitempty"`
+}
+
+type GetGatewayConnectionsRequest struct {
+	ServiceUUID string `json:"-"`
+}
+
+func (r *GetGatewayConnectionsRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/connections", gatewayBaseURL, r.ServiceUUID)
+}
+
+type GetGatewayConnectionRequest struct {
+	ServiceUUID string `json:"-"`
+	Name        string `json:"-"`
+}
+
+func (r *GetGatewayConnectionRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/connections/%s", gatewayBaseURL, r.ServiceUUID, r.Name)
+}
+
+type CreateGatewayConnectionRequest struct {
+	ServiceUUID string `json:"-"`
+	Connection  GatewayConnection
+}
+
+func (r *CreateGatewayConnectionRequest) MarshalJSON() ([]byte, error) {
+	return json.Marshal(r.Connection)
+}
+
+func (r *CreateGatewayConnectionRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/connections/", gatewayBaseURL, r.ServiceUUID)
+}
+
+type DeleteGatewayConnectionRequest struct {
+	ServiceUUID string `json:"-"`
+	Name        string `json:"-"`
+}
+
+func (r *DeleteGatewayConnectionRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/connections/%s", gatewayBaseURL, r.ServiceUUID, r.Name)
 }

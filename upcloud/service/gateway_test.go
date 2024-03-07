@@ -350,6 +350,99 @@ func TestVPNGateway(t *testing.T) {
 	})
 }
 
+func TestVPNGatewayConnections(t *testing.T) {
+	t.Parallel()
+
+	record(t, "gatewayvpnconnections", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		router, err := svc.CreateRouter(ctx, &request.CreateRouterRequest{Name: "test-router-vpn-conn"})
+		if !assert.NoError(t, err) {
+			return
+		}
+		defer func() {
+			err = svc.DeleteRouter(ctx, &request.DeleteRouterRequest{UUID: router.UUID})
+			assert.NoError(t, err)
+		}()
+
+		gw, err := svc.CreateGateway(ctx, &request.CreateGatewayRequest{
+			Name: "test-vpn-conn",
+			Zone: "pl-waw1",
+			Routers: []request.GatewayRouter{
+				{
+					UUID: router.UUID,
+				},
+			},
+			Plan:             "advanced",
+			Features:         []upcloud.GatewayFeature{upcloud.GatewayFeatureVPN},
+			ConfiguredStatus: upcloud.GatewayConfiguredStatusStarted,
+			Addresses: []upcloud.GatewayAddress{
+				{
+					Name: "my-ip-address",
+				},
+			},
+		})
+
+		if !assert.NoError(t, err) {
+			return
+		}
+
+		defer func() {
+			err = svc.DeleteGateway(ctx, &request.DeleteGatewayRequest{UUID: gw.UUID})
+			assert.NoError(t, err)
+
+			err = waitGatewayToDelete(ctx, rec, svc, gw.UUID)
+			assert.NoError(t, err)
+		}()
+
+		req := &request.CreateGatewayConnectionRequest{
+			ServiceUUID: gw.UUID,
+			Connection: request.GatewayConnection{
+				Name: "added-connection",
+				Type: upcloud.GatewayConnectionTypeIPSec,
+				LocalRoutes: []upcloud.GatewayRoute{
+					{
+						Name:          "local-route",
+						Type:          upcloud.GatewayRouteTypeStatic,
+						StaticNetwork: "10.0.1.0/24",
+					},
+				},
+				RemoteRoutes: []upcloud.GatewayRoute{
+					{
+						Name:          "remote-route",
+						Type:          upcloud.GatewayRouteTypeStatic,
+						StaticNetwork: "10.0.2.0/24",
+					},
+				},
+				Tunnels: []request.GatewayTunnel{
+					{
+						Name: "added-tunnel",
+						LocalAddress: upcloud.GatewayTunnelLocalAddress{
+							Name: gw.Addresses[0].Name,
+						},
+						RemoteAddress: upcloud.GatewayTunnelRemoteAddress{
+							Address: "100.10.0.111",
+						},
+						IPSec: upcloud.GatewayTunnelIPSec{
+							Authentication: upcloud.GatewayTunnelIPSecAuth{
+								Authentication: upcloud.GatewayTunnelIPSecAuthTypePSK,
+								PSK:            "psk1234567890psk1234567890",
+							},
+						},
+					},
+				},
+			},
+		}
+
+		// Now try to create a connection
+		conn, err := svc.CreateGatewayConnection(ctx, req)
+
+		assert.NoError(t, err)
+		assert.Equal(t, "added-connection", conn.Name)
+		assert.Len(t, conn.LocalRoutes, 1)
+		assert.Len(t, conn.RemoteRoutes, 1)
+		assert.Len(t, conn.Tunnels, 1)
+	})
+}
+
 func waitGatewayToStart(ctx context.Context, rec *recorder.Recorder, svc *Service, UUID string) error {
 	if rec.Mode() != recorder.ModeRecording {
 		return nil

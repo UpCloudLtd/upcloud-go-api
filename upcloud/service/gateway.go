@@ -14,6 +14,10 @@ type Gateway interface {
 	CreateGateway(ctx context.Context, r *request.CreateGatewayRequest) (*upcloud.Gateway, error)
 	ModifyGateway(ctx context.Context, r *request.ModifyGatewayRequest) (*upcloud.Gateway, error)
 	DeleteGateway(ctx context.Context, r *request.DeleteGatewayRequest) error
+	GetGatewayConnections(ctx context.Context, r *request.GetGatewayConnectionsRequest) ([]upcloud.GatewayConnection, error)
+	GetGatewayConnection(ctx context.Context, r *request.GetGatewayConnectionRequest) (*upcloud.GatewayConnection, error)
+	CreateGatewayConnection(ctx context.Context, r *request.CreateGatewayConnectionRequest) (*upcloud.GatewayConnection, error)
+	DeleteGatewayConnection(ctx context.Context, r *request.DeleteGatewayConnectionRequest) error
 }
 
 // GetGatewayPlans retrieves a list of all available plans for network gateway service
@@ -50,5 +54,28 @@ func (s *Service) ModifyGateway(ctx context.Context, r *request.ModifyGatewayReq
 
 // DeleteGateway deletes a network gateway.
 func (s *Service) DeleteGateway(ctx context.Context, r *request.DeleteGatewayRequest) error {
+	return s.delete(ctx, r)
+}
+
+// GetGatewayConnections retrieves a list of specific gateway connections
+func (s *Service) GetGatewayConnections(ctx context.Context, r *request.GetGatewayConnectionsRequest) ([]upcloud.GatewayConnection, error) {
+	p := []upcloud.GatewayConnection{}
+	return p, s.get(ctx, r.RequestURL(), &p)
+}
+
+// GetGatewayConnection retrieves details of a specific network gateway connection
+func (s *Service) GetGatewayConnection(ctx context.Context, r *request.GetGatewayConnectionRequest) (*upcloud.GatewayConnection, error) {
+	p := upcloud.GatewayConnection{}
+	return &p, s.get(ctx, r.RequestURL(), &p)
+}
+
+// CreateGatewayConnection creates a new connection for a specific gateway
+func (s *Service) CreateGatewayConnection(ctx context.Context, r *request.CreateGatewayConnectionRequest) (*upcloud.GatewayConnection, error) {
+	p := upcloud.GatewayConnection{}
+	return &p, s.create(ctx, r, &p)
+}
+
+// DeleteGatewayConnection deletes a specific connection of a network gateway
+func (s *Service) DeleteGatewayConnection(ctx context.Context, r *request.DeleteGatewayConnectionRequest) error {
 	return s.delete(ctx, r)
 }
