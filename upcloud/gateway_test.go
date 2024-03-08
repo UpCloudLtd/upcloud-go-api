@@ -2,6 +2,9 @@ package upcloud
 
 import (
 	"testing"
+	"time"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestGateway(t *testing.T) {
@@ -18,7 +21,8 @@ func TestGateway(t *testing.T) {
 		"configured_status": "started",
 		"created_at": "2022-12-01T09:04:08.529138Z",
 		"features": [
-			"nat"
+			"nat",
+			"vpn"
 		],
 		"name": "example-gateway",
 		"operational_state": "running",
@@ -36,9 +40,65 @@ func TestGateway(t *testing.T) {
 		],
 		"updated_at": "2022-12-01T19:04:08.529138Z",
 		"uuid": "10c153e0-12e4-4dea-8748-4f34850ff76d",
-		"zone": "fi-hel1"
+		"zone": "fi-hel1",
+		"plan": "advanced",
+		"connections": [
+			{
+				"name": "example-connection",
+				"type": "ipsec",
+				"local_routes": [
+				  {
+					"name": "upcloud-example-route",
+					"type": "static",
+					"static_network": "10.0.0.0/24"
+				  }
+				],
+				"remote_routes": [
+				  {
+					"name": "remote-example-route",
+					"type": "static",
+					"static_network": "10.0.1.0/24"
+				  }
+				],
+				"tunnels": [
+					{
+						"name": "example-tunnel-1",
+						"local_address": {
+							"name": "public-ip-1"
+						},
+						"remote_address": {
+							"address": "100.10.0.111"
+						},
+						"ipsec": {
+							"authentication": {
+								"authentication": "psk"
+							},
+							"child_rekey_time": 1440,
+							"dpd_delay": 30,
+							"dpd_timeout": 120,
+							"ike_lifetime": 86400,
+							"phase1_algorithms": ["aes128gcm128", "aes256gcm128"],
+							"phase1_dh_group_numbers": [14, 16, 18, 19, 20, 21],
+							"phase1_integrity_algorithms": ["aes128gmac", "aes256gmac", "sha256", "sha384", "sha512"],
+							"phase2_algorithms": ["aes128gcm128", "aes256gcm128"],
+							"phase2_dh_group_numbers": [14, 16, 18, 19, 20, 21],
+							"phase2_integrity_algorithms": ["aes128gmac", "aes256gmac", "sha256", "sha384", "sha512"],
+							"rekey_time": 14400
+						},
+						"operational_state": "established",
+						"created_at": "2022-12-01T09:04:08.529138Z",
+						"updated_at": "2022-12-01T09:04:08.529138Z"
+				  	}
+				],
+				"created_at": "2022-12-01T09:04:08.529138Z",
+				"updated_at": "2022-12-01T09:04:08.529138Z"
+			}
+		]
 	}
 	`
+
+	timestamp, err := time.Parse(time.RFC3339, "2022-12-01T09:04:08.529138Z")
+	require.NoError(t, err)
 
 	gateway := &Gateway{
 		Addresses: []GatewayAddress{{
@@ -49,6 +109,7 @@ func TestGateway(t *testing.T) {
 		CreatedAt:        timeParse("2022-12-01T09:04:08.529138Z"),
 		Features: []GatewayFeature{
 			GatewayFeatureNAT,
+			GatewayFeatureVPN,
 		},
 		Name:             "example-gateway",
 		OperationalState: "running",
@@ -64,6 +125,77 @@ func TestGateway(t *testing.T) {
 		UpdatedAt: timeParse("2022-12-01T19:04:08.529138Z"),
 		UUID:      "10c153e0-12e4-4dea-8748-4f34850ff76d",
 		Zone:      "fi-hel1",
+		Plan:      "advanced",
+		Connections: []GatewayConnection{
+			{
+				Name: "example-connection",
+				Type: GatewayConnectionTypeIPSec,
+				LocalRoutes: []GatewayRoute{
+					{
+						Name:          "upcloud-example-route",
+						Type:          GatewayRouteTypeStatic,
+						StaticNetwork: "10.0.0.0/24",
+					},
+				},
+				RemoteRoutes: []GatewayRoute{
+					{
+						Name:          "remote-example-route",
+						Type:          GatewayRouteTypeStatic,
+						StaticNetwork: "10.0.1.0/24",
+					},
+				},
+				Tunnels: []GatewayTunnel{
+					{
+						Name: "example-tunnel-1",
+						LocalAddress: GatewayTunnelLocalAddress{
+							Name: "public-ip-1",
+						},
+						RemoteAddress: GatewayTunnelRemoteAddress{
+							Address: "100.10.0.111",
+						},
+						IPSec: GatewayTunnelIPSec{
+							Authentication: GatewayTunnelIPSecAuth{
+								Authentication: GatewayTunnelIPSecAuthTypePSK,
+							},
+							ChildRekeyTime: 1440,
+							DPDDelay:       30,
+							DPDTimeout:     120,
+							IKELifetime:    86400,
+							Phase1Algortihms: []GatewayIPSecAlgorithm{
+								GatewayIPSecAlgorithm_aes128gcm128,
+								GatewayIPSecAlgorithm_aes256gcm128,
+							},
+							Phase1DHGroupNumbers: []int{14, 16, 18, 19, 20, 21},
+							Phase1IntegrityAlgorithms: []GatewayIPSecIntegrityAlgorithm{
+								GatewayIPSecIntegrityAlgorithm_aes128gmac,
+								GatewayIPSecIntegrityAlgorithm_aes256gmac,
+								GatewayIPSecIntegrityAlgorithm_sha256,
+								GatewayIPSecIntegrityAlgorithm_sha384,
+								GatewayIPSecIntegrityAlgorithm_sha512,
+							},
+							Phase2Algortihms: []GatewayIPSecAlgorithm{
+								GatewayIPSecAlgorithm_aes128gcm128,
+								GatewayIPSecAlgorithm_aes256gcm128,
+							},
+							Phase2DHGroupNumbers: []int{14, 16, 18, 19, 20, 21},
+							Phase2IntegrityAlgorithms: []GatewayIPSecIntegrityAlgorithm{
+								GatewayIPSecIntegrityAlgorithm_aes128gmac,
+								GatewayIPSecIntegrityAlgorithm_aes256gmac,
+								GatewayIPSecIntegrityAlgorithm_sha256,
+								GatewayIPSecIntegrityAlgorithm_sha384,
+								GatewayIPSecIntegrityAlgorithm_sha512,
+							},
+							RekeyTime: 14400,
+						},
+						OperationalState: GatewayTunnelOperationalStateEstabilished,
+						CreatedAt:        timestamp,
+						UpdatedAt:        timestamp,
+					},
+				},
+				CreatedAt: timestamp,
+				UpdatedAt: timestamp,
+			},
+		},
 	}
 
 	testJSON(t, &Gateway{}, gateway, jsonStr)
