@@ -13,18 +13,35 @@ func TestGetGatewaysRequest(t *testing.T) {
 	r := GetGatewaysRequest{}
 	assert.Equal(t, "/gateway", r.RequestURL())
 
-	r = GetGatewaysRequest{
-		Filters: []QueryFilter{
-			FilterLabel{
-				Label: upcloud.Label{
-					Key:   "color",
-					Value: "green",
-				},
+	filters := []QueryFilter{
+		FilterLabel{
+			Label: upcloud.Label{
+				Key:   "color",
+				Value: "green",
 			},
-			FilterLabelKey{Key: "size"},
 		},
+		FilterLabelKey{Key: "size"},
+	}
+
+	r = GetGatewaysRequest{
+		Filters: filters,
 	}
 	assert.Equal(t, "/gateway?label=color%3Dgreen&label=size", r.RequestURL())
+
+	page := &Page{
+		Size:   15,
+		Number: 3,
+	}
+	r = GetGatewaysRequest{
+		Page: page,
+	}
+	assert.Equal(t, "/gateway?limit=15&offset=30", r.RequestURL())
+
+	r = GetGatewaysRequest{
+		Filters: filters,
+		Page:    page,
+	}
+	assert.Equal(t, "/gateway?label=color%3Dgreen&label=size&limit=15&offset=30", r.RequestURL())
 }
 
 func TestGetGatewayRequest(t *testing.T) {

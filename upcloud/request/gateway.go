@@ -10,14 +10,21 @@ const gatewayBaseURL string = "/gateway"
 
 type GetGatewaysRequest struct {
 	Filters []QueryFilter
+	Page    *Page
 }
 
 func (r *GetGatewaysRequest) RequestURL() string {
-	if len(r.Filters) == 0 {
+	f := make([]QueryFilter, len(r.Filters))
+	copy(f, r.Filters)
+	if r.Page != nil {
+		f = append(f, r.Page)
+	}
+
+	if len(f) == 0 {
 		return gatewayBaseURL
 	}
 
-	return fmt.Sprintf("%s?%s", gatewayBaseURL, encodeQueryFilters(r.Filters))
+	return fmt.Sprintf("%s?%s", gatewayBaseURL, encodeQueryFilters(f))
 }
 
 type GetGatewayRequest struct {
