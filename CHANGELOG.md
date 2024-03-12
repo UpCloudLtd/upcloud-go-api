@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.3.0]
+
 ### Added
 
 - Gateway: add paging support to `GetGateways` method.
@@ -453,7 +455,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.2.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.3.0...HEAD
+[8.3.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.2.0...v8.3.0
 [8.2.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.1.0...v8.2.0
 [8.1.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.0.0...v8.1.0
 [8.0.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v7.0.0...v8.0.0
