@@ -156,13 +156,13 @@ type GatewayTunnelIPSec struct {
 	// Maximum IKE SA lifetime in seconds
 	IKELifetime int `json:"ike_lifetime,omitempty"`
 	// List of Phase 1: Proposal algorithms
-	Phase1Algortihms []GatewayIPSecAlgorithm `json:"phase1_algorithms,omitempty"`
+	Phase1Algorithms []GatewayIPSecAlgorithm `json:"phase1_algorithms,omitempty"`
 	// List of Phase 1 integrity algorithms
 	Phase1IntegrityAlgorithms []GatewayIPSecIntegrityAlgorithm `json:"phase1_integrity_algorithms,omitempty"`
 	// List of Phase 1 Diffie-Hellman group numbers
 	Phase1DHGroupNumbers []int `json:"phase1_dh_group_numbers,omitempty"`
 	// List of Phase 2: Security Association algorithms
-	Phase2Algortihms []GatewayIPSecAlgorithm `json:"phase2_algorithms,omitempty"`
+	Phase2Algorithms []GatewayIPSecAlgorithm `json:"phase2_algorithms,omitempty"`
 	// List of Phase 2 integrity algorithms
 	Phase2IntegrityAlgorithms []GatewayIPSecIntegrityAlgorithm `json:"phase2_integrity_algorithms,omitempty"`
 	// List of Phase 2 Diffie-Hellman group numbers

@@ -161,7 +161,7 @@ func TestGateway(t *testing.T) {
 							DPDDelay:       30,
 							DPDTimeout:     120,
 							IKELifetime:    86400,
-							Phase1Algortihms: []GatewayIPSecAlgorithm{
+							Phase1Algorithms: []GatewayIPSecAlgorithm{
 								GatewayIPSecAlgorithm_aes128gcm128,
 								GatewayIPSecAlgorithm_aes256gcm128,
 							},
@@ -173,7 +173,7 @@ func TestGateway(t *testing.T) {
 								GatewayIPSecIntegrityAlgorithm_sha384,
 								GatewayIPSecIntegrityAlgorithm_sha512,
 							},
-							Phase2Algortihms: []GatewayIPSecAlgorithm{
+							Phase2Algorithms: []GatewayIPSecAlgorithm{
 								GatewayIPSecAlgorithm_aes128gcm128,
 								GatewayIPSecAlgorithm_aes256gcm128,
 							},
