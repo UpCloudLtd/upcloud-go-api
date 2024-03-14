@@ -56,7 +56,51 @@ func TestCreateGatewayRequest(t *testing.T) {
 			"uuid": "0485d477-8d8f-4c97-9bef-731933187538"
 		  }
 		],
-		"configured_status": "started"
+		"configured_status": "started",
+		"plan": "random-plan",
+		"addresses": [
+		  {
+			"name": "my-public-ip"
+		  }
+		],
+		"connections": [
+			{
+				"name": "example-connection",
+      			"type": "ipsec",
+      			"local_routes": [
+        			{
+						"name": "upcloud-example-route",
+						"type": "static",
+						"static_network": "10.0.0.0/24"
+					}
+				],
+				"remote_routes": [
+					{
+						"name": "remote-example-route",
+						"type": "static",
+						"static_network": "10.0.1.0/24"
+					}
+				],
+				"tunnels": [
+					{
+						"name": "example-tunnel-1",
+						"local_address": {
+							"name": "public-ip-1"
+						},
+						"remote_address": {
+							"address": "100.10.0.111"
+						},
+						"ipsec": {
+							"authentication": {
+								"authentication": "psk",
+								"psk": "pskpsksk"
+							}
+						}
+					}
+				]
+
+			}
+		]
 	}
 	`
 	r := CreateGatewayRequest{
@@ -69,7 +113,51 @@ func TestCreateGatewayRequest(t *testing.T) {
 			},
 		},
 		ConfiguredStatus: upcloud.GatewayConfiguredStatusStarted,
+		Plan:             "random-plan",
+		Addresses: []upcloud.GatewayAddress{
+			{
+				Name: "my-public-ip",
+			},
+		},
+		Connections: []GatewayConnection{
+			{
+				Name: "example-connection",
+				Type: upcloud.GatewayConnectionTypeIPSec,
+				LocalRoutes: []upcloud.GatewayRoute{
+					{
+						Name:          "upcloud-example-route",
+						Type:          upcloud.GatewayRouteTypeStatic,
+						StaticNetwork: "10.0.0.0/24",
+					},
+				},
+				RemoteRoutes: []upcloud.GatewayRoute{
+					{
+						Name:          "remote-example-route",
+						Type:          upcloud.GatewayRouteTypeStatic,
+						StaticNetwork: "10.0.1.0/24",
+					},
+				},
+				Tunnels: []GatewayTunnel{
+					{
+						Name: "example-tunnel-1",
+						LocalAddress: upcloud.GatewayTunnelLocalAddress{
+							Name: "public-ip-1",
+						},
+						RemoteAddress: upcloud.GatewayTunnelRemoteAddress{
+							Address: "100.10.0.111",
+						},
+						IPSec: upcloud.GatewayTunnelIPSec{
+							Authentication: upcloud.GatewayTunnelIPSecAuth{
+								Authentication: upcloud.GatewayTunnelIPSecAuthTypePSK,
+								PSK:            "pskpsksk",
+							},
+						},
+					},
+				},
+			},
+		},
 	}
+
 	got, err := json.Marshal(&r)
 	require.NoError(t, err)
 	assert.Equal(t, gatewayBaseURL, r.RequestURL())
