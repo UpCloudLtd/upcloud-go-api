@@ -53,7 +53,12 @@ const (
 
 	// GatewayFeatureNAT is a Network Address Translation (NAT) service that offers a way for cloud servers in SDN private networks to connect to the Internet through the public IP assigned to the network gateway service
 	GatewayFeatureNAT GatewayFeature = "nat"
+
 	// GatewayFeatureVPN is a Virtual Private Network (VPN) service used to establish an encrypted network connection when using public networks
+	// Please note that VPN feature is currently in beta. You can learn more about it on its [product page]
+	// Also note that VPN is available only in some of the gateway plans. To check which plans support VPN, you can use the GetGatewayPlans method.
+	//
+	// [product page]: https://upcloud.com/resources/docs/networking#nat-and-vpn-gateways
 	GatewayFeatureVPN GatewayFeature = "vpn"
 
 	GatewayConnectionTypeIPSec GatewayConnectionType = "ipsec"

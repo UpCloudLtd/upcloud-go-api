@@ -6,7 +6,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 ## [Unreleased]
 
 ### Added
-- Support for Gateway VPN feature
+- **Experimental**, Gateway: support for VPN feature. Note that VPN feature is currently in beta, you can learn more about it on the [product page](https://upcloud.com/resources/docs/networking#nat-and-vpn-gateways)
 
 ## [8.2.0]
 
