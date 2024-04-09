@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## Changed
+- Go version bump to 1.22
+
 ## [8.3.0]
 
 ### Added

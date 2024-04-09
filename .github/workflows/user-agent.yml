@@ -8,9 +8,9 @@ jobs:
     name: Check version in User-Agent
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - run: ./scripts/update-user-agent-version.sh
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - uses: stefanzweifel/git-auto-commit-action@8756aa072ef5b4a080af5dc8fef36c5d586e521d # v5.0.0
         with:
           commit_message: "chore: update version in `User-Agent`"
           file_pattern: upcloud/client/client.go
