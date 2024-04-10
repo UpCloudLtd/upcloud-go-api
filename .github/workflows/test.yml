@@ -11,10 +11,10 @@ jobs:
       matrix:
         # support two latest major versions of Go, following the Go security policy
         # in which these versions get security updates. See https://golang.org/security
-        go-version: [1.19.x, 1.20.x]
+        go-version: [1.21.x, 1.22.x]
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-go@v4
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: actions/setup-go@0c52d547c9bc32b1aa3301fd7a9cb496313a4491 # v5.0.0
         with:
           go-version: ${{ matrix.go-version }}
 

@@ -152,9 +152,9 @@ func WithBaseURL(baseURL string) ConfigFn {
 // the server's certificate chain and host name. This should be used only for testing.
 func WithInsecureSkipVerify() ConfigFn {
 	return func(c *config) {
-		if c.httpClient != nil { // #nosec G402 // allow setting InsecureSkipVerify to true as explicitly requested
+		if c.httpClient != nil {
 			if t, ok := c.httpClient.Transport.(*http.Transport); ok {
-				cfg := &tls.Config{InsecureSkipVerify: true}
+				cfg := &tls.Config{InsecureSkipVerify: true} //nolint:gosec // allow setting InsecureSkipVerify to true as explicitly requested
 				if t.TLSClientConfig == nil {
 					t.TLSClientConfig = cfg
 

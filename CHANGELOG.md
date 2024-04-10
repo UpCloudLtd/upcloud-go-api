@@ -5,9 +5,12 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
-## Addded
+## Added
 
 - Cloud: `ParentZone` field to `Zone` struct (only available for private zones)
+
+## Changed
+- Go version bump to 1.21
 
 ## [8.3.0]
 

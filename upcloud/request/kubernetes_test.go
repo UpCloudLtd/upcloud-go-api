@@ -213,7 +213,7 @@ func TestKubernetes(t *testing.T) {
 		}
 		for _, test := range tests {
 			assert.Equal(t, fmt.Sprintf("%s/%s", kubernetesClusterBasePath, test.request.ClusterUUID), test.request.RequestURL())
-
+			test := test
 			b, err := json.Marshal(&test.request)
 			actual := string(b)
 

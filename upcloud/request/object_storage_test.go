@@ -27,6 +27,7 @@ func TestCreateObjectStorageRequest(t *testing.T) {
 		SecretKey:   "ssLDVHvTRjHaEAPRcMiFep3HItcqdNUNtql3DcLx",
 	}
 
+	//nolint:gosec // allow credentials for unit test payload
 	expectedJSON := `
 		{
 			"object_storage": {
@@ -55,6 +56,7 @@ func TestModifyObjectStorageRequest(t *testing.T) {
 		SecretKey:   "ssLDVHvTRjHaEAPRcMiFep3HItcqdNUNtql3DcLx",
 	}
 
+	//nolint:gosec // allow credentials for unit test payload
 	expectedJSON := `
 		{
 			"object_storage": {

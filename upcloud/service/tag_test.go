@@ -198,7 +198,6 @@ func deleteAllTags(ctx context.Context, svc *Service) error {
 		err = svc.DeleteTag(ctx, &request.DeleteTagRequest{
 			Name: tagDetails.Name,
 		})
-
 		if err != nil {
 			return err
 		}
