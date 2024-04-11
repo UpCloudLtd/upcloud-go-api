@@ -5,6 +5,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## Addded
+
+- Cloud: `ParentZone` field to `Zone` struct (only available for private zones)
+
 ## [8.3.0]
 
 ### Added

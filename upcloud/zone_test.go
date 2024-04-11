@@ -28,6 +28,12 @@ func TestUnmarshalZones(t *testing.T) {
         {
           "description" : "Chicago #1",
           "id" : "us-chi1"
+        },
+        {
+          "description" : "Fake private cloud",
+          "id" : "fi-fake-priv-cloud",
+		  "public": false,
+		  "parent_zone": "fi-hel1"
         }
       ]
     }
@@ -38,11 +44,13 @@ func TestUnmarshalZones(t *testing.T) {
 	err := json.Unmarshal([]byte(originalJSON), &zones)
 
 	assert.Nil(t, err)
-	assert.Len(t, zones.Zones, 4)
+	assert.Len(t, zones.Zones, 5)
 
 	zoneData := []struct {
 		Description string
 		ID          string
+		Public      bool
+		ParentZone  string
 	}{
 		{
 			ID:          "de-fra1",
@@ -59,6 +67,12 @@ func TestUnmarshalZones(t *testing.T) {
 		{
 			ID:          "us-chi1",
 			Description: "Chicago #1",
+		},
+		{
+			ID:          "fi-fake-priv-cloud",
+			Description: "Fake private cloud",
+			Public:      false,
+			ParentZone:  "fi-hel1",
 		},
 	}
 
