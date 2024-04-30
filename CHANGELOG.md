@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.4.0]
+
 ## Added
 - Cloud: `ParentZone` field to `Zone` struct (only available for private zones)
 
@@ -460,7 +462,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.3.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.4.0...HEAD
+[8.4.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.3.0...v8.4.0
 [8.3.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.2.0...v8.3.0
 [8.2.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.1.0...v8.2.0
 [8.1.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.0.0...v8.1.0
