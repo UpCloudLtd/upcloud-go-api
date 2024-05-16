@@ -5,6 +5,14 @@ import (
 	"time"
 )
 
+type (
+	// StorageEncryption is storage encryption strategy enum type.
+	StorageEncryption string
+
+	// StorageTier is storage tier enum type.
+	StorageTier string
+)
+
 // Constants
 const (
 	StorageTypeBackup   = "backup"
@@ -45,6 +53,8 @@ const (
 	StorageImportStateCancelling = "cancelling"
 	StorageImportStateCancelled  = "cancelled"
 	StorageImportStateCompleted  = "completed"
+
+	StorageEncryptionDataAtReset StorageEncryption = "data-at-rest"
 )
 
 // Storages represents a /storage response

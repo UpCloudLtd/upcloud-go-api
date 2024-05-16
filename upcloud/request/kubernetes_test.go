@@ -7,6 +7,7 @@ import (
 
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 const exampleCreateKubernetesClusterRequestJSON string = `{
@@ -426,6 +427,67 @@ func TestDeleteKubernetesNodeGroupRequest(t *testing.T) {
 	t.Parallel()
 	r := DeleteKubernetesNodeGroupRequest{ClusterUUID: "id", Name: "nid"}
 	assert.Equal(t, fmt.Sprintf("%s/id/node-groups/nid", kubernetesClusterBasePath), r.RequestURL())
+}
+
+func TestCreateKubernetesNodeGroupEncryptedCustomPlanRequest(t *testing.T) {
+	t.Parallel()
+
+	const want string = `
+	{
+		"plan": "custom",
+		"storage_encryption": "data-at-rest",
+		"custom_plan": {
+			"cores": 4,
+			"memory": 2048,
+			"storage_size": 30,
+			"storage_tier": "hdd"
+		}
+	}
+	`
+	ng := CreateKubernetesNodeGroupRequest{
+		NodeGroup: KubernetesNodeGroup{
+			Plan:              "custom",
+			StorageEncryption: upcloud.StorageEncryptionDataAtReset,
+			CustomPlan: &upcloud.KubernetesNodeGroupCustomPlan{
+				Cores:       4,
+				Memory:      2048,
+				StorageSize: 30,
+				StorageTier: upcloud.KubernetesStorageTierHDD,
+			},
+		},
+	}
+	got, err := json.Marshal(&ng)
+	require.NoError(t, err)
+	require.JSONEq(t, want, string(got))
+}
+
+func TestCreateKubernetesStorageEncryptionRequest(t *testing.T) {
+	t.Parallel()
+
+	const want string = `
+	{
+		"name": "uks",
+		"storage_encryption": "data-at-rest",
+		"network": "00000000-0000-0000-0000-000000000000",
+		"network_cidr": "172.16.0.1/24",
+		"private_node_groups": false,
+		"control_plane_ip_filter": null,
+		"node_groups": null,
+		"version": "1.28",
+		"zone": "fi-hel2"
+	}
+	`
+	c := CreateKubernetesClusterRequest{
+		Name:              "uks",
+		Version:           "1.28",
+		Zone:              "fi-hel2",
+		StorageEncryption: upcloud.StorageEncryptionDataAtReset,
+		Network:           "00000000-0000-0000-0000-000000000000",
+		NetworkCIDR:       "172.16.0.1/24",
+	}
+	got, err := json.Marshal(&c)
+	require.NoError(t, err)
+	require.JSONEq(t, want, string(got))
 }
 
 func exampleGetKubernetesClustersWithFiltersRequest() GetKubernetesClustersWithFiltersRequest {

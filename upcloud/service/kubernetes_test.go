@@ -630,3 +630,86 @@ func TestGetKubernetesVersions(t *testing.T) {
 	assert.Len(t, res, 2)
 	assert.Equal(t, res[0].Version, "v1.27.4")
 }
+
+func TestCreateKubernetesEncryptedCluster(t *testing.T) {
+	t.Parallel()
+
+	networkID := "03e4970d-7791-4b80-a892-682ae0faf46b"
+	srv, svc := setupTestServerAndService(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodGet && r.URL.Path == fmt.Sprintf("/%s/network/%s", client.APIVersion, networkID) {
+			_, _ = fmt.Fprint(w, exampleNetworkResponse)
+			return
+		}
+		require.Equal(t, http.MethodPost, r.Method)
+		require.Equal(t, fmt.Sprintf("/%s/kubernetes", client.APIVersion), r.URL.Path)
+
+		payload := request.CreateKubernetesClusterRequest{}
+		require.NoError(t, json.NewDecoder(r.Body).Decode(&payload))
+		cluster := upcloud.KubernetesCluster{
+			Network:           networkID,
+			StorageEncryption: payload.StorageEncryption,
+		}
+		js, err := json.Marshal(cluster)
+		require.NoError(t, err)
+		_, err = w.Write(js)
+		require.NoError(t, err)
+	}))
+	defer srv.Close()
+
+	req := request.CreateKubernetesClusterRequest{
+		Network:           networkID,
+		StorageEncryption: upcloud.StorageEncryptionDataAtReset,
+	}
+	res, err := svc.CreateKubernetesCluster(context.Background(), &req)
+	require.NoError(t, err)
+	require.Equal(t, req.StorageEncryption, res.StorageEncryption)
+	require.Equal(t, networkID, res.Network)
+}
+
+func TestCreateKubernetesEncryptedCustomNodeGroup(t *testing.T) {
+	t.Parallel()
+
+	srv, svc := setupTestServerAndService(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		require.Equal(t, http.MethodPost, r.Method)
+		require.Equal(t, fmt.Sprintf("/%s/kubernetes/_UUID_/node-groups", client.APIVersion), r.URL.Path)
+
+		payload := request.KubernetesNodeGroup{}
+		require.NoError(t, json.NewDecoder(r.Body).Decode(&payload))
+		require.NotNil(t, payload.CustomPlan)
+		nodeGroup := upcloud.KubernetesNodeGroup{
+			StorageEncryption: payload.StorageEncryption,
+			Plan:              payload.Plan,
+			CustomPlan: &upcloud.KubernetesNodeGroupCustomPlan{
+				Cores:       payload.CustomPlan.Cores,
+				Memory:      payload.CustomPlan.Memory,
+				StorageSize: payload.CustomPlan.StorageSize,
+				StorageTier: payload.CustomPlan.StorageTier,
+			},
+		}
+		js, err := json.Marshal(nodeGroup)
+		require.NoError(t, err)
+
+		_, err = w.Write(js)
+		require.NoError(t, err)
+	}))
+	defer srv.Close()
+
+	req := request.CreateKubernetesNodeGroupRequest{
+		ClusterUUID: "_UUID_",
+		NodeGroup: request.KubernetesNodeGroup{
+			Plan:              "custom",
+			StorageEncryption: upcloud.StorageEncryptionDataAtReset,
+			CustomPlan: &upcloud.KubernetesNodeGroupCustomPlan{
+				Cores:       1,
+				Memory:      2048,
+				StorageSize: 25,
+				StorageTier: upcloud.KubernetesStorageTierMaxIOPS,
+			},
+		},
+	}
+	res, err := svc.CreateKubernetesNodeGroup(context.Background(), &req)
+	require.NoError(t, err)
+	require.NotNil(t, res.CustomPlan)
+	require.Equal(t, req.NodeGroup.CustomPlan, res.CustomPlan)
+	require.Equal(t, req.NodeGroup.StorageEncryption, res.StorageEncryption)
+}
