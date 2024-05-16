@@ -57,6 +57,8 @@ type CreateKubernetesClusterRequest struct {
 	Zone                 string                `json:"zone"`
 	Plan                 string                `json:"plan,omitempty"`
 	PrivateNodeGroups    bool                  `json:"private_node_groups"`
+	// The default storage encryption strategy for all node groups (optional).
+	StorageEncryption upcloud.StorageEncryption `json:"storage_encryption,omitempty"`
 }
 
 func (r *CreateKubernetesClusterRequest) RequestURL() string {
@@ -157,6 +159,10 @@ type KubernetesNodeGroup struct {
 	Taints               []upcloud.KubernetesTaint      `json:"taints,omitempty"`
 	AntiAffinity         bool                           `json:"anti_affinity,omitempty"`
 	UtilityNetworkAccess *bool                          `json:"utility_network_access,omitempty"`
+	// Node group custom plan properties. Required when plan is set as "custom".
+	CustomPlan *upcloud.KubernetesNodeGroupCustomPlan `json:"custom_plan,omitempty"`
+	// node group storage encryption strategy (optional).
+	StorageEncryption upcloud.StorageEncryption `json:"storage_encryption,omitempty"`
 }
 
 type CreateKubernetesNodeGroupRequest struct {

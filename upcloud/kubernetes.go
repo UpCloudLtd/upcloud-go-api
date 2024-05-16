@@ -1,5 +1,13 @@
 package upcloud
 
+type (
+	KubernetesClusterState       string
+	KubernetesNodeGroupState     string
+	KubernetesClusterType        string
+	KubernetesClusterTaintEffect string
+	KubernetesNodeState          string
+)
+
 const (
 	KubernetesClusterStatePending     KubernetesClusterState = "pending"
 	KubernetesClusterStateRunning     KubernetesClusterState = "running"
@@ -25,43 +33,43 @@ const (
 	KubernetesNodeStateRunning     KubernetesNodeState = "running"
 	KubernetesNodeStateTerminating KubernetesNodeState = "terminating"
 	KubernetesNodeStateUnknown     KubernetesNodeState = "unknown"
-)
 
-type (
-	KubernetesClusterState       string
-	KubernetesNodeGroupState     string
-	KubernetesClusterType        string
-	KubernetesClusterTaintEffect string
-	KubernetesNodeState          string
+	KubernetesStorageTierHDD     StorageTier = StorageTierHDD
+	KubernetesStorageTierMaxIOPS StorageTier = StorageTierMaxIOPS
 )
 
 type KubernetesCluster struct {
-	ControlPlaneIPFilter []string               `json:"control_plane_ip_filter"`
-	Labels               []Label                `json:"labels"`
-	Name                 string                 `json:"name"`
-	Network              string                 `json:"network"`
-	NetworkCIDR          string                 `json:"network_cidr"`
-	NodeGroups           []KubernetesNodeGroup  `json:"node_groups"`
-	State                KubernetesClusterState `json:"state"`
-	UUID                 string                 `json:"uuid"`
-	Version              string                 `json:"version"`
-	Zone                 string                 `json:"zone"`
-	Plan                 string                 `json:"plan"`
-	PrivateNodeGroups    bool                   `json:"private_node_groups"`
+	ControlPlaneIPFilter []string               `json:"control_plane_ip_filter,omitempty"`
+	Labels               []Label                `json:"labels,omitempty"`
+	Name                 string                 `json:"name,omitempty"`
+	Network              string                 `json:"network,omitempty"`
+	NetworkCIDR          string                 `json:"network_cidr,omitempty"`
+	NodeGroups           []KubernetesNodeGroup  `json:"node_groups,omitempty"`
+	State                KubernetesClusterState `json:"state,omitempty"`
+	UUID                 string                 `json:"uuid,omitempty"`
+	Version              string                 `json:"version,omitempty"`
+	Zone                 string                 `json:"zone,omitempty"`
+	Plan                 string                 `json:"plan,omitempty"`
+	PrivateNodeGroups    bool                   `json:"private_node_groups,omitempty"`
+	// The default storage encryption strategy for all node groups.
+	StorageEncryption StorageEncryption `json:"storage_encryption,omitempty"`
 }
 
 type KubernetesNodeGroup struct {
-	AntiAffinity         bool                     `json:"anti_affinity,omitempty"`
-	Count                int                      `json:"count,omitempty"`
-	KubeletArgs          []KubernetesKubeletArg   `json:"kubelet_args,omitempty"`
-	Labels               []Label                  `json:"labels,omitempty"`
-	Name                 string                   `json:"name,omitempty"`
-	Plan                 string                   `json:"plan,omitempty"`
-	SSHKeys              []string                 `json:"ssh_keys,omitempty"`
-	State                KubernetesNodeGroupState `json:"state,omitempty"`
-	Storage              string                   `json:"storage,omitempty"`
-	Taints               []KubernetesTaint        `json:"taints,omitempty"`
-	UtilityNetworkAccess bool                     `json:"utility_network_access,omitempty"`
+	AntiAffinity         bool                           `json:"anti_affinity,omitempty"`
+	Count                int                            `json:"count,omitempty"`
+	KubeletArgs          []KubernetesKubeletArg         `json:"kubelet_args,omitempty"`
+	Labels               []Label                        `json:"labels,omitempty"`
+	Name                 string                         `json:"name,omitempty"`
+	Plan                 string                         `json:"plan,omitempty"`
+	CustomPlan           *KubernetesNodeGroupCustomPlan `json:"custom_plan,omitempty"`
+	SSHKeys              []string                       `json:"ssh_keys,omitempty"`
+	State                KubernetesNodeGroupState       `json:"state,omitempty"`
+	Storage              string                         `json:"storage,omitempty"`
+	Taints               []KubernetesTaint              `json:"taints,omitempty"`
+	UtilityNetworkAccess bool                           `json:"utility_network_access,omitempty"`
+	// Node group storage encryption strategy.
+	StorageEncryption StorageEncryption `json:"storage_encryption,omitempty"`
 }
 
 type KubernetesNodeGroupDetails struct {
@@ -96,4 +104,16 @@ type KubernetesPlan struct {
 type KubernetesVersion struct {
 	Id      string `json:"id"`
 	Version string `json:"version"`
+}
+
+// KubernetesNodeGroupCustomPlan represents custom server plan used for each node in the node group.
+type KubernetesNodeGroupCustomPlan struct {
+	// The number of CPU cores dedicated to individual node group node
+	Cores int `json:"cores"`
+	// The amount of memory in megabytes to assign to individual node group node
+	Memory int `json:"memory"`
+	// The size of the storage device in gigabytes.
+	StorageSize int `json:"storage_size"`
+	// The storage tier is MaxIOPS® or HDD.
+	StorageTier StorageTier `json:"storage_tier,omitempty"`
 }

@@ -151,6 +151,52 @@ func TestKubernetesNodeGroupDetails(t *testing.T) {
 	require.Equal(t, KubernetesNodeGroupStateRunning, got.State)
 }
 
+func TestKubernetesNodeGroupEncryptedCustomPlan(t *testing.T) {
+	t.Parallel()
+
+	p := []byte(`
+	{
+		"plan": "custom",
+		"storage_encryption": "data-at-rest",
+		"custom_plan": {
+			"cores": 4,
+			"memory": 2048,
+			"storage_size": 30,
+			"storage_tier": "hdd"
+		}
+	}
+	`)
+	got := KubernetesNodeGroup{}
+	require.NoError(t, json.Unmarshal(p, &got))
+	want := KubernetesNodeGroup{
+		Plan:              "custom",
+		StorageEncryption: StorageEncryptionDataAtReset,
+		CustomPlan: &KubernetesNodeGroupCustomPlan{
+			Cores:       4,
+			Memory:      2048,
+			StorageSize: 30,
+			StorageTier: KubernetesStorageTierHDD,
+		},
+	}
+	require.Equal(t, want, got)
+}
+
+func TestKubernetesStorageEncryption(t *testing.T) {
+	t.Parallel()
+
+	p := []byte(`
+	{
+		"storage_encryption": "data-at-rest"
+	}
+	`)
+	got := KubernetesCluster{}
+	require.NoError(t, json.Unmarshal(p, &got))
+	want := KubernetesCluster{
+		StorageEncryption: StorageEncryptionDataAtReset,
+	}
+	require.Equal(t, want, got)
+}
+
 func exampleKubernetesCluster() KubernetesCluster {
 	return KubernetesCluster{
 		ControlPlaneIPFilter: []string{"0.0.0.0/0"},
