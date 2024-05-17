@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.5.0]
+
 ## Added
 - kubernetes: add support for node group custom plans
 - kubernetes: add support for data at rest encryption in node groups
@@ -466,7 +468,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.4.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.5.0...HEAD
+[8.5.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.4.0...v8.5.0
 [8.4.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.3.0...v8.4.0
 [8.3.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.2.0...v8.3.0
 [8.2.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.1.0...v8.2.0
