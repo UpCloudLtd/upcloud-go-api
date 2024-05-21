@@ -112,6 +112,7 @@ type GatewayRouter struct {
 }
 
 type GatewayConnection struct {
+	UUID         string                `json:"uuid"`
 	Name         string                `json:"name,omitempty"`
 	Type         GatewayConnectionType `json:"type,omitempty"`
 	LocalRoutes  []GatewayRoute        `json:"local_routes,omitempty"`
@@ -128,6 +129,7 @@ type GatewayRoute struct {
 }
 
 type GatewayTunnel struct {
+	UUID             string                        `json:"uuid,omitempty"`
 	Name             string                        `json:"name,omitempty"`
 	LocalAddress     GatewayTunnelLocalAddress     `json:"local_address,omitempty"`
 	RemoteAddress    GatewayTunnelRemoteAddress    `json:"remote_address,omitempty"`
