@@ -94,11 +94,11 @@ func (r *GetGatewayConnectionsRequest) RequestURL() string {
 
 type GetGatewayConnectionRequest struct {
 	ServiceUUID string `json:"-"`
-	Name        string `json:"-"`
+	UUID        string `json:"-"`
 }
 
 func (r *GetGatewayConnectionRequest) RequestURL() string {
-	return fmt.Sprintf("%s/%s/connections/%s", gatewayBaseURL, r.ServiceUUID, r.Name)
+	return fmt.Sprintf("%s/%s/connections/%s", gatewayBaseURL, r.ServiceUUID, r.UUID)
 }
 
 type CreateGatewayConnectionRequest struct {
@@ -122,12 +122,12 @@ type ModifyGatewayConnection struct {
 
 type ModifyGatewayConnectionRequest struct {
 	ServiceUUID string `json:"-"`
-	Name        string `json:"-"`
+	UUID        string `json:"-"`
 	Connection  ModifyGatewayConnection
 }
 
 func (r *ModifyGatewayConnectionRequest) RequestURL() string {
-	return fmt.Sprintf("%s/%s/connections/%s", gatewayBaseURL, r.ServiceUUID, r.Name)
+	return fmt.Sprintf("%s/%s/connections/%s", gatewayBaseURL, r.ServiceUUID, r.UUID)
 }
 
 func (r *ModifyGatewayConnectionRequest) MarshalJSON() ([]byte, error) {
@@ -136,11 +136,11 @@ func (r *ModifyGatewayConnectionRequest) MarshalJSON() ([]byte, error) {
 
 type DeleteGatewayConnectionRequest struct {
 	ServiceUUID string `json:"-"`
-	Name        string `json:"-"`
+	UUID        string `json:"-"`
 }
 
 func (r *DeleteGatewayConnectionRequest) RequestURL() string {
-	return fmt.Sprintf("%s/%s/connections/%s", gatewayBaseURL, r.ServiceUUID, r.Name)
+	return fmt.Sprintf("%s/%s/connections/%s", gatewayBaseURL, r.ServiceUUID, r.UUID)
 }
 
 type GatewayTunnel struct {
@@ -153,31 +153,31 @@ type GatewayTunnel struct {
 
 type GetGatewayConnectionTunnelsRequest struct {
 	ServiceUUID    string `json:"-"`
-	ConnectionName string `json:"-"`
+	ConnectionUUID string `json:"-"`
 }
 
 func (r *GetGatewayConnectionTunnelsRequest) RequestURL() string {
-	return fmt.Sprintf("%s/%s/connections/%s/tunnels", gatewayBaseURL, r.ServiceUUID, r.ConnectionName)
+	return fmt.Sprintf("%s/%s/connections/%s/tunnels", gatewayBaseURL, r.ServiceUUID, r.ConnectionUUID)
 }
 
 type GetGatewayConnectionTunnelRequest struct {
 	ServiceUUID    string `json:"-"`
-	ConnectionName string `json:"-"`
-	Name           string `json:"-"`
+	ConnectionUUID string `json:"-"`
+	UUID           string `json:"-"`
 }
 
 func (r *GetGatewayConnectionTunnelRequest) RequestURL() string {
-	return fmt.Sprintf("%s/%s/connections/%s/tunnels/%s", gatewayBaseURL, r.ServiceUUID, r.ConnectionName, r.Name)
+	return fmt.Sprintf("%s/%s/connections/%s/tunnels/%s", gatewayBaseURL, r.ServiceUUID, r.ConnectionUUID, r.UUID)
 }
 
 type CreateGatewayConnectionTunnelRequest struct {
 	ServiceUUID    string `json:"-"`
-	ConnectionName string `json:"-"`
+	ConnectionUUID string `json:"-"`
 	Tunnel         GatewayTunnel
 }
 
 func (r *CreateGatewayConnectionTunnelRequest) RequestURL() string {
-	return fmt.Sprintf("%s/%s/connections/%s/tunnels", gatewayBaseURL, r.ServiceUUID, r.ConnectionName)
+	return fmt.Sprintf("%s/%s/connections/%s/tunnels", gatewayBaseURL, r.ServiceUUID, r.ConnectionUUID)
 }
 
 func (r *CreateGatewayConnectionTunnelRequest) MarshalJSON() ([]byte, error) {
@@ -193,13 +193,13 @@ type ModifyGatewayTunnel struct {
 
 type ModifyGatewayConnectionTunnelRequest struct {
 	ServiceUUID    string `json:"-"`
-	ConnectionName string `json:"-"`
-	Name           string `json:"-"`
+	ConnectionUUID string `json:"-"`
+	UUID           string `json:"-"`
 	Tunnel         ModifyGatewayTunnel
 }
 
 func (r *ModifyGatewayConnectionTunnelRequest) RequestURL() string {
-	return fmt.Sprintf("%s/%s/connections/%s/tunnels/%s", gatewayBaseURL, r.ServiceUUID, r.ConnectionName, r.Name)
+	return fmt.Sprintf("%s/%s/connections/%s/tunnels/%s", gatewayBaseURL, r.ServiceUUID, r.ConnectionUUID, r.UUID)
 }
 
 func (r *ModifyGatewayConnectionTunnelRequest) MarshalJSON() ([]byte, error) {
@@ -208,10 +208,10 @@ func (r *ModifyGatewayConnectionTunnelRequest) MarshalJSON() ([]byte, error) {
 
 type DeleteGatewayConnectionTunnelRequest struct {
 	ServiceUUID    string `json:"-"`
-	ConnectionName string `json:"-"`
-	Name           string `json:"-"`
+	ConnectionUUID string `json:"-"`
+	UUID           string `json:"-"`
 }
 
 func (r *DeleteGatewayConnectionTunnelRequest) RequestURL() string {
-	return fmt.Sprintf("%s/%s/connections/%s/tunnels/%s", gatewayBaseURL, r.ServiceUUID, r.ConnectionName, r.Name)
+	return fmt.Sprintf("%s/%s/connections/%s/tunnels/%s", gatewayBaseURL, r.ServiceUUID, r.ConnectionUUID, r.UUID)
 }

@@ -44,6 +44,7 @@ func TestGateway(t *testing.T) {
 		"plan": "advanced",
 		"connections": [
 			{
+				"uuid": "10c153e0-12e4-4dea-8748-4f34850ff761",
 				"name": "example-connection",
 				"type": "ipsec",
 				"local_routes": [
@@ -62,6 +63,7 @@ func TestGateway(t *testing.T) {
 				],
 				"tunnels": [
 					{
+						"uuid": "10c153e0-12e4-4dea-8748-4f34850ff76e",
 						"name": "example-tunnel-1",
 						"local_address": {
 							"name": "public-ip-1"
@@ -128,6 +130,7 @@ func TestGateway(t *testing.T) {
 		Plan:      "advanced",
 		Connections: []GatewayConnection{
 			{
+				UUID: "10c153e0-12e4-4dea-8748-4f34850ff761",
 				Name: "example-connection",
 				Type: GatewayConnectionTypeIPSec,
 				LocalRoutes: []GatewayRoute{
@@ -146,6 +149,7 @@ func TestGateway(t *testing.T) {
 				},
 				Tunnels: []GatewayTunnel{
 					{
+						UUID: "10c153e0-12e4-4dea-8748-4f34850ff76e",
 						Name: "example-tunnel-1",
 						LocalAddress: GatewayTunnelLocalAddress{
 							Name: "public-ip-1",
