@@ -77,7 +77,7 @@ func (s *Service) get(ctx context.Context, location string, v interface{}) error
 	}
 
 	if strings.HasPrefix(err.Error(), "json: cannot unmarshal array") {
-		return errors.Join(err, errors.New("get: request parameters might be incorrect"))
+		return errors.Join(err, errors.New("get: request parameters might be incorrect, ensure that required fields, such as UUID, are set to valid values"))
 	}
 
 	return err
