@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.6.0]
+
 ## Added
 - **Experimental**, gateway: add UUID support for VPN gateway connections and tunnels
 - service: a more elaborate error message if get request returns an error on unmarshalling json array
@@ -472,7 +474,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.5.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.6.0...HEAD
+[8.6.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.5.0...v8.6.0
 [8.5.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.4.0...v8.5.0
 [8.4.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.3.0...v8.4.0
 [8.3.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.2.0...v8.3.0
