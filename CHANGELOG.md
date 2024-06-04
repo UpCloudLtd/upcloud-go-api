@@ -6,6 +6,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 ## [Unreleased]
 
 ## Added
+- **Experimental**, gateway: add UUID support for VPN gateway connections and tunnels
 - service: a more elaborate error message if get request returns an error on unmarshalling json array
 
 ## [8.5.0]
