@@ -10,7 +10,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/8.0.0
+      - upcloud-go-api/8.5.0
     url: https://api.upcloud.com/1.3/router
     method: POST
   response:
@@ -25,7 +25,7 @@ interactions:
             "name" : "test-router-vpn-conn",
             "static_routes" : [],
             "type" : "normal",
-            "uuid" : "04437f95-9d06-40e9-ad8a-378976912ea7"
+            "uuid" : "048ba054-f7ee-4193-83e3-69b50c1cbdc9"
          }
       }
     headers:
@@ -34,7 +34,7 @@ interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 07 Mar 2024 13:40:59 GMT
+      - Tue, 04 Jun 2024 11:48:37 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -43,7 +43,7 @@ interactions:
     code: 201
     duration: ""
 - request:
-    body: '{"name":"test-vpn-conn","zone":"pl-waw1","features":["vpn"],"routers":[{"uuid":"04437f95-9d06-40e9-ad8a-378976912ea7"}],"configured_status":"started","plan":"advanced","addresses":[{"name":"my-ip-address"}]}'
+    body: '{"name":"test-vpn-conn","zone":"pl-waw1","features":["vpn"],"routers":[{"uuid":"048ba054-f7ee-4193-83e3-69b50c1cbdc9"}],"configured_status":"started","plan":"advanced","addresses":[{"name":"my-ip-address"}]}'
     form: {}
     headers:
       Accept:
@@ -51,18 +51,18 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/8.0.0
+      - upcloud-go-api/8.5.0
     url: https://api.upcloud.com/1.3/gateway
     method: POST
   response:
-    body: '{"addresses":[{"name":"my-ip-address"}],"configured_status":"started","connections":[],"created_at":"2024-03-07T13:41:00.42508Z","features":["vpn"],"labels":[],"name":"test-vpn-conn","operational_state":"pending","plan":"advanced","routers":[{"created_at":"2024-03-07T13:41:00.42508Z","uuid":"04437f95-9d06-40e9-ad8a-378976912ea7"}],"updated_at":"2024-03-07T13:41:00.42508Z","uuid":"10cb0bf6-2bb0-4043-8a1a-a98347261fd3","zone":"pl-waw1"}'
+    body: '{"addresses":[{"name":"my-ip-address"}],"configured_status":"started","connections":[],"created_at":"2024-06-04T11:48:38.800314Z","features":["vpn"],"labels":[],"name":"test-vpn-conn","operational_state":"pending","plan":"advanced","routers":[{"created_at":"2024-06-04T11:48:38.800314Z","uuid":"048ba054-f7ee-4193-83e3-69b50c1cbdc9"}],"updated_at":"2024-06-04T11:48:38.800314Z","uuid":"10d4f3e4-bbcc-4861-ae92-98d90167ee48","zone":"pl-waw1"}'
     headers:
       Content-Length:
-      - "438"
+      - "441"
       Content-Type:
       - application/json
       Date:
-      - Thu, 07 Mar 2024 13:41:00 GMT
+      - Tue, 04 Jun 2024 11:48:38 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 201 Created
@@ -77,18 +77,18 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/8.0.0
-    url: https://api.upcloud.com/1.3/gateway/10cb0bf6-2bb0-4043-8a1a-a98347261fd3/connections/
+      - upcloud-go-api/8.5.0
+    url: https://api.upcloud.com/1.3/gateway/10d4f3e4-bbcc-4861-ae92-98d90167ee48/connections/
     method: POST
   response:
-    body: '{"created_at":"2024-03-07T13:41:00.665782Z","local_routes":[{"name":"local-route","static_network":"10.0.1.0/24","type":"static"}],"name":"added-connection","remote_routes":[{"name":"remote-route","static_network":"10.0.2.0/24","type":"static"}],"tunnels":[{"created_at":"2024-03-07T13:41:00.665782Z","ipsec":{"authentication":{"authentication":"psk"},"child_rekey_time":1440,"dpd_delay":30,"dpd_timeout":120,"ike_lifetime":86400,"phase1_algorithms":["aes128","aes256","aes128gcm128","aes256gcm128"],"phase1_dh_group_numbers":[14,16,18,19,20,21],"phase1_integrity_algorithms":["sha256","sha384","sha512"],"phase2_algorithms":["aes128","aes256","aes128gcm128","aes256gcm128"],"phase2_dh_group_numbers":[14,16,18,19,20,21],"phase2_integrity_algorithms":["sha256","sha384","sha512"],"rekey_time":14400},"local_address":{"name":"my-ip-address"},"name":"added-tunnel","operational_state":"uninitialized","remote_address":{"address":"100.10.0.111"},"updated_at":"2024-03-07T13:41:00.665782Z"}],"type":"ipsec","updated_at":"2024-03-07T13:41:00.665782Z"}'
+    body: '{"created_at":"2024-06-04T11:48:39.046156Z","local_routes":[{"name":"local-route","static_network":"10.0.1.0/24","type":"static"}],"name":"added-connection","remote_routes":[{"name":"remote-route","static_network":"10.0.2.0/24","type":"static"}],"tunnels":[{"created_at":"2024-06-04T11:48:39.046156Z","ipsec":{"authentication":{"authentication":"psk"},"child_rekey_time":1440,"dpd_delay":30,"dpd_timeout":120,"ike_lifetime":86400,"phase1_algorithms":["aes128","aes256","aes128gcm128","aes256gcm128"],"phase1_dh_group_numbers":[14,16,18,19,20,21],"phase1_integrity_algorithms":["sha256","sha384","sha512"],"phase2_algorithms":["aes128","aes256","aes128gcm128","aes256gcm128"],"phase2_dh_group_numbers":[14,16,18,19,20,21],"phase2_integrity_algorithms":["sha256","sha384","sha512"],"rekey_time":14400},"local_address":{"name":"my-ip-address"},"name":"added-tunnel","operational_state":"idle","remote_address":{"address":"100.10.0.111"},"updated_at":"2024-06-04T11:48:39.046156Z","uuid":"102be8f1-9487-45db-b842-6b9fcedfa0a1"}],"type":"ipsec","updated_at":"2024-06-04T11:48:39.046156Z","uuid":"1021b347-ccd3-4054-9810-b82788858350"}'
     headers:
       Content-Length:
-      - "1046"
+      - "1129"
       Content-Type:
       - application/json
       Date:
-      - Thu, 07 Mar 2024 13:41:01 GMT
+      - Tue, 04 Jun 2024 11:48:39 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 201 Created
@@ -103,18 +103,18 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/8.0.0
-    url: https://api.upcloud.com/1.3/gateway/10cb0bf6-2bb0-4043-8a1a-a98347261fd3/connections
+      - upcloud-go-api/8.5.0
+    url: https://api.upcloud.com/1.3/gateway/10d4f3e4-bbcc-4861-ae92-98d90167ee48/connections
     method: GET
   response:
-    body: '[{"created_at":"2024-03-07T13:41:00.665782Z","local_routes":[{"name":"local-route","static_network":"10.0.1.0/24","type":"static"}],"name":"added-connection","remote_routes":[{"name":"remote-route","static_network":"10.0.2.0/24","type":"static"}],"tunnels":[{"created_at":"2024-03-07T13:41:00.665782Z","ipsec":{"authentication":{"authentication":"psk"},"child_rekey_time":1440,"dpd_delay":30,"dpd_timeout":120,"ike_lifetime":86400,"phase1_algorithms":["aes128","aes256","aes128gcm128","aes256gcm128"],"phase1_dh_group_numbers":[14,16,18,19,20,21],"phase1_integrity_algorithms":["sha256","sha384","sha512"],"phase2_algorithms":["aes128","aes256","aes128gcm128","aes256gcm128"],"phase2_dh_group_numbers":[14,16,18,19,20,21],"phase2_integrity_algorithms":["sha256","sha384","sha512"],"rekey_time":14400},"local_address":{"name":"my-ip-address"},"name":"added-tunnel","operational_state":"uninitialized","remote_address":{"address":"100.10.0.111"},"updated_at":"2024-03-07T13:41:00.665782Z"}],"type":"ipsec","updated_at":"2024-03-07T13:41:00.665782Z"}]'
+    body: '[{"created_at":"2024-06-04T11:48:39.046156Z","local_routes":[{"name":"local-route","static_network":"10.0.1.0/24","type":"static"}],"name":"added-connection","remote_routes":[{"name":"remote-route","static_network":"10.0.2.0/24","type":"static"}],"tunnels":[{"created_at":"2024-06-04T11:48:39.046156Z","ipsec":{"authentication":{"authentication":"psk"},"child_rekey_time":1440,"dpd_delay":30,"dpd_timeout":120,"ike_lifetime":86400,"phase1_algorithms":["aes128","aes256","aes128gcm128","aes256gcm128"],"phase1_dh_group_numbers":[14,16,18,19,20,21],"phase1_integrity_algorithms":["sha256","sha384","sha512"],"phase2_algorithms":["aes128","aes256","aes128gcm128","aes256gcm128"],"phase2_dh_group_numbers":[14,16,18,19,20,21],"phase2_integrity_algorithms":["sha256","sha384","sha512"],"rekey_time":14400},"local_address":{"name":"my-ip-address"},"name":"added-tunnel","operational_state":"idle","remote_address":{"address":"100.10.0.111"},"updated_at":"2024-06-04T11:48:39.046156Z","uuid":"102be8f1-9487-45db-b842-6b9fcedfa0a1"}],"type":"ipsec","updated_at":"2024-06-04T11:48:39.046156Z","uuid":"1021b347-ccd3-4054-9810-b82788858350"}]'
     headers:
       Content-Length:
-      - "1048"
+      - "1131"
       Content-Type:
       - application/json
       Date:
-      - Thu, 07 Mar 2024 13:41:01 GMT
+      - Tue, 04 Jun 2024 11:48:39 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 200 OK
@@ -129,18 +129,18 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/8.0.0
-    url: https://api.upcloud.com/1.3/gateway/10cb0bf6-2bb0-4043-8a1a-a98347261fd3/connections/added-connection
+      - upcloud-go-api/8.5.0
+    url: https://api.upcloud.com/1.3/gateway/10d4f3e4-bbcc-4861-ae92-98d90167ee48/connections/1021b347-ccd3-4054-9810-b82788858350
     method: GET
   response:
-    body: '{"created_at":"2024-03-07T13:41:00.665782Z","local_routes":[{"name":"local-route","static_network":"10.0.1.0/24","type":"static"}],"name":"added-connection","remote_routes":[{"name":"remote-route","static_network":"10.0.2.0/24","type":"static"}],"tunnels":[{"created_at":"2024-03-07T13:41:00.665782Z","ipsec":{"authentication":{"authentication":"psk"},"child_rekey_time":1440,"dpd_delay":30,"dpd_timeout":120,"ike_lifetime":86400,"phase1_algorithms":["aes128","aes256","aes128gcm128","aes256gcm128"],"phase1_dh_group_numbers":[14,16,18,19,20,21],"phase1_integrity_algorithms":["sha256","sha384","sha512"],"phase2_algorithms":["aes128","aes256","aes128gcm128","aes256gcm128"],"phase2_dh_group_numbers":[14,16,18,19,20,21],"phase2_integrity_algorithms":["sha256","sha384","sha512"],"rekey_time":14400},"local_address":{"name":"my-ip-address"},"name":"added-tunnel","operational_state":"uninitialized","remote_address":{"address":"100.10.0.111"},"updated_at":"2024-03-07T13:41:00.665782Z"}],"type":"ipsec","updated_at":"2024-03-07T13:41:00.665782Z"}'
+    body: '{"created_at":"2024-06-04T11:48:39.046156Z","local_routes":[{"name":"local-route","static_network":"10.0.1.0/24","type":"static"}],"name":"added-connection","remote_routes":[{"name":"remote-route","static_network":"10.0.2.0/24","type":"static"}],"tunnels":[{"created_at":"2024-06-04T11:48:39.046156Z","ipsec":{"authentication":{"authentication":"psk"},"child_rekey_time":1440,"dpd_delay":30,"dpd_timeout":120,"ike_lifetime":86400,"phase1_algorithms":["aes128","aes256","aes128gcm128","aes256gcm128"],"phase1_dh_group_numbers":[14,16,18,19,20,21],"phase1_integrity_algorithms":["sha256","sha384","sha512"],"phase2_algorithms":["aes128","aes256","aes128gcm128","aes256gcm128"],"phase2_dh_group_numbers":[14,16,18,19,20,21],"phase2_integrity_algorithms":["sha256","sha384","sha512"],"rekey_time":14400},"local_address":{"name":"my-ip-address"},"name":"added-tunnel","operational_state":"idle","remote_address":{"address":"100.10.0.111"},"updated_at":"2024-06-04T11:48:39.046156Z","uuid":"102be8f1-9487-45db-b842-6b9fcedfa0a1"}],"type":"ipsec","updated_at":"2024-06-04T11:48:39.046156Z","uuid":"1021b347-ccd3-4054-9810-b82788858350"}'
     headers:
       Content-Length:
-      - "1046"
+      - "1129"
       Content-Type:
       - application/json
       Date:
-      - Thu, 07 Mar 2024 13:41:01 GMT
+      - Tue, 04 Jun 2024 11:48:39 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 200 OK
@@ -155,18 +155,18 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/8.0.0
-    url: https://api.upcloud.com/1.3/gateway/10cb0bf6-2bb0-4043-8a1a-a98347261fd3/connections/added-connection
+      - upcloud-go-api/8.5.0
+    url: https://api.upcloud.com/1.3/gateway/10d4f3e4-bbcc-4861-ae92-98d90167ee48/connections/1021b347-ccd3-4054-9810-b82788858350
     method: PATCH
   response:
-    body: '{"created_at":"2024-03-07T13:41:00.665782Z","local_routes":[{"name":"local-route","static_network":"10.0.1.0/24","type":"static"}],"name":"added-connection","remote_routes":[{"name":"remote-route-updated","static_network":"10.0.2.0/24","type":"static"}],"tunnels":[{"created_at":"2024-03-07T13:41:01.603394Z","ipsec":{"authentication":{"authentication":"psk"},"child_rekey_time":1440,"dpd_delay":30,"dpd_timeout":120,"ike_lifetime":86400,"phase1_algorithms":["aes128","aes256","aes128gcm128","aes256gcm128"],"phase1_dh_group_numbers":[14,16,18,19,20,21],"phase1_integrity_algorithms":["sha256","sha384","sha512"],"phase2_algorithms":["aes128","aes256","aes128gcm128","aes256gcm128"],"phase2_dh_group_numbers":[14,16,18,19,20,21],"phase2_integrity_algorithms":["sha256","sha384","sha512"],"rekey_time":14400},"local_address":{"name":"my-ip-address"},"name":"added-tunnel-updated","operational_state":"uninitialized","remote_address":{"address":"100.10.0.111"},"updated_at":"2024-03-07T13:41:01.603394Z"}],"type":"ipsec","updated_at":"2024-03-07T13:41:01.603394Z"}'
+    body: '{"created_at":"2024-06-04T11:48:39.046156Z","local_routes":[{"name":"local-route","static_network":"10.0.1.0/24","type":"static"}],"name":"added-connection","remote_routes":[{"name":"remote-route-updated","static_network":"10.0.2.0/24","type":"static"}],"tunnels":[{"created_at":"2024-06-04T11:48:39.046156Z","ipsec":{"authentication":{"authentication":"psk"},"child_rekey_time":1440,"dpd_delay":30,"dpd_timeout":120,"ike_lifetime":86400,"phase1_algorithms":["aes128","aes256","aes128gcm128","aes256gcm128"],"phase1_dh_group_numbers":[14,16,18,19,20,21],"phase1_integrity_algorithms":["sha256","sha384","sha512"],"phase2_algorithms":["aes128","aes256","aes128gcm128","aes256gcm128"],"phase2_dh_group_numbers":[14,16,18,19,20,21],"phase2_integrity_algorithms":["sha256","sha384","sha512"],"rekey_time":14400},"local_address":{"name":"my-ip-address"},"name":"added-tunnel-updated","operational_state":"idle","remote_address":{"address":"100.10.0.111"},"updated_at":"2024-06-04T11:48:40.197824Z","uuid":"102be8f1-9487-45db-b842-6b9fcedfa0a1"}],"type":"ipsec","updated_at":"2024-06-04T11:48:40.197824Z","uuid":"1021b347-ccd3-4054-9810-b82788858350"}'
     headers:
       Content-Length:
-      - "1062"
+      - "1145"
       Content-Type:
       - application/json
       Date:
-      - Thu, 07 Mar 2024 13:41:02 GMT
+      - Tue, 04 Jun 2024 11:48:40 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 200 OK
@@ -181,14 +181,14 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/8.0.0
-    url: https://api.upcloud.com/1.3/gateway/10cb0bf6-2bb0-4043-8a1a-a98347261fd3/connections/added-connection
+      - upcloud-go-api/8.5.0
+    url: https://api.upcloud.com/1.3/gateway/10d4f3e4-bbcc-4861-ae92-98d90167ee48/connections/1021b347-ccd3-4054-9810-b82788858350
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Thu, 07 Mar 2024 13:41:02 GMT
+      - Tue, 04 Jun 2024 11:48:40 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 204 No Content
@@ -203,14 +203,14 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/8.0.0
-    url: https://api.upcloud.com/1.3/gateway/10cb0bf6-2bb0-4043-8a1a-a98347261fd3
+      - upcloud-go-api/8.5.0
+    url: https://api.upcloud.com/1.3/gateway/10d4f3e4-bbcc-4861-ae92-98d90167ee48
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Thu, 07 Mar 2024 13:41:02 GMT
+      - Tue, 04 Jun 2024 11:48:41 GMT
       Strict-Transport-Security:
       - max-age=63072000
     status: 204 No Content
@@ -225,14 +225,14 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/8.0.0
-    url: https://api.upcloud.com/1.3/router/04437f95-9d06-40e9-ad8a-378976912ea7
+      - upcloud-go-api/8.5.0
+    url: https://api.upcloud.com/1.3/router/048ba054-f7ee-4193-83e3-69b50c1cbdc9
     method: DELETE
   response:
     body: ""
     headers:
       Date:
-      - Thu, 07 Mar 2024 13:41:07 GMT
+      - Tue, 04 Jun 2024 11:48:46 GMT
       Server:
       - Apache
       Strict-Transport-Security:
