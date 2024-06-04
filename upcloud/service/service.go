@@ -3,8 +3,10 @@ package service
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/client"
@@ -64,10 +66,21 @@ func (s *Service) get(ctx context.Context, location string, v interface{}) error
 	if err != nil {
 		return parseJSONServiceError(err)
 	}
+
 	if v == nil {
 		return nil
 	}
-	return json.Unmarshal(res, v)
+
+	err = json.Unmarshal(res, v)
+	if err == nil {
+		return nil
+	}
+
+	if strings.HasPrefix(err.Error(), "json: cannot unmarshal array") {
+		return errors.Join(err, errors.New("get: request parameters might be incorrect, ensure that required fields, such as UUID, are set to valid values"))
+	}
+
+	return err
 }
 
 // Create performs a POST request to the specified location with context and stores the response in the value pointed to by v.
