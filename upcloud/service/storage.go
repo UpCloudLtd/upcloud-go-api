@@ -169,7 +169,6 @@ func (s *Service) directStorageImport(ctx context.Context, r *request.CreateStor
 			return nil, fmt.Errorf("unable to open SourceLocation: %w", err)
 		}
 		bodyReader = f
-		defer f.Close()
 	case io.Reader:
 		bodyReader = v
 	default:
