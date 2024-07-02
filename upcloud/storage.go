@@ -21,8 +21,9 @@ const (
 	StorageTypeNormal   = "normal"
 	StorageTypeTemplate = "template"
 
-	StorageTierHDD     = "hdd"
-	StorageTierMaxIOPS = "maxiops"
+	StorageTierHDD      = "hdd"
+	StorageTierMaxIOPS  = "maxiops"
+	StorageTierStandard = "standard"
 
 	StorageAccessPublic  = "public"
 	StorageAccessPrivate = "private"

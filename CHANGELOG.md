@@ -5,24 +5,28 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+
+- storage: constant for standard storage tier
+
 ## [8.6.0]
 
-## Added
+### Added
 - **Experimental**, gateway: add UUID support for VPN gateway connections and tunnels
 - service: a more elaborate error message if get request returns an error on unmarshalling json array
 
 ## [8.5.0]
 
-## Added
+### Added
 - kubernetes: add support for node group custom plans
 - kubernetes: add support for data at rest encryption in node groups
 
 ## [8.4.0]
 
-## Added
+### Added
 - Cloud: `ParentZone` field to `Zone` struct (only available for private zones)
 
-## Changed
+### Changed
 - Go version bump to 1.21
 
 ## [8.3.0]
