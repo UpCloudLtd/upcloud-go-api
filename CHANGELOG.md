@@ -8,6 +8,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 ### Added
 
 - storage: constant for standard storage tier
+- storage: constant for disabling storage encryption
 
 ## [8.6.0]
 
