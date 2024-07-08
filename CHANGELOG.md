@@ -7,6 +7,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ### Added
 
+## [8.6.1]
+
 - storage: constant for standard storage tier
 - storage: constant for disabling storage encryption
 
@@ -479,7 +481,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.6.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.6.1...HEAD
+[8.6.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.6.0...v8.6.1
 [8.6.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.5.0...v8.6.0
 [8.5.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.4.0...v8.5.0
 [8.4.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.3.0...v8.4.0
