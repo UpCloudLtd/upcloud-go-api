@@ -447,7 +447,7 @@ func TestCreateKubernetesNodeGroupEncryptedCustomPlanRequest(t *testing.T) {
 	ng := CreateKubernetesNodeGroupRequest{
 		NodeGroup: KubernetesNodeGroup{
 			Plan:              "custom",
-			StorageEncryption: upcloud.StorageEncryptionDataAtReset,
+			StorageEncryption: upcloud.StorageEncryptionDataAtRest,
 			CustomPlan: &upcloud.KubernetesNodeGroupCustomPlan{
 				Cores:       4,
 				Memory:      2048,
@@ -481,7 +481,7 @@ func TestCreateKubernetesStorageEncryptionRequest(t *testing.T) {
 		Name:              "uks",
 		Version:           "1.28",
 		Zone:              "fi-hel2",
-		StorageEncryption: upcloud.StorageEncryptionDataAtReset,
+		StorageEncryption: upcloud.StorageEncryptionDataAtRest,
 		Network:           "00000000-0000-0000-0000-000000000000",
 		NetworkCIDR:       "172.16.0.1/24",
 	}
