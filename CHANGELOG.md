@@ -6,9 +6,12 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 ## [Unreleased]
 
 ### Added
+- client: add option to configure logger for logging requests and responses
+
 
 ## [8.6.1]
 
+### Added
 - storage: constant for standard storage tier
 - storage: constant for disabling storage encryption
 
