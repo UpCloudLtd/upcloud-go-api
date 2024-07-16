@@ -7,6 +7,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [8.6.2]
 
+### Added
+- storage: `TemplateType` field to `upcloud.Storage`
+
 ### Fixed
 - storage: typo in `StorageEncryptionDataAtRest` constant
 
