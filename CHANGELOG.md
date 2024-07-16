@@ -5,6 +5,11 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.6.2]
+
+### Added
+- storage: `TemplateType` field to `upcloud.Storage`
+
 ### Fixed
 - storage: typo in `StorageEncryptionDataAtRest` constant
 
@@ -486,7 +491,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.6.1...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.6.2...HEAD
+[8.6.2]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.6.1...v8.6.2
 [8.6.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.6.0...v8.6.1
 [8.6.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.5.0...v8.6.0
 [8.5.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.4.0...v8.5.0
