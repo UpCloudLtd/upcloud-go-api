@@ -5,10 +5,15 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
-### Added
+### Fixed
+- storage: typo in `StorageEncryptionDataAtRest` constant
+
+### Deprecated
+- `StorageEncryptionDataAtReset` in favor of `StorageEncryptionDataAtRest`
 
 ## [8.6.1]
 
+### Added
 - storage: constant for standard storage tier
 - storage: constant for disabling storage encryption
 

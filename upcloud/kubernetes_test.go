@@ -170,7 +170,7 @@ func TestKubernetesNodeGroupEncryptedCustomPlan(t *testing.T) {
 	require.NoError(t, json.Unmarshal(p, &got))
 	want := KubernetesNodeGroup{
 		Plan:              "custom",
-		StorageEncryption: StorageEncryptionDataAtReset,
+		StorageEncryption: StorageEncryptionDataAtRest,
 		CustomPlan: &KubernetesNodeGroupCustomPlan{
 			Cores:       4,
 			Memory:      2048,
@@ -192,7 +192,7 @@ func TestKubernetesStorageEncryption(t *testing.T) {
 	got := KubernetesCluster{}
 	require.NoError(t, json.Unmarshal(p, &got))
 	want := KubernetesCluster{
-		StorageEncryption: StorageEncryptionDataAtReset,
+		StorageEncryption: StorageEncryptionDataAtRest,
 	}
 	require.Equal(t, want, got)
 }

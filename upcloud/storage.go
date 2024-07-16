@@ -55,8 +55,11 @@ const (
 	StorageImportStateCancelled  = "cancelled"
 	StorageImportStateCompleted  = "completed"
 
+	StorageEncryptionDataAtRest StorageEncryption = "data-at-rest"
+	StorageEncryptionNone       StorageEncryption = "none"
+
+	// Deprecated: Use StorageEncryptionDataAtRest instead.
 	StorageEncryptionDataAtReset StorageEncryption = "data-at-rest"
-	StorageEncryptionNone        StorageEncryption = "none"
 )
 
 // Storages represents a /storage response

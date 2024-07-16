@@ -658,7 +658,7 @@ func TestCreateKubernetesEncryptedCluster(t *testing.T) {
 
 	req := request.CreateKubernetesClusterRequest{
 		Network:           networkID,
-		StorageEncryption: upcloud.StorageEncryptionDataAtReset,
+		StorageEncryption: upcloud.StorageEncryptionDataAtRest,
 	}
 	res, err := svc.CreateKubernetesCluster(context.Background(), &req)
 	require.NoError(t, err)
@@ -698,7 +698,7 @@ func TestCreateKubernetesEncryptedCustomNodeGroup(t *testing.T) {
 		ClusterUUID: "_UUID_",
 		NodeGroup: request.KubernetesNodeGroup{
 			Plan:              "custom",
-			StorageEncryption: upcloud.StorageEncryptionDataAtReset,
+			StorageEncryption: upcloud.StorageEncryptionDataAtRest,
 			CustomPlan: &upcloud.KubernetesNodeGroupCustomPlan{
 				Cores:       1,
 				Memory:      2048,
