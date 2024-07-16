@@ -50,12 +50,24 @@ func TestUnmarshalStorage(t *testing.T) {
         "type": "normal",
         "uuid": "01f3286c-a5ea-4670-8121-d0b9767d625b",
         "zone": "fi-hel1",
-		"labels": [
-			{
-				"key": "managedBy",
-				"value": "upcloud-go-sdk"
-			}
-		]
+        "labels": [
+          {
+            "key": "managedBy",
+            "value": "upcloud-go-sdk"
+          }
+        ]
+      },
+	  {
+        "access": "public",
+        "encrypted": "no",
+        "labels": [],
+        "license": 0,
+        "size": 5,
+        "state": "online",
+        "template_type": "cloud-init",
+        "title": "Ubuntu Server 24.04 LTS (Noble Numbat)",
+        "type": "template",
+        "uuid": "01000000-0000-4000-8000-000030240200"
       }
     ]
   }
@@ -64,7 +76,7 @@ func TestUnmarshalStorage(t *testing.T) {
 	storages := Storages{}
 	err := json.Unmarshal([]byte(originalJSON), &storages)
 	assert.NoError(t, err)
-	assert.Len(t, storages.Storages, 3)
+	assert.Len(t, storages.Storages, 4)
 
 	testData := []Storage{
 		{
@@ -106,6 +118,15 @@ func TestUnmarshalStorage(t *testing.T) {
 				Value: "upcloud-go-sdk",
 			}},
 		},
+		{
+			Access:       StorageAccessPublic,
+			Size:         5,
+			State:        StorageStateOnline,
+			Title:        "Ubuntu Server 24.04 LTS (Noble Numbat)",
+			Type:         StorageTypeTemplate,
+			UUID:         "01000000-0000-4000-8000-000030240200",
+			TemplateType: StorageTemplateTypeCloudInit,
+		},
 	}
 
 	for i, data := range testData {
@@ -120,6 +141,7 @@ func TestUnmarshalStorage(t *testing.T) {
 		assert.Equal(t, data.State, storage.State)
 		assert.Equal(t, data.Tier, storage.Tier)
 		assert.Equal(t, data.Zone, storage.Zone)
+		assert.Equal(t, data.TemplateType, storage.TemplateType)
 	}
 }
 

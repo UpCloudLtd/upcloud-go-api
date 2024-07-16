@@ -21,6 +21,9 @@ const (
 	StorageTypeNormal   = "normal"
 	StorageTypeTemplate = "template"
 
+	StorageTemplateTypeCloudInit = "cloud-init"
+	StorageTemplateTypeNative    = "native"
+
 	StorageTierHDD      = "hdd"
 	StorageTierMaxIOPS  = "maxiops"
 	StorageTierStandard = "standard"
@@ -93,14 +96,15 @@ type Storage struct {
 	Encrypted Boolean `json:"encrypted"`
 	License   float64 `json:"license"`
 	// TODO: Convert to boolean
-	PartOfPlan string `json:"part_of_plan"`
-	Size       int    `json:"size"`
-	State      string `json:"state"`
-	Tier       string `json:"tier"`
-	Title      string `json:"title"`
-	Type       string `json:"type"`
-	UUID       string `json:"uuid"`
-	Zone       string `json:"zone"`
+	PartOfPlan   string `json:"part_of_plan"`
+	Size         int    `json:"size"`
+	State        string `json:"state"`
+	TemplateType string `json:"template_type"`
+	Tier         string `json:"tier"`
+	Title        string `json:"title"`
+	Type         string `json:"type"`
+	UUID         string `json:"uuid"`
+	Zone         string `json:"zone"`
 	// Only for type "backup":
 	Origin  string    `json:"origin"`
 	Created time.Time `json:"created"`
