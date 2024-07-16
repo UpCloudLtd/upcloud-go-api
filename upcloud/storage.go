@@ -57,6 +57,9 @@ const (
 
 	StorageEncryptionDataAtRest StorageEncryption = "data-at-rest"
 	StorageEncryptionNone       StorageEncryption = "none"
+
+	// Deprecated: Use StorageEncryptionDataAtRest instead.
+	StorageEncryptionDataAtReset StorageEncryption = "data-at-rest"
 )
 
 // Storages represents a /storage response

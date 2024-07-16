@@ -8,6 +8,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 ### Fixed
 - storage: typo in `StorageEncryptionDataAtRest` constant
 
+### Deprecated
+- `StorageEncryptionDataAtReset` in favor of `StorageEncryptionDataAtRest`
 
 ## [8.6.1]
 
