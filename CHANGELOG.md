@@ -5,6 +5,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+
+- router: add `type` field to static routes
+
 ## [8.6.2]
 
 ### Added
