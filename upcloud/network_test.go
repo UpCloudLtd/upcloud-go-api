@@ -448,10 +448,17 @@ func TestUnmarshalRouters(t *testing.T) {
 			  },
 			  "name": "Example router",
 			  "static_routes": [
+				{
+					"name": "ngw-ID-default",
+					"nexthop": "169.254.16.2",
+					"route": "0.0.0.0/0",
+					"type": "service"
+				},
                 {
 			      "route": "0.0.0.0/0",
 			      "nexthop": "10.0.0.100",
-			      "name": "static_route_0"
+			      "name": "static_route_0",
+			      "type": "user"
 			    }
 			  ],
 			  "type": "normal",
@@ -482,9 +489,16 @@ func TestUnmarshalRouters(t *testing.T) {
 			Type: "normal",
 			StaticRoutes: []StaticRoute{
 				{
+					Name:    "ngw-ID-default",
+					Route:   "0.0.0.0/0",
+					Nexthop: "169.254.16.2",
+					Type:    RouterStaticRouteTypeService,
+				},
+				{
 					Name:    "static_route_0",
 					Route:   "0.0.0.0/0",
 					Nexthop: "10.0.0.100",
+					Type:    RouterStaticRouteTypeUser,
 				},
 			},
 			UUID: "04c0df35-2658-4b0c-8ac7-962090f4e92a",
