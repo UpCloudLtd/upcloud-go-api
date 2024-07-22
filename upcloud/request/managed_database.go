@@ -75,6 +75,7 @@ func (c *CloneManagedDatabaseRequest) RequestURL() string {
 // CreateManagedDatabaseRequest represents a request to create a new managed database instance
 type CreateManagedDatabaseRequest struct {
 	HostNamePrefix string                                `json:"hostname_prefix"`
+	Labels         []upcloud.Label                       `json:"labels,omitempty"`
 	Maintenance    ManagedDatabaseMaintenanceTimeRequest `json:"maintenance,omitempty"`
 	Networks       []upcloud.ManagedDatabaseNetwork      `json:"networks,omitempty"`
 	Plan           string                                `json:"plan"`
@@ -421,6 +422,7 @@ func (m *ManagedDatabasePropertiesRequest) GetPublicAccess() bool {
 
 // ModifyManagedDatabaseRequest represents a request to modify an existing managed database instance
 type ModifyManagedDatabaseRequest struct {
+	Labels      *[]upcloud.Label                      `json:"labels,omitempty"`
 	Maintenance ManagedDatabaseMaintenanceTimeRequest `json:"maintenance"`
 	Networks    *[]upcloud.ManagedDatabaseNetwork     `json:"networks,omitempty"`
 	Plan        string                                `json:"plan,omitempty"`

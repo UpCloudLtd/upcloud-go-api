@@ -8,6 +8,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 ### Added
 
 - router: add `type` field to static routes
+- managed databases: add support for labels.
 
 ## [8.6.2]
 
