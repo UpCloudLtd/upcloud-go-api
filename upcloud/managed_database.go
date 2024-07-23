@@ -190,6 +190,7 @@ type ManagedDatabase struct {
 	Backups          []ManagedDatabaseBackup         `json:"backups,omitempty"`
 	Components       []ManagedDatabaseComponent      `json:"components,omitempty"`
 	CreateTime       time.Time                       `json:"create_time,omitempty"`
+	Labels           []Label                         `json:"labels,omitempty"`
 	Maintenance      ManagedDatabaseMaintenanceTime  `json:"maintenance,omitempty"`
 	Name             string                          `json:"name,omitempty"`
 	Networks         []ManagedDatabaseNetwork        `json:"networks,omitempty"`
