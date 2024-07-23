@@ -5,10 +5,12 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.7.0]
+
 ### Added
 
 - router: add `type` field to static routes
-- managed databases: add support for labels.
+- managed databases: add support for labels
 
 ## [8.6.2]
 
@@ -496,7 +498,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.6.2...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.7.0...HEAD
+[8.7.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.6.2...v8.7.0
 [8.6.2]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.6.1...v8.6.2
 [8.6.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.6.0...v8.6.1
 [8.6.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.5.0...v8.6.0
