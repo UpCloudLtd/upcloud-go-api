@@ -8,6 +8,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 ## [8.7.0]
 
 ### Added
+- client: add option to configure logger for logging requests and responses
+
 
 - router: add `type` field to static routes
 - managed databases: add support for labels
