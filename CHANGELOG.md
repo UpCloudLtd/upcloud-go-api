@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.7.1]
+
 ### Added
 - kubernetes: constant for standard storage tier
 
@@ -500,7 +502,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.7.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.7.1...HEAD
+[8.7.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.7.0...v8.7.1
 [8.7.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.6.2...v8.7.0
 [8.6.2]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.6.1...v8.6.2
 [8.6.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.6.0...v8.6.1
