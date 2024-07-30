@@ -34,8 +34,9 @@ const (
 	KubernetesNodeStateTerminating KubernetesNodeState = "terminating"
 	KubernetesNodeStateUnknown     KubernetesNodeState = "unknown"
 
-	KubernetesStorageTierHDD     StorageTier = StorageTierHDD
-	KubernetesStorageTierMaxIOPS StorageTier = StorageTierMaxIOPS
+	KubernetesStorageTierHDD      StorageTier = StorageTierHDD
+	KubernetesStorageTierMaxIOPS  StorageTier = StorageTierMaxIOPS
+	KubernetesStorageTierStandard StorageTier = StorageTierStandard
 )
 
 type KubernetesCluster struct {

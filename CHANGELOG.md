@@ -5,10 +5,12 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- kubernetes: constant for standard storage tier
+
 ## [8.7.0]
 
 ### Added
-
 - router: add `type` field to static routes
 - managed databases: add support for labels
 
