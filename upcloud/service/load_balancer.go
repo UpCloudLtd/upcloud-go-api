@@ -66,6 +66,7 @@ type LoadBalancer interface {
 	DeleteLoadBalancerCertificateBundle(ctx context.Context, r *request.DeleteLoadBalancerCertificateBundleRequest) error
 	// Networks
 	ModifyLoadBalancerNetwork(ctx context.Context, r *request.ModifyLoadBalancerNetworkRequest) (*upcloud.LoadBalancerNetwork, error)
+	GetLoadBalancerDNSChallengeDomain(ctx context.Context, r *request.GetLoadBalancerDNSChallengeDomainRequest) (*upcloud.LoadBalancerDNSChallengeDomain, error)
 }
 
 // GetLoadBalancers retrieves a list of load balancers.
@@ -421,4 +422,9 @@ func (s *Service) DeleteLoadBalancerCertificateBundle(ctx context.Context, r *re
 func (s *Service) ModifyLoadBalancerNetwork(ctx context.Context, r *request.ModifyLoadBalancerNetworkRequest) (*upcloud.LoadBalancerNetwork, error) {
 	n := upcloud.LoadBalancerNetwork{}
 	return &n, s.modify(ctx, r, &n)
+}
+
+func (s *Service) GetLoadBalancerDNSChallengeDomain(ctx context.Context, r *request.GetLoadBalancerDNSChallengeDomainRequest) (*upcloud.LoadBalancerDNSChallengeDomain, error) {
+	var domain upcloud.LoadBalancerDNSChallengeDomain
+	return &domain, s.get(ctx, r.RequestURL(), &domain)
 }

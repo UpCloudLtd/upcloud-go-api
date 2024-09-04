@@ -141,3 +141,8 @@ type ManagedObjectStorageMetrics struct {
 	TotalObjects   int `json:"total_objects"`
 	TotalSizeBytes int `json:"total_size_bytes"`
 }
+
+type ManagedObjectStorageCustomDomain struct {
+	DomainName string `json:"domain_name"`
+	Type       string `json:"type"`
+}

@@ -417,3 +417,7 @@ type LoadBalancerNodeNetwork struct {
 type LoadBalancerFrontendNetwork struct {
 	Name string `json:"name,omitempty"`
 }
+
+type LoadBalancerDNSChallengeDomain struct {
+	Domain string `json:"domain"`
+}
