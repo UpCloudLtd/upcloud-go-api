@@ -1279,6 +1279,16 @@ func TestLoadBalancerLabels(t *testing.T) {
 	})
 }
 
+func TestDNSChallengeDomain(t *testing.T) {
+	t.Parallel()
+
+	record(t, "loadbalancerdnschallenge", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		domain, err := svc.GetLoadBalancerDNSChallengeDomain(ctx, &request.GetLoadBalancerDNSChallengeDomainRequest{})
+		require.NoError(t, err)
+		assert.NotEmpty(t, domain.Domain)
+	})
+}
+
 func waitLoadBalancerOnline(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, UUID string) error {
 	t.Helper()
 	if rec.Mode() == recorder.ModeRecording {

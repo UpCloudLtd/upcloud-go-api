@@ -5,6 +5,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- managed object storage: support for custom domains
+- managed load balancer: support for reading DNS challenge domain
+
 ## [8.7.1]
 
 ### Added

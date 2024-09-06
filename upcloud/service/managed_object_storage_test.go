@@ -844,6 +844,76 @@ func TestDetachManagedObjectStorageUserPolicy(t *testing.T) {
 	})
 }
 
+func TestManagedObjectStorageCustomDomains(t *testing.T) {
+	record(t, "managedobjectstoragecustomdomains", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		storage, err := createManagedObjectStorage(ctx, svc)
+		require.NoError(t, err)
+
+		defer func(uuid string) {
+			err = deleteManagedObjectStorageAndUsers(ctx, svc, uuid)
+			require.NoError(t, err)
+		}(storage.UUID)
+
+		domainName := "obj.example.com"
+		err = svc.CreateManagedObjectStorageCustomDomain(ctx, &request.CreateManagedObjectStorageCustomDomainRequest{
+			DomainName:  domainName,
+			Type:        "public",
+			ServiceUUID: storage.UUID,
+		})
+		require.NoError(t, err)
+
+		domains, err := svc.GetManagedObjectStorageCustomDomains(ctx, &request.GetManagedObjectStorageCustomDomainsRequest{
+			ServiceUUID: storage.UUID,
+		})
+		assert.NoError(t, err)
+		assert.Len(t, domains, 1)
+		assert.Equal(t, domains[0].DomainName, domainName)
+
+		objsto, err := svc.GetManagedObjectStorage(ctx, &request.GetManagedObjectStorageRequest{
+			UUID: storage.UUID,
+		})
+		assert.NoError(t, err)
+		assert.Len(t, objsto.CustomDomains, 1)
+
+		domain, err := svc.GetManagedObjectStorageCustomDomain(ctx, &request.GetManagedObjectStorageCustomDomainRequest{
+			ServiceUUID: storage.UUID,
+			DomainName:  domainName,
+		})
+		assert.NoError(t, err)
+		assert.Equal(t, domain.DomainName, domainName)
+
+		modifiedDomainName := "objects.example.com"
+		domain, err = svc.ModifyManagedObjectStorageCustomDomain(ctx, &request.ModifyManagedObjectStorageCustomDomainRequest{
+			ServiceUUID: storage.UUID,
+			DomainName:  domainName,
+			CustomDomain: request.ModifyCustomDomain{
+				Type:       "public",
+				DomainName: modifiedDomainName,
+			},
+		})
+		assert.NoError(t, err)
+		assert.Equal(t, domain.DomainName, modifiedDomainName)
+
+		err = svc.DeleteManagedObjectStorageCustomDomain(ctx, &request.DeleteManagedObjectStorageCustomDomainRequest{
+			ServiceUUID: storage.UUID,
+			DomainName:  modifiedDomainName,
+		})
+		require.NoError(t, err)
+
+		domains, err = svc.GetManagedObjectStorageCustomDomains(ctx, &request.GetManagedObjectStorageCustomDomainsRequest{
+			ServiceUUID: storage.UUID,
+		})
+		assert.NoError(t, err)
+		assert.Len(t, domains, 0)
+
+		objsto, err = svc.GetManagedObjectStorage(ctx, &request.GetManagedObjectStorageRequest{
+			UUID: storage.UUID,
+		})
+		assert.NoError(t, err)
+		assert.Len(t, objsto.CustomDomains, 0)
+	})
+}
+
 func createManagedObjectStorage(ctx context.Context, svc *Service) (*upcloud.ManagedObjectStorage, error) {
 	regions, err := svc.GetManagedObjectStorageRegions(ctx, &request.GetManagedObjectStorageRegionsRequest{})
 	if err != nil {

@@ -728,3 +728,10 @@ func (r *ModifyLoadBalancerNetworkRequest) RequestURL() string {
 func (r *ModifyLoadBalancerNetworkRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(r.Network)
 }
+
+// GetLoadBalancerDNSChallengeDomainRequest represents a request to get domain for DNS challenge
+type GetLoadBalancerDNSChallengeDomainRequest struct{}
+
+func (r *GetLoadBalancerDNSChallengeDomainRequest) RequestURL() string {
+	return "/load-balancer/certificate-bundles/dns-challenge-domain"
+}

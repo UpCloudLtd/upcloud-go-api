@@ -1,6 +1,7 @@
 package request
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
@@ -359,6 +360,71 @@ type DetachManagedObjectStorageUserPolicyRequest struct {
 // RequestURL implements the Request interface
 func (r *DetachManagedObjectStorageUserPolicyRequest) RequestURL() string {
 	return fmt.Sprintf("%s/%s/users/%s/policies/%s", managedObjectStorageBasePath, r.ServiceUUID, r.Username, r.Name)
+}
+
+// CreateManagedObjectStorageCustomDomainRequest represents a request for creating a policy
+type CreateManagedObjectStorageCustomDomainRequest struct {
+	DomainName  string `json:"domain_name"`
+	Type        string `json:"type"`
+	ServiceUUID string `json:"-"`
+}
+
+// RequestURL implements the Request interface
+func (r *CreateManagedObjectStorageCustomDomainRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/custom-domains", managedObjectStorageBasePath, r.ServiceUUID)
+}
+
+// GetManagedObjectStorageCustomDomainsRequest represents a request for retrieving policies
+type GetManagedObjectStorageCustomDomainsRequest struct {
+	ServiceUUID string `json:"-"`
+}
+
+// RequestURL implements the Request interface
+func (r *GetManagedObjectStorageCustomDomainsRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/custom-domains", managedObjectStorageBasePath, r.ServiceUUID)
+}
+
+// GetManagedObjectStorageCustomDomainRequest represents a request for retrieving details about a policy
+type GetManagedObjectStorageCustomDomainRequest struct {
+	DomainName  string `json:"-"`
+	ServiceUUID string `json:"-"`
+}
+
+// RequestURL implements the Request interface
+func (r *GetManagedObjectStorageCustomDomainRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/custom-domains/%s", managedObjectStorageBasePath, r.ServiceUUID, r.DomainName)
+}
+
+type ModifyCustomDomain struct {
+	DomainName string `json:"domain_name"`
+	Type       string `json:"type"`
+}
+
+// ModifyManagedObjectStorageCustomDomainRequest represents a request for retrieving details about a policy
+type ModifyManagedObjectStorageCustomDomainRequest struct {
+	DomainName   string `json:"-"`
+	ServiceUUID  string `json:"-"`
+	CustomDomain ModifyCustomDomain
+}
+
+// RequestURL implements the Request interface
+func (r *ModifyManagedObjectStorageCustomDomainRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/custom-domains/%s", managedObjectStorageBasePath, r.ServiceUUID, r.DomainName)
+}
+
+func (r *ModifyManagedObjectStorageCustomDomainRequest) MarshalJSON() ([]byte, error) {
+	return json.Marshal(r.CustomDomain)
+}
+
+// DeleteManagedObjectStorageCustomDomainRequest represents a request to delete a policy
+type DeleteManagedObjectStorageCustomDomainRequest struct {
+	ServiceUUID string `json:"-"`
+	DomainName  string `json:"-"`
+}
+
+// RequestURL implements the Request interface
+func (r *DeleteManagedObjectStorageCustomDomainRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/custom-domains/%s", managedObjectStorageBasePath, r.ServiceUUID, r.DomainName)
 }
 
 // WaitForManagedObjectStorageOperationalStateRequest represents a request to wait for a Managed Object Storage service

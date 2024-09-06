@@ -1,0 +1,29 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.7.1
+    url: https://api.upcloud.com/1.3/load-balancer/certificate-bundles/dns-challenge-domain
+    method: GET
+  response:
+    body: '{"domain":"_acme-challenge.750014ac94194e9f30c6ac66c3edc95d78d13241438d4566.upcloudlb.com"}'
+    headers:
+      Content-Length:
+      - "91"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 06 Sep 2024 12:12:15 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
