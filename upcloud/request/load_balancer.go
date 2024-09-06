@@ -733,5 +733,5 @@ func (r *ModifyLoadBalancerNetworkRequest) MarshalJSON() ([]byte, error) {
 type GetLoadBalancerDNSChallengeDomainRequest struct{}
 
 func (r *GetLoadBalancerDNSChallengeDomainRequest) RequestURL() string {
-	return "load-balancer/certificate-bundles/dns-challenge-domain"
+	return "/load-balancer/certificate-bundles/dns-challenge-domain"
 }
