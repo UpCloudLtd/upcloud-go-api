@@ -876,9 +876,21 @@ func TestManagedObjectStorageCustomDomains(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, domain.DomainName, domainName)
 
-		err = svc.DeleteManagedObjectStorageCustomDomain(ctx, &request.DeleteManagedObjectStorageCustomDomainRequest{
+		modifiedDomainName := "objects.example.com"
+		domain, err = svc.ModifyManagedObjectStorageCustomDomain(ctx, &request.ModifyManagedObjectStorageCustomDomainRequest{
 			ServiceUUID: storage.UUID,
 			DomainName:  domainName,
+			CustomDomain: request.ModifyCustomDomain{
+				Type:       "public",
+				DomainName: modifiedDomainName,
+			},
+		})
+		assert.NoError(t, err)
+		assert.Equal(t, domain.DomainName, modifiedDomainName)
+
+		err = svc.DeleteManagedObjectStorageCustomDomain(ctx, &request.DeleteManagedObjectStorageCustomDomainRequest{
+			ServiceUUID: storage.UUID,
+			DomainName:  modifiedDomainName,
 		})
 		require.NoError(t, err)
 

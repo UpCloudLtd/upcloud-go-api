@@ -43,6 +43,7 @@ type ManagedObjectStorage interface {
 	CreateManagedObjectStorageCustomDomain(ctx context.Context, r *request.CreateManagedObjectStorageCustomDomainRequest) error
 	GetManagedObjectStorageCustomDomains(ctx context.Context, r *request.GetManagedObjectStorageCustomDomainsRequest) ([]upcloud.ManagedObjectStorageCustomDomain, error)
 	GetManagedObjectStorageCustomDomain(ctx context.Context, r *request.GetManagedObjectStorageCustomDomainRequest) (*upcloud.ManagedObjectStorageCustomDomain, error)
+	ModifyManagedObjectStorageCustomDomain(ctx context.Context, r *request.ModifyManagedObjectStorageCustomDomainRequest) (*upcloud.ManagedObjectStorageCustomDomain, error)
 	DeleteManagedObjectStorageCustomDomain(ctx context.Context, r *request.DeleteManagedObjectStorageCustomDomainRequest) error
 	WaitForManagedObjectStorageOperationalState(ctx context.Context, r *request.WaitForManagedObjectStorageOperationalStateRequest) (*upcloud.ManagedObjectStorage, error)
 	WaitForManagedObjectStorageDeletion(ctx context.Context, r *request.WaitForManagedObjectStorageDeletionRequest) error
@@ -203,6 +204,11 @@ func (s *Service) GetManagedObjectStorageCustomDomains(ctx context.Context, r *r
 func (s *Service) GetManagedObjectStorageCustomDomain(ctx context.Context, r *request.GetManagedObjectStorageCustomDomainRequest) (*upcloud.ManagedObjectStorageCustomDomain, error) {
 	domain := upcloud.ManagedObjectStorageCustomDomain{}
 	return &domain, s.get(ctx, r.RequestURL(), &domain)
+}
+
+func (s *Service) ModifyManagedObjectStorageCustomDomain(ctx context.Context, r *request.ModifyManagedObjectStorageCustomDomainRequest) (*upcloud.ManagedObjectStorageCustomDomain, error) {
+	domain := upcloud.ManagedObjectStorageCustomDomain{}
+	return &domain, s.modify(ctx, r, &domain)
 }
 
 func (s *Service) DeleteManagedObjectStorageCustomDomain(ctx context.Context, r *request.DeleteManagedObjectStorageCustomDomainRequest) error {

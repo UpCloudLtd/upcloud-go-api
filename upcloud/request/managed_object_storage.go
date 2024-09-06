@@ -1,6 +1,7 @@
 package request
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
@@ -392,6 +393,27 @@ type GetManagedObjectStorageCustomDomainRequest struct {
 // RequestURL implements the Request interface
 func (r *GetManagedObjectStorageCustomDomainRequest) RequestURL() string {
 	return fmt.Sprintf("%s/%s/custom-domains/%s", managedObjectStorageBasePath, r.ServiceUUID, r.DomainName)
+}
+
+type ModifyCustomDomain struct {
+	DomainName string `json:"domain_name"`
+	Type       string `json:"type"`
+}
+
+// ModifyManagedObjectStorageCustomDomainRequest represents a request for retrieving details about a policy
+type ModifyManagedObjectStorageCustomDomainRequest struct {
+	DomainName   string `json:"-"`
+	ServiceUUID  string `json:"-"`
+	CustomDomain ModifyCustomDomain
+}
+
+// RequestURL implements the Request interface
+func (r *ModifyManagedObjectStorageCustomDomainRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/custom-domains/%s", managedObjectStorageBasePath, r.ServiceUUID, r.DomainName)
+}
+
+func (r *ModifyManagedObjectStorageCustomDomainRequest) MarshalJSON() ([]byte, error) {
+	return json.Marshal(r.CustomDomain)
 }
 
 // DeleteManagedObjectStorageCustomDomainRequest represents a request to delete a policy
