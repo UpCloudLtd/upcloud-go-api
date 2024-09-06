@@ -54,6 +54,7 @@ type (
 type ManagedObjectStorage struct {
 	ConfiguredStatus ManagedObjectStorageConfiguredStatus `json:"configured_status"`
 	CreatedAt        time.Time                            `json:"created_at"`
+	CustomDomains    []ManagedObjectStorageCustomDomain   `json:"custom_domains"`
 	Endpoints        []ManagedObjectStorageEndpoint       `json:"endpoints"`
 	Labels           []Label                              `json:"labels"`
 	Name             string                               `json:"name,omitempty"`

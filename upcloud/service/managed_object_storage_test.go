@@ -869,6 +869,12 @@ func TestManagedObjectStorageCustomDomains(t *testing.T) {
 		assert.Len(t, domains, 1)
 		assert.Equal(t, domains[0].DomainName, domainName)
 
+		objsto, err := svc.GetManagedObjectStorage(ctx, &request.GetManagedObjectStorageRequest{
+			UUID: storage.UUID,
+		})
+		assert.NoError(t, err)
+		assert.Len(t, objsto.CustomDomains, 1)
+
 		domain, err := svc.GetManagedObjectStorageCustomDomain(ctx, &request.GetManagedObjectStorageCustomDomainRequest{
 			ServiceUUID: storage.UUID,
 			DomainName:  domainName,
@@ -899,6 +905,12 @@ func TestManagedObjectStorageCustomDomains(t *testing.T) {
 		})
 		assert.NoError(t, err)
 		assert.Len(t, domains, 0)
+
+		objsto, err = svc.GetManagedObjectStorage(ctx, &request.GetManagedObjectStorageRequest{
+			UUID: storage.UUID,
+		})
+		assert.NoError(t, err)
+		assert.Len(t, objsto.CustomDomains, 0)
 	})
 }
 

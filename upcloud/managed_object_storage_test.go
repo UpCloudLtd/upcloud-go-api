@@ -11,6 +11,12 @@ func TestManagedObjectStorage(t *testing.T) {
 		&ManagedObjectStorage{
 			ConfiguredStatus: ManagedObjectStorageConfiguredStatusStarted,
 			CreatedAt:        timeParse("2023-05-07T15:55:24.655776Z"),
+			CustomDomains: []ManagedObjectStorageCustomDomain{
+				{
+					DomainName: "objects.example.com",
+					Type:       "public",
+				},
+			},
 			Endpoints: []ManagedObjectStorageEndpoint{
 				{
 					DomainName: "7mf5k.upbucket.com",
@@ -52,6 +58,12 @@ func TestManagedObjectStorage(t *testing.T) {
 		{
 			"configured_status": "started",
 			"created_at": "2023-05-07T15:55:24.655776Z",
+			"custom_domains": [
+				{
+					"domain_name": "objects.example.com",
+					"type": "public"
+				}
+			],
 			"endpoints": [
 				{
 					"domain_name": "7mf5k.upbucket.com",
