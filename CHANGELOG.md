@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.8.0]
+
 ### Added
 - managed object storage: support for custom domains
 - managed load balancer: support for reading DNS challenge domain
@@ -506,7 +508,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.7.1...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.8.0...HEAD
+[8.8.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.7.1...v8.8.0
 [8.7.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.7.0...v8.7.1
 [8.7.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.6.2...v8.7.0
 [8.6.2]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.6.1...v8.6.2
