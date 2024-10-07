@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- Managed Load Balancer: `MatchingCondition` field to frontend rule for controlling which operator to use when combining matchers
+
 ## [8.8.1]
 
 ### Changed

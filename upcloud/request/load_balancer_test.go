@@ -864,6 +864,7 @@ func TestCreateLoadBalancerFrontendRuleRequest(t *testing.T) {
 	{
 		"name": "example-rule-1",
 		"priority": 100,
+		"matching_condition": "or",
 		"matchers": [
 			{
 				"type": "path",
@@ -887,8 +888,9 @@ func TestCreateLoadBalancerFrontendRuleRequest(t *testing.T) {
 		ServiceUUID:  "sid",
 		FrontendName: "fename",
 		Rule: LoadBalancerFrontendRule{
-			Name:     "example-rule-1",
-			Priority: 100,
+			Name:              "example-rule-1",
+			Priority:          100,
+			MatchingCondition: upcloud.LoadBalancerMatchingConditionOr,
 			Matchers: []upcloud.LoadBalancerMatcher{{
 				Type: upcloud.LoadBalancerMatcherTypePath,
 				Path: &upcloud.LoadBalancerMatcherString{
