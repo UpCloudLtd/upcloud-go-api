@@ -161,19 +161,40 @@ func TestGetManagedObjectStorageMetrics(t *testing.T) {
 	})
 }
 
-func TestGetManagedObjectStorageBucketMetrics(t *testing.T) {
-	record(t, "getmanagedobjectstoragebucketmetrics", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		storage, err := createManagedObjectStorage(ctx, svc)
+func TestManagedObjectStorageBucketOperations(t *testing.T) {
+	record(t, "managedobjectstoragebucketoperations", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		objsto, err := createManagedObjectStorage(ctx, svc)
 		require.NoError(t, err)
 
 		defer func(uuid string) {
 			err = deleteManagedObjectStorageAndUsers(ctx, svc, uuid)
 			require.NoError(t, err)
-		}(storage.UUID)
+		}(objsto.UUID)
 
-		m, err := svc.GetManagedObjectStorageBucketMetrics(ctx, &request.GetManagedObjectStorageBucketMetricsRequest{ServiceUUID: storage.UUID})
+		m, err := svc.GetManagedObjectStorageBucketMetrics(ctx, &request.GetManagedObjectStorageBucketMetricsRequest{ServiceUUID: objsto.UUID})
 		require.NoError(t, err)
 		assert.Len(t, m, 0)
+
+		_, err = svc.CreateManagedObjectStorageBucket(ctx, &request.CreateManagedObjectStorageBucketRequest{Name: "test", ServiceUUID: objsto.UUID})
+		require.NoError(t, err)
+
+		m, err = svc.GetManagedObjectStorageBucketMetrics(ctx, &request.GetManagedObjectStorageBucketMetricsRequest{ServiceUUID: objsto.UUID})
+		require.NoError(t, err)
+		assert.Len(t, m, 1)
+		assert.Equal(t, "test", m[0].Name)
+		assert.False(t, m[0].Deleted)
+
+		err = svc.DeleteManagedObjectStorageBucket(ctx, &request.DeleteManagedObjectStorageBucketRequest{Name: "test", ServiceUUID: objsto.UUID})
+		require.NoError(t, err)
+
+		m, err = svc.GetManagedObjectStorageBucketMetrics(ctx, &request.GetManagedObjectStorageBucketMetricsRequest{ServiceUUID: objsto.UUID})
+		require.NoError(t, err)
+		assert.Len(t, m, 1)
+		assert.Equal(t, "test", m[0].Name)
+		assert.True(t, m[0].Deleted)
+
+		err = svc.WaitForManagedObjectStorageBucketDeletion(ctx, &request.WaitForManagedObjectStorageBucketDeletionRequest{Name: "test", ServiceUUID: objsto.UUID})
+		require.NoError(t, err)
 	})
 }
 

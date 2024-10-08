@@ -19,6 +19,8 @@ type ManagedObjectStorage interface {
 	ModifyManagedObjectStorage(ctx context.Context, r *request.ModifyManagedObjectStorageRequest) (*upcloud.ManagedObjectStorage, error)
 	DeleteManagedObjectStorage(ctx context.Context, r *request.DeleteManagedObjectStorageRequest) error
 	GetManagedObjectStorageMetrics(ctx context.Context, r *request.GetManagedObjectStorageMetricsRequest) (*upcloud.ManagedObjectStorageMetrics, error)
+	CreateManagedObjectStorageBucket(ctx context.Context, r *request.CreateManagedObjectStorageBucketRequest) (upcloud.ManagedObjectStorageBucketMetrics, error)
+	DeleteManagedObjectStorageBucket(ctx context.Context, r *request.DeleteManagedObjectStorageBucketRequest) error
 	GetManagedObjectStorageBucketMetrics(ctx context.Context, r *request.GetManagedObjectStorageBucketMetricsRequest) ([]upcloud.ManagedObjectStorageBucketMetrics, error)
 	CreateManagedObjectStorageNetwork(ctx context.Context, r *request.CreateManagedObjectStorageNetworkRequest) (*upcloud.ManagedObjectStorageNetwork, error)
 	GetManagedObjectStorageNetworks(ctx context.Context, r *request.GetManagedObjectStorageNetworksRequest) ([]upcloud.ManagedObjectStorageNetwork, error)
@@ -47,6 +49,7 @@ type ManagedObjectStorage interface {
 	DeleteManagedObjectStorageCustomDomain(ctx context.Context, r *request.DeleteManagedObjectStorageCustomDomainRequest) error
 	WaitForManagedObjectStorageOperationalState(ctx context.Context, r *request.WaitForManagedObjectStorageOperationalStateRequest) (*upcloud.ManagedObjectStorage, error)
 	WaitForManagedObjectStorageDeletion(ctx context.Context, r *request.WaitForManagedObjectStorageDeletionRequest) error
+	WaitForManagedObjectStorageBucketDeletion(ctx context.Context, r *request.WaitForManagedObjectStorageBucketDeletionRequest) error
 }
 
 func (s *Service) GetManagedObjectStorageRegions(ctx context.Context, r *request.GetManagedObjectStorageRegionsRequest) ([]upcloud.ManagedObjectStorageRegion, error) {
@@ -91,6 +94,15 @@ func (s *Service) DeleteManagedObjectStorage(ctx context.Context, r *request.Del
 func (s *Service) GetManagedObjectStorageMetrics(ctx context.Context, r *request.GetManagedObjectStorageMetricsRequest) (*upcloud.ManagedObjectStorageMetrics, error) {
 	metrics := upcloud.ManagedObjectStorageMetrics{}
 	return &metrics, s.get(ctx, r.RequestURL(), &metrics)
+}
+
+func (s *Service) CreateManagedObjectStorageBucket(ctx context.Context, r *request.CreateManagedObjectStorageBucketRequest) (upcloud.ManagedObjectStorageBucketMetrics, error) {
+	var bucketMetrics upcloud.ManagedObjectStorageBucketMetrics
+	return bucketMetrics, s.create(ctx, r, &bucketMetrics)
+}
+
+func (s *Service) DeleteManagedObjectStorageBucket(ctx context.Context, r *request.DeleteManagedObjectStorageBucketRequest) error {
+	return s.delete(ctx, r)
 }
 
 func (s *Service) GetManagedObjectStorageBucketMetrics(ctx context.Context, r *request.GetManagedObjectStorageBucketMetricsRequest) ([]upcloud.ManagedObjectStorageBucketMetrics, error) {
@@ -234,8 +246,7 @@ func (s *Service) WaitForManagedObjectStorageOperationalState(ctx context.Contex
 	}, nil)
 }
 
-// WaitForManagedObjectStorageDeletion blocks execution until the specified Managed Object Storage service
-// has been deleted. The method will give upafter the specified timeout
+// WaitForManagedObjectStorageDeletion blocks execution until the specified Managed Object Storage service has been deleted.
 func (s *Service) WaitForManagedObjectStorageDeletion(ctx context.Context, r *request.WaitForManagedObjectStorageDeletionRequest) error {
 	_, err := retry(ctx, func(_ int, c context.Context) (*upcloud.ManagedObjectStorage, error) {
 		details, err := s.GetManagedObjectStorage(c, &request.GetManagedObjectStorageRequest{
@@ -251,6 +262,31 @@ func (s *Service) WaitForManagedObjectStorageDeletion(ctx context.Context, r *re
 		}
 
 		return details, err
+	}, &retryConfig{inverse: true})
+	return err
+}
+
+// WaitForManagedObjectStorageBucketDeletion blocks execution until the specified Managed Object Storage bucket has been deleted.
+func (s *Service) WaitForManagedObjectStorageBucketDeletion(ctx context.Context, r *request.WaitForManagedObjectStorageBucketDeletionRequest) error {
+	_, err := retry(ctx, func(_ int, c context.Context) (*upcloud.ManagedObjectStorageBucketMetrics, error) {
+		buckets, err := s.GetManagedObjectStorageBucketMetrics(c, &request.GetManagedObjectStorageBucketMetricsRequest{
+			ServiceUUID: r.ServiceUUID,
+		})
+		if err != nil {
+			var ucErr *upcloud.Problem
+			if errors.As(err, &ucErr) && ucErr.Status == http.StatusNotFound {
+				return nil, nil
+			}
+
+			return nil, err
+		}
+
+		for _, bucket := range buckets {
+			if bucket.Name == r.Name {
+				return &bucket, nil
+			}
+		}
+		return nil, err
 	}, &retryConfig{inverse: true})
 	return err
 }
