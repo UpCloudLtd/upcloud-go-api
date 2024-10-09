@@ -1,0 +1,1347 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/regions
+    method: GET
+  response:
+    body: '[{"name":"apac-1","primary_zone":"sg-sin1","zones":[{"name":"sg-sin1"}]},{"name":"europe-1","primary_zone":"fi-hel2","zones":[{"name":"fi-hel2"},{"name":"de-fra1"},{"name":"es-mad1"},{"name":"fi-hel1"},{"name":"nl-ams1"},{"name":"pl-waw1"},{"name":"uk-lon1"},{"name":"se-sto1"}]},{"name":"europe-2","primary_zone":"de-fra1","zones":[{"name":"de-fra1"},{"name":"fi-hel2"},{"name":"es-mad1"},{"name":"fi-hel1"},{"name":"nl-ams1"},{"name":"pl-waw1"},{"name":"uk-lon1"},{"name":"se-sto1"}]}]'
+    headers:
+      Content-Length:
+      - "487"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:54:16 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"configured_status":"started","labels":[{"key":"example-key","value":"example-value"}],"name":"go-sdk-integration-test","networks":[{"family":"IPv4","name":"example-public-network","type":"public"}],"region":"apac-1"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2
+    method: POST
+  response:
+    body: '{"configured_status":"started","created_at":"2024-10-08T07:54:16.556935Z","custom_domains":[],"endpoints":[{"domain_name":"07ftk.upcloudobjects.com","iam_url":"https://07ftk.upcloudobjects.com:4443/iam","sts_url":"https://07ftk.upcloudobjects.com:4443/sts","type":"public"}],"labels":[{"key":"example-key","value":"example-value"}],"name":"go-sdk-integration-test","networks":[{"family":"IPv4","name":"example-public-network","type":"public"}],"operational_state":"pending","region":"apac-1","updated_at":"2024-10-08T07:54:16.556935Z","usage":{"total_objects":0,"total_size_bytes":0},"users":[],"uuid":"1201dfda-697f-4620-9b53-9c75f2afce93"}'
+    headers:
+      Content-Length:
+      - "641"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:54:18 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[]'
+    headers:
+      Content-Length:
+      - "2"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:54:18 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"name":"test"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: POST
+  response:
+    body: '{"deleted":false,"name":"test","total_objects":0,"total_size_bytes":0}'
+    headers:
+      Content-Length:
+      - "70"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:54:19 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":false,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "72"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:54:19 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets/test
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Tue, 08 Oct 2024 07:54:20 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:54:20 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:54:25 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:54:30 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:54:35 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:54:40 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:54:45 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:54:50 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:54:56 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:55:00 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:55:05 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:55:10 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:55:15 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:55:20 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:55:25 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:55:30 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:55:35 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:55:40 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:55:45 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:55:50 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:55:55 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:56:00 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:56:05 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:56:10 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:56:15 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:56:20 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:56:25 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:56:30 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:56:35 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:56:40 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:56:45 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:56:50 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:56:55 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:57:00 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:57:05 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:57:10 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:57:15 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:57:20 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:57:25 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:57:30 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:57:35 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:57:40 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:57:45 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[{"deleted":true,"name":"test","total_objects":0,"total_size_bytes":0}]'
+    headers:
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:57:50 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/buckets
+    method: GET
+  response:
+    body: '[]'
+    headers:
+      Content-Length:
+      - "2"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:57:55 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93/users
+    method: GET
+  response:
+    body: '[]'
+    headers:
+      Content-Length:
+      - "2"
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Oct 2024 07:57:56 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.8.1
+    url: https://api.upcloud.com/1.3/object-storage-2/1201dfda-697f-4620-9b53-9c75f2afce93
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Tue, 08 Oct 2024 07:57:57 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""

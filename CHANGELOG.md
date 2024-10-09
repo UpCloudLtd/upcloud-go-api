@@ -6,7 +6,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 ## [Unreleased]
 
 ### Added
-- Managed Load Balancer: `MatchingCondition` field to frontend rule for controlling which operator to use when combining matchers
+- managed load balancer: `MatchingCondition` field to frontend rule for controlling which operator to use when combining matchers
+- managed object storage: support for creating and deleting buckets
+- managed object storage: `Deleted` field to `upcloud.ManagedObjectStorageBucketMetrics`
 
 ## [8.8.1]
 

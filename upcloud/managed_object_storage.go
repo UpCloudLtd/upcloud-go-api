@@ -133,6 +133,7 @@ type ManagedObjectStorageUserAccessKey struct {
 // ManagedObjectStorageBucketMetrics represents metrics for a Managed Object Storage service bucket
 type ManagedObjectStorageBucketMetrics struct {
 	Name           string `json:"name"`
+	Deleted        bool   `json:"deleted"`
 	TotalObjects   int    `json:"total_objects"`
 	TotalSizeBytes int    `json:"total_size_bytes"`
 }

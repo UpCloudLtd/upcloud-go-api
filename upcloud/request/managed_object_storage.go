@@ -134,6 +134,26 @@ func (r *GetManagedObjectStorageBucketMetricsRequest) RequestURL() string {
 	return path
 }
 
+type CreateManagedObjectStorageBucketRequest struct {
+	ServiceUUID string `json:"-"`
+	Name        string `json:"name"`
+}
+
+// RequestURL implements the Request interface
+func (r *CreateManagedObjectStorageBucketRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/buckets", managedObjectStorageBasePath, r.ServiceUUID)
+}
+
+type DeleteManagedObjectStorageBucketRequest struct {
+	ServiceUUID string `json:"-"`
+	Name        string `json:"-"`
+}
+
+// RequestURL implements the Request interface
+func (r *DeleteManagedObjectStorageBucketRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/buckets/%s", managedObjectStorageBasePath, r.ServiceUUID, r.Name)
+}
+
 // CreateManagedObjectStorageNetworkRequest represents a request for creating a network
 type CreateManagedObjectStorageNetworkRequest struct {
 	Family      string `json:"family"`
@@ -442,11 +462,23 @@ func (r *WaitForManagedObjectStorageOperationalStateRequest) RequestURL() string
 // WaitForManagedObjectStorageDeletionRequest represents a request to wait for a Managed Object Storage service
 // to be deleted
 type WaitForManagedObjectStorageDeletionRequest struct {
-	DesiredState upcloud.ManagedObjectStorageOperationalState `json:"-"`
+	DesiredState upcloud.ManagedObjectStorageOperationalState `json:"-"` // Deprecated: The managed object storage instance has no state after being deleted.
 	UUID         string                                       `json:"-"`
 }
 
 // RequestURL implements the Request interface
 func (r *WaitForManagedObjectStorageDeletionRequest) RequestURL() string {
 	return fmt.Sprintf("%s/%s", managedObjectStorageBasePath, r.UUID)
+}
+
+// WaitForManagedObjectStorageDeletionRequest represents a request to wait for a Managed Object Storage service
+// to be deleted
+type WaitForManagedObjectStorageBucketDeletionRequest struct {
+	ServiceUUID string `json:"-"`
+	Name        string `json:"-"`
+}
+
+// RequestURL implements the Request interface
+func (r *WaitForManagedObjectStorageBucketDeletionRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/buckets", managedObjectStorageBasePath, r.ServiceUUID)
 }
