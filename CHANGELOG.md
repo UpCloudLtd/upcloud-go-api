@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.9.0]
+
 ### Added
 - managed load balancer: `MatchingCondition` field to frontend rule for controlling which operator to use when combining matchers
 - managed object storage: support for creating and deleting buckets
@@ -518,7 +520,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.8.1...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.9.0...HEAD
+[8.9.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.8.1...v8.9.0
 [8.8.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.8.0...v8.8.1
 [8.8.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.7.1...v8.8.0
 [8.7.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.7.0...v8.7.1
