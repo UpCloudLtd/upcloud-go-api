@@ -436,8 +436,9 @@ func (r *GetLoadBalancerFrontendRuleRequest) RequestURL() string {
 
 // LoadBalancerFrontendRule represents frontend rule payload
 type LoadBalancerFrontendRule struct {
-	Name     string `json:"name"`
-	Priority int    `json:"priority"`
+	Name              string                                `json:"name"`
+	Priority          int                                   `json:"priority"`
+	MatchingCondition upcloud.LoadBalancerMatchingCondition `json:"matching_condition,omitempty"`
 
 	// Set of rule matchers.
 	// Use NewLoadBalancer<Type>Matcher helper functions to define matcher items.
@@ -481,8 +482,9 @@ func (r *ReplaceLoadBalancerFrontendRuleRequest) RequestURL() string {
 
 // ModifyLoadBalancerFrontendRule represents frontend rule modification payload
 type ModifyLoadBalancerFrontendRule struct {
-	Name     string `json:"name,omitempty"`
-	Priority *int   `json:"priority,omitempty"`
+	Name              string                                `json:"name,omitempty"`
+	Priority          *int                                  `json:"priority,omitempty"`
+	MatchingCondition upcloud.LoadBalancerMatchingCondition `json:"matching_condition,omitempty"`
 }
 
 // ModifyLoadBalancerFrontendRuleRequest represents a request to modify frontend rule

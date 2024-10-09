@@ -7,6 +7,7 @@ import (
 type (
 	LoadBalancerMode                              string
 	LoadBalancerMatcherType                       string
+	LoadBalancerMatchingCondition                 string
 	LoadBalancerActionType                        string
 	LoadBalancerActionHTTPRedirectScheme          string
 	LoadBalancerStringMatcherMethod               string
@@ -69,6 +70,9 @@ const (
 	LoadBalancerMatcherTypeHeader       LoadBalancerMatcherType = "header"
 	LoadBalancerMatcherTypeURLParam     LoadBalancerMatcherType = "url_param"
 	LoadBalancerMatcherTypeNumMembersUp LoadBalancerMatcherType = "num_members_up"
+
+	LoadBalancerMatchingConditionAnd LoadBalancerMatchingCondition = "and"
+	LoadBalancerMatchingConditionOr  LoadBalancerMatchingCondition = "or"
 
 	LoadBalancerActionTypeUseBackend          LoadBalancerActionType = "use_backend"
 	LoadBalancerActionTypeTCPReject           LoadBalancerActionType = "tcp_reject"
@@ -159,12 +163,13 @@ type LoadBalancerFrontend struct {
 
 // LoadBalancerFrontendRule represents frontend rule
 type LoadBalancerFrontendRule struct {
-	Name      string                `json:"name,omitempty"`
-	Priority  int                   `json:"priority,omitempty"`
-	Matchers  []LoadBalancerMatcher `json:"matchers,omitempty"`
-	Actions   []LoadBalancerAction  `json:"actions,omitempty"`
-	CreatedAt time.Time             `json:"created_at,omitempty"`
-	UpdatedAt time.Time             `json:"updated_at,omitempty"`
+	Name              string                        `json:"name,omitempty"`
+	Priority          int                           `json:"priority,omitempty"`
+	MatchingCondition LoadBalancerMatchingCondition `json:"matching_condition,omitempty"`
+	Matchers          []LoadBalancerMatcher         `json:"matchers,omitempty"`
+	Actions           []LoadBalancerAction          `json:"actions,omitempty"`
+	CreatedAt         time.Time                     `json:"created_at,omitempty"`
+	UpdatedAt         time.Time                     `json:"updated_at,omitempty"`
 }
 
 // LoadBalancerFrontendTLSConfig represents frontend TLS configuration
