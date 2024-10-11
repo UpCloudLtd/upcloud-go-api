@@ -185,7 +185,7 @@ func (c *Client) logRequest(r *http.Request, body []byte) {
 		headers := r.Header.Clone()
 		if _, ok := headers[authorization]; ok {
 			auth := strings.Split(headers.Get(authorization), " ")
-			// Redact the token part of the Authorization header or the whole value if value has no space found.
+			// Redact the token part of the Authorization header or the whole value if there is no space to separate scheme from parameters.
 			if len(auth) > 1 {
 				headers.Set(authorization, fmt.Sprintf("%s [REDACTED]", auth[0]))
 			} else {
