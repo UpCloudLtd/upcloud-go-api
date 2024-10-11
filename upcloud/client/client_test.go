@@ -250,7 +250,7 @@ func TestClientWithLogger(t *testing.T) {
 	_, err := c.Get(context.TODO(), "/test")
 	require.NoError(t, err)
 
-	expected := `{"time":"2 Minutes to Midnight","level":"DEBUG","msg":"Sending request to UpCloud API","url":"http://server/1.3/test","method":"GET","headers":{"Accept":["application/json"],"Authorization":["Basic xxxxx"],"Content-Type":["application/json"],"User-Agent":["upcloud-go-api/8.9.0"]},"body":""}
+	expected := `{"time":"2 Minutes to Midnight","level":"DEBUG","msg":"Sending request to UpCloud API","url":"http://server/1.3/test","method":"GET","headers":{"Accept":["application/json"],"Authorization":["Basic [REDACTED]"],"Content-Type":["application/json"],"User-Agent":["upcloud-go-api/8.9.0"]},"body":""}
 {"time":"2 Minutes to Midnight","level":"DEBUG","msg":"Received response from UpCloud API","url":"http://server/1.3/test","status":"200 OK","headers":{"Content-Length":["38"],"Content-Type":["text/plain; charset=utf-8"],"Date":["Fri, 11 Oct 2024 23:58:00 GMT"]},"body":"{\n  \"method\": \"GET\",\n  \"path\": \"/1.3/test\"\n}"}
 `
 	assert.Equal(t, expected, output.String())

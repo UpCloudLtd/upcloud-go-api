@@ -187,9 +187,9 @@ func (c *Client) logRequest(r *http.Request, body []byte) {
 			auth := strings.Split(headers.Get(authorization), " ")
 			// Redact the token part of the Authorization header or the whole value if value has no space found.
 			if len(auth) > 1 {
-				headers.Set(authorization, fmt.Sprintf("%s xxxxx", auth[0]))
+				headers.Set(authorization, fmt.Sprintf("%s [REDACTED]", auth[0]))
 			} else {
-				headers.Set(authorization, "xxxxx")
+				headers.Set(authorization, "[REDACTED]")
 			}
 		}
 
