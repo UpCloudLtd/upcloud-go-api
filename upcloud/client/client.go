@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"crypto/tls"
+	"encoding/json"
 	"fmt"
 	"io"
 	"net"
@@ -23,11 +24,15 @@ const (
 	EnvDebugSkipCertificateVerify string = "UPCLOUD_DEBUG_SKIP_CERTIFICATE_VERIFY"
 )
 
+// LogFn is a function that logs a message with context and optional key-value pairs, e.g., slog.DebugContext
+type LogFn func(context.Context, string, ...any)
+
 type config struct {
 	username   string
 	password   string
 	baseURL    string
 	httpClient *http.Client
+	logger     LogFn
 }
 
 // Client represents an API client
@@ -83,13 +88,12 @@ func (c *Client) Delete(ctx context.Context, path string) ([]byte, error) {
 
 // Do performs HTTP request and returns the response body.
 func (c *Client) Do(r *http.Request) ([]byte, error) {
-	c.addDefaultHeaders(r)
 	response, err := c.config.httpClient.Do(r)
 	if err != nil {
 		return nil, err
 	}
 
-	return handleResponse(response)
+	return c.handleResponse(response)
 }
 
 func (c *Client) createRequest(ctx context.Context, method, path string, body []byte) (*http.Request, error) {
@@ -102,7 +106,33 @@ func (c *Client) createRequest(ctx context.Context, method, path string, body []
 	if err != nil {
 		return nil, err
 	}
+	c.addDefaultHeaders(req)
+	c.logRequest(req, body)
 	return req, err
+}
+
+// Parses the response and returns either the response body or an error
+func (c *Client) handleResponse(response *http.Response) ([]byte, error) {
+	defer response.Body.Close()
+
+	// Return an error on unsuccessful requests
+	if response.StatusCode < 200 || response.StatusCode > 299 {
+		errorBody, _ := io.ReadAll(response.Body)
+		var errorType ErrorType
+		switch response.Header.Get("Content-Type") {
+		case "application/problem+json":
+			errorType = ErrorTypeProblem
+		default:
+			errorType = ErrorTypeError
+		}
+		c.logResponse(response, errorBody)
+		return nil, &Error{response.StatusCode, response.Status, errorBody, errorType}
+	}
+
+	responseBody, err := io.ReadAll(response.Body)
+	c.logResponse(response, responseBody)
+
+	return responseBody, err
 }
 
 func (c *Client) addDefaultHeaders(r *http.Request) {
@@ -137,6 +167,50 @@ func (c *Client) getBaseURL() string {
 		c.config.baseURL = clientBaseURL(os.Getenv(EnvDebugAPIBaseURL))
 	}
 	return fmt.Sprintf("%s/%s", c.config.baseURL, APIVersion)
+}
+
+// Pretty prints given JSON bytes. If the JSON is not valid, returns the original bytes as string.
+func prettyJSON(i []byte) string {
+	var o bytes.Buffer
+	if err := json.Indent(&o, i, "", "  "); err != nil {
+		return string(i)
+	}
+	return o.String()
+}
+
+func (c *Client) logRequest(r *http.Request, body []byte) {
+	const authorization string = "Authorization"
+
+	if c.config.logger != nil {
+		headers := r.Header.Clone()
+		if _, ok := headers[authorization]; ok {
+			auth := strings.Split(headers.Get(authorization), " ")
+			// Redact the token part of the Authorization header or the whole value if there is no space to separate scheme from parameters.
+			if len(auth) > 1 {
+				headers.Set(authorization, fmt.Sprintf("%s [REDACTED]", auth[0]))
+			} else {
+				headers.Set(authorization, "[REDACTED]")
+			}
+		}
+
+		c.config.logger(r.Context(), "Sending request to UpCloud API",
+			"url", r.URL.Redacted(),
+			"method", r.Method,
+			"headers", headers,
+			"body", prettyJSON(body),
+		)
+	}
+}
+
+func (c *Client) logResponse(r *http.Response, body []byte) {
+	if c.config.logger != nil {
+		c.config.logger(r.Request.Context(), "Received response from UpCloud API",
+			"url", r.Request.URL.Redacted(),
+			"status", r.Status,
+			"headers", r.Header,
+			"body", prettyJSON(body),
+		)
+	}
 }
 
 type ConfigFn func(o *config)
@@ -181,6 +255,13 @@ func WithTimeout(timeout time.Duration) ConfigFn {
 	}
 }
 
+// WithLogger configures logging function that logs requests and responses
+func WithLogger(logger LogFn) ConfigFn {
+	return func(c *config) {
+		c.logger = logger
+	}
+}
+
 // New creates and returns a new client configured with the specified user and password and optional
 // config functions.
 func New(username, password string, c ...ConfigFn) *Client {
@@ -219,28 +300,6 @@ func clientBaseURL(URL string) string {
 	}
 
 	return URL
-}
-
-// Parses the response and returns either the response body or an error
-func handleResponse(response *http.Response) ([]byte, error) {
-	defer response.Body.Close()
-
-	// Return an error on unsuccessful requests
-	if response.StatusCode < 200 || response.StatusCode > 299 {
-		errorBody, _ := io.ReadAll(response.Body)
-		var errorType ErrorType
-		switch response.Header.Get("Content-Type") {
-		case "application/problem+json":
-			errorType = ErrorTypeProblem
-		default:
-			errorType = ErrorTypeError
-		}
-		return nil, &Error{response.StatusCode, response.Status, errorBody, errorType}
-	}
-
-	responseBody, err := io.ReadAll(response.Body)
-
-	return responseBody, err
 }
 
 // NewDefaultHTTPClient returns new default http.Client.
