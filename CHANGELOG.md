@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.10.0]
+
 ### Added
 - client: add option to configure logger for logging requests and responses
 
@@ -523,7 +525,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.9.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.10.0...HEAD
+[8.10.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.9.0...v8.10.0
 [8.9.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.8.1...v8.9.0
 [8.8.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.8.0...v8.8.1
 [8.8.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.7.1...v8.8.0
