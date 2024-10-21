@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- server: add `Index` field to `request.CreateServerInterface`
+
 ## [8.10.0]
 
 ### Added
