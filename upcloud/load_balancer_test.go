@@ -451,6 +451,29 @@ func TestLoadBalancerRule(t *testing.T) {
 					Type:                LoadBalancerActionTypeSetForwardedHeaders,
 					SetForwardedHeaders: &LoadBalancerActionSetForwardedHeaders{},
 				},
+				{
+					Type: LoadBalancerActionTypeSetRequestHeader,
+					SetRequestHeader: &LoadBalancerActionSetHeader{
+						Header: "Test-Type",
+						Value:  "Unit",
+					},
+				},
+				{
+					Type: LoadBalancerActionTypeSetResponseHeader,
+					SetResponseHeader: &LoadBalancerActionSetHeader{
+						Header: "Test-Type",
+						Value:  "Unit",
+					},
+				},
+			},
+			Matchers: []LoadBalancerMatcher{
+				{
+					Type: LoadBalancerMatcherTypeHTTPStatus,
+					HTTPStatus: &LoadBalancerMatcherInteger{
+						Method: LoadBalancerIntegerMatcherMethodEqual,
+						Value:  200,
+					},
+				},
 			},
 			CreatedAt: timeParse("2021-12-07T13:58:30.817272Z"),
 			UpdatedAt: timeParse("2022-02-11T17:33:08.490581Z"),
@@ -489,6 +512,29 @@ func TestLoadBalancerRule(t *testing.T) {
 				{
 					"type": "set_forwarded_headers",
 					"action_set_forwarded_headers": {}
+				},
+				{
+					"type": "set_request_header",
+					"action_set_request_header": {
+						"header": "Test-Type",
+						"value": "Unit"
+					}
+				},
+				{
+					"type": "set_response_header",
+					"action_set_response_header": {
+						"header": "Test-Type",
+						"value": "Unit"
+					}
+				}
+			],
+			"matchers": [
+				{
+					"type": "http_status",
+					"match_http_status": {
+						"method": "equal",
+						"value": 200
+					}
 				}
 			]
 		}

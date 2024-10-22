@@ -7,6 +7,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ### Added
 - server: add `Index` field to `request.CreateServerInterface`
+- managed load balancer: `http_status`, `request_header`, and `response_header` rule matchers
+- managed load balancer: `set_request_header`, and `set_response_header` rule actions
 
 ## [8.10.0]
 
