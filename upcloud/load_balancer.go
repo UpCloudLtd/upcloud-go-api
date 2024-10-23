@@ -58,18 +58,21 @@ const (
 	LoadBalancerCertificateBundleOperationalStateSetupChallenge    LoadBalancerCertificateBundleOperationalState = "setup-challenge"
 	LoadBalancerCertificateBundleOperationalStateCompleteChallenge LoadBalancerCertificateBundleOperationalState = "complete-challenge"
 
-	LoadBalancerMatcherTypeSrcIP        LoadBalancerMatcherType = "src_ip"
-	LoadBalancerMatcherTypeSrcPort      LoadBalancerMatcherType = "src_port"
-	LoadBalancerMatcherTypeBodySize     LoadBalancerMatcherType = "body_size"
-	LoadBalancerMatcherTypePath         LoadBalancerMatcherType = "path"
-	LoadBalancerMatcherTypeURL          LoadBalancerMatcherType = "url"
-	LoadBalancerMatcherTypeURLQuery     LoadBalancerMatcherType = "url_query"
-	LoadBalancerMatcherTypeHost         LoadBalancerMatcherType = "host"
-	LoadBalancerMatcherTypeHTTPMethod   LoadBalancerMatcherType = "http_method"
-	LoadBalancerMatcherTypeCookie       LoadBalancerMatcherType = "cookie"
-	LoadBalancerMatcherTypeHeader       LoadBalancerMatcherType = "header"
-	LoadBalancerMatcherTypeURLParam     LoadBalancerMatcherType = "url_param"
-	LoadBalancerMatcherTypeNumMembersUp LoadBalancerMatcherType = "num_members_up"
+	LoadBalancerMatcherTypeSrcIP          LoadBalancerMatcherType = "src_ip"
+	LoadBalancerMatcherTypeSrcPort        LoadBalancerMatcherType = "src_port"
+	LoadBalancerMatcherTypeBodySize       LoadBalancerMatcherType = "body_size"
+	LoadBalancerMatcherTypePath           LoadBalancerMatcherType = "path"
+	LoadBalancerMatcherTypeURL            LoadBalancerMatcherType = "url"
+	LoadBalancerMatcherTypeURLQuery       LoadBalancerMatcherType = "url_query"
+	LoadBalancerMatcherTypeHost           LoadBalancerMatcherType = "host"
+	LoadBalancerMatcherTypeHTTPMethod     LoadBalancerMatcherType = "http_method"
+	LoadBalancerMatcherTypeHTTPStatus     LoadBalancerMatcherType = "http_status"
+	LoadBalancerMatcherTypeCookie         LoadBalancerMatcherType = "cookie"
+	LoadBalancerMatcherTypeHeader         LoadBalancerMatcherType = "header"
+	LoadBalancerMatcherTypeRequestHeader  LoadBalancerMatcherType = "request_header"
+	LoadBalancerMatcherTypeResponseHeader LoadBalancerMatcherType = "response_header"
+	LoadBalancerMatcherTypeURLParam       LoadBalancerMatcherType = "url_param"
+	LoadBalancerMatcherTypeNumMembersUp   LoadBalancerMatcherType = "num_members_up"
 
 	LoadBalancerMatchingConditionAnd LoadBalancerMatchingCondition = "and"
 	LoadBalancerMatchingConditionOr  LoadBalancerMatchingCondition = "or"
@@ -79,6 +82,8 @@ const (
 	LoadBalancerActionTypeHTTPReturn          LoadBalancerActionType = "http_return"
 	LoadBalancerActionTypeHTTPRedirect        LoadBalancerActionType = "http_redirect"
 	LoadBalancerActionTypeSetForwardedHeaders LoadBalancerActionType = "set_forwarded_headers"
+	LoadBalancerActionTypeSetRequestHeader    LoadBalancerActionType = "set_request_header"
+	LoadBalancerActionTypeSetResponseHeader   LoadBalancerActionType = "set_response_header"
 
 	LoadBalancerActionHTTPRedirectSchemeHTTP  LoadBalancerActionHTTPRedirectScheme = "http"
 	LoadBalancerActionHTTPRedirectSchemeHTTPS LoadBalancerActionHTTPRedirectScheme = "https"
@@ -275,20 +280,23 @@ type LoadBalancer struct {
 
 // LoadBalancerMatcher represents rule matcher
 type LoadBalancerMatcher struct {
-	Type         LoadBalancerMatcherType                `json:"type,omitempty"`
-	SrcIP        *LoadBalancerMatcherSourceIP           `json:"match_src_ip,omitempty"`
-	SrcPort      *LoadBalancerMatcherInteger            `json:"match_src_port,omitempty"`
-	BodySize     *LoadBalancerMatcherInteger            `json:"match_body_size,omitempty"`
-	Path         *LoadBalancerMatcherString             `json:"match_path,omitempty"`
-	URL          *LoadBalancerMatcherString             `json:"match_url,omitempty"`
-	URLQuery     *LoadBalancerMatcherString             `json:"match_url_query,omitempty"`
-	Host         *LoadBalancerMatcherHost               `json:"match_host,omitempty"`
-	HTTPMethod   *LoadBalancerMatcherHTTPMethod         `json:"match_http_method,omitempty"`
-	Cookie       *LoadBalancerMatcherStringWithArgument `json:"match_cookie,omitempty"`
-	Header       *LoadBalancerMatcherStringWithArgument `json:"match_header,omitempty"`
-	URLParam     *LoadBalancerMatcherStringWithArgument `json:"match_url_param,omitempty"`
-	NumMembersUp *LoadBalancerMatcherNumMembersUp       `json:"match_num_members_up,omitempty"`
-	Inverse      *bool                                  `json:"inverse,omitempty"`
+	Type           LoadBalancerMatcherType                `json:"type,omitempty"`
+	SrcIP          *LoadBalancerMatcherSourceIP           `json:"match_src_ip,omitempty"`
+	SrcPort        *LoadBalancerMatcherInteger            `json:"match_src_port,omitempty"`
+	BodySize       *LoadBalancerMatcherInteger            `json:"match_body_size,omitempty"`
+	Path           *LoadBalancerMatcherString             `json:"match_path,omitempty"`
+	RequestHeader  *LoadBalancerMatcherStringWithArgument `json:"match_request_header,omitempty"`
+	ResponseHeader *LoadBalancerMatcherStringWithArgument `json:"match_response_header,omitempty"`
+	URL            *LoadBalancerMatcherString             `json:"match_url,omitempty"`
+	URLQuery       *LoadBalancerMatcherString             `json:"match_url_query,omitempty"`
+	Host           *LoadBalancerMatcherHost               `json:"match_host,omitempty"`
+	HTTPMethod     *LoadBalancerMatcherHTTPMethod         `json:"match_http_method,omitempty"`
+	HTTPStatus     *LoadBalancerMatcherInteger            `json:"match_http_status,omitempty"`
+	Cookie         *LoadBalancerMatcherStringWithArgument `json:"match_cookie,omitempty"`
+	Header         *LoadBalancerMatcherStringWithArgument `json:"match_header,omitempty"` // Deprecated: use RequestHeader instead
+	URLParam       *LoadBalancerMatcherStringWithArgument `json:"match_url_param,omitempty"`
+	NumMembersUp   *LoadBalancerMatcherNumMembersUp       `json:"match_num_members_up,omitempty"`
+	Inverse        *bool                                  `json:"inverse,omitempty"`
 }
 
 // LoadBalancerMatcherStringWithArgument represents 'string with argument' matcher
@@ -344,6 +352,8 @@ type LoadBalancerAction struct {
 	HTTPReturn          *LoadBalancerActionHTTPReturn          `json:"action_http_return,omitempty"`
 	HTTPRedirect        *LoadBalancerActionHTTPRedirect        `json:"action_http_redirect,omitempty"`
 	SetForwardedHeaders *LoadBalancerActionSetForwardedHeaders `json:"action_set_forwarded_headers,omitempty"`
+	SetRequestHeader    *LoadBalancerActionSetHeader           `json:"action_set_request_header,omitempty"`
+	SetResponseHeader   *LoadBalancerActionSetHeader           `json:"action_set_response_header,omitempty"`
 }
 
 // LoadBalancerActionUseBackend represents 'use_backend' action
@@ -369,6 +379,12 @@ type LoadBalancerActionHTTPRedirect struct {
 
 // LoadBalancerActionSetForwardedHeaders represents 'set_forwarded_headers' action
 type LoadBalancerActionSetForwardedHeaders struct{}
+
+// LoadBalancerActionSetHeader represents 'set_request_header' and 'set_response_header' actions
+type LoadBalancerActionSetHeader struct {
+	Header string `json:"header,omitempty"`
+	Value  string `json:"value,omitempty"`
+}
 
 // LoadBalancerCertificateBundle represents certificate bundle
 type LoadBalancerCertificateBundle struct {

@@ -56,6 +56,26 @@ func NewLoadBalancerSetForwardedHeadersAction() upcloud.LoadBalancerAction {
 	}
 }
 
+func NewLoadBalancerSetRequestHeaderAction(header, value string) upcloud.LoadBalancerAction {
+	return upcloud.LoadBalancerAction{
+		Type: upcloud.LoadBalancerActionTypeSetRequestHeader,
+		SetRequestHeader: &upcloud.LoadBalancerActionSetHeader{
+			Header: header,
+			Value:  value,
+		},
+	}
+}
+
+func NewLoadBalancerSetResponseHeaderAction(header, value string) upcloud.LoadBalancerAction {
+	return upcloud.LoadBalancerAction{
+		Type: upcloud.LoadBalancerActionTypeSetResponseHeader,
+		SetResponseHeader: &upcloud.LoadBalancerActionSetHeader{
+			Header: header,
+			Value:  value,
+		},
+	}
+}
+
 func NewLoadBalancerNumMembersUpMatcher(m upcloud.LoadBalancerIntegerMatcherMethod, count int, backend string) upcloud.LoadBalancerMatcher {
 	return upcloud.LoadBalancerMatcher{
 		Type: upcloud.LoadBalancerMatcherTypeNumMembersUp,
@@ -79,10 +99,35 @@ func NewLoadBalancerURLParamMatcher(m upcloud.LoadBalancerStringMatcherMethod, n
 	}
 }
 
+// Deprecated: Use NewLoadBalancerRequestHeaderMatcher instead
 func NewLoadBalancerHeaderMatcher(m upcloud.LoadBalancerStringMatcherMethod, name, value string, ignoreCase *bool) upcloud.LoadBalancerMatcher {
 	return upcloud.LoadBalancerMatcher{
 		Type: upcloud.LoadBalancerMatcherTypeHeader,
 		Header: &upcloud.LoadBalancerMatcherStringWithArgument{
+			Method:     m,
+			Name:       name,
+			Value:      value,
+			IgnoreCase: ignoreCase,
+		},
+	}
+}
+
+func NewLoadBalancerRequestHeaderMatcher(m upcloud.LoadBalancerStringMatcherMethod, name, value string, ignoreCase *bool) upcloud.LoadBalancerMatcher {
+	return upcloud.LoadBalancerMatcher{
+		Type: upcloud.LoadBalancerMatcherTypeRequestHeader,
+		RequestHeader: &upcloud.LoadBalancerMatcherStringWithArgument{
+			Method:     m,
+			Name:       name,
+			Value:      value,
+			IgnoreCase: ignoreCase,
+		},
+	}
+}
+
+func NewLoadBalancerResponseHeaderMatcher(m upcloud.LoadBalancerStringMatcherMethod, name, value string, ignoreCase *bool) upcloud.LoadBalancerMatcher {
+	return upcloud.LoadBalancerMatcher{
+		Type: upcloud.LoadBalancerMatcherTypeResponseHeader,
+		ResponseHeader: &upcloud.LoadBalancerMatcherStringWithArgument{
 			Method:     m,
 			Name:       name,
 			Value:      value,
@@ -108,6 +153,27 @@ func NewLoadBalancerHTTPMethodMatcher(method upcloud.LoadBalancerHTTPMatcherMeth
 		Type: upcloud.LoadBalancerMatcherTypeHTTPMethod,
 		HTTPMethod: &upcloud.LoadBalancerMatcherHTTPMethod{
 			Value: method,
+		},
+	}
+}
+
+func NewLoadBalancerHTTPStatusMatcher(m upcloud.LoadBalancerIntegerMatcherMethod, status int) upcloud.LoadBalancerMatcher {
+	return upcloud.LoadBalancerMatcher{
+		Type: upcloud.LoadBalancerMatcherTypeHTTPStatus,
+		HTTPStatus: &upcloud.LoadBalancerMatcherInteger{
+			Method: m,
+			Value:  status,
+		},
+	}
+}
+
+func NewLoadBalancerHTTPStatusRangeMatcher(start, end int) upcloud.LoadBalancerMatcher {
+	return upcloud.LoadBalancerMatcher{
+		Type: upcloud.LoadBalancerMatcherTypeHTTPStatus,
+		HTTPStatus: &upcloud.LoadBalancerMatcherInteger{
+			Method:     upcloud.LoadBalancerIntegerMatcherMethodRange,
+			RangeStart: start,
+			RangeEnd:   end,
 		},
 	}
 }
