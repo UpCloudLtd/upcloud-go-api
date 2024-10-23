@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.11.0]
+
 ### Added
 - server: add `Index` field to `request.CreateServerInterface`
 - managed load balancer: `http_status`, `request_header`, and `response_header` rule matchers
@@ -530,7 +532,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.10.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.11.0...HEAD
+[8.11.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.10.0...v8.11.0
 [8.10.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.9.0...v8.10.0
 [8.9.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.8.1...v8.9.0
 [8.8.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.8.0...v8.8.1
