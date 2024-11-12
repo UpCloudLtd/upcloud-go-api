@@ -39,7 +39,7 @@ type CloneManagedDatabaseRequest struct {
 	// CloneTime selects a point-in-time from where to clone the data. Zero value selects the most recent available.
 	CloneTime time.Time `json:"clone_time"`
 
-	// Only for Redis. Create a clone of your database service data from the backups by name.
+	// Only for Valkey. Create a clone of your database service data from the backups by name.
 	BackupName string `json:"backup_name,omitempty"`
 
 	HostNamePrefix string                                `json:"hostname_prefix"`
@@ -535,7 +535,9 @@ type CreateManagedDatabaseUserRequest struct {
 	Authentication          upcloud.ManagedDatabaseUserAuthenticationType       `json:"authentication,omitempty"`
 	OpenSearchAccessControl *upcloud.ManagedDatabaseUserOpenSearchAccessControl `json:"opensearch_access_control,omitempty"`
 	PGAccessControl         *upcloud.ManagedDatabaseUserPGAccessControl         `json:"pg_access_control,omitempty"`
-	RedisAccessControl      *upcloud.ManagedDatabaseUserRedisAccessControl      `json:"redis_access_control,omitempty"`
+	// Deprecated: Redis support will be removed in favor of Valkey.
+	RedisAccessControl  *upcloud.ManagedDatabaseUserRedisAccessControl  `json:"redis_access_control,omitempty"` //nolint:staticcheck // To be removed when Redis support has been removed
+	ValkeyAccessControl *upcloud.ManagedDatabaseUserValkeyAccessControl `json:"valkey_access_control,omitempty"`
 }
 
 // RequestURL implements the request.Request interface
@@ -608,7 +610,9 @@ type ModifyManagedDatabaseUserAccessControlRequest struct {
 	Username                string                                              `json:"-"`
 	OpenSearchAccessControl *upcloud.ManagedDatabaseUserOpenSearchAccessControl `json:"opensearch_access_control,omitempty"`
 	PGAccessControl         *upcloud.ManagedDatabaseUserPGAccessControl         `json:"pg_access_control,omitempty"`
-	RedisAccessControl      *upcloud.ManagedDatabaseUserRedisAccessControl      `json:"redis_access_control,omitempty"`
+	// Deprecated: Redis support will be removed in favor of Valkey.
+	RedisAccessControl  *upcloud.ManagedDatabaseUserRedisAccessControl  `json:"redis_access_control,omitempty"` //nolint:staticcheck // To be removed when Redis support has been removed
+	ValkeyAccessControl *upcloud.ManagedDatabaseUserValkeyAccessControl `json:"valkey_access_control,omitempty"`
 }
 
 // RequestURL implements the request.Request interface

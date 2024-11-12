@@ -425,7 +425,7 @@ func TestCreateManagedDatabaseUserRequest(t *testing.T) {
 		"username": "api-doc-user",
 		"password": "new-password",
 		"authentication": "caching_sha2_password",
-		"redis_access_control": {
+		"valkey_access_control": {
 			"categories": ["+@set"],
 			"channels": ["*"],
 			"commands": ["+set"],
@@ -444,7 +444,7 @@ func TestCreateManagedDatabaseUserRequest(t *testing.T) {
 		PGAccessControl: &upcloud.ManagedDatabaseUserPGAccessControl{
 			AllowReplication: upcloud.BoolPtr(true),
 		},
-		RedisAccessControl: &upcloud.ManagedDatabaseUserRedisAccessControl{
+		ValkeyAccessControl: &upcloud.ManagedDatabaseUserValkeyAccessControl{
 			Categories: &[]string{"+@set"},
 			Channels:   &[]string{"*"},
 			Commands:   &[]string{"+set"},
@@ -473,7 +473,7 @@ func TestCreateManagedDatabaseUserRequest(t *testing.T) {
 func TestModifyManagedDatabaseUserAccessControlRequest(t *testing.T) {
 	want := `
 	{
-		"redis_access_control": {
+		"valkey_access_control": {
 			"categories": ["+@set"],
 			"channels": ["*"],
 			"commands": ["+set"],
@@ -490,7 +490,7 @@ func TestModifyManagedDatabaseUserAccessControlRequest(t *testing.T) {
 		PGAccessControl: &upcloud.ManagedDatabaseUserPGAccessControl{
 			AllowReplication: upcloud.BoolPtr(true),
 		},
-		RedisAccessControl: &upcloud.ManagedDatabaseUserRedisAccessControl{
+		ValkeyAccessControl: &upcloud.ManagedDatabaseUserValkeyAccessControl{
 			Categories: &[]string{"+@set"},
 			Channels:   &[]string{"*"},
 			Commands:   &[]string{"+set"},

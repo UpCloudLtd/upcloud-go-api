@@ -680,6 +680,7 @@ func TestManagedDatabaseMetadata(t *testing.T) {
 	{
 		"metadata": {
 			"redis_version": "7",
+			"valkey_version": "7",
 			"mysql_version": "8.0.30",
 			"pg_version": "14.6",
 			"write_block_threshold_exceeded": false,
@@ -692,6 +693,7 @@ func TestManagedDatabaseMetadata(t *testing.T) {
 			PGVersion:                   "14.6",
 			MySQLVersion:                "8.0.30",
 			RedisVersion:                "7",
+			ValkeyVersion:               "7",
 			WriteBlockThresholdExceeded: BoolPtr(false),
 		},
 	}
