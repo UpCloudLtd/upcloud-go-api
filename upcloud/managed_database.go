@@ -77,8 +77,11 @@ const (
 	ManagedDatabaseServiceTypePostgreSQL ManagedDatabaseServiceType = "pg"
 	// ManagedDatabaseServiceTypeMySQL references a MySQL type of database instance
 	ManagedDatabaseServiceTypeMySQL ManagedDatabaseServiceType = "mysql"
+	// Deprecated: Prefer Valkey for new key-value store instances.
 	// ManagedDatabaseServiceTypeRedis references a Redis type of database instance
 	ManagedDatabaseServiceTypeRedis ManagedDatabaseServiceType = "redis"
+	// ManagedDatabaseServiceTypeValkey references a Valkey type of database instance
+	ManagedDatabaseServiceTypeValkey ManagedDatabaseServiceType = "valkey"
 	// ManagedDatabaseServiceTypeOpenSearch references an OpenSearch type of database instance
 	ManagedDatabaseServiceTypeOpenSearch ManagedDatabaseServiceType = "opensearch"
 )
@@ -238,7 +241,9 @@ type ManagedDatabaseComponent struct {
 type ManagedDatabaseSessions struct {
 	MySQL      []ManagedDatabaseSessionMySQL      `json:"mysql,omitempty"`
 	PostgreSQL []ManagedDatabaseSessionPostgreSQL `json:"pg,omitempty"`
-	Redis      []ManagedDatabaseSessionRedis      `json:"redis,omitempty"`
+	// Deprecated: Redis support will be removed in favor of Valkey.
+	Redis  []ManagedDatabaseSessionRedis  `json:"redis,omitempty"`
+	Valkey []ManagedDatabaseSessionValkey `json:"valkey,omitempty"`
 }
 
 // ManagedDatabaseSessionMySQL represents a session in a managed MySQL database instance.
@@ -278,8 +283,30 @@ type ManagedDatabaseSessionPostgreSQL struct {
 	XactStart       *time.Time    `json:"xact_start"`
 }
 
+// Deprecated: Redis support will be removed in favor of Valkey.
 // ManagedDatabaseSessionRedis represents a session in a managed Redis database instance.
 type ManagedDatabaseSessionRedis struct {
+	ActiveChannelSubscriptions                int           `json:"active_channel_subscriptions"`
+	ActiveDatabase                            string        `json:"active_database"`
+	ActivePatternMatchingChannelSubscriptions int           `json:"active_pattern_matching_channel_subscriptions"`
+	ApplicationName                           string        `json:"application_name"`
+	ClientAddr                                string        `json:"client_addr"`
+	ConnectionAge                             time.Duration `json:"connection_age"`
+	ConnectionIdle                            time.Duration `json:"connection_idle"`
+	Flags                                     []string      `json:"flags"`
+	FlagsRaw                                  string        `json:"flags_raw"`
+	Id                                        string        `json:"id"`
+	MultiExecCommands                         int           `json:"multi_exec_commands"`
+	OutputBuffer                              int           `json:"output_buffer"`
+	OutputBufferMemory                        int           `json:"output_buffer_memory"`
+	OutputListLength                          int           `json:"output_list_length"`
+	Query                                     string        `json:"query"`
+	QueryBuffer                               int           `json:"query_buffer"`
+	QueryBufferFree                           int           `json:"query_buffer_free"`
+}
+
+// ManagedDatabaseSessionValkey represents a session in a managed Valkey database instance.
+type ManagedDatabaseSessionValkey struct {
 	ActiveChannelSubscriptions                int           `json:"active_channel_subscriptions"`
 	ActiveDatabase                            string        `json:"active_database"`
 	ActivePatternMatchingChannelSubscriptions int           `json:"active_pattern_matching_channel_subscriptions"`
@@ -644,10 +671,12 @@ type ManagedDatabaseUser struct {
 	Type           ManagedDatabaseUserType               `json:"type,omitempty"`
 	// Password field is only visible when querying an individual user. It is omitted in main service view and in
 	// get all users view.
-	Password                string                                      `json:"password,omitempty"`
-	Username                string                                      `json:"username,omitempty"`
-	PGAccessControl         *ManagedDatabaseUserPGAccessControl         `json:"pg_access_control,omitempty"`
+	Password        string                              `json:"password,omitempty"`
+	Username        string                              `json:"username,omitempty"`
+	PGAccessControl *ManagedDatabaseUserPGAccessControl `json:"pg_access_control,omitempty"`
+	// Deprecated: Redis support will be removed in favor of Valkey.
 	RedisAccessControl      *ManagedDatabaseUserRedisAccessControl      `json:"redis_access_control,omitempty"`
+	ValkeyAccessControl     *ManagedDatabaseUserValkeyAccessControl     `json:"valkey_access_control,omitempty"`
 	OpenSearchAccessControl *ManagedDatabaseUserOpenSearchAccessControl `json:"opensearch_access_control,omitempty"`
 }
 
@@ -655,7 +684,15 @@ type ManagedDatabaseUserPGAccessControl struct {
 	AllowReplication *bool `json:"allow_replication,omitempty"`
 }
 
+// Deprecated: Redis support will be removed in favor of Valkey.
 type ManagedDatabaseUserRedisAccessControl struct {
+	Categories *[]string `json:"categories,omitempty"`
+	Channels   *[]string `json:"channels,omitempty"`
+	Commands   *[]string `json:"commands,omitempty"`
+	Keys       *[]string `json:"keys,omitempty"`
+}
+
+type ManagedDatabaseUserValkeyAccessControl struct {
 	Categories *[]string `json:"categories,omitempty"`
 	Channels   *[]string `json:"channels,omitempty"`
 	Commands   *[]string `json:"commands,omitempty"`
@@ -753,13 +790,15 @@ type ManagedDatabaseServicePlan struct {
 	BackupConfigMySQL      *ManagedDatabaseBackupConfigMySQL      `json:"backup_config_mysql,omitempty"`
 	BackupConfigOpenSearch *ManagedDatabaseBackupConfigOpenSearch `json:"backup_config_opensearch,omitempty"`
 	BackupConfigPostgreSQL *ManagedDatabaseBackupConfigPostgreSQL `json:"backup_config_pg,omitempty"`
-	BackupConfigRedis      *ManagedDatabaseBackupConfigRedis      `json:"backup_config_redis,omitempty"`
-	NodeCount              int                                    `json:"node_count"`
-	Plan                   string                                 `json:"plan"`
-	CoreNumber             int                                    `json:"core_number"`
-	StorageSize            int                                    `json:"storage_size"`
-	MemoryAmount           int                                    `json:"memory_amount"`
-	Zones                  ManagedDatabaseServicePlanZones        `json:"zones"`
+	// Deprecated: Redis support will be removed in favor of Valkey.
+	BackupConfigRedis  *ManagedDatabaseBackupConfigRedis  `json:"backup_config_redis,omitempty"`
+	BackupConfigValkey *ManagedDatabaseBackupConfigValkey `json:"backup_config_valkey,omitempty"`
+	NodeCount          int                                `json:"node_count"`
+	Plan               string                             `json:"plan"`
+	CoreNumber         int                                `json:"core_number"`
+	StorageSize        int                                `json:"storage_size"`
+	MemoryAmount       int                                `json:"memory_amount"`
+	Zones              ManagedDatabaseServicePlanZones    `json:"zones"`
 }
 
 // Deprecated: ManagedDatabaseBackupConfig is deprecated in favor of service specific ManagedDatabaseBackupConfig<ServiceType> types.
@@ -793,8 +832,16 @@ type ManagedDatabaseBackupConfigPostgreSQL struct {
 	RecoveryMode string `json:"recovery_mode"`
 }
 
+// Deprecated: Redis support will be removed in favor of Valkey.
 // ManagedDatabaseBackupConfigRedis represents backup configuration of a Redis database service plan
 type ManagedDatabaseBackupConfigRedis struct {
+	Interval     int    `json:"interval"`
+	MaxCount     int    `json:"max_count"`
+	RecoveryMode string `json:"recovery_mode"`
+}
+
+// ManagedDatabaseBackupConfigValkey represents backup configuration of a Valkey database service plan
+type ManagedDatabaseBackupConfigValkey struct {
 	Interval     int    `json:"interval"`
 	MaxCount     int    `json:"max_count"`
 	RecoveryMode string `json:"recovery_mode"`
@@ -843,10 +890,12 @@ type ManagedDatabaseServiceProperty struct {
 
 // ManagedDatabaseMetadata contains additional read-only informational data about the managed database
 type ManagedDatabaseMetadata struct {
-	MaxConnections              int    `json:"max_connections,omitempty"`
-	PGVersion                   string `json:"pg_version,omitempty"`
-	MySQLVersion                string `json:"mysql_version,omitempty"`
+	MaxConnections int    `json:"max_connections,omitempty"`
+	PGVersion      string `json:"pg_version,omitempty"`
+	MySQLVersion   string `json:"mysql_version,omitempty"`
+	// Deprecated: Redis support will be removed in favor of Valkey.
 	RedisVersion                string `json:"redis_version,omitempty"`
+	ValkeyVersion               string `json:"valkey_version,omitempty"`
 	WriteBlockThresholdExceeded *bool  `json:"write_block_threshold_exceeded,omitempty"`
 	OpenSearchVersion           string `json:"opensearch_version,omitempty"`
 	UpgradeVersion              string `json:"upgrade_version,omitempty"`

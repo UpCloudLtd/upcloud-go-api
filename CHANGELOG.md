@@ -5,6 +5,12 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- managed databases: add support for Valkey
+
+### Deprecated
+- managed databases: deprecate Redis
+
 ## [8.11.0]
 
 ### Added

@@ -20,6 +20,7 @@ const (
 	managedDatabaseTestPlanOpenSearch = "1x2xCPU-4GB-80GB-1D"
 	managedDatabaseTestPlanPostgreSQL = "2x2xCPU-4GB-100GB"
 	managedDatabaseTestPlanRedis      = "1x1xCPU-2GB"
+	managedDatabaseTestPlanValkey     = "1x1xCPU-2GB"
 	managedDatabaseTestZone           = "fi-hel2"
 )
 
@@ -67,7 +68,8 @@ func TestService_CreateManagedDatabase(t *testing.T) {
 	typesToTest := []upcloud.ManagedDatabaseServiceType{
 		upcloud.ManagedDatabaseServiceTypeMySQL,
 		upcloud.ManagedDatabaseServiceTypePostgreSQL,
-		upcloud.ManagedDatabaseServiceTypeRedis,
+		upcloud.ManagedDatabaseServiceTypeRedis, //nolint:staticcheck // To be removed when Redis support has been removed
+		upcloud.ManagedDatabaseServiceTypeValkey,
 		upcloud.ManagedDatabaseServiceTypeOpenSearch,
 	}
 
@@ -109,8 +111,10 @@ func TestService_CreateManagedDatabase(t *testing.T) {
 					assert.NotEmpty(t, details.Metadata.OpenSearchVersion)
 				case upcloud.ManagedDatabaseServiceTypePostgreSQL:
 					assert.NotEmpty(t, details.Metadata.PGVersion)
-				case upcloud.ManagedDatabaseServiceTypeRedis:
-					assert.NotEmpty(t, details.Metadata.RedisVersion)
+				case upcloud.ManagedDatabaseServiceTypeRedis: //nolint:staticcheck // To be removed when Redis support has been removed
+					assert.NotEmpty(t, details.Metadata.RedisVersion) //nolint:staticcheck // To be removed when Redis support has been removed
+				case upcloud.ManagedDatabaseServiceTypeValkey:
+					assert.NotEmpty(t, details.Metadata.ValkeyVersion)
 				}
 			})
 		}
@@ -293,7 +297,8 @@ func TestService_GetManagedDatabaseSessions(t *testing.T) {
 		require.NoError(t, err)
 		assert.Len(t, sessions.MySQL, 0)
 		assert.Len(t, sessions.PostgreSQL, 0)
-		assert.Len(t, sessions.Redis, 0)
+		assert.Len(t, sessions.Redis, 0) //nolint:staticcheck // To be removed when Redis support has been removed
+		assert.Len(t, sessions.Valkey, 0)
 
 		err = svc.CancelManagedDatabaseSession(ctx, &request.CancelManagedDatabaseSession{
 			UUID:      details.UUID,
@@ -726,7 +731,8 @@ func TestService_GetManagedDatabaseServiceType(t *testing.T) {
 			upcloud.ManagedDatabaseServiceTypeMySQL,
 			upcloud.ManagedDatabaseServiceTypeOpenSearch,
 			upcloud.ManagedDatabaseServiceTypePostgreSQL,
-			upcloud.ManagedDatabaseServiceTypeRedis,
+			upcloud.ManagedDatabaseServiceTypeRedis, //nolint:staticcheck // To be removed when Redis support has been removed
+			upcloud.ManagedDatabaseServiceTypeValkey,
 		}
 		for _, databaseType := range databaseTypes {
 			serviceType, err := svc.GetManagedDatabaseServiceType(ctx, &request.GetManagedDatabaseServiceTypeRequest{Type: string(databaseType)})
@@ -743,7 +749,8 @@ func TestService_GetManagedDatabaseServiceTypes(t *testing.T) {
 		assert.Equal(t, string(upcloud.ManagedDatabaseServiceTypeMySQL), types["mysql"].Name)
 		assert.Equal(t, string(upcloud.ManagedDatabaseServiceTypeOpenSearch), types["opensearch"].Name)
 		assert.Equal(t, string(upcloud.ManagedDatabaseServiceTypePostgreSQL), types["pg"].Name)
-		assert.Equal(t, string(upcloud.ManagedDatabaseServiceTypeRedis), types["redis"].Name)
+		assert.Equal(t, string(upcloud.ManagedDatabaseServiceTypeRedis), types["redis"].Name) //nolint:staticcheck // To be removed when Redis support has been removed
+		assert.Equal(t, string(upcloud.ManagedDatabaseServiceTypeValkey), types["valkey"].Name)
 	})
 }
 
@@ -845,9 +852,9 @@ func TestService_ModifyManagedDatabaseUserOpenSearchAccessControl(t *testing.T) 
 	})
 }
 
-func TestService_ModifyManagedDatabaseUserRedisAccessControl(t *testing.T) {
-	record(t, "modifymanageddatabaseuserredisaccesscontrol", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		db, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("modifyuseraccesscontrolredis", upcloud.ManagedDatabaseServiceTypeRedis))
+func TestService_ModifyManagedDatabaseUserValkeyAccessControl(t *testing.T) {
+	record(t, "modifymanageddatabaseuservalkeyaccesscontrol", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		db, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("modifyuseraccesscontrolvalkey", upcloud.ManagedDatabaseServiceTypeValkey))
 		require.NoError(t, err)
 
 		defer func() {
@@ -862,7 +869,7 @@ func TestService_ModifyManagedDatabaseUserRedisAccessControl(t *testing.T) {
 		user, err := svc.CreateManagedDatabaseUser(ctx, &request.CreateManagedDatabaseUserRequest{
 			ServiceUUID: db.UUID,
 			Username:    "demouser",
-			RedisAccessControl: &upcloud.ManagedDatabaseUserRedisAccessControl{
+			ValkeyAccessControl: &upcloud.ManagedDatabaseUserValkeyAccessControl{
 				Categories: &[]string{"+@set"},
 				Channels:   &[]string{"*"},
 				Commands:   &[]string{"+set"},
@@ -870,15 +877,15 @@ func TestService_ModifyManagedDatabaseUserRedisAccessControl(t *testing.T) {
 			},
 		})
 		require.NoError(t, err)
-		assert.Equal(t, []string{"+@set"}, *user.RedisAccessControl.Categories)
-		assert.Equal(t, []string{"*"}, *user.RedisAccessControl.Channels)
-		assert.Equal(t, []string{"+set"}, *user.RedisAccessControl.Commands)
-		assert.Equal(t, []string{"key_*"}, *user.RedisAccessControl.Keys)
+		assert.Equal(t, []string{"+@set"}, *user.ValkeyAccessControl.Categories)
+		assert.Equal(t, []string{"*"}, *user.ValkeyAccessControl.Channels)
+		assert.Equal(t, []string{"+set"}, *user.ValkeyAccessControl.Commands)
+		assert.Equal(t, []string{"key_*"}, *user.ValkeyAccessControl.Keys)
 
 		user, err = svc.ModifyManagedDatabaseUserAccessControl(ctx, &request.ModifyManagedDatabaseUserAccessControlRequest{
 			ServiceUUID: db.UUID,
 			Username:    user.Username,
-			RedisAccessControl: &upcloud.ManagedDatabaseUserRedisAccessControl{
+			ValkeyAccessControl: &upcloud.ManagedDatabaseUserValkeyAccessControl{
 				Categories: &[]string{},
 				Channels:   &[]string{},
 				Commands:   &[]string{},
@@ -886,10 +893,10 @@ func TestService_ModifyManagedDatabaseUserRedisAccessControl(t *testing.T) {
 			},
 		})
 		require.NoError(t, err)
-		assert.Equal(t, []string{}, *user.RedisAccessControl.Categories)
-		assert.Equal(t, []string{}, *user.RedisAccessControl.Channels)
-		assert.Equal(t, []string{}, *user.RedisAccessControl.Commands)
-		assert.Equal(t, []string{"key_*"}, *user.RedisAccessControl.Keys)
+		assert.Equal(t, []string{}, *user.ValkeyAccessControl.Categories)
+		assert.Equal(t, []string{}, *user.ValkeyAccessControl.Channels)
+		assert.Equal(t, []string{}, *user.ValkeyAccessControl.Commands)
+		assert.Equal(t, []string{"key_*"}, *user.ValkeyAccessControl.Keys)
 	})
 }
 
@@ -1013,8 +1020,10 @@ func getTestCreateRequest(name string, serviceType upcloud.ManagedDatabaseServic
 		plan = managedDatabaseTestPlanOpenSearch
 	case upcloud.ManagedDatabaseServiceTypePostgreSQL:
 		plan = managedDatabaseTestPlanPostgreSQL
-	case upcloud.ManagedDatabaseServiceTypeRedis:
+	case upcloud.ManagedDatabaseServiceTypeRedis: //nolint:staticcheck // To be removed when Redis support has been removed
 		plan = managedDatabaseTestPlanRedis
+	case upcloud.ManagedDatabaseServiceTypeValkey:
+		plan = managedDatabaseTestPlanValkey
 	default:
 		return nil
 	}
