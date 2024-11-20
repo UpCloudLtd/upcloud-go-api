@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Fixed
+- server: add storage labels to server storage devices list items
+
 ## [8.12.0]
 
 ### Added
