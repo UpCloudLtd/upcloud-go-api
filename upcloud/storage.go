@@ -170,6 +170,7 @@ type BackupRule struct {
 type ServerStorageDevice struct {
 	Address   string  `json:"address"`
 	Encrypted Boolean `json:"storage_encrypted"`
+	Labels    []Label `json:"labels"`
 	// TODO: Convert to boolean
 	PartOfPlan string `json:"part_of_plan"`
 	UUID       string `json:"storage"`

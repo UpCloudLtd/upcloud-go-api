@@ -222,7 +222,33 @@ func TestUnmarshalServerDetails(t *testing.T) {
                 "storage_tier": "maxiops",
                 "storage_title": "Storage for server1.example.com",
                 "type": "disk",
-                "boot_disk": "0"
+                "boot_disk": "0",
+                "labels" : [
+                  {
+                    "key" : "_os_architecture",
+                    "value" : "64"
+                  },
+                  {
+                    "key" : "_os_brand_name",
+                    "value" : "Ubuntu"
+                  },
+                  {
+                    "key" : "_os_brand_version",
+                    "value" : "22.04"
+                  },
+                  {
+                    "key" : "_os_main_category",
+                    "value" : "Linux"
+                  },
+                  {
+                    "key" : "_os_type",
+                    "value" : "ubuntu"
+                  },
+                  {
+                    "key" : "_template_uuid",
+                    "value" : "01000000-0000-4000-8000-000030220200"
+                  }
+                ]
               }
             ]
           },
@@ -266,6 +292,7 @@ func TestUnmarshalServerDetails(t *testing.T) {
 	assert.Equal(t, "Storage for server1.example.com", serverDetails.StorageDevices[0].Title)
 	assert.Equal(t, StorageTypeDisk, serverDetails.StorageDevices[0].Type)
 	assert.Equal(t, 0, serverDetails.StorageDevices[0].BootDisk)
+	assert.Len(t, serverDetails.StorageDevices[0].Labels, 6)
 	assert.Equal(t, "UTC", serverDetails.Timezone)
 	assert.Equal(t, VideoModelCirrus, serverDetails.VideoModel)
 	assert.True(t, serverDetails.RemoteAccessEnabled.Bool())
