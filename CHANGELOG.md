@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- managed databases: add support for termination protection
+
 ### Fixed
 - server: add storage labels to server storage devices list items
 

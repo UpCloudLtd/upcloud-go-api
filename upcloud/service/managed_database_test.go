@@ -552,7 +552,9 @@ func TestService_GetManagedDatabaseVersions(t *testing.T) {
 
 func TestService_ShutdownStartManagedDatabase(t *testing.T) {
 	record(t, "shutdownstartmanageddatabase", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		details, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("shutdownstartmanageddatabase", upcloud.ManagedDatabaseServiceTypePostgreSQL))
+		req := getTestCreateRequest("shutdownstartmanageddatabase", upcloud.ManagedDatabaseServiceTypePostgreSQL)
+		req.TerminationProtection = upcloud.BoolPtr(true)
+		details, err := svc.CreateManagedDatabase(ctx, req)
 		require.NoError(t, err)
 
 		defer func() {
@@ -564,6 +566,21 @@ func TestService_ShutdownStartManagedDatabase(t *testing.T) {
 		require.NoError(t, err)
 
 		err = waitForManagedDatabaseInitialBackup(ctx, rec, svc, details.UUID)
+		require.NoError(t, err)
+
+		// Shutdown should fail because termination protection is enabled.
+		_, err = svc.ShutdownManagedDatabase(ctx, &request.ShutdownManagedDatabaseRequest{UUID: details.UUID})
+		require.Error(t, err)
+
+		details, err = svc.GetManagedDatabase(ctx, &request.GetManagedDatabaseRequest{UUID: details.UUID})
+		require.NoError(t, err)
+		assert.True(t, details.Powered)
+		assert.True(t, details.TerminationProtection)
+
+		_, err = svc.ModifyManagedDatabase(ctx, &request.ModifyManagedDatabaseRequest{
+			UUID:                  details.UUID,
+			TerminationProtection: upcloud.BoolPtr(false),
+		})
 		require.NoError(t, err)
 
 		shutdownDetails, err := svc.ShutdownManagedDatabase(ctx, &request.ShutdownManagedDatabaseRequest{UUID: details.UUID})
