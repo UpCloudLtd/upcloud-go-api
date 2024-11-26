@@ -190,28 +190,29 @@ type ManagedDatabaseNetwork struct {
 
 // ManagedDatabase represents an existing managed database instance
 type ManagedDatabase struct {
-	Backups          []ManagedDatabaseBackup         `json:"backups,omitempty"`
-	Components       []ManagedDatabaseComponent      `json:"components,omitempty"`
-	CreateTime       time.Time                       `json:"create_time,omitempty"`
-	Labels           []Label                         `json:"labels,omitempty"`
-	Maintenance      ManagedDatabaseMaintenanceTime  `json:"maintenance,omitempty"`
-	Name             string                          `json:"name,omitempty"`
-	Networks         []ManagedDatabaseNetwork        `json:"networks,omitempty"`
-	NodeCount        int                             `json:"node_count,omitempty"`
-	NodeStates       []ManagedDatabaseNodeState      `json:"node_states,omitempty"`
-	Plan             string                          `json:"plan,omitempty"`
-	Powered          bool                            `json:"powered,omitempty"`
-	Properties       ManagedDatabaseProperties       `json:"properties,omitempty"`
-	State            ManagedDatabaseState            `json:"state,omitempty"`
-	Title            string                          `json:"title,omitempty"`
-	Type             ManagedDatabaseServiceType      `json:"type,omitempty"`
-	UpdateTime       time.Time                       `json:"update_time,omitempty"`
-	ServiceURI       string                          `json:"service_uri,omitempty"`
-	ServiceURIParams ManagedDatabaseServiceURIParams `json:"service_uri_params,omitempty"`
-	Users            []ManagedDatabaseUser           `json:"users,omitempty"`
-	UUID             string                          `json:"uuid,omitempty"`
-	Zone             string                          `json:"zone,omitempty"`
-	Metadata         *ManagedDatabaseMetadata        `json:"metadata,omitempty"`
+	Backups               []ManagedDatabaseBackup         `json:"backups,omitempty"`
+	Components            []ManagedDatabaseComponent      `json:"components,omitempty"`
+	CreateTime            time.Time                       `json:"create_time,omitempty"`
+	Labels                []Label                         `json:"labels,omitempty"`
+	Maintenance           ManagedDatabaseMaintenanceTime  `json:"maintenance,omitempty"`
+	Name                  string                          `json:"name,omitempty"`
+	Networks              []ManagedDatabaseNetwork        `json:"networks,omitempty"`
+	NodeCount             int                             `json:"node_count,omitempty"`
+	NodeStates            []ManagedDatabaseNodeState      `json:"node_states,omitempty"`
+	Plan                  string                          `json:"plan,omitempty"`
+	Powered               bool                            `json:"powered,omitempty"`
+	Properties            ManagedDatabaseProperties       `json:"properties,omitempty"`
+	State                 ManagedDatabaseState            `json:"state,omitempty"`
+	TerminationProtection bool                            `json:"termination_protection,omitempty"`
+	Title                 string                          `json:"title,omitempty"`
+	Type                  ManagedDatabaseServiceType      `json:"type,omitempty"`
+	UpdateTime            time.Time                       `json:"update_time,omitempty"`
+	ServiceURI            string                          `json:"service_uri,omitempty"`
+	ServiceURIParams      ManagedDatabaseServiceURIParams `json:"service_uri_params,omitempty"`
+	Users                 []ManagedDatabaseUser           `json:"users,omitempty"`
+	UUID                  string                          `json:"uuid,omitempty"`
+	Zone                  string                          `json:"zone,omitempty"`
+	Metadata              *ManagedDatabaseMetadata        `json:"metadata,omitempty"`
 }
 
 // ManagedDatabaseBackup represents a full backup taken at a point in time. It should be noted that both
