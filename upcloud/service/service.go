@@ -51,6 +51,7 @@ type service interface {
 	Kubernetes
 	ManagedObjectStorage
 	Gateway
+	Partner
 }
 
 var _ service = (*Service)(nil)
