@@ -14,6 +14,7 @@ func TestGetTokenDetailsRequest(t *testing.T) {
 
 func TestGetTokensRequest(t *testing.T) {
 	assert.Equal(t, "/account/tokens", (&GetTokensRequest{}).RequestURL())
+	assert.Equal(t, "/account/tokens", (&GetTokensRequest{}).RequestURL())
 }
 
 func TestDeleteTokenRequest(t *testing.T) {

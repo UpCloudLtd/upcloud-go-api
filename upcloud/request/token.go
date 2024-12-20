@@ -5,20 +5,22 @@ import (
 	"time"
 )
 
+const basePath = "/account/tokens"
+
 // GetTokenDetailsRequest represents a request to get token details. Will not return the actual API token.
 type GetTokenDetailsRequest struct {
 	ID string
 }
 
 func (r *GetTokenDetailsRequest) RequestURL() string {
-	return fmt.Sprintf("/account/tokens/%s", r.ID)
+	return fmt.Sprintf("%s/%s", basePath, r.ID)
 }
 
 // GetTokensRequest represents a request to get a list of tokens. Will not return the actual API tokens.
 type GetTokensRequest struct{}
 
 func (r *GetTokensRequest) RequestURL() string {
-	return "/account/tokens"
+	return basePath
 }
 
 // CreateTokenRequest represents a request to create a new network.
@@ -31,7 +33,7 @@ type CreateTokenRequest struct {
 
 // RequestURL implements the Request interface.
 func (r *CreateTokenRequest) RequestURL() string {
-	return "/account/tokens"
+	return basePath
 }
 
 // DeleteTokenRequest represents a request to delete a token.
@@ -41,5 +43,5 @@ type DeleteTokenRequest struct {
 
 // RequestURL implements the Request interface.
 func (r *DeleteTokenRequest) RequestURL() string {
-	return fmt.Sprintf("/account/tokens/%s", r.ID)
+	return fmt.Sprintf("%s/%s", basePath, r.ID)
 }
