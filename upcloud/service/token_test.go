@@ -31,6 +31,8 @@ func TestToken(t *testing.T) {
 	}
 
 	record(t, "token", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		// TODO: obfuscate real tokes from fixtures. Currently committed tokens in token.yaml are from local env
+		//  with the url changed to prod host. rec.AddFilter() for the win.
 		// Create some tokens
 		ids := make([]string, len(tokenRequests))
 
