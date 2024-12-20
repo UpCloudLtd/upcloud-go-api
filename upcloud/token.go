@@ -18,8 +18,8 @@ type Token struct {
 	ID                 string     `json:"id"`
 	Name               string     `json:"name"`
 	Type               string     `json:"type"`
-	Created            time.Time  `json:"created_at"`
-	Expires            time.Time  `json:"expires_at"`
+	CreatedAt          time.Time  `json:"created_at"`
+	ExpiresAt          time.Time  `json:"expires_at"`
 	LastUsed           *time.Time `json:"last_used_at,omitempty"`
 	CanCreateSubTokens bool       `json:"can_create_tokens"`
 	AllowedIPRanges    []string   `json:"allowed_ip_ranges"`
