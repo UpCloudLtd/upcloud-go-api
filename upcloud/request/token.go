@@ -17,9 +17,17 @@ func (r *GetTokenDetailsRequest) RequestURL() string {
 }
 
 // GetTokensRequest represents a request to get a list of tokens. Will not return the actual API tokens.
-type GetTokensRequest struct{}
+type GetTokensRequest struct {
+	Page *Page
+}
 
 func (r *GetTokensRequest) RequestURL() string {
+	if r.Page != nil {
+		f := make([]QueryFilter, 0)
+		f = append(f, r.Page)
+		return fmt.Sprintf("%s?%s", basePath, encodeQueryFilters(f))
+	}
+
 	return basePath
 }
 
