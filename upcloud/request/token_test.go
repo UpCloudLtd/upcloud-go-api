@@ -15,6 +15,12 @@ func TestGetTokenDetailsRequest(t *testing.T) {
 func TestGetTokensRequest(t *testing.T) {
 	assert.Equal(t, "/account/tokens", (&GetTokensRequest{}).RequestURL())
 	assert.Equal(t, "/account/tokens", (&GetTokensRequest{}).RequestURL())
+	assert.Equal(t, "/account/tokens?limit=10&offset=10", (&GetTokensRequest{
+		Page: &Page{
+			Size:   10,
+			Number: 2,
+		},
+	}).RequestURL())
 }
 
 func TestDeleteTokenRequest(t *testing.T) {

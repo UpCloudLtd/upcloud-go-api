@@ -10,7 +10,7 @@ import (
 type Token interface {
 	CreateToken(context.Context, *request.CreateTokenRequest) (*upcloud.Token, error)
 	GetTokenDetails(ctx context.Context, r *request.GetTokenDetailsRequest) (*upcloud.Token, error)
-	GetTokens(context.Context) (*upcloud.Tokens, error)
+	GetTokens(context.Context, *request.GetTokensRequest) (*upcloud.Tokens, error)
 	DeleteToken(context.Context, *request.DeleteTokenRequest) error
 }
 
@@ -27,8 +27,7 @@ func (s *Service) GetTokenDetails(ctx context.Context, r *request.GetTokenDetail
 }
 
 // GetTokens returns the all the available networks
-func (s *Service) GetTokens(ctx context.Context) (*upcloud.Tokens, error) {
-	req := request.GetTokensRequest{}
+func (s *Service) GetTokens(ctx context.Context, req *request.GetTokensRequest) (*upcloud.Tokens, error) {
 	tokens := upcloud.Tokens{}
 	return &tokens, s.get(ctx, req.RequestURL(), &tokens)
 }

@@ -59,10 +59,7 @@ func TestToken(t *testing.T) {
 		assert.Equal(t, true, token.CanCreateSubTokens)
 
 		// List tokens
-		// TODO: paging. Currently lists up to 100 tokens and does not support paging. Do we want to add explicit Page
-		//  parameter to the request, or within client request all the tokens page by page and return one possibly
-		//  massive list? I'd go with explicit paging.
-		tokens, err := svc.GetTokens(ctx)
+		tokens, err := svc.GetTokens(ctx, &request.GetTokensRequest{})
 		require.NoError(t, err)
 		require.GreaterOrEqual(t, len(*tokens), len(tokenRequests))
 
