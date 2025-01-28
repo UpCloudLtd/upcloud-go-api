@@ -5,6 +5,11 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.15.0]
+
+### Added
+- Adding support for load balancer redirect rule status
+
 ## [8.14.0]
 
 ### Added

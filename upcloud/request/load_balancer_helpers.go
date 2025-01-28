@@ -31,11 +31,31 @@ func NewLoadBalancerHTTPRedirectAction(location string) upcloud.LoadBalancerActi
 	}
 }
 
+func NewLoadBalancerHTTPRedirectActionWithStatus(location string, status int) upcloud.LoadBalancerAction {
+	return upcloud.LoadBalancerAction{
+		Type: upcloud.LoadBalancerActionTypeHTTPRedirect,
+		HTTPRedirect: &upcloud.LoadBalancerActionHTTPRedirect{
+			Location: location,
+			Status:   status,
+		},
+	}
+}
+
 func NewLoadBalancerHTTPRedirectSchemeAction(scheme upcloud.LoadBalancerActionHTTPRedirectScheme) upcloud.LoadBalancerAction {
 	return upcloud.LoadBalancerAction{
 		Type: upcloud.LoadBalancerActionTypeHTTPRedirect,
 		HTTPRedirect: &upcloud.LoadBalancerActionHTTPRedirect{
 			Scheme: scheme,
+		},
+	}
+}
+
+func NewLoadBalancerHTTPRedirectSchemeActionWithStatus(scheme upcloud.LoadBalancerActionHTTPRedirectScheme, status int) upcloud.LoadBalancerAction {
+	return upcloud.LoadBalancerAction{
+		Type: upcloud.LoadBalancerActionTypeHTTPRedirect,
+		HTTPRedirect: &upcloud.LoadBalancerActionHTTPRedirect{
+			Scheme: scheme,
+			Status: status,
 		},
 	}
 }
