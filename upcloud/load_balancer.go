@@ -375,6 +375,7 @@ type LoadBalancerActionHTTPReturn struct {
 type LoadBalancerActionHTTPRedirect struct {
 	Location string                               `json:"location,omitempty"`
 	Scheme   LoadBalancerActionHTTPRedirectScheme `json:"scheme,omitempty"`
+	Status   int                                  `json:"status,omitempty"`
 }
 
 // LoadBalancerActionSetForwardedHeaders represents 'set_forwarded_headers' action

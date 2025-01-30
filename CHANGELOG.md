@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- managed load balancer: support for redirect rule HTTP status
+
 ## [8.14.0]
 
 ### Added
