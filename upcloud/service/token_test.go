@@ -112,7 +112,6 @@ func TestClientWithToken(t *testing.T) {
 	assert.NotZero(t, account.ResourceLimits.PublicIPv6)
 	assert.NotZero(t, account.ResourceLimits.StorageHDD)
 	assert.NotZero(t, account.ResourceLimits.StorageSSD)
-
 }
 
 func cleanupTokenFunc(t *testing.T, svc *Service, id string) func() {
