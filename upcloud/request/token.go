@@ -7,20 +7,22 @@ import (
 
 const basePath = "/account/tokens"
 
-// GetTokenDetailsRequest represents a request to get token details. Will not return the actual API token.
+// GetTokenDetailsRequest (EXPERIMENTAL) represents a request to get token details. Will not return the actual API token.
 type GetTokenDetailsRequest struct {
 	ID string
 }
 
+// RequestURL (EXPERIMENTAL) implements the Request interface.
 func (r *GetTokenDetailsRequest) RequestURL() string {
 	return fmt.Sprintf("%s/%s", basePath, r.ID)
 }
 
-// GetTokensRequest represents a request to get a list of tokens. Will not return the actual API tokens.
+// GetTokensRequest (EXPERIMENTAL) represents a request to get a list of tokens. Will not return the actual API tokens.
 type GetTokensRequest struct {
 	Page *Page
 }
 
+// RequestURL (EXPERIMENTAL) implements the Request interface.
 func (r *GetTokensRequest) RequestURL() string {
 	if r.Page != nil {
 		f := make([]QueryFilter, 0)
@@ -31,7 +33,7 @@ func (r *GetTokensRequest) RequestURL() string {
 	return basePath
 }
 
-// CreateTokenRequest represents a request to create a new network.
+// CreateTokenRequest (EXPERIMENTAL) represents a request to create a new network.
 type CreateTokenRequest struct {
 	Name               string    `json:"name"`
 	ExpiresAt          time.Time `json:"expires_at"`
@@ -39,17 +41,17 @@ type CreateTokenRequest struct {
 	AllowedIPRanges    []string  `json:"allowed_ip_ranges"`
 }
 
-// RequestURL implements the Request interface.
+// RequestURL (EXPERIMENTAL) implements the Request interface.
 func (r *CreateTokenRequest) RequestURL() string {
 	return basePath
 }
 
-// DeleteTokenRequest represents a request to delete a token.
+// DeleteTokenRequest (EXPERIMENTAL) represents a request to delete a token.
 type DeleteTokenRequest struct {
 	ID string
 }
 
-// RequestURL implements the Request interface.
+// RequestURL (EXPERIMENTAL) implements the Request interface.
 func (r *DeleteTokenRequest) RequestURL() string {
 	return fmt.Sprintf("%s/%s", basePath, r.ID)
 }

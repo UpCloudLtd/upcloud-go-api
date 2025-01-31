@@ -262,7 +262,7 @@ func WithBasicAuth(username, password string) ConfigFn {
 	}
 }
 
-// WithBearerAuth configures the client to use bearer token for authentication
+// WithBearerAuth (EXPERIMENTAL) configures the client to use bearer token for authentication
 func WithBearerAuth(apiToken string) ConfigFn {
 	return func(c *config) {
 		c.token = apiToken

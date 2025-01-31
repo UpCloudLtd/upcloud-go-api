@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- Added support for token-based authentication in the client, including functions for token management.
+
 ## [8.14.0]
 
 ### Added
