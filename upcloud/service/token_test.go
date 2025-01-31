@@ -6,6 +6,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/client"
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/request"
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/stretchr/testify/assert"
@@ -68,6 +69,50 @@ func TestToken(t *testing.T) {
 		require.NoError(t, err)
 		require.NoError(t, svc.DeleteToken(ctx, &request.DeleteTokenRequest{ID: deleteThis.ID}))
 	})
+}
+
+func TestClientWithToken(t *testing.T) {
+	expires := time.Date(2025, 12, 1, 0, 0, 0, 0, time.UTC)
+	tokenRequest := request.CreateTokenRequest{
+		Name:               "my_1st_token",
+		ExpiresAt:          expires,
+		AllowedIPRanges:    []string{"0.0.0.0/0", "::/0"},
+		CanCreateSubTokens: true,
+	}
+
+	// Create client that retries the initial token
+	user, password := getCredentials()
+	clt := client.New(user, password)
+	svc := New(clt)
+
+	// Get the initial token
+	token, err := svc.CreateToken(context.Background(), &tokenRequest)
+	require.NoError(t, err)
+
+	// Create a new client with the initial token
+	authCfg := client.WithBearerAuth(token.APIToken)
+	cltWithToken := client.New("", "", authCfg)
+
+	// Create a new service with the client with the initial token
+	svcWithToken := New(cltWithToken)
+
+	account, err := svcWithToken.GetAccount(context.Background())
+	require.NoError(t, err)
+
+	// Print account details
+	t.Logf("Account: %+v", account)
+
+	if account.UserName != user {
+		t.Errorf("TestGetAccount expected %s, got %s", user, account.UserName)
+	}
+
+	assert.NotZero(t, account.ResourceLimits.Cores)
+	assert.NotZero(t, account.ResourceLimits.Memory)
+	assert.NotZero(t, account.ResourceLimits.Networks)
+	assert.NotZero(t, account.ResourceLimits.PublicIPv6)
+	assert.NotZero(t, account.ResourceLimits.StorageHDD)
+	assert.NotZero(t, account.ResourceLimits.StorageSSD)
+
 }
 
 func cleanupTokenFunc(t *testing.T, svc *Service, id string) func() {
