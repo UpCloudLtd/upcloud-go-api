@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.15.0]
+
 ### Added
 - Added support for token-based authentication in the client, including functions for token management.
 - managed load balancer: support for redirect rule HTTP status
@@ -557,7 +559,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.14.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.15.0...HEAD
+[8.15.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.14.0...v8.15.0
 [8.14.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.13.0...v8.14.0
 [8.13.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.12.0...v8.13.0
 [8.12.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.11.0...v8.12.0
