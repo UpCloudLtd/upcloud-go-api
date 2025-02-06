@@ -30,6 +30,7 @@ type LogFn func(context.Context, string, ...any)
 type config struct {
 	username   string
 	password   string
+	token      string
 	baseURL    string
 	httpClient *http.Client
 	logger     LogFn
@@ -152,7 +153,11 @@ func (c *Client) addDefaultHeaders(r *http.Request) {
 		r.Header.Set(userAgent, c.UserAgent)
 	}
 	if _, ok := r.Header[authorization]; !ok && strings.HasPrefix(r.URL.String(), c.config.baseURL) {
-		r.SetBasicAuth(c.config.username, c.config.password)
+		if c.config.token != "" {
+			r.Header.Set(authorization, "Bearer "+c.config.token)
+		} else {
+			r.SetBasicAuth(c.config.username, c.config.password)
+		}
 	}
 }
 
@@ -248,6 +253,24 @@ func WithHTTPClient(httpClient *http.Client) ConfigFn {
 	}
 }
 
+// WithBasicAuth configures the client to use basic auth credentials for authentication
+func WithBasicAuth(username, password string) ConfigFn {
+	return func(c *config) {
+		c.username = username
+		c.password = password
+		c.token = ""
+	}
+}
+
+// WithBearerAuth (EXPERIMENTAL) configures the client to use bearer token for authentication
+func WithBearerAuth(apiToken string) ConfigFn {
+	return func(c *config) {
+		c.token = apiToken
+		c.username = ""
+		c.password = ""
+	}
+}
+
 // WithTimeout modifies the client's httpClient timeout
 func WithTimeout(timeout time.Duration) ConfigFn {
 	return func(c *config) {
@@ -264,6 +287,8 @@ func WithLogger(logger LogFn) ConfigFn {
 
 // New creates and returns a new client configured with the specified user and password and optional
 // config functions.
+// TODO: we should get rid of username, password here, but it's a breaking change. Credentials can be now set with
+// configurators client.WithBasicAuth("user", "pass") or client.WithBearerAuth("ucat_token")
 func New(username, password string, c ...ConfigFn) *Client {
 	config := config{
 		username:   username,

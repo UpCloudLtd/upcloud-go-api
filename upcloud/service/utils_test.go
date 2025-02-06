@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"encoding/json"
 	"log"
 	"net/http"
 	"net/http/httptest"
@@ -28,8 +29,18 @@ func (c *customRoundTripper) RoundTrip(r *http.Request) (*http.Response, error) 
 	return c.fn(r)
 }
 
+// getTokenCredentials reads the token credential from the environment
+func getTokenCredentials() string {
+	return os.Getenv("UPCLOUD_GO_SDK_TOKEN")
+}
+
 // Reads the API username and password from the environment, panics if they are not available.
 func getCredentials() (string, string) {
+	// Read UPCLOUD_GO_SDK_TOKEN environment variable
+	if token := os.Getenv("UPCLOUD_GO_SDK_TOKEN"); token != "" {
+		return token, ""
+	}
+
 	if os.Getenv("UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS") == "yes" {
 		return "username", "password"
 	}
@@ -60,8 +71,42 @@ func record(t *testing.T, fixture string, f func(context.Context, *testing.T, *r
 	r, err := recorder.New("fixtures/" + fixture)
 	require.NoError(t, err)
 
+	// Redact sensitive information from Authorization field
 	r.AddFilter(func(i *cassette.Interaction) error {
-		delete(i.Request.Headers, "Authorization")
+		if authHeader, ok := i.Request.Headers["Authorization"]; ok {
+			var redactedAuthHeader []string
+			for _, value := range authHeader {
+				if strings.HasPrefix(value, "Bearer ") {
+					redactedAuthHeader = append(redactedAuthHeader, "Bearer [REDACTED]")
+				} else if strings.HasPrefix(value, "Basic ") {
+					redactedAuthHeader = append(redactedAuthHeader, "Basic [REDACTED]")
+				}
+			}
+
+			if len(redactedAuthHeader) > 0 {
+				i.Request.Headers["Authorization"] = redactedAuthHeader
+			} else {
+				delete(i.Request.Headers, "Authorization")
+			}
+		}
+
+		// Redact sensitive information from response body
+		if i.Response.Body != "" {
+			var responseData map[string]interface{}
+
+			err := json.Unmarshal([]byte(i.Response.Body), &responseData)
+			if err == nil {
+				// Redact sensitive fields
+				if _, exists := responseData["token"]; exists {
+					responseData["token"] = "ucat_[REDACTED]"
+				}
+
+				// Convert back to string and update response body
+				updatedBody, _ := json.Marshal(responseData)
+				i.Response.Body = string(updatedBody)
+			}
+		}
+
 		if i.Request.Method == http.MethodPut && strings.Contains(i.Request.URL, "uploader") {
 			// We will remove the body from the upload to reduce fixture size
 			i.Request.Body = ""
@@ -74,7 +119,12 @@ func record(t *testing.T, fixture string, f func(context.Context, *testing.T, *r
 		require.NoError(t, err)
 	}()
 
-	user, password := getCredentials()
+	// Read token credentials from the environment, if it does not exists try to read user and password
+	var user, password string
+	token := getTokenCredentials()
+	if token == "" {
+		user, password = getCredentials()
+	}
 
 	httpClient := client.NewDefaultHTTPClient()
 	origTransport := httpClient.Transport
@@ -95,7 +145,11 @@ func record(t *testing.T, fixture string, f func(context.Context, *testing.T, *r
 	// just some random timeout value. High enough that it won't be reached during normal test.
 	ctx, cancel := context.WithTimeout(context.Background(), waitTimeout*4)
 	defer cancel()
-	f(ctx, t, r, New(client.New(user, password, client.WithHTTPClient(httpClient))))
+	if token == "" {
+		f(ctx, t, r, New(client.New(user, password, client.WithHTTPClient(httpClient))))
+	} else {
+		f(ctx, t, r, New(client.New("", "", client.WithBearerAuth(token), client.WithHTTPClient(httpClient))))
+	}
 }
 
 // Tears down the test environment by removing all resources.
