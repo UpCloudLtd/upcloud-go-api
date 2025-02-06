@@ -103,7 +103,7 @@ func TestClientWithToken(t *testing.T) {
 	require.NotEmpty(t, server, "Failed to get servers. This points to a problem with token auth")
 	require.NoError(t, err, "Error getting the servers. This points to a problem with token auth")
 
-	//Delete the token
+	// Delete the token
 	err = svcWithToken.DeleteToken(ctx, &request.DeleteTokenRequest{ID: token.ID})
 	require.NoError(t, err, "Token deletion should not fail")
 

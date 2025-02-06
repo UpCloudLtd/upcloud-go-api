@@ -119,7 +119,7 @@ func record(t *testing.T, fixture string, f func(context.Context, *testing.T, *r
 		require.NoError(t, err)
 	}()
 
-	//Read token credentials from the environment, if it does not exists try to read user and password
+	// Read token credentials from the environment, if it does not exists try to read user and password
 	var user, password string
 	token := getTokenCredentials()
 	if token == "" {
