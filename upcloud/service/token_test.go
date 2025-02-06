@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"os"
 	"strings"
 	"testing"
 	"time"
@@ -32,8 +33,6 @@ func TestToken(t *testing.T) {
 	}
 
 	record(t, "token", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		// TODO: obfuscate real tokes from fixtures. Currently committed tokens in token.yaml are from local env
-		//  with the url changed to prod host. rec.AddFilter() for the win.
 		// Create some tokens
 		ids := make([]string, len(tokenRequests))
 
@@ -71,7 +70,11 @@ func TestToken(t *testing.T) {
 	})
 }
 
+// TestClientWithToken tests that a client can be created with a token and used to make authenticated API requests
 func TestClientWithToken(t *testing.T) {
+	if os.Getenv("UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS") == "yes" || testing.Short() {
+		t.Skip("Skipping TestGetAccount...")
+	}
 	expires := time.Date(2025, 12, 1, 0, 0, 0, 0, time.UTC)
 	tokenRequest := request.CreateTokenRequest{
 		Name:               "my_1st_token",
@@ -79,45 +82,41 @@ func TestClientWithToken(t *testing.T) {
 		AllowedIPRanges:    []string{"0.0.0.0/0", "::/0"},
 		CanCreateSubTokens: true,
 	}
-
-	// Create client that retries the initial token
-	user, password := getCredentials()
-	clt := client.New(user, password)
-	svc := New(clt)
+	ctx, cancel := context.WithTimeout(context.Background(), 120*time.Second)
+	defer cancel()
 
 	// Get the initial token
-	token, err := svc.CreateToken(context.Background(), &tokenRequest)
-	require.NoError(t, err)
+	user, password := getCredentials()
+	svc := New(client.New(user, password))
+	token, err := svc.CreateToken(ctx, &tokenRequest)
+	require.NoError(t, err, "Failed to create token")
+	require.NotNil(t, token, "Token must not be nil")
 
-	// Create a new client with the initial token
-	authCfg := client.WithBearerAuth(token.APIToken)
-	cltWithToken := client.New("", "", authCfg)
+	// Make sure that we cleanup the token
+	t.Cleanup(cleanupTokenFunc(t, svc, token.ID))
 
-	// Create a new service with the client with the initial token
-	svcWithToken := New(cltWithToken)
+	// Create a new client with the token
+	svcWithToken := New(client.New("", "", client.WithBearerAuth(token.APIToken)))
 
-	account, err := svcWithToken.GetAccount(context.Background())
-	require.NoError(t, err)
+	// Make an authenticated API request
+	server, err := svcWithToken.GetServers(ctx)
+	require.NotEmpty(t, server, "Failed to get servers. This points to a problem with token auth")
+	require.NoError(t, err, "Error getting the servers. This points to a problem with token auth")
 
-	// Print account details
-	t.Logf("Account: %+v", account)
+	//Delete the token
+	err = svcWithToken.DeleteToken(ctx, &request.DeleteTokenRequest{ID: token.ID})
+	require.NoError(t, err, "Token deletion should not fail")
 
-	if account.UserName != user {
-		t.Errorf("TestGetAccount expected %s, got %s", user, account.UserName)
-	}
-
-	assert.NotZero(t, account.ResourceLimits.Cores)
-	assert.NotZero(t, account.ResourceLimits.Memory)
-	assert.NotZero(t, account.ResourceLimits.Networks)
-	assert.NotZero(t, account.ResourceLimits.PublicIPv6)
-	assert.NotZero(t, account.ResourceLimits.StorageHDD)
-	assert.NotZero(t, account.ResourceLimits.StorageSSD)
+	// Make sure the token is deleted
+	server, err = svcWithToken.GetServers(ctx)
+	require.Error(t, err, "Getting servers with deleted token should fail")
+	require.Empty(t, server, "Getting servers with deleted token should return empty list")
 }
 
 func cleanupTokenFunc(t *testing.T, svc *Service, id string) func() {
 	return func() {
 		if err := svc.DeleteToken(context.Background(), &request.DeleteTokenRequest{ID: id}); err != nil {
-			t.Log(err)
+			t.Log(err, "This might not be a problem if the test deleted the token already")
 		}
 	}
 }
