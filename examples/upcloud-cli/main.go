@@ -14,11 +14,12 @@ import (
 	"github.com/davecgh/go-spew/spew"
 )
 
-var username, password string
+var username, password, token string
 
 func init() {
 	flag.StringVar(&username, "username", "", "UpCloud username")
 	flag.StringVar(&password, "password", "", "UpCloud password")
+	flag.StringVar(&password, "token", "", "UpCloud API token")
 }
 
 func main() {
@@ -34,21 +35,30 @@ func run() int {
 	if username == "" {
 		username = os.Getenv("UPCLOUD_USERNAME")
 	}
+	if token == "" {
+		token = os.Getenv("UPCLOUD_TOKEN")
+	}
 
 	command := flag.Arg(0)
 
-	if len(username) == 0 {
-		fmt.Fprintln(os.Stderr, "Username must be specified")
-		return 1
-	}
+	var authCfg client.ConfigFn
+	if len(token) > 0 {
+		authCfg = client.WithBearerAuth(token)
+	} else {
+		if len(username) == 0 {
+			fmt.Fprintln(os.Stderr, "Username or token must be specified")
+			return 1
+		}
 
-	if len(password) == 0 {
-		fmt.Fprintln(os.Stderr, "Password must be specified")
-		return 2
+		if len(password) == 0 {
+			fmt.Fprintln(os.Stderr, "Password or token must be specified")
+			return 2
+		}
+		authCfg = client.WithBasicAuth(username, password)
 	}
 
 	fmt.Println("Creating new client")
-	c := client.New(username, password)
+	c := client.New("", "", authCfg)
 	s := service.New(c)
 
 	switch command {
