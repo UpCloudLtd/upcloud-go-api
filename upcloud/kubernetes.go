@@ -100,6 +100,7 @@ type KubernetesPlan struct {
 	Name         string `json:"name"`
 	ServerNumber int    `json:"server_number"`
 	MaxNodes     int    `json:"max_nodes"`
+	Deprecated   bool   `json:"deprecated"`
 }
 
 type KubernetesVersion struct {

@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- kubernetes: add `Deprecated` field to `KubernetesPlan`
+
 ## [8.16.0]
 
 ### Added
