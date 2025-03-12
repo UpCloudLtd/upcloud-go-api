@@ -397,3 +397,14 @@ type UntagServerRequest struct {
 func (r *UntagServerRequest) RequestURL() string {
 	return fmt.Sprintf("/server/%s/untag/%s", r.UUID, strings.Join(r.Tags, ","))
 }
+
+// RelocateServerRequest represents a request to relocate a server
+type RelocateServerRequest struct {
+	UUID string `json:"-"`
+	Zone string `json:"zone"`
+}
+
+// RequestURL implements the Request interface
+func (r *RelocateServerRequest) RequestURL() string {
+	return fmt.Sprintf("/server/%s/relocate", r.UUID)
+}

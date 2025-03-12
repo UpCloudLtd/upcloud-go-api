@@ -362,6 +362,62 @@ func TestCreateDeleteServerAndStorage(t *testing.T) {
 	})
 }
 
+// TestCreateStopRelocateServer performs the following actions:
+//
+// - creates a server
+// - stops the server
+// - relocates the server to private zone
+// - checks server and storage details after relocation
+func TestCreateStopRelocateServer(t *testing.T) {
+	t.Parallel()
+
+	record(t, "createstoprelocateserver", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		relocationTarget := "fi-tst1"
+
+		// Create a server
+		serverDetails, err := createServer(ctx, rec, svc, "TestCreateStopRelocateServer")
+		require.NoError(t, err)
+		t.Logf("Server %s with UUID %s created", serverDetails.Title, serverDetails.UUID)
+
+		// Get details about the storage (UUID is required for testing)
+		assert.NotEmptyf(t, serverDetails.StorageDevices, "Server %s with UUID %s has no storages attached", serverDetails.Title, serverDetails.UUID)
+		storageUUID := serverDetails.StorageDevices[0].UUID
+		t.Logf("First storage of server with UUID %s has UUID %s", serverDetails.UUID, storageUUID)
+
+		// Stop the server
+		t.Logf("Stopping server with UUID %s ...", serverDetails.UUID)
+		err = stopServer(ctx, rec, svc, serverDetails.UUID)
+		require.NoError(t, err)
+		t.Log("Server is now stopped")
+
+		// Relocate the server
+		t.Logf("Relocating server with UUID %s to zone %s ...", serverDetails.UUID, relocationTarget)
+		_, err = svc.RelocateServer(ctx, &request.RelocateServerRequest{
+			UUID: serverDetails.UUID,
+			Zone: relocationTarget,
+		})
+		require.NoError(t, err)
+
+		// Check server details
+		relocatedServerDetails, err := svc.GetServerDetails(ctx, &request.GetServerDetailsRequest{
+			UUID: serverDetails.UUID,
+		})
+		require.NoError(t, err)
+		assert.Equal(t, upcloud.ServerStateStopped, relocatedServerDetails.State)
+		assert.Equal(t, relocationTarget, relocatedServerDetails.Zone)
+
+		// Check storage details
+		relocatedStorageDetails, err := svc.GetStorageDetails(ctx, &request.GetStorageDetailsRequest{
+			UUID: storageUUID,
+		})
+		require.NoError(t, err)
+		assert.Equal(t, upcloud.StorageStateOnline, relocatedStorageDetails.State)
+		assert.Equal(t, relocationTarget, relocatedStorageDetails.Zone)
+
+		t.Log("Server is now relocated")
+	})
+}
+
 // Creates a minimal server with a private utility network interface.
 func createMinimalServer(ctx context.Context, rec *recorder.Recorder, svc *Service, name string) (*upcloud.ServerDetails, error) {
 	title := "uploud-go-sdk-integration-test-" + name

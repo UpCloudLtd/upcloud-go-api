@@ -19,6 +19,7 @@ type Server interface {
 	ModifyServer(ctx context.Context, r *request.ModifyServerRequest) (*upcloud.ServerDetails, error)
 	DeleteServer(ctx context.Context, r *request.DeleteServerRequest) error
 	DeleteServerAndStorages(ctx context.Context, r *request.DeleteServerAndStoragesRequest) error
+	RelocateServer(ctx context.Context, r *request.RelocateServerRequest) (*upcloud.ServerDetails, error)
 }
 
 // GetServerConfigurations returns the available pre-configured server configurations
@@ -116,4 +117,10 @@ func (s *Service) DeleteServer(ctx context.Context, r *request.DeleteServerReque
 // DeleteServerAndStorages deletes the specified server and all attached storages
 func (s *Service) DeleteServerAndStorages(ctx context.Context, r *request.DeleteServerAndStoragesRequest) error {
 	return s.delete(ctx, r)
+}
+
+// RelocateServer relocates the specified server
+func (s *Service) RelocateServer(ctx context.Context, r *request.RelocateServerRequest) (*upcloud.ServerDetails, error) {
+	serverDetails := upcloud.ServerDetails{}
+	return &serverDetails, s.create(ctx, r, &serverDetails)
 }
