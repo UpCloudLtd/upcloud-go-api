@@ -453,3 +453,20 @@ func TestUntagServerRequest(t *testing.T) {
 
 	assert.Equal(t, "/server/foo/untag/tag1", request.RequestURL())
 }
+
+// TestRelocateServerRequest tests that RelocateServerRequest objects behave correctly
+func TestRelocateServerRequest(t *testing.T) {
+	request := RelocateServerRequest{
+		UUID: "foo",
+		Zone: "fi-hel2",
+	}
+	expectedJSON := `
+	  {
+		"zone": "fi-hel2"
+	  }
+	`
+	actualJSON, err := json.Marshal(&request)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
+	assert.Equal(t, "/server/foo/relocate", request.RequestURL())
+}
