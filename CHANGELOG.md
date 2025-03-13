@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.17.0]
+
 ### Added
 - server: add relocation support
 
@@ -571,7 +573,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.16.1...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.17.0...HEAD
+[8.17.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.16.1...v8.17.0
 [8.16.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.16.0...v8.16.1
 [8.16.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.15.0...v8.16.0
 [8.15.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.14.0...v8.15.0
