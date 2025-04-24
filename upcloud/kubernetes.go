@@ -6,6 +6,7 @@ type (
 	KubernetesClusterType        string
 	KubernetesClusterTaintEffect string
 	KubernetesNodeState          string
+	KubernetesUpgradeStrategy    string
 )
 
 const (
@@ -37,6 +38,9 @@ const (
 	KubernetesStorageTierHDD      StorageTier = StorageTierHDD
 	KubernetesStorageTierMaxIOPS  StorageTier = StorageTierMaxIOPS
 	KubernetesStorageTierStandard StorageTier = StorageTierStandard
+
+	KubernetesUpgradeStrategyManual        KubernetesUpgradeStrategy = "manual"
+	KubernetesUpgradeStrategyRollingUpdate KubernetesUpgradeStrategy = "rolling-update"
 )
 
 type KubernetesCluster struct {
@@ -54,6 +58,19 @@ type KubernetesCluster struct {
 	PrivateNodeGroups    bool                   `json:"private_node_groups,omitempty"`
 	// The default storage encryption strategy for all node groups.
 	StorageEncryption StorageEncryption `json:"storage_encryption,omitempty"`
+}
+
+type KubernetesClusterAvailableUpgrades struct {
+	Versions []string `json:"versions"`
+}
+
+type KubernetesClusterUpgradeStrategy struct {
+	Type KubernetesUpgradeStrategy `json:"type"`
+}
+
+type KubernetesClusterUpgrade struct {
+	Version  string                            `json:"version"`
+	Strategy *KubernetesClusterUpgradeStrategy `json:"strategy,omitempty"`
 }
 
 type KubernetesNodeGroup struct {

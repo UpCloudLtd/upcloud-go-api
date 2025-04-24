@@ -197,6 +197,22 @@ func TestKubernetesStorageEncryption(t *testing.T) {
 	require.Equal(t, want, got)
 }
 
+func TestKubernetesAvailableVersions(t *testing.T) {
+	t.Parallel()
+
+	p := []byte(`
+	{
+		"versions": ["1.31"]
+	}
+	`)
+	got := KubernetesClusterAvailableUpgrades{}
+	require.NoError(t, json.Unmarshal(p, &got))
+	want := KubernetesClusterAvailableUpgrades{
+		Versions: []string{"1.31"},
+	}
+	require.Equal(t, want, got)
+}
+
 func exampleKubernetesCluster() KubernetesCluster {
 	return KubernetesCluster{
 		ControlPlaneIPFilter: []string{"0.0.0.0/0"},

@@ -83,6 +83,27 @@ func (r *ModifyKubernetesClusterRequest) RequestURL() string {
 	return fmt.Sprintf("%s/%s", kubernetesClusterBasePath, r.ClusterUUID)
 }
 
+type GetKubernetesClusterAvailableUpgradesRequest struct {
+	ClusterUUID string `json:"-"`
+}
+
+func (r *GetKubernetesClusterAvailableUpgradesRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/available-upgrades", kubernetesClusterBasePath, r.ClusterUUID)
+}
+
+type UpgradeKubernetesClusterRequest struct {
+	ClusterUUID string `json:"-"`
+	Upgrade     upcloud.KubernetesClusterUpgrade
+}
+
+func (r *UpgradeKubernetesClusterRequest) MarshalJSON() ([]byte, error) {
+	return json.Marshal(r.Upgrade)
+}
+
+func (r *UpgradeKubernetesClusterRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/upgrade", kubernetesClusterBasePath, r.ClusterUUID)
+}
+
 // DeleteKubernetesClusterRequest represents a request to delete a Kubernetes cluster
 type DeleteKubernetesClusterRequest struct {
 	UUID string `json:"-"`

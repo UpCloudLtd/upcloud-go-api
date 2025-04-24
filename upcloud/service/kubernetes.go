@@ -16,6 +16,8 @@ type Kubernetes interface {
 	GetKubernetesCluster(ctx context.Context, r *request.GetKubernetesClusterRequest) (*upcloud.KubernetesCluster, error)
 	CreateKubernetesCluster(ctx context.Context, r *request.CreateKubernetesClusterRequest) (*upcloud.KubernetesCluster, error)
 	ModifyKubernetesCluster(ctx context.Context, r *request.ModifyKubernetesClusterRequest) (*upcloud.KubernetesCluster, error)
+	GetKubernetesClusterAvailableUpgrades(ctx context.Context, r *request.GetKubernetesClusterAvailableUpgradesRequest) (*upcloud.KubernetesClusterAvailableUpgrades, error)
+	UpgradeKubernetesCluster(ctx context.Context, r *request.UpgradeKubernetesClusterRequest) (*upcloud.KubernetesClusterUpgrade, error)
 	DeleteKubernetesCluster(ctx context.Context, r *request.DeleteKubernetesClusterRequest) error
 	GetKubernetesKubeconfig(ctx context.Context, r *request.GetKubernetesKubeconfigRequest) (string, error)
 	GetKubernetesVersions(ctx context.Context, r *request.GetKubernetesVersionsRequest) ([]upcloud.KubernetesVersion, error)
@@ -65,6 +67,18 @@ func (s *Service) CreateKubernetesCluster(ctx context.Context, r *request.Create
 func (s *Service) ModifyKubernetesCluster(ctx context.Context, r *request.ModifyKubernetesClusterRequest) (*upcloud.KubernetesCluster, error) {
 	cluster := upcloud.KubernetesCluster{}
 	return &cluster, s.modify(ctx, r, &cluster)
+}
+
+// GetKubernetesClusterAvailableUpgrades list available upgrades for the cluster.
+func (s *Service) GetKubernetesClusterAvailableUpgrades(ctx context.Context, r *request.GetKubernetesClusterAvailableUpgradesRequest) (*upcloud.KubernetesClusterAvailableUpgrades, error) {
+	availableUpgrades := upcloud.KubernetesClusterAvailableUpgrades{}
+	return &availableUpgrades, s.get(ctx, r.RequestURL(), &availableUpgrades)
+}
+
+// UpgradeKubernetesCluster upgrades an existing Kubernetes cluster.
+func (s *Service) UpgradeKubernetesCluster(ctx context.Context, r *request.UpgradeKubernetesClusterRequest) (*upcloud.KubernetesClusterUpgrade, error) {
+	upgrade := upcloud.KubernetesClusterUpgrade{}
+	return &upgrade, s.create(ctx, r, &upgrade)
 }
 
 // DeleteKubernetesCluster deletes an existing Kubernetes cluster.
