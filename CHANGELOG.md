@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- kubernetes: add support for cluster upgrade end-points
+
 ## [8.17.0]
 
 ### Added

@@ -69,6 +69,12 @@ const exampleClusterResponse = `
 }
 `
 
+const exampleAvailableUpgradesResponse = `
+{
+  "versions": ["1.31"]
+}
+`
+
 const exampleNodeGroupResponse = `
 {
 	"name":"my-test-group",
@@ -296,6 +302,24 @@ func TestCreateKubernetesCluster(t *testing.T) {
 	assert.Equal(t, upcloud.KubernetesClusterStateRunning, res.State)
 	assert.Equal(t, "de-fra1", res.Zone)
 	assert.Len(t, res.NodeGroups, 2)
+}
+
+func TestGetKubernetesClusterAvailableUpgrades(t *testing.T) {
+	t.Parallel()
+
+	srv, svc := setupTestServerAndService(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		assert.Equal(t, http.MethodGet, r.Method)
+		assert.Equal(t, fmt.Sprintf("/%s/kubernetes/_UUID_/available-upgrades", client.APIVersion), r.URL.Path)
+
+		_, _ = fmt.Fprint(w, exampleAvailableUpgradesResponse)
+	}))
+	defer srv.Close()
+
+	res, err := svc.GetKubernetesClusterAvailableUpgrades(context.Background(), &request.GetKubernetesClusterAvailableUpgradesRequest{
+		ClusterUUID: "_UUID_",
+	})
+	assert.NoError(t, err)
+	assert.Equal(t, []string{"1.31"}, res.Versions)
 }
 
 func TestDeleteKubernetesCluster(t *testing.T) {

@@ -227,6 +227,50 @@ func TestKubernetes(t *testing.T) {
 		}
 	})
 
+	t.Run("UpgradeKubernetesClusterRequestMarshal", func(t *testing.T) {
+		t.Parallel()
+
+		tests := []struct {
+			request  UpgradeKubernetesClusterRequest
+			expected string
+		}{
+			{
+				request: UpgradeKubernetesClusterRequest{
+					ClusterUUID: "set-filter-omit-labels",
+					Upgrade: upcloud.KubernetesClusterUpgrade{
+						Version: "1.31",
+						Strategy: &upcloud.KubernetesClusterUpgradeStrategy{
+							Type: upcloud.KubernetesUpgradeStrategyRollingUpdate,
+						},
+					},
+				},
+				expected: `{ "version": "1.31", "strategy": {"type": "rolling-update"} }`,
+			},
+			{
+				request: UpgradeKubernetesClusterRequest{
+					ClusterUUID: "set-filter-omit-labels",
+					Upgrade: upcloud.KubernetesClusterUpgrade{
+						Version: "1.32",
+					},
+				},
+				expected: `{ "version": "1.32" }`,
+			},
+		}
+		for _, test := range tests {
+			assert.Equal(t, fmt.Sprintf("%s/%s/upgrade", kubernetesClusterBasePath, test.request.ClusterUUID), test.request.RequestURL())
+			req := test.request
+			b, err := json.Marshal(&req)
+			actual := string(b)
+
+			assert.NoError(t, err)
+			assert.JSONEq(
+				t,
+				test.expected,
+				actual,
+			)
+		}
+	})
+
 	t.Run("DeleteKubernetesClusterRequest", func(t *testing.T) {
 		t.Parallel()
 
