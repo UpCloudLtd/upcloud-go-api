@@ -47,7 +47,7 @@ func (s *Service) DeleteNetworkPeering(ctx context.Context, r *request.DeleteNet
 }
 
 func (s *Service) WaitForNetworkPeeringState(ctx context.Context, r *request.WaitForNetworkPeeringStateRequest) (*upcloud.NetworkPeering, error) {
-	return retry(ctx, func(_ int, c context.Context) (*upcloud.NetworkPeering, error) {
+	return wait(ctx, func(_ int, c context.Context) (*upcloud.NetworkPeering, error) {
 		details, err := s.GetNetworkPeering(c, &request.GetNetworkPeeringRequest{
 			UUID: r.UUID,
 		})

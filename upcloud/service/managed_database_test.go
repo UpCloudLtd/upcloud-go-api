@@ -3,13 +3,12 @@ package service
 import (
 	"context"
 	"fmt"
-	"net/http"
 	"testing"
 	"time"
 
-	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"gopkg.in/dnaeon/go-vcr.v4/pkg/recorder"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/request"
@@ -220,7 +219,7 @@ func TestService_GetManagedDatabaseLogs(t *testing.T) {
 		err = waitForManagedDatabaseRunningState(ctx, rec, svc, details.UUID)
 		require.NoError(t, err)
 
-		if rec.Mode() == recorder.ModeRecording {
+		if rec.IsRecording() {
 			t.Logf("waiting for %s for the logs to be available", waitFor)
 			time.Sleep(waitFor)
 		}
@@ -332,7 +331,7 @@ func TestService_GetManagedDatabaseMetrics(t *testing.T) {
 		err = waitForManagedDatabaseRunningState(ctx, rec, svc, details.UUID)
 		require.NoError(t, err)
 
-		if rec.Mode() == recorder.ModeRecording {
+		if rec.IsRecording() {
 			t.Logf("waiting for %s to gather up some data", waitFor)
 			time.Sleep(waitFor)
 		}
@@ -975,19 +974,11 @@ func TestService_GetManagedDatabaseIndices(t *testing.T) {
 }
 
 func waitForManagedDatabaseInitialBackup(ctx context.Context, rec *recorder.Recorder, svc *Service, dbUUID string) error {
-	if rec.Mode() != recorder.ModeRecording {
+	if !rec.IsRecording() {
 		return nil
 	}
 
 	const timeout = 10 * time.Minute
-
-	rec.AddPassthrough(func(h *http.Request) bool {
-		return true
-	})
-
-	defer func() {
-		rec.Passthroughs = nil
-	}()
 
 	waitUntil := time.Now().Add(timeout)
 	for {
@@ -1009,16 +1000,9 @@ func waitForManagedDatabaseInitialBackup(ctx context.Context, rec *recorder.Reco
 }
 
 func waitForManagedDatabaseRunningState(ctx context.Context, rec *recorder.Recorder, svc *Service, dbUUID string) error {
-	if rec.Mode() != recorder.ModeRecording {
+	if !rec.IsRecording() {
 		return nil
 	}
-
-	rec.AddPassthrough(func(h *http.Request) bool {
-		return true
-	})
-	defer func() {
-		rec.Passthroughs = nil
-	}()
 
 	_, err := svc.WaitForManagedDatabaseState(ctx, &request.WaitForManagedDatabaseStateRequest{
 		UUID:         dbUUID,

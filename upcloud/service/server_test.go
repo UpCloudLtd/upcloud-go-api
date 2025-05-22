@@ -3,7 +3,6 @@ package service
 import (
 	"context"
 	"fmt"
-	"net/http"
 	"reflect"
 	"strings"
 	"testing"
@@ -11,9 +10,9 @@ import (
 
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/request"
-	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"gopkg.in/dnaeon/go-vcr.v4/pkg/recorder"
 )
 
 // TestGetServerConfigurations ensures that the GetServerConfigurations() function returns proper data.
@@ -585,16 +584,9 @@ func stopServer(ctx context.Context, rec *recorder.Recorder, svc *Service, uuid 
 
 // Waits for the server to achieve the desired state.
 func waitForServerState(ctx context.Context, rec *recorder.Recorder, svc *Service, serverUUID string, desiredState string) error {
-	if rec.Mode() != recorder.ModeRecording {
+	if !rec.IsRecording() {
 		return nil
 	}
-
-	rec.AddPassthrough(func(h *http.Request) bool {
-		return true
-	})
-	defer func() {
-		rec.Passthroughs = nil
-	}()
 
 	// Wait for the server to start
 	_, err := svc.WaitForServerState(ctx, &request.WaitForServerStateRequest{

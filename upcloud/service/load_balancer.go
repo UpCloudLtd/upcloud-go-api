@@ -2,6 +2,8 @@ package service
 
 import (
 	"context"
+	"errors"
+	"net/http"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/request"
@@ -13,6 +15,8 @@ type LoadBalancer interface {
 	CreateLoadBalancer(ctx context.Context, r *request.CreateLoadBalancerRequest) (*upcloud.LoadBalancer, error)
 	ModifyLoadBalancer(ctx context.Context, r *request.ModifyLoadBalancerRequest) (*upcloud.LoadBalancer, error)
 	DeleteLoadBalancer(ctx context.Context, r *request.DeleteLoadBalancerRequest) error
+	WaitForLoadBalancerState(ctx context.Context, r *request.WaitForLoadBalancerStateRequest) (*upcloud.LoadBalancer, error)
+	WaitForLoadBalancerDeletion(ctx context.Context, r *request.WaitForLoadBalancerDeletionRequest) error
 	// Backends
 	GetLoadBalancerBackends(ctx context.Context, r *request.GetLoadBalancerBackendsRequest) ([]upcloud.LoadBalancerBackend, error)
 	GetLoadBalancerBackend(ctx context.Context, r *request.GetLoadBalancerBackendRequest) (*upcloud.LoadBalancerBackend, error)
@@ -427,4 +431,42 @@ func (s *Service) ModifyLoadBalancerNetwork(ctx context.Context, r *request.Modi
 func (s *Service) GetLoadBalancerDNSChallengeDomain(ctx context.Context, r *request.GetLoadBalancerDNSChallengeDomainRequest) (*upcloud.LoadBalancerDNSChallengeDomain, error) {
 	var domain upcloud.LoadBalancerDNSChallengeDomain
 	return &domain, s.get(ctx, r.RequestURL(), &domain)
+}
+
+func (s *Service) WaitForLoadBalancerState(ctx context.Context, r *request.WaitForLoadBalancerStateRequest) (*upcloud.LoadBalancer, error) {
+	return wait(ctx, func(i int, c context.Context) (*upcloud.LoadBalancer, error) {
+		details, err := s.GetLoadBalancer(c, &request.GetLoadBalancerRequest{
+			UUID: r.UUID,
+		})
+		if err != nil {
+			return nil, err
+		}
+
+		// Either wait for the server to enter the desired state or wait for it to leave the undesired state
+		if r.DesiredState != "" && details.OperationalState == r.DesiredState {
+			return details, nil
+		}
+
+		return nil, nil
+	}, nil)
+}
+
+// WaitForManagedObjectStorageDeletion blocks execution until the specified Managed Object Storage service has been deleted.
+func (s *Service) WaitForLoadBalancerDeletion(ctx context.Context, r *request.WaitForLoadBalancerDeletionRequest) error {
+	_, err := wait(ctx, func(_ int, c context.Context) (*upcloud.LoadBalancer, error) {
+		details, err := s.GetLoadBalancer(c, &request.GetLoadBalancerRequest{
+			UUID: r.UUID,
+		})
+		if err != nil {
+			var ucErr *upcloud.Problem
+			if errors.As(err, &ucErr) && ucErr.Status == http.StatusNotFound {
+				return nil, nil
+			}
+
+			return nil, err
+		}
+
+		return details, err
+	}, &waitConfig{inverse: true})
+	return err
 }

@@ -97,13 +97,32 @@ func (c *Client) Do(r *http.Request) ([]byte, error) {
 	return c.handleResponse(response)
 }
 
+type clientContextKey string
+
+const fragmentContextKey clientContextKey = "fragment"
+
+func WithFragment(ctx context.Context, fragment string) context.Context {
+	return context.WithValue(ctx, fragmentContextKey, fragment)
+}
+
+func GetFragment(ctx context.Context) string {
+	if hash, ok := ctx.Value(fragmentContextKey).(string); ok {
+		return hash
+	}
+	return ""
+}
+
 func (c *Client) createRequest(ctx context.Context, method, path string, body []byte) (*http.Request, error) {
 	var bodyReader io.Reader
 
 	if body != nil {
 		bodyReader = bytes.NewBuffer(body)
 	}
-	req, err := http.NewRequestWithContext(ctx, method, c.createRequestURL(path), bodyReader)
+	url := c.createRequestURL(path)
+	if fragment := GetFragment(ctx); fragment != "" {
+		url = fmt.Sprintf("%s#%s", url, fragment)
+	}
+	req, err := http.NewRequestWithContext(ctx, method, url, bodyReader)
 	if err != nil {
 		return nil, err
 	}

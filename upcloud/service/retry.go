@@ -2,18 +2,21 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"time"
+
+	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/client"
 )
 
-type retryConfig struct {
+type waitConfig struct {
 	interval time.Duration
 	// Inverse the should retry logic. By default, operation is retried until operation returns a value. If inverse is set to true, operation is retried while operation returns a value. This should be used, for example, for waiting until resource is deleted.
 	inverse bool
 }
 
-func fillDefaults(c *retryConfig) *retryConfig {
+func fillDefaults(c *waitConfig) *waitConfig {
 	if c == nil {
-		c = &retryConfig{}
+		c = &waitConfig{}
 	}
 
 	if c.interval.Milliseconds() == 0 {
@@ -23,7 +26,11 @@ func fillDefaults(c *retryConfig) *retryConfig {
 	return c
 }
 
-func retry[T any](ctx context.Context, operation func(int, context.Context) (*T, error), config *retryConfig) (*T, error) {
+func withWaitFragment(ctx context.Context, i int) context.Context {
+	return client.WithFragment(ctx, fmt.Sprintf("wait:i=%d", i))
+}
+
+func wait[T any](ctx context.Context, operation func(int, context.Context) (*T, error), config *waitConfig) (*T, error) {
 	config = fillDefaults(config)
 
 	ticker := time.NewTicker(config.interval)
@@ -32,7 +39,8 @@ func retry[T any](ctx context.Context, operation func(int, context.Context) (*T,
 	for i := 0; ; i++ {
 		select {
 		case <-ticker.C:
-			value, err := operation(i, ctx)
+			c := withWaitFragment(ctx, i)
+			value, err := operation(i, c)
 			if err != nil {
 				return value, err
 			}

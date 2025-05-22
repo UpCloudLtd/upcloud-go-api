@@ -169,7 +169,7 @@ func (s *Service) GetManagedDatabaseVersions(ctx context.Context, r *request.Get
 // specified state. If the state changes favorably, the new managed database details is returned. The method will give up
 // after the specified timeout
 func (s *Service) WaitForManagedDatabaseState(ctx context.Context, r *request.WaitForManagedDatabaseStateRequest) (*upcloud.ManagedDatabase, error) {
-	return retry(ctx, func(_ int, c context.Context) (*upcloud.ManagedDatabase, error) {
+	return wait(ctx, func(_ int, c context.Context) (*upcloud.ManagedDatabase, error) {
 		details, err := s.GetManagedDatabase(c, &request.GetManagedDatabaseRequest{
 			UUID: r.UUID,
 		})

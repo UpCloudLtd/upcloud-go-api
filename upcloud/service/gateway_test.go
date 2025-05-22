@@ -12,8 +12,8 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/client"
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/request"
-	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/stretchr/testify/assert"
+	"gopkg.in/dnaeon/go-vcr.v4/pkg/recorder"
 )
 
 func TestGatewayPlans(t *testing.T) {
@@ -653,18 +653,11 @@ func TestVPNGatewayConnectionTunnels(t *testing.T) {
 }
 
 func waitGatewayToStart(ctx context.Context, rec *recorder.Recorder, svc *Service, UUID string) error {
-	if rec.Mode() != recorder.ModeRecording {
+	if !rec.IsRecording() {
 		return nil
 	}
 
 	const timeout = 10 * time.Minute
-
-	rec.AddPassthrough(func(h *http.Request) bool {
-		return true
-	})
-	defer func() {
-		rec.Passthroughs = nil
-	}()
 
 	waitUntil := time.Now().Add(timeout)
 	for {
@@ -683,18 +676,11 @@ func waitGatewayToStart(ctx context.Context, rec *recorder.Recorder, svc *Servic
 }
 
 func waitGatewayToDelete(ctx context.Context, rec *recorder.Recorder, svc *Service, UUID string) error {
-	if rec.Mode() != recorder.ModeRecording {
+	if !rec.IsRecording() {
 		return nil
 	}
 
 	const timeout = 10 * time.Minute
-
-	rec.AddPassthrough(func(h *http.Request) bool {
-		return true
-	})
-	defer func() {
-		rec.Passthroughs = nil
-	}()
 
 	waitUntil := time.Now().Add(timeout)
 	for {

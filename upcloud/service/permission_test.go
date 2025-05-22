@@ -6,8 +6,8 @@ import (
 
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/request"
-	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/stretchr/testify/assert"
+	"gopkg.in/dnaeon/go-vcr.v4/pkg/recorder"
 )
 
 func TestPermissions(t *testing.T) {

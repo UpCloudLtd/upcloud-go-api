@@ -8,9 +8,9 @@ import (
 	"time"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/client"
-	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"gopkg.in/dnaeon/go-vcr.v4/pkg/recorder"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/request"
@@ -656,21 +656,14 @@ func TestCreateTwoNetworksTwoServersAndARouter(t *testing.T) {
 		err = svc.DetachNetworkRouter(ctx, &request.DetachNetworkRouterRequest{NetworkUUID: network1.UUID})
 		require.NoError(t, err)
 
-		if rec.Mode() == recorder.ModeRecording {
-			rec.AddPassthrough(func(h *http.Request) bool {
-				return true
+		assert.Eventually(t, func() bool {
+			details, err := svc.GetNetworkDetails(ctx, &request.GetNetworkDetailsRequest{
+				UUID: network1.UUID,
 			})
+			require.NoError(t, err)
+			return err == nil && details.Router == ""
+		}, 15*time.Second, time.Second)
 
-			assert.Eventually(t, func() bool {
-				details, err := svc.GetNetworkDetails(ctx, &request.GetNetworkDetailsRequest{
-					UUID: network1.UUID,
-				})
-				require.NoError(t, err)
-				return err == nil && details.Router == ""
-			}, 15*time.Second, time.Second)
-
-			rec.Passthroughs = nil
-		}
 		details, err := svc.GetNetworkDetails(ctx, &request.GetNetworkDetailsRequest{
 			UUID: network1.UUID,
 		})
