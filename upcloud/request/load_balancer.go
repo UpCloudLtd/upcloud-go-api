@@ -737,3 +737,12 @@ type GetLoadBalancerDNSChallengeDomainRequest struct{}
 func (r *GetLoadBalancerDNSChallengeDomainRequest) RequestURL() string {
 	return "/load-balancer/certificate-bundles/dns-challenge-domain"
 }
+
+type WaitForLoadBalancerStateRequest struct {
+	UUID         string
+	DesiredState upcloud.LoadBalancerOperationalState
+}
+
+type WaitForLoadBalancerDeletionRequest struct {
+	UUID string `json:"-"`
+}

@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- managed load balancer: add `WaitForLoadBalancerState` and `WaitForLoadBalancerDeletion` helpers for waiting load-balancer state and deletion
+
 ## [8.18.0]
 
 ### Added

@@ -10,10 +10,10 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/client"
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/request"
-	"github.com/dnaeon/go-vcr/cassette"
-	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"gopkg.in/dnaeon/go-vcr.v4/pkg/cassette"
+	"gopkg.in/dnaeon/go-vcr.v4/pkg/recorder"
 )
 
 // TestGetAccount tests that the GetAccount() method returns proper data
@@ -49,16 +49,18 @@ func TestGetAccount(t *testing.T) {
 //   - Get account list and check that subaccount and main account is listed
 //   - Delete tag and subaccount
 func TestListDetailsCreateModifyDeleteSubaccount(t *testing.T) {
+	mainAccount := "testuser"
+
+	// Mask username from recording just in case if developer forgets to review it before commit
+	hook := func(i *cassette.Interaction) error {
+		testuser, _ := getCredentials()
+		i.Request.Body = strings.Replace(i.Request.Body, testuser, mainAccount, -1)
+		i.Response.Body = strings.Replace(i.Response.Body, testuser, mainAccount, -1)
+		return nil
+	}
+
 	record(t, "createmodifydeletesubaccount", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		var err error
-		mainAccount := "testuser"
-		rec.AddFilter(func(i *cassette.Interaction) error {
-			// try to mask username from recording just in case if developer forgets to review it before commit
-			testuser, _ := getCredentials()
-			i.Request.Body = strings.Replace(i.Request.Body, testuser, mainAccount, -1)
-			i.Response.Body = strings.Replace(i.Response.Body, testuser, mainAccount, -1)
-			return nil
-		})
 		username := "sdk_test_subaccount"
 		tagName := fmt.Sprintf("sdk_test_tag_%s", username)
 
@@ -235,5 +237,5 @@ func TestListDetailsCreateModifyDeleteSubaccount(t *testing.T) {
 		}
 		assert.False(t, subAccountNotFound, "subaccount not found from list of accounts")
 		assert.False(t, mainAccountNotFound, "main account not found from list of accounts")
-	})
+	}, recorder.WithHook(hook, recorder.BeforeSaveHook))
 }

@@ -2,17 +2,15 @@ package service
 
 import (
 	"context"
-	"errors"
 	"fmt"
-	"net/http"
 	"testing"
 	"time"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/request"
-	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"gopkg.in/dnaeon/go-vcr.v4/pkg/recorder"
 )
 
 func TestLoadBalancer(t *testing.T) {
@@ -1043,7 +1041,7 @@ func TestLoadBalancerPage(t *testing.T) {
 			lb, err := createLoadBalancer(ctx, svc, net.UUID, zone)
 			require.NoError(t, err)
 			lbs = append(lbs, lb)
-			if rec.Mode() != recorder.ModeReplaying {
+			if rec.IsRecording() {
 				time.Sleep(1 * time.Second)
 			}
 		}
@@ -1080,9 +1078,13 @@ func TestLoadBalancerPage(t *testing.T) {
 			}
 		}
 		for _, lb := range lbs {
-			if err := waitForLoadBalancerToShutdown(ctx, rec, svc, lb); err != nil {
-				t.Log(err)
-				continue
+			if rec.IsRecording() {
+				if err := svc.WaitForLoadBalancerDeletion(ctx, &request.WaitForLoadBalancerDeletionRequest{
+					UUID: lb.UUID,
+				}); err != nil {
+					t.Log(err)
+					continue
+				}
 			}
 		}
 		if err := svc.DeleteNetwork(ctx, &request.DeleteNetworkRequest{UUID: net.UUID}); err != nil {
@@ -1174,7 +1176,11 @@ func TestLoadBalancerNetwork(t *testing.T) {
 		assert.Len(t, fe.Networks, 1)
 
 		t.Logf("Waiting LB %s to become online", lb.Name)
-		if err = waitLoadBalancerOnline(ctx, t, rec, svc, lb.UUID); err != nil {
+		_, err = svc.WaitForLoadBalancerState(ctx, &request.WaitForLoadBalancerStateRequest{
+			UUID:         lb.UUID,
+			DesiredState: upcloud.LoadBalancerOperationalStateRunning,
+		})
+		if err != nil {
 			t.Error(err)
 			return
 		}
@@ -1289,29 +1295,6 @@ func TestDNSChallengeDomain(t *testing.T) {
 	})
 }
 
-func waitLoadBalancerOnline(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service, UUID string) error {
-	t.Helper()
-	if rec.Mode() == recorder.ModeRecording {
-		rec.AddPassthrough(func(h *http.Request) bool {
-			return true
-		})
-		defer func() {
-			rec.Passthroughs = nil
-		}()
-		for s := time.Now(); time.Since(s) < time.Minute*20; {
-			lb, err := svc.GetLoadBalancer(ctx, &request.GetLoadBalancerRequest{UUID: UUID})
-			if err != nil {
-				return err
-			}
-			if lb.OperationalState == upcloud.LoadBalancerOperationalStateRunning {
-				return nil
-			}
-			time.Sleep(time.Second * 2)
-		}
-	}
-	return nil
-}
-
 func createLoadBalancerBackend(ctx context.Context, svc *Service, lbUUID string) (*upcloud.LoadBalancerBackend, error) {
 	req := request.CreateLoadBalancerBackendRequest{
 		ServiceUUID: lbUUID,
@@ -1342,11 +1325,39 @@ func createLoadBalancerBackend(ctx context.Context, svc *Service, lbUUID string)
 }
 
 func cleanupLoadBalancer(ctx context.Context, rec *recorder.Recorder, svc *Service, lb *upcloud.LoadBalancer) error {
-	if rec.Mode() != recorder.ModeRecording {
+	if !rec.IsRecording() {
 		return nil
 	}
-	err := deleteLoadBalancer(ctx, svc, lb)
-	return err
+
+	if err := svc.DeleteLoadBalancer(ctx, &request.DeleteLoadBalancerRequest{UUID: lb.UUID}); err != nil {
+		return err
+	}
+
+	if err := svc.WaitForLoadBalancerDeletion(ctx, &request.WaitForLoadBalancerDeletionRequest{
+		UUID: lb.UUID,
+	}); err != nil {
+		return fmt.Errorf("unable to shutdown LB '%s' (%s) (check dangling networks)", lb.UUID, lb.Name)
+	}
+
+	var errs []error
+	if lb.NetworkUUID != "" {
+		if err := svc.DeleteNetwork(ctx, &request.DeleteNetworkRequest{UUID: lb.NetworkUUID}); err != nil {
+			errs = append(errs, err)
+		}
+	}
+	if len(lb.Networks) > 0 {
+		for _, n := range lb.Networks {
+			if n.Type == upcloud.LoadBalancerNetworkTypePrivate && n.UUID != "" && lb.NetworkUUID != n.UUID {
+				if err := svc.DeleteNetwork(ctx, &request.DeleteNetworkRequest{UUID: n.UUID}); err != nil {
+					errs = append(errs, err)
+				}
+			}
+		}
+	}
+	if len(errs) > 0 {
+		return fmt.Errorf("%s", errs)
+	}
+	return nil
 }
 
 func createLoadBalancer(ctx context.Context, svc *Service, networkUUID, zone string, label ...upcloud.Label) (*upcloud.LoadBalancer, error) {
@@ -1393,70 +1404,6 @@ func createLoadBalancerAndPrivateNetwork(ctx context.Context, svc *Service, zone
 			},
 		},
 	})
-}
-
-func waitForLoadBalancerToShutdown(ctx context.Context, rec *recorder.Recorder, svc *Service, lb *upcloud.LoadBalancer) error {
-	if rec.Mode() != recorder.ModeRecording {
-		return nil
-	}
-
-	const maxRetries int = 100
-	// wait delete request
-	for i := 0; i <= maxRetries; i++ {
-		_, err := svc.GetLoadBalancer(ctx, &request.GetLoadBalancerRequest{UUID: lb.UUID})
-		if err != nil {
-			if svcErr, ok := err.(*upcloud.Problem); ok && svcErr.Status == http.StatusNotFound {
-				return nil
-			}
-		}
-		time.Sleep(2 * time.Second)
-	}
-	return errors.New("max retries reached while waiting for load balancer instance to shutdown")
-}
-
-func waitLoadBalancerToShutdown(ctx context.Context, svc *Service, lb *upcloud.LoadBalancer) error {
-	const maxRetries int = 100
-	// wait delete request
-	for i := 0; i <= maxRetries; i++ {
-		_, err := svc.GetLoadBalancer(ctx, &request.GetLoadBalancerRequest{UUID: lb.UUID})
-		if err != nil {
-			if svcErr, ok := err.(*upcloud.Problem); ok && svcErr.Status == http.StatusNotFound {
-				return nil
-			}
-		}
-		time.Sleep(2 * time.Second)
-	}
-	return errors.New("max retries reached while waiting for load balancer instance to shutdown")
-}
-
-func deleteLoadBalancer(ctx context.Context, svc *Service, lb *upcloud.LoadBalancer) error {
-	if err := svc.DeleteLoadBalancer(ctx, &request.DeleteLoadBalancerRequest{UUID: lb.UUID}); err != nil {
-		return err
-	}
-
-	if err := waitLoadBalancerToShutdown(ctx, svc, lb); err != nil {
-		return fmt.Errorf("unable to shutdown LB '%s' (%s) (check dangling networks)", lb.UUID, lb.Name)
-	}
-
-	var errs []error
-	if lb.NetworkUUID != "" {
-		if err := svc.DeleteNetwork(ctx, &request.DeleteNetworkRequest{UUID: lb.NetworkUUID}); err != nil {
-			errs = append(errs, err)
-		}
-	}
-	if len(lb.Networks) > 0 {
-		for _, n := range lb.Networks {
-			if n.Type == upcloud.LoadBalancerNetworkTypePrivate && n.UUID != "" && lb.NetworkUUID != n.UUID {
-				if err := svc.DeleteNetwork(ctx, &request.DeleteNetworkRequest{UUID: n.UUID}); err != nil {
-					errs = append(errs, err)
-				}
-			}
-		}
-	}
-	if len(errs) > 0 {
-		return fmt.Errorf("%s", errs)
-	}
-	return nil
 }
 
 func createLoadBalancerPrivateNetwork(ctx context.Context, svc *Service, zone, addr string) (*upcloud.Network, error) {

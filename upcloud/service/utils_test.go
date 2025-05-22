@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"os"
+	"regexp"
 	"strings"
 	"testing"
 	"time"
@@ -14,9 +15,9 @@ import (
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/client"
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/request"
-	"github.com/dnaeon/go-vcr/cassette"
-	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/stretchr/testify/require"
+	"gopkg.in/dnaeon/go-vcr.v4/pkg/cassette"
+	"gopkg.in/dnaeon/go-vcr.v4/pkg/recorder"
 )
 
 const waitTimeout = time.Minute * 15
@@ -63,16 +64,22 @@ func handleError(err error) {
 }
 
 // records the API interactions of the test. Function provides both services to test cases so that old utility functions can be used to initialize environment.
-func record(t *testing.T, fixture string, f func(context.Context, *testing.T, *recorder.Recorder, *Service)) {
+func record(t *testing.T, fixture string, f func(context.Context, *testing.T, *recorder.Recorder, *Service), opts ...recorder.Option) {
 	if testing.Short() {
 		t.Skip("Skipping recorded test in short mode")
 	}
 
-	r, err := recorder.New("fixtures/" + fixture)
-	require.NoError(t, err)
+	testMode := os.Getenv("UPCLOUD_GO_SDK_TEST_MODE")
+	recorderMode := recorder.ModeRecordOnce
+	switch testMode {
+	case "integration":
+		recorderMode = recorder.ModeReplayOnly
+	case "end-to-end":
+		recorderMode = recorder.ModePassthrough
+	}
 
 	// Redact sensitive information from Authorization field
-	r.AddFilter(func(i *cassette.Interaction) error {
+	hook := (func(i *cassette.Interaction) error {
 		if authHeader, ok := i.Request.Headers["Authorization"]; ok {
 			var redactedAuthHeader []string
 			for _, value := range authHeader {
@@ -89,6 +96,10 @@ func record(t *testing.T, fixture string, f func(context.Context, *testing.T, *r
 				delete(i.Request.Headers, "Authorization")
 			}
 		}
+
+		// Redact DB passwords
+		avns := regexp.MustCompile(`AVNS_[a-zA-Z0-9-_]+`)
+		i.Response.Body = avns.ReplaceAllString(i.Response.Body, `AVNS_[REDACTED]`)
 
 		// Redact sensitive information from response body
 		if i.Response.Body != "" {
@@ -114,10 +125,13 @@ func record(t *testing.T, fixture string, f func(context.Context, *testing.T, *r
 		return nil
 	})
 
-	defer func() {
-		err := r.Stop()
-		require.NoError(t, err)
-	}()
+	passthrough := func(req *http.Request) bool {
+		if strings.HasPrefix(req.URL.Fragment, "wait:i=") {
+			// Do not store wait requests in fixtures
+			return true
+		}
+		return false
+	}
 
 	// Read token credentials from the environment, if it does not exists try to read user and password
 	var user, password string
@@ -128,19 +142,38 @@ func record(t *testing.T, fixture string, f func(context.Context, *testing.T, *r
 
 	httpClient := client.NewDefaultHTTPClient()
 	origTransport := httpClient.Transport
-	r.SetTransport(origTransport)
-	httpClient.Transport = r
+	transport := origTransport
 
 	customAPI := os.Getenv("UPCLOUD_GO_SDK_API_HOST")
 	if customAPI != "" {
 		// Override api host after the go-vcr to maintain consistent test fixtures
-		r.SetTransport(&customRoundTripper{fn: func(r *http.Request) (*http.Response, error) {
+		transport = &customRoundTripper{fn: func(r *http.Request) (*http.Response, error) {
 			clone := r.Clone(r.Context())
 			clone.URL.Host = customAPI
 			clone.Host = customAPI
 			return origTransport.RoundTrip(clone)
-		}})
+		}}
 	}
+
+	opts = append(opts,
+		recorder.WithHook(hook, recorder.BeforeSaveHook),
+		recorder.WithMode(recorderMode),
+		recorder.WithPassthrough(passthrough),
+		recorder.WithRealTransport(transport),
+	)
+
+	r, err := recorder.New(
+		"fixtures/"+fixture,
+		opts...,
+	)
+	require.NoError(t, err)
+
+	httpClient.Transport = r
+
+	defer func() {
+		err := r.Stop()
+		require.NoError(t, err)
+	}()
 
 	// just some random timeout value. High enough that it won't be reached during normal test.
 	ctx, cancel := context.WithTimeout(context.Background(), waitTimeout*4)

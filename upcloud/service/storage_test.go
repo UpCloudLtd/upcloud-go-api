@@ -12,9 +12,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"gopkg.in/dnaeon/go-vcr.v4/pkg/recorder"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/request"
@@ -649,16 +649,9 @@ func deleteStorage(ctx context.Context, svc *Service, uuid string) error {
 
 // Waits for the specified storage to come online.
 func waitForStorageImportCompletion(ctx context.Context, rec *recorder.Recorder, svc *Service, storageUUID string) error {
-	if rec.Mode() != recorder.ModeRecording {
+	if !rec.IsRecording() {
 		return nil
 	}
-
-	rec.AddPassthrough(func(h *http.Request) bool {
-		return true
-	})
-	defer func() {
-		rec.Passthroughs = nil
-	}()
 
 	_, err := svc.WaitForStorageImportCompletion(ctx, &request.WaitForStorageImportCompletionRequest{
 		StorageUUID: storageUUID,
@@ -669,16 +662,9 @@ func waitForStorageImportCompletion(ctx context.Context, rec *recorder.Recorder,
 
 // Waits for the specified storage to come online.
 func waitForStorageOnlineState(ctx context.Context, rec *recorder.Recorder, svc *Service, storageUUID string) error {
-	if rec.Mode() != recorder.ModeRecording {
+	if !rec.IsRecording() {
 		return nil
 	}
-
-	rec.AddPassthrough(func(h *http.Request) bool {
-		return true
-	})
-	defer func() {
-		rec.Passthroughs = nil
-	}()
 
 	_, err := svc.WaitForStorageState(ctx, &request.WaitForStorageStateRequest{
 		UUID:         storageUUID,
