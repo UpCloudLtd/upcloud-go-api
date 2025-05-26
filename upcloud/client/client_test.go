@@ -266,3 +266,84 @@ func ExampleWithHTTPClient() {
 	}
 	New(os.Getenv("UPCLOUD_USERNAME"), os.Getenv("UPCLOUD_PASSWORD"), WithHTTPClient(httpClient))
 }
+
+func TestNewFromEnv(t *testing.T) {
+	t.Run("token authentication", func(t *testing.T) {
+		t.Setenv(EnvToken, "test-token")
+		t.Setenv(EnvUsername, "")
+		t.Setenv(EnvPassword, "")
+
+		client, err := NewFromEnv()
+		require.NoError(t, err)
+		assert.Equal(t, "test-token", client.config.token)
+		assert.Empty(t, client.config.username)
+		assert.Empty(t, client.config.password)
+	})
+
+	t.Run("basic auth", func(t *testing.T) {
+		t.Setenv(EnvToken, "")
+		t.Setenv(EnvUsername, "test-user")
+		t.Setenv(EnvPassword, "test-pass")
+
+		client, err := NewFromEnv()
+		require.NoError(t, err)
+		assert.Empty(t, client.config.token)
+		assert.Equal(t, "test-user", client.config.username)
+		assert.Equal(t, "test-pass", client.config.password)
+	})
+
+	t.Run("both token and basic auth provided - should error", func(t *testing.T) {
+		t.Setenv(EnvToken, "test-token")
+		t.Setenv(EnvUsername, "test-user")
+		t.Setenv(EnvPassword, "test-pass")
+
+		client, err := NewFromEnv()
+		assert.Error(t, err)
+		assert.Nil(t, client)
+		assert.Contains(t, err.Error(), "only one authentication method")
+	})
+
+	t.Run("no credentials provided - should error", func(t *testing.T) {
+		t.Setenv(EnvToken, "")
+		t.Setenv(EnvUsername, "")
+		t.Setenv(EnvPassword, "")
+
+		client, err := NewFromEnv()
+		assert.Error(t, err)
+		assert.Nil(t, client)
+		assert.Contains(t, err.Error(), "authentication credentials must be provided")
+	})
+
+	t.Run("only username provided - should error", func(t *testing.T) {
+		t.Setenv(EnvToken, "")
+		t.Setenv(EnvUsername, "test-user")
+		t.Setenv(EnvPassword, "")
+
+		client, err := NewFromEnv()
+		assert.Error(t, err)
+		assert.Nil(t, client)
+		assert.Contains(t, err.Error(), "authentication credentials must be provided")
+	})
+
+	t.Run("only password provided - should error", func(t *testing.T) {
+		t.Setenv(EnvToken, "")
+		t.Setenv(EnvUsername, "")
+		t.Setenv(EnvPassword, "test-pass")
+
+		client, err := NewFromEnv()
+		assert.Error(t, err)
+		assert.Nil(t, client)
+		assert.Contains(t, err.Error(), "authentication credentials must be provided")
+	})
+
+	t.Run("with config functions", func(t *testing.T) {
+		t.Setenv(EnvToken, "test-token")
+		t.Setenv(EnvUsername, "")
+		t.Setenv(EnvPassword, "")
+
+		client, err := NewFromEnv(WithTimeout(5 * time.Second))
+		require.NoError(t, err)
+		assert.Equal(t, "test-token", client.config.token)
+		assert.Equal(t, 5*time.Second, client.config.httpClient.Timeout)
+	})
+}
