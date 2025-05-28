@@ -1,9 +1,6 @@
-# Golang CI pipeline configuration
+version: "2"
 linters:
-  disable-all: true
-
-  # Run golangci-lint linters to see the list of all linters
-  # Please keep them sorted alphabetically
+  default: none
   enable:
     - asasalint
     - asciicheck
@@ -13,13 +10,9 @@ linters:
     - dogsled
     - errcheck
     - goconst
-    - gofumpt
-    - goimports
-    # - golint # TODO: upgrade to revive and re-enable, needs breaking change due to wanting IpAddress -> IPAddress
     - gomoddirectives
     - goprintffuncname
     - gosec
-    - gosimple
     - govet
     - ineffassign
     - misspell
@@ -29,26 +22,44 @@ linters:
     - predeclared
     - rowserrcheck
     - staticcheck
-    # - stylecheck # TODO: re-enable, needs breaking change due to wanting IpAddress -> IPAddress
-    - typecheck
     - unconvert
     - unparam
     - unused
     - wastedassign
     - whitespace
-
+  settings:
+    goconst:
+      min-len: 5
+    predeclared:
+      ignore:
+        - new
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    rules:
+      - linters:
+          - bodyclose
+          - funlen
+        path: _test\.go
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
 issues:
-  uniq-by-line: false
   max-issues-per-linter: 0
   max-same-issues: 0
-  exclude-rules:
-    - path: _test\.go
-      linters:
-        - funlen
-        - bodyclose
-
-linters-settings:
-  goconst:
-    min-len: 5
-  predeclared:
-    ignore: "new"
+  uniq-by-line: false
+formatters:
+  enable:
+    - gofumpt
+    - goimports
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$

@@ -55,8 +55,8 @@ func TestListDetailsCreateModifyDeleteSubaccount(t *testing.T) {
 		rec.AddFilter(func(i *cassette.Interaction) error {
 			// try to mask username from recording just in case if developer forgets to review it before commit
 			testuser, _ := getCredentials()
-			i.Request.Body = strings.Replace(i.Request.Body, testuser, mainAccount, -1)
-			i.Response.Body = strings.Replace(i.Response.Body, testuser, mainAccount, -1)
+			i.Request.Body = strings.ReplaceAll(i.Request.Body, testuser, mainAccount)
+			i.Response.Body = strings.ReplaceAll(i.Response.Body, testuser, mainAccount)
 			return nil
 		})
 		username := "sdk_test_subaccount"
