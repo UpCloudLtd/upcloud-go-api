@@ -107,7 +107,7 @@ func record(t *testing.T, fixture string, f func(context.Context, *testing.T, *r
 			}
 		}
 
-		if i.Request.Method == http.MethodPut && strings.Contains(i.Request.URL, "uploader") {
+		if i.Method == http.MethodPut && strings.Contains(i.URL, "uploader") {
 			// We will remove the body from the upload to reduce fixture size
 			i.Request.Body = ""
 		}
