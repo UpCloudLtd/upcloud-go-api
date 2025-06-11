@@ -5,6 +5,7 @@ import (
 	"context"
 	"crypto/tls"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net"
@@ -22,6 +23,9 @@ const (
 
 	EnvDebugAPIBaseURL            string = "UPCLOUD_DEBUG_API_BASE_URL"
 	EnvDebugSkipCertificateVerify string = "UPCLOUD_DEBUG_SKIP_CERTIFICATE_VERIFY"
+	EnvToken                      string = "UPCLOUD_TOKEN"
+	EnvUsername                   string = "UPCLOUD_USERNAME"
+	EnvPassword                   string = "UPCLOUD_PASSWORD"
 )
 
 // LogFn is a function that logs a message with context and optional key-value pairs, e.g., slog.DebugContext
@@ -352,4 +356,46 @@ func NewDefaultHTTPTransport() http.RoundTripper {
 		DisableKeepAlives:     true,
 		MaxIdleConnsPerHost:   -1,
 	}
+}
+
+// NewFromEnv creates a new client from environment variables and
+// validates that only one authentication method is provided.
+func NewFromEnv(c ...ConfigFn) (*Client, error) {
+	token := os.Getenv(EnvToken)
+	username := os.Getenv(EnvUsername)
+	password := os.Getenv(EnvPassword)
+
+	if token != "" && (username != "" || password != "") {
+		return nil, errors.New("only one authentication method (token or basic auth) can be provided")
+	}
+
+	if token == "" && (username == "" || password == "") {
+		return nil, errors.New("authentication credentials must be provided via environment variables")
+	}
+
+	config := config{
+		baseURL:    clientBaseURL(os.Getenv(EnvDebugAPIBaseURL)),
+		httpClient: NewDefaultHTTPClient(),
+	}
+
+	if token != "" {
+		config.token = token
+	} else {
+		config.username = username
+		config.password = password
+	}
+
+	// If set, replace http client transport with one skipping tls verification
+	if os.Getenv(EnvDebugSkipCertificateVerify) == "1" {
+		c = append(c, WithInsecureSkipVerify())
+	}
+
+	for _, fn := range c {
+		fn(&config)
+	}
+
+	return &Client{
+		UserAgent: userAgent(),
+		config:    config,
+	}, nil
 }
