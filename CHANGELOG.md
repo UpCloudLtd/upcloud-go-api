@@ -5,6 +5,14 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.19.0]
+
+### Added
+- NewFromEnv client constructor for implicit client authentication through environment variables `UPCLOUD_USERNAME`, `UPCLOUD_PASSWORD` and `UPCLOUD_TOKEN`
+
+### Fixed
+- loadbalancer: optimize slice operations in load balancer request
+
 ### Changed
 - Go version bump to 1.23
 
@@ -581,7 +589,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.18.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.19.0...HEAD
+[8.19.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.18.0...v8.19.0
 [8.18.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.17.0...v8.18.0
 [8.17.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.16.1...v8.17.0
 [8.16.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.16.0...v8.16.1
