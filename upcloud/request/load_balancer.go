@@ -18,8 +18,8 @@ type GetLoadBalancersRequest struct {
 
 func (r *GetLoadBalancersRequest) RequestURL() string {
 	u := "/load-balancer"
-	f := make([]QueryFilter, len(r.Filters))
-	copy(f, r.Filters)
+	f := make([]QueryFilter, 0, len(r.Filters)+1)
+	f = append(f, r.Filters...)
 	if r.Page != nil {
 		f = append(f, r.Page)
 	}

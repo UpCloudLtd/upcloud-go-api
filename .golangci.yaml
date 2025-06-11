@@ -15,10 +15,12 @@ linters:
     - gosec
     - govet
     - ineffassign
+    - makezero
     - misspell
     - nakedret
     - nolintlint
     - nosprintfhostport
+    - prealloc
     - predeclared
     - rowserrcheck
     - staticcheck
