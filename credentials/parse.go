@@ -7,8 +7,11 @@ import (
 	"github.com/zalando/go-keyring"
 )
 
-// keyringServiceName is the name of the service to use when using the system keyring
-const keyringServiceName string = "UpCloud"
+// KeyringServiceName is the name of the service to use when using the system keyring
+const KeyringServiceName string = "UpCloud"
+
+// KeyringTokenUser is the username to use for the token in the system keyring
+const KeyringTokenUser string = ""
 
 func readFromEnv() Credentials {
 	return Credentials{
@@ -19,7 +22,7 @@ func readFromEnv() Credentials {
 }
 
 func readFromKeyring(username string) Credentials {
-	token, err := keyring.Get(keyringServiceName, "")
+	token, err := keyring.Get(KeyringServiceName, KeyringTokenUser)
 	fmt.Printf("Failed to read from keyring: %s", err)
 	if err == nil {
 		return Credentials{
@@ -31,7 +34,7 @@ func readFromKeyring(username string) Credentials {
 		Username: username,
 	}
 
-	password, err := keyring.Get(keyringServiceName, username)
+	password, err := keyring.Get(KeyringServiceName, username)
 	if err == nil {
 		creds.Password = password
 	}
@@ -56,5 +59,5 @@ func Parse(config Credentials) (Credentials, error) {
 		return creds.clean(CredentialsSourceKeyring), nil
 	}
 
-	return Credentials{}, fmt.Errorf("credentials not found, these must be set in configuration, via environment variables or in the system keyring (%s)", keyringServiceName)
+	return Credentials{}, fmt.Errorf("credentials not found, these must be set in configuration, via environment variables or in the system keyring (%s)", KeyringServiceName)
 }
