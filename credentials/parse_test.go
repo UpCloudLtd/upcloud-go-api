@@ -1,0 +1,111 @@
+package credentials_test
+
+import (
+	"fmt"
+	"testing"
+
+	"github.com/UpCloudLtd/upcloud-go-api/credentials"
+	"github.com/stretchr/testify/assert"
+	"github.com/zalando/go-keyring"
+)
+
+func getTokenFromKeyring() string {
+	token, err := keyring.Get("UpCloud", "")
+	if err != nil {
+		return ""
+	}
+	return token
+}
+
+func TestParse_PasswordFromKeyring(t *testing.T) {
+	if getTokenFromKeyring() != "" {
+		t.Skip("Token defined in the keyring has precedence over password defined in the keyring, skipping test")
+	}
+
+	t.Setenv("UPCLOUD_USERNAME", "unittest")
+	t.Setenv("UPCLOUD_PASSWORD", "")
+
+	err := keyring.Set("UpCloud", "unittest", "unittest_password")
+	assert.NoError(t, err)
+	t.Cleanup(func() {
+		assert.NoError(t, keyring.Delete("UpCloud", "unittest"))
+	})
+
+	creds, err := credentials.Parse(credentials.Credentials{})
+	assert.NoError(t, err)
+
+	assert.Equal(t, "unittest", creds.Username)
+	assert.Equal(t, "unittest_password", creds.Password)
+	assert.Equal(t, "keyring", string(creds.Source()))
+	assert.Equal(t, "basic", string(creds.Type()))
+}
+
+func TestParse_TokenFromKeyring(t *testing.T) {
+	token := getTokenFromKeyring()
+	if token == "" {
+		token = "unittest_token"
+		err := keyring.Set("UpCloud", "", token)
+		assert.NoError(t, err)
+		t.Cleanup(func() {
+			assert.NoError(t, keyring.Delete("UpCloud", ""))
+		})
+	}
+
+	creds, err := credentials.Parse(credentials.Credentials{})
+	assert.NoError(t, err)
+	fmt.Printf("Credentials: %+v\n", creds)
+
+	assert.Equal(t, "", creds.Username)
+	assert.Equal(t, "", creds.Password)
+	assert.Equal(t, token, creds.Token)
+	assert.Equal(t, "keyring", string(creds.Source()))
+	assert.Equal(t, "token", string(creds.Type()))
+}
+
+func TestParse_BasicFromEnv(t *testing.T) {
+	t.Setenv("UPCLOUD_USERNAME", "unittest")
+	t.Setenv("UPCLOUD_PASSWORD", "unittest_password")
+	t.Setenv("UPCLOUD_TOKEN", "")
+
+	creds, err := credentials.Parse(credentials.Credentials{})
+	assert.NoError(t, err)
+
+	assert.Equal(t, "unittest", creds.Username)
+	assert.Equal(t, "unittest_password", creds.Password)
+	assert.Equal(t, "", creds.Token)
+	assert.Equal(t, "environment", string(creds.Source()))
+	assert.Equal(t, "basic", string(creds.Type()))
+}
+
+func TestParse_TokenFromEnv(t *testing.T) {
+	t.Setenv("UPCLOUD_USERNAME", "unittest")
+	t.Setenv("UPCLOUD_PASSWORD", "unittest_password")
+	t.Setenv("UPCLOUD_TOKEN", "unittest_token")
+
+	creds, err := credentials.Parse(credentials.Credentials{})
+	assert.NoError(t, err)
+
+	assert.Equal(t, "", creds.Username)
+	assert.Equal(t, "", creds.Password)
+	assert.Equal(t, "unittest_token", creds.Token)
+	assert.Equal(t, "environment", string(creds.Source()))
+	assert.Equal(t, "token", string(creds.Type()))
+}
+
+func TestConfig_OverrideWithParameters(t *testing.T) {
+	t.Setenv("UPCLOUD_USERNAME", "")
+	t.Setenv("UPCLOUD_PASSWORD", "")
+	t.Setenv("UPCLOUD_TOKEN", "unittest_token")
+
+	creds, err := credentials.Parse(credentials.Credentials{
+		Username: "override_user",
+		Password: "override_pass",
+	})
+	assert.NoError(t, err)
+
+	assert.Equal(t, "override_user", creds.Username)
+	assert.Equal(t, "override_pass", creds.Password)
+	assert.Equal(t, "", creds.Token)
+	assert.Equal(t, "configuration", string(creds.Source()))
+	assert.Equal(t, "basic", string(creds.Type()))
+}
