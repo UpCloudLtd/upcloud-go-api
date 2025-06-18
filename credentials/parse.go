@@ -23,7 +23,6 @@ func readFromEnv() Credentials {
 
 func readFromKeyring(username string) Credentials {
 	token, err := keyring.Get(KeyringServiceName, KeyringTokenUser)
-	fmt.Printf("Failed to read from keyring: %s", err)
 	if err == nil {
 		return Credentials{
 			Token: token,

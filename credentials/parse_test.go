@@ -1,7 +1,6 @@
 package credentials_test
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/UpCloudLtd/upcloud-go-api/credentials"
@@ -53,7 +52,6 @@ func TestParse_TokenFromKeyring(t *testing.T) {
 
 	creds, err := credentials.Parse(credentials.Credentials{})
 	assert.NoError(t, err)
-	fmt.Printf("Credentials: %+v\n", creds)
 
 	assert.Equal(t, "", creds.Username)
 	assert.Equal(t, "", creds.Password)
