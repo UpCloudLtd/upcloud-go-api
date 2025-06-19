@@ -32,6 +32,9 @@ func TestLoadBalancer(t *testing.T) {
 		assert.Equal(t, upcloud.LoadBalancerMaintenanceDOWSunday, lb.MaintenanceDOW)
 		assert.Equal(t, "20:01:01Z", lb.MaintenanceTime)
 
+		err = waitForLoadBalancerRunningOperationalState(ctx, rec, svc, lb.UUID)
+		require.NoError(t, err)
+
 		// Modify Load Balancer
 		t.Log("Modifying load balancer")
 
@@ -1393,6 +1396,26 @@ func createLoadBalancerAndPrivateNetwork(ctx context.Context, svc *Service, zone
 			},
 		},
 	})
+}
+
+func waitForLoadBalancerRunningOperationalState(ctx context.Context, rec *recorder.Recorder, svc *Service, dbUUID string) error {
+	if rec.Mode() != recorder.ModeRecording {
+		return nil
+	}
+
+	rec.AddPassthrough(func(h *http.Request) bool {
+		return true
+	})
+	defer func() {
+		rec.Passthroughs = nil
+	}()
+
+	_, err := svc.WaitForLoadBalancerOperationalState(ctx, &request.WaitForLoadBalancerOperationalStateRequest{
+		UUID:         dbUUID,
+		DesiredState: upcloud.LoadBalancerOperationalStateRunning,
+	})
+
+	return err
 }
 
 func waitForLoadBalancerToShutdown(ctx context.Context, rec *recorder.Recorder, svc *Service, lb *upcloud.LoadBalancer) error {

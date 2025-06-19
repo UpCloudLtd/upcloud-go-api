@@ -5,6 +5,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- loadbalancer: `WaitForLoadBalancerOperationalState` helper for waiting for the load balancer to achieve a desired operational state
+
 ## [8.19.0]
 
 ### Added

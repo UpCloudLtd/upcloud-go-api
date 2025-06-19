@@ -13,6 +13,7 @@ type LoadBalancer interface {
 	CreateLoadBalancer(ctx context.Context, r *request.CreateLoadBalancerRequest) (*upcloud.LoadBalancer, error)
 	ModifyLoadBalancer(ctx context.Context, r *request.ModifyLoadBalancerRequest) (*upcloud.LoadBalancer, error)
 	DeleteLoadBalancer(ctx context.Context, r *request.DeleteLoadBalancerRequest) error
+	WaitForLoadBalancerOperationalState(ctx context.Context, r *request.WaitForLoadBalancerOperationalStateRequest) (*upcloud.LoadBalancer, error)
 	// Backends
 	GetLoadBalancerBackends(ctx context.Context, r *request.GetLoadBalancerBackendsRequest) ([]upcloud.LoadBalancerBackend, error)
 	GetLoadBalancerBackend(ctx context.Context, r *request.GetLoadBalancerBackendRequest) (*upcloud.LoadBalancerBackend, error)
@@ -121,6 +122,25 @@ func (s *Service) ModifyLoadBalancer(ctx context.Context, r *request.ModifyLoadB
 // DeleteLoadBalancer deletes an existing load balancer.
 func (s *Service) DeleteLoadBalancer(ctx context.Context, r *request.DeleteLoadBalancerRequest) error {
 	return s.delete(ctx, r)
+}
+
+// WaitForLoadBalancerOperationalState blocks execution until the specified load balancer instance has entered the
+// specified state. If the state changes favorably, the new load balancer details is returned. The method will give up
+// after the specified timeout
+func (s *Service) WaitForLoadBalancerOperationalState(ctx context.Context, r *request.WaitForLoadBalancerOperationalStateRequest) (*upcloud.LoadBalancer, error) {
+	return retry(ctx, func(_ int, c context.Context) (*upcloud.LoadBalancer, error) {
+		details, err := s.GetLoadBalancer(c, &request.GetLoadBalancerRequest{
+			UUID: r.UUID,
+		})
+		if err != nil {
+			return nil, err
+		}
+
+		if details.OperationalState == r.DesiredState {
+			return details, nil
+		}
+		return nil, nil
+	}, nil)
 }
 
 // GetLoadBalancerBackends retrieves a list of load balancer backends.
