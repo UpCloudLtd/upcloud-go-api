@@ -267,14 +267,14 @@ func WithInsecureSkipVerify() ConfigFn {
 	return func(c *config) {
 		if c.httpClient != nil {
 			if t, ok := c.httpClient.Transport.(*http.Transport); ok {
-				cfg := &tls.Config{InsecureSkipVerify: true} //nolint:gosec // allow setting InsecureSkipVerify to true as explicitly requested
+				var cfg *tls.Config
 				if t.TLSClientConfig == nil {
-					t.TLSClientConfig = cfg
-
-					return
+					cfg = newDefaultTLSClientConfig()
+				} else {
+					cfg = t.TLSClientConfig.Clone()
 				}
-
-				t.TLSClientConfig.InsecureSkipVerify = cfg.InsecureSkipVerify
+				cfg.InsecureSkipVerify = true
+				t.TLSClientConfig = cfg
 			}
 		}
 	}
@@ -384,6 +384,15 @@ func NewDefaultHTTPTransport() http.RoundTripper {
 		ExpectContinueTimeout: 1 * time.Second,
 		DisableKeepAlives:     true,
 		MaxIdleConnsPerHost:   -1,
+		TLSClientConfig:       newDefaultTLSClientConfig(),
+	}
+}
+
+func newDefaultTLSClientConfig() *tls.Config {
+	// Note: would be nice to be able to set this only if the default is lower,
+	// but there does not seem to be a good way to check the default as of Go 1.24.
+	return &tls.Config{
+		MinVersion: tls.VersionTLS13,
 	}
 }
 

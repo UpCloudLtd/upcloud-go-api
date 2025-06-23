@@ -9,6 +9,9 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 - audit logs: export support
 - client: streaming Get/Do variants
 
+### Changed
+- client: set minimum TLS version to 1.3
+
 ## [8.19.0]
 
 ### Added
