@@ -92,6 +92,12 @@ func (r *DeleteLoadBalancerRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s", r.UUID)
 }
 
+// WaitForLoadBalancerOperationalStateRequest represents a request to wait for a load balancer instance to enter a specific state
+type WaitForLoadBalancerOperationalStateRequest struct {
+	UUID         string
+	DesiredState upcloud.LoadBalancerOperationalState
+}
+
 // GetLoadBalancerBackendsRequest represents a request to list load balancer backends
 type GetLoadBalancerBackendsRequest struct {
 	ServiceUUID string `json:"-"`
