@@ -505,6 +505,58 @@ func TestCreateKubernetesNodeGroupEncryptedCustomPlanRequest(t *testing.T) {
 	require.JSONEq(t, want, string(got))
 }
 
+func TestCreateKubernetesNodeGroupCloudNativePlanRequest(t *testing.T) {
+	t.Parallel()
+
+	const want string = `
+	{
+		"plan": "CLOUDNATIVE-4xCPU-48GB",
+		"cloud_native_plan": {
+			"storage_size": 50,
+			"storage_tier": "maxiops"
+		}
+	}
+	`
+	ng := CreateKubernetesNodeGroupRequest{
+		NodeGroup: KubernetesNodeGroup{
+			Plan: "CLOUDNATIVE-4xCPU-48GB",
+			CloudNativePlan: &upcloud.KubernetesNodeGroupCloudNativePlan{
+				StorageSize: 50,
+				StorageTier: upcloud.KubernetesStorageTierMaxIOPS,
+			},
+		},
+	}
+	got, err := json.Marshal(&ng)
+	require.NoError(t, err)
+	require.JSONEq(t, want, string(got))
+}
+
+func TestCreateKubernetesNodeGroupGPUPlanRequest(t *testing.T) {
+	t.Parallel()
+
+	const want string = `
+	{
+		"plan": "GPU-12xCPU-128GB-1xL40s",
+		"gpu_plan": {
+			"storage_size": 100,
+			"storage_tier": "maxiops"
+		}
+	}
+	`
+	ng := CreateKubernetesNodeGroupRequest{
+		NodeGroup: KubernetesNodeGroup{
+			Plan: "GPU-12xCPU-128GB-1xL40s",
+			GPUPlan: &upcloud.KubernetesNodeGroupGPUPlan{
+				StorageSize: 100,
+				StorageTier: upcloud.KubernetesStorageTierMaxIOPS,
+			},
+		},
+	}
+	got, err := json.Marshal(&ng)
+	require.NoError(t, err)
+	require.JSONEq(t, want, string(got))
+}
+
 func TestCreateKubernetesStorageEncryptionRequest(t *testing.T) {
 	t.Parallel()
 
