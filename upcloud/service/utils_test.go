@@ -98,12 +98,13 @@ func record(t *testing.T, fixture string, f func(context.Context, *testing.T, *r
 			var responseArrayData []map[string]any
 
 			const maxTopLevelRecords = 100
+			const redactedToken = "ucat_[REDACTED]" //#nosec G101 -- false positive
 
 			err := json.Unmarshal([]byte(i.Response.Body), &responseData)
 			if err == nil {
 				// Redact sensitive fields
 				if _, exists := responseData["token"]; exists {
-					responseData["token"] = "ucat_[REDACTED]"
+					responseData["token"] = redactedToken
 				}
 
 				// Convert back to string and update response body
@@ -121,7 +122,7 @@ func record(t *testing.T, fixture string, f func(context.Context, *testing.T, *r
 				// Redact sensitive fields
 				for _, responseData = range responseArrayData {
 					if _, exists := responseData["token"]; exists {
-						responseData["token"] = "ucat_[REDACTED]"
+						responseData["token"] = redactedToken
 					}
 				}
 
@@ -150,7 +151,7 @@ func record(t *testing.T, fixture string, f func(context.Context, *testing.T, *r
 					// TODO: redaction based on column name
 					for j, field := range record {
 						if strings.HasPrefix(field, "ucat_") {
-							record[j] = "ucat_[REDACTED]"
+							record[j] = redactedToken
 						}
 					}
 
