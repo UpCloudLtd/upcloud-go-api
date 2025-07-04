@@ -2,7 +2,9 @@ package service
 
 import (
 	"context"
+	"encoding/csv"
 	"encoding/json"
+	"io"
 	"log"
 	"net/http"
 	"net/http/httptest"
@@ -129,6 +131,36 @@ func record(t *testing.T, fixture string, f func(context.Context, *testing.T, *r
 				} else {
 					i.Response.Body = string(updatedBody)
 				}
+			} else if strings.HasPrefix(i.Response.Headers.Get("Content-Type"), "text/csv") {
+				cr := csv.NewReader(strings.NewReader(i.Response.Body))
+				sb := &strings.Builder{}
+				cw := csv.NewWriter(sb)
+				n := 0
+				for n < maxTopLevelRecords { // Truncate some to reduce fixture size
+					record, err := cr.Read()
+					if err != nil {
+						return err
+					}
+					if err == io.EOF {
+						break
+					}
+					n++
+
+					// Redact sensitive fields
+					// TODO: redaction based on column name
+					for j, field := range record {
+						if strings.HasPrefix(field, "ucat_") {
+							record[j] = "ucat_[REDACTED]"
+						}
+					}
+
+					if err = cw.Write(record); err != nil {
+						return err
+					}
+				}
+
+				// Convert back to string and update response body
+				i.Response.Body = sb.String()
 			}
 		}
 
