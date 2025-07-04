@@ -102,8 +102,11 @@ func record(t *testing.T, fixture string, f func(context.Context, *testing.T, *r
 				}
 
 				// Convert back to string and update response body
-				updatedBody, _ := json.Marshal(responseData)
-				i.Response.Body = string(updatedBody)
+				if updatedBody, err := json.Marshal(responseData); err != nil {
+					return err
+				} else {
+					i.Response.Body = string(updatedBody)
+				}
 			}
 		}
 
