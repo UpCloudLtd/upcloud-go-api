@@ -95,6 +95,8 @@ func record(t *testing.T, fixture string, f func(context.Context, *testing.T, *r
 			var responseData map[string]interface{}
 			var responseArrayData []map[string]any
 
+			const maxTopLevelRecords = 100
+
 			err := json.Unmarshal([]byte(i.Response.Body), &responseData)
 			if err == nil {
 				// Redact sensitive fields
@@ -109,6 +111,11 @@ func record(t *testing.T, fixture string, f func(context.Context, *testing.T, *r
 					i.Response.Body = string(updatedBody)
 				}
 			} else if err = json.Unmarshal([]byte(i.Response.Body), &responseArrayData); err == nil {
+				// Truncate some to reduce fixture size
+				if len(responseArrayData) > maxTopLevelRecords {
+					responseArrayData = responseArrayData[:maxTopLevelRecords]
+				}
+
 				// Redact sensitive fields
 				for _, responseData = range responseArrayData {
 					if _, exists := responseData["token"]; exists {
