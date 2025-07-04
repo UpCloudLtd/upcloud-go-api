@@ -55,6 +55,15 @@ func (c *Client) Get(ctx context.Context, path string) ([]byte, error) {
 	return c.Do(r)
 }
 
+// GetStream performs a GET request to the specified path and returns the response body reader.
+func (c *Client) GetStream(ctx context.Context, path string) (io.ReadCloser, error) {
+	r, err := c.createRequest(ctx, http.MethodGet, path, nil)
+	if err != nil {
+		return nil, err
+	}
+	return c.DoStream(r)
+}
+
 // Post performs a POST request to the specified path and returns the response body.
 func (c *Client) Post(ctx context.Context, path string, body []byte) ([]byte, error) {
 	r, err := c.createRequest(ctx, http.MethodPost, path, body)
@@ -101,6 +110,16 @@ func (c *Client) Do(r *http.Request) ([]byte, error) {
 	return c.handleResponse(response)
 }
 
+// DoStream performs HTTP request and returns the response body reader.
+func (c *Client) DoStream(r *http.Request) (io.ReadCloser, error) {
+	response, err := c.config.httpClient.Do(r)
+	if err != nil {
+		return nil, err
+	}
+
+	return c.prepareResponse(response)
+}
+
 func (c *Client) createRequest(ctx context.Context, method, path string, body []byte) (*http.Request, error) {
 	var bodyReader io.Reader
 
@@ -116,12 +135,12 @@ func (c *Client) createRequest(ctx context.Context, method, path string, body []
 	return req, err
 }
 
-// Parses the response and returns either the response body or an error
-func (c *Client) handleResponse(response *http.Response) ([]byte, error) {
-	defer response.Body.Close()
-
+// prepareResponse prepares the response and returns either the response body or an error.
+func (c *Client) prepareResponse(response *http.Response) (io.ReadCloser, error) {
 	// Return an error on unsuccessful requests
 	if response.StatusCode < 200 || response.StatusCode > 299 {
+		defer response.Body.Close()
+
 		errorBody, _ := io.ReadAll(response.Body)
 		var errorType ErrorType
 		switch response.Header.Get("Content-Type") {
@@ -134,7 +153,18 @@ func (c *Client) handleResponse(response *http.Response) ([]byte, error) {
 		return nil, &Error{response.StatusCode, response.Status, errorBody, errorType}
 	}
 
-	responseBody, err := io.ReadAll(response.Body)
+	return response.Body, nil
+}
+
+// handleResponse parses the response and returns either the response body or an error.
+func (c *Client) handleResponse(response *http.Response) ([]byte, error) {
+	body, err := c.prepareResponse(response)
+	if err != nil {
+		return nil, err
+	}
+	defer body.Close()
+
+	responseBody, err := io.ReadAll(body)
 	c.logResponse(response, responseBody)
 
 	return responseBody, err
