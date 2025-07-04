@@ -93,6 +93,7 @@ func record(t *testing.T, fixture string, f func(context.Context, *testing.T, *r
 		// Redact sensitive information from response body
 		if i.Response.Body != "" {
 			var responseData map[string]interface{}
+			var responseArrayData []map[string]any
 
 			err := json.Unmarshal([]byte(i.Response.Body), &responseData)
 			if err == nil {
@@ -103,6 +104,20 @@ func record(t *testing.T, fixture string, f func(context.Context, *testing.T, *r
 
 				// Convert back to string and update response body
 				if updatedBody, err := json.Marshal(responseData); err != nil {
+					return err
+				} else {
+					i.Response.Body = string(updatedBody)
+				}
+			} else if err = json.Unmarshal([]byte(i.Response.Body), &responseArrayData); err == nil {
+				// Redact sensitive fields
+				for _, responseData = range responseArrayData {
+					if _, exists := responseData["token"]; exists {
+						responseData["token"] = "ucat_[REDACTED]"
+					}
+				}
+
+				// Convert back to string and update response body
+				if updatedBody, err := json.Marshal(responseArrayData); err != nil {
 					return err
 				} else {
 					i.Response.Body = string(updatedBody)
