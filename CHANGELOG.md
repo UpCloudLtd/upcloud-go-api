@@ -6,6 +6,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 ## [Unreleased]
 
 ### Added
+- audit logs: export support
 - client: streaming Get/Do variants
 
 ## [8.19.0]

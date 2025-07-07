@@ -57,6 +57,7 @@ type service interface {
 	ManagedObjectStorage
 	Gateway
 	Partner
+	AuditLog
 }
 
 var _ service = (*Service)(nil)
