@@ -354,6 +354,7 @@ type ManagedDatabaseMetrics struct {
 // ManagedDatabaseMetricsChartFloat64 represents a metric chart with float64 row values
 type ManagedDatabaseMetricsChartFloat64 struct {
 	ManagedDatabaseMetricsChartHeader
+
 	// Rows contains a slice of values per row. The inner slice has the same indexing as the
 	// ManagedDatabaseMetricsChartHeader.Columns
 	Rows [][]float64
@@ -455,6 +456,7 @@ type canonicalManagedDatabaseMetricChartForUnmarshal struct {
 // ManagedDatabaseMetricsChartInt represents a metric chart with int row values
 type ManagedDatabaseMetricsChartInt struct {
 	ManagedDatabaseMetricsChartHeader
+
 	// Rows contains a slice of values per row. The inner slice has the same indexing as the
 	// ManagedDatabaseMetricsChartHeader.Columns
 	Rows [][]int
