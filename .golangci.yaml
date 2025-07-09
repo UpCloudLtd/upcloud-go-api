@@ -7,31 +7,57 @@ linters:
     - bidichk
     - bodyclose
     - containedctx
+    - copyloopvar
     - dogsled
+    - dupword
+    - embeddedstructfieldcheck
     - errcheck
+    - exhaustive
+    - exptostd
+    - fatcontext
+    - funcorder
+    - gocheckcompilerdirectives
+    - gochecksumtype
     - goconst
     - gomoddirectives
     - goprintffuncname
     - gosec
     - govet
+    - iface
+    - importas
     - ineffassign
+    - intrange
+    - loggercheck
     - makezero
+    - mirror
     - misspell
     - nakedret
+    - nilnesserr
+    - noctx
     - nolintlint
     - nosprintfhostport
+    - perfsprint
     - prealloc
     - predeclared
     - rowserrcheck
     - staticcheck
+    - tagalign
     - unconvert
     - unparam
     - unused
+    - usestdlibvars
+    - usetesting
     - wastedassign
     - whitespace
   settings:
+    errcheck:
+      check-type-assertions: true
     goconst:
       min-len: 5
+    nolintlint:
+      require-specific: true
+    perfsprint:
+      strconcat: false
     predeclared:
       ignore:
         - new
