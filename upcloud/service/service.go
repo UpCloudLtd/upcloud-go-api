@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"net/http"
 	"strings"
 
@@ -15,6 +16,8 @@ import (
 type Client interface {
 	// Get performs a GET request to the specified path and returns the response body.
 	Get(ctx context.Context, path string) ([]byte, error)
+	// GetStream performs a GET request to the specified path and returns the response body reader.
+	GetStream(ctx context.Context, path string) (io.ReadCloser, error)
 	// Post performs a POST request to the specified path and returns the response body.
 	Post(ctx context.Context, path string, body []byte) ([]byte, error)
 	// Put performs a PUT request to the specified path and returns the response body.
@@ -23,8 +26,10 @@ type Client interface {
 	Patch(ctx context.Context, path string, body []byte) ([]byte, error)
 	// Delete performs a DELETE request to the specified path and returns the response body.
 	Delete(ctx context.Context, path string) ([]byte, error)
-	// Do performs a HTTP request using custom request object and returns the response body.
+	// Do performs an HTTP request using custom request object and returns the response body.
 	Do(r *http.Request) ([]byte, error)
+	// DoStream performs an HTTP request using custom request object and returns the response body reader.
+	DoStream(r *http.Request) (io.ReadCloser, error)
 }
 
 type requestable interface {
@@ -52,6 +57,7 @@ type service interface {
 	ManagedObjectStorage
 	Gateway
 	Partner
+	AuditLog
 }
 
 var _ service = (*Service)(nil)
