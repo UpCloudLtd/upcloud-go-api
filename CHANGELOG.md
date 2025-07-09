@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.20.0]
+
 ### Added
 - audit logs: export support
 - client: streaming Get/Do variants
@@ -596,7 +598,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.19.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.20.0...HEAD
+[8.20.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.19.0...v8.20.0
 [8.19.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.18.0...v8.19.0
 [8.18.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.17.0...v8.18.0
 [8.17.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.16.1...v8.17.0
