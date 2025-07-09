@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"net/http"
 	"testing"
@@ -1423,33 +1422,14 @@ func waitForLoadBalancerToShutdown(ctx context.Context, rec *recorder.Recorder, 
 		return nil
 	}
 
-	const maxRetries int = 100
-	// wait delete request
-	for i := 0; i <= maxRetries; i++ {
-		_, err := svc.GetLoadBalancer(ctx, &request.GetLoadBalancerRequest{UUID: lb.UUID})
-		if err != nil {
-			if svcErr, ok := err.(*upcloud.Problem); ok && svcErr.Status == http.StatusNotFound {
-				return nil
-			}
-		}
-		time.Sleep(2 * time.Second)
-	}
-	return errors.New("max retries reached while waiting for load balancer instance to shutdown")
+	return waitLoadBalancerToShutdown(ctx, svc, lb)
 }
 
 func waitLoadBalancerToShutdown(ctx context.Context, svc *Service, lb *upcloud.LoadBalancer) error {
-	const maxRetries int = 100
-	// wait delete request
-	for i := 0; i <= maxRetries; i++ {
-		_, err := svc.GetLoadBalancer(ctx, &request.GetLoadBalancerRequest{UUID: lb.UUID})
-		if err != nil {
-			if svcErr, ok := err.(*upcloud.Problem); ok && svcErr.Status == http.StatusNotFound {
-				return nil
-			}
-		}
-		time.Sleep(2 * time.Second)
-	}
-	return errors.New("max retries reached while waiting for load balancer instance to shutdown")
+	err := svc.WaitForLoadBalancerDeletion(ctx, &request.WaitForLoadBalancerDeletionRequest{
+		UUID: lb.UUID,
+	})
+	return err
 }
 
 func deleteLoadBalancer(ctx context.Context, svc *Service, lb *upcloud.LoadBalancer) error {

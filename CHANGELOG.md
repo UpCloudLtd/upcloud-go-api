@@ -7,6 +7,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ### Added
 - loadbalancer: `WaitForLoadBalancerOperationalState` helper for waiting for the load balancer to achieve a desired operational state
+- loadbalancer: `WaitForLoadBalancerDeletion` blocks execution until the specified load balancer instance has been deleted.
 
 ## [8.19.0]
 

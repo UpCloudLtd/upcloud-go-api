@@ -2,6 +2,8 @@ package service
 
 import (
 	"context"
+	"errors"
+	"net/http"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/request"
@@ -14,6 +16,7 @@ type LoadBalancer interface {
 	ModifyLoadBalancer(ctx context.Context, r *request.ModifyLoadBalancerRequest) (*upcloud.LoadBalancer, error)
 	DeleteLoadBalancer(ctx context.Context, r *request.DeleteLoadBalancerRequest) error
 	WaitForLoadBalancerOperationalState(ctx context.Context, r *request.WaitForLoadBalancerOperationalStateRequest) (*upcloud.LoadBalancer, error)
+	WaitForLoadBalancerDeletion(ctx context.Context, r *request.WaitForLoadBalancerDeletionRequest) error
 	// Backends
 	GetLoadBalancerBackends(ctx context.Context, r *request.GetLoadBalancerBackendsRequest) ([]upcloud.LoadBalancerBackend, error)
 	GetLoadBalancerBackend(ctx context.Context, r *request.GetLoadBalancerBackendRequest) (*upcloud.LoadBalancerBackend, error)
@@ -141,6 +144,29 @@ func (s *Service) WaitForLoadBalancerOperationalState(ctx context.Context, r *re
 		}
 		return nil, nil
 	}, nil)
+}
+
+// WaitForLoadBalancerDeletion blocks execution until the specified load balancer instance has been deleted.
+// nil error is returned when the load balancer has been deleted, otherwise an error is returned.
+func (s *Service) WaitForLoadBalancerDeletion(ctx context.Context, r *request.WaitForLoadBalancerDeletionRequest) error {
+
+	_, err := retry(ctx, func(_ int, c context.Context) (*upcloud.LoadBalancer, error) {
+		details, err := s.GetLoadBalancer(c, &request.GetLoadBalancerRequest{
+			UUID: r.UUID,
+		})
+		if err != nil {
+			var ucErr *upcloud.Problem
+			if errors.As(err, &ucErr) && ucErr.Status == http.StatusNotFound {
+				return nil, nil
+			}
+
+			return nil, err
+		}
+
+		return details, err
+
+	}, &retryConfig{inverse: true})
+	return err
 }
 
 // GetLoadBalancerBackends retrieves a list of load balancer backends.

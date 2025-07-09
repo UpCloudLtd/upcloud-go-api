@@ -98,6 +98,11 @@ type WaitForLoadBalancerOperationalStateRequest struct {
 	DesiredState upcloud.LoadBalancerOperationalState
 }
 
+// WaitForLoadBalancerDeletionRequest represents a request to wait for a load balancer instance to be deleted
+type WaitForLoadBalancerDeletionRequest struct {
+	UUID string `json:"-"`
+}
+
 // GetLoadBalancerBackendsRequest represents a request to list load balancer backends
 type GetLoadBalancerBackendsRequest struct {
 	ServiceUUID string `json:"-"`
