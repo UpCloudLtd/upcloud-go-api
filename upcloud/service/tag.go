@@ -39,7 +39,7 @@ func (s *Service) GetTags(ctx context.Context) (*upcloud.Tags, error) {
 	return &tags, s.get(ctx, "/tag", &tags)
 }
 
-// TagServer tags a server with with one or more tags
+// TagServer tags a server with one or more tags
 func (s *Service) TagServer(ctx context.Context, r *request.TagServerRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
 	return &serverDetails, s.create(ctx, r, &serverDetails)
