@@ -176,7 +176,7 @@ func TestService_GetManagedDatabase(t *testing.T) {
 func TestService_GetManagedDatabases(t *testing.T) {
 	record(t, "getmanageddatabases", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		uuidMap := make(map[string]bool)
-		for i := 0; i < 4; i++ {
+		for i := range 4 {
 			details, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest(fmt.Sprintf("getmanageddatabases-%d", i), upcloud.ManagedDatabaseServiceTypePostgreSQL))
 			require.NoError(t, err)
 
