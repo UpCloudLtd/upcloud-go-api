@@ -1,8 +1,8 @@
 package request
 
 import (
-	"fmt"
 	"net/url"
+	"strconv"
 )
 
 const (
@@ -36,8 +36,8 @@ func (p *Page) limit() int {
 
 func (p *Page) Values() url.Values {
 	v := url.Values{}
-	v.Add("limit", fmt.Sprint(p.limit()))
-	v.Add("offset", fmt.Sprint(p.offset()))
+	v.Add("limit", strconv.Itoa(p.limit()))
+	v.Add("offset", strconv.Itoa(p.offset()))
 	return v
 }
 
