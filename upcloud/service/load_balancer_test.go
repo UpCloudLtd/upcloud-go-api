@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"net/http"
 	"testing"
@@ -31,6 +30,9 @@ func TestLoadBalancer(t *testing.T) {
 		t.Logf("Created load balancer: %s", lb.Name)
 		assert.Equal(t, upcloud.LoadBalancerMaintenanceDOWSunday, lb.MaintenanceDOW)
 		assert.Equal(t, "20:01:01Z", lb.MaintenanceTime)
+
+		err = waitForLoadBalancerRunningOperationalState(ctx, rec, svc, lb.UUID)
+		require.NoError(t, err)
 
 		// Modify Load Balancer
 		t.Log("Modifying load balancer")
@@ -1395,38 +1397,39 @@ func createLoadBalancerAndPrivateNetwork(ctx context.Context, svc *Service, zone
 	})
 }
 
+func waitForLoadBalancerRunningOperationalState(ctx context.Context, rec *recorder.Recorder, svc *Service, dbUUID string) error {
+	if rec.Mode() != recorder.ModeRecording {
+		return nil
+	}
+
+	rec.AddPassthrough(func(h *http.Request) bool {
+		return true
+	})
+	defer func() {
+		rec.Passthroughs = nil
+	}()
+
+	_, err := svc.WaitForLoadBalancerOperationalState(ctx, &request.WaitForLoadBalancerOperationalStateRequest{
+		UUID:         dbUUID,
+		DesiredState: upcloud.LoadBalancerOperationalStateRunning,
+	})
+
+	return err
+}
+
 func waitForLoadBalancerToShutdown(ctx context.Context, rec *recorder.Recorder, svc *Service, lb *upcloud.LoadBalancer) error {
 	if rec.Mode() != recorder.ModeRecording {
 		return nil
 	}
 
-	const maxRetries int = 100
-	// wait delete request
-	for i := 0; i <= maxRetries; i++ {
-		_, err := svc.GetLoadBalancer(ctx, &request.GetLoadBalancerRequest{UUID: lb.UUID})
-		if err != nil {
-			if svcErr, ok := err.(*upcloud.Problem); ok && svcErr.Status == http.StatusNotFound {
-				return nil
-			}
-		}
-		time.Sleep(2 * time.Second)
-	}
-	return errors.New("max retries reached while waiting for load balancer instance to shutdown")
+	return waitLoadBalancerToShutdown(ctx, svc, lb)
 }
 
 func waitLoadBalancerToShutdown(ctx context.Context, svc *Service, lb *upcloud.LoadBalancer) error {
-	const maxRetries int = 100
-	// wait delete request
-	for i := 0; i <= maxRetries; i++ {
-		_, err := svc.GetLoadBalancer(ctx, &request.GetLoadBalancerRequest{UUID: lb.UUID})
-		if err != nil {
-			if svcErr, ok := err.(*upcloud.Problem); ok && svcErr.Status == http.StatusNotFound {
-				return nil
-			}
-		}
-		time.Sleep(2 * time.Second)
-	}
-	return errors.New("max retries reached while waiting for load balancer instance to shutdown")
+	err := svc.WaitForLoadBalancerDeletion(ctx, &request.WaitForLoadBalancerDeletionRequest{
+		UUID: lb.UUID,
+	})
+	return err
 }
 
 func deleteLoadBalancer(ctx context.Context, svc *Service, lb *upcloud.LoadBalancer) error {
