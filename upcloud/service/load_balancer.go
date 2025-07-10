@@ -149,7 +149,6 @@ func (s *Service) WaitForLoadBalancerOperationalState(ctx context.Context, r *re
 // WaitForLoadBalancerDeletion blocks execution until the specified load balancer instance has been deleted.
 // nil error is returned when the load balancer has been deleted, otherwise an error is returned.
 func (s *Service) WaitForLoadBalancerDeletion(ctx context.Context, r *request.WaitForLoadBalancerDeletionRequest) error {
-
 	_, err := retry(ctx, func(_ int, c context.Context) (*upcloud.LoadBalancer, error) {
 		details, err := s.GetLoadBalancer(c, &request.GetLoadBalancerRequest{
 			UUID: r.UUID,
@@ -162,9 +161,7 @@ func (s *Service) WaitForLoadBalancerDeletion(ctx context.Context, r *request.Wa
 
 			return nil, err
 		}
-
 		return details, err
-
 	}, &retryConfig{inverse: true})
 	return err
 }
