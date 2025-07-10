@@ -11,6 +11,7 @@ type Cloud interface {
 	GetPriceZones(ctx context.Context) (*upcloud.PriceZones, error)
 	GetTimeZones(ctx context.Context) (*upcloud.TimeZones, error)
 	GetPlans(ctx context.Context) (*upcloud.Plans, error)
+	GetDevicesAvailability(ctx context.Context) (*upcloud.DevicesAvailability, error)
 }
 
 // GetZones returns the available zones
@@ -35,4 +36,9 @@ func (s *Service) GetTimeZones(ctx context.Context) (*upcloud.TimeZones, error) 
 func (s *Service) GetPlans(ctx context.Context) (*upcloud.Plans, error) {
 	plans := upcloud.Plans{}
 	return &plans, s.get(ctx, "/plan", &plans)
+}
+
+func (s *Service) GetDevicesAvailability(ctx context.Context) (*upcloud.DevicesAvailability, error) {
+	r := upcloud.DevicesAvailability{}
+	return &r, s.get(ctx, "/device/availability", &r)
 }
