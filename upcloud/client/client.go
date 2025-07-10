@@ -17,7 +17,7 @@ import (
 )
 
 const (
-	Version    string = "8.19.0"
+	Version    string = "8.20.0"
 	APIVersion string = "1.3"
 	APIBaseURL string = "https://api.upcloud.com"
 
@@ -53,6 +53,15 @@ func (c *Client) Get(ctx context.Context, path string) ([]byte, error) {
 		return nil, err
 	}
 	return c.Do(r)
+}
+
+// GetStream performs a GET request to the specified path and returns the response body reader.
+func (c *Client) GetStream(ctx context.Context, path string) (io.ReadCloser, error) {
+	r, err := c.createRequest(ctx, http.MethodGet, path, nil)
+	if err != nil {
+		return nil, err
+	}
+	return c.DoStream(r)
 }
 
 // Post performs a POST request to the specified path and returns the response body.
@@ -101,6 +110,16 @@ func (c *Client) Do(r *http.Request) ([]byte, error) {
 	return c.handleResponse(response)
 }
 
+// DoStream performs HTTP request and returns the response body reader.
+func (c *Client) DoStream(r *http.Request) (io.ReadCloser, error) {
+	response, err := c.config.httpClient.Do(r)
+	if err != nil {
+		return nil, err
+	}
+
+	return c.prepareResponse(response)
+}
+
 func (c *Client) createRequest(ctx context.Context, method, path string, body []byte) (*http.Request, error) {
 	var bodyReader io.Reader
 
@@ -116,12 +135,12 @@ func (c *Client) createRequest(ctx context.Context, method, path string, body []
 	return req, err
 }
 
-// Parses the response and returns either the response body or an error
-func (c *Client) handleResponse(response *http.Response) ([]byte, error) {
-	defer response.Body.Close()
-
+// prepareResponse prepares the response and returns either the response body or an error.
+func (c *Client) prepareResponse(response *http.Response) (io.ReadCloser, error) {
 	// Return an error on unsuccessful requests
 	if response.StatusCode < 200 || response.StatusCode > 299 {
+		defer response.Body.Close()
+
 		errorBody, _ := io.ReadAll(response.Body)
 		var errorType ErrorType
 		switch response.Header.Get("Content-Type") {
@@ -134,7 +153,18 @@ func (c *Client) handleResponse(response *http.Response) ([]byte, error) {
 		return nil, &Error{response.StatusCode, response.Status, errorBody, errorType}
 	}
 
-	responseBody, err := io.ReadAll(response.Body)
+	return response.Body, nil
+}
+
+// handleResponse parses the response and returns either the response body or an error.
+func (c *Client) handleResponse(response *http.Response) ([]byte, error) {
+	body, err := c.prepareResponse(response)
+	if err != nil {
+		return nil, err
+	}
+	defer body.Close()
+
+	responseBody, err := io.ReadAll(body)
 	c.logResponse(response, responseBody)
 
 	return responseBody, err
@@ -237,14 +267,14 @@ func WithInsecureSkipVerify() ConfigFn {
 	return func(c *config) {
 		if c.httpClient != nil {
 			if t, ok := c.httpClient.Transport.(*http.Transport); ok {
-				cfg := &tls.Config{InsecureSkipVerify: true} //nolint:gosec // allow setting InsecureSkipVerify to true as explicitly requested
+				var cfg *tls.Config
 				if t.TLSClientConfig == nil {
-					t.TLSClientConfig = cfg
-
-					return
+					cfg = newDefaultTLSClientConfig()
+				} else {
+					cfg = t.TLSClientConfig.Clone()
 				}
-
-				t.TLSClientConfig.InsecureSkipVerify = cfg.InsecureSkipVerify
+				cfg.InsecureSkipVerify = true
+				t.TLSClientConfig = cfg
 			}
 		}
 	}
@@ -346,7 +376,6 @@ func NewDefaultHTTPTransport() http.RoundTripper {
 		DialContext: (&net.Dialer{
 			Timeout:   30 * time.Second,
 			KeepAlive: 30 * time.Second,
-			DualStack: true,
 		}).DialContext,
 		ForceAttemptHTTP2:     true,
 		MaxIdleConns:          100,
@@ -355,6 +384,15 @@ func NewDefaultHTTPTransport() http.RoundTripper {
 		ExpectContinueTimeout: 1 * time.Second,
 		DisableKeepAlives:     true,
 		MaxIdleConnsPerHost:   -1,
+		TLSClientConfig:       newDefaultTLSClientConfig(),
+	}
+}
+
+func newDefaultTLSClientConfig() *tls.Config {
+	// Note: would be nice to be able to set this only if the default is lower,
+	// but there does not seem to be a good way to check the default as of Go 1.24.
+	return &tls.Config{
+		MinVersion: tls.VersionTLS13,
 	}
 }
 
