@@ -42,6 +42,7 @@ func (o *ObjectStorages) UnmarshalJSON(b []byte) error {
 // ObjectStorageDetails represents details about a Object Storage
 type ObjectStorageDetails struct {
 	ObjectStorage
+
 	UsedSpace int `json:"used_space"`
 }
 
