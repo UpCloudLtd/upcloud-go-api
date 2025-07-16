@@ -5,6 +5,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+
+- server: add `Devices` field to server details
+
 ## [8.29.2]
 
 ### Fixed

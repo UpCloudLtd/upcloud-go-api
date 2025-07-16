@@ -117,6 +117,38 @@ type Server struct {
 	Zone         string         `json:"zone"`
 }
 
+type DeviceMetadata struct {
+	Cores  int `json:"cores"`
+	Memory int `json:"memory"`
+}
+
+type Device struct {
+	Model    string         `json:"model"`
+	Type     string         `json:"type"`
+	Serial   string         `json:"serial"`
+	Metadata DeviceMetadata `json:"metadata"`
+}
+
+// DeviceSlice is a slice of Devices.
+// It exists to allow for a custom JSON unmarshaller.
+type DeviceSlice []Device
+
+// UnmarshalJSON is a custom unmarshaller that deals with
+// deeply embedded values.
+func (s *DeviceSlice) UnmarshalJSON(b []byte) error {
+	v := struct {
+		Devices []Device `json:"device"`
+	}{}
+	err := json.Unmarshal(b, &v)
+	if err != nil {
+		return err
+	}
+
+	(*s) = v.Devices
+
+	return nil
+}
+
 // ServerStorageDeviceSlice is a slice of ServerStorageDevices.
 // It exists to allow for a custom JSON unmarshaller.
 type ServerStorageDeviceSlice []ServerStorageDevice
@@ -145,7 +177,8 @@ type ServerNetworking Networking
 type ServerDetails struct {
 	Server
 
-	BootOrder string `json:"boot_order"`
+	BootOrder string      `json:"boot_order"`
+	Devices   DeviceSlice `json:"devices"`
 	// TODO: Convert to boolean
 	Firewall             string                   `json:"firewall"`
 	Host                 int                      `json:"host"`
