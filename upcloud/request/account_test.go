@@ -211,3 +211,18 @@ func TestModifySubaccountRequest(t *testing.T) {
 	assert.NoError(t, err)
 	assert.JSONEq(t, expectedJSON, string(actualJSON))
 }
+
+func TestCreateBillingSummaryRequest(t *testing.T) {
+	r := GetBillingSummaryRequest{
+		YearMonth:  "2025-05",
+		ResourceID: "123-123-123",
+		Username:   "mock-username",
+	}
+	expectedURL := "/account/billing/summary/2025-05?resource_id=123-123-123&username=mock-username"
+	assert.Equal(t, expectedURL, r.RequestURL())
+	r = GetBillingSummaryRequest{
+		YearMonth: "2025-05",
+	}
+	expectedURL = "/account/billing/summary/2025-05?"
+	assert.Equal(t, expectedURL, r.RequestURL())
+}

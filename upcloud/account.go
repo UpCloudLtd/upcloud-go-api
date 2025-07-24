@@ -187,3 +187,69 @@ func (a *AccountList) UnmarshalJSON(b []byte) error {
 	*a = append(*a, v.Accounts.Item...)
 	return nil
 }
+
+// BillingSummary represents billing summary for a specific month
+type BillingSummary struct {
+	Currency              string           `json:"currency"`
+	TotalAmount           float64          `json:"total_amount"`
+	Servers               *BillingCategory `json:"servers,omitempty"`
+	ManagedDatabases      *BillingCategory `json:"managed_databases,omitempty"`
+	ManagedObjectStorages *BillingCategory `json:"managed_object_storages,omitempty"`
+	ManagedLoadbalancers  *BillingCategory `json:"managed_loadbalancers,omitempty"`
+	ManagedKubernetes     *BillingCategory `json:"managed_kubernetes,omitempty"`
+	NetworkGateways       *BillingCategory `json:"network_gateways,omitempty"`
+}
+
+// BillingCategory represents a billing category with its resources
+type BillingCategory struct {
+	TotalAmount          float64               `json:"total_amount"`
+	Server               *BillingResourceGroup `json:"server,omitempty"`
+	ManagedDatabase      *BillingResourceGroup `json:"managed_database,omitempty"`
+	ManagedObjectStorage *BillingResourceGroup `json:"managed_object_storage,omitempty"`
+	ManagedLoadbalancer  *BillingResourceGroup `json:"managed_loadbalancers,omitempty"`
+	ManagedKubernetes    *BillingResourceGroup `json:"managed_kubernetes,omitempty"`
+	NetworkGateway       *BillingResourceGroup `json:"network_gateway,omitempty"`
+}
+
+// BillingResourceGroup represents a group of resources with their details
+type BillingResourceGroup struct {
+	Resources   []BillingResource `json:"resources"`
+	TotalAmount float64           `json:"total_amount"`
+}
+
+// BillingResource represents a billable resource
+type BillingResource struct {
+	ResourceID string                  `json:"resource_id"`
+	Amount     float64                 `json:"amount"`
+	Hours      int                     `json:"hours"`
+	Details    []BillingResourceDetail `json:"details"`
+}
+
+// BillingResourceDetail represents detailed billing information for a resource
+type BillingResourceDetail struct {
+	Amount          float64 `json:"amount"`
+	Hours           int     `json:"hours"`
+	Plan            string  `json:"plan,omitempty"`
+	Zone            string  `json:"zone,omitempty"`
+	Size            int     `json:"size,omitempty"`
+	Cores           int     `json:"cores,omitempty"`
+	Memory          int     `json:"memory,omitempty"`
+	Firewall        float64 `json:"firewall,omitempty"`
+	Licenses        float64 `json:"licenses,omitempty"`
+	SimpleBackup    float64 `json:"simple_backup,omitempty"`
+	BillableSizeGiB int     `json:"billable_size_gib,omitempty"`
+	Labels          []Label `json:"labels,omitempty"`
+}
+
+// UnmarshalJSON is a custom unmarshaller for BillingSummary
+func (b *BillingSummary) UnmarshalJSON(data []byte) error {
+	type localBillingSummary BillingSummary
+
+	v := struct {
+		*localBillingSummary
+	}{
+		localBillingSummary: (*localBillingSummary)(b),
+	}
+
+	return json.Unmarshal(data, &v)
+}
