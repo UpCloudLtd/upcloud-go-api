@@ -198,6 +198,8 @@ type BillingSummary struct {
 	ManagedLoadbalancers  *BillingCategory `json:"managed_loadbalancers,omitempty"`
 	ManagedKubernetes     *BillingCategory `json:"managed_kubernetes,omitempty"`
 	NetworkGateways       *BillingCategory `json:"network_gateways,omitempty"`
+	Networks              *BillingCategory `json:"networks,omitempty"`
+	Storages              *BillingCategory `json:"storages,omitempty"`
 }
 
 // BillingCategory represents a billing category with its resources
@@ -209,6 +211,10 @@ type BillingCategory struct {
 	ManagedLoadbalancer  *BillingResourceGroup `json:"managed_loadbalancers,omitempty"`
 	ManagedKubernetes    *BillingResourceGroup `json:"managed_kubernetes,omitempty"`
 	NetworkGateway       *BillingResourceGroup `json:"network_gateway,omitempty"`
+	IPv4Address          *BillingResourceGroup `json:"ipv4_address,omitempty"`
+	Backup               *BillingResourceGroup `json:"backup,omitempty"`
+	Storage              *BillingResourceGroup `json:"storage,omitempty"`
+	Template             *BillingResourceGroup `json:"template,omitempty"`
 }
 
 // BillingResourceGroup represents a group of resources with their details
