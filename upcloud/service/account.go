@@ -14,6 +14,7 @@ type Account interface {
 	CreateSubaccount(ctx context.Context, r *request.CreateSubaccountRequest) (*upcloud.AccountDetails, error)
 	ModifySubaccount(ctx context.Context, r *request.ModifySubaccountRequest) (*upcloud.AccountDetails, error)
 	DeleteSubaccount(ctx context.Context, r *request.DeleteSubaccountRequest) error
+	GetBillingSummary(ctx context.Context, r *request.GetBillingSummaryRequest) (*upcloud.BillingSummary, error)
 }
 
 // GetAccount returns the current user's account
@@ -53,4 +54,10 @@ func (s *Service) CreateSubaccount(ctx context.Context, r *request.CreateSubacco
 // DeleteSubaccount deletes a sub account
 func (s *Service) DeleteSubaccount(ctx context.Context, r *request.DeleteSubaccountRequest) error {
 	return s.delete(ctx, r)
+}
+
+// GetBillingSummary returns billing summary for the specified month
+func (s *Service) GetBillingSummary(ctx context.Context, r *request.GetBillingSummaryRequest) (*upcloud.BillingSummary, error) {
+	billingSummary := upcloud.BillingSummary{}
+	return &billingSummary, s.get(ctx, r.RequestURL(), &billingSummary)
 }

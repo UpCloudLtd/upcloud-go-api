@@ -2,6 +2,7 @@ package request
 
 import (
 	"fmt"
+	"net/url"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
 )
@@ -109,4 +110,27 @@ type GetAccountDetailsRequest struct {
 // RequestURL implements the Request interface
 func (r *GetAccountDetailsRequest) RequestURL() string {
 	return fmt.Sprintf("/account/details/%s", r.Username)
+}
+
+// GetBillingSummaryRequest represents a request to get billing summary
+type GetBillingSummaryRequest struct {
+	// YearMonth in format YYYY-MM (e.g., "2024-09")
+	YearMonth string
+	// If specified, only the details of the given resource are returned.
+	ResourceID string
+	// If specified, retrieves the billing summary of given account instead of the calling account.
+	// Requires Partner API access and existing association between partner account and given account.
+	Username string
+}
+
+// RequestURL implements the Request interface
+func (r *GetBillingSummaryRequest) RequestURL() string {
+	qv := url.Values{}
+	if r.ResourceID != "" {
+		qv.Set("resource_id", r.ResourceID)
+	}
+	if r.Username != "" {
+		qv.Set("username", r.Username)
+	}
+	return fmt.Sprintf("/account/billing/summary/%s?%s", r.YearMonth, qv.Encode())
 }

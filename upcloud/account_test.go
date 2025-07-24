@@ -229,3 +229,198 @@ func TestUnmarshalAccountList(t *testing.T) {
 	assert.Equal(t, AccountType("sub"), a[1].Type)
 	assert.Equal(t, "my_billing_account", a[1].Username)
 }
+
+// TestUnmarshalBillingSummary tests that BillingSummary unmarshal correctly
+func TestUnmarshalBillingSummary(t *testing.T) {
+	originalJSON := []byte(`
+{
+  "currency": "EUR",
+  "managed_databases": {
+    "managed_database": {
+      "resources": [
+        {
+          "amount": 15.10223,
+          "details": [
+            {
+              "amount": 15.10223,
+              "hours": 420,
+              "plan": "1x1xCPU-2GB-25GB",
+              "zone": "fi-hel2"
+            }
+          ],
+          "hours": 420,
+          "resource_id": "09001a4d-b525-4ab8-835d-000000000000"
+        }
+      ],
+      "total_amount": 15.10223
+    },
+    "total_amount": 15.10223
+  },
+  "managed_object_storages": {
+    "managed_object_storage": {
+      "resources": [
+        {
+          "amount": 5.03384,
+          "details": [
+            {
+              "amount": 5.03384,
+             "billable_size_gib": 500,
+              "hours": 420,
+              "zone": "fi-hel2"
+            }
+          ],
+          "hours": 420,
+          "resource_id": "127ee42a-8304-477c-84e1-000000000000"
+        }
+      ],
+      "total_amount": 5.03384
+    },
+    "total_amount": 5.03384
+  },
+  "servers": {
+    "server": {
+      "resources": [
+        {
+          "amount": 16.18091,
+          "details": [
+            {
+              "amount": 16.18091,
+              "hours": 420,
+              "labels": [
+                {
+                  "key": "test",
+                  "value": ""
+                }
+              ],
+              "plan": "2xCPU-4GB",
+              "zone": "fi-hel2"
+            }
+          ],
+          "hours": 420,
+          "resource_id": "001c2caa-00dc-4eff-9321-000000000000"
+        },
+        {
+          "amount": 16.10386,
+          "details": [
+            {
+              "amount": 16.10386,
+              "hours": 418,
+              "labels": [
+                {
+                  "key": "test2",
+                  "value": ""
+                }
+              ],
+              "plan": "2xCPU-4GB",
+              "zone": "fi-hel2"
+            },
+            {
+              "amount": 0.9288,
+              "hours": 12,
+              "labels": [
+                {
+                  "key": "test2",
+                  "value": ""
+                }
+              ],
+              "plan": "4xCPU-8GB",
+              "zone": "fi-hel2"
+            }
+          ],
+          "hours": 430,
+          "resource_id": "0010cf04-3608-4512-b4de-000000000000"
+        }
+      ],
+      "total_amount": 33.21357
+    },
+    "total_amount": 33.21357
+  },
+  "total_amount": 53.34964
+}
+  `)
+	var b BillingSummary
+	err := json.Unmarshal(originalJSON, &b)
+	assert.NoError(t, err)
+
+	assert.Equal(t, "EUR", b.Currency)
+	assert.Equal(t, 53.34964, b.TotalAmount)
+
+	assert.NotNil(t, b.Servers)
+	assert.Equal(t, 33.21357, b.Servers.TotalAmount)
+	assert.NotNil(t, b.Servers.Server)
+	assert.Equal(t, 33.21357, b.Servers.Server.TotalAmount)
+	assert.Len(t, b.Servers.Server.Resources, 2)
+
+	assert.Equal(t, "001c2caa-00dc-4eff-9321-000000000000", b.Servers.Server.Resources[0].ResourceID)
+	assert.Equal(t, 16.18091, b.Servers.Server.Resources[0].Amount)
+	assert.Equal(t, 420, b.Servers.Server.Resources[0].Hours)
+	assert.Equal(t, []BillingResourceDetail{
+		{
+			Amount: 16.18091,
+			Hours:  420,
+			Plan:   "2xCPU-4GB",
+			Zone:   "fi-hel2",
+			Labels: []Label{
+				{Key: "test", Value: ""},
+			},
+		},
+	}, b.Servers.Server.Resources[0].Details)
+
+	assert.Equal(t, "0010cf04-3608-4512-b4de-000000000000", b.Servers.Server.Resources[1].ResourceID)
+	assert.Equal(t, 16.10386, b.Servers.Server.Resources[1].Amount)
+	assert.Equal(t, 430, b.Servers.Server.Resources[1].Hours)
+	assert.Equal(t, []BillingResourceDetail{
+		{
+			Amount: 16.10386,
+			Hours:  418,
+			Plan:   "2xCPU-4GB",
+			Zone:   "fi-hel2",
+			Labels: []Label{
+				{Key: "test2", Value: ""},
+			},
+		},
+		{
+			Amount: 0.9288,
+			Hours:  12,
+			Plan:   "4xCPU-8GB",
+			Zone:   "fi-hel2",
+			Labels: []Label{
+				{Key: "test2", Value: ""},
+			},
+		},
+	}, b.Servers.Server.Resources[1].Details)
+
+	assert.NotNil(t, b.ManagedDatabases)
+	assert.Equal(t, 15.10223, b.ManagedDatabases.TotalAmount)
+	assert.NotNil(t, b.ManagedDatabases.ManagedDatabase)
+	assert.Equal(t, 15.10223, b.ManagedDatabases.ManagedDatabase.TotalAmount)
+	assert.Len(t, b.ManagedDatabases.ManagedDatabase.Resources, 1)
+	assert.Equal(t, "09001a4d-b525-4ab8-835d-000000000000", b.ManagedDatabases.ManagedDatabase.Resources[0].ResourceID)
+	assert.Equal(t, 15.10223, b.ManagedDatabases.ManagedDatabase.Resources[0].Amount)
+	assert.Equal(t, 420, b.ManagedDatabases.ManagedDatabase.Resources[0].Hours)
+	assert.Equal(t, []BillingResourceDetail{
+		{
+			Amount: 15.10223,
+			Hours:  420,
+			Plan:   "1x1xCPU-2GB-25GB",
+			Zone:   "fi-hel2",
+		},
+	}, b.ManagedDatabases.ManagedDatabase.Resources[0].Details)
+
+	assert.NotNil(t, b.ManagedObjectStorages)
+	assert.Equal(t, 5.03384, b.ManagedObjectStorages.TotalAmount)
+	assert.NotNil(t, b.ManagedObjectStorages.ManagedObjectStorage)
+	assert.Equal(t, 5.03384, b.ManagedObjectStorages.ManagedObjectStorage.TotalAmount)
+	assert.Len(t, b.ManagedObjectStorages.ManagedObjectStorage.Resources, 1)
+	assert.Equal(t, "127ee42a-8304-477c-84e1-000000000000", b.ManagedObjectStorages.ManagedObjectStorage.Resources[0].ResourceID)
+	assert.Equal(t, 5.03384, b.ManagedObjectStorages.ManagedObjectStorage.Resources[0].Amount)
+	assert.Equal(t, 420, b.ManagedObjectStorages.ManagedObjectStorage.Resources[0].Hours)
+	assert.Equal(t, []BillingResourceDetail{
+		{
+			Amount:          5.03384,
+			Hours:           420,
+			Zone:            "fi-hel2",
+			BillableSizeGiB: 500,
+		},
+	}, b.ManagedObjectStorages.ManagedObjectStorage.Resources[0].Details)
+}
