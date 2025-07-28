@@ -246,16 +246,3 @@ type BillingResourceDetail struct {
 	BillableSizeGiB int     `json:"billable_size_gib,omitempty"`
 	Labels          []Label `json:"labels,omitempty"`
 }
-
-// UnmarshalJSON is a custom unmarshaller for BillingSummary
-func (b *BillingSummary) UnmarshalJSON(data []byte) error {
-	type localBillingSummary BillingSummary
-
-	v := struct {
-		*localBillingSummary
-	}{
-		localBillingSummary: (*localBillingSummary)(b),
-	}
-
-	return json.Unmarshal(data, &v)
-}
