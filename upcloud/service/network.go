@@ -20,6 +20,8 @@ type Network interface {
 	CreateNetworkInterface(ctx context.Context, r *request.CreateNetworkInterfaceRequest) (*upcloud.Interface, error)
 	ModifyNetworkInterface(ctx context.Context, r *request.ModifyNetworkInterfaceRequest) (*upcloud.Interface, error)
 	DeleteNetworkInterface(ctx context.Context, r *request.DeleteNetworkInterfaceRequest) error
+	AssignIPAddressToNetworkInterface(ctx context.Context, r *request.AssignIPAddressToNetworkInterfaceRequest) (*upcloud.IPAddress, error)
+	DeleteIPAddressFromNetworkInterface(ctx context.Context, r *request.DeleteIPAddressFromNetworkInterfaceRequest) error
 	GetRouters(ctx context.Context, f ...request.QueryFilter) (*upcloud.Routers, error)
 	GetRouterDetails(ctx context.Context, r *request.GetRouterDetailsRequest) (*upcloud.Router, error)
 	CreateRouter(ctx context.Context, r *request.CreateRouterRequest) (*upcloud.Router, error)
@@ -93,6 +95,15 @@ func (s *Service) ModifyNetworkInterface(ctx context.Context, r *request.ModifyN
 
 // DeleteNetworkInterface removes the specified network interface from the specified server.
 func (s *Service) DeleteNetworkInterface(ctx context.Context, r *request.DeleteNetworkInterfaceRequest) error {
+	return s.delete(ctx, r)
+}
+
+func (s *Service) AssignIPAddressToNetworkInterface(ctx context.Context, r *request.AssignIPAddressToNetworkInterfaceRequest) (*upcloud.IPAddress, error) {
+	ip := upcloud.IPAddress{}
+	return &ip, s.create(ctx, r, &ip)
+}
+
+func (s *Service) DeleteIPAddressFromNetworkInterface(ctx context.Context, r *request.DeleteIPAddressFromNetworkInterfaceRequest) error {
 	return s.delete(ctx, r)
 }
 

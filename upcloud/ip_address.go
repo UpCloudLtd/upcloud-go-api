@@ -65,15 +65,16 @@ func (i *IPAddressSlice) UnmarshalJSON(b []byte) error {
 
 // IPAddress represents an IP address
 type IPAddress struct {
-	Access     string  `json:"access"`
-	Address    string  `json:"address"`
-	Family     string  `json:"family"`
-	PartOfPlan Boolean `json:"part_of_plan"`
-	PTRRecord  string  `json:"ptr_record"`
-	ServerUUID string  `json:"server"`
-	MAC        string  `json:"mac"`
-	Floating   Boolean `json:"floating"`
-	Zone       string  `json:"zone"`
+	Access       string  `json:"access"`
+	Address      string  `json:"address"`
+	DHCPProvided Boolean `json:"dhcp_provided"`
+	Family       string  `json:"family"`
+	PartOfPlan   Boolean `json:"part_of_plan"`
+	PTRRecord    string  `json:"ptr_record"`
+	ServerUUID   string  `json:"server"`
+	MAC          string  `json:"mac"`
+	Floating     Boolean `json:"floating"`
+	Zone         string  `json:"zone"`
 }
 
 // UnmarshalJSON is a custom unmarshaller that deals with
