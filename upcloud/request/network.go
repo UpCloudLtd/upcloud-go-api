@@ -3,6 +3,7 @@ package request
 import (
 	"encoding/json"
 	"fmt"
+	"net/url"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
 )
@@ -252,7 +253,47 @@ func (r ModifyNetworkInterfaceRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&v)
 }
 
-// GetRouterssequest represents a request to list routers.
+type AssignIPAddressToNetworkInterfaceRequest struct {
+	ServerUUID string `json:"-"`
+	Index      int    `json:"-"`
+	Force      bool   `json:"-"`
+
+	Family  string `json:"family"`
+	Address string `json:"address,omitempty"`
+}
+
+// MarshalJSON is a custom marshaller that deals with
+// deeply embedded values.
+func (r AssignIPAddressToNetworkInterfaceRequest) MarshalJSON() ([]byte, error) {
+	type localAssignIPAddressToNetworkInterfaceRequest AssignIPAddressToNetworkInterfaceRequest
+	v := struct {
+		AssignIPAddressToNetworkInterfaceRequest localAssignIPAddressToNetworkInterfaceRequest `json:"ip_address"`
+	}{}
+	v.AssignIPAddressToNetworkInterfaceRequest = localAssignIPAddressToNetworkInterfaceRequest(r)
+
+	return json.Marshal(&v)
+}
+
+func (r *AssignIPAddressToNetworkInterfaceRequest) RequestURL() string {
+	qv := url.Values{}
+	if r.Force {
+		qv.Set("force", "yes")
+	}
+
+	return fmt.Sprintf("/server/%s/networking/interface/%d/ip-address?%s", r.ServerUUID, r.Index, qv.Encode())
+}
+
+type DeleteIPAddressFromNetworkInterfaceRequest struct {
+	ServerUUID string `json:"-"`
+	Index      int    `json:"-"`
+	Address    string `json:"-"`
+}
+
+func (r *DeleteIPAddressFromNetworkInterfaceRequest) RequestURL() string {
+	return fmt.Sprintf("/server/%s/networking/interface/%d/ip-address/%s", r.ServerUUID, r.Index, r.Address)
+}
+
+// GetRoutersRequest represents a request to list routers.
 type GetRoutersRequest struct {
 	Filters []QueryFilter
 }

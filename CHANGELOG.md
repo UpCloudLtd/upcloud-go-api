@@ -5,6 +5,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+- account: support for getting billing summary
+- network: support for assigning and deleting network interface IP addresses
+
 ## [8.21.0]
 
 ### Added
