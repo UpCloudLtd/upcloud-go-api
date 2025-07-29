@@ -2,6 +2,7 @@
 
 ![Build Status](https://github.com/UpCloudLtd/upcloud-go-api/workflows/Upcloud%20go%20api%20test/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/UpCloudLtd/upcloud-go-api)](https://goreportcard.com/report/github.com/UpCloudLtd/upcloud-go-api)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/UpCloudLtd/upcloud-go-api/badge)](https://scorecard.dev/viewer/?uri=github.com%2FUpCloudLtd%2Fupcloud-go-api)
 [![GoDoc](https://godoc.org/github.com/UpCloudLtd/upcloud-go-api?status.svg)](https://godoc.org/github.com/UpCloudLtd/upcloud-go-api)
 
 This is the official client for interfacing with UpCloud's API using the Go programming language. The features allows for easy and quick development and integration when using Go.
