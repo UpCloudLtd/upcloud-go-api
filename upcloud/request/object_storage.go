@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-// GetObjectStorageDetailsRequest represents a request for retrieving details about a Object Storage device
+// GetObjectStorageDetailsRequest represents a request for retrieving details about an Object Storage device.
 type GetObjectStorageDetailsRequest struct {
 	UUID string
 }
@@ -42,7 +42,7 @@ func (r *CreateObjectStorageRequest) RequestURL() string {
 	return "/object-storage"
 }
 
-// ModifyObjectStorageRequest represents a request to modify a Object Storage
+// ModifyObjectStorageRequest represents a request to modify an Object Storage.
 type ModifyObjectStorageRequest struct {
 	UUID        string `json:"-"`
 	Description string `json:"description,omitempty"`
@@ -68,7 +68,7 @@ func (r *ModifyObjectStorageRequest) RequestURL() string {
 	return fmt.Sprintf("/object-storage/%s", r.UUID)
 }
 
-// DeleteObjectStorageRequest represents a request to delete a Object Storage
+// DeleteObjectStorageRequest represents a request to delete an Object Storage.
 type DeleteObjectStorageRequest struct {
 	UUID string
 }

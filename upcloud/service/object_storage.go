@@ -27,7 +27,7 @@ func (s *Service) GetObjectStorageDetails(ctx context.Context, r *request.GetObj
 	return &objectStorageDetails, s.get(ctx, r.RequestURL(), &objectStorageDetails)
 }
 
-// CreateObjectStorage creates a Object Storage and return the Object Storage details for the newly created device
+// CreateObjectStorage creates an Object Storage and returns the Object Storage details for the newly created device.
 func (s *Service) CreateObjectStorage(ctx context.Context, r *request.CreateObjectStorageRequest) (*upcloud.ObjectStorageDetails, error) {
 	objectStorageDetails := upcloud.ObjectStorageDetails{}
 	return &objectStorageDetails, s.create(ctx, r, &objectStorageDetails)

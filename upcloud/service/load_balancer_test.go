@@ -138,14 +138,14 @@ func TestLoadBalancerBackend(t *testing.T) {
 	})
 }
 
-// TestLoadBalancerCerticateBundlesAndBackendTLSConfigs tests certificate bundles and TLS configs
+// TestLoadBalancerCertificateBundlesAndBackendTLSConfigs tests certificate bundles and TLS configs
 // Test:
 //   - certificate bundle CRUD
 //   - TLS config CRUD
 //   - add TLS config to LB backend
 //   - enable HTTP/2 for LB backend
 //   - remove TLS config to LB backend
-func TestLoadBalancerCerticateBundlesAndBackendTLSConfigs(t *testing.T) {
+func TestLoadBalancerCertificateBundlesAndBackendTLSConfigs(t *testing.T) {
 	t.Parallel()
 
 	record(t, "loadbalancercerticatebundlesandbackendtlsconfigs", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
@@ -823,14 +823,14 @@ func TestLoadBalancerFrontendRule(t *testing.T) {
 	})
 }
 
-// TestLoadBalancerCerticateBundlesAndFrontendTLSConfigs tests certificate bundles and TLS configs
+// TestLoadBalancerCertificateBundlesAndFrontendTLSConfigs tests certificate bundles and TLS configs
 // Test:
 //   - certificate bundle CRUD
 //   - TLS config CRUD
 //   - add TLS config to LB frontend
 //   - enable HTTP/2 for LB frontend
 //   - remove TLS config to LB frontend
-func TestLoadBalancerCerticateBundlesAndFrontendTLSConfigs(t *testing.T) {
+func TestLoadBalancerCertificateBundlesAndFrontendTLSConfigs(t *testing.T) {
 	t.Parallel()
 
 	record(t, "loadbalancercerticatebundlesandfrontendtlsconfigs", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {

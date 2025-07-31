@@ -128,7 +128,7 @@ func (s *Service) RestoreBackup(ctx context.Context, r *request.RestoreBackupReq
 	return s.create(ctx, r, nil)
 }
 
-// CreateStorageImport begins the process of importing an image onto a storage device. A `upcloud.StorageImportSourceHTTPImport` source
+// CreateStorageImport begins the process of importing an image onto a storage device. An `upcloud.StorageImportSourceHTTPImport` source
 // will import from an HTTP source. `upcloud.StorageImportSourceDirectUpload` will directly upload the file specified in `SourceLocation`.
 func (s *Service) CreateStorageImport(ctx context.Context, r *request.CreateStorageImportRequest) (*upcloud.StorageImportDetails, error) {
 	if r.Source == request.StorageImportSourceDirectUpload {
