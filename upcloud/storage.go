@@ -227,7 +227,7 @@ func (s *StorageImportDetails) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// ResizeStorageFilesystemBackup represents the backup details taken before an resize operation.
+// ResizeStorageFilesystemBackup represents the backup details taken before a resize operation.
 type ResizeStorageFilesystemBackup struct {
 	Access  string          `json:"access"`
 	Created time.Time       `json:"created"`
