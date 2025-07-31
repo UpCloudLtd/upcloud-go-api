@@ -214,7 +214,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 - Kubernetes: support for cluster labels.
 
 ### Changed
-- **Breaking**, Managed Database: `ManagedDatabaseUserOpernSearchAccessControl` fields changed to pointers
+- **Breaking**, Managed Database: `ManagedDatabaseUserOpenSearchAccessControl` fields changed to pointers
 - **Breaking**, Managed Database: `ManagedDatabaseUserPGAccessControl` fields changed to pointers
 - **Breaking**, Managed Database: `ManagedDatabaseUserRedisAccessControl` fields changed to pointers
 - **Breaking**, Managed Load Balancer: `LoadBalancerFrontendProperties` field `InboundProxyProtocol` to pointer
@@ -582,7 +582,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 - Converted API calls from XML to JSON
 - default zone from hel1 to hel2
 - only build PRs and merges to master
-- raise mininum required go version to 1.13
+- raise minimum required go version to 1.13
 - changelog format to include different lists
 - bump UpCloud API from 1.2 to 1.3 and expand with new functionalities
 

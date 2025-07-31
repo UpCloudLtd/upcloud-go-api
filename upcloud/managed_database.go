@@ -776,7 +776,7 @@ type ManagedDatabaseQueryStatisticsPostgreSQL struct {
 	UserName            string        `json:"user_name"`
 }
 
-// ManagedDatabaseType represets details of a database service type.
+// ManagedDatabaseType represents details of a database service type.
 type ManagedDatabaseType struct {
 	Name                   string                                    `json:"name"`
 	Description            string                                    `json:"description"`
@@ -817,7 +817,7 @@ type ManagedDatabaseBackupConfigMySQL struct {
 	RecoveryMode string `json:"recovery_mode"`
 }
 
-// ManagedDatabaseBackupConfigOpenSearch represents backup configuration of a OpenSearch database service plan
+// ManagedDatabaseBackupConfigOpenSearch represents backup configuration of an OpenSearch database service plan.
 type ManagedDatabaseBackupConfigOpenSearch struct {
 	FrequentIntervalMinutes    int    `json:"frequent_interval_minutes"`
 	FrequentOldestAgeMinutes   int    `json:"frequent_oldest_age_minutes"`
@@ -848,7 +848,7 @@ type ManagedDatabaseBackupConfigValkey struct {
 	RecoveryMode string `json:"recovery_mode"`
 }
 
-// ManagedDatabaseServicePlanZones is a helper for unmarshaling database plan zones
+// ManagedDatabaseServicePlanZones is a helper for unmarshalling database plan zones.
 type ManagedDatabaseServicePlanZones []ManagedDatabaseServicePlanZone
 
 // ManagedDatabaseServicePlanZone represents zone where parent database plan is available

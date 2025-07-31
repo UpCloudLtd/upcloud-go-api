@@ -7,8 +7,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// TestUnmarshalServerConfiguratons tests that ServerConfigurations and ServerConfiguration are unmarshaled correctly
-func TestUnmarshalServerConfiguratons(t *testing.T) {
+// TestUnmarshalServerConfigurations tests that ServerConfigurations and ServerConfiguration are unmarshaled correctly.
+func TestUnmarshalServerConfigurations(t *testing.T) {
 	originalJSON := `
 {
     "server_sizes": {

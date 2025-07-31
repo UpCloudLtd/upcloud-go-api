@@ -73,7 +73,7 @@ func main() {
 				fmt.Println(invalidParam.Reason) // Human-readable description of the problem with that particular field
 			}
 
-			// You can also check against the specific api error codes to programatically react to certain situations.
+			// You can also check against the specific api error codes to programmatically react to certain situations.
 			// Base `upcloud` package exports all the error codes that API can return.
 			// You can check which error code is return in which situation in UpCloud API docs -> https://developers.upcloud.com/1.3
 			if problem.ErrorCode() == upcloud.ErrCodeResourceAlreadyExists {
@@ -97,7 +97,7 @@ UpCloud Go SDK includes the following packages:
 - `upcloud` package - contains type definitions for all UpCloud API objects like servers, storages, load balancers, Kubernetes clusters, errors, etc. It also has a lot of constants that allow you, for example, to compare state, status and other properties of various objects.
 - `client` package - contains functions that allow you to create and customise HTTP client that will be used to make requests to UpCloud API. The returned client does expose some methods for making requests, but you shouldn't really use them directly, client should only be used to instantiate a new `Service`
 - `service` package - contains the `Service` type, which exposes all the methods to interact with UpCloud API. This is the package you will probably use most frequently. All `Service` methods accept `context.Context` as firt parameter. _Most_ `Service` methods accept a `request` object as the second parameter (see package below).
-- `request` package - contains various `request` objects. Those objects should always be used as an argument for a `Service` method and allow you to provide additional params for the request URL or body. For example, when fetching details of a speficic server, you would use a request object to speficy the server UUID. Similarly, when creating server you would use request object to specify server properties, like CPU, memory, OS, login method, etc.
+- `request` package - contains various `request` objects. Those objects should always be used as an argument for a `Service` method and allow you to provide additional params for the request URL or body. For example, when fetching details of a specific server, you would use a request object to specify the server UUID. Similarly, when creating server you would use request object to specify server properties, like CPU, memory, OS, login method, etc.
 
 ### Examples
 

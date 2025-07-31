@@ -422,7 +422,7 @@ func TestUnmarshalInterface(t *testing.T) {
 	assert.Equal(t, testIface, iface)
 }
 
-// TestUnmarshalRouters ensures that the unmarshalling of an Routers response
+// TestUnmarshalRouters ensures that the unmarshalling of a Routers response
 // behaves correctly.
 func TestUnmarshalRouters(t *testing.T) {
 	originalJSON := `
