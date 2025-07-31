@@ -191,7 +191,7 @@ func TestGateway(t *testing.T) {
 							},
 							RekeyTime: 14400,
 						},
-						OperationalState: GatewayTunnelOperationalStateEstabilished,
+						OperationalState: GatewayTunnelOperationalStateEstablished,
 						CreatedAt:        timestamp,
 						UpdatedAt:        timestamp,
 					},

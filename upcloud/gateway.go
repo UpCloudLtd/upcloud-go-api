@@ -44,12 +44,14 @@ const (
 	GatewayTunnelOperationalStateUninitialized GatewayTunnelOperationalState = "uninitialized"
 	GatewayTunnelOperationalStateCreated       GatewayTunnelOperationalState = "created"
 	GatewayTunnelOperationalStateConnecting    GatewayTunnelOperationalState = "connecting"
-	GatewayTunnelOperationalStateEstabilished  GatewayTunnelOperationalState = "established"
-	GatewayTunnelOperationalStateRekeying      GatewayTunnelOperationalState = "rekeying"
-	GatewayTunnelOperationalStateRekeyed       GatewayTunnelOperationalState = "rekeyed"
-	GatewayTunnelOperationalStateDeleting      GatewayTunnelOperationalState = "deleting"
-	GatewayTunnelOperationalStateDestroying    GatewayTunnelOperationalState = "destroying"
-	GatewayTunnelOperationalStateUnknown       GatewayTunnelOperationalState = "unknown"
+	// Deprecated: misspelling, use GatewayTunnelOperationalStateEstablished instead.
+	GatewayTunnelOperationalStateEstabilished GatewayTunnelOperationalState = "established"
+	GatewayTunnelOperationalStateEstablished  GatewayTunnelOperationalState = "established"
+	GatewayTunnelOperationalStateRekeying     GatewayTunnelOperationalState = "rekeying"
+	GatewayTunnelOperationalStateRekeyed      GatewayTunnelOperationalState = "rekeyed"
+	GatewayTunnelOperationalStateDeleting     GatewayTunnelOperationalState = "deleting"
+	GatewayTunnelOperationalStateDestroying   GatewayTunnelOperationalState = "destroying"
+	GatewayTunnelOperationalStateUnknown      GatewayTunnelOperationalState = "unknown"
 
 	// GatewayFeatureNAT is a Network Address Translation (NAT) service that offers a way for cloud servers in SDN private networks to connect to the Internet through the public IP assigned to the network gateway service
 	GatewayFeatureNAT GatewayFeature = "nat"
