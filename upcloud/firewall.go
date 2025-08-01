@@ -5,6 +5,7 @@ import "encoding/json"
 // Constants
 const (
 	FirewallRuleActionAccept = "accept"
+	// Deprecated: no longer supported.
 	FirewallRuleActionReject = "reject"
 	FirewallRuleActionDrop   = "drop"
 

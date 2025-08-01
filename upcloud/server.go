@@ -21,7 +21,8 @@ const (
 	StopTypeSoft = "soft"
 	StopTypeHard = "hard"
 
-	RemoteAccessTypeVNC   = "vnc"
+	RemoteAccessTypeVNC = "vnc"
+	// Deprecated: no longer supported.
 	RemoteAccessTypeSPICE = "spice"
 )
 
