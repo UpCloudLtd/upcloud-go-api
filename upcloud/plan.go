@@ -35,4 +35,6 @@ type Plan struct {
 	PublicTrafficOut int    `json:"public_traffic_out"`
 	StorageSize      int    `json:"storage_size"`
 	StorageTier      string `json:"storage_tier"`
+	GPUAmount        int    `json:"gpu_amount"`
+	GPUModel         string `json:"gpu_model"`
 }

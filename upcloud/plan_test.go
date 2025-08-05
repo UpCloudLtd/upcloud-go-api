@@ -28,6 +28,16 @@ func TestUnmarshalPlans(t *testing.T) {
               "public_traffic_out" : 4096,
               "storage_size" : 80,
               "storage_tier" : "maxiops"
+            },
+            {
+              "core_number" : 8,
+              "gpu_amount" : 1,
+              "gpu_model" : "NVIDIA L40S",
+              "memory_amount" : 65536,
+              "name" : "GPU-8xCPU-64GB-1xL40S",
+              "public_traffic_out" : 12,
+              "storage_size" : 0,
+              "storage_tier" : null
             }
           ]
         }
@@ -37,7 +47,7 @@ func TestUnmarshalPlans(t *testing.T) {
 	plans := Plans{}
 	err := json.Unmarshal([]byte(originalJSON), &plans)
 	assert.Nil(t, err)
-	assert.Len(t, plans.Plans, 2)
+	assert.Len(t, plans.Plans, 3)
 
 	testData := []Plan{
 		{
@@ -47,6 +57,8 @@ func TestUnmarshalPlans(t *testing.T) {
 			PublicTrafficOut: 2048,
 			StorageSize:      50,
 			StorageTier:      "maxiops",
+			GPUAmount:        0,
+			GPUModel:         "",
 		},
 		{
 			CoreNumber:       2,
@@ -55,6 +67,18 @@ func TestUnmarshalPlans(t *testing.T) {
 			PublicTrafficOut: 4096,
 			StorageSize:      80,
 			StorageTier:      "maxiops",
+			GPUAmount:        0,
+			GPUModel:         "",
+		},
+		{
+			CoreNumber:       8,
+			MemoryAmount:     65536,
+			Name:             "GPU-8xCPU-64GB-1xL40S",
+			PublicTrafficOut: 12,
+			StorageSize:      0,
+			StorageTier:      "",
+			GPUAmount:        1,
+			GPUModel:         "NVIDIA L40S",
 		},
 	}
 
@@ -66,5 +90,7 @@ func TestUnmarshalPlans(t *testing.T) {
 		assert.Equal(t, p.PublicTrafficOut, plan.PublicTrafficOut)
 		assert.Equal(t, p.StorageSize, plan.StorageSize)
 		assert.Equal(t, p.StorageTier, plan.StorageTier)
+		assert.Equal(t, p.GPUAmount, plan.GPUAmount)
+		assert.Equal(t, p.GPUModel, plan.GPUModel)
 	}
 }

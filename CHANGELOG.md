@@ -5,6 +5,11 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+
+- account: add GPUs to resource limits
+- server: add GPUs to server plans
+
 ## [8.22.0]
 
 ### Added

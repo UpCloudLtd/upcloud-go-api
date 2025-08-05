@@ -33,6 +33,7 @@ type ResourceLimits struct {
 	StorageMaxIOPS        int `json:"storage_maxiops,omitempty"`
 	StorageSSD            int `json:"storage_ssd,omitempty"`
 	LoadBalancers         int `json:"load_balancers,omitempty"`
+	GPUs                  int `json:"gpus,omitempty"`
 }
 
 // UnmarshalJSON is a custom unmarshaller that deals with

@@ -27,7 +27,8 @@ func TestUnmarshalAccount(t *testing.T) {
 			"storage_hdd": 10240,
 			"storage_maxiops": 10240,
 			"storage_ssd": 10240,
-			"load_balancers": 50
+			"load_balancers": 50,
+			"gpus": 8
 		  }
 		}
 	  }
@@ -51,6 +52,7 @@ func TestUnmarshalAccount(t *testing.T) {
 	assert.Equal(t, 10240, account.ResourceLimits.StorageMaxIOPS)
 	assert.Equal(t, 10240, account.ResourceLimits.StorageSSD)
 	assert.Equal(t, 50, account.ResourceLimits.LoadBalancers)
+	assert.Equal(t, 8, account.ResourceLimits.GPUs)
 }
 
 // TestMarshalAccount tests that Account objects marshal correctly
