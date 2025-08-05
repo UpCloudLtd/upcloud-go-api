@@ -26,6 +26,7 @@ type Gateway interface {
 	CreateGatewayConnectionTunnel(ctx context.Context, r *request.CreateGatewayConnectionTunnelRequest) (*upcloud.GatewayTunnel, error)
 	// ModifyGatewayConnectionTunnel(ctx context.Context, r *request.ModifyGatewayConnectionTunnelRequest) (*upcloud.GatewayTunnel, error)
 	DeleteGatewayConnectionTunnel(ctx context.Context, r *request.DeleteGatewayConnectionTunnelRequest) error
+	GetGatewayMetrics(ctx context.Context, r *request.GetGatewayMetricsRequest) (*upcloud.GatewayMetrics, error)
 }
 
 // GetGatewayPlans retrieves a list of all available plans for network gateway service
@@ -120,4 +121,10 @@ func (s *Service) ModifyGatewayConnectionTunnel(ctx context.Context, r *request.
 // DeleteGatewayConnectionTunnel deletes a tunnel for specific connection of specific gateway
 func (s *Service) DeleteGatewayConnectionTunnel(ctx context.Context, r *request.DeleteGatewayConnectionTunnelRequest) error {
 	return s.delete(ctx, r)
+}
+
+// GetGatewayMetrics retrieves metrics for a specific gateway service
+func (s *Service) GetGatewayMetrics(ctx context.Context, r *request.GetGatewayMetricsRequest) (*upcloud.GatewayMetrics, error) {
+	metrics := upcloud.GatewayMetrics{}
+	return &metrics, s.get(ctx, r.RequestURL(), &metrics)
 }
