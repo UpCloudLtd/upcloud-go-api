@@ -38,6 +38,7 @@ func TestGetAccount(t *testing.T) {
 	assert.NotZero(t, account.ResourceLimits.PublicIPv6)
 	assert.NotZero(t, account.ResourceLimits.StorageHDD)
 	assert.NotZero(t, account.ResourceLimits.StorageSSD)
+	assert.GreaterOrEqual(t, account.ResourceLimits.GPUs, 0)
 }
 
 // TestListDetailsCreateModifyDeleteSubaccountContext tests that subaccount functionality works correctly with context.
