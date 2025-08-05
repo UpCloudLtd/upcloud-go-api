@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.23.0]
+
 ### Added
 
 - account: add GPUs to resource limits
@@ -616,7 +618,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.22.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.23.0...HEAD
+[8.23.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.22.0...v8.23.0
 [8.22.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.21.0...v8.22.0
 [8.21.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.20.0...v8.21.0
 [8.20.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.19.0...v8.20.0
