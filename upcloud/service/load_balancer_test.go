@@ -1041,7 +1041,7 @@ func TestLoadBalancerPage(t *testing.T) {
 		net, err := createLoadBalancerAndPrivateNetwork(ctx, svc, zone, "172.16.0.0/24")
 		require.NoError(t, err)
 		lbs := make([]*upcloud.LoadBalancer, 0)
-		for i := 0; i < 5; i++ {
+		for range 5 {
 			lb, err := createLoadBalancer(ctx, svc, net.UUID, zone)
 			require.NoError(t, err)
 			lbs = append(lbs, lb)
