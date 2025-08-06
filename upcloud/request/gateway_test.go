@@ -210,3 +210,14 @@ func TestModifyGatewayRequest(t *testing.T) {
 
 	assert.Equal(t, gatewayBaseURL+"/fake", r.RequestURL())
 }
+
+func TestGetGatewayMetricsRequest_RequestURL(t *testing.T) {
+	r := GetGatewayMetricsRequest{
+		ServiceUUID: "test-service-uuid",
+	}
+
+	expected := "/gateway/test-service-uuid/metrics"
+	actual := r.RequestURL()
+
+	assert.Equal(t, expected, actual)
+}
