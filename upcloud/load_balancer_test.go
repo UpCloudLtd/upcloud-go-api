@@ -1179,7 +1179,7 @@ func TestLoadBalancerNetworks(t *testing.T) {
 		}`)
 }
 
-func testJSON(t *testing.T, unMarshall, marshall interface{}, want string) {
+func testJSON(t *testing.T, unMarshall, marshall any, want string) {
 	got, err := json.Marshal(marshall)
 	assert.NoError(t, err)
 	assert.JSONEq(t, want, string(got))

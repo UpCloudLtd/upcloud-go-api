@@ -68,7 +68,7 @@ type Service struct {
 }
 
 // Get performs a GET request to the specified location with context and stores the result in the value pointed to by v.
-func (s *Service) get(ctx context.Context, location string, v interface{}) error {
+func (s *Service) get(ctx context.Context, location string, v any) error {
 	res, err := s.client.Get(ctx, location)
 	if err != nil {
 		return parseJSONServiceError(err)
@@ -91,7 +91,7 @@ func (s *Service) get(ctx context.Context, location string, v interface{}) error
 }
 
 // Create performs a POST request to the specified location with context and stores the response in the value pointed to by v.
-func (s *Service) create(ctx context.Context, r requestable, v interface{}) error {
+func (s *Service) create(ctx context.Context, r requestable, v any) error {
 	payload, err := json.Marshal(r)
 	if err != nil {
 		return err
@@ -108,7 +108,7 @@ func (s *Service) create(ctx context.Context, r requestable, v interface{}) erro
 }
 
 // Modify performs a PATCH request to the specified location with context and stores the response in the value pointed to by v.
-func (s *Service) modify(ctx context.Context, r requestable, v interface{}) error {
+func (s *Service) modify(ctx context.Context, r requestable, v any) error {
 	payload, err := json.Marshal(r)
 	if err != nil {
 		return err
@@ -125,7 +125,7 @@ func (s *Service) modify(ctx context.Context, r requestable, v interface{}) erro
 }
 
 // Modify performs a PUT request to the specified location with context and stores the response in the value pointed to by v.
-func (s *Service) replace(ctx context.Context, r requestable, v interface{}) error {
+func (s *Service) replace(ctx context.Context, r requestable, v any) error {
 	payload, err := json.Marshal(r)
 	if err != nil {
 		return err

@@ -288,10 +288,10 @@ type ManagedDatabaseMaintenanceTimeRequest struct {
 // For example:
 //
 //	req := CreateManagedDatabaseRequest{}; req.Properties.SetString("foo", "bar").Set("test", customValue)
-type ManagedDatabasePropertiesRequest map[upcloud.ManagedDatabasePropertyKey]interface{}
+type ManagedDatabasePropertiesRequest map[upcloud.ManagedDatabasePropertyKey]any
 
 // Set associates key with an any type of value. The underlying map is initialised if it's nil
-func (m *ManagedDatabasePropertiesRequest) Set(name upcloud.ManagedDatabasePropertyKey, value interface{}) *ManagedDatabasePropertiesRequest {
+func (m *ManagedDatabasePropertiesRequest) Set(name upcloud.ManagedDatabasePropertyKey, value any) *ManagedDatabasePropertiesRequest {
 	if m == nil {
 		return nil
 	}
@@ -344,7 +344,7 @@ func (m *ManagedDatabasePropertiesRequest) SetPublicAccess(enabled bool) *Manage
 }
 
 // Get returns a property value by name. The underlying map is initialised if it's nil
-func (m *ManagedDatabasePropertiesRequest) Get(name upcloud.ManagedDatabasePropertyKey) interface{} {
+func (m *ManagedDatabasePropertiesRequest) Get(name upcloud.ManagedDatabasePropertyKey) any {
 	if m == nil {
 		return nil
 	}
@@ -387,7 +387,7 @@ func (m *ManagedDatabasePropertiesRequest) GetStringSlice(name upcloud.ManagedDa
 	if slice, ok := m.Get(name).([]string); ok {
 		return slice, nil
 	}
-	slice, ok := m.Get(name).([]interface{})
+	slice, ok := m.Get(name).([]any)
 	if !ok {
 		return nil, fmt.Errorf("not a string-slice property %q", name)
 	}
