@@ -62,15 +62,7 @@ func TestGetTimeZones(t *testing.T) {
 		zones, err := svc.GetTimeZones(ctx)
 		require.NoError(t, err)
 		assert.NotEmpty(t, zones.TimeZones)
-
-		var found bool
-		for _, z := range zones.TimeZones {
-			if z == "Pacific/Wallis" {
-				found = true
-				break
-			}
-		}
-		assert.True(t, found)
+		assert.Contains(t, zones.TimeZones, "Pacific/Wallis")
 	})
 }
 
