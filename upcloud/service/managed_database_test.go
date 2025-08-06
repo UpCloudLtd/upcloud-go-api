@@ -353,7 +353,7 @@ func TestService_GetManagedDatabaseMetrics(t *testing.T) {
 				assert.NoError(t, err)
 
 				if period == upcloud.ManagedDatabaseMetricPeriodHour {
-					validate := func(iv interface{}) {
+					validate := func(iv any) {
 						switch chart := iv.(type) {
 						case upcloud.ManagedDatabaseMetricsChartInt:
 							if assert.NotEmpty(t, chart.Rows) {

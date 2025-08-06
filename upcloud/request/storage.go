@@ -309,7 +309,7 @@ func (r *RestoreBackupRequest) RequestURL() string {
 
 // ImportSourceLocation can be a string to a file or io.Reader in StorageImportSourceDirectUpload mode or a URL
 // in StorageImportSourceHTTPImport mode
-type ImportSourceLocation interface{}
+type ImportSourceLocation any
 
 // CreateStorageImportRequest represent a request to import storage.
 type CreateStorageImportRequest struct {
