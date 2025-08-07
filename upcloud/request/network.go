@@ -37,7 +37,7 @@ func (r *GetNetworksInZoneRequest) RequestURL() string {
 	return fmt.Sprintf("/network?zone=%s&%s", r.Zone, encodeQueryFilters(r.Filters))
 }
 
-// GetNetworkDetailsRequest represents a request to the the details of
+// GetNetworkDetailsRequest represents a request to the details of
 // a single network.
 type GetNetworkDetailsRequest struct {
 	UUID string

@@ -47,7 +47,7 @@ func (s *Service) GetKubernetesCluster(ctx context.Context, r *request.GetKubern
 // CreateKubernetesCluster creates a new Kubernetes cluster.
 func (s *Service) CreateKubernetesCluster(ctx context.Context, r *request.CreateKubernetesClusterRequest) (*upcloud.KubernetesCluster, error) {
 	if r == nil || len(r.Network) == 0 {
-		return nil, fmt.Errorf("bad request, network is not defined")
+		return nil, errors.New("bad request, network is not defined")
 	}
 
 	networkDetails, err := s.GetNetworkDetails(ctx, &request.GetNetworkDetailsRequest{UUID: r.Network})
