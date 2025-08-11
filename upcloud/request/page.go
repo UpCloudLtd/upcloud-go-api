@@ -1,8 +1,8 @@
 package request
 
 import (
-	"fmt"
 	"net/url"
+	"strconv"
 )
 
 const (
@@ -20,24 +20,10 @@ type Page struct {
 	Number int
 }
 
-func (p *Page) offset() int {
-	if p.Number < 1 {
-		p.Number = 1
-	}
-	return (p.Number - 1) * p.Size
-}
-
-func (p *Page) limit() int {
-	if p.Size < 1 {
-		p.Size = 0
-	}
-	return p.Size
-}
-
 func (p *Page) Values() url.Values {
 	v := url.Values{}
-	v.Add("limit", fmt.Sprint(p.limit()))
-	v.Add("offset", fmt.Sprint(p.offset()))
+	v.Add("limit", strconv.Itoa(p.limit()))
+	v.Add("offset", strconv.Itoa(p.offset()))
 	return v
 }
 
@@ -68,4 +54,18 @@ func (p *Page) String() string {
 
 func (p *Page) ToQueryParam() string {
 	return p.String()
+}
+
+func (p *Page) limit() int {
+	if p.Size < 1 {
+		p.Size = 0
+	}
+	return p.Size
+}
+
+func (p *Page) offset() int {
+	if p.Number < 1 {
+		p.Number = 1
+	}
+	return (p.Number - 1) * p.Size
 }

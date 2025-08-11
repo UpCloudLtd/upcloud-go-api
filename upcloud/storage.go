@@ -207,6 +207,7 @@ func (s *StorageImportDetails) UnmarshalJSON(b []byte) error {
 	v := struct {
 		StorageImport struct {
 			localStorageImport
+
 			Completed string `json:"completed"`
 		} `json:"storage_import"`
 	}{}

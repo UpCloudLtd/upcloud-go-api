@@ -55,6 +55,7 @@ func (c CloneManagedDatabaseRequest) MarshalJSON() ([]byte, error) {
 	type alias CloneManagedDatabaseRequest
 	req := struct {
 		alias
+
 		CloneTime   *time.Time                             `json:"clone_time,omitempty"`
 		Maintenance *ManagedDatabaseMaintenanceTimeRequest `json:"maintenance,omitempty"`
 	}{alias: alias(c)}
@@ -91,6 +92,7 @@ func (c CreateManagedDatabaseRequest) MarshalJSON() ([]byte, error) {
 	type alias CreateManagedDatabaseRequest
 	req := struct {
 		alias
+
 		Maintenance *ManagedDatabaseMaintenanceTimeRequest `json:"maintenance,omitempty"`
 	}{alias: alias(c)}
 	if c.Maintenance.Time != "" || c.Maintenance.DayOfWeek != "" {
@@ -439,6 +441,7 @@ func (m ModifyManagedDatabaseRequest) MarshalJSON() ([]byte, error) {
 	type alias ModifyManagedDatabaseRequest
 	req := struct {
 		alias
+
 		Maintenance *ManagedDatabaseMaintenanceTimeRequest `json:"maintenance,omitempty"`
 	}{alias: alias(m)}
 	if m.Maintenance.Time != "" || m.Maintenance.DayOfWeek != "" {

@@ -46,6 +46,48 @@ type Client struct {
 	config    config
 }
 
+// NewFromEnv creates a new client from environment variables and
+// validates that only one authentication method is provided.
+func NewFromEnv(c ...ConfigFn) (*Client, error) {
+	token := os.Getenv(EnvToken)
+	username := os.Getenv(EnvUsername)
+	password := os.Getenv(EnvPassword)
+
+	if token != "" && (username != "" || password != "") {
+		return nil, errors.New("only one authentication method (token or basic auth) can be provided")
+	}
+
+	if token == "" && (username == "" || password == "") {
+		return nil, errors.New("authentication credentials must be provided via environment variables")
+	}
+
+	config := config{
+		baseURL:    clientBaseURL(os.Getenv(EnvDebugAPIBaseURL)),
+		httpClient: NewDefaultHTTPClient(),
+	}
+
+	if token != "" {
+		config.token = token
+	} else {
+		config.username = username
+		config.password = password
+	}
+
+	// If set, replace http client transport with one skipping tls verification
+	if os.Getenv(EnvDebugSkipCertificateVerify) == "1" {
+		c = append(c, WithInsecureSkipVerify())
+	}
+
+	for _, fn := range c {
+		fn(&config)
+	}
+
+	return &Client{
+		UserAgent: userAgent(),
+		config:    config,
+	}, nil
+}
+
 // Get performs a GET request to the specified path and returns the response body.
 func (c *Client) Get(ctx context.Context, path string) ([]byte, error) {
 	r, err := c.createRequest(ctx, http.MethodGet, path, nil)
@@ -394,46 +436,4 @@ func newDefaultTLSClientConfig() *tls.Config {
 	return &tls.Config{
 		MinVersion: tls.VersionTLS13,
 	}
-}
-
-// NewFromEnv creates a new client from environment variables and
-// validates that only one authentication method is provided.
-func NewFromEnv(c ...ConfigFn) (*Client, error) {
-	token := os.Getenv(EnvToken)
-	username := os.Getenv(EnvUsername)
-	password := os.Getenv(EnvPassword)
-
-	if token != "" && (username != "" || password != "") {
-		return nil, errors.New("only one authentication method (token or basic auth) can be provided")
-	}
-
-	if token == "" && (username == "" || password == "") {
-		return nil, errors.New("authentication credentials must be provided via environment variables")
-	}
-
-	config := config{
-		baseURL:    clientBaseURL(os.Getenv(EnvDebugAPIBaseURL)),
-		httpClient: NewDefaultHTTPClient(),
-	}
-
-	if token != "" {
-		config.token = token
-	} else {
-		config.username = username
-		config.password = password
-	}
-
-	// If set, replace http client transport with one skipping tls verification
-	if os.Getenv(EnvDebugSkipCertificateVerify) == "1" {
-		c = append(c, WithInsecureSkipVerify())
-	}
-
-	for _, fn := range c {
-		fn(&config)
-	}
-
-	return &Client{
-		UserAgent: userAgent(),
-		config:    config,
-	}, nil
 }
