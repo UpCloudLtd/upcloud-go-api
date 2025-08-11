@@ -215,3 +215,13 @@ type DeleteGatewayConnectionTunnelRequest struct {
 func (r *DeleteGatewayConnectionTunnelRequest) RequestURL() string {
 	return fmt.Sprintf("%s/%s/connections/%s/tunnels/%s", gatewayBaseURL, r.ServiceUUID, r.ConnectionUUID, r.UUID)
 }
+
+// GetGatewayMetricsRequest represents a request to get gateway metrics
+type GetGatewayMetricsRequest struct {
+	ServiceUUID string
+}
+
+// RequestURL implements the Request interface
+func (r *GetGatewayMetricsRequest) RequestURL() string {
+	return fmt.Sprintf("%s/%s/metrics", gatewayBaseURL, r.ServiceUUID)
+}

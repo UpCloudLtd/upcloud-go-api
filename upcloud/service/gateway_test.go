@@ -652,6 +652,145 @@ func TestVPNGatewayConnectionTunnels(t *testing.T) {
 	})
 }
 
+func TestGetGatewayMetrics(t *testing.T) {
+	t.Parallel()
+
+	metricsResponse := `{
+  "gateways": [
+    {
+      "active_connections": 15,
+      "created_at": "2024-01-11T13:16:05.161672Z",
+      "name": "gateway1",
+      "total_accepted_connections": 8773,
+      "total_rejected_sessions": 3,
+      "updated_at": "2024-01-17T10:25:13.393453Z"
+    }
+  ],
+  "ipsec_metrics": {
+    "ike_sas": [
+      {
+        "child_sas": [
+          {
+            "name": "example-connection/example-tunnel-1",
+            "tunnel_id": 213,
+            "unique_id": "389",
+            "state": "installed",
+            "spi_in": "c3d20761",
+            "spi_out": "cec8f1bc",
+            "bytes_in": 25537422,
+            "bytes_out": 645540,
+            "packets_in": 20353,
+            "packets_out": 7685,
+            "rekey_time": 1214,
+            "life_time": 1445,
+            "install_time": 139,
+            "local_traffic_selectors": [
+              "0.0.0.0/0",
+              "::/0"
+            ],
+            "remote_traffic_selectors": [
+              "0.0.0.0/0",
+              "::/0"
+            ],
+            "created_at": "2024-01-11T13:19:10.077746Z",
+            "updated_at": "2024-01-17T10:25:13.393453Z"
+          }
+        ],
+        "created_at": "2024-01-11T13:18:55.056675Z",
+        "established": 9286,
+        "initator": true,
+        "local_host": "100.127.0.241",
+        "local_id": "100.127.0.241",
+        "name": "example-connection/example-tunnel-1",
+        "reauth_time": 0,
+        "rekey_time": 4483,
+        "remote_host": "100.10.0.111",
+        "remote_id": "100.10.0.111",
+        "operational_state": "established",
+        "internal_state": "established",
+        "tunnel_id": 213,
+        "unique_id": "149",
+        "updated_at": "2024-01-17T10:25:13.393453Z",
+        "version": 2,
+        "heuristic_state": {
+          "tunnel_up": true,
+          "tunnel_healthy": true,
+          "last_down_message": "received AUTHENTICATION_FAILED notify error",
+          "updated_at": "2024-01-17T10:25:13.393453Z",
+          "last_down_message_updated_at": "2024-01-17T06:46:18.938719Z",
+          "up_events": 5,
+          "down_events": 4,
+          "log_message_bad_events": 1
+        }
+      }
+    ]
+  }
+}`
+
+	serviceUUID := "service-uuid-123"
+	srv, svc := setupTestServerAndService(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		assert.Equal(t, http.MethodGet, r.Method)
+		assert.Equal(t, fmt.Sprintf("/%s/gateway/%s/metrics", client.APIVersion, serviceUUID), r.URL.Path)
+		_, _ = fmt.Fprint(w, metricsResponse)
+	}))
+	defer srv.Close()
+
+	res, err := svc.GetGatewayMetrics(context.Background(), &request.GetGatewayMetricsRequest{
+		ServiceUUID: serviceUUID,
+	})
+	assert.NoError(t, err)
+	assert.NotNil(t, res)
+
+	// Test gateway metrics
+	assert.Len(t, res.Gateways, 1)
+	gateway := res.Gateways[0]
+	assert.Equal(t, 15, gateway.ActiveConnections)
+	assert.Equal(t, "gateway1", gateway.Name)
+	assert.Equal(t, 8773, gateway.TotalAcceptedConnections)
+	assert.Equal(t, 3, gateway.TotalRejectedSessions)
+
+	// Test IPSec metrics
+	assert.NotNil(t, res.IPSecMetrics)
+	assert.Len(t, res.IPSecMetrics.IKESAs, 1)
+
+	ikeSA := res.IPSecMetrics.IKESAs[0]
+	assert.Equal(t, "example-connection/example-tunnel-1", ikeSA.Name)
+	assert.Equal(t, 9286, ikeSA.Established)
+	assert.True(t, ikeSA.Initiator)
+	assert.Equal(t, "100.127.0.241", ikeSA.LocalHost)
+	assert.Equal(t, "100.10.0.111", ikeSA.RemoteHost)
+	assert.Equal(t, "established", ikeSA.OperationalState)
+	assert.Equal(t, 213, ikeSA.TunnelID)
+	assert.Equal(t, "149", ikeSA.UniqueID)
+	assert.Equal(t, 2, ikeSA.Version)
+
+	// Test child SAs
+	assert.Len(t, ikeSA.ChildSAs, 1)
+	childSA := ikeSA.ChildSAs[0]
+	assert.Equal(t, "example-connection/example-tunnel-1", childSA.Name)
+	assert.Equal(t, 213, childSA.TunnelID)
+	assert.Equal(t, "389", childSA.UniqueID)
+	assert.Equal(t, "installed", childSA.State)
+	assert.Equal(t, "c3d20761", childSA.SPIIn)
+	assert.Equal(t, "cec8f1bc", childSA.SPIOut)
+	assert.Equal(t, 25537422, childSA.BytesIn)
+	assert.Equal(t, 645540, childSA.BytesOut)
+	assert.Equal(t, 20353, childSA.PacketsIn)
+	assert.Equal(t, 7685, childSA.PacketsOut)
+	assert.Len(t, childSA.LocalTrafficSelectors, 2)
+	assert.Len(t, childSA.RemoteTrafficSelectors, 2)
+
+	// Test heuristic state
+	assert.NotNil(t, ikeSA.HeuristicState)
+	heuristic := ikeSA.HeuristicState
+	assert.True(t, heuristic.TunnelUp)
+	assert.True(t, heuristic.TunnelHealthy)
+	assert.Equal(t, "received AUTHENTICATION_FAILED notify error", heuristic.LastDownMessage)
+	assert.Equal(t, 5, heuristic.UpEvents)
+	assert.Equal(t, 4, heuristic.DownEvents)
+	assert.Equal(t, 1, heuristic.LogMessageBadEvents)
+}
+
 func waitGatewayToStart(ctx context.Context, rec *recorder.Recorder, svc *Service, UUID string) error {
 	if rec.Mode() != recorder.ModeRecording {
 		return nil
