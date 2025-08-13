@@ -94,7 +94,7 @@ func record(t *testing.T, fixture string, f func(context.Context, *testing.T, *r
 
 		// Redact sensitive information from response body
 		if i.Response.Body != "" {
-			var responseData map[string]interface{}
+			var responseData map[string]any
 			var responseArrayData []map[string]any
 
 			const maxTopLevelRecords = 100

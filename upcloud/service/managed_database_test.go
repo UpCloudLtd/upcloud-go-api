@@ -176,7 +176,7 @@ func TestService_GetManagedDatabase(t *testing.T) {
 func TestService_GetManagedDatabases(t *testing.T) {
 	record(t, "getmanageddatabases", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		uuidMap := make(map[string]bool)
-		for i := 0; i < 4; i++ {
+		for i := range 4 {
 			details, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest(fmt.Sprintf("getmanageddatabases-%d", i), upcloud.ManagedDatabaseServiceTypePostgreSQL))
 			require.NoError(t, err)
 
@@ -353,7 +353,7 @@ func TestService_GetManagedDatabaseMetrics(t *testing.T) {
 				assert.NoError(t, err)
 
 				if period == upcloud.ManagedDatabaseMetricPeriodHour {
-					validate := func(iv interface{}) {
+					validate := func(iv any) {
 						switch chart := iv.(type) {
 						case upcloud.ManagedDatabaseMetricsChartInt:
 							if assert.NotEmpty(t, chart.Rows) {

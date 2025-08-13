@@ -193,3 +193,79 @@ type GatewayPlan struct {
 	SupportedFeatures        []GatewayFeature `json:"supported_features,omitempty"`
 	VPNTunnelAmount          int              `json:"vpn_tunnel_amount,omitempty"`
 }
+
+// GatewayMetrics represents the response from the gateway metrics endpoint
+type GatewayMetrics struct {
+	Gateways     []GatewayMetricsGateway `json:"gateways,omitempty"`
+	IPSecMetrics *GatewayIPSecMetrics    `json:"ipsec_metrics,omitempty"`
+}
+
+// GatewayMetricsGateway represents individual gateway metrics
+type GatewayMetricsGateway struct {
+	ActiveConnections        int       `json:"active_connections,omitempty"`
+	CreatedAt                time.Time `json:"created_at,omitempty"`
+	Name                     string    `json:"name,omitempty"`
+	TotalAcceptedConnections int       `json:"total_accepted_connections,omitempty"`
+	TotalRejectedSessions    int       `json:"total_rejected_sessions,omitempty"`
+	UpdatedAt                time.Time `json:"updated_at,omitempty"`
+}
+
+// GatewayIPSecMetrics represents IPSec metrics
+type GatewayIPSecMetrics struct {
+	IKESAs []GatewayIKESA `json:"ike_sas,omitempty"`
+}
+
+// GatewayIKESA represents an IKE Security Association
+type GatewayIKESA struct {
+	ChildSAs         []GatewayChildSA       `json:"child_sas,omitempty"`
+	CreatedAt        time.Time              `json:"created_at,omitempty"`
+	Established      int                    `json:"established,omitempty"`
+	Initiator        bool                   `json:"initator,omitempty"` // Note: API has typo "initator"
+	LocalHost        string                 `json:"local_host,omitempty"`
+	LocalID          string                 `json:"local_id,omitempty"`
+	Name             string                 `json:"name,omitempty"`
+	ReauthTime       int                    `json:"reauth_time,omitempty"`
+	RekeyTime        int                    `json:"rekey_time,omitempty"`
+	RemoteHost       string                 `json:"remote_host,omitempty"`
+	RemoteID         string                 `json:"remote_id,omitempty"`
+	OperationalState string                 `json:"operational_state,omitempty"`
+	InternalState    string                 `json:"internal_state,omitempty"`
+	TunnelID         int                    `json:"tunnel_id,omitempty"`
+	UniqueID         string                 `json:"unique_id,omitempty"`
+	UpdatedAt        time.Time              `json:"updated_at,omitempty"`
+	Version          int                    `json:"version,omitempty"`
+	HeuristicState   *GatewayHeuristicState `json:"heuristic_state,omitempty"`
+}
+
+// GatewayChildSA represents a Child Security Association
+type GatewayChildSA struct {
+	Name                   string    `json:"name,omitempty"`
+	TunnelID               int       `json:"tunnel_id,omitempty"`
+	UniqueID               string    `json:"unique_id,omitempty"`
+	State                  string    `json:"state,omitempty"`
+	SPIIn                  string    `json:"spi_in,omitempty"`
+	SPIOut                 string    `json:"spi_out,omitempty"`
+	BytesIn                int       `json:"bytes_in,omitempty"`
+	BytesOut               int       `json:"bytes_out,omitempty"`
+	PacketsIn              int       `json:"packets_in,omitempty"`
+	PacketsOut             int       `json:"packets_out,omitempty"`
+	RekeyTime              int       `json:"rekey_time,omitempty"`
+	LifeTime               int       `json:"life_time,omitempty"`
+	InstallTime            int       `json:"install_time,omitempty"`
+	LocalTrafficSelectors  []string  `json:"local_traffic_selectors,omitempty"`
+	RemoteTrafficSelectors []string  `json:"remote_traffic_selectors,omitempty"`
+	CreatedAt              time.Time `json:"created_at,omitempty"`
+	UpdatedAt              time.Time `json:"updated_at,omitempty"`
+}
+
+// GatewayHeuristicState represents heuristic tunnel state information
+type GatewayHeuristicState struct {
+	TunnelUp                 bool      `json:"tunnel_up,omitempty"`
+	TunnelHealthy            bool      `json:"tunnel_healthy,omitempty"`
+	LastDownMessage          string    `json:"last_down_message,omitempty"`
+	UpdatedAt                time.Time `json:"updated_at,omitempty"`
+	LastDownMessageUpdatedAt time.Time `json:"last_down_message_updated_at,omitempty"`
+	UpEvents                 int       `json:"up_events,omitempty"`
+	DownEvents               int       `json:"down_events,omitempty"`
+	LogMessageBadEvents      int       `json:"log_message_bad_events,omitempty"`
+}
