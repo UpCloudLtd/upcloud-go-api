@@ -5,6 +5,12 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.25.0]
+
+### Added
+
+- kubernetes: support for customising node groups utilising GPU and Cloud Native plans
+
 ## [8.24.0]
 
 ### Added
@@ -624,7 +630,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.24.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.25.0...HEAD
+[8.25.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.24.0...v8.25.0
 [8.24.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.23.0...v8.24.0
 [8.23.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.22.0...v8.23.0
 [8.22.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.21.0...v8.22.0
