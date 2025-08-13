@@ -737,3 +737,88 @@ func TestCreateKubernetesEncryptedCustomNodeGroup(t *testing.T) {
 	require.Equal(t, req.NodeGroup.CustomPlan, res.CustomPlan)
 	require.Equal(t, req.NodeGroup.StorageEncryption, res.StorageEncryption)
 }
+
+func TestCreateKubernetesCloudNativeNodeGroup(t *testing.T) {
+	t.Parallel()
+
+	srv, svc := setupTestServerAndService(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		require.Equal(t, http.MethodPost, r.Method)
+		require.Equal(t, fmt.Sprintf("/%s/kubernetes/_UUID_/node-groups", client.APIVersion), r.URL.Path)
+
+		payload := request.KubernetesNodeGroup{}
+		require.NoError(t, json.NewDecoder(r.Body).Decode(&payload))
+		require.NotNil(t, payload.CloudNativePlan)
+		nodeGroup := upcloud.KubernetesNodeGroup{
+			Plan: payload.Plan,
+			CloudNativePlan: &upcloud.KubernetesNodeGroupCloudNativePlan{
+				StorageSize: payload.CloudNativePlan.StorageSize,
+				StorageTier: payload.CloudNativePlan.StorageTier,
+			},
+		}
+		js, err := json.Marshal(nodeGroup)
+		require.NoError(t, err)
+
+		_, err = w.Write(js)
+		require.NoError(t, err)
+	}))
+	defer srv.Close()
+
+	req := request.CreateKubernetesNodeGroupRequest{
+		ClusterUUID: "_UUID_",
+		NodeGroup: request.KubernetesNodeGroup{
+			Plan: "CLOUDNATIVE-16xCPU-192GB",
+			CloudNativePlan: &upcloud.KubernetesNodeGroupCloudNativePlan{
+				StorageSize: 50,
+				StorageTier: upcloud.KubernetesStorageTierMaxIOPS,
+			},
+		},
+	}
+	res, err := svc.CreateKubernetesNodeGroup(context.Background(), &req)
+	require.NoError(t, err)
+	require.NotNil(t, res.CloudNativePlan)
+	require.Equal(t, req.NodeGroup.CloudNativePlan, res.CloudNativePlan)
+}
+
+func TestCreateKubernetesGPUNodeGroup(t *testing.T) {
+	t.Parallel()
+
+	srv, svc := setupTestServerAndService(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		require.Equal(t, http.MethodPost, r.Method)
+		require.Equal(t, fmt.Sprintf("/%s/kubernetes/_UUID_/node-groups", client.APIVersion), r.URL.Path)
+
+		payload := request.KubernetesNodeGroup{}
+		require.NoError(t, json.NewDecoder(r.Body).Decode(&payload))
+		require.NotNil(t, payload.GPUPlan)
+		nodeGroup := upcloud.KubernetesNodeGroup{
+			StorageEncryption: payload.StorageEncryption,
+			Plan:              payload.Plan,
+			GPUPlan: &upcloud.KubernetesNodeGroupGPUPlan{
+				StorageSize: payload.GPUPlan.StorageSize,
+				StorageTier: payload.GPUPlan.StorageTier,
+			},
+		}
+		js, err := json.Marshal(nodeGroup)
+		require.NoError(t, err)
+
+		_, err = w.Write(js)
+		require.NoError(t, err)
+	}))
+	defer srv.Close()
+
+	req := request.CreateKubernetesNodeGroupRequest{
+		ClusterUUID: "_UUID_",
+		NodeGroup: request.KubernetesNodeGroup{
+			Plan:              "GPU-12xCPU-128GB-1xL40s",
+			StorageEncryption: upcloud.StorageEncryptionDataAtRest,
+			GPUPlan: &upcloud.KubernetesNodeGroupGPUPlan{
+				StorageSize: 100,
+				StorageTier: upcloud.KubernetesStorageTierStandard,
+			},
+		},
+	}
+	res, err := svc.CreateKubernetesNodeGroup(context.Background(), &req)
+	require.NoError(t, err)
+	require.NotNil(t, res.GPUPlan)
+	require.Equal(t, req.NodeGroup.GPUPlan, res.GPUPlan)
+	require.Equal(t, req.NodeGroup.StorageEncryption, res.StorageEncryption)
+}

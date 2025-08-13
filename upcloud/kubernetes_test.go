@@ -181,6 +181,54 @@ func TestKubernetesNodeGroupEncryptedCustomPlan(t *testing.T) {
 	require.Equal(t, want, got)
 }
 
+func TestKubernetesNodeGroupCloudNativePlan(t *testing.T) {
+	t.Parallel()
+
+	p := []byte(`
+	{
+		"plan": "CLOUDNATIVE-16xCPU-192GB",
+		"cloud_native_plan": {
+			"storage_size": 50,
+			"storage_tier": "maxiops"
+		}
+	}
+	`)
+	got := KubernetesNodeGroup{}
+	require.NoError(t, json.Unmarshal(p, &got))
+	want := KubernetesNodeGroup{
+		Plan: "CLOUDNATIVE-16xCPU-192GB",
+		CloudNativePlan: &KubernetesNodeGroupCloudNativePlan{
+			StorageSize: 50,
+			StorageTier: KubernetesStorageTierMaxIOPS,
+		},
+	}
+	require.Equal(t, want, got)
+}
+
+func TestKubernetesNodeGroupGPUPlan(t *testing.T) {
+	t.Parallel()
+
+	p := []byte(`
+	{
+		"plan": "GPU-12xCPU-128GB-1xL40s",
+		"gpu_plan": {
+			"storage_size": 100,
+			"storage_tier": "maxiops"
+		}
+	}
+	`)
+	got := KubernetesNodeGroup{}
+	require.NoError(t, json.Unmarshal(p, &got))
+	want := KubernetesNodeGroup{
+		Plan: "GPU-12xCPU-128GB-1xL40s",
+		GPUPlan: &KubernetesNodeGroupGPUPlan{
+			StorageSize: 100,
+			StorageTier: KubernetesStorageTierMaxIOPS,
+		},
+	}
+	require.Equal(t, want, got)
+}
+
 func TestKubernetesStorageEncryption(t *testing.T) {
 	t.Parallel()
 

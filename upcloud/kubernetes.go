@@ -74,18 +74,20 @@ type KubernetesClusterUpgrade struct {
 }
 
 type KubernetesNodeGroup struct {
-	AntiAffinity         bool                           `json:"anti_affinity,omitempty"`
-	Count                int                            `json:"count,omitempty"`
-	KubeletArgs          []KubernetesKubeletArg         `json:"kubelet_args,omitempty"`
-	Labels               []Label                        `json:"labels,omitempty"`
-	Name                 string                         `json:"name,omitempty"`
-	Plan                 string                         `json:"plan,omitempty"`
-	CustomPlan           *KubernetesNodeGroupCustomPlan `json:"custom_plan,omitempty"`
-	SSHKeys              []string                       `json:"ssh_keys,omitempty"`
-	State                KubernetesNodeGroupState       `json:"state,omitempty"`
-	Storage              string                         `json:"storage,omitempty"`
-	Taints               []KubernetesTaint              `json:"taints,omitempty"`
-	UtilityNetworkAccess bool                           `json:"utility_network_access,omitempty"`
+	AntiAffinity         bool                                `json:"anti_affinity,omitempty"`
+	Count                int                                 `json:"count,omitempty"`
+	KubeletArgs          []KubernetesKubeletArg              `json:"kubelet_args,omitempty"`
+	Labels               []Label                             `json:"labels,omitempty"`
+	Name                 string                              `json:"name,omitempty"`
+	Plan                 string                              `json:"plan,omitempty"`
+	CustomPlan           *KubernetesNodeGroupCustomPlan      `json:"custom_plan,omitempty"`
+	CloudNativePlan      *KubernetesNodeGroupCloudNativePlan `json:"cloud_native_plan,omitempty"`
+	GPUPlan              *KubernetesNodeGroupGPUPlan         `json:"gpu_plan,omitempty"`
+	SSHKeys              []string                            `json:"ssh_keys,omitempty"`
+	State                KubernetesNodeGroupState            `json:"state,omitempty"`
+	Storage              string                              `json:"storage,omitempty"`
+	Taints               []KubernetesTaint                   `json:"taints,omitempty"`
+	UtilityNetworkAccess bool                                `json:"utility_network_access,omitempty"`
 	// Node group storage encryption strategy.
 	StorageEncryption StorageEncryption `json:"storage_encryption,omitempty"`
 }
@@ -134,5 +136,21 @@ type KubernetesNodeGroupCustomPlan struct {
 	// The size of the storage device in gigabytes.
 	StorageSize int `json:"storage_size"`
 	// The storage tier is MaxIOPS® or HDD.
+	StorageTier StorageTier `json:"storage_tier,omitempty"`
+}
+
+// KubernetesNodeGroupCloudNativePlan represents cloud native plan properties used for each node in the node group.
+type KubernetesNodeGroupCloudNativePlan struct {
+	// The size of the storage device in gigabytes.
+	StorageSize int `json:"storage_size"`
+	// The storage tier is MaxIOPS, HDD, or Standard.
+	StorageTier StorageTier `json:"storage_tier,omitempty"`
+}
+
+// KubernetesNodeGroupGPUPlan represents GPU plan properties used for each node in the node group.
+type KubernetesNodeGroupGPUPlan struct {
+	// The size of the storage device in gigabytes.
+	StorageSize int `json:"storage_size"`
+	// The storage tier is MaxIOPS, HDD, or Standard.
 	StorageTier StorageTier `json:"storage_tier,omitempty"`
 }
