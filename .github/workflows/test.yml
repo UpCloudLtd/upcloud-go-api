@@ -3,10 +3,14 @@ name: Upcloud go api test
 on:
   pull_request:
 
+permissions: {}
+
 jobs:
   test:
     name: test
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     strategy:
       matrix:
         # support two latest major versions of Go, following the Go security policy

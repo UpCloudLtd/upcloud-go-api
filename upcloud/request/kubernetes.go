@@ -182,6 +182,10 @@ type KubernetesNodeGroup struct {
 	UtilityNetworkAccess *bool                          `json:"utility_network_access,omitempty"`
 	// Node group custom plan properties. Required when plan is set as "custom".
 	CustomPlan *upcloud.KubernetesNodeGroupCustomPlan `json:"custom_plan,omitempty"`
+	// Node group cloud native plan properties. Optional to customise a cloud native plan.
+	CloudNativePlan *upcloud.KubernetesNodeGroupCloudNativePlan `json:"cloud_native_plan,omitempty"`
+	// Node group GPU plan properties. Optional to customise a GPU plan.
+	GPUPlan *upcloud.KubernetesNodeGroupGPUPlan `json:"gpu_plan,omitempty"`
 	// node group storage encryption strategy (optional).
 	StorageEncryption upcloud.StorageEncryption `json:"storage_encryption,omitempty"`
 }

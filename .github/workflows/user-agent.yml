@@ -3,10 +3,13 @@ on:
   pull_request:
     paths:
       - CHANGELOG.md
+permissions: {}
 jobs:
   update_user_agent:
     name: Check version in User-Agent
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:

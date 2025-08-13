@@ -54,7 +54,7 @@ func (s *Service) DeleteServerGroup(ctx context.Context, r *request.DeleteServer
 
 // AddServerToServerGroup adds a server to a server group with context (EXPERIMENTAL).
 func (s *Service) AddServerToServerGroup(ctx context.Context, r *request.AddServerToServerGroupRequest) error {
-	var v interface{}
+	var v any
 	return s.create(ctx, r, v)
 }
 

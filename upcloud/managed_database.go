@@ -371,9 +371,9 @@ func (m ManagedDatabaseMetricsChartFloat64) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("the number of timestamps doesn't match the number of rows: %d != %d",
 			len(m.Timestamps), len(m.Rows))
 	}
-	rows := make([][]interface{}, 0, len(m.Rows))
+	rows := make([][]any, 0, len(m.Rows))
 	for i := range m.Rows {
-		row := make([]interface{}, 0, len(m.Rows[i]))
+		row := make([]any, 0, len(m.Rows[i]))
 		row = append(row, &m.Timestamps[i])
 		if len(m.Rows[i]) != len(m.Columns) {
 			return nil, fmt.Errorf("unexpected number of columns at row %d (not %d)", i, len(m.Columns))
@@ -436,7 +436,7 @@ type ManagedDatabaseMetricsChartHeader struct {
 type canonicalManagedDatabaseMetricChartForMarshal struct {
 	Data struct {
 		Columns []ManagedDatabaseMetricsColumn `json:"cols"`
-		Rows    [][]interface{}                `json:"rows"`
+		Rows    [][]any                        `json:"rows"`
 	} `json:"data"`
 	Hints struct {
 		Title string `json:"title"`
@@ -473,9 +473,9 @@ func (m ManagedDatabaseMetricsChartInt) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("the number of timestamps doesn't match the number of rows: %d != %d",
 			len(m.Timestamps), len(m.Rows))
 	}
-	rows := make([][]interface{}, 0, len(m.Rows))
+	rows := make([][]any, 0, len(m.Rows))
 	for i := range m.Rows {
-		row := make([]interface{}, 0, len(m.Rows[i]))
+		row := make([]any, 0, len(m.Rows[i]))
 		row = append(row, &m.Timestamps[i])
 		if len(m.Rows[i]) != len(m.Columns) {
 			return nil, fmt.Errorf("unexpected number of columns at row %d (not %d)", i, len(m.Columns))
@@ -544,10 +544,10 @@ type ManagedDatabaseNodeState struct {
 }
 
 // ManagedDatabaseProperties is a Properties helper type for ManagedDatabase
-type ManagedDatabaseProperties map[ManagedDatabasePropertyKey]interface{}
+type ManagedDatabaseProperties map[ManagedDatabasePropertyKey]any
 
 // Get returns a property value by name. The underlying map is initialised if it's nil
-func (m *ManagedDatabaseProperties) Get(name ManagedDatabasePropertyKey) interface{} {
+func (m *ManagedDatabaseProperties) Get(name ManagedDatabasePropertyKey) any {
 	if m == nil {
 		return nil
 	}
@@ -590,7 +590,7 @@ func (m *ManagedDatabaseProperties) GetStringSlice(name ManagedDatabasePropertyK
 	if slice, ok := m.Get(name).([]string); ok {
 		return slice, nil
 	}
-	slice, ok := m.Get(name).([]interface{})
+	slice, ok := m.Get(name).([]any)
 	if !ok {
 		return nil, fmt.Errorf("not a string-slice property %q", name)
 	}
@@ -876,17 +876,17 @@ func (s *ManagedDatabaseServicePlanZones) UnmarshalJSON(b []byte) error {
 // ManagedDatabaseServiceProperty contains help for database property usage and validation
 type ManagedDatabaseServiceProperty struct {
 	CreateOnly  bool                                      `json:"createOnly,omitempty"`
-	Default     interface{}                               `json:"default,omitempty"`
-	Example     interface{}                               `json:"example,omitempty"`
+	Default     any                                       `json:"default,omitempty"`
+	Example     any                                       `json:"example,omitempty"`
 	MaxLength   int                                       `json:"maxLength,omitempty"`
 	Maximum     *float64                                  `json:"maximum,omitempty"`
 	MinLength   int                                       `json:"minLength,omitempty"`
 	Minimum     *float64                                  `json:"minimum,omitempty"`
 	Pattern     string                                    `json:"pattern,omitempty"`
-	Type        interface{}                               `json:"type"`
+	Type        any                                       `json:"type"`
 	Title       string                                    `json:"title"`
 	Description string                                    `json:"description,omitempty"`
-	Enum        interface{}                               `json:"enum,omitempty"`
+	Enum        any                                       `json:"enum,omitempty"`
 	UserError   string                                    `json:"user_error,omitempty"`
 	Properties  map[string]ManagedDatabaseServiceProperty `json:"properties,omitempty"`
 }
