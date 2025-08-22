@@ -8,3 +8,9 @@ updates:
     directory: /
     schedule:
       interval: daily
+  - package-ecosystem: gomod
+    directory: /credentials
+    commit-message:
+      prefix: "deps(credentials)"
+    schedule:
+      interval: daily
