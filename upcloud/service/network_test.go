@@ -830,7 +830,6 @@ func TestCreateNetworkAndServer_DHCPOptions(t *testing.T) {
 				ipNet.DHCPRoutesConfig.EffectiveRoutesAutoPopulation.ExcludeBySource,
 			)
 		})
-
 	})
 }
 
