@@ -166,20 +166,25 @@ func TestMarshalModifyNetworkRequest(t *testing.T) {
 	}
 
 	expectedJSON := `
-	  {
+	{
 		"network": {
-		  "name": "My private network",
 			"ip_networks": {
-			  "ip_network": [
+			"ip_network": [
 				{
-				  "dhcp": "no",
-				  "dhcp_default_route": "no",
-				  "family" : "IPv4"
+				"dhcp": "no",
+				"dhcp_default_route": "no",
+				"dhcp_routes_configuration": {
+					"effective_routes_auto_population": {
+					"enabled": "no"
+					}
+				},
+				"family": "IPv4"
 				}
-			  ]
-			}
-		  }
-	  }
+			]
+			},
+			"name": "My private network"
+		}
+	}
 	`
 
 	actualJSON, err := json.Marshal(&request)
