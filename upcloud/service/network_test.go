@@ -790,12 +790,12 @@ func TestCreateNetworkAndServer_DHCPOptions(t *testing.T) {
 						DHCPDns:          []string{"172.16.0.10", "172.16.1.10"},
 						Family:           upcloud.IPAddressFamilyIPv4,
 						Gateway:          "172.16.0.1",
-						DHCPRoutesConfig: upcloud.DHCPRoutesConfig{
+						DHCPRoutesConfiguration: upcloud.DHCPRoutesConfiguration{
 							EffectiveRoutesAutoPopulation: upcloud.EffectiveRoutesAutoPopulation{
 								Enabled:             upcloud.True,
 								FilterByDestination: []string{"172.16.0.0/22"},
-								FilterByRouteType:   []string{"service"},
-								ExcludeBySource:     []string{"static-route"},
+								FilterByRouteType:   []upcloud.RouteType{"service"},
+								ExcludeBySource:     []upcloud.RouteSource{"static-route"},
 							},
 						},
 					},
@@ -812,22 +812,22 @@ func TestCreateNetworkAndServer_DHCPOptions(t *testing.T) {
 			ipNet := netDetails.IPNetworks[0]
 
 			require.Equal(t, upcloud.True,
-				ipNet.DHCPRoutesConfig.EffectiveRoutesAutoPopulation.Enabled,
+				ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.Enabled,
 				"auto-population should be enabled")
 
 			assert.ElementsMatch(t,
 				[]string{"172.16.0.0/22"},
-				ipNet.DHCPRoutesConfig.EffectiveRoutesAutoPopulation.FilterByDestination,
+				ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.FilterByDestination,
 			)
 
 			assert.ElementsMatch(t,
-				[]string{"service"},
-				ipNet.DHCPRoutesConfig.EffectiveRoutesAutoPopulation.FilterByRouteType,
+				[]upcloud.RouteType{"service"},
+				ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.FilterByRouteType,
 			)
 
 			assert.ElementsMatch(t,
-				[]string{"static-route"},
-				ipNet.DHCPRoutesConfig.EffectiveRoutesAutoPopulation.ExcludeBySource,
+				[]upcloud.RouteSource{"static-route"},
+				ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.ExcludeBySource,
 			)
 		})
 	})

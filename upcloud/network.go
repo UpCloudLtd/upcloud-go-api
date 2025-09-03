@@ -88,27 +88,37 @@ func (s *Interface) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-type DHCPRoutesConfig struct {
+type RouteSource string
+type RouteType string
+
+const (
+	RouterConnectedNetworkRoute RouteSource = "router-connected-networks"
+	StaticSourceRoute           RouteSource = "static-route"
+	UserRouteType               RouteType   = "user"
+	ServiceRouteType            RouteType   = "service"
+)
+
+type DHCPRoutesConfiguration struct {
 	EffectiveRoutesAutoPopulation EffectiveRoutesAutoPopulation `json:"effective_routes_auto_population"`
 }
 
 type EffectiveRoutesAutoPopulation struct {
-	Enabled             Boolean  `json:"enabled"`
-	ExcludeBySource     []string `json:"exclude_by_source,omitempty"`
-	FilterByDestination []string `json:"filter_by_destination,omitempty"`
-	FilterByRouteType   []string `json:"filter_by_route_type,omitempty"`
+	Enabled             Boolean       `json:"enabled"`
+	ExcludeBySource     []RouteSource `json:"exclude_by_source,omitempty"`
+	FilterByDestination []string      `json:"filter_by_destination,omitempty"`
+	FilterByRouteType   []RouteType   `json:"filter_by_route_type,omitempty"`
 }
 
 // IPNetwork represents an IP network in a response.
 type IPNetwork struct {
-	Address          string           `json:"address,omitempty"`
-	DHCP             Boolean          `json:"dhcp"`
-	DHCPDefaultRoute Boolean          `json:"dhcp_default_route"`
-	DHCPDns          []string         `json:"dhcp_dns,omitempty"`
-	DHCPRoutes       []string         `json:"dhcp_routes,omitempty"`
-	Family           string           `json:"family,omitempty"`
-	Gateway          string           `json:"gateway,omitempty"`
-	DHCPRoutesConfig DHCPRoutesConfig `json:"dhcp_routes_configuration,omitempty"`
+	Address                 string                  `json:"address,omitempty"`
+	DHCP                    Boolean                 `json:"dhcp"`
+	DHCPDefaultRoute        Boolean                 `json:"dhcp_default_route"`
+	DHCPDns                 []string                `json:"dhcp_dns,omitempty"`
+	DHCPRoutes              []string                `json:"dhcp_routes,omitempty"`
+	Family                  string                  `json:"family,omitempty"`
+	Gateway                 string                  `json:"gateway,omitempty"`
+	DHCPRoutesConfiguration DHCPRoutesConfiguration `json:"dhcp_routes_configuration,omitempty"`
 }
 
 // IPNetworkSlice is a slice of IPNetworks

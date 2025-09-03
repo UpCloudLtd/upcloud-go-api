@@ -84,12 +84,12 @@ func TestMarshalCreateNetworkRequest(t *testing.T) {
 				},
 				Family:  upcloud.IPAddressFamilyIPv4,
 				Gateway: "172.16.0.1",
-				DHCPRoutesConfig: upcloud.DHCPRoutesConfig{
+				DHCPRoutesConfiguration: upcloud.DHCPRoutesConfiguration{
 					EffectiveRoutesAutoPopulation: upcloud.EffectiveRoutesAutoPopulation{
 						Enabled:             upcloud.True,
-						ExcludeBySource:     []string{"static-route"},
+						ExcludeBySource:     []upcloud.RouteSource{"static-route"},
 						FilterByDestination: []string{"172.16.0.0/22"},
-						FilterByRouteType:   []string{"service"},
+						FilterByRouteType:   []upcloud.RouteType{"service"},
 					},
 				},
 			},
