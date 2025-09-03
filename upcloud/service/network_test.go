@@ -794,8 +794,8 @@ func TestCreateNetworkAndServer_DHCPOptions(t *testing.T) {
 							EffectiveRoutesAutoPopulation: upcloud.EffectiveRoutesAutoPopulation{
 								Enabled:             upcloud.True,
 								FilterByDestination: []string{"172.16.0.0/22"},
-								FilterByRouteType:   []upcloud.RouteType{"service"},
-								ExcludeBySource:     []upcloud.RouteSource{"static-route"},
+								FilterByRouteType:   []upcloud.NetworkRouteType{"service"},
+								ExcludeBySource:     []upcloud.NetworkRouteSource{"static-route"},
 							},
 						},
 					},
@@ -821,12 +821,12 @@ func TestCreateNetworkAndServer_DHCPOptions(t *testing.T) {
 			)
 
 			assert.ElementsMatch(t,
-				[]upcloud.RouteType{"service"},
+				[]upcloud.NetworkRouteType{"service"},
 				ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.FilterByRouteType,
 			)
 
 			assert.ElementsMatch(t,
-				[]upcloud.RouteSource{"static-route"},
+				[]upcloud.NetworkRouteSource{"static-route"},
 				ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.ExcludeBySource,
 			)
 		})

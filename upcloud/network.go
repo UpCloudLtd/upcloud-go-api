@@ -92,10 +92,10 @@ type NetworkRouteSource string
 type NetworkRouteType string
 
 const (
-	NetworkRouteSourceRouterConnectedNetwork RouteSource = "router-connected-networks"
-	NetworkRouteSourceStaticSource           RouteSource = "static-route"
-	NetworkRouteTypeUser               RouteType   = "user"
-	NetworkRouteTypeService            RouteType   = "service"
+	NetworkRouteSourceRouterConnectedNetwork NetworkRouteSource = "router-connected-networks"
+	NetworkRouteSourceStaticSource           NetworkRouteSource = "static-route"
+	NetworkRouteTypeUser                     NetworkRouteType   = "user"
+	NetworkRouteTypeService                  NetworkRouteType   = "service"
 )
 
 type DHCPRoutesConfiguration struct {
@@ -103,10 +103,10 @@ type DHCPRoutesConfiguration struct {
 }
 
 type EffectiveRoutesAutoPopulation struct {
-	Enabled             Boolean       `json:"enabled"`
-	ExcludeBySource     []RouteSource `json:"exclude_by_source,omitempty"`
-	FilterByDestination []string      `json:"filter_by_destination,omitempty"`
-	FilterByRouteType   []RouteType   `json:"filter_by_route_type,omitempty"`
+	Enabled             Boolean              `json:"enabled"`
+	ExcludeBySource     []NetworkRouteSource `json:"exclude_by_source,omitempty"`
+	FilterByDestination []string             `json:"filter_by_destination,omitempty"`
+	FilterByRouteType   []NetworkRouteType   `json:"filter_by_route_type,omitempty"`
 }
 
 // IPNetwork represents an IP network in a response.
