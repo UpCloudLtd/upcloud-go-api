@@ -88,14 +88,14 @@ func (s *Interface) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-type RouteSource string
-type RouteType string
+type NetworkRouteSource string
+type NetworkRouteType string
 
 const (
-	RouterConnectedNetworkRoute RouteSource = "router-connected-networks"
-	StaticSourceRoute           RouteSource = "static-route"
-	UserRouteType               RouteType   = "user"
-	ServiceRouteType            RouteType   = "service"
+	NetworkRouteSourceRouterConnectedNetwork RouteSource = "router-connected-networks"
+	NetworkRouteSourceStaticSource           RouteSource = "static-route"
+	NetworkRouteTypeUser               RouteType   = "user"
+	NetworkRouteTypeService            RouteType   = "service"
 )
 
 type DHCPRoutesConfiguration struct {
