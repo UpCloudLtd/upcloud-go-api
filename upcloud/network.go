@@ -89,6 +89,7 @@ func (s *Interface) UnmarshalJSON(b []byte) error {
 }
 
 type NetworkRouteSource string
+
 type NetworkRouteType string
 
 const (
