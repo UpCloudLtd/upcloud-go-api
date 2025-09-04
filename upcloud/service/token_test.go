@@ -108,8 +108,10 @@ func TestClientWithToken(t *testing.T) {
 	require.NoError(t, err, "Token deletion should not fail")
 
 	// Make sure the token is deleted
-	server, err = svcWithToken.GetServers(ctx)
-	require.Error(t, err, "Getting servers with deleted token should fail")
+	require.Eventually(t, func() bool {
+		server, err = svcWithToken.GetServers(ctx)
+		return err != nil
+	}, 70*time.Second, 1*time.Second, "deleted token should become invalid within timeout")
 	require.Empty(t, server, "Getting servers with deleted token should return empty list")
 }
 

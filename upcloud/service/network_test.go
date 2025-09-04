@@ -736,6 +736,103 @@ func TestCreateNetworkAndServer(t *testing.T) {
 	})
 }
 
+func TestCreateNetworkAndServer_DHCPOptions(t *testing.T) {
+	record(t, "dhcpnetworkconfigurations", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		// Create a DHCP-enabled network WITH default route via DHCP
+		netReq := &request.CreateNetworkRequest{
+			Name: "sdk-test default-route yes",
+			Zone: "fi-hel2",
+			IPNetworks: []upcloud.IPNetwork{
+				{
+					Address:          "172.16.0.0/22",
+					DHCP:             upcloud.True,
+					DHCPDefaultRoute: upcloud.True,
+					DHCPDns:          []string{"172.16.0.10", "172.16.1.10"},
+					Family:           upcloud.IPAddressFamilyIPv4,
+					Gateway:          "172.16.0.1",
+				},
+			},
+		}
+		network, err := svc.CreateNetwork(ctx, netReq)
+		require.NoError(t, err)
+		require.NotEmpty(t, network.UUID)
+
+		// Create a server attached to this network
+		srv, err := createServerWithNetwork(ctx, rec, svc, "TestCreateNetworkAndServerDHCP", network.UUID)
+		require.NoError(t, err)
+		require.NotEmpty(t, srv.UUID)
+
+		// Re-fetch network details and assert DHCP default route = yes
+		netDetails, err := svc.GetNetworkDetails(ctx, &request.GetNetworkDetailsRequest{UUID: network.UUID})
+		require.NoError(t, err)
+		require.NotEmpty(t, netDetails.IPNetworks)
+		ipNet := netDetails.IPNetworks[0]
+		assert.Equal(t, upcloud.True, ipNet.DHCPDefaultRoute, "dhcp_default_route should be 'yes'")
+
+		// Server should be attached to our network
+		found := false
+		for _, nic := range srv.Networking.Interfaces {
+			if nic.Network == network.UUID {
+				found = true
+				break
+			}
+		}
+		assert.True(t, found, "server should be attached to created network")
+
+		t.Run("DHCP_AutoPopulation_AllFileters", func(t *testing.T) {
+			modReq := &request.ModifyNetworkRequest{
+				UUID: network.UUID,
+				IPNetworks: []upcloud.IPNetwork{
+					{
+						Address:          "172.16.0.0/22",
+						DHCP:             upcloud.True,
+						DHCPDefaultRoute: upcloud.True,
+						DHCPDns:          []string{"172.16.0.10", "172.16.1.10"},
+						Family:           upcloud.IPAddressFamilyIPv4,
+						Gateway:          "172.16.0.1",
+						DHCPRoutesConfiguration: upcloud.DHCPRoutesConfiguration{
+							EffectiveRoutesAutoPopulation: upcloud.EffectiveRoutesAutoPopulation{
+								Enabled:             upcloud.True,
+								FilterByDestination: []string{"172.16.0.0/22"},
+								FilterByRouteType:   []upcloud.NetworkRouteType{"service"},
+								ExcludeBySource:     []upcloud.NetworkRouteSource{"static-route"},
+							},
+						},
+					},
+				},
+			}
+
+			_, err := svc.ModifyNetwork(ctx, modReq)
+			require.NoError(t, err, "ModifyNetwork with all filters should succeed")
+
+			// Re-read and assert the config was applied
+			netDetails, err := svc.GetNetworkDetails(ctx, &request.GetNetworkDetailsRequest{UUID: network.UUID})
+			require.NoError(t, err)
+			require.NotEmpty(t, netDetails.IPNetworks)
+			ipNet := netDetails.IPNetworks[0]
+
+			require.Equal(t, upcloud.True,
+				ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.Enabled,
+				"auto-population should be enabled")
+
+			assert.ElementsMatch(t,
+				[]string{"172.16.0.0/22"},
+				ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.FilterByDestination,
+			)
+
+			assert.ElementsMatch(t,
+				[]upcloud.NetworkRouteType{"service"},
+				ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.FilterByRouteType,
+			)
+
+			assert.ElementsMatch(t,
+				[]upcloud.NetworkRouteSource{"static-route"},
+				ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.ExcludeBySource,
+			)
+		})
+	})
+}
+
 // TestRoutersFilters tests router labels and filters
 func TestRouterLabelsAndFilters(t *testing.T) {
 	record(t, "routerlabelsandfilters", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {

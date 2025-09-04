@@ -84,6 +84,14 @@ func TestMarshalCreateNetworkRequest(t *testing.T) {
 				},
 				Family:  upcloud.IPAddressFamilyIPv4,
 				Gateway: "172.16.0.1",
+				DHCPRoutesConfiguration: upcloud.DHCPRoutesConfiguration{
+					EffectiveRoutesAutoPopulation: upcloud.EffectiveRoutesAutoPopulation{
+						Enabled:             upcloud.True,
+						ExcludeBySource:     []upcloud.NetworkRouteSource{"static-route"},
+						FilterByDestination: []string{"172.16.0.0/22"},
+						FilterByRouteType:   []upcloud.NetworkRouteType{"service"},
+					},
+				},
 			},
 		},
 	}
@@ -114,6 +122,20 @@ func TestMarshalCreateNetworkRequest(t *testing.T) {
 				  "192.168.0.0/24",
 				  "192.168.100.100/32"
 				],
+				"dhcp_routes_configuration": {
+					"effective_routes_auto_population": {
+						"enabled": "yes",
+						"exclude_by_source": [
+							"static-route"
+						],
+						"filter_by_destination": [
+							"172.16.0.0/22"
+						],
+						"filter_by_route_type": [
+							"service"
+						]
+					}
+				},
 				"family" : "IPv4",
 				"gateway" : "172.16.0.1"
 			  }
@@ -144,20 +166,25 @@ func TestMarshalModifyNetworkRequest(t *testing.T) {
 	}
 
 	expectedJSON := `
-	  {
+	{
 		"network": {
-		  "name": "My private network",
 			"ip_networks": {
-			  "ip_network": [
+			"ip_network": [
 				{
-				  "dhcp": "no",
-				  "dhcp_default_route": "no",
-				  "family" : "IPv4"
+				"dhcp": "no",
+				"dhcp_default_route": "no",
+				"dhcp_routes_configuration": {
+					"effective_routes_auto_population": {
+					"enabled": "no"
+					}
+				},
+				"family": "IPv4"
 				}
-			  ]
-			}
-		  }
-	  }
+			]
+			},
+			"name": "My private network"
+		}
+	}
 	`
 
 	actualJSON, err := json.Marshal(&request)
