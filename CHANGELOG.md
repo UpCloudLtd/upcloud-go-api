@@ -7,14 +7,13 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [8.26.0]
 
-### Changed
-
-- Go version bump to 1.24
-
 ### Added
 
 - network: support for dhcp_routes_configuration
 
+### Changed
+
+- Go version bump to 1.24
 ## [8.25.0]
 
 ### Added
