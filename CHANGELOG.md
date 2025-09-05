@@ -5,8 +5,15 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.26.0]
+
 ### Changed
+
 - Go version bump to 1.24
+
+### Added
+
+- network: support for dhcp_routes_configuration
 
 ## [8.25.0]
 
@@ -633,7 +640,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.25.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.26.0...HEAD
+[8.26.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.25.0...v8.26.0
 [8.25.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.24.0...v8.25.0
 [8.24.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.23.0...v8.24.0
 [8.23.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.22.0...v8.23.0
