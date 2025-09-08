@@ -5,6 +5,11 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+
+- load-balancer: support for floating IP addresses
+- ip-address: support for release policy
+
 ## [8.26.0]
 
 ### Added

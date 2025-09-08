@@ -48,6 +48,11 @@ type LoadBalancerNetwork struct {
 	UUID   string                            `json:"uuid,omitempty"`
 }
 
+type LoadBalancerIPAddress struct {
+	Address     string `json:"address,omitempty"`
+	NetworkName string `json:"network_name,omitempty"`
+}
+
 // CreateLoadBalancerRequest represents a request to create load balancer
 type CreateLoadBalancerRequest struct {
 	Name             string                               `json:"name,omitempty"`
@@ -55,6 +60,7 @@ type CreateLoadBalancerRequest struct {
 	Zone             string                               `json:"zone,omitempty"`
 	NetworkUUID      string                               `json:"network_uuid,omitempty"`
 	Networks         []LoadBalancerNetwork                `json:"networks,omitempty"`
+	IPAddresses      []LoadBalancerIPAddress              `json:"ip_addresses,omitempty"`
 	ConfiguredStatus upcloud.LoadBalancerConfiguredStatus `json:"configured_status,omitempty"`
 	Frontends        []LoadBalancerFrontend               `json:"frontends"`
 	Backends         []LoadBalancerBackend                `json:"backends"`
@@ -740,6 +746,33 @@ func (r *ModifyLoadBalancerNetworkRequest) RequestURL() string {
 
 func (r *ModifyLoadBalancerNetworkRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(r.Network)
+}
+
+type GetLoadBalancerIPAddressesRequest struct {
+	ServiceUUID string `json:"-"`
+}
+
+func (r *GetLoadBalancerIPAddressesRequest) RequestURL() string {
+	return fmt.Sprintf("/load-balancer/%s/ip-addresses", r.ServiceUUID)
+}
+
+type AttachLoadBalancerIPAddressRequest struct {
+	ServiceUUID string `json:"-"`
+	Address     string `json:"address"`
+	NetworkName string `json:"network_name"`
+}
+
+func (r *AttachLoadBalancerIPAddressRequest) RequestURL() string {
+	return fmt.Sprintf("/load-balancer/%s/ip-addresses", r.ServiceUUID)
+}
+
+type RemoveLoadBalancerIPAddressRequest struct {
+	ServiceUUID string `json:"-"`
+	Address     string `json:"-"`
+}
+
+func (r *RemoveLoadBalancerIPAddressRequest) RequestURL() string {
+	return fmt.Sprintf("/load-balancer/%s/ip-addresses/%s", r.ServiceUUID, r.Address)
 }
 
 // GetLoadBalancerDNSChallengeDomainRequest represents a request to get domain for DNS challenge

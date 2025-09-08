@@ -19,12 +19,13 @@ func (r *GetIPAddressDetailsRequest) RequestURL() string {
 
 // AssignIPAddressRequest represents a request to assign a new IP address to a server
 type AssignIPAddressRequest struct {
-	Access     string          `json:"access,omitempty"`
-	Family     string          `json:"family,omitempty"`
-	ServerUUID string          `json:"server,omitempty"`
-	Floating   upcloud.Boolean `json:"floating,omitempty"`
-	MAC        string          `json:"mac,omitempty"`
-	Zone       string          `json:"zone,omitempty"`
+	Access        string                         `json:"access,omitempty"`
+	Family        string                         `json:"family,omitempty"`
+	ServerUUID    string                         `json:"server,omitempty"`
+	Floating      upcloud.Boolean                `json:"floating,omitempty"`
+	MAC           string                         `json:"mac,omitempty"`
+	Zone          string                         `json:"zone,omitempty"`
+	ReleasePolicy upcloud.IPAddressReleasePolicy `json:"release_policy,omitempty"`
 }
 
 // RequestURL implements the Request interface
@@ -48,8 +49,9 @@ func (r AssignIPAddressRequest) MarshalJSON() ([]byte, error) {
 type ModifyIPAddressRequest struct {
 	IPAddress string `json:"-"`
 
-	PTRRecord string `json:"ptr_record,omitempty"`
-	MAC       string `json:"mac,omitempty"`
+	PTRRecord     string                         `json:"ptr_record,omitempty"`
+	MAC           string                         `json:"mac,omitempty"`
+	ReleasePolicy upcloud.IPAddressReleasePolicy `json:"release_policy,omitempty"`
 }
 
 // RequestURL implements the Request interface
@@ -60,7 +62,7 @@ func (r *ModifyIPAddressRequest) RequestURL() string {
 // MarshalJSON is a custom marshaller that deals with
 // deeply embedded values.
 func (r ModifyIPAddressRequest) MarshalJSON() ([]byte, error) {
-	if r.PTRRecord == "" && r.MAC == "" {
+	if r.PTRRecord == "" && r.MAC == "" && r.ReleasePolicy == "" {
 		// We want to unassign the IP which requires the MAC to be explicitly not set.
 		return []byte(`
 		  {
