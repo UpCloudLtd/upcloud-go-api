@@ -201,6 +201,30 @@ func TestService_GetManagedDatabases(t *testing.T) {
 	})
 }
 
+func TestService_GetAllManagedDatabases(t *testing.T) {
+	record(t, "getallmanageddatabases", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		uuidMap := make(map[string]bool)
+		for i := range 4 {
+			details, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest(fmt.Sprintf("getallmanageddatabases-%d", i), upcloud.ManagedDatabaseServiceTypePostgreSQL))
+			require.NoError(t, err)
+
+			uuidMap[details.UUID] = true
+		}
+
+		defer func() {
+			for uuid := range uuidMap {
+				t.Logf("deleting %s", uuid)
+				err := svc.DeleteManagedDatabase(ctx, &request.DeleteManagedDatabaseRequest{UUID: uuid})
+				assert.NoError(t, err)
+			}
+		}()
+
+		services, err := svc.GetAllManagedDatabases(ctx)
+		require.NoError(t, err)
+		assert.Equal(t, len(services), 4)
+	})
+}
+
 func TestService_GetManagedDatabaseLogs(t *testing.T) {
 	const (
 		batchSize = 5
