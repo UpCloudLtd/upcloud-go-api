@@ -5,8 +5,8 @@ import "encoding/json"
 type ObjectStorageConfiguredStatus string
 
 const (
-	ObjectStorageConfiguredStatusStaarted ObjectStorageConfiguredStatus = "started"
-	ObjectStorageConfiguredStatusStopped  ObjectStorageConfiguredStatus = "stopped"
+	ObjectStorageConfiguredStatusStarted ObjectStorageConfiguredStatus = "started"
+	ObjectStorageConfiguredStatusStopped ObjectStorageConfiguredStatus = "stopped"
 )
 
 // ObjectStorage represents a Object Storage
