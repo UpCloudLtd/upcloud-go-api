@@ -2,13 +2,6 @@ package upcloud
 
 import "encoding/json"
 
-type ObjectStorageConfiguredStatus string
-
-const (
-	ObjectStorageConfiguredStatusStarted ObjectStorageConfiguredStatus = "started"
-	ObjectStorageConfiguredStatusStopped ObjectStorageConfiguredStatus = "stopped"
-)
-
 // ObjectStorage represents a Object Storage
 type ObjectStorage struct {
 	Created     string `json:"created"`
