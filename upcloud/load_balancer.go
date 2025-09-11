@@ -258,24 +258,25 @@ type LoadBalancerResolver struct {
 
 // LoadBalancer service
 type LoadBalancer struct {
-	UUID             string                       `json:"uuid,omitempty"`
-	Name             string                       `json:"name,omitempty"`
-	Zone             string                       `json:"zone,omitempty"`
-	Plan             string                       `json:"plan,omitempty"`
-	NetworkUUID      string                       `json:"network_uuid,omitempty"` // deprecated
-	Networks         []LoadBalancerNetwork        `json:"networks,omitempty"`
-	DNSName          string                       `json:"dns_name,omitempty"` // deprecated
-	Labels           []Label                      `json:"labels,omitempty"`
-	ConfiguredStatus LoadBalancerConfiguredStatus `json:"configured_status,omitempty"`
-	OperationalState LoadBalancerOperationalState `json:"operational_state,omitempty"`
-	Frontends        []LoadBalancerFrontend       `json:"frontends,omitempty"`
-	Backends         []LoadBalancerBackend        `json:"backends,omitempty"`
-	Resolvers        []LoadBalancerResolver       `json:"resolvers,omitempty"`
-	Nodes            []LoadBalancerNode           `json:"nodes,omitempty"`
-	CreatedAt        time.Time                    `json:"created_at,omitempty"`
-	UpdatedAt        time.Time                    `json:"updated_at,omitempty"`
-	MaintenanceDOW   LoadBalancerMaintenanceDOW   `json:"maintenance_dow,omitempty"`
-	MaintenanceTime  string                       `json:"maintenance_time,omitempty"`
+	UUID             string                          `json:"uuid,omitempty"`
+	Name             string                          `json:"name,omitempty"`
+	Zone             string                          `json:"zone,omitempty"`
+	Plan             string                          `json:"plan,omitempty"`
+	NetworkUUID      string                          `json:"network_uuid,omitempty"` // deprecated
+	Networks         []LoadBalancerNetwork           `json:"networks,omitempty"`
+	IPAddresses      []LoadBalancerFloatingIPAddress `json:"ip_addresses,omitempty"`
+	DNSName          string                          `json:"dns_name,omitempty"` // deprecated
+	Labels           []Label                         `json:"labels,omitempty"`
+	ConfiguredStatus LoadBalancerConfiguredStatus    `json:"configured_status,omitempty"`
+	OperationalState LoadBalancerOperationalState    `json:"operational_state,omitempty"`
+	Frontends        []LoadBalancerFrontend          `json:"frontends,omitempty"`
+	Backends         []LoadBalancerBackend           `json:"backends,omitempty"`
+	Resolvers        []LoadBalancerResolver          `json:"resolvers,omitempty"`
+	Nodes            []LoadBalancerNode              `json:"nodes,omitempty"`
+	CreatedAt        time.Time                       `json:"created_at,omitempty"`
+	UpdatedAt        time.Time                       `json:"updated_at,omitempty"`
+	MaintenanceDOW   LoadBalancerMaintenanceDOW      `json:"maintenance_dow,omitempty"`
+	MaintenanceTime  string                          `json:"maintenance_time,omitempty"`
 }
 
 // LoadBalancerMatcher represents rule matcher
@@ -414,6 +415,13 @@ type LoadBalancerNetwork struct {
 	DNSName     string                    `json:"dns_name,omitempty"`
 	CreatedAt   time.Time                 `json:"created_at,omitempty"`
 	UpdatedAt   time.Time                 `json:"updated_at,omitempty"`
+}
+
+type LoadBalancerFloatingIPAddress struct {
+	Address     string    `json:"address,omitempty"`
+	CreatedAt   time.Time `json:"created_at,omitempty"`
+	UpdatedAt   time.Time `json:"updated_at,omitempty"`
+	NetworkName string    `json:"network_name,omitempty"`
 }
 
 // LoadBalancerIPAddress represents IP address inside loadbalancer service

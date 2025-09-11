@@ -70,6 +70,10 @@ type LoadBalancer interface {
 	DeleteLoadBalancerCertificateBundle(ctx context.Context, r *request.DeleteLoadBalancerCertificateBundleRequest) error
 	// Networks
 	ModifyLoadBalancerNetwork(ctx context.Context, r *request.ModifyLoadBalancerNetworkRequest) (*upcloud.LoadBalancerNetwork, error)
+	// IP Addresses
+	GetLoadBalancerIPAddresses(ctx context.Context, r *request.GetLoadBalancerIPAddressesRequest) ([]upcloud.LoadBalancerFloatingIPAddress, error)
+	AttachLoadBalancerIPAddress(ctx context.Context, r *request.AttachLoadBalancerIPAddressRequest) (upcloud.LoadBalancerFloatingIPAddress, error)
+	RemoveLoadBalancerIPAddress(ctx context.Context, r *request.RemoveLoadBalancerIPAddressRequest) error
 	GetLoadBalancerDNSChallengeDomain(ctx context.Context, r *request.GetLoadBalancerDNSChallengeDomainRequest) (*upcloud.LoadBalancerDNSChallengeDomain, error)
 }
 
@@ -465,6 +469,20 @@ func (s *Service) DeleteLoadBalancerCertificateBundle(ctx context.Context, r *re
 func (s *Service) ModifyLoadBalancerNetwork(ctx context.Context, r *request.ModifyLoadBalancerNetworkRequest) (*upcloud.LoadBalancerNetwork, error) {
 	n := upcloud.LoadBalancerNetwork{}
 	return &n, s.modify(ctx, r, &n)
+}
+
+func (s *Service) GetLoadBalancerIPAddresses(ctx context.Context, r *request.GetLoadBalancerIPAddressesRequest) ([]upcloud.LoadBalancerFloatingIPAddress, error) {
+	var ipAddresses []upcloud.LoadBalancerFloatingIPAddress
+	return ipAddresses, s.get(ctx, r.RequestURL(), &ipAddresses)
+}
+
+func (s *Service) AttachLoadBalancerIPAddress(ctx context.Context, r *request.AttachLoadBalancerIPAddressRequest) (upcloud.LoadBalancerFloatingIPAddress, error) {
+	var ipAddress upcloud.LoadBalancerFloatingIPAddress
+	return ipAddress, s.create(ctx, r, &ipAddress)
+}
+
+func (s *Service) RemoveLoadBalancerIPAddress(ctx context.Context, r *request.RemoveLoadBalancerIPAddressRequest) error {
+	return s.delete(ctx, r)
 }
 
 func (s *Service) GetLoadBalancerDNSChallengeDomain(ctx context.Context, r *request.GetLoadBalancerDNSChallengeDomainRequest) (*upcloud.LoadBalancerDNSChallengeDomain, error) {

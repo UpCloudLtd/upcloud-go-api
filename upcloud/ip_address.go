@@ -2,8 +2,13 @@ package upcloud
 
 import "encoding/json"
 
+type IPAddressReleasePolicy string
+
 // Constants
 const (
+	IPAddressReleasePolicyKeep    IPAddressReleasePolicy = "keep"
+	IPAddressReleasePolicyRelease IPAddressReleasePolicy = "release"
+
 	IPAddressFamilyIPv4 = "IPv4"
 	IPAddressFamilyIPv6 = "IPv6"
 
@@ -65,16 +70,17 @@ func (i *IPAddressSlice) UnmarshalJSON(b []byte) error {
 
 // IPAddress represents an IP address
 type IPAddress struct {
-	Access       string  `json:"access"`
-	Address      string  `json:"address"`
-	DHCPProvided Boolean `json:"dhcp_provided"`
-	Family       string  `json:"family"`
-	PartOfPlan   Boolean `json:"part_of_plan"`
-	PTRRecord    string  `json:"ptr_record"`
-	ServerUUID   string  `json:"server"`
-	MAC          string  `json:"mac"`
-	Floating     Boolean `json:"floating"`
-	Zone         string  `json:"zone"`
+	Access        string                 `json:"access"`
+	Address       string                 `json:"address"`
+	DHCPProvided  Boolean                `json:"dhcp_provided"`
+	Family        string                 `json:"family"`
+	PartOfPlan    Boolean                `json:"part_of_plan"`
+	PTRRecord     string                 `json:"ptr_record"`
+	ReleasePolicy IPAddressReleasePolicy `json:"release_policy"`
+	ServerUUID    string                 `json:"server"`
+	MAC           string                 `json:"mac"`
+	Floating      Boolean                `json:"floating"`
+	Zone          string                 `json:"zone"`
 }
 
 // UnmarshalJSON is a custom unmarshaller that deals with
