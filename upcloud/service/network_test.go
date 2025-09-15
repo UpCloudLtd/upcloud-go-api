@@ -779,7 +779,7 @@ func TestCreateNetworkAndServer_DHCPOptions(t *testing.T) {
 		}
 		assert.True(t, found, "server should be attached to created network")
 
-		t.Run("DHCP_AutoPopulation_AllFileters", func(t *testing.T) {
+		t.Run("DHCP_AutoPopulation_AllFilters", func(t *testing.T) {
 			modReq := &request.ModifyNetworkRequest{
 				UUID: network.UUID,
 				IPNetworks: []upcloud.IPNetwork{
@@ -793,9 +793,9 @@ func TestCreateNetworkAndServer_DHCPOptions(t *testing.T) {
 						DHCPRoutesConfiguration: upcloud.DHCPRoutesConfiguration{
 							EffectiveRoutesAutoPopulation: upcloud.EffectiveRoutesAutoPopulation{
 								Enabled:             upcloud.True,
-								FilterByDestination: []string{"172.16.0.0/22"},
-								FilterByRouteType:   []upcloud.NetworkRouteType{"service"},
-								ExcludeBySource:     []upcloud.NetworkRouteSource{"static-route"},
+								FilterByDestination: &[]string{"172.16.0.0/22"},
+								FilterByRouteType:   &[]upcloud.NetworkRouteType{"service"},
+								ExcludeBySource:     &[]upcloud.NetworkRouteSource{"static-route"},
 							},
 						},
 					},
@@ -817,17 +817,17 @@ func TestCreateNetworkAndServer_DHCPOptions(t *testing.T) {
 
 			assert.ElementsMatch(t,
 				[]string{"172.16.0.0/22"},
-				ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.FilterByDestination,
+				*ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.FilterByDestination,
 			)
 
 			assert.ElementsMatch(t,
 				[]upcloud.NetworkRouteType{"service"},
-				ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.FilterByRouteType,
+				*ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.FilterByRouteType,
 			)
 
 			assert.ElementsMatch(t,
 				[]upcloud.NetworkRouteSource{"static-route"},
-				ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.ExcludeBySource,
+				*ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.ExcludeBySource,
 			)
 		})
 	})

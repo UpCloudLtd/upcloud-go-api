@@ -12,19 +12,19 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/8.25.0
+      - upcloud-go-api/8.27.0
     url: https://api.upcloud.com/1.3/network/
     method: POST
   response:
     body: '{"network":{"effective_routes":[],"ip_networks":{"ip_network":[{"address":"172.16.0.0/22","dhcp":"yes","dhcp_default_route":"yes","dhcp_dns":["172.16.0.10","172.16.1.10"],"dhcp_effective_routes":[],"dhcp_routes_configuration":{"effective_routes_auto_population":{"enabled":"no"}},"family":"IPv4","gateway":"172.16.0.1"}]},"labels":[],"name":"sdk-test
-      default-route yes","type":"private","uuid":"0319cad1-e085-4c6f-a446-33f262d9004f","zone":"fi-hel2"}}'
+      default-route yes","type":"private","uuid":"036500e8-2935-45f7-b9b2-506859c5e18c","zone":"fi-hel2"}}'
     headers:
       Content-Length:
       - "859"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 03 Sep 2025 08:56:31 GMT
+      - Mon, 15 Sep 2025 11:33:42 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -33,7 +33,7 @@ interactions:
     code: 201
     duration: ""
 - request:
-    body: '{"server":{"hostname":"uploud-go-sdk-integration-test-testcreatenetworkandserverdhcp.example.com","labels":{"label":[{"key":"managedBy","value":"upcloud-sdk-integration-test"},{"key":"testName","value":"TestCreateNetworkAndServerDHCP"}]},"metadata":"no","networking":{"interfaces":{"interface":[{"ip_addresses":{"ip_address":[{"family":"IPv4"}]},"type":"utility"},{"ip_addresses":{"ip_address":[{"family":"IPv4"}]},"type":"public"},{"ip_addresses":{"ip_address":[{"family":"IPv6"}]},"type":"public"},{"ip_addresses":{"ip_address":[{"family":"IPv4"}]},"type":"private","network":"0319cad1-e085-4c6f-a446-33f262d9004f"}]}},"password_delivery":"none","storage_devices":{"storage_device":[{"action":"clone","storage":"01000000-0000-4000-8000-000020060100","title":"disk1","size":10,"tier":"maxiops"}]},"title":"uploud-go-sdk-integration-test-TestCreateNetworkAndServerDHCP","remote_access_enabled":"no","zone":"fi-hel2"}}'
+    body: '{"server":{"hostname":"uploud-go-sdk-integration-test-testcreatenetworkandserverdhcp.example.com","labels":{"label":[{"key":"managedBy","value":"upcloud-sdk-integration-test"},{"key":"testName","value":"TestCreateNetworkAndServerDHCP"}]},"metadata":"no","networking":{"interfaces":{"interface":[{"ip_addresses":{"ip_address":[{"family":"IPv4"}]},"type":"utility"},{"ip_addresses":{"ip_address":[{"family":"IPv4"}]},"type":"public"},{"ip_addresses":{"ip_address":[{"family":"IPv6"}]},"type":"public"},{"ip_addresses":{"ip_address":[{"family":"IPv4"}]},"type":"private","network":"036500e8-2935-45f7-b9b2-506859c5e18c"}]}},"password_delivery":"none","storage_devices":{"storage_device":[{"action":"clone","storage":"01000000-0000-4000-8000-000020060100","title":"disk1","size":10,"tier":"maxiops"}]},"title":"uploud-go-sdk-integration-test-TestCreateNetworkAndServerDHCP","remote_access_enabled":"no","zone":"fi-hel2"}}'
     form: {}
     headers:
       Accept:
@@ -43,18 +43,18 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/8.25.0
+      - upcloud-go-api/8.27.0
     url: https://api.upcloud.com/1.3/server
     method: POST
   response:
-    body: '{"server":{"boot_order":"disk","core_number":"1","created":1756889792,"devices":{"device":[]},"firewall":"off","host":8556659331,"hostname":"uploud-go-sdk-integration-test-testcreatenetworkandserverdhcp.example.com","ip_addresses":{"ip_address":[{"access":"utility","address":"10.6.0.216","family":"IPv4"},{"access":"public","address":"2a04:3545:1000:720:6c28:ffff:fe12:618d","family":"IPv6"},{"access":"public","address":"85.9.221.151","family":"IPv4"}]},"labels":{"label":[{"key":"managedBy","value":"upcloud-sdk-integration-test"},{"key":"testName","value":"TestCreateNetworkAndServerDHCP"}]},"license":0,"memory_amount":"1024","metadata":"no","networking":{"interfaces":{"interface":[{"bootable":"no","index":1,"ip_addresses":{"ip_address":[{"address":"10.6.0.216","dhcp_provided":"yes","family":"IPv4","floating":"no","release_policy":"release"}]},"mac":"6e:28:ff:12:e6:63","network":"03652712-70ca-49d6-bd6d-f321d10b9b53","source_ip_filtering":"yes","type":"utility"},{"bootable":"no","index":2,"ip_addresses":{"ip_address":[{"address":"85.9.221.151","dhcp_provided":"yes","family":"IPv4","floating":"no","release_policy":"release"}]},"mac":"6e:28:ff:12:6d:f0","network":"03a46c59-c94d-4ffd-a95e-2373b5bf6f06","source_ip_filtering":"yes","type":"public"},{"bootable":"no","index":3,"ip_addresses":{"ip_address":[{"address":"2a04:3545:1000:720:6c28:ffff:fe12:618d","dhcp_provided":"yes","family":"IPv6","floating":"no","release_policy":"release"}]},"mac":"6e:28:ff:12:61:8d","network":"03000000-0000-4000-8046-000000000000","source_ip_filtering":"yes","type":"public"},{"bootable":"no","index":4,"ip_addresses":{"ip_address":[{"address":"172.16.0.2","dhcp_provided":"yes","family":"IPv4","floating":"no","release_policy":"release"}]},"mac":"6e:28:ff:12:dd:5c","network":"0319cad1-e085-4c6f-a446-33f262d9004f","source_ip_filtering":"yes","type":"private"}]}},"nic_model":"virtio","password":"h8d89s525j52xm78","plan":"custom","plan_ipv4_bytes":"0","plan_ipv6_bytes":"0","progress":"0","remote_access_enabled":"no","remote_access_password":"tn77A4Tk","remote_access_type":"vnc","server_group":null,"simple_backup":"no","state":"maintenance","storage_devices":{"storage_device":[{"address":"virtio:0","boot_disk":"0","labels":[{"key":"_os_architecture","value":"64"},{"key":"_os_brand_name","value":"Debian"},{"key":"_os_brand_version","value":"11"},{"key":"_os_main_category","value":"Linux"},{"key":"_os_type","value":"debian"},{"key":"_template_uuid","value":"01000000-0000-4000-8000-000020060100"}],"storage":"017f8e7d-806b-4802-905c-2d00d2bb3525","storage_encrypted":"no","storage_size":10,"storage_tier":"maxiops","storage_title":"disk1","type":"disk"}]},"tags":{"tag":[]},"timezone":"UTC","title":"uploud-go-sdk-integration-test-TestCreateNetworkAndServerDHCP","username":"root","uuid":"00339795-955e-42aa-b742-0c3fbf14b486","video_model":"cirrus","zone":"fi-hel2"}}'
+    body: '{"server":{"boot_order":"disk","core_number":"1","created":1757936023,"devices":{"device":[]},"firewall":"off","host":5738087043,"hostname":"uploud-go-sdk-integration-test-testcreatenetworkandserverdhcp.example.com","ip_addresses":{"ip_address":[{"access":"utility","address":"10.6.10.19","family":"IPv4"},{"access":"public","address":"2a04:3545:1000:720:6c28:ffff:fe12:35ef","family":"IPv6"},{"access":"public","address":"94.237.8.118","family":"IPv4"}]},"labels":{"label":[{"key":"managedBy","value":"upcloud-sdk-integration-test"},{"key":"testName","value":"TestCreateNetworkAndServerDHCP"}]},"license":0,"memory_amount":"1024","metadata":"no","networking":{"interfaces":{"interface":[{"bootable":"no","index":1,"ip_addresses":{"ip_address":[{"address":"10.6.10.19","dhcp_provided":"yes","family":"IPv4","floating":"no","release_policy":"release"}]},"mac":"6e:28:ff:12:e1:8f","network":"035a3774-c700-4a42-9e7d-38de3f817e3f","source_ip_filtering":"yes","type":"utility"},{"bootable":"no","index":2,"ip_addresses":{"ip_address":[{"address":"94.237.8.118","dhcp_provided":"yes","family":"IPv4","floating":"no","release_policy":"release"}]},"mac":"6e:28:ff:12:01:a8","network":"03000000-0000-4000-8044-000000000000","source_ip_filtering":"yes","type":"public"},{"bootable":"no","index":3,"ip_addresses":{"ip_address":[{"address":"2a04:3545:1000:720:6c28:ffff:fe12:35ef","dhcp_provided":"yes","family":"IPv6","floating":"no","release_policy":"release"}]},"mac":"6e:28:ff:12:35:ef","network":"03000000-0000-4000-8046-000000000000","source_ip_filtering":"yes","type":"public"},{"bootable":"no","index":4,"ip_addresses":{"ip_address":[{"address":"172.16.0.2","dhcp_provided":"yes","family":"IPv4","floating":"no","release_policy":"release"}]},"mac":"6e:28:ff:12:b1:5d","network":"036500e8-2935-45f7-b9b2-506859c5e18c","source_ip_filtering":"yes","type":"private"}]}},"nic_model":"virtio","password":"q8626gdt9jv6bz86","plan":"custom","plan_ipv4_bytes":"0","plan_ipv6_bytes":"0","progress":"0","remote_access_enabled":"no","remote_access_password":"7Q7tp4Vd","remote_access_type":"vnc","server_group":null,"simple_backup":"no","state":"maintenance","storage_devices":{"storage_device":[{"address":"virtio:0","boot_disk":"0","labels":[{"key":"_os_architecture","value":"64"},{"key":"_os_brand_name","value":"Debian"},{"key":"_os_brand_version","value":"11"},{"key":"_os_main_category","value":"Linux"},{"key":"_os_type","value":"debian"},{"key":"_template_uuid","value":"01000000-0000-4000-8000-000020060100"}],"storage":"01e77c5b-97ad-4321-9a62-2ea0bb71fad2","storage_encrypted":"no","storage_size":10,"storage_tier":"maxiops","storage_title":"disk1","type":"disk"}]},"tags":{"tag":[]},"timezone":"UTC","title":"uploud-go-sdk-integration-test-TestCreateNetworkAndServerDHCP","username":"root","uuid":"00785261-8484-48c5-a8bc-f58ce766fdd2","video_model":"cirrus","zone":"fi-hel2"}}'
     headers:
       Content-Length:
       - "6226"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 03 Sep 2025 08:56:32 GMT
+      - Mon, 15 Sep 2025 11:33:43 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -73,18 +73,18 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/8.25.0
-    url: https://api.upcloud.com/1.3/server/00339795-955e-42aa-b742-0c3fbf14b486
+      - upcloud-go-api/8.27.0
+    url: https://api.upcloud.com/1.3/server/00785261-8484-48c5-a8bc-f58ce766fdd2
     method: GET
   response:
-    body: '{"server":{"boot_order":"disk","core_number":"1","created":1756889792,"devices":{"device":[]},"firewall":"off","host":8556659331,"hostname":"uploud-go-sdk-integration-test-testcreatenetworkandserverdhcp.example.com","ip_addresses":{"ip_address":[{"access":"utility","address":"10.6.0.216","family":"IPv4"},{"access":"public","address":"2a04:3545:1000:720:6c28:ffff:fe12:618d","family":"IPv6"},{"access":"public","address":"85.9.221.151","family":"IPv4"}]},"labels":{"label":[{"key":"managedBy","value":"upcloud-sdk-integration-test"},{"key":"testName","value":"TestCreateNetworkAndServerDHCP"}]},"license":0,"memory_amount":"1024","metadata":"no","networking":{"interfaces":{"interface":[{"bootable":"no","index":1,"ip_addresses":{"ip_address":[{"address":"10.6.0.216","dhcp_provided":"yes","family":"IPv4","floating":"no","release_policy":"release"}]},"mac":"6e:28:ff:12:e6:63","network":"03652712-70ca-49d6-bd6d-f321d10b9b53","source_ip_filtering":"yes","type":"utility"},{"bootable":"no","index":2,"ip_addresses":{"ip_address":[{"address":"85.9.221.151","dhcp_provided":"yes","family":"IPv4","floating":"no","release_policy":"release"}]},"mac":"6e:28:ff:12:6d:f0","network":"03a46c59-c94d-4ffd-a95e-2373b5bf6f06","source_ip_filtering":"yes","type":"public"},{"bootable":"no","index":3,"ip_addresses":{"ip_address":[{"address":"2a04:3545:1000:720:6c28:ffff:fe12:618d","dhcp_provided":"yes","family":"IPv6","floating":"no","release_policy":"release"}]},"mac":"6e:28:ff:12:61:8d","network":"03000000-0000-4000-8046-000000000000","source_ip_filtering":"yes","type":"public"},{"bootable":"no","index":4,"ip_addresses":{"ip_address":[{"address":"172.16.0.2","dhcp_provided":"yes","family":"IPv4","floating":"no","release_policy":"release"}]},"mac":"6e:28:ff:12:dd:5c","network":"0319cad1-e085-4c6f-a446-33f262d9004f","source_ip_filtering":"yes","type":"private"}]}},"nic_model":"virtio","plan":"custom","plan_ipv4_bytes":"0","plan_ipv6_bytes":"0","remote_access_enabled":"no","remote_access_password":"tn77A4Tk","remote_access_type":"vnc","server_group":null,"simple_backup":"no","state":"started","storage_devices":{"storage_device":[{"address":"virtio:0","boot_disk":"0","labels":[{"key":"_os_architecture","value":"64"},{"key":"_os_brand_name","value":"Debian"},{"key":"_os_brand_version","value":"11"},{"key":"_os_main_category","value":"Linux"},{"key":"_os_type","value":"debian"},{"key":"_template_uuid","value":"01000000-0000-4000-8000-000020060100"}],"storage":"017f8e7d-806b-4802-905c-2d00d2bb3525","storage_encrypted":"no","storage_size":10,"storage_tier":"maxiops","storage_title":"disk1","type":"disk"}]},"tags":{"tag":[]},"timezone":"UTC","title":"uploud-go-sdk-integration-test-TestCreateNetworkAndServerDHCP","uuid":"00339795-955e-42aa-b742-0c3fbf14b486","video_model":"cirrus","zone":"fi-hel2"}}'
+    body: '{"server":{"boot_order":"disk","core_number":"1","created":1757936023,"devices":{"device":[]},"firewall":"off","host":5738087043,"hostname":"uploud-go-sdk-integration-test-testcreatenetworkandserverdhcp.example.com","ip_addresses":{"ip_address":[{"access":"utility","address":"10.6.10.19","family":"IPv4"},{"access":"public","address":"2a04:3545:1000:720:6c28:ffff:fe12:35ef","family":"IPv6"},{"access":"public","address":"94.237.8.118","family":"IPv4"}]},"labels":{"label":[{"key":"managedBy","value":"upcloud-sdk-integration-test"},{"key":"testName","value":"TestCreateNetworkAndServerDHCP"}]},"license":0,"memory_amount":"1024","metadata":"no","networking":{"interfaces":{"interface":[{"bootable":"no","index":1,"ip_addresses":{"ip_address":[{"address":"10.6.10.19","dhcp_provided":"yes","family":"IPv4","floating":"no","release_policy":"release"}]},"mac":"6e:28:ff:12:e1:8f","network":"035a3774-c700-4a42-9e7d-38de3f817e3f","source_ip_filtering":"yes","type":"utility"},{"bootable":"no","index":2,"ip_addresses":{"ip_address":[{"address":"94.237.8.118","dhcp_provided":"yes","family":"IPv4","floating":"no","release_policy":"release"}]},"mac":"6e:28:ff:12:01:a8","network":"03000000-0000-4000-8044-000000000000","source_ip_filtering":"yes","type":"public"},{"bootable":"no","index":3,"ip_addresses":{"ip_address":[{"address":"2a04:3545:1000:720:6c28:ffff:fe12:35ef","dhcp_provided":"yes","family":"IPv6","floating":"no","release_policy":"release"}]},"mac":"6e:28:ff:12:35:ef","network":"03000000-0000-4000-8046-000000000000","source_ip_filtering":"yes","type":"public"},{"bootable":"no","index":4,"ip_addresses":{"ip_address":[{"address":"172.16.0.2","dhcp_provided":"yes","family":"IPv4","floating":"no","release_policy":"release"}]},"mac":"6e:28:ff:12:b1:5d","network":"036500e8-2935-45f7-b9b2-506859c5e18c","source_ip_filtering":"yes","type":"private"}]}},"nic_model":"virtio","plan":"custom","plan_ipv4_bytes":"0","plan_ipv6_bytes":"0","remote_access_enabled":"no","remote_access_password":"7Q7tp4Vd","remote_access_type":"vnc","server_group":null,"simple_backup":"no","state":"started","storage_devices":{"storage_device":[{"address":"virtio:0","boot_disk":"0","labels":[{"key":"_os_architecture","value":"64"},{"key":"_os_brand_name","value":"Debian"},{"key":"_os_brand_version","value":"11"},{"key":"_os_main_category","value":"Linux"},{"key":"_os_type","value":"debian"},{"key":"_template_uuid","value":"01000000-0000-4000-8000-000020060100"}],"storage":"01e77c5b-97ad-4321-9a62-2ea0bb71fad2","storage_encrypted":"no","storage_size":10,"storage_tier":"maxiops","storage_title":"disk1","type":"disk"}]},"tags":{"tag":[]},"timezone":"UTC","title":"uploud-go-sdk-integration-test-TestCreateNetworkAndServerDHCP","uuid":"00785261-8484-48c5-a8bc-f58ce766fdd2","video_model":"cirrus","zone":"fi-hel2"}}'
     headers:
       Content-Length:
       - "6132"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 03 Sep 2025 08:58:25 GMT
+      - Mon, 15 Sep 2025 11:34:31 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -103,19 +103,19 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/8.25.0
-    url: https://api.upcloud.com/1.3/network/0319cad1-e085-4c6f-a446-33f262d9004f
+      - upcloud-go-api/8.27.0
+    url: https://api.upcloud.com/1.3/network/036500e8-2935-45f7-b9b2-506859c5e18c
     method: GET
   response:
     body: '{"network":{"effective_routes":[],"ip_networks":{"ip_network":[{"address":"172.16.0.0/22","dhcp":"yes","dhcp_default_route":"yes","dhcp_dns":["172.16.0.10","172.16.1.10"],"dhcp_effective_routes":[],"dhcp_routes_configuration":{"effective_routes_auto_population":{"enabled":"no"}},"family":"IPv4","gateway":"172.16.0.1"}]},"labels":[],"name":"sdk-test
-      default-route yes","servers":{"server":[{"title":"uploud-go-sdk-integration-test-TestCreateNetworkAndServerDHCP","uuid":"00339795-955e-42aa-b742-0c3fbf14b486"}]},"type":"private","uuid":"0319cad1-e085-4c6f-a446-33f262d9004f","zone":"fi-hel2"}}'
+      default-route yes","servers":{"server":[{"title":"uploud-go-sdk-integration-test-TestCreateNetworkAndServerDHCP","uuid":"00785261-8484-48c5-a8bc-f58ce766fdd2"}]},"type":"private","uuid":"036500e8-2935-45f7-b9b2-506859c5e18c","zone":"fi-hel2"}}'
     headers:
       Content-Length:
       - "1102"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 03 Sep 2025 08:58:25 GMT
+      - Mon, 15 Sep 2025 11:34:31 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -134,19 +134,19 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/8.25.0
-    url: https://api.upcloud.com/1.3/network/0319cad1-e085-4c6f-a446-33f262d9004f
+      - upcloud-go-api/8.27.0
+    url: https://api.upcloud.com/1.3/network/036500e8-2935-45f7-b9b2-506859c5e18c
     method: PUT
   response:
     body: '{"network":{"effective_routes":[],"ip_networks":{"ip_network":[{"address":"172.16.0.0/22","dhcp":"yes","dhcp_default_route":"yes","dhcp_dns":["172.16.0.10","172.16.1.10"],"dhcp_effective_routes":[],"dhcp_routes_configuration":{"effective_routes_auto_population":{"enabled":"yes","exclude_by_source":["static-route"],"filter_by_destination":["172.16.0.0/22"],"filter_by_route_type":["service"]}},"family":"IPv4","gateway":"172.16.0.1"}]},"labels":[],"name":"sdk-test
-      default-route yes","type":"private","uuid":"0319cad1-e085-4c6f-a446-33f262d9004f","zone":"fi-hel2"}}'
+      default-route yes","type":"private","uuid":"036500e8-2935-45f7-b9b2-506859c5e18c","zone":"fi-hel2"}}'
     headers:
       Content-Length:
       - "1187"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 03 Sep 2025 08:58:26 GMT
+      - Mon, 15 Sep 2025 11:34:32 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -165,19 +165,19 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - upcloud-go-api/8.25.0
-    url: https://api.upcloud.com/1.3/network/0319cad1-e085-4c6f-a446-33f262d9004f
+      - upcloud-go-api/8.27.0
+    url: https://api.upcloud.com/1.3/network/036500e8-2935-45f7-b9b2-506859c5e18c
     method: GET
   response:
     body: '{"network":{"effective_routes":[],"ip_networks":{"ip_network":[{"address":"172.16.0.0/22","dhcp":"yes","dhcp_default_route":"yes","dhcp_dns":["172.16.0.10","172.16.1.10"],"dhcp_effective_routes":[],"dhcp_routes_configuration":{"effective_routes_auto_population":{"enabled":"yes","exclude_by_source":["static-route"],"filter_by_destination":["172.16.0.0/22"],"filter_by_route_type":["service"]}},"family":"IPv4","gateway":"172.16.0.1"}]},"labels":[],"name":"sdk-test
-      default-route yes","servers":{"server":[{"title":"uploud-go-sdk-integration-test-TestCreateNetworkAndServerDHCP","uuid":"00339795-955e-42aa-b742-0c3fbf14b486"}]},"type":"private","uuid":"0319cad1-e085-4c6f-a446-33f262d9004f","zone":"fi-hel2"}}'
+      default-route yes","servers":{"server":[{"title":"uploud-go-sdk-integration-test-TestCreateNetworkAndServerDHCP","uuid":"00785261-8484-48c5-a8bc-f58ce766fdd2"}]},"type":"private","uuid":"036500e8-2935-45f7-b9b2-506859c5e18c","zone":"fi-hel2"}}'
     headers:
       Content-Length:
       - "1430"
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Wed, 03 Sep 2025 08:58:27 GMT
+      - Mon, 15 Sep 2025 11:34:33 GMT
       Server:
       - Apache
       Strict-Transport-Security:

@@ -87,9 +87,9 @@ func TestMarshalCreateNetworkRequest(t *testing.T) {
 				DHCPRoutesConfiguration: upcloud.DHCPRoutesConfiguration{
 					EffectiveRoutesAutoPopulation: upcloud.EffectiveRoutesAutoPopulation{
 						Enabled:             upcloud.True,
-						ExcludeBySource:     []upcloud.NetworkRouteSource{"static-route"},
-						FilterByDestination: []string{"172.16.0.0/22"},
-						FilterByRouteType:   []upcloud.NetworkRouteType{"service"},
+						ExcludeBySource:     &[]upcloud.NetworkRouteSource{"static-route"},
+						FilterByDestination: &[]string{"172.16.0.0/22"},
+						FilterByRouteType:   &[]upcloud.NetworkRouteType{"service"},
 					},
 				},
 			},
