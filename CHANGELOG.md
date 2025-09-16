@@ -5,6 +5,13 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.27.0]
+
+### Added
+
+- load-balancer: support for floating IP addresses
+- ip-address: support for release policy
+
 ## [8.26.0]
 
 ### Added
@@ -639,7 +646,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.26.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.27.0...HEAD
+[8.27.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.26.0...v8.27.0
 [8.26.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.25.0...v8.26.0
 [8.25.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.24.0...v8.25.0
 [8.24.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.23.0...v8.24.0
