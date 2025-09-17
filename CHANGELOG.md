@@ -8,7 +8,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 ### Added
 
 - database: add GetAllManagedDatabases to retrieve all managed databases regardless of paging
-- network: add support for DHCP Routes Configuration and Effective Routes Auto Population
+
+### Changed
+
+- network: ExcludeBySource, FilterByDestination and FilterByRouteType in EffectiveRoutesAutoPopulation struct changed to pointers
 
 ## [8.27.0]
 
