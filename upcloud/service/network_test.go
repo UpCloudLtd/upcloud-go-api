@@ -830,6 +830,25 @@ func TestCreateNetworkAndServer_DHCPOptions(t *testing.T) {
 				*ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.ExcludeBySource,
 			)
 		})
+		// Stop the server
+		t.Logf("Stopping server with UUID %s ...", srv.UUID)
+		err = stopServer(ctx, rec, svc, srv.UUID)
+		require.NoError(t, err)
+		t.Log("Server is now stopped")
+
+		// Delete the server and storage
+		t.Logf("Deleting the server with UUID %s, including storages...", srv.UUID)
+		err = deleteServerAndStorages(ctx, svc, srv.UUID)
+		require.NoError(t, err)
+		t.Log("Server is now deleted")
+
+		// Delete the network
+		t.Logf("Deleting the network with UUID %s...", network.UUID)
+		err = svc.DeleteNetwork(ctx, &request.DeleteNetworkRequest{
+			UUID: network.UUID,
+		})
+		require.NoError(t, err)
+		t.Log("Network is now deleted")
 
 		t.Run("DHCP_AutoPopulation_Unset_Filters", func(t *testing.T) {
 			modReq := &request.ModifyNetworkRequest{
