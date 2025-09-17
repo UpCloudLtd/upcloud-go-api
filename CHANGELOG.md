@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.28.0]
+
 ### Added
 
 - database: add GetAllManagedDatabases to retrieve all managed databases regardless of paging
@@ -654,7 +656,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.27.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.28.0...HEAD
+[8.28.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.27.0...v8.28.0
 [8.27.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.26.0...v8.27.0
 [8.26.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.25.0...v8.26.0
 [8.25.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.24.0...v8.25.0
