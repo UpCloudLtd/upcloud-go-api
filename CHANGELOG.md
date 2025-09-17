@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.28.0]
+
 ### Added
 
 - database: add GetAllManagedDatabases to retrieve all managed databases regardless of paging
