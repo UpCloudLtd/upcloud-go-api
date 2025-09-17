@@ -779,7 +779,7 @@ func TestCreateNetworkAndServer_DHCPOptions(t *testing.T) {
 		}
 		assert.True(t, found, "server should be attached to created network")
 
-		t.Run("DHCP_AutoPopulation_AllFileters", func(t *testing.T) {
+		t.Run("DHCP_AutoPopulation_AllFilters", func(t *testing.T) {
 			modReq := &request.ModifyNetworkRequest{
 				UUID: network.UUID,
 				IPNetworks: []upcloud.IPNetwork{
@@ -793,9 +793,9 @@ func TestCreateNetworkAndServer_DHCPOptions(t *testing.T) {
 						DHCPRoutesConfiguration: upcloud.DHCPRoutesConfiguration{
 							EffectiveRoutesAutoPopulation: upcloud.EffectiveRoutesAutoPopulation{
 								Enabled:             upcloud.True,
-								FilterByDestination: []string{"172.16.0.0/22"},
-								FilterByRouteType:   []upcloud.NetworkRouteType{"service"},
-								ExcludeBySource:     []upcloud.NetworkRouteSource{"static-route"},
+								FilterByDestination: &[]string{"172.16.0.0/22"},
+								FilterByRouteType:   &[]upcloud.NetworkRouteType{"service"},
+								ExcludeBySource:     &[]upcloud.NetworkRouteSource{"static-route"},
 							},
 						},
 					},
@@ -817,19 +817,87 @@ func TestCreateNetworkAndServer_DHCPOptions(t *testing.T) {
 
 			assert.ElementsMatch(t,
 				[]string{"172.16.0.0/22"},
-				ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.FilterByDestination,
+				*ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.FilterByDestination,
 			)
 
 			assert.ElementsMatch(t,
 				[]upcloud.NetworkRouteType{"service"},
-				ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.FilterByRouteType,
+				*ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.FilterByRouteType,
 			)
 
 			assert.ElementsMatch(t,
 				[]upcloud.NetworkRouteSource{"static-route"},
-				ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.ExcludeBySource,
+				*ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.ExcludeBySource,
 			)
 		})
+
+		t.Run("DHCP_AutoPopulation_Unset_Filters", func(t *testing.T) {
+			modReq := &request.ModifyNetworkRequest{
+				UUID: network.UUID,
+				IPNetworks: []upcloud.IPNetwork{
+					{
+						Address:          "172.16.0.0/22",
+						DHCP:             upcloud.True,
+						DHCPDefaultRoute: upcloud.True,
+						DHCPDns:          []string{"172.16.0.10", "172.16.1.10"},
+						Family:           upcloud.IPAddressFamilyIPv4,
+						Gateway:          "172.16.0.1",
+						DHCPRoutesConfiguration: upcloud.DHCPRoutesConfiguration{
+							EffectiveRoutesAutoPopulation: upcloud.EffectiveRoutesAutoPopulation{
+								Enabled:             upcloud.True,
+								FilterByDestination: &[]string{},
+								ExcludeBySource:     &[]upcloud.NetworkRouteSource{"static-route"},
+							},
+						},
+					},
+				},
+			}
+
+			_, err := svc.ModifyNetwork(ctx, modReq)
+			require.NoError(t, err, "ModifyNetwork with all filters should succeed")
+
+			// Re-read and assert the config was applied
+			netDetails, err := svc.GetNetworkDetails(ctx, &request.GetNetworkDetailsRequest{UUID: network.UUID})
+			require.NoError(t, err)
+			require.NotEmpty(t, netDetails.IPNetworks)
+			ipNet := netDetails.IPNetworks[0]
+
+			require.Equal(t, upcloud.True,
+				ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.Enabled,
+				"auto-population should be enabled")
+
+			assert.Nil(t, ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.FilterByDestination)
+
+			assert.ElementsMatch(t,
+				[]upcloud.NetworkRouteType{"service"},
+				*ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.FilterByRouteType,
+			)
+
+			assert.ElementsMatch(t,
+				[]upcloud.NetworkRouteSource{"static-route"},
+				*ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.ExcludeBySource,
+			)
+		})
+
+		// Stop the server
+		t.Logf("Stopping server with UUID %s ...", srv.UUID)
+		err = stopServer(ctx, rec, svc, srv.UUID)
+		require.NoError(t, err)
+		t.Log("Server is now stopped")
+
+		// Delete the server and storage
+		t.Logf("Deleting the server with UUID %s, including storages...", srv.UUID)
+		err = deleteServerAndStorages(ctx, svc, srv.UUID)
+		require.NoError(t, err)
+		t.Log("Server is now deleted")
+
+		// Delete the network
+		t.Logf("Deleting the network with UUID %s...", network.UUID)
+		err = svc.DeleteNetwork(ctx, &request.DeleteNetworkRequest{
+			UUID: network.UUID,
+		})
+		require.NoError(t, err)
+		t.Log("Network is now deleted")
 	})
 }
 

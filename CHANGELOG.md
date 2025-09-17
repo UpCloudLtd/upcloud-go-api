@@ -9,6 +9,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 - database: add GetAllManagedDatabases to retrieve all managed databases regardless of paging
 
+### Changed
+
+- network: ExcludeBySource, FilterByDestination and FilterByRouteType in EffectiveRoutesAutoPopulation struct changed to pointers
+
 ## [8.27.0]
 
 ### Added

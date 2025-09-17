@@ -104,10 +104,10 @@ type DHCPRoutesConfiguration struct {
 }
 
 type EffectiveRoutesAutoPopulation struct {
-	Enabled             Boolean              `json:"enabled"`
-	ExcludeBySource     []NetworkRouteSource `json:"exclude_by_source,omitempty"`
-	FilterByDestination []string             `json:"filter_by_destination,omitempty"`
-	FilterByRouteType   []NetworkRouteType   `json:"filter_by_route_type,omitempty"`
+	Enabled             Boolean               `json:"enabled"`
+	ExcludeBySource     *[]NetworkRouteSource `json:"exclude_by_source,omitempty"`
+	FilterByDestination *[]string             `json:"filter_by_destination,omitempty"`
+	FilterByRouteType   *[]NetworkRouteType   `json:"filter_by_route_type,omitempty"`
 }
 
 // IPNetwork represents an IP network in a response.
