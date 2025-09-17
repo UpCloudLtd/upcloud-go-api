@@ -830,6 +830,54 @@ func TestCreateNetworkAndServer_DHCPOptions(t *testing.T) {
 				*ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.ExcludeBySource,
 			)
 		})
+
+		t.Run("DHCP_AutoPopulation_Unset_Filters", func(t *testing.T) {
+			modReq := &request.ModifyNetworkRequest{
+				UUID: network.UUID,
+				IPNetworks: []upcloud.IPNetwork{
+					{
+						Address:          "172.16.0.0/22",
+						DHCP:             upcloud.True,
+						DHCPDefaultRoute: upcloud.True,
+						DHCPDns:          []string{"172.16.0.10", "172.16.1.10"},
+						Family:           upcloud.IPAddressFamilyIPv4,
+						Gateway:          "172.16.0.1",
+						DHCPRoutesConfiguration: upcloud.DHCPRoutesConfiguration{
+							EffectiveRoutesAutoPopulation: upcloud.EffectiveRoutesAutoPopulation{
+								Enabled:             upcloud.True,
+								FilterByDestination: &[]string{},
+								ExcludeBySource:     &[]upcloud.NetworkRouteSource{"static-route"},
+							},
+						},
+					},
+				},
+			}
+
+			_, err := svc.ModifyNetwork(ctx, modReq)
+			require.NoError(t, err, "ModifyNetwork with all filters should succeed")
+
+			// Re-read and assert the config was applied
+			netDetails, err := svc.GetNetworkDetails(ctx, &request.GetNetworkDetailsRequest{UUID: network.UUID})
+			require.NoError(t, err)
+			require.NotEmpty(t, netDetails.IPNetworks)
+			ipNet := netDetails.IPNetworks[0]
+
+			require.Equal(t, upcloud.True,
+				ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.Enabled,
+				"auto-population should be enabled")
+
+			assert.Nil(t, ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.FilterByDestination)
+
+			assert.ElementsMatch(t,
+				[]upcloud.NetworkRouteType{"service"},
+				*ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.FilterByRouteType,
+			)
+
+			assert.ElementsMatch(t,
+				[]upcloud.NetworkRouteSource{"static-route"},
+				*ipNet.DHCPRoutesConfiguration.EffectiveRoutesAutoPopulation.ExcludeBySource,
+			)
+		})
 	})
 }
 
