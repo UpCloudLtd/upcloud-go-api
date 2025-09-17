@@ -7,7 +7,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ### Changed
 
-- ExcludeBySource, FilterByDestination and FilterByRouteType in EffectiveRoutesAutoPopulation struct change to pointers.
+- network: ExcludeBySource, FilterByDestination and FilterByRouteType in EffectiveRoutesAutoPopulation struct changed to pointers
 
 ## [8.27.0]
 
