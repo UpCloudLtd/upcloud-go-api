@@ -36,6 +36,7 @@ type ManagedDatabaseServiceManager interface {
 	WaitForManagedDatabaseState(ctx context.Context, r *request.WaitForManagedDatabaseStateRequest) (*upcloud.ManagedDatabase, error)
 	GetManagedDatabaseServiceType(ctx context.Context, r *request.GetManagedDatabaseServiceTypeRequest) (*upcloud.ManagedDatabaseType, error)
 	GetManagedDatabaseServiceTypes(ctx context.Context, r *request.GetManagedDatabaseServiceTypesRequest) (map[string]upcloud.ManagedDatabaseType, error)
+	GetAllManagedDatabases(ctx context.Context) ([]upcloud.ManagedDatabase, error)
 }
 
 type ManagedDatabaseUserManager interface {
@@ -257,6 +258,37 @@ func (s *Service) GetManagedDatabaseServiceType(ctx context.Context, r *request.
 func (s *Service) GetManagedDatabaseServiceTypes(ctx context.Context, r *request.GetManagedDatabaseServiceTypesRequest) (map[string]upcloud.ManagedDatabaseType, error) {
 	serviceTypes := make(map[string]upcloud.ManagedDatabaseType)
 	return serviceTypes, s.get(ctx, r.RequestURL(), &serviceTypes)
+}
+
+// GetAllManagedDatabases returns all managed databases, across pages.
+// It errors if the total exceeds maxAllowedPageResults.
+func (s *Service) GetAllManagedDatabases(ctx context.Context) ([]upcloud.ManagedDatabase, error) {
+	var all []upcloud.ManagedDatabase
+	page := request.DefaultPage
+	maxAllowedPageResults := 10 * request.PageResultMaxSize
+
+	for {
+		items, err := s.GetManagedDatabases(ctx, &request.GetManagedDatabasesRequest{Page: page})
+		if err != nil {
+			return nil, err
+		}
+		if len(items) == 0 {
+			break
+		}
+
+		all = append(all, items...)
+
+		if len(all) > maxAllowedPageResults {
+			return all, fmt.Errorf("too many managed databases: exceeded maximum allowed results: (%d)", maxAllowedPageResults)
+		}
+
+		if len(items) < page.Size {
+			break
+		}
+		page = page.Next()
+	}
+
+	return all, nil
 }
 
 // ModifyManagedDatabaseUserAccessControl modifies access control for an existing user
