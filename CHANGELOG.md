@@ -7,7 +7,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ### Added
 
-- database: add GetAllManagedDatabases function
+- database: add GetAllManagedDatabases to retrieve all managed databases regardless of paging
 
 ## [8.27.0]
 
