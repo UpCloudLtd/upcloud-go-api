@@ -58,6 +58,7 @@ type service interface {
 	Gateway
 	Partner
 	AuditLog
+	FileStorage
 }
 
 var _ service = (*Service)(nil)
