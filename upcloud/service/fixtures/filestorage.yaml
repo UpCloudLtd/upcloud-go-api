@@ -1,0 +1,746 @@
+---
+version: 1
+interactions:
+- request:
+    body: '{"name":"go-sdk-test-filesto","zone":"fi-hel2","configured_status":"started","size_gib":250,"labels":[{"key":"managedBy","value":"upcloud-go-sdk-unit-test"}]}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.28.0
+    url: https://api.upcloud.com/1.3/file-storage
+    method: POST
+  response:
+    body: '{"configured_status":"started","created_at":"2025-09-29T06:41:46.313627Z","labels":[{"key":"managedBy","value":"upcloud-go-sdk-unit-test"}],"name":"go-sdk-test-filesto","networks":[],"operational_state":"pending","shares":[],"size_gib":250,"state_messages":[],"updated_at":"2025-09-29T06:41:46.313627Z","uuid":"178c9d9b-7b5b-4817-b838-8ffcaa41829d","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "366"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Sep 2025 06:41:46 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.28.0
+    url: https://api.upcloud.com/1.3/file-storage
+    method: GET
+  response:
+    body: '[{"configured_status":"started","created_at":"2025-09-29T06:41:46.313627Z","labels":[{"key":"managedBy","value":"upcloud-go-sdk-unit-test"}],"name":"go-sdk-test-filesto","networks":[],"operational_state":"running","shares":[],"size_gib":250,"state_messages":[],"updated_at":"2025-09-29T06:42:16.439301Z","uuid":"178c9d9b-7b5b-4817-b838-8ffcaa41829d","zone":"fi-hel2"}]'
+    headers:
+      Content-Length:
+      - "368"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Sep 2025 06:42:16 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.28.0
+    url: https://api.upcloud.com/1.3/file-storage/178c9d9b-7b5b-4817-b838-8ffcaa41829d
+    method: GET
+  response:
+    body: '{"configured_status":"started","created_at":"2025-09-29T06:41:46.313627Z","labels":[{"key":"managedBy","value":"upcloud-go-sdk-unit-test"}],"name":"go-sdk-test-filesto","networks":[],"operational_state":"running","shares":[],"size_gib":250,"state_messages":[],"updated_at":"2025-09-29T06:42:16.439301Z","uuid":"178c9d9b-7b5b-4817-b838-8ffcaa41829d","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "366"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Sep 2025 06:42:16 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"name":"go-sdk-test-filesto-replaced","configured_status":"started","size_gib":250,"labels":[{"key":"managedBy","value":"replaced"}]}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.28.0
+    url: https://api.upcloud.com/1.3/file-storage/178c9d9b-7b5b-4817-b838-8ffcaa41829d
+    method: PUT
+  response:
+    body: '{"configured_status":"started","created_at":"2025-09-29T06:41:46.313627Z","labels":[{"key":"managedBy","value":"replaced"}],"name":"go-sdk-test-filesto-replaced","networks":[],"operational_state":"pending","shares":[],"size_gib":250,"state_messages":[],"updated_at":"2025-09-29T06:42:17.023997Z","uuid":"178c9d9b-7b5b-4817-b838-8ffcaa41829d","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "359"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Sep 2025 06:42:17 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"name":"go-sdk-test-filesto-modified","labels":[{"key":"managedBy","value":"modified"}]}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.28.0
+    url: https://api.upcloud.com/1.3/file-storage/178c9d9b-7b5b-4817-b838-8ffcaa41829d
+    method: PATCH
+  response:
+    body: '{"configured_status":"started","created_at":"2025-09-29T06:41:46.313627Z","labels":[{"key":"managedBy","value":"modified"}],"name":"go-sdk-test-filesto-modified","networks":[],"operational_state":"pending","shares":[],"size_gib":250,"state_messages":[],"updated_at":"2025-09-29T06:42:27.372355Z","uuid":"178c9d9b-7b5b-4817-b838-8ffcaa41829d","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "359"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Sep 2025 06:42:27 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"network":{"name":"go-sdk-test-filesto","zone":"fi-hel2","ip_networks":{"ip_network":[{"address":"172.28.1.0/24","dhcp":"no","dhcp_default_route":"no","family":"IPv4","gateway":"172.28.1.1","dhcp_routes_configuration":{"effective_routes_auto_population":{"enabled":"no"}}}]}}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.28.0
+    url: https://api.upcloud.com/1.3/network/
+    method: POST
+  response:
+    body: '{"network":{"effective_routes":[],"ip_networks":{"ip_network":[{"address":"172.28.1.0/24","dhcp":"no","dhcp_default_route":"no","dhcp_effective_routes":[],"dhcp_routes_configuration":{"effective_routes_auto_population":{"enabled":"no"}},"family":"IPv4","gateway":"172.28.1.1"}]},"labels":[],"name":"go-sdk-test-filesto","type":"private","uuid":"0309843f-8da3-4037-9277-7ac77ac50eac","zone":"fi-hel2"}}'
+    headers:
+      Content-Length:
+      - "737"
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Mon, 29 Sep 2025 06:42:47 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: '{"uuid":"0309843f-8da3-4037-9277-7ac77ac50eac","name":"go-sdk-test-filesto","family":"IPv4"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.28.0
+    url: https://api.upcloud.com/1.3/file-storage/178c9d9b-7b5b-4817-b838-8ffcaa41829d/networks
+    method: POST
+  response:
+    body: '{"family":"IPv4","ip_address":"172.28.1.2","name":"go-sdk-test-filesto","uuid":"0309843f-8da3-4037-9277-7ac77ac50eac"}'
+    headers:
+      Content-Length:
+      - "118"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Sep 2025 06:42:48 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.28.0
+    url: https://api.upcloud.com/1.3/file-storage/178c9d9b-7b5b-4817-b838-8ffcaa41829d/networks
+    method: GET
+  response:
+    body: '[{"family":"IPv4","ip_address":"172.28.1.2","name":"go-sdk-test-filesto","uuid":"0309843f-8da3-4037-9277-7ac77ac50eac"}]'
+    headers:
+      Content-Length:
+      - "120"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Sep 2025 06:42:48 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.28.0
+    url: https://api.upcloud.com/1.3/file-storage/178c9d9b-7b5b-4817-b838-8ffcaa41829d/networks/go-sdk-test-filesto
+    method: GET
+  response:
+    body: '{"family":"IPv4","ip_address":"172.28.1.2","name":"go-sdk-test-filesto","uuid":"0309843f-8da3-4037-9277-7ac77ac50eac"}'
+    headers:
+      Content-Length:
+      - "118"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Sep 2025 06:42:49 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.28.0
+    url: https://api.upcloud.com/1.3/file-storage/178c9d9b-7b5b-4817-b838-8ffcaa41829d/networks/go-sdk-test-filesto
+    method: PATCH
+  response:
+    body: '{"family":"IPv4","ip_address":"172.28.1.2","name":"go-sdk-test-filesto","uuid":"0309843f-8da3-4037-9277-7ac77ac50eac"}'
+    headers:
+      Content-Length:
+      - "118"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Sep 2025 06:42:49 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.28.0
+    url: https://api.upcloud.com/1.3/file-storage/178c9d9b-7b5b-4817-b838-8ffcaa41829d/networks/go-sdk-test-filesto
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Mon, 29 Sep 2025 06:42:49 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: '{"name":"test-share","path":"/data/test","acl":[{"target":"user","permission":"rw"}]}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.28.0
+    url: https://api.upcloud.com/1.3/file-storage/178c9d9b-7b5b-4817-b838-8ffcaa41829d/shares
+    method: POST
+  response:
+    body: '{"acl":[{"permission":"rw","target":"user"}],"name":"test-share","path":"/data/test"}'
+    headers:
+      Content-Length:
+      - "85"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Sep 2025 06:42:49 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.28.0
+    url: https://api.upcloud.com/1.3/file-storage/178c9d9b-7b5b-4817-b838-8ffcaa41829d/shares
+    method: GET
+  response:
+    body: '[{"acl":[{"permission":"rw","target":"user"}],"name":"test-share","path":"/data/test"}]'
+    headers:
+      Content-Length:
+      - "87"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Sep 2025 06:42:49 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.28.0
+    url: https://api.upcloud.com/1.3/file-storage/178c9d9b-7b5b-4817-b838-8ffcaa41829d/shares/test-share
+    method: GET
+  response:
+    body: '{"acl":[{"permission":"rw","target":"user"}],"name":"test-share","path":"/data/test"}'
+    headers:
+      Content-Length:
+      - "85"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Sep 2025 06:42:50 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"path":"/data/modified","acl":[{"target":"user","permission":"ro"}]}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.28.0
+    url: https://api.upcloud.com/1.3/file-storage/178c9d9b-7b5b-4817-b838-8ffcaa41829d/shares/test-share
+    method: PATCH
+  response:
+    body: '{"acl":[{"permission":"ro","target":"user"}],"name":"test-share","path":"/data/modified"}'
+    headers:
+      Content-Length:
+      - "89"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Sep 2025 06:42:50 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.28.0
+    url: https://api.upcloud.com/1.3/file-storage/178c9d9b-7b5b-4817-b838-8ffcaa41829d/shares/test-share
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Mon, 29 Sep 2025 06:42:50 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: '{"key":"test-label","value":"test"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.28.0
+    url: https://api.upcloud.com/1.3/file-storage/178c9d9b-7b5b-4817-b838-8ffcaa41829d/labels
+    method: POST
+  response:
+    body: '{"key":"test-label","value":"test"}'
+    headers:
+      Content-Length:
+      - "35"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Sep 2025 06:42:50 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.28.0
+    url: https://api.upcloud.com/1.3/file-storage/178c9d9b-7b5b-4817-b838-8ffcaa41829d/labels
+    method: GET
+  response:
+    body: '[{"key":"managedBy","value":"modified"},{"key":"test-label","value":"test"}]'
+    headers:
+      Content-Length:
+      - "76"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Sep 2025 06:42:50 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.28.0
+    url: https://api.upcloud.com/1.3/file-storage/178c9d9b-7b5b-4817-b838-8ffcaa41829d/labels/test-label
+    method: GET
+  response:
+    body: '{"key":"test-label","value":"test"}'
+    headers:
+      Content-Length:
+      - "35"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Sep 2025 06:42:50 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"key":"test-label","value":"modified"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.28.0
+    url: https://api.upcloud.com/1.3/file-storage/178c9d9b-7b5b-4817-b838-8ffcaa41829d/labels/test-label
+    method: PATCH
+  response:
+    body: '{"key":"test-label","value":"modified"}'
+    headers:
+      Content-Length:
+      - "39"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Sep 2025 06:42:51 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.28.0
+    url: https://api.upcloud.com/1.3/file-storage/178c9d9b-7b5b-4817-b838-8ffcaa41829d/labels/test-label
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Mon, 29 Sep 2025 06:42:51 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.28.0
+    url: https://api.upcloud.com/1.3/file-storage/178c9d9b-7b5b-4817-b838-8ffcaa41829d
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Mon, 29 Sep 2025 06:42:51 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.28.0
+    url: https://api.upcloud.com/1.3/file-storage/178c9d9b-7b5b-4817-b838-8ffcaa41829d
+    method: GET
+  response:
+    body: '{"configured_status":"started","created_at":"2025-09-29T06:41:46.313627Z","labels":[{"key":"managedBy","value":"modified"}],"name":"go-sdk-test-filesto-modified","networks":[],"operational_state":"pending","shares":[],"size_gib":250,"state_messages":[],"updated_at":"2025-09-29T06:42:51.424374Z","uuid":"178c9d9b-7b5b-4817-b838-8ffcaa41829d","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "359"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Sep 2025 06:42:56 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.28.0
+    url: https://api.upcloud.com/1.3/file-storage/178c9d9b-7b5b-4817-b838-8ffcaa41829d
+    method: GET
+  response:
+    body: '{"configured_status":"started","created_at":"2025-09-29T06:41:46.313627Z","labels":[{"key":"managedBy","value":"modified"}],"name":"go-sdk-test-filesto-modified","networks":[],"operational_state":"delete-instance","shares":[],"size_gib":250,"state_messages":[],"updated_at":"2025-09-29T06:43:01.436152Z","uuid":"178c9d9b-7b5b-4817-b838-8ffcaa41829d","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "367"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Sep 2025 06:43:01 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.28.0
+    url: https://api.upcloud.com/1.3/file-storage/178c9d9b-7b5b-4817-b838-8ffcaa41829d
+    method: GET
+  response:
+    body: '{"configured_status":"started","created_at":"2025-09-29T06:41:46.313627Z","labels":[{"key":"managedBy","value":"modified"}],"name":"go-sdk-test-filesto-modified","networks":[],"operational_state":"delete-instance","shares":[],"size_gib":250,"state_messages":[],"updated_at":"2025-09-29T06:43:01.436152Z","uuid":"178c9d9b-7b5b-4817-b838-8ffcaa41829d","zone":"fi-hel2"}'
+    headers:
+      Content-Length:
+      - "367"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Sep 2025 06:43:06 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.28.0
+    url: https://api.upcloud.com/1.3/file-storage/178c9d9b-7b5b-4817-b838-8ffcaa41829d
+    method: GET
+  response:
+    body: '{"correlation_id":"01K6A3C0J1MATD1335Q2ES85S6","status":404,"title":"The
+      resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}'
+    headers:
+      Content-Language:
+      - en
+      Content-Length:
+      - "190"
+      Content-Type:
+      - application/problem+json
+      Date:
+      - Mon, 29 Sep 2025 06:43:11 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 404 Not Found
+    code: 404
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.28.0
+    url: https://api.upcloud.com/1.3/network/0309843f-8da3-4037-9277-7ac77ac50eac
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Mon, 29 Sep 2025 06:43:11 GMT
+      Server:
+      - Apache
+      Strict-Transport-Security:
+      - max-age=63072000
+    status: 204 No Content
+    code: 204
+    duration: ""
