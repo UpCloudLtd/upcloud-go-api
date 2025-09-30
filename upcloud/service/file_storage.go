@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"net/http"
 
@@ -36,85 +35,62 @@ type FileStorage interface {
 
 // GetFileStorages retrieves a list of file storages. (EXPERIMENTAL)
 func (s *Service) GetFileStorages(ctx context.Context, r *request.GetFileStoragesRequest) ([]upcloud.FileStorage, error) {
-	var result []upcloud.FileStorage
-	response, err := s.client.Get(ctx, r.RequestURL())
-	if err != nil {
-		return nil, err
+	fileStorages := make([]upcloud.FileStorage, 0)
+	if r.Page != nil {
+		return fileStorages, s.get(ctx, r.RequestURL(), &fileStorages)
 	}
-	if err := json.Unmarshal(response, &result); err != nil {
-		return nil, err
+
+	// copy request value so that we are not altering original request
+	req := *r
+
+	// use default page size and get all available records
+	req.Page = request.DefaultPage
+
+	// loop until max result is reached or until response doesn't fill our page anymore
+	for len(fileStorages) <= request.PageResultMaxSize {
+		fss := make([]upcloud.FileStorage, 0)
+		if err := s.get(ctx, req.RequestURL(), &fss); err != nil || len(fss) < 1 {
+			return fileStorages, err
+		}
+
+		fileStorages = append(fileStorages, fss...)
+		if len(fss) < req.Page.Size {
+			return fileStorages, nil
+		}
+
+		req.Page = req.Page.Next()
 	}
-	return result, nil
+
+	return fileStorages, nil
 }
 
 // CreateFileStorage creates a new file storage. (EXPERIMENTAL)
 func (s *Service) CreateFileStorage(ctx context.Context, r *request.CreateFileStorageRequest) (*upcloud.FileStorage, error) {
-	var result upcloud.FileStorage
-	payload, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-	response, err := s.client.Post(ctx, r.RequestURL(), payload)
-	if err != nil {
-		return nil, err
-	}
-	if err := json.Unmarshal(response, &result); err != nil {
-		return nil, err
-	}
-	return &result, nil
+	fileStorage := upcloud.FileStorage{}
+	return &fileStorage, s.create(ctx, r, &fileStorage)
 }
 
 // GetFileStorage retrieves details of a file storage. (EXPERIMENTAL)
 func (s *Service) GetFileStorage(ctx context.Context, r *request.GetFileStorageRequest) (*upcloud.FileStorage, error) {
-	var result upcloud.FileStorage
-	response, err := s.client.Get(ctx, r.RequestURL())
-	if err != nil {
-		return nil, err
-	}
-	if err := json.Unmarshal(response, &result); err != nil {
-		return nil, err
-	}
-	return &result, nil
+	fileStorage := upcloud.FileStorage{}
+	return &fileStorage, s.get(ctx, r.RequestURL(), &fileStorage)
 }
 
 // ReplaceFileStorage replaces an existing file storage. (EXPERIMENTAL)
 func (s *Service) ReplaceFileStorage(ctx context.Context, r *request.ReplaceFileStorageRequest) (*upcloud.FileStorage, error) {
-	var result upcloud.FileStorage
-	payload, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-	response, err := s.client.Put(ctx, r.RequestURL(), payload)
-	if err != nil {
-		return nil, err
-	}
-	if err := json.Unmarshal(response, &result); err != nil {
-		return nil, err
-	}
-	return &result, nil
+	fileStorage := upcloud.FileStorage{}
+	return &fileStorage, s.replace(ctx, r, &fileStorage)
 }
 
 // ModifyFileStorage modifies properties of an existing file storage. (EXPERIMENTAL)
 func (s *Service) ModifyFileStorage(ctx context.Context, r *request.ModifyFileStorageRequest) (*upcloud.FileStorage, error) {
-	var result upcloud.FileStorage
-	payload, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-	response, err := s.client.Patch(ctx, r.RequestURL(), payload)
-	if err != nil {
-		return nil, err
-	}
-	if err := json.Unmarshal(response, &result); err != nil {
-		return nil, err
-	}
-	return &result, nil
+	fileStorage := upcloud.FileStorage{}
+	return &fileStorage, s.modify(ctx, r, &fileStorage)
 }
 
 // DeleteFileStorage deletes a file storage. (EXPERIMENTAL)
 func (s *Service) DeleteFileStorage(ctx context.Context, r *request.DeleteFileStorageRequest) error {
-	_, err := s.client.Delete(ctx, r.RequestURL())
-	return err
+	return s.delete(ctx, r)
 }
 
 // WaitForFileStorageDeletion blocks execution until the specified Managed Object Storage service has been deleted.
@@ -158,197 +134,86 @@ func (s *Service) WaitForFileStorageOperationalState(ctx context.Context, r *req
 
 // GetFileStorageNetworks retrieves a list of file storage networks. (EXPERIMENTAL)
 func (s *Service) GetFileStorageNetworks(ctx context.Context, r *request.GetFileStorageNetworksRequest) ([]upcloud.FileStorageNetwork, error) {
-	var result []upcloud.FileStorageNetwork
-	response, err := s.client.Get(ctx, r.RequestURL())
-	if err != nil {
-		return nil, err
-	}
-	if err := json.Unmarshal(response, &result); err != nil {
-		return nil, err
-	}
-	return result, nil
+	fileStorageNetworks := make([]upcloud.FileStorageNetwork, 0)
+	return fileStorageNetworks, s.get(ctx, r.RequestURL(), &fileStorageNetworks)
 }
 
 // CreateFileStorageNetwork creates a new file storage network. (EXPERIMENTAL)
 func (s *Service) CreateFileStorageNetwork(ctx context.Context, r *request.CreateFileStorageNetworkRequest) (*upcloud.FileStorageNetwork, error) {
-	var result upcloud.FileStorageNetwork
-	payload, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-	response, err := s.client.Post(ctx, r.RequestURL(), payload)
-	if err != nil {
-		return nil, err
-	}
-	if err := json.Unmarshal(response, &result); err != nil {
-		return nil, err
-	}
-	return &result, nil
+	fileStorageNetwork := upcloud.FileStorageNetwork{}
+	return &fileStorageNetwork, s.create(ctx, r, &fileStorageNetwork)
 }
 
 // GetFileStorageNetwork retrieves details of a file storage network. (EXPERIMENTAL)
 func (s *Service) GetFileStorageNetwork(ctx context.Context, r *request.GetFileStorageNetworkRequest) (*upcloud.FileStorageNetwork, error) {
-	var result upcloud.FileStorageNetwork
-	response, err := s.client.Get(ctx, r.RequestURL())
-	if err != nil {
-		return nil, err
-	}
-	if err := json.Unmarshal(response, &result); err != nil {
-		return nil, err
-	}
-	return &result, nil
+	fileStorageNetwork := upcloud.FileStorageNetwork{}
+	return &fileStorageNetwork, s.get(ctx, r.RequestURL(), &fileStorageNetwork)
 }
 
 // ModifyFileStorageNetwork modifies properties of an existing file storage network. (EXPERIMENTAL)
 func (s *Service) ModifyFileStorageNetwork(ctx context.Context, r *request.ModifyFileStorageNetworkRequest) (*upcloud.FileStorageNetwork, error) {
-	var result upcloud.FileStorageNetwork
-	payload, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-	response, err := s.client.Patch(ctx, r.RequestURL(), payload)
-	if err != nil {
-		return nil, err
-	}
-	if err := json.Unmarshal(response, &result); err != nil {
-		return nil, err
-	}
-	return &result, nil
+	fileStorageNetwork := upcloud.FileStorageNetwork{}
+	return &fileStorageNetwork, s.modify(ctx, r, &fileStorageNetwork)
 }
 
 // DeleteFileStorageNetwork deletes a file storage network. (EXPERIMENTAL)
 func (s *Service) DeleteFileStorageNetwork(ctx context.Context, r *request.DeleteFileStorageNetworkRequest) error {
-	_, err := s.client.Delete(ctx, r.RequestURL())
-	return err
+	return s.delete(ctx, r)
 }
 
 // GetFileStorageShares retrieves a list of file storage shares. (EXPERIMENTAL)
 func (s *Service) GetFileStorageShares(ctx context.Context, r *request.GetFileStorageSharesRequest) ([]upcloud.FileStorageShare, error) {
-	var result []upcloud.FileStorageShare
-	response, err := s.client.Get(ctx, r.RequestURL())
-	if err != nil {
-		return nil, err
-	}
-	if err := json.Unmarshal(response, &result); err != nil {
-		return nil, err
-	}
-	return result, nil
+	fileStorageShares := make([]upcloud.FileStorageShare, 0)
+	return fileStorageShares, s.get(ctx, r.RequestURL(), &fileStorageShares)
 }
 
 // CreateFileStorageShare creates a new file storage share. (EXPERIMENTAL)
 func (s *Service) CreateFileStorageShare(ctx context.Context, r *request.CreateFileStorageShareRequest) (*upcloud.FileStorageShare, error) {
-	var result upcloud.FileStorageShare
-	payload, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-	response, err := s.client.Post(ctx, r.RequestURL(), payload)
-	if err != nil {
-		return nil, err
-	}
-	if err := json.Unmarshal(response, &result); err != nil {
-		return nil, err
-	}
-	return &result, nil
+	fileStorageShare := upcloud.FileStorageShare{}
+	return &fileStorageShare, s.create(ctx, r, &fileStorageShare)
 }
 
 // GetFileStorageShare retrieves details of a file storage share. (EXPERIMENTAL)
 func (s *Service) GetFileStorageShare(ctx context.Context, r *request.GetFileStorageShareRequest) (*upcloud.FileStorageShare, error) {
-	var result upcloud.FileStorageShare
-	response, err := s.client.Get(ctx, r.RequestURL())
-	if err != nil {
-		return nil, err
-	}
-	if err := json.Unmarshal(response, &result); err != nil {
-		return nil, err
-	}
-	return &result, nil
+	fileStorageShare := upcloud.FileStorageShare{}
+	return &fileStorageShare, s.get(ctx, r.RequestURL(), &fileStorageShare)
 }
 
 // ModifyFileStorageShare modifies properties of an existing file storage share. (EXPERIMENTAL)
 func (s *Service) ModifyFileStorageShare(ctx context.Context, r *request.ModifyFileStorageShareRequest) (*upcloud.FileStorageShare, error) {
-	var result upcloud.FileStorageShare
-	payload, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-	response, err := s.client.Patch(ctx, r.RequestURL(), payload)
-	if err != nil {
-		return nil, err
-	}
-	if err := json.Unmarshal(response, &result); err != nil {
-		return nil, err
-	}
-	return &result, nil
+	fileStorageShare := upcloud.FileStorageShare{}
+	return &fileStorageShare, s.modify(ctx, r, &fileStorageShare)
 }
 
 // DeleteFileStorageShare deletes a file storage share. (EXPERIMENTAL)
 func (s *Service) DeleteFileStorageShare(ctx context.Context, r *request.DeleteFileStorageShareRequest) error {
-	_, err := s.client.Delete(ctx, r.RequestURL())
-	return err
+	return s.delete(ctx, r)
 }
 
 // GetFileStorageLabels retrieves a list of file storage labels. (EXPERIMENTAL)
 func (s *Service) GetFileStorageLabels(ctx context.Context, r *request.GetFileStorageLabelsRequest) ([]upcloud.Label, error) {
-	var result []upcloud.Label
-	response, err := s.client.Get(ctx, r.RequestURL())
-	if err != nil {
-		return nil, err
-	}
-	if err := json.Unmarshal(response, &result); err != nil {
-		return nil, err
-	}
-	return result, nil
+	labels := make([]upcloud.Label, 0)
+	return labels, s.get(ctx, r.RequestURL(), &labels)
 }
 
 // CreateFileStorageLabel creates a new file storage label. (EXPERIMENTAL)
 func (s *Service) CreateFileStorageLabel(ctx context.Context, r *request.CreateFileStorageLabelRequest) (*upcloud.Label, error) {
-	var result upcloud.Label
-	payload, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-	response, err := s.client.Post(ctx, r.RequestURL(), payload)
-	if err != nil {
-		return nil, err
-	}
-	if err := json.Unmarshal(response, &result); err != nil {
-		return nil, err
-	}
-	return &result, nil
+	label := upcloud.Label{}
+	return &label, s.create(ctx, r, &label)
 }
 
 func (s *Service) GetFileStorageLabel(ctx context.Context, r *request.GetFileStorageLabelRequest) (*upcloud.Label, error) {
-	var result upcloud.Label
-	response, err := s.client.Get(ctx, r.RequestURL())
-	if err != nil {
-		return nil, err
-	}
-	if err := json.Unmarshal(response, &result); err != nil {
-		return nil, err
-	}
-	return &result, nil
+	label := upcloud.Label{}
+	return &label, s.get(ctx, r.RequestURL(), &label)
 }
 
 // ModifyFileStorageLabel modifies properties of an existing file storage label. (EXPERIMENTAL)
 func (s *Service) ModifyFileStorageLabel(ctx context.Context, r *request.ModifyFileStorageLabelRequest) (*upcloud.Label, error) {
-	var result upcloud.Label
-	payload, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-	response, err := s.client.Patch(ctx, r.RequestURL(), payload)
-	if err != nil {
-		return nil, err
-	}
-	if err := json.Unmarshal(response, &result); err != nil {
-		return nil, err
-	}
-	return &result, nil
+	label := upcloud.Label{}
+	return &label, s.modify(ctx, r, &label)
 }
 
 // DeleteFileStorageLabel deletes a file storage label. (EXPERIMENTAL)
 func (s *Service) DeleteFileStorageLabel(ctx context.Context, r *request.DeleteFileStorageLabelRequest) error {
-	_, err := s.client.Delete(ctx, r.RequestURL())
-	return err
+	return s.delete(ctx, r)
 }

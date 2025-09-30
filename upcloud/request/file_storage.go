@@ -79,14 +79,12 @@ type WaitForFileStorageDeletionRequest struct {
 	UUID string `json:"-"`
 }
 
-
 // WaitForFileStorageOperationalStateRequest represents a request to wait for a File Storage service
 // to enter a desired state
 type WaitForFileStorageOperationalStateRequest struct {
 	DesiredState upcloud.FileStorageOperationalState `json:"-"`
 	UUID         string                              `json:"-"`
 }
-
 
 type GetFileStorageNetworksRequest struct{ ServiceUUID string }
 
