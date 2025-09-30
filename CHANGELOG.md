@@ -5,6 +5,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+
+- database: add `AdditionalDiskSpaceGiB` field to managed databases
+
 ## [8.28.0]
 
 ### Added

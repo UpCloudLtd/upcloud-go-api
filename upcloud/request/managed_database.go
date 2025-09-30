@@ -75,16 +75,17 @@ func (c *CloneManagedDatabaseRequest) RequestURL() string {
 
 // CreateManagedDatabaseRequest represents a request to create a new managed database instance
 type CreateManagedDatabaseRequest struct {
-	HostNamePrefix        string                                `json:"hostname_prefix"`
-	Labels                []upcloud.Label                       `json:"labels,omitempty"`
-	Maintenance           ManagedDatabaseMaintenanceTimeRequest `json:"maintenance,omitempty"`
-	Networks              []upcloud.ManagedDatabaseNetwork      `json:"networks,omitempty"`
-	Plan                  string                                `json:"plan"`
-	Properties            ManagedDatabasePropertiesRequest      `json:"properties,omitempty"`
-	Title                 string                                `json:"title,omitempty"`
-	TerminationProtection *bool                                 `json:"termination_protection,omitempty"`
-	Type                  upcloud.ManagedDatabaseServiceType    `json:"type"`
-	Zone                  string                                `json:"zone"`
+	AdditionalDiskSpaceGiB int                                   `json:"additional_disk_space_gib,omitempty"`
+	HostNamePrefix         string                                `json:"hostname_prefix"`
+	Labels                 []upcloud.Label                       `json:"labels,omitempty"`
+	Maintenance            ManagedDatabaseMaintenanceTimeRequest `json:"maintenance,omitempty"`
+	Networks               []upcloud.ManagedDatabaseNetwork      `json:"networks,omitempty"`
+	Plan                   string                                `json:"plan"`
+	Properties             ManagedDatabasePropertiesRequest      `json:"properties,omitempty"`
+	Title                  string                                `json:"title,omitempty"`
+	TerminationProtection  *bool                                 `json:"termination_protection,omitempty"`
+	Type                   upcloud.ManagedDatabaseServiceType    `json:"type"`
+	Zone                   string                                `json:"zone"`
 }
 
 // MarshalJSON implements json.Marshaler
@@ -425,15 +426,16 @@ func (m *ManagedDatabasePropertiesRequest) GetPublicAccess() bool {
 
 // ModifyManagedDatabaseRequest represents a request to modify an existing managed database instance
 type ModifyManagedDatabaseRequest struct {
-	Labels                *[]upcloud.Label                      `json:"labels,omitempty"`
-	Maintenance           ManagedDatabaseMaintenanceTimeRequest `json:"maintenance"`
-	Networks              *[]upcloud.ManagedDatabaseNetwork     `json:"networks,omitempty"`
-	Plan                  string                                `json:"plan,omitempty"`
-	Properties            ManagedDatabasePropertiesRequest      `json:"properties,omitempty"`
-	Title                 string                                `json:"title,omitempty"`
-	TerminationProtection *bool                                 `json:"termination_protection,omitempty"`
-	UUID                  string                                `json:"-"`
-	Zone                  string                                `json:"zone,omitempty"`
+	AdditionalDiskSpaceGiB *int                                  `json:"additional_disk_space_gib,omitempty"`
+	Labels                 *[]upcloud.Label                      `json:"labels,omitempty"`
+	Maintenance            ManagedDatabaseMaintenanceTimeRequest `json:"maintenance"`
+	Networks               *[]upcloud.ManagedDatabaseNetwork     `json:"networks,omitempty"`
+	Plan                   string                                `json:"plan,omitempty"`
+	Properties             ManagedDatabasePropertiesRequest      `json:"properties,omitempty"`
+	Title                  string                                `json:"title,omitempty"`
+	TerminationProtection  *bool                                 `json:"termination_protection,omitempty"`
+	UUID                   string                                `json:"-"`
+	Zone                   string                                `json:"zone,omitempty"`
 }
 
 // MarshalJSON implements json.Marshaler
