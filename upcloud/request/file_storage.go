@@ -79,9 +79,6 @@ type WaitForFileStorageDeletionRequest struct {
 	UUID string `json:"-"`
 }
 
-func (r *WaitForFileStorageDeletionRequest) RequestURL() string {
-	return "/file-storage/" + r.UUID
-}
 
 // WaitForFileStorageOperationalStateRequest represents a request to wait for a File Storage service
 // to enter a desired state
@@ -90,10 +87,6 @@ type WaitForFileStorageOperationalStateRequest struct {
 	UUID         string                              `json:"-"`
 }
 
-// RequestURL implements the Request interface
-func (r *WaitForFileStorageOperationalStateRequest) RequestURL() string {
-	return "/file-storage/" + r.UUID
-}
 
 type GetFileStorageNetworksRequest struct{ ServiceUUID string }
 
