@@ -5,6 +5,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+
+- file-storage: experimental support for creating and managing file storage instances and related resources
+
 ## [8.28.0]
 
 ### Added
