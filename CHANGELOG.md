@@ -5,6 +5,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Changed
+
+- database: Return an error if database reaches an error state in `WaitForManagedDatabaseState`.
+
 ## [8.29.0]
 
 ### Added

@@ -204,6 +204,7 @@ type ManagedDatabase struct {
 	Powered                bool                            `json:"powered,omitempty"`
 	Properties             ManagedDatabaseProperties       `json:"properties,omitempty"`
 	State                  ManagedDatabaseState            `json:"state,omitempty"`
+	StateError             map[ManagedDatabaseState]string `json:"state_error,omitempty"`
 	TerminationProtection  bool                            `json:"termination_protection,omitempty"`
 	Title                  string                          `json:"title,omitempty"`
 	Type                   ManagedDatabaseServiceType      `json:"type,omitempty"`

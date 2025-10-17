@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"strings"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/request"
@@ -166,9 +167,24 @@ func (s *Service) GetManagedDatabaseVersions(ctx context.Context, r *request.Get
 	return versions, s.get(ctx, r.RequestURL(), &versions)
 }
 
+// stateError returns an error if the managed database is in error state
+func nilOrStateError(details *upcloud.ManagedDatabase) error {
+	if details.State != upcloud.ManagedDatabaseStateError {
+		return nil
+	}
+
+	var errors []string
+	if len(details.StateError) == 1 {
+		for k, v := range details.StateError {
+			errors = append(errors, fmt.Sprintf("%s (%s)", v, k))
+		}
+	}
+
+	return fmt.Errorf("managed database entered error state: %s", strings.Join(errors, ", "))
+}
+
 // WaitForManagedDatabaseState blocks execution until the specified managed database instance has entered the
-// specified state. If the state changes favorably, the new managed database details is returned. The method will give up
-// after the specified timeout
+// specified state. If the state changes favorably, the new managed database details is returned. Returns an error if the database reaches error state.
 func (s *Service) WaitForManagedDatabaseState(ctx context.Context, r *request.WaitForManagedDatabaseStateRequest) (*upcloud.ManagedDatabase, error) {
 	return retry(ctx, func(_ int, c context.Context) (*upcloud.ManagedDatabase, error) {
 		details, err := s.GetManagedDatabase(c, &request.GetManagedDatabaseRequest{
@@ -181,7 +197,8 @@ func (s *Service) WaitForManagedDatabaseState(ctx context.Context, r *request.Wa
 		if details.State == r.DesiredState {
 			return details, nil
 		}
-		return nil, nil
+
+		return nil, nilOrStateError(details)
 	}, nil)
 }
 
