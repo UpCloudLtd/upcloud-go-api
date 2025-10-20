@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.29.1]
+
 ### Changed
 
 - database: Return an error if database reaches an error state in `WaitForManagedDatabaseState`.
@@ -667,7 +669,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.29.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.29.1...HEAD
+[8.29.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.29.0...v8.29.1
 [8.29.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.28.0...v8.29.0
 [8.28.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.27.0...v8.28.0
 [8.27.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.26.0...v8.27.0
