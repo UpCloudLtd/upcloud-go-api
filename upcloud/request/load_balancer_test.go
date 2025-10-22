@@ -284,87 +284,147 @@ func TestGetLoadBalancerBackendRequest(t *testing.T) {
 }
 
 func TestModifyLoadBalancerBackendRequest(t *testing.T) {
-	r := ModifyLoadBalancerBackendRequest{
-		ServiceUUID: "lb",
-		Name:        "be",
-		Backend: ModifyLoadBalancerBackend{
-			Name:     "newnew",
-			Resolver: upcloud.StringPtr("newresolver"),
-			Properties: &upcloud.LoadBalancerBackendProperties{
-				TimeoutServer:             30,
-				TimeoutTunnel:             3600,
-				HealthCheckType:           upcloud.LoadBalancerHealthCheckTypeHTTP,
-				HealthCheckInterval:       20,
-				HealthCheckFall:           3,
-				HealthCheckRise:           2,
-				HealthCheckURL:            "/health",
-				HealthCheckExpectedStatus: 200,
-				StickySessionCookieName:   "SERVERID",
-				OutboundProxyProtocol:     upcloud.LoadBalancerProxyProtocolVersion1,
-				HTTP2Enabled:              upcloud.BoolPtr(true),
+	testdata := []struct {
+		name         string
+		request      ModifyLoadBalancerBackendRequest
+		expectedJson string
+	}{
+		{
+			request: ModifyLoadBalancerBackendRequest{
+				ServiceUUID: "lb",
+				Name:        "full",
+				Backend: ModifyLoadBalancerBackend{
+					Name:     "newnew",
+					Resolver: upcloud.StringPtr("newresolver"),
+					Properties: &upcloud.LoadBalancerBackendProperties{
+						TimeoutServer:             30,
+						TimeoutTunnel:             3600,
+						HealthCheckType:           upcloud.LoadBalancerHealthCheckTypeHTTP,
+						HealthCheckInterval:       20,
+						HealthCheckFall:           3,
+						HealthCheckRise:           2,
+						HealthCheckURL:            "/health",
+						HealthCheckExpectedStatus: 200,
+						StickySessionCookieName:   "SERVERID",
+						OutboundProxyProtocol:     upcloud.LoadBalancerProxyProtocolVersion1,
+						HTTP2Enabled:              upcloud.BoolPtr(true),
+					},
+				},
 			},
+			expectedJson: `
+			{
+				"name": "newnew",
+				"resolver": "newresolver",
+				"properties": {
+					"timeout_server": 30,
+					"timeout_tunnel": 3600,
+					"health_check_type": "http",
+					"health_check_interval": 20,
+					"health_check_fall": 3,
+					"health_check_rise": 2,
+					"health_check_url": "/health",
+					"health_check_expected_status": 200,
+					"sticky_session_cookie_name": "SERVERID",
+					"outbound_proxy_protocol": "v1",
+					"http2_enabled": true
+				}
+			}`,
+		},
+		{
+			request: ModifyLoadBalancerBackendRequest{
+				ServiceUUID: "lb",
+				Name:        "clear-resolver",
+				Backend: ModifyLoadBalancerBackend{
+					Name:     "newnew",
+					Resolver: upcloud.StringPtr(""),
+				},
+			},
+			expectedJson: `
+				{
+					"name": "newnew",
+					"resolver": ""
+				}`,
+		},
+		{
+			request: ModifyLoadBalancerBackendRequest{
+				ServiceUUID: "lb",
+				Name:        "rename-only",
+				Backend: ModifyLoadBalancerBackend{
+					Name: "newnew",
+				},
+			},
+			expectedJson: `
+				{
+					"name": "newnew"
+				}`,
+		},
+		{
+			request: ModifyLoadBalancerBackendRequest{
+				ServiceUUID: "lb",
+				Name:        "props-omitempty",
+				Backend: ModifyLoadBalancerBackend{
+					Properties: &upcloud.LoadBalancerBackendProperties{
+						OutboundProxyProtocol:   "",
+						StickySessionCookieName: "",
+					},
+				},
+			},
+			expectedJson: `
+				{
+					"properties": {}
+				}`,
+		},
+		{
+			request: ModifyLoadBalancerBackendRequest{
+				ServiceUUID: "lb",
+				Name:        "clear-proxy-protocol",
+				Backend: ModifyLoadBalancerBackend{
+					ClearProperties: ModifyLoadBalancerBackendClearProperties{
+						OutboundProxyProtocol: true,
+					},
+				},
+			},
+			expectedJson: `
+				{
+					"properties": {
+						"outbound_proxy_protocol": ""
+					}
+				}`,
+		},
+		{
+			request: ModifyLoadBalancerBackendRequest{
+				ServiceUUID: "lb",
+				Name:        "clear-proxy-protocol-and-sticky-cookie",
+				Backend: ModifyLoadBalancerBackend{
+					Properties: &upcloud.LoadBalancerBackendProperties{
+						HTTP2Enabled: upcloud.BoolPtr(true),
+					},
+					ClearProperties: ModifyLoadBalancerBackendClearProperties{
+						OutboundProxyProtocol:   true,
+						StickySessionCookieName: true,
+					},
+				},
+			},
+			expectedJson: `
+				{
+					"properties": {
+						"outbound_proxy_protocol": "",
+						"sticky_session_cookie_name": "",
+						"http2_enabled": true
+					}
+				}`,
 		},
 	}
+	for _, test := range testdata {
+		t.Run(test.request.Name, func(t *testing.T) {
+			expectedPath := fmt.Sprintf("/load-balancer/%s/backends/%s", test.request.ServiceUUID, test.request.Name)
 
-	expectedJson := `
-	{
-		"name": "newnew",
-		"resolver": "newresolver",
-		"properties": {
-			"timeout_server": 30,
-			"timeout_tunnel": 3600,
-			"health_check_type": "http",
-			"health_check_interval": 20,
-			"health_check_fall": 3,
-			"health_check_rise": 2,
-			"health_check_url": "/health",
-			"health_check_expected_status": 200,
-			"sticky_session_cookie_name": "SERVERID",
-			"outbound_proxy_protocol": "v1",
-			"http2_enabled": true
-		}
-	}`
-
-	actualJson, err := json.Marshal(&r)
-	require.NoError(t, err)
-	assert.Exactly(t, "/load-balancer/lb/backends/be", r.RequestURL())
-	assert.JSONEq(t, expectedJson, string(actualJson))
-
-	r = ModifyLoadBalancerBackendRequest{
-		ServiceUUID: "lb",
-		Name:        "be",
-		Backend: ModifyLoadBalancerBackend{
-			Name:     "newnew",
-			Resolver: upcloud.StringPtr(""),
-		},
+			actualJson, err := json.Marshal(&test.request)
+			require.NoError(t, err)
+			assert.Exactly(t, expectedPath, test.request.RequestURL())
+			assert.JSONEq(t, test.expectedJson, string(actualJson))
+		})
 	}
-
-	expectedJson = `
-	{
-		"name": "newnew",
-		"resolver": ""	
-	}`
-
-	actualJson, err = json.Marshal(&r)
-	require.NoError(t, err)
-	assert.JSONEq(t, expectedJson, string(actualJson))
-
-	r = ModifyLoadBalancerBackendRequest{
-		ServiceUUID: "lb",
-		Name:        "be",
-		Backend: ModifyLoadBalancerBackend{
-			Name: "newnew",
-		},
-	}
-
-	expectedJson = `
-	{
-		"name": "newnew"
-	}`
-
-	actualJson, err = json.Marshal(&r)
-	require.NoError(t, err)
-	assert.JSONEq(t, expectedJson, string(actualJson))
 }
 
 func TestDeleteLoadBalancerBackendRequest(t *testing.T) {

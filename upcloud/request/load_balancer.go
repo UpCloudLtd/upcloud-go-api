@@ -151,11 +151,18 @@ func (r *GetLoadBalancerBackendRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/%s/backends/%s", r.ServiceUUID, r.Name)
 }
 
+type ModifyLoadBalancerBackendClearProperties struct {
+	OutboundProxyProtocol   bool
+	StickySessionCookieName bool
+}
+
 // ModifyLoadBalancerBackend represents the payload for ModifyLoadBalancerBackendRequest
 type ModifyLoadBalancerBackend struct {
-	Name       string                                 `json:"name,omitempty"`
-	Resolver   *string                                `json:"resolver,omitempty"`
-	Properties *upcloud.LoadBalancerBackendProperties `json:"properties,omitempty"`
+	Name     string  `json:"name,omitempty"`
+	Resolver *string `json:"resolver,omitempty"`
+	// `upcloud.LoadBalancerBackendProperties` does not support clearing `OutboundProxyProtocol` or `StickySessionCookieName`. Use `ClearProperties` to clear these fields.
+	Properties      *upcloud.LoadBalancerBackendProperties   `json:"properties,omitempty"`
+	ClearProperties ModifyLoadBalancerBackendClearProperties `json:"-"`
 }
 
 // ModifyLoadBalancerBackendRequest represents a request to modify load balancer backend
@@ -170,7 +177,34 @@ func (r *ModifyLoadBalancerBackendRequest) RequestURL() string {
 }
 
 func (r *ModifyLoadBalancerBackendRequest) MarshalJSON() ([]byte, error) {
-	return json.Marshal(r.Backend)
+	d, err := json.Marshal(r.Backend)
+	if err != nil {
+		return nil, err
+	}
+
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(d, &m); err != nil {
+		return nil, err
+	}
+
+	var props map[string]interface{}
+	if m["properties"] == nil {
+		props = make(map[string]interface{})
+	} else {
+		props, _ = m["properties"].(map[string]interface{})
+	}
+
+	// Work-around for clearing properties. These should use pointer types, to be able to distinguish between undefined and empty string. Thus omitempty blocks user from clearing them.
+	if r.Backend.ClearProperties.OutboundProxyProtocol {
+		props["outbound_proxy_protocol"] = ""
+		m["properties"] = props
+	}
+	if r.Backend.ClearProperties.StickySessionCookieName {
+		props["sticky_session_cookie_name"] = ""
+		m["properties"] = props
+	}
+
+	return json.Marshal(m)
 }
 
 // DeleteLoadBalancerBackendRequest represents a request to delete load balancer backend
