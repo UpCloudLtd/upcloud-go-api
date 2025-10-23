@@ -117,6 +117,30 @@ func TestUnmarshalServerDetails(t *testing.T) {
         "server": {
           "boot_order": "cdrom,disk",
           "core_number": "0",
+          "devices": {
+            "device": [
+              {
+                "model": "NVIDIA L40S",
+                "type": "gpu",
+                "serial": "1790925007018",
+                "metadata": {
+                  "serial": "1723925007011",
+                  "cores": 18176,
+                  "memory": 48
+                }
+              },
+              {
+                "model": "NVIDIA L40S",
+                "type": "gpu",
+                "serial": "1790325030002",
+                "metadata": {
+                  "serial": "1723382930206",
+                  "cores": 18176,
+                  "memory": 48
+                }
+              }
+            ]
+          },
           "firewall": "on",
           "host" : 7653311107,
           "hostname": "server1.example.com",
@@ -275,6 +299,9 @@ func TestUnmarshalServerDetails(t *testing.T) {
 	serverDetails := ServerDetails{}
 	err := json.Unmarshal([]byte(originalJSON), &serverDetails)
 	assert.Nil(t, err)
+
+	assert.Len(t, serverDetails.Devices, 2)
+	assert.Equal(t, "NVIDIA L40S", serverDetails.Devices[0].Model)
 
 	assert.Equal(t, true, serverDetails.StorageDevices[0].Encrypted.Bool())
 	assert.Equal(t, "cdrom,disk", serverDetails.BootOrder)
