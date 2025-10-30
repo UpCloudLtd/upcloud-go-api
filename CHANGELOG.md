@@ -5,6 +5,12 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.31.0]
+
+### Added
+
+- network: add effective_routes and dhcp_effective_routes
+
 ## [8.30.0]
 
 ### Added
@@ -681,7 +687,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.30.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.31.0...HEAD
+[8.31.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.30.0...v8.31.0
 [8.30.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.29.2...v8.30.0
 [8.29.2]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.29.1...v8.29.2
 [8.29.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.29.0...v8.29.1
