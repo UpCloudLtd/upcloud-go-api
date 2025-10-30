@@ -26,7 +26,19 @@ func TestUnmarshalNetworks(t *testing.T) {
 					  "94.237.40.9"
 					],
 					"family": "IPv4",
-					"gateway": "80.69.172.1"
+					"gateway": "80.69.172.1",
+					"dhcp_effective_routes": [
+						{
+							"auto_populated": "yes",
+							"route": "192.168.0.0/24",
+							"nexthop": "80.69.172.1"
+						},
+						{
+							"auto_populated": "no",
+							"route": "10.10.0.0/16",
+							"nexthop": "80.69.172.2"
+						}
+					]
 				  }
 				]
 			  },
@@ -97,6 +109,18 @@ func TestUnmarshalNetworks(t *testing.T) {
 					},
 					Family:  IPAddressFamilyIPv4,
 					Gateway: "80.69.172.1",
+					DHCPEffectiveRoutes: []DHCPEffectiveRoute{
+						{
+							AutoPopulated: True,
+							Route:         "192.168.0.0/24",
+							Nexthop:       "80.69.172.1",
+						},
+						{
+							AutoPopulated: False,
+							Route:         "10.10.0.0/16",
+							Nexthop:       "80.69.172.2",
+						},
+					},
 				},
 			},
 			Labels: []Label{
@@ -195,7 +219,23 @@ func TestUnmarshalNetwork(t *testing.T) {
 				"gateway": "172.16.0.1"
 			  }
 			]
-		  },
+		  },			
+		  "effective_routes": [
+			{
+				"source": "router-connected-networks",
+				"route": "10.0.50.0/24",
+				"nexthop": "172.16.0.1",
+				"type": "user",
+				"source_resource_id": "abcd-123"
+			},
+			{
+				"source": "static-route",
+				"route": "192.168.1.0/24",
+				"nexthop": "172.16.0.2",
+				"type": "service",
+				"source_resource_id": "efgh-456"
+			}
+		  ],
 		  "servers": {
 			"server": [
 			  {"uuid": "009d64ef-31d1-4684-a26b-c86c955cbf46", "title": "London server #1"},
@@ -251,6 +291,22 @@ func TestUnmarshalNetwork(t *testing.T) {
 			{
 				ServerUUID:  "0035079f-9d66-42d5-aa74-12090e7b4ed1",
 				ServerTitle: "London server #2",
+			},
+		},
+		EffectiveRoutes: []EffectiveRoute{
+			{
+				Source:           NetworkRouteSourceRouterConnectedNetwork,
+				Route:            "10.0.50.0/24",
+				Nexthop:          "172.16.0.1",
+				Type:             NetworkRouteTypeUser,
+				SourceResourceID: "abcd-123",
+			},
+			{
+				Source:           NetworkRouteSourceStaticSource,
+				Route:            "192.168.1.0/24",
+				Nexthop:          "172.16.0.2",
+				Type:             NetworkRouteTypeService,
+				SourceResourceID: "efgh-456",
 			},
 		},
 	}

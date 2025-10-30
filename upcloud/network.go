@@ -110,6 +110,24 @@ type EffectiveRoutesAutoPopulation struct {
 	FilterByRouteType   *[]NetworkRouteType   `json:"filter_by_route_type,omitempty"`
 }
 
+type EffectiveRoute struct {
+	Source           NetworkRouteSource `json:"source,omitempty"`
+	Route            string             `json:"route"`
+	Nexthop          string             `json:"nexthop,omitempty"`
+	Type             NetworkRouteType   `json:"type,omitempty"`
+	SourceResourceID string             `json:"source_resource_id,omitempty"`
+}
+
+type EffectiveRouteSlice []EffectiveRoute
+
+type DHCPEffectiveRoute struct {
+	AutoPopulated Boolean `json:"auto_populated"`
+	Route         string  `json:"route"`
+	Nexthop       string  `json:"nexthop,omitempty"`
+}
+
+type DHCPEffectiveRouteSlice []DHCPEffectiveRoute
+
 // IPNetwork represents an IP network in a response.
 type IPNetwork struct {
 	Address                 string                  `json:"address,omitempty"`
@@ -120,6 +138,7 @@ type IPNetwork struct {
 	Family                  string                  `json:"family,omitempty"`
 	Gateway                 string                  `json:"gateway,omitempty"`
 	DHCPRoutesConfiguration DHCPRoutesConfiguration `json:"dhcp_routes_configuration,omitempty"`
+	DHCPEffectiveRoutes     DHCPEffectiveRouteSlice `json:"dhcp_effective_routes,omitempty"`
 }
 
 // IPNetworkSlice is a slice of IPNetworks
@@ -184,14 +203,15 @@ type NetworkServer struct {
 
 // Network represents a network in a networking response.
 type Network struct {
-	IPNetworks IPNetworkSlice     `json:"ip_networks"`
-	Name       string             `json:"name"`
-	Type       string             `json:"type"`
-	UUID       string             `json:"uuid"`
-	Zone       string             `json:"zone"`
-	Router     string             `json:"router"`
-	Servers    NetworkServerSlice `json:"servers"`
-	Labels     []Label            `json:"labels"`
+	IPNetworks      IPNetworkSlice      `json:"ip_networks"`
+	Name            string              `json:"name"`
+	Type            string              `json:"type"`
+	UUID            string              `json:"uuid"`
+	Zone            string              `json:"zone"`
+	Router          string              `json:"router"`
+	Servers         NetworkServerSlice  `json:"servers"`
+	Labels          []Label             `json:"labels"`
+	EffectiveRoutes EffectiveRouteSlice `json:"effective_routes,omitempty"`
 }
 
 // UnmarshalJSON is a custom unmarshaller that deals with
