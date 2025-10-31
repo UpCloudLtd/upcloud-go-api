@@ -30,7 +30,7 @@ type ProblemInvalidParam struct {
 
 func (p *Problem) Error() string {
 	var sb strings.Builder
-	_, _ = fmt.Fprintf(&sb, "error: message=%q, type=%q", p.Title, p.Type)
+	_, _ = fmt.Fprintf(&sb, "%s (type=%s, status=%d", p.Title, p.Type, p.Status)
 	if p.CorrelationID != "" {
 		_, _ = fmt.Fprintf(&sb, ", correlation_id=%s", p.CorrelationID)
 	}
@@ -39,6 +39,7 @@ func (p *Problem) Error() string {
 			_, _ = fmt.Fprintf(&sb, ", invalid_params_%s='%s'", ip.Name, ip.Reason)
 		}
 	}
+	fmt.Fprintf(&sb, ")")
 	return sb.String()
 }
 
