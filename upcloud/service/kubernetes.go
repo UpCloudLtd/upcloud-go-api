@@ -90,7 +90,7 @@ func (s *Service) DeleteKubernetesCluster(ctx context.Context, r *request.Delete
 // specified state. If the state changes favorably, cluster details are returned. The method will give up
 // after the specified timeout
 func (s *Service) WaitForKubernetesClusterState(ctx context.Context, r *request.WaitForKubernetesClusterStateRequest) (*upcloud.KubernetesCluster, error) {
-	return retry(ctx, func(i int, c context.Context) (*upcloud.KubernetesCluster, error) {
+	return Retry(ctx, func(i int, c context.Context) (*upcloud.KubernetesCluster, error) {
 		details, err := s.GetKubernetesCluster(c, &request.GetKubernetesClusterRequest{
 			UUID: r.UUID,
 		})
@@ -115,7 +115,7 @@ func (s *Service) WaitForKubernetesClusterState(ctx context.Context, r *request.
 // specified state. If the state changes favorably, node group is returned. The method will give up
 // after the specified timeout
 func (s *Service) WaitForKubernetesNodeGroupState(ctx context.Context, r *request.WaitForKubernetesNodeGroupStateRequest) (*upcloud.KubernetesNodeGroup, error) {
-	return retry(ctx, func(i int, c context.Context) (*upcloud.KubernetesNodeGroup, error) {
+	return Retry(ctx, func(i int, c context.Context) (*upcloud.KubernetesNodeGroup, error) {
 		ng, err := s.GetKubernetesNodeGroup(c, &request.GetKubernetesNodeGroupRequest{
 			ClusterUUID: r.ClusterUUID,
 			Name:        r.Name,
