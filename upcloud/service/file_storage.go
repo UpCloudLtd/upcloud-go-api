@@ -95,7 +95,7 @@ func (s *Service) DeleteFileStorage(ctx context.Context, r *request.DeleteFileSt
 
 // WaitForFileStorageDeletion blocks execution until the specified Managed Object Storage service has been deleted.
 func (s *Service) WaitForFileStorageDeletion(ctx context.Context, r *request.WaitForFileStorageDeletionRequest) error {
-	_, err := Retry(ctx, func(_ int, c context.Context) (*upcloud.FileStorage, error) {
+	_, err := retry(ctx, func(_ int, c context.Context) (*upcloud.FileStorage, error) {
 		details, err := s.GetFileStorage(c, &request.GetFileStorageRequest{
 			UUID: r.UUID,
 		})
@@ -109,7 +109,7 @@ func (s *Service) WaitForFileStorageDeletion(ctx context.Context, r *request.Wai
 		}
 
 		return details, err
-	}, &RetryConfig{inverse: true})
+	}, &retryConfig{inverse: true})
 	return err
 }
 
@@ -117,7 +117,7 @@ func (s *Service) WaitForFileStorageDeletion(ctx context.Context, r *request.Wai
 // specified state. If the state changes favorably, the file storage details are returned. The method will give up
 // after the specified timeout. (EXPERIMENTAL)
 func (s *Service) WaitForFileStorageOperationalState(ctx context.Context, r *request.WaitForFileStorageOperationalStateRequest) (*upcloud.FileStorage, error) {
-	return Retry(ctx, func(_ int, c context.Context) (*upcloud.FileStorage, error) {
+	return retry(ctx, func(_ int, c context.Context) (*upcloud.FileStorage, error) {
 		details, err := s.GetFileStorage(c, &request.GetFileStorageRequest{
 			UUID: r.UUID,
 		})

@@ -89,7 +89,7 @@ func (s *Service) TemplatizeStorage(ctx context.Context, r *request.TemplatizeSt
 // WaitForStorageState blocks execution until the specified storage device has entered the specified state. If the
 // state changes favorably, the new storage details is returned. The method will give up after the specified timeout
 func (s *Service) WaitForStorageState(ctx context.Context, r *request.WaitForStorageStateRequest) (*upcloud.StorageDetails, error) {
-	return Retry(ctx, func(i int, c context.Context) (*upcloud.StorageDetails, error) {
+	return retry(ctx, func(i int, c context.Context) (*upcloud.StorageDetails, error) {
 		details, err := s.GetStorageDetails(c, &request.GetStorageDetailsRequest{
 			UUID: r.UUID,
 		})
@@ -214,7 +214,7 @@ func (s *Service) GetStorageImportDetails(ctx context.Context, r *request.GetSto
 
 // WaitForStorageImportCompletion waits for the importing storage to complete.
 func (s *Service) WaitForStorageImportCompletion(ctx context.Context, r *request.WaitForStorageImportCompletionRequest) (*upcloud.StorageImportDetails, error) {
-	return Retry(ctx, func(i int, c context.Context) (*upcloud.StorageImportDetails, error) {
+	return retry(ctx, func(i int, c context.Context) (*upcloud.StorageImportDetails, error) {
 		details, err := s.GetStorageImportDetails(c, &request.GetStorageImportDetailsRequest{
 			UUID: r.StorageUUID,
 		})

@@ -186,7 +186,7 @@ func nilOrStateError(details *upcloud.ManagedDatabase) error {
 // WaitForManagedDatabaseState blocks execution until the specified managed database instance has entered the
 // specified state. If the state changes favorably, the new managed database details is returned. Returns an error if the database reaches error state.
 func (s *Service) WaitForManagedDatabaseState(ctx context.Context, r *request.WaitForManagedDatabaseStateRequest) (*upcloud.ManagedDatabase, error) {
-	return Retry(ctx, func(_ int, c context.Context) (*upcloud.ManagedDatabase, error) {
+	return retry(ctx, func(_ int, c context.Context) (*upcloud.ManagedDatabase, error) {
 		details, err := s.GetManagedDatabase(c, &request.GetManagedDatabaseRequest{
 			UUID: r.UUID,
 		})

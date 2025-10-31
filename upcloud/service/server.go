@@ -55,7 +55,7 @@ func (s *Service) CreateServer(ctx context.Context, r *request.CreateServerReque
 // WaitForServerState blocks execution until the specified server has entered the specified state. If the state changes
 // favorably, the new server details are returned. The method will give up after the specified timeout
 func (s *Service) WaitForServerState(ctx context.Context, r *request.WaitForServerStateRequest) (*upcloud.ServerDetails, error) {
-	return Retry(ctx, func(i int, c context.Context) (*upcloud.ServerDetails, error) {
+	return retry(ctx, func(i int, c context.Context) (*upcloud.ServerDetails, error) {
 		details, err := s.GetServerDetails(c, &request.GetServerDetailsRequest{
 			UUID: r.UUID,
 		})

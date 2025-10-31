@@ -10,15 +10,15 @@ import (
 
 const maxRetriesOnError = 3
 
-type RetryConfig struct {
+type retryConfig struct {
 	interval time.Duration
 	// Inverse the should retry logic. By default, operation is retried until operation returns a value. If inverse is set to true, operation is retried while operation returns a value. This should be used, for example, for waiting until resource is deleted.
 	inverse bool
 }
 
-func fillDefaults(c *RetryConfig) *RetryConfig {
+func fillDefaults(c *retryConfig) *retryConfig {
 	if c == nil {
-		c = &RetryConfig{}
+		c = &retryConfig{}
 	}
 
 	if c.interval.Milliseconds() == 0 {
@@ -41,7 +41,7 @@ func shouldRetryOnError(err error, retryOnErrorCount int) bool {
 	return false
 }
 
-func Retry[T any](ctx context.Context, operation func(int, context.Context) (*T, error), config *RetryConfig) (*T, error) {
+func retry[T any](ctx context.Context, operation func(int, context.Context) (*T, error), config *retryConfig) (*T, error) {
 	config = fillDefaults(config)
 
 	ticker := time.NewTicker(config.interval)

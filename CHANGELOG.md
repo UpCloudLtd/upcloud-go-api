@@ -5,10 +5,6 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
-### Added
-
-- export `service.Retry` helper
-
 ### Changed
 
 - problem: improve error message formatting and add HTTP status code to the message
