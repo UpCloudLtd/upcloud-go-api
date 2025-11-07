@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
+	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/client"
 )
 
 const maxRetriesOnError = 3
@@ -35,6 +36,11 @@ func shouldRetryOnError(err error, retryOnErrorCount int) bool {
 
 	var ucErr *upcloud.Problem
 	if errors.As(err, &ucErr) && ucErr.Status >= 500 {
+		return true
+	}
+
+	var clientErr *client.Error
+	if errors.As(err, &clientErr) && clientErr.ErrorCode >= 500 {
 		return true
 	}
 

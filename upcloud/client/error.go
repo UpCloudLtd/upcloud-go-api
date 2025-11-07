@@ -19,5 +19,5 @@ type Error struct {
 
 // Error implements the Error interface
 func (e *Error) Error() string {
-	return fmt.Sprintf("%d: %s", e.ErrorCode, e.ErrorMessage)
+	return fmt.Sprintf("HTTP %d: %s", e.ErrorCode, string(e.ResponseBody))
 }
