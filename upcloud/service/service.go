@@ -162,14 +162,14 @@ func parseJSONServiceError(err error) error {
 
 		switch clientError.Type {
 		case client.ErrorTypeProblem:
-			if err := json.Unmarshal(clientError.ResponseBody, prob); err != nil {
-				return fmt.Errorf("received malformed client error: %s", string(clientError.ResponseBody))
+			if parseErr := json.Unmarshal(clientError.ResponseBody, prob); parseErr != nil {
+				return fmt.Errorf("received malformed client error (%w): %w", parseErr, err)
 			}
 			return prob
 		default:
 			ucError := &legacyError{}
-			if err := json.Unmarshal(clientError.ResponseBody, ucError); err != nil {
-				return fmt.Errorf("received malformed client error: %s", string(clientError.ResponseBody))
+			if parseErr := json.Unmarshal(clientError.ResponseBody, ucError); parseErr != nil {
+				return fmt.Errorf("received malformed client error (%w): %w", parseErr, err)
 			}
 
 			prob.Type = ucError.ErrorCode
