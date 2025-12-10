@@ -37,7 +37,7 @@ type CreateFileStorageRequest struct {
 	ConfiguredStatus upcloud.FileStorageConfiguredStatus `json:"configured_status"`
 	SizeGiB          int                                 `json:"size_gib"`
 	Networks         []upcloud.FileStorageNetwork        `json:"networks,omitempty"`
-	Shares           []upcloud.FileStorageShare          `json:"shares,omitempty"`
+	Shares           []FileStorageShare                  `json:"shares,omitempty"`
 	Labels           []upcloud.Label                     `json:"labels,omitempty"`
 }
 
@@ -146,6 +146,12 @@ type CreateFileStorageShareRequest struct {
 
 func (r *CreateFileStorageShareRequest) RequestURL() string {
 	return "/file-storage/" + r.ServiceUUID + "/shares"
+}
+
+type FileStorageShare struct {
+	Name string                   `json:"name"`
+	Path string                   `json:"path"`
+	ACL  []upcloud.FileStorageACL `json:"acl"`
 }
 
 type GetFileStorageShareRequest struct {

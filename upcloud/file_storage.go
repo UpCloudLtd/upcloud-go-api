@@ -51,9 +51,10 @@ type FileStorageNetwork struct {
 }
 
 type FileStorageShare struct {
-	Name string           `json:"name"`
-	Path string           `json:"path"`
-	ACL  []FileStorageACL `json:"acl"`
+	Name     string           `json:"name"`
+	Path     string           `json:"path"`
+	ACL      []FileStorageACL `json:"acl"`
+	Deleting bool             `json:"deleting"`
 }
 
 type FileStorageACL struct {

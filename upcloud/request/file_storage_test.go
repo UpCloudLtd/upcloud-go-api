@@ -60,7 +60,7 @@ func TestCreateFileStorageRequest_MarshalJSON(t *testing.T) {
 			ConfiguredStatus: "started",
 			SizeGiB:          20,
 			Networks:         []upcloud.FileStorageNetwork{{UUID: "net-uuid", Name: "net1", Family: "IPv4", IPAddress: "192.168.1.1"}},
-			Shares:           []upcloud.FileStorageShare{{Name: "share", Path: "/data", ACL: []upcloud.FileStorageACL{{Target: "*", Permission: "ro"}}}},
+			Shares:           []FileStorageShare{{Name: "share", Path: "/data", ACL: []upcloud.FileStorageACL{{Target: "*", Permission: "ro"}}}},
 			Labels:           []upcloud.Label{{Key: "env", Value: "dev"}},
 		}
 		data, err := json.Marshal(&req)
