@@ -53,7 +53,6 @@ type ReplaceFileStorageRequest struct {
 	ConfiguredStatus upcloud.FileStorageConfiguredStatus `json:"configured_status"`
 	SizeGiB          int                                 `json:"size_gib"`
 	Networks         []upcloud.FileStorageNetwork        `json:"networks,omitempty"`
-	Shares           []upcloud.FileStorageShare          `json:"shares,omitempty"`
 	Labels           []upcloud.Label                     `json:"labels,omitempty"`
 }
 
@@ -65,7 +64,6 @@ type ModifyFileStorageRequest struct {
 	ConfiguredStatus *upcloud.FileStorageConfiguredStatus `json:"configured_status,omitempty"`
 	SizeGiB          *int                                 `json:"size_gib,omitempty"`
 	Networks         *[]upcloud.FileStorageNetwork        `json:"networks,omitempty"`
-	Shares           *[]upcloud.FileStorageShare          `json:"shares,omitempty"`
 	Labels           *[]upcloud.Label                     `json:"labels,omitempty"`
 }
 
