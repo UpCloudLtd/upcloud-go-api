@@ -16,6 +16,9 @@ type FileStorage interface {
 	ReplaceFileStorage(ctx context.Context, r *request.ReplaceFileStorageRequest) (*upcloud.FileStorage, error)
 	ModifyFileStorage(ctx context.Context, r *request.ModifyFileStorageRequest) (*upcloud.FileStorage, error)
 	DeleteFileStorage(ctx context.Context, r *request.DeleteFileStorageRequest) error
+	WaitForFileStorageDeletion(ctx context.Context, r *request.WaitForFileStorageDeletionRequest) error
+	WaitForFileStorageOperationalState(ctx context.Context, r *request.WaitForFileStorageOperationalStateRequest) (*upcloud.FileStorage, error)
+	GetFileStorageCurrentState(ctx context.Context, r *request.GetFileStorageCurrentStateRequest) (*upcloud.FileStorage, error)
 	GetFileStorageNetworks(ctx context.Context, r *request.GetFileStorageNetworksRequest) ([]upcloud.FileStorageNetwork, error)
 	CreateFileStorageNetwork(ctx context.Context, r *request.CreateFileStorageNetworkRequest) (*upcloud.FileStorageNetwork, error)
 	GetFileStorageNetwork(ctx context.Context, r *request.GetFileStorageNetworkRequest) (*upcloud.FileStorageNetwork, error)

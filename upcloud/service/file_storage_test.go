@@ -127,6 +127,10 @@ func TestFileStorage(t *testing.T) {
 		assert.NoError(t, err)
 		require.NotNil(t, share)
 
+		currentState, err := svc.GetFileStorageCurrentState(ctx, &request.GetFileStorageCurrentStateRequest{UUID: modified.UUID})
+		assert.NoError(t, err)
+		require.NotNil(t, currentState)
+
 		sharereq := &request.GetFileStorageSharesRequest{ServiceUUID: modified.UUID}
 		shares, err := svc.GetFileStorageShares(ctx, sharereq)
 		assert.NoError(t, err)

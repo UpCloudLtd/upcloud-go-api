@@ -15,6 +15,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 - file-storage: add File Storage Share ACL management support
 - file-storage: add `Deleting` boolean to `FileStorageShare` in upcloud package
 - file-storage: add `FileStorageShare` to request package
+- file-storage: add `GetFileStorageCurrentState` method for getting the effective state of the service
 
 ### Changed
 - file-storage: rename `FileStorageACL` to `FileStorageShareACL` and related constants accordingly in upcloud package

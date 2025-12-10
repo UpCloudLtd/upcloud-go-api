@@ -84,6 +84,12 @@ type WaitForFileStorageOperationalStateRequest struct {
 	UUID         string                              `json:"-"`
 }
 
+type GetFileStorageCurrentStateRequest struct{ UUID string }
+
+func (r *GetFileStorageCurrentStateRequest) RequestURL() string {
+	return "/file-storage/" + r.UUID + "/current-state"
+}
+
 type GetFileStorageNetworksRequest struct{ ServiceUUID string }
 
 func (r *GetFileStorageNetworksRequest) RequestURL() string {
