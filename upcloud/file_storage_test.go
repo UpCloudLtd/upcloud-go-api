@@ -20,7 +20,7 @@ func TestFileStorage_MarshalUnmarshalJSON(t *testing.T) {
 			CreatedAt:        time.Date(2025, 9, 18, 12, 0, 0, 0, time.UTC),
 			UpdatedAt:        time.Date(2025, 9, 18, 12, 5, 0, 0, time.UTC),
 			Networks:         []FileStorageNetwork{{UUID: "net-uuid", Name: "net1", Family: "IPv4", IPAddress: "192.168.1.1"}},
-			Shares:           []FileStorageShare{{Name: "share1", Path: "/data/share1", ACL: []FileStorageACL{{Target: "user", Permission: "rw"}}, Deleting: true}},
+			Shares:           []FileStorageShare{{Name: "share1", Path: "/data/share1", ACL: []FileStorageShareACL{{Target: "user", Permission: "rw"}}, Deleting: true}},
 			Labels:           []Label{{Key: "env", Value: "dev"}},
 			StateMessages:    []FileStorageStateMessage{{OperationalState: "running", Message: "All good", Code: "OK"}},
 		},

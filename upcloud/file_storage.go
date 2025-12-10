@@ -12,14 +12,14 @@ const (
 )
 
 const (
-	FileStorageACLPermissionReadOnly  FileStorageACLPermission = "ro"
-	FileStorageACLPermissionReadWrite FileStorageACLPermission = "rw"
+	FileStorageShareACLPermissionReadOnly  FileStorageShareACLPermission = "ro"
+	FileStorageShareACLPermissionReadWrite FileStorageShareACLPermission = "rw"
 )
 
 type (
-	FileStorageConfiguredStatus string
-	FileStorageOperationalState string
-	FileStorageACLPermission    string
+	FileStorageConfiguredStatus   string
+	FileStorageOperationalState   string
+	FileStorageShareACLPermission string
 )
 
 type FileStorage struct {
@@ -51,13 +51,14 @@ type FileStorageNetwork struct {
 }
 
 type FileStorageShare struct {
-	Name     string           `json:"name"`
-	Path     string           `json:"path"`
-	ACL      []FileStorageACL `json:"acl"`
-	Deleting bool             `json:"deleting"`
+	Name     string                `json:"name"`
+	Path     string                `json:"path"`
+	ACL      []FileStorageShareACL `json:"acl"`
+	Deleting bool                  `json:"deleting"`
 }
 
-type FileStorageACL struct {
-	Target     string                   `json:"target"`
-	Permission FileStorageACLPermission `json:"permission"`
+type FileStorageShareACL struct {
+	Name       string                        `json:"name"`
+	Target     string                        `json:"target"`
+	Permission FileStorageShareACLPermission `json:"permission"`
 }

@@ -60,12 +60,12 @@ func TestCreateFileStorageRequest_MarshalJSON(t *testing.T) {
 			ConfiguredStatus: "started",
 			SizeGiB:          20,
 			Networks:         []upcloud.FileStorageNetwork{{UUID: "net-uuid", Name: "net1", Family: "IPv4", IPAddress: "192.168.1.1"}},
-			Shares:           []FileStorageShare{{Name: "share", Path: "/data", ACL: []upcloud.FileStorageACL{{Target: "*", Permission: "ro"}}}},
+			Shares:           []FileStorageShare{{Name: "share", Path: "/data", ACL: []upcloud.FileStorageShareACL{{Name: "test-acl", Target: "*", Permission: "ro"}}}},
 			Labels:           []upcloud.Label{{Key: "env", Value: "dev"}},
 		}
 		data, err := json.Marshal(&req)
 		assert.NoError(t, err)
-		const expected = `{"name":"full","zone":"zone-2","configured_status":"started","size_gib":20,"networks":[{"uuid":"net-uuid","name":"net1","family":"IPv4","ip_address":"192.168.1.1"}],"shares":[{"name":"share","path":"/data","acl":[{"target":"*","permission":"ro"}]}],"labels":[{"key":"env","value":"dev"}]}`
+		const expected = `{"name":"full","zone":"zone-2","configured_status":"started","size_gib":20,"networks":[{"uuid":"net-uuid","name":"net1","family":"IPv4","ip_address":"192.168.1.1"}],"shares":[{"name":"share","path":"/data","acl":[{"name":"test-acl","target":"*","permission":"ro"}]}],"labels":[{"key":"env","value":"dev"}]}`
 		assert.JSONEq(t, expected, string(data))
 	})
 }
