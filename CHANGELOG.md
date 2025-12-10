@@ -7,6 +7,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ### Removed
 - file-storage: remove `Shares` from `ModifyFileStorageRequest` and `ReplaceFileStorageRequest`
+- file-storage: remove `Path` from `ModifyFileStorageShareRequest`
 
 ### Added
 - file-storage: add `Deleting` boolean to `FileStorageShare` in upcloud package

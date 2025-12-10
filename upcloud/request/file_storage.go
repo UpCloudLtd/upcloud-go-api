@@ -165,7 +165,6 @@ func (r *GetFileStorageShareRequest) RequestURL() string {
 
 type ModifyFileStorageShare struct {
 	Name *string                   `json:"name,omitempty"`
-	Path *string                   `json:"path,omitempty"`
 	ACL  *[]upcloud.FileStorageACL `json:"acl,omitempty"`
 }
 
