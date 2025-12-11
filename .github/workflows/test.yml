@@ -1,4 +1,4 @@
-name: Upcloud go api test
+name: Test
 
 on:
   pull_request:

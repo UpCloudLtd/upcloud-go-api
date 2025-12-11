@@ -1,4 +1,4 @@
-name: Lint
+name: User-Agent update
 on:
   pull_request:
     paths:
