@@ -70,6 +70,47 @@ func TestCreateFileStorageRequest_MarshalJSON(t *testing.T) {
 	})
 }
 
+func TestModifyFileStorageShareRequest_MarshalJSON(t *testing.T) {
+	req := ModifyFileStorageShareRequest{
+		ModifyFileStorageShare: ModifyFileStorageShare{
+			Name: upcloud.StringPtr("test-share"),
+			ACL:  nil,
+		},
+		ServiceUUID: "service-uuid",
+		ShareName:   "share-name",
+	}
+	data, err := json.Marshal(&req)
+	assert.NoError(t, err)
+	const expected = `{"name":"test-share"}`
+	assert.JSONEq(t, expected, string(data))
+
+	req = ModifyFileStorageShareRequest{
+		ModifyFileStorageShare: ModifyFileStorageShare{
+			Name: nil,
+			ACL:  &[]upcloud.FileStorageShareACL{{Name: "acl1", Target: "*", Permission: "rw"}},
+		},
+		ServiceUUID: "service-uuid",
+		ShareName:   "share-name",
+	}
+	data, err = json.Marshal(&req)
+	assert.NoError(t, err)
+	const expectedACL = `{"acl":[{"name":"acl1","target":"*","permission":"rw"}]}`
+	assert.JSONEq(t, expectedACL, string(data))
+
+	req = ModifyFileStorageShareRequest{
+		ModifyFileStorageShare: ModifyFileStorageShare{
+			Name: nil,
+			ACL:  &[]upcloud.FileStorageShareACL{},
+		},
+		ServiceUUID: "service-uuid",
+		ShareName:   "share-name",
+	}
+	data, err = json.Marshal(&req)
+	assert.NoError(t, err)
+	const expectedEmptyACL = `{"acl":[]}`
+	assert.JSONEq(t, expectedEmptyACL, string(data))
+}
+
 func TestDeleteFileStorageRequest_RequestURL(t *testing.T) {
 	req := DeleteFileStorageRequest{UUID: "fs-uuid"}
 	assert.Equal(t, "/file-storage/fs-uuid", req.RequestURL())
