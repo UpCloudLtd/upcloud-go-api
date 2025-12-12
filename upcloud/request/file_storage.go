@@ -211,7 +211,7 @@ type CreateFileStorageShareACLRequest struct {
 }
 
 func (r *CreateFileStorageShareACLRequest) RequestURL() string {
-	return "/file-storage/" + r.ServiceUUID + "/shares" + r.ShareName + "/acl"
+	return "/file-storage/" + r.ServiceUUID + "/shares/" + r.ShareName + "/acl"
 }
 
 type GetFileStorageShareACLRequest struct {
