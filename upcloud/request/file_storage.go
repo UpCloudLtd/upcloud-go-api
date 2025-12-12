@@ -170,8 +170,8 @@ func (r *GetFileStorageShareRequest) RequestURL() string {
 }
 
 type ModifyFileStorageShare struct {
-	Name *string                `json:"name,omitempty"`
-	ACL  *[]FileStorageShareACL `json:"acl,omitempty"`
+	Name *string                        `json:"name,omitempty"`
+	ACL  *[]upcloud.FileStorageShareACL `json:"acl,omitempty"`
 }
 
 type ModifyFileStorageShareRequest struct {
@@ -192,12 +192,6 @@ type DeleteFileStorageShareRequest struct {
 
 func (r *DeleteFileStorageShareRequest) RequestURL() string {
 	return "/file-storage/" + r.ServiceUUID + "/shares/" + r.ShareName
-}
-
-type FileStorageShareACL struct {
-	Name       *string                                `json:"name,omitempty"`
-	Target     *string                                `json:"target,omitempty"`
-	Permission *upcloud.FileStorageShareACLPermission `json:"permission,omitempty"`
 }
 
 type GetFileStorageShareACLsRequest struct {
