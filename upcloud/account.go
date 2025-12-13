@@ -234,16 +234,16 @@ type BillingResource struct {
 
 // BillingResourceDetail represents detailed billing information for a resource
 type BillingResourceDetail struct {
-	Amount          float64 `json:"amount"`
-	Hours           int     `json:"hours"`
-	Plan            string  `json:"plan,omitempty"`
-	Zone            string  `json:"zone,omitempty"`
-	Size            int     `json:"size,omitempty"`
-	Cores           int     `json:"cores,omitempty"`
-	Memory          int     `json:"memory,omitempty"`
-	Firewall        float64 `json:"firewall,omitempty"`
-	Licenses        float64 `json:"licenses,omitempty"`
-	SimpleBackup    float64 `json:"simple_backup,omitempty"`
-	BillableSizeGiB int     `json:"billable_size_gib,omitempty"`
-	Labels          []Label `json:"labels,omitempty"`
+	Amount          float64                `json:"amount"`
+	Hours           int                    `json:"hours"`
+	Plan            string                 `json:"plan,omitempty"`
+	Zone            string                 `json:"zone,omitempty"`
+	Size            int                    `json:"size,omitempty"`
+	Cores           int                    `json:"cores,omitempty"`
+	Memory          int                    `json:"memory,omitempty"`
+	Firewall        StringTolerantFloat64  `json:"firewall,omitempty"`
+	Licenses        float64                `json:"licenses,omitempty"`
+	SimpleBackup    float64                `json:"simple_backup,omitempty"`
+	BillableSizeGiB int                    `json:"billable_size_gib,omitempty"`
+	Labels          []Label                `json:"labels,omitempty"`
 }
