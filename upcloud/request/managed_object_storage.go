@@ -484,10 +484,10 @@ func (r *WaitForManagedObjectStorageBucketDeletionRequest) RequestURL() string {
 }
 
 type CreateManagedObjectStoragePolicyVersionRequest struct {
-	ServiceUUID  string `json:"-"`
-	Name         string `json:"-"`
-	Document     string `json:"document"`
-	SetAsDefault bool   `json:"set_as_default,omitempty"`
+	ServiceUUID string `json:"-"`
+	Name        string `json:"-"`
+	Document    string `json:"document"`
+	IsDefault   bool   `json:"is_default,omitempty"`
 }
 
 func (r *CreateManagedObjectStoragePolicyVersionRequest) RequestURL() string {
