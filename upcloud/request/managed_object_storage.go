@@ -492,7 +492,8 @@ type CreateManagedObjectStoragePolicyVersionRequest struct {
 
 func (r *CreateManagedObjectStoragePolicyVersionRequest) RequestURL() string {
 	return fmt.Sprintf(
-		"/managed-object-storage/%s/policies/%s/versions",
+		"%s/%s/policies/%s/versions",
+		managedObjectStorageBasePath,
 		r.ServiceUUID,
 		r.Name,
 	)
