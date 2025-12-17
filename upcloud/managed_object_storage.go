@@ -148,3 +148,10 @@ type ManagedObjectStorageCustomDomain struct {
 	DomainName string `json:"domain_name"`
 	Type       string `json:"type"`
 }
+
+type ManagedObjectStoragePolicyVersion struct {
+	VersionID string    `json:"version_id"`
+	Document  string    `json:"document"`
+	IsDefault bool      `json:"is_default"`
+	CreatedAt time.Time `json:"created_at"`
+}

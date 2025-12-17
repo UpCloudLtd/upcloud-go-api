@@ -482,3 +482,18 @@ type WaitForManagedObjectStorageBucketDeletionRequest struct {
 func (r *WaitForManagedObjectStorageBucketDeletionRequest) RequestURL() string {
 	return fmt.Sprintf("%s/%s/buckets", managedObjectStorageBasePath, r.ServiceUUID)
 }
+
+type CreateManagedObjectStoragePolicyVersionRequest struct {
+	ServiceUUID  string `json:"-"`
+	Name         string `json:"-"`
+	Document     string `json:"document"`
+	SetAsDefault bool   `json:"set_as_default,omitempty"`
+}
+
+func (r *CreateManagedObjectStoragePolicyVersionRequest) RequestURL() string {
+	return fmt.Sprintf(
+		"/managed-object-storage/%s/policies/%s/versions",
+		r.ServiceUUID,
+		r.Name,
+	)
+}
