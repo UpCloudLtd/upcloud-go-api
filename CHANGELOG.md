@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.32.0]
+
 ### Removed
 
 - file-storage: remove `Shares` from `ModifyFileStorageRequest` and `ReplaceFileStorageRequest`
@@ -709,7 +711,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.31.1...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.32.0...HEAD
+[8.32.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.31.1...v8.32.0
 [8.31.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.31.0...v8.31.1
 [8.31.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.30.0...v8.31.0
 [8.30.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.29.2...v8.30.0
