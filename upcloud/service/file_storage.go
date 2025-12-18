@@ -16,6 +16,9 @@ type FileStorage interface {
 	ReplaceFileStorage(ctx context.Context, r *request.ReplaceFileStorageRequest) (*upcloud.FileStorage, error)
 	ModifyFileStorage(ctx context.Context, r *request.ModifyFileStorageRequest) (*upcloud.FileStorage, error)
 	DeleteFileStorage(ctx context.Context, r *request.DeleteFileStorageRequest) error
+	WaitForFileStorageDeletion(ctx context.Context, r *request.WaitForFileStorageDeletionRequest) error
+	WaitForFileStorageOperationalState(ctx context.Context, r *request.WaitForFileStorageOperationalStateRequest) (*upcloud.FileStorage, error)
+	GetFileStorageCurrentState(ctx context.Context, r *request.GetFileStorageCurrentStateRequest) (*upcloud.FileStorage, error)
 	GetFileStorageNetworks(ctx context.Context, r *request.GetFileStorageNetworksRequest) ([]upcloud.FileStorageNetwork, error)
 	CreateFileStorageNetwork(ctx context.Context, r *request.CreateFileStorageNetworkRequest) (*upcloud.FileStorageNetwork, error)
 	GetFileStorageNetwork(ctx context.Context, r *request.GetFileStorageNetworkRequest) (*upcloud.FileStorageNetwork, error)
@@ -26,6 +29,11 @@ type FileStorage interface {
 	GetFileStorageShare(ctx context.Context, r *request.GetFileStorageShareRequest) (*upcloud.FileStorageShare, error)
 	ModifyFileStorageShare(ctx context.Context, r *request.ModifyFileStorageShareRequest) (*upcloud.FileStorageShare, error)
 	DeleteFileStorageShare(ctx context.Context, r *request.DeleteFileStorageShareRequest) error
+	GetFileStorageShareACLs(ctx context.Context, r *request.GetFileStorageShareACLsRequest) ([]upcloud.FileStorageShareACL, error)
+	CreateFileStorageShareACL(ctx context.Context, r *request.CreateFileStorageShareACLRequest) (*upcloud.FileStorageShareACL, error)
+	GetFileStorageShareACL(ctx context.Context, r *request.GetFileStorageShareACLRequest) (*upcloud.FileStorageShareACL, error)
+	ModifyFileStorageShareACL(ctx context.Context, r *request.ModifyFileStorageShareACLRequest) (*upcloud.FileStorageShareACL, error)
+	DeleteFileStorageShareACL(ctx context.Context, r *request.DeleteFileStorageShareACLRequest) error
 	GetFileStorageLabels(ctx context.Context, r *request.GetFileStorageLabelsRequest) ([]upcloud.Label, error)
 	CreateFileStorageLabel(ctx context.Context, r *request.CreateFileStorageLabelRequest) (*upcloud.Label, error)
 	GetFileStorageLabel(ctx context.Context, r *request.GetFileStorageLabelRequest) (*upcloud.Label, error)
@@ -132,6 +140,12 @@ func (s *Service) WaitForFileStorageOperationalState(ctx context.Context, r *req
 	}, nil)
 }
 
+// GetFileStorageCurrentState retrieves details of a file storage at the current state. (EXPERIMENTAL)
+func (s *Service) GetFileStorageCurrentState(ctx context.Context, r *request.GetFileStorageCurrentStateRequest) (*upcloud.FileStorage, error) {
+	fileStorage := upcloud.FileStorage{}
+	return &fileStorage, s.get(ctx, r.RequestURL(), &fileStorage)
+}
+
 // GetFileStorageNetworks retrieves a list of file storage networks. (EXPERIMENTAL)
 func (s *Service) GetFileStorageNetworks(ctx context.Context, r *request.GetFileStorageNetworksRequest) ([]upcloud.FileStorageNetwork, error) {
 	fileStorageNetworks := make([]upcloud.FileStorageNetwork, 0)
@@ -187,6 +201,35 @@ func (s *Service) ModifyFileStorageShare(ctx context.Context, r *request.ModifyF
 
 // DeleteFileStorageShare deletes a file storage share. (EXPERIMENTAL)
 func (s *Service) DeleteFileStorageShare(ctx context.Context, r *request.DeleteFileStorageShareRequest) error {
+	return s.delete(ctx, r)
+}
+
+// GetFileStorageShareACLs retrieves a list of file storage share ACLs. (EXPERIMENTAL)
+func (s *Service) GetFileStorageShareACLs(ctx context.Context, r *request.GetFileStorageShareACLsRequest) ([]upcloud.FileStorageShareACL, error) {
+	fileStorageShareACLs := make([]upcloud.FileStorageShareACL, 0)
+	return fileStorageShareACLs, s.get(ctx, r.RequestURL(), &fileStorageShareACLs)
+}
+
+// CreateFileStorageShareACL creates a new file storage share ACL. (EXPERIMENTAL)
+func (s *Service) CreateFileStorageShareACL(ctx context.Context, r *request.CreateFileStorageShareACLRequest) (*upcloud.FileStorageShareACL, error) {
+	fileStorageShareACL := upcloud.FileStorageShareACL{}
+	return &fileStorageShareACL, s.create(ctx, r, &fileStorageShareACL)
+}
+
+// GetFileStorageShareACL retrieves details of a file storage share ACL. (EXPERIMENTAL)
+func (s *Service) GetFileStorageShareACL(ctx context.Context, r *request.GetFileStorageShareACLRequest) (*upcloud.FileStorageShareACL, error) {
+	fileStorageShareACL := upcloud.FileStorageShareACL{}
+	return &fileStorageShareACL, s.get(ctx, r.RequestURL(), &fileStorageShareACL)
+}
+
+// ModifyFileStorageShareACL modifies properties of an existing file storage share ACL. (EXPERIMENTAL)
+func (s *Service) ModifyFileStorageShareACL(ctx context.Context, r *request.ModifyFileStorageShareACLRequest) (*upcloud.FileStorageShareACL, error) {
+	fileStorageShareACL := upcloud.FileStorageShareACL{}
+	return &fileStorageShareACL, s.modify(ctx, r, &fileStorageShareACL)
+}
+
+// DeleteFileStorageShareACL deletes a file storage share ACL. (EXPERIMENTAL)
+func (s *Service) DeleteFileStorageShareACL(ctx context.Context, r *request.DeleteFileStorageShareACLRequest) error {
 	return s.delete(ctx, r)
 }
 

@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"crypto/tls"
 	"encoding/csv"
 	"encoding/json"
 	"io"
@@ -177,7 +178,7 @@ func record(t *testing.T, fixture string, f func(context.Context, *testing.T, *r
 		require.NoError(t, err)
 	}()
 
-	// Read token credentials from the environment, if it does not exists try to read user and password
+	// Read token credentials from the environment, if it does not exist try to read user and password
 	var user, password string
 	token := getTokenCredentials()
 	if token == "" {
@@ -187,6 +188,20 @@ func record(t *testing.T, fixture string, f func(context.Context, *testing.T, *r
 	httpClient := client.NewDefaultHTTPClient()
 	origTransport := httpClient.Transport
 	r.SetTransport(origTransport)
+
+	// If set, replace http client transport with one skipping tls verification
+	if os.Getenv(client.EnvDebugSkipCertificateVerify) == "1" {
+		if transport, ok := origTransport.(*http.Transport); ok {
+			var cfg *tls.Config
+			if transport.TLSClientConfig == nil {
+				cfg = client.NewDefaultTLSClientConfig()
+			} else {
+				cfg = transport.TLSClientConfig.Clone()
+			}
+			cfg.InsecureSkipVerify = true
+			transport.TLSClientConfig = cfg
+		}
+	}
 	httpClient.Transport = r
 
 	customAPI := os.Getenv("UPCLOUD_GO_SDK_API_HOST")

@@ -37,7 +37,7 @@ type CreateFileStorageRequest struct {
 	ConfiguredStatus upcloud.FileStorageConfiguredStatus `json:"configured_status"`
 	SizeGiB          int                                 `json:"size_gib"`
 	Networks         []upcloud.FileStorageNetwork        `json:"networks,omitempty"`
-	Shares           []upcloud.FileStorageShare          `json:"shares,omitempty"`
+	Shares           []FileStorageShare                  `json:"shares,omitempty"`
 	Labels           []upcloud.Label                     `json:"labels,omitempty"`
 }
 
@@ -53,7 +53,6 @@ type ReplaceFileStorageRequest struct {
 	ConfiguredStatus upcloud.FileStorageConfiguredStatus `json:"configured_status"`
 	SizeGiB          int                                 `json:"size_gib"`
 	Networks         []upcloud.FileStorageNetwork        `json:"networks,omitempty"`
-	Shares           []upcloud.FileStorageShare          `json:"shares,omitempty"`
 	Labels           []upcloud.Label                     `json:"labels,omitempty"`
 }
 
@@ -65,7 +64,6 @@ type ModifyFileStorageRequest struct {
 	ConfiguredStatus *upcloud.FileStorageConfiguredStatus `json:"configured_status,omitempty"`
 	SizeGiB          *int                                 `json:"size_gib,omitempty"`
 	Networks         *[]upcloud.FileStorageNetwork        `json:"networks,omitempty"`
-	Shares           *[]upcloud.FileStorageShare          `json:"shares,omitempty"`
 	Labels           *[]upcloud.Label                     `json:"labels,omitempty"`
 }
 
@@ -84,6 +82,12 @@ type WaitForFileStorageDeletionRequest struct {
 type WaitForFileStorageOperationalStateRequest struct {
 	DesiredState upcloud.FileStorageOperationalState `json:"-"`
 	UUID         string                              `json:"-"`
+}
+
+type GetFileStorageCurrentStateRequest struct{ UUID string }
+
+func (r *GetFileStorageCurrentStateRequest) RequestURL() string {
+	return "/file-storage/" + r.UUID + "/current-state"
 }
 
 type GetFileStorageNetworksRequest struct{ ServiceUUID string }
@@ -140,14 +144,20 @@ func (r *GetFileStorageSharesRequest) RequestURL() string {
 }
 
 type CreateFileStorageShareRequest struct {
-	ServiceUUID string                   `json:"-"`
-	Name        string                   `json:"name"`
-	Path        string                   `json:"path"`
-	ACL         []upcloud.FileStorageACL `json:"acl"`
+	ServiceUUID string                        `json:"-"`
+	Name        string                        `json:"name"`
+	Path        string                        `json:"path"`
+	ACL         []upcloud.FileStorageShareACL `json:"acl"`
 }
 
 func (r *CreateFileStorageShareRequest) RequestURL() string {
 	return "/file-storage/" + r.ServiceUUID + "/shares"
+}
+
+type FileStorageShare struct {
+	Name string                        `json:"name"`
+	Path string                        `json:"path"`
+	ACL  []upcloud.FileStorageShareACL `json:"acl"`
 }
 
 type GetFileStorageShareRequest struct {
@@ -160,9 +170,8 @@ func (r *GetFileStorageShareRequest) RequestURL() string {
 }
 
 type ModifyFileStorageShare struct {
-	Name *string                   `json:"name,omitempty"`
-	Path *string                   `json:"path,omitempty"`
-	ACL  *[]upcloud.FileStorageACL `json:"acl,omitempty"`
+	Name *string                        `json:"name,omitempty"`
+	ACL  *[]upcloud.FileStorageShareACL `json:"acl,omitempty"`
 }
 
 type ModifyFileStorageShareRequest struct {
@@ -183,6 +192,64 @@ type DeleteFileStorageShareRequest struct {
 
 func (r *DeleteFileStorageShareRequest) RequestURL() string {
 	return "/file-storage/" + r.ServiceUUID + "/shares/" + r.ShareName
+}
+
+type GetFileStorageShareACLsRequest struct {
+	ServiceUUID string
+	ShareName   string
+}
+
+func (r *GetFileStorageShareACLsRequest) RequestURL() string {
+	return "/file-storage/" + r.ServiceUUID + "/shares/" + r.ShareName + "/acl"
+}
+
+type CreateFileStorageShareACLRequest struct {
+	upcloud.FileStorageShareACL
+
+	ServiceUUID string `json:"-"`
+	ShareName   string `json:"-"`
+}
+
+func (r *CreateFileStorageShareACLRequest) RequestURL() string {
+	return "/file-storage/" + r.ServiceUUID + "/shares/" + r.ShareName + "/acl"
+}
+
+type GetFileStorageShareACLRequest struct {
+	ServiceUUID string
+	ShareName   string
+	ACLName     string
+}
+
+func (r *GetFileStorageShareACLRequest) RequestURL() string {
+	return "/file-storage/" + r.ServiceUUID + "/shares/" + r.ShareName + "/acl/" + r.ACLName
+}
+
+type ModifyFileStorageShareACL struct {
+	Name       *string                                `json:"name,omitempty"`
+	Target     *string                                `json:"target,omitempty"`
+	Permission *upcloud.FileStorageShareACLPermission `json:"permission,omitempty"`
+}
+
+type ModifyFileStorageShareACLRequest struct {
+	ModifyFileStorageShareACL
+
+	ServiceUUID string `json:"-"`
+	ShareName   string `json:"-"`
+	ACLName     string `json:"-"`
+}
+
+func (r *ModifyFileStorageShareACLRequest) RequestURL() string {
+	return "/file-storage/" + r.ServiceUUID + "/shares/" + r.ShareName + "/acl/" + r.ACLName
+}
+
+type DeleteFileStorageShareACLRequest struct {
+	ServiceUUID string
+	ShareName   string
+	ACLName     string
+}
+
+func (r *DeleteFileStorageShareACLRequest) RequestURL() string {
+	return "/file-storage/" + r.ServiceUUID + "/shares/" + r.ShareName + "/acl/" + r.ACLName
 }
 
 type GetFileStorageLabelsRequest struct{ ServiceUUID string }
