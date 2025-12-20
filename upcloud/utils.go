@@ -2,6 +2,7 @@ package upcloud
 
 import (
 	"encoding/json"
+	"strconv"
 	"time"
 )
 
@@ -94,6 +95,51 @@ func IntPtr(v int) *int {
 
 func TimePtr(v time.Time) *time.Time {
 	return &v
+}
+
+// StringTolerantFloat64 is a float64 type that tolerates unmarshalling from
+// JSON strings in addition to JSON numbers. This handles API inconsistencies
+// where some numeric fields may be returned as strings (e.g., "0" vs 0).
+type StringTolerantFloat64 float64
+
+// UnmarshalJSON implements custom unmarshaling to handle both string and numeric JSON values.
+func (f *StringTolerantFloat64) UnmarshalJSON(data []byte) error {
+	// Try unmarshaling as a number first
+	var num float64
+	if err := json.Unmarshal(data, &num); err == nil {
+		*f = StringTolerantFloat64(num)
+		return nil
+	}
+
+	// Try unmarshaling as a string
+	var str string
+	if err := json.Unmarshal(data, &str); err == nil {
+		// Handle empty string as 0
+		if str == "" {
+			*f = 0
+			return nil
+		}
+		// Parse the string as a float64
+		parsed, err := strconv.ParseFloat(str, 64)
+		if err == nil {
+			*f = StringTolerantFloat64(parsed)
+			return nil
+		}
+	}
+
+	// If both fail, default to 0
+	*f = 0
+	return nil
+}
+
+// MarshalJSON marshals the value as a standard JSON number.
+func (f StringTolerantFloat64) MarshalJSON() ([]byte, error) {
+	return json.Marshal(float64(f))
+}
+
+// Float64 converts to a standard float64 value.
+func (f StringTolerantFloat64) Float64() float64 {
+	return float64(f)
 }
 
 // ServerUUIDSlice is a slice of string.
