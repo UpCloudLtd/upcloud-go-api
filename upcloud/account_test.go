@@ -469,7 +469,7 @@ func TestUnmarshalBillingSummaryWithStringFirewall(t *testing.T) {
 	assert.Len(t, b.Servers.Server.Resources, 1)
 
 	detail := b.Servers.Server.Resources[0].Details[0]
-	assert.Equal(t, 0.0, detail.Firewall.Float64())
+	assert.Equal(t, 0.0, detail.Firewall)
 	assert.Equal(t, "1xCPU-1GB", detail.Plan)
 }
 
@@ -512,6 +512,6 @@ func TestUnmarshalBillingSummaryWithNumericFirewall(t *testing.T) {
 	assert.Equal(t, 12.75, b.TotalAmount)
 
 	detail := b.Servers.Server.Resources[0].Details[0]
-	assert.Equal(t, 2.25, detail.Firewall.Float64())
+	assert.Equal(t, 2.25, detail.Firewall)
 	assert.Equal(t, "1xCPU-1GB", detail.Plan)
 }
