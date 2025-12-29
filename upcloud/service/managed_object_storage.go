@@ -42,6 +42,10 @@ type ManagedObjectStorage interface {
 	AttachManagedObjectStorageUserPolicy(ctx context.Context, r *request.AttachManagedObjectStorageUserPolicyRequest) error
 	GetManagedObjectStorageUserPolicies(ctx context.Context, r *request.GetManagedObjectStorageUserPoliciesRequest) ([]upcloud.ManagedObjectStorageUserPolicy, error)
 	DetachManagedObjectStorageUserPolicy(ctx context.Context, r *request.DetachManagedObjectStorageUserPolicyRequest) error
+	CreateManagedObjectStoragePolicyVersion(ctx context.Context, r *request.CreateManagedObjectStoragePolicyVersionRequest) (*upcloud.ManagedObjectStoragePolicyVersion, error)
+	GetManagedObjectStoragePolicyVersion(ctx context.Context, r *request.GetManagedObjectStoragePolicyVersionRequest) (*upcloud.ManagedObjectStoragePolicyVersion, error)
+	GetManagedObjectStoragePolicyVersions(ctx context.Context, r *request.GetManagedObjectStoragePolicyVersionsRequest) ([]upcloud.ManagedObjectStoragePolicyVersion, error)
+	DeleteManagedObjectStoragePolicyVersion(ctx context.Context, r *request.DeleteManagedObjectStoragePolicyVersionRequest) error
 	CreateManagedObjectStorageCustomDomain(ctx context.Context, r *request.CreateManagedObjectStorageCustomDomainRequest) error
 	GetManagedObjectStorageCustomDomains(ctx context.Context, r *request.GetManagedObjectStorageCustomDomainsRequest) ([]upcloud.ManagedObjectStorageCustomDomain, error)
 	GetManagedObjectStorageCustomDomain(ctx context.Context, r *request.GetManagedObjectStorageCustomDomainRequest) (*upcloud.ManagedObjectStorageCustomDomain, error)
@@ -201,6 +205,25 @@ func (s *Service) GetManagedObjectStorageUserPolicies(ctx context.Context, r *re
 }
 
 func (s *Service) DetachManagedObjectStorageUserPolicy(ctx context.Context, r *request.DetachManagedObjectStorageUserPolicyRequest) error {
+	return s.delete(ctx, r)
+}
+
+func (s *Service) CreateManagedObjectStoragePolicyVersion(ctx context.Context, r *request.CreateManagedObjectStoragePolicyVersionRequest) (*upcloud.ManagedObjectStoragePolicyVersion, error) {
+	version := upcloud.ManagedObjectStoragePolicyVersion{}
+	return &version, s.create(ctx, r, &version)
+}
+
+func (s *Service) GetManagedObjectStoragePolicyVersion(ctx context.Context, r *request.GetManagedObjectStoragePolicyVersionRequest) (*upcloud.ManagedObjectStoragePolicyVersion, error) {
+	version := upcloud.ManagedObjectStoragePolicyVersion{}
+	return &version, s.get(ctx, r.RequestURL(), &version)
+}
+
+func (s *Service) GetManagedObjectStoragePolicyVersions(ctx context.Context, r *request.GetManagedObjectStoragePolicyVersionsRequest) ([]upcloud.ManagedObjectStoragePolicyVersion, error) {
+	versions := make([]upcloud.ManagedObjectStoragePolicyVersion, 0)
+	return versions, s.get(ctx, r.RequestURL(), &versions)
+}
+
+func (s *Service) DeleteManagedObjectStoragePolicyVersion(ctx context.Context, r *request.DeleteManagedObjectStoragePolicyVersionRequest) error {
 	return s.delete(ctx, r)
 }
 

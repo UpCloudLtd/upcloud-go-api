@@ -5,6 +5,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+
+- managed object storage: add support for policy versions
+
 ### Fixed
 
 - account: improve parsing of `Firewall` field in `BillingResourceDetail` to handle both string and float64 types

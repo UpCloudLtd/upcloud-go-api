@@ -1,0 +1,324 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.32.0
+    url: https://api.upcloud.com/1.3/object-storage-2/regions
+    method: GET
+  response:
+    body: '[{"allow_new":true,"name":"apac-1","primary_zone":"sg-sin1","zones":[{"name":"sg-sin1"},{"name":"au-syd1"}]},{"allow_new":true,"name":"europe-1","primary_zone":"fi-hel2","zones":[{"name":"de-fra1"},{"name":"es-mad1"},{"name":"fi-hel1"},{"name":"fi-hel2"},{"name":"nl-ams1"},{"name":"pl-waw1"},{"name":"se-sto1"},{"name":"uk-lon1"},{"name":"dk-cph1"}]},{"allow_new":true,"name":"europe-2","primary_zone":"de-fra1","zones":[{"name":"de-fra1"},{"name":"es-mad1"},{"name":"fi-hel1"},{"name":"fi-hel2"},{"name":"nl-ams1"},{"name":"pl-waw1"},{"name":"se-sto1"},{"name":"uk-lon1"},{"name":"dk-cph1"}]},{"allow_new":true,"name":"europe-3","primary_zone":"se-sto1","zones":[{"name":"de-fra1"},{"name":"es-mad1"},{"name":"fi-hel1"},{"name":"fi-hel2"},{"name":"nl-ams1"},{"name":"pl-waw1"},{"name":"se-sto1"},{"name":"uk-lon1"},{"name":"dk-cph1"}]},{"allow_new":true,"name":"us-1","primary_zone":"us-chi1","zones":[{"name":"us-chi1"},{"name":"us-sjo1"},{"name":"us-nyc1"}]}]'
+    headers:
+      Content-Length:
+      - "963"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Dec 2025 13:57:24 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+      Upcloud-Cid:
+      - 01KDN6CFGE49NSH6MXBXE8CEW5
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"configured_status":"started","labels":[{"key":"example-key","value":"example-value"}],"name":"go-sdk-integration-test","networks":[{"family":"IPv4","name":"example-public-network","type":"public"}],"region":"apac-1"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.32.0
+    url: https://api.upcloud.com/1.3/object-storage-2
+    method: POST
+  response:
+    body: '{"configured_status":"started","created_at":"2025-12-29T13:57:24.256663Z","custom_domains":[],"endpoints":[{"domain_name":"d95iu.upcloudobjects.com","iam_url":"https://d95iu.upcloudobjects.com:4443/iam","sts_url":"https://d95iu.upcloudobjects.com:4443/sts","type":"public"}],"labels":[{"key":"example-key","value":"example-value"}],"name":"go-sdk-integration-test","networks":[{"family":"IPv4","name":"example-public-network","type":"public"}],"operational_state":"pending","region":"apac-1","state_messages":[],"updated_at":"2025-12-29T13:57:24.256663Z","usage":{"total_objects":0,"total_size_bytes":0},"users":[],"uuid":"126a4b2f-f229-4e12-b320-d4455daf9a64"}'
+    headers:
+      Content-Length:
+      - "661"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Dec 2025 13:57:25 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+      Upcloud-Cid:
+      - 01KDN6CFK9PP55148YV6D2M2TV
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: '{"name":"testpolicy","description":"description2","document":"{\"Version\":
+      \"2012-10-17\",\"Statement\": [{\"Action\": [\"s3:List*\"],\"Resource\": \"*\",\"Effect\":
+      \"Allow\"}]}"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.32.0
+    url: https://api.upcloud.com/1.3/object-storage-2/126a4b2f-f229-4e12-b320-d4455daf9a64/policies
+    method: POST
+  response:
+    body: '{"arn":"urn:ecs:iam::126a4b2ff2294e12b320d4455daf9a64:policy/testpolicy","attachment_count":0,"created_at":"2025-12-29T13:57:26Z","default_version_id":"v1","description":"description2","document":"%7B%22Version%22%3A%222012-10-17%22%2C%22Statement%22%3A%5B%7B%22Action%22%3A%5B%22s3%3AList*%22%5D%2C%22Resource%22%3A%22*%22%2C%22Effect%22%3A%22Allow%22%7D%5D%7D","name":"testpolicy","system":false,"updated_at":"2025-12-29T13:57:26Z"}'
+    headers:
+      Content-Length:
+      - "434"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Dec 2025 13:57:27 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+      Upcloud-Cid:
+      - 01KDN6CGXFHRKTTNHCQ1YM8D9H
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.32.0
+    url: https://api.upcloud.com/1.3/object-storage-2/126a4b2f-f229-4e12-b320-d4455daf9a64/policies/testpolicy/versions
+    method: GET
+  response:
+    body: '[{"created_at":"2025-12-29T13:57:26Z","document":"%7B%22Version%22%3A%222012-10-17%22%2C%22Statement%22%3A%5B%7B%22Action%22%3A%5B%22s3%3AList*%22%5D%2C%22Resource%22%3A%22*%22%2C%22Effect%22%3A%22Allow%22%7D%5D%7D","is_default":true,"version_id":"v1"}]'
+    headers:
+      Content-Length:
+      - "253"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Dec 2025 13:57:28 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+      Upcloud-Cid:
+      - 01KDN6CJWJM1JJQYT5STKKQTBK
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"document":"{\"Version\": \"2012-10-17\",\"Statement\": [{\"Action\":
+      [\"s3:Get*\"],\"Resource\": \"*\",\"Effect\": \"Allow\"}]}","is_default":true}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.32.0
+    url: https://api.upcloud.com/1.3/object-storage-2/126a4b2f-f229-4e12-b320-d4455daf9a64/policies/testpolicy/versions
+    method: POST
+  response:
+    body: '{"created_at":"2025-12-29T13:57:28Z","document":"%7B%22Version%22%3A%222012-10-17%22%2C%22Statement%22%3A%5B%7B%22Action%22%3A%5B%22s3%3AGet*%22%5D%2C%22Resource%22%3A%22*%22%2C%22Effect%22%3A%22Allow%22%7D%5D%7D","is_default":true,"version_id":"v2"}'
+    headers:
+      Content-Length:
+      - "250"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Dec 2025 13:57:29 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+      Upcloud-Cid:
+      - 01KDN6CKJXC7MS8S2S61Y73C5B
+    status: 201 Created
+    code: 201
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.32.0
+    url: https://api.upcloud.com/1.3/object-storage-2/126a4b2f-f229-4e12-b320-d4455daf9a64/policies/testpolicy/versions/v2
+    method: GET
+  response:
+    body: '{"created_at":"2025-12-29T13:57:28Z","document":"%7B%22Version%22%3A%222012-10-17%22%2C%22Statement%22%3A%5B%7B%22Action%22%3A%5B%22s3%3AGet*%22%5D%2C%22Resource%22%3A%22*%22%2C%22Effect%22%3A%22Allow%22%7D%5D%7D","is_default":true,"version_id":"v2"}'
+    headers:
+      Content-Length:
+      - "250"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Dec 2025 13:57:29 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+      Upcloud-Cid:
+      - 01KDN6CMA6WFCDY371Q3T2P4J1
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.32.0
+    url: https://api.upcloud.com/1.3/object-storage-2/126a4b2f-f229-4e12-b320-d4455daf9a64/policies/testpolicy/versions
+    method: GET
+  response:
+    body: '[{"created_at":"2025-12-29T13:57:28Z","document":"%7B%22Version%22%3A%222012-10-17%22%2C%22Statement%22%3A%5B%7B%22Action%22%3A%5B%22s3%3AGet*%22%5D%2C%22Resource%22%3A%22*%22%2C%22Effect%22%3A%22Allow%22%7D%5D%7D","is_default":true,"version_id":"v2"},{"created_at":"2025-12-29T13:57:26Z","document":"%7B%22Version%22%3A%222012-10-17%22%2C%22Statement%22%3A%5B%7B%22Action%22%3A%5B%22s3%3AList*%22%5D%2C%22Resource%22%3A%22*%22%2C%22Effect%22%3A%22Allow%22%7D%5D%7D","is_default":false,"version_id":"v1"}]'
+    headers:
+      Content-Length:
+      - "505"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Dec 2025 13:57:30 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+      Upcloud-Cid:
+      - 01KDN6CMZTCPMSSE891QVZD20G
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.32.0
+    url: https://api.upcloud.com/1.3/object-storage-2/126a4b2f-f229-4e12-b320-d4455daf9a64/policies/testpolicy/versions/v1
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Mon, 29 Dec 2025 13:57:31 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+      Upcloud-Cid:
+      - 01KDN6CNMDC1EHPN29WMGQEK69
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.32.0
+    url: https://api.upcloud.com/1.3/object-storage-2/126a4b2f-f229-4e12-b320-d4455daf9a64/policies/testpolicy
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Mon, 29 Dec 2025 13:57:31 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+      Upcloud-Cid:
+      - 01KDN6CPAAN6GYDS1YGDPV74B5
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.32.0
+    url: https://api.upcloud.com/1.3/object-storage-2/126a4b2f-f229-4e12-b320-d4455daf9a64/users
+    method: GET
+  response:
+    body: '[]'
+    headers:
+      Content-Length:
+      - "2"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 29 Dec 2025 13:57:32 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+      Upcloud-Cid:
+      - 01KDN6CPYXHF97WDZ1MFQPRMBF
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Basic [REDACTED]
+      Content-Type:
+      - application/json
+      User-Agent:
+      - upcloud-go-api/8.32.0
+    url: https://api.upcloud.com/1.3/object-storage-2/126a4b2f-f229-4e12-b320-d4455daf9a64
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Date:
+      - Mon, 29 Dec 2025 13:57:33 GMT
+      Strict-Transport-Security:
+      - max-age=63072000
+      Upcloud-Cid:
+      - 01KDN6CQP3W4V1G4MJ3DEQ95YG
+    status: 204 No Content
+    code: 204
+    duration: ""
