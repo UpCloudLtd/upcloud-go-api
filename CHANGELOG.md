@@ -5,6 +5,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Fixed
+
+- account: improve parsing of `Firewall` field in `BillingResourceDetail` to handle both string and float64 types
+
 ## [8.32.0]
 
 ### Removed
