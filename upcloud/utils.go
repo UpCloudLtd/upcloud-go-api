@@ -2,6 +2,8 @@ package upcloud
 
 import (
 	"encoding/json"
+	"fmt"
+	"strconv"
 	"time"
 )
 
@@ -94,6 +96,30 @@ func IntPtr(v int) *int {
 
 func TimePtr(v time.Time) *time.Time {
 	return &v
+}
+
+func StringOrFloat64ToFloat64(val any) (float64, error) {
+	// Try converting to float64 first
+	if num, ok := val.(float64); ok {
+		return num, nil
+	}
+
+	// Try converting to string
+	if str, ok := val.(string); ok {
+		// Handle empty string as 0
+		if str == "" {
+			return 0, nil
+		}
+		// Parse the string as a float64
+		parsed, err := strconv.ParseFloat(str, 64)
+		if err != nil {
+			return 0, fmt.Errorf("failed to parse float64 from string: %w", err)
+		}
+		return parsed, nil
+	}
+
+	// If both fail, default to 0 and return an error
+	return 0, fmt.Errorf("failed to parse float64 from value of type %T, expected float64 or string", val)
 }
 
 // ServerUUIDSlice is a slice of string.

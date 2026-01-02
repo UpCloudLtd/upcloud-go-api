@@ -2,6 +2,7 @@ package upcloud
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 type AccountType string
@@ -246,4 +247,38 @@ type BillingResourceDetail struct {
 	SimpleBackup    float64 `json:"simple_backup,omitempty"`
 	BillableSizeGiB int     `json:"billable_size_gib,omitempty"`
 	Labels          []Label `json:"labels,omitempty"`
+}
+
+func (brd *BillingResourceDetail) UnmarshalJSON(data []byte) error {
+	// Unmarshal into a map to handle firewall field separately
+	var m map[string]any
+	if err := json.Unmarshal(data, &m); err != nil {
+		return err
+	}
+
+	// Parse firewall field and remove it from the map
+	var firewall float64
+	if val, ok := m["firewall"]; ok {
+		parsed, err := StringOrFloat64ToFloat64(val)
+		if err != nil {
+			return fmt.Errorf("failed to parse firewall field: %w", err)
+		}
+		firewall = parsed
+		delete(m, "firewall")
+	}
+
+	// Marshal the modified map back to JSON
+	b, err := json.Marshal(m)
+	if err != nil {
+		return err
+	}
+
+	// Unmarshal the rest of the fields using default unmarshalling and set firewall separately
+	type brdType BillingResourceDetail
+	if err := json.Unmarshal(b, (*brdType)(brd)); err != nil {
+		return err
+	}
+	brd.Firewall = firewall
+
+	return nil
 }

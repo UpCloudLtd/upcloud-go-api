@@ -75,7 +75,7 @@ func TestClientWithToken(t *testing.T) {
 	if os.Getenv("UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS") == "yes" || testing.Short() {
 		t.Skip("Skipping TestGetAccount...")
 	}
-	expires := time.Date(2025, 12, 1, 0, 0, 0, 0, time.UTC)
+	expires := time.Now().Add(time.Minute)
 	tokenRequest := request.CreateTokenRequest{
 		Name:               "my_1st_token",
 		ExpiresAt:          expires,

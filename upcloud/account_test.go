@@ -426,3 +426,92 @@ func TestUnmarshalBillingSummary(t *testing.T) {
 		},
 	}, b.ManagedObjectStorages.ManagedObjectStorage.Resources[0].Details)
 }
+
+// TestUnmarshalBillingSummaryWithStringFirewall tests that BillingSummary handles
+// firewall field as a string (issue #449)
+func TestUnmarshalBillingSummaryWithStringFirewall(t *testing.T) {
+	originalJSON := []byte(`
+{
+  "currency": "USD",
+  "total_amount": 10.5,
+  "servers": {
+    "server": {
+      "resources": [
+        {
+          "amount": 10.5,
+          "details": [
+            {
+              "amount": 10.5,
+              "hours": 100,
+              "firewall": "0",
+              "plan": "1xCPU-1GB",
+              "zone": "us-nyc1"
+            }
+          ],
+          "hours": 100,
+          "resource_id": "00000000-0000-0000-0000-000000000001"
+        }
+      ],
+      "total_amount": 10.5
+    },
+    "total_amount": 10.5
+  }
+}
+  `)
+	var b BillingSummary
+	err := json.Unmarshal(originalJSON, &b)
+	assert.NoError(t, err)
+
+	assert.Equal(t, "USD", b.Currency)
+	assert.Equal(t, 10.5, b.TotalAmount)
+	assert.NotNil(t, b.Servers)
+	assert.NotNil(t, b.Servers.Server)
+	assert.Len(t, b.Servers.Server.Resources, 1)
+
+	detail := b.Servers.Server.Resources[0].Details[0]
+	assert.Equal(t, 0.0, detail.Firewall)
+	assert.Equal(t, "1xCPU-1GB", detail.Plan)
+}
+
+// TestUnmarshalBillingSummaryWithNumericFirewall tests that BillingSummary still handles
+// firewall field as a number
+func TestUnmarshalBillingSummaryWithNumericFirewall(t *testing.T) {
+	originalJSON := []byte(`
+{
+  "currency": "USD",
+  "total_amount": 12.75,
+  "servers": {
+    "server": {
+      "resources": [
+        {
+          "amount": 12.75,
+          "details": [
+            {
+              "amount": 12.75,
+              "hours": 100,
+              "firewall": 2.25,
+              "plan": "1xCPU-1GB",
+              "zone": "us-nyc1"
+            }
+          ],
+          "hours": 100,
+          "resource_id": "00000000-0000-0000-0000-000000000002"
+        }
+      ],
+      "total_amount": 12.75
+    },
+    "total_amount": 12.75
+  }
+}
+  `)
+	var b BillingSummary
+	err := json.Unmarshal(originalJSON, &b)
+	assert.NoError(t, err)
+
+	assert.Equal(t, "USD", b.Currency)
+	assert.Equal(t, 12.75, b.TotalAmount)
+
+	detail := b.Servers.Server.Resources[0].Details[0]
+	assert.Equal(t, 2.25, detail.Firewall)
+	assert.Equal(t, "1xCPU-1GB", detail.Plan)
+}

@@ -608,8 +608,8 @@ func TestDeleteManagedObjectStorageUserAccessKey(t *testing.T) {
 	})
 }
 
-func TestCreateManagedObjectStoragePolicy(t *testing.T) {
-	record(t, "createmanagedobjectstoragepolicy", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+func TestManagedObjectStoragePolicy(t *testing.T) {
+	record(t, "managedobjectstoragepolicy", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		storage, err := createManagedObjectStorage(ctx, svc)
 		require.NoError(t, err)
 
@@ -628,16 +628,27 @@ func TestCreateManagedObjectStoragePolicy(t *testing.T) {
 		assert.Equal(t, policy.Name, "testpolicy")
 		assert.Equal(t, policy.Description, "description2")
 
+		_, err = svc.GetManagedObjectStoragePolicy(ctx, &request.GetManagedObjectStoragePolicyRequest{ServiceUUID: storage.UUID, Name: policy.Name})
+		assert.NoError(t, err)
+
+		policies, err := svc.GetManagedObjectStoragePolicies(ctx, &request.GetManagedObjectStoragePoliciesRequest{ServiceUUID: storage.UUID})
+		assert.NoError(t, err)
+		assert.Len(t, policies, 6)
+
 		err = svc.DeleteManagedObjectStoragePolicy(ctx, &request.DeleteManagedObjectStoragePolicyRequest{
 			ServiceUUID: storage.UUID,
 			Name:        policy.Name,
 		})
 		require.NoError(t, err)
+
+		policies, err = svc.GetManagedObjectStoragePolicies(ctx, &request.GetManagedObjectStoragePoliciesRequest{ServiceUUID: storage.UUID})
+		assert.NoError(t, err)
+		assert.Len(t, policies, 5)
 	})
 }
 
-func TestGetManagedObjectStoragePolicies(t *testing.T) {
-	record(t, "getmanagedobjectstoragepolicies", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+func TestManagedObjectStoragePolicyVersion(t *testing.T) {
+	record(t, "managedobjectstoragepolicyversion", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		storage, err := createManagedObjectStorage(ctx, svc)
 		require.NoError(t, err)
 
@@ -649,66 +660,50 @@ func TestGetManagedObjectStoragePolicies(t *testing.T) {
 		policy, err := svc.CreateManagedObjectStoragePolicy(ctx, &request.CreateManagedObjectStoragePolicyRequest{
 			Name:        "testpolicy",
 			Description: "description2",
-			Document:    "%7B%22Version%22%3A%20%222012-10-17%22%2C%20%20%22Statement%22%3A%20%5B%7B%22Action%22%3A%20%5B%22iam%3AGetUser%22%5D%2C%20%22Resource%22%3A%20%22%2A%22%2C%20%22Effect%22%3A%20%22Allow%22%2C%20%22Sid%22%3A%20%22editor%22%7D%5D%7D",
+			Document:    `{"Version": "2012-10-17","Statement": [{"Action": ["s3:List*"],"Resource": "*","Effect": "Allow"}]}`,
 			ServiceUUID: storage.UUID,
-		})
-		require.NoError(t, err)
-
-		policies, err := svc.GetManagedObjectStoragePolicies(ctx, &request.GetManagedObjectStoragePoliciesRequest{ServiceUUID: storage.UUID})
-		assert.NoError(t, err)
-		assert.Len(t, policies, 6)
-
-		err = svc.DeleteManagedObjectStoragePolicy(ctx, &request.DeleteManagedObjectStoragePolicyRequest{
-			ServiceUUID: storage.UUID,
-			Name:        policy.Name,
-		})
-		require.NoError(t, err)
-	})
-}
-
-func TestGetManagedObjectStoragePolicy(t *testing.T) {
-	record(t, "getmanagedobjectstoragepolicy", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		storage, err := createManagedObjectStorage(ctx, svc)
-		require.NoError(t, err)
-
-		defer func(uuid string) {
-			err = deleteManagedObjectStorageAndUsers(ctx, svc, uuid)
-			require.NoError(t, err)
-		}(storage.UUID)
-
-		policy, err := svc.CreateManagedObjectStoragePolicy(ctx, &request.CreateManagedObjectStoragePolicyRequest{
-			Name:        "testpolicy",
-			ServiceUUID: storage.UUID,
-			Document:    "%7B%22Version%22%3A%20%222012-10-17%22%2C%20%20%22Statement%22%3A%20%5B%7B%22Action%22%3A%20%5B%22iam%3AGetUser%22%5D%2C%20%22Resource%22%3A%20%22%2A%22%2C%20%22Effect%22%3A%20%22Allow%22%2C%20%22Sid%22%3A%20%22editor%22%7D%5D%7D",
 		})
 		require.NoError(t, err)
 		assert.Equal(t, policy.Name, "testpolicy")
+		assert.Equal(t, policy.Description, "description2")
 
-		_, err = svc.GetManagedObjectStoragePolicy(ctx, &request.GetManagedObjectStoragePolicyRequest{ServiceUUID: storage.UUID, Name: policy.Name})
-		assert.NoError(t, err)
-
-		err = svc.DeleteManagedObjectStoragePolicy(ctx, &request.DeleteManagedObjectStoragePolicyRequest{
+		versions, err := svc.GetManagedObjectStoragePolicyVersions(ctx, &request.GetManagedObjectStoragePolicyVersionsRequest{
 			ServiceUUID: storage.UUID,
 			Name:        policy.Name,
 		})
 		require.NoError(t, err)
-	})
-}
+		assert.Len(t, versions, 1)
 
-func TestDeleteManagedObjectStoragePolicy(t *testing.T) {
-	record(t, "deletemanagedobjectstoragepolicy", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
-		storage, err := createManagedObjectStorage(ctx, svc)
-		require.NoError(t, err)
+		previousVersionID := versions[0].VersionID
 
-		defer func(uuid string) {
-			err = deleteManagedObjectStorageAndUsers(ctx, svc, uuid)
-			require.NoError(t, err)
-		}(storage.UUID)
-
-		policy, err := svc.CreateManagedObjectStoragePolicy(ctx, &request.CreateManagedObjectStoragePolicyRequest{
-			Name:        "testpolicy",
+		version, err := svc.CreateManagedObjectStoragePolicyVersion(ctx, &request.CreateManagedObjectStoragePolicyVersionRequest{
 			ServiceUUID: storage.UUID,
-			Document:    "%7B%22Version%22%3A%20%222012-10-17%22%2C%20%20%22Statement%22%3A%20%5B%7B%22Action%22%3A%20%5B%22iam%3AGetUser%22%5D%2C%20%22Resource%22%3A%20%22%2A%22%2C%20%22Effect%22%3A%20%22Allow%22%2C%20%22Sid%22%3A%20%22editor%22%7D%5D%7D",
+			Name:        policy.Name,
+			IsDefault:   true,
+			Document:    `{"Version": "2012-10-17","Statement": [{"Action": ["s3:Get*"],"Resource": "*","Effect": "Allow"}]}`,
+		})
+		require.NoError(t, err)
+		versionID := version.VersionID
+
+		version, err = svc.GetManagedObjectStoragePolicyVersion(ctx, &request.GetManagedObjectStoragePolicyVersionRequest{
+			ServiceUUID: storage.UUID,
+			Name:        policy.Name,
+			VersionID:   version.VersionID,
+		})
+		require.NoError(t, err)
+		assert.Equal(t, versionID, version.VersionID)
+
+		versions, err = svc.GetManagedObjectStoragePolicyVersions(ctx, &request.GetManagedObjectStoragePolicyVersionsRequest{
+			ServiceUUID: storage.UUID,
+			Name:        policy.Name,
+		})
+		require.NoError(t, err)
+		assert.Len(t, versions, 2)
+
+		err = svc.DeleteManagedObjectStoragePolicyVersion(ctx, &request.DeleteManagedObjectStoragePolicyVersionRequest{
+			ServiceUUID: storage.UUID,
+			Name:        policy.Name,
+			VersionID:   previousVersionID,
 		})
 		require.NoError(t, err)
 

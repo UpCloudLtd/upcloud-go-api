@@ -482,3 +482,65 @@ type WaitForManagedObjectStorageBucketDeletionRequest struct {
 func (r *WaitForManagedObjectStorageBucketDeletionRequest) RequestURL() string {
 	return fmt.Sprintf("%s/%s/buckets", managedObjectStorageBasePath, r.ServiceUUID)
 }
+
+type CreateManagedObjectStoragePolicyVersionRequest struct {
+	ServiceUUID string `json:"-"`
+	Name        string `json:"-"`
+	Document    string `json:"document"`
+	IsDefault   bool   `json:"is_default,omitempty"`
+}
+
+func (r *CreateManagedObjectStoragePolicyVersionRequest) RequestURL() string {
+	return fmt.Sprintf(
+		"%s/%s/policies/%s/versions",
+		managedObjectStorageBasePath,
+		r.ServiceUUID,
+		r.Name,
+	)
+}
+
+type GetManagedObjectStoragePolicyVersionsRequest struct {
+	ServiceUUID string `json:"-"`
+	Name        string `json:"-"`
+}
+
+func (r *GetManagedObjectStoragePolicyVersionsRequest) RequestURL() string {
+	return fmt.Sprintf(
+		"%s/%s/policies/%s/versions",
+		managedObjectStorageBasePath,
+		r.ServiceUUID,
+		r.Name,
+	)
+}
+
+type GetManagedObjectStoragePolicyVersionRequest struct {
+	ServiceUUID string `json:"-"`
+	Name        string `json:"-"`
+	VersionID   string `json:"-"`
+}
+
+func (r *GetManagedObjectStoragePolicyVersionRequest) RequestURL() string {
+	return fmt.Sprintf(
+		"%s/%s/policies/%s/versions/%s",
+		managedObjectStorageBasePath,
+		r.ServiceUUID,
+		r.Name,
+		r.VersionID,
+	)
+}
+
+type DeleteManagedObjectStoragePolicyVersionRequest struct {
+	ServiceUUID string `json:"-"`
+	Name        string `json:"-"`
+	VersionID   string `json:"-"`
+}
+
+func (r *DeleteManagedObjectStoragePolicyVersionRequest) RequestURL() string {
+	return fmt.Sprintf(
+		"%s/%s/policies/%s/versions/%s",
+		managedObjectStorageBasePath,
+		r.ServiceUUID,
+		r.Name,
+		r.VersionID,
+	)
+}

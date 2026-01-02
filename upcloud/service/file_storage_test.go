@@ -20,7 +20,7 @@ func TestFileStorage(t *testing.T) {
 			Zone:             "fi-hel2",
 			ConfiguredStatus: upcloud.FileStorageConfiguredStatusStarted,
 			SizeGiB:          250,
-			Labels:           []upcloud.Label{{Key: "managedBy", Value: "upcloud-go-sdk-unit-test"}},
+			Labels:           []upcloud.Label{{Key: "managedBy", Value: "upcloud-go-sdk-test"}},
 		}
 		created, err := svc.CreateFileStorage(ctx, createReq)
 		assert.NoError(t, err)
@@ -121,11 +121,15 @@ func TestFileStorage(t *testing.T) {
 			ServiceUUID: modified.UUID,
 			Name:        "test-share",
 			Path:        "/data/test",
-			ACL:         []upcloud.FileStorageACL{{Target: "user", Permission: upcloud.FileStorageACLPermissionReadWrite}},
+			ACL:         []upcloud.FileStorageShareACL{{Name: "test-share-acl", Target: "10.10.10.0/24", Permission: upcloud.FileStorageShareACLPermissionReadWrite}},
 		}
 		share, err := svc.CreateFileStorageShare(ctx, shareCreate)
 		assert.NoError(t, err)
 		require.NotNil(t, share)
+
+		currentState, err := svc.GetFileStorageCurrentState(ctx, &request.GetFileStorageCurrentStateRequest{UUID: modified.UUID})
+		assert.NoError(t, err)
+		require.NotNil(t, currentState)
 
 		sharereq := &request.GetFileStorageSharesRequest{ServiceUUID: modified.UUID}
 		shares, err := svc.GetFileStorageShares(ctx, sharereq)
@@ -136,21 +140,48 @@ func TestFileStorage(t *testing.T) {
 		assert.NoError(t, err)
 		assert.NotNil(t, gotShare)
 
-		modSharePath := "/data/modified"
-		modShareACL := []upcloud.FileStorageACL{{Target: "user", Permission: upcloud.FileStorageACLPermissionReadOnly}}
+		modShareACL := []upcloud.FileStorageShareACL{{Name: "test-share-acl", Target: "*", Permission: upcloud.FileStorageShareACLPermissionReadOnly}}
 		modShareReq := &request.ModifyFileStorageShareRequest{
 			ServiceUUID: modified.UUID,
 			ShareName:   share.Name,
 			ModifyFileStorageShare: request.ModifyFileStorageShare{
-				Path: &modSharePath,
-				ACL:  &modShareACL,
+				ACL: &modShareACL,
 			},
 		}
 		modShare, err := svc.ModifyFileStorageShare(ctx, modShareReq)
 		assert.NoError(t, err)
 		require.NotNil(t, modShare)
-		assert.Equal(t, "/data/modified", modShare.Path)
-		assert.Equal(t, upcloud.FileStorageACLPermissionReadOnly, modShare.ACL[0].Permission)
+		assert.Equal(t, upcloud.FileStorageShareACLPermissionReadOnly, modShare.ACL[0].Permission)
+		assert.Equal(t, "*", modShare.ACL[0].Target)
+
+		modShareEmptyACLReq := &request.ModifyFileStorageShareRequest{
+			ServiceUUID: modified.UUID,
+			ShareName:   share.Name,
+			ModifyFileStorageShare: request.ModifyFileStorageShare{
+				ACL: &[]upcloud.FileStorageShareACL{},
+			},
+		}
+		modShareEmptyACL, err := svc.ModifyFileStorageShare(ctx, modShareEmptyACLReq)
+		assert.NoError(t, err)
+		require.NotNil(t, modShare)
+		assert.Equal(t, []upcloud.FileStorageShareACL{}, modShareEmptyACL.ACL)
+
+		newShareACL := upcloud.FileStorageShareACL{Name: "acl2", Target: "10.10.11.0/24", Permission: upcloud.FileStorageShareACLPermissionReadWrite}
+		aclCreateReq := &request.CreateFileStorageShareACLRequest{
+			ServiceUUID:         modified.UUID,
+			ShareName:           share.Name,
+			FileStorageShareACL: newShareACL,
+		}
+
+		acl, err := svc.CreateFileStorageShareACL(ctx, aclCreateReq)
+		assert.NoError(t, err)
+		require.NotNil(t, acl)
+		assert.Equal(t, "acl2", acl.Name)
+		assert.Equal(t, "10.10.11.0/24", acl.Target)
+		assert.Equal(t, upcloud.FileStorageShareACLPermissionReadWrite, acl.Permission)
+
+		err = svc.DeleteFileStorageShareACL(ctx, &request.DeleteFileStorageShareACLRequest{ServiceUUID: modified.UUID, ShareName: share.Name, ACLName: acl.Name})
+		assert.NoError(t, err)
 
 		err = svc.DeleteFileStorageShare(ctx, &request.DeleteFileStorageShareRequest{ServiceUUID: modified.UUID, ShareName: share.Name})
 		assert.NoError(t, err)
