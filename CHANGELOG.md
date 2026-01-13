@@ -5,6 +5,16 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+
+- price: add new `PricingByZone` type (map-based structure) for easier access to pricing items without reflection
+- service: add new `GetPricingByZone` function for retrieving pricing information organized by zone and item name
+
+### Deprecated
+
+- price: deprecate `PriceZone` and `PriceZones` types in favor of `PricingByZone`
+- service: deprecate `GetPriceZones` function in favor of `GetPricingByZone`
+
 ## [8.33.0]
 
 ### Added
