@@ -171,18 +171,18 @@ func TestUnmarshalPriceZones(t *testing.T) {
 	assert.Equal(t, 10.0, zone.IORequestBackup.Price)
 }
 
-func TestUnmarshalPricingByZone(t *testing.T) {
-	pricing := PricingByZone{}
-	err := json.Unmarshal([]byte(testdata), &pricing)
+func TestUnmarshalPricesByZone(t *testing.T) {
+	prices := PricesByZone{}
+	err := json.Unmarshal([]byte(testdata), &prices)
 	assert.Nil(t, err)
-	assert.Len(t, pricing, 2)
+	assert.Len(t, prices, 2)
 
 	// Test de-fra1 zone
-	deFramItems, ok := pricing["de-fra1"]
+	deFramItems, ok := prices["de-fra1"]
 	assert.True(t, ok)
 	assert.NotNil(t, deFramItems)
 
-	// Test specific pricing items in de-fra1
+	// Test specific prices items in de-fra1
 	firewall := deFramItems["firewall"]
 	assert.Equal(t, 2, firewall.Amount)
 	assert.Equal(t, 0.5, firewall.Price)
@@ -204,7 +204,7 @@ func TestUnmarshalPricingByZone(t *testing.T) {
 	assert.Equal(t, 0.028, storageMax.Price)
 
 	// Test fi-hel1 zone
-	helItems, ok := pricing["fi-hel1"]
+	helItems, ok := prices["fi-hel1"]
 	assert.True(t, ok)
 	assert.NotNil(t, helItems)
 

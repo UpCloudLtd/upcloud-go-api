@@ -2,12 +2,12 @@ package upcloud
 
 import "encoding/json"
 
-// PricingByZone represents pricing information organized by zone and item name.
+// PricesByZone represents price information organized by zone and item name.
 // The structure is map[zoneName]map[itemName]Price.
-type PricingByZone map[string]map[string]Price
+type PricesByZone map[string]map[string]Price
 
-// UnmarshalJSON converts the API response to the PricingByZone format.
-func (p *PricingByZone) UnmarshalJSON(b []byte) error {
+// UnmarshalJSON converts the API response to the PricesByZone format.
+func (p *PricesByZone) UnmarshalJSON(b []byte) error {
 	// Parse the raw JSON into a generic structure
 	var raw struct {
 		Prices struct {
@@ -60,7 +60,7 @@ func (p *PricingByZone) UnmarshalJSON(b []byte) error {
 
 // PriceZones represents a /price response
 //
-// Deprecated: Use PricingByZone instead.
+// Deprecated: Use PricesByZone instead.
 type PriceZones struct {
 	PriceZones []PriceZone `json:"prices"`
 }
@@ -87,7 +87,7 @@ func (s *PriceZones) UnmarshalJSON(b []byte) error {
 
 // PriceZone represents a price zone. A prize zone consists of multiple items that each have a price.
 //
-// Deprecated: Use PricingByZone instead.
+// Deprecated: Use PricesByZone instead.
 type PriceZone struct {
 	Name string `json:"name"`
 
