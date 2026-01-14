@@ -1040,7 +1040,7 @@ func TestLoadBalancerPage(t *testing.T) {
 	record(t, "loadbalancerpage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		net, err := createLoadBalancerAndPrivateNetwork(ctx, svc, zone, "172.16.0.0/24")
 		require.NoError(t, err)
-		lbs := make([]*upcloud.LoadBalancer, 0)
+		lbs := make([]*upcloud.LoadBalancer, 0, 5)
 		for range 5 {
 			lb, err := createLoadBalancer(ctx, svc, net.UUID, zone)
 			require.NoError(t, err)

@@ -40,7 +40,7 @@ func TestGetPriceZones(t *testing.T) {
 		assert.NotEmpty(t, zones.PriceZones)
 
 		var found bool
-		var zone upcloud.PriceZone
+		var zone upcloud.PriceZone //nolint: staticcheck // To be removed in v9
 		for _, z := range zones.PriceZones {
 			if z.Name == testFiHel1Zone {
 				found = true
