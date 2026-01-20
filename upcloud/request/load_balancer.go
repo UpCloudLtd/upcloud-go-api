@@ -729,6 +729,30 @@ type ModifyLoadBalancerCertificateBundleRequest struct {
 	Hostnames     []string `json:"hostnames,omitempty"`
 }
 
+func (r *ModifyLoadBalancerCertificateBundleRequest) MarshalJSON() ([]byte, error) {
+	m := make(map[string]interface{})
+	if r.Name != "" {
+		m["name"] = r.Name
+	}
+	if r.Certificate != "" {
+		m["certificate"] = r.Certificate
+	}
+	if r.Intermediates != nil {
+		if *r.Intermediates == "" {
+			m["intermediates"] = nil
+		} else {
+			m["intermediates"] = *r.Intermediates
+		}
+	}
+	if r.PrivateKey != "" {
+		m["private_key"] = r.PrivateKey
+	}
+	if len(r.Hostnames) > 0 {
+		m["hostnames"] = r.Hostnames
+	}
+	return json.Marshal(m)
+}
+
 func (r *ModifyLoadBalancerCertificateBundleRequest) RequestURL() string {
 	return fmt.Sprintf("/load-balancer/certificate-bundles/%s", r.UUID)
 }

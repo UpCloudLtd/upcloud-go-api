@@ -5,6 +5,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Fixed
+
+- load-balancer: `ModifyLoadBalancerCertificateBundleRequest` `intermediates` field marshals to null, if set to a pointer to empty string
+
 ## [8.34.0]
 
 ### Added
