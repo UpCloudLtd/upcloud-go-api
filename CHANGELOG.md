@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.34.1]
+
 ### Fixed
 
 - load-balancer: `ModifyLoadBalancerCertificateBundleRequest` `intermediates` field marshals to null, if set to a pointer to empty string
@@ -737,7 +739,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.34.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.34.1...HEAD
+[8.34.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.34.0...v8.34.1
 [8.34.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.33.0...v8.34.0
 [8.33.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.32.0...v8.33.0
 [8.32.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.31.1...v8.32.0
