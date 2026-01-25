@@ -4,11 +4,17 @@ updates:
     directory: /
     schedule:
       interval: daily
+    cooldown:
+      default-days: 7
   - package-ecosystem: gomod
     directory: /
     schedule:
       interval: daily
+    cooldown:
+      default-days: 7
   - package-ecosystem: gomod
     directory: /credentials
     schedule:
       interval: daily
+    cooldown:
+      default-days: 7
