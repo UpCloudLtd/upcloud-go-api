@@ -74,14 +74,20 @@ func (r CreateNetworkRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&v)
 }
 
+type ModifyNetworkClearIPNetworksFields struct {
+	DHCPDns bool
+}
+
 // ModifyNetworkRequest represents a request to modify an existing network.
 type ModifyNetworkRequest struct {
 	UUID string `json:"-"`
 
-	Name       string                 `json:"name,omitempty"`
-	Zone       string                 `json:"zone,omitempty"`
-	IPNetworks upcloud.IPNetworkSlice `json:"ip_networks,omitempty"`
-	Labels     *[]upcloud.Label       `json:"labels,omitempty"`
+	Name string `json:"name,omitempty"`
+	Zone string `json:"zone,omitempty"`
+	// `upcloud.IPNetworkSlice` does not support clearing `DHCPDns`. Use `ClearIPNetworksField` to clear these fields.
+	IPNetworks            upcloud.IPNetworkSlice               `json:"ip_networks,omitempty"`
+	Labels                *[]upcloud.Label                     `json:"labels,omitempty"`
+	ClearIPNetworksFields []ModifyNetworkClearIPNetworksFields `json:"-"`
 }
 
 // RequestURL implements the Request interface.
@@ -92,11 +98,59 @@ func (r *ModifyNetworkRequest) RequestURL() string {
 // MarshalJSON is a custom marshaller that deals with
 // deeply embedded values.
 func (r ModifyNetworkRequest) MarshalJSON() ([]byte, error) {
-	type localModifyNetworkRequest ModifyNetworkRequest
+	// Work-around for clearing IPNetwork fields. The modify request should use a struct that supports distinguishing empty values from undefined ones. Currently omitempty blocks user from clearing these fields.
+	type mnrType ModifyNetworkRequest
+	d, err := json.Marshal((mnrType)(r))
+	if err != nil {
+		return nil, err
+	}
+
+	m := make(map[string]interface{})
+	if err := json.Unmarshal(d, &m); err != nil {
+		return nil, err
+	}
+
+	ipNetworksWrapper, ok := m["ip_networks"].(map[string]interface{})
+	if !ok {
+		ipNetworksWrapper = map[string]interface{}{}
+	}
+
+	ipNetworks, ok := ipNetworksWrapper["ip_network"].([]interface{})
+	if !ok {
+		ipNetworks = []interface{}{}
+	}
+
+	n := max(len(r.ClearIPNetworksFields), len(ipNetworks))
+	newIpNetworks := make([]interface{}, n)
+
+	for i := range n {
+		net := make(map[string]interface{})
+		if i < len(ipNetworks) {
+			if prev, ok := ipNetworks[i].(map[string]interface{}); ok {
+				net = prev
+			}
+		}
+
+		var clearIPNet ModifyNetworkClearIPNetworksFields
+		if i < len(r.ClearIPNetworksFields) {
+			clearIPNet = r.ClearIPNetworksFields[i]
+		}
+
+		if clearIPNet.DHCPDns {
+			net["dhcp_dns"] = []string{}
+		}
+		newIpNetworks[i] = net
+	}
+
+	if len(newIpNetworks) > 0 {
+		m["ip_networks"] = map[string]interface{}{"ip_network": newIpNetworks}
+	}
+
+	// Handle extra network object layer.
 	v := struct {
-		ModifyNetworkRequest localModifyNetworkRequest `json:"network"`
+		ModifyNetworkRequest map[string]any `json:"network"`
 	}{}
-	v.ModifyNetworkRequest = localModifyNetworkRequest(r)
+	v.ModifyNetworkRequest = m
 
 	return json.Marshal(&v)
 }
