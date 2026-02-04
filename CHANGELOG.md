@@ -5,6 +5,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Fixed
+
+- network: Add workaround for clearing `DHCPDns` field when modifying `IPNetworks`.
+
 ## [8.34.1]
 
 ### Fixed
