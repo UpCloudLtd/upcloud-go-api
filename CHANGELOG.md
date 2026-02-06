@@ -5,6 +5,12 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.34.3]
+
+### Added
+
+- object-storage: Support force query parameter in `request.DeleteManagedObjectStorageRequest`.
+
 ## [8.34.2]
 
 ### Fixed
@@ -745,7 +751,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.34.2...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.34.3...HEAD
+[8.34.3]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.34.2...v8.34.3
 [8.34.2]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.34.1...v8.34.2
 [8.34.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.34.0...v8.34.1
 [8.34.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.33.0...v8.34.0
