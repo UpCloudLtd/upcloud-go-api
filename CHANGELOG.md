@@ -9,7 +9,7 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ### Added
 
-- object-storage: Support force query parameter in delete `request.DeleteManagedObjectStorageRequest`.
+- object-storage: Support force query parameter in `request.DeleteManagedObjectStorageRequest`.
 
 ## [8.34.2]
 
