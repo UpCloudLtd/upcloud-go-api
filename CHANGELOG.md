@@ -5,6 +5,36 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.34.3]
+
+### Added
+
+- object-storage: Support force query parameter in `request.DeleteManagedObjectStorageRequest`.
+
+## [8.34.2]
+
+### Fixed
+
+- network: Add workaround for clearing `DHCPDns` field when modifying `IPNetworks`.
+
+## [8.34.1]
+
+### Fixed
+
+- load-balancer: `ModifyLoadBalancerCertificateBundleRequest` `intermediates` field marshals to null, if set to a pointer to empty string
+
+## [8.34.0]
+
+### Added
+
+- price: add new `PricesByZone` type (map-based structure) for easier access to prices without reflection
+- service: add new `GetPricesByZone` function for retrieving price information organized by zone and item name
+
+### Deprecated
+
+- price: deprecate `PriceZone` and `PriceZones` types in favor of `PricesByZone`
+- service: deprecate `GetPriceZones` function in favor of `GetPricesByZone`
+
 ## [8.33.0]
 
 ### Added
@@ -721,7 +751,11 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.33.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.34.3...HEAD
+[8.34.3]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.34.2...v8.34.3
+[8.34.2]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.34.1...v8.34.2
+[8.34.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.34.0...v8.34.1
+[8.34.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.33.0...v8.34.0
 [8.33.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.32.0...v8.33.0
 [8.32.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.31.1...v8.32.0
 [8.31.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.31.0...v8.31.1

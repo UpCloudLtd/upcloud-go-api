@@ -100,11 +100,16 @@ func (r *ModifyManagedObjectStorageRequest) RequestURL() string {
 
 // DeleteManagedObjectStorageRequest represents a request to delete a Managed Object Storage service
 type DeleteManagedObjectStorageRequest struct {
-	UUID string `json:"-"`
+	UUID  string `json:"-"`
+	Force bool   `json:"-"`
 }
 
 // RequestURL implements the Request interface
 func (r *DeleteManagedObjectStorageRequest) RequestURL() string {
+	if r.Force {
+		return fmt.Sprintf("%s/%s?force=true", managedObjectStorageBasePath, r.UUID)
+	}
+
 	return fmt.Sprintf("%s/%s", managedObjectStorageBasePath, r.UUID)
 }
 

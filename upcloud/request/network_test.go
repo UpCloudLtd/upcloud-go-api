@@ -153,74 +153,113 @@ func TestMarshalCreateNetworkRequest(t *testing.T) {
 
 // TestMarshalModifyNetworkRequest tests that ModifyNetworkRequest behaves correctly
 func TestMarshalModifyNetworkRequest(t *testing.T) {
-	request := ModifyNetworkRequest{
-		UUID: "foo",
+	testdata := []struct {
+		name         string
+		request      ModifyNetworkRequest
+		expectedJSON string
+	}{
+		{
+			name: "basic",
+			request: ModifyNetworkRequest{
+				UUID: "foo",
 
-		Name: "My private network",
-		IPNetworks: []upcloud.IPNetwork{
-			{
-				DHCP:   upcloud.False,
-				Family: upcloud.IPAddressFamilyIPv4,
-			},
-		},
-	}
-
-	expectedJSON := `
-	{
-		"network": {
-			"ip_networks": {
-			"ip_network": [
-				{
-				"dhcp": "no",
-				"dhcp_default_route": "no",
-				"dhcp_routes_configuration": {
-					"effective_routes_auto_population": {
-					"enabled": "no"
-					}
+				Name: "My private network",
+				IPNetworks: []upcloud.IPNetwork{
+					{
+						DHCP:   upcloud.False,
+						Family: upcloud.IPAddressFamilyIPv4,
+					},
 				},
-				"family": "IPv4"
+			},
+			expectedJSON: `{
+				"network": {
+					"ip_networks": {
+						"ip_network": [
+							{
+								"dhcp": "no",
+								"dhcp_default_route": "no",
+								"dhcp_routes_configuration": {
+									"effective_routes_auto_population": {
+										"enabled": "no"
+									}
+								},
+								"family": "IPv4"
+							}
+						]
+					},
+					"name": "My private network"
 				}
-			]
+			}`,
+		},
+		{
+			name: "labels",
+			request: ModifyNetworkRequest{
+				UUID: "foo",
+				Name: "supername",
+				Labels: &[]upcloud.Label{
+					{
+						Key:   "env",
+						Value: "test",
+					},
+				},
 			},
-			"name": "My private network"
-		}
-	}
-	`
-
-	actualJSON, err := json.Marshal(&request)
-	assert.NoError(t, err)
-	assert.Equal(t, "/network/foo", request.RequestURL())
-	assert.JSONEq(t, expectedJSON, string(actualJSON))
-
-	request = ModifyNetworkRequest{
-		UUID: "foo",
-		Name: "supername",
-		Labels: &[]upcloud.Label{
-			{
-				Key:   "env",
-				Value: "test",
+			expectedJSON: `{
+				"network": {
+					"name": "supername",
+					"labels": [
+						{
+							"key": "env",
+							"value": "test"
+						}
+					]
+				}
+			}`,
+		},
+		{
+			name: "clear DHCPDns",
+			request: ModifyNetworkRequest{
+				UUID: "clear-dhcpdns",
+				IPNetworks: []upcloud.IPNetwork{
+					{
+						Family: upcloud.IPAddressFamilyIPv4,
+					},
+				},
+				ClearIPNetworksFields: []ModifyNetworkClearIPNetworksFields{
+					{
+						DHCPDns: true,
+					},
+				},
 			},
+			expectedJSON: `{
+				"network": {
+					"ip_networks": {
+						"ip_network": [
+							{
+								"dhcp": "no",
+								"dhcp_default_route": "no",
+								"dhcp_dns": [],
+								"dhcp_routes_configuration": {
+									"effective_routes_auto_population": {
+										"enabled": "no"
+									}
+								},
+								"family": "IPv4"
+							}
+						]
+					}
+				}
+			}`,
 		},
 	}
 
-	expectedJSON = `
-	  {
-		"network": {
-		  "name": "supername",
-		  "labels": [
-			{
-				"key": "env",
-				"value": "test"
-			}
-		  ]
-	  	}
-	  }	
-	`
-
-	actualJSON, err = json.Marshal(&request)
-	assert.NoError(t, err)
-	assert.Equal(t, "/network/foo", request.RequestURL())
-	assert.JSONEq(t, expectedJSON, string(actualJSON))
+	for _, test := range testdata {
+		t.Run(test.name, func(t *testing.T) {
+			actualJSON, err := json.Marshal(&test.request)
+			assert.NoError(t, err)
+			assert.Equal(t, "/network/"+test.request.UUID, test.request.RequestURL())
+			assert.JSONEq(t, test.expectedJSON, string(actualJSON))
+		})
+	}
 }
 
 // TestMarshalDeleteNetwork tests the DeleteNetworkRequest behaves correctly

@@ -25,7 +25,7 @@ type GetTokensRequest struct {
 // RequestURL (EXPERIMENTAL) implements the Request interface.
 func (r *GetTokensRequest) RequestURL() string {
 	if r.Page != nil {
-		f := make([]QueryFilter, 0)
+		f := make([]QueryFilter, 0, 1)
 		f = append(f, r.Page)
 		return fmt.Sprintf("%s?%s", basePath, encodeQueryFilters(f))
 	}

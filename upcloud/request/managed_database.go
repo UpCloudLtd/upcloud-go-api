@@ -137,7 +137,7 @@ func (g *GetManagedDatabasesRequest) RequestURL() string {
 	u := "/database"
 
 	if g.Page != nil {
-		f := make([]QueryFilter, 0)
+		f := make([]QueryFilter, 0, 1)
 		f = append(f, g.Page)
 		return fmt.Sprintf("%s?%s", u, encodeQueryFilters(f))
 	}

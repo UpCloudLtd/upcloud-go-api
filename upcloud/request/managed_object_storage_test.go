@@ -89,6 +89,12 @@ func TestDeleteManagedObjectStorageRequest_RequestURL(t *testing.T) {
 		UUID: "service",
 	}
 	assert.Equal(t, "/object-storage-2/service", req.RequestURL())
+
+	req = &DeleteManagedObjectStorageRequest{
+		UUID:  "service",
+		Force: true,
+	}
+	assert.Equal(t, "/object-storage-2/service?force=true", req.RequestURL())
 }
 
 func TestGetManagedObjectStorageMetricsRequest_RequestURL(t *testing.T) {

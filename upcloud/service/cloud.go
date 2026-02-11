@@ -8,7 +8,8 @@ import (
 
 type Cloud interface {
 	GetZones(ctx context.Context) (*upcloud.Zones, error)
-	GetPriceZones(ctx context.Context) (*upcloud.PriceZones, error)
+	GetPriceZones(ctx context.Context) (*upcloud.PriceZones, error) //nolint: staticcheck // To be removed in v9
+	GetPricesByZone(ctx context.Context) (*upcloud.PricesByZone, error)
 	GetTimeZones(ctx context.Context) (*upcloud.TimeZones, error)
 	GetPlans(ctx context.Context) (*upcloud.Plans, error)
 	GetDevicesAvailability(ctx context.Context) (*upcloud.DevicesAvailability, error)
@@ -21,9 +22,17 @@ func (s *Service) GetZones(ctx context.Context) (*upcloud.Zones, error) {
 }
 
 // GetPriceZones returns the available price zones and their corresponding prices
+//
+// Deprecated: Use GetPricesByZone instead.
 func (s *Service) GetPriceZones(ctx context.Context) (*upcloud.PriceZones, error) {
 	zones := upcloud.PriceZones{}
 	return &zones, s.get(ctx, "/price", &zones)
+}
+
+// GetPricesByZone returns price information organized by zone and item name.
+func (s *Service) GetPricesByZone(ctx context.Context) (*upcloud.PricesByZone, error) {
+	prices := upcloud.PricesByZone{}
+	return &prices, s.get(ctx, "/price", &prices)
 }
 
 // GetTimeZones returns the available timezones
