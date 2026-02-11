@@ -24,6 +24,7 @@ jobs:
 
       - name: test
         env:
+          GOTOOLCHAIN: auto
           UPCLOUD_GO_SDK_TEST_NO_CREDENTIALS: yes
           UPCLOUD_GO_SDK_TEST_DELETE_RESOURCES: yes
           UPCLOUD_GO_SDK_TEST_USER: ${{ secrets.UPCLOUD_GO_SDK_TEST_USER }}
