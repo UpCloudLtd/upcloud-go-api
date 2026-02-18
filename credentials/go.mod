@@ -1,6 +1,6 @@
 module github.com/UpCloudLtd/upcloud-go-api/credentials
 
-go 1.24.2
+go 1.24.13
 
 require (
 	github.com/stretchr/testify v1.11.1
