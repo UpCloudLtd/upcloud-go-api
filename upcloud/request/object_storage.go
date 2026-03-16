@@ -20,7 +20,7 @@ type CreateObjectStorageRequest struct {
 	Name        string `json:"name,omitempty"`
 	Description string `json:"description,omitempty"`
 	Zone        string `json:"zone"`
-	AccessKey   string `json:"access_key"`
+	AccessKey   string `json:"access_key"` //nolint:gosec // G117: struct field for API credential, not a hardcoded secret
 	SecretKey   string `json:"secret_key"`
 	Size        int    `json:"size"`
 }
@@ -46,7 +46,7 @@ func (r *CreateObjectStorageRequest) RequestURL() string {
 type ModifyObjectStorageRequest struct {
 	UUID        string `json:"-"`
 	Description string `json:"description,omitempty"`
-	AccessKey   string `json:"access_key,omitempty"`
+	AccessKey   string `json:"access_key,omitempty"` //nolint:gosec // G117: struct field for API credential, not a hardcoded secret
 	SecretKey   string `json:"secret_key,omitempty"`
 	Size        int    `json:"size,omitempty"`
 }

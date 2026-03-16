@@ -10,7 +10,7 @@ import (
 // CreateSubaccount represents data required to create a sub account
 type CreateSubaccount struct {
 	Username   string `json:"username"`
-	Password   string `json:"password"`
+	Password   string `json:"password"` //nolint:gosec // G117: struct field for API credential, not a hardcoded secret
 	FirstName  string `json:"first_name"`
 	LastName   string `json:"last_name"`
 	Company    string `json:"company"`

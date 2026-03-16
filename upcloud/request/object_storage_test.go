@@ -18,7 +18,7 @@ func TestGetObjectStorageDetailsRequest(t *testing.T) {
 
 // TestCreateObjectStorageRequest tests that CreateObjectStorageRequest objects behave correctly
 func TestCreateObjectStorageRequest(t *testing.T) {
-	request := CreateObjectStorageRequest{
+	request := CreateObjectStorageRequest{ //nolint:gosec // G101: hardcoded credentials are test fixtures only
 		Name:        "app-object-storage",
 		Description: "App object storage",
 		Zone:        "fi-hel2",
@@ -49,7 +49,7 @@ func TestCreateObjectStorageRequest(t *testing.T) {
 
 // TestModifyObjectStorageRequest tests that ModifyObjectStorageRequest objects behave correctly
 func TestModifyObjectStorageRequest(t *testing.T) {
-	request := ModifyObjectStorageRequest{
+	request := ModifyObjectStorageRequest{ //nolint:gosec // G101: hardcoded credentials are test fixtures only
 		UUID:        "foo",
 		Description: "Modified object storage",
 		AccessKey:   "UCOB5HE4NVTVFMXXRBQ2",

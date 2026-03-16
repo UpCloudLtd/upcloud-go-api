@@ -80,7 +80,7 @@ func TestTokenMarshal(t *testing.T) {
 		  ]
 		}
 	`
-	got, err := json.Marshal(&Token{
+	got, err := json.Marshal(&Token{ //nolint:gosec // G101: test fixture token value
 		APIToken:           "ucat_01DEADBEEFDEADBEEFDEADBEEF",
 		ID:                 "deadbeef-dead-beef-dead-beefdeadbeef",
 		Name:               "test_token",

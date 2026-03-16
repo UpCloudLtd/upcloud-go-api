@@ -51,7 +51,7 @@ func TestGetObjectStorageDetails(t *testing.T) {
 
 // Creates an Object Storage and returns the details about it, panic if creation fails
 func createObjectStorage(ctx context.Context, svc *Service, name string, description string, zone string, size int) (*upcloud.ObjectStorageDetails, error) {
-	createObjectStorageRequest := request.CreateObjectStorageRequest{
+	createObjectStorageRequest := request.CreateObjectStorageRequest{ //nolint:gosec // G101: hardcoded credentials are test fixtures only
 		Name:        "go-test-" + name,
 		Description: description,
 		Zone:        zone,

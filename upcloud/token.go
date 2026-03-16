@@ -14,6 +14,7 @@ const (
 type Tokens []Token
 
 type Token struct {
+	//nolint:gosec // G117: APIToken is the API token field, not a hardcoded secret
 	APIToken           string     `json:"token,omitempty"` // APIToken is the API token. Returned only when creating a new token.
 	ID                 string     `json:"id"`
 	Name               string     `json:"name"`

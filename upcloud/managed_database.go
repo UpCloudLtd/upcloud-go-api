@@ -661,7 +661,7 @@ type ManagedDatabaseLogicalDatabase struct {
 type ManagedDatabaseServiceURIParams struct {
 	DatabaseName string `json:"dbname"`
 	Host         string `json:"host"`
-	Password     string `json:"password"`
+	Password     string `json:"password"` //nolint:gosec // G117: struct field for API credential, not a hardcoded secret
 	Port         string `json:"port"`
 	SSLMode      string `json:"ssl_mode"`
 	User         string `json:"user"`
@@ -676,7 +676,7 @@ type ManagedDatabaseUser struct {
 	Type           ManagedDatabaseUserType               `json:"type,omitempty"`
 	// Password field is only visible when querying an individual user. It is omitted in main service view and in
 	// get all users view.
-	Password        string                              `json:"password,omitempty"`
+	Password        string                              `json:"password,omitempty"` //nolint:gosec // G117: struct field for API credential, not a hardcoded secret
 	Username        string                              `json:"username,omitempty"`
 	PGAccessControl *ManagedDatabaseUserPGAccessControl `json:"pg_access_control,omitempty"`
 	// Deprecated: Redis support will be removed in favor of Valkey.
