@@ -169,7 +169,14 @@ func TestMatcheresAndActionsHelper(t *testing.T) {
 					"scheme": "https",
 					"status": 302
 				}
-			}					
+			},
+			{
+				"type": "http_rewrite_path",
+				"action_http_rewrite_path": {
+					"match_pattern": "/old-path",
+					"rewrite_to": "/new-path"
+				}
+			}						
 		]
 	}
 	`
@@ -201,6 +208,7 @@ func TestMatcheresAndActionsHelper(t *testing.T) {
 			NewLoadBalancerHTTPRedirectSchemeAction(upcloud.LoadBalancerActionHTTPRedirectSchemeHTTPS),
 			NewLoadBalancerHTTPRedirectActionWithStatus("https://internal.example.com", 301),
 			NewLoadBalancerHTTPRedirectSchemeActionWithStatus(upcloud.LoadBalancerActionHTTPRedirectSchemeHTTPS, 302),
+			NewLoadBalancerHTTPRewritePathAction("/old-path", "/new-path"),
 		},
 	}
 	actual, err := json.Marshal(&r)

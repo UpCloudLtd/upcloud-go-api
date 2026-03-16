@@ -84,6 +84,7 @@ const (
 	LoadBalancerActionTypeSetForwardedHeaders LoadBalancerActionType = "set_forwarded_headers"
 	LoadBalancerActionTypeSetRequestHeader    LoadBalancerActionType = "set_request_header"
 	LoadBalancerActionTypeSetResponseHeader   LoadBalancerActionType = "set_response_header"
+	LoadBalancerActionTypeHTTPRewritePath     LoadBalancerActionType = "http_rewrite_path"
 
 	LoadBalancerActionHTTPRedirectSchemeHTTP  LoadBalancerActionHTTPRedirectScheme = "http"
 	LoadBalancerActionHTTPRedirectSchemeHTTPS LoadBalancerActionHTTPRedirectScheme = "https"
@@ -352,6 +353,7 @@ type LoadBalancerAction struct {
 	TCPReject           *LoadBalancerActionTCPReject           `json:"action_tcp_reject,omitempty"`
 	HTTPReturn          *LoadBalancerActionHTTPReturn          `json:"action_http_return,omitempty"`
 	HTTPRedirect        *LoadBalancerActionHTTPRedirect        `json:"action_http_redirect,omitempty"`
+	HTTPRewritePath     *LoadBalancerActionHTTPRewritePath     `json:"action_http_rewrite_path,omitempty"` // HTTP rewrite is implemented as HTTP redirect with scheme and status code omitted
 	SetForwardedHeaders *LoadBalancerActionSetForwardedHeaders `json:"action_set_forwarded_headers,omitempty"`
 	SetRequestHeader    *LoadBalancerActionSetHeader           `json:"action_set_request_header,omitempty"`
 	SetResponseHeader   *LoadBalancerActionSetHeader           `json:"action_set_response_header,omitempty"`
@@ -377,6 +379,11 @@ type LoadBalancerActionHTTPRedirect struct {
 	Location string                               `json:"location,omitempty"`
 	Scheme   LoadBalancerActionHTTPRedirectScheme `json:"scheme,omitempty"`
 	Status   int                                  `json:"status,omitempty"`
+}
+
+type LoadBalancerActionHTTPRewritePath struct {
+	MatchPattern string `json:"match_pattern,omitempty"`
+	RewriteTo    string `json:"rewrite_to,omitempty"`
 }
 
 // LoadBalancerActionSetForwardedHeaders represents 'set_forwarded_headers' action
