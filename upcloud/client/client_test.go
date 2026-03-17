@@ -242,7 +242,7 @@ func TestClientWithLogger(t *testing.T) {
 
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Date", "Fri, 11 Oct 2024 23:58:00 GMT")
-		fmt.Fprintf(w, `{"method": "%s", "path": "%s"}`, r.Method, r.URL.Path) //nolint:gosec // G705: test server handler uses only trusted request metadata
+		fmt.Fprintf(w, `{"method": "%s", "path": "%s"}`, r.Method, r.URL.Path) //gosec:disable G705 -- test server handler uses only trusted request metadata
 	}))
 	defer srv.Close()
 

@@ -18,7 +18,7 @@ func TestCreatePartnerAccountRequestWithoutContactDetails(t *testing.T) {
 			"password" : "superSecret123"
 		}
 	`
-	actualJSON, err := json.Marshal(&request)
+	actualJSON, err := json.Marshal(&request) //gosec:disable G117 -- test fixture marshals struct with password field
 	assert.NoError(t, err)
 	assert.JSONEq(t, expectedJSON, string(actualJSON))
 	assert.Equal(t, "/partner/accounts", request.RequestURL())
@@ -49,7 +49,7 @@ func TestCreatePartnerAccountRequestWithMinimalContactDetails(t *testing.T) {
 			}
 		}
 	`
-	actualJSON, err := json.Marshal(&request)
+	actualJSON, err := json.Marshal(&request) //gosec:disable G117 -- test fixture marshals struct with password field
 	assert.NoError(t, err)
 	assert.JSONEq(t, expectedJSON, string(actualJSON))
 	assert.Equal(t, "/partner/accounts", request.RequestURL())

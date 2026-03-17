@@ -144,7 +144,7 @@ func (c *Client) Delete(ctx context.Context, path string) ([]byte, error) {
 
 // Do performs HTTP request and returns the response body.
 func (c *Client) Do(r *http.Request) ([]byte, error) {
-	response, err := c.config.httpClient.Do(r) //nolint:gosec // G704: request is constructed by trusted internal callers
+	response, err := c.config.httpClient.Do(r) //gosec:disable G704 -- request is constructed by trusted internal callers
 	if err != nil {
 		return nil, err
 	}
@@ -154,7 +154,7 @@ func (c *Client) Do(r *http.Request) ([]byte, error) {
 
 // DoStream performs HTTP request and returns the response body reader.
 func (c *Client) DoStream(r *http.Request) (io.ReadCloser, error) {
-	response, err := c.config.httpClient.Do(r) //nolint:gosec // G704: request is constructed by trusted internal callers
+	response, err := c.config.httpClient.Do(r) //gosec:disable G704 -- request is constructed by trusted internal callers
 	if err != nil {
 		return nil, err
 	}

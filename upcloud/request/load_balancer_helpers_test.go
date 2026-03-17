@@ -282,7 +282,7 @@ func TestCreateLoadBalancerCertificateBundleRequest(t *testing.T) {
 		NewCreateLoadBalancerManualCertificateBundleRequest("man", "x", "x", "x"),
 		NewCreateLoadBalancerDynamicCertificateBundleRequest("dyn", "rsa", []string{"example.com", "app.example.com"}),
 	}
-	actual, err := json.Marshal(&r)
+	actual, err := json.Marshal(&r) //gosec:disable G117 -- test fixture marshals struct with private_key field
 	assert.NoError(t, err)
 	assert.JSONEq(t, expected, string(actual))
 }

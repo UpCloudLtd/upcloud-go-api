@@ -18,7 +18,7 @@ func TestGetObjectStorageDetailsRequest(t *testing.T) {
 
 // TestCreateObjectStorageRequest tests that CreateObjectStorageRequest objects behave correctly
 func TestCreateObjectStorageRequest(t *testing.T) {
-	request := CreateObjectStorageRequest{ //nolint:gosec // G101: hardcoded credentials are test fixtures only
+	request := CreateObjectStorageRequest{ //gosec:disable G101 -- hardcoded credentials are test fixtures only
 		Name:        "app-object-storage",
 		Description: "App object storage",
 		Zone:        "fi-hel2",
@@ -27,7 +27,7 @@ func TestCreateObjectStorageRequest(t *testing.T) {
 		SecretKey:   "ssLDVHvTRjHaEAPRcMiFep3HItcqdNUNtql3DcLx",
 	}
 
-	//nolint:gosec // allow credentials for unit test payload
+	//gosec:disable G101 -- hardcoded credentials in test expected JSON
 	expectedJSON := `
 		{
 			"object_storage": {
@@ -41,7 +41,7 @@ func TestCreateObjectStorageRequest(t *testing.T) {
 		}
 	`
 
-	actualJSON, err := json.Marshal(&request)
+	actualJSON, err := json.Marshal(&request) //gosec:disable G117 -- test fixture marshals struct with access_key field
 	assert.NoError(t, err)
 	assert.JSONEq(t, expectedJSON, string(actualJSON))
 	assert.Equal(t, "/object-storage", request.RequestURL())
@@ -49,14 +49,14 @@ func TestCreateObjectStorageRequest(t *testing.T) {
 
 // TestModifyObjectStorageRequest tests that ModifyObjectStorageRequest objects behave correctly
 func TestModifyObjectStorageRequest(t *testing.T) {
-	request := ModifyObjectStorageRequest{ //nolint:gosec // G101: hardcoded credentials are test fixtures only
+	request := ModifyObjectStorageRequest{ //gosec:disable G101 -- hardcoded credentials are test fixtures only
 		UUID:        "foo",
 		Description: "Modified object storage",
 		AccessKey:   "UCOB5HE4NVTVFMXXRBQ2",
 		SecretKey:   "ssLDVHvTRjHaEAPRcMiFep3HItcqdNUNtql3DcLx",
 	}
 
-	//nolint:gosec // allow credentials for unit test payload
+	//gosec:disable G101 -- hardcoded credentials in test expected JSON
 	expectedJSON := `
 		{
 			"object_storage": {
@@ -67,7 +67,7 @@ func TestModifyObjectStorageRequest(t *testing.T) {
 		}
 	`
 
-	actualJSON, err := json.Marshal(&request)
+	actualJSON, err := json.Marshal(&request) //gosec:disable G117 -- test fixture marshals struct with access_key field
 	assert.Nil(t, err)
 	assert.JSONEq(t, expectedJSON, string(actualJSON))
 	assert.Equal(t, "/object-storage/foo", request.RequestURL())

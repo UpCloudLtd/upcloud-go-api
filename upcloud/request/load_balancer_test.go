@@ -1246,7 +1246,7 @@ func TestCreateLoadBalancerManualCertificateBundleRequest(t *testing.T) {
 		Intermediates: "LS0tLS1CRdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJ0VENDQVZ1Z0F4SUJBZ0lSQU5wSDZzV0ZtQzErWkdnUzFMWllVZGN3Q2dZSUtvWkl6ajBFQXdJd0pERU0KTUFvR0ExVUVDaE1EWkdWMk1SUXdFZ1lEVlFRREV3dGtaWFlnVW05dmRDQkRRVEFlRncweU1URXlNRGt4TXpVMwpNREZhRncwek1URXlNRGN4TXpVM01ERmFNQ3d4RERBS0JnTlZCQW9UQTJSbGRqRWNNQm9HQTFVRUF4TVRaR1YyCklFbHVkR1Z5YldWa2FXRjBaU0JEUVRCWk1CTUdCeXFHU000OUFnRUdDQ3FHU000OUF3RUhBMElBQkswbGMzNmcKN01TaDJTaXd3MUdDUjkvL3lSODR6S1VuNml6SmdCUkpFTlBxbmNXcjQzTi8rNktJR1EraERaazhRWHZ6RmExYQp2dFloc3JEVGtnRm9EV0tqWmpCa01BNEdBMVVkRHdFQi93UUVBd0lCQmpBU0JnTlZIUk1CQWY4RUNEQUdBUUgvCkFnRUFNQjBHQTFVZERnUVdCQlRWcG44d3hraHZhYVhvajF6c0Rkcmk4eGJuSnpBZkJnTlZIU01FR0RBV2dCU2oKckgwV0pubDdUSUJtc3NESGVveENFTVZyRmpBS0JnZ3Foa2pPUFFRREFnTklBREJGQWlBa3NhUXdPMkFESGhBLwppRVR1SVY1dTlNV3hFTU5BVGlVODFIZjc0cGVhWlFJaEFLMnJDRmhVVnQxbFlzR1o3dFdjWGFHVDhyU1k2cU1YClBmK3dnUXFnNXUyVAotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==",
 		PrivateKey:    "LS0tL1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR0hBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ3NQMzI2RlIxcmNwL0xybmcKNFBCT3BLRjIzSUNaM01GdGNrZFJuWkFESnRlaFJBTkNBQVFZMUtoOW9rcDlGTDN4T3orM1RnL2g5SWZ2cWtJNApDNkRjblNOYWRvdjcwVG40UzVCd1VkdFlHd1NCZyt2WG1qRldiOFJIS2xJaVZIOUs1U2txclB0dgotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tCg==",
 	}
-	actual, err := json.Marshal(&r)
+	actual, err := json.Marshal(&r) //gosec:disable G117 -- test fixture marshals struct with private_key field
 	assert.NoError(t, err)
 	assert.JSONEq(t, expected, string(actual))
 	assert.Equal(t, "/load-balancer/certificate-bundles", r.RequestURL())
@@ -1273,7 +1273,7 @@ func TestCreateLoadBalancerDynamicCertificateBundleRequest(t *testing.T) {
 		},
 		KeyType: "rsa",
 	}
-	actual, err := json.Marshal(&r)
+	actual, err := json.Marshal(&r) //gosec:disable G117 -- test fixture marshals struct with private_key field
 	assert.NoError(t, err)
 	assert.JSONEq(t, expected, string(actual))
 	assert.Equal(t, "/load-balancer/certificate-bundles", r.RequestURL())
@@ -1295,7 +1295,7 @@ func TestModifyLoadBalancerManualCertificateBundleRequest(t *testing.T) {
 		Intermediates: upcloud.StringPtr("LS0tLS1CRdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJ0VENDQVZ1Z0F4SUJBZ0lSQU5wSDZzV0ZtQzErWkdnUzFMWllVZGN3Q2dZSUtvWkl6ajBFQXdJd0pERU0KTUFvR0ExVUVDaE1EWkdWMk1SUXdFZ1lEVlFRREV3dGtaWFlnVW05dmRDQkRRVEFlRncweU1URXlNRGt4TXpVMwpNREZhRncwek1URXlNRGN4TXpVM01ERmFNQ3d4RERBS0JnTlZCQW9UQTJSbGRqRWNNQm9HQTFVRUF4TVRaR1YyCklFbHVkR1Z5YldWa2FXRjBaU0JEUVRCWk1CTUdCeXFHU000OUFnRUdDQ3FHU000OUF3RUhBMElBQkswbGMzNmcKN01TaDJTaXd3MUdDUjkvL3lSODR6S1VuNml6SmdCUkpFTlBxbmNXcjQzTi8rNktJR1EraERaazhRWHZ6RmExYQp2dFloc3JEVGtnRm9EV0tqWmpCa01BNEdBMVVkRHdFQi93UUVBd0lCQmpBU0JnTlZIUk1CQWY4RUNEQUdBUUgvCkFnRUFNQjBHQTFVZERnUVdCQlRWcG44d3hraHZhYVhvajF6c0Rkcmk4eGJuSnpBZkJnTlZIU01FR0RBV2dCU2oKckgwV0pubDdUSUJtc3NESGVveENFTVZyRmpBS0JnZ3Foa2pPUFFRREFnTklBREJGQWlBa3NhUXdPMkFESGhBLwppRVR1SVY1dTlNV3hFTU5BVGlVODFIZjc0cGVhWlFJaEFLMnJDRmhVVnQxbFlzR1o3dFdjWGFHVDhyU1k2cU1YClBmK3dnUXFnNXUyVAotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg=="),
 		PrivateKey:    "LS0tL1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR0hBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ3NQMzI2RlIxcmNwL0xybmcKNFBCT3BLRjIzSUNaM01GdGNrZFJuWkFESnRlaFJBTkNBQVFZMUtoOW9rcDlGTDN4T3orM1RnL2g5SWZ2cWtJNApDNkRjblNOYWRvdjcwVG40UzVCd1VkdFlHd1NCZyt2WG1qRldiOFJIS2xJaVZIOUs1U2txclB0dgotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tCg==",
 	}
-	actual, err := json.Marshal(&r)
+	actual, err := json.Marshal(&r) //gosec:disable G117 -- test fixture marshals struct with private_key field
 	assert.NoError(t, err)
 	assert.JSONEq(t, expected, string(actual))
 	assert.Equal(t, "/load-balancer/certificate-bundles/id", r.RequestURL())
@@ -1313,7 +1313,7 @@ func TestModifyLoadBalancerManualCertificateBundleRequest(t *testing.T) {
 		Certificate: "LS0LS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNIVENDQWNPZ0F3SUJBZ0lVSWlNbzg1cGd0b25kUmVESU1McVR4YjhncHI0d0NnWUlLb1pJemowRUF3SXcKWkRFTE1Ba0dBMVVFQmhNQ1FWVXhFekFSQmdOVkJBZ01DbE52YldVdFUzUmhkR1V4SVRBZkJnTlZCQW9NR0VsdQpkR1Z5Ym1WMElGZHBaR2RwZEhNZ1VIUjVJRXgwWkRFZE1Cc0dBMVVFQXd3VVpHVjJMblZ3YkdJdWRYQmpiRzkxClpDNWpiMjB3SGhjTk1qRXhNREl5TVRJeE1ETTJXaGNOTXpFeE1ESXdNVEl4TURNMldqQmtNUXN3Q1FZRFZRUUcKRXdKQlZURVRNQkVHQTFVRUNBd0tVMjl0WlMxVGRHRjBaVEVoTUI4R0ExVUVDZ3dZU1c1MFpYSnVaWFFnVjJsawpaMmwwY3lCUWRIa2dUSFJrTVIwd0d3WURWUVFEREJSa1pYWXVkWEJzWWk1MWNHTnNiM1ZrTG1OdmJUQlpNQk1HCkJ5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEEwSUFCQmpVcUgyaVNuMFV2ZkU3UDdkT0QrSDBoKytxUWpnTG9OeWQKSTFwMmkvdlJPZmhMa0hCUjIxZ2JCSUdENjllYU1WWnZ4RWNxVWlKVWYwcmxLU3FzKzIralV6QlJNQjBHQTFVZApEZ1FXQkJTYTFaU3V1NkxJczMrc2lSSUJ5MHRXL3RnamZEQWZCZ05WSFNNRUdEQVdnQlNhMVpTdXU2TElzMytzCmlSSUJ5MHRXL3RnamZEQVBCZ05WSFJNQkFmOEVCVEFEQVFIL01Bb0dDQ3FHU000OUJBTUNBMGdBTUVVQ0lRQ3IKWXA5dHc2TmVXTHZGOGwrWm9rSE9QUzUzaGc2SDM0OHNMSjEvNit4YXN3SWdWVmN6WkFDc3JyUWt3TnVBZEVCeQo5TkxJR1VrWlhqeWgwdVFCS2x4Si9Wdz0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=",
 		PrivateKey:  "LS0tL1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR0hBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ3NQMzI2RlIxcmNwL0xybmcKNFBCT3BLRjIzSUNaM01GdGNrZFJuWkFESnRlaFJBTkNBQVFZMUtoOW9rcDlGTDN4T3orM1RnL2g5SWZ2cWtJNApDNkRjblNOYWRvdjcwVG40UzVCd1VkdFlHd1NCZyt2WG1qRldiOFJIS2xJaVZIOUs1U2txclB0dgotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tCg==",
 	}
-	actual, err = json.Marshal(&r)
+	actual, err = json.Marshal(&r) //gosec:disable G117 -- test fixture marshals struct with private_key field
 	assert.NoError(t, err)
 	assert.JSONEq(t, expected, string(actual))
 
@@ -1332,7 +1332,7 @@ func TestModifyLoadBalancerManualCertificateBundleRequest(t *testing.T) {
 		Intermediates: upcloud.StringPtr(""),
 		PrivateKey:    "LS0tL1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR0hBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ3NQMzI2RlIxcmNwL0xybmcKNFBCT3BLRjIzSUNaM01GdGNrZFJuWkFESnRlaFJBTkNBQVFZMUtoOW9rcDlGTDN4T3orM1RnL2g5SWZ2cWtJNApDNkRjblNOYWRvdjcwVG40UzVCd1VkdFlHd1NCZyt2WG1qRldiOFJIS2xJaVZIOUs1U2txclB0dgotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tCg==",
 	}
-	actual, err = json.Marshal(&r)
+	actual, err = json.Marshal(&r) //gosec:disable G117 -- test fixture marshals struct with private_key field
 	assert.NoError(t, err)
 	assert.JSONEq(t, expected, string(actual))
 }
@@ -1355,7 +1355,7 @@ func TestModifyLoadBalancerDynamicCertificateBundleRequest(t *testing.T) {
 			"app.example.com",
 		},
 	}
-	actual, err := json.Marshal(&r)
+	actual, err := json.Marshal(&r) //gosec:disable G117 -- test fixture marshals struct with private_key field
 	assert.NoError(t, err)
 	assert.JSONEq(t, expected, string(actual))
 	assert.Equal(t, "/load-balancer/certificate-bundles/id", r.RequestURL())

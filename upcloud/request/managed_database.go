@@ -535,7 +535,7 @@ type CreateManagedDatabaseUserRequest struct {
 	// ServiceUUID selects a managed database service to modify
 	ServiceUUID string `json:"-"`
 	Username    string `json:"username"`
-	Password    string `json:"password,omitempty"` //nolint:gosec // G117: struct field for API credential, not a hardcoded secret
+	Password    string `json:"password,omitempty"` //gosec:disable G117 -- struct field for API credential, not a hardcoded secret
 	// Authentication selects authentication type for the user. See following constants for more information:
 	// 	upcloud.ManagedDatabaseUserAuthenticationCachingSHA2Password
 	// 	upcloud.ManagedDatabaseUserAuthenticationMySQLNativePassword
@@ -597,7 +597,7 @@ type ModifyManagedDatabaseUserRequest struct {
 	ServiceUUID string `json:"-"`
 	// Username selects the username to modify. The username itself is immutable. To change it, recreate the user.
 	Username string `json:"-"`
-	Password string `json:"password,omitempty"` //nolint:gosec // G117: struct field for API credential, not a hardcoded secret
+	Password string `json:"password,omitempty"` //gosec:disable G117 -- struct field for API credential, not a hardcoded secret
 	// Authentication selects authentication type for the user. See following constants for more information:
 	// 	upcloud.ManagedDatabaseUserAuthenticationCachingSHA2Password
 	// 	upcloud.ManagedDatabaseUserAuthenticationMySQLNativePassword
