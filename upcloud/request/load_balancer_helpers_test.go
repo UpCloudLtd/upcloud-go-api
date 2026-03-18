@@ -169,7 +169,21 @@ func TestMatcheresAndActionsHelper(t *testing.T) {
 					"scheme": "https",
 					"status": 302
 				}
-			}					
+			},
+			{
+				"type": "http_rewrite_path",
+				"action_http_rewrite_path": {
+					"match_pattern": "/old-path",
+					"rewrite_to": "/new-path"
+				}
+			},
+			{
+				"type": "http_rewrite_uri",
+				"action_http_rewrite_uri": {
+					"match_pattern": "^/api/v1/(.*)$",
+					"rewrite_to": "/api/v2/\\1"
+				}
+			}
 		]
 	}
 	`
@@ -201,6 +215,8 @@ func TestMatcheresAndActionsHelper(t *testing.T) {
 			NewLoadBalancerHTTPRedirectSchemeAction(upcloud.LoadBalancerActionHTTPRedirectSchemeHTTPS),
 			NewLoadBalancerHTTPRedirectActionWithStatus("https://internal.example.com", 301),
 			NewLoadBalancerHTTPRedirectSchemeActionWithStatus(upcloud.LoadBalancerActionHTTPRedirectSchemeHTTPS, 302),
+			NewLoadBalancerHTTPRewritePathAction("/old-path", "/new-path"),
+			NewLoadBalancerHTTPRewriteURIAction("^/api/v1/(.*)$", "/api/v2/\\1"),
 		},
 	}
 	actual, err := json.Marshal(&r)
@@ -266,7 +282,7 @@ func TestCreateLoadBalancerCertificateBundleRequest(t *testing.T) {
 		NewCreateLoadBalancerManualCertificateBundleRequest("man", "x", "x", "x"),
 		NewCreateLoadBalancerDynamicCertificateBundleRequest("dyn", "rsa", []string{"example.com", "app.example.com"}),
 	}
-	actual, err := json.Marshal(&r)
+	actual, err := json.Marshal(&r) //gosec:disable G117 -- test fixture marshals struct with private_key field
 	assert.NoError(t, err)
 	assert.JSONEq(t, expected, string(actual))
 }

@@ -511,7 +511,7 @@ func TestLoadBalancerResolver(t *testing.T) {
 		t.Logf("Created resolver %s for load balancer %s", resolver.Name, lb.Name)
 
 		newName := "updated_testname"
-		newNameServers := append(nameServers, "10.0.0.3")
+		newNameServers := []string{"10.0.0.1", "10.0.0.2", "10.0.0.3"}
 		newRetries := 5
 		newTimeout := 30
 

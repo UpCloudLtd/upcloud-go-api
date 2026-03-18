@@ -710,7 +710,7 @@ type CreateLoadBalancerCertificateBundleRequest struct {
 	Name          string   `json:"name,omitempty"`
 	Certificate   string   `json:"certificate,omitempty"`
 	Intermediates string   `json:"intermediates,omitempty"`
-	PrivateKey    string   `json:"private_key,omitempty"`
+	PrivateKey    string   `json:"private_key,omitempty"` //gosec:disable G117 -- struct field for API credential, not a hardcoded secret
 	KeyType       string   `json:"key_type,omitempty"`
 	Hostnames     []string `json:"hostnames,omitempty"`
 }
@@ -725,7 +725,7 @@ type ModifyLoadBalancerCertificateBundleRequest struct {
 	Name          string   `json:"name,omitempty"`
 	Certificate   string   `json:"certificate,omitempty"`
 	Intermediates *string  `json:"intermediates,omitempty"`
-	PrivateKey    string   `json:"private_key,omitempty"`
+	PrivateKey    string   `json:"private_key,omitempty"` //gosec:disable G117 -- struct field for API credential, not a hardcoded secret
 	Hostnames     []string `json:"hostnames,omitempty"`
 }
 

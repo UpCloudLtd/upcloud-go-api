@@ -673,7 +673,7 @@ func TestService_ManagedDatabaseUserManager(t *testing.T) {
 			})
 
 			t.Run("CtxModify", func(t *testing.T) {
-				//nolint:gosec
+				//gosec:disable G101 -- test password constant, not a real credential
 				const newPassword = "yXB8gePmxHuESbJx_I-Iag"
 				newUserDetails, err := svc.ModifyManagedDatabaseUser(ctx, &request.ModifyManagedDatabaseUserRequest{
 					ServiceUUID: details.UUID,

@@ -451,7 +451,7 @@ func TestCreateManagedDatabaseUserRequest(t *testing.T) {
 			Keys:       &[]string{"key_*"},
 		},
 	}
-	got, err := json.Marshal(&r)
+	got, err := json.Marshal(&r) //gosec:disable G117 -- test fixture marshals struct with password field
 	assert.NoError(t, err)
 	assert.JSONEq(t, want, string(got))
 	assert.Equal(t, "/database/fakeuuid/users", r.RequestURL())
@@ -465,7 +465,7 @@ func TestCreateManagedDatabaseUserRequest(t *testing.T) {
 		ServiceUUID: "fakeuuid",
 		Username:    "api-doc-user",
 	}
-	got, err = json.Marshal(&r)
+	got, err = json.Marshal(&r) //gosec:disable G117 -- test fixture marshals struct with password field
 	assert.NoError(t, err)
 	assert.JSONEq(t, want, string(got))
 }

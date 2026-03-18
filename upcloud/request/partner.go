@@ -18,7 +18,7 @@ type CreatePartnerAccountContactDetails struct {
 // CreatePartnerAccountRequest represents a request to create new main account for partner
 type CreatePartnerAccountRequest struct {
 	Username       string                              `json:"username"`
-	Password       string                              `json:"password"`
+	Password       string                              `json:"password"` //gosec:disable G117 -- struct field for API credential, not a hardcoded secret
 	ContactDetails *CreatePartnerAccountContactDetails `json:"contact_details,omitempty"`
 }
 

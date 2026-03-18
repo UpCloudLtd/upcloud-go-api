@@ -31,6 +31,26 @@ func NewLoadBalancerHTTPRedirectAction(location string) upcloud.LoadBalancerActi
 	}
 }
 
+func NewLoadBalancerHTTPRewritePathAction(matchPattern, rewriteTo string) upcloud.LoadBalancerAction {
+	return upcloud.LoadBalancerAction{
+		Type: upcloud.LoadBalancerActionTypeHTTPRewritePath,
+		HTTPRewritePath: &upcloud.LoadBalancerActionHTTPRewritePath{
+			MatchPattern: matchPattern,
+			RewriteTo:    rewriteTo,
+		},
+	}
+}
+
+func NewLoadBalancerHTTPRewriteURIAction(matchPattern, rewriteTo string) upcloud.LoadBalancerAction {
+	return upcloud.LoadBalancerAction{
+		Type: upcloud.LoadBalancerActionTypeHTTPRewriteURI,
+		HTTPRewriteURI: &upcloud.LoadBalancerActionHTTPRewriteURI{
+			MatchPattern: matchPattern,
+			RewriteTo:    rewriteTo,
+		},
+	}
+}
+
 func NewLoadBalancerHTTPRedirectActionWithStatus(location string, status int) upcloud.LoadBalancerAction {
 	return upcloud.LoadBalancerAction{
 		Type: upcloud.LoadBalancerActionTypeHTTPRedirect,

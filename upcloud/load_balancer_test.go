@@ -1052,6 +1052,52 @@ func TestLoadBalancerActionHTTPRedirect(t *testing.T) {
 	)
 }
 
+func TestLoadBalancerActionHTTPRewritePath(t *testing.T) {
+	t.Parallel()
+	testJSON(t,
+		&LoadBalancerAction{},
+		&LoadBalancerAction{
+			Type: LoadBalancerActionTypeHTTPRewritePath,
+			HTTPRewritePath: &LoadBalancerActionHTTPRewritePath{
+				MatchPattern: "/old-path",
+				RewriteTo:    "/new-path",
+			},
+		},
+		`
+		{
+			"type": "http_rewrite_path",
+			"action_http_rewrite_path": {
+				"match_pattern": "/old-path",
+				"rewrite_to": "/new-path"
+			}
+		}
+		`,
+	)
+}
+
+func TestLoadBalancerActionHTTPRewriteURI(t *testing.T) {
+	t.Parallel()
+	testJSON(t,
+		&LoadBalancerAction{},
+		&LoadBalancerAction{
+			Type: LoadBalancerActionTypeHTTPRewriteURI,
+			HTTPRewriteURI: &LoadBalancerActionHTTPRewriteURI{
+				MatchPattern: "^/api/v1/(.*)$",
+				RewriteTo:    "/api/v2/\\1",
+			},
+		},
+		`
+		{
+			"type": "http_rewrite_uri",
+			"action_http_rewrite_uri": {
+				"match_pattern": "^/api/v1/(.*)$",
+				"rewrite_to": "/api/v2/\\1"
+			}
+		}
+		`,
+	)
+}
+
 func TestLoadBalancerCertificateBundle(t *testing.T) {
 	t.Parallel()
 	testJSON(t,
