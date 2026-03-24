@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/HEAD/configuration-schema.json
+package: testdata
+generate:
+  client: true
+  models: true
+  embedded-spec: false
+  server-urls: true
+output-options:
+  resolve-type-name-collisions: true
+  overlay:
+    path: testdata/config/overlay.yaml
+    strict: false
+  user-templates:
+    constants.tmpl: config/constants.tmpl
+output: testdata/test.gen.go

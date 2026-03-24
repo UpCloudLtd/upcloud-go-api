@@ -1,0 +1,177 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Minimal Overlay Test Spec",
+    "version": "1.0.0",
+    "description": "A minimal OpenAPI spec to test overlay handling of nullable, oneOf, anyOf, and array patterns."
+  },
+  "paths": {
+    "/test": {
+      "get": {
+        "summary": "Test endpoint for overlay patterns",
+        "description": "Returns an object containing all test schemas as properties.",
+        "operationId": "getTest",
+        "responses": {
+          "200": {
+            "description": "A response object containing all test schema patterns.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Object containing all test schema patterns as properties.",
+                  "properties": {
+                    "arrayNull": {
+                      "$ref": "#/components/schemas/ArrayNullPropertySchema",
+                      "description": "Schema with a property of type [array, null]."
+                    },
+                    "anyOfStringNull": {
+                      "$ref": "#/components/schemas/AnyOfStringNullPropertySchema",
+                      "description": "Schema with a property using anyOf: string, string (empty), or null."
+                    },
+                    "anyOfArrayNull": {
+                      "$ref": "#/components/schemas/AnyOfArrayNullPropertySchema",
+                      "description": "Schema with a property using anyOf: array or null."
+                    },
+                    "oneOfStringNull": {
+                      "$ref": "#/components/schemas/OneOfStringNullPropertySchema",
+                      "description": "Schema with a property using oneOf: string, string (empty), or null."
+                    },
+                    "oneOfArrayNull": {
+                      "$ref": "#/components/schemas/OneOfArrayNullPropertySchema",
+                      "description": "Schema with a property using oneOf: array or null."
+                    },
+                    "topLevelStringNull": {
+                      "$ref": "#/components/schemas/TopLevelStringNull",
+                      "description": "Top-level schema with type [string, null]."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ArrayNullPropertySchema": {
+        "type": "object",
+        "description": "Object schema with a property of type [array, null] for overlay testing.",
+        "properties": {
+          "exampleArrayProperty": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "description": "A property that can be an array of strings or null.",
+            "items": {
+              "type": "string",
+              "description": "String item in the array."
+            }
+          }
+        }
+      },
+      "AnyOfStringNullPropertySchema": {
+        "type": "object",
+        "description": "Object schema with a property using anyOf: string, string (empty), or null.",
+        "properties": {
+          "value": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^(a|b|c)$",
+                "description": "A string matching a|b|c."
+              },
+              {
+                "type": "string",
+                "pattern": "^$",
+                "description": "An empty string."
+              },
+              {
+                "type": "null",
+                "description": "A null value."
+              }
+            ],
+            "description": "A value that can be a string (a|b|c), an empty string, or null."
+          }
+        }
+      },
+      "AnyOfArrayNullPropertySchema": {
+        "type": "object",
+        "description": "Object schema with a property using anyOf: array or null.",
+        "properties": {
+          "exampleArrayProperty": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "String item in the array."
+                },
+                "description": "An array of strings."
+              },
+              {
+                "type": "null",
+                "description": "A null value."
+              }
+            ],
+            "description": "A value that can be an array of strings or null."
+          }
+        }
+      },
+      "OneOfStringNullPropertySchema": {
+        "type": "object",
+        "description": "Object schema with a property using oneOf: string, string (empty), or null.",
+        "properties": {
+          "exampleOneOfProperty": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^(a|b|c)$",
+                "description": "A string matching a|b|c."
+              },
+              {
+                "type": "string",
+                "pattern": "^$",
+                "description": "An empty string."
+              },
+              {
+                "type": "null",
+                "description": "A null value."
+              }
+            ],
+            "description": "A value that can be a string (a|b|c), an empty string, or null."
+          }
+        }
+      },
+      "OneOfArrayNullPropertySchema": {
+        "type": "object",
+        "description": "Object schema with a property using oneOf: array or null.",
+        "properties": {
+          "exampleArrayProperty": {
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "String item in the array."
+                },
+                "description": "An array of strings."
+              },
+              {
+                "type": "null",
+                "description": "A null value."
+              }
+            ],
+            "description": "A value that can be an array of strings or null."
+          }
+        }
+      },
+      "TopLevelStringNull": {
+        "type": ["string", "null"],
+        "description": "A top-level schema that can be a string or null."
+      }
+    }
+  }
+}
