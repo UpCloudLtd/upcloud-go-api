@@ -73,6 +73,9 @@ linters:
           - bodyclose
           - funlen
         path: _test\.go
+      - linters:
+          - staticcheck
+        text: "SA1019: .+ deprecated: non-managed object storage service has been decommissioned"
     paths:
       - third_party$
       - builtin$
