@@ -1,0 +1,53 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/OAI/spec.openapis.org/refs/heads/main/overlay/1.0/schema/2024-10-22
+overlay: 1.0.0
+x-speakeasy-jsonpath: rfc9535
+info:
+  title: Overlay for oapi-codegen 3.0.3 compatibility
+  version: 0.0.1
+actions:
+  # avoid `oapi-codegen` warning us that we're using an OpenAPI 3.1 spec
+  - target: "$.openapi"
+    update: "3.0.3"
+  - target: "$..['x-go-name']"
+    remove: true
+  - target: "$..['x-go-type']"
+    remove: true
+  # normalize OpenAPI 3.1 union type arrays like ["<type>", "null"] for oapi-codegen 3.0.x
+  - target: "$..[?(@.type && @.type[0] == 'array' && @.type[1] == 'null')]"
+    update:
+      type: array
+      nullable: true
+  - target: "$..[?(@.type && @.type[0] == 'boolean' && @.type[1] == 'null')]"
+    update:
+      type: boolean
+      nullable: true
+  - target: "$..[?(@.type && @.type[0] == 'integer' && @.type[1] == 'null')]"
+    update:
+      type: integer
+      nullable: true
+  - target: "$..[?(@.type && @.type[0] == 'object' && @.type[1] == 'null')]"
+    update:
+      type: object
+      nullable: true
+  - target: "$..[?(@.type && @.type[0] == 'string' && @.type[1] == 'null')]"
+    update:
+      type: string
+      nullable: true
+  - target: "$..[?(@.type && @.type[0] == 'null' && @.type[1] == 'string')]"
+    update:
+      type: string
+      nullable: true
+  - target: "$..[?(@.type && @.type[0] == 'integer' && @.type[1] == 'number' && @.type[2] == 'null')]"
+    update:
+      type: number
+      nullable: true
+  # example: $.components.schemas.firewallRulesetServerFirewallRule.properties.destination_address_end.anyOf[3] (string|null property in anyOf)
+  - target: "$..properties.*.anyOf[?(@.type == 'null')]"
+    update:
+      type: string
+      nullable: true
+  # example: $.components.schemas.firewallRulesetServerFirewallRule.properties.destination_port_end.oneOf[0] (string|null property in oneOf)
+  - target: "$..properties.*.oneOf[?(@.type == 'null')]"
+    update:
+      type: string
+      nullable: true

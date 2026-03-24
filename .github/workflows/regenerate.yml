@@ -1,0 +1,105 @@
+# yaml-language-server: $schema=https://www.schemastore.org/github-workflow.json
+name: Regenerate SDK
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Spec version (e.g. 1.2.3)
+        required: true
+        type: string
+      asset_url:
+        description: GitHub API URL for the spec tarball release asset
+        required: true
+        type: string
+      spec_file:
+        description: Spec filename inside the released spec tarball
+        required: true
+        type: string
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: v9
+          fetch-depth: 1
+
+      - name: Download spec
+        env:
+          ASSET_URL: ${{ github.event.inputs.asset_url }}
+          SPEC_FILE: ${{ github.event.inputs.spec_file }}
+          SPECS_ACCESS_PAT: ${{ secrets.SPECS_ACCESS_PAT }}
+        run: |
+          set -euo pipefail
+
+          : "${ASSET_URL:?ERROR: Missing asset_url in dispatch event}"
+          : "${SPEC_FILE:?ERROR: Missing spec_file in dispatch event}"
+          : "${SPECS_ACCESS_PAT:?ERROR: SPECS_ACCESS_PAT secret is not set}"
+
+          SPEC_DIR="${RUNNER_TEMP}/spec"
+          WORK_SPEC="v9/generator/spec.json"
+          mkdir -p "$SPEC_DIR"
+          SPEC_ARCHIVE="${RUNNER_TEMP}/spec.tar.gz"
+          curl --fail -L \
+            --retry 5 \
+            --retry-all-errors \
+            --retry-delay 2 \
+            --connect-timeout 10 \
+            --max-time 120 \
+            -H "Authorization: Bearer $SPECS_ACCESS_PAT" \
+            -H "Accept: application/octet-stream" \
+            "$ASSET_URL" \
+            -o "$SPEC_ARCHIVE"
+
+          tar -xzf "$SPEC_ARCHIVE" -C "$SPEC_DIR"
+          cp "$SPEC_DIR/$SPEC_FILE" "$WORK_SPEC"
+
+      - uses: jdx/mise-action@v3
+        with:
+          version: 2026.3.9 # [default: latest] mise version to install
+          install: true # [default: true] run `mise install`
+          cache: true # [default: true] cache mise using GitHub's cache
+          working_directory: v9
+
+      - name: Generate SDK
+        working-directory: v9
+        run: mise run generate
+
+      - name: Inject spec version
+        env:
+          SPEC_VERSION: ${{ github.event.inputs.version }}
+        run: |
+          set -euo pipefail
+          : "${SPEC_VERSION:?ERROR: Missing version in dispatch event}"
+          cat > v9/pkg/upcloud/spec_version.go <<EOF
+          package upcloud
+
+          const specVersion = "${SPEC_VERSION}"
+          EOF
+
+      - name: Drop spec from the working tree
+        run: |
+          set -euo pipefail
+          WORK_SPEC="v9/generator/spec.json"
+          if git ls-files --error-unmatch "$WORK_SPEC" >/dev/null 2>&1; then
+            git restore "$WORK_SPEC"
+          else
+            rm -f "$WORK_SPEC"
+          fi
+
+      - name: Create PR
+        uses: peter-evans/create-pull-request@c0f553fe549906ede9cf27b5156039d195d2ece0 # v8.1.0
+        with:
+          commit-message: "chore: regenerate v9/pkg/upcloud (${{ github.event.inputs.version }})"
+          branch: "chore/regenerate/${{ github.event.inputs.version }}"
+          title: "Regenerate v9/pkg/upcloud (${{ github.event.inputs.version }})"
+          base: v9
+          body: >
+            Automated regeneration for spec version
+            `${{ github.event.inputs.version }}`.

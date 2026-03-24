@@ -1,0 +1,374 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/OAI/spec.openapis.org/refs/heads/main/overlay/1.0/schema/2024-10-22
+overlay: 1.0.0
+x-speakeasy-jsonpath: rfc9535
+info:
+  title: Overlay for oapi-codegen 3.0.3 compatibility
+  version: 0.0.1
+actions:
+  # avoid `oapi-codegen` warning us that we're using an OpenAPI 3.1 spec
+  - target: "$.openapi"
+    update: "3.0.3"
+  - target: "$..['x-go-name']"
+    remove: true
+  - target: "$..['x-go-type']"
+    remove: true
+  # normalize OpenAPI 3.1 union type arrays like ["<type>", "null"] for oapi-codegen 3.0.x
+  - target: "$..[?(@.type && @.type[0] == 'array' && @.type[1] == 'null')]"
+    update:
+      type: array
+      nullable: true
+  - target: "$..[?(@.type && @.type[0] == 'boolean' && @.type[1] == 'null')]"
+    update:
+      type: boolean
+      nullable: true
+  - target: "$..[?(@.type && @.type[0] == 'integer' && @.type[1] == 'null')]"
+    update:
+      type: integer
+      nullable: true
+  - target: "$..[?(@.type && @.type[0] == 'object' && @.type[1] == 'null')]"
+    update:
+      type: object
+      nullable: true
+  - target: "$..[?(@.type && @.type[0] == 'string' && @.type[1] == 'null')]"
+    update:
+      type: string
+      nullable: true
+  - target: "$..[?(@.type && @.type[0] == 'null' && @.type[1] == 'string')]"
+    update:
+      type: string
+      nullable: true
+  - target: "$..[?(@.type && @.type[0] == 'integer' && @.type[1] == 'number' && @.type[2] == 'null')]"
+    update:
+      type: number
+      nullable: true
+  # example: $.components.schemas.firewallRulesetServerFirewallRule.properties.destination_address_end.anyOf[3] (string|null property in anyOf)
+  - target: "$..properties.*.anyOf[?(@.type == 'null')]"
+    update:
+      type: string
+      nullable: true
+  # example: $.components.schemas.firewallRulesetServerFirewallRule.properties.destination_port_end.oneOf[0] (string|null property in oneOf)
+  - target: "$..properties.*.oneOf[?(@.type == 'null')]"
+    update:
+      type: string
+      nullable: true
+  # align operationIds with split service specs where they differ from upcloud-public-openapi
+  - target: '$.paths["/1.3/database"].get.operationId'
+    update: listDatabases
+  - target: '$.paths["/1.3/database"].post.operationId'
+    update: createDatabase
+  - target: '$.paths["/1.3/database/alerts"].get.operationId'
+    update: getDatabaseProjectAlerts
+  - target: '$.paths["/1.3/database/certificate"].get.operationId'
+    update: getDatabaseAccountCA
+  - target: '$.paths["/1.3/database/integration-endpoints"].get.operationId'
+    update: listDatabaseIntegrationEndpoints
+  - target: '$.paths["/1.3/database/integration-endpoints"].post.operationId'
+    update: createDatabaseIntegrationEndpoint
+  - target: '$.paths["/1.3/database/integration-endpoints/{integration-uuid}"].delete.operationId'
+    update: deleteDatabaseIntegrationEndpoint
+  - target: '$.paths["/1.3/database/integration-endpoints/{integration-uuid}"].get.operationId'
+    update: getDatabaseIntegrationEndpoint
+  - target: '$.paths["/1.3/database/integration-endpoints/{integration-uuid}"].patch.operationId'
+    update: modifyDatabaseIntegrationEndpoint
+  - target: '$.paths["/1.3/database/service-types"].get.operationId'
+    update: listDatabaseTypes
+  - target: '$.paths["/1.3/database/service-types/{service-type-name}"].get.operationId'
+    update: getDatabaseType
+  - target: '$.paths["/1.3/database/versions"].get.operationId'
+    update: getDatabaseTypeVersions
+  - target: '$.paths["/1.3/database/{uuid}"].delete.operationId'
+    update: deleteDatabase
+  - target: '$.paths["/1.3/database/{uuid}"].get.operationId'
+    update: getDatabase
+  - target: '$.paths["/1.3/database/{uuid}"].patch.operationId'
+    update: modifyDatabase
+  - target: '$.paths["/1.3/database/{uuid}/access-control"].get.operationId'
+    update: getDatabaseOpenSearchACLSettings
+  - target: '$.paths["/1.3/database/{uuid}/access-control"].patch.operationId'
+    update: modifyDatabaseOpenSearchACLSettings
+  - target: '$.paths["/1.3/database/{uuid}/alerts"].get.operationId'
+    update: getDatabaseAlerts
+  - target: '$.paths["/1.3/database/{uuid}/available-extensions"].get.operationId'
+    update: getDatabaseAvailableExtensions
+  - target: '$.paths["/1.3/database/{uuid}/clone"].post.operationId'
+    update: cloneDatabase
+  - target: '$.paths["/1.3/database/{uuid}/connection-pools"].get.operationId'
+    update: listDatabaseConnectionPools
+  - target: '$.paths["/1.3/database/{uuid}/connection-pools"].post.operationId'
+    update: createDatabaseConnectionPool
+  - target: '$.paths["/1.3/database/{uuid}/connection-pools/{pool-name}"].delete.operationId'
+    update: deleteDatabaseConnectionPool
+  - target: '$.paths["/1.3/database/{uuid}/connection-pools/{pool-name}"].get.operationId'
+    update: getDatabaseConnectionPool
+  - target: '$.paths["/1.3/database/{uuid}/connection-pools/{pool-name}"].patch.operationId'
+    update: modifyDatabaseConnectionPool
+  - target: '$.paths["/1.3/database/{uuid}/databases"].get.operationId'
+    update: listDatabaseLogicalDatabases
+  - target: '$.paths["/1.3/database/{uuid}/databases"].post.operationId'
+    update: createDatabaseLogicalDatabase
+  - target: '$.paths["/1.3/database/{uuid}/databases/{database-name}"].delete.operationId'
+    update: deleteDatabaseLogicalDatabase
+  - target: '$.paths["/1.3/database/{uuid}/enable-writes"].post.operationId'
+    update: enableDatabaseTemporaryWrites
+  - target: '$.paths["/1.3/database/{uuid}/indices"].get.operationId'
+    update: listDatabaseOpenSearchIndices
+  - target: '$.paths["/1.3/database/{uuid}/indices/{index-name}"].delete.operationId'
+    update: deleteDatabaseOpenSearchIndex
+  - target: '$.paths["/1.3/database/{uuid}/integrations"].get.operationId'
+    update: listDatabaseIntegrations
+  - target: '$.paths["/1.3/database/{uuid}/integrations"].post.operationId'
+    update: createDatabaseIntegration
+  - target: '$.paths["/1.3/database/{uuid}/integrations/{integration-uuid}"].delete.operationId'
+    update: deleteDatabaseIntegration
+  - target: '$.paths["/1.3/database/{uuid}/integrations/{integration-uuid}"].get.operationId'
+    update: getDatabaseIntegration
+  - target: '$.paths["/1.3/database/{uuid}/integrations/{integration-uuid}"].patch.operationId'
+    update: modifyDatabaseIntegration
+  - target: '$.paths["/1.3/database/{uuid}/labels"].get.operationId'
+    update: listDatabaseLabels
+  - target: '$.paths["/1.3/database/{uuid}/labels"].post.operationId'
+    update: createDatabaseLabel
+  - target: '$.paths["/1.3/database/{uuid}/labels/{label-key}"].delete.operationId'
+    update: deleteDatabaseLabel
+  - target: '$.paths["/1.3/database/{uuid}/labels/{label-key}"].get.operationId'
+    update: getDatabaseLabel
+  - target: '$.paths["/1.3/database/{uuid}/labels/{label-key}"].patch.operationId'
+    update: modifyDatabaseLabel
+  - target: '$.paths["/1.3/database/{uuid}/logs"].get.operationId'
+    update: getDatabaseLogs
+  - target: '$.paths["/1.3/database/{uuid}/metrics"].get.operationId'
+    update: getDatabaseMetrics
+  - target: '$.paths["/1.3/database/{uuid}/migration-status"].get.operationId'
+    update: getDatabaseMigrationStatus
+  - target: '$.paths["/1.3/database/{uuid}/networks"].get.operationId'
+    update: listDatabaseNetworks
+  - target: '$.paths["/1.3/database/{uuid}/networks"].post.operationId'
+    update: createDatabaseNetwork
+  - target: '$.paths["/1.3/database/{uuid}/networks/{network-name}"].delete.operationId'
+    update: deleteDatabaseNetwork
+  - target: '$.paths["/1.3/database/{uuid}/networks/{network-name}"].get.operationId'
+    update: getDatabaseNetwork
+  - target: '$.paths["/1.3/database/{uuid}/peering-status"].get.operationId'
+    update: getDatabasePeeringsStatus
+  - target: '$.paths["/1.3/database/{uuid}/query-statistics"].get.operationId'
+    update: getDatabaseQueryStatistics
+  - target: '$.paths["/1.3/database/{uuid}/security"].get.operationId'
+    update: getDatabaseOpenSearchSecurityPluginStatus
+  - target: '$.paths["/1.3/database/{uuid}/security/admin"].post.operationId'
+    update: enableDatabaseOpenSearchSecurityPlugin
+  - target: '$.paths["/1.3/database/{uuid}/security/admin"].put.operationId'
+    update: modifyDatabaseOpenSearchSecurityPluginPassword
+  - target: '$.paths["/1.3/database/{uuid}/service-type"].patch.operationId'
+    update: modifyDatabaseType
+  - target: '$.paths["/1.3/database/{uuid}/sessions"].get.operationId'
+    update: getDatabaseSessions
+  - target: '$.paths["/1.3/database/{uuid}/sessions/{pid}"].delete.operationId'
+    update: terminateDatabaseSession
+  - target: '$.paths["/1.3/database/{uuid}/start-maintenance"].put.operationId'
+    update: startDatabaseManualMaintenanceService
+  - target: '$.paths["/1.3/database/{uuid}/status"].get.operationId'
+    update: getDatabaseStatus
+  - target: '$.paths["/1.3/database/{uuid}/tasks"].post.operationId'
+    update: createDatabaseTask
+  - target: '$.paths["/1.3/database/{uuid}/tasks/{task-id}"].get.operationId'
+    update: getDatabaseTask
+  - target: '$.paths["/1.3/database/{uuid}/upgrade"].post.operationId'
+    update: upgradeDatabase
+  - target: '$.paths["/1.3/database/{uuid}/users"].get.operationId'
+    update: listDatabaseUsers
+  - target: '$.paths["/1.3/database/{uuid}/users"].post.operationId'
+    update: createDatabaseUser
+  - target: '$.paths["/1.3/database/{uuid}/users/{username}"].delete.operationId'
+    update: deleteDatabaseUser
+  - target: '$.paths["/1.3/database/{uuid}/users/{username}"].get.operationId'
+    update: getDatabaseUser
+  - target: '$.paths["/1.3/database/{uuid}/users/{username}"].patch.operationId'
+    update: modifyDatabaseUser
+  - target: '$.paths["/1.3/database/{uuid}/users/{username}/access-control"].patch.operationId'
+    update: modifyDatabaseUserAccessControl
+  - target: '$.paths["/1.3/database/{uuid}/versions"].get.operationId'
+    update: getDatabaseVersions
+  - target: '$.paths["/1.3/object-storage-2"].get.operationId'
+    update: listObjectStorages
+  - target: '$.paths["/1.3/object-storage-2"].post.operationId'
+    update: createObjectStorage
+  - target: '$.paths["/1.3/object-storage-2/integrations/services"].get.operationId'
+    update: listObjectStorageIntegrationServices
+  - target: '$.paths["/1.3/object-storage-2/integrations/services/{service-uuid}"].get.operationId'
+    update: getObjectStorageIntegrationService
+  - target: '$.paths["/1.3/object-storage-2/integrations/services/{service-uuid}/networks"].post.operationId'
+    update: createObjectStorageIntegrationNetwork
+  - target: '$.paths["/1.3/object-storage-2/integrations/services/{service-uuid}/networks/{network-name}"].delete.operationId'
+    update: deleteObjectStorageIntegrationNetwork
+  - target: '$.paths["/1.3/object-storage-2/regions"].get.operationId'
+    update: listObjectStorageRegions
+  - target: '$.paths["/1.3/object-storage-2/regions/{region-name}"].get.operationId'
+    update: getObjectStorageRegion
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}"].delete.operationId'
+    update: deleteObjectStorage
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}"].get.operationId'
+    update: getObjectStorage
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}"].patch.operationId'
+    update: modifyObjectStorage
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}"].put.operationId'
+    update: replaceObjectStorage
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/buckets"].get.operationId'
+    update: listObjectStorageBucketMetrics
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/buckets"].post.operationId'
+    update: createObjectStorageBucket
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/buckets/{bucket-name}"].delete.operationId'
+    update: deleteObjectStorageBucket
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/custom-domains"].get.operationId'
+    update: listObjectStorageCustomDomains
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/custom-domains"].post.operationId'
+    update: attachObjectStorageCustomDomain
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/custom-domains/{custom-domain-name}"].delete.operationId'
+    update: deleteObjectStorageCustomDomain
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/custom-domains/{custom-domain-name}"].get.operationId'
+    update: getObjectStorageCustomDomain
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/custom-domains/{custom-domain-name}"].patch.operationId'
+    update: modifyObjectStorageCustomDomain
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/groups"].get.operationId'
+    update: listObjectStorageGroups
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/groups"].post.operationId'
+    update: createObjectStorageGroup
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/groups/{group-name}"].delete.operationId'
+    update: deleteObjectStorageGroup
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/groups/{group-name}"].get.operationId'
+    update: getObjectStorageGroup
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/groups/{group-name}/inline-policies"].get.operationId'
+    update: listObjectStorageGroupInlinePolicies
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/groups/{group-name}/inline-policies"].post.operationId'
+    update: createObjectStorageGroupInlinePolicy
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/groups/{group-name}/inline-policies/{group-policy-name}"].delete.operationId'
+    update: deleteObjectStorageGroupInlinePolicy
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/groups/{group-name}/inline-policies/{group-policy-name}"].get.operationId'
+    update: getObjectStorageGroupInlinePolicy
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/groups/{group-name}/policies"].get.operationId'
+    update: listObjectStorageIAMGroupPolicies
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/groups/{group-name}/policies"].post.operationId'
+    update: attachObjectStorageIAMGroupPolicy
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/groups/{group-name}/policies/{policy-name}"].delete.operationId'
+    update: detachObjectStorageIAMGroupPolicy
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/groups/{group-name}/users/{username}"].delete.operationId'
+    update: removeObjectStorageUserFromGroup
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/groups/{group-name}/users/{username}"].post.operationId'
+    update: attachObjectStorageUserToGroup
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/labels"].get.operationId'
+    update: listObjectStorageLabels
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/labels"].post.operationId'
+    update: createObjectStorageLabel
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/labels/{label-key}"].delete.operationId'
+    update: deleteObjectStorageLabel
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/labels/{label-key}"].get.operationId'
+    update: getObjectStorageLabel
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/labels/{label-key}"].patch.operationId'
+    update: modifyObjectStorageLabel
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/metrics"].get.operationId'
+    update: getObjectStorageMetrics
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/metrics/series"].get.operationId'
+    update: listObjectStorageMetricsSeries
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/networks"].get.operationId'
+    update: listObjectStorageNetworks
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/networks"].post.operationId'
+    update: createObjectStorageNetwork
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/networks/{network-name}"].delete.operationId'
+    update: deleteObjectStorageNetwork
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/networks/{network-name}"].get.operationId'
+    update: getObjectStorageNetwork
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/policies"].get.operationId'
+    update: listObjectStoragePolicies
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/policies"].post.operationId'
+    update: createObjectStoragePolicy
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/policies/{policy-name}"].delete.operationId'
+    update: deleteObjectStoragePolicy
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/policies/{policy-name}"].get.operationId'
+    update: getObjectStoragePolicy
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/policies/{policy-name}"].patch.operationId'
+    update: setObjectStorageDefaultPolicyVersion
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/policies/{policy-name}/versions"].get.operationId'
+    update: listObjectStoragePolicyVersions
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/policies/{policy-name}/versions"].post.operationId'
+    update: createObjectStoragePolicyVersion
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/policies/{policy-name}/versions/{policy-version}"].delete.operationId'
+    update: deleteObjectStoragePolicyVersion
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/policies/{policy-name}/versions/{policy-version}"].get.operationId'
+    update: getObjectStoragePolicyVersion
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/roles"].get.operationId'
+    update: listObjectStorageRoles
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/roles"].post.operationId'
+    update: createObjectStorageRole
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/roles/{role-name}"].delete.operationId'
+    update: deleteObjectStorageRole
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/roles/{role-name}"].get.operationId'
+    update: getObjectStorageRole
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/roles/{role-name}"].patch.operationId'
+    update: updateObjectStorageRole
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/roles/{role-name}/assume-role-policy"].put.operationId'
+    update: assumeObjectStorageRolePolicy
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/roles/{role-name}/inline-policies"].get.operationId'
+    update: listObjectStorageRoleInlinePolicies
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/roles/{role-name}/inline-policies"].post.operationId'
+    update: createObjectStorageRoleInlinePolicy
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/roles/{role-name}/inline-policies/{role-policy-name}"].delete.operationId'
+    update: deleteObjectStorageRoleInlinePolicy
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/roles/{role-name}/inline-policies/{role-policy-name}"].get.operationId'
+    update: getObjectStorageRoleInlinePolicy
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/roles/{role-name}/permissions-boundary"].delete.operationId'
+    update: deleteObjectStorageRolePermissionsBoundary
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/roles/{role-name}/permissions-boundary"].put.operationId'
+    update: createObjectStorageRolePermissionsBoundary
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/roles/{role-name}/policies"].get.operationId'
+    update: listObjectStorageAttachedRolePolicies
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/roles/{role-name}/policies"].post.operationId'
+    update: attachObjectStoragePolicyToRole
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/roles/{role-name}/policies/{role-policy-name}"].delete.operationId'
+    update: detachObjectStoragePolicyFromRole
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/roles/{role-name}/tags"].get.operationId'
+    update: getObjectStorageRoleTags
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/roles/{role-name}/tags"].put.operationId'
+    update: replaceObjectStorageRoleTags
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/roles/{role-name}/tags/{role-tag-key}"].delete.operationId'
+    update: deleteObjectStorageRoleTag
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/users"].get.operationId'
+    update: listObjectStorageUsers
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/users"].post.operationId'
+    update: createObjectStorageUser
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/users/{username}"].delete.operationId'
+    update: deleteObjectStorageUser
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/users/{username}"].get.operationId'
+    update: getObjectStorageUser
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/users/{username}/access-keys"].get.operationId'
+    update: listObjectStorageAccessKeys
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/users/{username}/access-keys"].post.operationId'
+    update: createObjectStorageAccessKey
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/users/{username}/access-keys/{access-key-id}"].delete.operationId'
+    update: deleteObjectStorageAccessKey
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/users/{username}/access-keys/{access-key-id}"].get.operationId'
+    update: getObjectStorageAccessKeyDetails
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/users/{username}/access-keys/{access-key-id}"].patch.operationId'
+    update: modifyObjectStorageAccessKeyDetails
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/users/{username}/inline-policies"].get.operationId'
+    update: listObjectStorageUserInlinePolicies
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/users/{username}/inline-policies"].post.operationId'
+    update: createObjectStorageUserInlinePolicy
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/users/{username}/inline-policies/{user-policy-name}"].delete.operationId'
+    update: deleteObjectStorageUserInlinePolicy
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/users/{username}/inline-policies/{user-policy-name}"].get.operationId'
+    update: getObjectStorageUserInlinePolicy
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/users/{username}/permissions-boundary"].delete.operationId'
+    update: deleteObjectStorageUserPermissionsBoundary
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/users/{username}/permissions-boundary"].put.operationId'
+    update: createObjectStorageUserPermissionsBoundary
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/users/{username}/policies"].get.operationId'
+    update: listObjectStorageAttachedUserPolicies
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/users/{username}/policies"].post.operationId'
+    update: attachObjectStorageUserPolicy
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/users/{username}/policies/{nested-name}"].delete.operationId'
+    update: detachObjectStorageUserPolicy
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/users/{username}/tags"].get.operationId'
+    update: getObjectStorageUserTags
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/users/{username}/tags"].put.operationId'
+    update: replaceObjectStorageUserTags
+  - target: '$.paths["/1.3/object-storage-2/{service-uuid}/users/{username}/tags/{user-tag-key}"].delete.operationId'
+    update: deleteObjectStorageUserTag
