@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/refs/tags/v2.6.0/configuration-schema.json
+package: upcloud
+generate:
+  client: true
+  models: true
+  embedded-spec: false
+  server-urls: true
+output-options:
+  include-tags:
+    - object-storage-2
+  resolve-type-name-collisions: true
+  overlay:
+    path: config/overlay.yaml
+    strict: true
+  user-templates:
+    # https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/refs/tags/v2.6.0/pkg/codegen/templates/constants.tmpl
+    constants.tmpl: config/constants.tmpl
+output: ../pkg/upcloud/upcloud.gen.go
