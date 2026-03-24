@@ -1,0 +1,14 @@
+[tools]
+go = "1.25.8"
+golangci-lint = "2.11.3"
+
+[env]
+MISE_GO_SET_GOROOT = "true"
+
+[tasks.generate]
+description = "Generate SDK"
+run = "./generator/scripts/generate.sh"
+
+[tasks.test]
+description = "Test"
+run = "go generate ./generator/generator_test.go"

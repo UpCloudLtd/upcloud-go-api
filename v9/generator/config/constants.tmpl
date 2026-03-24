@@ -1,0 +1,18 @@
+{{range $Enum := .EnumDefinitions}}
+// Defines values for {{$Enum.TypeName}}.
+const (
+{{range $name, $value := $Enum.GetValues}}
+  {{$name}} {{$Enum.TypeName}} = {{$Enum.ValueWrapper}}{{$value}}{{$Enum.ValueWrapper -}}
+{{end}}
+)
+
+// Valid indicates whether the value is a known member of the {{$Enum.TypeName}} enum.
+func (e {{$Enum.TypeName}}) Valid() bool {
+    switch e {
+    {{range $name, $value := $Enum.GetValues}}case {{$name}}:
+        return true
+    {{end}}default:
+        return false
+    }
+}
+{{end}}
