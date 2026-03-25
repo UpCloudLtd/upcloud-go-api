@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v9/pkg/upcloud"
+	"github.com/google/uuid"
 )
 
 const (
@@ -46,16 +47,16 @@ func main() {
 	if createResp.JSON201 == nil {
 		log.Fatal("create service failed")
 	}
-	uuid := createResp.JSON201.Uuid
-	if uuid == nil {
+	serviceUUID := createResp.JSON201.Uuid
+	if serviceUUID == nil {
 		log.Fatal("create response missing uuid")
 	}
-	fmt.Printf("Created service with UUID: %s\n", uuid.String())
+	fmt.Printf("Created service with UUID: %s\n", *serviceUUID)
 
 	fmt.Println("Waiting for service to start...")
 	waitCtx, cancel := context.WithTimeout(ctx, waitTimeout)
 	defer cancel()
-	_, err = client.WaitForObjectStorageOperationalState(waitCtx, uuid.String(), "running")
+	_, err = client.WaitForObjectStorageOperationalState(waitCtx, *serviceUUID, "running")
 	if err != nil {
 		log.Fatalf("wait for service start: %v", err)
 	}
@@ -72,7 +73,12 @@ func main() {
 	printServices(*listResp2.JSON200)
 
 	fmt.Println("Deleting service...")
-	delResp, err := client.DeleteObjectStorageWithResponse(ctx, *uuid, nil)
+
+	u, err := uuid.Parse(*serviceUUID)
+	if err != nil {
+		log.Fatalf("cannot parse uuid: %v", err)
+	}
+	delResp, err := client.DeleteObjectStorageWithResponse(ctx, u, nil)
 	if err != nil {
 		log.Fatalf("delete service: %v", err)
 	}
@@ -87,7 +93,7 @@ func main() {
 	fmt.Println("Waiting for deletion...")
 	delCtx, delCancel := context.WithTimeout(ctx, waitTimeout)
 	defer delCancel()
-	if err = client.WaitForObjectStorageDeletion(delCtx, uuid.String()); err != nil {
+	if err = client.WaitForObjectStorageDeletion(delCtx, *serviceUUID); err != nil {
 		log.Fatalf("wait for deletion: %v", err)
 	}
 	fmt.Println("Deletion confirmed")
@@ -103,9 +109,6 @@ func printServices(services []upcloud.ObjectStorage2ServiceDetailResponse) {
 		name, r := "", ""
 		if s.Name != nil {
 			name = *s.Name
-		}
-		if s.Region != nil {
-			r = *s.Region
 		}
 		fmt.Printf("- %s (%s)\n", name, r)
 	}
