@@ -75,6 +75,24 @@ func (e ObjectStorage2CreateAccessKeyResponseStatus) Valid() bool {
 	}
 }
 
+// Defines values for ObjectStorage2CustomDomainCreateMode.
+const (
+	ObjectStorage2CustomDomainCreateModeApi           ObjectStorage2CustomDomainCreateMode = "api"
+	ObjectStorage2CustomDomainCreateModeStaticWebsite ObjectStorage2CustomDomainCreateMode = "static-website"
+)
+
+// Valid indicates whether the value is a known member of the ObjectStorage2CustomDomainCreateMode enum.
+func (e ObjectStorage2CustomDomainCreateMode) Valid() bool {
+	switch e {
+	case ObjectStorage2CustomDomainCreateModeApi:
+		return true
+	case ObjectStorage2CustomDomainCreateModeStaticWebsite:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ObjectStorage2CustomDomainCreateType.
 const (
 	ObjectStorage2CustomDomainCreateTypePrivate ObjectStorage2CustomDomainCreateType = "private"
@@ -93,6 +111,24 @@ func (e ObjectStorage2CustomDomainCreateType) Valid() bool {
 	}
 }
 
+// Defines values for ObjectStorage2CustomDomainDetailResponseMode.
+const (
+	ObjectStorage2CustomDomainDetailResponseModeApi           ObjectStorage2CustomDomainDetailResponseMode = "api"
+	ObjectStorage2CustomDomainDetailResponseModeStaticWebsite ObjectStorage2CustomDomainDetailResponseMode = "static-website"
+)
+
+// Valid indicates whether the value is a known member of the ObjectStorage2CustomDomainDetailResponseMode enum.
+func (e ObjectStorage2CustomDomainDetailResponseMode) Valid() bool {
+	switch e {
+	case ObjectStorage2CustomDomainDetailResponseModeApi:
+		return true
+	case ObjectStorage2CustomDomainDetailResponseModeStaticWebsite:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ObjectStorage2CustomDomainModifyType.
 const (
 	ObjectStorage2CustomDomainModifyTypePrivate ObjectStorage2CustomDomainModifyType = "private"
@@ -105,6 +141,42 @@ func (e ObjectStorage2CustomDomainModifyType) Valid() bool {
 	case ObjectStorage2CustomDomainModifyTypePrivate:
 		return true
 	case ObjectStorage2CustomDomainModifyTypePublic:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ObjectStorage2EndpointResponseMode.
+const (
+	Api           ObjectStorage2EndpointResponseMode = "api"
+	StaticWebsite ObjectStorage2EndpointResponseMode = "static-website"
+)
+
+// Valid indicates whether the value is a known member of the ObjectStorage2EndpointResponseMode enum.
+func (e ObjectStorage2EndpointResponseMode) Valid() bool {
+	switch e {
+	case Api:
+		return true
+	case StaticWebsite:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ObjectStorage2EndpointResponseType.
+const (
+	ObjectStorage2EndpointResponseTypePrivate ObjectStorage2EndpointResponseType = "private"
+	ObjectStorage2EndpointResponseTypePublic  ObjectStorage2EndpointResponseType = "public"
+)
+
+// Valid indicates whether the value is a known member of the ObjectStorage2EndpointResponseType enum.
+func (e ObjectStorage2EndpointResponseType) Valid() bool {
+	switch e {
+	case ObjectStorage2EndpointResponseTypePrivate:
+		return true
+	case ObjectStorage2EndpointResponseTypePublic:
 		return true
 	default:
 		return false
@@ -155,16 +227,16 @@ func (e ObjectStorage2NetworkFamily) Valid() bool {
 
 // Defines values for ObjectStorage2NetworkType.
 const (
-	Private ObjectStorage2NetworkType = "private"
-	Public  ObjectStorage2NetworkType = "public"
+	ObjectStorage2NetworkTypePrivate ObjectStorage2NetworkType = "private"
+	ObjectStorage2NetworkTypePublic  ObjectStorage2NetworkType = "public"
 )
 
 // Valid indicates whether the value is a known member of the ObjectStorage2NetworkType enum.
 func (e ObjectStorage2NetworkType) Valid() bool {
 	switch e {
-	case Private:
+	case ObjectStorage2NetworkTypePrivate:
 		return true
-	case Public:
+	case ObjectStorage2NetworkTypePublic:
 		return true
 	default:
 		return false
@@ -219,6 +291,27 @@ func (e ObjectStorage2QueryParamSort) Valid() bool {
 	case RegionName:
 		return true
 	case ServiceName:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ObjectStorage2ServiceDomainsDomainsType.
+const (
+	Custom  ObjectStorage2ServiceDomainsDomainsType = "custom"
+	Private ObjectStorage2ServiceDomainsDomainsType = "private"
+	Public  ObjectStorage2ServiceDomainsDomainsType = "public"
+)
+
+// Valid indicates whether the value is a known member of the ObjectStorage2ServiceDomainsDomainsType enum.
+func (e ObjectStorage2ServiceDomainsDomainsType) Valid() bool {
+	switch e {
+	case Custom:
+		return true
+	case Private:
+		return true
+	case Public:
 		return true
 	default:
 		return false
@@ -375,28 +468,43 @@ type ObjectStorage2CreateAccessKeyResponseStatus string
 
 // ObjectStorage2CustomDomainCreate Schema for creating a custom domain.
 type ObjectStorage2CustomDomainCreate struct {
-	// DomainName Custom domain to be added. Must be a subdomain.
+	// DomainName Custom domain to be added. Supports both apex domains (example.com) and subdomains (objects.example.com).
 	DomainName string `json:"domain_name"`
+
+	// Mode Purpose of the domain. 'api' for S3 API access (creates base URL), 'static-website' for static website hosting (no base URL). Cannot be changed after creation.
+	Mode *ObjectStorage2CustomDomainCreateMode `json:"mode,omitempty"`
 
 	// Type Type of the custom domain. At the moment only public is accepted.
 	Type ObjectStorage2CustomDomainCreateType `json:"type"`
 }
+
+// ObjectStorage2CustomDomainCreateMode Purpose of the domain. 'api' for S3 API access (creates base URL), 'static-website' for static website hosting (no base URL). Cannot be changed after creation.
+type ObjectStorage2CustomDomainCreateMode string
 
 // ObjectStorage2CustomDomainCreateType Type of the custom domain. At the moment only public is accepted.
 type ObjectStorage2CustomDomainCreateType string
 
 // ObjectStorage2CustomDomainDetailResponse Response schema for custom domain details.
 type ObjectStorage2CustomDomainDetailResponse struct {
+	// DomainName Custom domain name. Supports both apex domains and subdomains.
 	DomainName *string `json:"domain_name,omitempty"`
-	Type       *string `json:"type,omitempty"`
+
+	// Mode Purpose of the domain. 'api' for S3 API access, 'static-website' for static website hosting.
+	Mode *ObjectStorage2CustomDomainDetailResponseMode `json:"mode,omitempty"`
+
+	// Type Endpoint type for the custom domain.
+	Type *string `json:"type,omitempty"`
 }
+
+// ObjectStorage2CustomDomainDetailResponseMode Purpose of the domain. 'api' for S3 API access, 'static-website' for static website hosting.
+type ObjectStorage2CustomDomainDetailResponseMode string
 
 // ObjectStorage2CustomDomainListResponse Response schema for listing custom domains.
 type ObjectStorage2CustomDomainListResponse = []ObjectStorage2CustomDomainDetailResponse
 
 // ObjectStorage2CustomDomainModify Schema for modifying a custom domain.
 type ObjectStorage2CustomDomainModify struct {
-	// DomainName New modified custom domain.
+	// DomainName New modified custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
 	DomainName *string `json:"domain_name,omitempty"`
 
 	// Type Type of the custom domain.
@@ -406,16 +514,27 @@ type ObjectStorage2CustomDomainModify struct {
 // ObjectStorage2CustomDomainModifyType Type of the custom domain.
 type ObjectStorage2CustomDomainModifyType string
 
-// ObjectStorage2CustomDomainName A valid hostname for the custom domain.
+// ObjectStorage2CustomDomainName A valid hostname for the custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
 type ObjectStorage2CustomDomainName = string
 
 // ObjectStorage2EndpointResponse Response schema for endpoint details.
 type ObjectStorage2EndpointResponse struct {
 	DomainName *string `json:"domain_name,omitempty"`
 	IamUrl     *string `json:"iam_url,omitempty"`
-	StsUrl     *string `json:"sts_url,omitempty"`
-	Type       *string `json:"type,omitempty"`
+
+	// Mode The operational mode of the endpoint: 'api' for S3/IAM/STS access, 'static-website' for static website hosting
+	Mode   *ObjectStorage2EndpointResponseMode `json:"mode,omitempty"`
+	StsUrl *string                             `json:"sts_url,omitempty"`
+
+	// Type The network access type of the endpoint
+	Type *ObjectStorage2EndpointResponseType `json:"type,omitempty"`
 }
+
+// ObjectStorage2EndpointResponseMode The operational mode of the endpoint: 'api' for S3/IAM/STS access, 'static-website' for static website hosting
+type ObjectStorage2EndpointResponseMode string
+
+// ObjectStorage2EndpointResponseType The network access type of the endpoint
+type ObjectStorage2EndpointResponseType string
 
 // ObjectStorage2ErrorResponse Schema for error responses from the API.
 type ObjectStorage2ErrorResponse struct {
@@ -768,65 +887,36 @@ type ObjectStorage2ServiceCreate struct {
 	TerminationProtection *bool `json:"termination_protection,omitempty"`
 }
 
-// ObjectStorage2ServiceDetailResponse Response schema for service details, including UUID, name, endpoints, networks, labels, users, and operational state.
+// ObjectStorage2ServiceDetailResponse Response schema for service details, including UUID, name, and endpoints.
 type ObjectStorage2ServiceDetailResponse struct {
-	// ConfiguredStatus The configured status of the service.
-	ConfiguredStatus *string `json:"configured_status,omitempty"`
-
-	// CreatedAt Timestamp when the service was created.
-	CreatedAt *time.Time `json:"created_at,omitempty"`
-
-	// CustomDomains List of custom domains attached to the service.
-	CustomDomains *[]ObjectStorage2CustomDomainDetailResponse `json:"custom_domains,omitempty"`
-
-	// Endpoints List of service endpoints.
 	Endpoints *[]ObjectStorage2EndpointResponse `json:"endpoints,omitempty"`
+	Name      *string                           `json:"name,omitempty"`
 
-	// Labels List of labels associated with the service.
-	Labels *[]ObjectStorage2LabelDetailResponse `json:"labels,omitempty"`
-
-	// Name Name of the service.
-	Name *string `json:"name,omitempty"`
-
-	// Networks List of networks attached to the service.
-	Networks *[]ObjectStorage2NetworkDetailResponse `json:"networks,omitempty"`
-
-	// OperationalState Current operational state of the service.
-	OperationalState *string `json:"operational_state,omitempty"`
-
-	// Region Region where the service is deployed.
-	Region *string `json:"region,omitempty"`
-
-	// StateMessages List of state messages describing the service status.
-	StateMessages *[]struct {
-		// Code Code identifying the state message.
-		Code *string `json:"code,omitempty"`
-
-		// CreatedAt Timestamp when the state message was created.
-		CreatedAt *time.Time `json:"created_at,omitempty"`
-
-		// Message Human-readable state message.
-		Message *string `json:"message,omitempty"`
-
-		// OperationalState Operational state associated with the message.
-		OperationalState *string `json:"operational_state,omitempty"`
-
-		// UpdatedAt Timestamp when the state message was last updated.
-		UpdatedAt *time.Time `json:"updated_at,omitempty"`
-	} `json:"state_messages,omitempty"`
-
-	// UpdatedAt Timestamp when the service was last updated.
-	UpdatedAt *time.Time `json:"updated_at,omitempty"`
-
-	// Usage Response schema for service usage metrics.
-	Usage *ObjectStorage2MetricsUsageResponse `json:"usage,omitempty"`
-
-	// Users List of users associated with the service.
-	Users *[]ObjectStorage2UserDetailResponse `json:"users,omitempty"`
-
-	// Uuid Unique identifier for the service.
-	Uuid *openapi_types.UUID `json:"uuid,omitempty"`
+	// StaticWebsites Static website configurations for this service
+	StaticWebsites *[]ObjectStorage2StaticWebsiteConfig `json:"static_websites,omitempty"`
+	Uuid           *string                              `json:"uuid,omitempty"`
 }
+
+// ObjectStorage2ServiceDomains Service domains with their static website hosting status
+type ObjectStorage2ServiceDomains struct {
+	// Domains List of all service domains (public, private, custom) with their static website hosting availability and configuration status
+	Domains []struct {
+		// Active Whether this domain is active and ready to use (always true for enabled public/private endpoints, true for custom domains only if certificate is ready)
+		Active bool `json:"active"`
+
+		// Domain Domain name (e.g., unc38.local.upbucket.com)
+		Domain string `json:"domain"`
+
+		// StaticWebsiteConfigured Whether static website hosting is configured for this domain
+		StaticWebsiteConfigured bool `json:"static_website_configured"`
+
+		// Type Type of domain (public endpoint, private endpoint, or custom domain)
+		Type ObjectStorage2ServiceDomainsDomainsType `json:"type"`
+	} `json:"domains"`
+}
+
+// ObjectStorage2ServiceDomainsDomainsType Type of domain (public endpoint, private endpoint, or custom domain)
+type ObjectStorage2ServiceDomainsDomainsType string
 
 // ObjectStorage2ServiceListResponse Response schema for a list of services.
 type ObjectStorage2ServiceListResponse = []ObjectStorage2ServiceDetailResponse
@@ -842,6 +932,9 @@ type ObjectStorage2ServiceModify struct {
 
 	// Properties Schema for creating properties with an optional access control origin override.
 	Properties *ObjectStorage2PropertiesCreate `json:"properties,omitempty"`
+
+	// StaticWebsites Static website configurations for this service. Array replaces all existing configurations.
+	StaticWebsites *[]ObjectStorage2StaticWebsiteConfigCreate `json:"static_websites,omitempty"`
 
 	// TerminationProtection Enables or disables termination protection for the service. When enabled, the service cannot be deleted or powered down unless this is disabled first.
 	TerminationProtection *bool `json:"termination_protection,omitempty"`
@@ -861,12 +954,115 @@ type ObjectStorage2ServiceReplace struct {
 	// Properties Schema for creating properties with an optional access control origin override.
 	Properties *ObjectStorage2PropertiesCreate `json:"properties,omitempty"`
 
+	// StaticWebsites Static website configurations for this service. Array replaces all existing configurations.
+	StaticWebsites *[]ObjectStorage2StaticWebsiteConfigCreate `json:"static_websites,omitempty"`
+
 	// TerminationProtection Enables or disables termination protection for the service. When enabled, the service cannot be deleted or powered down unless this is disabled first.
 	TerminationProtection *bool `json:"termination_protection,omitempty"`
 }
 
 // ObjectStorage2ServiceUUID The unique identifier for the service.
 type ObjectStorage2ServiceUUID = openapi_types.UUID
+
+// ObjectStorage2StaticWebsiteConfig Static website hosting configuration for a specific domain
+type ObjectStorage2StaticWebsiteConfig struct {
+	// BucketName Name of the S3/ECS bucket containing the website content. Only alphanumerics, dots, hyphens, and underscores are allowed.
+	BucketName string `json:"bucket_name"`
+
+	// BucketPrefix Optional prefix/subfolder within the bucket. Only alphanumerics, slashes, dots, hyphens, and underscores are allowed.
+	BucketPrefix string `json:"bucket_prefix"`
+
+	// CreatedAt Timestamp when this configuration was created
+	CreatedAt time.Time `json:"created_at"`
+
+	// DomainName The domain this configuration applies to
+	DomainName string `json:"domain_name"`
+
+	// Enabled Whether the static website configuration is currently active
+	Enabled bool `json:"enabled"`
+
+	// ErrorPages Custom error page configurations for specific HTTP status codes or ranges
+	ErrorPages []ObjectStorage2StaticWebsiteErrorPage `json:"error_pages"`
+
+	// IndexDocument Default document for directories. Only alphanumerics, slashes, dots, hyphens, and underscores are allowed.
+	IndexDocument string `json:"index_document"`
+
+	// SpaMode Enable Single Page Application (SPA) mode. When enabled, all non-file routes serve the index document, allowing client-side routing to handle the URL. Essential for React, Vue, Next.js, and similar frameworks.
+	SpaMode *bool `json:"spa_mode,omitempty"`
+
+	// UpdatedAt Timestamp when this configuration was last updated
+	UpdatedAt time.Time `json:"updated_at"`
+}
+
+// ObjectStorage2StaticWebsiteConfigCreate Request body for creating a static website configuration. If domain is omitted, the primary static website domain is used.
+type ObjectStorage2StaticWebsiteConfigCreate struct {
+	// BucketName Name of the S3/ECS bucket containing the website content. Only alphanumerics, dots, hyphens, and underscores are allowed.
+	BucketName string `json:"bucket_name"`
+
+	// BucketPrefix Optional prefix/subfolder within the bucket. Only alphanumerics, slashes, dots, hyphens, and underscores are allowed.
+	BucketPrefix *string `json:"bucket_prefix,omitempty"`
+
+	// DomainName Custom domain to use for static website hosting. Must be a custom domain attached to the service. If omitted, the primary static website domain is used.
+	DomainName *string `json:"domain_name,omitempty"`
+
+	// Enabled Whether the static website configuration should be active. Defaults to true if not specified.
+	Enabled *bool `json:"enabled,omitempty"`
+
+	// ErrorPages Custom error page configurations for specific HTTP status codes or ranges
+	ErrorPages *[]ObjectStorage2StaticWebsiteErrorPage `json:"error_pages,omitempty"`
+
+	// IndexDocument Default document for directories. Only alphanumerics, slashes, dots, hyphens, and underscores are allowed.
+	IndexDocument *string `json:"index_document,omitempty"`
+
+	// SpaMode Enable Single Page Application (SPA) mode. When enabled, all non-file routes serve the index document, allowing client-side routing to handle the URL. Essential for React, Vue, Next.js, and similar frameworks.
+	SpaMode *bool `json:"spa_mode,omitempty"`
+}
+
+// ObjectStorage2StaticWebsiteConfigModify Request body for updating a static website configuration
+type ObjectStorage2StaticWebsiteConfigModify struct {
+	// BucketName Name of the S3/ECS bucket containing the website content. Only alphanumerics, dots, hyphens, and underscores are allowed.
+	BucketName *string `json:"bucket_name,omitempty"`
+
+	// BucketPrefix Optional prefix/subfolder within the bucket. Only alphanumerics, slashes, dots, hyphens, and underscores are allowed.
+	BucketPrefix *string `json:"bucket_prefix,omitempty"`
+
+	// Enabled Whether the static website configuration should be active
+	Enabled *bool `json:"enabled,omitempty"`
+
+	// ErrorPages Custom error page configurations for specific HTTP status codes or ranges. Replaces the entire set when provided.
+	ErrorPages *[]ObjectStorage2StaticWebsiteErrorPage `json:"error_pages,omitempty"`
+
+	// IndexDocument Default document for directories. Only alphanumerics, slashes, dots, hyphens, and underscores are allowed.
+	IndexDocument *string `json:"index_document,omitempty"`
+
+	// SpaMode Enable Single Page Application (SPA) mode. When enabled, all non-file routes serve the index document, allowing client-side routing to handle the URL. Essential for React, Vue, Next.js, and similar frameworks.
+	SpaMode *bool `json:"spa_mode,omitempty"`
+}
+
+// ObjectStorage2StaticWebsiteErrorPage Custom error page configuration for specific HTTP status codes or ranges
+type ObjectStorage2StaticWebsiteErrorPage struct {
+	// ErrorDocument Path to the custom error page document relative to the bucket root (e.g., '404.html', 'errors/404.html'). Must not start with '/'.
+	ErrorDocument string `json:"error_document"`
+
+	// StatusCode Single HTTP status code to match (must be within 4xx or 5xx).
+	StatusCode *int `json:"status_code,omitempty"`
+
+	// StatusRange Inclusive HTTP status code range to match (for example 4xx or 5xx blocks).
+	StatusRange *struct {
+		// End Inclusive upper bound of the HTTP status range (must be within 4xx or 5xx).
+		End int `json:"end"`
+
+		// Start Inclusive lower bound of the HTTP status range (must be within 4xx or 5xx).
+		Start int `json:"start"`
+	} `json:"status_range,omitempty"`
+	union json.RawMessage
+}
+
+// ObjectStorage2StaticWebsiteErrorPage0 defines model for .
+type ObjectStorage2StaticWebsiteErrorPage0 = interface{}
+
+// ObjectStorage2StaticWebsiteErrorPage1 defines model for .
+type ObjectStorage2StaticWebsiteErrorPage1 = interface{}
 
 // ObjectStorage2TagKey The key of a tag.
 type ObjectStorage2TagKey = string
@@ -1003,6 +1199,9 @@ type ObjectStorage2CreateRolePermissionsBoundaryServiceUuid = ObjectStorage2Serv
 // ObjectStorage2CreateRoleServiceUuid The unique identifier for the service.
 type ObjectStorage2CreateRoleServiceUuid = ObjectStorage2ServiceUUID
 
+// ObjectStorage2CreateStaticWebsiteServiceUuid The unique identifier for the service.
+type ObjectStorage2CreateStaticWebsiteServiceUuid = ObjectStorage2ServiceUUID
+
 // ObjectStorage2CreateUserInlinePolicyServiceUuid The unique identifier for the service.
 type ObjectStorage2CreateUserInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
 
@@ -1033,7 +1232,7 @@ type ObjectStorage2DeleteBucketBucketName = ObjectStorage2Name
 // ObjectStorage2DeleteBucketServiceUuid The unique identifier for the service.
 type ObjectStorage2DeleteBucketServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2DeleteCustomDomainCustomDomainName A valid hostname for the custom domain.
+// ObjectStorage2DeleteCustomDomainCustomDomainName A valid hostname for the custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
 type ObjectStorage2DeleteCustomDomainCustomDomainName = ObjectStorage2CustomDomainName
 
 // ObjectStorage2DeleteCustomDomainServiceUuid The unique identifier for the service.
@@ -1117,6 +1316,12 @@ type ObjectStorage2DeleteServiceForce = ObjectStorage2QueryParamForce
 // ObjectStorage2DeleteServiceServiceUuid The unique identifier for the service.
 type ObjectStorage2DeleteServiceServiceUuid = ObjectStorage2ServiceUUID
 
+// ObjectStorage2DeleteStaticWebsiteCustomDomainName A valid hostname for the custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
+type ObjectStorage2DeleteStaticWebsiteCustomDomainName = ObjectStorage2CustomDomainName
+
+// ObjectStorage2DeleteStaticWebsiteServiceUuid The unique identifier for the service.
+type ObjectStorage2DeleteStaticWebsiteServiceUuid = ObjectStorage2ServiceUUID
+
 // ObjectStorage2DeleteUserInlinePolicyServiceUuid The unique identifier for the service.
 type ObjectStorage2DeleteUserInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
 
@@ -1183,7 +1388,7 @@ type ObjectStorage2GetAccessKeyDetailsServiceUuid = ObjectStorage2ServiceUUID
 // ObjectStorage2GetAccessKeyDetailsUsername A resource name.
 type ObjectStorage2GetAccessKeyDetailsUsername = ObjectStorage2Name
 
-// ObjectStorage2GetCustomDomainDetailsCustomDomainName A valid hostname for the custom domain.
+// ObjectStorage2GetCustomDomainDetailsCustomDomainName A valid hostname for the custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
 type ObjectStorage2GetCustomDomainDetailsCustomDomainName = ObjectStorage2CustomDomainName
 
 // ObjectStorage2GetCustomDomainDetailsServiceUuid The unique identifier for the service.
@@ -1255,11 +1460,20 @@ type ObjectStorage2GetRoleTagsRoleName = ObjectStorage2Name
 // ObjectStorage2GetRoleTagsServiceUuid The unique identifier for the service.
 type ObjectStorage2GetRoleTagsServiceUuid = ObjectStorage2ServiceUUID
 
+// ObjectStorage2GetServiceDomainsServiceUuid The unique identifier for the service.
+type ObjectStorage2GetServiceDomainsServiceUuid = ObjectStorage2ServiceUUID
+
 // ObjectStorage2GetServiceMetricsServiceUuid The unique identifier for the service.
 type ObjectStorage2GetServiceMetricsServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2GetServiceServiceUuid The unique identifier for the service.
 type ObjectStorage2GetServiceServiceUuid = ObjectStorage2ServiceUUID
+
+// ObjectStorage2GetStaticWebsiteCustomDomainName A valid hostname for the custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
+type ObjectStorage2GetStaticWebsiteCustomDomainName = ObjectStorage2CustomDomainName
+
+// ObjectStorage2GetStaticWebsiteServiceUuid The unique identifier for the service.
+type ObjectStorage2GetStaticWebsiteServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2GetUserDetailsServiceUuid The unique identifier for the service.
 type ObjectStorage2GetUserDetailsServiceUuid = ObjectStorage2ServiceUUID
@@ -1393,6 +1607,9 @@ type ObjectStorage2ListServicesOffset = ObjectStorage2QueryParamOffset
 // ObjectStorage2ListServicesSort Schema for a query parameter specifying the sort field and direction. Prefix with '-' for descending order.
 type ObjectStorage2ListServicesSort = ObjectStorage2QueryParamSort
 
+// ObjectStorage2ListStaticWebsitesServiceUuid The unique identifier for the service.
+type ObjectStorage2ListStaticWebsitesServiceUuid = ObjectStorage2ServiceUUID
+
 // ObjectStorage2ListUserInlinePoliciesServiceUuid The unique identifier for the service.
 type ObjectStorage2ListUserInlinePoliciesServiceUuid = ObjectStorage2ServiceUUID
 
@@ -1411,7 +1628,7 @@ type ObjectStorage2ModifyAccessKeyDetailsServiceUuid = ObjectStorage2ServiceUUID
 // ObjectStorage2ModifyAccessKeyDetailsUsername A resource name.
 type ObjectStorage2ModifyAccessKeyDetailsUsername = ObjectStorage2Name
 
-// ObjectStorage2ModifyCustomDomainCustomDomainName A valid hostname for the custom domain.
+// ObjectStorage2ModifyCustomDomainCustomDomainName A valid hostname for the custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
 type ObjectStorage2ModifyCustomDomainCustomDomainName = ObjectStorage2CustomDomainName
 
 // ObjectStorage2ModifyCustomDomainServiceUuid The unique identifier for the service.
@@ -1425,6 +1642,12 @@ type ObjectStorage2ModifyLabelServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2ModifyServiceServiceUuid The unique identifier for the service.
 type ObjectStorage2ModifyServiceServiceUuid = ObjectStorage2ServiceUUID
+
+// ObjectStorage2ModifyStaticWebsiteCustomDomainName A valid hostname for the custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
+type ObjectStorage2ModifyStaticWebsiteCustomDomainName = ObjectStorage2CustomDomainName
+
+// ObjectStorage2ModifyStaticWebsiteServiceUuid The unique identifier for the service.
+type ObjectStorage2ModifyStaticWebsiteServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2RemoveUserFromGroupGroupName A resource name.
 type ObjectStorage2RemoveUserFromGroupGroupName = ObjectStorage2Name
@@ -1552,11 +1775,17 @@ type ObjectStorage2CreateRolePermissionsBoundary200 = ObjectStorage2PermissionsB
 // ObjectStorage2CreateRolePermissionsBoundaryDefault Schema for error responses from the API.
 type ObjectStorage2CreateRolePermissionsBoundaryDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2CreateService201 Response schema for service details, including UUID, name, endpoints, networks, labels, users, and operational state.
+// ObjectStorage2CreateService201 Response schema for service details, including UUID, name, and endpoints.
 type ObjectStorage2CreateService201 = ObjectStorage2ServiceDetailResponse
 
 // ObjectStorage2CreateServiceDefault Schema for error responses from the API.
 type ObjectStorage2CreateServiceDefault = ObjectStorage2ErrorResponse
+
+// ObjectStorage2CreateStaticWebsite201 Static website hosting configuration for a specific domain
+type ObjectStorage2CreateStaticWebsite201 = ObjectStorage2StaticWebsiteConfig
+
+// ObjectStorage2CreateStaticWebsiteDefault Schema for error responses from the API.
+type ObjectStorage2CreateStaticWebsiteDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2CreateUser201 Response schema for user details.
 type ObjectStorage2CreateUser201 = ObjectStorage2UserDetailResponse
@@ -1617,6 +1846,9 @@ type ObjectStorage2DeleteRoleTagDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2DeleteServiceDefault Schema for error responses from the API.
 type ObjectStorage2DeleteServiceDefault = ObjectStorage2ErrorResponse
+
+// ObjectStorage2DeleteStaticWebsiteDefault Schema for error responses from the API.
+type ObjectStorage2DeleteStaticWebsiteDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2DeleteUserDefault Schema for error responses from the API.
 type ObjectStorage2DeleteUserDefault = ObjectStorage2ErrorResponse
@@ -1711,17 +1943,29 @@ type ObjectStorage2GetRoleTags200 = ObjectStorage2TagListResponse
 // ObjectStorage2GetRoleTagsDefault Schema for error responses from the API.
 type ObjectStorage2GetRoleTagsDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2GetService200 Response schema for service details, including UUID, name, endpoints, networks, labels, users, and operational state.
+// ObjectStorage2GetService200 Response schema for service details, including UUID, name, and endpoints.
 type ObjectStorage2GetService200 = ObjectStorage2ServiceDetailResponse
 
 // ObjectStorage2GetServiceDefault Schema for error responses from the API.
 type ObjectStorage2GetServiceDefault = ObjectStorage2ErrorResponse
+
+// ObjectStorage2GetServiceDomains200 Service domains with their static website hosting status
+type ObjectStorage2GetServiceDomains200 = ObjectStorage2ServiceDomains
+
+// ObjectStorage2GetServiceDomainsDefault Schema for error responses from the API.
+type ObjectStorage2GetServiceDomainsDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2GetServiceMetrics200 Response schema for service usage metrics.
 type ObjectStorage2GetServiceMetrics200 = ObjectStorage2MetricsUsageResponse
 
 // ObjectStorage2GetServiceMetricsDefault Schema for error responses from the API.
 type ObjectStorage2GetServiceMetricsDefault = ObjectStorage2ErrorResponse
+
+// ObjectStorage2GetStaticWebsite200 Static website hosting configuration for a specific domain
+type ObjectStorage2GetStaticWebsite200 = ObjectStorage2StaticWebsiteConfig
+
+// ObjectStorage2GetStaticWebsiteDefault Schema for error responses from the API.
+type ObjectStorage2GetStaticWebsiteDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2GetUserDetails200 Response schema for user details.
 type ObjectStorage2GetUserDetails200 = ObjectStorage2UserDetailResponse
@@ -1740,6 +1984,27 @@ type ObjectStorage2GetUserTags200 = ObjectStorage2TagListResponse
 
 // ObjectStorage2GetUserTagsDefault Schema for error responses from the API.
 type ObjectStorage2GetUserTagsDefault = ObjectStorage2ErrorResponse
+
+// ObjectStorage2IntegrationCreateNetwork201 Schema for network details including family, name, type, and UUID.
+type ObjectStorage2IntegrationCreateNetwork201 = ObjectStorage2NetworkDetailResponse
+
+// ObjectStorage2IntegrationCreateNetworkDefault Schema for error responses from the API.
+type ObjectStorage2IntegrationCreateNetworkDefault = ObjectStorage2ErrorResponse
+
+// ObjectStorage2IntegrationDeleteNetworkDefault Schema for error responses from the API.
+type ObjectStorage2IntegrationDeleteNetworkDefault = ObjectStorage2ErrorResponse
+
+// ObjectStorage2IntegrationGetService200 Response schema for service details, including UUID, name, and endpoints.
+type ObjectStorage2IntegrationGetService200 = ObjectStorage2ServiceDetailResponse
+
+// ObjectStorage2IntegrationGetServiceDefault Schema for error responses from the API.
+type ObjectStorage2IntegrationGetServiceDefault = ObjectStorage2ErrorResponse
+
+// ObjectStorage2IntegrationListServices200 Response schema for a list of services.
+type ObjectStorage2IntegrationListServices200 = ObjectStorage2ServiceListResponse
+
+// ObjectStorage2IntegrationListServicesDefault Schema for error responses from the API.
+type ObjectStorage2IntegrationListServicesDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ListAccessKeys200 Response schema for listing access keys.
 type ObjectStorage2ListAccessKeys200 = ObjectStorage2AccessKeyListResponse
@@ -1843,6 +2108,9 @@ type ObjectStorage2ListServices200 = ObjectStorage2ServiceListResponse
 // ObjectStorage2ListServicesDefault Schema for error responses from the API.
 type ObjectStorage2ListServicesDefault = ObjectStorage2ErrorResponse
 
+// ObjectStorage2ListStaticWebsitesDefault Schema for error responses from the API.
+type ObjectStorage2ListStaticWebsitesDefault = ObjectStorage2ErrorResponse
+
 // ObjectStorage2ListUserInlinePolicies200 Response schema for listing inline policies.
 type ObjectStorage2ListUserInlinePolicies200 = ObjectStorage2InlinePolicyListResponse
 
@@ -1873,11 +2141,17 @@ type ObjectStorage2ModifyLabel200 = ObjectStorage2LabelDetailResponse
 // ObjectStorage2ModifyLabelDefault Schema for error responses from the API.
 type ObjectStorage2ModifyLabelDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ModifyService200 Response schema for service details, including UUID, name, endpoints, networks, labels, users, and operational state.
+// ObjectStorage2ModifyService200 Response schema for service details, including UUID, name, and endpoints.
 type ObjectStorage2ModifyService200 = ObjectStorage2ServiceDetailResponse
 
 // ObjectStorage2ModifyServiceDefault Schema for error responses from the API.
 type ObjectStorage2ModifyServiceDefault = ObjectStorage2ErrorResponse
+
+// ObjectStorage2ModifyStaticWebsite200 Static website hosting configuration for a specific domain
+type ObjectStorage2ModifyStaticWebsite200 = ObjectStorage2StaticWebsiteConfig
+
+// ObjectStorage2ModifyStaticWebsiteDefault Schema for error responses from the API.
+type ObjectStorage2ModifyStaticWebsiteDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2RemoveUserFromGroupDefault Schema for error responses from the API.
 type ObjectStorage2RemoveUserFromGroupDefault = ObjectStorage2ErrorResponse
@@ -1888,7 +2162,7 @@ type ObjectStorage2ReplaceRoleTags200 = ObjectStorage2TagListResponse
 // ObjectStorage2ReplaceRoleTagsDefault Schema for error responses from the API.
 type ObjectStorage2ReplaceRoleTagsDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ReplaceService200 Response schema for service details, including UUID, name, endpoints, networks, labels, users, and operational state.
+// ObjectStorage2ReplaceService200 Response schema for service details, including UUID, name, and endpoints.
 type ObjectStorage2ReplaceService200 = ObjectStorage2ServiceDetailResponse
 
 // ObjectStorage2ReplaceServiceDefault Schema for error responses from the API.
@@ -1960,6 +2234,9 @@ type ObjectStorage2CreateRolePermissionsBoundary = ObjectStorage2PermissionsBoun
 // ObjectStorage2CreateService Schema for creating a service, including name, region, status, networks, domains, labels, and properties.
 type ObjectStorage2CreateService = ObjectStorage2ServiceCreate
 
+// ObjectStorage2CreateStaticWebsite Request body for creating a static website configuration. If domain is omitted, the primary static website domain is used.
+type ObjectStorage2CreateStaticWebsite = ObjectStorage2StaticWebsiteConfigCreate
+
 // ObjectStorage2CreateUser Schema for creating a new user.
 type ObjectStorage2CreateUser = ObjectStorage2UserCreate
 
@@ -1980,6 +2257,9 @@ type ObjectStorage2ModifyLabel = ObjectStorage2LabelModify
 
 // ObjectStorage2ModifyService Schema for modifying a service, including name, status, networks, domains, labels, and properties.
 type ObjectStorage2ModifyService = ObjectStorage2ServiceModify
+
+// ObjectStorage2ModifyStaticWebsite Request body for updating a static website configuration
+type ObjectStorage2ModifyStaticWebsite = ObjectStorage2StaticWebsiteConfigModify
 
 // ObjectStorage2ReplaceRoleTags Schema for a list of tags to apply to a resource.
 type ObjectStorage2ReplaceRoleTags = ObjectStorage2TagListRequest
@@ -2110,6 +2390,12 @@ type AttachObjectStoragePolicyToRoleJSONRequestBody = ObjectStorage2PolicyAttach
 // ReplaceObjectStorageRoleTagsJSONRequestBody defines body for ReplaceObjectStorageRoleTags for application/json ContentType.
 type ReplaceObjectStorageRoleTagsJSONRequestBody = ObjectStorage2TagListRequest
 
+// CreateStaticWebsiteJSONRequestBody defines body for CreateStaticWebsite for application/json ContentType.
+type CreateStaticWebsiteJSONRequestBody = ObjectStorage2StaticWebsiteConfigCreate
+
+// ModifyStaticWebsiteJSONRequestBody defines body for ModifyStaticWebsite for application/json ContentType.
+type ModifyStaticWebsiteJSONRequestBody = ObjectStorage2StaticWebsiteConfigModify
+
 // CreateObjectStorageUserJSONRequestBody defines body for CreateObjectStorageUser for application/json ContentType.
 type CreateObjectStorageUserJSONRequestBody = ObjectStorage2UserCreate
 
@@ -2127,6 +2413,128 @@ type AttachObjectStorageUserPolicyJSONRequestBody = ObjectStorage2PolicyAttachme
 
 // ReplaceObjectStorageUserTagsJSONRequestBody defines body for ReplaceObjectStorageUserTags for application/json ContentType.
 type ReplaceObjectStorageUserTagsJSONRequestBody = ObjectStorage2TagListRequest
+
+// AsObjectStorage2StaticWebsiteErrorPage0 returns the union data inside the ObjectStorage2StaticWebsiteErrorPage as a ObjectStorage2StaticWebsiteErrorPage0
+func (t ObjectStorage2StaticWebsiteErrorPage) AsObjectStorage2StaticWebsiteErrorPage0() (ObjectStorage2StaticWebsiteErrorPage0, error) {
+	var body ObjectStorage2StaticWebsiteErrorPage0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromObjectStorage2StaticWebsiteErrorPage0 overwrites any union data inside the ObjectStorage2StaticWebsiteErrorPage as the provided ObjectStorage2StaticWebsiteErrorPage0
+func (t *ObjectStorage2StaticWebsiteErrorPage) FromObjectStorage2StaticWebsiteErrorPage0(v ObjectStorage2StaticWebsiteErrorPage0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeObjectStorage2StaticWebsiteErrorPage0 performs a merge with any union data inside the ObjectStorage2StaticWebsiteErrorPage, using the provided ObjectStorage2StaticWebsiteErrorPage0
+func (t *ObjectStorage2StaticWebsiteErrorPage) MergeObjectStorage2StaticWebsiteErrorPage0(v ObjectStorage2StaticWebsiteErrorPage0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsObjectStorage2StaticWebsiteErrorPage1 returns the union data inside the ObjectStorage2StaticWebsiteErrorPage as a ObjectStorage2StaticWebsiteErrorPage1
+func (t ObjectStorage2StaticWebsiteErrorPage) AsObjectStorage2StaticWebsiteErrorPage1() (ObjectStorage2StaticWebsiteErrorPage1, error) {
+	var body ObjectStorage2StaticWebsiteErrorPage1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromObjectStorage2StaticWebsiteErrorPage1 overwrites any union data inside the ObjectStorage2StaticWebsiteErrorPage as the provided ObjectStorage2StaticWebsiteErrorPage1
+func (t *ObjectStorage2StaticWebsiteErrorPage) FromObjectStorage2StaticWebsiteErrorPage1(v ObjectStorage2StaticWebsiteErrorPage1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeObjectStorage2StaticWebsiteErrorPage1 performs a merge with any union data inside the ObjectStorage2StaticWebsiteErrorPage, using the provided ObjectStorage2StaticWebsiteErrorPage1
+func (t *ObjectStorage2StaticWebsiteErrorPage) MergeObjectStorage2StaticWebsiteErrorPage1(v ObjectStorage2StaticWebsiteErrorPage1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t ObjectStorage2StaticWebsiteErrorPage) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	object := make(map[string]json.RawMessage)
+	if t.union != nil {
+		err = json.Unmarshal(b, &object)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	object["error_document"], err = json.Marshal(t.ErrorDocument)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'error_document': %w", err)
+	}
+
+	if t.StatusCode != nil {
+		object["status_code"], err = json.Marshal(t.StatusCode)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'status_code': %w", err)
+		}
+	}
+
+	if t.StatusRange != nil {
+		object["status_range"], err = json.Marshal(t.StatusRange)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'status_range': %w", err)
+		}
+	}
+	b, err = json.Marshal(object)
+	return b, err
+}
+
+func (t *ObjectStorage2StaticWebsiteErrorPage) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	if err != nil {
+		return err
+	}
+	object := make(map[string]json.RawMessage)
+	err = json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["error_document"]; found {
+		err = json.Unmarshal(raw, &t.ErrorDocument)
+		if err != nil {
+			return fmt.Errorf("error reading 'error_document': %w", err)
+		}
+	}
+
+	if raw, found := object["status_code"]; found {
+		err = json.Unmarshal(raw, &t.StatusCode)
+		if err != nil {
+			return fmt.Errorf("error reading 'status_code': %w", err)
+		}
+	}
+
+	if raw, found := object["status_range"]; found {
+		err = json.Unmarshal(raw, &t.StatusRange)
+		if err != nil {
+			return fmt.Errorf("error reading 'status_range': %w", err)
+		}
+	}
+
+	return err
+}
 
 // RequestEditorFn  is the function signature for the RequestEditor callback function
 type RequestEditorFn func(ctx context.Context, req *http.Request) error
@@ -2272,6 +2680,9 @@ type ClientInterface interface {
 	ModifyObjectStorageCustomDomainWithBody(ctx context.Context, serviceUuid ObjectStorage2ModifyCustomDomainServiceUuid, customDomainName ObjectStorage2ModifyCustomDomainCustomDomainName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	ModifyObjectStorageCustomDomain(ctx context.Context, serviceUuid ObjectStorage2ModifyCustomDomainServiceUuid, customDomainName ObjectStorage2ModifyCustomDomainCustomDomainName, body ModifyObjectStorageCustomDomainJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetServiceDomains request
+	GetServiceDomains(ctx context.Context, serviceUuid ObjectStorage2GetServiceDomainsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListObjectStorageGroups request
 	ListObjectStorageGroups(ctx context.Context, serviceUuid ObjectStorage2ListGroupsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -2457,6 +2868,25 @@ type ClientInterface interface {
 
 	// DeleteObjectStorageRoleTag request
 	DeleteObjectStorageRoleTag(ctx context.Context, serviceUuid ObjectStorage2DeleteRoleTagServiceUuid, roleName ObjectStorage2DeleteRoleTagRoleName, roleTagKey ObjectStorage2DeleteRoleTagRoleTagKey, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListStaticWebsites request
+	ListStaticWebsites(ctx context.Context, serviceUuid ObjectStorage2ListStaticWebsitesServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateStaticWebsiteWithBody request with any body
+	CreateStaticWebsiteWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateStaticWebsiteServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CreateStaticWebsite(ctx context.Context, serviceUuid ObjectStorage2CreateStaticWebsiteServiceUuid, body CreateStaticWebsiteJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteStaticWebsite request
+	DeleteStaticWebsite(ctx context.Context, serviceUuid ObjectStorage2DeleteStaticWebsiteServiceUuid, customDomainName ObjectStorage2DeleteStaticWebsiteCustomDomainName, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetStaticWebsite request
+	GetStaticWebsite(ctx context.Context, serviceUuid ObjectStorage2GetStaticWebsiteServiceUuid, customDomainName ObjectStorage2GetStaticWebsiteCustomDomainName, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ModifyStaticWebsiteWithBody request with any body
+	ModifyStaticWebsiteWithBody(ctx context.Context, serviceUuid ObjectStorage2ModifyStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyStaticWebsiteCustomDomainName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	ModifyStaticWebsite(ctx context.Context, serviceUuid ObjectStorage2ModifyStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyStaticWebsiteCustomDomainName, body ModifyStaticWebsiteJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListObjectStorageUsers request
 	ListObjectStorageUsers(ctx context.Context, serviceUuid ObjectStorage2ListUsersServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -2836,6 +3266,18 @@ func (c *Client) ModifyObjectStorageCustomDomainWithBody(ctx context.Context, se
 
 func (c *Client) ModifyObjectStorageCustomDomain(ctx context.Context, serviceUuid ObjectStorage2ModifyCustomDomainServiceUuid, customDomainName ObjectStorage2ModifyCustomDomainCustomDomainName, body ModifyObjectStorageCustomDomainJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewModifyObjectStorageCustomDomainRequest(c.Server, serviceUuid, customDomainName, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetServiceDomains(ctx context.Context, serviceUuid ObjectStorage2GetServiceDomainsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetServiceDomainsRequest(c.Server, serviceUuid)
 	if err != nil {
 		return nil, err
 	}
@@ -3640,6 +4082,90 @@ func (c *Client) ReplaceObjectStorageRoleTags(ctx context.Context, serviceUuid O
 
 func (c *Client) DeleteObjectStorageRoleTag(ctx context.Context, serviceUuid ObjectStorage2DeleteRoleTagServiceUuid, roleName ObjectStorage2DeleteRoleTagRoleName, roleTagKey ObjectStorage2DeleteRoleTagRoleTagKey, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteObjectStorageRoleTagRequest(c.Server, serviceUuid, roleName, roleTagKey)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ListStaticWebsites(ctx context.Context, serviceUuid ObjectStorage2ListStaticWebsitesServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListStaticWebsitesRequest(c.Server, serviceUuid)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateStaticWebsiteWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateStaticWebsiteServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateStaticWebsiteRequestWithBody(c.Server, serviceUuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateStaticWebsite(ctx context.Context, serviceUuid ObjectStorage2CreateStaticWebsiteServiceUuid, body CreateStaticWebsiteJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateStaticWebsiteRequest(c.Server, serviceUuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) DeleteStaticWebsite(ctx context.Context, serviceUuid ObjectStorage2DeleteStaticWebsiteServiceUuid, customDomainName ObjectStorage2DeleteStaticWebsiteCustomDomainName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteStaticWebsiteRequest(c.Server, serviceUuid, customDomainName)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetStaticWebsite(ctx context.Context, serviceUuid ObjectStorage2GetStaticWebsiteServiceUuid, customDomainName ObjectStorage2GetStaticWebsiteCustomDomainName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetStaticWebsiteRequest(c.Server, serviceUuid, customDomainName)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ModifyStaticWebsiteWithBody(ctx context.Context, serviceUuid ObjectStorage2ModifyStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyStaticWebsiteCustomDomainName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewModifyStaticWebsiteRequestWithBody(c.Server, serviceUuid, customDomainName, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ModifyStaticWebsite(ctx context.Context, serviceUuid ObjectStorage2ModifyStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyStaticWebsiteCustomDomainName, body ModifyStaticWebsiteJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewModifyStaticWebsiteRequest(c.Server, serviceUuid, customDomainName, body)
 	if err != nil {
 		return nil, err
 	}
@@ -4849,6 +5375,40 @@ func NewModifyObjectStorageCustomDomainRequestWithBody(server string, serviceUui
 	}
 
 	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewGetServiceDomainsRequest generates requests for GetServiceDomains
+func NewGetServiceDomainsRequest(server string, serviceUuid ObjectStorage2GetServiceDomainsServiceUuid) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "service-uuid", serviceUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/object-storage-2/%s/domains", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
 
 	return req, nil
 }
@@ -7247,6 +7807,223 @@ func NewDeleteObjectStorageRoleTagRequest(server string, serviceUuid ObjectStora
 	return req, nil
 }
 
+// NewListStaticWebsitesRequest generates requests for ListStaticWebsites
+func NewListStaticWebsitesRequest(server string, serviceUuid ObjectStorage2ListStaticWebsitesServiceUuid) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "service-uuid", serviceUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/object-storage-2/%s/static-websites", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateStaticWebsiteRequest calls the generic CreateStaticWebsite builder with application/json body
+func NewCreateStaticWebsiteRequest(server string, serviceUuid ObjectStorage2CreateStaticWebsiteServiceUuid, body CreateStaticWebsiteJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateStaticWebsiteRequestWithBody(server, serviceUuid, "application/json", bodyReader)
+}
+
+// NewCreateStaticWebsiteRequestWithBody generates requests for CreateStaticWebsite with any type of body
+func NewCreateStaticWebsiteRequestWithBody(server string, serviceUuid ObjectStorage2CreateStaticWebsiteServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "service-uuid", serviceUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/object-storage-2/%s/static-websites", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeleteStaticWebsiteRequest generates requests for DeleteStaticWebsite
+func NewDeleteStaticWebsiteRequest(server string, serviceUuid ObjectStorage2DeleteStaticWebsiteServiceUuid, customDomainName ObjectStorage2DeleteStaticWebsiteCustomDomainName) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "service-uuid", serviceUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "custom-domain-name", customDomainName, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "hostname"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/object-storage-2/%s/static-websites/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetStaticWebsiteRequest generates requests for GetStaticWebsite
+func NewGetStaticWebsiteRequest(server string, serviceUuid ObjectStorage2GetStaticWebsiteServiceUuid, customDomainName ObjectStorage2GetStaticWebsiteCustomDomainName) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "service-uuid", serviceUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "custom-domain-name", customDomainName, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "hostname"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/object-storage-2/%s/static-websites/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewModifyStaticWebsiteRequest calls the generic ModifyStaticWebsite builder with application/json body
+func NewModifyStaticWebsiteRequest(server string, serviceUuid ObjectStorage2ModifyStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyStaticWebsiteCustomDomainName, body ModifyStaticWebsiteJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewModifyStaticWebsiteRequestWithBody(server, serviceUuid, customDomainName, "application/json", bodyReader)
+}
+
+// NewModifyStaticWebsiteRequestWithBody generates requests for ModifyStaticWebsite with any type of body
+func NewModifyStaticWebsiteRequestWithBody(server string, serviceUuid ObjectStorage2ModifyStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyStaticWebsiteCustomDomainName, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "service-uuid", serviceUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "custom-domain-name", customDomainName, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "hostname"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/object-storage-2/%s/static-websites/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PATCH", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
 // NewListObjectStorageUsersRequest generates requests for ListObjectStorageUsers
 func NewListObjectStorageUsersRequest(server string, serviceUuid ObjectStorage2ListUsersServiceUuid) (*http.Request, error) {
 	var err error
@@ -8336,6 +9113,9 @@ type ClientWithResponsesInterface interface {
 
 	ModifyObjectStorageCustomDomainWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyCustomDomainServiceUuid, customDomainName ObjectStorage2ModifyCustomDomainCustomDomainName, body ModifyObjectStorageCustomDomainJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyObjectStorageCustomDomainResponse, error)
 
+	// GetServiceDomainsWithResponse request
+	GetServiceDomainsWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetServiceDomainsServiceUuid, reqEditors ...RequestEditorFn) (*GetServiceDomainsResponse, error)
+
 	// ListObjectStorageGroupsWithResponse request
 	ListObjectStorageGroupsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListGroupsServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageGroupsResponse, error)
 
@@ -8521,6 +9301,25 @@ type ClientWithResponsesInterface interface {
 	// DeleteObjectStorageRoleTagWithResponse request
 	DeleteObjectStorageRoleTagWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteRoleTagServiceUuid, roleName ObjectStorage2DeleteRoleTagRoleName, roleTagKey ObjectStorage2DeleteRoleTagRoleTagKey, reqEditors ...RequestEditorFn) (*DeleteObjectStorageRoleTagResponse, error)
 
+	// ListStaticWebsitesWithResponse request
+	ListStaticWebsitesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListStaticWebsitesServiceUuid, reqEditors ...RequestEditorFn) (*ListStaticWebsitesResponse, error)
+
+	// CreateStaticWebsiteWithBodyWithResponse request with any body
+	CreateStaticWebsiteWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateStaticWebsiteServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateStaticWebsiteResponse, error)
+
+	CreateStaticWebsiteWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateStaticWebsiteServiceUuid, body CreateStaticWebsiteJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateStaticWebsiteResponse, error)
+
+	// DeleteStaticWebsiteWithResponse request
+	DeleteStaticWebsiteWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteStaticWebsiteServiceUuid, customDomainName ObjectStorage2DeleteStaticWebsiteCustomDomainName, reqEditors ...RequestEditorFn) (*DeleteStaticWebsiteResponse, error)
+
+	// GetStaticWebsiteWithResponse request
+	GetStaticWebsiteWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetStaticWebsiteServiceUuid, customDomainName ObjectStorage2GetStaticWebsiteCustomDomainName, reqEditors ...RequestEditorFn) (*GetStaticWebsiteResponse, error)
+
+	// ModifyStaticWebsiteWithBodyWithResponse request with any body
+	ModifyStaticWebsiteWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyStaticWebsiteCustomDomainName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyStaticWebsiteResponse, error)
+
+	ModifyStaticWebsiteWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyStaticWebsiteCustomDomainName, body ModifyStaticWebsiteJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyStaticWebsiteResponse, error)
+
 	// ListObjectStorageUsersWithResponse request
 	ListObjectStorageUsersWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListUsersServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageUsersResponse, error)
 
@@ -8644,8 +9443,10 @@ func (r CreateObjectStorageResponse) StatusCode() int {
 }
 
 type ListObjectStorageIntegrationServicesResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *ObjectStorage2IntegrationListServices200
+	ApplicationproblemJSONDefault *ObjectStorage2IntegrationListServicesDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -8665,8 +9466,10 @@ func (r ListObjectStorageIntegrationServicesResponse) StatusCode() int {
 }
 
 type GetObjectStorageIntegrationServiceResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *ObjectStorage2IntegrationGetService200
+	ApplicationproblemJSONDefault *ObjectStorage2IntegrationGetServiceDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -8686,8 +9489,10 @@ func (r GetObjectStorageIntegrationServiceResponse) StatusCode() int {
 }
 
 type CreateObjectStorageIntegrationNetworkResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON201                       *ObjectStorage2IntegrationCreateNetwork201
+	ApplicationproblemJSONDefault *ObjectStorage2IntegrationCreateNetworkDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -8707,8 +9512,9 @@ func (r CreateObjectStorageIntegrationNetworkResponse) StatusCode() int {
 }
 
 type DeleteObjectStorageIntegrationNetworkResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	ApplicationproblemJSONDefault *ObjectStorage2IntegrationDeleteNetworkDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -9040,6 +9846,29 @@ func (r ModifyObjectStorageCustomDomainResponse) Status() string {
 
 // StatusCode returns HTTPResponse.StatusCode
 func (r ModifyObjectStorageCustomDomainResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetServiceDomainsResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *ObjectStorage2GetServiceDomains200
+	ApplicationproblemJSONDefault *ObjectStorage2GetServiceDomainsDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r GetServiceDomainsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetServiceDomainsResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -10203,6 +11032,119 @@ func (r DeleteObjectStorageRoleTagResponse) StatusCode() int {
 	return 0
 }
 
+type ListStaticWebsitesResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	ApplicationproblemJSONDefault *ObjectStorage2ListStaticWebsitesDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r ListStaticWebsitesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListStaticWebsitesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type CreateStaticWebsiteResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON201                       *ObjectStorage2CreateStaticWebsite201
+	ApplicationproblemJSONDefault *ObjectStorage2CreateStaticWebsiteDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateStaticWebsiteResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateStaticWebsiteResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type DeleteStaticWebsiteResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	ApplicationproblemJSONDefault *ObjectStorage2DeleteStaticWebsiteDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteStaticWebsiteResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteStaticWebsiteResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetStaticWebsiteResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *ObjectStorage2GetStaticWebsite200
+	ApplicationproblemJSONDefault *ObjectStorage2GetStaticWebsiteDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r GetStaticWebsiteResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetStaticWebsiteResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type ModifyStaticWebsiteResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *ObjectStorage2ModifyStaticWebsite200
+	ApplicationproblemJSONDefault *ObjectStorage2ModifyStaticWebsiteDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r ModifyStaticWebsiteResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ModifyStaticWebsiteResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
 type ListObjectStorageUsersResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
@@ -10907,6 +11849,15 @@ func (c *ClientWithResponses) ModifyObjectStorageCustomDomainWithResponse(ctx co
 	return ParseModifyObjectStorageCustomDomainResponse(rsp)
 }
 
+// GetServiceDomainsWithResponse request returning *GetServiceDomainsResponse
+func (c *ClientWithResponses) GetServiceDomainsWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetServiceDomainsServiceUuid, reqEditors ...RequestEditorFn) (*GetServiceDomainsResponse, error) {
+	rsp, err := c.GetServiceDomains(ctx, serviceUuid, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetServiceDomainsResponse(rsp)
+}
+
 // ListObjectStorageGroupsWithResponse request returning *ListObjectStorageGroupsResponse
 func (c *ClientWithResponses) ListObjectStorageGroupsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListGroupsServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageGroupsResponse, error) {
 	rsp, err := c.ListObjectStorageGroups(ctx, serviceUuid, reqEditors...)
@@ -11494,6 +12445,67 @@ func (c *ClientWithResponses) DeleteObjectStorageRoleTagWithResponse(ctx context
 	return ParseDeleteObjectStorageRoleTagResponse(rsp)
 }
 
+// ListStaticWebsitesWithResponse request returning *ListStaticWebsitesResponse
+func (c *ClientWithResponses) ListStaticWebsitesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListStaticWebsitesServiceUuid, reqEditors ...RequestEditorFn) (*ListStaticWebsitesResponse, error) {
+	rsp, err := c.ListStaticWebsites(ctx, serviceUuid, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListStaticWebsitesResponse(rsp)
+}
+
+// CreateStaticWebsiteWithBodyWithResponse request with arbitrary body returning *CreateStaticWebsiteResponse
+func (c *ClientWithResponses) CreateStaticWebsiteWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateStaticWebsiteServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateStaticWebsiteResponse, error) {
+	rsp, err := c.CreateStaticWebsiteWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateStaticWebsiteResponse(rsp)
+}
+
+func (c *ClientWithResponses) CreateStaticWebsiteWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateStaticWebsiteServiceUuid, body CreateStaticWebsiteJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateStaticWebsiteResponse, error) {
+	rsp, err := c.CreateStaticWebsite(ctx, serviceUuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateStaticWebsiteResponse(rsp)
+}
+
+// DeleteStaticWebsiteWithResponse request returning *DeleteStaticWebsiteResponse
+func (c *ClientWithResponses) DeleteStaticWebsiteWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteStaticWebsiteServiceUuid, customDomainName ObjectStorage2DeleteStaticWebsiteCustomDomainName, reqEditors ...RequestEditorFn) (*DeleteStaticWebsiteResponse, error) {
+	rsp, err := c.DeleteStaticWebsite(ctx, serviceUuid, customDomainName, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteStaticWebsiteResponse(rsp)
+}
+
+// GetStaticWebsiteWithResponse request returning *GetStaticWebsiteResponse
+func (c *ClientWithResponses) GetStaticWebsiteWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetStaticWebsiteServiceUuid, customDomainName ObjectStorage2GetStaticWebsiteCustomDomainName, reqEditors ...RequestEditorFn) (*GetStaticWebsiteResponse, error) {
+	rsp, err := c.GetStaticWebsite(ctx, serviceUuid, customDomainName, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetStaticWebsiteResponse(rsp)
+}
+
+// ModifyStaticWebsiteWithBodyWithResponse request with arbitrary body returning *ModifyStaticWebsiteResponse
+func (c *ClientWithResponses) ModifyStaticWebsiteWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyStaticWebsiteCustomDomainName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyStaticWebsiteResponse, error) {
+	rsp, err := c.ModifyStaticWebsiteWithBody(ctx, serviceUuid, customDomainName, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseModifyStaticWebsiteResponse(rsp)
+}
+
+func (c *ClientWithResponses) ModifyStaticWebsiteWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyStaticWebsiteCustomDomainName, body ModifyStaticWebsiteJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyStaticWebsiteResponse, error) {
+	rsp, err := c.ModifyStaticWebsite(ctx, serviceUuid, customDomainName, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseModifyStaticWebsiteResponse(rsp)
+}
+
 // ListObjectStorageUsersWithResponse request returning *ListObjectStorageUsersResponse
 func (c *ClientWithResponses) ListObjectStorageUsersWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListUsersServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageUsersResponse, error) {
 	rsp, err := c.ListObjectStorageUsers(ctx, serviceUuid, reqEditors...)
@@ -11810,6 +12822,23 @@ func ParseListObjectStorageIntegrationServicesResponse(rsp *http.Response) (*Lis
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ObjectStorage2IntegrationListServices200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ObjectStorage2IntegrationListServicesDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -11824,6 +12853,23 @@ func ParseGetObjectStorageIntegrationServiceResponse(rsp *http.Response) (*GetOb
 	response := &GetObjectStorageIntegrationServiceResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ObjectStorage2IntegrationGetService200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ObjectStorage2IntegrationGetServiceDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
 	}
 
 	return response, nil
@@ -11842,6 +12888,23 @@ func ParseCreateObjectStorageIntegrationNetworkResponse(rsp *http.Response) (*Cr
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest ObjectStorage2IntegrationCreateNetwork201
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ObjectStorage2IntegrationCreateNetworkDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -11856,6 +12919,16 @@ func ParseDeleteObjectStorageIntegrationNetworkResponse(rsp *http.Response) (*De
 	response := &DeleteObjectStorageIntegrationNetworkResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ObjectStorage2IntegrationDeleteNetworkDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
 	}
 
 	return response, nil
@@ -12292,6 +13365,39 @@ func ParseModifyObjectStorageCustomDomainResponse(rsp *http.Response) (*ModifyOb
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest ObjectStorage2ModifyCustomDomainDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetServiceDomainsResponse parses an HTTP response from a GetServiceDomainsWithResponse call
+func ParseGetServiceDomainsResponse(rsp *http.Response) (*GetServiceDomainsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetServiceDomainsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ObjectStorage2GetServiceDomains200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ObjectStorage2GetServiceDomainsDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13863,6 +14969,157 @@ func ParseDeleteObjectStorageRoleTagResponse(rsp *http.Response) (*DeleteObjectS
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest ObjectStorage2DeleteRoleTagDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListStaticWebsitesResponse parses an HTTP response from a ListStaticWebsitesWithResponse call
+func ParseListStaticWebsitesResponse(rsp *http.Response) (*ListStaticWebsitesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListStaticWebsitesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ObjectStorage2ListStaticWebsitesDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateStaticWebsiteResponse parses an HTTP response from a CreateStaticWebsiteWithResponse call
+func ParseCreateStaticWebsiteResponse(rsp *http.Response) (*CreateStaticWebsiteResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateStaticWebsiteResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest ObjectStorage2CreateStaticWebsite201
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ObjectStorage2CreateStaticWebsiteDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteStaticWebsiteResponse parses an HTTP response from a DeleteStaticWebsiteWithResponse call
+func ParseDeleteStaticWebsiteResponse(rsp *http.Response) (*DeleteStaticWebsiteResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteStaticWebsiteResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ObjectStorage2DeleteStaticWebsiteDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetStaticWebsiteResponse parses an HTTP response from a GetStaticWebsiteWithResponse call
+func ParseGetStaticWebsiteResponse(rsp *http.Response) (*GetStaticWebsiteResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetStaticWebsiteResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ObjectStorage2GetStaticWebsite200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ObjectStorage2GetStaticWebsiteDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseModifyStaticWebsiteResponse parses an HTTP response from a ModifyStaticWebsiteWithResponse call
+func ParseModifyStaticWebsiteResponse(rsp *http.Response) (*ModifyStaticWebsiteResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ModifyStaticWebsiteResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ObjectStorage2ModifyStaticWebsite200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ObjectStorage2ModifyStaticWebsiteDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
