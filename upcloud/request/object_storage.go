@@ -6,6 +6,8 @@ import (
 )
 
 // GetObjectStorageDetailsRequest represents a request for retrieving details about an Object Storage device.
+//
+// Deprecated: non-managed object storage service has been decommissioned.
 type GetObjectStorageDetailsRequest struct {
 	UUID string
 }
@@ -16,6 +18,8 @@ func (r *GetObjectStorageDetailsRequest) RequestURL() string {
 }
 
 // CreateObjectStorageRequest represents a request for creating a new Object Storage device
+//
+// Deprecated: non-managed object storage service has been decommissioned.
 type CreateObjectStorageRequest struct {
 	Name        string `json:"name,omitempty"`
 	Description string `json:"description,omitempty"`
@@ -43,6 +47,8 @@ func (r *CreateObjectStorageRequest) RequestURL() string {
 }
 
 // ModifyObjectStorageRequest represents a request to modify an Object Storage.
+//
+// Deprecated: non-managed object storage service has been decommissioned.
 type ModifyObjectStorageRequest struct {
 	UUID        string `json:"-"`
 	Description string `json:"description,omitempty"`
@@ -69,6 +75,8 @@ func (r *ModifyObjectStorageRequest) RequestURL() string {
 }
 
 // DeleteObjectStorageRequest represents a request to delete an Object Storage.
+//
+// Deprecated: non-managed object storage service has been decommissioned.
 type DeleteObjectStorageRequest struct {
 	UUID string
 }
