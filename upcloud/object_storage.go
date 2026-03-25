@@ -3,6 +3,8 @@ package upcloud
 import "encoding/json"
 
 // ObjectStorage represents a Object Storage
+//
+// Deprecated: non-managed object storage service has been decommissioned.
 type ObjectStorage struct {
 	Created     string `json:"created"`
 	Description string `json:"description"`
@@ -15,6 +17,8 @@ type ObjectStorage struct {
 }
 
 // ObjectStorages represent a /object-storage response
+//
+// Deprecated: non-managed object storage service has been decommissioned.
 type ObjectStorages struct {
 	ObjectStorages []ObjectStorage `json:"object_storages"`
 }
@@ -40,6 +44,8 @@ func (o *ObjectStorages) UnmarshalJSON(b []byte) error {
 }
 
 // ObjectStorageDetails represents details about a Object Storage
+//
+// Deprecated: non-managed object storage service has been decommissioned.
 type ObjectStorageDetails struct {
 	ObjectStorage
 

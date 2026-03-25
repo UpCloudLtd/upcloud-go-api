@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://www.schemastore.org/github-workflow.json
-name: Regenerate SDK
+name: Regenerate
 
 on:
   workflow_dispatch:
