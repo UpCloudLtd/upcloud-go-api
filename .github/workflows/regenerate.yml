@@ -60,7 +60,7 @@ jobs:
           tar -xzf "$SPEC_ARCHIVE" -C "$SPEC_DIR"
           cp "$SPEC_DIR/$SPEC_FILE" "$WORK_SPEC"
 
-      - uses: jdx/mise-action@v3
+      - uses: jdx/mise-action@v4
         with:
           version: 2026.3.9 # [default: latest] mise version to install
           install: true # [default: true] run `mise install`
