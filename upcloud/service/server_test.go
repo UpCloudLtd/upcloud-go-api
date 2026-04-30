@@ -139,7 +139,7 @@ func TestStartAvoidHost(t *testing.T) {
 	record(t, "startavoidhost", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		serverDetails, err := createServer(ctx, rec, svc, "TestStartAvoidHost")
 		require.NoError(t, err)
-		assert.NotZero(t, serverDetails.Host)
+		assert.NotZero(t, serverDetails.HostID)
 
 		_, err = svc.StopServer(ctx, &request.StopServerRequest{
 			UUID:     serverDetails.UUID,
@@ -157,12 +157,12 @@ func TestStartAvoidHost(t *testing.T) {
 		assert.Equal(t, upcloud.ServerStateStopped, getServerDetails.State)
 
 		postServerDetails, err := svc.StartServer(ctx, &request.StartServerRequest{
-			UUID:      serverDetails.UUID,
-			AvoidHost: serverDetails.Host,
+			UUID:        serverDetails.UUID,
+			AvoidHostID: serverDetails.HostID,
 		})
 		require.NoError(t, err)
-		assert.NotZero(t, postServerDetails.Host)
-		assert.NotEqual(t, serverDetails.Host, postServerDetails.Host)
+		assert.NotZero(t, postServerDetails.HostID)
+		assert.NotEqual(t, serverDetails.HostID, postServerDetails.HostID)
 	})
 }
 

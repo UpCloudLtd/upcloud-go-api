@@ -2,6 +2,7 @@ package request
 
 import (
 	"encoding/json"
+	"math"
 	"testing"
 	"time"
 
@@ -240,6 +241,29 @@ func TestStartServerRequest_WithValues(t *testing.T) {
 	assert.Equal(t, "/server/foo/start", request.RequestURL())
 }
 
+func TestStartServerRequest_WithHostIDValues(t *testing.T) {
+	request := StartServerRequest{
+		UUID:        "foo",
+		HostID:      math.MaxInt64,
+		AvoidHostID: math.MaxInt64 - 1,
+	}
+
+	expectedJSON := `
+	  {
+		  "server": {
+			  "host": 9223372036854775807,
+			  "avoid_host": 9223372036854775806
+		  }
+	  }
+	`
+
+	actualJSON, err := json.Marshal(request)
+	assert.NoError(t, err)
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
+
+	assert.Equal(t, "/server/foo/start", request.RequestURL())
+}
+
 // TestStopServerRequest tests that StopServerRequest objects behave correctly
 func TestStopServerRequest(t *testing.T) {
 	request := StopServerRequest{
@@ -279,6 +303,31 @@ func TestRestartServerRequest(t *testing.T) {
 		  "timeout": "300",
 		  "timeout_action": "destroy",
 		  "host": 999
+		}
+	  }
+	`
+	actualJSON, err := json.Marshal(&request)
+	assert.Nil(t, err)
+	assert.JSONEq(t, expectedJSON, string(actualJSON))
+	assert.Equal(t, "/server/foo/restart", request.RequestURL())
+}
+
+func TestRestartServerRequest_WithHostID(t *testing.T) {
+	request := RestartServerRequest{
+		UUID:          "foo",
+		Timeout:       time.Minute * 5,
+		StopType:      ServerStopTypeSoft,
+		TimeoutAction: RestartTimeoutActionDestroy,
+		HostID:        math.MaxInt64,
+	}
+
+	expectedJSON := `
+	  {
+		"restart_server": {
+		  "stop_type": "soft",
+		  "timeout": "300",
+		  "timeout_action": "destroy",
+		  "host": 9223372036854775807
 		}
 	  }
 	`

@@ -5,6 +5,14 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+
+- server, host: add `int64` host identifier fields for safe JSON handling on 32-bit builds
+
+### Deprecated
+
+- server, host: `int` host identifier fields in favor of the `int64` alternatives
+
 ## [8.35.0]
 
 ### Added
