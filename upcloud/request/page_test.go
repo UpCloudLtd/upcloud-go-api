@@ -35,7 +35,7 @@ func TestPage(t *testing.T) {
 	assert.Equal(t, "limit=100&offset=0", p.String())
 	p = &Page{
 		Size:   100,
-		Number: math.MaxInt,
+		Number: math.MaxInt64, // update to math.MaxInt when available (go 1.17)
 	}
 	p = p.Next()
 	assert.Equal(t, "limit=100&offset=0", p.String())
