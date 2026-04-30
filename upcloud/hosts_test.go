@@ -2,6 +2,7 @@ package upcloud
 
 import (
 	"encoding/json"
+	"strconv"
 	"testing"
 	"time"
 
@@ -11,6 +12,14 @@ import (
 func timeParse(s string) time.Time {
 	t, _ := time.Parse(time.RFC3339, s)
 	return t
+}
+
+func legacyHostID(id int64) int {
+	if strconv.IntSize == 64 {
+		return int(id)
+	}
+
+	return 0
 }
 
 // TestUnmarshalHosts tests that multiple Hosts and Stats are unmarshalled correctly.
@@ -70,7 +79,8 @@ func TestUnmarshalHosts(t *testing.T) {
 
 	testsHosts := []Host{
 		{
-			ID:             9223372036854775807,
+			ID:             legacyHostID(9223372036854775807),
+			HostID:         9223372036854775807,
 			Description:    "My Host #1",
 			Zone:           "private-zone-id",
 			WindowsEnabled: False,
@@ -88,7 +98,8 @@ func TestUnmarshalHosts(t *testing.T) {
 			},
 		},
 		{
-			ID:             8055964291,
+			ID:             legacyHostID(8055964291),
+			HostID:         8055964291,
 			Description:    "My Host #2",
 			Zone:           "private-zone-id",
 			WindowsEnabled: False,
@@ -144,7 +155,8 @@ func TestUnmarshalHost(t *testing.T) {
 	assert.NoError(t, err)
 
 	testHost := Host{
-		ID:             9223372036854775807,
+		ID:             legacyHostID(9223372036854775807),
+		HostID:         9223372036854775807,
 		Description:    "My Host #1",
 		Zone:           "private-zone-id",
 		WindowsEnabled: False,

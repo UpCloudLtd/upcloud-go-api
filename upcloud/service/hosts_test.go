@@ -24,17 +24,17 @@ func TestGetModifyHosts(t *testing.T) {
 
 		assert.NotEmpty(t, hosts.Hosts)
 
-		assert.NotZero(t, hosts.Hosts[0].ID)
+		assert.NotZero(t, hosts.Hosts[0].HostID)
 		assert.NotEmpty(t, hosts.Hosts[0].Description)
 		assert.NotEmpty(t, hosts.Hosts[0].Stats)
 		assert.NotEmpty(t, hosts.Hosts[0].Zone)
 
 		host, err := svc.GetHostDetails(ctx, &request.GetHostDetailsRequest{
-			ID: hosts.Hosts[0].ID,
+			HostID: hosts.Hosts[0].HostID,
 		})
 		require.NoError(t, err)
 
-		assert.Equal(t, hosts.Hosts[0].ID, host.ID)
+		assert.Equal(t, hosts.Hosts[0].HostID, host.HostID)
 		assert.Equal(t, hosts.Hosts[0].Description, host.Description)
 		assert.Equal(t, hosts.Hosts[0].WindowsEnabled, host.WindowsEnabled)
 		assert.Equal(t, hosts.Hosts[0].Zone, host.Zone)
@@ -42,15 +42,15 @@ func TestGetModifyHosts(t *testing.T) {
 		oldDescription := host.Description
 
 		modifiedHost, err := svc.ModifyHost(ctx, &request.ModifyHostRequest{
-			ID:          host.ID,
+			HostID:      host.HostID,
 			Description: oldDescription + "(modified)",
 		})
 		require.NoError(t, err)
 		assert.Equal(t, oldDescription+"(modified)", modifiedHost.Description)
-		assert.Equal(t, host.ID, modifiedHost.ID)
+		assert.Equal(t, host.HostID, modifiedHost.HostID)
 
 		_, err = svc.ModifyHost(ctx, &request.ModifyHostRequest{
-			ID:          host.ID,
+			HostID:      host.HostID,
 			Description: oldDescription,
 		})
 		require.NoError(t, err)

@@ -8,23 +8,27 @@ import (
 // GetHostDetailsRequest represents the request for the details of a
 // single private host
 type GetHostDetailsRequest struct {
-	ID int64
+	// Deprecated: Use HostID instead.
+	ID     int
+	HostID int64
 }
 
 // RequestURL implements the Request interface
 func (r *GetHostDetailsRequest) RequestURL() string {
-	return fmt.Sprintf("/host/%d", r.ID)
+	return fmt.Sprintf("/host/%d", hostIDValue(r.ID, r.HostID))
 }
 
 // ModifyHostRequest represents the request to modify a private host
 type ModifyHostRequest struct {
-	ID          int64  `json:"-"`
+	// Deprecated: Use HostID instead.
+	ID          int    `json:"-"`
+	HostID      int64  `json:"-"`
 	Description string `json:"description"`
 }
 
 // RequestURL implements the Request interface
 func (r *ModifyHostRequest) RequestURL() string {
-	return fmt.Sprintf("/host/%d", r.ID)
+	return fmt.Sprintf("/host/%d", hostIDValue(r.ID, r.HostID))
 }
 
 // MarshalJSON is a custom marshaller that deals with

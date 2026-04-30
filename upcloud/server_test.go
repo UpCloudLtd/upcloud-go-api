@@ -3,10 +3,19 @@ package upcloud
 import (
 	"encoding/json"
 	"math"
+	"strconv"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
+
+func legacyServerHost(id int64) int {
+	if strconv.IntSize == 64 {
+		return int(id)
+	}
+
+	return 0
+}
 
 // TestUnmarshalServerConfigurations tests that ServerConfigurations and ServerConfiguration are unmarshaled correctly.
 func TestUnmarshalServerConfigurations(t *testing.T) {
@@ -332,7 +341,12 @@ func TestUnmarshalServerDetails(t *testing.T) {
 	assert.Equal(t, "0100,dailies", serverDetails.SimpleBackup)
 	assert.Equal(t, "test_group_id", serverDetails.ServerGroup)
 	assert.True(t, serverDetails.Metadata.Bool())
-	assert.Equal(t, int64(math.MaxInt64), serverDetails.Host)
+	assert.Equal(t, int64(math.MaxInt64), serverDetails.HostID)
+	if strconv.IntSize == 64 {
+		assert.Equal(t, legacyServerHost(math.MaxInt64), serverDetails.Host)
+	} else {
+		assert.Zero(t, serverDetails.Host)
+	}
 
 	networkingTestData := []ServerInterface{
 		{

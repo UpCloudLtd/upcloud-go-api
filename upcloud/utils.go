@@ -3,6 +3,7 @@ package upcloud
 import (
 	"encoding/json"
 	"fmt"
+	"math"
 	"strconv"
 	"time"
 )
@@ -96,6 +97,14 @@ func IntPtr(v int) *int {
 
 func TimePtr(v time.Time) *time.Time {
 	return &v
+}
+
+func int64FitsInt(v int64) bool {
+	if strconv.IntSize == 32 {
+		return v >= math.MinInt32 && v <= math.MaxInt32
+	}
+
+	return true
 }
 
 func StringOrFloat64ToFloat64(val any) (float64, error) {
