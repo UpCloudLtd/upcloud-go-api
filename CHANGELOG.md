@@ -5,6 +5,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Changed
+
+- server, host: host identifier fields to `int64` to avoid JSON unmarshal overflows on 32-bit builds
+
 ## [8.35.0]
 
 ### Added

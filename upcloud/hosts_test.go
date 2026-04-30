@@ -20,7 +20,7 @@ func TestUnmarshalHosts(t *testing.T) {
 		"hosts": {
 		  "host": [
 			{
-			  "id": 7653311107,
+			  "id": 9223372036854775807,
 			  "description": "My Host #1",
 			  "zone": "private-zone-id",
 			  "windows_enabled": "no",
@@ -70,7 +70,7 @@ func TestUnmarshalHosts(t *testing.T) {
 
 	testsHosts := []Host{
 		{
-			ID:             7653311107,
+			ID:             9223372036854775807,
 			Description:    "My Host #1",
 			Zone:           "private-zone-id",
 			WindowsEnabled: False,
@@ -117,7 +117,7 @@ func TestUnmarshalHost(t *testing.T) {
 	originalJSON := `
 	{
 		"host": {
-		  "id": 7653311107,
+		  "id": 9223372036854775807,
 		  "description": "My Host #1",
 		  "zone": "private-zone-id",
 		  "windows_enabled": "no",
@@ -144,7 +144,7 @@ func TestUnmarshalHost(t *testing.T) {
 	assert.NoError(t, err)
 
 	testHost := Host{
-		ID:             7653311107,
+		ID:             9223372036854775807,
 		Description:    "My Host #1",
 		Zone:           "private-zone-id",
 		WindowsEnabled: False,

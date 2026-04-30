@@ -2,6 +2,7 @@ package upcloud
 
 import (
 	"encoding/json"
+	"math"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -142,7 +143,7 @@ func TestUnmarshalServerDetails(t *testing.T) {
             ]
           },
           "firewall": "on",
-          "host" : 7653311107,
+          "host" : 9223372036854775807,
           "hostname": "server1.example.com",
           "ip_addresses": {
             "ip_address": [
@@ -331,6 +332,7 @@ func TestUnmarshalServerDetails(t *testing.T) {
 	assert.Equal(t, "0100,dailies", serverDetails.SimpleBackup)
 	assert.Equal(t, "test_group_id", serverDetails.ServerGroup)
 	assert.True(t, serverDetails.Metadata.Bool())
+	assert.Equal(t, int64(math.MaxInt64), serverDetails.Host)
 
 	networkingTestData := []ServerInterface{
 		{

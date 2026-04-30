@@ -2,6 +2,7 @@ package request
 
 import (
 	"encoding/json"
+	"math"
 	"testing"
 	"time"
 
@@ -220,14 +221,14 @@ func TestStartServerRequest_OmitValues(t *testing.T) {
 func TestStartServerRequest_WithValues(t *testing.T) {
 	request := StartServerRequest{
 		UUID:      "foo",
-		Host:      1010,
+		Host:      math.MaxInt64,
 		AvoidHost: 1101,
 	}
 
 	expectedJSON := `
 	  {
 		  "server": {
-			  "host": 1010,
+			  "host": 9223372036854775807,
 			  "avoid_host": 1101 
 		  }
 	  }
@@ -269,7 +270,7 @@ func TestRestartServerRequest(t *testing.T) {
 		Timeout:       time.Minute * 5,
 		StopType:      ServerStopTypeSoft,
 		TimeoutAction: RestartTimeoutActionDestroy,
-		Host:          999,
+		Host:          math.MaxInt64,
 	}
 
 	expectedJSON := `
@@ -278,7 +279,7 @@ func TestRestartServerRequest(t *testing.T) {
 		  "stop_type": "soft",
 		  "timeout": "300",
 		  "timeout_action": "destroy",
-		  "host": 999
+		  "host": 9223372036854775807
 		}
 	  }
 	`

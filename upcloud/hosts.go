@@ -55,7 +55,7 @@ func (t *StatSlice) UnmarshalJSON(b []byte) error {
 
 // Host represents an individual Host in a response
 type Host struct {
-	ID             int       `json:"id"`
+	ID             int64     `json:"id"`
 	Description    string    `json:"description"`
 	Zone           string    `json:"zone"`
 	WindowsEnabled Boolean   `json:"windows_enabled"`

@@ -135,8 +135,8 @@ type CreateServerNetworking struct {
 
 // CreateServerRequest represents a request for creating a new server
 type CreateServerRequest struct {
-	AvoidHost  int    `json:"avoid_host,omitempty"`
-	Host       int    `json:"host,omitempty"`
+	AvoidHost  int64  `json:"avoid_host,omitempty"`
+	Host       int64  `json:"host,omitempty"`
 	BootOrder  string `json:"boot_order,omitempty"`
 	CoreNumber int    `json:"core_number,omitempty"`
 	// TODO: Convert to boolean
@@ -235,8 +235,8 @@ type WaitForServerStateRequest struct {
 // StartServerRequest represents a request to start a server
 type StartServerRequest struct {
 	UUID      string `json:"-"`
-	AvoidHost int    `json:"avoid_host,omitempty"`
-	Host      int    `json:"host,omitempty"`
+	AvoidHost int64  `json:"avoid_host,omitempty"`
+	Host      int64  `json:"host,omitempty"`
 }
 
 // RequestURL implements the Request interface
@@ -289,7 +289,7 @@ type RestartServerRequest struct {
 	StopType      string        `json:"stop_type,omitempty"`
 	Timeout       time.Duration `json:"timeout,omitempty,string"`
 	TimeoutAction string        `json:"timeout_action,omitempty"`
-	Host          int           `json:"host,omitempty"`
+	Host          int64         `json:"host,omitempty"`
 }
 
 // RequestURL implements the Request interface

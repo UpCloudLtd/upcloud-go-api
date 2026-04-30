@@ -181,7 +181,7 @@ type ServerDetails struct {
 	Devices   DeviceSlice `json:"devices"`
 	// TODO: Convert to boolean
 	Firewall             string                   `json:"firewall"`
-	Host                 int                      `json:"host"`
+	Host                 int64                    `json:"host"`
 	IPAddresses          IPAddressSlice           `json:"ip_addresses"`
 	Labels               LabelSlice               `json:"labels"`
 	Metadata             Boolean                  `json:"metadata"`

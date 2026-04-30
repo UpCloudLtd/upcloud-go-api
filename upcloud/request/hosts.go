@@ -8,7 +8,7 @@ import (
 // GetHostDetailsRequest represents the request for the details of a
 // single private host
 type GetHostDetailsRequest struct {
-	ID int
+	ID int64
 }
 
 // RequestURL implements the Request interface
@@ -18,7 +18,7 @@ func (r *GetHostDetailsRequest) RequestURL() string {
 
 // ModifyHostRequest represents the request to modify a private host
 type ModifyHostRequest struct {
-	ID          int    `json:"-"`
+	ID          int64  `json:"-"`
 	Description string `json:"description"`
 }
 
