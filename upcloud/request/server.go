@@ -135,8 +135,12 @@ type CreateServerNetworking struct {
 
 // CreateServerRequest represents a request for creating a new server
 type CreateServerRequest struct {
-	AvoidHost  int    `json:"avoid_host,omitempty"`
-	Host       int    `json:"host,omitempty"`
+	// Deprecated: Use AvoidHostID instead.
+	AvoidHost   int   `json:"-"`
+	AvoidHostID int64 `json:"-"`
+	// Deprecated: Use HostID instead.
+	Host       int    `json:"-"`
+	HostID     int64  `json:"-"`
 	BootOrder  string `json:"boot_order,omitempty"`
 	CoreNumber int    `json:"core_number,omitempty"`
 	// TODO: Convert to boolean
@@ -168,9 +172,16 @@ type CreateServerRequest struct {
 func (r CreateServerRequest) MarshalJSON() ([]byte, error) {
 	type localCreateServerRequest CreateServerRequest
 	v := struct {
-		Server localCreateServerRequest `json:"server"`
+		Server struct {
+			localCreateServerRequest
+
+			AvoidHost *int64 `json:"avoid_host,omitempty"`
+			Host      *int64 `json:"host,omitempty"`
+		} `json:"server"`
 	}{}
-	v.Server = localCreateServerRequest(r)
+	v.Server.localCreateServerRequest = localCreateServerRequest(r)
+	v.Server.AvoidHost = hostIDPtr(r.AvoidHost, r.AvoidHostID)
+	v.Server.Host = hostIDPtr(r.Host, r.HostID)
 
 	return json.Marshal(&v)
 }
@@ -234,9 +245,13 @@ type WaitForServerStateRequest struct {
 
 // StartServerRequest represents a request to start a server
 type StartServerRequest struct {
-	UUID      string `json:"-"`
-	AvoidHost int    `json:"avoid_host,omitempty"`
-	Host      int    `json:"host,omitempty"`
+	UUID string `json:"-"`
+	// Deprecated: Use AvoidHostID instead.
+	AvoidHost   int   `json:"-"`
+	AvoidHostID int64 `json:"-"`
+	// Deprecated: Use HostID instead.
+	Host   int   `json:"-"`
+	HostID int64 `json:"-"`
 }
 
 // RequestURL implements the Request interface
@@ -249,9 +264,16 @@ func (r *StartServerRequest) RequestURL() string {
 func (r StartServerRequest) MarshalJSON() ([]byte, error) {
 	type localStartServerRequest StartServerRequest
 	v := struct {
-		Server localStartServerRequest `json:"server"`
+		Server struct {
+			localStartServerRequest
+
+			AvoidHost *int64 `json:"avoid_host,omitempty"`
+			Host      *int64 `json:"host,omitempty"`
+		} `json:"server"`
 	}{}
-	v.Server = localStartServerRequest(r)
+	v.Server.localStartServerRequest = localStartServerRequest(r)
+	v.Server.AvoidHost = hostIDPtr(r.AvoidHost, r.AvoidHostID)
+	v.Server.Host = hostIDPtr(r.Host, r.HostID)
 
 	return json.Marshal(&v)
 }
@@ -289,7 +311,9 @@ type RestartServerRequest struct {
 	StopType      string        `json:"stop_type,omitempty"`
 	Timeout       time.Duration `json:"timeout,omitempty,string"`
 	TimeoutAction string        `json:"timeout_action,omitempty"`
-	Host          int           `json:"host,omitempty"`
+	// Deprecated: Use HostID instead.
+	Host   int   `json:"-"`
+	HostID int64 `json:"-"`
 }
 
 // RequestURL implements the Request interface
@@ -302,12 +326,34 @@ func (r *RestartServerRequest) RequestURL() string {
 func (r RestartServerRequest) MarshalJSON() ([]byte, error) {
 	type localRestartServerRequest RestartServerRequest
 	v := struct {
-		RestartServerRequest localRestartServerRequest `json:"restart_server"`
+		RestartServerRequest struct {
+			localRestartServerRequest
+
+			Host *int64 `json:"host,omitempty"`
+		} `json:"restart_server"`
 	}{}
-	v.RestartServerRequest = localRestartServerRequest(r)
+	v.RestartServerRequest.localRestartServerRequest = localRestartServerRequest(r)
 	v.RestartServerRequest.Timeout = v.RestartServerRequest.Timeout / 1e9
+	v.RestartServerRequest.Host = hostIDPtr(r.Host, r.HostID)
 
 	return json.Marshal(&v)
+}
+
+func hostIDValue(id int, hostID int64) int64 {
+	if hostID != 0 {
+		return hostID
+	}
+
+	return int64(id)
+}
+
+func hostIDPtr(id int, hostID int64) *int64 {
+	resolved := hostIDValue(id, hostID)
+	if resolved == 0 {
+		return nil
+	}
+
+	return &resolved
 }
 
 // ModifyServerRequest represents a request to modify a server
