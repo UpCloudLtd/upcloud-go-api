@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.36.0]
+
 ### Added
 
 - server, host: add `int64` host identifier fields for safe JSON handling on 32-bit builds
@@ -765,7 +767,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.35.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.36.0...HEAD
+[8.36.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.35.0...v8.36.0
 [8.35.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.34.3...v8.35.0
 [8.34.3]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.34.2...v8.34.3
 [8.34.2]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.34.1...v8.34.2
