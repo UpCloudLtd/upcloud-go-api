@@ -5,6 +5,12 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.36.1]
+
+### Fixed
+
+- changelog: add missing changelog entry omitted from the `v8.36.0` tag
+
 ## [8.36.0]
 
 ### Added
@@ -767,7 +773,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.36.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.36.1...HEAD
+[8.36.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.36.0...v8.36.1
 [8.36.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.35.0...v8.36.0
 [8.35.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.34.3...v8.35.0
 [8.34.3]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.34.2...v8.34.3
