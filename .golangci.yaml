@@ -53,6 +53,7 @@ linters:
     errcheck:
       check-type-assertions: true
     goconst:
+      ignore-tests: true
       min-len: 5
     nolintlint:
       require-specific: true
