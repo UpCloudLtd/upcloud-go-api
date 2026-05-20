@@ -36,6 +36,7 @@ type CreateFileStorageRequest struct {
 	Zone             string                              `json:"zone"`
 	ConfiguredStatus upcloud.FileStorageConfiguredStatus `json:"configured_status"`
 	SizeGiB          int                                 `json:"size_gib"`
+	Encrypted        bool                                `json:"encrypted,omitempty"`
 	Networks         []upcloud.FileStorageNetwork        `json:"networks,omitempty"`
 	Shares           []FileStorageShare                  `json:"shares,omitempty"`
 	Labels           []upcloud.Label                     `json:"labels,omitempty"`

@@ -5,6 +5,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+
+- file-storage: add `Encrypted` field to `request.CreateFileStorageRequest` and `upcloud.FileStorage` structs.
+
 ## [8.36.1]
 
 ### Fixed
