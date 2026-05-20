@@ -53,6 +53,31 @@ func TestCreateFileStorageRequest_MarshalJSON(t *testing.T) {
 		assert.JSONEq(t, expected, string(data))
 	})
 
+	t.Run("WithEncryption", func(t *testing.T) {
+		req := CreateFileStorageRequest{
+			Name:             "enc",
+			Zone:             "fi-hel1",
+			ConfiguredStatus: "started",
+			SizeGiB:          250,
+			Encrypted:        true,
+		}
+		data, err := json.Marshal(&req)
+		assert.NoError(t, err)
+		assert.JSONEq(t, `{"name":"enc","zone":"fi-hel1","configured_status":"started","size_gib":250,"encrypted":true}`, string(data))
+	})
+
+	t.Run("WithoutEncryption", func(t *testing.T) {
+		req := CreateFileStorageRequest{
+			Name:             "plain",
+			Zone:             "fi-hel1",
+			ConfiguredStatus: "started",
+			SizeGiB:          250,
+		}
+		data, err := json.Marshal(&req)
+		assert.NoError(t, err)
+		assert.JSONEq(t, `{"name":"plain","zone":"fi-hel1","configured_status":"started","size_gib":250}`, string(data))
+	})
+
 	t.Run("Full", func(t *testing.T) {
 		req := CreateFileStorageRequest{
 			Name:             "full",
