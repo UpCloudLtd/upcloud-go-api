@@ -8,6 +8,7 @@ generate:
 output-options:
   include-tags:
     - object-storage-2
+    - firewall-ruleset
   resolve-type-name-collisions: true
   overlay:
     path: config/overlay.yaml
