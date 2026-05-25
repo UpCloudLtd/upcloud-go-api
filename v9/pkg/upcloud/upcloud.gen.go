@@ -21,6 +21,42 @@ import (
 // ServerUrlHttpsapiUpcloudCom defines the Server URL for https://api.upcloud.com
 const ServerUrlHttpsapiUpcloudCom = "https://api.upcloud.com"
 
+// Defines values for FirewallRulesetRuleAction.
+const (
+	Accept FirewallRulesetRuleAction = "accept"
+	Drop   FirewallRulesetRuleAction = "drop"
+)
+
+// Valid indicates whether the value is a known member of the FirewallRulesetRuleAction enum.
+func (e FirewallRulesetRuleAction) Valid() bool {
+	switch e {
+	case Accept:
+		return true
+	case Drop:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for FirewallRulesetRuleDirection.
+const (
+	In  FirewallRulesetRuleDirection = "in"
+	Out FirewallRulesetRuleDirection = "out"
+)
+
+// Valid indicates whether the value is a known member of the FirewallRulesetRuleDirection enum.
+func (e FirewallRulesetRuleDirection) Valid() bool {
+	switch e {
+	case In:
+		return true
+	case Out:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ObjectStorage2AccessKeyDetailResponseStatus.
 const (
 	ObjectStorage2AccessKeyDetailResponseStatusActive   ObjectStorage2AccessKeyDetailResponseStatus = "Active"
@@ -245,16 +281,16 @@ func (e ObjectStorage2NetworkType) Valid() bool {
 
 // Defines values for ObjectStorage2PropertyConfiguredStatus.
 const (
-	Started ObjectStorage2PropertyConfiguredStatus = "started"
-	Stopped ObjectStorage2PropertyConfiguredStatus = "stopped"
+	ObjectStorage2PropertyConfiguredStatusStarted ObjectStorage2PropertyConfiguredStatus = "started"
+	ObjectStorage2PropertyConfiguredStatusStopped ObjectStorage2PropertyConfiguredStatus = "stopped"
 )
 
 // Valid indicates whether the value is a known member of the ObjectStorage2PropertyConfiguredStatus enum.
 func (e ObjectStorage2PropertyConfiguredStatus) Valid() bool {
 	switch e {
-	case Started:
+	case ObjectStorage2PropertyConfiguredStatusStarted:
 		return true
-	case Stopped:
+	case ObjectStorage2PropertyConfiguredStatusStopped:
 		return true
 	default:
 		return false
@@ -297,6 +333,126 @@ func (e ObjectStorage2QueryParamSort) Valid() bool {
 	}
 }
 
+// Defines values for ObjectStorage2ServiceDetailResponseConfiguredStatus.
+const (
+	ObjectStorage2ServiceDetailResponseConfiguredStatusStarted ObjectStorage2ServiceDetailResponseConfiguredStatus = "started"
+	ObjectStorage2ServiceDetailResponseConfiguredStatusStopped ObjectStorage2ServiceDetailResponseConfiguredStatus = "stopped"
+)
+
+// Valid indicates whether the value is a known member of the ObjectStorage2ServiceDetailResponseConfiguredStatus enum.
+func (e ObjectStorage2ServiceDetailResponseConfiguredStatus) Valid() bool {
+	switch e {
+	case ObjectStorage2ServiceDetailResponseConfiguredStatusStarted:
+		return true
+	case ObjectStorage2ServiceDetailResponseConfiguredStatusStopped:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ObjectStorage2ServiceDetailResponseOperationalState.
+const (
+	CleanupDeletedBuckets ObjectStorage2ServiceDetailResponseOperationalState = "cleanup-deleted-buckets"
+	DeleteBuckets         ObjectStorage2ServiceDetailResponseOperationalState = "delete-buckets"
+	DeleteDns             ObjectStorage2ServiceDetailResponseOperationalState = "delete-dns"
+	DeleteIam             ObjectStorage2ServiceDetailResponseOperationalState = "delete-iam"
+	DeleteNamespace       ObjectStorage2ServiceDetailResponseOperationalState = "delete-namespace"
+	DeleteNetwork         ObjectStorage2ServiceDetailResponseOperationalState = "delete-network"
+	DeletePrivateEndpoint ObjectStorage2ServiceDetailResponseOperationalState = "delete-private-endpoint"
+	DeletePublicEndpoint  ObjectStorage2ServiceDetailResponseOperationalState = "delete-public-endpoint"
+	DeleteService         ObjectStorage2ServiceDetailResponseOperationalState = "delete-service"
+	DeleteTls             ObjectStorage2ServiceDetailResponseOperationalState = "delete-tls"
+	Pending               ObjectStorage2ServiceDetailResponseOperationalState = "pending"
+	Running               ObjectStorage2ServiceDetailResponseOperationalState = "running"
+	SetupCheckup          ObjectStorage2ServiceDetailResponseOperationalState = "setup-checkup"
+	SetupDns              ObjectStorage2ServiceDetailResponseOperationalState = "setup-dns"
+	SetupIam              ObjectStorage2ServiceDetailResponseOperationalState = "setup-iam"
+	SetupNetwork          ObjectStorage2ServiceDetailResponseOperationalState = "setup-network"
+	SetupPrivateEndpoint  ObjectStorage2ServiceDetailResponseOperationalState = "setup-private-endpoint"
+	SetupPublicEndpoint   ObjectStorage2ServiceDetailResponseOperationalState = "setup-public-endpoint"
+	SetupService          ObjectStorage2ServiceDetailResponseOperationalState = "setup-service"
+	SetupTls              ObjectStorage2ServiceDetailResponseOperationalState = "setup-tls"
+	Stopped               ObjectStorage2ServiceDetailResponseOperationalState = "stopped"
+)
+
+// Valid indicates whether the value is a known member of the ObjectStorage2ServiceDetailResponseOperationalState enum.
+func (e ObjectStorage2ServiceDetailResponseOperationalState) Valid() bool {
+	switch e {
+	case CleanupDeletedBuckets:
+		return true
+	case DeleteBuckets:
+		return true
+	case DeleteDns:
+		return true
+	case DeleteIam:
+		return true
+	case DeleteNamespace:
+		return true
+	case DeleteNetwork:
+		return true
+	case DeletePrivateEndpoint:
+		return true
+	case DeletePublicEndpoint:
+		return true
+	case DeleteService:
+		return true
+	case DeleteTls:
+		return true
+	case Pending:
+		return true
+	case Running:
+		return true
+	case SetupCheckup:
+		return true
+	case SetupDns:
+		return true
+	case SetupIam:
+		return true
+	case SetupNetwork:
+		return true
+	case SetupPrivateEndpoint:
+		return true
+	case SetupPublicEndpoint:
+		return true
+	case SetupService:
+		return true
+	case SetupTls:
+		return true
+	case Stopped:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ObjectStorage2ServiceDetailResponseStateMessagesCode.
+const (
+	BucketsStuckInDeletion         ObjectStorage2ServiceDetailResponseStateMessagesCode = "buckets_stuck_in_deletion"
+	FailedCustomDomainVerification ObjectStorage2ServiceDetailResponseStateMessagesCode = "failed_custom_domain_verification"
+	FailedDomainVerification       ObjectStorage2ServiceDetailResponseStateMessagesCode = "failed_domain_verification"
+	NamespaceStuckInDeletion       ObjectStorage2ServiceDetailResponseStateMessagesCode = "namespace_stuck_in_deletion"
+	WaitingCertificateIssuing      ObjectStorage2ServiceDetailResponseStateMessagesCode = "waiting_certificate_issuing"
+)
+
+// Valid indicates whether the value is a known member of the ObjectStorage2ServiceDetailResponseStateMessagesCode enum.
+func (e ObjectStorage2ServiceDetailResponseStateMessagesCode) Valid() bool {
+	switch e {
+	case BucketsStuckInDeletion:
+		return true
+	case FailedCustomDomainVerification:
+		return true
+	case FailedDomainVerification:
+		return true
+	case NamespaceStuckInDeletion:
+		return true
+	case WaitingCertificateIssuing:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ObjectStorage2ServiceDomainsDomainsType.
 const (
 	Custom  ObjectStorage2ServiceDomainsDomainsType = "custom"
@@ -316,6 +472,28 @@ func (e ObjectStorage2ServiceDomainsDomainsType) Valid() bool {
 	default:
 		return false
 	}
+}
+
+// CreateFirewallRuleset Create firewall ruleset
+type CreateFirewallRuleset struct {
+	DefaultDnsRulesEnabled *bool `json:"default_dns_rules_enabled,omitempty"`
+
+	// Description Description of the firewall ruleset
+	Description *string `json:"description,omitempty"`
+	Enabled     *bool   `json:"enabled,omitempty"`
+
+	// Labels Labels
+	Labels *[]FirewallRulesetCreateLabel `json:"labels,omitempty"`
+
+	// Name Name of the firewall ruleset
+	Name string `json:"name"`
+
+	// ServerUuid The unique identifier for the resource.
+	ServerUuid *FirewallRulesetUuid `json:"server_uuid,omitempty"`
+	Stateful   *bool                `json:"stateful,omitempty"`
+
+	// Uuid The unique identifier for the resource.
+	Uuid *FirewallRulesetUuid `json:"uuid,omitempty"`
 }
 
 // DatabaseDependencyResponse a dependency definition
@@ -390,6 +568,517 @@ type DatabasePropertySchemaResponse struct {
 	UserError *string `json:"user_error,omitempty"`
 }
 
+// FirewallRulesetCreateLabel UpCloud firewall ruleset Label
+type FirewallRulesetCreateLabel struct {
+	// Key Key
+	Key string `json:"key"`
+
+	// Value Value
+	Value string `json:"value"`
+}
+
+// FirewallRulesetDetailResponse Response schema for firewall ruleset details, including UUID, name, description, stateful, enabled, labels and serverUUID.
+type FirewallRulesetDetailResponse struct {
+	CreatedAt              *time.Time `json:"created_at,omitempty"`
+	DefaultDnsRulesEnabled *bool      `json:"default_dns_rules_enabled,omitempty"`
+
+	// Description Description of the firewall ruleset
+	Description *string `json:"description,omitempty"`
+	Enabled     *bool   `json:"enabled,omitempty"`
+
+	// Labels Labels
+	Labels *[]FirewallRulesetCreateLabel `json:"labels,omitempty"`
+
+	// Name Name of the firewall ruleset
+	Name *string `json:"name,omitempty"`
+
+	// ServerUuid The unique identifier for the server.
+	ServerUuid *FirewallRulesetServerUuid `json:"server_uuid,omitempty"`
+	Stateful   *bool                      `json:"stateful,omitempty"`
+	UpdatedAt  *time.Time                 `json:"updated_at,omitempty"`
+
+	// Uuid The unique identifier for the server.
+	Uuid *FirewallRulesetServerUuid `json:"uuid,omitempty"`
+
+	// Version The firewall ruleset version.
+	Version *FirewallRulesetVersion `json:"version,omitempty"`
+}
+
+// FirewallRulesetErrorLegacyResponse Schema for legacy error responses from API.
+type FirewallRulesetErrorLegacyResponse struct {
+	// Error Schema for legacy error response.
+	Error struct {
+		ErrorCode    *string `json:"error_code,omitempty"`
+		ErrorMessage *string `json:"error_message,omitempty"`
+	} `json:"error"`
+}
+
+// FirewallRulesetErrorResponse Schema for error responses from the API.
+type FirewallRulesetErrorResponse struct {
+	// CorrelationId Unique identifier for the request, useful for debugging.
+	CorrelationId string `json:"correlation_id"`
+
+	// InvalidParams List of invalid parameters in the request.
+	InvalidParams *[]interface{} `json:"invalid_params,omitempty"`
+
+	// Status HTTP status code associated with the error.
+	Status int32 `json:"status"`
+
+	// Title Short description of the error.
+	Title string `json:"title"`
+
+	// Type Error code string.
+	Type string `json:"type"`
+}
+
+// FirewallRulesetFirewallRuleCreate defines model for firewallRulesetFirewallRuleCreate.
+type FirewallRulesetFirewallRuleCreate struct {
+	Action interface{} `json:"action"`
+
+	// Comment Comments
+	Comment                 *string     `json:"comment,omitempty"`
+	DestinationAddressCidr  *string     `json:"destination_address_cidr,omitempty"`
+	DestinationAddressEnd   *string     `json:"destination_address_end,omitempty"`
+	DestinationAddressStart *string     `json:"destination_address_start,omitempty"`
+	DestinationPortEnd      *int64      `json:"destination_port_end,omitempty"`
+	DestinationPortStart    *int64      `json:"destination_port_start,omitempty"`
+	Direction               interface{} `json:"direction"`
+
+	// Enabled Enabled
+	Enabled            *bool       `json:"enabled,omitempty"`
+	Family             interface{} `json:"family"`
+	IcmpType           *int64      `json:"icmp_type,omitempty"`
+	Position           *int64      `json:"position,omitempty"`
+	Protocol           interface{} `json:"protocol,omitempty"`
+	SourceAddressCidr  *string     `json:"source_address_cidr,omitempty"`
+	SourceAddressEnd   *string     `json:"source_address_end,omitempty"`
+	SourceAddressStart *string     `json:"source_address_start,omitempty"`
+	SourcePortEnd      *int64      `json:"source_port_end,omitempty"`
+	SourcePortStart    *int64      `json:"source_port_start,omitempty"`
+
+	// Uuid The unique identifier for the resource.
+	Uuid *FirewallRulesetUuid `json:"uuid,omitempty"`
+}
+
+// FirewallRulesetFirewallRuleListResponse Response schema for a list of firewall ruleset rules.
+type FirewallRulesetFirewallRuleListResponse = []FirewallRulesetRuleDetailResponse
+
+// FirewallRulesetFirewallRuleModify defines model for firewallRulesetFirewallRuleModify.
+type FirewallRulesetFirewallRuleModify struct {
+	Action interface{} `json:"action,omitempty"`
+
+	// Comment Comments
+	Comment                 *string     `json:"comment,omitempty"`
+	DestinationAddressCidr  *string     `json:"destination_address_cidr,omitempty"`
+	DestinationAddressEnd   *string     `json:"destination_address_end,omitempty"`
+	DestinationAddressStart *string     `json:"destination_address_start,omitempty"`
+	DestinationPortEnd      *int64      `json:"destination_port_end,omitempty"`
+	DestinationPortStart    *int64      `json:"destination_port_start,omitempty"`
+	Direction               interface{} `json:"direction,omitempty"`
+
+	// Enabled Enabled
+	Enabled              *bool                  `json:"enabled,omitempty"`
+	Family               interface{}            `json:"family,omitempty"`
+	IcmpType             *int64                 `json:"icmp_type,omitempty"`
+	Position             *int64                 `json:"position,omitempty"`
+	Protocol             interface{}            `json:"protocol,omitempty"`
+	SourceAddressCidr    *string                `json:"source_address_cidr,omitempty"`
+	SourceAddressEnd     *string                `json:"source_address_end,omitempty"`
+	SourceAddressStart   *string                `json:"source_address_start,omitempty"`
+	SourcePortEnd        *int64                 `json:"source_port_end,omitempty"`
+	SourcePortStart      *int64                 `json:"source_port_start,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// FirewallRulesetLabelDetailResponse Schema for label details including key-value pairs.
+type FirewallRulesetLabelDetailResponse struct {
+	Key   *string `json:"key,omitempty"`
+	Value *string `json:"value,omitempty"`
+}
+
+// FirewallRulesetLabelKey The key of a label.
+type FirewallRulesetLabelKey = string
+
+// FirewallRulesetLabelListResponse Response schema for listing labels.
+type FirewallRulesetLabelListResponse = []FirewallRulesetLabelDetailResponse
+
+// FirewallRulesetLabelModify Schema for modifying a label with a key-value pair.
+type FirewallRulesetLabelModify struct {
+	// Key The key of a label.
+	Key *FirewallRulesetLabelKey `json:"key,omitempty"`
+
+	// Value Schema for a label value property, allowing a string or null with specific character constraints.
+	Value *FirewallRulesetLabelValue `json:"value,omitempty"`
+}
+
+// FirewallRulesetLabelValue Schema for a label value property, allowing a string or null with specific character constraints.
+type FirewallRulesetLabelValue = string
+
+// FirewallRulesetListResponse Response schema for a list of firewall rulesets.
+type FirewallRulesetListResponse = []FirewallRulesetDetailResponse
+
+// FirewallRulesetModify Modify firewall ruleset
+type FirewallRulesetModify struct {
+	DefaultDnsRulesEnabled *bool `json:"default_dns_rules_enabled,omitempty"`
+
+	// Description Description of the firewall ruleset
+	Description *string `json:"description,omitempty"`
+
+	// Enabled Enabled
+	Enabled *bool `json:"enabled,omitempty"`
+
+	// Labels Labels
+	Labels *[]FirewallRulesetCreateLabel `json:"labels,omitempty"`
+
+	// Name Name of the ruleset
+	Name *string `json:"name,omitempty"`
+}
+
+// FirewallRulesetQueryParamLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
+type FirewallRulesetQueryParamLimit = int64
+
+// FirewallRulesetQueryParamOffset Schema for a query parameter specifying the offset for pagination.
+type FirewallRulesetQueryParamOffset = int64
+
+// FirewallRulesetQueryParamSort Schema for a query parameter specifying the sort field.
+type FirewallRulesetQueryParamSort = string
+
+// FirewallRulesetRuleAction Rule action.
+type FirewallRulesetRuleAction string
+
+// FirewallRulesetRuleDetailResponse Response schema for firewall ruleset rule details.
+type FirewallRulesetRuleDetailResponse struct {
+	Action interface{} `json:"action"`
+
+	// Comment Comments
+	Comment                 *string     `json:"comment,omitempty"`
+	DestinationAddressCidr  *string     `json:"destination_address_cidr,omitempty"`
+	DestinationAddressEnd   *string     `json:"destination_address_end,omitempty"`
+	DestinationAddressStart *string     `json:"destination_address_start,omitempty"`
+	DestinationPortEnd      *int64      `json:"destination_port_end,omitempty"`
+	DestinationPortStart    *int64      `json:"destination_port_start,omitempty"`
+	Direction               interface{} `json:"direction"`
+
+	// Enabled Enabled
+	Enabled            *bool       `json:"enabled,omitempty"`
+	Family             interface{} `json:"family"`
+	IcmpType           *int64      `json:"icmp_type,omitempty"`
+	Position           *int64      `json:"position,omitempty"`
+	Protocol           interface{} `json:"protocol,omitempty"`
+	SourceAddressCidr  *string     `json:"source_address_cidr,omitempty"`
+	SourceAddressEnd   *string     `json:"source_address_end,omitempty"`
+	SourceAddressStart *string     `json:"source_address_start,omitempty"`
+	SourcePortEnd      *int64      `json:"source_port_end,omitempty"`
+	SourcePortStart    *int64      `json:"source_port_start,omitempty"`
+
+	// Uuid The unique identifier for the server.
+	Uuid *FirewallRulesetServerUuid `json:"uuid,omitempty"`
+}
+
+// FirewallRulesetRuleDirection Rule direction.
+type FirewallRulesetRuleDirection string
+
+// FirewallRulesetServerFirewallDetailResponse Server firewall detail response.
+type FirewallRulesetServerFirewallDetailResponse struct {
+	// FirewallRules Server firewall rules.
+	FirewallRules FirewallRulesetServerFirewallRules `json:"firewall_rules"`
+}
+
+// FirewallRulesetServerFirewallRule Server firewall rule
+type FirewallRulesetServerFirewallRule struct {
+	// Action Rule action.
+	Action FirewallRulesetRuleAction `json:"action"`
+
+	// Comment Comment
+	Comment *string `json:"comment,omitempty"`
+
+	// DestinationAddressEnd Destination address range ends from to this address
+	DestinationAddressEnd *FirewallRulesetServerFirewallRule_DestinationAddressEnd `json:"destination_address_end,omitempty"`
+
+	// DestinationAddressStart Destination address range starts from this address
+	DestinationAddressStart *FirewallRulesetServerFirewallRule_DestinationAddressStart `json:"destination_address_start,omitempty"`
+
+	// DestinationPortEnd Destination port range ends at this port number
+	DestinationPortEnd *FirewallRulesetServerFirewallRule_DestinationPortEnd `json:"destination_port_end,omitempty"`
+
+	// DestinationPortStart Destination port range starts from this port number
+	DestinationPortStart *FirewallRulesetServerFirewallRule_DestinationPortStart `json:"destination_port_start,omitempty"`
+
+	// Direction Rule direction.
+	Direction FirewallRulesetRuleDirection `json:"direction"`
+
+	// Enabled Rule enabled
+	Enabled *string                                   `json:"enabled,omitempty"`
+	Family  *FirewallRulesetServerFirewallRule_Family `json:"family,omitempty"`
+
+	// IcmpType ICMP type
+	IcmpType *FirewallRulesetServerFirewallRule_IcmpType `json:"icmp_type,omitempty"`
+
+	// Position Rule position
+	Position *FirewallRulesetServerFirewallRule_Position `json:"position,omitempty"`
+
+	// Protocol Rule protocol
+	Protocol *FirewallRulesetServerFirewallRule_Protocol `json:"protocol,omitempty"`
+
+	// SourceAddressEnd Source address range ends at this address
+	SourceAddressEnd *FirewallRulesetServerFirewallRule_SourceAddressEnd `json:"source_address_end,omitempty"`
+
+	// SourceAddressStart Source address range starts from this address
+	SourceAddressStart *FirewallRulesetServerFirewallRule_SourceAddressStart `json:"source_address_start,omitempty"`
+
+	// SourcePortEnd Source port range ends at this port number
+	SourcePortEnd *FirewallRulesetServerFirewallRule_SourcePortEnd `json:"source_port_end,omitempty"`
+
+	// SourcePortStart Source port range starts from this port number
+	SourcePortStart *FirewallRulesetServerFirewallRule_SourcePortStart `json:"source_port_start,omitempty"`
+}
+
+// FirewallRulesetServerFirewallRuleDestinationAddressEnd0 defines model for .
+type FirewallRulesetServerFirewallRuleDestinationAddressEnd0 = string
+
+// FirewallRulesetServerFirewallRuleDestinationAddressEnd1 defines model for .
+type FirewallRulesetServerFirewallRuleDestinationAddressEnd1 = string
+
+// FirewallRulesetServerFirewallRuleDestinationAddressEnd2 defines model for .
+type FirewallRulesetServerFirewallRuleDestinationAddressEnd2 = string
+
+// FirewallRulesetServerFirewallRuleDestinationAddressEnd3 defines model for .
+type FirewallRulesetServerFirewallRuleDestinationAddressEnd3 = string
+
+// FirewallRulesetServerFirewallRule_DestinationAddressEnd Destination address range ends from to this address
+type FirewallRulesetServerFirewallRule_DestinationAddressEnd struct {
+	union json.RawMessage
+}
+
+// FirewallRulesetServerFirewallRuleDestinationAddressStart0 defines model for .
+type FirewallRulesetServerFirewallRuleDestinationAddressStart0 = string
+
+// FirewallRulesetServerFirewallRuleDestinationAddressStart1 defines model for .
+type FirewallRulesetServerFirewallRuleDestinationAddressStart1 = string
+
+// FirewallRulesetServerFirewallRuleDestinationAddressStart2 defines model for .
+type FirewallRulesetServerFirewallRuleDestinationAddressStart2 = string
+
+// FirewallRulesetServerFirewallRuleDestinationAddressStart3 defines model for .
+type FirewallRulesetServerFirewallRuleDestinationAddressStart3 = string
+
+// FirewallRulesetServerFirewallRule_DestinationAddressStart Destination address range starts from this address
+type FirewallRulesetServerFirewallRule_DestinationAddressStart struct {
+	union json.RawMessage
+}
+
+// FirewallRulesetServerFirewallRuleDestinationPortEnd0 defines model for .
+type FirewallRulesetServerFirewallRuleDestinationPortEnd0 = string
+
+// FirewallRulesetServerFirewallRuleDestinationPortEnd1 defines model for .
+type FirewallRulesetServerFirewallRuleDestinationPortEnd1 = int64
+
+// FirewallRulesetServerFirewallRuleDestinationPortEnd2 defines model for .
+type FirewallRulesetServerFirewallRuleDestinationPortEnd2 = string
+
+// FirewallRulesetServerFirewallRule_DestinationPortEnd Destination port range ends at this port number
+type FirewallRulesetServerFirewallRule_DestinationPortEnd struct {
+	union json.RawMessage
+}
+
+// FirewallRulesetServerFirewallRuleDestinationPortStart0 defines model for .
+type FirewallRulesetServerFirewallRuleDestinationPortStart0 = string
+
+// FirewallRulesetServerFirewallRuleDestinationPortStart1 defines model for .
+type FirewallRulesetServerFirewallRuleDestinationPortStart1 = int64
+
+// FirewallRulesetServerFirewallRuleDestinationPortStart2 defines model for .
+type FirewallRulesetServerFirewallRuleDestinationPortStart2 = string
+
+// FirewallRulesetServerFirewallRule_DestinationPortStart Destination port range starts from this port number
+type FirewallRulesetServerFirewallRule_DestinationPortStart struct {
+	union json.RawMessage
+}
+
+// FirewallRulesetServerFirewallRuleFamily0 defines model for .
+type FirewallRulesetServerFirewallRuleFamily0 = string
+
+// FirewallRulesetServerFirewallRuleFamily1 defines model for .
+type FirewallRulesetServerFirewallRuleFamily1 = string
+
+// FirewallRulesetServerFirewallRuleFamily2 defines model for .
+type FirewallRulesetServerFirewallRuleFamily2 = string
+
+// FirewallRulesetServerFirewallRule_Family defines model for FirewallRulesetServerFirewallRule.Family.
+type FirewallRulesetServerFirewallRule_Family struct {
+	union json.RawMessage
+}
+
+// FirewallRulesetServerFirewallRuleIcmpType0 defines model for .
+type FirewallRulesetServerFirewallRuleIcmpType0 = string
+
+// FirewallRulesetServerFirewallRuleIcmpType1 defines model for .
+type FirewallRulesetServerFirewallRuleIcmpType1 = int64
+
+// FirewallRulesetServerFirewallRuleIcmpType2 defines model for .
+type FirewallRulesetServerFirewallRuleIcmpType2 = string
+
+// FirewallRulesetServerFirewallRule_IcmpType ICMP type
+type FirewallRulesetServerFirewallRule_IcmpType struct {
+	union json.RawMessage
+}
+
+// FirewallRulesetServerFirewallRulePosition0 defines model for .
+type FirewallRulesetServerFirewallRulePosition0 = int64
+
+// FirewallRulesetServerFirewallRulePosition1 defines model for .
+type FirewallRulesetServerFirewallRulePosition1 = string
+
+// FirewallRulesetServerFirewallRule_Position Rule position
+type FirewallRulesetServerFirewallRule_Position struct {
+	union json.RawMessage
+}
+
+// FirewallRulesetServerFirewallRuleProtocol0 defines model for .
+type FirewallRulesetServerFirewallRuleProtocol0 = string
+
+// FirewallRulesetServerFirewallRuleProtocol1 defines model for .
+type FirewallRulesetServerFirewallRuleProtocol1 = string
+
+// FirewallRulesetServerFirewallRuleProtocol2 defines model for .
+type FirewallRulesetServerFirewallRuleProtocol2 = string
+
+// FirewallRulesetServerFirewallRule_Protocol Rule protocol
+type FirewallRulesetServerFirewallRule_Protocol struct {
+	union json.RawMessage
+}
+
+// FirewallRulesetServerFirewallRuleSourceAddressEnd0 defines model for .
+type FirewallRulesetServerFirewallRuleSourceAddressEnd0 = string
+
+// FirewallRulesetServerFirewallRuleSourceAddressEnd1 defines model for .
+type FirewallRulesetServerFirewallRuleSourceAddressEnd1 = string
+
+// FirewallRulesetServerFirewallRuleSourceAddressEnd2 defines model for .
+type FirewallRulesetServerFirewallRuleSourceAddressEnd2 = string
+
+// FirewallRulesetServerFirewallRuleSourceAddressEnd3 defines model for .
+type FirewallRulesetServerFirewallRuleSourceAddressEnd3 = string
+
+// FirewallRulesetServerFirewallRule_SourceAddressEnd Source address range ends at this address
+type FirewallRulesetServerFirewallRule_SourceAddressEnd struct {
+	union json.RawMessage
+}
+
+// FirewallRulesetServerFirewallRuleSourceAddressStart0 defines model for .
+type FirewallRulesetServerFirewallRuleSourceAddressStart0 = string
+
+// FirewallRulesetServerFirewallRuleSourceAddressStart1 defines model for .
+type FirewallRulesetServerFirewallRuleSourceAddressStart1 = string
+
+// FirewallRulesetServerFirewallRuleSourceAddressStart2 defines model for .
+type FirewallRulesetServerFirewallRuleSourceAddressStart2 = string
+
+// FirewallRulesetServerFirewallRuleSourceAddressStart3 defines model for .
+type FirewallRulesetServerFirewallRuleSourceAddressStart3 = string
+
+// FirewallRulesetServerFirewallRule_SourceAddressStart Source address range starts from this address
+type FirewallRulesetServerFirewallRule_SourceAddressStart struct {
+	union json.RawMessage
+}
+
+// FirewallRulesetServerFirewallRuleSourcePortEnd0 defines model for .
+type FirewallRulesetServerFirewallRuleSourcePortEnd0 = string
+
+// FirewallRulesetServerFirewallRuleSourcePortEnd1 defines model for .
+type FirewallRulesetServerFirewallRuleSourcePortEnd1 = int64
+
+// FirewallRulesetServerFirewallRuleSourcePortEnd2 defines model for .
+type FirewallRulesetServerFirewallRuleSourcePortEnd2 = string
+
+// FirewallRulesetServerFirewallRule_SourcePortEnd Source port range ends at this port number
+type FirewallRulesetServerFirewallRule_SourcePortEnd struct {
+	union json.RawMessage
+}
+
+// FirewallRulesetServerFirewallRuleSourcePortStart0 defines model for .
+type FirewallRulesetServerFirewallRuleSourcePortStart0 = string
+
+// FirewallRulesetServerFirewallRuleSourcePortStart1 defines model for .
+type FirewallRulesetServerFirewallRuleSourcePortStart1 = int64
+
+// FirewallRulesetServerFirewallRuleSourcePortStart2 defines model for .
+type FirewallRulesetServerFirewallRuleSourcePortStart2 = string
+
+// FirewallRulesetServerFirewallRule_SourcePortStart Source port range starts from this port number
+type FirewallRulesetServerFirewallRule_SourcePortStart struct {
+	union json.RawMessage
+}
+
+// FirewallRulesetServerFirewallRuleCreate defines model for firewallRulesetServerFirewallRuleCreate.
+type FirewallRulesetServerFirewallRuleCreate struct {
+	// FirewallRule Server firewall rule
+	FirewallRule FirewallRulesetServerFirewallRule `json:"firewall_rule"`
+}
+
+// FirewallRulesetServerFirewallRuleDetail Server firewall rule detail
+type FirewallRulesetServerFirewallRuleDetail struct {
+	// FirewallRule Server firewall rule
+	FirewallRule FirewallRulesetServerFirewallRule `json:"firewall_rule"`
+}
+
+// FirewallRulesetServerFirewallRulePosition The server firewall rule position.
+type FirewallRulesetServerFirewallRulePosition = string
+
+// FirewallRulesetServerFirewallRules Server firewall rules.
+type FirewallRulesetServerFirewallRules struct {
+	FirewallRule FirewallRulesetServerFirewallRules_FirewallRule `json:"firewall_rule"`
+}
+
+// FirewallRulesetServerFirewallRulesFirewallRule0 defines model for .
+type FirewallRulesetServerFirewallRulesFirewallRule0 = []FirewallRulesetServerFirewallRule
+
+// FirewallRulesetServerFirewallRulesFirewallRule1 defines model for .
+type FirewallRulesetServerFirewallRulesFirewallRule1 = string
+
+// FirewallRulesetServerFirewallRules_FirewallRule defines model for FirewallRulesetServerFirewallRules.FirewallRule.
+type FirewallRulesetServerFirewallRules_FirewallRule struct {
+	union json.RawMessage
+}
+
+// FirewallRulesetServerMultipleFirewallRulesCreate Creates multiple server firewall rules.
+type FirewallRulesetServerMultipleFirewallRulesCreate struct {
+	FirewallRules FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules `json:"firewall_rules"`
+}
+
+// FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0 defines model for .
+type FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0 = string
+
+// FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1 defines model for .
+type FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1 struct {
+	FirewallRule FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule `json:"firewall_rule"`
+}
+
+// FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0 defines model for .
+type FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0 = []FirewallRulesetServerFirewallRule
+
+// FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1 defines model for .
+type FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1 = string
+
+// FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule defines model for FirewallRulesetServerMultipleFirewallRulesCreate.FirewallRules.1.FirewallRule.
+type FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule struct {
+	union json.RawMessage
+}
+
+// FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules defines model for FirewallRulesetServerMultipleFirewallRulesCreate.FirewallRules.
+type FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules struct {
+	union json.RawMessage
+}
+
+// FirewallRulesetServerUuid The unique identifier for the server.
+type FirewallRulesetServerUuid = openapi_types.UUID
+
+// FirewallRulesetUuid The unique identifier for the resource.
+type FirewallRulesetUuid = openapi_types.UUID
+
+// FirewallRulesetVersion The firewall ruleset version.
+type FirewallRulesetVersion = int64
+
 // KubernetesName Name
 type KubernetesName = string
 
@@ -401,10 +1090,13 @@ type KubernetesUuid = openapi_types.UUID
 
 // ObjectStorage2AccessKeyDetailResponse Response schema for access key details.
 type ObjectStorage2AccessKeyDetailResponse struct {
-	AccessKeyId *string                                      `json:"access_key_id,omitempty"`
-	CreatedAt   *time.Time                                   `json:"created_at,omitempty"`
-	LastUsedAt  *time.Time                                   `json:"last_used_at,omitempty"`
-	Status      *ObjectStorage2AccessKeyDetailResponseStatus `json:"status,omitempty"`
+	AccessKeyId *string    `json:"access_key_id,omitempty"`
+	CreatedAt   *time.Time `json:"created_at,omitempty"`
+	LastUsedAt  *time.Time `json:"last_used_at,omitempty"`
+
+	// SecretAccessKey Only returned upon creation, empty otherwise.
+	SecretAccessKey *string                                      `json:"secret_access_key,omitempty"`
+	Status          *ObjectStorage2AccessKeyDetailResponseStatus `json:"status,omitempty"`
 }
 
 // ObjectStorage2AccessKeyDetailResponseStatus defines model for ObjectStorage2AccessKeyDetailResponse.Status.
@@ -444,6 +1136,7 @@ type ObjectStorage2BucketCreate struct {
 
 // ObjectStorage2BucketDetailResponse Response schema for bucket details.
 type ObjectStorage2BucketDetailResponse struct {
+	Deleted        *bool   `json:"deleted,omitempty"`
 	Name           *string `json:"name,omitempty"`
 	TotalObjects   *int32  `json:"total_objects,omitempty"`
 	TotalSizeBytes *int64  `json:"total_size_bytes,omitempty"`
@@ -889,13 +1582,43 @@ type ObjectStorage2ServiceCreate struct {
 
 // ObjectStorage2ServiceDetailResponse Response schema for service details, including UUID, name, and endpoints.
 type ObjectStorage2ServiceDetailResponse struct {
-	Endpoints *[]ObjectStorage2EndpointResponse `json:"endpoints,omitempty"`
-	Name      *string                           `json:"name,omitempty"`
+	ConfiguredStatus *ObjectStorage2ServiceDetailResponseConfiguredStatus `json:"configured_status,omitempty"`
+	CreatedAt        *time.Time                                           `json:"created_at,omitempty"`
+	CustomDomains    *[]ObjectStorage2CustomDomainDetailResponse          `json:"custom_domains,omitempty"`
+	Endpoints        *[]ObjectStorage2EndpointResponse                    `json:"endpoints,omitempty"`
+	Labels           *[]ObjectStorage2LabelDetailResponse                 `json:"labels,omitempty"`
+	Name             *string                                              `json:"name,omitempty"`
+	Networks         *[]ObjectStorage2NetworkDetailResponse               `json:"networks,omitempty"`
+	OperationalState *ObjectStorage2ServiceDetailResponseOperationalState `json:"operational_state,omitempty"`
+	Region           *string                                              `json:"region,omitempty"`
+	StateMessages    *[]struct {
+		Code             *ObjectStorage2ServiceDetailResponseStateMessagesCode `json:"code,omitempty"`
+		CreatedAt        *time.Time                                            `json:"created_at,omitempty"`
+		Message          *string                                               `json:"message,omitempty"`
+		OperationalState *string                                               `json:"operational_state,omitempty"`
+		UpdatedAt        *time.Time                                            `json:"updated_at,omitempty"`
+	} `json:"state_messages,omitempty"`
 
 	// StaticWebsites Static website configurations for this service
-	StaticWebsites *[]ObjectStorage2StaticWebsiteConfig `json:"static_websites,omitempty"`
-	Uuid           *string                              `json:"uuid,omitempty"`
+	StaticWebsites        *[]ObjectStorage2StaticWebsiteConfig `json:"static_websites,omitempty"`
+	TerminationProtection *bool                                `json:"termination_protection,omitempty"`
+	UpdatedAt             *time.Time                           `json:"updated_at,omitempty"`
+	Usage                 *struct {
+		TotalObjects   *int `json:"total_objects,omitempty"`
+		TotalSizeBytes *int `json:"total_size_bytes,omitempty"`
+	} `json:"usage,omitempty"`
+	Users *[]ObjectStorage2UserDetailResponse `json:"users,omitempty"`
+	Uuid  *string                             `json:"uuid,omitempty"`
 }
+
+// ObjectStorage2ServiceDetailResponseConfiguredStatus defines model for ObjectStorage2ServiceDetailResponse.ConfiguredStatus.
+type ObjectStorage2ServiceDetailResponseConfiguredStatus string
+
+// ObjectStorage2ServiceDetailResponseOperationalState defines model for ObjectStorage2ServiceDetailResponse.OperationalState.
+type ObjectStorage2ServiceDetailResponseOperationalState string
+
+// ObjectStorage2ServiceDetailResponseStateMessagesCode defines model for ObjectStorage2ServiceDetailResponse.StateMessages.Code.
+type ObjectStorage2ServiceDetailResponseStateMessagesCode string
 
 // ObjectStorage2ServiceDomains Service domains with their static website hosting status
 type ObjectStorage2ServiceDomains struct {
@@ -964,7 +1687,7 @@ type ObjectStorage2ServiceReplace struct {
 // ObjectStorage2ServiceUUID The unique identifier for the service.
 type ObjectStorage2ServiceUUID = openapi_types.UUID
 
-// ObjectStorage2StaticWebsiteConfig Static website hosting configuration for a specific domain
+// ObjectStorage2StaticWebsiteConfig Static website hosting configuration for a specific domain.
 type ObjectStorage2StaticWebsiteConfig struct {
 	// BucketName Name of the S3/ECS bucket containing the website content. Only alphanumerics, dots, hyphens, and underscores are allowed.
 	BucketName string `json:"bucket_name"`
@@ -1096,15 +1819,88 @@ type ObjectStorage2UserCreate struct {
 
 // ObjectStorage2UserDetailResponse Response schema for user details.
 type ObjectStorage2UserDetailResponse struct {
-	AccessKeys *[]ObjectStorage2AccessKeyDetailResponse  `json:"access_keys,omitempty"`
-	Arn        *string                                   `json:"arn,omitempty"`
-	CreatedAt  *time.Time                                `json:"created_at,omitempty"`
-	Policies   *[]ObjectStorage2PolicyAttachmentResponse `json:"policies,omitempty"`
-	Username   *string                                   `json:"username,omitempty"`
+	AccessKeys *[]ObjectStorage2AccessKeyDetailResponse `json:"access_keys,omitempty"`
+	Arn        *string                                  `json:"arn,omitempty"`
+	CreatedAt  *time.Time                               `json:"created_at,omitempty"`
+
+	// PermissionsBoundary Schema representing a permissions boundary response.
+	PermissionsBoundary *ObjectStorage2PermissionsBoundaryResponse `json:"permissions_boundary,omitempty"`
+	Policies            *[]ObjectStorage2PolicyAttachmentResponse  `json:"policies,omitempty"`
+	Tags                *[]ObjectStorage2TagResponse               `json:"tags,omitempty"`
+	Username            *string                                    `json:"username,omitempty"`
 }
 
 // ObjectStorage2UserListResponse Response schema for listing users.
 type ObjectStorage2UserListResponse = []ObjectStorage2UserDetailResponse
+
+// CreateFirewallRulesetLabelRulesetUuid The unique identifier for the server.
+type CreateFirewallRulesetLabelRulesetUuid = FirewallRulesetServerUuid
+
+// CreateFirewallRulesetRuleRulesetUuid The unique identifier for the server.
+type CreateFirewallRulesetRuleRulesetUuid = FirewallRulesetServerUuid
+
+// DeleteFirewallRulesetLabelLabelKey The key of a label.
+type DeleteFirewallRulesetLabelLabelKey = FirewallRulesetLabelKey
+
+// DeleteFirewallRulesetLabelRulesetUuid The unique identifier for the server.
+type DeleteFirewallRulesetLabelRulesetUuid = FirewallRulesetServerUuid
+
+// DeleteFirewallRulesetRuleRuleId The unique identifier for the server.
+type DeleteFirewallRulesetRuleRuleId = FirewallRulesetServerUuid
+
+// DeleteFirewallRulesetRuleRulesetUuid The unique identifier for the server.
+type DeleteFirewallRulesetRuleRulesetUuid = FirewallRulesetServerUuid
+
+// DeleteFirewallRulesetRulesetUuid The unique identifier for the server.
+type DeleteFirewallRulesetRulesetUuid = FirewallRulesetServerUuid
+
+// FirewallRulesetAdminListServerFirewallRulesServerUuid The unique identifier for the server.
+type FirewallRulesetAdminListServerFirewallRulesServerUuid = FirewallRulesetServerUuid
+
+// FirewallRulesetCreateMultipleServerFirewallRulesServerUuid The unique identifier for the server.
+type FirewallRulesetCreateMultipleServerFirewallRulesServerUuid = FirewallRulesetServerUuid
+
+// FirewallRulesetCreateServerFirewallRuleServerUuid The unique identifier for the server.
+type FirewallRulesetCreateServerFirewallRuleServerUuid = FirewallRulesetServerUuid
+
+// FirewallRulesetDeleteServerFirewallRulePosition The server firewall rule position.
+type FirewallRulesetDeleteServerFirewallRulePosition = FirewallRulesetServerFirewallRulePosition
+
+// FirewallRulesetDeleteServerFirewallRuleServerUuid The unique identifier for the server.
+type FirewallRulesetDeleteServerFirewallRuleServerUuid = FirewallRulesetServerUuid
+
+// FirewallRulesetGetServerFirewallRulePosition The server firewall rule position.
+type FirewallRulesetGetServerFirewallRulePosition = FirewallRulesetServerFirewallRulePosition
+
+// FirewallRulesetGetServerFirewallRuleServerUuid The unique identifier for the server.
+type FirewallRulesetGetServerFirewallRuleServerUuid = FirewallRulesetServerUuid
+
+// FirewallRulesetListServerFirewallRuleLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
+type FirewallRulesetListServerFirewallRuleLimit = FirewallRulesetQueryParamLimit
+
+// FirewallRulesetListServerFirewallRuleOffset Schema for a query parameter specifying the offset for pagination.
+type FirewallRulesetListServerFirewallRuleOffset = FirewallRulesetQueryParamOffset
+
+// FirewallRulesetListServerFirewallRuleServerUuid The unique identifier for the server.
+type FirewallRulesetListServerFirewallRuleServerUuid = FirewallRulesetServerUuid
+
+// FirewallRulesetListServerFirewallRuleSort Schema for a query parameter specifying the sort field.
+type FirewallRulesetListServerFirewallRuleSort = FirewallRulesetQueryParamSort
+
+// GetFirewallRulesetLabelLabelKey The key of a label.
+type GetFirewallRulesetLabelLabelKey = FirewallRulesetLabelKey
+
+// GetFirewallRulesetLabelRulesetUuid The unique identifier for the server.
+type GetFirewallRulesetLabelRulesetUuid = FirewallRulesetServerUuid
+
+// GetFirewallRulesetRuleRuleId The unique identifier for the server.
+type GetFirewallRulesetRuleRuleId = FirewallRulesetServerUuid
+
+// GetFirewallRulesetRuleRulesetUuid The unique identifier for the server.
+type GetFirewallRulesetRuleRulesetUuid = FirewallRulesetServerUuid
+
+// GetFirewallRulesetRulesetUuid The unique identifier for the server.
+type GetFirewallRulesetRulesetUuid = FirewallRulesetServerUuid
 
 // KubernetesNameParameter Name
 type KubernetesNameParameter = KubernetesName
@@ -1115,1214 +1911,1484 @@ type KubernetesNodeNameParameter = KubernetesNodeName
 // KubernetesUuidParameter UUID
 type KubernetesUuidParameter = KubernetesUuid
 
-// ObjectStorage2AssumeRolePolicyRoleName A resource name.
-type ObjectStorage2AssumeRolePolicyRoleName = ObjectStorage2Name
+// ListFirewallRulesetLabelsRulesetUuid The unique identifier for the server.
+type ListFirewallRulesetLabelsRulesetUuid = FirewallRulesetServerUuid
 
-// ObjectStorage2AssumeRolePolicyServiceUuid The unique identifier for the service.
-type ObjectStorage2AssumeRolePolicyServiceUuid = ObjectStorage2ServiceUUID
+// ListFirewallRulesetRulesLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
+type ListFirewallRulesetRulesLimit = FirewallRulesetQueryParamLimit
 
-// ObjectStorage2AttachCustomDomainServiceUuid The unique identifier for the service.
-type ObjectStorage2AttachCustomDomainServiceUuid = ObjectStorage2ServiceUUID
+// ListFirewallRulesetRulesOffset Schema for a query parameter specifying the offset for pagination.
+type ListFirewallRulesetRulesOffset = FirewallRulesetQueryParamOffset
 
-// ObjectStorage2AttachIAMGroupPolicyGroupName A resource name.
-type ObjectStorage2AttachIAMGroupPolicyGroupName = ObjectStorage2Name
+// ListFirewallRulesetRulesRulesetUuid The unique identifier for the server.
+type ListFirewallRulesetRulesRulesetUuid = FirewallRulesetServerUuid
 
-// ObjectStorage2AttachIAMGroupPolicyServiceUuid The unique identifier for the service.
-type ObjectStorage2AttachIAMGroupPolicyServiceUuid = ObjectStorage2ServiceUUID
+// ListFirewallRulesetRulesSort Schema for a query parameter specifying the sort field.
+type ListFirewallRulesetRulesSort = FirewallRulesetQueryParamSort
 
-// ObjectStorage2AttachPolicyToRoleRoleName A resource name.
-type ObjectStorage2AttachPolicyToRoleRoleName = ObjectStorage2Name
+// ListFirewallRulesetsLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
+type ListFirewallRulesetsLimit = FirewallRulesetQueryParamLimit
 
-// ObjectStorage2AttachPolicyToRoleServiceUuid The unique identifier for the service.
-type ObjectStorage2AttachPolicyToRoleServiceUuid = ObjectStorage2ServiceUUID
+// ListFirewallRulesetsOffset Schema for a query parameter specifying the offset for pagination.
+type ListFirewallRulesetsOffset = FirewallRulesetQueryParamOffset
 
-// ObjectStorage2AttachUserPolicyServiceUuid The unique identifier for the service.
-type ObjectStorage2AttachUserPolicyServiceUuid = ObjectStorage2ServiceUUID
+// ListFirewallRulesetsSort Schema for a query parameter specifying the sort field.
+type ListFirewallRulesetsSort = FirewallRulesetQueryParamSort
 
-// ObjectStorage2AttachUserPolicyUsername A resource name.
-type ObjectStorage2AttachUserPolicyUsername = ObjectStorage2Name
+// ModifyFirewallRulesetLabelLabelKey The key of a label.
+type ModifyFirewallRulesetLabelLabelKey = FirewallRulesetLabelKey
 
-// ObjectStorage2AttachUserToGroupGroupName A resource name.
-type ObjectStorage2AttachUserToGroupGroupName = ObjectStorage2Name
+// ModifyFirewallRulesetLabelRulesetUuid The unique identifier for the server.
+type ModifyFirewallRulesetLabelRulesetUuid = FirewallRulesetServerUuid
 
-// ObjectStorage2AttachUserToGroupServiceUuid The unique identifier for the service.
-type ObjectStorage2AttachUserToGroupServiceUuid = ObjectStorage2ServiceUUID
+// ModifyFirewallRulesetRuleRuleId The unique identifier for the server.
+type ModifyFirewallRulesetRuleRuleId = FirewallRulesetServerUuid
 
-// ObjectStorage2AttachUserToGroupUsername A resource name.
-type ObjectStorage2AttachUserToGroupUsername = ObjectStorage2Name
+// ModifyFirewallRulesetRuleRulesetUuid The unique identifier for the server.
+type ModifyFirewallRulesetRuleRulesetUuid = FirewallRulesetServerUuid
 
-// ObjectStorage2CreateAccessKeyServiceUuid The unique identifier for the service.
-type ObjectStorage2CreateAccessKeyServiceUuid = ObjectStorage2ServiceUUID
+// ModifyFirewallRulesetRulesetUuid The unique identifier for the server.
+type ModifyFirewallRulesetRulesetUuid = FirewallRulesetServerUuid
 
-// ObjectStorage2CreateAccessKeyUsername A resource name.
-type ObjectStorage2CreateAccessKeyUsername = ObjectStorage2Name
+// ObjectStorage2AssumeObjectStorageRolePolicyRoleName A resource name.
+type ObjectStorage2AssumeObjectStorageRolePolicyRoleName = ObjectStorage2Name
 
-// ObjectStorage2CreateBucketServiceUuid The unique identifier for the service.
-type ObjectStorage2CreateBucketServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2AssumeObjectStorageRolePolicyServiceUuid The unique identifier for the service.
+type ObjectStorage2AssumeObjectStorageRolePolicyServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2CreateGroupInlinePolicyGroupName A resource name.
-type ObjectStorage2CreateGroupInlinePolicyGroupName = ObjectStorage2Name
+// ObjectStorage2AttachObjectStorageCustomDomainServiceUuid The unique identifier for the service.
+type ObjectStorage2AttachObjectStorageCustomDomainServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2CreateGroupInlinePolicyServiceUuid The unique identifier for the service.
-type ObjectStorage2CreateGroupInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2AttachObjectStorageIAMGroupPolicyGroupName A resource name.
+type ObjectStorage2AttachObjectStorageIAMGroupPolicyGroupName = ObjectStorage2Name
 
-// ObjectStorage2CreateGroupServiceUuid The unique identifier for the service.
-type ObjectStorage2CreateGroupServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2AttachObjectStorageIAMGroupPolicyServiceUuid The unique identifier for the service.
+type ObjectStorage2AttachObjectStorageIAMGroupPolicyServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2CreateLabelServiceUuid The unique identifier for the service.
-type ObjectStorage2CreateLabelServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2AttachObjectStoragePolicyToRoleRoleName A resource name.
+type ObjectStorage2AttachObjectStoragePolicyToRoleRoleName = ObjectStorage2Name
 
-// ObjectStorage2CreateNetworkServiceUuid The unique identifier for the service.
-type ObjectStorage2CreateNetworkServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2AttachObjectStoragePolicyToRoleServiceUuid The unique identifier for the service.
+type ObjectStorage2AttachObjectStoragePolicyToRoleServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2CreatePolicyServiceUuid The unique identifier for the service.
-type ObjectStorage2CreatePolicyServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2AttachObjectStorageUserPolicyServiceUuid The unique identifier for the service.
+type ObjectStorage2AttachObjectStorageUserPolicyServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2CreatePolicyVersionPolicyName A resource name.
-type ObjectStorage2CreatePolicyVersionPolicyName = ObjectStorage2Name
+// ObjectStorage2AttachObjectStorageUserPolicyUsername A resource name.
+type ObjectStorage2AttachObjectStorageUserPolicyUsername = ObjectStorage2Name
 
-// ObjectStorage2CreatePolicyVersionServiceUuid The unique identifier for the service.
-type ObjectStorage2CreatePolicyVersionServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2AttachObjectStorageUserToGroupGroupName A resource name.
+type ObjectStorage2AttachObjectStorageUserToGroupGroupName = ObjectStorage2Name
 
-// ObjectStorage2CreateRoleInlinePolicyRoleName A resource name.
-type ObjectStorage2CreateRoleInlinePolicyRoleName = ObjectStorage2Name
+// ObjectStorage2AttachObjectStorageUserToGroupServiceUuid The unique identifier for the service.
+type ObjectStorage2AttachObjectStorageUserToGroupServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2CreateRoleInlinePolicyServiceUuid The unique identifier for the service.
-type ObjectStorage2CreateRoleInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2AttachObjectStorageUserToGroupUsername A resource name.
+type ObjectStorage2AttachObjectStorageUserToGroupUsername = ObjectStorage2Name
 
-// ObjectStorage2CreateRolePermissionsBoundaryRoleName A resource name.
-type ObjectStorage2CreateRolePermissionsBoundaryRoleName = ObjectStorage2Name
+// ObjectStorage2CreateObjectStorageAccessKeyServiceUuid The unique identifier for the service.
+type ObjectStorage2CreateObjectStorageAccessKeyServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2CreateRolePermissionsBoundaryServiceUuid The unique identifier for the service.
-type ObjectStorage2CreateRolePermissionsBoundaryServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2CreateObjectStorageAccessKeyUsername A resource name.
+type ObjectStorage2CreateObjectStorageAccessKeyUsername = ObjectStorage2Name
 
-// ObjectStorage2CreateRoleServiceUuid The unique identifier for the service.
-type ObjectStorage2CreateRoleServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2CreateObjectStorageBucketServiceUuid The unique identifier for the service.
+type ObjectStorage2CreateObjectStorageBucketServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2CreateStaticWebsiteServiceUuid The unique identifier for the service.
-type ObjectStorage2CreateStaticWebsiteServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2CreateObjectStorageGroupInlinePolicyGroupName A resource name.
+type ObjectStorage2CreateObjectStorageGroupInlinePolicyGroupName = ObjectStorage2Name
 
-// ObjectStorage2CreateUserInlinePolicyServiceUuid The unique identifier for the service.
-type ObjectStorage2CreateUserInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2CreateObjectStorageGroupInlinePolicyServiceUuid The unique identifier for the service.
+type ObjectStorage2CreateObjectStorageGroupInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2CreateUserInlinePolicyUsername A resource name.
-type ObjectStorage2CreateUserInlinePolicyUsername = ObjectStorage2Name
+// ObjectStorage2CreateObjectStorageGroupServiceUuid The unique identifier for the service.
+type ObjectStorage2CreateObjectStorageGroupServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2CreateUserPermissionsBoundaryServiceUuid The unique identifier for the service.
-type ObjectStorage2CreateUserPermissionsBoundaryServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2CreateObjectStorageLabelServiceUuid The unique identifier for the service.
+type ObjectStorage2CreateObjectStorageLabelServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2CreateUserPermissionsBoundaryUsername A resource name.
-type ObjectStorage2CreateUserPermissionsBoundaryUsername = ObjectStorage2Name
+// ObjectStorage2CreateObjectStorageNetworkServiceUuid The unique identifier for the service.
+type ObjectStorage2CreateObjectStorageNetworkServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2CreateUserServiceUuid The unique identifier for the service.
-type ObjectStorage2CreateUserServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2CreateObjectStoragePolicyServiceUuid The unique identifier for the service.
+type ObjectStorage2CreateObjectStoragePolicyServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2DeleteAccessKeyAccessKeyId The public identifier for an access key.
-type ObjectStorage2DeleteAccessKeyAccessKeyId = ObjectStorage2AccessKeyID
+// ObjectStorage2CreateObjectStoragePolicyVersionPolicyName A resource name.
+type ObjectStorage2CreateObjectStoragePolicyVersionPolicyName = ObjectStorage2Name
 
-// ObjectStorage2DeleteAccessKeyServiceUuid The unique identifier for the service.
-type ObjectStorage2DeleteAccessKeyServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2CreateObjectStoragePolicyVersionServiceUuid The unique identifier for the service.
+type ObjectStorage2CreateObjectStoragePolicyVersionServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2DeleteAccessKeyUsername A resource name.
-type ObjectStorage2DeleteAccessKeyUsername = ObjectStorage2Name
+// ObjectStorage2CreateObjectStorageRoleInlinePolicyRoleName A resource name.
+type ObjectStorage2CreateObjectStorageRoleInlinePolicyRoleName = ObjectStorage2Name
 
-// ObjectStorage2DeleteBucketBucketName A resource name.
-type ObjectStorage2DeleteBucketBucketName = ObjectStorage2Name
+// ObjectStorage2CreateObjectStorageRoleInlinePolicyServiceUuid The unique identifier for the service.
+type ObjectStorage2CreateObjectStorageRoleInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2DeleteBucketServiceUuid The unique identifier for the service.
-type ObjectStorage2DeleteBucketServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2CreateObjectStorageRolePermissionsBoundaryRoleName A resource name.
+type ObjectStorage2CreateObjectStorageRolePermissionsBoundaryRoleName = ObjectStorage2Name
 
-// ObjectStorage2DeleteCustomDomainCustomDomainName A valid hostname for the custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
-type ObjectStorage2DeleteCustomDomainCustomDomainName = ObjectStorage2CustomDomainName
+// ObjectStorage2CreateObjectStorageRolePermissionsBoundaryServiceUuid The unique identifier for the service.
+type ObjectStorage2CreateObjectStorageRolePermissionsBoundaryServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2DeleteCustomDomainServiceUuid The unique identifier for the service.
-type ObjectStorage2DeleteCustomDomainServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2CreateObjectStorageRoleServiceUuid The unique identifier for the service.
+type ObjectStorage2CreateObjectStorageRoleServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2DeleteGroupGroupName A resource name.
-type ObjectStorage2DeleteGroupGroupName = ObjectStorage2Name
+// ObjectStorage2CreateObjectStorageStaticWebsiteServiceUuid The unique identifier for the service.
+type ObjectStorage2CreateObjectStorageStaticWebsiteServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2DeleteGroupInlinePolicyGroupName A resource name.
-type ObjectStorage2DeleteGroupInlinePolicyGroupName = ObjectStorage2Name
+// ObjectStorage2CreateObjectStorageUserInlinePolicyServiceUuid The unique identifier for the service.
+type ObjectStorage2CreateObjectStorageUserInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2DeleteGroupInlinePolicyGroupPolicyName A resource name.
-type ObjectStorage2DeleteGroupInlinePolicyGroupPolicyName = ObjectStorage2Name
+// ObjectStorage2CreateObjectStorageUserInlinePolicyUsername A resource name.
+type ObjectStorage2CreateObjectStorageUserInlinePolicyUsername = ObjectStorage2Name
 
-// ObjectStorage2DeleteGroupInlinePolicyServiceUuid The unique identifier for the service.
-type ObjectStorage2DeleteGroupInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2CreateObjectStorageUserPermissionsBoundaryServiceUuid The unique identifier for the service.
+type ObjectStorage2CreateObjectStorageUserPermissionsBoundaryServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2DeleteGroupServiceUuid The unique identifier for the service.
-type ObjectStorage2DeleteGroupServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2CreateObjectStorageUserPermissionsBoundaryUsername A resource name.
+type ObjectStorage2CreateObjectStorageUserPermissionsBoundaryUsername = ObjectStorage2Name
 
-// ObjectStorage2DeleteLabelLabelKey The key of a label.
-type ObjectStorage2DeleteLabelLabelKey = ObjectStorage2LabelKey
+// ObjectStorage2CreateObjectStorageUserServiceUuid The unique identifier for the service.
+type ObjectStorage2CreateObjectStorageUserServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2DeleteLabelServiceUuid The unique identifier for the service.
-type ObjectStorage2DeleteLabelServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2DeleteObjectStorageAccessKeyAccessKeyId The public identifier for an access key.
+type ObjectStorage2DeleteObjectStorageAccessKeyAccessKeyId = ObjectStorage2AccessKeyID
 
-// ObjectStorage2DeleteNetworkNetworkName A resource name.
-type ObjectStorage2DeleteNetworkNetworkName = ObjectStorage2Name
+// ObjectStorage2DeleteObjectStorageAccessKeyServiceUuid The unique identifier for the service.
+type ObjectStorage2DeleteObjectStorageAccessKeyServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2DeleteNetworkServiceUuid The unique identifier for the service.
-type ObjectStorage2DeleteNetworkServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2DeleteObjectStorageAccessKeyUsername A resource name.
+type ObjectStorage2DeleteObjectStorageAccessKeyUsername = ObjectStorage2Name
 
-// ObjectStorage2DeletePolicyPolicyName A resource name.
-type ObjectStorage2DeletePolicyPolicyName = ObjectStorage2Name
+// ObjectStorage2DeleteObjectStorageBucketBucketName A resource name.
+type ObjectStorage2DeleteObjectStorageBucketBucketName = ObjectStorage2Name
 
-// ObjectStorage2DeletePolicyServiceUuid The unique identifier for the service.
-type ObjectStorage2DeletePolicyServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2DeleteObjectStorageBucketServiceUuid The unique identifier for the service.
+type ObjectStorage2DeleteObjectStorageBucketServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2DeletePolicyVersionPolicyName A resource name.
-type ObjectStorage2DeletePolicyVersionPolicyName = ObjectStorage2Name
+// ObjectStorage2DeleteObjectStorageCustomDomainCustomDomainName A valid hostname for the custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
+type ObjectStorage2DeleteObjectStorageCustomDomainCustomDomainName = ObjectStorage2CustomDomainName
 
-// ObjectStorage2DeletePolicyVersionPolicyVersion The version identifier of a policy (e.g., v1, v2).
-type ObjectStorage2DeletePolicyVersionPolicyVersion = ObjectStorage2PolicyVersionID
+// ObjectStorage2DeleteObjectStorageCustomDomainServiceUuid The unique identifier for the service.
+type ObjectStorage2DeleteObjectStorageCustomDomainServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2DeletePolicyVersionServiceUuid The unique identifier for the service.
-type ObjectStorage2DeletePolicyVersionServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2DeleteObjectStorageForce Schema for a query parameter specifying whether to force an operation.
+type ObjectStorage2DeleteObjectStorageForce = ObjectStorage2QueryParamForce
 
-// ObjectStorage2DeleteRoleInlinePolicyRoleName A resource name.
-type ObjectStorage2DeleteRoleInlinePolicyRoleName = ObjectStorage2Name
+// ObjectStorage2DeleteObjectStorageGroupGroupName A resource name.
+type ObjectStorage2DeleteObjectStorageGroupGroupName = ObjectStorage2Name
 
-// ObjectStorage2DeleteRoleInlinePolicyRolePolicyName A resource name.
-type ObjectStorage2DeleteRoleInlinePolicyRolePolicyName = ObjectStorage2Name
+// ObjectStorage2DeleteObjectStorageGroupInlinePolicyGroupName A resource name.
+type ObjectStorage2DeleteObjectStorageGroupInlinePolicyGroupName = ObjectStorage2Name
 
-// ObjectStorage2DeleteRoleInlinePolicyServiceUuid The unique identifier for the service.
-type ObjectStorage2DeleteRoleInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2DeleteObjectStorageGroupInlinePolicyGroupPolicyName A resource name.
+type ObjectStorage2DeleteObjectStorageGroupInlinePolicyGroupPolicyName = ObjectStorage2Name
 
-// ObjectStorage2DeleteRolePermissionsBoundaryRoleName A resource name.
-type ObjectStorage2DeleteRolePermissionsBoundaryRoleName = ObjectStorage2Name
+// ObjectStorage2DeleteObjectStorageGroupInlinePolicyServiceUuid The unique identifier for the service.
+type ObjectStorage2DeleteObjectStorageGroupInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2DeleteRolePermissionsBoundaryServiceUuid The unique identifier for the service.
-type ObjectStorage2DeleteRolePermissionsBoundaryServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2DeleteObjectStorageGroupServiceUuid The unique identifier for the service.
+type ObjectStorage2DeleteObjectStorageGroupServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2DeleteRoleRoleName A resource name.
-type ObjectStorage2DeleteRoleRoleName = ObjectStorage2Name
+// ObjectStorage2DeleteObjectStorageLabelLabelKey The key of a label.
+type ObjectStorage2DeleteObjectStorageLabelLabelKey = ObjectStorage2LabelKey
 
-// ObjectStorage2DeleteRoleServiceUuid The unique identifier for the service.
-type ObjectStorage2DeleteRoleServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2DeleteObjectStorageLabelServiceUuid The unique identifier for the service.
+type ObjectStorage2DeleteObjectStorageLabelServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2DeleteRoleTagRoleName A resource name.
-type ObjectStorage2DeleteRoleTagRoleName = ObjectStorage2Name
+// ObjectStorage2DeleteObjectStorageNetworkNetworkName A resource name.
+type ObjectStorage2DeleteObjectStorageNetworkNetworkName = ObjectStorage2Name
 
-// ObjectStorage2DeleteRoleTagRoleTagKey The key of a tag.
-type ObjectStorage2DeleteRoleTagRoleTagKey = ObjectStorage2TagKey
+// ObjectStorage2DeleteObjectStorageNetworkServiceUuid The unique identifier for the service.
+type ObjectStorage2DeleteObjectStorageNetworkServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2DeleteRoleTagServiceUuid The unique identifier for the service.
-type ObjectStorage2DeleteRoleTagServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2DeleteObjectStoragePolicyPolicyName A resource name.
+type ObjectStorage2DeleteObjectStoragePolicyPolicyName = ObjectStorage2Name
 
-// ObjectStorage2DeleteServiceForce Schema for a query parameter specifying whether to force an operation.
-type ObjectStorage2DeleteServiceForce = ObjectStorage2QueryParamForce
+// ObjectStorage2DeleteObjectStoragePolicyServiceUuid The unique identifier for the service.
+type ObjectStorage2DeleteObjectStoragePolicyServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2DeleteServiceServiceUuid The unique identifier for the service.
-type ObjectStorage2DeleteServiceServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2DeleteObjectStoragePolicyVersionPolicyName A resource name.
+type ObjectStorage2DeleteObjectStoragePolicyVersionPolicyName = ObjectStorage2Name
 
-// ObjectStorage2DeleteStaticWebsiteCustomDomainName A valid hostname for the custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
-type ObjectStorage2DeleteStaticWebsiteCustomDomainName = ObjectStorage2CustomDomainName
+// ObjectStorage2DeleteObjectStoragePolicyVersionPolicyVersion The version identifier of a policy (e.g., v1, v2).
+type ObjectStorage2DeleteObjectStoragePolicyVersionPolicyVersion = ObjectStorage2PolicyVersionID
 
-// ObjectStorage2DeleteStaticWebsiteServiceUuid The unique identifier for the service.
-type ObjectStorage2DeleteStaticWebsiteServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2DeleteObjectStoragePolicyVersionServiceUuid The unique identifier for the service.
+type ObjectStorage2DeleteObjectStoragePolicyVersionServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2DeleteUserInlinePolicyServiceUuid The unique identifier for the service.
-type ObjectStorage2DeleteUserInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2DeleteObjectStorageRoleInlinePolicyRoleName A resource name.
+type ObjectStorage2DeleteObjectStorageRoleInlinePolicyRoleName = ObjectStorage2Name
 
-// ObjectStorage2DeleteUserInlinePolicyUserPolicyName A resource name.
-type ObjectStorage2DeleteUserInlinePolicyUserPolicyName = ObjectStorage2Name
+// ObjectStorage2DeleteObjectStorageRoleInlinePolicyRolePolicyName A resource name.
+type ObjectStorage2DeleteObjectStorageRoleInlinePolicyRolePolicyName = ObjectStorage2Name
 
-// ObjectStorage2DeleteUserInlinePolicyUsername A resource name.
-type ObjectStorage2DeleteUserInlinePolicyUsername = ObjectStorage2Name
+// ObjectStorage2DeleteObjectStorageRoleInlinePolicyServiceUuid The unique identifier for the service.
+type ObjectStorage2DeleteObjectStorageRoleInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2DeleteUserPermissionsBoundaryServiceUuid The unique identifier for the service.
-type ObjectStorage2DeleteUserPermissionsBoundaryServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2DeleteObjectStorageRolePermissionsBoundaryRoleName A resource name.
+type ObjectStorage2DeleteObjectStorageRolePermissionsBoundaryRoleName = ObjectStorage2Name
 
-// ObjectStorage2DeleteUserPermissionsBoundaryUsername A resource name.
-type ObjectStorage2DeleteUserPermissionsBoundaryUsername = ObjectStorage2Name
+// ObjectStorage2DeleteObjectStorageRolePermissionsBoundaryServiceUuid The unique identifier for the service.
+type ObjectStorage2DeleteObjectStorageRolePermissionsBoundaryServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2DeleteUserServiceUuid The unique identifier for the service.
-type ObjectStorage2DeleteUserServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2DeleteObjectStorageRoleRoleName A resource name.
+type ObjectStorage2DeleteObjectStorageRoleRoleName = ObjectStorage2Name
 
-// ObjectStorage2DeleteUserTagServiceUuid The unique identifier for the service.
-type ObjectStorage2DeleteUserTagServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2DeleteObjectStorageRoleServiceUuid The unique identifier for the service.
+type ObjectStorage2DeleteObjectStorageRoleServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2DeleteUserTagUserTagKey The key of a tag.
-type ObjectStorage2DeleteUserTagUserTagKey = ObjectStorage2TagKey
+// ObjectStorage2DeleteObjectStorageRoleTagRoleName A resource name.
+type ObjectStorage2DeleteObjectStorageRoleTagRoleName = ObjectStorage2Name
 
-// ObjectStorage2DeleteUserTagUsername A resource name.
-type ObjectStorage2DeleteUserTagUsername = ObjectStorage2Name
+// ObjectStorage2DeleteObjectStorageRoleTagRoleTagKey The key of a tag.
+type ObjectStorage2DeleteObjectStorageRoleTagRoleTagKey = ObjectStorage2TagKey
 
-// ObjectStorage2DeleteUserUsername A resource name.
-type ObjectStorage2DeleteUserUsername = ObjectStorage2Name
+// ObjectStorage2DeleteObjectStorageRoleTagServiceUuid The unique identifier for the service.
+type ObjectStorage2DeleteObjectStorageRoleTagServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2DetachIAMGroupPolicyGroupName A resource name.
-type ObjectStorage2DetachIAMGroupPolicyGroupName = ObjectStorage2Name
+// ObjectStorage2DeleteObjectStorageServiceUuid The unique identifier for the service.
+type ObjectStorage2DeleteObjectStorageServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2DetachIAMGroupPolicyPolicyName A resource name.
-type ObjectStorage2DetachIAMGroupPolicyPolicyName = ObjectStorage2Name
+// ObjectStorage2DeleteObjectStorageStaticWebsiteCustomDomainName A valid hostname for the custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
+type ObjectStorage2DeleteObjectStorageStaticWebsiteCustomDomainName = ObjectStorage2CustomDomainName
 
-// ObjectStorage2DetachIAMGroupPolicyServiceUuid The unique identifier for the service.
-type ObjectStorage2DetachIAMGroupPolicyServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2DeleteObjectStorageStaticWebsiteServiceUuid The unique identifier for the service.
+type ObjectStorage2DeleteObjectStorageStaticWebsiteServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2DetachPolicyFromRoleRoleName A resource name.
-type ObjectStorage2DetachPolicyFromRoleRoleName = ObjectStorage2Name
+// ObjectStorage2DeleteObjectStorageUserInlinePolicyServiceUuid The unique identifier for the service.
+type ObjectStorage2DeleteObjectStorageUserInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2DetachPolicyFromRoleRolePolicyName A resource name.
-type ObjectStorage2DetachPolicyFromRoleRolePolicyName = ObjectStorage2Name
+// ObjectStorage2DeleteObjectStorageUserInlinePolicyUserPolicyName A resource name.
+type ObjectStorage2DeleteObjectStorageUserInlinePolicyUserPolicyName = ObjectStorage2Name
 
-// ObjectStorage2DetachPolicyFromRoleServiceUuid The unique identifier for the service.
-type ObjectStorage2DetachPolicyFromRoleServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2DeleteObjectStorageUserInlinePolicyUsername A resource name.
+type ObjectStorage2DeleteObjectStorageUserInlinePolicyUsername = ObjectStorage2Name
 
-// ObjectStorage2DetachUserPolicyNestedName A resource name.
-type ObjectStorage2DetachUserPolicyNestedName = ObjectStorage2Name
+// ObjectStorage2DeleteObjectStorageUserPermissionsBoundaryServiceUuid The unique identifier for the service.
+type ObjectStorage2DeleteObjectStorageUserPermissionsBoundaryServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2DetachUserPolicyServiceUuid The unique identifier for the service.
-type ObjectStorage2DetachUserPolicyServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2DeleteObjectStorageUserPermissionsBoundaryUsername A resource name.
+type ObjectStorage2DeleteObjectStorageUserPermissionsBoundaryUsername = ObjectStorage2Name
 
-// ObjectStorage2DetachUserPolicyUsername A resource name.
-type ObjectStorage2DetachUserPolicyUsername = ObjectStorage2Name
+// ObjectStorage2DeleteObjectStorageUserServiceUuid The unique identifier for the service.
+type ObjectStorage2DeleteObjectStorageUserServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2GetAccessKeyDetailsAccessKeyId The public identifier for an access key.
-type ObjectStorage2GetAccessKeyDetailsAccessKeyId = ObjectStorage2AccessKeyID
+// ObjectStorage2DeleteObjectStorageUserTagServiceUuid The unique identifier for the service.
+type ObjectStorage2DeleteObjectStorageUserTagServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2GetAccessKeyDetailsServiceUuid The unique identifier for the service.
-type ObjectStorage2GetAccessKeyDetailsServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2DeleteObjectStorageUserTagUserTagKey The key of a tag.
+type ObjectStorage2DeleteObjectStorageUserTagUserTagKey = ObjectStorage2TagKey
 
-// ObjectStorage2GetAccessKeyDetailsUsername A resource name.
-type ObjectStorage2GetAccessKeyDetailsUsername = ObjectStorage2Name
+// ObjectStorage2DeleteObjectStorageUserTagUsername A resource name.
+type ObjectStorage2DeleteObjectStorageUserTagUsername = ObjectStorage2Name
 
-// ObjectStorage2GetCustomDomainDetailsCustomDomainName A valid hostname for the custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
-type ObjectStorage2GetCustomDomainDetailsCustomDomainName = ObjectStorage2CustomDomainName
+// ObjectStorage2DeleteObjectStorageUserUsername A resource name.
+type ObjectStorage2DeleteObjectStorageUserUsername = ObjectStorage2Name
 
-// ObjectStorage2GetCustomDomainDetailsServiceUuid The unique identifier for the service.
-type ObjectStorage2GetCustomDomainDetailsServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2DetachObjectStorageIAMGroupPolicyGroupName A resource name.
+type ObjectStorage2DetachObjectStorageIAMGroupPolicyGroupName = ObjectStorage2Name
 
-// ObjectStorage2GetGroupGroupName A resource name.
-type ObjectStorage2GetGroupGroupName = ObjectStorage2Name
+// ObjectStorage2DetachObjectStorageIAMGroupPolicyPolicyName A resource name.
+type ObjectStorage2DetachObjectStorageIAMGroupPolicyPolicyName = ObjectStorage2Name
 
-// ObjectStorage2GetGroupInlinePolicyGroupName A resource name.
-type ObjectStorage2GetGroupInlinePolicyGroupName = ObjectStorage2Name
+// ObjectStorage2DetachObjectStorageIAMGroupPolicyServiceUuid The unique identifier for the service.
+type ObjectStorage2DetachObjectStorageIAMGroupPolicyServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2GetGroupInlinePolicyGroupPolicyName A resource name.
-type ObjectStorage2GetGroupInlinePolicyGroupPolicyName = ObjectStorage2Name
+// ObjectStorage2DetachObjectStoragePolicyFromRoleRoleName A resource name.
+type ObjectStorage2DetachObjectStoragePolicyFromRoleRoleName = ObjectStorage2Name
 
-// ObjectStorage2GetGroupInlinePolicyServiceUuid The unique identifier for the service.
-type ObjectStorage2GetGroupInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2DetachObjectStoragePolicyFromRoleRolePolicyName A resource name.
+type ObjectStorage2DetachObjectStoragePolicyFromRoleRolePolicyName = ObjectStorage2Name
 
-// ObjectStorage2GetGroupServiceUuid The unique identifier for the service.
-type ObjectStorage2GetGroupServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2DetachObjectStoragePolicyFromRoleServiceUuid The unique identifier for the service.
+type ObjectStorage2DetachObjectStoragePolicyFromRoleServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2GetLabelDetailsLabelKey The key of a label.
-type ObjectStorage2GetLabelDetailsLabelKey = ObjectStorage2LabelKey
+// ObjectStorage2DetachObjectStorageUserPolicyNestedName A resource name.
+type ObjectStorage2DetachObjectStorageUserPolicyNestedName = ObjectStorage2Name
 
-// ObjectStorage2GetLabelDetailsServiceUuid The unique identifier for the service.
-type ObjectStorage2GetLabelDetailsServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2DetachObjectStorageUserPolicyServiceUuid The unique identifier for the service.
+type ObjectStorage2DetachObjectStorageUserPolicyServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2GetNetworkNetworkName A resource name.
-type ObjectStorage2GetNetworkNetworkName = ObjectStorage2Name
+// ObjectStorage2DetachObjectStorageUserPolicyUsername A resource name.
+type ObjectStorage2DetachObjectStorageUserPolicyUsername = ObjectStorage2Name
 
-// ObjectStorage2GetNetworkServiceUuid The unique identifier for the service.
-type ObjectStorage2GetNetworkServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2GetObjectStorageAccessKeyDetailsAccessKeyId The public identifier for an access key.
+type ObjectStorage2GetObjectStorageAccessKeyDetailsAccessKeyId = ObjectStorage2AccessKeyID
 
-// ObjectStorage2GetPolicyDetailsPolicyName A resource name.
-type ObjectStorage2GetPolicyDetailsPolicyName = ObjectStorage2Name
+// ObjectStorage2GetObjectStorageAccessKeyDetailsServiceUuid The unique identifier for the service.
+type ObjectStorage2GetObjectStorageAccessKeyDetailsServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2GetPolicyDetailsServiceUuid The unique identifier for the service.
-type ObjectStorage2GetPolicyDetailsServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2GetObjectStorageAccessKeyDetailsUsername A resource name.
+type ObjectStorage2GetObjectStorageAccessKeyDetailsUsername = ObjectStorage2Name
 
-// ObjectStorage2GetPolicyVersionPolicyName A resource name.
-type ObjectStorage2GetPolicyVersionPolicyName = ObjectStorage2Name
+// ObjectStorage2GetObjectStorageCustomDomainCustomDomainName A valid hostname for the custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
+type ObjectStorage2GetObjectStorageCustomDomainCustomDomainName = ObjectStorage2CustomDomainName
 
-// ObjectStorage2GetPolicyVersionPolicyVersion The version identifier of a policy (e.g., v1, v2).
-type ObjectStorage2GetPolicyVersionPolicyVersion = ObjectStorage2PolicyVersionID
+// ObjectStorage2GetObjectStorageCustomDomainServiceUuid The unique identifier for the service.
+type ObjectStorage2GetObjectStorageCustomDomainServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2GetPolicyVersionServiceUuid The unique identifier for the service.
-type ObjectStorage2GetPolicyVersionServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2GetObjectStorageGroupGroupName A resource name.
+type ObjectStorage2GetObjectStorageGroupGroupName = ObjectStorage2Name
 
-// ObjectStorage2GetRegionDetailsRegionName A resource name.
-type ObjectStorage2GetRegionDetailsRegionName = ObjectStorage2Name
+// ObjectStorage2GetObjectStorageGroupInlinePolicyGroupName A resource name.
+type ObjectStorage2GetObjectStorageGroupInlinePolicyGroupName = ObjectStorage2Name
 
-// ObjectStorage2GetRoleInlinePolicyRoleName A resource name.
-type ObjectStorage2GetRoleInlinePolicyRoleName = ObjectStorage2Name
+// ObjectStorage2GetObjectStorageGroupInlinePolicyGroupPolicyName A resource name.
+type ObjectStorage2GetObjectStorageGroupInlinePolicyGroupPolicyName = ObjectStorage2Name
 
-// ObjectStorage2GetRoleInlinePolicyRolePolicyName A resource name.
-type ObjectStorage2GetRoleInlinePolicyRolePolicyName = ObjectStorage2Name
+// ObjectStorage2GetObjectStorageGroupInlinePolicyServiceUuid The unique identifier for the service.
+type ObjectStorage2GetObjectStorageGroupInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2GetRoleInlinePolicyServiceUuid The unique identifier for the service.
-type ObjectStorage2GetRoleInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2GetObjectStorageGroupServiceUuid The unique identifier for the service.
+type ObjectStorage2GetObjectStorageGroupServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2GetRoleRoleName A resource name.
-type ObjectStorage2GetRoleRoleName = ObjectStorage2Name
+// ObjectStorage2GetObjectStorageLabelLabelKey The key of a label.
+type ObjectStorage2GetObjectStorageLabelLabelKey = ObjectStorage2LabelKey
 
-// ObjectStorage2GetRoleServiceUuid The unique identifier for the service.
-type ObjectStorage2GetRoleServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2GetObjectStorageLabelServiceUuid The unique identifier for the service.
+type ObjectStorage2GetObjectStorageLabelServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2GetRoleTagsRoleName A resource name.
-type ObjectStorage2GetRoleTagsRoleName = ObjectStorage2Name
+// ObjectStorage2GetObjectStorageMetricsServiceUuid The unique identifier for the service.
+type ObjectStorage2GetObjectStorageMetricsServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2GetRoleTagsServiceUuid The unique identifier for the service.
-type ObjectStorage2GetRoleTagsServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2GetObjectStorageNetworkNetworkName A resource name.
+type ObjectStorage2GetObjectStorageNetworkNetworkName = ObjectStorage2Name
 
-// ObjectStorage2GetServiceDomainsServiceUuid The unique identifier for the service.
-type ObjectStorage2GetServiceDomainsServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2GetObjectStorageNetworkServiceUuid The unique identifier for the service.
+type ObjectStorage2GetObjectStorageNetworkServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2GetServiceMetricsServiceUuid The unique identifier for the service.
-type ObjectStorage2GetServiceMetricsServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2GetObjectStoragePolicyPolicyName A resource name.
+type ObjectStorage2GetObjectStoragePolicyPolicyName = ObjectStorage2Name
 
-// ObjectStorage2GetServiceServiceUuid The unique identifier for the service.
-type ObjectStorage2GetServiceServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2GetObjectStoragePolicyServiceUuid The unique identifier for the service.
+type ObjectStorage2GetObjectStoragePolicyServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2GetStaticWebsiteCustomDomainName A valid hostname for the custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
-type ObjectStorage2GetStaticWebsiteCustomDomainName = ObjectStorage2CustomDomainName
+// ObjectStorage2GetObjectStoragePolicyVersionPolicyName A resource name.
+type ObjectStorage2GetObjectStoragePolicyVersionPolicyName = ObjectStorage2Name
 
-// ObjectStorage2GetStaticWebsiteServiceUuid The unique identifier for the service.
-type ObjectStorage2GetStaticWebsiteServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2GetObjectStoragePolicyVersionPolicyVersion The version identifier of a policy (e.g., v1, v2).
+type ObjectStorage2GetObjectStoragePolicyVersionPolicyVersion = ObjectStorage2PolicyVersionID
 
-// ObjectStorage2GetUserDetailsServiceUuid The unique identifier for the service.
-type ObjectStorage2GetUserDetailsServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2GetObjectStoragePolicyVersionServiceUuid The unique identifier for the service.
+type ObjectStorage2GetObjectStoragePolicyVersionServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2GetUserDetailsUsername A resource name.
-type ObjectStorage2GetUserDetailsUsername = ObjectStorage2Name
+// ObjectStorage2GetObjectStorageRegionRegionName A resource name.
+type ObjectStorage2GetObjectStorageRegionRegionName = ObjectStorage2Name
 
-// ObjectStorage2GetUserInlinePolicyServiceUuid The unique identifier for the service.
-type ObjectStorage2GetUserInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2GetObjectStorageRoleInlinePolicyRoleName A resource name.
+type ObjectStorage2GetObjectStorageRoleInlinePolicyRoleName = ObjectStorage2Name
 
-// ObjectStorage2GetUserInlinePolicyUserPolicyName A resource name.
-type ObjectStorage2GetUserInlinePolicyUserPolicyName = ObjectStorage2Name
+// ObjectStorage2GetObjectStorageRoleInlinePolicyRolePolicyName A resource name.
+type ObjectStorage2GetObjectStorageRoleInlinePolicyRolePolicyName = ObjectStorage2Name
 
-// ObjectStorage2GetUserInlinePolicyUsername A resource name.
-type ObjectStorage2GetUserInlinePolicyUsername = ObjectStorage2Name
+// ObjectStorage2GetObjectStorageRoleInlinePolicyServiceUuid The unique identifier for the service.
+type ObjectStorage2GetObjectStorageRoleInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2GetUserTagsServiceUuid The unique identifier for the service.
-type ObjectStorage2GetUserTagsServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2GetObjectStorageRoleRoleName A resource name.
+type ObjectStorage2GetObjectStorageRoleRoleName = ObjectStorage2Name
 
-// ObjectStorage2GetUserTagsUsername A resource name.
-type ObjectStorage2GetUserTagsUsername = ObjectStorage2Name
+// ObjectStorage2GetObjectStorageRoleServiceUuid The unique identifier for the service.
+type ObjectStorage2GetObjectStorageRoleServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2IntegrationCreateNetworkServiceUuid The unique identifier for the service.
-type ObjectStorage2IntegrationCreateNetworkServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2GetObjectStorageRoleTagsRoleName A resource name.
+type ObjectStorage2GetObjectStorageRoleTagsRoleName = ObjectStorage2Name
 
-// ObjectStorage2IntegrationDeleteNetworkNetworkName A resource name.
-type ObjectStorage2IntegrationDeleteNetworkNetworkName = ObjectStorage2Name
+// ObjectStorage2GetObjectStorageRoleTagsServiceUuid The unique identifier for the service.
+type ObjectStorage2GetObjectStorageRoleTagsServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2IntegrationDeleteNetworkServiceUuid The unique identifier for the service.
-type ObjectStorage2IntegrationDeleteNetworkServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2GetObjectStorageServiceUuid The unique identifier for the service.
+type ObjectStorage2GetObjectStorageServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2IntegrationGetServiceServiceUuid The unique identifier for the service.
-type ObjectStorage2IntegrationGetServiceServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2GetObjectStorageStaticWebsiteCustomDomainName A valid hostname for the custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
+type ObjectStorage2GetObjectStorageStaticWebsiteCustomDomainName = ObjectStorage2CustomDomainName
 
-// ObjectStorage2ListAccessKeysServiceUuid The unique identifier for the service.
-type ObjectStorage2ListAccessKeysServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2GetObjectStorageStaticWebsiteServiceUuid The unique identifier for the service.
+type ObjectStorage2GetObjectStorageStaticWebsiteServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2ListAccessKeysUsername A resource name.
-type ObjectStorage2ListAccessKeysUsername = ObjectStorage2Name
+// ObjectStorage2GetObjectStorageUserInlinePolicyServiceUuid The unique identifier for the service.
+type ObjectStorage2GetObjectStorageUserInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2ListAttachedRolePoliciesRoleName A resource name.
-type ObjectStorage2ListAttachedRolePoliciesRoleName = ObjectStorage2Name
+// ObjectStorage2GetObjectStorageUserInlinePolicyUserPolicyName A resource name.
+type ObjectStorage2GetObjectStorageUserInlinePolicyUserPolicyName = ObjectStorage2Name
 
-// ObjectStorage2ListAttachedRolePoliciesServiceUuid The unique identifier for the service.
-type ObjectStorage2ListAttachedRolePoliciesServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2GetObjectStorageUserInlinePolicyUsername A resource name.
+type ObjectStorage2GetObjectStorageUserInlinePolicyUsername = ObjectStorage2Name
 
-// ObjectStorage2ListAttachedUserPoliciesServiceUuid The unique identifier for the service.
-type ObjectStorage2ListAttachedUserPoliciesServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2GetObjectStorageUserServiceUuid The unique identifier for the service.
+type ObjectStorage2GetObjectStorageUserServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2ListAttachedUserPoliciesUsername A resource name.
-type ObjectStorage2ListAttachedUserPoliciesUsername = ObjectStorage2Name
+// ObjectStorage2GetObjectStorageUserTagsServiceUuid The unique identifier for the service.
+type ObjectStorage2GetObjectStorageUserTagsServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2ListBucketMetricsLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
-type ObjectStorage2ListBucketMetricsLimit = ObjectStorage2QueryParamLimit
+// ObjectStorage2GetObjectStorageUserTagsUsername A resource name.
+type ObjectStorage2GetObjectStorageUserTagsUsername = ObjectStorage2Name
 
-// ObjectStorage2ListBucketMetricsOffset Schema for a query parameter specifying the offset for pagination.
-type ObjectStorage2ListBucketMetricsOffset = ObjectStorage2QueryParamOffset
+// ObjectStorage2GetObjectStorageUserUsername A resource name.
+type ObjectStorage2GetObjectStorageUserUsername = ObjectStorage2Name
 
-// ObjectStorage2ListBucketMetricsServiceUuid The unique identifier for the service.
-type ObjectStorage2ListBucketMetricsServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2ListObjectStorageAccessKeysServiceUuid The unique identifier for the service.
+type ObjectStorage2ListObjectStorageAccessKeysServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2ListCustomDomainsServiceUuid The unique identifier for the service.
-type ObjectStorage2ListCustomDomainsServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2ListObjectStorageAccessKeysUsername A resource name.
+type ObjectStorage2ListObjectStorageAccessKeysUsername = ObjectStorage2Name
 
-// ObjectStorage2ListGroupInlinePoliciesGroupName A resource name.
-type ObjectStorage2ListGroupInlinePoliciesGroupName = ObjectStorage2Name
+// ObjectStorage2ListObjectStorageAttachedRolePoliciesRoleName A resource name.
+type ObjectStorage2ListObjectStorageAttachedRolePoliciesRoleName = ObjectStorage2Name
 
-// ObjectStorage2ListGroupInlinePoliciesServiceUuid The unique identifier for the service.
-type ObjectStorage2ListGroupInlinePoliciesServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2ListObjectStorageAttachedRolePoliciesServiceUuid The unique identifier for the service.
+type ObjectStorage2ListObjectStorageAttachedRolePoliciesServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2ListGroupsServiceUuid The unique identifier for the service.
-type ObjectStorage2ListGroupsServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2ListObjectStorageAttachedUserPoliciesServiceUuid The unique identifier for the service.
+type ObjectStorage2ListObjectStorageAttachedUserPoliciesServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2ListIAMGroupPoliciesGroupName A resource name.
-type ObjectStorage2ListIAMGroupPoliciesGroupName = ObjectStorage2Name
+// ObjectStorage2ListObjectStorageAttachedUserPoliciesUsername A resource name.
+type ObjectStorage2ListObjectStorageAttachedUserPoliciesUsername = ObjectStorage2Name
 
-// ObjectStorage2ListIAMGroupPoliciesServiceUuid The unique identifier for the service.
-type ObjectStorage2ListIAMGroupPoliciesServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2ListObjectStorageBucketMetricsLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
+type ObjectStorage2ListObjectStorageBucketMetricsLimit = ObjectStorage2QueryParamLimit
 
-// ObjectStorage2ListLabelsServiceUuid The unique identifier for the service.
-type ObjectStorage2ListLabelsServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2ListObjectStorageBucketMetricsOffset Schema for a query parameter specifying the offset for pagination.
+type ObjectStorage2ListObjectStorageBucketMetricsOffset = ObjectStorage2QueryParamOffset
 
-// ObjectStorage2ListNetworksServiceUuid The unique identifier for the service.
-type ObjectStorage2ListNetworksServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2ListObjectStorageBucketMetricsServiceUuid The unique identifier for the service.
+type ObjectStorage2ListObjectStorageBucketMetricsServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2ListPoliciesServiceUuid The unique identifier for the service.
-type ObjectStorage2ListPoliciesServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2ListObjectStorageCustomDomainsServiceUuid The unique identifier for the service.
+type ObjectStorage2ListObjectStorageCustomDomainsServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2ListPolicyVersionsPolicyName A resource name.
-type ObjectStorage2ListPolicyVersionsPolicyName = ObjectStorage2Name
+// ObjectStorage2ListObjectStorageDomainsServiceUuid The unique identifier for the service.
+type ObjectStorage2ListObjectStorageDomainsServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2ListPolicyVersionsServiceUuid The unique identifier for the service.
-type ObjectStorage2ListPolicyVersionsServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2ListObjectStorageGroupInlinePoliciesGroupName A resource name.
+type ObjectStorage2ListObjectStorageGroupInlinePoliciesGroupName = ObjectStorage2Name
 
-// ObjectStorage2ListRoleInlinePoliciesRoleName A resource name.
-type ObjectStorage2ListRoleInlinePoliciesRoleName = ObjectStorage2Name
+// ObjectStorage2ListObjectStorageGroupInlinePoliciesServiceUuid The unique identifier for the service.
+type ObjectStorage2ListObjectStorageGroupInlinePoliciesServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2ListRoleInlinePoliciesServiceUuid The unique identifier for the service.
-type ObjectStorage2ListRoleInlinePoliciesServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2ListObjectStorageGroupsServiceUuid The unique identifier for the service.
+type ObjectStorage2ListObjectStorageGroupsServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2ListRolesServiceUuid The unique identifier for the service.
-type ObjectStorage2ListRolesServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2ListObjectStorageIAMGroupPoliciesGroupName A resource name.
+type ObjectStorage2ListObjectStorageIAMGroupPoliciesGroupName = ObjectStorage2Name
 
-// ObjectStorage2ListServiceMetricsSeriesFrom Schema for a query parameter specifying a timestamp.
-type ObjectStorage2ListServiceMetricsSeriesFrom = ObjectStorage2QueryParamTimestamp
+// ObjectStorage2ListObjectStorageIAMGroupPoliciesServiceUuid The unique identifier for the service.
+type ObjectStorage2ListObjectStorageIAMGroupPoliciesServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2ListServiceMetricsSeriesInterval Schema for a query parameter specifying the time interval.
-type ObjectStorage2ListServiceMetricsSeriesInterval = ObjectStorage2QueryParamInterval
+// ObjectStorage2ListObjectStorageLabelsServiceUuid The unique identifier for the service.
+type ObjectStorage2ListObjectStorageLabelsServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2ListServiceMetricsSeriesLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
-type ObjectStorage2ListServiceMetricsSeriesLimit = ObjectStorage2QueryParamLimit
+// ObjectStorage2ListObjectStorageMetricsSeriesFrom Schema for a query parameter specifying a timestamp.
+type ObjectStorage2ListObjectStorageMetricsSeriesFrom = ObjectStorage2QueryParamTimestamp
 
-// ObjectStorage2ListServiceMetricsSeriesOffset Schema for a query parameter specifying the offset for pagination.
-type ObjectStorage2ListServiceMetricsSeriesOffset = ObjectStorage2QueryParamOffset
+// ObjectStorage2ListObjectStorageMetricsSeriesInterval Schema for a query parameter specifying the time interval.
+type ObjectStorage2ListObjectStorageMetricsSeriesInterval = ObjectStorage2QueryParamInterval
 
-// ObjectStorage2ListServiceMetricsSeriesServiceUuid The unique identifier for the service.
-type ObjectStorage2ListServiceMetricsSeriesServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2ListObjectStorageMetricsSeriesLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
+type ObjectStorage2ListObjectStorageMetricsSeriesLimit = ObjectStorage2QueryParamLimit
 
-// ObjectStorage2ListServiceMetricsSeriesSort Schema for a query parameter specifying the sort field and direction. Prefix with '-' for descending order.
-type ObjectStorage2ListServiceMetricsSeriesSort = ObjectStorage2QueryParamSort
+// ObjectStorage2ListObjectStorageMetricsSeriesOffset Schema for a query parameter specifying the offset for pagination.
+type ObjectStorage2ListObjectStorageMetricsSeriesOffset = ObjectStorage2QueryParamOffset
 
-// ObjectStorage2ListServiceMetricsSeriesTo Schema for a query parameter specifying a timestamp.
-type ObjectStorage2ListServiceMetricsSeriesTo = ObjectStorage2QueryParamTimestamp
+// ObjectStorage2ListObjectStorageMetricsSeriesServiceUuid The unique identifier for the service.
+type ObjectStorage2ListObjectStorageMetricsSeriesServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2ListServicesLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
-type ObjectStorage2ListServicesLimit = ObjectStorage2QueryParamLimit
+// ObjectStorage2ListObjectStorageMetricsSeriesSort Schema for a query parameter specifying the sort field and direction. Prefix with '-' for descending order.
+type ObjectStorage2ListObjectStorageMetricsSeriesSort = ObjectStorage2QueryParamSort
 
-// ObjectStorage2ListServicesOffset Schema for a query parameter specifying the offset for pagination.
-type ObjectStorage2ListServicesOffset = ObjectStorage2QueryParamOffset
+// ObjectStorage2ListObjectStorageMetricsSeriesTo Schema for a query parameter specifying a timestamp.
+type ObjectStorage2ListObjectStorageMetricsSeriesTo = ObjectStorage2QueryParamTimestamp
 
-// ObjectStorage2ListServicesSort Schema for a query parameter specifying the sort field and direction. Prefix with '-' for descending order.
-type ObjectStorage2ListServicesSort = ObjectStorage2QueryParamSort
+// ObjectStorage2ListObjectStorageNetworksServiceUuid The unique identifier for the service.
+type ObjectStorage2ListObjectStorageNetworksServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2ListStaticWebsitesServiceUuid The unique identifier for the service.
-type ObjectStorage2ListStaticWebsitesServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2ListObjectStoragePoliciesServiceUuid The unique identifier for the service.
+type ObjectStorage2ListObjectStoragePoliciesServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2ListUserInlinePoliciesServiceUuid The unique identifier for the service.
-type ObjectStorage2ListUserInlinePoliciesServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2ListObjectStoragePolicyVersionsPolicyName A resource name.
+type ObjectStorage2ListObjectStoragePolicyVersionsPolicyName = ObjectStorage2Name
 
-// ObjectStorage2ListUserInlinePoliciesUsername A resource name.
-type ObjectStorage2ListUserInlinePoliciesUsername = ObjectStorage2Name
+// ObjectStorage2ListObjectStoragePolicyVersionsServiceUuid The unique identifier for the service.
+type ObjectStorage2ListObjectStoragePolicyVersionsServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2ListUsersServiceUuid The unique identifier for the service.
-type ObjectStorage2ListUsersServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2ListObjectStorageRoleInlinePoliciesRoleName A resource name.
+type ObjectStorage2ListObjectStorageRoleInlinePoliciesRoleName = ObjectStorage2Name
 
-// ObjectStorage2ModifyAccessKeyDetailsAccessKeyId The public identifier for an access key.
-type ObjectStorage2ModifyAccessKeyDetailsAccessKeyId = ObjectStorage2AccessKeyID
+// ObjectStorage2ListObjectStorageRoleInlinePoliciesServiceUuid The unique identifier for the service.
+type ObjectStorage2ListObjectStorageRoleInlinePoliciesServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2ModifyAccessKeyDetailsServiceUuid The unique identifier for the service.
-type ObjectStorage2ModifyAccessKeyDetailsServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2ListObjectStorageRolesServiceUuid The unique identifier for the service.
+type ObjectStorage2ListObjectStorageRolesServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2ModifyAccessKeyDetailsUsername A resource name.
-type ObjectStorage2ModifyAccessKeyDetailsUsername = ObjectStorage2Name
+// ObjectStorage2ListObjectStorageStaticWebsitesServiceUuid The unique identifier for the service.
+type ObjectStorage2ListObjectStorageStaticWebsitesServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2ModifyCustomDomainCustomDomainName A valid hostname for the custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
-type ObjectStorage2ModifyCustomDomainCustomDomainName = ObjectStorage2CustomDomainName
+// ObjectStorage2ListObjectStorageUserInlinePoliciesServiceUuid The unique identifier for the service.
+type ObjectStorage2ListObjectStorageUserInlinePoliciesServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2ModifyCustomDomainServiceUuid The unique identifier for the service.
-type ObjectStorage2ModifyCustomDomainServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2ListObjectStorageUserInlinePoliciesUsername A resource name.
+type ObjectStorage2ListObjectStorageUserInlinePoliciesUsername = ObjectStorage2Name
 
-// ObjectStorage2ModifyLabelLabelKey The key of a label.
-type ObjectStorage2ModifyLabelLabelKey = ObjectStorage2LabelKey
+// ObjectStorage2ListObjectStorageUsersServiceUuid The unique identifier for the service.
+type ObjectStorage2ListObjectStorageUsersServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2ModifyLabelServiceUuid The unique identifier for the service.
-type ObjectStorage2ModifyLabelServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2ListObjectStoragesLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
+type ObjectStorage2ListObjectStoragesLimit = ObjectStorage2QueryParamLimit
 
-// ObjectStorage2ModifyServiceServiceUuid The unique identifier for the service.
-type ObjectStorage2ModifyServiceServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2ListObjectStoragesOffset Schema for a query parameter specifying the offset for pagination.
+type ObjectStorage2ListObjectStoragesOffset = ObjectStorage2QueryParamOffset
 
-// ObjectStorage2ModifyStaticWebsiteCustomDomainName A valid hostname for the custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
-type ObjectStorage2ModifyStaticWebsiteCustomDomainName = ObjectStorage2CustomDomainName
+// ObjectStorage2ListObjectStoragesSort Schema for a query parameter specifying the sort field and direction. Prefix with '-' for descending order.
+type ObjectStorage2ListObjectStoragesSort = ObjectStorage2QueryParamSort
 
-// ObjectStorage2ModifyStaticWebsiteServiceUuid The unique identifier for the service.
-type ObjectStorage2ModifyStaticWebsiteServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2ModifyObjectStorageAccessKeyDetailsAccessKeyId The public identifier for an access key.
+type ObjectStorage2ModifyObjectStorageAccessKeyDetailsAccessKeyId = ObjectStorage2AccessKeyID
 
-// ObjectStorage2RemoveUserFromGroupGroupName A resource name.
-type ObjectStorage2RemoveUserFromGroupGroupName = ObjectStorage2Name
+// ObjectStorage2ModifyObjectStorageAccessKeyDetailsServiceUuid The unique identifier for the service.
+type ObjectStorage2ModifyObjectStorageAccessKeyDetailsServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2RemoveUserFromGroupServiceUuid The unique identifier for the service.
-type ObjectStorage2RemoveUserFromGroupServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2ModifyObjectStorageAccessKeyDetailsUsername A resource name.
+type ObjectStorage2ModifyObjectStorageAccessKeyDetailsUsername = ObjectStorage2Name
 
-// ObjectStorage2RemoveUserFromGroupUsername A resource name.
-type ObjectStorage2RemoveUserFromGroupUsername = ObjectStorage2Name
+// ObjectStorage2ModifyObjectStorageCustomDomainCustomDomainName A valid hostname for the custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
+type ObjectStorage2ModifyObjectStorageCustomDomainCustomDomainName = ObjectStorage2CustomDomainName
 
-// ObjectStorage2ReplaceRoleTagsRoleName A resource name.
-type ObjectStorage2ReplaceRoleTagsRoleName = ObjectStorage2Name
+// ObjectStorage2ModifyObjectStorageCustomDomainServiceUuid The unique identifier for the service.
+type ObjectStorage2ModifyObjectStorageCustomDomainServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2ReplaceRoleTagsServiceUuid The unique identifier for the service.
-type ObjectStorage2ReplaceRoleTagsServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2ModifyObjectStorageLabelLabelKey The key of a label.
+type ObjectStorage2ModifyObjectStorageLabelLabelKey = ObjectStorage2LabelKey
 
-// ObjectStorage2ReplaceServiceServiceUuid The unique identifier for the service.
-type ObjectStorage2ReplaceServiceServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2ModifyObjectStorageLabelServiceUuid The unique identifier for the service.
+type ObjectStorage2ModifyObjectStorageLabelServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2ReplaceUserTagsServiceUuid The unique identifier for the service.
-type ObjectStorage2ReplaceUserTagsServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2ModifyObjectStorageServiceUuid The unique identifier for the service.
+type ObjectStorage2ModifyObjectStorageServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2ReplaceUserTagsUsername A resource name.
-type ObjectStorage2ReplaceUserTagsUsername = ObjectStorage2Name
+// ObjectStorage2ModifyObjectStorageStaticWebsiteCustomDomainName A valid hostname for the custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
+type ObjectStorage2ModifyObjectStorageStaticWebsiteCustomDomainName = ObjectStorage2CustomDomainName
 
-// ObjectStorage2SetDefaultPolicyVersionPolicyName A resource name.
-type ObjectStorage2SetDefaultPolicyVersionPolicyName = ObjectStorage2Name
+// ObjectStorage2ModifyObjectStorageStaticWebsiteServiceUuid The unique identifier for the service.
+type ObjectStorage2ModifyObjectStorageStaticWebsiteServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2SetDefaultPolicyVersionServiceUuid The unique identifier for the service.
-type ObjectStorage2SetDefaultPolicyVersionServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2RemoveObjectStorageUserFromGroupGroupName A resource name.
+type ObjectStorage2RemoveObjectStorageUserFromGroupGroupName = ObjectStorage2Name
 
-// ObjectStorage2UpdateRoleRoleName A resource name.
-type ObjectStorage2UpdateRoleRoleName = ObjectStorage2Name
+// ObjectStorage2RemoveObjectStorageUserFromGroupServiceUuid The unique identifier for the service.
+type ObjectStorage2RemoveObjectStorageUserFromGroupServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2UpdateRoleServiceUuid The unique identifier for the service.
-type ObjectStorage2UpdateRoleServiceUuid = ObjectStorage2ServiceUUID
+// ObjectStorage2RemoveObjectStorageUserFromGroupUsername A resource name.
+type ObjectStorage2RemoveObjectStorageUserFromGroupUsername = ObjectStorage2Name
 
-// ObjectStorage2AssumeRolePolicy200 Response schema for assuming a role with a policy document.
-type ObjectStorage2AssumeRolePolicy200 = ObjectStorage2AssumeRolePolicyResponse
+// ObjectStorage2ReplaceObjectStorageRoleTagsRoleName A resource name.
+type ObjectStorage2ReplaceObjectStorageRoleTagsRoleName = ObjectStorage2Name
 
-// ObjectStorage2AssumeRolePolicyDefault Schema for error responses from the API.
-type ObjectStorage2AssumeRolePolicyDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2ReplaceObjectStorageRoleTagsServiceUuid The unique identifier for the service.
+type ObjectStorage2ReplaceObjectStorageRoleTagsServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2AttachCustomDomain201 Response schema for custom domain details.
-type ObjectStorage2AttachCustomDomain201 = ObjectStorage2CustomDomainDetailResponse
+// ObjectStorage2ReplaceObjectStorageServiceUuid The unique identifier for the service.
+type ObjectStorage2ReplaceObjectStorageServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2AttachCustomDomainDefault Schema for error responses from the API.
-type ObjectStorage2AttachCustomDomainDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2ReplaceObjectStorageUserTagsServiceUuid The unique identifier for the service.
+type ObjectStorage2ReplaceObjectStorageUserTagsServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2AttachIAMGroupPolicyDefault Schema for error responses from the API.
-type ObjectStorage2AttachIAMGroupPolicyDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2ReplaceObjectStorageUserTagsUsername A resource name.
+type ObjectStorage2ReplaceObjectStorageUserTagsUsername = ObjectStorage2Name
 
-// ObjectStorage2AttachPolicyToRoleDefault Schema for error responses from the API.
-type ObjectStorage2AttachPolicyToRoleDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2SetObjectStorageDefaultPolicyVersionPolicyName A resource name.
+type ObjectStorage2SetObjectStorageDefaultPolicyVersionPolicyName = ObjectStorage2Name
 
-// ObjectStorage2AttachUserPolicyDefault Schema for error responses from the API.
-type ObjectStorage2AttachUserPolicyDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2SetObjectStorageDefaultPolicyVersionServiceUuid The unique identifier for the service.
+type ObjectStorage2SetObjectStorageDefaultPolicyVersionServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2AttachUserToGroupDefault Schema for error responses from the API.
-type ObjectStorage2AttachUserToGroupDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2UpdateObjectStorageRoleRoleName A resource name.
+type ObjectStorage2UpdateObjectStorageRoleRoleName = ObjectStorage2Name
 
-// ObjectStorage2CreateAccessKey201 Response schema for creating an access key.
-type ObjectStorage2CreateAccessKey201 = ObjectStorage2CreateAccessKeyResponse
+// ObjectStorage2UpdateObjectStorageRoleServiceUuid The unique identifier for the service.
+type ObjectStorage2UpdateObjectStorageRoleServiceUuid = ObjectStorage2ServiceUUID
 
-// ObjectStorage2CreateAccessKeyDefault Schema for error responses from the API.
-type ObjectStorage2CreateAccessKeyDefault = ObjectStorage2ErrorResponse
+// RestoreFirewallRulesetRulesetUuid The unique identifier for the server.
+type RestoreFirewallRulesetRulesetUuid = FirewallRulesetServerUuid
 
-// ObjectStorage2CreateBucket201 Response schema for bucket details.
-type ObjectStorage2CreateBucket201 = ObjectStorage2BucketDetailResponse
+// RestoreFirewallRulesetRulesetVersion The firewall ruleset version.
+type RestoreFirewallRulesetRulesetVersion = FirewallRulesetVersion
 
-// ObjectStorage2CreateBucketDefault Schema for error responses from the API.
-type ObjectStorage2CreateBucketDefault = ObjectStorage2ErrorResponse
+// CreateFirewallRuleset201 Response schema for firewall ruleset details, including UUID, name, description, stateful, enabled, labels and serverUUID.
+type CreateFirewallRuleset201 = FirewallRulesetDetailResponse
 
-// ObjectStorage2CreateGroup201 Response schema for group details.
-type ObjectStorage2CreateGroup201 = ObjectStorage2GroupResponse
+// CreateFirewallRulesetDefault Schema for error responses from the API.
+type CreateFirewallRulesetDefault = FirewallRulesetErrorResponse
 
-// ObjectStorage2CreateGroupDefault Schema for error responses from the API.
-type ObjectStorage2CreateGroupDefault = ObjectStorage2ErrorResponse
+// CreateFirewallRulesetLabel201 Schema for label details including key-value pairs.
+type CreateFirewallRulesetLabel201 = FirewallRulesetLabelDetailResponse
 
-// ObjectStorage2CreateGroupInlinePolicy201 Schema representing an inline policy response.
-type ObjectStorage2CreateGroupInlinePolicy201 = ObjectStorage2InlinePolicyResponse
+// CreateFirewallRulesetLabelDefault Schema for error responses from the API.
+type CreateFirewallRulesetLabelDefault = FirewallRulesetErrorResponse
 
-// ObjectStorage2CreateGroupInlinePolicyDefault Schema for error responses from the API.
-type ObjectStorage2CreateGroupInlinePolicyDefault = ObjectStorage2ErrorResponse
+// CreateFirewallRulesetRule201 Response schema for firewall ruleset rule details.
+type CreateFirewallRulesetRule201 = FirewallRulesetRuleDetailResponse
 
-// ObjectStorage2CreateLabel201 Schema for label details including key-value pairs.
-type ObjectStorage2CreateLabel201 = ObjectStorage2LabelDetailResponse
+// CreateFirewallRulesetRuleDefault Schema for error responses from the API.
+type CreateFirewallRulesetRuleDefault = FirewallRulesetErrorResponse
 
-// ObjectStorage2CreateLabelDefault Schema for error responses from the API.
-type ObjectStorage2CreateLabelDefault = ObjectStorage2ErrorResponse
+// CreateObjectStorage201 Response schema for service details, including UUID, name, and endpoints.
+type CreateObjectStorage201 = ObjectStorage2ServiceDetailResponse
 
-// ObjectStorage2CreateNetwork201 Schema for network details including family, name, type, and UUID.
-type ObjectStorage2CreateNetwork201 = ObjectStorage2NetworkDetailResponse
+// DeleteFirewallRulesetDefault Schema for error responses from the API.
+type DeleteFirewallRulesetDefault = FirewallRulesetErrorResponse
 
-// ObjectStorage2CreateNetworkDefault Schema for error responses from the API.
-type ObjectStorage2CreateNetworkDefault = ObjectStorage2ErrorResponse
+// DeleteFirewallRulesetLabelDefault Schema for error responses from the API.
+type DeleteFirewallRulesetLabelDefault = FirewallRulesetErrorResponse
 
-// ObjectStorage2CreatePolicy201 Schema for policy details including ARN, attachment count, creation date, default version ID, description, document, name, system status, and last updated date.
-type ObjectStorage2CreatePolicy201 = ObjectStorage2PolicyDetailResponse
+// DeleteFirewallRulesetRuleDefault Schema for error responses from the API.
+type DeleteFirewallRulesetRuleDefault = FirewallRulesetErrorResponse
 
-// ObjectStorage2CreatePolicyDefault Schema for error responses from the API.
-type ObjectStorage2CreatePolicyDefault = ObjectStorage2ErrorResponse
+// FirewallRulesetAdminListServerFirewallRules200 Server firewall detail response.
+type FirewallRulesetAdminListServerFirewallRules200 = FirewallRulesetServerFirewallDetailResponse
 
-// ObjectStorage2CreatePolicyVersion201 Schema for a policy version response, including creation date, document content, default status, and version ID.
-type ObjectStorage2CreatePolicyVersion201 = ObjectStorage2PolicyVersionResponse
+// FirewallRulesetAdminListServerFirewallRules400 Schema for legacy error responses from API.
+type FirewallRulesetAdminListServerFirewallRules400 = FirewallRulesetErrorLegacyResponse
 
-// ObjectStorage2CreatePolicyVersionDefault Schema for error responses from the API.
-type ObjectStorage2CreatePolicyVersionDefault = ObjectStorage2ErrorResponse
+// FirewallRulesetAdminListServerFirewallRules403 Schema for legacy error responses from API.
+type FirewallRulesetAdminListServerFirewallRules403 = FirewallRulesetErrorLegacyResponse
 
-// ObjectStorage2CreateRole201 Response schema for detailed information about a specific role.
-type ObjectStorage2CreateRole201 = ObjectStorage2RoleResponse
+// FirewallRulesetAdminListServerFirewallRules404 Schema for legacy error responses from API.
+type FirewallRulesetAdminListServerFirewallRules404 = FirewallRulesetErrorLegacyResponse
 
-// ObjectStorage2CreateRoleDefault Schema for error responses from the API.
-type ObjectStorage2CreateRoleDefault = ObjectStorage2ErrorResponse
+// FirewallRulesetAdminListServerFirewallRules409 Schema for legacy error responses from API.
+type FirewallRulesetAdminListServerFirewallRules409 = FirewallRulesetErrorLegacyResponse
 
-// ObjectStorage2CreateRoleInlinePolicy201 Schema representing an inline policy response.
-type ObjectStorage2CreateRoleInlinePolicy201 = ObjectStorage2InlinePolicyResponse
+// FirewallRulesetAdminListServerFirewallRulesDefault Schema for error responses from the API.
+type FirewallRulesetAdminListServerFirewallRulesDefault = FirewallRulesetErrorResponse
 
-// ObjectStorage2CreateRoleInlinePolicyDefault Schema for error responses from the API.
-type ObjectStorage2CreateRoleInlinePolicyDefault = ObjectStorage2ErrorResponse
+// FirewallRulesetCreateMultipleServerFirewallRules200 Server firewall detail response.
+type FirewallRulesetCreateMultipleServerFirewallRules200 = FirewallRulesetServerFirewallDetailResponse
 
-// ObjectStorage2CreateRolePermissionsBoundary200 Schema representing a permissions boundary response.
-type ObjectStorage2CreateRolePermissionsBoundary200 = ObjectStorage2PermissionsBoundaryResponse
+// FirewallRulesetCreateMultipleServerFirewallRules400 Schema for legacy error responses from API.
+type FirewallRulesetCreateMultipleServerFirewallRules400 = FirewallRulesetErrorLegacyResponse
 
-// ObjectStorage2CreateRolePermissionsBoundaryDefault Schema for error responses from the API.
-type ObjectStorage2CreateRolePermissionsBoundaryDefault = ObjectStorage2ErrorResponse
+// FirewallRulesetCreateMultipleServerFirewallRules403 Schema for legacy error responses from API.
+type FirewallRulesetCreateMultipleServerFirewallRules403 = FirewallRulesetErrorLegacyResponse
 
-// ObjectStorage2CreateService201 Response schema for service details, including UUID, name, and endpoints.
-type ObjectStorage2CreateService201 = ObjectStorage2ServiceDetailResponse
+// FirewallRulesetCreateMultipleServerFirewallRules404 Schema for legacy error responses from API.
+type FirewallRulesetCreateMultipleServerFirewallRules404 = FirewallRulesetErrorLegacyResponse
 
-// ObjectStorage2CreateServiceDefault Schema for error responses from the API.
-type ObjectStorage2CreateServiceDefault = ObjectStorage2ErrorResponse
+// FirewallRulesetCreateMultipleServerFirewallRules409 Schema for legacy error responses from API.
+type FirewallRulesetCreateMultipleServerFirewallRules409 = FirewallRulesetErrorLegacyResponse
 
-// ObjectStorage2CreateStaticWebsite201 Static website hosting configuration for a specific domain
-type ObjectStorage2CreateStaticWebsite201 = ObjectStorage2StaticWebsiteConfig
+// FirewallRulesetCreateMultipleServerFirewallRulesDefault Schema for error responses from the API.
+type FirewallRulesetCreateMultipleServerFirewallRulesDefault = FirewallRulesetErrorResponse
 
-// ObjectStorage2CreateStaticWebsiteDefault Schema for error responses from the API.
-type ObjectStorage2CreateStaticWebsiteDefault = ObjectStorage2ErrorResponse
+// FirewallRulesetCreateServerFirewallRule201 Server firewall rule detail
+type FirewallRulesetCreateServerFirewallRule201 = FirewallRulesetServerFirewallRuleDetail
 
-// ObjectStorage2CreateUser201 Response schema for user details.
-type ObjectStorage2CreateUser201 = ObjectStorage2UserDetailResponse
+// FirewallRulesetCreateServerFirewallRule400 Schema for legacy error responses from API.
+type FirewallRulesetCreateServerFirewallRule400 = FirewallRulesetErrorLegacyResponse
 
-// ObjectStorage2CreateUserDefault Schema for error responses from the API.
-type ObjectStorage2CreateUserDefault = ObjectStorage2ErrorResponse
+// FirewallRulesetCreateServerFirewallRule403 Schema for legacy error responses from API.
+type FirewallRulesetCreateServerFirewallRule403 = FirewallRulesetErrorLegacyResponse
 
-// ObjectStorage2CreateUserInlinePolicy201 Schema representing an inline policy response.
-type ObjectStorage2CreateUserInlinePolicy201 = ObjectStorage2InlinePolicyResponse
+// FirewallRulesetCreateServerFirewallRule404 Schema for legacy error responses from API.
+type FirewallRulesetCreateServerFirewallRule404 = FirewallRulesetErrorLegacyResponse
 
-// ObjectStorage2CreateUserInlinePolicyDefault Schema for error responses from the API.
-type ObjectStorage2CreateUserInlinePolicyDefault = ObjectStorage2ErrorResponse
+// FirewallRulesetCreateServerFirewallRule409 Schema for legacy error responses from API.
+type FirewallRulesetCreateServerFirewallRule409 = FirewallRulesetErrorLegacyResponse
 
-// ObjectStorage2CreateUserPermissionsBoundary200 Schema representing a permissions boundary response.
-type ObjectStorage2CreateUserPermissionsBoundary200 = ObjectStorage2PermissionsBoundaryResponse
+// FirewallRulesetCreateServerFirewallRuleDefault Schema for error responses from the API.
+type FirewallRulesetCreateServerFirewallRuleDefault = FirewallRulesetErrorResponse
 
-// ObjectStorage2CreateUserPermissionsBoundaryDefault Schema for error responses from the API.
-type ObjectStorage2CreateUserPermissionsBoundaryDefault = ObjectStorage2ErrorResponse
+// FirewallRulesetDeleteServerFirewallRule400 Schema for legacy error responses from API.
+type FirewallRulesetDeleteServerFirewallRule400 = FirewallRulesetErrorLegacyResponse
 
-// ObjectStorage2DeleteAccessKeyDefault Schema for error responses from the API.
-type ObjectStorage2DeleteAccessKeyDefault = ObjectStorage2ErrorResponse
+// FirewallRulesetDeleteServerFirewallRule403 Schema for legacy error responses from API.
+type FirewallRulesetDeleteServerFirewallRule403 = FirewallRulesetErrorLegacyResponse
 
-// ObjectStorage2DeleteBucketDefault Schema for error responses from the API.
-type ObjectStorage2DeleteBucketDefault = ObjectStorage2ErrorResponse
+// FirewallRulesetDeleteServerFirewallRule404 Schema for legacy error responses from API.
+type FirewallRulesetDeleteServerFirewallRule404 = FirewallRulesetErrorLegacyResponse
 
-// ObjectStorage2DeleteCustomDomainDefault Schema for error responses from the API.
-type ObjectStorage2DeleteCustomDomainDefault = ObjectStorage2ErrorResponse
+// FirewallRulesetDeleteServerFirewallRule409 Schema for legacy error responses from API.
+type FirewallRulesetDeleteServerFirewallRule409 = FirewallRulesetErrorLegacyResponse
 
-// ObjectStorage2DeleteGroupDefault Schema for error responses from the API.
-type ObjectStorage2DeleteGroupDefault = ObjectStorage2ErrorResponse
+// FirewallRulesetDeleteServerFirewallRuleDefault Schema for error responses from the API.
+type FirewallRulesetDeleteServerFirewallRuleDefault = FirewallRulesetErrorResponse
 
-// ObjectStorage2DeleteGroupInlinePolicyDefault Schema for error responses from the API.
-type ObjectStorage2DeleteGroupInlinePolicyDefault = ObjectStorage2ErrorResponse
+// FirewallRulesetGetServerFirewallRule200 Server firewall rule detail
+type FirewallRulesetGetServerFirewallRule200 = FirewallRulesetServerFirewallRuleDetail
 
-// ObjectStorage2DeleteLabelDefault Schema for error responses from the API.
-type ObjectStorage2DeleteLabelDefault = ObjectStorage2ErrorResponse
+// FirewallRulesetGetServerFirewallRuleDefault Schema for error responses from the API.
+type FirewallRulesetGetServerFirewallRuleDefault = FirewallRulesetErrorResponse
 
-// ObjectStorage2DeleteNetworkDefault Schema for error responses from the API.
-type ObjectStorage2DeleteNetworkDefault = ObjectStorage2ErrorResponse
+// FirewallRulesetListServerFirewallRule200 Server firewall detail response.
+type FirewallRulesetListServerFirewallRule200 = FirewallRulesetServerFirewallDetailResponse
 
-// ObjectStorage2DeletePolicyDefault Schema for error responses from the API.
-type ObjectStorage2DeletePolicyDefault = ObjectStorage2ErrorResponse
+// FirewallRulesetListServerFirewallRuleDefault Schema for error responses from the API.
+type FirewallRulesetListServerFirewallRuleDefault = FirewallRulesetErrorResponse
 
-// ObjectStorage2DeletePolicyVersionDefault Schema for error responses from the API.
-type ObjectStorage2DeletePolicyVersionDefault = ObjectStorage2ErrorResponse
+// GetFirewallRuleset200 Response schema for firewall ruleset details, including UUID, name, description, stateful, enabled, labels and serverUUID.
+type GetFirewallRuleset200 = FirewallRulesetDetailResponse
 
-// ObjectStorage2DeleteRoleDefault Schema for error responses from the API.
-type ObjectStorage2DeleteRoleDefault = ObjectStorage2ErrorResponse
+// GetFirewallRulesetDefault Schema for error responses from the API.
+type GetFirewallRulesetDefault = FirewallRulesetErrorResponse
 
-// ObjectStorage2DeleteRoleInlinePolicyDefault Schema for error responses from the API.
-type ObjectStorage2DeleteRoleInlinePolicyDefault = ObjectStorage2ErrorResponse
+// GetFirewallRulesetLabel200 Schema for label details including key-value pairs.
+type GetFirewallRulesetLabel200 = FirewallRulesetLabelDetailResponse
 
-// ObjectStorage2DeleteRolePermissionsBoundaryDefault Schema for error responses from the API.
-type ObjectStorage2DeleteRolePermissionsBoundaryDefault = ObjectStorage2ErrorResponse
+// GetFirewallRulesetLabelDefault Schema for error responses from the API.
+type GetFirewallRulesetLabelDefault = FirewallRulesetErrorResponse
 
-// ObjectStorage2DeleteRoleTagDefault Schema for error responses from the API.
-type ObjectStorage2DeleteRoleTagDefault = ObjectStorage2ErrorResponse
+// GetFirewallRulesetRule200 Response schema for firewall ruleset rule details.
+type GetFirewallRulesetRule200 = FirewallRulesetRuleDetailResponse
 
-// ObjectStorage2DeleteServiceDefault Schema for error responses from the API.
-type ObjectStorage2DeleteServiceDefault = ObjectStorage2ErrorResponse
+// GetFirewallRulesetRuleDefault Schema for error responses from the API.
+type GetFirewallRulesetRuleDefault = FirewallRulesetErrorResponse
 
-// ObjectStorage2DeleteStaticWebsiteDefault Schema for error responses from the API.
-type ObjectStorage2DeleteStaticWebsiteDefault = ObjectStorage2ErrorResponse
+// GetObjectStorage200 Response schema for service details, including UUID, name, and endpoints.
+type GetObjectStorage200 = ObjectStorage2ServiceDetailResponse
 
-// ObjectStorage2DeleteUserDefault Schema for error responses from the API.
-type ObjectStorage2DeleteUserDefault = ObjectStorage2ErrorResponse
+// ListFirewallRulesetLabels200 Response schema for listing labels.
+type ListFirewallRulesetLabels200 = FirewallRulesetLabelListResponse
 
-// ObjectStorage2DeleteUserInlinePolicyDefault Schema for error responses from the API.
-type ObjectStorage2DeleteUserInlinePolicyDefault = ObjectStorage2ErrorResponse
+// ListFirewallRulesetLabelsDefault Schema for error responses from the API.
+type ListFirewallRulesetLabelsDefault = FirewallRulesetErrorResponse
 
-// ObjectStorage2DeleteUserPermissionsBoundaryDefault Schema for error responses from the API.
-type ObjectStorage2DeleteUserPermissionsBoundaryDefault = ObjectStorage2ErrorResponse
+// ListFirewallRulesetRules200 Response schema for a list of firewall ruleset rules.
+type ListFirewallRulesetRules200 = FirewallRulesetFirewallRuleListResponse
 
-// ObjectStorage2DeleteUserTagDefault Schema for error responses from the API.
-type ObjectStorage2DeleteUserTagDefault = ObjectStorage2ErrorResponse
+// ListFirewallRulesetRulesDefault Schema for error responses from the API.
+type ListFirewallRulesetRulesDefault = FirewallRulesetErrorResponse
 
-// ObjectStorage2DetachIAMGroupPolicyDefault Schema for error responses from the API.
-type ObjectStorage2DetachIAMGroupPolicyDefault = ObjectStorage2ErrorResponse
+// ListFirewallRulesets200 Response schema for a list of firewall rulesets.
+type ListFirewallRulesets200 = FirewallRulesetListResponse
 
-// ObjectStorage2DetachPolicyFromRoleDefault Schema for error responses from the API.
-type ObjectStorage2DetachPolicyFromRoleDefault = ObjectStorage2ErrorResponse
+// ListFirewallRulesetsDefault Schema for error responses from the API.
+type ListFirewallRulesetsDefault = FirewallRulesetErrorResponse
 
-// ObjectStorage2DetachUserPolicyDefault Schema for error responses from the API.
-type ObjectStorage2DetachUserPolicyDefault = ObjectStorage2ErrorResponse
+// ModifyFirewallRuleset200 Response schema for firewall ruleset details, including UUID, name, description, stateful, enabled, labels and serverUUID.
+type ModifyFirewallRuleset200 = FirewallRulesetDetailResponse
 
-// ObjectStorage2GetAccessKeyDetails200 Response schema for access key details.
-type ObjectStorage2GetAccessKeyDetails200 = ObjectStorage2AccessKeyDetailResponse
+// ModifyFirewallRulesetDefault Schema for error responses from the API.
+type ModifyFirewallRulesetDefault = FirewallRulesetErrorResponse
 
-// ObjectStorage2GetAccessKeyDetailsDefault Schema for error responses from the API.
-type ObjectStorage2GetAccessKeyDetailsDefault = ObjectStorage2ErrorResponse
+// ModifyFirewallRulesetLabel200 Schema for label details including key-value pairs.
+type ModifyFirewallRulesetLabel200 = FirewallRulesetLabelDetailResponse
 
-// ObjectStorage2GetCustomDomainDetails200 Response schema for custom domain details.
-type ObjectStorage2GetCustomDomainDetails200 = ObjectStorage2CustomDomainDetailResponse
+// ModifyFirewallRulesetLabelDefault Schema for error responses from the API.
+type ModifyFirewallRulesetLabelDefault = FirewallRulesetErrorResponse
 
-// ObjectStorage2GetCustomDomainDetailsDefault Schema for error responses from the API.
-type ObjectStorage2GetCustomDomainDetailsDefault = ObjectStorage2ErrorResponse
+// ModifyFirewallRulesetRule200 Response schema for firewall ruleset rule details.
+type ModifyFirewallRulesetRule200 = FirewallRulesetRuleDetailResponse
 
-// ObjectStorage2GetGroup200 Response schema for group details.
-type ObjectStorage2GetGroup200 = ObjectStorage2GroupResponse
+// ModifyFirewallRulesetRuleDefault Schema for error responses from the API.
+type ModifyFirewallRulesetRuleDefault = FirewallRulesetErrorResponse
 
-// ObjectStorage2GetGroupDefault Schema for error responses from the API.
-type ObjectStorage2GetGroupDefault = ObjectStorage2ErrorResponse
+// ModifyObjectStorage200 Response schema for service details, including UUID, name, and endpoints.
+type ModifyObjectStorage200 = ObjectStorage2ServiceDetailResponse
 
-// ObjectStorage2GetGroupInlinePolicy200 Schema representing an inline policy response.
-type ObjectStorage2GetGroupInlinePolicy200 = ObjectStorage2InlinePolicyResponse
+// ObjectStorage2AssumeObjectStorageRolePolicy200 Response schema for assuming a role with a policy document.
+type ObjectStorage2AssumeObjectStorageRolePolicy200 = ObjectStorage2AssumeRolePolicyResponse
 
-// ObjectStorage2GetGroupInlinePolicyDefault Schema for error responses from the API.
-type ObjectStorage2GetGroupInlinePolicyDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2AssumeObjectStorageRolePolicyDefault Schema for error responses from the API.
+type ObjectStorage2AssumeObjectStorageRolePolicyDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2GetLabelDetails200 Schema for label details including key-value pairs.
-type ObjectStorage2GetLabelDetails200 = ObjectStorage2LabelDetailResponse
+// ObjectStorage2AttachObjectStorageCustomDomain201 Response schema for custom domain details.
+type ObjectStorage2AttachObjectStorageCustomDomain201 = ObjectStorage2CustomDomainDetailResponse
 
-// ObjectStorage2GetLabelDetailsDefault Schema for error responses from the API.
-type ObjectStorage2GetLabelDetailsDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2AttachObjectStorageCustomDomainDefault Schema for error responses from the API.
+type ObjectStorage2AttachObjectStorageCustomDomainDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2GetNetwork200 Schema for network details including family, name, type, and UUID.
-type ObjectStorage2GetNetwork200 = ObjectStorage2NetworkDetailResponse
+// ObjectStorage2AttachObjectStorageIAMGroupPolicyDefault Schema for error responses from the API.
+type ObjectStorage2AttachObjectStorageIAMGroupPolicyDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2GetNetworkDefault Schema for error responses from the API.
-type ObjectStorage2GetNetworkDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2AttachObjectStoragePolicyToRoleDefault Schema for error responses from the API.
+type ObjectStorage2AttachObjectStoragePolicyToRoleDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2GetPolicyDetails200 Schema for policy details including ARN, attachment count, creation date, default version ID, description, document, name, system status, and last updated date.
-type ObjectStorage2GetPolicyDetails200 = ObjectStorage2PolicyDetailResponse
+// ObjectStorage2AttachObjectStorageUserPolicyDefault Schema for error responses from the API.
+type ObjectStorage2AttachObjectStorageUserPolicyDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2GetPolicyDetailsDefault Schema for error responses from the API.
-type ObjectStorage2GetPolicyDetailsDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2AttachObjectStorageUserToGroupDefault Schema for error responses from the API.
+type ObjectStorage2AttachObjectStorageUserToGroupDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2GetPolicyVersion200 Schema for a policy version response, including creation date, document content, default status, and version ID.
-type ObjectStorage2GetPolicyVersion200 = ObjectStorage2PolicyVersionResponse
+// ObjectStorage2CreateObjectStorageAccessKey201 Response schema for creating an access key.
+type ObjectStorage2CreateObjectStorageAccessKey201 = ObjectStorage2CreateAccessKeyResponse
 
-// ObjectStorage2GetPolicyVersionDefault Schema for error responses from the API.
-type ObjectStorage2GetPolicyVersionDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2CreateObjectStorageAccessKeyDefault Schema for error responses from the API.
+type ObjectStorage2CreateObjectStorageAccessKeyDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2GetRegionDetails200 Response schema for detailed information about a specific region.
-type ObjectStorage2GetRegionDetails200 = ObjectStorage2RegionDetailResponse
+// ObjectStorage2CreateObjectStorageBucket201 Response schema for bucket details.
+type ObjectStorage2CreateObjectStorageBucket201 = ObjectStorage2BucketDetailResponse
 
-// ObjectStorage2GetRegionDetailsDefault Schema for error responses from the API.
-type ObjectStorage2GetRegionDetailsDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2CreateObjectStorageBucketDefault Schema for error responses from the API.
+type ObjectStorage2CreateObjectStorageBucketDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2GetRole200 Response schema for detailed information about a specific role.
-type ObjectStorage2GetRole200 = ObjectStorage2RoleResponse
+// ObjectStorage2CreateObjectStorageDefault Schema for error responses from the API.
+type ObjectStorage2CreateObjectStorageDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2GetRoleDefault Schema for error responses from the API.
-type ObjectStorage2GetRoleDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2CreateObjectStorageGroup201 Response schema for group details.
+type ObjectStorage2CreateObjectStorageGroup201 = ObjectStorage2GroupResponse
 
-// ObjectStorage2GetRoleInlinePolicy200 Schema representing an inline policy response.
-type ObjectStorage2GetRoleInlinePolicy200 = ObjectStorage2InlinePolicyResponse
+// ObjectStorage2CreateObjectStorageGroupDefault Schema for error responses from the API.
+type ObjectStorage2CreateObjectStorageGroupDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2GetRoleInlinePolicyDefault Schema for error responses from the API.
-type ObjectStorage2GetRoleInlinePolicyDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2CreateObjectStorageGroupInlinePolicy201 Schema representing an inline policy response.
+type ObjectStorage2CreateObjectStorageGroupInlinePolicy201 = ObjectStorage2InlinePolicyResponse
 
-// ObjectStorage2GetRoleTags200 Response schema for listing tags associated with a resource.
-type ObjectStorage2GetRoleTags200 = ObjectStorage2TagListResponse
+// ObjectStorage2CreateObjectStorageGroupInlinePolicyDefault Schema for error responses from the API.
+type ObjectStorage2CreateObjectStorageGroupInlinePolicyDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2GetRoleTagsDefault Schema for error responses from the API.
-type ObjectStorage2GetRoleTagsDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2CreateObjectStorageLabel201 Schema for label details including key-value pairs.
+type ObjectStorage2CreateObjectStorageLabel201 = ObjectStorage2LabelDetailResponse
 
-// ObjectStorage2GetService200 Response schema for service details, including UUID, name, and endpoints.
-type ObjectStorage2GetService200 = ObjectStorage2ServiceDetailResponse
+// ObjectStorage2CreateObjectStorageLabelDefault Schema for error responses from the API.
+type ObjectStorage2CreateObjectStorageLabelDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2GetServiceDefault Schema for error responses from the API.
-type ObjectStorage2GetServiceDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2CreateObjectStorageNetwork201 Schema for network details including family, name, type, and UUID.
+type ObjectStorage2CreateObjectStorageNetwork201 = ObjectStorage2NetworkDetailResponse
 
-// ObjectStorage2GetServiceDomains200 Service domains with their static website hosting status
-type ObjectStorage2GetServiceDomains200 = ObjectStorage2ServiceDomains
+// ObjectStorage2CreateObjectStorageNetworkDefault Schema for error responses from the API.
+type ObjectStorage2CreateObjectStorageNetworkDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2GetServiceDomainsDefault Schema for error responses from the API.
-type ObjectStorage2GetServiceDomainsDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2CreateObjectStoragePolicy201 Schema for policy details including ARN, attachment count, creation date, default version ID, description, document, name, system status, and last updated date.
+type ObjectStorage2CreateObjectStoragePolicy201 = ObjectStorage2PolicyDetailResponse
 
-// ObjectStorage2GetServiceMetrics200 Response schema for service usage metrics.
-type ObjectStorage2GetServiceMetrics200 = ObjectStorage2MetricsUsageResponse
+// ObjectStorage2CreateObjectStoragePolicyDefault Schema for error responses from the API.
+type ObjectStorage2CreateObjectStoragePolicyDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2GetServiceMetricsDefault Schema for error responses from the API.
-type ObjectStorage2GetServiceMetricsDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2CreateObjectStoragePolicyVersion201 Schema for a policy version response, including creation date, document content, default status, and version ID.
+type ObjectStorage2CreateObjectStoragePolicyVersion201 = ObjectStorage2PolicyVersionResponse
 
-// ObjectStorage2GetStaticWebsite200 Static website hosting configuration for a specific domain
-type ObjectStorage2GetStaticWebsite200 = ObjectStorage2StaticWebsiteConfig
+// ObjectStorage2CreateObjectStoragePolicyVersionDefault Schema for error responses from the API.
+type ObjectStorage2CreateObjectStoragePolicyVersionDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2GetStaticWebsiteDefault Schema for error responses from the API.
-type ObjectStorage2GetStaticWebsiteDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2CreateObjectStorageRole201 Response schema for detailed information about a specific role.
+type ObjectStorage2CreateObjectStorageRole201 = ObjectStorage2RoleResponse
 
-// ObjectStorage2GetUserDetails200 Response schema for user details.
-type ObjectStorage2GetUserDetails200 = ObjectStorage2UserDetailResponse
+// ObjectStorage2CreateObjectStorageRoleDefault Schema for error responses from the API.
+type ObjectStorage2CreateObjectStorageRoleDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2GetUserDetailsDefault Schema for error responses from the API.
-type ObjectStorage2GetUserDetailsDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2CreateObjectStorageRoleInlinePolicy201 Schema representing an inline policy response.
+type ObjectStorage2CreateObjectStorageRoleInlinePolicy201 = ObjectStorage2InlinePolicyResponse
 
-// ObjectStorage2GetUserInlinePolicy200 Schema representing an inline policy response.
-type ObjectStorage2GetUserInlinePolicy200 = ObjectStorage2InlinePolicyResponse
+// ObjectStorage2CreateObjectStorageRoleInlinePolicyDefault Schema for error responses from the API.
+type ObjectStorage2CreateObjectStorageRoleInlinePolicyDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2GetUserInlinePolicyDefault Schema for error responses from the API.
-type ObjectStorage2GetUserInlinePolicyDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2CreateObjectStorageRolePermissionsBoundary200 Schema representing a permissions boundary response.
+type ObjectStorage2CreateObjectStorageRolePermissionsBoundary200 = ObjectStorage2PermissionsBoundaryResponse
 
-// ObjectStorage2GetUserTags200 Response schema for listing tags associated with a resource.
-type ObjectStorage2GetUserTags200 = ObjectStorage2TagListResponse
+// ObjectStorage2CreateObjectStorageRolePermissionsBoundaryDefault Schema for error responses from the API.
+type ObjectStorage2CreateObjectStorageRolePermissionsBoundaryDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2GetUserTagsDefault Schema for error responses from the API.
-type ObjectStorage2GetUserTagsDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2CreateObjectStorageStaticWebsite201 Static website hosting configuration for a specific domain.
+type ObjectStorage2CreateObjectStorageStaticWebsite201 = ObjectStorage2StaticWebsiteConfig
 
-// ObjectStorage2IntegrationCreateNetwork201 Schema for network details including family, name, type, and UUID.
-type ObjectStorage2IntegrationCreateNetwork201 = ObjectStorage2NetworkDetailResponse
+// ObjectStorage2CreateObjectStorageStaticWebsiteDefault Schema for error responses from the API.
+type ObjectStorage2CreateObjectStorageStaticWebsiteDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2IntegrationCreateNetworkDefault Schema for error responses from the API.
-type ObjectStorage2IntegrationCreateNetworkDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2CreateObjectStorageUser201 Response schema for user details.
+type ObjectStorage2CreateObjectStorageUser201 = ObjectStorage2UserDetailResponse
 
-// ObjectStorage2IntegrationDeleteNetworkDefault Schema for error responses from the API.
-type ObjectStorage2IntegrationDeleteNetworkDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2CreateObjectStorageUserDefault Schema for error responses from the API.
+type ObjectStorage2CreateObjectStorageUserDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2IntegrationGetService200 Response schema for service details, including UUID, name, and endpoints.
-type ObjectStorage2IntegrationGetService200 = ObjectStorage2ServiceDetailResponse
+// ObjectStorage2CreateObjectStorageUserInlinePolicy201 Schema representing an inline policy response.
+type ObjectStorage2CreateObjectStorageUserInlinePolicy201 = ObjectStorage2InlinePolicyResponse
 
-// ObjectStorage2IntegrationGetServiceDefault Schema for error responses from the API.
-type ObjectStorage2IntegrationGetServiceDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2CreateObjectStorageUserInlinePolicyDefault Schema for error responses from the API.
+type ObjectStorage2CreateObjectStorageUserInlinePolicyDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2IntegrationListServices200 Response schema for a list of services.
-type ObjectStorage2IntegrationListServices200 = ObjectStorage2ServiceListResponse
+// ObjectStorage2CreateObjectStorageUserPermissionsBoundary200 Schema representing a permissions boundary response.
+type ObjectStorage2CreateObjectStorageUserPermissionsBoundary200 = ObjectStorage2PermissionsBoundaryResponse
 
-// ObjectStorage2IntegrationListServicesDefault Schema for error responses from the API.
-type ObjectStorage2IntegrationListServicesDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2CreateObjectStorageUserPermissionsBoundaryDefault Schema for error responses from the API.
+type ObjectStorage2CreateObjectStorageUserPermissionsBoundaryDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListAccessKeys200 Response schema for listing access keys.
-type ObjectStorage2ListAccessKeys200 = ObjectStorage2AccessKeyListResponse
+// ObjectStorage2DeleteObjectStorageAccessKeyDefault Schema for error responses from the API.
+type ObjectStorage2DeleteObjectStorageAccessKeyDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListAccessKeysDefault Schema for error responses from the API.
-type ObjectStorage2ListAccessKeysDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2DeleteObjectStorageBucketDefault Schema for error responses from the API.
+type ObjectStorage2DeleteObjectStorageBucketDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListAttachedRolePolicies200 Response schema for listing policy attachments.
-type ObjectStorage2ListAttachedRolePolicies200 = ObjectStorage2PolicyAttachmentListResponse
+// ObjectStorage2DeleteObjectStorageCustomDomainDefault Schema for error responses from the API.
+type ObjectStorage2DeleteObjectStorageCustomDomainDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListAttachedRolePoliciesDefault Schema for error responses from the API.
-type ObjectStorage2ListAttachedRolePoliciesDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2DeleteObjectStorageDefault Schema for error responses from the API.
+type ObjectStorage2DeleteObjectStorageDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListAttachedUserPolicies200 Response schema for listing policy attachments.
-type ObjectStorage2ListAttachedUserPolicies200 = ObjectStorage2PolicyAttachmentListResponse
+// ObjectStorage2DeleteObjectStorageGroupDefault Schema for error responses from the API.
+type ObjectStorage2DeleteObjectStorageGroupDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListAttachedUserPoliciesDefault Schema for error responses from the API.
-type ObjectStorage2ListAttachedUserPoliciesDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2DeleteObjectStorageGroupInlinePolicyDefault Schema for error responses from the API.
+type ObjectStorage2DeleteObjectStorageGroupInlinePolicyDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListBucketMetrics200 Response schema for listing buckets.
-type ObjectStorage2ListBucketMetrics200 = ObjectStorage2BucketListResponse
+// ObjectStorage2DeleteObjectStorageLabelDefault Schema for error responses from the API.
+type ObjectStorage2DeleteObjectStorageLabelDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListBucketMetricsDefault Schema for error responses from the API.
-type ObjectStorage2ListBucketMetricsDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2DeleteObjectStorageNetworkDefault Schema for error responses from the API.
+type ObjectStorage2DeleteObjectStorageNetworkDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListCustomDomains200 Response schema for listing custom domains.
-type ObjectStorage2ListCustomDomains200 = ObjectStorage2CustomDomainListResponse
+// ObjectStorage2DeleteObjectStoragePolicyDefault Schema for error responses from the API.
+type ObjectStorage2DeleteObjectStoragePolicyDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListCustomDomainsDefault Schema for error responses from the API.
-type ObjectStorage2ListCustomDomainsDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2DeleteObjectStoragePolicyVersionDefault Schema for error responses from the API.
+type ObjectStorage2DeleteObjectStoragePolicyVersionDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListGroupInlinePolicies200 Response schema for listing inline policies.
-type ObjectStorage2ListGroupInlinePolicies200 = ObjectStorage2InlinePolicyListResponse
+// ObjectStorage2DeleteObjectStorageRoleDefault Schema for error responses from the API.
+type ObjectStorage2DeleteObjectStorageRoleDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListGroupInlinePoliciesDefault Schema for error responses from the API.
-type ObjectStorage2ListGroupInlinePoliciesDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2DeleteObjectStorageRoleInlinePolicyDefault Schema for error responses from the API.
+type ObjectStorage2DeleteObjectStorageRoleInlinePolicyDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListGroups200 Response schema for listing groups.
-type ObjectStorage2ListGroups200 = ObjectStorage2GroupListResponse
+// ObjectStorage2DeleteObjectStorageRolePermissionsBoundaryDefault Schema for error responses from the API.
+type ObjectStorage2DeleteObjectStorageRolePermissionsBoundaryDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListGroupsDefault Schema for error responses from the API.
-type ObjectStorage2ListGroupsDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2DeleteObjectStorageRoleTagDefault Schema for error responses from the API.
+type ObjectStorage2DeleteObjectStorageRoleTagDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListIAMGroupPolicies200 Response schema for listing policy attachments.
-type ObjectStorage2ListIAMGroupPolicies200 = ObjectStorage2PolicyAttachmentListResponse
+// ObjectStorage2DeleteObjectStorageStaticWebsiteDefault Schema for error responses from the API.
+type ObjectStorage2DeleteObjectStorageStaticWebsiteDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListIAMGroupPoliciesDefault Schema for error responses from the API.
-type ObjectStorage2ListIAMGroupPoliciesDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2DeleteObjectStorageUserDefault Schema for error responses from the API.
+type ObjectStorage2DeleteObjectStorageUserDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListLabels200 Response schema for listing labels.
-type ObjectStorage2ListLabels200 = ObjectStorage2LabelListResponse
+// ObjectStorage2DeleteObjectStorageUserInlinePolicyDefault Schema for error responses from the API.
+type ObjectStorage2DeleteObjectStorageUserInlinePolicyDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListLabelsDefault Schema for error responses from the API.
-type ObjectStorage2ListLabelsDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2DeleteObjectStorageUserPermissionsBoundaryDefault Schema for error responses from the API.
+type ObjectStorage2DeleteObjectStorageUserPermissionsBoundaryDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListNetworks200 Response schema for a list of network details.
-type ObjectStorage2ListNetworks200 = ObjectStorage2NetworkListResponse
+// ObjectStorage2DeleteObjectStorageUserTagDefault Schema for error responses from the API.
+type ObjectStorage2DeleteObjectStorageUserTagDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListNetworksDefault Schema for error responses from the API.
-type ObjectStorage2ListNetworksDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2DetachObjectStorageIAMGroupPolicyDefault Schema for error responses from the API.
+type ObjectStorage2DetachObjectStorageIAMGroupPolicyDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListPolicies200 Response schema for listing policies.
-type ObjectStorage2ListPolicies200 = ObjectStorage2PolicyListResponse
+// ObjectStorage2DetachObjectStoragePolicyFromRoleDefault Schema for error responses from the API.
+type ObjectStorage2DetachObjectStoragePolicyFromRoleDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListPoliciesDefault Schema for error responses from the API.
-type ObjectStorage2ListPoliciesDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2DetachObjectStorageUserPolicyDefault Schema for error responses from the API.
+type ObjectStorage2DetachObjectStorageUserPolicyDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListPolicyVersions200 Response schema for a list of policy versions.
-type ObjectStorage2ListPolicyVersions200 = ObjectStorage2PolicyVersionListResponse
+// ObjectStorage2GetObjectStorageAccessKeyDetails200 Response schema for access key details.
+type ObjectStorage2GetObjectStorageAccessKeyDetails200 = ObjectStorage2AccessKeyDetailResponse
 
-// ObjectStorage2ListPolicyVersionsDefault Schema for error responses from the API.
-type ObjectStorage2ListPolicyVersionsDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2GetObjectStorageAccessKeyDetailsDefault Schema for error responses from the API.
+type ObjectStorage2GetObjectStorageAccessKeyDetailsDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListRegions200 Response schema for listing regions.
-type ObjectStorage2ListRegions200 = ObjectStorage2RegionListResponse
+// ObjectStorage2GetObjectStorageCustomDomain200 Response schema for custom domain details.
+type ObjectStorage2GetObjectStorageCustomDomain200 = ObjectStorage2CustomDomainDetailResponse
 
-// ObjectStorage2ListRegionsDefault Schema for error responses from the API.
-type ObjectStorage2ListRegionsDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2GetObjectStorageCustomDomainDefault Schema for error responses from the API.
+type ObjectStorage2GetObjectStorageCustomDomainDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListRoleInlinePolicies200 Response schema for listing inline policies.
-type ObjectStorage2ListRoleInlinePolicies200 = ObjectStorage2InlinePolicyListResponse
+// ObjectStorage2GetObjectStorageDefault Schema for error responses from the API.
+type ObjectStorage2GetObjectStorageDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListRoleInlinePoliciesDefault Schema for error responses from the API.
-type ObjectStorage2ListRoleInlinePoliciesDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2GetObjectStorageGroup200 Response schema for group details.
+type ObjectStorage2GetObjectStorageGroup200 = ObjectStorage2GroupResponse
 
-// ObjectStorage2ListRoles200 Response schema for listing roles.
-type ObjectStorage2ListRoles200 = ObjectStorage2RoleListResponse
+// ObjectStorage2GetObjectStorageGroupDefault Schema for error responses from the API.
+type ObjectStorage2GetObjectStorageGroupDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListRolesDefault Schema for error responses from the API.
-type ObjectStorage2ListRolesDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2GetObjectStorageGroupInlinePolicy200 Schema representing an inline policy response.
+type ObjectStorage2GetObjectStorageGroupInlinePolicy200 = ObjectStorage2InlinePolicyResponse
 
-// ObjectStorage2ListServiceMetricsSeries200 Response schema for listing metrics series.
-type ObjectStorage2ListServiceMetricsSeries200 = ObjectStorage2MetricsSeriesListResponse
+// ObjectStorage2GetObjectStorageGroupInlinePolicyDefault Schema for error responses from the API.
+type ObjectStorage2GetObjectStorageGroupInlinePolicyDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListServiceMetricsSeriesDefault Schema for error responses from the API.
-type ObjectStorage2ListServiceMetricsSeriesDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2GetObjectStorageLabel200 Schema for label details including key-value pairs.
+type ObjectStorage2GetObjectStorageLabel200 = ObjectStorage2LabelDetailResponse
 
-// ObjectStorage2ListServices200 Response schema for a list of services.
-type ObjectStorage2ListServices200 = ObjectStorage2ServiceListResponse
+// ObjectStorage2GetObjectStorageLabelDefault Schema for error responses from the API.
+type ObjectStorage2GetObjectStorageLabelDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListServicesDefault Schema for error responses from the API.
-type ObjectStorage2ListServicesDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2GetObjectStorageMetrics200 Response schema for service usage metrics.
+type ObjectStorage2GetObjectStorageMetrics200 = ObjectStorage2MetricsUsageResponse
 
-// ObjectStorage2ListStaticWebsitesDefault Schema for error responses from the API.
-type ObjectStorage2ListStaticWebsitesDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2GetObjectStorageMetricsDefault Schema for error responses from the API.
+type ObjectStorage2GetObjectStorageMetricsDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListUserInlinePolicies200 Response schema for listing inline policies.
-type ObjectStorage2ListUserInlinePolicies200 = ObjectStorage2InlinePolicyListResponse
+// ObjectStorage2GetObjectStorageNetwork200 Schema for network details including family, name, type, and UUID.
+type ObjectStorage2GetObjectStorageNetwork200 = ObjectStorage2NetworkDetailResponse
 
-// ObjectStorage2ListUserInlinePoliciesDefault Schema for error responses from the API.
-type ObjectStorage2ListUserInlinePoliciesDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2GetObjectStorageNetworkDefault Schema for error responses from the API.
+type ObjectStorage2GetObjectStorageNetworkDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ListUsers200 Response schema for listing users.
-type ObjectStorage2ListUsers200 = ObjectStorage2UserListResponse
+// ObjectStorage2GetObjectStoragePolicy200 Schema for policy details including ARN, attachment count, creation date, default version ID, description, document, name, system status, and last updated date.
+type ObjectStorage2GetObjectStoragePolicy200 = ObjectStorage2PolicyDetailResponse
 
-// ObjectStorage2ListUsersDefault Schema for error responses from the API.
-type ObjectStorage2ListUsersDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2GetObjectStoragePolicyDefault Schema for error responses from the API.
+type ObjectStorage2GetObjectStoragePolicyDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ModifyAccessKeyDetails200 Response schema for access key details.
-type ObjectStorage2ModifyAccessKeyDetails200 = ObjectStorage2AccessKeyDetailResponse
+// ObjectStorage2GetObjectStoragePolicyVersion200 Schema for a policy version response, including creation date, document content, default status, and version ID.
+type ObjectStorage2GetObjectStoragePolicyVersion200 = ObjectStorage2PolicyVersionResponse
 
-// ObjectStorage2ModifyAccessKeyDetailsDefault Schema for error responses from the API.
-type ObjectStorage2ModifyAccessKeyDetailsDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2GetObjectStoragePolicyVersionDefault Schema for error responses from the API.
+type ObjectStorage2GetObjectStoragePolicyVersionDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ModifyCustomDomain200 Response schema for custom domain details.
-type ObjectStorage2ModifyCustomDomain200 = ObjectStorage2CustomDomainDetailResponse
+// ObjectStorage2GetObjectStorageRegion200 Response schema for detailed information about a specific region.
+type ObjectStorage2GetObjectStorageRegion200 = ObjectStorage2RegionDetailResponse
 
-// ObjectStorage2ModifyCustomDomainDefault Schema for error responses from the API.
-type ObjectStorage2ModifyCustomDomainDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2GetObjectStorageRegionDefault Schema for error responses from the API.
+type ObjectStorage2GetObjectStorageRegionDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ModifyLabel200 Schema for label details including key-value pairs.
-type ObjectStorage2ModifyLabel200 = ObjectStorage2LabelDetailResponse
+// ObjectStorage2GetObjectStorageRole200 Response schema for detailed information about a specific role.
+type ObjectStorage2GetObjectStorageRole200 = ObjectStorage2RoleResponse
 
-// ObjectStorage2ModifyLabelDefault Schema for error responses from the API.
-type ObjectStorage2ModifyLabelDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2GetObjectStorageRoleDefault Schema for error responses from the API.
+type ObjectStorage2GetObjectStorageRoleDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ModifyService200 Response schema for service details, including UUID, name, and endpoints.
-type ObjectStorage2ModifyService200 = ObjectStorage2ServiceDetailResponse
+// ObjectStorage2GetObjectStorageRoleInlinePolicy200 Schema representing an inline policy response.
+type ObjectStorage2GetObjectStorageRoleInlinePolicy200 = ObjectStorage2InlinePolicyResponse
 
-// ObjectStorage2ModifyServiceDefault Schema for error responses from the API.
-type ObjectStorage2ModifyServiceDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2GetObjectStorageRoleInlinePolicyDefault Schema for error responses from the API.
+type ObjectStorage2GetObjectStorageRoleInlinePolicyDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ModifyStaticWebsite200 Static website hosting configuration for a specific domain
-type ObjectStorage2ModifyStaticWebsite200 = ObjectStorage2StaticWebsiteConfig
+// ObjectStorage2GetObjectStorageRoleTags200 Response schema for listing tags associated with a resource.
+type ObjectStorage2GetObjectStorageRoleTags200 = ObjectStorage2TagListResponse
 
-// ObjectStorage2ModifyStaticWebsiteDefault Schema for error responses from the API.
-type ObjectStorage2ModifyStaticWebsiteDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2GetObjectStorageRoleTagsDefault Schema for error responses from the API.
+type ObjectStorage2GetObjectStorageRoleTagsDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2RemoveUserFromGroupDefault Schema for error responses from the API.
-type ObjectStorage2RemoveUserFromGroupDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2GetObjectStorageStaticWebsite200 Static website hosting configuration for a specific domain.
+type ObjectStorage2GetObjectStorageStaticWebsite200 = ObjectStorage2StaticWebsiteConfig
 
-// ObjectStorage2ReplaceRoleTags200 Response schema for listing tags associated with a resource.
-type ObjectStorage2ReplaceRoleTags200 = ObjectStorage2TagListResponse
+// ObjectStorage2GetObjectStorageStaticWebsiteDefault Schema for error responses from the API.
+type ObjectStorage2GetObjectStorageStaticWebsiteDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ReplaceRoleTagsDefault Schema for error responses from the API.
-type ObjectStorage2ReplaceRoleTagsDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2GetObjectStorageUser200 Response schema for user details.
+type ObjectStorage2GetObjectStorageUser200 = ObjectStorage2UserDetailResponse
 
-// ObjectStorage2ReplaceService200 Response schema for service details, including UUID, name, and endpoints.
-type ObjectStorage2ReplaceService200 = ObjectStorage2ServiceDetailResponse
+// ObjectStorage2GetObjectStorageUserDefault Schema for error responses from the API.
+type ObjectStorage2GetObjectStorageUserDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ReplaceServiceDefault Schema for error responses from the API.
-type ObjectStorage2ReplaceServiceDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2GetObjectStorageUserInlinePolicy200 Schema representing an inline policy response.
+type ObjectStorage2GetObjectStorageUserInlinePolicy200 = ObjectStorage2InlinePolicyResponse
 
-// ObjectStorage2ReplaceUserTags200 Response schema for listing tags associated with a resource.
-type ObjectStorage2ReplaceUserTags200 = ObjectStorage2TagListResponse
+// ObjectStorage2GetObjectStorageUserInlinePolicyDefault Schema for error responses from the API.
+type ObjectStorage2GetObjectStorageUserInlinePolicyDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ReplaceUserTagsDefault Schema for error responses from the API.
-type ObjectStorage2ReplaceUserTagsDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2GetObjectStorageUserTags200 Response schema for listing tags associated with a resource.
+type ObjectStorage2GetObjectStorageUserTags200 = ObjectStorage2TagListResponse
 
-// ObjectStorage2SetDefaultPolicyVersion200 Schema for policy details including ARN, attachment count, creation date, default version ID, description, document, name, system status, and last updated date.
-type ObjectStorage2SetDefaultPolicyVersion200 = ObjectStorage2PolicyDetailResponse
+// ObjectStorage2GetObjectStorageUserTagsDefault Schema for error responses from the API.
+type ObjectStorage2GetObjectStorageUserTagsDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2SetDefaultPolicyVersionDefault Schema for error responses from the API.
-type ObjectStorage2SetDefaultPolicyVersionDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2ListObjectStorageAccessKeys200 Response schema for listing access keys.
+type ObjectStorage2ListObjectStorageAccessKeys200 = ObjectStorage2AccessKeyListResponse
 
-// ObjectStorage2UpdateRole200 Response schema for detailed information about a specific role.
-type ObjectStorage2UpdateRole200 = ObjectStorage2RoleResponse
+// ObjectStorage2ListObjectStorageAccessKeysDefault Schema for error responses from the API.
+type ObjectStorage2ListObjectStorageAccessKeysDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2UpdateRoleDefault Schema for error responses from the API.
-type ObjectStorage2UpdateRoleDefault = ObjectStorage2ErrorResponse
+// ObjectStorage2ListObjectStorageAttachedRolePolicies200 Response schema for listing policy attachments.
+type ObjectStorage2ListObjectStorageAttachedRolePolicies200 = ObjectStorage2PolicyAttachmentListResponse
 
-// ObjectStorage2AssumeRolePolicy Schema for the request to assume a role with a policy document.
-type ObjectStorage2AssumeRolePolicy = ObjectStorage2AssumeRolePolicyRequest
+// ObjectStorage2ListObjectStorageAttachedRolePoliciesDefault Schema for error responses from the API.
+type ObjectStorage2ListObjectStorageAttachedRolePoliciesDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2AttachCustomDomain Schema for creating a custom domain.
-type ObjectStorage2AttachCustomDomain = ObjectStorage2CustomDomainCreate
+// ObjectStorage2ListObjectStorageAttachedUserPolicies200 Response schema for listing policy attachments.
+type ObjectStorage2ListObjectStorageAttachedUserPolicies200 = ObjectStorage2PolicyAttachmentListResponse
 
-// ObjectStorage2AttachIAMGroupPolicy Schema for creating a policy attachment.
-type ObjectStorage2AttachIAMGroupPolicy = ObjectStorage2PolicyAttachmentCreate
+// ObjectStorage2ListObjectStorageAttachedUserPoliciesDefault Schema for error responses from the API.
+type ObjectStorage2ListObjectStorageAttachedUserPoliciesDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2AttachPolicyToRole Schema for creating a policy attachment.
-type ObjectStorage2AttachPolicyToRole = ObjectStorage2PolicyAttachmentCreate
+// ObjectStorage2ListObjectStorageBucketMetrics200 Response schema for listing buckets.
+type ObjectStorage2ListObjectStorageBucketMetrics200 = ObjectStorage2BucketListResponse
 
-// ObjectStorage2AttachUserPolicy Schema for creating a policy attachment.
-type ObjectStorage2AttachUserPolicy = ObjectStorage2PolicyAttachmentCreate
+// ObjectStorage2ListObjectStorageBucketMetricsDefault Schema for error responses from the API.
+type ObjectStorage2ListObjectStorageBucketMetricsDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2CreateBucket Schema for creating a new bucket.
-type ObjectStorage2CreateBucket = ObjectStorage2BucketCreate
+// ObjectStorage2ListObjectStorageCustomDomains200 Response schema for listing custom domains.
+type ObjectStorage2ListObjectStorageCustomDomains200 = ObjectStorage2CustomDomainListResponse
 
-// ObjectStorage2CreateGroup Schema for creating a new IAM group.
-type ObjectStorage2CreateGroup = ObjectStorage2GroupCreate
+// ObjectStorage2ListObjectStorageCustomDomainsDefault Schema for error responses from the API.
+type ObjectStorage2ListObjectStorageCustomDomainsDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2CreateGroupInlinePolicy Schema for creating an inline policy.
-type ObjectStorage2CreateGroupInlinePolicy = ObjectStorage2InlinePolicyCreate
+// ObjectStorage2ListObjectStorageDomains200 Service domains with their static website hosting status
+type ObjectStorage2ListObjectStorageDomains200 = ObjectStorage2ServiceDomains
 
-// ObjectStorage2CreateLabel Schema for creating a label with a key-value pair.
-type ObjectStorage2CreateLabel = ObjectStorage2LabelCreate
+// ObjectStorage2ListObjectStorageDomainsDefault Schema for error responses from the API.
+type ObjectStorage2ListObjectStorageDomainsDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2CreateNetwork Schema for creating a network with optional private UUID, name, type, and family.
-type ObjectStorage2CreateNetwork = ObjectStorage2NetworkCreate
+// ObjectStorage2ListObjectStorageGroupInlinePolicies200 Response schema for listing inline policies.
+type ObjectStorage2ListObjectStorageGroupInlinePolicies200 = ObjectStorage2InlinePolicyListResponse
 
-// ObjectStorage2CreatePolicy Schema for creating a policy with a name, description, and document.
-type ObjectStorage2CreatePolicy = ObjectStorage2PolicyCreate
+// ObjectStorage2ListObjectStorageGroupInlinePoliciesDefault Schema for error responses from the API.
+type ObjectStorage2ListObjectStorageGroupInlinePoliciesDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2CreatePolicyVersion Schema for creating a new version of a policy.
-type ObjectStorage2CreatePolicyVersion = ObjectStorage2PolicyVersionCreate
+// ObjectStorage2ListObjectStorageGroups200 Response schema for listing groups.
+type ObjectStorage2ListObjectStorageGroups200 = ObjectStorage2GroupListResponse
 
-// ObjectStorage2CreateRole Schema for creating a new role.
-type ObjectStorage2CreateRole = ObjectStorage2RoleCreate
+// ObjectStorage2ListObjectStorageGroupsDefault Schema for error responses from the API.
+type ObjectStorage2ListObjectStorageGroupsDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2CreateRoleInlinePolicy Schema for creating an inline policy.
-type ObjectStorage2CreateRoleInlinePolicy = ObjectStorage2InlinePolicyCreate
+// ObjectStorage2ListObjectStorageIAMGroupPolicies200 Response schema for listing policy attachments.
+type ObjectStorage2ListObjectStorageIAMGroupPolicies200 = ObjectStorage2PolicyAttachmentListResponse
 
-// ObjectStorage2CreateRolePermissionsBoundary Schema for creating a permissions boundary with a specified policy name.
-type ObjectStorage2CreateRolePermissionsBoundary = ObjectStorage2PermissionsBoundaryCreate
+// ObjectStorage2ListObjectStorageIAMGroupPoliciesDefault Schema for error responses from the API.
+type ObjectStorage2ListObjectStorageIAMGroupPoliciesDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2CreateService Schema for creating a service, including name, region, status, networks, domains, labels, and properties.
-type ObjectStorage2CreateService = ObjectStorage2ServiceCreate
+// ObjectStorage2ListObjectStorageLabels200 Response schema for listing labels.
+type ObjectStorage2ListObjectStorageLabels200 = ObjectStorage2LabelListResponse
 
-// ObjectStorage2CreateStaticWebsite Request body for creating a static website configuration. If domain is omitted, the primary static website domain is used.
-type ObjectStorage2CreateStaticWebsite = ObjectStorage2StaticWebsiteConfigCreate
+// ObjectStorage2ListObjectStorageLabelsDefault Schema for error responses from the API.
+type ObjectStorage2ListObjectStorageLabelsDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2CreateUser Schema for creating a new user.
-type ObjectStorage2CreateUser = ObjectStorage2UserCreate
+// ObjectStorage2ListObjectStorageMetricsSeries200 Response schema for listing metrics series.
+type ObjectStorage2ListObjectStorageMetricsSeries200 = ObjectStorage2MetricsSeriesListResponse
 
-// ObjectStorage2CreateUserInlinePolicy Schema for creating an inline policy.
-type ObjectStorage2CreateUserInlinePolicy = ObjectStorage2InlinePolicyCreate
+// ObjectStorage2ListObjectStorageMetricsSeriesDefault Schema for error responses from the API.
+type ObjectStorage2ListObjectStorageMetricsSeriesDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2CreateUserPermissionsBoundary Schema for creating a permissions boundary with a specified policy name.
-type ObjectStorage2CreateUserPermissionsBoundary = ObjectStorage2PermissionsBoundaryCreate
+// ObjectStorage2ListObjectStorageNetworks200 Response schema for a list of network details.
+type ObjectStorage2ListObjectStorageNetworks200 = ObjectStorage2NetworkListResponse
 
-// ObjectStorage2ModifyAccessKeyDetails Schema for modifying an access key.
-type ObjectStorage2ModifyAccessKeyDetails = ObjectStorage2AccessKeyModify
+// ObjectStorage2ListObjectStorageNetworksDefault Schema for error responses from the API.
+type ObjectStorage2ListObjectStorageNetworksDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ModifyCustomDomain Schema for modifying a custom domain.
-type ObjectStorage2ModifyCustomDomain = ObjectStorage2CustomDomainModify
+// ObjectStorage2ListObjectStoragePolicies200 Response schema for listing policies.
+type ObjectStorage2ListObjectStoragePolicies200 = ObjectStorage2PolicyListResponse
 
-// ObjectStorage2ModifyLabel Schema for modifying a label with a key-value pair.
-type ObjectStorage2ModifyLabel = ObjectStorage2LabelModify
+// ObjectStorage2ListObjectStoragePoliciesDefault Schema for error responses from the API.
+type ObjectStorage2ListObjectStoragePoliciesDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ModifyService Schema for modifying a service, including name, status, networks, domains, labels, and properties.
-type ObjectStorage2ModifyService = ObjectStorage2ServiceModify
+// ObjectStorage2ListObjectStoragePolicyVersions200 Response schema for a list of policy versions.
+type ObjectStorage2ListObjectStoragePolicyVersions200 = ObjectStorage2PolicyVersionListResponse
 
-// ObjectStorage2ModifyStaticWebsite Request body for updating a static website configuration
-type ObjectStorage2ModifyStaticWebsite = ObjectStorage2StaticWebsiteConfigModify
+// ObjectStorage2ListObjectStoragePolicyVersionsDefault Schema for error responses from the API.
+type ObjectStorage2ListObjectStoragePolicyVersionsDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ReplaceRoleTags Schema for a list of tags to apply to a resource.
-type ObjectStorage2ReplaceRoleTags = ObjectStorage2TagListRequest
+// ObjectStorage2ListObjectStorageRegions200 Response schema for listing regions.
+type ObjectStorage2ListObjectStorageRegions200 = ObjectStorage2RegionListResponse
 
-// ObjectStorage2ReplaceService Schema for replacing a service, including name, status, networks, domains, labels, and properties.
-type ObjectStorage2ReplaceService = ObjectStorage2ServiceReplace
+// ObjectStorage2ListObjectStorageRegionsDefault Schema for error responses from the API.
+type ObjectStorage2ListObjectStorageRegionsDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2ReplaceUserTags Schema for a list of tags to apply to a resource.
-type ObjectStorage2ReplaceUserTags = ObjectStorage2TagListRequest
+// ObjectStorage2ListObjectStorageRoleInlinePolicies200 Response schema for listing inline policies.
+type ObjectStorage2ListObjectStorageRoleInlinePolicies200 = ObjectStorage2InlinePolicyListResponse
 
-// ObjectStorage2SetDefaultPolicyVersion Schema for setting a default version of a policy.
-type ObjectStorage2SetDefaultPolicyVersion = ObjectStorage2PolicySetDefaultVersion
+// ObjectStorage2ListObjectStorageRoleInlinePoliciesDefault Schema for error responses from the API.
+type ObjectStorage2ListObjectStorageRoleInlinePoliciesDefault = ObjectStorage2ErrorResponse
 
-// ObjectStorage2UpdateRole Schema for updating an existing role.
-type ObjectStorage2UpdateRole = ObjectStorage2RoleUpdate
+// ObjectStorage2ListObjectStorageRoles200 Response schema for listing roles.
+type ObjectStorage2ListObjectStorageRoles200 = ObjectStorage2RoleListResponse
+
+// ObjectStorage2ListObjectStorageRolesDefault Schema for error responses from the API.
+type ObjectStorage2ListObjectStorageRolesDefault = ObjectStorage2ErrorResponse
+
+// ObjectStorage2ListObjectStorageStaticWebsitesDefault Schema for error responses from the API.
+type ObjectStorage2ListObjectStorageStaticWebsitesDefault = ObjectStorage2ErrorResponse
+
+// ObjectStorage2ListObjectStorageUserInlinePolicies200 Response schema for listing inline policies.
+type ObjectStorage2ListObjectStorageUserInlinePolicies200 = ObjectStorage2InlinePolicyListResponse
+
+// ObjectStorage2ListObjectStorageUserInlinePoliciesDefault Schema for error responses from the API.
+type ObjectStorage2ListObjectStorageUserInlinePoliciesDefault = ObjectStorage2ErrorResponse
+
+// ObjectStorage2ListObjectStorageUsers200 Response schema for listing users.
+type ObjectStorage2ListObjectStorageUsers200 = ObjectStorage2UserListResponse
+
+// ObjectStorage2ListObjectStorageUsersDefault Schema for error responses from the API.
+type ObjectStorage2ListObjectStorageUsersDefault = ObjectStorage2ErrorResponse
+
+// ObjectStorage2ListObjectStorages200 Response schema for a list of services.
+type ObjectStorage2ListObjectStorages200 = ObjectStorage2ServiceListResponse
+
+// ObjectStorage2ListObjectStoragesDefault Schema for error responses from the API.
+type ObjectStorage2ListObjectStoragesDefault = ObjectStorage2ErrorResponse
+
+// ObjectStorage2ModifyObjectStorageAccessKeyDetails200 Response schema for access key details.
+type ObjectStorage2ModifyObjectStorageAccessKeyDetails200 = ObjectStorage2AccessKeyDetailResponse
+
+// ObjectStorage2ModifyObjectStorageAccessKeyDetailsDefault Schema for error responses from the API.
+type ObjectStorage2ModifyObjectStorageAccessKeyDetailsDefault = ObjectStorage2ErrorResponse
+
+// ObjectStorage2ModifyObjectStorageCustomDomain200 Response schema for custom domain details.
+type ObjectStorage2ModifyObjectStorageCustomDomain200 = ObjectStorage2CustomDomainDetailResponse
+
+// ObjectStorage2ModifyObjectStorageCustomDomainDefault Schema for error responses from the API.
+type ObjectStorage2ModifyObjectStorageCustomDomainDefault = ObjectStorage2ErrorResponse
+
+// ObjectStorage2ModifyObjectStorageDefault Schema for error responses from the API.
+type ObjectStorage2ModifyObjectStorageDefault = ObjectStorage2ErrorResponse
+
+// ObjectStorage2ModifyObjectStorageLabel200 Schema for label details including key-value pairs.
+type ObjectStorage2ModifyObjectStorageLabel200 = ObjectStorage2LabelDetailResponse
+
+// ObjectStorage2ModifyObjectStorageLabelDefault Schema for error responses from the API.
+type ObjectStorage2ModifyObjectStorageLabelDefault = ObjectStorage2ErrorResponse
+
+// ObjectStorage2ModifyObjectStorageStaticWebsite200 Static website hosting configuration for a specific domain.
+type ObjectStorage2ModifyObjectStorageStaticWebsite200 = ObjectStorage2StaticWebsiteConfig
+
+// ObjectStorage2ModifyObjectStorageStaticWebsiteDefault Schema for error responses from the API.
+type ObjectStorage2ModifyObjectStorageStaticWebsiteDefault = ObjectStorage2ErrorResponse
+
+// ObjectStorage2RemoveObjectStorageUserFromGroupDefault Schema for error responses from the API.
+type ObjectStorage2RemoveObjectStorageUserFromGroupDefault = ObjectStorage2ErrorResponse
+
+// ObjectStorage2ReplaceObjectStorageDefault Schema for error responses from the API.
+type ObjectStorage2ReplaceObjectStorageDefault = ObjectStorage2ErrorResponse
+
+// ObjectStorage2ReplaceObjectStorageRoleTags200 Response schema for listing tags associated with a resource.
+type ObjectStorage2ReplaceObjectStorageRoleTags200 = ObjectStorage2TagListResponse
+
+// ObjectStorage2ReplaceObjectStorageRoleTagsDefault Schema for error responses from the API.
+type ObjectStorage2ReplaceObjectStorageRoleTagsDefault = ObjectStorage2ErrorResponse
+
+// ObjectStorage2ReplaceObjectStorageUserTags200 Response schema for listing tags associated with a resource.
+type ObjectStorage2ReplaceObjectStorageUserTags200 = ObjectStorage2TagListResponse
+
+// ObjectStorage2ReplaceObjectStorageUserTagsDefault Schema for error responses from the API.
+type ObjectStorage2ReplaceObjectStorageUserTagsDefault = ObjectStorage2ErrorResponse
+
+// ObjectStorage2SetObjectStorageDefaultPolicyVersion200 Schema for policy details including ARN, attachment count, creation date, default version ID, description, document, name, system status, and last updated date.
+type ObjectStorage2SetObjectStorageDefaultPolicyVersion200 = ObjectStorage2PolicyDetailResponse
+
+// ObjectStorage2SetObjectStorageDefaultPolicyVersionDefault Schema for error responses from the API.
+type ObjectStorage2SetObjectStorageDefaultPolicyVersionDefault = ObjectStorage2ErrorResponse
+
+// ObjectStorage2UpdateObjectStorageRole200 Response schema for detailed information about a specific role.
+type ObjectStorage2UpdateObjectStorageRole200 = ObjectStorage2RoleResponse
+
+// ObjectStorage2UpdateObjectStorageRoleDefault Schema for error responses from the API.
+type ObjectStorage2UpdateObjectStorageRoleDefault = ObjectStorage2ErrorResponse
+
+// ReplaceObjectStorage200 Response schema for service details, including UUID, name, and endpoints.
+type ReplaceObjectStorage200 = ObjectStorage2ServiceDetailResponse
+
+// RestoreFirewallRuleset200 Response schema for firewall ruleset details, including UUID, name, description, stateful, enabled, labels and serverUUID.
+type RestoreFirewallRuleset200 = FirewallRulesetDetailResponse
+
+// RestoreFirewallRulesetDefault Schema for error responses from the API.
+type RestoreFirewallRulesetDefault = FirewallRulesetErrorResponse
+
+// CreateFirewallRulesetRequestBody Create firewall ruleset
+type CreateFirewallRulesetRequestBody = CreateFirewallRuleset
+
+// CreateFirewallRulesetLabel UpCloud firewall ruleset Label
+type CreateFirewallRulesetLabel = FirewallRulesetCreateLabel
+
+// CreateFirewallRulesetRule defines model for createFirewallRulesetRule.
+type CreateFirewallRulesetRule = FirewallRulesetFirewallRuleCreate
+
+// FirewallRulesetAdminListServerFirewallRules defines model for firewallRulesetAdminListServerFirewallRules.
+type FirewallRulesetAdminListServerFirewallRules = FirewallRulesetServerFirewallRuleCreate
+
+// FirewallRulesetCreateMultipleServerFirewallRules Creates multiple server firewall rules.
+type FirewallRulesetCreateMultipleServerFirewallRules = FirewallRulesetServerMultipleFirewallRulesCreate
+
+// FirewallRulesetCreateServerFirewallRule defines model for firewallRulesetCreateServerFirewallRule.
+type FirewallRulesetCreateServerFirewallRule = FirewallRulesetServerFirewallRuleCreate
+
+// ModifyFirewallRuleset Modify firewall ruleset
+type ModifyFirewallRuleset = FirewallRulesetModify
+
+// ModifyFirewallRulesetLabel Schema for modifying a label with a key-value pair.
+type ModifyFirewallRulesetLabel = FirewallRulesetLabelModify
+
+// ModifyFirewallRulesetRule defines model for modifyFirewallRulesetRule.
+type ModifyFirewallRulesetRule = FirewallRulesetFirewallRuleModify
+
+// ObjectStorage2AssumeObjectStorageRolePolicy Schema for the request to assume a role with a policy document.
+type ObjectStorage2AssumeObjectStorageRolePolicy = ObjectStorage2AssumeRolePolicyRequest
+
+// ObjectStorage2AttachObjectStorageCustomDomain Schema for creating a custom domain.
+type ObjectStorage2AttachObjectStorageCustomDomain = ObjectStorage2CustomDomainCreate
+
+// ObjectStorage2AttachObjectStorageIAMGroupPolicy Schema for creating a policy attachment.
+type ObjectStorage2AttachObjectStorageIAMGroupPolicy = ObjectStorage2PolicyAttachmentCreate
+
+// ObjectStorage2AttachObjectStoragePolicyToRole Schema for creating a policy attachment.
+type ObjectStorage2AttachObjectStoragePolicyToRole = ObjectStorage2PolicyAttachmentCreate
+
+// ObjectStorage2AttachObjectStorageUserPolicy Schema for creating a policy attachment.
+type ObjectStorage2AttachObjectStorageUserPolicy = ObjectStorage2PolicyAttachmentCreate
+
+// ObjectStorage2CreateObjectStorage Schema for creating a service, including name, region, status, networks, domains, labels, and properties.
+type ObjectStorage2CreateObjectStorage = ObjectStorage2ServiceCreate
+
+// ObjectStorage2CreateObjectStorageBucket Schema for creating a new bucket.
+type ObjectStorage2CreateObjectStorageBucket = ObjectStorage2BucketCreate
+
+// ObjectStorage2CreateObjectStorageGroup Schema for creating a new IAM group.
+type ObjectStorage2CreateObjectStorageGroup = ObjectStorage2GroupCreate
+
+// ObjectStorage2CreateObjectStorageGroupInlinePolicy Schema for creating an inline policy.
+type ObjectStorage2CreateObjectStorageGroupInlinePolicy = ObjectStorage2InlinePolicyCreate
+
+// ObjectStorage2CreateObjectStorageLabel Schema for creating a label with a key-value pair.
+type ObjectStorage2CreateObjectStorageLabel = ObjectStorage2LabelCreate
+
+// ObjectStorage2CreateObjectStorageNetwork Schema for creating a network with optional private UUID, name, type, and family.
+type ObjectStorage2CreateObjectStorageNetwork = ObjectStorage2NetworkCreate
+
+// ObjectStorage2CreateObjectStoragePolicy Schema for creating a policy with a name, description, and document.
+type ObjectStorage2CreateObjectStoragePolicy = ObjectStorage2PolicyCreate
+
+// ObjectStorage2CreateObjectStoragePolicyVersion Schema for creating a new version of a policy.
+type ObjectStorage2CreateObjectStoragePolicyVersion = ObjectStorage2PolicyVersionCreate
+
+// ObjectStorage2CreateObjectStorageRole Schema for creating a new role.
+type ObjectStorage2CreateObjectStorageRole = ObjectStorage2RoleCreate
+
+// ObjectStorage2CreateObjectStorageRoleInlinePolicy Schema for creating an inline policy.
+type ObjectStorage2CreateObjectStorageRoleInlinePolicy = ObjectStorage2InlinePolicyCreate
+
+// ObjectStorage2CreateObjectStorageRolePermissionsBoundary Schema for creating a permissions boundary with a specified policy name.
+type ObjectStorage2CreateObjectStorageRolePermissionsBoundary = ObjectStorage2PermissionsBoundaryCreate
+
+// ObjectStorage2CreateObjectStorageStaticWebsite Request body for creating a static website configuration. If domain is omitted, the primary static website domain is used.
+type ObjectStorage2CreateObjectStorageStaticWebsite = ObjectStorage2StaticWebsiteConfigCreate
+
+// ObjectStorage2CreateObjectStorageUser Schema for creating a new user.
+type ObjectStorage2CreateObjectStorageUser = ObjectStorage2UserCreate
+
+// ObjectStorage2CreateObjectStorageUserInlinePolicy Schema for creating an inline policy.
+type ObjectStorage2CreateObjectStorageUserInlinePolicy = ObjectStorage2InlinePolicyCreate
+
+// ObjectStorage2CreateObjectStorageUserPermissionsBoundary Schema for creating a permissions boundary with a specified policy name.
+type ObjectStorage2CreateObjectStorageUserPermissionsBoundary = ObjectStorage2PermissionsBoundaryCreate
+
+// ObjectStorage2ModifyObjectStorage Schema for modifying a service, including name, status, networks, domains, labels, and properties.
+type ObjectStorage2ModifyObjectStorage = ObjectStorage2ServiceModify
+
+// ObjectStorage2ModifyObjectStorageAccessKeyDetails Schema for modifying an access key.
+type ObjectStorage2ModifyObjectStorageAccessKeyDetails = ObjectStorage2AccessKeyModify
+
+// ObjectStorage2ModifyObjectStorageCustomDomain Schema for modifying a custom domain.
+type ObjectStorage2ModifyObjectStorageCustomDomain = ObjectStorage2CustomDomainModify
+
+// ObjectStorage2ModifyObjectStorageLabel Schema for modifying a label with a key-value pair.
+type ObjectStorage2ModifyObjectStorageLabel = ObjectStorage2LabelModify
+
+// ObjectStorage2ModifyObjectStorageStaticWebsite Request body for updating a static website configuration
+type ObjectStorage2ModifyObjectStorageStaticWebsite = ObjectStorage2StaticWebsiteConfigModify
+
+// ObjectStorage2ReplaceObjectStorage Schema for replacing a service, including name, status, networks, domains, labels, and properties.
+type ObjectStorage2ReplaceObjectStorage = ObjectStorage2ServiceReplace
+
+// ObjectStorage2ReplaceObjectStorageRoleTags Schema for a list of tags to apply to a resource.
+type ObjectStorage2ReplaceObjectStorageRoleTags = ObjectStorage2TagListRequest
+
+// ObjectStorage2ReplaceObjectStorageUserTags Schema for a list of tags to apply to a resource.
+type ObjectStorage2ReplaceObjectStorageUserTags = ObjectStorage2TagListRequest
+
+// ObjectStorage2SetObjectStorageDefaultPolicyVersion Schema for setting a default version of a policy.
+type ObjectStorage2SetObjectStorageDefaultPolicyVersion = ObjectStorage2PolicySetDefaultVersion
+
+// ObjectStorage2UpdateObjectStorageRole Schema for updating an existing role.
+type ObjectStorage2UpdateObjectStorageRole = ObjectStorage2RoleUpdate
+
+// ListFirewallRulesetsParams defines parameters for ListFirewallRulesets.
+type ListFirewallRulesetsParams struct {
+	// Limit Number of entries to receive at most.
+	Limit *ListFirewallRulesetsLimit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Offset Offset for retrieved results.
+	Offset *ListFirewallRulesetsOffset `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// Sort Order of returned results.
+	Sort *ListFirewallRulesetsSort `form:"sort,omitempty" json:"sort,omitempty"`
+}
+
+// ListServerFirewallRuleParams defines parameters for ListServerFirewallRule.
+type ListServerFirewallRuleParams struct {
+	// Limit Number of entries to receive at most.
+	Limit *FirewallRulesetListServerFirewallRuleLimit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Offset Offset for retrieved results.
+	Offset *FirewallRulesetListServerFirewallRuleOffset `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// Sort Order of returned results.
+	Sort *FirewallRulesetListServerFirewallRuleSort `form:"sort,omitempty" json:"sort,omitempty"`
+}
+
+// ListFirewallRulesetRulesParams defines parameters for ListFirewallRulesetRules.
+type ListFirewallRulesetRulesParams struct {
+	// Limit Number of entries to receive at most.
+	Limit *ListFirewallRulesetRulesLimit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Offset Offset for retrieved results.
+	Offset *ListFirewallRulesetRulesOffset `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// Sort Order of returned results.
+	Sort *ListFirewallRulesetRulesSort `form:"sort,omitempty" json:"sort,omitempty"`
+}
 
 // ListObjectStoragesParams defines parameters for ListObjectStorages.
 type ListObjectStoragesParams struct {
 	// Limit Number of entries to receive at most.
-	Limit *ObjectStorage2ListServicesLimit `form:"limit,omitempty" json:"limit,omitempty"`
+	Limit *ObjectStorage2ListObjectStoragesLimit `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Offset Offset for retrieved results.
-	Offset *ObjectStorage2ListServicesOffset `form:"offset,omitempty" json:"offset,omitempty"`
+	Offset *ObjectStorage2ListObjectStoragesOffset `form:"offset,omitempty" json:"offset,omitempty"`
 
 	// Sort Order of returned results.
-	Sort *ObjectStorage2ListServicesSort `form:"sort,omitempty" json:"sort,omitempty"`
+	Sort *ObjectStorage2ListObjectStoragesSort `form:"sort,omitempty" json:"sort,omitempty"`
 }
 
 // DeleteObjectStorageParams defines parameters for DeleteObjectStorage.
 type DeleteObjectStorageParams struct {
 	// Force If the parameter is provided, the deletion process starts even if the service is not empty.
-	Force *ObjectStorage2DeleteServiceForce `form:"force,omitempty" json:"force,omitempty"`
+	Force *ObjectStorage2DeleteObjectStorageForce `form:"force,omitempty" json:"force,omitempty"`
 }
 
 // ListObjectStorageBucketMetricsParams defines parameters for ListObjectStorageBucketMetrics.
 type ListObjectStorageBucketMetricsParams struct {
 	// Limit Number of entries to receive at most.
-	Limit *ObjectStorage2ListBucketMetricsLimit `form:"limit,omitempty" json:"limit,omitempty"`
+	Limit *ObjectStorage2ListObjectStorageBucketMetricsLimit `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Offset Offset for retrieved results.
-	Offset *ObjectStorage2ListBucketMetricsOffset `form:"offset,omitempty" json:"offset,omitempty"`
+	Offset *ObjectStorage2ListObjectStorageBucketMetricsOffset `form:"offset,omitempty" json:"offset,omitempty"`
 }
 
 // ListObjectStorageMetricsSeriesParams defines parameters for ListObjectStorageMetricsSeries.
 type ListObjectStorageMetricsSeriesParams struct {
 	// From Beginning of the time range for which to return metrics.
-	From *ObjectStorage2ListServiceMetricsSeriesFrom `form:"from,omitempty" json:"from,omitempty"`
+	From *ObjectStorage2ListObjectStorageMetricsSeriesFrom `form:"from,omitempty" json:"from,omitempty"`
 
 	// To End of the time range for which to return metrics.
-	To *ObjectStorage2ListServiceMetricsSeriesTo `form:"to,omitempty" json:"to,omitempty"`
+	To *ObjectStorage2ListObjectStorageMetricsSeriesTo `form:"to,omitempty" json:"to,omitempty"`
 
 	// Interval Metrics aggregation interval.
-	Interval *ObjectStorage2ListServiceMetricsSeriesInterval `form:"interval,omitempty" json:"interval,omitempty"`
+	Interval *ObjectStorage2ListObjectStorageMetricsSeriesInterval `form:"interval,omitempty" json:"interval,omitempty"`
 
 	// Sort Order of returned results.
-	Sort *ObjectStorage2ListServiceMetricsSeriesSort `form:"sort,omitempty" json:"sort,omitempty"`
+	Sort *ObjectStorage2ListObjectStorageMetricsSeriesSort `form:"sort,omitempty" json:"sort,omitempty"`
 
 	// Limit Number of entries to receive at most.
-	Limit *ObjectStorage2ListServiceMetricsSeriesLimit `form:"limit,omitempty" json:"limit,omitempty"`
+	Limit *ObjectStorage2ListObjectStorageMetricsSeriesLimit `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Offset Offset for retrieved results.
-	Offset *ObjectStorage2ListServiceMetricsSeriesOffset `form:"offset,omitempty" json:"offset,omitempty"`
+	Offset *ObjectStorage2ListObjectStorageMetricsSeriesOffset `form:"offset,omitempty" json:"offset,omitempty"`
 }
+
+// CreateFirewallRulesetJSONRequestBody defines body for CreateFirewallRuleset for application/json ContentType.
+type CreateFirewallRulesetJSONRequestBody = CreateFirewallRuleset
+
+// AdminListServerFirewallRulesJSONRequestBody defines body for AdminListServerFirewallRules for application/json ContentType.
+type AdminListServerFirewallRulesJSONRequestBody = FirewallRulesetServerFirewallRuleCreate
+
+// CreateServerFirewallRuleJSONRequestBody defines body for CreateServerFirewallRule for application/json ContentType.
+type CreateServerFirewallRuleJSONRequestBody = FirewallRulesetServerFirewallRuleCreate
+
+// CreateMultipleServerFirewallRulesJSONRequestBody defines body for CreateMultipleServerFirewallRules for application/json ContentType.
+type CreateMultipleServerFirewallRulesJSONRequestBody = FirewallRulesetServerMultipleFirewallRulesCreate
+
+// ModifyFirewallRulesetJSONRequestBody defines body for ModifyFirewallRuleset for application/json ContentType.
+type ModifyFirewallRulesetJSONRequestBody = FirewallRulesetModify
+
+// CreateFirewallRulesetLabelJSONRequestBody defines body for CreateFirewallRulesetLabel for application/json ContentType.
+type CreateFirewallRulesetLabelJSONRequestBody = FirewallRulesetCreateLabel
+
+// ModifyFirewallRulesetLabelJSONRequestBody defines body for ModifyFirewallRulesetLabel for application/json ContentType.
+type ModifyFirewallRulesetLabelJSONRequestBody = FirewallRulesetLabelModify
+
+// CreateFirewallRulesetRuleJSONRequestBody defines body for CreateFirewallRulesetRule for application/json ContentType.
+type CreateFirewallRulesetRuleJSONRequestBody = FirewallRulesetFirewallRuleCreate
+
+// ModifyFirewallRulesetRuleJSONRequestBody defines body for ModifyFirewallRulesetRule for application/json ContentType.
+type ModifyFirewallRulesetRuleJSONRequestBody = FirewallRulesetFirewallRuleModify
 
 // CreateObjectStorageJSONRequestBody defines body for CreateObjectStorage for application/json ContentType.
 type CreateObjectStorageJSONRequestBody = ObjectStorage2ServiceCreate
@@ -2390,11 +3456,11 @@ type AttachObjectStoragePolicyToRoleJSONRequestBody = ObjectStorage2PolicyAttach
 // ReplaceObjectStorageRoleTagsJSONRequestBody defines body for ReplaceObjectStorageRoleTags for application/json ContentType.
 type ReplaceObjectStorageRoleTagsJSONRequestBody = ObjectStorage2TagListRequest
 
-// CreateStaticWebsiteJSONRequestBody defines body for CreateStaticWebsite for application/json ContentType.
-type CreateStaticWebsiteJSONRequestBody = ObjectStorage2StaticWebsiteConfigCreate
+// CreateObjectStorageStaticWebsiteJSONRequestBody defines body for CreateObjectStorageStaticWebsite for application/json ContentType.
+type CreateObjectStorageStaticWebsiteJSONRequestBody = ObjectStorage2StaticWebsiteConfigCreate
 
-// ModifyStaticWebsiteJSONRequestBody defines body for ModifyStaticWebsite for application/json ContentType.
-type ModifyStaticWebsiteJSONRequestBody = ObjectStorage2StaticWebsiteConfigModify
+// ModifyObjectStorageStaticWebsiteJSONRequestBody defines body for ModifyObjectStorageStaticWebsite for application/json ContentType.
+type ModifyObjectStorageStaticWebsiteJSONRequestBody = ObjectStorage2StaticWebsiteConfigModify
 
 // CreateObjectStorageUserJSONRequestBody defines body for CreateObjectStorageUser for application/json ContentType.
 type CreateObjectStorageUserJSONRequestBody = ObjectStorage2UserCreate
@@ -2413,6 +3479,1641 @@ type AttachObjectStorageUserPolicyJSONRequestBody = ObjectStorage2PolicyAttachme
 
 // ReplaceObjectStorageUserTagsJSONRequestBody defines body for ReplaceObjectStorageUserTags for application/json ContentType.
 type ReplaceObjectStorageUserTagsJSONRequestBody = ObjectStorage2TagListRequest
+
+// Getter for additional properties for FirewallRulesetFirewallRuleModify. Returns the specified
+// element and whether it was found
+func (a FirewallRulesetFirewallRuleModify) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for FirewallRulesetFirewallRuleModify
+func (a *FirewallRulesetFirewallRuleModify) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for FirewallRulesetFirewallRuleModify to handle AdditionalProperties
+func (a *FirewallRulesetFirewallRuleModify) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["action"]; found {
+		err = json.Unmarshal(raw, &a.Action)
+		if err != nil {
+			return fmt.Errorf("error reading 'action': %w", err)
+		}
+		delete(object, "action")
+	}
+
+	if raw, found := object["comment"]; found {
+		err = json.Unmarshal(raw, &a.Comment)
+		if err != nil {
+			return fmt.Errorf("error reading 'comment': %w", err)
+		}
+		delete(object, "comment")
+	}
+
+	if raw, found := object["destination_address_cidr"]; found {
+		err = json.Unmarshal(raw, &a.DestinationAddressCidr)
+		if err != nil {
+			return fmt.Errorf("error reading 'destination_address_cidr': %w", err)
+		}
+		delete(object, "destination_address_cidr")
+	}
+
+	if raw, found := object["destination_address_end"]; found {
+		err = json.Unmarshal(raw, &a.DestinationAddressEnd)
+		if err != nil {
+			return fmt.Errorf("error reading 'destination_address_end': %w", err)
+		}
+		delete(object, "destination_address_end")
+	}
+
+	if raw, found := object["destination_address_start"]; found {
+		err = json.Unmarshal(raw, &a.DestinationAddressStart)
+		if err != nil {
+			return fmt.Errorf("error reading 'destination_address_start': %w", err)
+		}
+		delete(object, "destination_address_start")
+	}
+
+	if raw, found := object["destination_port_end"]; found {
+		err = json.Unmarshal(raw, &a.DestinationPortEnd)
+		if err != nil {
+			return fmt.Errorf("error reading 'destination_port_end': %w", err)
+		}
+		delete(object, "destination_port_end")
+	}
+
+	if raw, found := object["destination_port_start"]; found {
+		err = json.Unmarshal(raw, &a.DestinationPortStart)
+		if err != nil {
+			return fmt.Errorf("error reading 'destination_port_start': %w", err)
+		}
+		delete(object, "destination_port_start")
+	}
+
+	if raw, found := object["direction"]; found {
+		err = json.Unmarshal(raw, &a.Direction)
+		if err != nil {
+			return fmt.Errorf("error reading 'direction': %w", err)
+		}
+		delete(object, "direction")
+	}
+
+	if raw, found := object["enabled"]; found {
+		err = json.Unmarshal(raw, &a.Enabled)
+		if err != nil {
+			return fmt.Errorf("error reading 'enabled': %w", err)
+		}
+		delete(object, "enabled")
+	}
+
+	if raw, found := object["family"]; found {
+		err = json.Unmarshal(raw, &a.Family)
+		if err != nil {
+			return fmt.Errorf("error reading 'family': %w", err)
+		}
+		delete(object, "family")
+	}
+
+	if raw, found := object["icmp_type"]; found {
+		err = json.Unmarshal(raw, &a.IcmpType)
+		if err != nil {
+			return fmt.Errorf("error reading 'icmp_type': %w", err)
+		}
+		delete(object, "icmp_type")
+	}
+
+	if raw, found := object["position"]; found {
+		err = json.Unmarshal(raw, &a.Position)
+		if err != nil {
+			return fmt.Errorf("error reading 'position': %w", err)
+		}
+		delete(object, "position")
+	}
+
+	if raw, found := object["protocol"]; found {
+		err = json.Unmarshal(raw, &a.Protocol)
+		if err != nil {
+			return fmt.Errorf("error reading 'protocol': %w", err)
+		}
+		delete(object, "protocol")
+	}
+
+	if raw, found := object["source_address_cidr"]; found {
+		err = json.Unmarshal(raw, &a.SourceAddressCidr)
+		if err != nil {
+			return fmt.Errorf("error reading 'source_address_cidr': %w", err)
+		}
+		delete(object, "source_address_cidr")
+	}
+
+	if raw, found := object["source_address_end"]; found {
+		err = json.Unmarshal(raw, &a.SourceAddressEnd)
+		if err != nil {
+			return fmt.Errorf("error reading 'source_address_end': %w", err)
+		}
+		delete(object, "source_address_end")
+	}
+
+	if raw, found := object["source_address_start"]; found {
+		err = json.Unmarshal(raw, &a.SourceAddressStart)
+		if err != nil {
+			return fmt.Errorf("error reading 'source_address_start': %w", err)
+		}
+		delete(object, "source_address_start")
+	}
+
+	if raw, found := object["source_port_end"]; found {
+		err = json.Unmarshal(raw, &a.SourcePortEnd)
+		if err != nil {
+			return fmt.Errorf("error reading 'source_port_end': %w", err)
+		}
+		delete(object, "source_port_end")
+	}
+
+	if raw, found := object["source_port_start"]; found {
+		err = json.Unmarshal(raw, &a.SourcePortStart)
+		if err != nil {
+			return fmt.Errorf("error reading 'source_port_start': %w", err)
+		}
+		delete(object, "source_port_start")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for FirewallRulesetFirewallRuleModify to handle AdditionalProperties
+func (a FirewallRulesetFirewallRuleModify) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	object["action"], err = json.Marshal(a.Action)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'action': %w", err)
+	}
+
+	if a.Comment != nil {
+		object["comment"], err = json.Marshal(a.Comment)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'comment': %w", err)
+		}
+	}
+
+	if a.DestinationAddressCidr != nil {
+		object["destination_address_cidr"], err = json.Marshal(a.DestinationAddressCidr)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'destination_address_cidr': %w", err)
+		}
+	}
+
+	if a.DestinationAddressEnd != nil {
+		object["destination_address_end"], err = json.Marshal(a.DestinationAddressEnd)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'destination_address_end': %w", err)
+		}
+	}
+
+	if a.DestinationAddressStart != nil {
+		object["destination_address_start"], err = json.Marshal(a.DestinationAddressStart)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'destination_address_start': %w", err)
+		}
+	}
+
+	if a.DestinationPortEnd != nil {
+		object["destination_port_end"], err = json.Marshal(a.DestinationPortEnd)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'destination_port_end': %w", err)
+		}
+	}
+
+	if a.DestinationPortStart != nil {
+		object["destination_port_start"], err = json.Marshal(a.DestinationPortStart)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'destination_port_start': %w", err)
+		}
+	}
+
+	object["direction"], err = json.Marshal(a.Direction)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'direction': %w", err)
+	}
+
+	if a.Enabled != nil {
+		object["enabled"], err = json.Marshal(a.Enabled)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'enabled': %w", err)
+		}
+	}
+
+	object["family"], err = json.Marshal(a.Family)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'family': %w", err)
+	}
+
+	if a.IcmpType != nil {
+		object["icmp_type"], err = json.Marshal(a.IcmpType)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'icmp_type': %w", err)
+		}
+	}
+
+	if a.Position != nil {
+		object["position"], err = json.Marshal(a.Position)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'position': %w", err)
+		}
+	}
+
+	object["protocol"], err = json.Marshal(a.Protocol)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'protocol': %w", err)
+	}
+
+	if a.SourceAddressCidr != nil {
+		object["source_address_cidr"], err = json.Marshal(a.SourceAddressCidr)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'source_address_cidr': %w", err)
+		}
+	}
+
+	if a.SourceAddressEnd != nil {
+		object["source_address_end"], err = json.Marshal(a.SourceAddressEnd)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'source_address_end': %w", err)
+		}
+	}
+
+	if a.SourceAddressStart != nil {
+		object["source_address_start"], err = json.Marshal(a.SourceAddressStart)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'source_address_start': %w", err)
+		}
+	}
+
+	if a.SourcePortEnd != nil {
+		object["source_port_end"], err = json.Marshal(a.SourcePortEnd)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'source_port_end': %w", err)
+		}
+	}
+
+	if a.SourcePortStart != nil {
+		object["source_port_start"], err = json.Marshal(a.SourcePortStart)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'source_port_start': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// AsFirewallRulesetServerFirewallRuleDestinationAddressEnd0 returns the union data inside the FirewallRulesetServerFirewallRule_DestinationAddressEnd as a FirewallRulesetServerFirewallRuleDestinationAddressEnd0
+func (t FirewallRulesetServerFirewallRule_DestinationAddressEnd) AsFirewallRulesetServerFirewallRuleDestinationAddressEnd0() (FirewallRulesetServerFirewallRuleDestinationAddressEnd0, error) {
+	var body FirewallRulesetServerFirewallRuleDestinationAddressEnd0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleDestinationAddressEnd0 overwrites any union data inside the FirewallRulesetServerFirewallRule_DestinationAddressEnd as the provided FirewallRulesetServerFirewallRuleDestinationAddressEnd0
+func (t *FirewallRulesetServerFirewallRule_DestinationAddressEnd) FromFirewallRulesetServerFirewallRuleDestinationAddressEnd0(v FirewallRulesetServerFirewallRuleDestinationAddressEnd0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleDestinationAddressEnd0 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_DestinationAddressEnd, using the provided FirewallRulesetServerFirewallRuleDestinationAddressEnd0
+func (t *FirewallRulesetServerFirewallRule_DestinationAddressEnd) MergeFirewallRulesetServerFirewallRuleDestinationAddressEnd0(v FirewallRulesetServerFirewallRuleDestinationAddressEnd0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleDestinationAddressEnd1 returns the union data inside the FirewallRulesetServerFirewallRule_DestinationAddressEnd as a FirewallRulesetServerFirewallRuleDestinationAddressEnd1
+func (t FirewallRulesetServerFirewallRule_DestinationAddressEnd) AsFirewallRulesetServerFirewallRuleDestinationAddressEnd1() (FirewallRulesetServerFirewallRuleDestinationAddressEnd1, error) {
+	var body FirewallRulesetServerFirewallRuleDestinationAddressEnd1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleDestinationAddressEnd1 overwrites any union data inside the FirewallRulesetServerFirewallRule_DestinationAddressEnd as the provided FirewallRulesetServerFirewallRuleDestinationAddressEnd1
+func (t *FirewallRulesetServerFirewallRule_DestinationAddressEnd) FromFirewallRulesetServerFirewallRuleDestinationAddressEnd1(v FirewallRulesetServerFirewallRuleDestinationAddressEnd1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleDestinationAddressEnd1 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_DestinationAddressEnd, using the provided FirewallRulesetServerFirewallRuleDestinationAddressEnd1
+func (t *FirewallRulesetServerFirewallRule_DestinationAddressEnd) MergeFirewallRulesetServerFirewallRuleDestinationAddressEnd1(v FirewallRulesetServerFirewallRuleDestinationAddressEnd1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleDestinationAddressEnd2 returns the union data inside the FirewallRulesetServerFirewallRule_DestinationAddressEnd as a FirewallRulesetServerFirewallRuleDestinationAddressEnd2
+func (t FirewallRulesetServerFirewallRule_DestinationAddressEnd) AsFirewallRulesetServerFirewallRuleDestinationAddressEnd2() (FirewallRulesetServerFirewallRuleDestinationAddressEnd2, error) {
+	var body FirewallRulesetServerFirewallRuleDestinationAddressEnd2
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleDestinationAddressEnd2 overwrites any union data inside the FirewallRulesetServerFirewallRule_DestinationAddressEnd as the provided FirewallRulesetServerFirewallRuleDestinationAddressEnd2
+func (t *FirewallRulesetServerFirewallRule_DestinationAddressEnd) FromFirewallRulesetServerFirewallRuleDestinationAddressEnd2(v FirewallRulesetServerFirewallRuleDestinationAddressEnd2) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleDestinationAddressEnd2 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_DestinationAddressEnd, using the provided FirewallRulesetServerFirewallRuleDestinationAddressEnd2
+func (t *FirewallRulesetServerFirewallRule_DestinationAddressEnd) MergeFirewallRulesetServerFirewallRuleDestinationAddressEnd2(v FirewallRulesetServerFirewallRuleDestinationAddressEnd2) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleDestinationAddressEnd3 returns the union data inside the FirewallRulesetServerFirewallRule_DestinationAddressEnd as a FirewallRulesetServerFirewallRuleDestinationAddressEnd3
+func (t FirewallRulesetServerFirewallRule_DestinationAddressEnd) AsFirewallRulesetServerFirewallRuleDestinationAddressEnd3() (FirewallRulesetServerFirewallRuleDestinationAddressEnd3, error) {
+	var body FirewallRulesetServerFirewallRuleDestinationAddressEnd3
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleDestinationAddressEnd3 overwrites any union data inside the FirewallRulesetServerFirewallRule_DestinationAddressEnd as the provided FirewallRulesetServerFirewallRuleDestinationAddressEnd3
+func (t *FirewallRulesetServerFirewallRule_DestinationAddressEnd) FromFirewallRulesetServerFirewallRuleDestinationAddressEnd3(v FirewallRulesetServerFirewallRuleDestinationAddressEnd3) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleDestinationAddressEnd3 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_DestinationAddressEnd, using the provided FirewallRulesetServerFirewallRuleDestinationAddressEnd3
+func (t *FirewallRulesetServerFirewallRule_DestinationAddressEnd) MergeFirewallRulesetServerFirewallRuleDestinationAddressEnd3(v FirewallRulesetServerFirewallRuleDestinationAddressEnd3) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t FirewallRulesetServerFirewallRule_DestinationAddressEnd) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *FirewallRulesetServerFirewallRule_DestinationAddressEnd) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleDestinationAddressStart0 returns the union data inside the FirewallRulesetServerFirewallRule_DestinationAddressStart as a FirewallRulesetServerFirewallRuleDestinationAddressStart0
+func (t FirewallRulesetServerFirewallRule_DestinationAddressStart) AsFirewallRulesetServerFirewallRuleDestinationAddressStart0() (FirewallRulesetServerFirewallRuleDestinationAddressStart0, error) {
+	var body FirewallRulesetServerFirewallRuleDestinationAddressStart0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleDestinationAddressStart0 overwrites any union data inside the FirewallRulesetServerFirewallRule_DestinationAddressStart as the provided FirewallRulesetServerFirewallRuleDestinationAddressStart0
+func (t *FirewallRulesetServerFirewallRule_DestinationAddressStart) FromFirewallRulesetServerFirewallRuleDestinationAddressStart0(v FirewallRulesetServerFirewallRuleDestinationAddressStart0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleDestinationAddressStart0 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_DestinationAddressStart, using the provided FirewallRulesetServerFirewallRuleDestinationAddressStart0
+func (t *FirewallRulesetServerFirewallRule_DestinationAddressStart) MergeFirewallRulesetServerFirewallRuleDestinationAddressStart0(v FirewallRulesetServerFirewallRuleDestinationAddressStart0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleDestinationAddressStart1 returns the union data inside the FirewallRulesetServerFirewallRule_DestinationAddressStart as a FirewallRulesetServerFirewallRuleDestinationAddressStart1
+func (t FirewallRulesetServerFirewallRule_DestinationAddressStart) AsFirewallRulesetServerFirewallRuleDestinationAddressStart1() (FirewallRulesetServerFirewallRuleDestinationAddressStart1, error) {
+	var body FirewallRulesetServerFirewallRuleDestinationAddressStart1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleDestinationAddressStart1 overwrites any union data inside the FirewallRulesetServerFirewallRule_DestinationAddressStart as the provided FirewallRulesetServerFirewallRuleDestinationAddressStart1
+func (t *FirewallRulesetServerFirewallRule_DestinationAddressStart) FromFirewallRulesetServerFirewallRuleDestinationAddressStart1(v FirewallRulesetServerFirewallRuleDestinationAddressStart1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleDestinationAddressStart1 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_DestinationAddressStart, using the provided FirewallRulesetServerFirewallRuleDestinationAddressStart1
+func (t *FirewallRulesetServerFirewallRule_DestinationAddressStart) MergeFirewallRulesetServerFirewallRuleDestinationAddressStart1(v FirewallRulesetServerFirewallRuleDestinationAddressStart1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleDestinationAddressStart2 returns the union data inside the FirewallRulesetServerFirewallRule_DestinationAddressStart as a FirewallRulesetServerFirewallRuleDestinationAddressStart2
+func (t FirewallRulesetServerFirewallRule_DestinationAddressStart) AsFirewallRulesetServerFirewallRuleDestinationAddressStart2() (FirewallRulesetServerFirewallRuleDestinationAddressStart2, error) {
+	var body FirewallRulesetServerFirewallRuleDestinationAddressStart2
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleDestinationAddressStart2 overwrites any union data inside the FirewallRulesetServerFirewallRule_DestinationAddressStart as the provided FirewallRulesetServerFirewallRuleDestinationAddressStart2
+func (t *FirewallRulesetServerFirewallRule_DestinationAddressStart) FromFirewallRulesetServerFirewallRuleDestinationAddressStart2(v FirewallRulesetServerFirewallRuleDestinationAddressStart2) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleDestinationAddressStart2 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_DestinationAddressStart, using the provided FirewallRulesetServerFirewallRuleDestinationAddressStart2
+func (t *FirewallRulesetServerFirewallRule_DestinationAddressStart) MergeFirewallRulesetServerFirewallRuleDestinationAddressStart2(v FirewallRulesetServerFirewallRuleDestinationAddressStart2) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleDestinationAddressStart3 returns the union data inside the FirewallRulesetServerFirewallRule_DestinationAddressStart as a FirewallRulesetServerFirewallRuleDestinationAddressStart3
+func (t FirewallRulesetServerFirewallRule_DestinationAddressStart) AsFirewallRulesetServerFirewallRuleDestinationAddressStart3() (FirewallRulesetServerFirewallRuleDestinationAddressStart3, error) {
+	var body FirewallRulesetServerFirewallRuleDestinationAddressStart3
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleDestinationAddressStart3 overwrites any union data inside the FirewallRulesetServerFirewallRule_DestinationAddressStart as the provided FirewallRulesetServerFirewallRuleDestinationAddressStart3
+func (t *FirewallRulesetServerFirewallRule_DestinationAddressStart) FromFirewallRulesetServerFirewallRuleDestinationAddressStart3(v FirewallRulesetServerFirewallRuleDestinationAddressStart3) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleDestinationAddressStart3 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_DestinationAddressStart, using the provided FirewallRulesetServerFirewallRuleDestinationAddressStart3
+func (t *FirewallRulesetServerFirewallRule_DestinationAddressStart) MergeFirewallRulesetServerFirewallRuleDestinationAddressStart3(v FirewallRulesetServerFirewallRuleDestinationAddressStart3) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t FirewallRulesetServerFirewallRule_DestinationAddressStart) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *FirewallRulesetServerFirewallRule_DestinationAddressStart) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleDestinationPortEnd0 returns the union data inside the FirewallRulesetServerFirewallRule_DestinationPortEnd as a FirewallRulesetServerFirewallRuleDestinationPortEnd0
+func (t FirewallRulesetServerFirewallRule_DestinationPortEnd) AsFirewallRulesetServerFirewallRuleDestinationPortEnd0() (FirewallRulesetServerFirewallRuleDestinationPortEnd0, error) {
+	var body FirewallRulesetServerFirewallRuleDestinationPortEnd0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleDestinationPortEnd0 overwrites any union data inside the FirewallRulesetServerFirewallRule_DestinationPortEnd as the provided FirewallRulesetServerFirewallRuleDestinationPortEnd0
+func (t *FirewallRulesetServerFirewallRule_DestinationPortEnd) FromFirewallRulesetServerFirewallRuleDestinationPortEnd0(v FirewallRulesetServerFirewallRuleDestinationPortEnd0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleDestinationPortEnd0 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_DestinationPortEnd, using the provided FirewallRulesetServerFirewallRuleDestinationPortEnd0
+func (t *FirewallRulesetServerFirewallRule_DestinationPortEnd) MergeFirewallRulesetServerFirewallRuleDestinationPortEnd0(v FirewallRulesetServerFirewallRuleDestinationPortEnd0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleDestinationPortEnd1 returns the union data inside the FirewallRulesetServerFirewallRule_DestinationPortEnd as a FirewallRulesetServerFirewallRuleDestinationPortEnd1
+func (t FirewallRulesetServerFirewallRule_DestinationPortEnd) AsFirewallRulesetServerFirewallRuleDestinationPortEnd1() (FirewallRulesetServerFirewallRuleDestinationPortEnd1, error) {
+	var body FirewallRulesetServerFirewallRuleDestinationPortEnd1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleDestinationPortEnd1 overwrites any union data inside the FirewallRulesetServerFirewallRule_DestinationPortEnd as the provided FirewallRulesetServerFirewallRuleDestinationPortEnd1
+func (t *FirewallRulesetServerFirewallRule_DestinationPortEnd) FromFirewallRulesetServerFirewallRuleDestinationPortEnd1(v FirewallRulesetServerFirewallRuleDestinationPortEnd1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleDestinationPortEnd1 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_DestinationPortEnd, using the provided FirewallRulesetServerFirewallRuleDestinationPortEnd1
+func (t *FirewallRulesetServerFirewallRule_DestinationPortEnd) MergeFirewallRulesetServerFirewallRuleDestinationPortEnd1(v FirewallRulesetServerFirewallRuleDestinationPortEnd1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleDestinationPortEnd2 returns the union data inside the FirewallRulesetServerFirewallRule_DestinationPortEnd as a FirewallRulesetServerFirewallRuleDestinationPortEnd2
+func (t FirewallRulesetServerFirewallRule_DestinationPortEnd) AsFirewallRulesetServerFirewallRuleDestinationPortEnd2() (FirewallRulesetServerFirewallRuleDestinationPortEnd2, error) {
+	var body FirewallRulesetServerFirewallRuleDestinationPortEnd2
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleDestinationPortEnd2 overwrites any union data inside the FirewallRulesetServerFirewallRule_DestinationPortEnd as the provided FirewallRulesetServerFirewallRuleDestinationPortEnd2
+func (t *FirewallRulesetServerFirewallRule_DestinationPortEnd) FromFirewallRulesetServerFirewallRuleDestinationPortEnd2(v FirewallRulesetServerFirewallRuleDestinationPortEnd2) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleDestinationPortEnd2 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_DestinationPortEnd, using the provided FirewallRulesetServerFirewallRuleDestinationPortEnd2
+func (t *FirewallRulesetServerFirewallRule_DestinationPortEnd) MergeFirewallRulesetServerFirewallRuleDestinationPortEnd2(v FirewallRulesetServerFirewallRuleDestinationPortEnd2) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t FirewallRulesetServerFirewallRule_DestinationPortEnd) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *FirewallRulesetServerFirewallRule_DestinationPortEnd) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleDestinationPortStart0 returns the union data inside the FirewallRulesetServerFirewallRule_DestinationPortStart as a FirewallRulesetServerFirewallRuleDestinationPortStart0
+func (t FirewallRulesetServerFirewallRule_DestinationPortStart) AsFirewallRulesetServerFirewallRuleDestinationPortStart0() (FirewallRulesetServerFirewallRuleDestinationPortStart0, error) {
+	var body FirewallRulesetServerFirewallRuleDestinationPortStart0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleDestinationPortStart0 overwrites any union data inside the FirewallRulesetServerFirewallRule_DestinationPortStart as the provided FirewallRulesetServerFirewallRuleDestinationPortStart0
+func (t *FirewallRulesetServerFirewallRule_DestinationPortStart) FromFirewallRulesetServerFirewallRuleDestinationPortStart0(v FirewallRulesetServerFirewallRuleDestinationPortStart0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleDestinationPortStart0 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_DestinationPortStart, using the provided FirewallRulesetServerFirewallRuleDestinationPortStart0
+func (t *FirewallRulesetServerFirewallRule_DestinationPortStart) MergeFirewallRulesetServerFirewallRuleDestinationPortStart0(v FirewallRulesetServerFirewallRuleDestinationPortStart0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleDestinationPortStart1 returns the union data inside the FirewallRulesetServerFirewallRule_DestinationPortStart as a FirewallRulesetServerFirewallRuleDestinationPortStart1
+func (t FirewallRulesetServerFirewallRule_DestinationPortStart) AsFirewallRulesetServerFirewallRuleDestinationPortStart1() (FirewallRulesetServerFirewallRuleDestinationPortStart1, error) {
+	var body FirewallRulesetServerFirewallRuleDestinationPortStart1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleDestinationPortStart1 overwrites any union data inside the FirewallRulesetServerFirewallRule_DestinationPortStart as the provided FirewallRulesetServerFirewallRuleDestinationPortStart1
+func (t *FirewallRulesetServerFirewallRule_DestinationPortStart) FromFirewallRulesetServerFirewallRuleDestinationPortStart1(v FirewallRulesetServerFirewallRuleDestinationPortStart1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleDestinationPortStart1 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_DestinationPortStart, using the provided FirewallRulesetServerFirewallRuleDestinationPortStart1
+func (t *FirewallRulesetServerFirewallRule_DestinationPortStart) MergeFirewallRulesetServerFirewallRuleDestinationPortStart1(v FirewallRulesetServerFirewallRuleDestinationPortStart1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleDestinationPortStart2 returns the union data inside the FirewallRulesetServerFirewallRule_DestinationPortStart as a FirewallRulesetServerFirewallRuleDestinationPortStart2
+func (t FirewallRulesetServerFirewallRule_DestinationPortStart) AsFirewallRulesetServerFirewallRuleDestinationPortStart2() (FirewallRulesetServerFirewallRuleDestinationPortStart2, error) {
+	var body FirewallRulesetServerFirewallRuleDestinationPortStart2
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleDestinationPortStart2 overwrites any union data inside the FirewallRulesetServerFirewallRule_DestinationPortStart as the provided FirewallRulesetServerFirewallRuleDestinationPortStart2
+func (t *FirewallRulesetServerFirewallRule_DestinationPortStart) FromFirewallRulesetServerFirewallRuleDestinationPortStart2(v FirewallRulesetServerFirewallRuleDestinationPortStart2) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleDestinationPortStart2 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_DestinationPortStart, using the provided FirewallRulesetServerFirewallRuleDestinationPortStart2
+func (t *FirewallRulesetServerFirewallRule_DestinationPortStart) MergeFirewallRulesetServerFirewallRuleDestinationPortStart2(v FirewallRulesetServerFirewallRuleDestinationPortStart2) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t FirewallRulesetServerFirewallRule_DestinationPortStart) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *FirewallRulesetServerFirewallRule_DestinationPortStart) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleFamily0 returns the union data inside the FirewallRulesetServerFirewallRule_Family as a FirewallRulesetServerFirewallRuleFamily0
+func (t FirewallRulesetServerFirewallRule_Family) AsFirewallRulesetServerFirewallRuleFamily0() (FirewallRulesetServerFirewallRuleFamily0, error) {
+	var body FirewallRulesetServerFirewallRuleFamily0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleFamily0 overwrites any union data inside the FirewallRulesetServerFirewallRule_Family as the provided FirewallRulesetServerFirewallRuleFamily0
+func (t *FirewallRulesetServerFirewallRule_Family) FromFirewallRulesetServerFirewallRuleFamily0(v FirewallRulesetServerFirewallRuleFamily0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleFamily0 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_Family, using the provided FirewallRulesetServerFirewallRuleFamily0
+func (t *FirewallRulesetServerFirewallRule_Family) MergeFirewallRulesetServerFirewallRuleFamily0(v FirewallRulesetServerFirewallRuleFamily0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleFamily1 returns the union data inside the FirewallRulesetServerFirewallRule_Family as a FirewallRulesetServerFirewallRuleFamily1
+func (t FirewallRulesetServerFirewallRule_Family) AsFirewallRulesetServerFirewallRuleFamily1() (FirewallRulesetServerFirewallRuleFamily1, error) {
+	var body FirewallRulesetServerFirewallRuleFamily1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleFamily1 overwrites any union data inside the FirewallRulesetServerFirewallRule_Family as the provided FirewallRulesetServerFirewallRuleFamily1
+func (t *FirewallRulesetServerFirewallRule_Family) FromFirewallRulesetServerFirewallRuleFamily1(v FirewallRulesetServerFirewallRuleFamily1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleFamily1 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_Family, using the provided FirewallRulesetServerFirewallRuleFamily1
+func (t *FirewallRulesetServerFirewallRule_Family) MergeFirewallRulesetServerFirewallRuleFamily1(v FirewallRulesetServerFirewallRuleFamily1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleFamily2 returns the union data inside the FirewallRulesetServerFirewallRule_Family as a FirewallRulesetServerFirewallRuleFamily2
+func (t FirewallRulesetServerFirewallRule_Family) AsFirewallRulesetServerFirewallRuleFamily2() (FirewallRulesetServerFirewallRuleFamily2, error) {
+	var body FirewallRulesetServerFirewallRuleFamily2
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleFamily2 overwrites any union data inside the FirewallRulesetServerFirewallRule_Family as the provided FirewallRulesetServerFirewallRuleFamily2
+func (t *FirewallRulesetServerFirewallRule_Family) FromFirewallRulesetServerFirewallRuleFamily2(v FirewallRulesetServerFirewallRuleFamily2) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleFamily2 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_Family, using the provided FirewallRulesetServerFirewallRuleFamily2
+func (t *FirewallRulesetServerFirewallRule_Family) MergeFirewallRulesetServerFirewallRuleFamily2(v FirewallRulesetServerFirewallRuleFamily2) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t FirewallRulesetServerFirewallRule_Family) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *FirewallRulesetServerFirewallRule_Family) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleIcmpType0 returns the union data inside the FirewallRulesetServerFirewallRule_IcmpType as a FirewallRulesetServerFirewallRuleIcmpType0
+func (t FirewallRulesetServerFirewallRule_IcmpType) AsFirewallRulesetServerFirewallRuleIcmpType0() (FirewallRulesetServerFirewallRuleIcmpType0, error) {
+	var body FirewallRulesetServerFirewallRuleIcmpType0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleIcmpType0 overwrites any union data inside the FirewallRulesetServerFirewallRule_IcmpType as the provided FirewallRulesetServerFirewallRuleIcmpType0
+func (t *FirewallRulesetServerFirewallRule_IcmpType) FromFirewallRulesetServerFirewallRuleIcmpType0(v FirewallRulesetServerFirewallRuleIcmpType0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleIcmpType0 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_IcmpType, using the provided FirewallRulesetServerFirewallRuleIcmpType0
+func (t *FirewallRulesetServerFirewallRule_IcmpType) MergeFirewallRulesetServerFirewallRuleIcmpType0(v FirewallRulesetServerFirewallRuleIcmpType0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleIcmpType1 returns the union data inside the FirewallRulesetServerFirewallRule_IcmpType as a FirewallRulesetServerFirewallRuleIcmpType1
+func (t FirewallRulesetServerFirewallRule_IcmpType) AsFirewallRulesetServerFirewallRuleIcmpType1() (FirewallRulesetServerFirewallRuleIcmpType1, error) {
+	var body FirewallRulesetServerFirewallRuleIcmpType1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleIcmpType1 overwrites any union data inside the FirewallRulesetServerFirewallRule_IcmpType as the provided FirewallRulesetServerFirewallRuleIcmpType1
+func (t *FirewallRulesetServerFirewallRule_IcmpType) FromFirewallRulesetServerFirewallRuleIcmpType1(v FirewallRulesetServerFirewallRuleIcmpType1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleIcmpType1 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_IcmpType, using the provided FirewallRulesetServerFirewallRuleIcmpType1
+func (t *FirewallRulesetServerFirewallRule_IcmpType) MergeFirewallRulesetServerFirewallRuleIcmpType1(v FirewallRulesetServerFirewallRuleIcmpType1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleIcmpType2 returns the union data inside the FirewallRulesetServerFirewallRule_IcmpType as a FirewallRulesetServerFirewallRuleIcmpType2
+func (t FirewallRulesetServerFirewallRule_IcmpType) AsFirewallRulesetServerFirewallRuleIcmpType2() (FirewallRulesetServerFirewallRuleIcmpType2, error) {
+	var body FirewallRulesetServerFirewallRuleIcmpType2
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleIcmpType2 overwrites any union data inside the FirewallRulesetServerFirewallRule_IcmpType as the provided FirewallRulesetServerFirewallRuleIcmpType2
+func (t *FirewallRulesetServerFirewallRule_IcmpType) FromFirewallRulesetServerFirewallRuleIcmpType2(v FirewallRulesetServerFirewallRuleIcmpType2) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleIcmpType2 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_IcmpType, using the provided FirewallRulesetServerFirewallRuleIcmpType2
+func (t *FirewallRulesetServerFirewallRule_IcmpType) MergeFirewallRulesetServerFirewallRuleIcmpType2(v FirewallRulesetServerFirewallRuleIcmpType2) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t FirewallRulesetServerFirewallRule_IcmpType) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *FirewallRulesetServerFirewallRule_IcmpType) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRulePosition0 returns the union data inside the FirewallRulesetServerFirewallRule_Position as a FirewallRulesetServerFirewallRulePosition0
+func (t FirewallRulesetServerFirewallRule_Position) AsFirewallRulesetServerFirewallRulePosition0() (FirewallRulesetServerFirewallRulePosition0, error) {
+	var body FirewallRulesetServerFirewallRulePosition0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRulePosition0 overwrites any union data inside the FirewallRulesetServerFirewallRule_Position as the provided FirewallRulesetServerFirewallRulePosition0
+func (t *FirewallRulesetServerFirewallRule_Position) FromFirewallRulesetServerFirewallRulePosition0(v FirewallRulesetServerFirewallRulePosition0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRulePosition0 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_Position, using the provided FirewallRulesetServerFirewallRulePosition0
+func (t *FirewallRulesetServerFirewallRule_Position) MergeFirewallRulesetServerFirewallRulePosition0(v FirewallRulesetServerFirewallRulePosition0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRulePosition1 returns the union data inside the FirewallRulesetServerFirewallRule_Position as a FirewallRulesetServerFirewallRulePosition1
+func (t FirewallRulesetServerFirewallRule_Position) AsFirewallRulesetServerFirewallRulePosition1() (FirewallRulesetServerFirewallRulePosition1, error) {
+	var body FirewallRulesetServerFirewallRulePosition1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRulePosition1 overwrites any union data inside the FirewallRulesetServerFirewallRule_Position as the provided FirewallRulesetServerFirewallRulePosition1
+func (t *FirewallRulesetServerFirewallRule_Position) FromFirewallRulesetServerFirewallRulePosition1(v FirewallRulesetServerFirewallRulePosition1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRulePosition1 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_Position, using the provided FirewallRulesetServerFirewallRulePosition1
+func (t *FirewallRulesetServerFirewallRule_Position) MergeFirewallRulesetServerFirewallRulePosition1(v FirewallRulesetServerFirewallRulePosition1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t FirewallRulesetServerFirewallRule_Position) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *FirewallRulesetServerFirewallRule_Position) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleProtocol0 returns the union data inside the FirewallRulesetServerFirewallRule_Protocol as a FirewallRulesetServerFirewallRuleProtocol0
+func (t FirewallRulesetServerFirewallRule_Protocol) AsFirewallRulesetServerFirewallRuleProtocol0() (FirewallRulesetServerFirewallRuleProtocol0, error) {
+	var body FirewallRulesetServerFirewallRuleProtocol0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleProtocol0 overwrites any union data inside the FirewallRulesetServerFirewallRule_Protocol as the provided FirewallRulesetServerFirewallRuleProtocol0
+func (t *FirewallRulesetServerFirewallRule_Protocol) FromFirewallRulesetServerFirewallRuleProtocol0(v FirewallRulesetServerFirewallRuleProtocol0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleProtocol0 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_Protocol, using the provided FirewallRulesetServerFirewallRuleProtocol0
+func (t *FirewallRulesetServerFirewallRule_Protocol) MergeFirewallRulesetServerFirewallRuleProtocol0(v FirewallRulesetServerFirewallRuleProtocol0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleProtocol1 returns the union data inside the FirewallRulesetServerFirewallRule_Protocol as a FirewallRulesetServerFirewallRuleProtocol1
+func (t FirewallRulesetServerFirewallRule_Protocol) AsFirewallRulesetServerFirewallRuleProtocol1() (FirewallRulesetServerFirewallRuleProtocol1, error) {
+	var body FirewallRulesetServerFirewallRuleProtocol1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleProtocol1 overwrites any union data inside the FirewallRulesetServerFirewallRule_Protocol as the provided FirewallRulesetServerFirewallRuleProtocol1
+func (t *FirewallRulesetServerFirewallRule_Protocol) FromFirewallRulesetServerFirewallRuleProtocol1(v FirewallRulesetServerFirewallRuleProtocol1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleProtocol1 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_Protocol, using the provided FirewallRulesetServerFirewallRuleProtocol1
+func (t *FirewallRulesetServerFirewallRule_Protocol) MergeFirewallRulesetServerFirewallRuleProtocol1(v FirewallRulesetServerFirewallRuleProtocol1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleProtocol2 returns the union data inside the FirewallRulesetServerFirewallRule_Protocol as a FirewallRulesetServerFirewallRuleProtocol2
+func (t FirewallRulesetServerFirewallRule_Protocol) AsFirewallRulesetServerFirewallRuleProtocol2() (FirewallRulesetServerFirewallRuleProtocol2, error) {
+	var body FirewallRulesetServerFirewallRuleProtocol2
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleProtocol2 overwrites any union data inside the FirewallRulesetServerFirewallRule_Protocol as the provided FirewallRulesetServerFirewallRuleProtocol2
+func (t *FirewallRulesetServerFirewallRule_Protocol) FromFirewallRulesetServerFirewallRuleProtocol2(v FirewallRulesetServerFirewallRuleProtocol2) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleProtocol2 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_Protocol, using the provided FirewallRulesetServerFirewallRuleProtocol2
+func (t *FirewallRulesetServerFirewallRule_Protocol) MergeFirewallRulesetServerFirewallRuleProtocol2(v FirewallRulesetServerFirewallRuleProtocol2) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t FirewallRulesetServerFirewallRule_Protocol) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *FirewallRulesetServerFirewallRule_Protocol) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleSourceAddressEnd0 returns the union data inside the FirewallRulesetServerFirewallRule_SourceAddressEnd as a FirewallRulesetServerFirewallRuleSourceAddressEnd0
+func (t FirewallRulesetServerFirewallRule_SourceAddressEnd) AsFirewallRulesetServerFirewallRuleSourceAddressEnd0() (FirewallRulesetServerFirewallRuleSourceAddressEnd0, error) {
+	var body FirewallRulesetServerFirewallRuleSourceAddressEnd0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleSourceAddressEnd0 overwrites any union data inside the FirewallRulesetServerFirewallRule_SourceAddressEnd as the provided FirewallRulesetServerFirewallRuleSourceAddressEnd0
+func (t *FirewallRulesetServerFirewallRule_SourceAddressEnd) FromFirewallRulesetServerFirewallRuleSourceAddressEnd0(v FirewallRulesetServerFirewallRuleSourceAddressEnd0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleSourceAddressEnd0 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_SourceAddressEnd, using the provided FirewallRulesetServerFirewallRuleSourceAddressEnd0
+func (t *FirewallRulesetServerFirewallRule_SourceAddressEnd) MergeFirewallRulesetServerFirewallRuleSourceAddressEnd0(v FirewallRulesetServerFirewallRuleSourceAddressEnd0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleSourceAddressEnd1 returns the union data inside the FirewallRulesetServerFirewallRule_SourceAddressEnd as a FirewallRulesetServerFirewallRuleSourceAddressEnd1
+func (t FirewallRulesetServerFirewallRule_SourceAddressEnd) AsFirewallRulesetServerFirewallRuleSourceAddressEnd1() (FirewallRulesetServerFirewallRuleSourceAddressEnd1, error) {
+	var body FirewallRulesetServerFirewallRuleSourceAddressEnd1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleSourceAddressEnd1 overwrites any union data inside the FirewallRulesetServerFirewallRule_SourceAddressEnd as the provided FirewallRulesetServerFirewallRuleSourceAddressEnd1
+func (t *FirewallRulesetServerFirewallRule_SourceAddressEnd) FromFirewallRulesetServerFirewallRuleSourceAddressEnd1(v FirewallRulesetServerFirewallRuleSourceAddressEnd1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleSourceAddressEnd1 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_SourceAddressEnd, using the provided FirewallRulesetServerFirewallRuleSourceAddressEnd1
+func (t *FirewallRulesetServerFirewallRule_SourceAddressEnd) MergeFirewallRulesetServerFirewallRuleSourceAddressEnd1(v FirewallRulesetServerFirewallRuleSourceAddressEnd1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleSourceAddressEnd2 returns the union data inside the FirewallRulesetServerFirewallRule_SourceAddressEnd as a FirewallRulesetServerFirewallRuleSourceAddressEnd2
+func (t FirewallRulesetServerFirewallRule_SourceAddressEnd) AsFirewallRulesetServerFirewallRuleSourceAddressEnd2() (FirewallRulesetServerFirewallRuleSourceAddressEnd2, error) {
+	var body FirewallRulesetServerFirewallRuleSourceAddressEnd2
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleSourceAddressEnd2 overwrites any union data inside the FirewallRulesetServerFirewallRule_SourceAddressEnd as the provided FirewallRulesetServerFirewallRuleSourceAddressEnd2
+func (t *FirewallRulesetServerFirewallRule_SourceAddressEnd) FromFirewallRulesetServerFirewallRuleSourceAddressEnd2(v FirewallRulesetServerFirewallRuleSourceAddressEnd2) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleSourceAddressEnd2 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_SourceAddressEnd, using the provided FirewallRulesetServerFirewallRuleSourceAddressEnd2
+func (t *FirewallRulesetServerFirewallRule_SourceAddressEnd) MergeFirewallRulesetServerFirewallRuleSourceAddressEnd2(v FirewallRulesetServerFirewallRuleSourceAddressEnd2) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleSourceAddressEnd3 returns the union data inside the FirewallRulesetServerFirewallRule_SourceAddressEnd as a FirewallRulesetServerFirewallRuleSourceAddressEnd3
+func (t FirewallRulesetServerFirewallRule_SourceAddressEnd) AsFirewallRulesetServerFirewallRuleSourceAddressEnd3() (FirewallRulesetServerFirewallRuleSourceAddressEnd3, error) {
+	var body FirewallRulesetServerFirewallRuleSourceAddressEnd3
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleSourceAddressEnd3 overwrites any union data inside the FirewallRulesetServerFirewallRule_SourceAddressEnd as the provided FirewallRulesetServerFirewallRuleSourceAddressEnd3
+func (t *FirewallRulesetServerFirewallRule_SourceAddressEnd) FromFirewallRulesetServerFirewallRuleSourceAddressEnd3(v FirewallRulesetServerFirewallRuleSourceAddressEnd3) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleSourceAddressEnd3 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_SourceAddressEnd, using the provided FirewallRulesetServerFirewallRuleSourceAddressEnd3
+func (t *FirewallRulesetServerFirewallRule_SourceAddressEnd) MergeFirewallRulesetServerFirewallRuleSourceAddressEnd3(v FirewallRulesetServerFirewallRuleSourceAddressEnd3) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t FirewallRulesetServerFirewallRule_SourceAddressEnd) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *FirewallRulesetServerFirewallRule_SourceAddressEnd) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleSourceAddressStart0 returns the union data inside the FirewallRulesetServerFirewallRule_SourceAddressStart as a FirewallRulesetServerFirewallRuleSourceAddressStart0
+func (t FirewallRulesetServerFirewallRule_SourceAddressStart) AsFirewallRulesetServerFirewallRuleSourceAddressStart0() (FirewallRulesetServerFirewallRuleSourceAddressStart0, error) {
+	var body FirewallRulesetServerFirewallRuleSourceAddressStart0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleSourceAddressStart0 overwrites any union data inside the FirewallRulesetServerFirewallRule_SourceAddressStart as the provided FirewallRulesetServerFirewallRuleSourceAddressStart0
+func (t *FirewallRulesetServerFirewallRule_SourceAddressStart) FromFirewallRulesetServerFirewallRuleSourceAddressStart0(v FirewallRulesetServerFirewallRuleSourceAddressStart0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleSourceAddressStart0 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_SourceAddressStart, using the provided FirewallRulesetServerFirewallRuleSourceAddressStart0
+func (t *FirewallRulesetServerFirewallRule_SourceAddressStart) MergeFirewallRulesetServerFirewallRuleSourceAddressStart0(v FirewallRulesetServerFirewallRuleSourceAddressStart0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleSourceAddressStart1 returns the union data inside the FirewallRulesetServerFirewallRule_SourceAddressStart as a FirewallRulesetServerFirewallRuleSourceAddressStart1
+func (t FirewallRulesetServerFirewallRule_SourceAddressStart) AsFirewallRulesetServerFirewallRuleSourceAddressStart1() (FirewallRulesetServerFirewallRuleSourceAddressStart1, error) {
+	var body FirewallRulesetServerFirewallRuleSourceAddressStart1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleSourceAddressStart1 overwrites any union data inside the FirewallRulesetServerFirewallRule_SourceAddressStart as the provided FirewallRulesetServerFirewallRuleSourceAddressStart1
+func (t *FirewallRulesetServerFirewallRule_SourceAddressStart) FromFirewallRulesetServerFirewallRuleSourceAddressStart1(v FirewallRulesetServerFirewallRuleSourceAddressStart1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleSourceAddressStart1 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_SourceAddressStart, using the provided FirewallRulesetServerFirewallRuleSourceAddressStart1
+func (t *FirewallRulesetServerFirewallRule_SourceAddressStart) MergeFirewallRulesetServerFirewallRuleSourceAddressStart1(v FirewallRulesetServerFirewallRuleSourceAddressStart1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleSourceAddressStart2 returns the union data inside the FirewallRulesetServerFirewallRule_SourceAddressStart as a FirewallRulesetServerFirewallRuleSourceAddressStart2
+func (t FirewallRulesetServerFirewallRule_SourceAddressStart) AsFirewallRulesetServerFirewallRuleSourceAddressStart2() (FirewallRulesetServerFirewallRuleSourceAddressStart2, error) {
+	var body FirewallRulesetServerFirewallRuleSourceAddressStart2
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleSourceAddressStart2 overwrites any union data inside the FirewallRulesetServerFirewallRule_SourceAddressStart as the provided FirewallRulesetServerFirewallRuleSourceAddressStart2
+func (t *FirewallRulesetServerFirewallRule_SourceAddressStart) FromFirewallRulesetServerFirewallRuleSourceAddressStart2(v FirewallRulesetServerFirewallRuleSourceAddressStart2) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleSourceAddressStart2 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_SourceAddressStart, using the provided FirewallRulesetServerFirewallRuleSourceAddressStart2
+func (t *FirewallRulesetServerFirewallRule_SourceAddressStart) MergeFirewallRulesetServerFirewallRuleSourceAddressStart2(v FirewallRulesetServerFirewallRuleSourceAddressStart2) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleSourceAddressStart3 returns the union data inside the FirewallRulesetServerFirewallRule_SourceAddressStart as a FirewallRulesetServerFirewallRuleSourceAddressStart3
+func (t FirewallRulesetServerFirewallRule_SourceAddressStart) AsFirewallRulesetServerFirewallRuleSourceAddressStart3() (FirewallRulesetServerFirewallRuleSourceAddressStart3, error) {
+	var body FirewallRulesetServerFirewallRuleSourceAddressStart3
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleSourceAddressStart3 overwrites any union data inside the FirewallRulesetServerFirewallRule_SourceAddressStart as the provided FirewallRulesetServerFirewallRuleSourceAddressStart3
+func (t *FirewallRulesetServerFirewallRule_SourceAddressStart) FromFirewallRulesetServerFirewallRuleSourceAddressStart3(v FirewallRulesetServerFirewallRuleSourceAddressStart3) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleSourceAddressStart3 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_SourceAddressStart, using the provided FirewallRulesetServerFirewallRuleSourceAddressStart3
+func (t *FirewallRulesetServerFirewallRule_SourceAddressStart) MergeFirewallRulesetServerFirewallRuleSourceAddressStart3(v FirewallRulesetServerFirewallRuleSourceAddressStart3) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t FirewallRulesetServerFirewallRule_SourceAddressStart) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *FirewallRulesetServerFirewallRule_SourceAddressStart) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleSourcePortEnd0 returns the union data inside the FirewallRulesetServerFirewallRule_SourcePortEnd as a FirewallRulesetServerFirewallRuleSourcePortEnd0
+func (t FirewallRulesetServerFirewallRule_SourcePortEnd) AsFirewallRulesetServerFirewallRuleSourcePortEnd0() (FirewallRulesetServerFirewallRuleSourcePortEnd0, error) {
+	var body FirewallRulesetServerFirewallRuleSourcePortEnd0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleSourcePortEnd0 overwrites any union data inside the FirewallRulesetServerFirewallRule_SourcePortEnd as the provided FirewallRulesetServerFirewallRuleSourcePortEnd0
+func (t *FirewallRulesetServerFirewallRule_SourcePortEnd) FromFirewallRulesetServerFirewallRuleSourcePortEnd0(v FirewallRulesetServerFirewallRuleSourcePortEnd0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleSourcePortEnd0 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_SourcePortEnd, using the provided FirewallRulesetServerFirewallRuleSourcePortEnd0
+func (t *FirewallRulesetServerFirewallRule_SourcePortEnd) MergeFirewallRulesetServerFirewallRuleSourcePortEnd0(v FirewallRulesetServerFirewallRuleSourcePortEnd0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleSourcePortEnd1 returns the union data inside the FirewallRulesetServerFirewallRule_SourcePortEnd as a FirewallRulesetServerFirewallRuleSourcePortEnd1
+func (t FirewallRulesetServerFirewallRule_SourcePortEnd) AsFirewallRulesetServerFirewallRuleSourcePortEnd1() (FirewallRulesetServerFirewallRuleSourcePortEnd1, error) {
+	var body FirewallRulesetServerFirewallRuleSourcePortEnd1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleSourcePortEnd1 overwrites any union data inside the FirewallRulesetServerFirewallRule_SourcePortEnd as the provided FirewallRulesetServerFirewallRuleSourcePortEnd1
+func (t *FirewallRulesetServerFirewallRule_SourcePortEnd) FromFirewallRulesetServerFirewallRuleSourcePortEnd1(v FirewallRulesetServerFirewallRuleSourcePortEnd1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleSourcePortEnd1 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_SourcePortEnd, using the provided FirewallRulesetServerFirewallRuleSourcePortEnd1
+func (t *FirewallRulesetServerFirewallRule_SourcePortEnd) MergeFirewallRulesetServerFirewallRuleSourcePortEnd1(v FirewallRulesetServerFirewallRuleSourcePortEnd1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleSourcePortEnd2 returns the union data inside the FirewallRulesetServerFirewallRule_SourcePortEnd as a FirewallRulesetServerFirewallRuleSourcePortEnd2
+func (t FirewallRulesetServerFirewallRule_SourcePortEnd) AsFirewallRulesetServerFirewallRuleSourcePortEnd2() (FirewallRulesetServerFirewallRuleSourcePortEnd2, error) {
+	var body FirewallRulesetServerFirewallRuleSourcePortEnd2
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleSourcePortEnd2 overwrites any union data inside the FirewallRulesetServerFirewallRule_SourcePortEnd as the provided FirewallRulesetServerFirewallRuleSourcePortEnd2
+func (t *FirewallRulesetServerFirewallRule_SourcePortEnd) FromFirewallRulesetServerFirewallRuleSourcePortEnd2(v FirewallRulesetServerFirewallRuleSourcePortEnd2) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleSourcePortEnd2 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_SourcePortEnd, using the provided FirewallRulesetServerFirewallRuleSourcePortEnd2
+func (t *FirewallRulesetServerFirewallRule_SourcePortEnd) MergeFirewallRulesetServerFirewallRuleSourcePortEnd2(v FirewallRulesetServerFirewallRuleSourcePortEnd2) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t FirewallRulesetServerFirewallRule_SourcePortEnd) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *FirewallRulesetServerFirewallRule_SourcePortEnd) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleSourcePortStart0 returns the union data inside the FirewallRulesetServerFirewallRule_SourcePortStart as a FirewallRulesetServerFirewallRuleSourcePortStart0
+func (t FirewallRulesetServerFirewallRule_SourcePortStart) AsFirewallRulesetServerFirewallRuleSourcePortStart0() (FirewallRulesetServerFirewallRuleSourcePortStart0, error) {
+	var body FirewallRulesetServerFirewallRuleSourcePortStart0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleSourcePortStart0 overwrites any union data inside the FirewallRulesetServerFirewallRule_SourcePortStart as the provided FirewallRulesetServerFirewallRuleSourcePortStart0
+func (t *FirewallRulesetServerFirewallRule_SourcePortStart) FromFirewallRulesetServerFirewallRuleSourcePortStart0(v FirewallRulesetServerFirewallRuleSourcePortStart0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleSourcePortStart0 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_SourcePortStart, using the provided FirewallRulesetServerFirewallRuleSourcePortStart0
+func (t *FirewallRulesetServerFirewallRule_SourcePortStart) MergeFirewallRulesetServerFirewallRuleSourcePortStart0(v FirewallRulesetServerFirewallRuleSourcePortStart0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleSourcePortStart1 returns the union data inside the FirewallRulesetServerFirewallRule_SourcePortStart as a FirewallRulesetServerFirewallRuleSourcePortStart1
+func (t FirewallRulesetServerFirewallRule_SourcePortStart) AsFirewallRulesetServerFirewallRuleSourcePortStart1() (FirewallRulesetServerFirewallRuleSourcePortStart1, error) {
+	var body FirewallRulesetServerFirewallRuleSourcePortStart1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleSourcePortStart1 overwrites any union data inside the FirewallRulesetServerFirewallRule_SourcePortStart as the provided FirewallRulesetServerFirewallRuleSourcePortStart1
+func (t *FirewallRulesetServerFirewallRule_SourcePortStart) FromFirewallRulesetServerFirewallRuleSourcePortStart1(v FirewallRulesetServerFirewallRuleSourcePortStart1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleSourcePortStart1 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_SourcePortStart, using the provided FirewallRulesetServerFirewallRuleSourcePortStart1
+func (t *FirewallRulesetServerFirewallRule_SourcePortStart) MergeFirewallRulesetServerFirewallRuleSourcePortStart1(v FirewallRulesetServerFirewallRuleSourcePortStart1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRuleSourcePortStart2 returns the union data inside the FirewallRulesetServerFirewallRule_SourcePortStart as a FirewallRulesetServerFirewallRuleSourcePortStart2
+func (t FirewallRulesetServerFirewallRule_SourcePortStart) AsFirewallRulesetServerFirewallRuleSourcePortStart2() (FirewallRulesetServerFirewallRuleSourcePortStart2, error) {
+	var body FirewallRulesetServerFirewallRuleSourcePortStart2
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRuleSourcePortStart2 overwrites any union data inside the FirewallRulesetServerFirewallRule_SourcePortStart as the provided FirewallRulesetServerFirewallRuleSourcePortStart2
+func (t *FirewallRulesetServerFirewallRule_SourcePortStart) FromFirewallRulesetServerFirewallRuleSourcePortStart2(v FirewallRulesetServerFirewallRuleSourcePortStart2) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRuleSourcePortStart2 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_SourcePortStart, using the provided FirewallRulesetServerFirewallRuleSourcePortStart2
+func (t *FirewallRulesetServerFirewallRule_SourcePortStart) MergeFirewallRulesetServerFirewallRuleSourcePortStart2(v FirewallRulesetServerFirewallRuleSourcePortStart2) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t FirewallRulesetServerFirewallRule_SourcePortStart) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *FirewallRulesetServerFirewallRule_SourcePortStart) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRulesFirewallRule0 returns the union data inside the FirewallRulesetServerFirewallRules_FirewallRule as a FirewallRulesetServerFirewallRulesFirewallRule0
+func (t FirewallRulesetServerFirewallRules_FirewallRule) AsFirewallRulesetServerFirewallRulesFirewallRule0() (FirewallRulesetServerFirewallRulesFirewallRule0, error) {
+	var body FirewallRulesetServerFirewallRulesFirewallRule0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRulesFirewallRule0 overwrites any union data inside the FirewallRulesetServerFirewallRules_FirewallRule as the provided FirewallRulesetServerFirewallRulesFirewallRule0
+func (t *FirewallRulesetServerFirewallRules_FirewallRule) FromFirewallRulesetServerFirewallRulesFirewallRule0(v FirewallRulesetServerFirewallRulesFirewallRule0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRulesFirewallRule0 performs a merge with any union data inside the FirewallRulesetServerFirewallRules_FirewallRule, using the provided FirewallRulesetServerFirewallRulesFirewallRule0
+func (t *FirewallRulesetServerFirewallRules_FirewallRule) MergeFirewallRulesetServerFirewallRulesFirewallRule0(v FirewallRulesetServerFirewallRulesFirewallRule0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerFirewallRulesFirewallRule1 returns the union data inside the FirewallRulesetServerFirewallRules_FirewallRule as a FirewallRulesetServerFirewallRulesFirewallRule1
+func (t FirewallRulesetServerFirewallRules_FirewallRule) AsFirewallRulesetServerFirewallRulesFirewallRule1() (FirewallRulesetServerFirewallRulesFirewallRule1, error) {
+	var body FirewallRulesetServerFirewallRulesFirewallRule1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerFirewallRulesFirewallRule1 overwrites any union data inside the FirewallRulesetServerFirewallRules_FirewallRule as the provided FirewallRulesetServerFirewallRulesFirewallRule1
+func (t *FirewallRulesetServerFirewallRules_FirewallRule) FromFirewallRulesetServerFirewallRulesFirewallRule1(v FirewallRulesetServerFirewallRulesFirewallRule1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerFirewallRulesFirewallRule1 performs a merge with any union data inside the FirewallRulesetServerFirewallRules_FirewallRule, using the provided FirewallRulesetServerFirewallRulesFirewallRule1
+func (t *FirewallRulesetServerFirewallRules_FirewallRule) MergeFirewallRulesetServerFirewallRulesFirewallRule1(v FirewallRulesetServerFirewallRulesFirewallRule1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t FirewallRulesetServerFirewallRules_FirewallRule) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *FirewallRulesetServerFirewallRules_FirewallRule) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0 returns the union data inside the FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule as a FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0
+func (t FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule) AsFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0() (FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0, error) {
+	var body FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0 overwrites any union data inside the FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule as the provided FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0
+func (t *FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule) FromFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0(v FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0 performs a merge with any union data inside the FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule, using the provided FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0
+func (t *FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule) MergeFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0(v FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1 returns the union data inside the FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule as a FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1
+func (t FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule) AsFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1() (FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1, error) {
+	var body FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1 overwrites any union data inside the FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule as the provided FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1
+func (t *FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule) FromFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1(v FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1 performs a merge with any union data inside the FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule, using the provided FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1
+func (t *FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule) MergeFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1(v FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0 returns the union data inside the FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules as a FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0
+func (t FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules) AsFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0() (FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0, error) {
+	var body FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0 overwrites any union data inside the FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules as the provided FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0
+func (t *FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules) FromFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0(v FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0 performs a merge with any union data inside the FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules, using the provided FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0
+func (t *FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules) MergeFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0(v FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1 returns the union data inside the FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules as a FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1
+func (t FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules) AsFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1() (FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1, error) {
+	var body FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1 overwrites any union data inside the FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules as the provided FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1
+func (t *FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules) FromFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1(v FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1 performs a merge with any union data inside the FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules, using the provided FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1
+func (t *FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules) MergeFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1(v FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
 
 // AsObjectStorage2StaticWebsiteErrorPage0 returns the union data inside the ObjectStorage2StaticWebsiteErrorPage as a ObjectStorage2StaticWebsiteErrorPage0
 func (t ObjectStorage2StaticWebsiteErrorPage) AsObjectStorage2StaticWebsiteErrorPage0() (ObjectStorage2StaticWebsiteErrorPage0, error) {
@@ -2609,6 +5310,90 @@ func WithRequestEditorFn(fn RequestEditorFn) ClientOption {
 
 // The interface specification for the client above.
 type ClientInterface interface {
+	// ListFirewallRulesets request
+	ListFirewallRulesets(ctx context.Context, params *ListFirewallRulesetsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateFirewallRulesetWithBody request with any body
+	CreateFirewallRulesetWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CreateFirewallRuleset(ctx context.Context, body CreateFirewallRulesetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// AdminListServerFirewallRulesWithBody request with any body
+	AdminListServerFirewallRulesWithBody(ctx context.Context, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	AdminListServerFirewallRules(ctx context.Context, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, body AdminListServerFirewallRulesJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListServerFirewallRule request
+	ListServerFirewallRule(ctx context.Context, serverUuid FirewallRulesetListServerFirewallRuleServerUuid, params *ListServerFirewallRuleParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateServerFirewallRuleWithBody request with any body
+	CreateServerFirewallRuleWithBody(ctx context.Context, serverUuid FirewallRulesetCreateServerFirewallRuleServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CreateServerFirewallRule(ctx context.Context, serverUuid FirewallRulesetCreateServerFirewallRuleServerUuid, body CreateServerFirewallRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateMultipleServerFirewallRulesWithBody request with any body
+	CreateMultipleServerFirewallRulesWithBody(ctx context.Context, serverUuid FirewallRulesetCreateMultipleServerFirewallRulesServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CreateMultipleServerFirewallRules(ctx context.Context, serverUuid FirewallRulesetCreateMultipleServerFirewallRulesServerUuid, body CreateMultipleServerFirewallRulesJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteServerFirewallRule request
+	DeleteServerFirewallRule(ctx context.Context, serverUuid FirewallRulesetDeleteServerFirewallRuleServerUuid, position FirewallRulesetDeleteServerFirewallRulePosition, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetServerFirewallRule request
+	GetServerFirewallRule(ctx context.Context, serverUuid FirewallRulesetGetServerFirewallRuleServerUuid, position FirewallRulesetGetServerFirewallRulePosition, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteFirewallRuleset request
+	DeleteFirewallRuleset(ctx context.Context, rulesetUuid DeleteFirewallRulesetRulesetUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetFirewallRuleset request
+	GetFirewallRuleset(ctx context.Context, rulesetUuid GetFirewallRulesetRulesetUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ModifyFirewallRulesetWithBody request with any body
+	ModifyFirewallRulesetWithBody(ctx context.Context, rulesetUuid ModifyFirewallRulesetRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	ModifyFirewallRuleset(ctx context.Context, rulesetUuid ModifyFirewallRulesetRulesetUuid, body ModifyFirewallRulesetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListFirewallRulesetLabels request
+	ListFirewallRulesetLabels(ctx context.Context, rulesetUuid ListFirewallRulesetLabelsRulesetUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateFirewallRulesetLabelWithBody request with any body
+	CreateFirewallRulesetLabelWithBody(ctx context.Context, rulesetUuid CreateFirewallRulesetLabelRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CreateFirewallRulesetLabel(ctx context.Context, rulesetUuid CreateFirewallRulesetLabelRulesetUuid, body CreateFirewallRulesetLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteFirewallRulesetLabel request
+	DeleteFirewallRulesetLabel(ctx context.Context, rulesetUuid DeleteFirewallRulesetLabelRulesetUuid, labelKey DeleteFirewallRulesetLabelLabelKey, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetFirewallRulesetLabel request
+	GetFirewallRulesetLabel(ctx context.Context, rulesetUuid GetFirewallRulesetLabelRulesetUuid, labelKey GetFirewallRulesetLabelLabelKey, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ModifyFirewallRulesetLabelWithBody request with any body
+	ModifyFirewallRulesetLabelWithBody(ctx context.Context, rulesetUuid ModifyFirewallRulesetLabelRulesetUuid, labelKey ModifyFirewallRulesetLabelLabelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	ModifyFirewallRulesetLabel(ctx context.Context, rulesetUuid ModifyFirewallRulesetLabelRulesetUuid, labelKey ModifyFirewallRulesetLabelLabelKey, body ModifyFirewallRulesetLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RestoreFirewallRuleset request
+	RestoreFirewallRuleset(ctx context.Context, rulesetUuid RestoreFirewallRulesetRulesetUuid, rulesetVersion RestoreFirewallRulesetRulesetVersion, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListFirewallRulesetRules request
+	ListFirewallRulesetRules(ctx context.Context, rulesetUuid ListFirewallRulesetRulesRulesetUuid, params *ListFirewallRulesetRulesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateFirewallRulesetRuleWithBody request with any body
+	CreateFirewallRulesetRuleWithBody(ctx context.Context, rulesetUuid CreateFirewallRulesetRuleRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CreateFirewallRulesetRule(ctx context.Context, rulesetUuid CreateFirewallRulesetRuleRulesetUuid, body CreateFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteFirewallRulesetRule request
+	DeleteFirewallRulesetRule(ctx context.Context, rulesetUuid DeleteFirewallRulesetRuleRulesetUuid, ruleId DeleteFirewallRulesetRuleRuleId, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetFirewallRulesetRule request
+	GetFirewallRulesetRule(ctx context.Context, rulesetUuid GetFirewallRulesetRuleRulesetUuid, ruleId GetFirewallRulesetRuleRuleId, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ModifyFirewallRulesetRuleWithBody request with any body
+	ModifyFirewallRulesetRuleWithBody(ctx context.Context, rulesetUuid ModifyFirewallRulesetRuleRulesetUuid, ruleId ModifyFirewallRulesetRuleRuleId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	ModifyFirewallRulesetRule(ctx context.Context, rulesetUuid ModifyFirewallRulesetRuleRulesetUuid, ruleId ModifyFirewallRulesetRuleRuleId, body ModifyFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ListObjectStorages request
 	ListObjectStorages(ctx context.Context, params *ListObjectStoragesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -2617,351 +5402,711 @@ type ClientInterface interface {
 
 	CreateObjectStorage(ctx context.Context, body CreateObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ListObjectStorageIntegrationServices request
-	ListObjectStorageIntegrationServices(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetObjectStorageIntegrationService request
-	GetObjectStorageIntegrationService(ctx context.Context, serviceUuid ObjectStorage2IntegrationGetServiceServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateObjectStorageIntegrationNetwork request
-	CreateObjectStorageIntegrationNetwork(ctx context.Context, serviceUuid ObjectStorage2IntegrationCreateNetworkServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// DeleteObjectStorageIntegrationNetwork request
-	DeleteObjectStorageIntegrationNetwork(ctx context.Context, serviceUuid ObjectStorage2IntegrationDeleteNetworkServiceUuid, networkName ObjectStorage2IntegrationDeleteNetworkNetworkName, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// ListObjectStorageRegions request
 	ListObjectStorageRegions(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetObjectStorageRegion request
-	GetObjectStorageRegion(ctx context.Context, regionName ObjectStorage2GetRegionDetailsRegionName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetObjectStorageRegion(ctx context.Context, regionName ObjectStorage2GetObjectStorageRegionRegionName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteObjectStorage request
-	DeleteObjectStorage(ctx context.Context, serviceUuid ObjectStorage2DeleteServiceServiceUuid, params *DeleteObjectStorageParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteObjectStorage(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageServiceUuid, params *DeleteObjectStorageParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetObjectStorage request
-	GetObjectStorage(ctx context.Context, serviceUuid ObjectStorage2GetServiceServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetObjectStorage(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ModifyObjectStorageWithBody request with any body
-	ModifyObjectStorageWithBody(ctx context.Context, serviceUuid ObjectStorage2ModifyServiceServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ModifyObjectStorageWithBody(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	ModifyObjectStorage(ctx context.Context, serviceUuid ObjectStorage2ModifyServiceServiceUuid, body ModifyObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ModifyObjectStorage(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageServiceUuid, body ModifyObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ReplaceObjectStorageWithBody request with any body
-	ReplaceObjectStorageWithBody(ctx context.Context, serviceUuid ObjectStorage2ReplaceServiceServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ReplaceObjectStorageWithBody(ctx context.Context, serviceUuid ObjectStorage2ReplaceObjectStorageServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	ReplaceObjectStorage(ctx context.Context, serviceUuid ObjectStorage2ReplaceServiceServiceUuid, body ReplaceObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ReplaceObjectStorage(ctx context.Context, serviceUuid ObjectStorage2ReplaceObjectStorageServiceUuid, body ReplaceObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListObjectStorageBucketMetrics request
-	ListObjectStorageBucketMetrics(ctx context.Context, serviceUuid ObjectStorage2ListBucketMetricsServiceUuid, params *ListObjectStorageBucketMetricsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListObjectStorageBucketMetrics(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageBucketMetricsServiceUuid, params *ListObjectStorageBucketMetricsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateObjectStorageBucketWithBody request with any body
-	CreateObjectStorageBucketWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateBucketServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStorageBucketWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageBucketServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateObjectStorageBucket(ctx context.Context, serviceUuid ObjectStorage2CreateBucketServiceUuid, body CreateObjectStorageBucketJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStorageBucket(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageBucketServiceUuid, body CreateObjectStorageBucketJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteObjectStorageBucket request
-	DeleteObjectStorageBucket(ctx context.Context, serviceUuid ObjectStorage2DeleteBucketServiceUuid, bucketName ObjectStorage2DeleteBucketBucketName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteObjectStorageBucket(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageBucketServiceUuid, bucketName ObjectStorage2DeleteObjectStorageBucketBucketName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListObjectStorageCustomDomains request
-	ListObjectStorageCustomDomains(ctx context.Context, serviceUuid ObjectStorage2ListCustomDomainsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListObjectStorageCustomDomains(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageCustomDomainsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// AttachObjectStorageCustomDomainWithBody request with any body
-	AttachObjectStorageCustomDomainWithBody(ctx context.Context, serviceUuid ObjectStorage2AttachCustomDomainServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	AttachObjectStorageCustomDomainWithBody(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageCustomDomainServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	AttachObjectStorageCustomDomain(ctx context.Context, serviceUuid ObjectStorage2AttachCustomDomainServiceUuid, body AttachObjectStorageCustomDomainJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	AttachObjectStorageCustomDomain(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageCustomDomainServiceUuid, body AttachObjectStorageCustomDomainJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteObjectStorageCustomDomain request
-	DeleteObjectStorageCustomDomain(ctx context.Context, serviceUuid ObjectStorage2DeleteCustomDomainServiceUuid, customDomainName ObjectStorage2DeleteCustomDomainCustomDomainName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteObjectStorageCustomDomain(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageCustomDomainServiceUuid, customDomainName ObjectStorage2DeleteObjectStorageCustomDomainCustomDomainName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetObjectStorageCustomDomain request
-	GetObjectStorageCustomDomain(ctx context.Context, serviceUuid ObjectStorage2GetCustomDomainDetailsServiceUuid, customDomainName ObjectStorage2GetCustomDomainDetailsCustomDomainName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetObjectStorageCustomDomain(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageCustomDomainServiceUuid, customDomainName ObjectStorage2GetObjectStorageCustomDomainCustomDomainName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ModifyObjectStorageCustomDomainWithBody request with any body
-	ModifyObjectStorageCustomDomainWithBody(ctx context.Context, serviceUuid ObjectStorage2ModifyCustomDomainServiceUuid, customDomainName ObjectStorage2ModifyCustomDomainCustomDomainName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ModifyObjectStorageCustomDomainWithBody(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageCustomDomainServiceUuid, customDomainName ObjectStorage2ModifyObjectStorageCustomDomainCustomDomainName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	ModifyObjectStorageCustomDomain(ctx context.Context, serviceUuid ObjectStorage2ModifyCustomDomainServiceUuid, customDomainName ObjectStorage2ModifyCustomDomainCustomDomainName, body ModifyObjectStorageCustomDomainJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ModifyObjectStorageCustomDomain(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageCustomDomainServiceUuid, customDomainName ObjectStorage2ModifyObjectStorageCustomDomainCustomDomainName, body ModifyObjectStorageCustomDomainJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetServiceDomains request
-	GetServiceDomains(ctx context.Context, serviceUuid ObjectStorage2GetServiceDomainsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// ListObjectStorageDomains request
+	ListObjectStorageDomains(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageDomainsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListObjectStorageGroups request
-	ListObjectStorageGroups(ctx context.Context, serviceUuid ObjectStorage2ListGroupsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListObjectStorageGroups(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageGroupsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateObjectStorageGroupWithBody request with any body
-	CreateObjectStorageGroupWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateGroupServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStorageGroupWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageGroupServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateObjectStorageGroup(ctx context.Context, serviceUuid ObjectStorage2CreateGroupServiceUuid, body CreateObjectStorageGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStorageGroup(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageGroupServiceUuid, body CreateObjectStorageGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteObjectStorageGroup request
-	DeleteObjectStorageGroup(ctx context.Context, serviceUuid ObjectStorage2DeleteGroupServiceUuid, groupName ObjectStorage2DeleteGroupGroupName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteObjectStorageGroup(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageGroupServiceUuid, groupName ObjectStorage2DeleteObjectStorageGroupGroupName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetObjectStorageGroup request
-	GetObjectStorageGroup(ctx context.Context, serviceUuid ObjectStorage2GetGroupServiceUuid, groupName ObjectStorage2GetGroupGroupName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetObjectStorageGroup(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageGroupServiceUuid, groupName ObjectStorage2GetObjectStorageGroupGroupName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListObjectStorageGroupInlinePolicies request
-	ListObjectStorageGroupInlinePolicies(ctx context.Context, serviceUuid ObjectStorage2ListGroupInlinePoliciesServiceUuid, groupName ObjectStorage2ListGroupInlinePoliciesGroupName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListObjectStorageGroupInlinePolicies(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageGroupInlinePoliciesServiceUuid, groupName ObjectStorage2ListObjectStorageGroupInlinePoliciesGroupName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateObjectStorageGroupInlinePolicyWithBody request with any body
-	CreateObjectStorageGroupInlinePolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateGroupInlinePolicyServiceUuid, groupName ObjectStorage2CreateGroupInlinePolicyGroupName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStorageGroupInlinePolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageGroupInlinePolicyServiceUuid, groupName ObjectStorage2CreateObjectStorageGroupInlinePolicyGroupName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateObjectStorageGroupInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2CreateGroupInlinePolicyServiceUuid, groupName ObjectStorage2CreateGroupInlinePolicyGroupName, body CreateObjectStorageGroupInlinePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStorageGroupInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageGroupInlinePolicyServiceUuid, groupName ObjectStorage2CreateObjectStorageGroupInlinePolicyGroupName, body CreateObjectStorageGroupInlinePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteObjectStorageGroupInlinePolicy request
-	DeleteObjectStorageGroupInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2DeleteGroupInlinePolicyServiceUuid, groupName ObjectStorage2DeleteGroupInlinePolicyGroupName, groupPolicyName ObjectStorage2DeleteGroupInlinePolicyGroupPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteObjectStorageGroupInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageGroupInlinePolicyServiceUuid, groupName ObjectStorage2DeleteObjectStorageGroupInlinePolicyGroupName, groupPolicyName ObjectStorage2DeleteObjectStorageGroupInlinePolicyGroupPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetObjectStorageGroupInlinePolicy request
-	GetObjectStorageGroupInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2GetGroupInlinePolicyServiceUuid, groupName ObjectStorage2GetGroupInlinePolicyGroupName, groupPolicyName ObjectStorage2GetGroupInlinePolicyGroupPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetObjectStorageGroupInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageGroupInlinePolicyServiceUuid, groupName ObjectStorage2GetObjectStorageGroupInlinePolicyGroupName, groupPolicyName ObjectStorage2GetObjectStorageGroupInlinePolicyGroupPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListObjectStorageIAMGroupPolicies request
-	ListObjectStorageIAMGroupPolicies(ctx context.Context, serviceUuid ObjectStorage2ListIAMGroupPoliciesServiceUuid, groupName ObjectStorage2ListIAMGroupPoliciesGroupName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListObjectStorageIAMGroupPolicies(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageIAMGroupPoliciesServiceUuid, groupName ObjectStorage2ListObjectStorageIAMGroupPoliciesGroupName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// AttachObjectStorageIAMGroupPolicyWithBody request with any body
-	AttachObjectStorageIAMGroupPolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2AttachIAMGroupPolicyServiceUuid, groupName ObjectStorage2AttachIAMGroupPolicyGroupName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	AttachObjectStorageIAMGroupPolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageIAMGroupPolicyServiceUuid, groupName ObjectStorage2AttachObjectStorageIAMGroupPolicyGroupName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	AttachObjectStorageIAMGroupPolicy(ctx context.Context, serviceUuid ObjectStorage2AttachIAMGroupPolicyServiceUuid, groupName ObjectStorage2AttachIAMGroupPolicyGroupName, body AttachObjectStorageIAMGroupPolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	AttachObjectStorageIAMGroupPolicy(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageIAMGroupPolicyServiceUuid, groupName ObjectStorage2AttachObjectStorageIAMGroupPolicyGroupName, body AttachObjectStorageIAMGroupPolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DetachObjectStorageIAMGroupPolicy request
-	DetachObjectStorageIAMGroupPolicy(ctx context.Context, serviceUuid ObjectStorage2DetachIAMGroupPolicyServiceUuid, groupName ObjectStorage2DetachIAMGroupPolicyGroupName, policyName ObjectStorage2DetachIAMGroupPolicyPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DetachObjectStorageIAMGroupPolicy(ctx context.Context, serviceUuid ObjectStorage2DetachObjectStorageIAMGroupPolicyServiceUuid, groupName ObjectStorage2DetachObjectStorageIAMGroupPolicyGroupName, policyName ObjectStorage2DetachObjectStorageIAMGroupPolicyPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// RemoveObjectStorageUserFromGroup request
-	RemoveObjectStorageUserFromGroup(ctx context.Context, serviceUuid ObjectStorage2RemoveUserFromGroupServiceUuid, groupName ObjectStorage2RemoveUserFromGroupGroupName, username ObjectStorage2RemoveUserFromGroupUsername, reqEditors ...RequestEditorFn) (*http.Response, error)
+	RemoveObjectStorageUserFromGroup(ctx context.Context, serviceUuid ObjectStorage2RemoveObjectStorageUserFromGroupServiceUuid, groupName ObjectStorage2RemoveObjectStorageUserFromGroupGroupName, username ObjectStorage2RemoveObjectStorageUserFromGroupUsername, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// AttachObjectStorageUserToGroup request
-	AttachObjectStorageUserToGroup(ctx context.Context, serviceUuid ObjectStorage2AttachUserToGroupServiceUuid, groupName ObjectStorage2AttachUserToGroupGroupName, username ObjectStorage2AttachUserToGroupUsername, reqEditors ...RequestEditorFn) (*http.Response, error)
+	AttachObjectStorageUserToGroup(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageUserToGroupServiceUuid, groupName ObjectStorage2AttachObjectStorageUserToGroupGroupName, username ObjectStorage2AttachObjectStorageUserToGroupUsername, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListObjectStorageLabels request
-	ListObjectStorageLabels(ctx context.Context, serviceUuid ObjectStorage2ListLabelsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListObjectStorageLabels(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageLabelsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateObjectStorageLabelWithBody request with any body
-	CreateObjectStorageLabelWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateLabelServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStorageLabelWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageLabelServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateObjectStorageLabel(ctx context.Context, serviceUuid ObjectStorage2CreateLabelServiceUuid, body CreateObjectStorageLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStorageLabel(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageLabelServiceUuid, body CreateObjectStorageLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteObjectStorageLabel request
-	DeleteObjectStorageLabel(ctx context.Context, serviceUuid ObjectStorage2DeleteLabelServiceUuid, labelKey ObjectStorage2DeleteLabelLabelKey, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteObjectStorageLabel(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageLabelServiceUuid, labelKey ObjectStorage2DeleteObjectStorageLabelLabelKey, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetObjectStorageLabel request
-	GetObjectStorageLabel(ctx context.Context, serviceUuid ObjectStorage2GetLabelDetailsServiceUuid, labelKey ObjectStorage2GetLabelDetailsLabelKey, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetObjectStorageLabel(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageLabelServiceUuid, labelKey ObjectStorage2GetObjectStorageLabelLabelKey, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ModifyObjectStorageLabelWithBody request with any body
-	ModifyObjectStorageLabelWithBody(ctx context.Context, serviceUuid ObjectStorage2ModifyLabelServiceUuid, labelKey ObjectStorage2ModifyLabelLabelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ModifyObjectStorageLabelWithBody(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageLabelServiceUuid, labelKey ObjectStorage2ModifyObjectStorageLabelLabelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	ModifyObjectStorageLabel(ctx context.Context, serviceUuid ObjectStorage2ModifyLabelServiceUuid, labelKey ObjectStorage2ModifyLabelLabelKey, body ModifyObjectStorageLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ModifyObjectStorageLabel(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageLabelServiceUuid, labelKey ObjectStorage2ModifyObjectStorageLabelLabelKey, body ModifyObjectStorageLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetObjectStorageMetrics request
-	GetObjectStorageMetrics(ctx context.Context, serviceUuid ObjectStorage2GetServiceMetricsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetObjectStorageMetrics(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageMetricsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListObjectStorageMetricsSeries request
-	ListObjectStorageMetricsSeries(ctx context.Context, serviceUuid ObjectStorage2ListServiceMetricsSeriesServiceUuid, params *ListObjectStorageMetricsSeriesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListObjectStorageMetricsSeries(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageMetricsSeriesServiceUuid, params *ListObjectStorageMetricsSeriesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListObjectStorageNetworks request
-	ListObjectStorageNetworks(ctx context.Context, serviceUuid ObjectStorage2ListNetworksServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListObjectStorageNetworks(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageNetworksServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateObjectStorageNetworkWithBody request with any body
-	CreateObjectStorageNetworkWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateNetworkServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStorageNetworkWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageNetworkServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateObjectStorageNetwork(ctx context.Context, serviceUuid ObjectStorage2CreateNetworkServiceUuid, body CreateObjectStorageNetworkJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStorageNetwork(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageNetworkServiceUuid, body CreateObjectStorageNetworkJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteObjectStorageNetwork request
-	DeleteObjectStorageNetwork(ctx context.Context, serviceUuid ObjectStorage2DeleteNetworkServiceUuid, networkName ObjectStorage2DeleteNetworkNetworkName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteObjectStorageNetwork(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageNetworkServiceUuid, networkName ObjectStorage2DeleteObjectStorageNetworkNetworkName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetObjectStorageNetwork request
-	GetObjectStorageNetwork(ctx context.Context, serviceUuid ObjectStorage2GetNetworkServiceUuid, networkName ObjectStorage2GetNetworkNetworkName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetObjectStorageNetwork(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageNetworkServiceUuid, networkName ObjectStorage2GetObjectStorageNetworkNetworkName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListObjectStoragePolicies request
-	ListObjectStoragePolicies(ctx context.Context, serviceUuid ObjectStorage2ListPoliciesServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListObjectStoragePolicies(ctx context.Context, serviceUuid ObjectStorage2ListObjectStoragePoliciesServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateObjectStoragePolicyWithBody request with any body
-	CreateObjectStoragePolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2CreatePolicyServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStoragePolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStoragePolicyServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateObjectStoragePolicy(ctx context.Context, serviceUuid ObjectStorage2CreatePolicyServiceUuid, body CreateObjectStoragePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStoragePolicy(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStoragePolicyServiceUuid, body CreateObjectStoragePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteObjectStoragePolicy request
-	DeleteObjectStoragePolicy(ctx context.Context, serviceUuid ObjectStorage2DeletePolicyServiceUuid, policyName ObjectStorage2DeletePolicyPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteObjectStoragePolicy(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStoragePolicyServiceUuid, policyName ObjectStorage2DeleteObjectStoragePolicyPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetObjectStoragePolicy request
-	GetObjectStoragePolicy(ctx context.Context, serviceUuid ObjectStorage2GetPolicyDetailsServiceUuid, policyName ObjectStorage2GetPolicyDetailsPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetObjectStoragePolicy(ctx context.Context, serviceUuid ObjectStorage2GetObjectStoragePolicyServiceUuid, policyName ObjectStorage2GetObjectStoragePolicyPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// SetObjectStorageDefaultPolicyVersionWithBody request with any body
-	SetObjectStorageDefaultPolicyVersionWithBody(ctx context.Context, serviceUuid ObjectStorage2SetDefaultPolicyVersionServiceUuid, policyName ObjectStorage2SetDefaultPolicyVersionPolicyName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	SetObjectStorageDefaultPolicyVersionWithBody(ctx context.Context, serviceUuid ObjectStorage2SetObjectStorageDefaultPolicyVersionServiceUuid, policyName ObjectStorage2SetObjectStorageDefaultPolicyVersionPolicyName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	SetObjectStorageDefaultPolicyVersion(ctx context.Context, serviceUuid ObjectStorage2SetDefaultPolicyVersionServiceUuid, policyName ObjectStorage2SetDefaultPolicyVersionPolicyName, body SetObjectStorageDefaultPolicyVersionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	SetObjectStorageDefaultPolicyVersion(ctx context.Context, serviceUuid ObjectStorage2SetObjectStorageDefaultPolicyVersionServiceUuid, policyName ObjectStorage2SetObjectStorageDefaultPolicyVersionPolicyName, body SetObjectStorageDefaultPolicyVersionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListObjectStoragePolicyVersions request
-	ListObjectStoragePolicyVersions(ctx context.Context, serviceUuid ObjectStorage2ListPolicyVersionsServiceUuid, policyName ObjectStorage2ListPolicyVersionsPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListObjectStoragePolicyVersions(ctx context.Context, serviceUuid ObjectStorage2ListObjectStoragePolicyVersionsServiceUuid, policyName ObjectStorage2ListObjectStoragePolicyVersionsPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateObjectStoragePolicyVersionWithBody request with any body
-	CreateObjectStoragePolicyVersionWithBody(ctx context.Context, serviceUuid ObjectStorage2CreatePolicyVersionServiceUuid, policyName ObjectStorage2CreatePolicyVersionPolicyName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStoragePolicyVersionWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStoragePolicyVersionServiceUuid, policyName ObjectStorage2CreateObjectStoragePolicyVersionPolicyName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateObjectStoragePolicyVersion(ctx context.Context, serviceUuid ObjectStorage2CreatePolicyVersionServiceUuid, policyName ObjectStorage2CreatePolicyVersionPolicyName, body CreateObjectStoragePolicyVersionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStoragePolicyVersion(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStoragePolicyVersionServiceUuid, policyName ObjectStorage2CreateObjectStoragePolicyVersionPolicyName, body CreateObjectStoragePolicyVersionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteObjectStoragePolicyVersion request
-	DeleteObjectStoragePolicyVersion(ctx context.Context, serviceUuid ObjectStorage2DeletePolicyVersionServiceUuid, policyName ObjectStorage2DeletePolicyVersionPolicyName, policyVersion ObjectStorage2DeletePolicyVersionPolicyVersion, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteObjectStoragePolicyVersion(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStoragePolicyVersionServiceUuid, policyName ObjectStorage2DeleteObjectStoragePolicyVersionPolicyName, policyVersion ObjectStorage2DeleteObjectStoragePolicyVersionPolicyVersion, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetObjectStoragePolicyVersion request
-	GetObjectStoragePolicyVersion(ctx context.Context, serviceUuid ObjectStorage2GetPolicyVersionServiceUuid, policyName ObjectStorage2GetPolicyVersionPolicyName, policyVersion ObjectStorage2GetPolicyVersionPolicyVersion, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetObjectStoragePolicyVersion(ctx context.Context, serviceUuid ObjectStorage2GetObjectStoragePolicyVersionServiceUuid, policyName ObjectStorage2GetObjectStoragePolicyVersionPolicyName, policyVersion ObjectStorage2GetObjectStoragePolicyVersionPolicyVersion, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListObjectStorageRoles request
-	ListObjectStorageRoles(ctx context.Context, serviceUuid ObjectStorage2ListRolesServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListObjectStorageRoles(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageRolesServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateObjectStorageRoleWithBody request with any body
-	CreateObjectStorageRoleWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateRoleServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStorageRoleWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageRoleServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateObjectStorageRole(ctx context.Context, serviceUuid ObjectStorage2CreateRoleServiceUuid, body CreateObjectStorageRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStorageRole(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageRoleServiceUuid, body CreateObjectStorageRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteObjectStorageRole request
-	DeleteObjectStorageRole(ctx context.Context, serviceUuid ObjectStorage2DeleteRoleServiceUuid, roleName ObjectStorage2DeleteRoleRoleName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteObjectStorageRole(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageRoleServiceUuid, roleName ObjectStorage2DeleteObjectStorageRoleRoleName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetObjectStorageRole request
-	GetObjectStorageRole(ctx context.Context, serviceUuid ObjectStorage2GetRoleServiceUuid, roleName ObjectStorage2GetRoleRoleName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetObjectStorageRole(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageRoleServiceUuid, roleName ObjectStorage2GetObjectStorageRoleRoleName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateObjectStorageRoleWithBody request with any body
-	UpdateObjectStorageRoleWithBody(ctx context.Context, serviceUuid ObjectStorage2UpdateRoleServiceUuid, roleName ObjectStorage2UpdateRoleRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	UpdateObjectStorageRoleWithBody(ctx context.Context, serviceUuid ObjectStorage2UpdateObjectStorageRoleServiceUuid, roleName ObjectStorage2UpdateObjectStorageRoleRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	UpdateObjectStorageRole(ctx context.Context, serviceUuid ObjectStorage2UpdateRoleServiceUuid, roleName ObjectStorage2UpdateRoleRoleName, body UpdateObjectStorageRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	UpdateObjectStorageRole(ctx context.Context, serviceUuid ObjectStorage2UpdateObjectStorageRoleServiceUuid, roleName ObjectStorage2UpdateObjectStorageRoleRoleName, body UpdateObjectStorageRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// AssumeObjectStorageRolePolicyWithBody request with any body
-	AssumeObjectStorageRolePolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2AssumeRolePolicyServiceUuid, roleName ObjectStorage2AssumeRolePolicyRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	AssumeObjectStorageRolePolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2AssumeObjectStorageRolePolicyServiceUuid, roleName ObjectStorage2AssumeObjectStorageRolePolicyRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	AssumeObjectStorageRolePolicy(ctx context.Context, serviceUuid ObjectStorage2AssumeRolePolicyServiceUuid, roleName ObjectStorage2AssumeRolePolicyRoleName, body AssumeObjectStorageRolePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	AssumeObjectStorageRolePolicy(ctx context.Context, serviceUuid ObjectStorage2AssumeObjectStorageRolePolicyServiceUuid, roleName ObjectStorage2AssumeObjectStorageRolePolicyRoleName, body AssumeObjectStorageRolePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListObjectStorageRoleInlinePolicies request
-	ListObjectStorageRoleInlinePolicies(ctx context.Context, serviceUuid ObjectStorage2ListRoleInlinePoliciesServiceUuid, roleName ObjectStorage2ListRoleInlinePoliciesRoleName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListObjectStorageRoleInlinePolicies(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageRoleInlinePoliciesServiceUuid, roleName ObjectStorage2ListObjectStorageRoleInlinePoliciesRoleName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateObjectStorageRoleInlinePolicyWithBody request with any body
-	CreateObjectStorageRoleInlinePolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateRoleInlinePolicyServiceUuid, roleName ObjectStorage2CreateRoleInlinePolicyRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStorageRoleInlinePolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageRoleInlinePolicyServiceUuid, roleName ObjectStorage2CreateObjectStorageRoleInlinePolicyRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateObjectStorageRoleInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2CreateRoleInlinePolicyServiceUuid, roleName ObjectStorage2CreateRoleInlinePolicyRoleName, body CreateObjectStorageRoleInlinePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStorageRoleInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageRoleInlinePolicyServiceUuid, roleName ObjectStorage2CreateObjectStorageRoleInlinePolicyRoleName, body CreateObjectStorageRoleInlinePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteObjectStorageRoleInlinePolicy request
-	DeleteObjectStorageRoleInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2DeleteRoleInlinePolicyServiceUuid, roleName ObjectStorage2DeleteRoleInlinePolicyRoleName, rolePolicyName ObjectStorage2DeleteRoleInlinePolicyRolePolicyName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteObjectStorageRoleInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageRoleInlinePolicyServiceUuid, roleName ObjectStorage2DeleteObjectStorageRoleInlinePolicyRoleName, rolePolicyName ObjectStorage2DeleteObjectStorageRoleInlinePolicyRolePolicyName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetObjectStorageRoleInlinePolicy request
-	GetObjectStorageRoleInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2GetRoleInlinePolicyServiceUuid, roleName ObjectStorage2GetRoleInlinePolicyRoleName, rolePolicyName ObjectStorage2GetRoleInlinePolicyRolePolicyName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetObjectStorageRoleInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageRoleInlinePolicyServiceUuid, roleName ObjectStorage2GetObjectStorageRoleInlinePolicyRoleName, rolePolicyName ObjectStorage2GetObjectStorageRoleInlinePolicyRolePolicyName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteObjectStorageRolePermissionsBoundary request
-	DeleteObjectStorageRolePermissionsBoundary(ctx context.Context, serviceUuid ObjectStorage2DeleteRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2DeleteRolePermissionsBoundaryRoleName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteObjectStorageRolePermissionsBoundary(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2DeleteObjectStorageRolePermissionsBoundaryRoleName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateObjectStorageRolePermissionsBoundaryWithBody request with any body
-	CreateObjectStorageRolePermissionsBoundaryWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2CreateRolePermissionsBoundaryRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStorageRolePermissionsBoundaryWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2CreateObjectStorageRolePermissionsBoundaryRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateObjectStorageRolePermissionsBoundary(ctx context.Context, serviceUuid ObjectStorage2CreateRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2CreateRolePermissionsBoundaryRoleName, body CreateObjectStorageRolePermissionsBoundaryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStorageRolePermissionsBoundary(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2CreateObjectStorageRolePermissionsBoundaryRoleName, body CreateObjectStorageRolePermissionsBoundaryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListObjectStorageAttachedRolePolicies request
-	ListObjectStorageAttachedRolePolicies(ctx context.Context, serviceUuid ObjectStorage2ListAttachedRolePoliciesServiceUuid, roleName ObjectStorage2ListAttachedRolePoliciesRoleName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListObjectStorageAttachedRolePolicies(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageAttachedRolePoliciesServiceUuid, roleName ObjectStorage2ListObjectStorageAttachedRolePoliciesRoleName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// AttachObjectStoragePolicyToRoleWithBody request with any body
-	AttachObjectStoragePolicyToRoleWithBody(ctx context.Context, serviceUuid ObjectStorage2AttachPolicyToRoleServiceUuid, roleName ObjectStorage2AttachPolicyToRoleRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	AttachObjectStoragePolicyToRoleWithBody(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStoragePolicyToRoleServiceUuid, roleName ObjectStorage2AttachObjectStoragePolicyToRoleRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	AttachObjectStoragePolicyToRole(ctx context.Context, serviceUuid ObjectStorage2AttachPolicyToRoleServiceUuid, roleName ObjectStorage2AttachPolicyToRoleRoleName, body AttachObjectStoragePolicyToRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	AttachObjectStoragePolicyToRole(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStoragePolicyToRoleServiceUuid, roleName ObjectStorage2AttachObjectStoragePolicyToRoleRoleName, body AttachObjectStoragePolicyToRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DetachObjectStoragePolicyFromRole request
-	DetachObjectStoragePolicyFromRole(ctx context.Context, serviceUuid ObjectStorage2DetachPolicyFromRoleServiceUuid, roleName ObjectStorage2DetachPolicyFromRoleRoleName, rolePolicyName ObjectStorage2DetachPolicyFromRoleRolePolicyName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DetachObjectStoragePolicyFromRole(ctx context.Context, serviceUuid ObjectStorage2DetachObjectStoragePolicyFromRoleServiceUuid, roleName ObjectStorage2DetachObjectStoragePolicyFromRoleRoleName, rolePolicyName ObjectStorage2DetachObjectStoragePolicyFromRoleRolePolicyName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetObjectStorageRoleTags request
-	GetObjectStorageRoleTags(ctx context.Context, serviceUuid ObjectStorage2GetRoleTagsServiceUuid, roleName ObjectStorage2GetRoleTagsRoleName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetObjectStorageRoleTags(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageRoleTagsServiceUuid, roleName ObjectStorage2GetObjectStorageRoleTagsRoleName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ReplaceObjectStorageRoleTagsWithBody request with any body
-	ReplaceObjectStorageRoleTagsWithBody(ctx context.Context, serviceUuid ObjectStorage2ReplaceRoleTagsServiceUuid, roleName ObjectStorage2ReplaceRoleTagsRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ReplaceObjectStorageRoleTagsWithBody(ctx context.Context, serviceUuid ObjectStorage2ReplaceObjectStorageRoleTagsServiceUuid, roleName ObjectStorage2ReplaceObjectStorageRoleTagsRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	ReplaceObjectStorageRoleTags(ctx context.Context, serviceUuid ObjectStorage2ReplaceRoleTagsServiceUuid, roleName ObjectStorage2ReplaceRoleTagsRoleName, body ReplaceObjectStorageRoleTagsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ReplaceObjectStorageRoleTags(ctx context.Context, serviceUuid ObjectStorage2ReplaceObjectStorageRoleTagsServiceUuid, roleName ObjectStorage2ReplaceObjectStorageRoleTagsRoleName, body ReplaceObjectStorageRoleTagsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteObjectStorageRoleTag request
-	DeleteObjectStorageRoleTag(ctx context.Context, serviceUuid ObjectStorage2DeleteRoleTagServiceUuid, roleName ObjectStorage2DeleteRoleTagRoleName, roleTagKey ObjectStorage2DeleteRoleTagRoleTagKey, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteObjectStorageRoleTag(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageRoleTagServiceUuid, roleName ObjectStorage2DeleteObjectStorageRoleTagRoleName, roleTagKey ObjectStorage2DeleteObjectStorageRoleTagRoleTagKey, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ListStaticWebsites request
-	ListStaticWebsites(ctx context.Context, serviceUuid ObjectStorage2ListStaticWebsitesServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// ListObjectStorageStaticWebsites request
+	ListObjectStorageStaticWebsites(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageStaticWebsitesServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateStaticWebsiteWithBody request with any body
-	CreateStaticWebsiteWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateStaticWebsiteServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// CreateObjectStorageStaticWebsiteWithBody request with any body
+	CreateObjectStorageStaticWebsiteWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageStaticWebsiteServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateStaticWebsite(ctx context.Context, serviceUuid ObjectStorage2CreateStaticWebsiteServiceUuid, body CreateStaticWebsiteJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStorageStaticWebsite(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageStaticWebsiteServiceUuid, body CreateObjectStorageStaticWebsiteJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// DeleteStaticWebsite request
-	DeleteStaticWebsite(ctx context.Context, serviceUuid ObjectStorage2DeleteStaticWebsiteServiceUuid, customDomainName ObjectStorage2DeleteStaticWebsiteCustomDomainName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// DeleteObjectStorageStaticWebsite request
+	DeleteObjectStorageStaticWebsite(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageStaticWebsiteServiceUuid, customDomainName ObjectStorage2DeleteObjectStorageStaticWebsiteCustomDomainName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetStaticWebsite request
-	GetStaticWebsite(ctx context.Context, serviceUuid ObjectStorage2GetStaticWebsiteServiceUuid, customDomainName ObjectStorage2GetStaticWebsiteCustomDomainName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// GetObjectStorageStaticWebsite request
+	GetObjectStorageStaticWebsite(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageStaticWebsiteServiceUuid, customDomainName ObjectStorage2GetObjectStorageStaticWebsiteCustomDomainName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ModifyStaticWebsiteWithBody request with any body
-	ModifyStaticWebsiteWithBody(ctx context.Context, serviceUuid ObjectStorage2ModifyStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyStaticWebsiteCustomDomainName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// ModifyObjectStorageStaticWebsiteWithBody request with any body
+	ModifyObjectStorageStaticWebsiteWithBody(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyObjectStorageStaticWebsiteCustomDomainName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	ModifyStaticWebsite(ctx context.Context, serviceUuid ObjectStorage2ModifyStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyStaticWebsiteCustomDomainName, body ModifyStaticWebsiteJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ModifyObjectStorageStaticWebsite(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyObjectStorageStaticWebsiteCustomDomainName, body ModifyObjectStorageStaticWebsiteJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListObjectStorageUsers request
-	ListObjectStorageUsers(ctx context.Context, serviceUuid ObjectStorage2ListUsersServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListObjectStorageUsers(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageUsersServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateObjectStorageUserWithBody request with any body
-	CreateObjectStorageUserWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateUserServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStorageUserWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageUserServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateObjectStorageUser(ctx context.Context, serviceUuid ObjectStorage2CreateUserServiceUuid, body CreateObjectStorageUserJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStorageUser(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageUserServiceUuid, body CreateObjectStorageUserJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteObjectStorageUser request
-	DeleteObjectStorageUser(ctx context.Context, serviceUuid ObjectStorage2DeleteUserServiceUuid, username ObjectStorage2DeleteUserUsername, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteObjectStorageUser(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageUserServiceUuid, username ObjectStorage2DeleteObjectStorageUserUsername, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetObjectStorageUser request
-	GetObjectStorageUser(ctx context.Context, serviceUuid ObjectStorage2GetUserDetailsServiceUuid, username ObjectStorage2GetUserDetailsUsername, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetObjectStorageUser(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageUserServiceUuid, username ObjectStorage2GetObjectStorageUserUsername, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListObjectStorageAccessKeys request
-	ListObjectStorageAccessKeys(ctx context.Context, serviceUuid ObjectStorage2ListAccessKeysServiceUuid, username ObjectStorage2ListAccessKeysUsername, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListObjectStorageAccessKeys(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageAccessKeysServiceUuid, username ObjectStorage2ListObjectStorageAccessKeysUsername, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateObjectStorageAccessKey request
-	CreateObjectStorageAccessKey(ctx context.Context, serviceUuid ObjectStorage2CreateAccessKeyServiceUuid, username ObjectStorage2CreateAccessKeyUsername, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStorageAccessKey(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageAccessKeyServiceUuid, username ObjectStorage2CreateObjectStorageAccessKeyUsername, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteObjectStorageAccessKey request
-	DeleteObjectStorageAccessKey(ctx context.Context, serviceUuid ObjectStorage2DeleteAccessKeyServiceUuid, username ObjectStorage2DeleteAccessKeyUsername, accessKeyId ObjectStorage2DeleteAccessKeyAccessKeyId, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteObjectStorageAccessKey(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageAccessKeyServiceUuid, username ObjectStorage2DeleteObjectStorageAccessKeyUsername, accessKeyId ObjectStorage2DeleteObjectStorageAccessKeyAccessKeyId, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetObjectStorageAccessKeyDetails request
-	GetObjectStorageAccessKeyDetails(ctx context.Context, serviceUuid ObjectStorage2GetAccessKeyDetailsServiceUuid, username ObjectStorage2GetAccessKeyDetailsUsername, accessKeyId ObjectStorage2GetAccessKeyDetailsAccessKeyId, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetObjectStorageAccessKeyDetails(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageAccessKeyDetailsServiceUuid, username ObjectStorage2GetObjectStorageAccessKeyDetailsUsername, accessKeyId ObjectStorage2GetObjectStorageAccessKeyDetailsAccessKeyId, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ModifyObjectStorageAccessKeyDetailsWithBody request with any body
-	ModifyObjectStorageAccessKeyDetailsWithBody(ctx context.Context, serviceUuid ObjectStorage2ModifyAccessKeyDetailsServiceUuid, username ObjectStorage2ModifyAccessKeyDetailsUsername, accessKeyId ObjectStorage2ModifyAccessKeyDetailsAccessKeyId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ModifyObjectStorageAccessKeyDetailsWithBody(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageAccessKeyDetailsServiceUuid, username ObjectStorage2ModifyObjectStorageAccessKeyDetailsUsername, accessKeyId ObjectStorage2ModifyObjectStorageAccessKeyDetailsAccessKeyId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	ModifyObjectStorageAccessKeyDetails(ctx context.Context, serviceUuid ObjectStorage2ModifyAccessKeyDetailsServiceUuid, username ObjectStorage2ModifyAccessKeyDetailsUsername, accessKeyId ObjectStorage2ModifyAccessKeyDetailsAccessKeyId, body ModifyObjectStorageAccessKeyDetailsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ModifyObjectStorageAccessKeyDetails(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageAccessKeyDetailsServiceUuid, username ObjectStorage2ModifyObjectStorageAccessKeyDetailsUsername, accessKeyId ObjectStorage2ModifyObjectStorageAccessKeyDetailsAccessKeyId, body ModifyObjectStorageAccessKeyDetailsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListObjectStorageUserInlinePolicies request
-	ListObjectStorageUserInlinePolicies(ctx context.Context, serviceUuid ObjectStorage2ListUserInlinePoliciesServiceUuid, username ObjectStorage2ListUserInlinePoliciesUsername, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListObjectStorageUserInlinePolicies(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageUserInlinePoliciesServiceUuid, username ObjectStorage2ListObjectStorageUserInlinePoliciesUsername, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateObjectStorageUserInlinePolicyWithBody request with any body
-	CreateObjectStorageUserInlinePolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateUserInlinePolicyServiceUuid, username ObjectStorage2CreateUserInlinePolicyUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStorageUserInlinePolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageUserInlinePolicyServiceUuid, username ObjectStorage2CreateObjectStorageUserInlinePolicyUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateObjectStorageUserInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2CreateUserInlinePolicyServiceUuid, username ObjectStorage2CreateUserInlinePolicyUsername, body CreateObjectStorageUserInlinePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStorageUserInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageUserInlinePolicyServiceUuid, username ObjectStorage2CreateObjectStorageUserInlinePolicyUsername, body CreateObjectStorageUserInlinePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteObjectStorageUserInlinePolicy request
-	DeleteObjectStorageUserInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2DeleteUserInlinePolicyServiceUuid, username ObjectStorage2DeleteUserInlinePolicyUsername, userPolicyName ObjectStorage2DeleteUserInlinePolicyUserPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteObjectStorageUserInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageUserInlinePolicyServiceUuid, username ObjectStorage2DeleteObjectStorageUserInlinePolicyUsername, userPolicyName ObjectStorage2DeleteObjectStorageUserInlinePolicyUserPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetObjectStorageUserInlinePolicy request
-	GetObjectStorageUserInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2GetUserInlinePolicyServiceUuid, username ObjectStorage2GetUserInlinePolicyUsername, userPolicyName ObjectStorage2GetUserInlinePolicyUserPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetObjectStorageUserInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageUserInlinePolicyServiceUuid, username ObjectStorage2GetObjectStorageUserInlinePolicyUsername, userPolicyName ObjectStorage2GetObjectStorageUserInlinePolicyUserPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteObjectStorageUserPermissionsBoundary request
-	DeleteObjectStorageUserPermissionsBoundary(ctx context.Context, serviceUuid ObjectStorage2DeleteUserPermissionsBoundaryServiceUuid, username ObjectStorage2DeleteUserPermissionsBoundaryUsername, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteObjectStorageUserPermissionsBoundary(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageUserPermissionsBoundaryServiceUuid, username ObjectStorage2DeleteObjectStorageUserPermissionsBoundaryUsername, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateObjectStorageUserPermissionsBoundaryWithBody request with any body
-	CreateObjectStorageUserPermissionsBoundaryWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateUserPermissionsBoundaryServiceUuid, username ObjectStorage2CreateUserPermissionsBoundaryUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStorageUserPermissionsBoundaryWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageUserPermissionsBoundaryServiceUuid, username ObjectStorage2CreateObjectStorageUserPermissionsBoundaryUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateObjectStorageUserPermissionsBoundary(ctx context.Context, serviceUuid ObjectStorage2CreateUserPermissionsBoundaryServiceUuid, username ObjectStorage2CreateUserPermissionsBoundaryUsername, body CreateObjectStorageUserPermissionsBoundaryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateObjectStorageUserPermissionsBoundary(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageUserPermissionsBoundaryServiceUuid, username ObjectStorage2CreateObjectStorageUserPermissionsBoundaryUsername, body CreateObjectStorageUserPermissionsBoundaryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListObjectStorageAttachedUserPolicies request
-	ListObjectStorageAttachedUserPolicies(ctx context.Context, serviceUuid ObjectStorage2ListAttachedUserPoliciesServiceUuid, username ObjectStorage2ListAttachedUserPoliciesUsername, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListObjectStorageAttachedUserPolicies(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageAttachedUserPoliciesServiceUuid, username ObjectStorage2ListObjectStorageAttachedUserPoliciesUsername, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// AttachObjectStorageUserPolicyWithBody request with any body
-	AttachObjectStorageUserPolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2AttachUserPolicyServiceUuid, username ObjectStorage2AttachUserPolicyUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	AttachObjectStorageUserPolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageUserPolicyServiceUuid, username ObjectStorage2AttachObjectStorageUserPolicyUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	AttachObjectStorageUserPolicy(ctx context.Context, serviceUuid ObjectStorage2AttachUserPolicyServiceUuid, username ObjectStorage2AttachUserPolicyUsername, body AttachObjectStorageUserPolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	AttachObjectStorageUserPolicy(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageUserPolicyServiceUuid, username ObjectStorage2AttachObjectStorageUserPolicyUsername, body AttachObjectStorageUserPolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DetachObjectStorageUserPolicy request
-	DetachObjectStorageUserPolicy(ctx context.Context, serviceUuid ObjectStorage2DetachUserPolicyServiceUuid, username ObjectStorage2DetachUserPolicyUsername, nestedName ObjectStorage2DetachUserPolicyNestedName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DetachObjectStorageUserPolicy(ctx context.Context, serviceUuid ObjectStorage2DetachObjectStorageUserPolicyServiceUuid, username ObjectStorage2DetachObjectStorageUserPolicyUsername, nestedName ObjectStorage2DetachObjectStorageUserPolicyNestedName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetObjectStorageUserTags request
-	GetObjectStorageUserTags(ctx context.Context, serviceUuid ObjectStorage2GetUserTagsServiceUuid, username ObjectStorage2GetUserTagsUsername, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetObjectStorageUserTags(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageUserTagsServiceUuid, username ObjectStorage2GetObjectStorageUserTagsUsername, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ReplaceObjectStorageUserTagsWithBody request with any body
-	ReplaceObjectStorageUserTagsWithBody(ctx context.Context, serviceUuid ObjectStorage2ReplaceUserTagsServiceUuid, username ObjectStorage2ReplaceUserTagsUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ReplaceObjectStorageUserTagsWithBody(ctx context.Context, serviceUuid ObjectStorage2ReplaceObjectStorageUserTagsServiceUuid, username ObjectStorage2ReplaceObjectStorageUserTagsUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	ReplaceObjectStorageUserTags(ctx context.Context, serviceUuid ObjectStorage2ReplaceUserTagsServiceUuid, username ObjectStorage2ReplaceUserTagsUsername, body ReplaceObjectStorageUserTagsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ReplaceObjectStorageUserTags(ctx context.Context, serviceUuid ObjectStorage2ReplaceObjectStorageUserTagsServiceUuid, username ObjectStorage2ReplaceObjectStorageUserTagsUsername, body ReplaceObjectStorageUserTagsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteObjectStorageUserTag request
-	DeleteObjectStorageUserTag(ctx context.Context, serviceUuid ObjectStorage2DeleteUserTagServiceUuid, username ObjectStorage2DeleteUserTagUsername, userTagKey ObjectStorage2DeleteUserTagUserTagKey, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteObjectStorageUserTag(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageUserTagServiceUuid, username ObjectStorage2DeleteObjectStorageUserTagUsername, userTagKey ObjectStorage2DeleteObjectStorageUserTagUserTagKey, reqEditors ...RequestEditorFn) (*http.Response, error)
+}
+
+func (c *Client) ListFirewallRulesets(ctx context.Context, params *ListFirewallRulesetsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListFirewallRulesetsRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateFirewallRulesetWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateFirewallRulesetRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateFirewallRuleset(ctx context.Context, body CreateFirewallRulesetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateFirewallRulesetRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) AdminListServerFirewallRulesWithBody(ctx context.Context, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAdminListServerFirewallRulesRequestWithBody(c.Server, serverUuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) AdminListServerFirewallRules(ctx context.Context, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, body AdminListServerFirewallRulesJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAdminListServerFirewallRulesRequest(c.Server, serverUuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ListServerFirewallRule(ctx context.Context, serverUuid FirewallRulesetListServerFirewallRuleServerUuid, params *ListServerFirewallRuleParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListServerFirewallRuleRequest(c.Server, serverUuid, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateServerFirewallRuleWithBody(ctx context.Context, serverUuid FirewallRulesetCreateServerFirewallRuleServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateServerFirewallRuleRequestWithBody(c.Server, serverUuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateServerFirewallRule(ctx context.Context, serverUuid FirewallRulesetCreateServerFirewallRuleServerUuid, body CreateServerFirewallRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateServerFirewallRuleRequest(c.Server, serverUuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateMultipleServerFirewallRulesWithBody(ctx context.Context, serverUuid FirewallRulesetCreateMultipleServerFirewallRulesServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateMultipleServerFirewallRulesRequestWithBody(c.Server, serverUuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateMultipleServerFirewallRules(ctx context.Context, serverUuid FirewallRulesetCreateMultipleServerFirewallRulesServerUuid, body CreateMultipleServerFirewallRulesJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateMultipleServerFirewallRulesRequest(c.Server, serverUuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) DeleteServerFirewallRule(ctx context.Context, serverUuid FirewallRulesetDeleteServerFirewallRuleServerUuid, position FirewallRulesetDeleteServerFirewallRulePosition, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteServerFirewallRuleRequest(c.Server, serverUuid, position)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetServerFirewallRule(ctx context.Context, serverUuid FirewallRulesetGetServerFirewallRuleServerUuid, position FirewallRulesetGetServerFirewallRulePosition, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetServerFirewallRuleRequest(c.Server, serverUuid, position)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) DeleteFirewallRuleset(ctx context.Context, rulesetUuid DeleteFirewallRulesetRulesetUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteFirewallRulesetRequest(c.Server, rulesetUuid)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetFirewallRuleset(ctx context.Context, rulesetUuid GetFirewallRulesetRulesetUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetFirewallRulesetRequest(c.Server, rulesetUuid)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ModifyFirewallRulesetWithBody(ctx context.Context, rulesetUuid ModifyFirewallRulesetRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewModifyFirewallRulesetRequestWithBody(c.Server, rulesetUuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ModifyFirewallRuleset(ctx context.Context, rulesetUuid ModifyFirewallRulesetRulesetUuid, body ModifyFirewallRulesetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewModifyFirewallRulesetRequest(c.Server, rulesetUuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ListFirewallRulesetLabels(ctx context.Context, rulesetUuid ListFirewallRulesetLabelsRulesetUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListFirewallRulesetLabelsRequest(c.Server, rulesetUuid)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateFirewallRulesetLabelWithBody(ctx context.Context, rulesetUuid CreateFirewallRulesetLabelRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateFirewallRulesetLabelRequestWithBody(c.Server, rulesetUuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateFirewallRulesetLabel(ctx context.Context, rulesetUuid CreateFirewallRulesetLabelRulesetUuid, body CreateFirewallRulesetLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateFirewallRulesetLabelRequest(c.Server, rulesetUuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) DeleteFirewallRulesetLabel(ctx context.Context, rulesetUuid DeleteFirewallRulesetLabelRulesetUuid, labelKey DeleteFirewallRulesetLabelLabelKey, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteFirewallRulesetLabelRequest(c.Server, rulesetUuid, labelKey)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetFirewallRulesetLabel(ctx context.Context, rulesetUuid GetFirewallRulesetLabelRulesetUuid, labelKey GetFirewallRulesetLabelLabelKey, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetFirewallRulesetLabelRequest(c.Server, rulesetUuid, labelKey)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ModifyFirewallRulesetLabelWithBody(ctx context.Context, rulesetUuid ModifyFirewallRulesetLabelRulesetUuid, labelKey ModifyFirewallRulesetLabelLabelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewModifyFirewallRulesetLabelRequestWithBody(c.Server, rulesetUuid, labelKey, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ModifyFirewallRulesetLabel(ctx context.Context, rulesetUuid ModifyFirewallRulesetLabelRulesetUuid, labelKey ModifyFirewallRulesetLabelLabelKey, body ModifyFirewallRulesetLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewModifyFirewallRulesetLabelRequest(c.Server, rulesetUuid, labelKey, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) RestoreFirewallRuleset(ctx context.Context, rulesetUuid RestoreFirewallRulesetRulesetUuid, rulesetVersion RestoreFirewallRulesetRulesetVersion, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRestoreFirewallRulesetRequest(c.Server, rulesetUuid, rulesetVersion)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ListFirewallRulesetRules(ctx context.Context, rulesetUuid ListFirewallRulesetRulesRulesetUuid, params *ListFirewallRulesetRulesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListFirewallRulesetRulesRequest(c.Server, rulesetUuid, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateFirewallRulesetRuleWithBody(ctx context.Context, rulesetUuid CreateFirewallRulesetRuleRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateFirewallRulesetRuleRequestWithBody(c.Server, rulesetUuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateFirewallRulesetRule(ctx context.Context, rulesetUuid CreateFirewallRulesetRuleRulesetUuid, body CreateFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateFirewallRulesetRuleRequest(c.Server, rulesetUuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) DeleteFirewallRulesetRule(ctx context.Context, rulesetUuid DeleteFirewallRulesetRuleRulesetUuid, ruleId DeleteFirewallRulesetRuleRuleId, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteFirewallRulesetRuleRequest(c.Server, rulesetUuid, ruleId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetFirewallRulesetRule(ctx context.Context, rulesetUuid GetFirewallRulesetRuleRulesetUuid, ruleId GetFirewallRulesetRuleRuleId, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetFirewallRulesetRuleRequest(c.Server, rulesetUuid, ruleId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ModifyFirewallRulesetRuleWithBody(ctx context.Context, rulesetUuid ModifyFirewallRulesetRuleRulesetUuid, ruleId ModifyFirewallRulesetRuleRuleId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewModifyFirewallRulesetRuleRequestWithBody(c.Server, rulesetUuid, ruleId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ModifyFirewallRulesetRule(ctx context.Context, rulesetUuid ModifyFirewallRulesetRuleRulesetUuid, ruleId ModifyFirewallRulesetRuleRuleId, body ModifyFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewModifyFirewallRulesetRuleRequest(c.Server, rulesetUuid, ruleId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
 }
 
 func (c *Client) ListObjectStorages(ctx context.Context, params *ListObjectStoragesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -3000,54 +6145,6 @@ func (c *Client) CreateObjectStorage(ctx context.Context, body CreateObjectStora
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListObjectStorageIntegrationServices(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListObjectStorageIntegrationServicesRequest(c.Server)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) GetObjectStorageIntegrationService(ctx context.Context, serviceUuid ObjectStorage2IntegrationGetServiceServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetObjectStorageIntegrationServiceRequest(c.Server, serviceUuid)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) CreateObjectStorageIntegrationNetwork(ctx context.Context, serviceUuid ObjectStorage2IntegrationCreateNetworkServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateObjectStorageIntegrationNetworkRequest(c.Server, serviceUuid)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) DeleteObjectStorageIntegrationNetwork(ctx context.Context, serviceUuid ObjectStorage2IntegrationDeleteNetworkServiceUuid, networkName ObjectStorage2IntegrationDeleteNetworkNetworkName, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteObjectStorageIntegrationNetworkRequest(c.Server, serviceUuid, networkName)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 func (c *Client) ListObjectStorageRegions(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListObjectStorageRegionsRequest(c.Server)
 	if err != nil {
@@ -3060,7 +6157,7 @@ func (c *Client) ListObjectStorageRegions(ctx context.Context, reqEditors ...Req
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetObjectStorageRegion(ctx context.Context, regionName ObjectStorage2GetRegionDetailsRegionName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetObjectStorageRegion(ctx context.Context, regionName ObjectStorage2GetObjectStorageRegionRegionName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetObjectStorageRegionRequest(c.Server, regionName)
 	if err != nil {
 		return nil, err
@@ -3072,7 +6169,7 @@ func (c *Client) GetObjectStorageRegion(ctx context.Context, regionName ObjectSt
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteObjectStorage(ctx context.Context, serviceUuid ObjectStorage2DeleteServiceServiceUuid, params *DeleteObjectStorageParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteObjectStorage(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageServiceUuid, params *DeleteObjectStorageParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteObjectStorageRequest(c.Server, serviceUuid, params)
 	if err != nil {
 		return nil, err
@@ -3084,7 +6181,7 @@ func (c *Client) DeleteObjectStorage(ctx context.Context, serviceUuid ObjectStor
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetObjectStorage(ctx context.Context, serviceUuid ObjectStorage2GetServiceServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetObjectStorage(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetObjectStorageRequest(c.Server, serviceUuid)
 	if err != nil {
 		return nil, err
@@ -3096,7 +6193,7 @@ func (c *Client) GetObjectStorage(ctx context.Context, serviceUuid ObjectStorage
 	return c.Client.Do(req)
 }
 
-func (c *Client) ModifyObjectStorageWithBody(ctx context.Context, serviceUuid ObjectStorage2ModifyServiceServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ModifyObjectStorageWithBody(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewModifyObjectStorageRequestWithBody(c.Server, serviceUuid, contentType, body)
 	if err != nil {
 		return nil, err
@@ -3108,7 +6205,7 @@ func (c *Client) ModifyObjectStorageWithBody(ctx context.Context, serviceUuid Ob
 	return c.Client.Do(req)
 }
 
-func (c *Client) ModifyObjectStorage(ctx context.Context, serviceUuid ObjectStorage2ModifyServiceServiceUuid, body ModifyObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ModifyObjectStorage(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageServiceUuid, body ModifyObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewModifyObjectStorageRequest(c.Server, serviceUuid, body)
 	if err != nil {
 		return nil, err
@@ -3120,7 +6217,7 @@ func (c *Client) ModifyObjectStorage(ctx context.Context, serviceUuid ObjectStor
 	return c.Client.Do(req)
 }
 
-func (c *Client) ReplaceObjectStorageWithBody(ctx context.Context, serviceUuid ObjectStorage2ReplaceServiceServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ReplaceObjectStorageWithBody(ctx context.Context, serviceUuid ObjectStorage2ReplaceObjectStorageServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewReplaceObjectStorageRequestWithBody(c.Server, serviceUuid, contentType, body)
 	if err != nil {
 		return nil, err
@@ -3132,7 +6229,7 @@ func (c *Client) ReplaceObjectStorageWithBody(ctx context.Context, serviceUuid O
 	return c.Client.Do(req)
 }
 
-func (c *Client) ReplaceObjectStorage(ctx context.Context, serviceUuid ObjectStorage2ReplaceServiceServiceUuid, body ReplaceObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ReplaceObjectStorage(ctx context.Context, serviceUuid ObjectStorage2ReplaceObjectStorageServiceUuid, body ReplaceObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewReplaceObjectStorageRequest(c.Server, serviceUuid, body)
 	if err != nil {
 		return nil, err
@@ -3144,7 +6241,7 @@ func (c *Client) ReplaceObjectStorage(ctx context.Context, serviceUuid ObjectSto
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListObjectStorageBucketMetrics(ctx context.Context, serviceUuid ObjectStorage2ListBucketMetricsServiceUuid, params *ListObjectStorageBucketMetricsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListObjectStorageBucketMetrics(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageBucketMetricsServiceUuid, params *ListObjectStorageBucketMetricsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListObjectStorageBucketMetricsRequest(c.Server, serviceUuid, params)
 	if err != nil {
 		return nil, err
@@ -3156,7 +6253,7 @@ func (c *Client) ListObjectStorageBucketMetrics(ctx context.Context, serviceUuid
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateObjectStorageBucketWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateBucketServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateObjectStorageBucketWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageBucketServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateObjectStorageBucketRequestWithBody(c.Server, serviceUuid, contentType, body)
 	if err != nil {
 		return nil, err
@@ -3168,7 +6265,7 @@ func (c *Client) CreateObjectStorageBucketWithBody(ctx context.Context, serviceU
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateObjectStorageBucket(ctx context.Context, serviceUuid ObjectStorage2CreateBucketServiceUuid, body CreateObjectStorageBucketJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateObjectStorageBucket(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageBucketServiceUuid, body CreateObjectStorageBucketJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateObjectStorageBucketRequest(c.Server, serviceUuid, body)
 	if err != nil {
 		return nil, err
@@ -3180,7 +6277,7 @@ func (c *Client) CreateObjectStorageBucket(ctx context.Context, serviceUuid Obje
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteObjectStorageBucket(ctx context.Context, serviceUuid ObjectStorage2DeleteBucketServiceUuid, bucketName ObjectStorage2DeleteBucketBucketName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteObjectStorageBucket(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageBucketServiceUuid, bucketName ObjectStorage2DeleteObjectStorageBucketBucketName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteObjectStorageBucketRequest(c.Server, serviceUuid, bucketName)
 	if err != nil {
 		return nil, err
@@ -3192,7 +6289,7 @@ func (c *Client) DeleteObjectStorageBucket(ctx context.Context, serviceUuid Obje
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListObjectStorageCustomDomains(ctx context.Context, serviceUuid ObjectStorage2ListCustomDomainsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListObjectStorageCustomDomains(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageCustomDomainsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListObjectStorageCustomDomainsRequest(c.Server, serviceUuid)
 	if err != nil {
 		return nil, err
@@ -3204,7 +6301,7 @@ func (c *Client) ListObjectStorageCustomDomains(ctx context.Context, serviceUuid
 	return c.Client.Do(req)
 }
 
-func (c *Client) AttachObjectStorageCustomDomainWithBody(ctx context.Context, serviceUuid ObjectStorage2AttachCustomDomainServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) AttachObjectStorageCustomDomainWithBody(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageCustomDomainServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewAttachObjectStorageCustomDomainRequestWithBody(c.Server, serviceUuid, contentType, body)
 	if err != nil {
 		return nil, err
@@ -3216,7 +6313,7 @@ func (c *Client) AttachObjectStorageCustomDomainWithBody(ctx context.Context, se
 	return c.Client.Do(req)
 }
 
-func (c *Client) AttachObjectStorageCustomDomain(ctx context.Context, serviceUuid ObjectStorage2AttachCustomDomainServiceUuid, body AttachObjectStorageCustomDomainJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) AttachObjectStorageCustomDomain(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageCustomDomainServiceUuid, body AttachObjectStorageCustomDomainJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewAttachObjectStorageCustomDomainRequest(c.Server, serviceUuid, body)
 	if err != nil {
 		return nil, err
@@ -3228,7 +6325,7 @@ func (c *Client) AttachObjectStorageCustomDomain(ctx context.Context, serviceUui
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteObjectStorageCustomDomain(ctx context.Context, serviceUuid ObjectStorage2DeleteCustomDomainServiceUuid, customDomainName ObjectStorage2DeleteCustomDomainCustomDomainName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteObjectStorageCustomDomain(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageCustomDomainServiceUuid, customDomainName ObjectStorage2DeleteObjectStorageCustomDomainCustomDomainName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteObjectStorageCustomDomainRequest(c.Server, serviceUuid, customDomainName)
 	if err != nil {
 		return nil, err
@@ -3240,7 +6337,7 @@ func (c *Client) DeleteObjectStorageCustomDomain(ctx context.Context, serviceUui
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetObjectStorageCustomDomain(ctx context.Context, serviceUuid ObjectStorage2GetCustomDomainDetailsServiceUuid, customDomainName ObjectStorage2GetCustomDomainDetailsCustomDomainName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetObjectStorageCustomDomain(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageCustomDomainServiceUuid, customDomainName ObjectStorage2GetObjectStorageCustomDomainCustomDomainName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetObjectStorageCustomDomainRequest(c.Server, serviceUuid, customDomainName)
 	if err != nil {
 		return nil, err
@@ -3252,7 +6349,7 @@ func (c *Client) GetObjectStorageCustomDomain(ctx context.Context, serviceUuid O
 	return c.Client.Do(req)
 }
 
-func (c *Client) ModifyObjectStorageCustomDomainWithBody(ctx context.Context, serviceUuid ObjectStorage2ModifyCustomDomainServiceUuid, customDomainName ObjectStorage2ModifyCustomDomainCustomDomainName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ModifyObjectStorageCustomDomainWithBody(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageCustomDomainServiceUuid, customDomainName ObjectStorage2ModifyObjectStorageCustomDomainCustomDomainName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewModifyObjectStorageCustomDomainRequestWithBody(c.Server, serviceUuid, customDomainName, contentType, body)
 	if err != nil {
 		return nil, err
@@ -3264,7 +6361,7 @@ func (c *Client) ModifyObjectStorageCustomDomainWithBody(ctx context.Context, se
 	return c.Client.Do(req)
 }
 
-func (c *Client) ModifyObjectStorageCustomDomain(ctx context.Context, serviceUuid ObjectStorage2ModifyCustomDomainServiceUuid, customDomainName ObjectStorage2ModifyCustomDomainCustomDomainName, body ModifyObjectStorageCustomDomainJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ModifyObjectStorageCustomDomain(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageCustomDomainServiceUuid, customDomainName ObjectStorage2ModifyObjectStorageCustomDomainCustomDomainName, body ModifyObjectStorageCustomDomainJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewModifyObjectStorageCustomDomainRequest(c.Server, serviceUuid, customDomainName, body)
 	if err != nil {
 		return nil, err
@@ -3276,8 +6373,8 @@ func (c *Client) ModifyObjectStorageCustomDomain(ctx context.Context, serviceUui
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetServiceDomains(ctx context.Context, serviceUuid ObjectStorage2GetServiceDomainsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetServiceDomainsRequest(c.Server, serviceUuid)
+func (c *Client) ListObjectStorageDomains(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageDomainsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListObjectStorageDomainsRequest(c.Server, serviceUuid)
 	if err != nil {
 		return nil, err
 	}
@@ -3288,7 +6385,7 @@ func (c *Client) GetServiceDomains(ctx context.Context, serviceUuid ObjectStorag
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListObjectStorageGroups(ctx context.Context, serviceUuid ObjectStorage2ListGroupsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListObjectStorageGroups(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageGroupsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListObjectStorageGroupsRequest(c.Server, serviceUuid)
 	if err != nil {
 		return nil, err
@@ -3300,7 +6397,7 @@ func (c *Client) ListObjectStorageGroups(ctx context.Context, serviceUuid Object
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateObjectStorageGroupWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateGroupServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateObjectStorageGroupWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageGroupServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateObjectStorageGroupRequestWithBody(c.Server, serviceUuid, contentType, body)
 	if err != nil {
 		return nil, err
@@ -3312,7 +6409,7 @@ func (c *Client) CreateObjectStorageGroupWithBody(ctx context.Context, serviceUu
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateObjectStorageGroup(ctx context.Context, serviceUuid ObjectStorage2CreateGroupServiceUuid, body CreateObjectStorageGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateObjectStorageGroup(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageGroupServiceUuid, body CreateObjectStorageGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateObjectStorageGroupRequest(c.Server, serviceUuid, body)
 	if err != nil {
 		return nil, err
@@ -3324,7 +6421,7 @@ func (c *Client) CreateObjectStorageGroup(ctx context.Context, serviceUuid Objec
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteObjectStorageGroup(ctx context.Context, serviceUuid ObjectStorage2DeleteGroupServiceUuid, groupName ObjectStorage2DeleteGroupGroupName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteObjectStorageGroup(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageGroupServiceUuid, groupName ObjectStorage2DeleteObjectStorageGroupGroupName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteObjectStorageGroupRequest(c.Server, serviceUuid, groupName)
 	if err != nil {
 		return nil, err
@@ -3336,7 +6433,7 @@ func (c *Client) DeleteObjectStorageGroup(ctx context.Context, serviceUuid Objec
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetObjectStorageGroup(ctx context.Context, serviceUuid ObjectStorage2GetGroupServiceUuid, groupName ObjectStorage2GetGroupGroupName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetObjectStorageGroup(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageGroupServiceUuid, groupName ObjectStorage2GetObjectStorageGroupGroupName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetObjectStorageGroupRequest(c.Server, serviceUuid, groupName)
 	if err != nil {
 		return nil, err
@@ -3348,7 +6445,7 @@ func (c *Client) GetObjectStorageGroup(ctx context.Context, serviceUuid ObjectSt
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListObjectStorageGroupInlinePolicies(ctx context.Context, serviceUuid ObjectStorage2ListGroupInlinePoliciesServiceUuid, groupName ObjectStorage2ListGroupInlinePoliciesGroupName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListObjectStorageGroupInlinePolicies(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageGroupInlinePoliciesServiceUuid, groupName ObjectStorage2ListObjectStorageGroupInlinePoliciesGroupName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListObjectStorageGroupInlinePoliciesRequest(c.Server, serviceUuid, groupName)
 	if err != nil {
 		return nil, err
@@ -3360,7 +6457,7 @@ func (c *Client) ListObjectStorageGroupInlinePolicies(ctx context.Context, servi
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateObjectStorageGroupInlinePolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateGroupInlinePolicyServiceUuid, groupName ObjectStorage2CreateGroupInlinePolicyGroupName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateObjectStorageGroupInlinePolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageGroupInlinePolicyServiceUuid, groupName ObjectStorage2CreateObjectStorageGroupInlinePolicyGroupName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateObjectStorageGroupInlinePolicyRequestWithBody(c.Server, serviceUuid, groupName, contentType, body)
 	if err != nil {
 		return nil, err
@@ -3372,7 +6469,7 @@ func (c *Client) CreateObjectStorageGroupInlinePolicyWithBody(ctx context.Contex
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateObjectStorageGroupInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2CreateGroupInlinePolicyServiceUuid, groupName ObjectStorage2CreateGroupInlinePolicyGroupName, body CreateObjectStorageGroupInlinePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateObjectStorageGroupInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageGroupInlinePolicyServiceUuid, groupName ObjectStorage2CreateObjectStorageGroupInlinePolicyGroupName, body CreateObjectStorageGroupInlinePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateObjectStorageGroupInlinePolicyRequest(c.Server, serviceUuid, groupName, body)
 	if err != nil {
 		return nil, err
@@ -3384,7 +6481,7 @@ func (c *Client) CreateObjectStorageGroupInlinePolicy(ctx context.Context, servi
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteObjectStorageGroupInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2DeleteGroupInlinePolicyServiceUuid, groupName ObjectStorage2DeleteGroupInlinePolicyGroupName, groupPolicyName ObjectStorage2DeleteGroupInlinePolicyGroupPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteObjectStorageGroupInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageGroupInlinePolicyServiceUuid, groupName ObjectStorage2DeleteObjectStorageGroupInlinePolicyGroupName, groupPolicyName ObjectStorage2DeleteObjectStorageGroupInlinePolicyGroupPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteObjectStorageGroupInlinePolicyRequest(c.Server, serviceUuid, groupName, groupPolicyName)
 	if err != nil {
 		return nil, err
@@ -3396,7 +6493,7 @@ func (c *Client) DeleteObjectStorageGroupInlinePolicy(ctx context.Context, servi
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetObjectStorageGroupInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2GetGroupInlinePolicyServiceUuid, groupName ObjectStorage2GetGroupInlinePolicyGroupName, groupPolicyName ObjectStorage2GetGroupInlinePolicyGroupPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetObjectStorageGroupInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageGroupInlinePolicyServiceUuid, groupName ObjectStorage2GetObjectStorageGroupInlinePolicyGroupName, groupPolicyName ObjectStorage2GetObjectStorageGroupInlinePolicyGroupPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetObjectStorageGroupInlinePolicyRequest(c.Server, serviceUuid, groupName, groupPolicyName)
 	if err != nil {
 		return nil, err
@@ -3408,7 +6505,7 @@ func (c *Client) GetObjectStorageGroupInlinePolicy(ctx context.Context, serviceU
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListObjectStorageIAMGroupPolicies(ctx context.Context, serviceUuid ObjectStorage2ListIAMGroupPoliciesServiceUuid, groupName ObjectStorage2ListIAMGroupPoliciesGroupName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListObjectStorageIAMGroupPolicies(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageIAMGroupPoliciesServiceUuid, groupName ObjectStorage2ListObjectStorageIAMGroupPoliciesGroupName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListObjectStorageIAMGroupPoliciesRequest(c.Server, serviceUuid, groupName)
 	if err != nil {
 		return nil, err
@@ -3420,7 +6517,7 @@ func (c *Client) ListObjectStorageIAMGroupPolicies(ctx context.Context, serviceU
 	return c.Client.Do(req)
 }
 
-func (c *Client) AttachObjectStorageIAMGroupPolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2AttachIAMGroupPolicyServiceUuid, groupName ObjectStorage2AttachIAMGroupPolicyGroupName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) AttachObjectStorageIAMGroupPolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageIAMGroupPolicyServiceUuid, groupName ObjectStorage2AttachObjectStorageIAMGroupPolicyGroupName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewAttachObjectStorageIAMGroupPolicyRequestWithBody(c.Server, serviceUuid, groupName, contentType, body)
 	if err != nil {
 		return nil, err
@@ -3432,7 +6529,7 @@ func (c *Client) AttachObjectStorageIAMGroupPolicyWithBody(ctx context.Context, 
 	return c.Client.Do(req)
 }
 
-func (c *Client) AttachObjectStorageIAMGroupPolicy(ctx context.Context, serviceUuid ObjectStorage2AttachIAMGroupPolicyServiceUuid, groupName ObjectStorage2AttachIAMGroupPolicyGroupName, body AttachObjectStorageIAMGroupPolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) AttachObjectStorageIAMGroupPolicy(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageIAMGroupPolicyServiceUuid, groupName ObjectStorage2AttachObjectStorageIAMGroupPolicyGroupName, body AttachObjectStorageIAMGroupPolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewAttachObjectStorageIAMGroupPolicyRequest(c.Server, serviceUuid, groupName, body)
 	if err != nil {
 		return nil, err
@@ -3444,7 +6541,7 @@ func (c *Client) AttachObjectStorageIAMGroupPolicy(ctx context.Context, serviceU
 	return c.Client.Do(req)
 }
 
-func (c *Client) DetachObjectStorageIAMGroupPolicy(ctx context.Context, serviceUuid ObjectStorage2DetachIAMGroupPolicyServiceUuid, groupName ObjectStorage2DetachIAMGroupPolicyGroupName, policyName ObjectStorage2DetachIAMGroupPolicyPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DetachObjectStorageIAMGroupPolicy(ctx context.Context, serviceUuid ObjectStorage2DetachObjectStorageIAMGroupPolicyServiceUuid, groupName ObjectStorage2DetachObjectStorageIAMGroupPolicyGroupName, policyName ObjectStorage2DetachObjectStorageIAMGroupPolicyPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDetachObjectStorageIAMGroupPolicyRequest(c.Server, serviceUuid, groupName, policyName)
 	if err != nil {
 		return nil, err
@@ -3456,7 +6553,7 @@ func (c *Client) DetachObjectStorageIAMGroupPolicy(ctx context.Context, serviceU
 	return c.Client.Do(req)
 }
 
-func (c *Client) RemoveObjectStorageUserFromGroup(ctx context.Context, serviceUuid ObjectStorage2RemoveUserFromGroupServiceUuid, groupName ObjectStorage2RemoveUserFromGroupGroupName, username ObjectStorage2RemoveUserFromGroupUsername, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) RemoveObjectStorageUserFromGroup(ctx context.Context, serviceUuid ObjectStorage2RemoveObjectStorageUserFromGroupServiceUuid, groupName ObjectStorage2RemoveObjectStorageUserFromGroupGroupName, username ObjectStorage2RemoveObjectStorageUserFromGroupUsername, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewRemoveObjectStorageUserFromGroupRequest(c.Server, serviceUuid, groupName, username)
 	if err != nil {
 		return nil, err
@@ -3468,7 +6565,7 @@ func (c *Client) RemoveObjectStorageUserFromGroup(ctx context.Context, serviceUu
 	return c.Client.Do(req)
 }
 
-func (c *Client) AttachObjectStorageUserToGroup(ctx context.Context, serviceUuid ObjectStorage2AttachUserToGroupServiceUuid, groupName ObjectStorage2AttachUserToGroupGroupName, username ObjectStorage2AttachUserToGroupUsername, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) AttachObjectStorageUserToGroup(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageUserToGroupServiceUuid, groupName ObjectStorage2AttachObjectStorageUserToGroupGroupName, username ObjectStorage2AttachObjectStorageUserToGroupUsername, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewAttachObjectStorageUserToGroupRequest(c.Server, serviceUuid, groupName, username)
 	if err != nil {
 		return nil, err
@@ -3480,7 +6577,7 @@ func (c *Client) AttachObjectStorageUserToGroup(ctx context.Context, serviceUuid
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListObjectStorageLabels(ctx context.Context, serviceUuid ObjectStorage2ListLabelsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListObjectStorageLabels(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageLabelsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListObjectStorageLabelsRequest(c.Server, serviceUuid)
 	if err != nil {
 		return nil, err
@@ -3492,7 +6589,7 @@ func (c *Client) ListObjectStorageLabels(ctx context.Context, serviceUuid Object
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateObjectStorageLabelWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateLabelServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateObjectStorageLabelWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageLabelServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateObjectStorageLabelRequestWithBody(c.Server, serviceUuid, contentType, body)
 	if err != nil {
 		return nil, err
@@ -3504,7 +6601,7 @@ func (c *Client) CreateObjectStorageLabelWithBody(ctx context.Context, serviceUu
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateObjectStorageLabel(ctx context.Context, serviceUuid ObjectStorage2CreateLabelServiceUuid, body CreateObjectStorageLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateObjectStorageLabel(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageLabelServiceUuid, body CreateObjectStorageLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateObjectStorageLabelRequest(c.Server, serviceUuid, body)
 	if err != nil {
 		return nil, err
@@ -3516,7 +6613,7 @@ func (c *Client) CreateObjectStorageLabel(ctx context.Context, serviceUuid Objec
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteObjectStorageLabel(ctx context.Context, serviceUuid ObjectStorage2DeleteLabelServiceUuid, labelKey ObjectStorage2DeleteLabelLabelKey, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteObjectStorageLabel(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageLabelServiceUuid, labelKey ObjectStorage2DeleteObjectStorageLabelLabelKey, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteObjectStorageLabelRequest(c.Server, serviceUuid, labelKey)
 	if err != nil {
 		return nil, err
@@ -3528,7 +6625,7 @@ func (c *Client) DeleteObjectStorageLabel(ctx context.Context, serviceUuid Objec
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetObjectStorageLabel(ctx context.Context, serviceUuid ObjectStorage2GetLabelDetailsServiceUuid, labelKey ObjectStorage2GetLabelDetailsLabelKey, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetObjectStorageLabel(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageLabelServiceUuid, labelKey ObjectStorage2GetObjectStorageLabelLabelKey, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetObjectStorageLabelRequest(c.Server, serviceUuid, labelKey)
 	if err != nil {
 		return nil, err
@@ -3540,7 +6637,7 @@ func (c *Client) GetObjectStorageLabel(ctx context.Context, serviceUuid ObjectSt
 	return c.Client.Do(req)
 }
 
-func (c *Client) ModifyObjectStorageLabelWithBody(ctx context.Context, serviceUuid ObjectStorage2ModifyLabelServiceUuid, labelKey ObjectStorage2ModifyLabelLabelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ModifyObjectStorageLabelWithBody(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageLabelServiceUuid, labelKey ObjectStorage2ModifyObjectStorageLabelLabelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewModifyObjectStorageLabelRequestWithBody(c.Server, serviceUuid, labelKey, contentType, body)
 	if err != nil {
 		return nil, err
@@ -3552,7 +6649,7 @@ func (c *Client) ModifyObjectStorageLabelWithBody(ctx context.Context, serviceUu
 	return c.Client.Do(req)
 }
 
-func (c *Client) ModifyObjectStorageLabel(ctx context.Context, serviceUuid ObjectStorage2ModifyLabelServiceUuid, labelKey ObjectStorage2ModifyLabelLabelKey, body ModifyObjectStorageLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ModifyObjectStorageLabel(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageLabelServiceUuid, labelKey ObjectStorage2ModifyObjectStorageLabelLabelKey, body ModifyObjectStorageLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewModifyObjectStorageLabelRequest(c.Server, serviceUuid, labelKey, body)
 	if err != nil {
 		return nil, err
@@ -3564,7 +6661,7 @@ func (c *Client) ModifyObjectStorageLabel(ctx context.Context, serviceUuid Objec
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetObjectStorageMetrics(ctx context.Context, serviceUuid ObjectStorage2GetServiceMetricsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetObjectStorageMetrics(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageMetricsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetObjectStorageMetricsRequest(c.Server, serviceUuid)
 	if err != nil {
 		return nil, err
@@ -3576,7 +6673,7 @@ func (c *Client) GetObjectStorageMetrics(ctx context.Context, serviceUuid Object
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListObjectStorageMetricsSeries(ctx context.Context, serviceUuid ObjectStorage2ListServiceMetricsSeriesServiceUuid, params *ListObjectStorageMetricsSeriesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListObjectStorageMetricsSeries(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageMetricsSeriesServiceUuid, params *ListObjectStorageMetricsSeriesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListObjectStorageMetricsSeriesRequest(c.Server, serviceUuid, params)
 	if err != nil {
 		return nil, err
@@ -3588,7 +6685,7 @@ func (c *Client) ListObjectStorageMetricsSeries(ctx context.Context, serviceUuid
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListObjectStorageNetworks(ctx context.Context, serviceUuid ObjectStorage2ListNetworksServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListObjectStorageNetworks(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageNetworksServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListObjectStorageNetworksRequest(c.Server, serviceUuid)
 	if err != nil {
 		return nil, err
@@ -3600,7 +6697,7 @@ func (c *Client) ListObjectStorageNetworks(ctx context.Context, serviceUuid Obje
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateObjectStorageNetworkWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateNetworkServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateObjectStorageNetworkWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageNetworkServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateObjectStorageNetworkRequestWithBody(c.Server, serviceUuid, contentType, body)
 	if err != nil {
 		return nil, err
@@ -3612,7 +6709,7 @@ func (c *Client) CreateObjectStorageNetworkWithBody(ctx context.Context, service
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateObjectStorageNetwork(ctx context.Context, serviceUuid ObjectStorage2CreateNetworkServiceUuid, body CreateObjectStorageNetworkJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateObjectStorageNetwork(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageNetworkServiceUuid, body CreateObjectStorageNetworkJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateObjectStorageNetworkRequest(c.Server, serviceUuid, body)
 	if err != nil {
 		return nil, err
@@ -3624,7 +6721,7 @@ func (c *Client) CreateObjectStorageNetwork(ctx context.Context, serviceUuid Obj
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteObjectStorageNetwork(ctx context.Context, serviceUuid ObjectStorage2DeleteNetworkServiceUuid, networkName ObjectStorage2DeleteNetworkNetworkName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteObjectStorageNetwork(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageNetworkServiceUuid, networkName ObjectStorage2DeleteObjectStorageNetworkNetworkName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteObjectStorageNetworkRequest(c.Server, serviceUuid, networkName)
 	if err != nil {
 		return nil, err
@@ -3636,7 +6733,7 @@ func (c *Client) DeleteObjectStorageNetwork(ctx context.Context, serviceUuid Obj
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetObjectStorageNetwork(ctx context.Context, serviceUuid ObjectStorage2GetNetworkServiceUuid, networkName ObjectStorage2GetNetworkNetworkName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetObjectStorageNetwork(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageNetworkServiceUuid, networkName ObjectStorage2GetObjectStorageNetworkNetworkName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetObjectStorageNetworkRequest(c.Server, serviceUuid, networkName)
 	if err != nil {
 		return nil, err
@@ -3648,7 +6745,7 @@ func (c *Client) GetObjectStorageNetwork(ctx context.Context, serviceUuid Object
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListObjectStoragePolicies(ctx context.Context, serviceUuid ObjectStorage2ListPoliciesServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListObjectStoragePolicies(ctx context.Context, serviceUuid ObjectStorage2ListObjectStoragePoliciesServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListObjectStoragePoliciesRequest(c.Server, serviceUuid)
 	if err != nil {
 		return nil, err
@@ -3660,7 +6757,7 @@ func (c *Client) ListObjectStoragePolicies(ctx context.Context, serviceUuid Obje
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateObjectStoragePolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2CreatePolicyServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateObjectStoragePolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStoragePolicyServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateObjectStoragePolicyRequestWithBody(c.Server, serviceUuid, contentType, body)
 	if err != nil {
 		return nil, err
@@ -3672,7 +6769,7 @@ func (c *Client) CreateObjectStoragePolicyWithBody(ctx context.Context, serviceU
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateObjectStoragePolicy(ctx context.Context, serviceUuid ObjectStorage2CreatePolicyServiceUuid, body CreateObjectStoragePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateObjectStoragePolicy(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStoragePolicyServiceUuid, body CreateObjectStoragePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateObjectStoragePolicyRequest(c.Server, serviceUuid, body)
 	if err != nil {
 		return nil, err
@@ -3684,7 +6781,7 @@ func (c *Client) CreateObjectStoragePolicy(ctx context.Context, serviceUuid Obje
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteObjectStoragePolicy(ctx context.Context, serviceUuid ObjectStorage2DeletePolicyServiceUuid, policyName ObjectStorage2DeletePolicyPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteObjectStoragePolicy(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStoragePolicyServiceUuid, policyName ObjectStorage2DeleteObjectStoragePolicyPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteObjectStoragePolicyRequest(c.Server, serviceUuid, policyName)
 	if err != nil {
 		return nil, err
@@ -3696,7 +6793,7 @@ func (c *Client) DeleteObjectStoragePolicy(ctx context.Context, serviceUuid Obje
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetObjectStoragePolicy(ctx context.Context, serviceUuid ObjectStorage2GetPolicyDetailsServiceUuid, policyName ObjectStorage2GetPolicyDetailsPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetObjectStoragePolicy(ctx context.Context, serviceUuid ObjectStorage2GetObjectStoragePolicyServiceUuid, policyName ObjectStorage2GetObjectStoragePolicyPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetObjectStoragePolicyRequest(c.Server, serviceUuid, policyName)
 	if err != nil {
 		return nil, err
@@ -3708,7 +6805,7 @@ func (c *Client) GetObjectStoragePolicy(ctx context.Context, serviceUuid ObjectS
 	return c.Client.Do(req)
 }
 
-func (c *Client) SetObjectStorageDefaultPolicyVersionWithBody(ctx context.Context, serviceUuid ObjectStorage2SetDefaultPolicyVersionServiceUuid, policyName ObjectStorage2SetDefaultPolicyVersionPolicyName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) SetObjectStorageDefaultPolicyVersionWithBody(ctx context.Context, serviceUuid ObjectStorage2SetObjectStorageDefaultPolicyVersionServiceUuid, policyName ObjectStorage2SetObjectStorageDefaultPolicyVersionPolicyName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewSetObjectStorageDefaultPolicyVersionRequestWithBody(c.Server, serviceUuid, policyName, contentType, body)
 	if err != nil {
 		return nil, err
@@ -3720,7 +6817,7 @@ func (c *Client) SetObjectStorageDefaultPolicyVersionWithBody(ctx context.Contex
 	return c.Client.Do(req)
 }
 
-func (c *Client) SetObjectStorageDefaultPolicyVersion(ctx context.Context, serviceUuid ObjectStorage2SetDefaultPolicyVersionServiceUuid, policyName ObjectStorage2SetDefaultPolicyVersionPolicyName, body SetObjectStorageDefaultPolicyVersionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) SetObjectStorageDefaultPolicyVersion(ctx context.Context, serviceUuid ObjectStorage2SetObjectStorageDefaultPolicyVersionServiceUuid, policyName ObjectStorage2SetObjectStorageDefaultPolicyVersionPolicyName, body SetObjectStorageDefaultPolicyVersionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewSetObjectStorageDefaultPolicyVersionRequest(c.Server, serviceUuid, policyName, body)
 	if err != nil {
 		return nil, err
@@ -3732,7 +6829,7 @@ func (c *Client) SetObjectStorageDefaultPolicyVersion(ctx context.Context, servi
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListObjectStoragePolicyVersions(ctx context.Context, serviceUuid ObjectStorage2ListPolicyVersionsServiceUuid, policyName ObjectStorage2ListPolicyVersionsPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListObjectStoragePolicyVersions(ctx context.Context, serviceUuid ObjectStorage2ListObjectStoragePolicyVersionsServiceUuid, policyName ObjectStorage2ListObjectStoragePolicyVersionsPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListObjectStoragePolicyVersionsRequest(c.Server, serviceUuid, policyName)
 	if err != nil {
 		return nil, err
@@ -3744,7 +6841,7 @@ func (c *Client) ListObjectStoragePolicyVersions(ctx context.Context, serviceUui
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateObjectStoragePolicyVersionWithBody(ctx context.Context, serviceUuid ObjectStorage2CreatePolicyVersionServiceUuid, policyName ObjectStorage2CreatePolicyVersionPolicyName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateObjectStoragePolicyVersionWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStoragePolicyVersionServiceUuid, policyName ObjectStorage2CreateObjectStoragePolicyVersionPolicyName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateObjectStoragePolicyVersionRequestWithBody(c.Server, serviceUuid, policyName, contentType, body)
 	if err != nil {
 		return nil, err
@@ -3756,7 +6853,7 @@ func (c *Client) CreateObjectStoragePolicyVersionWithBody(ctx context.Context, s
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateObjectStoragePolicyVersion(ctx context.Context, serviceUuid ObjectStorage2CreatePolicyVersionServiceUuid, policyName ObjectStorage2CreatePolicyVersionPolicyName, body CreateObjectStoragePolicyVersionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateObjectStoragePolicyVersion(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStoragePolicyVersionServiceUuid, policyName ObjectStorage2CreateObjectStoragePolicyVersionPolicyName, body CreateObjectStoragePolicyVersionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateObjectStoragePolicyVersionRequest(c.Server, serviceUuid, policyName, body)
 	if err != nil {
 		return nil, err
@@ -3768,7 +6865,7 @@ func (c *Client) CreateObjectStoragePolicyVersion(ctx context.Context, serviceUu
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteObjectStoragePolicyVersion(ctx context.Context, serviceUuid ObjectStorage2DeletePolicyVersionServiceUuid, policyName ObjectStorage2DeletePolicyVersionPolicyName, policyVersion ObjectStorage2DeletePolicyVersionPolicyVersion, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteObjectStoragePolicyVersion(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStoragePolicyVersionServiceUuid, policyName ObjectStorage2DeleteObjectStoragePolicyVersionPolicyName, policyVersion ObjectStorage2DeleteObjectStoragePolicyVersionPolicyVersion, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteObjectStoragePolicyVersionRequest(c.Server, serviceUuid, policyName, policyVersion)
 	if err != nil {
 		return nil, err
@@ -3780,7 +6877,7 @@ func (c *Client) DeleteObjectStoragePolicyVersion(ctx context.Context, serviceUu
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetObjectStoragePolicyVersion(ctx context.Context, serviceUuid ObjectStorage2GetPolicyVersionServiceUuid, policyName ObjectStorage2GetPolicyVersionPolicyName, policyVersion ObjectStorage2GetPolicyVersionPolicyVersion, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetObjectStoragePolicyVersion(ctx context.Context, serviceUuid ObjectStorage2GetObjectStoragePolicyVersionServiceUuid, policyName ObjectStorage2GetObjectStoragePolicyVersionPolicyName, policyVersion ObjectStorage2GetObjectStoragePolicyVersionPolicyVersion, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetObjectStoragePolicyVersionRequest(c.Server, serviceUuid, policyName, policyVersion)
 	if err != nil {
 		return nil, err
@@ -3792,7 +6889,7 @@ func (c *Client) GetObjectStoragePolicyVersion(ctx context.Context, serviceUuid 
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListObjectStorageRoles(ctx context.Context, serviceUuid ObjectStorage2ListRolesServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListObjectStorageRoles(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageRolesServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListObjectStorageRolesRequest(c.Server, serviceUuid)
 	if err != nil {
 		return nil, err
@@ -3804,7 +6901,7 @@ func (c *Client) ListObjectStorageRoles(ctx context.Context, serviceUuid ObjectS
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateObjectStorageRoleWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateRoleServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateObjectStorageRoleWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageRoleServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateObjectStorageRoleRequestWithBody(c.Server, serviceUuid, contentType, body)
 	if err != nil {
 		return nil, err
@@ -3816,7 +6913,7 @@ func (c *Client) CreateObjectStorageRoleWithBody(ctx context.Context, serviceUui
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateObjectStorageRole(ctx context.Context, serviceUuid ObjectStorage2CreateRoleServiceUuid, body CreateObjectStorageRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateObjectStorageRole(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageRoleServiceUuid, body CreateObjectStorageRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateObjectStorageRoleRequest(c.Server, serviceUuid, body)
 	if err != nil {
 		return nil, err
@@ -3828,7 +6925,7 @@ func (c *Client) CreateObjectStorageRole(ctx context.Context, serviceUuid Object
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteObjectStorageRole(ctx context.Context, serviceUuid ObjectStorage2DeleteRoleServiceUuid, roleName ObjectStorage2DeleteRoleRoleName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteObjectStorageRole(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageRoleServiceUuid, roleName ObjectStorage2DeleteObjectStorageRoleRoleName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteObjectStorageRoleRequest(c.Server, serviceUuid, roleName)
 	if err != nil {
 		return nil, err
@@ -3840,7 +6937,7 @@ func (c *Client) DeleteObjectStorageRole(ctx context.Context, serviceUuid Object
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetObjectStorageRole(ctx context.Context, serviceUuid ObjectStorage2GetRoleServiceUuid, roleName ObjectStorage2GetRoleRoleName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetObjectStorageRole(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageRoleServiceUuid, roleName ObjectStorage2GetObjectStorageRoleRoleName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetObjectStorageRoleRequest(c.Server, serviceUuid, roleName)
 	if err != nil {
 		return nil, err
@@ -3852,7 +6949,7 @@ func (c *Client) GetObjectStorageRole(ctx context.Context, serviceUuid ObjectSto
 	return c.Client.Do(req)
 }
 
-func (c *Client) UpdateObjectStorageRoleWithBody(ctx context.Context, serviceUuid ObjectStorage2UpdateRoleServiceUuid, roleName ObjectStorage2UpdateRoleRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) UpdateObjectStorageRoleWithBody(ctx context.Context, serviceUuid ObjectStorage2UpdateObjectStorageRoleServiceUuid, roleName ObjectStorage2UpdateObjectStorageRoleRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateObjectStorageRoleRequestWithBody(c.Server, serviceUuid, roleName, contentType, body)
 	if err != nil {
 		return nil, err
@@ -3864,7 +6961,7 @@ func (c *Client) UpdateObjectStorageRoleWithBody(ctx context.Context, serviceUui
 	return c.Client.Do(req)
 }
 
-func (c *Client) UpdateObjectStorageRole(ctx context.Context, serviceUuid ObjectStorage2UpdateRoleServiceUuid, roleName ObjectStorage2UpdateRoleRoleName, body UpdateObjectStorageRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) UpdateObjectStorageRole(ctx context.Context, serviceUuid ObjectStorage2UpdateObjectStorageRoleServiceUuid, roleName ObjectStorage2UpdateObjectStorageRoleRoleName, body UpdateObjectStorageRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateObjectStorageRoleRequest(c.Server, serviceUuid, roleName, body)
 	if err != nil {
 		return nil, err
@@ -3876,7 +6973,7 @@ func (c *Client) UpdateObjectStorageRole(ctx context.Context, serviceUuid Object
 	return c.Client.Do(req)
 }
 
-func (c *Client) AssumeObjectStorageRolePolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2AssumeRolePolicyServiceUuid, roleName ObjectStorage2AssumeRolePolicyRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) AssumeObjectStorageRolePolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2AssumeObjectStorageRolePolicyServiceUuid, roleName ObjectStorage2AssumeObjectStorageRolePolicyRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewAssumeObjectStorageRolePolicyRequestWithBody(c.Server, serviceUuid, roleName, contentType, body)
 	if err != nil {
 		return nil, err
@@ -3888,7 +6985,7 @@ func (c *Client) AssumeObjectStorageRolePolicyWithBody(ctx context.Context, serv
 	return c.Client.Do(req)
 }
 
-func (c *Client) AssumeObjectStorageRolePolicy(ctx context.Context, serviceUuid ObjectStorage2AssumeRolePolicyServiceUuid, roleName ObjectStorage2AssumeRolePolicyRoleName, body AssumeObjectStorageRolePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) AssumeObjectStorageRolePolicy(ctx context.Context, serviceUuid ObjectStorage2AssumeObjectStorageRolePolicyServiceUuid, roleName ObjectStorage2AssumeObjectStorageRolePolicyRoleName, body AssumeObjectStorageRolePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewAssumeObjectStorageRolePolicyRequest(c.Server, serviceUuid, roleName, body)
 	if err != nil {
 		return nil, err
@@ -3900,7 +6997,7 @@ func (c *Client) AssumeObjectStorageRolePolicy(ctx context.Context, serviceUuid 
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListObjectStorageRoleInlinePolicies(ctx context.Context, serviceUuid ObjectStorage2ListRoleInlinePoliciesServiceUuid, roleName ObjectStorage2ListRoleInlinePoliciesRoleName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListObjectStorageRoleInlinePolicies(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageRoleInlinePoliciesServiceUuid, roleName ObjectStorage2ListObjectStorageRoleInlinePoliciesRoleName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListObjectStorageRoleInlinePoliciesRequest(c.Server, serviceUuid, roleName)
 	if err != nil {
 		return nil, err
@@ -3912,7 +7009,7 @@ func (c *Client) ListObjectStorageRoleInlinePolicies(ctx context.Context, servic
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateObjectStorageRoleInlinePolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateRoleInlinePolicyServiceUuid, roleName ObjectStorage2CreateRoleInlinePolicyRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateObjectStorageRoleInlinePolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageRoleInlinePolicyServiceUuid, roleName ObjectStorage2CreateObjectStorageRoleInlinePolicyRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateObjectStorageRoleInlinePolicyRequestWithBody(c.Server, serviceUuid, roleName, contentType, body)
 	if err != nil {
 		return nil, err
@@ -3924,7 +7021,7 @@ func (c *Client) CreateObjectStorageRoleInlinePolicyWithBody(ctx context.Context
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateObjectStorageRoleInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2CreateRoleInlinePolicyServiceUuid, roleName ObjectStorage2CreateRoleInlinePolicyRoleName, body CreateObjectStorageRoleInlinePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateObjectStorageRoleInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageRoleInlinePolicyServiceUuid, roleName ObjectStorage2CreateObjectStorageRoleInlinePolicyRoleName, body CreateObjectStorageRoleInlinePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateObjectStorageRoleInlinePolicyRequest(c.Server, serviceUuid, roleName, body)
 	if err != nil {
 		return nil, err
@@ -3936,7 +7033,7 @@ func (c *Client) CreateObjectStorageRoleInlinePolicy(ctx context.Context, servic
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteObjectStorageRoleInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2DeleteRoleInlinePolicyServiceUuid, roleName ObjectStorage2DeleteRoleInlinePolicyRoleName, rolePolicyName ObjectStorage2DeleteRoleInlinePolicyRolePolicyName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteObjectStorageRoleInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageRoleInlinePolicyServiceUuid, roleName ObjectStorage2DeleteObjectStorageRoleInlinePolicyRoleName, rolePolicyName ObjectStorage2DeleteObjectStorageRoleInlinePolicyRolePolicyName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteObjectStorageRoleInlinePolicyRequest(c.Server, serviceUuid, roleName, rolePolicyName)
 	if err != nil {
 		return nil, err
@@ -3948,7 +7045,7 @@ func (c *Client) DeleteObjectStorageRoleInlinePolicy(ctx context.Context, servic
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetObjectStorageRoleInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2GetRoleInlinePolicyServiceUuid, roleName ObjectStorage2GetRoleInlinePolicyRoleName, rolePolicyName ObjectStorage2GetRoleInlinePolicyRolePolicyName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetObjectStorageRoleInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageRoleInlinePolicyServiceUuid, roleName ObjectStorage2GetObjectStorageRoleInlinePolicyRoleName, rolePolicyName ObjectStorage2GetObjectStorageRoleInlinePolicyRolePolicyName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetObjectStorageRoleInlinePolicyRequest(c.Server, serviceUuid, roleName, rolePolicyName)
 	if err != nil {
 		return nil, err
@@ -3960,7 +7057,7 @@ func (c *Client) GetObjectStorageRoleInlinePolicy(ctx context.Context, serviceUu
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteObjectStorageRolePermissionsBoundary(ctx context.Context, serviceUuid ObjectStorage2DeleteRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2DeleteRolePermissionsBoundaryRoleName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteObjectStorageRolePermissionsBoundary(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2DeleteObjectStorageRolePermissionsBoundaryRoleName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteObjectStorageRolePermissionsBoundaryRequest(c.Server, serviceUuid, roleName)
 	if err != nil {
 		return nil, err
@@ -3972,7 +7069,7 @@ func (c *Client) DeleteObjectStorageRolePermissionsBoundary(ctx context.Context,
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateObjectStorageRolePermissionsBoundaryWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2CreateRolePermissionsBoundaryRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateObjectStorageRolePermissionsBoundaryWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2CreateObjectStorageRolePermissionsBoundaryRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateObjectStorageRolePermissionsBoundaryRequestWithBody(c.Server, serviceUuid, roleName, contentType, body)
 	if err != nil {
 		return nil, err
@@ -3984,7 +7081,7 @@ func (c *Client) CreateObjectStorageRolePermissionsBoundaryWithBody(ctx context.
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateObjectStorageRolePermissionsBoundary(ctx context.Context, serviceUuid ObjectStorage2CreateRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2CreateRolePermissionsBoundaryRoleName, body CreateObjectStorageRolePermissionsBoundaryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateObjectStorageRolePermissionsBoundary(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2CreateObjectStorageRolePermissionsBoundaryRoleName, body CreateObjectStorageRolePermissionsBoundaryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateObjectStorageRolePermissionsBoundaryRequest(c.Server, serviceUuid, roleName, body)
 	if err != nil {
 		return nil, err
@@ -3996,7 +7093,7 @@ func (c *Client) CreateObjectStorageRolePermissionsBoundary(ctx context.Context,
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListObjectStorageAttachedRolePolicies(ctx context.Context, serviceUuid ObjectStorage2ListAttachedRolePoliciesServiceUuid, roleName ObjectStorage2ListAttachedRolePoliciesRoleName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListObjectStorageAttachedRolePolicies(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageAttachedRolePoliciesServiceUuid, roleName ObjectStorage2ListObjectStorageAttachedRolePoliciesRoleName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListObjectStorageAttachedRolePoliciesRequest(c.Server, serviceUuid, roleName)
 	if err != nil {
 		return nil, err
@@ -4008,7 +7105,7 @@ func (c *Client) ListObjectStorageAttachedRolePolicies(ctx context.Context, serv
 	return c.Client.Do(req)
 }
 
-func (c *Client) AttachObjectStoragePolicyToRoleWithBody(ctx context.Context, serviceUuid ObjectStorage2AttachPolicyToRoleServiceUuid, roleName ObjectStorage2AttachPolicyToRoleRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) AttachObjectStoragePolicyToRoleWithBody(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStoragePolicyToRoleServiceUuid, roleName ObjectStorage2AttachObjectStoragePolicyToRoleRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewAttachObjectStoragePolicyToRoleRequestWithBody(c.Server, serviceUuid, roleName, contentType, body)
 	if err != nil {
 		return nil, err
@@ -4020,7 +7117,7 @@ func (c *Client) AttachObjectStoragePolicyToRoleWithBody(ctx context.Context, se
 	return c.Client.Do(req)
 }
 
-func (c *Client) AttachObjectStoragePolicyToRole(ctx context.Context, serviceUuid ObjectStorage2AttachPolicyToRoleServiceUuid, roleName ObjectStorage2AttachPolicyToRoleRoleName, body AttachObjectStoragePolicyToRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) AttachObjectStoragePolicyToRole(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStoragePolicyToRoleServiceUuid, roleName ObjectStorage2AttachObjectStoragePolicyToRoleRoleName, body AttachObjectStoragePolicyToRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewAttachObjectStoragePolicyToRoleRequest(c.Server, serviceUuid, roleName, body)
 	if err != nil {
 		return nil, err
@@ -4032,7 +7129,7 @@ func (c *Client) AttachObjectStoragePolicyToRole(ctx context.Context, serviceUui
 	return c.Client.Do(req)
 }
 
-func (c *Client) DetachObjectStoragePolicyFromRole(ctx context.Context, serviceUuid ObjectStorage2DetachPolicyFromRoleServiceUuid, roleName ObjectStorage2DetachPolicyFromRoleRoleName, rolePolicyName ObjectStorage2DetachPolicyFromRoleRolePolicyName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DetachObjectStoragePolicyFromRole(ctx context.Context, serviceUuid ObjectStorage2DetachObjectStoragePolicyFromRoleServiceUuid, roleName ObjectStorage2DetachObjectStoragePolicyFromRoleRoleName, rolePolicyName ObjectStorage2DetachObjectStoragePolicyFromRoleRolePolicyName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDetachObjectStoragePolicyFromRoleRequest(c.Server, serviceUuid, roleName, rolePolicyName)
 	if err != nil {
 		return nil, err
@@ -4044,7 +7141,7 @@ func (c *Client) DetachObjectStoragePolicyFromRole(ctx context.Context, serviceU
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetObjectStorageRoleTags(ctx context.Context, serviceUuid ObjectStorage2GetRoleTagsServiceUuid, roleName ObjectStorage2GetRoleTagsRoleName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetObjectStorageRoleTags(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageRoleTagsServiceUuid, roleName ObjectStorage2GetObjectStorageRoleTagsRoleName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetObjectStorageRoleTagsRequest(c.Server, serviceUuid, roleName)
 	if err != nil {
 		return nil, err
@@ -4056,7 +7153,7 @@ func (c *Client) GetObjectStorageRoleTags(ctx context.Context, serviceUuid Objec
 	return c.Client.Do(req)
 }
 
-func (c *Client) ReplaceObjectStorageRoleTagsWithBody(ctx context.Context, serviceUuid ObjectStorage2ReplaceRoleTagsServiceUuid, roleName ObjectStorage2ReplaceRoleTagsRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ReplaceObjectStorageRoleTagsWithBody(ctx context.Context, serviceUuid ObjectStorage2ReplaceObjectStorageRoleTagsServiceUuid, roleName ObjectStorage2ReplaceObjectStorageRoleTagsRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewReplaceObjectStorageRoleTagsRequestWithBody(c.Server, serviceUuid, roleName, contentType, body)
 	if err != nil {
 		return nil, err
@@ -4068,7 +7165,7 @@ func (c *Client) ReplaceObjectStorageRoleTagsWithBody(ctx context.Context, servi
 	return c.Client.Do(req)
 }
 
-func (c *Client) ReplaceObjectStorageRoleTags(ctx context.Context, serviceUuid ObjectStorage2ReplaceRoleTagsServiceUuid, roleName ObjectStorage2ReplaceRoleTagsRoleName, body ReplaceObjectStorageRoleTagsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ReplaceObjectStorageRoleTags(ctx context.Context, serviceUuid ObjectStorage2ReplaceObjectStorageRoleTagsServiceUuid, roleName ObjectStorage2ReplaceObjectStorageRoleTagsRoleName, body ReplaceObjectStorageRoleTagsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewReplaceObjectStorageRoleTagsRequest(c.Server, serviceUuid, roleName, body)
 	if err != nil {
 		return nil, err
@@ -4080,7 +7177,7 @@ func (c *Client) ReplaceObjectStorageRoleTags(ctx context.Context, serviceUuid O
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteObjectStorageRoleTag(ctx context.Context, serviceUuid ObjectStorage2DeleteRoleTagServiceUuid, roleName ObjectStorage2DeleteRoleTagRoleName, roleTagKey ObjectStorage2DeleteRoleTagRoleTagKey, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteObjectStorageRoleTag(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageRoleTagServiceUuid, roleName ObjectStorage2DeleteObjectStorageRoleTagRoleName, roleTagKey ObjectStorage2DeleteObjectStorageRoleTagRoleTagKey, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteObjectStorageRoleTagRequest(c.Server, serviceUuid, roleName, roleTagKey)
 	if err != nil {
 		return nil, err
@@ -4092,8 +7189,8 @@ func (c *Client) DeleteObjectStorageRoleTag(ctx context.Context, serviceUuid Obj
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListStaticWebsites(ctx context.Context, serviceUuid ObjectStorage2ListStaticWebsitesServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListStaticWebsitesRequest(c.Server, serviceUuid)
+func (c *Client) ListObjectStorageStaticWebsites(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageStaticWebsitesServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListObjectStorageStaticWebsitesRequest(c.Server, serviceUuid)
 	if err != nil {
 		return nil, err
 	}
@@ -4104,8 +7201,8 @@ func (c *Client) ListStaticWebsites(ctx context.Context, serviceUuid ObjectStora
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateStaticWebsiteWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateStaticWebsiteServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateStaticWebsiteRequestWithBody(c.Server, serviceUuid, contentType, body)
+func (c *Client) CreateObjectStorageStaticWebsiteWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageStaticWebsiteServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateObjectStorageStaticWebsiteRequestWithBody(c.Server, serviceUuid, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -4116,8 +7213,8 @@ func (c *Client) CreateStaticWebsiteWithBody(ctx context.Context, serviceUuid Ob
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateStaticWebsite(ctx context.Context, serviceUuid ObjectStorage2CreateStaticWebsiteServiceUuid, body CreateStaticWebsiteJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateStaticWebsiteRequest(c.Server, serviceUuid, body)
+func (c *Client) CreateObjectStorageStaticWebsite(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageStaticWebsiteServiceUuid, body CreateObjectStorageStaticWebsiteJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateObjectStorageStaticWebsiteRequest(c.Server, serviceUuid, body)
 	if err != nil {
 		return nil, err
 	}
@@ -4128,8 +7225,8 @@ func (c *Client) CreateStaticWebsite(ctx context.Context, serviceUuid ObjectStor
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteStaticWebsite(ctx context.Context, serviceUuid ObjectStorage2DeleteStaticWebsiteServiceUuid, customDomainName ObjectStorage2DeleteStaticWebsiteCustomDomainName, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteStaticWebsiteRequest(c.Server, serviceUuid, customDomainName)
+func (c *Client) DeleteObjectStorageStaticWebsite(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageStaticWebsiteServiceUuid, customDomainName ObjectStorage2DeleteObjectStorageStaticWebsiteCustomDomainName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteObjectStorageStaticWebsiteRequest(c.Server, serviceUuid, customDomainName)
 	if err != nil {
 		return nil, err
 	}
@@ -4140,8 +7237,8 @@ func (c *Client) DeleteStaticWebsite(ctx context.Context, serviceUuid ObjectStor
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetStaticWebsite(ctx context.Context, serviceUuid ObjectStorage2GetStaticWebsiteServiceUuid, customDomainName ObjectStorage2GetStaticWebsiteCustomDomainName, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetStaticWebsiteRequest(c.Server, serviceUuid, customDomainName)
+func (c *Client) GetObjectStorageStaticWebsite(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageStaticWebsiteServiceUuid, customDomainName ObjectStorage2GetObjectStorageStaticWebsiteCustomDomainName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetObjectStorageStaticWebsiteRequest(c.Server, serviceUuid, customDomainName)
 	if err != nil {
 		return nil, err
 	}
@@ -4152,8 +7249,8 @@ func (c *Client) GetStaticWebsite(ctx context.Context, serviceUuid ObjectStorage
 	return c.Client.Do(req)
 }
 
-func (c *Client) ModifyStaticWebsiteWithBody(ctx context.Context, serviceUuid ObjectStorage2ModifyStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyStaticWebsiteCustomDomainName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewModifyStaticWebsiteRequestWithBody(c.Server, serviceUuid, customDomainName, contentType, body)
+func (c *Client) ModifyObjectStorageStaticWebsiteWithBody(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyObjectStorageStaticWebsiteCustomDomainName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewModifyObjectStorageStaticWebsiteRequestWithBody(c.Server, serviceUuid, customDomainName, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -4164,8 +7261,8 @@ func (c *Client) ModifyStaticWebsiteWithBody(ctx context.Context, serviceUuid Ob
 	return c.Client.Do(req)
 }
 
-func (c *Client) ModifyStaticWebsite(ctx context.Context, serviceUuid ObjectStorage2ModifyStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyStaticWebsiteCustomDomainName, body ModifyStaticWebsiteJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewModifyStaticWebsiteRequest(c.Server, serviceUuid, customDomainName, body)
+func (c *Client) ModifyObjectStorageStaticWebsite(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyObjectStorageStaticWebsiteCustomDomainName, body ModifyObjectStorageStaticWebsiteJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewModifyObjectStorageStaticWebsiteRequest(c.Server, serviceUuid, customDomainName, body)
 	if err != nil {
 		return nil, err
 	}
@@ -4176,7 +7273,7 @@ func (c *Client) ModifyStaticWebsite(ctx context.Context, serviceUuid ObjectStor
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListObjectStorageUsers(ctx context.Context, serviceUuid ObjectStorage2ListUsersServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListObjectStorageUsers(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageUsersServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListObjectStorageUsersRequest(c.Server, serviceUuid)
 	if err != nil {
 		return nil, err
@@ -4188,7 +7285,7 @@ func (c *Client) ListObjectStorageUsers(ctx context.Context, serviceUuid ObjectS
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateObjectStorageUserWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateUserServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateObjectStorageUserWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageUserServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateObjectStorageUserRequestWithBody(c.Server, serviceUuid, contentType, body)
 	if err != nil {
 		return nil, err
@@ -4200,7 +7297,7 @@ func (c *Client) CreateObjectStorageUserWithBody(ctx context.Context, serviceUui
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateObjectStorageUser(ctx context.Context, serviceUuid ObjectStorage2CreateUserServiceUuid, body CreateObjectStorageUserJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateObjectStorageUser(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageUserServiceUuid, body CreateObjectStorageUserJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateObjectStorageUserRequest(c.Server, serviceUuid, body)
 	if err != nil {
 		return nil, err
@@ -4212,7 +7309,7 @@ func (c *Client) CreateObjectStorageUser(ctx context.Context, serviceUuid Object
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteObjectStorageUser(ctx context.Context, serviceUuid ObjectStorage2DeleteUserServiceUuid, username ObjectStorage2DeleteUserUsername, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteObjectStorageUser(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageUserServiceUuid, username ObjectStorage2DeleteObjectStorageUserUsername, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteObjectStorageUserRequest(c.Server, serviceUuid, username)
 	if err != nil {
 		return nil, err
@@ -4224,7 +7321,7 @@ func (c *Client) DeleteObjectStorageUser(ctx context.Context, serviceUuid Object
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetObjectStorageUser(ctx context.Context, serviceUuid ObjectStorage2GetUserDetailsServiceUuid, username ObjectStorage2GetUserDetailsUsername, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetObjectStorageUser(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageUserServiceUuid, username ObjectStorage2GetObjectStorageUserUsername, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetObjectStorageUserRequest(c.Server, serviceUuid, username)
 	if err != nil {
 		return nil, err
@@ -4236,7 +7333,7 @@ func (c *Client) GetObjectStorageUser(ctx context.Context, serviceUuid ObjectSto
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListObjectStorageAccessKeys(ctx context.Context, serviceUuid ObjectStorage2ListAccessKeysServiceUuid, username ObjectStorage2ListAccessKeysUsername, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListObjectStorageAccessKeys(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageAccessKeysServiceUuid, username ObjectStorage2ListObjectStorageAccessKeysUsername, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListObjectStorageAccessKeysRequest(c.Server, serviceUuid, username)
 	if err != nil {
 		return nil, err
@@ -4248,7 +7345,7 @@ func (c *Client) ListObjectStorageAccessKeys(ctx context.Context, serviceUuid Ob
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateObjectStorageAccessKey(ctx context.Context, serviceUuid ObjectStorage2CreateAccessKeyServiceUuid, username ObjectStorage2CreateAccessKeyUsername, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateObjectStorageAccessKey(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageAccessKeyServiceUuid, username ObjectStorage2CreateObjectStorageAccessKeyUsername, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateObjectStorageAccessKeyRequest(c.Server, serviceUuid, username)
 	if err != nil {
 		return nil, err
@@ -4260,7 +7357,7 @@ func (c *Client) CreateObjectStorageAccessKey(ctx context.Context, serviceUuid O
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteObjectStorageAccessKey(ctx context.Context, serviceUuid ObjectStorage2DeleteAccessKeyServiceUuid, username ObjectStorage2DeleteAccessKeyUsername, accessKeyId ObjectStorage2DeleteAccessKeyAccessKeyId, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteObjectStorageAccessKey(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageAccessKeyServiceUuid, username ObjectStorage2DeleteObjectStorageAccessKeyUsername, accessKeyId ObjectStorage2DeleteObjectStorageAccessKeyAccessKeyId, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteObjectStorageAccessKeyRequest(c.Server, serviceUuid, username, accessKeyId)
 	if err != nil {
 		return nil, err
@@ -4272,7 +7369,7 @@ func (c *Client) DeleteObjectStorageAccessKey(ctx context.Context, serviceUuid O
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetObjectStorageAccessKeyDetails(ctx context.Context, serviceUuid ObjectStorage2GetAccessKeyDetailsServiceUuid, username ObjectStorage2GetAccessKeyDetailsUsername, accessKeyId ObjectStorage2GetAccessKeyDetailsAccessKeyId, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetObjectStorageAccessKeyDetails(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageAccessKeyDetailsServiceUuid, username ObjectStorage2GetObjectStorageAccessKeyDetailsUsername, accessKeyId ObjectStorage2GetObjectStorageAccessKeyDetailsAccessKeyId, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetObjectStorageAccessKeyDetailsRequest(c.Server, serviceUuid, username, accessKeyId)
 	if err != nil {
 		return nil, err
@@ -4284,7 +7381,7 @@ func (c *Client) GetObjectStorageAccessKeyDetails(ctx context.Context, serviceUu
 	return c.Client.Do(req)
 }
 
-func (c *Client) ModifyObjectStorageAccessKeyDetailsWithBody(ctx context.Context, serviceUuid ObjectStorage2ModifyAccessKeyDetailsServiceUuid, username ObjectStorage2ModifyAccessKeyDetailsUsername, accessKeyId ObjectStorage2ModifyAccessKeyDetailsAccessKeyId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ModifyObjectStorageAccessKeyDetailsWithBody(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageAccessKeyDetailsServiceUuid, username ObjectStorage2ModifyObjectStorageAccessKeyDetailsUsername, accessKeyId ObjectStorage2ModifyObjectStorageAccessKeyDetailsAccessKeyId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewModifyObjectStorageAccessKeyDetailsRequestWithBody(c.Server, serviceUuid, username, accessKeyId, contentType, body)
 	if err != nil {
 		return nil, err
@@ -4296,7 +7393,7 @@ func (c *Client) ModifyObjectStorageAccessKeyDetailsWithBody(ctx context.Context
 	return c.Client.Do(req)
 }
 
-func (c *Client) ModifyObjectStorageAccessKeyDetails(ctx context.Context, serviceUuid ObjectStorage2ModifyAccessKeyDetailsServiceUuid, username ObjectStorage2ModifyAccessKeyDetailsUsername, accessKeyId ObjectStorage2ModifyAccessKeyDetailsAccessKeyId, body ModifyObjectStorageAccessKeyDetailsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ModifyObjectStorageAccessKeyDetails(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageAccessKeyDetailsServiceUuid, username ObjectStorage2ModifyObjectStorageAccessKeyDetailsUsername, accessKeyId ObjectStorage2ModifyObjectStorageAccessKeyDetailsAccessKeyId, body ModifyObjectStorageAccessKeyDetailsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewModifyObjectStorageAccessKeyDetailsRequest(c.Server, serviceUuid, username, accessKeyId, body)
 	if err != nil {
 		return nil, err
@@ -4308,7 +7405,7 @@ func (c *Client) ModifyObjectStorageAccessKeyDetails(ctx context.Context, servic
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListObjectStorageUserInlinePolicies(ctx context.Context, serviceUuid ObjectStorage2ListUserInlinePoliciesServiceUuid, username ObjectStorage2ListUserInlinePoliciesUsername, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListObjectStorageUserInlinePolicies(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageUserInlinePoliciesServiceUuid, username ObjectStorage2ListObjectStorageUserInlinePoliciesUsername, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListObjectStorageUserInlinePoliciesRequest(c.Server, serviceUuid, username)
 	if err != nil {
 		return nil, err
@@ -4320,7 +7417,7 @@ func (c *Client) ListObjectStorageUserInlinePolicies(ctx context.Context, servic
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateObjectStorageUserInlinePolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateUserInlinePolicyServiceUuid, username ObjectStorage2CreateUserInlinePolicyUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateObjectStorageUserInlinePolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageUserInlinePolicyServiceUuid, username ObjectStorage2CreateObjectStorageUserInlinePolicyUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateObjectStorageUserInlinePolicyRequestWithBody(c.Server, serviceUuid, username, contentType, body)
 	if err != nil {
 		return nil, err
@@ -4332,7 +7429,7 @@ func (c *Client) CreateObjectStorageUserInlinePolicyWithBody(ctx context.Context
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateObjectStorageUserInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2CreateUserInlinePolicyServiceUuid, username ObjectStorage2CreateUserInlinePolicyUsername, body CreateObjectStorageUserInlinePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateObjectStorageUserInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageUserInlinePolicyServiceUuid, username ObjectStorage2CreateObjectStorageUserInlinePolicyUsername, body CreateObjectStorageUserInlinePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateObjectStorageUserInlinePolicyRequest(c.Server, serviceUuid, username, body)
 	if err != nil {
 		return nil, err
@@ -4344,7 +7441,7 @@ func (c *Client) CreateObjectStorageUserInlinePolicy(ctx context.Context, servic
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteObjectStorageUserInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2DeleteUserInlinePolicyServiceUuid, username ObjectStorage2DeleteUserInlinePolicyUsername, userPolicyName ObjectStorage2DeleteUserInlinePolicyUserPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteObjectStorageUserInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageUserInlinePolicyServiceUuid, username ObjectStorage2DeleteObjectStorageUserInlinePolicyUsername, userPolicyName ObjectStorage2DeleteObjectStorageUserInlinePolicyUserPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteObjectStorageUserInlinePolicyRequest(c.Server, serviceUuid, username, userPolicyName)
 	if err != nil {
 		return nil, err
@@ -4356,7 +7453,7 @@ func (c *Client) DeleteObjectStorageUserInlinePolicy(ctx context.Context, servic
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetObjectStorageUserInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2GetUserInlinePolicyServiceUuid, username ObjectStorage2GetUserInlinePolicyUsername, userPolicyName ObjectStorage2GetUserInlinePolicyUserPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetObjectStorageUserInlinePolicy(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageUserInlinePolicyServiceUuid, username ObjectStorage2GetObjectStorageUserInlinePolicyUsername, userPolicyName ObjectStorage2GetObjectStorageUserInlinePolicyUserPolicyName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetObjectStorageUserInlinePolicyRequest(c.Server, serviceUuid, username, userPolicyName)
 	if err != nil {
 		return nil, err
@@ -4368,7 +7465,7 @@ func (c *Client) GetObjectStorageUserInlinePolicy(ctx context.Context, serviceUu
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteObjectStorageUserPermissionsBoundary(ctx context.Context, serviceUuid ObjectStorage2DeleteUserPermissionsBoundaryServiceUuid, username ObjectStorage2DeleteUserPermissionsBoundaryUsername, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteObjectStorageUserPermissionsBoundary(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageUserPermissionsBoundaryServiceUuid, username ObjectStorage2DeleteObjectStorageUserPermissionsBoundaryUsername, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteObjectStorageUserPermissionsBoundaryRequest(c.Server, serviceUuid, username)
 	if err != nil {
 		return nil, err
@@ -4380,7 +7477,7 @@ func (c *Client) DeleteObjectStorageUserPermissionsBoundary(ctx context.Context,
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateObjectStorageUserPermissionsBoundaryWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateUserPermissionsBoundaryServiceUuid, username ObjectStorage2CreateUserPermissionsBoundaryUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateObjectStorageUserPermissionsBoundaryWithBody(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageUserPermissionsBoundaryServiceUuid, username ObjectStorage2CreateObjectStorageUserPermissionsBoundaryUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateObjectStorageUserPermissionsBoundaryRequestWithBody(c.Server, serviceUuid, username, contentType, body)
 	if err != nil {
 		return nil, err
@@ -4392,7 +7489,7 @@ func (c *Client) CreateObjectStorageUserPermissionsBoundaryWithBody(ctx context.
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateObjectStorageUserPermissionsBoundary(ctx context.Context, serviceUuid ObjectStorage2CreateUserPermissionsBoundaryServiceUuid, username ObjectStorage2CreateUserPermissionsBoundaryUsername, body CreateObjectStorageUserPermissionsBoundaryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateObjectStorageUserPermissionsBoundary(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageUserPermissionsBoundaryServiceUuid, username ObjectStorage2CreateObjectStorageUserPermissionsBoundaryUsername, body CreateObjectStorageUserPermissionsBoundaryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateObjectStorageUserPermissionsBoundaryRequest(c.Server, serviceUuid, username, body)
 	if err != nil {
 		return nil, err
@@ -4404,7 +7501,7 @@ func (c *Client) CreateObjectStorageUserPermissionsBoundary(ctx context.Context,
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListObjectStorageAttachedUserPolicies(ctx context.Context, serviceUuid ObjectStorage2ListAttachedUserPoliciesServiceUuid, username ObjectStorage2ListAttachedUserPoliciesUsername, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListObjectStorageAttachedUserPolicies(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageAttachedUserPoliciesServiceUuid, username ObjectStorage2ListObjectStorageAttachedUserPoliciesUsername, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListObjectStorageAttachedUserPoliciesRequest(c.Server, serviceUuid, username)
 	if err != nil {
 		return nil, err
@@ -4416,7 +7513,7 @@ func (c *Client) ListObjectStorageAttachedUserPolicies(ctx context.Context, serv
 	return c.Client.Do(req)
 }
 
-func (c *Client) AttachObjectStorageUserPolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2AttachUserPolicyServiceUuid, username ObjectStorage2AttachUserPolicyUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) AttachObjectStorageUserPolicyWithBody(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageUserPolicyServiceUuid, username ObjectStorage2AttachObjectStorageUserPolicyUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewAttachObjectStorageUserPolicyRequestWithBody(c.Server, serviceUuid, username, contentType, body)
 	if err != nil {
 		return nil, err
@@ -4428,7 +7525,7 @@ func (c *Client) AttachObjectStorageUserPolicyWithBody(ctx context.Context, serv
 	return c.Client.Do(req)
 }
 
-func (c *Client) AttachObjectStorageUserPolicy(ctx context.Context, serviceUuid ObjectStorage2AttachUserPolicyServiceUuid, username ObjectStorage2AttachUserPolicyUsername, body AttachObjectStorageUserPolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) AttachObjectStorageUserPolicy(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageUserPolicyServiceUuid, username ObjectStorage2AttachObjectStorageUserPolicyUsername, body AttachObjectStorageUserPolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewAttachObjectStorageUserPolicyRequest(c.Server, serviceUuid, username, body)
 	if err != nil {
 		return nil, err
@@ -4440,7 +7537,7 @@ func (c *Client) AttachObjectStorageUserPolicy(ctx context.Context, serviceUuid 
 	return c.Client.Do(req)
 }
 
-func (c *Client) DetachObjectStorageUserPolicy(ctx context.Context, serviceUuid ObjectStorage2DetachUserPolicyServiceUuid, username ObjectStorage2DetachUserPolicyUsername, nestedName ObjectStorage2DetachUserPolicyNestedName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DetachObjectStorageUserPolicy(ctx context.Context, serviceUuid ObjectStorage2DetachObjectStorageUserPolicyServiceUuid, username ObjectStorage2DetachObjectStorageUserPolicyUsername, nestedName ObjectStorage2DetachObjectStorageUserPolicyNestedName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDetachObjectStorageUserPolicyRequest(c.Server, serviceUuid, username, nestedName)
 	if err != nil {
 		return nil, err
@@ -4452,7 +7549,7 @@ func (c *Client) DetachObjectStorageUserPolicy(ctx context.Context, serviceUuid 
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetObjectStorageUserTags(ctx context.Context, serviceUuid ObjectStorage2GetUserTagsServiceUuid, username ObjectStorage2GetUserTagsUsername, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetObjectStorageUserTags(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageUserTagsServiceUuid, username ObjectStorage2GetObjectStorageUserTagsUsername, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetObjectStorageUserTagsRequest(c.Server, serviceUuid, username)
 	if err != nil {
 		return nil, err
@@ -4464,7 +7561,7 @@ func (c *Client) GetObjectStorageUserTags(ctx context.Context, serviceUuid Objec
 	return c.Client.Do(req)
 }
 
-func (c *Client) ReplaceObjectStorageUserTagsWithBody(ctx context.Context, serviceUuid ObjectStorage2ReplaceUserTagsServiceUuid, username ObjectStorage2ReplaceUserTagsUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ReplaceObjectStorageUserTagsWithBody(ctx context.Context, serviceUuid ObjectStorage2ReplaceObjectStorageUserTagsServiceUuid, username ObjectStorage2ReplaceObjectStorageUserTagsUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewReplaceObjectStorageUserTagsRequestWithBody(c.Server, serviceUuid, username, contentType, body)
 	if err != nil {
 		return nil, err
@@ -4476,7 +7573,7 @@ func (c *Client) ReplaceObjectStorageUserTagsWithBody(ctx context.Context, servi
 	return c.Client.Do(req)
 }
 
-func (c *Client) ReplaceObjectStorageUserTags(ctx context.Context, serviceUuid ObjectStorage2ReplaceUserTagsServiceUuid, username ObjectStorage2ReplaceUserTagsUsername, body ReplaceObjectStorageUserTagsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ReplaceObjectStorageUserTags(ctx context.Context, serviceUuid ObjectStorage2ReplaceObjectStorageUserTagsServiceUuid, username ObjectStorage2ReplaceObjectStorageUserTagsUsername, body ReplaceObjectStorageUserTagsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewReplaceObjectStorageUserTagsRequest(c.Server, serviceUuid, username, body)
 	if err != nil {
 		return nil, err
@@ -4488,7 +7585,7 @@ func (c *Client) ReplaceObjectStorageUserTags(ctx context.Context, serviceUuid O
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteObjectStorageUserTag(ctx context.Context, serviceUuid ObjectStorage2DeleteUserTagServiceUuid, username ObjectStorage2DeleteUserTagUsername, userTagKey ObjectStorage2DeleteUserTagUserTagKey, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteObjectStorageUserTag(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageUserTagServiceUuid, username ObjectStorage2DeleteObjectStorageUserTagUsername, userTagKey ObjectStorage2DeleteObjectStorageUserTagUserTagKey, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteObjectStorageUserTagRequest(c.Server, serviceUuid, username, userTagKey)
 	if err != nil {
 		return nil, err
@@ -4498,6 +7595,1082 @@ func (c *Client) DeleteObjectStorageUserTag(ctx context.Context, serviceUuid Obj
 		return nil, err
 	}
 	return c.Client.Do(req)
+}
+
+// NewListFirewallRulesetsRequest generates requests for ListFirewallRulesets
+func NewListFirewallRulesetsRequest(server string, params *ListFirewallRulesetsParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/firewall-ruleset")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int64"}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Offset != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "offset", *params.Offset, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int64"}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateFirewallRulesetRequest calls the generic CreateFirewallRuleset builder with application/json body
+func NewCreateFirewallRulesetRequest(server string, body CreateFirewallRulesetJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateFirewallRulesetRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCreateFirewallRulesetRequestWithBody generates requests for CreateFirewallRuleset with any type of body
+func NewCreateFirewallRulesetRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/firewall-ruleset")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewAdminListServerFirewallRulesRequest calls the generic AdminListServerFirewallRules builder with application/json body
+func NewAdminListServerFirewallRulesRequest(server string, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, body AdminListServerFirewallRulesJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewAdminListServerFirewallRulesRequestWithBody(server, serverUuid, "application/json", bodyReader)
+}
+
+// NewAdminListServerFirewallRulesRequestWithBody generates requests for AdminListServerFirewallRules with any type of body
+func NewAdminListServerFirewallRulesRequestWithBody(server string, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "server-uuid", serverUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/admin/server/%s/firewall-rule", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewListServerFirewallRuleRequest generates requests for ListServerFirewallRule
+func NewListServerFirewallRuleRequest(server string, serverUuid FirewallRulesetListServerFirewallRuleServerUuid, params *ListServerFirewallRuleParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "server-uuid", serverUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/server/%s/firewall-rule", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int64"}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Offset != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "offset", *params.Offset, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int64"}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateServerFirewallRuleRequest calls the generic CreateServerFirewallRule builder with application/json body
+func NewCreateServerFirewallRuleRequest(server string, serverUuid FirewallRulesetCreateServerFirewallRuleServerUuid, body CreateServerFirewallRuleJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateServerFirewallRuleRequestWithBody(server, serverUuid, "application/json", bodyReader)
+}
+
+// NewCreateServerFirewallRuleRequestWithBody generates requests for CreateServerFirewallRule with any type of body
+func NewCreateServerFirewallRuleRequestWithBody(server string, serverUuid FirewallRulesetCreateServerFirewallRuleServerUuid, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "server-uuid", serverUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/server/%s/firewall-rule", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewCreateMultipleServerFirewallRulesRequest calls the generic CreateMultipleServerFirewallRules builder with application/json body
+func NewCreateMultipleServerFirewallRulesRequest(server string, serverUuid FirewallRulesetCreateMultipleServerFirewallRulesServerUuid, body CreateMultipleServerFirewallRulesJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateMultipleServerFirewallRulesRequestWithBody(server, serverUuid, "application/json", bodyReader)
+}
+
+// NewCreateMultipleServerFirewallRulesRequestWithBody generates requests for CreateMultipleServerFirewallRules with any type of body
+func NewCreateMultipleServerFirewallRulesRequestWithBody(server string, serverUuid FirewallRulesetCreateMultipleServerFirewallRulesServerUuid, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "server-uuid", serverUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/server/%s/firewall-rule", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PUT", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeleteServerFirewallRuleRequest generates requests for DeleteServerFirewallRule
+func NewDeleteServerFirewallRuleRequest(server string, serverUuid FirewallRulesetDeleteServerFirewallRuleServerUuid, position FirewallRulesetDeleteServerFirewallRulePosition) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "server-uuid", serverUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "position", position, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/server/%s/firewall-rule/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetServerFirewallRuleRequest generates requests for GetServerFirewallRule
+func NewGetServerFirewallRuleRequest(server string, serverUuid FirewallRulesetGetServerFirewallRuleServerUuid, position FirewallRulesetGetServerFirewallRulePosition) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "server-uuid", serverUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "position", position, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/server/%s/firewall-rule/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewDeleteFirewallRulesetRequest generates requests for DeleteFirewallRuleset
+func NewDeleteFirewallRulesetRequest(server string, rulesetUuid DeleteFirewallRulesetRulesetUuid) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "ruleset-uuid", rulesetUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetFirewallRulesetRequest generates requests for GetFirewallRuleset
+func NewGetFirewallRulesetRequest(server string, rulesetUuid GetFirewallRulesetRulesetUuid) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "ruleset-uuid", rulesetUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewModifyFirewallRulesetRequest calls the generic ModifyFirewallRuleset builder with application/json body
+func NewModifyFirewallRulesetRequest(server string, rulesetUuid ModifyFirewallRulesetRulesetUuid, body ModifyFirewallRulesetJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewModifyFirewallRulesetRequestWithBody(server, rulesetUuid, "application/json", bodyReader)
+}
+
+// NewModifyFirewallRulesetRequestWithBody generates requests for ModifyFirewallRuleset with any type of body
+func NewModifyFirewallRulesetRequestWithBody(server string, rulesetUuid ModifyFirewallRulesetRulesetUuid, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "ruleset-uuid", rulesetUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PATCH", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewListFirewallRulesetLabelsRequest generates requests for ListFirewallRulesetLabels
+func NewListFirewallRulesetLabelsRequest(server string, rulesetUuid ListFirewallRulesetLabelsRulesetUuid) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "ruleset-uuid", rulesetUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/%s/labels", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateFirewallRulesetLabelRequest calls the generic CreateFirewallRulesetLabel builder with application/json body
+func NewCreateFirewallRulesetLabelRequest(server string, rulesetUuid CreateFirewallRulesetLabelRulesetUuid, body CreateFirewallRulesetLabelJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateFirewallRulesetLabelRequestWithBody(server, rulesetUuid, "application/json", bodyReader)
+}
+
+// NewCreateFirewallRulesetLabelRequestWithBody generates requests for CreateFirewallRulesetLabel with any type of body
+func NewCreateFirewallRulesetLabelRequestWithBody(server string, rulesetUuid CreateFirewallRulesetLabelRulesetUuid, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "ruleset-uuid", rulesetUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/%s/labels", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeleteFirewallRulesetLabelRequest generates requests for DeleteFirewallRulesetLabel
+func NewDeleteFirewallRulesetLabelRequest(server string, rulesetUuid DeleteFirewallRulesetLabelRulesetUuid, labelKey DeleteFirewallRulesetLabelLabelKey) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "ruleset-uuid", rulesetUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "label-key", labelKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/%s/labels/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetFirewallRulesetLabelRequest generates requests for GetFirewallRulesetLabel
+func NewGetFirewallRulesetLabelRequest(server string, rulesetUuid GetFirewallRulesetLabelRulesetUuid, labelKey GetFirewallRulesetLabelLabelKey) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "ruleset-uuid", rulesetUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "label-key", labelKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/%s/labels/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewModifyFirewallRulesetLabelRequest calls the generic ModifyFirewallRulesetLabel builder with application/json body
+func NewModifyFirewallRulesetLabelRequest(server string, rulesetUuid ModifyFirewallRulesetLabelRulesetUuid, labelKey ModifyFirewallRulesetLabelLabelKey, body ModifyFirewallRulesetLabelJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewModifyFirewallRulesetLabelRequestWithBody(server, rulesetUuid, labelKey, "application/json", bodyReader)
+}
+
+// NewModifyFirewallRulesetLabelRequestWithBody generates requests for ModifyFirewallRulesetLabel with any type of body
+func NewModifyFirewallRulesetLabelRequestWithBody(server string, rulesetUuid ModifyFirewallRulesetLabelRulesetUuid, labelKey ModifyFirewallRulesetLabelLabelKey, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "ruleset-uuid", rulesetUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "label-key", labelKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/%s/labels/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PATCH", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewRestoreFirewallRulesetRequest generates requests for RestoreFirewallRuleset
+func NewRestoreFirewallRulesetRequest(server string, rulesetUuid RestoreFirewallRulesetRulesetUuid, rulesetVersion RestoreFirewallRulesetRulesetVersion) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "ruleset-uuid", rulesetUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "ruleset-version", rulesetVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/%s/restore/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PATCH", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewListFirewallRulesetRulesRequest generates requests for ListFirewallRulesetRules
+func NewListFirewallRulesetRulesRequest(server string, rulesetUuid ListFirewallRulesetRulesRulesetUuid, params *ListFirewallRulesetRulesParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "ruleset-uuid", rulesetUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/%s/rule", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int64"}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Offset != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "offset", *params.Offset, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int64"}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateFirewallRulesetRuleRequest calls the generic CreateFirewallRulesetRule builder with application/json body
+func NewCreateFirewallRulesetRuleRequest(server string, rulesetUuid CreateFirewallRulesetRuleRulesetUuid, body CreateFirewallRulesetRuleJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateFirewallRulesetRuleRequestWithBody(server, rulesetUuid, "application/json", bodyReader)
+}
+
+// NewCreateFirewallRulesetRuleRequestWithBody generates requests for CreateFirewallRulesetRule with any type of body
+func NewCreateFirewallRulesetRuleRequestWithBody(server string, rulesetUuid CreateFirewallRulesetRuleRulesetUuid, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "ruleset-uuid", rulesetUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/%s/rule", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeleteFirewallRulesetRuleRequest generates requests for DeleteFirewallRulesetRule
+func NewDeleteFirewallRulesetRuleRequest(server string, rulesetUuid DeleteFirewallRulesetRuleRulesetUuid, ruleId DeleteFirewallRulesetRuleRuleId) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "ruleset-uuid", rulesetUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "rule-id", ruleId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/%s/rule/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetFirewallRulesetRuleRequest generates requests for GetFirewallRulesetRule
+func NewGetFirewallRulesetRuleRequest(server string, rulesetUuid GetFirewallRulesetRuleRulesetUuid, ruleId GetFirewallRulesetRuleRuleId) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "ruleset-uuid", rulesetUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "rule-id", ruleId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/%s/rule/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewModifyFirewallRulesetRuleRequest calls the generic ModifyFirewallRulesetRule builder with application/json body
+func NewModifyFirewallRulesetRuleRequest(server string, rulesetUuid ModifyFirewallRulesetRuleRulesetUuid, ruleId ModifyFirewallRulesetRuleRuleId, body ModifyFirewallRulesetRuleJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewModifyFirewallRulesetRuleRequestWithBody(server, rulesetUuid, ruleId, "application/json", bodyReader)
+}
+
+// NewModifyFirewallRulesetRuleRequestWithBody generates requests for ModifyFirewallRulesetRule with any type of body
+func NewModifyFirewallRulesetRuleRequestWithBody(server string, rulesetUuid ModifyFirewallRulesetRuleRulesetUuid, ruleId ModifyFirewallRulesetRuleRuleId, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "ruleset-uuid", rulesetUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "rule-id", ruleId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/%s/rule/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PATCH", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
 }
 
 // NewListObjectStoragesRequest generates requests for ListObjectStorages
@@ -4621,142 +8794,6 @@ func NewCreateObjectStorageRequestWithBody(server string, contentType string, bo
 	return req, nil
 }
 
-// NewListObjectStorageIntegrationServicesRequest generates requests for ListObjectStorageIntegrationServices
-func NewListObjectStorageIntegrationServicesRequest(server string) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/1.3/object-storage-2/integrations/services")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewGetObjectStorageIntegrationServiceRequest generates requests for GetObjectStorageIntegrationService
-func NewGetObjectStorageIntegrationServiceRequest(server string, serviceUuid ObjectStorage2IntegrationGetServiceServiceUuid) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "service-uuid", serviceUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/1.3/object-storage-2/integrations/services/%s", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewCreateObjectStorageIntegrationNetworkRequest generates requests for CreateObjectStorageIntegrationNetwork
-func NewCreateObjectStorageIntegrationNetworkRequest(server string, serviceUuid ObjectStorage2IntegrationCreateNetworkServiceUuid) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "service-uuid", serviceUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/1.3/object-storage-2/integrations/services/%s/networks", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("POST", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewDeleteObjectStorageIntegrationNetworkRequest generates requests for DeleteObjectStorageIntegrationNetwork
-func NewDeleteObjectStorageIntegrationNetworkRequest(server string, serviceUuid ObjectStorage2IntegrationDeleteNetworkServiceUuid, networkName ObjectStorage2IntegrationDeleteNetworkNetworkName) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "service-uuid", serviceUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam1 string
-
-	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "network-name", networkName, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/1.3/object-storage-2/integrations/services/%s/networks/%s", pathParam0, pathParam1)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
 // NewListObjectStorageRegionsRequest generates requests for ListObjectStorageRegions
 func NewListObjectStorageRegionsRequest(server string) (*http.Request, error) {
 	var err error
@@ -4785,7 +8822,7 @@ func NewListObjectStorageRegionsRequest(server string) (*http.Request, error) {
 }
 
 // NewGetObjectStorageRegionRequest generates requests for GetObjectStorageRegion
-func NewGetObjectStorageRegionRequest(server string, regionName ObjectStorage2GetRegionDetailsRegionName) (*http.Request, error) {
+func NewGetObjectStorageRegionRequest(server string, regionName ObjectStorage2GetObjectStorageRegionRegionName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -4819,7 +8856,7 @@ func NewGetObjectStorageRegionRequest(server string, regionName ObjectStorage2Ge
 }
 
 // NewDeleteObjectStorageRequest generates requests for DeleteObjectStorage
-func NewDeleteObjectStorageRequest(server string, serviceUuid ObjectStorage2DeleteServiceServiceUuid, params *DeleteObjectStorageParams) (*http.Request, error) {
+func NewDeleteObjectStorageRequest(server string, serviceUuid ObjectStorage2DeleteObjectStorageServiceUuid, params *DeleteObjectStorageParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -4875,7 +8912,7 @@ func NewDeleteObjectStorageRequest(server string, serviceUuid ObjectStorage2Dele
 }
 
 // NewGetObjectStorageRequest generates requests for GetObjectStorage
-func NewGetObjectStorageRequest(server string, serviceUuid ObjectStorage2GetServiceServiceUuid) (*http.Request, error) {
+func NewGetObjectStorageRequest(server string, serviceUuid ObjectStorage2GetObjectStorageServiceUuid) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -4909,7 +8946,7 @@ func NewGetObjectStorageRequest(server string, serviceUuid ObjectStorage2GetServ
 }
 
 // NewModifyObjectStorageRequest calls the generic ModifyObjectStorage builder with application/json body
-func NewModifyObjectStorageRequest(server string, serviceUuid ObjectStorage2ModifyServiceServiceUuid, body ModifyObjectStorageJSONRequestBody) (*http.Request, error) {
+func NewModifyObjectStorageRequest(server string, serviceUuid ObjectStorage2ModifyObjectStorageServiceUuid, body ModifyObjectStorageJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -4920,7 +8957,7 @@ func NewModifyObjectStorageRequest(server string, serviceUuid ObjectStorage2Modi
 }
 
 // NewModifyObjectStorageRequestWithBody generates requests for ModifyObjectStorage with any type of body
-func NewModifyObjectStorageRequestWithBody(server string, serviceUuid ObjectStorage2ModifyServiceServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
+func NewModifyObjectStorageRequestWithBody(server string, serviceUuid ObjectStorage2ModifyObjectStorageServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -4956,7 +8993,7 @@ func NewModifyObjectStorageRequestWithBody(server string, serviceUuid ObjectStor
 }
 
 // NewReplaceObjectStorageRequest calls the generic ReplaceObjectStorage builder with application/json body
-func NewReplaceObjectStorageRequest(server string, serviceUuid ObjectStorage2ReplaceServiceServiceUuid, body ReplaceObjectStorageJSONRequestBody) (*http.Request, error) {
+func NewReplaceObjectStorageRequest(server string, serviceUuid ObjectStorage2ReplaceObjectStorageServiceUuid, body ReplaceObjectStorageJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -4967,7 +9004,7 @@ func NewReplaceObjectStorageRequest(server string, serviceUuid ObjectStorage2Rep
 }
 
 // NewReplaceObjectStorageRequestWithBody generates requests for ReplaceObjectStorage with any type of body
-func NewReplaceObjectStorageRequestWithBody(server string, serviceUuid ObjectStorage2ReplaceServiceServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
+func NewReplaceObjectStorageRequestWithBody(server string, serviceUuid ObjectStorage2ReplaceObjectStorageServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -5003,7 +9040,7 @@ func NewReplaceObjectStorageRequestWithBody(server string, serviceUuid ObjectSto
 }
 
 // NewListObjectStorageBucketMetricsRequest generates requests for ListObjectStorageBucketMetrics
-func NewListObjectStorageBucketMetricsRequest(server string, serviceUuid ObjectStorage2ListBucketMetricsServiceUuid, params *ListObjectStorageBucketMetricsParams) (*http.Request, error) {
+func NewListObjectStorageBucketMetricsRequest(server string, serviceUuid ObjectStorage2ListObjectStorageBucketMetricsServiceUuid, params *ListObjectStorageBucketMetricsParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -5075,7 +9112,7 @@ func NewListObjectStorageBucketMetricsRequest(server string, serviceUuid ObjectS
 }
 
 // NewCreateObjectStorageBucketRequest calls the generic CreateObjectStorageBucket builder with application/json body
-func NewCreateObjectStorageBucketRequest(server string, serviceUuid ObjectStorage2CreateBucketServiceUuid, body CreateObjectStorageBucketJSONRequestBody) (*http.Request, error) {
+func NewCreateObjectStorageBucketRequest(server string, serviceUuid ObjectStorage2CreateObjectStorageBucketServiceUuid, body CreateObjectStorageBucketJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -5086,7 +9123,7 @@ func NewCreateObjectStorageBucketRequest(server string, serviceUuid ObjectStorag
 }
 
 // NewCreateObjectStorageBucketRequestWithBody generates requests for CreateObjectStorageBucket with any type of body
-func NewCreateObjectStorageBucketRequestWithBody(server string, serviceUuid ObjectStorage2CreateBucketServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateObjectStorageBucketRequestWithBody(server string, serviceUuid ObjectStorage2CreateObjectStorageBucketServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -5122,7 +9159,7 @@ func NewCreateObjectStorageBucketRequestWithBody(server string, serviceUuid Obje
 }
 
 // NewDeleteObjectStorageBucketRequest generates requests for DeleteObjectStorageBucket
-func NewDeleteObjectStorageBucketRequest(server string, serviceUuid ObjectStorage2DeleteBucketServiceUuid, bucketName ObjectStorage2DeleteBucketBucketName) (*http.Request, error) {
+func NewDeleteObjectStorageBucketRequest(server string, serviceUuid ObjectStorage2DeleteObjectStorageBucketServiceUuid, bucketName ObjectStorage2DeleteObjectStorageBucketBucketName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -5163,7 +9200,7 @@ func NewDeleteObjectStorageBucketRequest(server string, serviceUuid ObjectStorag
 }
 
 // NewListObjectStorageCustomDomainsRequest generates requests for ListObjectStorageCustomDomains
-func NewListObjectStorageCustomDomainsRequest(server string, serviceUuid ObjectStorage2ListCustomDomainsServiceUuid) (*http.Request, error) {
+func NewListObjectStorageCustomDomainsRequest(server string, serviceUuid ObjectStorage2ListObjectStorageCustomDomainsServiceUuid) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -5197,7 +9234,7 @@ func NewListObjectStorageCustomDomainsRequest(server string, serviceUuid ObjectS
 }
 
 // NewAttachObjectStorageCustomDomainRequest calls the generic AttachObjectStorageCustomDomain builder with application/json body
-func NewAttachObjectStorageCustomDomainRequest(server string, serviceUuid ObjectStorage2AttachCustomDomainServiceUuid, body AttachObjectStorageCustomDomainJSONRequestBody) (*http.Request, error) {
+func NewAttachObjectStorageCustomDomainRequest(server string, serviceUuid ObjectStorage2AttachObjectStorageCustomDomainServiceUuid, body AttachObjectStorageCustomDomainJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -5208,7 +9245,7 @@ func NewAttachObjectStorageCustomDomainRequest(server string, serviceUuid Object
 }
 
 // NewAttachObjectStorageCustomDomainRequestWithBody generates requests for AttachObjectStorageCustomDomain with any type of body
-func NewAttachObjectStorageCustomDomainRequestWithBody(server string, serviceUuid ObjectStorage2AttachCustomDomainServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
+func NewAttachObjectStorageCustomDomainRequestWithBody(server string, serviceUuid ObjectStorage2AttachObjectStorageCustomDomainServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -5244,7 +9281,7 @@ func NewAttachObjectStorageCustomDomainRequestWithBody(server string, serviceUui
 }
 
 // NewDeleteObjectStorageCustomDomainRequest generates requests for DeleteObjectStorageCustomDomain
-func NewDeleteObjectStorageCustomDomainRequest(server string, serviceUuid ObjectStorage2DeleteCustomDomainServiceUuid, customDomainName ObjectStorage2DeleteCustomDomainCustomDomainName) (*http.Request, error) {
+func NewDeleteObjectStorageCustomDomainRequest(server string, serviceUuid ObjectStorage2DeleteObjectStorageCustomDomainServiceUuid, customDomainName ObjectStorage2DeleteObjectStorageCustomDomainCustomDomainName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -5285,7 +9322,7 @@ func NewDeleteObjectStorageCustomDomainRequest(server string, serviceUuid Object
 }
 
 // NewGetObjectStorageCustomDomainRequest generates requests for GetObjectStorageCustomDomain
-func NewGetObjectStorageCustomDomainRequest(server string, serviceUuid ObjectStorage2GetCustomDomainDetailsServiceUuid, customDomainName ObjectStorage2GetCustomDomainDetailsCustomDomainName) (*http.Request, error) {
+func NewGetObjectStorageCustomDomainRequest(server string, serviceUuid ObjectStorage2GetObjectStorageCustomDomainServiceUuid, customDomainName ObjectStorage2GetObjectStorageCustomDomainCustomDomainName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -5326,7 +9363,7 @@ func NewGetObjectStorageCustomDomainRequest(server string, serviceUuid ObjectSto
 }
 
 // NewModifyObjectStorageCustomDomainRequest calls the generic ModifyObjectStorageCustomDomain builder with application/json body
-func NewModifyObjectStorageCustomDomainRequest(server string, serviceUuid ObjectStorage2ModifyCustomDomainServiceUuid, customDomainName ObjectStorage2ModifyCustomDomainCustomDomainName, body ModifyObjectStorageCustomDomainJSONRequestBody) (*http.Request, error) {
+func NewModifyObjectStorageCustomDomainRequest(server string, serviceUuid ObjectStorage2ModifyObjectStorageCustomDomainServiceUuid, customDomainName ObjectStorage2ModifyObjectStorageCustomDomainCustomDomainName, body ModifyObjectStorageCustomDomainJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -5337,7 +9374,7 @@ func NewModifyObjectStorageCustomDomainRequest(server string, serviceUuid Object
 }
 
 // NewModifyObjectStorageCustomDomainRequestWithBody generates requests for ModifyObjectStorageCustomDomain with any type of body
-func NewModifyObjectStorageCustomDomainRequestWithBody(server string, serviceUuid ObjectStorage2ModifyCustomDomainServiceUuid, customDomainName ObjectStorage2ModifyCustomDomainCustomDomainName, contentType string, body io.Reader) (*http.Request, error) {
+func NewModifyObjectStorageCustomDomainRequestWithBody(server string, serviceUuid ObjectStorage2ModifyObjectStorageCustomDomainServiceUuid, customDomainName ObjectStorage2ModifyObjectStorageCustomDomainCustomDomainName, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -5379,8 +9416,8 @@ func NewModifyObjectStorageCustomDomainRequestWithBody(server string, serviceUui
 	return req, nil
 }
 
-// NewGetServiceDomainsRequest generates requests for GetServiceDomains
-func NewGetServiceDomainsRequest(server string, serviceUuid ObjectStorage2GetServiceDomainsServiceUuid) (*http.Request, error) {
+// NewListObjectStorageDomainsRequest generates requests for ListObjectStorageDomains
+func NewListObjectStorageDomainsRequest(server string, serviceUuid ObjectStorage2ListObjectStorageDomainsServiceUuid) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -5414,7 +9451,7 @@ func NewGetServiceDomainsRequest(server string, serviceUuid ObjectStorage2GetSer
 }
 
 // NewListObjectStorageGroupsRequest generates requests for ListObjectStorageGroups
-func NewListObjectStorageGroupsRequest(server string, serviceUuid ObjectStorage2ListGroupsServiceUuid) (*http.Request, error) {
+func NewListObjectStorageGroupsRequest(server string, serviceUuid ObjectStorage2ListObjectStorageGroupsServiceUuid) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -5448,7 +9485,7 @@ func NewListObjectStorageGroupsRequest(server string, serviceUuid ObjectStorage2
 }
 
 // NewCreateObjectStorageGroupRequest calls the generic CreateObjectStorageGroup builder with application/json body
-func NewCreateObjectStorageGroupRequest(server string, serviceUuid ObjectStorage2CreateGroupServiceUuid, body CreateObjectStorageGroupJSONRequestBody) (*http.Request, error) {
+func NewCreateObjectStorageGroupRequest(server string, serviceUuid ObjectStorage2CreateObjectStorageGroupServiceUuid, body CreateObjectStorageGroupJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -5459,7 +9496,7 @@ func NewCreateObjectStorageGroupRequest(server string, serviceUuid ObjectStorage
 }
 
 // NewCreateObjectStorageGroupRequestWithBody generates requests for CreateObjectStorageGroup with any type of body
-func NewCreateObjectStorageGroupRequestWithBody(server string, serviceUuid ObjectStorage2CreateGroupServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateObjectStorageGroupRequestWithBody(server string, serviceUuid ObjectStorage2CreateObjectStorageGroupServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -5495,7 +9532,7 @@ func NewCreateObjectStorageGroupRequestWithBody(server string, serviceUuid Objec
 }
 
 // NewDeleteObjectStorageGroupRequest generates requests for DeleteObjectStorageGroup
-func NewDeleteObjectStorageGroupRequest(server string, serviceUuid ObjectStorage2DeleteGroupServiceUuid, groupName ObjectStorage2DeleteGroupGroupName) (*http.Request, error) {
+func NewDeleteObjectStorageGroupRequest(server string, serviceUuid ObjectStorage2DeleteObjectStorageGroupServiceUuid, groupName ObjectStorage2DeleteObjectStorageGroupGroupName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -5536,7 +9573,7 @@ func NewDeleteObjectStorageGroupRequest(server string, serviceUuid ObjectStorage
 }
 
 // NewGetObjectStorageGroupRequest generates requests for GetObjectStorageGroup
-func NewGetObjectStorageGroupRequest(server string, serviceUuid ObjectStorage2GetGroupServiceUuid, groupName ObjectStorage2GetGroupGroupName) (*http.Request, error) {
+func NewGetObjectStorageGroupRequest(server string, serviceUuid ObjectStorage2GetObjectStorageGroupServiceUuid, groupName ObjectStorage2GetObjectStorageGroupGroupName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -5577,7 +9614,7 @@ func NewGetObjectStorageGroupRequest(server string, serviceUuid ObjectStorage2Ge
 }
 
 // NewListObjectStorageGroupInlinePoliciesRequest generates requests for ListObjectStorageGroupInlinePolicies
-func NewListObjectStorageGroupInlinePoliciesRequest(server string, serviceUuid ObjectStorage2ListGroupInlinePoliciesServiceUuid, groupName ObjectStorage2ListGroupInlinePoliciesGroupName) (*http.Request, error) {
+func NewListObjectStorageGroupInlinePoliciesRequest(server string, serviceUuid ObjectStorage2ListObjectStorageGroupInlinePoliciesServiceUuid, groupName ObjectStorage2ListObjectStorageGroupInlinePoliciesGroupName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -5618,7 +9655,7 @@ func NewListObjectStorageGroupInlinePoliciesRequest(server string, serviceUuid O
 }
 
 // NewCreateObjectStorageGroupInlinePolicyRequest calls the generic CreateObjectStorageGroupInlinePolicy builder with application/json body
-func NewCreateObjectStorageGroupInlinePolicyRequest(server string, serviceUuid ObjectStorage2CreateGroupInlinePolicyServiceUuid, groupName ObjectStorage2CreateGroupInlinePolicyGroupName, body CreateObjectStorageGroupInlinePolicyJSONRequestBody) (*http.Request, error) {
+func NewCreateObjectStorageGroupInlinePolicyRequest(server string, serviceUuid ObjectStorage2CreateObjectStorageGroupInlinePolicyServiceUuid, groupName ObjectStorage2CreateObjectStorageGroupInlinePolicyGroupName, body CreateObjectStorageGroupInlinePolicyJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -5629,7 +9666,7 @@ func NewCreateObjectStorageGroupInlinePolicyRequest(server string, serviceUuid O
 }
 
 // NewCreateObjectStorageGroupInlinePolicyRequestWithBody generates requests for CreateObjectStorageGroupInlinePolicy with any type of body
-func NewCreateObjectStorageGroupInlinePolicyRequestWithBody(server string, serviceUuid ObjectStorage2CreateGroupInlinePolicyServiceUuid, groupName ObjectStorage2CreateGroupInlinePolicyGroupName, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateObjectStorageGroupInlinePolicyRequestWithBody(server string, serviceUuid ObjectStorage2CreateObjectStorageGroupInlinePolicyServiceUuid, groupName ObjectStorage2CreateObjectStorageGroupInlinePolicyGroupName, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -5672,7 +9709,7 @@ func NewCreateObjectStorageGroupInlinePolicyRequestWithBody(server string, servi
 }
 
 // NewDeleteObjectStorageGroupInlinePolicyRequest generates requests for DeleteObjectStorageGroupInlinePolicy
-func NewDeleteObjectStorageGroupInlinePolicyRequest(server string, serviceUuid ObjectStorage2DeleteGroupInlinePolicyServiceUuid, groupName ObjectStorage2DeleteGroupInlinePolicyGroupName, groupPolicyName ObjectStorage2DeleteGroupInlinePolicyGroupPolicyName) (*http.Request, error) {
+func NewDeleteObjectStorageGroupInlinePolicyRequest(server string, serviceUuid ObjectStorage2DeleteObjectStorageGroupInlinePolicyServiceUuid, groupName ObjectStorage2DeleteObjectStorageGroupInlinePolicyGroupName, groupPolicyName ObjectStorage2DeleteObjectStorageGroupInlinePolicyGroupPolicyName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -5720,7 +9757,7 @@ func NewDeleteObjectStorageGroupInlinePolicyRequest(server string, serviceUuid O
 }
 
 // NewGetObjectStorageGroupInlinePolicyRequest generates requests for GetObjectStorageGroupInlinePolicy
-func NewGetObjectStorageGroupInlinePolicyRequest(server string, serviceUuid ObjectStorage2GetGroupInlinePolicyServiceUuid, groupName ObjectStorage2GetGroupInlinePolicyGroupName, groupPolicyName ObjectStorage2GetGroupInlinePolicyGroupPolicyName) (*http.Request, error) {
+func NewGetObjectStorageGroupInlinePolicyRequest(server string, serviceUuid ObjectStorage2GetObjectStorageGroupInlinePolicyServiceUuid, groupName ObjectStorage2GetObjectStorageGroupInlinePolicyGroupName, groupPolicyName ObjectStorage2GetObjectStorageGroupInlinePolicyGroupPolicyName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -5768,7 +9805,7 @@ func NewGetObjectStorageGroupInlinePolicyRequest(server string, serviceUuid Obje
 }
 
 // NewListObjectStorageIAMGroupPoliciesRequest generates requests for ListObjectStorageIAMGroupPolicies
-func NewListObjectStorageIAMGroupPoliciesRequest(server string, serviceUuid ObjectStorage2ListIAMGroupPoliciesServiceUuid, groupName ObjectStorage2ListIAMGroupPoliciesGroupName) (*http.Request, error) {
+func NewListObjectStorageIAMGroupPoliciesRequest(server string, serviceUuid ObjectStorage2ListObjectStorageIAMGroupPoliciesServiceUuid, groupName ObjectStorage2ListObjectStorageIAMGroupPoliciesGroupName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -5809,7 +9846,7 @@ func NewListObjectStorageIAMGroupPoliciesRequest(server string, serviceUuid Obje
 }
 
 // NewAttachObjectStorageIAMGroupPolicyRequest calls the generic AttachObjectStorageIAMGroupPolicy builder with application/json body
-func NewAttachObjectStorageIAMGroupPolicyRequest(server string, serviceUuid ObjectStorage2AttachIAMGroupPolicyServiceUuid, groupName ObjectStorage2AttachIAMGroupPolicyGroupName, body AttachObjectStorageIAMGroupPolicyJSONRequestBody) (*http.Request, error) {
+func NewAttachObjectStorageIAMGroupPolicyRequest(server string, serviceUuid ObjectStorage2AttachObjectStorageIAMGroupPolicyServiceUuid, groupName ObjectStorage2AttachObjectStorageIAMGroupPolicyGroupName, body AttachObjectStorageIAMGroupPolicyJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -5820,7 +9857,7 @@ func NewAttachObjectStorageIAMGroupPolicyRequest(server string, serviceUuid Obje
 }
 
 // NewAttachObjectStorageIAMGroupPolicyRequestWithBody generates requests for AttachObjectStorageIAMGroupPolicy with any type of body
-func NewAttachObjectStorageIAMGroupPolicyRequestWithBody(server string, serviceUuid ObjectStorage2AttachIAMGroupPolicyServiceUuid, groupName ObjectStorage2AttachIAMGroupPolicyGroupName, contentType string, body io.Reader) (*http.Request, error) {
+func NewAttachObjectStorageIAMGroupPolicyRequestWithBody(server string, serviceUuid ObjectStorage2AttachObjectStorageIAMGroupPolicyServiceUuid, groupName ObjectStorage2AttachObjectStorageIAMGroupPolicyGroupName, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -5863,7 +9900,7 @@ func NewAttachObjectStorageIAMGroupPolicyRequestWithBody(server string, serviceU
 }
 
 // NewDetachObjectStorageIAMGroupPolicyRequest generates requests for DetachObjectStorageIAMGroupPolicy
-func NewDetachObjectStorageIAMGroupPolicyRequest(server string, serviceUuid ObjectStorage2DetachIAMGroupPolicyServiceUuid, groupName ObjectStorage2DetachIAMGroupPolicyGroupName, policyName ObjectStorage2DetachIAMGroupPolicyPolicyName) (*http.Request, error) {
+func NewDetachObjectStorageIAMGroupPolicyRequest(server string, serviceUuid ObjectStorage2DetachObjectStorageIAMGroupPolicyServiceUuid, groupName ObjectStorage2DetachObjectStorageIAMGroupPolicyGroupName, policyName ObjectStorage2DetachObjectStorageIAMGroupPolicyPolicyName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -5911,7 +9948,7 @@ func NewDetachObjectStorageIAMGroupPolicyRequest(server string, serviceUuid Obje
 }
 
 // NewRemoveObjectStorageUserFromGroupRequest generates requests for RemoveObjectStorageUserFromGroup
-func NewRemoveObjectStorageUserFromGroupRequest(server string, serviceUuid ObjectStorage2RemoveUserFromGroupServiceUuid, groupName ObjectStorage2RemoveUserFromGroupGroupName, username ObjectStorage2RemoveUserFromGroupUsername) (*http.Request, error) {
+func NewRemoveObjectStorageUserFromGroupRequest(server string, serviceUuid ObjectStorage2RemoveObjectStorageUserFromGroupServiceUuid, groupName ObjectStorage2RemoveObjectStorageUserFromGroupGroupName, username ObjectStorage2RemoveObjectStorageUserFromGroupUsername) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -5959,7 +9996,7 @@ func NewRemoveObjectStorageUserFromGroupRequest(server string, serviceUuid Objec
 }
 
 // NewAttachObjectStorageUserToGroupRequest generates requests for AttachObjectStorageUserToGroup
-func NewAttachObjectStorageUserToGroupRequest(server string, serviceUuid ObjectStorage2AttachUserToGroupServiceUuid, groupName ObjectStorage2AttachUserToGroupGroupName, username ObjectStorage2AttachUserToGroupUsername) (*http.Request, error) {
+func NewAttachObjectStorageUserToGroupRequest(server string, serviceUuid ObjectStorage2AttachObjectStorageUserToGroupServiceUuid, groupName ObjectStorage2AttachObjectStorageUserToGroupGroupName, username ObjectStorage2AttachObjectStorageUserToGroupUsername) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -6007,7 +10044,7 @@ func NewAttachObjectStorageUserToGroupRequest(server string, serviceUuid ObjectS
 }
 
 // NewListObjectStorageLabelsRequest generates requests for ListObjectStorageLabels
-func NewListObjectStorageLabelsRequest(server string, serviceUuid ObjectStorage2ListLabelsServiceUuid) (*http.Request, error) {
+func NewListObjectStorageLabelsRequest(server string, serviceUuid ObjectStorage2ListObjectStorageLabelsServiceUuid) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -6041,7 +10078,7 @@ func NewListObjectStorageLabelsRequest(server string, serviceUuid ObjectStorage2
 }
 
 // NewCreateObjectStorageLabelRequest calls the generic CreateObjectStorageLabel builder with application/json body
-func NewCreateObjectStorageLabelRequest(server string, serviceUuid ObjectStorage2CreateLabelServiceUuid, body CreateObjectStorageLabelJSONRequestBody) (*http.Request, error) {
+func NewCreateObjectStorageLabelRequest(server string, serviceUuid ObjectStorage2CreateObjectStorageLabelServiceUuid, body CreateObjectStorageLabelJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -6052,7 +10089,7 @@ func NewCreateObjectStorageLabelRequest(server string, serviceUuid ObjectStorage
 }
 
 // NewCreateObjectStorageLabelRequestWithBody generates requests for CreateObjectStorageLabel with any type of body
-func NewCreateObjectStorageLabelRequestWithBody(server string, serviceUuid ObjectStorage2CreateLabelServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateObjectStorageLabelRequestWithBody(server string, serviceUuid ObjectStorage2CreateObjectStorageLabelServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -6088,7 +10125,7 @@ func NewCreateObjectStorageLabelRequestWithBody(server string, serviceUuid Objec
 }
 
 // NewDeleteObjectStorageLabelRequest generates requests for DeleteObjectStorageLabel
-func NewDeleteObjectStorageLabelRequest(server string, serviceUuid ObjectStorage2DeleteLabelServiceUuid, labelKey ObjectStorage2DeleteLabelLabelKey) (*http.Request, error) {
+func NewDeleteObjectStorageLabelRequest(server string, serviceUuid ObjectStorage2DeleteObjectStorageLabelServiceUuid, labelKey ObjectStorage2DeleteObjectStorageLabelLabelKey) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -6129,7 +10166,7 @@ func NewDeleteObjectStorageLabelRequest(server string, serviceUuid ObjectStorage
 }
 
 // NewGetObjectStorageLabelRequest generates requests for GetObjectStorageLabel
-func NewGetObjectStorageLabelRequest(server string, serviceUuid ObjectStorage2GetLabelDetailsServiceUuid, labelKey ObjectStorage2GetLabelDetailsLabelKey) (*http.Request, error) {
+func NewGetObjectStorageLabelRequest(server string, serviceUuid ObjectStorage2GetObjectStorageLabelServiceUuid, labelKey ObjectStorage2GetObjectStorageLabelLabelKey) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -6170,7 +10207,7 @@ func NewGetObjectStorageLabelRequest(server string, serviceUuid ObjectStorage2Ge
 }
 
 // NewModifyObjectStorageLabelRequest calls the generic ModifyObjectStorageLabel builder with application/json body
-func NewModifyObjectStorageLabelRequest(server string, serviceUuid ObjectStorage2ModifyLabelServiceUuid, labelKey ObjectStorage2ModifyLabelLabelKey, body ModifyObjectStorageLabelJSONRequestBody) (*http.Request, error) {
+func NewModifyObjectStorageLabelRequest(server string, serviceUuid ObjectStorage2ModifyObjectStorageLabelServiceUuid, labelKey ObjectStorage2ModifyObjectStorageLabelLabelKey, body ModifyObjectStorageLabelJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -6181,7 +10218,7 @@ func NewModifyObjectStorageLabelRequest(server string, serviceUuid ObjectStorage
 }
 
 // NewModifyObjectStorageLabelRequestWithBody generates requests for ModifyObjectStorageLabel with any type of body
-func NewModifyObjectStorageLabelRequestWithBody(server string, serviceUuid ObjectStorage2ModifyLabelServiceUuid, labelKey ObjectStorage2ModifyLabelLabelKey, contentType string, body io.Reader) (*http.Request, error) {
+func NewModifyObjectStorageLabelRequestWithBody(server string, serviceUuid ObjectStorage2ModifyObjectStorageLabelServiceUuid, labelKey ObjectStorage2ModifyObjectStorageLabelLabelKey, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -6224,7 +10261,7 @@ func NewModifyObjectStorageLabelRequestWithBody(server string, serviceUuid Objec
 }
 
 // NewGetObjectStorageMetricsRequest generates requests for GetObjectStorageMetrics
-func NewGetObjectStorageMetricsRequest(server string, serviceUuid ObjectStorage2GetServiceMetricsServiceUuid) (*http.Request, error) {
+func NewGetObjectStorageMetricsRequest(server string, serviceUuid ObjectStorage2GetObjectStorageMetricsServiceUuid) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -6258,7 +10295,7 @@ func NewGetObjectStorageMetricsRequest(server string, serviceUuid ObjectStorage2
 }
 
 // NewListObjectStorageMetricsSeriesRequest generates requests for ListObjectStorageMetricsSeries
-func NewListObjectStorageMetricsSeriesRequest(server string, serviceUuid ObjectStorage2ListServiceMetricsSeriesServiceUuid, params *ListObjectStorageMetricsSeriesParams) (*http.Request, error) {
+func NewListObjectStorageMetricsSeriesRequest(server string, serviceUuid ObjectStorage2ListObjectStorageMetricsSeriesServiceUuid, params *ListObjectStorageMetricsSeriesParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -6394,7 +10431,7 @@ func NewListObjectStorageMetricsSeriesRequest(server string, serviceUuid ObjectS
 }
 
 // NewListObjectStorageNetworksRequest generates requests for ListObjectStorageNetworks
-func NewListObjectStorageNetworksRequest(server string, serviceUuid ObjectStorage2ListNetworksServiceUuid) (*http.Request, error) {
+func NewListObjectStorageNetworksRequest(server string, serviceUuid ObjectStorage2ListObjectStorageNetworksServiceUuid) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -6428,7 +10465,7 @@ func NewListObjectStorageNetworksRequest(server string, serviceUuid ObjectStorag
 }
 
 // NewCreateObjectStorageNetworkRequest calls the generic CreateObjectStorageNetwork builder with application/json body
-func NewCreateObjectStorageNetworkRequest(server string, serviceUuid ObjectStorage2CreateNetworkServiceUuid, body CreateObjectStorageNetworkJSONRequestBody) (*http.Request, error) {
+func NewCreateObjectStorageNetworkRequest(server string, serviceUuid ObjectStorage2CreateObjectStorageNetworkServiceUuid, body CreateObjectStorageNetworkJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -6439,7 +10476,7 @@ func NewCreateObjectStorageNetworkRequest(server string, serviceUuid ObjectStora
 }
 
 // NewCreateObjectStorageNetworkRequestWithBody generates requests for CreateObjectStorageNetwork with any type of body
-func NewCreateObjectStorageNetworkRequestWithBody(server string, serviceUuid ObjectStorage2CreateNetworkServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateObjectStorageNetworkRequestWithBody(server string, serviceUuid ObjectStorage2CreateObjectStorageNetworkServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -6475,7 +10512,7 @@ func NewCreateObjectStorageNetworkRequestWithBody(server string, serviceUuid Obj
 }
 
 // NewDeleteObjectStorageNetworkRequest generates requests for DeleteObjectStorageNetwork
-func NewDeleteObjectStorageNetworkRequest(server string, serviceUuid ObjectStorage2DeleteNetworkServiceUuid, networkName ObjectStorage2DeleteNetworkNetworkName) (*http.Request, error) {
+func NewDeleteObjectStorageNetworkRequest(server string, serviceUuid ObjectStorage2DeleteObjectStorageNetworkServiceUuid, networkName ObjectStorage2DeleteObjectStorageNetworkNetworkName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -6516,7 +10553,7 @@ func NewDeleteObjectStorageNetworkRequest(server string, serviceUuid ObjectStora
 }
 
 // NewGetObjectStorageNetworkRequest generates requests for GetObjectStorageNetwork
-func NewGetObjectStorageNetworkRequest(server string, serviceUuid ObjectStorage2GetNetworkServiceUuid, networkName ObjectStorage2GetNetworkNetworkName) (*http.Request, error) {
+func NewGetObjectStorageNetworkRequest(server string, serviceUuid ObjectStorage2GetObjectStorageNetworkServiceUuid, networkName ObjectStorage2GetObjectStorageNetworkNetworkName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -6557,7 +10594,7 @@ func NewGetObjectStorageNetworkRequest(server string, serviceUuid ObjectStorage2
 }
 
 // NewListObjectStoragePoliciesRequest generates requests for ListObjectStoragePolicies
-func NewListObjectStoragePoliciesRequest(server string, serviceUuid ObjectStorage2ListPoliciesServiceUuid) (*http.Request, error) {
+func NewListObjectStoragePoliciesRequest(server string, serviceUuid ObjectStorage2ListObjectStoragePoliciesServiceUuid) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -6591,7 +10628,7 @@ func NewListObjectStoragePoliciesRequest(server string, serviceUuid ObjectStorag
 }
 
 // NewCreateObjectStoragePolicyRequest calls the generic CreateObjectStoragePolicy builder with application/json body
-func NewCreateObjectStoragePolicyRequest(server string, serviceUuid ObjectStorage2CreatePolicyServiceUuid, body CreateObjectStoragePolicyJSONRequestBody) (*http.Request, error) {
+func NewCreateObjectStoragePolicyRequest(server string, serviceUuid ObjectStorage2CreateObjectStoragePolicyServiceUuid, body CreateObjectStoragePolicyJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -6602,7 +10639,7 @@ func NewCreateObjectStoragePolicyRequest(server string, serviceUuid ObjectStorag
 }
 
 // NewCreateObjectStoragePolicyRequestWithBody generates requests for CreateObjectStoragePolicy with any type of body
-func NewCreateObjectStoragePolicyRequestWithBody(server string, serviceUuid ObjectStorage2CreatePolicyServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateObjectStoragePolicyRequestWithBody(server string, serviceUuid ObjectStorage2CreateObjectStoragePolicyServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -6638,7 +10675,7 @@ func NewCreateObjectStoragePolicyRequestWithBody(server string, serviceUuid Obje
 }
 
 // NewDeleteObjectStoragePolicyRequest generates requests for DeleteObjectStoragePolicy
-func NewDeleteObjectStoragePolicyRequest(server string, serviceUuid ObjectStorage2DeletePolicyServiceUuid, policyName ObjectStorage2DeletePolicyPolicyName) (*http.Request, error) {
+func NewDeleteObjectStoragePolicyRequest(server string, serviceUuid ObjectStorage2DeleteObjectStoragePolicyServiceUuid, policyName ObjectStorage2DeleteObjectStoragePolicyPolicyName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -6679,7 +10716,7 @@ func NewDeleteObjectStoragePolicyRequest(server string, serviceUuid ObjectStorag
 }
 
 // NewGetObjectStoragePolicyRequest generates requests for GetObjectStoragePolicy
-func NewGetObjectStoragePolicyRequest(server string, serviceUuid ObjectStorage2GetPolicyDetailsServiceUuid, policyName ObjectStorage2GetPolicyDetailsPolicyName) (*http.Request, error) {
+func NewGetObjectStoragePolicyRequest(server string, serviceUuid ObjectStorage2GetObjectStoragePolicyServiceUuid, policyName ObjectStorage2GetObjectStoragePolicyPolicyName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -6720,7 +10757,7 @@ func NewGetObjectStoragePolicyRequest(server string, serviceUuid ObjectStorage2G
 }
 
 // NewSetObjectStorageDefaultPolicyVersionRequest calls the generic SetObjectStorageDefaultPolicyVersion builder with application/json body
-func NewSetObjectStorageDefaultPolicyVersionRequest(server string, serviceUuid ObjectStorage2SetDefaultPolicyVersionServiceUuid, policyName ObjectStorage2SetDefaultPolicyVersionPolicyName, body SetObjectStorageDefaultPolicyVersionJSONRequestBody) (*http.Request, error) {
+func NewSetObjectStorageDefaultPolicyVersionRequest(server string, serviceUuid ObjectStorage2SetObjectStorageDefaultPolicyVersionServiceUuid, policyName ObjectStorage2SetObjectStorageDefaultPolicyVersionPolicyName, body SetObjectStorageDefaultPolicyVersionJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -6731,7 +10768,7 @@ func NewSetObjectStorageDefaultPolicyVersionRequest(server string, serviceUuid O
 }
 
 // NewSetObjectStorageDefaultPolicyVersionRequestWithBody generates requests for SetObjectStorageDefaultPolicyVersion with any type of body
-func NewSetObjectStorageDefaultPolicyVersionRequestWithBody(server string, serviceUuid ObjectStorage2SetDefaultPolicyVersionServiceUuid, policyName ObjectStorage2SetDefaultPolicyVersionPolicyName, contentType string, body io.Reader) (*http.Request, error) {
+func NewSetObjectStorageDefaultPolicyVersionRequestWithBody(server string, serviceUuid ObjectStorage2SetObjectStorageDefaultPolicyVersionServiceUuid, policyName ObjectStorage2SetObjectStorageDefaultPolicyVersionPolicyName, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -6774,7 +10811,7 @@ func NewSetObjectStorageDefaultPolicyVersionRequestWithBody(server string, servi
 }
 
 // NewListObjectStoragePolicyVersionsRequest generates requests for ListObjectStoragePolicyVersions
-func NewListObjectStoragePolicyVersionsRequest(server string, serviceUuid ObjectStorage2ListPolicyVersionsServiceUuid, policyName ObjectStorage2ListPolicyVersionsPolicyName) (*http.Request, error) {
+func NewListObjectStoragePolicyVersionsRequest(server string, serviceUuid ObjectStorage2ListObjectStoragePolicyVersionsServiceUuid, policyName ObjectStorage2ListObjectStoragePolicyVersionsPolicyName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -6815,7 +10852,7 @@ func NewListObjectStoragePolicyVersionsRequest(server string, serviceUuid Object
 }
 
 // NewCreateObjectStoragePolicyVersionRequest calls the generic CreateObjectStoragePolicyVersion builder with application/json body
-func NewCreateObjectStoragePolicyVersionRequest(server string, serviceUuid ObjectStorage2CreatePolicyVersionServiceUuid, policyName ObjectStorage2CreatePolicyVersionPolicyName, body CreateObjectStoragePolicyVersionJSONRequestBody) (*http.Request, error) {
+func NewCreateObjectStoragePolicyVersionRequest(server string, serviceUuid ObjectStorage2CreateObjectStoragePolicyVersionServiceUuid, policyName ObjectStorage2CreateObjectStoragePolicyVersionPolicyName, body CreateObjectStoragePolicyVersionJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -6826,7 +10863,7 @@ func NewCreateObjectStoragePolicyVersionRequest(server string, serviceUuid Objec
 }
 
 // NewCreateObjectStoragePolicyVersionRequestWithBody generates requests for CreateObjectStoragePolicyVersion with any type of body
-func NewCreateObjectStoragePolicyVersionRequestWithBody(server string, serviceUuid ObjectStorage2CreatePolicyVersionServiceUuid, policyName ObjectStorage2CreatePolicyVersionPolicyName, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateObjectStoragePolicyVersionRequestWithBody(server string, serviceUuid ObjectStorage2CreateObjectStoragePolicyVersionServiceUuid, policyName ObjectStorage2CreateObjectStoragePolicyVersionPolicyName, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -6869,7 +10906,7 @@ func NewCreateObjectStoragePolicyVersionRequestWithBody(server string, serviceUu
 }
 
 // NewDeleteObjectStoragePolicyVersionRequest generates requests for DeleteObjectStoragePolicyVersion
-func NewDeleteObjectStoragePolicyVersionRequest(server string, serviceUuid ObjectStorage2DeletePolicyVersionServiceUuid, policyName ObjectStorage2DeletePolicyVersionPolicyName, policyVersion ObjectStorage2DeletePolicyVersionPolicyVersion) (*http.Request, error) {
+func NewDeleteObjectStoragePolicyVersionRequest(server string, serviceUuid ObjectStorage2DeleteObjectStoragePolicyVersionServiceUuid, policyName ObjectStorage2DeleteObjectStoragePolicyVersionPolicyName, policyVersion ObjectStorage2DeleteObjectStoragePolicyVersionPolicyVersion) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -6917,7 +10954,7 @@ func NewDeleteObjectStoragePolicyVersionRequest(server string, serviceUuid Objec
 }
 
 // NewGetObjectStoragePolicyVersionRequest generates requests for GetObjectStoragePolicyVersion
-func NewGetObjectStoragePolicyVersionRequest(server string, serviceUuid ObjectStorage2GetPolicyVersionServiceUuid, policyName ObjectStorage2GetPolicyVersionPolicyName, policyVersion ObjectStorage2GetPolicyVersionPolicyVersion) (*http.Request, error) {
+func NewGetObjectStoragePolicyVersionRequest(server string, serviceUuid ObjectStorage2GetObjectStoragePolicyVersionServiceUuid, policyName ObjectStorage2GetObjectStoragePolicyVersionPolicyName, policyVersion ObjectStorage2GetObjectStoragePolicyVersionPolicyVersion) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -6965,7 +11002,7 @@ func NewGetObjectStoragePolicyVersionRequest(server string, serviceUuid ObjectSt
 }
 
 // NewListObjectStorageRolesRequest generates requests for ListObjectStorageRoles
-func NewListObjectStorageRolesRequest(server string, serviceUuid ObjectStorage2ListRolesServiceUuid) (*http.Request, error) {
+func NewListObjectStorageRolesRequest(server string, serviceUuid ObjectStorage2ListObjectStorageRolesServiceUuid) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -6999,7 +11036,7 @@ func NewListObjectStorageRolesRequest(server string, serviceUuid ObjectStorage2L
 }
 
 // NewCreateObjectStorageRoleRequest calls the generic CreateObjectStorageRole builder with application/json body
-func NewCreateObjectStorageRoleRequest(server string, serviceUuid ObjectStorage2CreateRoleServiceUuid, body CreateObjectStorageRoleJSONRequestBody) (*http.Request, error) {
+func NewCreateObjectStorageRoleRequest(server string, serviceUuid ObjectStorage2CreateObjectStorageRoleServiceUuid, body CreateObjectStorageRoleJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -7010,7 +11047,7 @@ func NewCreateObjectStorageRoleRequest(server string, serviceUuid ObjectStorage2
 }
 
 // NewCreateObjectStorageRoleRequestWithBody generates requests for CreateObjectStorageRole with any type of body
-func NewCreateObjectStorageRoleRequestWithBody(server string, serviceUuid ObjectStorage2CreateRoleServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateObjectStorageRoleRequestWithBody(server string, serviceUuid ObjectStorage2CreateObjectStorageRoleServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -7046,7 +11083,7 @@ func NewCreateObjectStorageRoleRequestWithBody(server string, serviceUuid Object
 }
 
 // NewDeleteObjectStorageRoleRequest generates requests for DeleteObjectStorageRole
-func NewDeleteObjectStorageRoleRequest(server string, serviceUuid ObjectStorage2DeleteRoleServiceUuid, roleName ObjectStorage2DeleteRoleRoleName) (*http.Request, error) {
+func NewDeleteObjectStorageRoleRequest(server string, serviceUuid ObjectStorage2DeleteObjectStorageRoleServiceUuid, roleName ObjectStorage2DeleteObjectStorageRoleRoleName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -7087,7 +11124,7 @@ func NewDeleteObjectStorageRoleRequest(server string, serviceUuid ObjectStorage2
 }
 
 // NewGetObjectStorageRoleRequest generates requests for GetObjectStorageRole
-func NewGetObjectStorageRoleRequest(server string, serviceUuid ObjectStorage2GetRoleServiceUuid, roleName ObjectStorage2GetRoleRoleName) (*http.Request, error) {
+func NewGetObjectStorageRoleRequest(server string, serviceUuid ObjectStorage2GetObjectStorageRoleServiceUuid, roleName ObjectStorage2GetObjectStorageRoleRoleName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -7128,7 +11165,7 @@ func NewGetObjectStorageRoleRequest(server string, serviceUuid ObjectStorage2Get
 }
 
 // NewUpdateObjectStorageRoleRequest calls the generic UpdateObjectStorageRole builder with application/json body
-func NewUpdateObjectStorageRoleRequest(server string, serviceUuid ObjectStorage2UpdateRoleServiceUuid, roleName ObjectStorage2UpdateRoleRoleName, body UpdateObjectStorageRoleJSONRequestBody) (*http.Request, error) {
+func NewUpdateObjectStorageRoleRequest(server string, serviceUuid ObjectStorage2UpdateObjectStorageRoleServiceUuid, roleName ObjectStorage2UpdateObjectStorageRoleRoleName, body UpdateObjectStorageRoleJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -7139,7 +11176,7 @@ func NewUpdateObjectStorageRoleRequest(server string, serviceUuid ObjectStorage2
 }
 
 // NewUpdateObjectStorageRoleRequestWithBody generates requests for UpdateObjectStorageRole with any type of body
-func NewUpdateObjectStorageRoleRequestWithBody(server string, serviceUuid ObjectStorage2UpdateRoleServiceUuid, roleName ObjectStorage2UpdateRoleRoleName, contentType string, body io.Reader) (*http.Request, error) {
+func NewUpdateObjectStorageRoleRequestWithBody(server string, serviceUuid ObjectStorage2UpdateObjectStorageRoleServiceUuid, roleName ObjectStorage2UpdateObjectStorageRoleRoleName, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -7182,7 +11219,7 @@ func NewUpdateObjectStorageRoleRequestWithBody(server string, serviceUuid Object
 }
 
 // NewAssumeObjectStorageRolePolicyRequest calls the generic AssumeObjectStorageRolePolicy builder with application/json body
-func NewAssumeObjectStorageRolePolicyRequest(server string, serviceUuid ObjectStorage2AssumeRolePolicyServiceUuid, roleName ObjectStorage2AssumeRolePolicyRoleName, body AssumeObjectStorageRolePolicyJSONRequestBody) (*http.Request, error) {
+func NewAssumeObjectStorageRolePolicyRequest(server string, serviceUuid ObjectStorage2AssumeObjectStorageRolePolicyServiceUuid, roleName ObjectStorage2AssumeObjectStorageRolePolicyRoleName, body AssumeObjectStorageRolePolicyJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -7193,7 +11230,7 @@ func NewAssumeObjectStorageRolePolicyRequest(server string, serviceUuid ObjectSt
 }
 
 // NewAssumeObjectStorageRolePolicyRequestWithBody generates requests for AssumeObjectStorageRolePolicy with any type of body
-func NewAssumeObjectStorageRolePolicyRequestWithBody(server string, serviceUuid ObjectStorage2AssumeRolePolicyServiceUuid, roleName ObjectStorage2AssumeRolePolicyRoleName, contentType string, body io.Reader) (*http.Request, error) {
+func NewAssumeObjectStorageRolePolicyRequestWithBody(server string, serviceUuid ObjectStorage2AssumeObjectStorageRolePolicyServiceUuid, roleName ObjectStorage2AssumeObjectStorageRolePolicyRoleName, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -7236,7 +11273,7 @@ func NewAssumeObjectStorageRolePolicyRequestWithBody(server string, serviceUuid 
 }
 
 // NewListObjectStorageRoleInlinePoliciesRequest generates requests for ListObjectStorageRoleInlinePolicies
-func NewListObjectStorageRoleInlinePoliciesRequest(server string, serviceUuid ObjectStorage2ListRoleInlinePoliciesServiceUuid, roleName ObjectStorage2ListRoleInlinePoliciesRoleName) (*http.Request, error) {
+func NewListObjectStorageRoleInlinePoliciesRequest(server string, serviceUuid ObjectStorage2ListObjectStorageRoleInlinePoliciesServiceUuid, roleName ObjectStorage2ListObjectStorageRoleInlinePoliciesRoleName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -7277,7 +11314,7 @@ func NewListObjectStorageRoleInlinePoliciesRequest(server string, serviceUuid Ob
 }
 
 // NewCreateObjectStorageRoleInlinePolicyRequest calls the generic CreateObjectStorageRoleInlinePolicy builder with application/json body
-func NewCreateObjectStorageRoleInlinePolicyRequest(server string, serviceUuid ObjectStorage2CreateRoleInlinePolicyServiceUuid, roleName ObjectStorage2CreateRoleInlinePolicyRoleName, body CreateObjectStorageRoleInlinePolicyJSONRequestBody) (*http.Request, error) {
+func NewCreateObjectStorageRoleInlinePolicyRequest(server string, serviceUuid ObjectStorage2CreateObjectStorageRoleInlinePolicyServiceUuid, roleName ObjectStorage2CreateObjectStorageRoleInlinePolicyRoleName, body CreateObjectStorageRoleInlinePolicyJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -7288,7 +11325,7 @@ func NewCreateObjectStorageRoleInlinePolicyRequest(server string, serviceUuid Ob
 }
 
 // NewCreateObjectStorageRoleInlinePolicyRequestWithBody generates requests for CreateObjectStorageRoleInlinePolicy with any type of body
-func NewCreateObjectStorageRoleInlinePolicyRequestWithBody(server string, serviceUuid ObjectStorage2CreateRoleInlinePolicyServiceUuid, roleName ObjectStorage2CreateRoleInlinePolicyRoleName, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateObjectStorageRoleInlinePolicyRequestWithBody(server string, serviceUuid ObjectStorage2CreateObjectStorageRoleInlinePolicyServiceUuid, roleName ObjectStorage2CreateObjectStorageRoleInlinePolicyRoleName, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -7331,7 +11368,7 @@ func NewCreateObjectStorageRoleInlinePolicyRequestWithBody(server string, servic
 }
 
 // NewDeleteObjectStorageRoleInlinePolicyRequest generates requests for DeleteObjectStorageRoleInlinePolicy
-func NewDeleteObjectStorageRoleInlinePolicyRequest(server string, serviceUuid ObjectStorage2DeleteRoleInlinePolicyServiceUuid, roleName ObjectStorage2DeleteRoleInlinePolicyRoleName, rolePolicyName ObjectStorage2DeleteRoleInlinePolicyRolePolicyName) (*http.Request, error) {
+func NewDeleteObjectStorageRoleInlinePolicyRequest(server string, serviceUuid ObjectStorage2DeleteObjectStorageRoleInlinePolicyServiceUuid, roleName ObjectStorage2DeleteObjectStorageRoleInlinePolicyRoleName, rolePolicyName ObjectStorage2DeleteObjectStorageRoleInlinePolicyRolePolicyName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -7379,7 +11416,7 @@ func NewDeleteObjectStorageRoleInlinePolicyRequest(server string, serviceUuid Ob
 }
 
 // NewGetObjectStorageRoleInlinePolicyRequest generates requests for GetObjectStorageRoleInlinePolicy
-func NewGetObjectStorageRoleInlinePolicyRequest(server string, serviceUuid ObjectStorage2GetRoleInlinePolicyServiceUuid, roleName ObjectStorage2GetRoleInlinePolicyRoleName, rolePolicyName ObjectStorage2GetRoleInlinePolicyRolePolicyName) (*http.Request, error) {
+func NewGetObjectStorageRoleInlinePolicyRequest(server string, serviceUuid ObjectStorage2GetObjectStorageRoleInlinePolicyServiceUuid, roleName ObjectStorage2GetObjectStorageRoleInlinePolicyRoleName, rolePolicyName ObjectStorage2GetObjectStorageRoleInlinePolicyRolePolicyName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -7427,7 +11464,7 @@ func NewGetObjectStorageRoleInlinePolicyRequest(server string, serviceUuid Objec
 }
 
 // NewDeleteObjectStorageRolePermissionsBoundaryRequest generates requests for DeleteObjectStorageRolePermissionsBoundary
-func NewDeleteObjectStorageRolePermissionsBoundaryRequest(server string, serviceUuid ObjectStorage2DeleteRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2DeleteRolePermissionsBoundaryRoleName) (*http.Request, error) {
+func NewDeleteObjectStorageRolePermissionsBoundaryRequest(server string, serviceUuid ObjectStorage2DeleteObjectStorageRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2DeleteObjectStorageRolePermissionsBoundaryRoleName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -7468,7 +11505,7 @@ func NewDeleteObjectStorageRolePermissionsBoundaryRequest(server string, service
 }
 
 // NewCreateObjectStorageRolePermissionsBoundaryRequest calls the generic CreateObjectStorageRolePermissionsBoundary builder with application/json body
-func NewCreateObjectStorageRolePermissionsBoundaryRequest(server string, serviceUuid ObjectStorage2CreateRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2CreateRolePermissionsBoundaryRoleName, body CreateObjectStorageRolePermissionsBoundaryJSONRequestBody) (*http.Request, error) {
+func NewCreateObjectStorageRolePermissionsBoundaryRequest(server string, serviceUuid ObjectStorage2CreateObjectStorageRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2CreateObjectStorageRolePermissionsBoundaryRoleName, body CreateObjectStorageRolePermissionsBoundaryJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -7479,7 +11516,7 @@ func NewCreateObjectStorageRolePermissionsBoundaryRequest(server string, service
 }
 
 // NewCreateObjectStorageRolePermissionsBoundaryRequestWithBody generates requests for CreateObjectStorageRolePermissionsBoundary with any type of body
-func NewCreateObjectStorageRolePermissionsBoundaryRequestWithBody(server string, serviceUuid ObjectStorage2CreateRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2CreateRolePermissionsBoundaryRoleName, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateObjectStorageRolePermissionsBoundaryRequestWithBody(server string, serviceUuid ObjectStorage2CreateObjectStorageRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2CreateObjectStorageRolePermissionsBoundaryRoleName, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -7522,7 +11559,7 @@ func NewCreateObjectStorageRolePermissionsBoundaryRequestWithBody(server string,
 }
 
 // NewListObjectStorageAttachedRolePoliciesRequest generates requests for ListObjectStorageAttachedRolePolicies
-func NewListObjectStorageAttachedRolePoliciesRequest(server string, serviceUuid ObjectStorage2ListAttachedRolePoliciesServiceUuid, roleName ObjectStorage2ListAttachedRolePoliciesRoleName) (*http.Request, error) {
+func NewListObjectStorageAttachedRolePoliciesRequest(server string, serviceUuid ObjectStorage2ListObjectStorageAttachedRolePoliciesServiceUuid, roleName ObjectStorage2ListObjectStorageAttachedRolePoliciesRoleName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -7563,7 +11600,7 @@ func NewListObjectStorageAttachedRolePoliciesRequest(server string, serviceUuid 
 }
 
 // NewAttachObjectStoragePolicyToRoleRequest calls the generic AttachObjectStoragePolicyToRole builder with application/json body
-func NewAttachObjectStoragePolicyToRoleRequest(server string, serviceUuid ObjectStorage2AttachPolicyToRoleServiceUuid, roleName ObjectStorage2AttachPolicyToRoleRoleName, body AttachObjectStoragePolicyToRoleJSONRequestBody) (*http.Request, error) {
+func NewAttachObjectStoragePolicyToRoleRequest(server string, serviceUuid ObjectStorage2AttachObjectStoragePolicyToRoleServiceUuid, roleName ObjectStorage2AttachObjectStoragePolicyToRoleRoleName, body AttachObjectStoragePolicyToRoleJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -7574,7 +11611,7 @@ func NewAttachObjectStoragePolicyToRoleRequest(server string, serviceUuid Object
 }
 
 // NewAttachObjectStoragePolicyToRoleRequestWithBody generates requests for AttachObjectStoragePolicyToRole with any type of body
-func NewAttachObjectStoragePolicyToRoleRequestWithBody(server string, serviceUuid ObjectStorage2AttachPolicyToRoleServiceUuid, roleName ObjectStorage2AttachPolicyToRoleRoleName, contentType string, body io.Reader) (*http.Request, error) {
+func NewAttachObjectStoragePolicyToRoleRequestWithBody(server string, serviceUuid ObjectStorage2AttachObjectStoragePolicyToRoleServiceUuid, roleName ObjectStorage2AttachObjectStoragePolicyToRoleRoleName, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -7617,7 +11654,7 @@ func NewAttachObjectStoragePolicyToRoleRequestWithBody(server string, serviceUui
 }
 
 // NewDetachObjectStoragePolicyFromRoleRequest generates requests for DetachObjectStoragePolicyFromRole
-func NewDetachObjectStoragePolicyFromRoleRequest(server string, serviceUuid ObjectStorage2DetachPolicyFromRoleServiceUuid, roleName ObjectStorage2DetachPolicyFromRoleRoleName, rolePolicyName ObjectStorage2DetachPolicyFromRoleRolePolicyName) (*http.Request, error) {
+func NewDetachObjectStoragePolicyFromRoleRequest(server string, serviceUuid ObjectStorage2DetachObjectStoragePolicyFromRoleServiceUuid, roleName ObjectStorage2DetachObjectStoragePolicyFromRoleRoleName, rolePolicyName ObjectStorage2DetachObjectStoragePolicyFromRoleRolePolicyName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -7665,7 +11702,7 @@ func NewDetachObjectStoragePolicyFromRoleRequest(server string, serviceUuid Obje
 }
 
 // NewGetObjectStorageRoleTagsRequest generates requests for GetObjectStorageRoleTags
-func NewGetObjectStorageRoleTagsRequest(server string, serviceUuid ObjectStorage2GetRoleTagsServiceUuid, roleName ObjectStorage2GetRoleTagsRoleName) (*http.Request, error) {
+func NewGetObjectStorageRoleTagsRequest(server string, serviceUuid ObjectStorage2GetObjectStorageRoleTagsServiceUuid, roleName ObjectStorage2GetObjectStorageRoleTagsRoleName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -7706,7 +11743,7 @@ func NewGetObjectStorageRoleTagsRequest(server string, serviceUuid ObjectStorage
 }
 
 // NewReplaceObjectStorageRoleTagsRequest calls the generic ReplaceObjectStorageRoleTags builder with application/json body
-func NewReplaceObjectStorageRoleTagsRequest(server string, serviceUuid ObjectStorage2ReplaceRoleTagsServiceUuid, roleName ObjectStorage2ReplaceRoleTagsRoleName, body ReplaceObjectStorageRoleTagsJSONRequestBody) (*http.Request, error) {
+func NewReplaceObjectStorageRoleTagsRequest(server string, serviceUuid ObjectStorage2ReplaceObjectStorageRoleTagsServiceUuid, roleName ObjectStorage2ReplaceObjectStorageRoleTagsRoleName, body ReplaceObjectStorageRoleTagsJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -7717,7 +11754,7 @@ func NewReplaceObjectStorageRoleTagsRequest(server string, serviceUuid ObjectSto
 }
 
 // NewReplaceObjectStorageRoleTagsRequestWithBody generates requests for ReplaceObjectStorageRoleTags with any type of body
-func NewReplaceObjectStorageRoleTagsRequestWithBody(server string, serviceUuid ObjectStorage2ReplaceRoleTagsServiceUuid, roleName ObjectStorage2ReplaceRoleTagsRoleName, contentType string, body io.Reader) (*http.Request, error) {
+func NewReplaceObjectStorageRoleTagsRequestWithBody(server string, serviceUuid ObjectStorage2ReplaceObjectStorageRoleTagsServiceUuid, roleName ObjectStorage2ReplaceObjectStorageRoleTagsRoleName, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -7760,7 +11797,7 @@ func NewReplaceObjectStorageRoleTagsRequestWithBody(server string, serviceUuid O
 }
 
 // NewDeleteObjectStorageRoleTagRequest generates requests for DeleteObjectStorageRoleTag
-func NewDeleteObjectStorageRoleTagRequest(server string, serviceUuid ObjectStorage2DeleteRoleTagServiceUuid, roleName ObjectStorage2DeleteRoleTagRoleName, roleTagKey ObjectStorage2DeleteRoleTagRoleTagKey) (*http.Request, error) {
+func NewDeleteObjectStorageRoleTagRequest(server string, serviceUuid ObjectStorage2DeleteObjectStorageRoleTagServiceUuid, roleName ObjectStorage2DeleteObjectStorageRoleTagRoleName, roleTagKey ObjectStorage2DeleteObjectStorageRoleTagRoleTagKey) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -7807,8 +11844,8 @@ func NewDeleteObjectStorageRoleTagRequest(server string, serviceUuid ObjectStora
 	return req, nil
 }
 
-// NewListStaticWebsitesRequest generates requests for ListStaticWebsites
-func NewListStaticWebsitesRequest(server string, serviceUuid ObjectStorage2ListStaticWebsitesServiceUuid) (*http.Request, error) {
+// NewListObjectStorageStaticWebsitesRequest generates requests for ListObjectStorageStaticWebsites
+func NewListObjectStorageStaticWebsitesRequest(server string, serviceUuid ObjectStorage2ListObjectStorageStaticWebsitesServiceUuid) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -7841,19 +11878,19 @@ func NewListStaticWebsitesRequest(server string, serviceUuid ObjectStorage2ListS
 	return req, nil
 }
 
-// NewCreateStaticWebsiteRequest calls the generic CreateStaticWebsite builder with application/json body
-func NewCreateStaticWebsiteRequest(server string, serviceUuid ObjectStorage2CreateStaticWebsiteServiceUuid, body CreateStaticWebsiteJSONRequestBody) (*http.Request, error) {
+// NewCreateObjectStorageStaticWebsiteRequest calls the generic CreateObjectStorageStaticWebsite builder with application/json body
+func NewCreateObjectStorageStaticWebsiteRequest(server string, serviceUuid ObjectStorage2CreateObjectStorageStaticWebsiteServiceUuid, body CreateObjectStorageStaticWebsiteJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewCreateStaticWebsiteRequestWithBody(server, serviceUuid, "application/json", bodyReader)
+	return NewCreateObjectStorageStaticWebsiteRequestWithBody(server, serviceUuid, "application/json", bodyReader)
 }
 
-// NewCreateStaticWebsiteRequestWithBody generates requests for CreateStaticWebsite with any type of body
-func NewCreateStaticWebsiteRequestWithBody(server string, serviceUuid ObjectStorage2CreateStaticWebsiteServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
+// NewCreateObjectStorageStaticWebsiteRequestWithBody generates requests for CreateObjectStorageStaticWebsite with any type of body
+func NewCreateObjectStorageStaticWebsiteRequestWithBody(server string, serviceUuid ObjectStorage2CreateObjectStorageStaticWebsiteServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -7888,8 +11925,8 @@ func NewCreateStaticWebsiteRequestWithBody(server string, serviceUuid ObjectStor
 	return req, nil
 }
 
-// NewDeleteStaticWebsiteRequest generates requests for DeleteStaticWebsite
-func NewDeleteStaticWebsiteRequest(server string, serviceUuid ObjectStorage2DeleteStaticWebsiteServiceUuid, customDomainName ObjectStorage2DeleteStaticWebsiteCustomDomainName) (*http.Request, error) {
+// NewDeleteObjectStorageStaticWebsiteRequest generates requests for DeleteObjectStorageStaticWebsite
+func NewDeleteObjectStorageStaticWebsiteRequest(server string, serviceUuid ObjectStorage2DeleteObjectStorageStaticWebsiteServiceUuid, customDomainName ObjectStorage2DeleteObjectStorageStaticWebsiteCustomDomainName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -7929,8 +11966,8 @@ func NewDeleteStaticWebsiteRequest(server string, serviceUuid ObjectStorage2Dele
 	return req, nil
 }
 
-// NewGetStaticWebsiteRequest generates requests for GetStaticWebsite
-func NewGetStaticWebsiteRequest(server string, serviceUuid ObjectStorage2GetStaticWebsiteServiceUuid, customDomainName ObjectStorage2GetStaticWebsiteCustomDomainName) (*http.Request, error) {
+// NewGetObjectStorageStaticWebsiteRequest generates requests for GetObjectStorageStaticWebsite
+func NewGetObjectStorageStaticWebsiteRequest(server string, serviceUuid ObjectStorage2GetObjectStorageStaticWebsiteServiceUuid, customDomainName ObjectStorage2GetObjectStorageStaticWebsiteCustomDomainName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -7970,19 +12007,19 @@ func NewGetStaticWebsiteRequest(server string, serviceUuid ObjectStorage2GetStat
 	return req, nil
 }
 
-// NewModifyStaticWebsiteRequest calls the generic ModifyStaticWebsite builder with application/json body
-func NewModifyStaticWebsiteRequest(server string, serviceUuid ObjectStorage2ModifyStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyStaticWebsiteCustomDomainName, body ModifyStaticWebsiteJSONRequestBody) (*http.Request, error) {
+// NewModifyObjectStorageStaticWebsiteRequest calls the generic ModifyObjectStorageStaticWebsite builder with application/json body
+func NewModifyObjectStorageStaticWebsiteRequest(server string, serviceUuid ObjectStorage2ModifyObjectStorageStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyObjectStorageStaticWebsiteCustomDomainName, body ModifyObjectStorageStaticWebsiteJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewModifyStaticWebsiteRequestWithBody(server, serviceUuid, customDomainName, "application/json", bodyReader)
+	return NewModifyObjectStorageStaticWebsiteRequestWithBody(server, serviceUuid, customDomainName, "application/json", bodyReader)
 }
 
-// NewModifyStaticWebsiteRequestWithBody generates requests for ModifyStaticWebsite with any type of body
-func NewModifyStaticWebsiteRequestWithBody(server string, serviceUuid ObjectStorage2ModifyStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyStaticWebsiteCustomDomainName, contentType string, body io.Reader) (*http.Request, error) {
+// NewModifyObjectStorageStaticWebsiteRequestWithBody generates requests for ModifyObjectStorageStaticWebsite with any type of body
+func NewModifyObjectStorageStaticWebsiteRequestWithBody(server string, serviceUuid ObjectStorage2ModifyObjectStorageStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyObjectStorageStaticWebsiteCustomDomainName, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -8025,7 +12062,7 @@ func NewModifyStaticWebsiteRequestWithBody(server string, serviceUuid ObjectStor
 }
 
 // NewListObjectStorageUsersRequest generates requests for ListObjectStorageUsers
-func NewListObjectStorageUsersRequest(server string, serviceUuid ObjectStorage2ListUsersServiceUuid) (*http.Request, error) {
+func NewListObjectStorageUsersRequest(server string, serviceUuid ObjectStorage2ListObjectStorageUsersServiceUuid) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -8059,7 +12096,7 @@ func NewListObjectStorageUsersRequest(server string, serviceUuid ObjectStorage2L
 }
 
 // NewCreateObjectStorageUserRequest calls the generic CreateObjectStorageUser builder with application/json body
-func NewCreateObjectStorageUserRequest(server string, serviceUuid ObjectStorage2CreateUserServiceUuid, body CreateObjectStorageUserJSONRequestBody) (*http.Request, error) {
+func NewCreateObjectStorageUserRequest(server string, serviceUuid ObjectStorage2CreateObjectStorageUserServiceUuid, body CreateObjectStorageUserJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -8070,7 +12107,7 @@ func NewCreateObjectStorageUserRequest(server string, serviceUuid ObjectStorage2
 }
 
 // NewCreateObjectStorageUserRequestWithBody generates requests for CreateObjectStorageUser with any type of body
-func NewCreateObjectStorageUserRequestWithBody(server string, serviceUuid ObjectStorage2CreateUserServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateObjectStorageUserRequestWithBody(server string, serviceUuid ObjectStorage2CreateObjectStorageUserServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -8106,7 +12143,7 @@ func NewCreateObjectStorageUserRequestWithBody(server string, serviceUuid Object
 }
 
 // NewDeleteObjectStorageUserRequest generates requests for DeleteObjectStorageUser
-func NewDeleteObjectStorageUserRequest(server string, serviceUuid ObjectStorage2DeleteUserServiceUuid, username ObjectStorage2DeleteUserUsername) (*http.Request, error) {
+func NewDeleteObjectStorageUserRequest(server string, serviceUuid ObjectStorage2DeleteObjectStorageUserServiceUuid, username ObjectStorage2DeleteObjectStorageUserUsername) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -8147,7 +12184,7 @@ func NewDeleteObjectStorageUserRequest(server string, serviceUuid ObjectStorage2
 }
 
 // NewGetObjectStorageUserRequest generates requests for GetObjectStorageUser
-func NewGetObjectStorageUserRequest(server string, serviceUuid ObjectStorage2GetUserDetailsServiceUuid, username ObjectStorage2GetUserDetailsUsername) (*http.Request, error) {
+func NewGetObjectStorageUserRequest(server string, serviceUuid ObjectStorage2GetObjectStorageUserServiceUuid, username ObjectStorage2GetObjectStorageUserUsername) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -8188,7 +12225,7 @@ func NewGetObjectStorageUserRequest(server string, serviceUuid ObjectStorage2Get
 }
 
 // NewListObjectStorageAccessKeysRequest generates requests for ListObjectStorageAccessKeys
-func NewListObjectStorageAccessKeysRequest(server string, serviceUuid ObjectStorage2ListAccessKeysServiceUuid, username ObjectStorage2ListAccessKeysUsername) (*http.Request, error) {
+func NewListObjectStorageAccessKeysRequest(server string, serviceUuid ObjectStorage2ListObjectStorageAccessKeysServiceUuid, username ObjectStorage2ListObjectStorageAccessKeysUsername) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -8229,7 +12266,7 @@ func NewListObjectStorageAccessKeysRequest(server string, serviceUuid ObjectStor
 }
 
 // NewCreateObjectStorageAccessKeyRequest generates requests for CreateObjectStorageAccessKey
-func NewCreateObjectStorageAccessKeyRequest(server string, serviceUuid ObjectStorage2CreateAccessKeyServiceUuid, username ObjectStorage2CreateAccessKeyUsername) (*http.Request, error) {
+func NewCreateObjectStorageAccessKeyRequest(server string, serviceUuid ObjectStorage2CreateObjectStorageAccessKeyServiceUuid, username ObjectStorage2CreateObjectStorageAccessKeyUsername) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -8270,7 +12307,7 @@ func NewCreateObjectStorageAccessKeyRequest(server string, serviceUuid ObjectSto
 }
 
 // NewDeleteObjectStorageAccessKeyRequest generates requests for DeleteObjectStorageAccessKey
-func NewDeleteObjectStorageAccessKeyRequest(server string, serviceUuid ObjectStorage2DeleteAccessKeyServiceUuid, username ObjectStorage2DeleteAccessKeyUsername, accessKeyId ObjectStorage2DeleteAccessKeyAccessKeyId) (*http.Request, error) {
+func NewDeleteObjectStorageAccessKeyRequest(server string, serviceUuid ObjectStorage2DeleteObjectStorageAccessKeyServiceUuid, username ObjectStorage2DeleteObjectStorageAccessKeyUsername, accessKeyId ObjectStorage2DeleteObjectStorageAccessKeyAccessKeyId) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -8318,7 +12355,7 @@ func NewDeleteObjectStorageAccessKeyRequest(server string, serviceUuid ObjectSto
 }
 
 // NewGetObjectStorageAccessKeyDetailsRequest generates requests for GetObjectStorageAccessKeyDetails
-func NewGetObjectStorageAccessKeyDetailsRequest(server string, serviceUuid ObjectStorage2GetAccessKeyDetailsServiceUuid, username ObjectStorage2GetAccessKeyDetailsUsername, accessKeyId ObjectStorage2GetAccessKeyDetailsAccessKeyId) (*http.Request, error) {
+func NewGetObjectStorageAccessKeyDetailsRequest(server string, serviceUuid ObjectStorage2GetObjectStorageAccessKeyDetailsServiceUuid, username ObjectStorage2GetObjectStorageAccessKeyDetailsUsername, accessKeyId ObjectStorage2GetObjectStorageAccessKeyDetailsAccessKeyId) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -8366,7 +12403,7 @@ func NewGetObjectStorageAccessKeyDetailsRequest(server string, serviceUuid Objec
 }
 
 // NewModifyObjectStorageAccessKeyDetailsRequest calls the generic ModifyObjectStorageAccessKeyDetails builder with application/json body
-func NewModifyObjectStorageAccessKeyDetailsRequest(server string, serviceUuid ObjectStorage2ModifyAccessKeyDetailsServiceUuid, username ObjectStorage2ModifyAccessKeyDetailsUsername, accessKeyId ObjectStorage2ModifyAccessKeyDetailsAccessKeyId, body ModifyObjectStorageAccessKeyDetailsJSONRequestBody) (*http.Request, error) {
+func NewModifyObjectStorageAccessKeyDetailsRequest(server string, serviceUuid ObjectStorage2ModifyObjectStorageAccessKeyDetailsServiceUuid, username ObjectStorage2ModifyObjectStorageAccessKeyDetailsUsername, accessKeyId ObjectStorage2ModifyObjectStorageAccessKeyDetailsAccessKeyId, body ModifyObjectStorageAccessKeyDetailsJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -8377,7 +12414,7 @@ func NewModifyObjectStorageAccessKeyDetailsRequest(server string, serviceUuid Ob
 }
 
 // NewModifyObjectStorageAccessKeyDetailsRequestWithBody generates requests for ModifyObjectStorageAccessKeyDetails with any type of body
-func NewModifyObjectStorageAccessKeyDetailsRequestWithBody(server string, serviceUuid ObjectStorage2ModifyAccessKeyDetailsServiceUuid, username ObjectStorage2ModifyAccessKeyDetailsUsername, accessKeyId ObjectStorage2ModifyAccessKeyDetailsAccessKeyId, contentType string, body io.Reader) (*http.Request, error) {
+func NewModifyObjectStorageAccessKeyDetailsRequestWithBody(server string, serviceUuid ObjectStorage2ModifyObjectStorageAccessKeyDetailsServiceUuid, username ObjectStorage2ModifyObjectStorageAccessKeyDetailsUsername, accessKeyId ObjectStorage2ModifyObjectStorageAccessKeyDetailsAccessKeyId, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -8427,7 +12464,7 @@ func NewModifyObjectStorageAccessKeyDetailsRequestWithBody(server string, servic
 }
 
 // NewListObjectStorageUserInlinePoliciesRequest generates requests for ListObjectStorageUserInlinePolicies
-func NewListObjectStorageUserInlinePoliciesRequest(server string, serviceUuid ObjectStorage2ListUserInlinePoliciesServiceUuid, username ObjectStorage2ListUserInlinePoliciesUsername) (*http.Request, error) {
+func NewListObjectStorageUserInlinePoliciesRequest(server string, serviceUuid ObjectStorage2ListObjectStorageUserInlinePoliciesServiceUuid, username ObjectStorage2ListObjectStorageUserInlinePoliciesUsername) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -8468,7 +12505,7 @@ func NewListObjectStorageUserInlinePoliciesRequest(server string, serviceUuid Ob
 }
 
 // NewCreateObjectStorageUserInlinePolicyRequest calls the generic CreateObjectStorageUserInlinePolicy builder with application/json body
-func NewCreateObjectStorageUserInlinePolicyRequest(server string, serviceUuid ObjectStorage2CreateUserInlinePolicyServiceUuid, username ObjectStorage2CreateUserInlinePolicyUsername, body CreateObjectStorageUserInlinePolicyJSONRequestBody) (*http.Request, error) {
+func NewCreateObjectStorageUserInlinePolicyRequest(server string, serviceUuid ObjectStorage2CreateObjectStorageUserInlinePolicyServiceUuid, username ObjectStorage2CreateObjectStorageUserInlinePolicyUsername, body CreateObjectStorageUserInlinePolicyJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -8479,7 +12516,7 @@ func NewCreateObjectStorageUserInlinePolicyRequest(server string, serviceUuid Ob
 }
 
 // NewCreateObjectStorageUserInlinePolicyRequestWithBody generates requests for CreateObjectStorageUserInlinePolicy with any type of body
-func NewCreateObjectStorageUserInlinePolicyRequestWithBody(server string, serviceUuid ObjectStorage2CreateUserInlinePolicyServiceUuid, username ObjectStorage2CreateUserInlinePolicyUsername, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateObjectStorageUserInlinePolicyRequestWithBody(server string, serviceUuid ObjectStorage2CreateObjectStorageUserInlinePolicyServiceUuid, username ObjectStorage2CreateObjectStorageUserInlinePolicyUsername, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -8522,7 +12559,7 @@ func NewCreateObjectStorageUserInlinePolicyRequestWithBody(server string, servic
 }
 
 // NewDeleteObjectStorageUserInlinePolicyRequest generates requests for DeleteObjectStorageUserInlinePolicy
-func NewDeleteObjectStorageUserInlinePolicyRequest(server string, serviceUuid ObjectStorage2DeleteUserInlinePolicyServiceUuid, username ObjectStorage2DeleteUserInlinePolicyUsername, userPolicyName ObjectStorage2DeleteUserInlinePolicyUserPolicyName) (*http.Request, error) {
+func NewDeleteObjectStorageUserInlinePolicyRequest(server string, serviceUuid ObjectStorage2DeleteObjectStorageUserInlinePolicyServiceUuid, username ObjectStorage2DeleteObjectStorageUserInlinePolicyUsername, userPolicyName ObjectStorage2DeleteObjectStorageUserInlinePolicyUserPolicyName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -8570,7 +12607,7 @@ func NewDeleteObjectStorageUserInlinePolicyRequest(server string, serviceUuid Ob
 }
 
 // NewGetObjectStorageUserInlinePolicyRequest generates requests for GetObjectStorageUserInlinePolicy
-func NewGetObjectStorageUserInlinePolicyRequest(server string, serviceUuid ObjectStorage2GetUserInlinePolicyServiceUuid, username ObjectStorage2GetUserInlinePolicyUsername, userPolicyName ObjectStorage2GetUserInlinePolicyUserPolicyName) (*http.Request, error) {
+func NewGetObjectStorageUserInlinePolicyRequest(server string, serviceUuid ObjectStorage2GetObjectStorageUserInlinePolicyServiceUuid, username ObjectStorage2GetObjectStorageUserInlinePolicyUsername, userPolicyName ObjectStorage2GetObjectStorageUserInlinePolicyUserPolicyName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -8618,7 +12655,7 @@ func NewGetObjectStorageUserInlinePolicyRequest(server string, serviceUuid Objec
 }
 
 // NewDeleteObjectStorageUserPermissionsBoundaryRequest generates requests for DeleteObjectStorageUserPermissionsBoundary
-func NewDeleteObjectStorageUserPermissionsBoundaryRequest(server string, serviceUuid ObjectStorage2DeleteUserPermissionsBoundaryServiceUuid, username ObjectStorage2DeleteUserPermissionsBoundaryUsername) (*http.Request, error) {
+func NewDeleteObjectStorageUserPermissionsBoundaryRequest(server string, serviceUuid ObjectStorage2DeleteObjectStorageUserPermissionsBoundaryServiceUuid, username ObjectStorage2DeleteObjectStorageUserPermissionsBoundaryUsername) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -8659,7 +12696,7 @@ func NewDeleteObjectStorageUserPermissionsBoundaryRequest(server string, service
 }
 
 // NewCreateObjectStorageUserPermissionsBoundaryRequest calls the generic CreateObjectStorageUserPermissionsBoundary builder with application/json body
-func NewCreateObjectStorageUserPermissionsBoundaryRequest(server string, serviceUuid ObjectStorage2CreateUserPermissionsBoundaryServiceUuid, username ObjectStorage2CreateUserPermissionsBoundaryUsername, body CreateObjectStorageUserPermissionsBoundaryJSONRequestBody) (*http.Request, error) {
+func NewCreateObjectStorageUserPermissionsBoundaryRequest(server string, serviceUuid ObjectStorage2CreateObjectStorageUserPermissionsBoundaryServiceUuid, username ObjectStorage2CreateObjectStorageUserPermissionsBoundaryUsername, body CreateObjectStorageUserPermissionsBoundaryJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -8670,7 +12707,7 @@ func NewCreateObjectStorageUserPermissionsBoundaryRequest(server string, service
 }
 
 // NewCreateObjectStorageUserPermissionsBoundaryRequestWithBody generates requests for CreateObjectStorageUserPermissionsBoundary with any type of body
-func NewCreateObjectStorageUserPermissionsBoundaryRequestWithBody(server string, serviceUuid ObjectStorage2CreateUserPermissionsBoundaryServiceUuid, username ObjectStorage2CreateUserPermissionsBoundaryUsername, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateObjectStorageUserPermissionsBoundaryRequestWithBody(server string, serviceUuid ObjectStorage2CreateObjectStorageUserPermissionsBoundaryServiceUuid, username ObjectStorage2CreateObjectStorageUserPermissionsBoundaryUsername, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -8713,7 +12750,7 @@ func NewCreateObjectStorageUserPermissionsBoundaryRequestWithBody(server string,
 }
 
 // NewListObjectStorageAttachedUserPoliciesRequest generates requests for ListObjectStorageAttachedUserPolicies
-func NewListObjectStorageAttachedUserPoliciesRequest(server string, serviceUuid ObjectStorage2ListAttachedUserPoliciesServiceUuid, username ObjectStorage2ListAttachedUserPoliciesUsername) (*http.Request, error) {
+func NewListObjectStorageAttachedUserPoliciesRequest(server string, serviceUuid ObjectStorage2ListObjectStorageAttachedUserPoliciesServiceUuid, username ObjectStorage2ListObjectStorageAttachedUserPoliciesUsername) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -8754,7 +12791,7 @@ func NewListObjectStorageAttachedUserPoliciesRequest(server string, serviceUuid 
 }
 
 // NewAttachObjectStorageUserPolicyRequest calls the generic AttachObjectStorageUserPolicy builder with application/json body
-func NewAttachObjectStorageUserPolicyRequest(server string, serviceUuid ObjectStorage2AttachUserPolicyServiceUuid, username ObjectStorage2AttachUserPolicyUsername, body AttachObjectStorageUserPolicyJSONRequestBody) (*http.Request, error) {
+func NewAttachObjectStorageUserPolicyRequest(server string, serviceUuid ObjectStorage2AttachObjectStorageUserPolicyServiceUuid, username ObjectStorage2AttachObjectStorageUserPolicyUsername, body AttachObjectStorageUserPolicyJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -8765,7 +12802,7 @@ func NewAttachObjectStorageUserPolicyRequest(server string, serviceUuid ObjectSt
 }
 
 // NewAttachObjectStorageUserPolicyRequestWithBody generates requests for AttachObjectStorageUserPolicy with any type of body
-func NewAttachObjectStorageUserPolicyRequestWithBody(server string, serviceUuid ObjectStorage2AttachUserPolicyServiceUuid, username ObjectStorage2AttachUserPolicyUsername, contentType string, body io.Reader) (*http.Request, error) {
+func NewAttachObjectStorageUserPolicyRequestWithBody(server string, serviceUuid ObjectStorage2AttachObjectStorageUserPolicyServiceUuid, username ObjectStorage2AttachObjectStorageUserPolicyUsername, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -8808,7 +12845,7 @@ func NewAttachObjectStorageUserPolicyRequestWithBody(server string, serviceUuid 
 }
 
 // NewDetachObjectStorageUserPolicyRequest generates requests for DetachObjectStorageUserPolicy
-func NewDetachObjectStorageUserPolicyRequest(server string, serviceUuid ObjectStorage2DetachUserPolicyServiceUuid, username ObjectStorage2DetachUserPolicyUsername, nestedName ObjectStorage2DetachUserPolicyNestedName) (*http.Request, error) {
+func NewDetachObjectStorageUserPolicyRequest(server string, serviceUuid ObjectStorage2DetachObjectStorageUserPolicyServiceUuid, username ObjectStorage2DetachObjectStorageUserPolicyUsername, nestedName ObjectStorage2DetachObjectStorageUserPolicyNestedName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -8856,7 +12893,7 @@ func NewDetachObjectStorageUserPolicyRequest(server string, serviceUuid ObjectSt
 }
 
 // NewGetObjectStorageUserTagsRequest generates requests for GetObjectStorageUserTags
-func NewGetObjectStorageUserTagsRequest(server string, serviceUuid ObjectStorage2GetUserTagsServiceUuid, username ObjectStorage2GetUserTagsUsername) (*http.Request, error) {
+func NewGetObjectStorageUserTagsRequest(server string, serviceUuid ObjectStorage2GetObjectStorageUserTagsServiceUuid, username ObjectStorage2GetObjectStorageUserTagsUsername) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -8897,7 +12934,7 @@ func NewGetObjectStorageUserTagsRequest(server string, serviceUuid ObjectStorage
 }
 
 // NewReplaceObjectStorageUserTagsRequest calls the generic ReplaceObjectStorageUserTags builder with application/json body
-func NewReplaceObjectStorageUserTagsRequest(server string, serviceUuid ObjectStorage2ReplaceUserTagsServiceUuid, username ObjectStorage2ReplaceUserTagsUsername, body ReplaceObjectStorageUserTagsJSONRequestBody) (*http.Request, error) {
+func NewReplaceObjectStorageUserTagsRequest(server string, serviceUuid ObjectStorage2ReplaceObjectStorageUserTagsServiceUuid, username ObjectStorage2ReplaceObjectStorageUserTagsUsername, body ReplaceObjectStorageUserTagsJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -8908,7 +12945,7 @@ func NewReplaceObjectStorageUserTagsRequest(server string, serviceUuid ObjectSto
 }
 
 // NewReplaceObjectStorageUserTagsRequestWithBody generates requests for ReplaceObjectStorageUserTags with any type of body
-func NewReplaceObjectStorageUserTagsRequestWithBody(server string, serviceUuid ObjectStorage2ReplaceUserTagsServiceUuid, username ObjectStorage2ReplaceUserTagsUsername, contentType string, body io.Reader) (*http.Request, error) {
+func NewReplaceObjectStorageUserTagsRequestWithBody(server string, serviceUuid ObjectStorage2ReplaceObjectStorageUserTagsServiceUuid, username ObjectStorage2ReplaceObjectStorageUserTagsUsername, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -8951,7 +12988,7 @@ func NewReplaceObjectStorageUserTagsRequestWithBody(server string, serviceUuid O
 }
 
 // NewDeleteObjectStorageUserTagRequest generates requests for DeleteObjectStorageUserTag
-func NewDeleteObjectStorageUserTagRequest(server string, serviceUuid ObjectStorage2DeleteUserTagServiceUuid, username ObjectStorage2DeleteUserTagUsername, userTagKey ObjectStorage2DeleteUserTagUserTagKey) (*http.Request, error) {
+func NewDeleteObjectStorageUserTagRequest(server string, serviceUuid ObjectStorage2DeleteObjectStorageUserTagServiceUuid, username ObjectStorage2DeleteObjectStorageUserTagUsername, userTagKey ObjectStorage2DeleteObjectStorageUserTagUserTagKey) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -9041,6 +13078,90 @@ func WithBaseURL(baseURL string) ClientOption {
 
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ClientWithResponsesInterface interface {
+	// ListFirewallRulesetsWithResponse request
+	ListFirewallRulesetsWithResponse(ctx context.Context, params *ListFirewallRulesetsParams, reqEditors ...RequestEditorFn) (*ListFirewallRulesetsResponse, error)
+
+	// CreateFirewallRulesetWithBodyWithResponse request with any body
+	CreateFirewallRulesetWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateFirewallRulesetResponse, error)
+
+	CreateFirewallRulesetWithResponse(ctx context.Context, body CreateFirewallRulesetJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateFirewallRulesetResponse, error)
+
+	// AdminListServerFirewallRulesWithBodyWithResponse request with any body
+	AdminListServerFirewallRulesWithBodyWithResponse(ctx context.Context, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AdminListServerFirewallRulesResponse, error)
+
+	AdminListServerFirewallRulesWithResponse(ctx context.Context, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, body AdminListServerFirewallRulesJSONRequestBody, reqEditors ...RequestEditorFn) (*AdminListServerFirewallRulesResponse, error)
+
+	// ListServerFirewallRuleWithResponse request
+	ListServerFirewallRuleWithResponse(ctx context.Context, serverUuid FirewallRulesetListServerFirewallRuleServerUuid, params *ListServerFirewallRuleParams, reqEditors ...RequestEditorFn) (*ListServerFirewallRuleResponse, error)
+
+	// CreateServerFirewallRuleWithBodyWithResponse request with any body
+	CreateServerFirewallRuleWithBodyWithResponse(ctx context.Context, serverUuid FirewallRulesetCreateServerFirewallRuleServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateServerFirewallRuleResponse, error)
+
+	CreateServerFirewallRuleWithResponse(ctx context.Context, serverUuid FirewallRulesetCreateServerFirewallRuleServerUuid, body CreateServerFirewallRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateServerFirewallRuleResponse, error)
+
+	// CreateMultipleServerFirewallRulesWithBodyWithResponse request with any body
+	CreateMultipleServerFirewallRulesWithBodyWithResponse(ctx context.Context, serverUuid FirewallRulesetCreateMultipleServerFirewallRulesServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateMultipleServerFirewallRulesResponse, error)
+
+	CreateMultipleServerFirewallRulesWithResponse(ctx context.Context, serverUuid FirewallRulesetCreateMultipleServerFirewallRulesServerUuid, body CreateMultipleServerFirewallRulesJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateMultipleServerFirewallRulesResponse, error)
+
+	// DeleteServerFirewallRuleWithResponse request
+	DeleteServerFirewallRuleWithResponse(ctx context.Context, serverUuid FirewallRulesetDeleteServerFirewallRuleServerUuid, position FirewallRulesetDeleteServerFirewallRulePosition, reqEditors ...RequestEditorFn) (*DeleteServerFirewallRuleResponse, error)
+
+	// GetServerFirewallRuleWithResponse request
+	GetServerFirewallRuleWithResponse(ctx context.Context, serverUuid FirewallRulesetGetServerFirewallRuleServerUuid, position FirewallRulesetGetServerFirewallRulePosition, reqEditors ...RequestEditorFn) (*GetServerFirewallRuleResponse, error)
+
+	// DeleteFirewallRulesetWithResponse request
+	DeleteFirewallRulesetWithResponse(ctx context.Context, rulesetUuid DeleteFirewallRulesetRulesetUuid, reqEditors ...RequestEditorFn) (*DeleteFirewallRulesetResponse, error)
+
+	// GetFirewallRulesetWithResponse request
+	GetFirewallRulesetWithResponse(ctx context.Context, rulesetUuid GetFirewallRulesetRulesetUuid, reqEditors ...RequestEditorFn) (*GetFirewallRulesetResponse, error)
+
+	// ModifyFirewallRulesetWithBodyWithResponse request with any body
+	ModifyFirewallRulesetWithBodyWithResponse(ctx context.Context, rulesetUuid ModifyFirewallRulesetRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyFirewallRulesetResponse, error)
+
+	ModifyFirewallRulesetWithResponse(ctx context.Context, rulesetUuid ModifyFirewallRulesetRulesetUuid, body ModifyFirewallRulesetJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyFirewallRulesetResponse, error)
+
+	// ListFirewallRulesetLabelsWithResponse request
+	ListFirewallRulesetLabelsWithResponse(ctx context.Context, rulesetUuid ListFirewallRulesetLabelsRulesetUuid, reqEditors ...RequestEditorFn) (*ListFirewallRulesetLabelsResponse, error)
+
+	// CreateFirewallRulesetLabelWithBodyWithResponse request with any body
+	CreateFirewallRulesetLabelWithBodyWithResponse(ctx context.Context, rulesetUuid CreateFirewallRulesetLabelRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateFirewallRulesetLabelResponse, error)
+
+	CreateFirewallRulesetLabelWithResponse(ctx context.Context, rulesetUuid CreateFirewallRulesetLabelRulesetUuid, body CreateFirewallRulesetLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateFirewallRulesetLabelResponse, error)
+
+	// DeleteFirewallRulesetLabelWithResponse request
+	DeleteFirewallRulesetLabelWithResponse(ctx context.Context, rulesetUuid DeleteFirewallRulesetLabelRulesetUuid, labelKey DeleteFirewallRulesetLabelLabelKey, reqEditors ...RequestEditorFn) (*DeleteFirewallRulesetLabelResponse, error)
+
+	// GetFirewallRulesetLabelWithResponse request
+	GetFirewallRulesetLabelWithResponse(ctx context.Context, rulesetUuid GetFirewallRulesetLabelRulesetUuid, labelKey GetFirewallRulesetLabelLabelKey, reqEditors ...RequestEditorFn) (*GetFirewallRulesetLabelResponse, error)
+
+	// ModifyFirewallRulesetLabelWithBodyWithResponse request with any body
+	ModifyFirewallRulesetLabelWithBodyWithResponse(ctx context.Context, rulesetUuid ModifyFirewallRulesetLabelRulesetUuid, labelKey ModifyFirewallRulesetLabelLabelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyFirewallRulesetLabelResponse, error)
+
+	ModifyFirewallRulesetLabelWithResponse(ctx context.Context, rulesetUuid ModifyFirewallRulesetLabelRulesetUuid, labelKey ModifyFirewallRulesetLabelLabelKey, body ModifyFirewallRulesetLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyFirewallRulesetLabelResponse, error)
+
+	// RestoreFirewallRulesetWithResponse request
+	RestoreFirewallRulesetWithResponse(ctx context.Context, rulesetUuid RestoreFirewallRulesetRulesetUuid, rulesetVersion RestoreFirewallRulesetRulesetVersion, reqEditors ...RequestEditorFn) (*RestoreFirewallRulesetResponse, error)
+
+	// ListFirewallRulesetRulesWithResponse request
+	ListFirewallRulesetRulesWithResponse(ctx context.Context, rulesetUuid ListFirewallRulesetRulesRulesetUuid, params *ListFirewallRulesetRulesParams, reqEditors ...RequestEditorFn) (*ListFirewallRulesetRulesResponse, error)
+
+	// CreateFirewallRulesetRuleWithBodyWithResponse request with any body
+	CreateFirewallRulesetRuleWithBodyWithResponse(ctx context.Context, rulesetUuid CreateFirewallRulesetRuleRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateFirewallRulesetRuleResponse, error)
+
+	CreateFirewallRulesetRuleWithResponse(ctx context.Context, rulesetUuid CreateFirewallRulesetRuleRulesetUuid, body CreateFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateFirewallRulesetRuleResponse, error)
+
+	// DeleteFirewallRulesetRuleWithResponse request
+	DeleteFirewallRulesetRuleWithResponse(ctx context.Context, rulesetUuid DeleteFirewallRulesetRuleRulesetUuid, ruleId DeleteFirewallRulesetRuleRuleId, reqEditors ...RequestEditorFn) (*DeleteFirewallRulesetRuleResponse, error)
+
+	// GetFirewallRulesetRuleWithResponse request
+	GetFirewallRulesetRuleWithResponse(ctx context.Context, rulesetUuid GetFirewallRulesetRuleRulesetUuid, ruleId GetFirewallRulesetRuleRuleId, reqEditors ...RequestEditorFn) (*GetFirewallRulesetRuleResponse, error)
+
+	// ModifyFirewallRulesetRuleWithBodyWithResponse request with any body
+	ModifyFirewallRulesetRuleWithBodyWithResponse(ctx context.Context, rulesetUuid ModifyFirewallRulesetRuleRulesetUuid, ruleId ModifyFirewallRulesetRuleRuleId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyFirewallRulesetRuleResponse, error)
+
+	ModifyFirewallRulesetRuleWithResponse(ctx context.Context, rulesetUuid ModifyFirewallRulesetRuleRulesetUuid, ruleId ModifyFirewallRulesetRuleRuleId, body ModifyFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyFirewallRulesetRuleResponse, error)
+
 	// ListObjectStoragesWithResponse request
 	ListObjectStoragesWithResponse(ctx context.Context, params *ListObjectStoragesParams, reqEditors ...RequestEditorFn) (*ListObjectStoragesResponse, error)
 
@@ -9049,358 +13170,864 @@ type ClientWithResponsesInterface interface {
 
 	CreateObjectStorageWithResponse(ctx context.Context, body CreateObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageResponse, error)
 
-	// ListObjectStorageIntegrationServicesWithResponse request
-	ListObjectStorageIntegrationServicesWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListObjectStorageIntegrationServicesResponse, error)
-
-	// GetObjectStorageIntegrationServiceWithResponse request
-	GetObjectStorageIntegrationServiceWithResponse(ctx context.Context, serviceUuid ObjectStorage2IntegrationGetServiceServiceUuid, reqEditors ...RequestEditorFn) (*GetObjectStorageIntegrationServiceResponse, error)
-
-	// CreateObjectStorageIntegrationNetworkWithResponse request
-	CreateObjectStorageIntegrationNetworkWithResponse(ctx context.Context, serviceUuid ObjectStorage2IntegrationCreateNetworkServiceUuid, reqEditors ...RequestEditorFn) (*CreateObjectStorageIntegrationNetworkResponse, error)
-
-	// DeleteObjectStorageIntegrationNetworkWithResponse request
-	DeleteObjectStorageIntegrationNetworkWithResponse(ctx context.Context, serviceUuid ObjectStorage2IntegrationDeleteNetworkServiceUuid, networkName ObjectStorage2IntegrationDeleteNetworkNetworkName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageIntegrationNetworkResponse, error)
-
 	// ListObjectStorageRegionsWithResponse request
 	ListObjectStorageRegionsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListObjectStorageRegionsResponse, error)
 
 	// GetObjectStorageRegionWithResponse request
-	GetObjectStorageRegionWithResponse(ctx context.Context, regionName ObjectStorage2GetRegionDetailsRegionName, reqEditors ...RequestEditorFn) (*GetObjectStorageRegionResponse, error)
+	GetObjectStorageRegionWithResponse(ctx context.Context, regionName ObjectStorage2GetObjectStorageRegionRegionName, reqEditors ...RequestEditorFn) (*GetObjectStorageRegionResponse, error)
 
 	// DeleteObjectStorageWithResponse request
-	DeleteObjectStorageWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteServiceServiceUuid, params *DeleteObjectStorageParams, reqEditors ...RequestEditorFn) (*DeleteObjectStorageResponse, error)
+	DeleteObjectStorageWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageServiceUuid, params *DeleteObjectStorageParams, reqEditors ...RequestEditorFn) (*DeleteObjectStorageResponse, error)
 
 	// GetObjectStorageWithResponse request
-	GetObjectStorageWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetServiceServiceUuid, reqEditors ...RequestEditorFn) (*GetObjectStorageResponse, error)
+	GetObjectStorageWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageServiceUuid, reqEditors ...RequestEditorFn) (*GetObjectStorageResponse, error)
 
 	// ModifyObjectStorageWithBodyWithResponse request with any body
-	ModifyObjectStorageWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyServiceServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyObjectStorageResponse, error)
+	ModifyObjectStorageWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyObjectStorageResponse, error)
 
-	ModifyObjectStorageWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyServiceServiceUuid, body ModifyObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyObjectStorageResponse, error)
+	ModifyObjectStorageWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageServiceUuid, body ModifyObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyObjectStorageResponse, error)
 
 	// ReplaceObjectStorageWithBodyWithResponse request with any body
-	ReplaceObjectStorageWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ReplaceServiceServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplaceObjectStorageResponse, error)
+	ReplaceObjectStorageWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ReplaceObjectStorageServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplaceObjectStorageResponse, error)
 
-	ReplaceObjectStorageWithResponse(ctx context.Context, serviceUuid ObjectStorage2ReplaceServiceServiceUuid, body ReplaceObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplaceObjectStorageResponse, error)
+	ReplaceObjectStorageWithResponse(ctx context.Context, serviceUuid ObjectStorage2ReplaceObjectStorageServiceUuid, body ReplaceObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplaceObjectStorageResponse, error)
 
 	// ListObjectStorageBucketMetricsWithResponse request
-	ListObjectStorageBucketMetricsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListBucketMetricsServiceUuid, params *ListObjectStorageBucketMetricsParams, reqEditors ...RequestEditorFn) (*ListObjectStorageBucketMetricsResponse, error)
+	ListObjectStorageBucketMetricsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageBucketMetricsServiceUuid, params *ListObjectStorageBucketMetricsParams, reqEditors ...RequestEditorFn) (*ListObjectStorageBucketMetricsResponse, error)
 
 	// CreateObjectStorageBucketWithBodyWithResponse request with any body
-	CreateObjectStorageBucketWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateBucketServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageBucketResponse, error)
+	CreateObjectStorageBucketWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageBucketServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageBucketResponse, error)
 
-	CreateObjectStorageBucketWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateBucketServiceUuid, body CreateObjectStorageBucketJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageBucketResponse, error)
+	CreateObjectStorageBucketWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageBucketServiceUuid, body CreateObjectStorageBucketJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageBucketResponse, error)
 
 	// DeleteObjectStorageBucketWithResponse request
-	DeleteObjectStorageBucketWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteBucketServiceUuid, bucketName ObjectStorage2DeleteBucketBucketName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageBucketResponse, error)
+	DeleteObjectStorageBucketWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageBucketServiceUuid, bucketName ObjectStorage2DeleteObjectStorageBucketBucketName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageBucketResponse, error)
 
 	// ListObjectStorageCustomDomainsWithResponse request
-	ListObjectStorageCustomDomainsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListCustomDomainsServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageCustomDomainsResponse, error)
+	ListObjectStorageCustomDomainsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageCustomDomainsServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageCustomDomainsResponse, error)
 
 	// AttachObjectStorageCustomDomainWithBodyWithResponse request with any body
-	AttachObjectStorageCustomDomainWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachCustomDomainServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AttachObjectStorageCustomDomainResponse, error)
+	AttachObjectStorageCustomDomainWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageCustomDomainServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AttachObjectStorageCustomDomainResponse, error)
 
-	AttachObjectStorageCustomDomainWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachCustomDomainServiceUuid, body AttachObjectStorageCustomDomainJSONRequestBody, reqEditors ...RequestEditorFn) (*AttachObjectStorageCustomDomainResponse, error)
+	AttachObjectStorageCustomDomainWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageCustomDomainServiceUuid, body AttachObjectStorageCustomDomainJSONRequestBody, reqEditors ...RequestEditorFn) (*AttachObjectStorageCustomDomainResponse, error)
 
 	// DeleteObjectStorageCustomDomainWithResponse request
-	DeleteObjectStorageCustomDomainWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteCustomDomainServiceUuid, customDomainName ObjectStorage2DeleteCustomDomainCustomDomainName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageCustomDomainResponse, error)
+	DeleteObjectStorageCustomDomainWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageCustomDomainServiceUuid, customDomainName ObjectStorage2DeleteObjectStorageCustomDomainCustomDomainName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageCustomDomainResponse, error)
 
 	// GetObjectStorageCustomDomainWithResponse request
-	GetObjectStorageCustomDomainWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetCustomDomainDetailsServiceUuid, customDomainName ObjectStorage2GetCustomDomainDetailsCustomDomainName, reqEditors ...RequestEditorFn) (*GetObjectStorageCustomDomainResponse, error)
+	GetObjectStorageCustomDomainWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageCustomDomainServiceUuid, customDomainName ObjectStorage2GetObjectStorageCustomDomainCustomDomainName, reqEditors ...RequestEditorFn) (*GetObjectStorageCustomDomainResponse, error)
 
 	// ModifyObjectStorageCustomDomainWithBodyWithResponse request with any body
-	ModifyObjectStorageCustomDomainWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyCustomDomainServiceUuid, customDomainName ObjectStorage2ModifyCustomDomainCustomDomainName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyObjectStorageCustomDomainResponse, error)
+	ModifyObjectStorageCustomDomainWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageCustomDomainServiceUuid, customDomainName ObjectStorage2ModifyObjectStorageCustomDomainCustomDomainName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyObjectStorageCustomDomainResponse, error)
 
-	ModifyObjectStorageCustomDomainWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyCustomDomainServiceUuid, customDomainName ObjectStorage2ModifyCustomDomainCustomDomainName, body ModifyObjectStorageCustomDomainJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyObjectStorageCustomDomainResponse, error)
+	ModifyObjectStorageCustomDomainWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageCustomDomainServiceUuid, customDomainName ObjectStorage2ModifyObjectStorageCustomDomainCustomDomainName, body ModifyObjectStorageCustomDomainJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyObjectStorageCustomDomainResponse, error)
 
-	// GetServiceDomainsWithResponse request
-	GetServiceDomainsWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetServiceDomainsServiceUuid, reqEditors ...RequestEditorFn) (*GetServiceDomainsResponse, error)
+	// ListObjectStorageDomainsWithResponse request
+	ListObjectStorageDomainsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageDomainsServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageDomainsResponse, error)
 
 	// ListObjectStorageGroupsWithResponse request
-	ListObjectStorageGroupsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListGroupsServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageGroupsResponse, error)
+	ListObjectStorageGroupsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageGroupsServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageGroupsResponse, error)
 
 	// CreateObjectStorageGroupWithBodyWithResponse request with any body
-	CreateObjectStorageGroupWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateGroupServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageGroupResponse, error)
+	CreateObjectStorageGroupWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageGroupServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageGroupResponse, error)
 
-	CreateObjectStorageGroupWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateGroupServiceUuid, body CreateObjectStorageGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageGroupResponse, error)
+	CreateObjectStorageGroupWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageGroupServiceUuid, body CreateObjectStorageGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageGroupResponse, error)
 
 	// DeleteObjectStorageGroupWithResponse request
-	DeleteObjectStorageGroupWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteGroupServiceUuid, groupName ObjectStorage2DeleteGroupGroupName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageGroupResponse, error)
+	DeleteObjectStorageGroupWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageGroupServiceUuid, groupName ObjectStorage2DeleteObjectStorageGroupGroupName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageGroupResponse, error)
 
 	// GetObjectStorageGroupWithResponse request
-	GetObjectStorageGroupWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetGroupServiceUuid, groupName ObjectStorage2GetGroupGroupName, reqEditors ...RequestEditorFn) (*GetObjectStorageGroupResponse, error)
+	GetObjectStorageGroupWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageGroupServiceUuid, groupName ObjectStorage2GetObjectStorageGroupGroupName, reqEditors ...RequestEditorFn) (*GetObjectStorageGroupResponse, error)
 
 	// ListObjectStorageGroupInlinePoliciesWithResponse request
-	ListObjectStorageGroupInlinePoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListGroupInlinePoliciesServiceUuid, groupName ObjectStorage2ListGroupInlinePoliciesGroupName, reqEditors ...RequestEditorFn) (*ListObjectStorageGroupInlinePoliciesResponse, error)
+	ListObjectStorageGroupInlinePoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageGroupInlinePoliciesServiceUuid, groupName ObjectStorage2ListObjectStorageGroupInlinePoliciesGroupName, reqEditors ...RequestEditorFn) (*ListObjectStorageGroupInlinePoliciesResponse, error)
 
 	// CreateObjectStorageGroupInlinePolicyWithBodyWithResponse request with any body
-	CreateObjectStorageGroupInlinePolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateGroupInlinePolicyServiceUuid, groupName ObjectStorage2CreateGroupInlinePolicyGroupName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageGroupInlinePolicyResponse, error)
+	CreateObjectStorageGroupInlinePolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageGroupInlinePolicyServiceUuid, groupName ObjectStorage2CreateObjectStorageGroupInlinePolicyGroupName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageGroupInlinePolicyResponse, error)
 
-	CreateObjectStorageGroupInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateGroupInlinePolicyServiceUuid, groupName ObjectStorage2CreateGroupInlinePolicyGroupName, body CreateObjectStorageGroupInlinePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageGroupInlinePolicyResponse, error)
+	CreateObjectStorageGroupInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageGroupInlinePolicyServiceUuid, groupName ObjectStorage2CreateObjectStorageGroupInlinePolicyGroupName, body CreateObjectStorageGroupInlinePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageGroupInlinePolicyResponse, error)
 
 	// DeleteObjectStorageGroupInlinePolicyWithResponse request
-	DeleteObjectStorageGroupInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteGroupInlinePolicyServiceUuid, groupName ObjectStorage2DeleteGroupInlinePolicyGroupName, groupPolicyName ObjectStorage2DeleteGroupInlinePolicyGroupPolicyName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageGroupInlinePolicyResponse, error)
+	DeleteObjectStorageGroupInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageGroupInlinePolicyServiceUuid, groupName ObjectStorage2DeleteObjectStorageGroupInlinePolicyGroupName, groupPolicyName ObjectStorage2DeleteObjectStorageGroupInlinePolicyGroupPolicyName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageGroupInlinePolicyResponse, error)
 
 	// GetObjectStorageGroupInlinePolicyWithResponse request
-	GetObjectStorageGroupInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetGroupInlinePolicyServiceUuid, groupName ObjectStorage2GetGroupInlinePolicyGroupName, groupPolicyName ObjectStorage2GetGroupInlinePolicyGroupPolicyName, reqEditors ...RequestEditorFn) (*GetObjectStorageGroupInlinePolicyResponse, error)
+	GetObjectStorageGroupInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageGroupInlinePolicyServiceUuid, groupName ObjectStorage2GetObjectStorageGroupInlinePolicyGroupName, groupPolicyName ObjectStorage2GetObjectStorageGroupInlinePolicyGroupPolicyName, reqEditors ...RequestEditorFn) (*GetObjectStorageGroupInlinePolicyResponse, error)
 
 	// ListObjectStorageIAMGroupPoliciesWithResponse request
-	ListObjectStorageIAMGroupPoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListIAMGroupPoliciesServiceUuid, groupName ObjectStorage2ListIAMGroupPoliciesGroupName, reqEditors ...RequestEditorFn) (*ListObjectStorageIAMGroupPoliciesResponse, error)
+	ListObjectStorageIAMGroupPoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageIAMGroupPoliciesServiceUuid, groupName ObjectStorage2ListObjectStorageIAMGroupPoliciesGroupName, reqEditors ...RequestEditorFn) (*ListObjectStorageIAMGroupPoliciesResponse, error)
 
 	// AttachObjectStorageIAMGroupPolicyWithBodyWithResponse request with any body
-	AttachObjectStorageIAMGroupPolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachIAMGroupPolicyServiceUuid, groupName ObjectStorage2AttachIAMGroupPolicyGroupName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AttachObjectStorageIAMGroupPolicyResponse, error)
+	AttachObjectStorageIAMGroupPolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageIAMGroupPolicyServiceUuid, groupName ObjectStorage2AttachObjectStorageIAMGroupPolicyGroupName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AttachObjectStorageIAMGroupPolicyResponse, error)
 
-	AttachObjectStorageIAMGroupPolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachIAMGroupPolicyServiceUuid, groupName ObjectStorage2AttachIAMGroupPolicyGroupName, body AttachObjectStorageIAMGroupPolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*AttachObjectStorageIAMGroupPolicyResponse, error)
+	AttachObjectStorageIAMGroupPolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageIAMGroupPolicyServiceUuid, groupName ObjectStorage2AttachObjectStorageIAMGroupPolicyGroupName, body AttachObjectStorageIAMGroupPolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*AttachObjectStorageIAMGroupPolicyResponse, error)
 
 	// DetachObjectStorageIAMGroupPolicyWithResponse request
-	DetachObjectStorageIAMGroupPolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DetachIAMGroupPolicyServiceUuid, groupName ObjectStorage2DetachIAMGroupPolicyGroupName, policyName ObjectStorage2DetachIAMGroupPolicyPolicyName, reqEditors ...RequestEditorFn) (*DetachObjectStorageIAMGroupPolicyResponse, error)
+	DetachObjectStorageIAMGroupPolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DetachObjectStorageIAMGroupPolicyServiceUuid, groupName ObjectStorage2DetachObjectStorageIAMGroupPolicyGroupName, policyName ObjectStorage2DetachObjectStorageIAMGroupPolicyPolicyName, reqEditors ...RequestEditorFn) (*DetachObjectStorageIAMGroupPolicyResponse, error)
 
 	// RemoveObjectStorageUserFromGroupWithResponse request
-	RemoveObjectStorageUserFromGroupWithResponse(ctx context.Context, serviceUuid ObjectStorage2RemoveUserFromGroupServiceUuid, groupName ObjectStorage2RemoveUserFromGroupGroupName, username ObjectStorage2RemoveUserFromGroupUsername, reqEditors ...RequestEditorFn) (*RemoveObjectStorageUserFromGroupResponse, error)
+	RemoveObjectStorageUserFromGroupWithResponse(ctx context.Context, serviceUuid ObjectStorage2RemoveObjectStorageUserFromGroupServiceUuid, groupName ObjectStorage2RemoveObjectStorageUserFromGroupGroupName, username ObjectStorage2RemoveObjectStorageUserFromGroupUsername, reqEditors ...RequestEditorFn) (*RemoveObjectStorageUserFromGroupResponse, error)
 
 	// AttachObjectStorageUserToGroupWithResponse request
-	AttachObjectStorageUserToGroupWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachUserToGroupServiceUuid, groupName ObjectStorage2AttachUserToGroupGroupName, username ObjectStorage2AttachUserToGroupUsername, reqEditors ...RequestEditorFn) (*AttachObjectStorageUserToGroupResponse, error)
+	AttachObjectStorageUserToGroupWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageUserToGroupServiceUuid, groupName ObjectStorage2AttachObjectStorageUserToGroupGroupName, username ObjectStorage2AttachObjectStorageUserToGroupUsername, reqEditors ...RequestEditorFn) (*AttachObjectStorageUserToGroupResponse, error)
 
 	// ListObjectStorageLabelsWithResponse request
-	ListObjectStorageLabelsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListLabelsServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageLabelsResponse, error)
+	ListObjectStorageLabelsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageLabelsServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageLabelsResponse, error)
 
 	// CreateObjectStorageLabelWithBodyWithResponse request with any body
-	CreateObjectStorageLabelWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateLabelServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageLabelResponse, error)
+	CreateObjectStorageLabelWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageLabelServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageLabelResponse, error)
 
-	CreateObjectStorageLabelWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateLabelServiceUuid, body CreateObjectStorageLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageLabelResponse, error)
+	CreateObjectStorageLabelWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageLabelServiceUuid, body CreateObjectStorageLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageLabelResponse, error)
 
 	// DeleteObjectStorageLabelWithResponse request
-	DeleteObjectStorageLabelWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteLabelServiceUuid, labelKey ObjectStorage2DeleteLabelLabelKey, reqEditors ...RequestEditorFn) (*DeleteObjectStorageLabelResponse, error)
+	DeleteObjectStorageLabelWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageLabelServiceUuid, labelKey ObjectStorage2DeleteObjectStorageLabelLabelKey, reqEditors ...RequestEditorFn) (*DeleteObjectStorageLabelResponse, error)
 
 	// GetObjectStorageLabelWithResponse request
-	GetObjectStorageLabelWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetLabelDetailsServiceUuid, labelKey ObjectStorage2GetLabelDetailsLabelKey, reqEditors ...RequestEditorFn) (*GetObjectStorageLabelResponse, error)
+	GetObjectStorageLabelWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageLabelServiceUuid, labelKey ObjectStorage2GetObjectStorageLabelLabelKey, reqEditors ...RequestEditorFn) (*GetObjectStorageLabelResponse, error)
 
 	// ModifyObjectStorageLabelWithBodyWithResponse request with any body
-	ModifyObjectStorageLabelWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyLabelServiceUuid, labelKey ObjectStorage2ModifyLabelLabelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyObjectStorageLabelResponse, error)
+	ModifyObjectStorageLabelWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageLabelServiceUuid, labelKey ObjectStorage2ModifyObjectStorageLabelLabelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyObjectStorageLabelResponse, error)
 
-	ModifyObjectStorageLabelWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyLabelServiceUuid, labelKey ObjectStorage2ModifyLabelLabelKey, body ModifyObjectStorageLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyObjectStorageLabelResponse, error)
+	ModifyObjectStorageLabelWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageLabelServiceUuid, labelKey ObjectStorage2ModifyObjectStorageLabelLabelKey, body ModifyObjectStorageLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyObjectStorageLabelResponse, error)
 
 	// GetObjectStorageMetricsWithResponse request
-	GetObjectStorageMetricsWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetServiceMetricsServiceUuid, reqEditors ...RequestEditorFn) (*GetObjectStorageMetricsResponse, error)
+	GetObjectStorageMetricsWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageMetricsServiceUuid, reqEditors ...RequestEditorFn) (*GetObjectStorageMetricsResponse, error)
 
 	// ListObjectStorageMetricsSeriesWithResponse request
-	ListObjectStorageMetricsSeriesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListServiceMetricsSeriesServiceUuid, params *ListObjectStorageMetricsSeriesParams, reqEditors ...RequestEditorFn) (*ListObjectStorageMetricsSeriesResponse, error)
+	ListObjectStorageMetricsSeriesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageMetricsSeriesServiceUuid, params *ListObjectStorageMetricsSeriesParams, reqEditors ...RequestEditorFn) (*ListObjectStorageMetricsSeriesResponse, error)
 
 	// ListObjectStorageNetworksWithResponse request
-	ListObjectStorageNetworksWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListNetworksServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageNetworksResponse, error)
+	ListObjectStorageNetworksWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageNetworksServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageNetworksResponse, error)
 
 	// CreateObjectStorageNetworkWithBodyWithResponse request with any body
-	CreateObjectStorageNetworkWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateNetworkServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageNetworkResponse, error)
+	CreateObjectStorageNetworkWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageNetworkServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageNetworkResponse, error)
 
-	CreateObjectStorageNetworkWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateNetworkServiceUuid, body CreateObjectStorageNetworkJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageNetworkResponse, error)
+	CreateObjectStorageNetworkWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageNetworkServiceUuid, body CreateObjectStorageNetworkJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageNetworkResponse, error)
 
 	// DeleteObjectStorageNetworkWithResponse request
-	DeleteObjectStorageNetworkWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteNetworkServiceUuid, networkName ObjectStorage2DeleteNetworkNetworkName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageNetworkResponse, error)
+	DeleteObjectStorageNetworkWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageNetworkServiceUuid, networkName ObjectStorage2DeleteObjectStorageNetworkNetworkName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageNetworkResponse, error)
 
 	// GetObjectStorageNetworkWithResponse request
-	GetObjectStorageNetworkWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetNetworkServiceUuid, networkName ObjectStorage2GetNetworkNetworkName, reqEditors ...RequestEditorFn) (*GetObjectStorageNetworkResponse, error)
+	GetObjectStorageNetworkWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageNetworkServiceUuid, networkName ObjectStorage2GetObjectStorageNetworkNetworkName, reqEditors ...RequestEditorFn) (*GetObjectStorageNetworkResponse, error)
 
 	// ListObjectStoragePoliciesWithResponse request
-	ListObjectStoragePoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListPoliciesServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStoragePoliciesResponse, error)
+	ListObjectStoragePoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStoragePoliciesServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStoragePoliciesResponse, error)
 
 	// CreateObjectStoragePolicyWithBodyWithResponse request with any body
-	CreateObjectStoragePolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreatePolicyServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStoragePolicyResponse, error)
+	CreateObjectStoragePolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStoragePolicyServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStoragePolicyResponse, error)
 
-	CreateObjectStoragePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreatePolicyServiceUuid, body CreateObjectStoragePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStoragePolicyResponse, error)
+	CreateObjectStoragePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStoragePolicyServiceUuid, body CreateObjectStoragePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStoragePolicyResponse, error)
 
 	// DeleteObjectStoragePolicyWithResponse request
-	DeleteObjectStoragePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeletePolicyServiceUuid, policyName ObjectStorage2DeletePolicyPolicyName, reqEditors ...RequestEditorFn) (*DeleteObjectStoragePolicyResponse, error)
+	DeleteObjectStoragePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStoragePolicyServiceUuid, policyName ObjectStorage2DeleteObjectStoragePolicyPolicyName, reqEditors ...RequestEditorFn) (*DeleteObjectStoragePolicyResponse, error)
 
 	// GetObjectStoragePolicyWithResponse request
-	GetObjectStoragePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetPolicyDetailsServiceUuid, policyName ObjectStorage2GetPolicyDetailsPolicyName, reqEditors ...RequestEditorFn) (*GetObjectStoragePolicyResponse, error)
+	GetObjectStoragePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStoragePolicyServiceUuid, policyName ObjectStorage2GetObjectStoragePolicyPolicyName, reqEditors ...RequestEditorFn) (*GetObjectStoragePolicyResponse, error)
 
 	// SetObjectStorageDefaultPolicyVersionWithBodyWithResponse request with any body
-	SetObjectStorageDefaultPolicyVersionWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2SetDefaultPolicyVersionServiceUuid, policyName ObjectStorage2SetDefaultPolicyVersionPolicyName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*SetObjectStorageDefaultPolicyVersionResponse, error)
+	SetObjectStorageDefaultPolicyVersionWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2SetObjectStorageDefaultPolicyVersionServiceUuid, policyName ObjectStorage2SetObjectStorageDefaultPolicyVersionPolicyName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*SetObjectStorageDefaultPolicyVersionResponse, error)
 
-	SetObjectStorageDefaultPolicyVersionWithResponse(ctx context.Context, serviceUuid ObjectStorage2SetDefaultPolicyVersionServiceUuid, policyName ObjectStorage2SetDefaultPolicyVersionPolicyName, body SetObjectStorageDefaultPolicyVersionJSONRequestBody, reqEditors ...RequestEditorFn) (*SetObjectStorageDefaultPolicyVersionResponse, error)
+	SetObjectStorageDefaultPolicyVersionWithResponse(ctx context.Context, serviceUuid ObjectStorage2SetObjectStorageDefaultPolicyVersionServiceUuid, policyName ObjectStorage2SetObjectStorageDefaultPolicyVersionPolicyName, body SetObjectStorageDefaultPolicyVersionJSONRequestBody, reqEditors ...RequestEditorFn) (*SetObjectStorageDefaultPolicyVersionResponse, error)
 
 	// ListObjectStoragePolicyVersionsWithResponse request
-	ListObjectStoragePolicyVersionsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListPolicyVersionsServiceUuid, policyName ObjectStorage2ListPolicyVersionsPolicyName, reqEditors ...RequestEditorFn) (*ListObjectStoragePolicyVersionsResponse, error)
+	ListObjectStoragePolicyVersionsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStoragePolicyVersionsServiceUuid, policyName ObjectStorage2ListObjectStoragePolicyVersionsPolicyName, reqEditors ...RequestEditorFn) (*ListObjectStoragePolicyVersionsResponse, error)
 
 	// CreateObjectStoragePolicyVersionWithBodyWithResponse request with any body
-	CreateObjectStoragePolicyVersionWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreatePolicyVersionServiceUuid, policyName ObjectStorage2CreatePolicyVersionPolicyName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStoragePolicyVersionResponse, error)
+	CreateObjectStoragePolicyVersionWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStoragePolicyVersionServiceUuid, policyName ObjectStorage2CreateObjectStoragePolicyVersionPolicyName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStoragePolicyVersionResponse, error)
 
-	CreateObjectStoragePolicyVersionWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreatePolicyVersionServiceUuid, policyName ObjectStorage2CreatePolicyVersionPolicyName, body CreateObjectStoragePolicyVersionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStoragePolicyVersionResponse, error)
+	CreateObjectStoragePolicyVersionWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStoragePolicyVersionServiceUuid, policyName ObjectStorage2CreateObjectStoragePolicyVersionPolicyName, body CreateObjectStoragePolicyVersionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStoragePolicyVersionResponse, error)
 
 	// DeleteObjectStoragePolicyVersionWithResponse request
-	DeleteObjectStoragePolicyVersionWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeletePolicyVersionServiceUuid, policyName ObjectStorage2DeletePolicyVersionPolicyName, policyVersion ObjectStorage2DeletePolicyVersionPolicyVersion, reqEditors ...RequestEditorFn) (*DeleteObjectStoragePolicyVersionResponse, error)
+	DeleteObjectStoragePolicyVersionWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStoragePolicyVersionServiceUuid, policyName ObjectStorage2DeleteObjectStoragePolicyVersionPolicyName, policyVersion ObjectStorage2DeleteObjectStoragePolicyVersionPolicyVersion, reqEditors ...RequestEditorFn) (*DeleteObjectStoragePolicyVersionResponse, error)
 
 	// GetObjectStoragePolicyVersionWithResponse request
-	GetObjectStoragePolicyVersionWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetPolicyVersionServiceUuid, policyName ObjectStorage2GetPolicyVersionPolicyName, policyVersion ObjectStorage2GetPolicyVersionPolicyVersion, reqEditors ...RequestEditorFn) (*GetObjectStoragePolicyVersionResponse, error)
+	GetObjectStoragePolicyVersionWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStoragePolicyVersionServiceUuid, policyName ObjectStorage2GetObjectStoragePolicyVersionPolicyName, policyVersion ObjectStorage2GetObjectStoragePolicyVersionPolicyVersion, reqEditors ...RequestEditorFn) (*GetObjectStoragePolicyVersionResponse, error)
 
 	// ListObjectStorageRolesWithResponse request
-	ListObjectStorageRolesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListRolesServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageRolesResponse, error)
+	ListObjectStorageRolesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageRolesServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageRolesResponse, error)
 
 	// CreateObjectStorageRoleWithBodyWithResponse request with any body
-	CreateObjectStorageRoleWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateRoleServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageRoleResponse, error)
+	CreateObjectStorageRoleWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageRoleServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageRoleResponse, error)
 
-	CreateObjectStorageRoleWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateRoleServiceUuid, body CreateObjectStorageRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageRoleResponse, error)
+	CreateObjectStorageRoleWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageRoleServiceUuid, body CreateObjectStorageRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageRoleResponse, error)
 
 	// DeleteObjectStorageRoleWithResponse request
-	DeleteObjectStorageRoleWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteRoleServiceUuid, roleName ObjectStorage2DeleteRoleRoleName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageRoleResponse, error)
+	DeleteObjectStorageRoleWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageRoleServiceUuid, roleName ObjectStorage2DeleteObjectStorageRoleRoleName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageRoleResponse, error)
 
 	// GetObjectStorageRoleWithResponse request
-	GetObjectStorageRoleWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetRoleServiceUuid, roleName ObjectStorage2GetRoleRoleName, reqEditors ...RequestEditorFn) (*GetObjectStorageRoleResponse, error)
+	GetObjectStorageRoleWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageRoleServiceUuid, roleName ObjectStorage2GetObjectStorageRoleRoleName, reqEditors ...RequestEditorFn) (*GetObjectStorageRoleResponse, error)
 
 	// UpdateObjectStorageRoleWithBodyWithResponse request with any body
-	UpdateObjectStorageRoleWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2UpdateRoleServiceUuid, roleName ObjectStorage2UpdateRoleRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateObjectStorageRoleResponse, error)
+	UpdateObjectStorageRoleWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2UpdateObjectStorageRoleServiceUuid, roleName ObjectStorage2UpdateObjectStorageRoleRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateObjectStorageRoleResponse, error)
 
-	UpdateObjectStorageRoleWithResponse(ctx context.Context, serviceUuid ObjectStorage2UpdateRoleServiceUuid, roleName ObjectStorage2UpdateRoleRoleName, body UpdateObjectStorageRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateObjectStorageRoleResponse, error)
+	UpdateObjectStorageRoleWithResponse(ctx context.Context, serviceUuid ObjectStorage2UpdateObjectStorageRoleServiceUuid, roleName ObjectStorage2UpdateObjectStorageRoleRoleName, body UpdateObjectStorageRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateObjectStorageRoleResponse, error)
 
 	// AssumeObjectStorageRolePolicyWithBodyWithResponse request with any body
-	AssumeObjectStorageRolePolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AssumeRolePolicyServiceUuid, roleName ObjectStorage2AssumeRolePolicyRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AssumeObjectStorageRolePolicyResponse, error)
+	AssumeObjectStorageRolePolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AssumeObjectStorageRolePolicyServiceUuid, roleName ObjectStorage2AssumeObjectStorageRolePolicyRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AssumeObjectStorageRolePolicyResponse, error)
 
-	AssumeObjectStorageRolePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AssumeRolePolicyServiceUuid, roleName ObjectStorage2AssumeRolePolicyRoleName, body AssumeObjectStorageRolePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*AssumeObjectStorageRolePolicyResponse, error)
+	AssumeObjectStorageRolePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AssumeObjectStorageRolePolicyServiceUuid, roleName ObjectStorage2AssumeObjectStorageRolePolicyRoleName, body AssumeObjectStorageRolePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*AssumeObjectStorageRolePolicyResponse, error)
 
 	// ListObjectStorageRoleInlinePoliciesWithResponse request
-	ListObjectStorageRoleInlinePoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListRoleInlinePoliciesServiceUuid, roleName ObjectStorage2ListRoleInlinePoliciesRoleName, reqEditors ...RequestEditorFn) (*ListObjectStorageRoleInlinePoliciesResponse, error)
+	ListObjectStorageRoleInlinePoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageRoleInlinePoliciesServiceUuid, roleName ObjectStorage2ListObjectStorageRoleInlinePoliciesRoleName, reqEditors ...RequestEditorFn) (*ListObjectStorageRoleInlinePoliciesResponse, error)
 
 	// CreateObjectStorageRoleInlinePolicyWithBodyWithResponse request with any body
-	CreateObjectStorageRoleInlinePolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateRoleInlinePolicyServiceUuid, roleName ObjectStorage2CreateRoleInlinePolicyRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageRoleInlinePolicyResponse, error)
+	CreateObjectStorageRoleInlinePolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageRoleInlinePolicyServiceUuid, roleName ObjectStorage2CreateObjectStorageRoleInlinePolicyRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageRoleInlinePolicyResponse, error)
 
-	CreateObjectStorageRoleInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateRoleInlinePolicyServiceUuid, roleName ObjectStorage2CreateRoleInlinePolicyRoleName, body CreateObjectStorageRoleInlinePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageRoleInlinePolicyResponse, error)
+	CreateObjectStorageRoleInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageRoleInlinePolicyServiceUuid, roleName ObjectStorage2CreateObjectStorageRoleInlinePolicyRoleName, body CreateObjectStorageRoleInlinePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageRoleInlinePolicyResponse, error)
 
 	// DeleteObjectStorageRoleInlinePolicyWithResponse request
-	DeleteObjectStorageRoleInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteRoleInlinePolicyServiceUuid, roleName ObjectStorage2DeleteRoleInlinePolicyRoleName, rolePolicyName ObjectStorage2DeleteRoleInlinePolicyRolePolicyName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageRoleInlinePolicyResponse, error)
+	DeleteObjectStorageRoleInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageRoleInlinePolicyServiceUuid, roleName ObjectStorage2DeleteObjectStorageRoleInlinePolicyRoleName, rolePolicyName ObjectStorage2DeleteObjectStorageRoleInlinePolicyRolePolicyName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageRoleInlinePolicyResponse, error)
 
 	// GetObjectStorageRoleInlinePolicyWithResponse request
-	GetObjectStorageRoleInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetRoleInlinePolicyServiceUuid, roleName ObjectStorage2GetRoleInlinePolicyRoleName, rolePolicyName ObjectStorage2GetRoleInlinePolicyRolePolicyName, reqEditors ...RequestEditorFn) (*GetObjectStorageRoleInlinePolicyResponse, error)
+	GetObjectStorageRoleInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageRoleInlinePolicyServiceUuid, roleName ObjectStorage2GetObjectStorageRoleInlinePolicyRoleName, rolePolicyName ObjectStorage2GetObjectStorageRoleInlinePolicyRolePolicyName, reqEditors ...RequestEditorFn) (*GetObjectStorageRoleInlinePolicyResponse, error)
 
 	// DeleteObjectStorageRolePermissionsBoundaryWithResponse request
-	DeleteObjectStorageRolePermissionsBoundaryWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2DeleteRolePermissionsBoundaryRoleName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageRolePermissionsBoundaryResponse, error)
+	DeleteObjectStorageRolePermissionsBoundaryWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2DeleteObjectStorageRolePermissionsBoundaryRoleName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageRolePermissionsBoundaryResponse, error)
 
 	// CreateObjectStorageRolePermissionsBoundaryWithBodyWithResponse request with any body
-	CreateObjectStorageRolePermissionsBoundaryWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2CreateRolePermissionsBoundaryRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageRolePermissionsBoundaryResponse, error)
+	CreateObjectStorageRolePermissionsBoundaryWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2CreateObjectStorageRolePermissionsBoundaryRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageRolePermissionsBoundaryResponse, error)
 
-	CreateObjectStorageRolePermissionsBoundaryWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2CreateRolePermissionsBoundaryRoleName, body CreateObjectStorageRolePermissionsBoundaryJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageRolePermissionsBoundaryResponse, error)
+	CreateObjectStorageRolePermissionsBoundaryWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2CreateObjectStorageRolePermissionsBoundaryRoleName, body CreateObjectStorageRolePermissionsBoundaryJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageRolePermissionsBoundaryResponse, error)
 
 	// ListObjectStorageAttachedRolePoliciesWithResponse request
-	ListObjectStorageAttachedRolePoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListAttachedRolePoliciesServiceUuid, roleName ObjectStorage2ListAttachedRolePoliciesRoleName, reqEditors ...RequestEditorFn) (*ListObjectStorageAttachedRolePoliciesResponse, error)
+	ListObjectStorageAttachedRolePoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageAttachedRolePoliciesServiceUuid, roleName ObjectStorage2ListObjectStorageAttachedRolePoliciesRoleName, reqEditors ...RequestEditorFn) (*ListObjectStorageAttachedRolePoliciesResponse, error)
 
 	// AttachObjectStoragePolicyToRoleWithBodyWithResponse request with any body
-	AttachObjectStoragePolicyToRoleWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachPolicyToRoleServiceUuid, roleName ObjectStorage2AttachPolicyToRoleRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AttachObjectStoragePolicyToRoleResponse, error)
+	AttachObjectStoragePolicyToRoleWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStoragePolicyToRoleServiceUuid, roleName ObjectStorage2AttachObjectStoragePolicyToRoleRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AttachObjectStoragePolicyToRoleResponse, error)
 
-	AttachObjectStoragePolicyToRoleWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachPolicyToRoleServiceUuid, roleName ObjectStorage2AttachPolicyToRoleRoleName, body AttachObjectStoragePolicyToRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*AttachObjectStoragePolicyToRoleResponse, error)
+	AttachObjectStoragePolicyToRoleWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStoragePolicyToRoleServiceUuid, roleName ObjectStorage2AttachObjectStoragePolicyToRoleRoleName, body AttachObjectStoragePolicyToRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*AttachObjectStoragePolicyToRoleResponse, error)
 
 	// DetachObjectStoragePolicyFromRoleWithResponse request
-	DetachObjectStoragePolicyFromRoleWithResponse(ctx context.Context, serviceUuid ObjectStorage2DetachPolicyFromRoleServiceUuid, roleName ObjectStorage2DetachPolicyFromRoleRoleName, rolePolicyName ObjectStorage2DetachPolicyFromRoleRolePolicyName, reqEditors ...RequestEditorFn) (*DetachObjectStoragePolicyFromRoleResponse, error)
+	DetachObjectStoragePolicyFromRoleWithResponse(ctx context.Context, serviceUuid ObjectStorage2DetachObjectStoragePolicyFromRoleServiceUuid, roleName ObjectStorage2DetachObjectStoragePolicyFromRoleRoleName, rolePolicyName ObjectStorage2DetachObjectStoragePolicyFromRoleRolePolicyName, reqEditors ...RequestEditorFn) (*DetachObjectStoragePolicyFromRoleResponse, error)
 
 	// GetObjectStorageRoleTagsWithResponse request
-	GetObjectStorageRoleTagsWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetRoleTagsServiceUuid, roleName ObjectStorage2GetRoleTagsRoleName, reqEditors ...RequestEditorFn) (*GetObjectStorageRoleTagsResponse, error)
+	GetObjectStorageRoleTagsWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageRoleTagsServiceUuid, roleName ObjectStorage2GetObjectStorageRoleTagsRoleName, reqEditors ...RequestEditorFn) (*GetObjectStorageRoleTagsResponse, error)
 
 	// ReplaceObjectStorageRoleTagsWithBodyWithResponse request with any body
-	ReplaceObjectStorageRoleTagsWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ReplaceRoleTagsServiceUuid, roleName ObjectStorage2ReplaceRoleTagsRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplaceObjectStorageRoleTagsResponse, error)
+	ReplaceObjectStorageRoleTagsWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ReplaceObjectStorageRoleTagsServiceUuid, roleName ObjectStorage2ReplaceObjectStorageRoleTagsRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplaceObjectStorageRoleTagsResponse, error)
 
-	ReplaceObjectStorageRoleTagsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ReplaceRoleTagsServiceUuid, roleName ObjectStorage2ReplaceRoleTagsRoleName, body ReplaceObjectStorageRoleTagsJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplaceObjectStorageRoleTagsResponse, error)
+	ReplaceObjectStorageRoleTagsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ReplaceObjectStorageRoleTagsServiceUuid, roleName ObjectStorage2ReplaceObjectStorageRoleTagsRoleName, body ReplaceObjectStorageRoleTagsJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplaceObjectStorageRoleTagsResponse, error)
 
 	// DeleteObjectStorageRoleTagWithResponse request
-	DeleteObjectStorageRoleTagWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteRoleTagServiceUuid, roleName ObjectStorage2DeleteRoleTagRoleName, roleTagKey ObjectStorage2DeleteRoleTagRoleTagKey, reqEditors ...RequestEditorFn) (*DeleteObjectStorageRoleTagResponse, error)
+	DeleteObjectStorageRoleTagWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageRoleTagServiceUuid, roleName ObjectStorage2DeleteObjectStorageRoleTagRoleName, roleTagKey ObjectStorage2DeleteObjectStorageRoleTagRoleTagKey, reqEditors ...RequestEditorFn) (*DeleteObjectStorageRoleTagResponse, error)
 
-	// ListStaticWebsitesWithResponse request
-	ListStaticWebsitesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListStaticWebsitesServiceUuid, reqEditors ...RequestEditorFn) (*ListStaticWebsitesResponse, error)
+	// ListObjectStorageStaticWebsitesWithResponse request
+	ListObjectStorageStaticWebsitesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageStaticWebsitesServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageStaticWebsitesResponse, error)
 
-	// CreateStaticWebsiteWithBodyWithResponse request with any body
-	CreateStaticWebsiteWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateStaticWebsiteServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateStaticWebsiteResponse, error)
+	// CreateObjectStorageStaticWebsiteWithBodyWithResponse request with any body
+	CreateObjectStorageStaticWebsiteWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageStaticWebsiteServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageStaticWebsiteResponse, error)
 
-	CreateStaticWebsiteWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateStaticWebsiteServiceUuid, body CreateStaticWebsiteJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateStaticWebsiteResponse, error)
+	CreateObjectStorageStaticWebsiteWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageStaticWebsiteServiceUuid, body CreateObjectStorageStaticWebsiteJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageStaticWebsiteResponse, error)
 
-	// DeleteStaticWebsiteWithResponse request
-	DeleteStaticWebsiteWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteStaticWebsiteServiceUuid, customDomainName ObjectStorage2DeleteStaticWebsiteCustomDomainName, reqEditors ...RequestEditorFn) (*DeleteStaticWebsiteResponse, error)
+	// DeleteObjectStorageStaticWebsiteWithResponse request
+	DeleteObjectStorageStaticWebsiteWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageStaticWebsiteServiceUuid, customDomainName ObjectStorage2DeleteObjectStorageStaticWebsiteCustomDomainName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageStaticWebsiteResponse, error)
 
-	// GetStaticWebsiteWithResponse request
-	GetStaticWebsiteWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetStaticWebsiteServiceUuid, customDomainName ObjectStorage2GetStaticWebsiteCustomDomainName, reqEditors ...RequestEditorFn) (*GetStaticWebsiteResponse, error)
+	// GetObjectStorageStaticWebsiteWithResponse request
+	GetObjectStorageStaticWebsiteWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageStaticWebsiteServiceUuid, customDomainName ObjectStorage2GetObjectStorageStaticWebsiteCustomDomainName, reqEditors ...RequestEditorFn) (*GetObjectStorageStaticWebsiteResponse, error)
 
-	// ModifyStaticWebsiteWithBodyWithResponse request with any body
-	ModifyStaticWebsiteWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyStaticWebsiteCustomDomainName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyStaticWebsiteResponse, error)
+	// ModifyObjectStorageStaticWebsiteWithBodyWithResponse request with any body
+	ModifyObjectStorageStaticWebsiteWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyObjectStorageStaticWebsiteCustomDomainName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyObjectStorageStaticWebsiteResponse, error)
 
-	ModifyStaticWebsiteWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyStaticWebsiteCustomDomainName, body ModifyStaticWebsiteJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyStaticWebsiteResponse, error)
+	ModifyObjectStorageStaticWebsiteWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyObjectStorageStaticWebsiteCustomDomainName, body ModifyObjectStorageStaticWebsiteJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyObjectStorageStaticWebsiteResponse, error)
 
 	// ListObjectStorageUsersWithResponse request
-	ListObjectStorageUsersWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListUsersServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageUsersResponse, error)
+	ListObjectStorageUsersWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageUsersServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageUsersResponse, error)
 
 	// CreateObjectStorageUserWithBodyWithResponse request with any body
-	CreateObjectStorageUserWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateUserServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageUserResponse, error)
+	CreateObjectStorageUserWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageUserServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageUserResponse, error)
 
-	CreateObjectStorageUserWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateUserServiceUuid, body CreateObjectStorageUserJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageUserResponse, error)
+	CreateObjectStorageUserWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageUserServiceUuid, body CreateObjectStorageUserJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageUserResponse, error)
 
 	// DeleteObjectStorageUserWithResponse request
-	DeleteObjectStorageUserWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteUserServiceUuid, username ObjectStorage2DeleteUserUsername, reqEditors ...RequestEditorFn) (*DeleteObjectStorageUserResponse, error)
+	DeleteObjectStorageUserWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageUserServiceUuid, username ObjectStorage2DeleteObjectStorageUserUsername, reqEditors ...RequestEditorFn) (*DeleteObjectStorageUserResponse, error)
 
 	// GetObjectStorageUserWithResponse request
-	GetObjectStorageUserWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetUserDetailsServiceUuid, username ObjectStorage2GetUserDetailsUsername, reqEditors ...RequestEditorFn) (*GetObjectStorageUserResponse, error)
+	GetObjectStorageUserWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageUserServiceUuid, username ObjectStorage2GetObjectStorageUserUsername, reqEditors ...RequestEditorFn) (*GetObjectStorageUserResponse, error)
 
 	// ListObjectStorageAccessKeysWithResponse request
-	ListObjectStorageAccessKeysWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListAccessKeysServiceUuid, username ObjectStorage2ListAccessKeysUsername, reqEditors ...RequestEditorFn) (*ListObjectStorageAccessKeysResponse, error)
+	ListObjectStorageAccessKeysWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageAccessKeysServiceUuid, username ObjectStorage2ListObjectStorageAccessKeysUsername, reqEditors ...RequestEditorFn) (*ListObjectStorageAccessKeysResponse, error)
 
 	// CreateObjectStorageAccessKeyWithResponse request
-	CreateObjectStorageAccessKeyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateAccessKeyServiceUuid, username ObjectStorage2CreateAccessKeyUsername, reqEditors ...RequestEditorFn) (*CreateObjectStorageAccessKeyResponse, error)
+	CreateObjectStorageAccessKeyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageAccessKeyServiceUuid, username ObjectStorage2CreateObjectStorageAccessKeyUsername, reqEditors ...RequestEditorFn) (*CreateObjectStorageAccessKeyResponse, error)
 
 	// DeleteObjectStorageAccessKeyWithResponse request
-	DeleteObjectStorageAccessKeyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteAccessKeyServiceUuid, username ObjectStorage2DeleteAccessKeyUsername, accessKeyId ObjectStorage2DeleteAccessKeyAccessKeyId, reqEditors ...RequestEditorFn) (*DeleteObjectStorageAccessKeyResponse, error)
+	DeleteObjectStorageAccessKeyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageAccessKeyServiceUuid, username ObjectStorage2DeleteObjectStorageAccessKeyUsername, accessKeyId ObjectStorage2DeleteObjectStorageAccessKeyAccessKeyId, reqEditors ...RequestEditorFn) (*DeleteObjectStorageAccessKeyResponse, error)
 
 	// GetObjectStorageAccessKeyDetailsWithResponse request
-	GetObjectStorageAccessKeyDetailsWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetAccessKeyDetailsServiceUuid, username ObjectStorage2GetAccessKeyDetailsUsername, accessKeyId ObjectStorage2GetAccessKeyDetailsAccessKeyId, reqEditors ...RequestEditorFn) (*GetObjectStorageAccessKeyDetailsResponse, error)
+	GetObjectStorageAccessKeyDetailsWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageAccessKeyDetailsServiceUuid, username ObjectStorage2GetObjectStorageAccessKeyDetailsUsername, accessKeyId ObjectStorage2GetObjectStorageAccessKeyDetailsAccessKeyId, reqEditors ...RequestEditorFn) (*GetObjectStorageAccessKeyDetailsResponse, error)
 
 	// ModifyObjectStorageAccessKeyDetailsWithBodyWithResponse request with any body
-	ModifyObjectStorageAccessKeyDetailsWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyAccessKeyDetailsServiceUuid, username ObjectStorage2ModifyAccessKeyDetailsUsername, accessKeyId ObjectStorage2ModifyAccessKeyDetailsAccessKeyId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyObjectStorageAccessKeyDetailsResponse, error)
+	ModifyObjectStorageAccessKeyDetailsWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageAccessKeyDetailsServiceUuid, username ObjectStorage2ModifyObjectStorageAccessKeyDetailsUsername, accessKeyId ObjectStorage2ModifyObjectStorageAccessKeyDetailsAccessKeyId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyObjectStorageAccessKeyDetailsResponse, error)
 
-	ModifyObjectStorageAccessKeyDetailsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyAccessKeyDetailsServiceUuid, username ObjectStorage2ModifyAccessKeyDetailsUsername, accessKeyId ObjectStorage2ModifyAccessKeyDetailsAccessKeyId, body ModifyObjectStorageAccessKeyDetailsJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyObjectStorageAccessKeyDetailsResponse, error)
+	ModifyObjectStorageAccessKeyDetailsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageAccessKeyDetailsServiceUuid, username ObjectStorage2ModifyObjectStorageAccessKeyDetailsUsername, accessKeyId ObjectStorage2ModifyObjectStorageAccessKeyDetailsAccessKeyId, body ModifyObjectStorageAccessKeyDetailsJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyObjectStorageAccessKeyDetailsResponse, error)
 
 	// ListObjectStorageUserInlinePoliciesWithResponse request
-	ListObjectStorageUserInlinePoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListUserInlinePoliciesServiceUuid, username ObjectStorage2ListUserInlinePoliciesUsername, reqEditors ...RequestEditorFn) (*ListObjectStorageUserInlinePoliciesResponse, error)
+	ListObjectStorageUserInlinePoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageUserInlinePoliciesServiceUuid, username ObjectStorage2ListObjectStorageUserInlinePoliciesUsername, reqEditors ...RequestEditorFn) (*ListObjectStorageUserInlinePoliciesResponse, error)
 
 	// CreateObjectStorageUserInlinePolicyWithBodyWithResponse request with any body
-	CreateObjectStorageUserInlinePolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateUserInlinePolicyServiceUuid, username ObjectStorage2CreateUserInlinePolicyUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageUserInlinePolicyResponse, error)
+	CreateObjectStorageUserInlinePolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageUserInlinePolicyServiceUuid, username ObjectStorage2CreateObjectStorageUserInlinePolicyUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageUserInlinePolicyResponse, error)
 
-	CreateObjectStorageUserInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateUserInlinePolicyServiceUuid, username ObjectStorage2CreateUserInlinePolicyUsername, body CreateObjectStorageUserInlinePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageUserInlinePolicyResponse, error)
+	CreateObjectStorageUserInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageUserInlinePolicyServiceUuid, username ObjectStorage2CreateObjectStorageUserInlinePolicyUsername, body CreateObjectStorageUserInlinePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageUserInlinePolicyResponse, error)
 
 	// DeleteObjectStorageUserInlinePolicyWithResponse request
-	DeleteObjectStorageUserInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteUserInlinePolicyServiceUuid, username ObjectStorage2DeleteUserInlinePolicyUsername, userPolicyName ObjectStorage2DeleteUserInlinePolicyUserPolicyName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageUserInlinePolicyResponse, error)
+	DeleteObjectStorageUserInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageUserInlinePolicyServiceUuid, username ObjectStorage2DeleteObjectStorageUserInlinePolicyUsername, userPolicyName ObjectStorage2DeleteObjectStorageUserInlinePolicyUserPolicyName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageUserInlinePolicyResponse, error)
 
 	// GetObjectStorageUserInlinePolicyWithResponse request
-	GetObjectStorageUserInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetUserInlinePolicyServiceUuid, username ObjectStorage2GetUserInlinePolicyUsername, userPolicyName ObjectStorage2GetUserInlinePolicyUserPolicyName, reqEditors ...RequestEditorFn) (*GetObjectStorageUserInlinePolicyResponse, error)
+	GetObjectStorageUserInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageUserInlinePolicyServiceUuid, username ObjectStorage2GetObjectStorageUserInlinePolicyUsername, userPolicyName ObjectStorage2GetObjectStorageUserInlinePolicyUserPolicyName, reqEditors ...RequestEditorFn) (*GetObjectStorageUserInlinePolicyResponse, error)
 
 	// DeleteObjectStorageUserPermissionsBoundaryWithResponse request
-	DeleteObjectStorageUserPermissionsBoundaryWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteUserPermissionsBoundaryServiceUuid, username ObjectStorage2DeleteUserPermissionsBoundaryUsername, reqEditors ...RequestEditorFn) (*DeleteObjectStorageUserPermissionsBoundaryResponse, error)
+	DeleteObjectStorageUserPermissionsBoundaryWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageUserPermissionsBoundaryServiceUuid, username ObjectStorage2DeleteObjectStorageUserPermissionsBoundaryUsername, reqEditors ...RequestEditorFn) (*DeleteObjectStorageUserPermissionsBoundaryResponse, error)
 
 	// CreateObjectStorageUserPermissionsBoundaryWithBodyWithResponse request with any body
-	CreateObjectStorageUserPermissionsBoundaryWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateUserPermissionsBoundaryServiceUuid, username ObjectStorage2CreateUserPermissionsBoundaryUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageUserPermissionsBoundaryResponse, error)
+	CreateObjectStorageUserPermissionsBoundaryWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageUserPermissionsBoundaryServiceUuid, username ObjectStorage2CreateObjectStorageUserPermissionsBoundaryUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageUserPermissionsBoundaryResponse, error)
 
-	CreateObjectStorageUserPermissionsBoundaryWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateUserPermissionsBoundaryServiceUuid, username ObjectStorage2CreateUserPermissionsBoundaryUsername, body CreateObjectStorageUserPermissionsBoundaryJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageUserPermissionsBoundaryResponse, error)
+	CreateObjectStorageUserPermissionsBoundaryWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageUserPermissionsBoundaryServiceUuid, username ObjectStorage2CreateObjectStorageUserPermissionsBoundaryUsername, body CreateObjectStorageUserPermissionsBoundaryJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageUserPermissionsBoundaryResponse, error)
 
 	// ListObjectStorageAttachedUserPoliciesWithResponse request
-	ListObjectStorageAttachedUserPoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListAttachedUserPoliciesServiceUuid, username ObjectStorage2ListAttachedUserPoliciesUsername, reqEditors ...RequestEditorFn) (*ListObjectStorageAttachedUserPoliciesResponse, error)
+	ListObjectStorageAttachedUserPoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageAttachedUserPoliciesServiceUuid, username ObjectStorage2ListObjectStorageAttachedUserPoliciesUsername, reqEditors ...RequestEditorFn) (*ListObjectStorageAttachedUserPoliciesResponse, error)
 
 	// AttachObjectStorageUserPolicyWithBodyWithResponse request with any body
-	AttachObjectStorageUserPolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachUserPolicyServiceUuid, username ObjectStorage2AttachUserPolicyUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AttachObjectStorageUserPolicyResponse, error)
+	AttachObjectStorageUserPolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageUserPolicyServiceUuid, username ObjectStorage2AttachObjectStorageUserPolicyUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AttachObjectStorageUserPolicyResponse, error)
 
-	AttachObjectStorageUserPolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachUserPolicyServiceUuid, username ObjectStorage2AttachUserPolicyUsername, body AttachObjectStorageUserPolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*AttachObjectStorageUserPolicyResponse, error)
+	AttachObjectStorageUserPolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageUserPolicyServiceUuid, username ObjectStorage2AttachObjectStorageUserPolicyUsername, body AttachObjectStorageUserPolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*AttachObjectStorageUserPolicyResponse, error)
 
 	// DetachObjectStorageUserPolicyWithResponse request
-	DetachObjectStorageUserPolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DetachUserPolicyServiceUuid, username ObjectStorage2DetachUserPolicyUsername, nestedName ObjectStorage2DetachUserPolicyNestedName, reqEditors ...RequestEditorFn) (*DetachObjectStorageUserPolicyResponse, error)
+	DetachObjectStorageUserPolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DetachObjectStorageUserPolicyServiceUuid, username ObjectStorage2DetachObjectStorageUserPolicyUsername, nestedName ObjectStorage2DetachObjectStorageUserPolicyNestedName, reqEditors ...RequestEditorFn) (*DetachObjectStorageUserPolicyResponse, error)
 
 	// GetObjectStorageUserTagsWithResponse request
-	GetObjectStorageUserTagsWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetUserTagsServiceUuid, username ObjectStorage2GetUserTagsUsername, reqEditors ...RequestEditorFn) (*GetObjectStorageUserTagsResponse, error)
+	GetObjectStorageUserTagsWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageUserTagsServiceUuid, username ObjectStorage2GetObjectStorageUserTagsUsername, reqEditors ...RequestEditorFn) (*GetObjectStorageUserTagsResponse, error)
 
 	// ReplaceObjectStorageUserTagsWithBodyWithResponse request with any body
-	ReplaceObjectStorageUserTagsWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ReplaceUserTagsServiceUuid, username ObjectStorage2ReplaceUserTagsUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplaceObjectStorageUserTagsResponse, error)
+	ReplaceObjectStorageUserTagsWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ReplaceObjectStorageUserTagsServiceUuid, username ObjectStorage2ReplaceObjectStorageUserTagsUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplaceObjectStorageUserTagsResponse, error)
 
-	ReplaceObjectStorageUserTagsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ReplaceUserTagsServiceUuid, username ObjectStorage2ReplaceUserTagsUsername, body ReplaceObjectStorageUserTagsJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplaceObjectStorageUserTagsResponse, error)
+	ReplaceObjectStorageUserTagsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ReplaceObjectStorageUserTagsServiceUuid, username ObjectStorage2ReplaceObjectStorageUserTagsUsername, body ReplaceObjectStorageUserTagsJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplaceObjectStorageUserTagsResponse, error)
 
 	// DeleteObjectStorageUserTagWithResponse request
-	DeleteObjectStorageUserTagWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteUserTagServiceUuid, username ObjectStorage2DeleteUserTagUsername, userTagKey ObjectStorage2DeleteUserTagUserTagKey, reqEditors ...RequestEditorFn) (*DeleteObjectStorageUserTagResponse, error)
+	DeleteObjectStorageUserTagWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageUserTagServiceUuid, username ObjectStorage2DeleteObjectStorageUserTagUsername, userTagKey ObjectStorage2DeleteObjectStorageUserTagUserTagKey, reqEditors ...RequestEditorFn) (*DeleteObjectStorageUserTagResponse, error)
+}
+
+type ListFirewallRulesetsResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *ListFirewallRulesets200
+	ApplicationproblemJSONDefault *ListFirewallRulesetsDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r ListFirewallRulesetsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListFirewallRulesetsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type CreateFirewallRulesetResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON201                       *CreateFirewallRuleset201
+	ApplicationproblemJSONDefault *CreateFirewallRulesetDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateFirewallRulesetResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateFirewallRulesetResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type AdminListServerFirewallRulesResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *FirewallRulesetAdminListServerFirewallRules200
+	ApplicationproblemJSON400     *FirewallRulesetAdminListServerFirewallRules400
+	ApplicationproblemJSON403     *FirewallRulesetAdminListServerFirewallRules403
+	ApplicationproblemJSON404     *FirewallRulesetAdminListServerFirewallRules404
+	ApplicationproblemJSON409     *FirewallRulesetAdminListServerFirewallRules409
+	ApplicationproblemJSONDefault *FirewallRulesetAdminListServerFirewallRulesDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r AdminListServerFirewallRulesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r AdminListServerFirewallRulesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type ListServerFirewallRuleResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *FirewallRulesetListServerFirewallRule200
+	ApplicationproblemJSONDefault *FirewallRulesetListServerFirewallRuleDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r ListServerFirewallRuleResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListServerFirewallRuleResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type CreateServerFirewallRuleResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON201                       *FirewallRulesetCreateServerFirewallRule201
+	ApplicationproblemJSON400     *FirewallRulesetCreateServerFirewallRule400
+	ApplicationproblemJSON403     *FirewallRulesetCreateServerFirewallRule403
+	ApplicationproblemJSON404     *FirewallRulesetCreateServerFirewallRule404
+	ApplicationproblemJSON409     *FirewallRulesetCreateServerFirewallRule409
+	ApplicationproblemJSONDefault *FirewallRulesetCreateServerFirewallRuleDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateServerFirewallRuleResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateServerFirewallRuleResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type CreateMultipleServerFirewallRulesResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *FirewallRulesetCreateMultipleServerFirewallRules200
+	ApplicationproblemJSON400     *FirewallRulesetCreateMultipleServerFirewallRules400
+	ApplicationproblemJSON403     *FirewallRulesetCreateMultipleServerFirewallRules403
+	ApplicationproblemJSON404     *FirewallRulesetCreateMultipleServerFirewallRules404
+	ApplicationproblemJSON409     *FirewallRulesetCreateMultipleServerFirewallRules409
+	ApplicationproblemJSONDefault *FirewallRulesetCreateMultipleServerFirewallRulesDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateMultipleServerFirewallRulesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateMultipleServerFirewallRulesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type DeleteServerFirewallRuleResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	ApplicationproblemJSON400     *FirewallRulesetDeleteServerFirewallRule400
+	ApplicationproblemJSON403     *FirewallRulesetDeleteServerFirewallRule403
+	ApplicationproblemJSON404     *FirewallRulesetDeleteServerFirewallRule404
+	ApplicationproblemJSON409     *FirewallRulesetDeleteServerFirewallRule409
+	ApplicationproblemJSONDefault *FirewallRulesetDeleteServerFirewallRuleDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteServerFirewallRuleResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteServerFirewallRuleResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetServerFirewallRuleResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *FirewallRulesetGetServerFirewallRule200
+	ApplicationproblemJSONDefault *FirewallRulesetGetServerFirewallRuleDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r GetServerFirewallRuleResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetServerFirewallRuleResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type DeleteFirewallRulesetResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	ApplicationproblemJSONDefault *DeleteFirewallRulesetDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteFirewallRulesetResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteFirewallRulesetResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetFirewallRulesetResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *GetFirewallRuleset200
+	ApplicationproblemJSONDefault *GetFirewallRulesetDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r GetFirewallRulesetResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetFirewallRulesetResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type ModifyFirewallRulesetResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *ModifyFirewallRuleset200
+	ApplicationproblemJSONDefault *ModifyFirewallRulesetDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r ModifyFirewallRulesetResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ModifyFirewallRulesetResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type ListFirewallRulesetLabelsResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *ListFirewallRulesetLabels200
+	ApplicationproblemJSONDefault *ListFirewallRulesetLabelsDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r ListFirewallRulesetLabelsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListFirewallRulesetLabelsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type CreateFirewallRulesetLabelResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON201                       *CreateFirewallRulesetLabel201
+	ApplicationproblemJSONDefault *CreateFirewallRulesetLabelDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateFirewallRulesetLabelResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateFirewallRulesetLabelResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type DeleteFirewallRulesetLabelResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	ApplicationproblemJSONDefault *DeleteFirewallRulesetLabelDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteFirewallRulesetLabelResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteFirewallRulesetLabelResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetFirewallRulesetLabelResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *GetFirewallRulesetLabel200
+	ApplicationproblemJSONDefault *GetFirewallRulesetLabelDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r GetFirewallRulesetLabelResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetFirewallRulesetLabelResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type ModifyFirewallRulesetLabelResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *ModifyFirewallRulesetLabel200
+	ApplicationproblemJSONDefault *ModifyFirewallRulesetLabelDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r ModifyFirewallRulesetLabelResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ModifyFirewallRulesetLabelResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type RestoreFirewallRulesetResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *RestoreFirewallRuleset200
+	ApplicationproblemJSONDefault *RestoreFirewallRulesetDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r RestoreFirewallRulesetResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r RestoreFirewallRulesetResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type ListFirewallRulesetRulesResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *ListFirewallRulesetRules200
+	ApplicationproblemJSONDefault *ListFirewallRulesetRulesDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r ListFirewallRulesetRulesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListFirewallRulesetRulesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type CreateFirewallRulesetRuleResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON201                       *CreateFirewallRulesetRule201
+	ApplicationproblemJSONDefault *CreateFirewallRulesetRuleDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateFirewallRulesetRuleResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateFirewallRulesetRuleResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type DeleteFirewallRulesetRuleResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	ApplicationproblemJSONDefault *DeleteFirewallRulesetRuleDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteFirewallRulesetRuleResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteFirewallRulesetRuleResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetFirewallRulesetRuleResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *GetFirewallRulesetRule200
+	ApplicationproblemJSONDefault *GetFirewallRulesetRuleDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r GetFirewallRulesetRuleResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetFirewallRulesetRuleResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type ModifyFirewallRulesetRuleResponse struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *ModifyFirewallRulesetRule200
+	ApplicationproblemJSONDefault *ModifyFirewallRulesetRuleDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r ModifyFirewallRulesetRuleResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ModifyFirewallRulesetRuleResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
 }
 
 type ListObjectStoragesResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2ListServices200
-	ApplicationproblemJSONDefault *ObjectStorage2ListServicesDefault
+	JSON200                       *ObjectStorage2ListObjectStorages200
+	ApplicationproblemJSONDefault *ObjectStorage2ListObjectStoragesDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -9422,8 +14049,8 @@ func (r ListObjectStoragesResponse) StatusCode() int {
 type CreateObjectStorageResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON201                       *ObjectStorage2CreateService201
-	ApplicationproblemJSONDefault *ObjectStorage2CreateServiceDefault
+	JSON201                       *CreateObjectStorage201
+	ApplicationproblemJSONDefault *ObjectStorage2CreateObjectStorageDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -9442,102 +14069,11 @@ func (r CreateObjectStorageResponse) StatusCode() int {
 	return 0
 }
 
-type ListObjectStorageIntegrationServicesResponse struct {
-	Body                          []byte
-	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2IntegrationListServices200
-	ApplicationproblemJSONDefault *ObjectStorage2IntegrationListServicesDefault
-}
-
-// Status returns HTTPResponse.Status
-func (r ListObjectStorageIntegrationServicesResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r ListObjectStorageIntegrationServicesResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type GetObjectStorageIntegrationServiceResponse struct {
-	Body                          []byte
-	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2IntegrationGetService200
-	ApplicationproblemJSONDefault *ObjectStorage2IntegrationGetServiceDefault
-}
-
-// Status returns HTTPResponse.Status
-func (r GetObjectStorageIntegrationServiceResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetObjectStorageIntegrationServiceResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type CreateObjectStorageIntegrationNetworkResponse struct {
-	Body                          []byte
-	HTTPResponse                  *http.Response
-	JSON201                       *ObjectStorage2IntegrationCreateNetwork201
-	ApplicationproblemJSONDefault *ObjectStorage2IntegrationCreateNetworkDefault
-}
-
-// Status returns HTTPResponse.Status
-func (r CreateObjectStorageIntegrationNetworkResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r CreateObjectStorageIntegrationNetworkResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type DeleteObjectStorageIntegrationNetworkResponse struct {
-	Body                          []byte
-	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2IntegrationDeleteNetworkDefault
-}
-
-// Status returns HTTPResponse.Status
-func (r DeleteObjectStorageIntegrationNetworkResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r DeleteObjectStorageIntegrationNetworkResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
 type ListObjectStorageRegionsResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2ListRegions200
-	ApplicationproblemJSONDefault *ObjectStorage2ListRegionsDefault
+	JSON200                       *ObjectStorage2ListObjectStorageRegions200
+	ApplicationproblemJSONDefault *ObjectStorage2ListObjectStorageRegionsDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -9559,8 +14095,8 @@ func (r ListObjectStorageRegionsResponse) StatusCode() int {
 type GetObjectStorageRegionResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2GetRegionDetails200
-	ApplicationproblemJSONDefault *ObjectStorage2GetRegionDetailsDefault
+	JSON200                       *ObjectStorage2GetObjectStorageRegion200
+	ApplicationproblemJSONDefault *ObjectStorage2GetObjectStorageRegionDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -9582,7 +14118,7 @@ func (r GetObjectStorageRegionResponse) StatusCode() int {
 type DeleteObjectStorageResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2DeleteServiceDefault
+	ApplicationproblemJSONDefault *ObjectStorage2DeleteObjectStorageDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -9604,8 +14140,8 @@ func (r DeleteObjectStorageResponse) StatusCode() int {
 type GetObjectStorageResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2GetService200
-	ApplicationproblemJSONDefault *ObjectStorage2GetServiceDefault
+	JSON200                       *GetObjectStorage200
+	ApplicationproblemJSONDefault *ObjectStorage2GetObjectStorageDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -9627,8 +14163,8 @@ func (r GetObjectStorageResponse) StatusCode() int {
 type ModifyObjectStorageResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2ModifyService200
-	ApplicationproblemJSONDefault *ObjectStorage2ModifyServiceDefault
+	JSON200                       *ModifyObjectStorage200
+	ApplicationproblemJSONDefault *ObjectStorage2ModifyObjectStorageDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -9650,8 +14186,8 @@ func (r ModifyObjectStorageResponse) StatusCode() int {
 type ReplaceObjectStorageResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2ReplaceService200
-	ApplicationproblemJSONDefault *ObjectStorage2ReplaceServiceDefault
+	JSON200                       *ReplaceObjectStorage200
+	ApplicationproblemJSONDefault *ObjectStorage2ReplaceObjectStorageDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -9673,8 +14209,8 @@ func (r ReplaceObjectStorageResponse) StatusCode() int {
 type ListObjectStorageBucketMetricsResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2ListBucketMetrics200
-	ApplicationproblemJSONDefault *ObjectStorage2ListBucketMetricsDefault
+	JSON200                       *ObjectStorage2ListObjectStorageBucketMetrics200
+	ApplicationproblemJSONDefault *ObjectStorage2ListObjectStorageBucketMetricsDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -9696,8 +14232,8 @@ func (r ListObjectStorageBucketMetricsResponse) StatusCode() int {
 type CreateObjectStorageBucketResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON201                       *ObjectStorage2CreateBucket201
-	ApplicationproblemJSONDefault *ObjectStorage2CreateBucketDefault
+	JSON201                       *ObjectStorage2CreateObjectStorageBucket201
+	ApplicationproblemJSONDefault *ObjectStorage2CreateObjectStorageBucketDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -9719,7 +14255,7 @@ func (r CreateObjectStorageBucketResponse) StatusCode() int {
 type DeleteObjectStorageBucketResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2DeleteBucketDefault
+	ApplicationproblemJSONDefault *ObjectStorage2DeleteObjectStorageBucketDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -9741,8 +14277,8 @@ func (r DeleteObjectStorageBucketResponse) StatusCode() int {
 type ListObjectStorageCustomDomainsResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2ListCustomDomains200
-	ApplicationproblemJSONDefault *ObjectStorage2ListCustomDomainsDefault
+	JSON200                       *ObjectStorage2ListObjectStorageCustomDomains200
+	ApplicationproblemJSONDefault *ObjectStorage2ListObjectStorageCustomDomainsDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -9764,8 +14300,8 @@ func (r ListObjectStorageCustomDomainsResponse) StatusCode() int {
 type AttachObjectStorageCustomDomainResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON201                       *ObjectStorage2AttachCustomDomain201
-	ApplicationproblemJSONDefault *ObjectStorage2AttachCustomDomainDefault
+	JSON201                       *ObjectStorage2AttachObjectStorageCustomDomain201
+	ApplicationproblemJSONDefault *ObjectStorage2AttachObjectStorageCustomDomainDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -9787,7 +14323,7 @@ func (r AttachObjectStorageCustomDomainResponse) StatusCode() int {
 type DeleteObjectStorageCustomDomainResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2DeleteCustomDomainDefault
+	ApplicationproblemJSONDefault *ObjectStorage2DeleteObjectStorageCustomDomainDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -9809,8 +14345,8 @@ func (r DeleteObjectStorageCustomDomainResponse) StatusCode() int {
 type GetObjectStorageCustomDomainResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2GetCustomDomainDetails200
-	ApplicationproblemJSONDefault *ObjectStorage2GetCustomDomainDetailsDefault
+	JSON200                       *ObjectStorage2GetObjectStorageCustomDomain200
+	ApplicationproblemJSONDefault *ObjectStorage2GetObjectStorageCustomDomainDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -9832,8 +14368,8 @@ func (r GetObjectStorageCustomDomainResponse) StatusCode() int {
 type ModifyObjectStorageCustomDomainResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2ModifyCustomDomain200
-	ApplicationproblemJSONDefault *ObjectStorage2ModifyCustomDomainDefault
+	JSON200                       *ObjectStorage2ModifyObjectStorageCustomDomain200
+	ApplicationproblemJSONDefault *ObjectStorage2ModifyObjectStorageCustomDomainDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -9852,15 +14388,15 @@ func (r ModifyObjectStorageCustomDomainResponse) StatusCode() int {
 	return 0
 }
 
-type GetServiceDomainsResponse struct {
+type ListObjectStorageDomainsResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2GetServiceDomains200
-	ApplicationproblemJSONDefault *ObjectStorage2GetServiceDomainsDefault
+	JSON200                       *ObjectStorage2ListObjectStorageDomains200
+	ApplicationproblemJSONDefault *ObjectStorage2ListObjectStorageDomainsDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r GetServiceDomainsResponse) Status() string {
+func (r ListObjectStorageDomainsResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -9868,7 +14404,7 @@ func (r GetServiceDomainsResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetServiceDomainsResponse) StatusCode() int {
+func (r ListObjectStorageDomainsResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -9878,8 +14414,8 @@ func (r GetServiceDomainsResponse) StatusCode() int {
 type ListObjectStorageGroupsResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2ListGroups200
-	ApplicationproblemJSONDefault *ObjectStorage2ListGroupsDefault
+	JSON200                       *ObjectStorage2ListObjectStorageGroups200
+	ApplicationproblemJSONDefault *ObjectStorage2ListObjectStorageGroupsDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -9901,8 +14437,8 @@ func (r ListObjectStorageGroupsResponse) StatusCode() int {
 type CreateObjectStorageGroupResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON201                       *ObjectStorage2CreateGroup201
-	ApplicationproblemJSONDefault *ObjectStorage2CreateGroupDefault
+	JSON201                       *ObjectStorage2CreateObjectStorageGroup201
+	ApplicationproblemJSONDefault *ObjectStorage2CreateObjectStorageGroupDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -9924,7 +14460,7 @@ func (r CreateObjectStorageGroupResponse) StatusCode() int {
 type DeleteObjectStorageGroupResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2DeleteGroupDefault
+	ApplicationproblemJSONDefault *ObjectStorage2DeleteObjectStorageGroupDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -9946,8 +14482,8 @@ func (r DeleteObjectStorageGroupResponse) StatusCode() int {
 type GetObjectStorageGroupResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2GetGroup200
-	ApplicationproblemJSONDefault *ObjectStorage2GetGroupDefault
+	JSON200                       *ObjectStorage2GetObjectStorageGroup200
+	ApplicationproblemJSONDefault *ObjectStorage2GetObjectStorageGroupDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -9969,8 +14505,8 @@ func (r GetObjectStorageGroupResponse) StatusCode() int {
 type ListObjectStorageGroupInlinePoliciesResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2ListGroupInlinePolicies200
-	ApplicationproblemJSONDefault *ObjectStorage2ListGroupInlinePoliciesDefault
+	JSON200                       *ObjectStorage2ListObjectStorageGroupInlinePolicies200
+	ApplicationproblemJSONDefault *ObjectStorage2ListObjectStorageGroupInlinePoliciesDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -9992,8 +14528,8 @@ func (r ListObjectStorageGroupInlinePoliciesResponse) StatusCode() int {
 type CreateObjectStorageGroupInlinePolicyResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON201                       *ObjectStorage2CreateGroupInlinePolicy201
-	ApplicationproblemJSONDefault *ObjectStorage2CreateGroupInlinePolicyDefault
+	JSON201                       *ObjectStorage2CreateObjectStorageGroupInlinePolicy201
+	ApplicationproblemJSONDefault *ObjectStorage2CreateObjectStorageGroupInlinePolicyDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10015,7 +14551,7 @@ func (r CreateObjectStorageGroupInlinePolicyResponse) StatusCode() int {
 type DeleteObjectStorageGroupInlinePolicyResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2DeleteGroupInlinePolicyDefault
+	ApplicationproblemJSONDefault *ObjectStorage2DeleteObjectStorageGroupInlinePolicyDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10037,8 +14573,8 @@ func (r DeleteObjectStorageGroupInlinePolicyResponse) StatusCode() int {
 type GetObjectStorageGroupInlinePolicyResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2GetGroupInlinePolicy200
-	ApplicationproblemJSONDefault *ObjectStorage2GetGroupInlinePolicyDefault
+	JSON200                       *ObjectStorage2GetObjectStorageGroupInlinePolicy200
+	ApplicationproblemJSONDefault *ObjectStorage2GetObjectStorageGroupInlinePolicyDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10060,8 +14596,8 @@ func (r GetObjectStorageGroupInlinePolicyResponse) StatusCode() int {
 type ListObjectStorageIAMGroupPoliciesResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2ListIAMGroupPolicies200
-	ApplicationproblemJSONDefault *ObjectStorage2ListIAMGroupPoliciesDefault
+	JSON200                       *ObjectStorage2ListObjectStorageIAMGroupPolicies200
+	ApplicationproblemJSONDefault *ObjectStorage2ListObjectStorageIAMGroupPoliciesDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10083,7 +14619,7 @@ func (r ListObjectStorageIAMGroupPoliciesResponse) StatusCode() int {
 type AttachObjectStorageIAMGroupPolicyResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2AttachIAMGroupPolicyDefault
+	ApplicationproblemJSONDefault *ObjectStorage2AttachObjectStorageIAMGroupPolicyDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10105,7 +14641,7 @@ func (r AttachObjectStorageIAMGroupPolicyResponse) StatusCode() int {
 type DetachObjectStorageIAMGroupPolicyResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2DetachIAMGroupPolicyDefault
+	ApplicationproblemJSONDefault *ObjectStorage2DetachObjectStorageIAMGroupPolicyDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10127,7 +14663,7 @@ func (r DetachObjectStorageIAMGroupPolicyResponse) StatusCode() int {
 type RemoveObjectStorageUserFromGroupResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2RemoveUserFromGroupDefault
+	ApplicationproblemJSONDefault *ObjectStorage2RemoveObjectStorageUserFromGroupDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10149,7 +14685,7 @@ func (r RemoveObjectStorageUserFromGroupResponse) StatusCode() int {
 type AttachObjectStorageUserToGroupResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2AttachUserToGroupDefault
+	ApplicationproblemJSONDefault *ObjectStorage2AttachObjectStorageUserToGroupDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10171,8 +14707,8 @@ func (r AttachObjectStorageUserToGroupResponse) StatusCode() int {
 type ListObjectStorageLabelsResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2ListLabels200
-	ApplicationproblemJSONDefault *ObjectStorage2ListLabelsDefault
+	JSON200                       *ObjectStorage2ListObjectStorageLabels200
+	ApplicationproblemJSONDefault *ObjectStorage2ListObjectStorageLabelsDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10194,8 +14730,8 @@ func (r ListObjectStorageLabelsResponse) StatusCode() int {
 type CreateObjectStorageLabelResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON201                       *ObjectStorage2CreateLabel201
-	ApplicationproblemJSONDefault *ObjectStorage2CreateLabelDefault
+	JSON201                       *ObjectStorage2CreateObjectStorageLabel201
+	ApplicationproblemJSONDefault *ObjectStorage2CreateObjectStorageLabelDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10217,7 +14753,7 @@ func (r CreateObjectStorageLabelResponse) StatusCode() int {
 type DeleteObjectStorageLabelResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2DeleteLabelDefault
+	ApplicationproblemJSONDefault *ObjectStorage2DeleteObjectStorageLabelDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10239,8 +14775,8 @@ func (r DeleteObjectStorageLabelResponse) StatusCode() int {
 type GetObjectStorageLabelResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2GetLabelDetails200
-	ApplicationproblemJSONDefault *ObjectStorage2GetLabelDetailsDefault
+	JSON200                       *ObjectStorage2GetObjectStorageLabel200
+	ApplicationproblemJSONDefault *ObjectStorage2GetObjectStorageLabelDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10262,8 +14798,8 @@ func (r GetObjectStorageLabelResponse) StatusCode() int {
 type ModifyObjectStorageLabelResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2ModifyLabel200
-	ApplicationproblemJSONDefault *ObjectStorage2ModifyLabelDefault
+	JSON200                       *ObjectStorage2ModifyObjectStorageLabel200
+	ApplicationproblemJSONDefault *ObjectStorage2ModifyObjectStorageLabelDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10285,8 +14821,8 @@ func (r ModifyObjectStorageLabelResponse) StatusCode() int {
 type GetObjectStorageMetricsResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2GetServiceMetrics200
-	ApplicationproblemJSONDefault *ObjectStorage2GetServiceMetricsDefault
+	JSON200                       *ObjectStorage2GetObjectStorageMetrics200
+	ApplicationproblemJSONDefault *ObjectStorage2GetObjectStorageMetricsDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10308,8 +14844,8 @@ func (r GetObjectStorageMetricsResponse) StatusCode() int {
 type ListObjectStorageMetricsSeriesResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2ListServiceMetricsSeries200
-	ApplicationproblemJSONDefault *ObjectStorage2ListServiceMetricsSeriesDefault
+	JSON200                       *ObjectStorage2ListObjectStorageMetricsSeries200
+	ApplicationproblemJSONDefault *ObjectStorage2ListObjectStorageMetricsSeriesDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10331,8 +14867,8 @@ func (r ListObjectStorageMetricsSeriesResponse) StatusCode() int {
 type ListObjectStorageNetworksResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2ListNetworks200
-	ApplicationproblemJSONDefault *ObjectStorage2ListNetworksDefault
+	JSON200                       *ObjectStorage2ListObjectStorageNetworks200
+	ApplicationproblemJSONDefault *ObjectStorage2ListObjectStorageNetworksDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10354,8 +14890,8 @@ func (r ListObjectStorageNetworksResponse) StatusCode() int {
 type CreateObjectStorageNetworkResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON201                       *ObjectStorage2CreateNetwork201
-	ApplicationproblemJSONDefault *ObjectStorage2CreateNetworkDefault
+	JSON201                       *ObjectStorage2CreateObjectStorageNetwork201
+	ApplicationproblemJSONDefault *ObjectStorage2CreateObjectStorageNetworkDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10377,7 +14913,7 @@ func (r CreateObjectStorageNetworkResponse) StatusCode() int {
 type DeleteObjectStorageNetworkResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2DeleteNetworkDefault
+	ApplicationproblemJSONDefault *ObjectStorage2DeleteObjectStorageNetworkDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10399,8 +14935,8 @@ func (r DeleteObjectStorageNetworkResponse) StatusCode() int {
 type GetObjectStorageNetworkResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2GetNetwork200
-	ApplicationproblemJSONDefault *ObjectStorage2GetNetworkDefault
+	JSON200                       *ObjectStorage2GetObjectStorageNetwork200
+	ApplicationproblemJSONDefault *ObjectStorage2GetObjectStorageNetworkDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10422,8 +14958,8 @@ func (r GetObjectStorageNetworkResponse) StatusCode() int {
 type ListObjectStoragePoliciesResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2ListPolicies200
-	ApplicationproblemJSONDefault *ObjectStorage2ListPoliciesDefault
+	JSON200                       *ObjectStorage2ListObjectStoragePolicies200
+	ApplicationproblemJSONDefault *ObjectStorage2ListObjectStoragePoliciesDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10445,8 +14981,8 @@ func (r ListObjectStoragePoliciesResponse) StatusCode() int {
 type CreateObjectStoragePolicyResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON201                       *ObjectStorage2CreatePolicy201
-	ApplicationproblemJSONDefault *ObjectStorage2CreatePolicyDefault
+	JSON201                       *ObjectStorage2CreateObjectStoragePolicy201
+	ApplicationproblemJSONDefault *ObjectStorage2CreateObjectStoragePolicyDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10468,7 +15004,7 @@ func (r CreateObjectStoragePolicyResponse) StatusCode() int {
 type DeleteObjectStoragePolicyResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2DeletePolicyDefault
+	ApplicationproblemJSONDefault *ObjectStorage2DeleteObjectStoragePolicyDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10490,8 +15026,8 @@ func (r DeleteObjectStoragePolicyResponse) StatusCode() int {
 type GetObjectStoragePolicyResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2GetPolicyDetails200
-	ApplicationproblemJSONDefault *ObjectStorage2GetPolicyDetailsDefault
+	JSON200                       *ObjectStorage2GetObjectStoragePolicy200
+	ApplicationproblemJSONDefault *ObjectStorage2GetObjectStoragePolicyDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10513,8 +15049,8 @@ func (r GetObjectStoragePolicyResponse) StatusCode() int {
 type SetObjectStorageDefaultPolicyVersionResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2SetDefaultPolicyVersion200
-	ApplicationproblemJSONDefault *ObjectStorage2SetDefaultPolicyVersionDefault
+	JSON200                       *ObjectStorage2SetObjectStorageDefaultPolicyVersion200
+	ApplicationproblemJSONDefault *ObjectStorage2SetObjectStorageDefaultPolicyVersionDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10536,8 +15072,8 @@ func (r SetObjectStorageDefaultPolicyVersionResponse) StatusCode() int {
 type ListObjectStoragePolicyVersionsResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2ListPolicyVersions200
-	ApplicationproblemJSONDefault *ObjectStorage2ListPolicyVersionsDefault
+	JSON200                       *ObjectStorage2ListObjectStoragePolicyVersions200
+	ApplicationproblemJSONDefault *ObjectStorage2ListObjectStoragePolicyVersionsDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10559,8 +15095,8 @@ func (r ListObjectStoragePolicyVersionsResponse) StatusCode() int {
 type CreateObjectStoragePolicyVersionResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON201                       *ObjectStorage2CreatePolicyVersion201
-	ApplicationproblemJSONDefault *ObjectStorage2CreatePolicyVersionDefault
+	JSON201                       *ObjectStorage2CreateObjectStoragePolicyVersion201
+	ApplicationproblemJSONDefault *ObjectStorage2CreateObjectStoragePolicyVersionDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10582,7 +15118,7 @@ func (r CreateObjectStoragePolicyVersionResponse) StatusCode() int {
 type DeleteObjectStoragePolicyVersionResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2DeletePolicyVersionDefault
+	ApplicationproblemJSONDefault *ObjectStorage2DeleteObjectStoragePolicyVersionDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10604,8 +15140,8 @@ func (r DeleteObjectStoragePolicyVersionResponse) StatusCode() int {
 type GetObjectStoragePolicyVersionResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2GetPolicyVersion200
-	ApplicationproblemJSONDefault *ObjectStorage2GetPolicyVersionDefault
+	JSON200                       *ObjectStorage2GetObjectStoragePolicyVersion200
+	ApplicationproblemJSONDefault *ObjectStorage2GetObjectStoragePolicyVersionDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10627,8 +15163,8 @@ func (r GetObjectStoragePolicyVersionResponse) StatusCode() int {
 type ListObjectStorageRolesResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2ListRoles200
-	ApplicationproblemJSONDefault *ObjectStorage2ListRolesDefault
+	JSON200                       *ObjectStorage2ListObjectStorageRoles200
+	ApplicationproblemJSONDefault *ObjectStorage2ListObjectStorageRolesDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10650,8 +15186,8 @@ func (r ListObjectStorageRolesResponse) StatusCode() int {
 type CreateObjectStorageRoleResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON201                       *ObjectStorage2CreateRole201
-	ApplicationproblemJSONDefault *ObjectStorage2CreateRoleDefault
+	JSON201                       *ObjectStorage2CreateObjectStorageRole201
+	ApplicationproblemJSONDefault *ObjectStorage2CreateObjectStorageRoleDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10673,7 +15209,7 @@ func (r CreateObjectStorageRoleResponse) StatusCode() int {
 type DeleteObjectStorageRoleResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2DeleteRoleDefault
+	ApplicationproblemJSONDefault *ObjectStorage2DeleteObjectStorageRoleDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10695,8 +15231,8 @@ func (r DeleteObjectStorageRoleResponse) StatusCode() int {
 type GetObjectStorageRoleResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2GetRole200
-	ApplicationproblemJSONDefault *ObjectStorage2GetRoleDefault
+	JSON200                       *ObjectStorage2GetObjectStorageRole200
+	ApplicationproblemJSONDefault *ObjectStorage2GetObjectStorageRoleDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10718,8 +15254,8 @@ func (r GetObjectStorageRoleResponse) StatusCode() int {
 type UpdateObjectStorageRoleResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2UpdateRole200
-	ApplicationproblemJSONDefault *ObjectStorage2UpdateRoleDefault
+	JSON200                       *ObjectStorage2UpdateObjectStorageRole200
+	ApplicationproblemJSONDefault *ObjectStorage2UpdateObjectStorageRoleDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10741,8 +15277,8 @@ func (r UpdateObjectStorageRoleResponse) StatusCode() int {
 type AssumeObjectStorageRolePolicyResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2AssumeRolePolicy200
-	ApplicationproblemJSONDefault *ObjectStorage2AssumeRolePolicyDefault
+	JSON200                       *ObjectStorage2AssumeObjectStorageRolePolicy200
+	ApplicationproblemJSONDefault *ObjectStorage2AssumeObjectStorageRolePolicyDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10764,8 +15300,8 @@ func (r AssumeObjectStorageRolePolicyResponse) StatusCode() int {
 type ListObjectStorageRoleInlinePoliciesResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2ListRoleInlinePolicies200
-	ApplicationproblemJSONDefault *ObjectStorage2ListRoleInlinePoliciesDefault
+	JSON200                       *ObjectStorage2ListObjectStorageRoleInlinePolicies200
+	ApplicationproblemJSONDefault *ObjectStorage2ListObjectStorageRoleInlinePoliciesDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10787,8 +15323,8 @@ func (r ListObjectStorageRoleInlinePoliciesResponse) StatusCode() int {
 type CreateObjectStorageRoleInlinePolicyResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON201                       *ObjectStorage2CreateRoleInlinePolicy201
-	ApplicationproblemJSONDefault *ObjectStorage2CreateRoleInlinePolicyDefault
+	JSON201                       *ObjectStorage2CreateObjectStorageRoleInlinePolicy201
+	ApplicationproblemJSONDefault *ObjectStorage2CreateObjectStorageRoleInlinePolicyDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10810,7 +15346,7 @@ func (r CreateObjectStorageRoleInlinePolicyResponse) StatusCode() int {
 type DeleteObjectStorageRoleInlinePolicyResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2DeleteRoleInlinePolicyDefault
+	ApplicationproblemJSONDefault *ObjectStorage2DeleteObjectStorageRoleInlinePolicyDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10832,8 +15368,8 @@ func (r DeleteObjectStorageRoleInlinePolicyResponse) StatusCode() int {
 type GetObjectStorageRoleInlinePolicyResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2GetRoleInlinePolicy200
-	ApplicationproblemJSONDefault *ObjectStorage2GetRoleInlinePolicyDefault
+	JSON200                       *ObjectStorage2GetObjectStorageRoleInlinePolicy200
+	ApplicationproblemJSONDefault *ObjectStorage2GetObjectStorageRoleInlinePolicyDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10855,7 +15391,7 @@ func (r GetObjectStorageRoleInlinePolicyResponse) StatusCode() int {
 type DeleteObjectStorageRolePermissionsBoundaryResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2DeleteRolePermissionsBoundaryDefault
+	ApplicationproblemJSONDefault *ObjectStorage2DeleteObjectStorageRolePermissionsBoundaryDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10877,8 +15413,8 @@ func (r DeleteObjectStorageRolePermissionsBoundaryResponse) StatusCode() int {
 type CreateObjectStorageRolePermissionsBoundaryResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2CreateRolePermissionsBoundary200
-	ApplicationproblemJSONDefault *ObjectStorage2CreateRolePermissionsBoundaryDefault
+	JSON200                       *ObjectStorage2CreateObjectStorageRolePermissionsBoundary200
+	ApplicationproblemJSONDefault *ObjectStorage2CreateObjectStorageRolePermissionsBoundaryDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10900,8 +15436,8 @@ func (r CreateObjectStorageRolePermissionsBoundaryResponse) StatusCode() int {
 type ListObjectStorageAttachedRolePoliciesResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2ListAttachedRolePolicies200
-	ApplicationproblemJSONDefault *ObjectStorage2ListAttachedRolePoliciesDefault
+	JSON200                       *ObjectStorage2ListObjectStorageAttachedRolePolicies200
+	ApplicationproblemJSONDefault *ObjectStorage2ListObjectStorageAttachedRolePoliciesDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10923,7 +15459,7 @@ func (r ListObjectStorageAttachedRolePoliciesResponse) StatusCode() int {
 type AttachObjectStoragePolicyToRoleResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2AttachPolicyToRoleDefault
+	ApplicationproblemJSONDefault *ObjectStorage2AttachObjectStoragePolicyToRoleDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10945,7 +15481,7 @@ func (r AttachObjectStoragePolicyToRoleResponse) StatusCode() int {
 type DetachObjectStoragePolicyFromRoleResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2DetachPolicyFromRoleDefault
+	ApplicationproblemJSONDefault *ObjectStorage2DetachObjectStoragePolicyFromRoleDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10967,8 +15503,8 @@ func (r DetachObjectStoragePolicyFromRoleResponse) StatusCode() int {
 type GetObjectStorageRoleTagsResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2GetRoleTags200
-	ApplicationproblemJSONDefault *ObjectStorage2GetRoleTagsDefault
+	JSON200                       *ObjectStorage2GetObjectStorageRoleTags200
+	ApplicationproblemJSONDefault *ObjectStorage2GetObjectStorageRoleTagsDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -10990,8 +15526,8 @@ func (r GetObjectStorageRoleTagsResponse) StatusCode() int {
 type ReplaceObjectStorageRoleTagsResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2ReplaceRoleTags200
-	ApplicationproblemJSONDefault *ObjectStorage2ReplaceRoleTagsDefault
+	JSON200                       *ObjectStorage2ReplaceObjectStorageRoleTags200
+	ApplicationproblemJSONDefault *ObjectStorage2ReplaceObjectStorageRoleTagsDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -11013,7 +15549,7 @@ func (r ReplaceObjectStorageRoleTagsResponse) StatusCode() int {
 type DeleteObjectStorageRoleTagResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2DeleteRoleTagDefault
+	ApplicationproblemJSONDefault *ObjectStorage2DeleteObjectStorageRoleTagDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -11032,14 +15568,14 @@ func (r DeleteObjectStorageRoleTagResponse) StatusCode() int {
 	return 0
 }
 
-type ListStaticWebsitesResponse struct {
+type ListObjectStorageStaticWebsitesResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2ListStaticWebsitesDefault
+	ApplicationproblemJSONDefault *ObjectStorage2ListObjectStorageStaticWebsitesDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r ListStaticWebsitesResponse) Status() string {
+func (r ListObjectStorageStaticWebsitesResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -11047,22 +15583,22 @@ func (r ListStaticWebsitesResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r ListStaticWebsitesResponse) StatusCode() int {
+func (r ListObjectStorageStaticWebsitesResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type CreateStaticWebsiteResponse struct {
+type CreateObjectStorageStaticWebsiteResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON201                       *ObjectStorage2CreateStaticWebsite201
-	ApplicationproblemJSONDefault *ObjectStorage2CreateStaticWebsiteDefault
+	JSON201                       *ObjectStorage2CreateObjectStorageStaticWebsite201
+	ApplicationproblemJSONDefault *ObjectStorage2CreateObjectStorageStaticWebsiteDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r CreateStaticWebsiteResponse) Status() string {
+func (r CreateObjectStorageStaticWebsiteResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -11070,21 +15606,21 @@ func (r CreateStaticWebsiteResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r CreateStaticWebsiteResponse) StatusCode() int {
+func (r CreateObjectStorageStaticWebsiteResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type DeleteStaticWebsiteResponse struct {
+type DeleteObjectStorageStaticWebsiteResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2DeleteStaticWebsiteDefault
+	ApplicationproblemJSONDefault *ObjectStorage2DeleteObjectStorageStaticWebsiteDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r DeleteStaticWebsiteResponse) Status() string {
+func (r DeleteObjectStorageStaticWebsiteResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -11092,22 +15628,22 @@ func (r DeleteStaticWebsiteResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r DeleteStaticWebsiteResponse) StatusCode() int {
+func (r DeleteObjectStorageStaticWebsiteResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetStaticWebsiteResponse struct {
+type GetObjectStorageStaticWebsiteResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2GetStaticWebsite200
-	ApplicationproblemJSONDefault *ObjectStorage2GetStaticWebsiteDefault
+	JSON200                       *ObjectStorage2GetObjectStorageStaticWebsite200
+	ApplicationproblemJSONDefault *ObjectStorage2GetObjectStorageStaticWebsiteDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r GetStaticWebsiteResponse) Status() string {
+func (r GetObjectStorageStaticWebsiteResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -11115,22 +15651,22 @@ func (r GetStaticWebsiteResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetStaticWebsiteResponse) StatusCode() int {
+func (r GetObjectStorageStaticWebsiteResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type ModifyStaticWebsiteResponse struct {
+type ModifyObjectStorageStaticWebsiteResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2ModifyStaticWebsite200
-	ApplicationproblemJSONDefault *ObjectStorage2ModifyStaticWebsiteDefault
+	JSON200                       *ObjectStorage2ModifyObjectStorageStaticWebsite200
+	ApplicationproblemJSONDefault *ObjectStorage2ModifyObjectStorageStaticWebsiteDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r ModifyStaticWebsiteResponse) Status() string {
+func (r ModifyObjectStorageStaticWebsiteResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -11138,7 +15674,7 @@ func (r ModifyStaticWebsiteResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r ModifyStaticWebsiteResponse) StatusCode() int {
+func (r ModifyObjectStorageStaticWebsiteResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -11148,8 +15684,8 @@ func (r ModifyStaticWebsiteResponse) StatusCode() int {
 type ListObjectStorageUsersResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2ListUsers200
-	ApplicationproblemJSONDefault *ObjectStorage2ListUsersDefault
+	JSON200                       *ObjectStorage2ListObjectStorageUsers200
+	ApplicationproblemJSONDefault *ObjectStorage2ListObjectStorageUsersDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -11171,8 +15707,8 @@ func (r ListObjectStorageUsersResponse) StatusCode() int {
 type CreateObjectStorageUserResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON201                       *ObjectStorage2CreateUser201
-	ApplicationproblemJSONDefault *ObjectStorage2CreateUserDefault
+	JSON201                       *ObjectStorage2CreateObjectStorageUser201
+	ApplicationproblemJSONDefault *ObjectStorage2CreateObjectStorageUserDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -11194,7 +15730,7 @@ func (r CreateObjectStorageUserResponse) StatusCode() int {
 type DeleteObjectStorageUserResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2DeleteUserDefault
+	ApplicationproblemJSONDefault *ObjectStorage2DeleteObjectStorageUserDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -11216,8 +15752,8 @@ func (r DeleteObjectStorageUserResponse) StatusCode() int {
 type GetObjectStorageUserResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2GetUserDetails200
-	ApplicationproblemJSONDefault *ObjectStorage2GetUserDetailsDefault
+	JSON200                       *ObjectStorage2GetObjectStorageUser200
+	ApplicationproblemJSONDefault *ObjectStorage2GetObjectStorageUserDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -11239,8 +15775,8 @@ func (r GetObjectStorageUserResponse) StatusCode() int {
 type ListObjectStorageAccessKeysResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2ListAccessKeys200
-	ApplicationproblemJSONDefault *ObjectStorage2ListAccessKeysDefault
+	JSON200                       *ObjectStorage2ListObjectStorageAccessKeys200
+	ApplicationproblemJSONDefault *ObjectStorage2ListObjectStorageAccessKeysDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -11262,8 +15798,8 @@ func (r ListObjectStorageAccessKeysResponse) StatusCode() int {
 type CreateObjectStorageAccessKeyResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON201                       *ObjectStorage2CreateAccessKey201
-	ApplicationproblemJSONDefault *ObjectStorage2CreateAccessKeyDefault
+	JSON201                       *ObjectStorage2CreateObjectStorageAccessKey201
+	ApplicationproblemJSONDefault *ObjectStorage2CreateObjectStorageAccessKeyDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -11285,7 +15821,7 @@ func (r CreateObjectStorageAccessKeyResponse) StatusCode() int {
 type DeleteObjectStorageAccessKeyResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2DeleteAccessKeyDefault
+	ApplicationproblemJSONDefault *ObjectStorage2DeleteObjectStorageAccessKeyDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -11307,8 +15843,8 @@ func (r DeleteObjectStorageAccessKeyResponse) StatusCode() int {
 type GetObjectStorageAccessKeyDetailsResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2GetAccessKeyDetails200
-	ApplicationproblemJSONDefault *ObjectStorage2GetAccessKeyDetailsDefault
+	JSON200                       *ObjectStorage2GetObjectStorageAccessKeyDetails200
+	ApplicationproblemJSONDefault *ObjectStorage2GetObjectStorageAccessKeyDetailsDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -11330,8 +15866,8 @@ func (r GetObjectStorageAccessKeyDetailsResponse) StatusCode() int {
 type ModifyObjectStorageAccessKeyDetailsResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2ModifyAccessKeyDetails200
-	ApplicationproblemJSONDefault *ObjectStorage2ModifyAccessKeyDetailsDefault
+	JSON200                       *ObjectStorage2ModifyObjectStorageAccessKeyDetails200
+	ApplicationproblemJSONDefault *ObjectStorage2ModifyObjectStorageAccessKeyDetailsDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -11353,8 +15889,8 @@ func (r ModifyObjectStorageAccessKeyDetailsResponse) StatusCode() int {
 type ListObjectStorageUserInlinePoliciesResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2ListUserInlinePolicies200
-	ApplicationproblemJSONDefault *ObjectStorage2ListUserInlinePoliciesDefault
+	JSON200                       *ObjectStorage2ListObjectStorageUserInlinePolicies200
+	ApplicationproblemJSONDefault *ObjectStorage2ListObjectStorageUserInlinePoliciesDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -11376,8 +15912,8 @@ func (r ListObjectStorageUserInlinePoliciesResponse) StatusCode() int {
 type CreateObjectStorageUserInlinePolicyResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON201                       *ObjectStorage2CreateUserInlinePolicy201
-	ApplicationproblemJSONDefault *ObjectStorage2CreateUserInlinePolicyDefault
+	JSON201                       *ObjectStorage2CreateObjectStorageUserInlinePolicy201
+	ApplicationproblemJSONDefault *ObjectStorage2CreateObjectStorageUserInlinePolicyDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -11399,7 +15935,7 @@ func (r CreateObjectStorageUserInlinePolicyResponse) StatusCode() int {
 type DeleteObjectStorageUserInlinePolicyResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2DeleteUserInlinePolicyDefault
+	ApplicationproblemJSONDefault *ObjectStorage2DeleteObjectStorageUserInlinePolicyDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -11421,8 +15957,8 @@ func (r DeleteObjectStorageUserInlinePolicyResponse) StatusCode() int {
 type GetObjectStorageUserInlinePolicyResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2GetUserInlinePolicy200
-	ApplicationproblemJSONDefault *ObjectStorage2GetUserInlinePolicyDefault
+	JSON200                       *ObjectStorage2GetObjectStorageUserInlinePolicy200
+	ApplicationproblemJSONDefault *ObjectStorage2GetObjectStorageUserInlinePolicyDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -11444,7 +15980,7 @@ func (r GetObjectStorageUserInlinePolicyResponse) StatusCode() int {
 type DeleteObjectStorageUserPermissionsBoundaryResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2DeleteUserPermissionsBoundaryDefault
+	ApplicationproblemJSONDefault *ObjectStorage2DeleteObjectStorageUserPermissionsBoundaryDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -11466,8 +16002,8 @@ func (r DeleteObjectStorageUserPermissionsBoundaryResponse) StatusCode() int {
 type CreateObjectStorageUserPermissionsBoundaryResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2CreateUserPermissionsBoundary200
-	ApplicationproblemJSONDefault *ObjectStorage2CreateUserPermissionsBoundaryDefault
+	JSON200                       *ObjectStorage2CreateObjectStorageUserPermissionsBoundary200
+	ApplicationproblemJSONDefault *ObjectStorage2CreateObjectStorageUserPermissionsBoundaryDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -11489,8 +16025,8 @@ func (r CreateObjectStorageUserPermissionsBoundaryResponse) StatusCode() int {
 type ListObjectStorageAttachedUserPoliciesResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2ListAttachedUserPolicies200
-	ApplicationproblemJSONDefault *ObjectStorage2ListAttachedUserPoliciesDefault
+	JSON200                       *ObjectStorage2ListObjectStorageAttachedUserPolicies200
+	ApplicationproblemJSONDefault *ObjectStorage2ListObjectStorageAttachedUserPoliciesDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -11512,7 +16048,7 @@ func (r ListObjectStorageAttachedUserPoliciesResponse) StatusCode() int {
 type AttachObjectStorageUserPolicyResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2AttachUserPolicyDefault
+	ApplicationproblemJSONDefault *ObjectStorage2AttachObjectStorageUserPolicyDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -11534,7 +16070,7 @@ func (r AttachObjectStorageUserPolicyResponse) StatusCode() int {
 type DetachObjectStorageUserPolicyResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2DetachUserPolicyDefault
+	ApplicationproblemJSONDefault *ObjectStorage2DetachObjectStorageUserPolicyDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -11556,8 +16092,8 @@ func (r DetachObjectStorageUserPolicyResponse) StatusCode() int {
 type GetObjectStorageUserTagsResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2GetUserTags200
-	ApplicationproblemJSONDefault *ObjectStorage2GetUserTagsDefault
+	JSON200                       *ObjectStorage2GetObjectStorageUserTags200
+	ApplicationproblemJSONDefault *ObjectStorage2GetObjectStorageUserTagsDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -11579,8 +16115,8 @@ func (r GetObjectStorageUserTagsResponse) StatusCode() int {
 type ReplaceObjectStorageUserTagsResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *ObjectStorage2ReplaceUserTags200
-	ApplicationproblemJSONDefault *ObjectStorage2ReplaceUserTagsDefault
+	JSON200                       *ObjectStorage2ReplaceObjectStorageUserTags200
+	ApplicationproblemJSONDefault *ObjectStorage2ReplaceObjectStorageUserTagsDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -11602,7 +16138,7 @@ func (r ReplaceObjectStorageUserTagsResponse) StatusCode() int {
 type DeleteObjectStorageUserTagResponse struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *ObjectStorage2DeleteUserTagDefault
+	ApplicationproblemJSONDefault *ObjectStorage2DeleteObjectStorageUserTagDefault
 }
 
 // Status returns HTTPResponse.Status
@@ -11619,6 +16155,276 @@ func (r DeleteObjectStorageUserTagResponse) StatusCode() int {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
+}
+
+// ListFirewallRulesetsWithResponse request returning *ListFirewallRulesetsResponse
+func (c *ClientWithResponses) ListFirewallRulesetsWithResponse(ctx context.Context, params *ListFirewallRulesetsParams, reqEditors ...RequestEditorFn) (*ListFirewallRulesetsResponse, error) {
+	rsp, err := c.ListFirewallRulesets(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListFirewallRulesetsResponse(rsp)
+}
+
+// CreateFirewallRulesetWithBodyWithResponse request with arbitrary body returning *CreateFirewallRulesetResponse
+func (c *ClientWithResponses) CreateFirewallRulesetWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateFirewallRulesetResponse, error) {
+	rsp, err := c.CreateFirewallRulesetWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateFirewallRulesetResponse(rsp)
+}
+
+func (c *ClientWithResponses) CreateFirewallRulesetWithResponse(ctx context.Context, body CreateFirewallRulesetJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateFirewallRulesetResponse, error) {
+	rsp, err := c.CreateFirewallRuleset(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateFirewallRulesetResponse(rsp)
+}
+
+// AdminListServerFirewallRulesWithBodyWithResponse request with arbitrary body returning *AdminListServerFirewallRulesResponse
+func (c *ClientWithResponses) AdminListServerFirewallRulesWithBodyWithResponse(ctx context.Context, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AdminListServerFirewallRulesResponse, error) {
+	rsp, err := c.AdminListServerFirewallRulesWithBody(ctx, serverUuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAdminListServerFirewallRulesResponse(rsp)
+}
+
+func (c *ClientWithResponses) AdminListServerFirewallRulesWithResponse(ctx context.Context, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, body AdminListServerFirewallRulesJSONRequestBody, reqEditors ...RequestEditorFn) (*AdminListServerFirewallRulesResponse, error) {
+	rsp, err := c.AdminListServerFirewallRules(ctx, serverUuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAdminListServerFirewallRulesResponse(rsp)
+}
+
+// ListServerFirewallRuleWithResponse request returning *ListServerFirewallRuleResponse
+func (c *ClientWithResponses) ListServerFirewallRuleWithResponse(ctx context.Context, serverUuid FirewallRulesetListServerFirewallRuleServerUuid, params *ListServerFirewallRuleParams, reqEditors ...RequestEditorFn) (*ListServerFirewallRuleResponse, error) {
+	rsp, err := c.ListServerFirewallRule(ctx, serverUuid, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListServerFirewallRuleResponse(rsp)
+}
+
+// CreateServerFirewallRuleWithBodyWithResponse request with arbitrary body returning *CreateServerFirewallRuleResponse
+func (c *ClientWithResponses) CreateServerFirewallRuleWithBodyWithResponse(ctx context.Context, serverUuid FirewallRulesetCreateServerFirewallRuleServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateServerFirewallRuleResponse, error) {
+	rsp, err := c.CreateServerFirewallRuleWithBody(ctx, serverUuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateServerFirewallRuleResponse(rsp)
+}
+
+func (c *ClientWithResponses) CreateServerFirewallRuleWithResponse(ctx context.Context, serverUuid FirewallRulesetCreateServerFirewallRuleServerUuid, body CreateServerFirewallRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateServerFirewallRuleResponse, error) {
+	rsp, err := c.CreateServerFirewallRule(ctx, serverUuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateServerFirewallRuleResponse(rsp)
+}
+
+// CreateMultipleServerFirewallRulesWithBodyWithResponse request with arbitrary body returning *CreateMultipleServerFirewallRulesResponse
+func (c *ClientWithResponses) CreateMultipleServerFirewallRulesWithBodyWithResponse(ctx context.Context, serverUuid FirewallRulesetCreateMultipleServerFirewallRulesServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateMultipleServerFirewallRulesResponse, error) {
+	rsp, err := c.CreateMultipleServerFirewallRulesWithBody(ctx, serverUuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateMultipleServerFirewallRulesResponse(rsp)
+}
+
+func (c *ClientWithResponses) CreateMultipleServerFirewallRulesWithResponse(ctx context.Context, serverUuid FirewallRulesetCreateMultipleServerFirewallRulesServerUuid, body CreateMultipleServerFirewallRulesJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateMultipleServerFirewallRulesResponse, error) {
+	rsp, err := c.CreateMultipleServerFirewallRules(ctx, serverUuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateMultipleServerFirewallRulesResponse(rsp)
+}
+
+// DeleteServerFirewallRuleWithResponse request returning *DeleteServerFirewallRuleResponse
+func (c *ClientWithResponses) DeleteServerFirewallRuleWithResponse(ctx context.Context, serverUuid FirewallRulesetDeleteServerFirewallRuleServerUuid, position FirewallRulesetDeleteServerFirewallRulePosition, reqEditors ...RequestEditorFn) (*DeleteServerFirewallRuleResponse, error) {
+	rsp, err := c.DeleteServerFirewallRule(ctx, serverUuid, position, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteServerFirewallRuleResponse(rsp)
+}
+
+// GetServerFirewallRuleWithResponse request returning *GetServerFirewallRuleResponse
+func (c *ClientWithResponses) GetServerFirewallRuleWithResponse(ctx context.Context, serverUuid FirewallRulesetGetServerFirewallRuleServerUuid, position FirewallRulesetGetServerFirewallRulePosition, reqEditors ...RequestEditorFn) (*GetServerFirewallRuleResponse, error) {
+	rsp, err := c.GetServerFirewallRule(ctx, serverUuid, position, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetServerFirewallRuleResponse(rsp)
+}
+
+// DeleteFirewallRulesetWithResponse request returning *DeleteFirewallRulesetResponse
+func (c *ClientWithResponses) DeleteFirewallRulesetWithResponse(ctx context.Context, rulesetUuid DeleteFirewallRulesetRulesetUuid, reqEditors ...RequestEditorFn) (*DeleteFirewallRulesetResponse, error) {
+	rsp, err := c.DeleteFirewallRuleset(ctx, rulesetUuid, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteFirewallRulesetResponse(rsp)
+}
+
+// GetFirewallRulesetWithResponse request returning *GetFirewallRulesetResponse
+func (c *ClientWithResponses) GetFirewallRulesetWithResponse(ctx context.Context, rulesetUuid GetFirewallRulesetRulesetUuid, reqEditors ...RequestEditorFn) (*GetFirewallRulesetResponse, error) {
+	rsp, err := c.GetFirewallRuleset(ctx, rulesetUuid, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetFirewallRulesetResponse(rsp)
+}
+
+// ModifyFirewallRulesetWithBodyWithResponse request with arbitrary body returning *ModifyFirewallRulesetResponse
+func (c *ClientWithResponses) ModifyFirewallRulesetWithBodyWithResponse(ctx context.Context, rulesetUuid ModifyFirewallRulesetRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyFirewallRulesetResponse, error) {
+	rsp, err := c.ModifyFirewallRulesetWithBody(ctx, rulesetUuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseModifyFirewallRulesetResponse(rsp)
+}
+
+func (c *ClientWithResponses) ModifyFirewallRulesetWithResponse(ctx context.Context, rulesetUuid ModifyFirewallRulesetRulesetUuid, body ModifyFirewallRulesetJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyFirewallRulesetResponse, error) {
+	rsp, err := c.ModifyFirewallRuleset(ctx, rulesetUuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseModifyFirewallRulesetResponse(rsp)
+}
+
+// ListFirewallRulesetLabelsWithResponse request returning *ListFirewallRulesetLabelsResponse
+func (c *ClientWithResponses) ListFirewallRulesetLabelsWithResponse(ctx context.Context, rulesetUuid ListFirewallRulesetLabelsRulesetUuid, reqEditors ...RequestEditorFn) (*ListFirewallRulesetLabelsResponse, error) {
+	rsp, err := c.ListFirewallRulesetLabels(ctx, rulesetUuid, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListFirewallRulesetLabelsResponse(rsp)
+}
+
+// CreateFirewallRulesetLabelWithBodyWithResponse request with arbitrary body returning *CreateFirewallRulesetLabelResponse
+func (c *ClientWithResponses) CreateFirewallRulesetLabelWithBodyWithResponse(ctx context.Context, rulesetUuid CreateFirewallRulesetLabelRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateFirewallRulesetLabelResponse, error) {
+	rsp, err := c.CreateFirewallRulesetLabelWithBody(ctx, rulesetUuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateFirewallRulesetLabelResponse(rsp)
+}
+
+func (c *ClientWithResponses) CreateFirewallRulesetLabelWithResponse(ctx context.Context, rulesetUuid CreateFirewallRulesetLabelRulesetUuid, body CreateFirewallRulesetLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateFirewallRulesetLabelResponse, error) {
+	rsp, err := c.CreateFirewallRulesetLabel(ctx, rulesetUuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateFirewallRulesetLabelResponse(rsp)
+}
+
+// DeleteFirewallRulesetLabelWithResponse request returning *DeleteFirewallRulesetLabelResponse
+func (c *ClientWithResponses) DeleteFirewallRulesetLabelWithResponse(ctx context.Context, rulesetUuid DeleteFirewallRulesetLabelRulesetUuid, labelKey DeleteFirewallRulesetLabelLabelKey, reqEditors ...RequestEditorFn) (*DeleteFirewallRulesetLabelResponse, error) {
+	rsp, err := c.DeleteFirewallRulesetLabel(ctx, rulesetUuid, labelKey, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteFirewallRulesetLabelResponse(rsp)
+}
+
+// GetFirewallRulesetLabelWithResponse request returning *GetFirewallRulesetLabelResponse
+func (c *ClientWithResponses) GetFirewallRulesetLabelWithResponse(ctx context.Context, rulesetUuid GetFirewallRulesetLabelRulesetUuid, labelKey GetFirewallRulesetLabelLabelKey, reqEditors ...RequestEditorFn) (*GetFirewallRulesetLabelResponse, error) {
+	rsp, err := c.GetFirewallRulesetLabel(ctx, rulesetUuid, labelKey, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetFirewallRulesetLabelResponse(rsp)
+}
+
+// ModifyFirewallRulesetLabelWithBodyWithResponse request with arbitrary body returning *ModifyFirewallRulesetLabelResponse
+func (c *ClientWithResponses) ModifyFirewallRulesetLabelWithBodyWithResponse(ctx context.Context, rulesetUuid ModifyFirewallRulesetLabelRulesetUuid, labelKey ModifyFirewallRulesetLabelLabelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyFirewallRulesetLabelResponse, error) {
+	rsp, err := c.ModifyFirewallRulesetLabelWithBody(ctx, rulesetUuid, labelKey, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseModifyFirewallRulesetLabelResponse(rsp)
+}
+
+func (c *ClientWithResponses) ModifyFirewallRulesetLabelWithResponse(ctx context.Context, rulesetUuid ModifyFirewallRulesetLabelRulesetUuid, labelKey ModifyFirewallRulesetLabelLabelKey, body ModifyFirewallRulesetLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyFirewallRulesetLabelResponse, error) {
+	rsp, err := c.ModifyFirewallRulesetLabel(ctx, rulesetUuid, labelKey, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseModifyFirewallRulesetLabelResponse(rsp)
+}
+
+// RestoreFirewallRulesetWithResponse request returning *RestoreFirewallRulesetResponse
+func (c *ClientWithResponses) RestoreFirewallRulesetWithResponse(ctx context.Context, rulesetUuid RestoreFirewallRulesetRulesetUuid, rulesetVersion RestoreFirewallRulesetRulesetVersion, reqEditors ...RequestEditorFn) (*RestoreFirewallRulesetResponse, error) {
+	rsp, err := c.RestoreFirewallRuleset(ctx, rulesetUuid, rulesetVersion, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRestoreFirewallRulesetResponse(rsp)
+}
+
+// ListFirewallRulesetRulesWithResponse request returning *ListFirewallRulesetRulesResponse
+func (c *ClientWithResponses) ListFirewallRulesetRulesWithResponse(ctx context.Context, rulesetUuid ListFirewallRulesetRulesRulesetUuid, params *ListFirewallRulesetRulesParams, reqEditors ...RequestEditorFn) (*ListFirewallRulesetRulesResponse, error) {
+	rsp, err := c.ListFirewallRulesetRules(ctx, rulesetUuid, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListFirewallRulesetRulesResponse(rsp)
+}
+
+// CreateFirewallRulesetRuleWithBodyWithResponse request with arbitrary body returning *CreateFirewallRulesetRuleResponse
+func (c *ClientWithResponses) CreateFirewallRulesetRuleWithBodyWithResponse(ctx context.Context, rulesetUuid CreateFirewallRulesetRuleRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateFirewallRulesetRuleResponse, error) {
+	rsp, err := c.CreateFirewallRulesetRuleWithBody(ctx, rulesetUuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateFirewallRulesetRuleResponse(rsp)
+}
+
+func (c *ClientWithResponses) CreateFirewallRulesetRuleWithResponse(ctx context.Context, rulesetUuid CreateFirewallRulesetRuleRulesetUuid, body CreateFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateFirewallRulesetRuleResponse, error) {
+	rsp, err := c.CreateFirewallRulesetRule(ctx, rulesetUuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateFirewallRulesetRuleResponse(rsp)
+}
+
+// DeleteFirewallRulesetRuleWithResponse request returning *DeleteFirewallRulesetRuleResponse
+func (c *ClientWithResponses) DeleteFirewallRulesetRuleWithResponse(ctx context.Context, rulesetUuid DeleteFirewallRulesetRuleRulesetUuid, ruleId DeleteFirewallRulesetRuleRuleId, reqEditors ...RequestEditorFn) (*DeleteFirewallRulesetRuleResponse, error) {
+	rsp, err := c.DeleteFirewallRulesetRule(ctx, rulesetUuid, ruleId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteFirewallRulesetRuleResponse(rsp)
+}
+
+// GetFirewallRulesetRuleWithResponse request returning *GetFirewallRulesetRuleResponse
+func (c *ClientWithResponses) GetFirewallRulesetRuleWithResponse(ctx context.Context, rulesetUuid GetFirewallRulesetRuleRulesetUuid, ruleId GetFirewallRulesetRuleRuleId, reqEditors ...RequestEditorFn) (*GetFirewallRulesetRuleResponse, error) {
+	rsp, err := c.GetFirewallRulesetRule(ctx, rulesetUuid, ruleId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetFirewallRulesetRuleResponse(rsp)
+}
+
+// ModifyFirewallRulesetRuleWithBodyWithResponse request with arbitrary body returning *ModifyFirewallRulesetRuleResponse
+func (c *ClientWithResponses) ModifyFirewallRulesetRuleWithBodyWithResponse(ctx context.Context, rulesetUuid ModifyFirewallRulesetRuleRulesetUuid, ruleId ModifyFirewallRulesetRuleRuleId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyFirewallRulesetRuleResponse, error) {
+	rsp, err := c.ModifyFirewallRulesetRuleWithBody(ctx, rulesetUuid, ruleId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseModifyFirewallRulesetRuleResponse(rsp)
+}
+
+func (c *ClientWithResponses) ModifyFirewallRulesetRuleWithResponse(ctx context.Context, rulesetUuid ModifyFirewallRulesetRuleRulesetUuid, ruleId ModifyFirewallRulesetRuleRuleId, body ModifyFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyFirewallRulesetRuleResponse, error) {
+	rsp, err := c.ModifyFirewallRulesetRule(ctx, rulesetUuid, ruleId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseModifyFirewallRulesetRuleResponse(rsp)
 }
 
 // ListObjectStoragesWithResponse request returning *ListObjectStoragesResponse
@@ -11647,42 +16453,6 @@ func (c *ClientWithResponses) CreateObjectStorageWithResponse(ctx context.Contex
 	return ParseCreateObjectStorageResponse(rsp)
 }
 
-// ListObjectStorageIntegrationServicesWithResponse request returning *ListObjectStorageIntegrationServicesResponse
-func (c *ClientWithResponses) ListObjectStorageIntegrationServicesWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListObjectStorageIntegrationServicesResponse, error) {
-	rsp, err := c.ListObjectStorageIntegrationServices(ctx, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseListObjectStorageIntegrationServicesResponse(rsp)
-}
-
-// GetObjectStorageIntegrationServiceWithResponse request returning *GetObjectStorageIntegrationServiceResponse
-func (c *ClientWithResponses) GetObjectStorageIntegrationServiceWithResponse(ctx context.Context, serviceUuid ObjectStorage2IntegrationGetServiceServiceUuid, reqEditors ...RequestEditorFn) (*GetObjectStorageIntegrationServiceResponse, error) {
-	rsp, err := c.GetObjectStorageIntegrationService(ctx, serviceUuid, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetObjectStorageIntegrationServiceResponse(rsp)
-}
-
-// CreateObjectStorageIntegrationNetworkWithResponse request returning *CreateObjectStorageIntegrationNetworkResponse
-func (c *ClientWithResponses) CreateObjectStorageIntegrationNetworkWithResponse(ctx context.Context, serviceUuid ObjectStorage2IntegrationCreateNetworkServiceUuid, reqEditors ...RequestEditorFn) (*CreateObjectStorageIntegrationNetworkResponse, error) {
-	rsp, err := c.CreateObjectStorageIntegrationNetwork(ctx, serviceUuid, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateObjectStorageIntegrationNetworkResponse(rsp)
-}
-
-// DeleteObjectStorageIntegrationNetworkWithResponse request returning *DeleteObjectStorageIntegrationNetworkResponse
-func (c *ClientWithResponses) DeleteObjectStorageIntegrationNetworkWithResponse(ctx context.Context, serviceUuid ObjectStorage2IntegrationDeleteNetworkServiceUuid, networkName ObjectStorage2IntegrationDeleteNetworkNetworkName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageIntegrationNetworkResponse, error) {
-	rsp, err := c.DeleteObjectStorageIntegrationNetwork(ctx, serviceUuid, networkName, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseDeleteObjectStorageIntegrationNetworkResponse(rsp)
-}
-
 // ListObjectStorageRegionsWithResponse request returning *ListObjectStorageRegionsResponse
 func (c *ClientWithResponses) ListObjectStorageRegionsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListObjectStorageRegionsResponse, error) {
 	rsp, err := c.ListObjectStorageRegions(ctx, reqEditors...)
@@ -11693,7 +16463,7 @@ func (c *ClientWithResponses) ListObjectStorageRegionsWithResponse(ctx context.C
 }
 
 // GetObjectStorageRegionWithResponse request returning *GetObjectStorageRegionResponse
-func (c *ClientWithResponses) GetObjectStorageRegionWithResponse(ctx context.Context, regionName ObjectStorage2GetRegionDetailsRegionName, reqEditors ...RequestEditorFn) (*GetObjectStorageRegionResponse, error) {
+func (c *ClientWithResponses) GetObjectStorageRegionWithResponse(ctx context.Context, regionName ObjectStorage2GetObjectStorageRegionRegionName, reqEditors ...RequestEditorFn) (*GetObjectStorageRegionResponse, error) {
 	rsp, err := c.GetObjectStorageRegion(ctx, regionName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11702,7 +16472,7 @@ func (c *ClientWithResponses) GetObjectStorageRegionWithResponse(ctx context.Con
 }
 
 // DeleteObjectStorageWithResponse request returning *DeleteObjectStorageResponse
-func (c *ClientWithResponses) DeleteObjectStorageWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteServiceServiceUuid, params *DeleteObjectStorageParams, reqEditors ...RequestEditorFn) (*DeleteObjectStorageResponse, error) {
+func (c *ClientWithResponses) DeleteObjectStorageWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageServiceUuid, params *DeleteObjectStorageParams, reqEditors ...RequestEditorFn) (*DeleteObjectStorageResponse, error) {
 	rsp, err := c.DeleteObjectStorage(ctx, serviceUuid, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11711,7 +16481,7 @@ func (c *ClientWithResponses) DeleteObjectStorageWithResponse(ctx context.Contex
 }
 
 // GetObjectStorageWithResponse request returning *GetObjectStorageResponse
-func (c *ClientWithResponses) GetObjectStorageWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetServiceServiceUuid, reqEditors ...RequestEditorFn) (*GetObjectStorageResponse, error) {
+func (c *ClientWithResponses) GetObjectStorageWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageServiceUuid, reqEditors ...RequestEditorFn) (*GetObjectStorageResponse, error) {
 	rsp, err := c.GetObjectStorage(ctx, serviceUuid, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11720,7 +16490,7 @@ func (c *ClientWithResponses) GetObjectStorageWithResponse(ctx context.Context, 
 }
 
 // ModifyObjectStorageWithBodyWithResponse request with arbitrary body returning *ModifyObjectStorageResponse
-func (c *ClientWithResponses) ModifyObjectStorageWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyServiceServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyObjectStorageResponse, error) {
+func (c *ClientWithResponses) ModifyObjectStorageWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyObjectStorageResponse, error) {
 	rsp, err := c.ModifyObjectStorageWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11728,7 +16498,7 @@ func (c *ClientWithResponses) ModifyObjectStorageWithBodyWithResponse(ctx contex
 	return ParseModifyObjectStorageResponse(rsp)
 }
 
-func (c *ClientWithResponses) ModifyObjectStorageWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyServiceServiceUuid, body ModifyObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyObjectStorageResponse, error) {
+func (c *ClientWithResponses) ModifyObjectStorageWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageServiceUuid, body ModifyObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyObjectStorageResponse, error) {
 	rsp, err := c.ModifyObjectStorage(ctx, serviceUuid, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11737,7 +16507,7 @@ func (c *ClientWithResponses) ModifyObjectStorageWithResponse(ctx context.Contex
 }
 
 // ReplaceObjectStorageWithBodyWithResponse request with arbitrary body returning *ReplaceObjectStorageResponse
-func (c *ClientWithResponses) ReplaceObjectStorageWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ReplaceServiceServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplaceObjectStorageResponse, error) {
+func (c *ClientWithResponses) ReplaceObjectStorageWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ReplaceObjectStorageServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplaceObjectStorageResponse, error) {
 	rsp, err := c.ReplaceObjectStorageWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11745,7 +16515,7 @@ func (c *ClientWithResponses) ReplaceObjectStorageWithBodyWithResponse(ctx conte
 	return ParseReplaceObjectStorageResponse(rsp)
 }
 
-func (c *ClientWithResponses) ReplaceObjectStorageWithResponse(ctx context.Context, serviceUuid ObjectStorage2ReplaceServiceServiceUuid, body ReplaceObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplaceObjectStorageResponse, error) {
+func (c *ClientWithResponses) ReplaceObjectStorageWithResponse(ctx context.Context, serviceUuid ObjectStorage2ReplaceObjectStorageServiceUuid, body ReplaceObjectStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplaceObjectStorageResponse, error) {
 	rsp, err := c.ReplaceObjectStorage(ctx, serviceUuid, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11754,7 +16524,7 @@ func (c *ClientWithResponses) ReplaceObjectStorageWithResponse(ctx context.Conte
 }
 
 // ListObjectStorageBucketMetricsWithResponse request returning *ListObjectStorageBucketMetricsResponse
-func (c *ClientWithResponses) ListObjectStorageBucketMetricsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListBucketMetricsServiceUuid, params *ListObjectStorageBucketMetricsParams, reqEditors ...RequestEditorFn) (*ListObjectStorageBucketMetricsResponse, error) {
+func (c *ClientWithResponses) ListObjectStorageBucketMetricsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageBucketMetricsServiceUuid, params *ListObjectStorageBucketMetricsParams, reqEditors ...RequestEditorFn) (*ListObjectStorageBucketMetricsResponse, error) {
 	rsp, err := c.ListObjectStorageBucketMetrics(ctx, serviceUuid, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11763,7 +16533,7 @@ func (c *ClientWithResponses) ListObjectStorageBucketMetricsWithResponse(ctx con
 }
 
 // CreateObjectStorageBucketWithBodyWithResponse request with arbitrary body returning *CreateObjectStorageBucketResponse
-func (c *ClientWithResponses) CreateObjectStorageBucketWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateBucketServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageBucketResponse, error) {
+func (c *ClientWithResponses) CreateObjectStorageBucketWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageBucketServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageBucketResponse, error) {
 	rsp, err := c.CreateObjectStorageBucketWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11771,7 +16541,7 @@ func (c *ClientWithResponses) CreateObjectStorageBucketWithBodyWithResponse(ctx 
 	return ParseCreateObjectStorageBucketResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateObjectStorageBucketWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateBucketServiceUuid, body CreateObjectStorageBucketJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageBucketResponse, error) {
+func (c *ClientWithResponses) CreateObjectStorageBucketWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageBucketServiceUuid, body CreateObjectStorageBucketJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageBucketResponse, error) {
 	rsp, err := c.CreateObjectStorageBucket(ctx, serviceUuid, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11780,7 +16550,7 @@ func (c *ClientWithResponses) CreateObjectStorageBucketWithResponse(ctx context.
 }
 
 // DeleteObjectStorageBucketWithResponse request returning *DeleteObjectStorageBucketResponse
-func (c *ClientWithResponses) DeleteObjectStorageBucketWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteBucketServiceUuid, bucketName ObjectStorage2DeleteBucketBucketName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageBucketResponse, error) {
+func (c *ClientWithResponses) DeleteObjectStorageBucketWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageBucketServiceUuid, bucketName ObjectStorage2DeleteObjectStorageBucketBucketName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageBucketResponse, error) {
 	rsp, err := c.DeleteObjectStorageBucket(ctx, serviceUuid, bucketName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11789,7 +16559,7 @@ func (c *ClientWithResponses) DeleteObjectStorageBucketWithResponse(ctx context.
 }
 
 // ListObjectStorageCustomDomainsWithResponse request returning *ListObjectStorageCustomDomainsResponse
-func (c *ClientWithResponses) ListObjectStorageCustomDomainsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListCustomDomainsServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageCustomDomainsResponse, error) {
+func (c *ClientWithResponses) ListObjectStorageCustomDomainsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageCustomDomainsServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageCustomDomainsResponse, error) {
 	rsp, err := c.ListObjectStorageCustomDomains(ctx, serviceUuid, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11798,7 +16568,7 @@ func (c *ClientWithResponses) ListObjectStorageCustomDomainsWithResponse(ctx con
 }
 
 // AttachObjectStorageCustomDomainWithBodyWithResponse request with arbitrary body returning *AttachObjectStorageCustomDomainResponse
-func (c *ClientWithResponses) AttachObjectStorageCustomDomainWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachCustomDomainServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AttachObjectStorageCustomDomainResponse, error) {
+func (c *ClientWithResponses) AttachObjectStorageCustomDomainWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageCustomDomainServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AttachObjectStorageCustomDomainResponse, error) {
 	rsp, err := c.AttachObjectStorageCustomDomainWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11806,7 +16576,7 @@ func (c *ClientWithResponses) AttachObjectStorageCustomDomainWithBodyWithRespons
 	return ParseAttachObjectStorageCustomDomainResponse(rsp)
 }
 
-func (c *ClientWithResponses) AttachObjectStorageCustomDomainWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachCustomDomainServiceUuid, body AttachObjectStorageCustomDomainJSONRequestBody, reqEditors ...RequestEditorFn) (*AttachObjectStorageCustomDomainResponse, error) {
+func (c *ClientWithResponses) AttachObjectStorageCustomDomainWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageCustomDomainServiceUuid, body AttachObjectStorageCustomDomainJSONRequestBody, reqEditors ...RequestEditorFn) (*AttachObjectStorageCustomDomainResponse, error) {
 	rsp, err := c.AttachObjectStorageCustomDomain(ctx, serviceUuid, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11815,7 +16585,7 @@ func (c *ClientWithResponses) AttachObjectStorageCustomDomainWithResponse(ctx co
 }
 
 // DeleteObjectStorageCustomDomainWithResponse request returning *DeleteObjectStorageCustomDomainResponse
-func (c *ClientWithResponses) DeleteObjectStorageCustomDomainWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteCustomDomainServiceUuid, customDomainName ObjectStorage2DeleteCustomDomainCustomDomainName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageCustomDomainResponse, error) {
+func (c *ClientWithResponses) DeleteObjectStorageCustomDomainWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageCustomDomainServiceUuid, customDomainName ObjectStorage2DeleteObjectStorageCustomDomainCustomDomainName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageCustomDomainResponse, error) {
 	rsp, err := c.DeleteObjectStorageCustomDomain(ctx, serviceUuid, customDomainName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11824,7 +16594,7 @@ func (c *ClientWithResponses) DeleteObjectStorageCustomDomainWithResponse(ctx co
 }
 
 // GetObjectStorageCustomDomainWithResponse request returning *GetObjectStorageCustomDomainResponse
-func (c *ClientWithResponses) GetObjectStorageCustomDomainWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetCustomDomainDetailsServiceUuid, customDomainName ObjectStorage2GetCustomDomainDetailsCustomDomainName, reqEditors ...RequestEditorFn) (*GetObjectStorageCustomDomainResponse, error) {
+func (c *ClientWithResponses) GetObjectStorageCustomDomainWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageCustomDomainServiceUuid, customDomainName ObjectStorage2GetObjectStorageCustomDomainCustomDomainName, reqEditors ...RequestEditorFn) (*GetObjectStorageCustomDomainResponse, error) {
 	rsp, err := c.GetObjectStorageCustomDomain(ctx, serviceUuid, customDomainName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11833,7 +16603,7 @@ func (c *ClientWithResponses) GetObjectStorageCustomDomainWithResponse(ctx conte
 }
 
 // ModifyObjectStorageCustomDomainWithBodyWithResponse request with arbitrary body returning *ModifyObjectStorageCustomDomainResponse
-func (c *ClientWithResponses) ModifyObjectStorageCustomDomainWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyCustomDomainServiceUuid, customDomainName ObjectStorage2ModifyCustomDomainCustomDomainName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyObjectStorageCustomDomainResponse, error) {
+func (c *ClientWithResponses) ModifyObjectStorageCustomDomainWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageCustomDomainServiceUuid, customDomainName ObjectStorage2ModifyObjectStorageCustomDomainCustomDomainName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyObjectStorageCustomDomainResponse, error) {
 	rsp, err := c.ModifyObjectStorageCustomDomainWithBody(ctx, serviceUuid, customDomainName, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11841,7 +16611,7 @@ func (c *ClientWithResponses) ModifyObjectStorageCustomDomainWithBodyWithRespons
 	return ParseModifyObjectStorageCustomDomainResponse(rsp)
 }
 
-func (c *ClientWithResponses) ModifyObjectStorageCustomDomainWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyCustomDomainServiceUuid, customDomainName ObjectStorage2ModifyCustomDomainCustomDomainName, body ModifyObjectStorageCustomDomainJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyObjectStorageCustomDomainResponse, error) {
+func (c *ClientWithResponses) ModifyObjectStorageCustomDomainWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageCustomDomainServiceUuid, customDomainName ObjectStorage2ModifyObjectStorageCustomDomainCustomDomainName, body ModifyObjectStorageCustomDomainJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyObjectStorageCustomDomainResponse, error) {
 	rsp, err := c.ModifyObjectStorageCustomDomain(ctx, serviceUuid, customDomainName, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11849,17 +16619,17 @@ func (c *ClientWithResponses) ModifyObjectStorageCustomDomainWithResponse(ctx co
 	return ParseModifyObjectStorageCustomDomainResponse(rsp)
 }
 
-// GetServiceDomainsWithResponse request returning *GetServiceDomainsResponse
-func (c *ClientWithResponses) GetServiceDomainsWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetServiceDomainsServiceUuid, reqEditors ...RequestEditorFn) (*GetServiceDomainsResponse, error) {
-	rsp, err := c.GetServiceDomains(ctx, serviceUuid, reqEditors...)
+// ListObjectStorageDomainsWithResponse request returning *ListObjectStorageDomainsResponse
+func (c *ClientWithResponses) ListObjectStorageDomainsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageDomainsServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageDomainsResponse, error) {
+	rsp, err := c.ListObjectStorageDomains(ctx, serviceUuid, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetServiceDomainsResponse(rsp)
+	return ParseListObjectStorageDomainsResponse(rsp)
 }
 
 // ListObjectStorageGroupsWithResponse request returning *ListObjectStorageGroupsResponse
-func (c *ClientWithResponses) ListObjectStorageGroupsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListGroupsServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageGroupsResponse, error) {
+func (c *ClientWithResponses) ListObjectStorageGroupsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageGroupsServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageGroupsResponse, error) {
 	rsp, err := c.ListObjectStorageGroups(ctx, serviceUuid, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11868,7 +16638,7 @@ func (c *ClientWithResponses) ListObjectStorageGroupsWithResponse(ctx context.Co
 }
 
 // CreateObjectStorageGroupWithBodyWithResponse request with arbitrary body returning *CreateObjectStorageGroupResponse
-func (c *ClientWithResponses) CreateObjectStorageGroupWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateGroupServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageGroupResponse, error) {
+func (c *ClientWithResponses) CreateObjectStorageGroupWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageGroupServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageGroupResponse, error) {
 	rsp, err := c.CreateObjectStorageGroupWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11876,7 +16646,7 @@ func (c *ClientWithResponses) CreateObjectStorageGroupWithBodyWithResponse(ctx c
 	return ParseCreateObjectStorageGroupResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateObjectStorageGroupWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateGroupServiceUuid, body CreateObjectStorageGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageGroupResponse, error) {
+func (c *ClientWithResponses) CreateObjectStorageGroupWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageGroupServiceUuid, body CreateObjectStorageGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageGroupResponse, error) {
 	rsp, err := c.CreateObjectStorageGroup(ctx, serviceUuid, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11885,7 +16655,7 @@ func (c *ClientWithResponses) CreateObjectStorageGroupWithResponse(ctx context.C
 }
 
 // DeleteObjectStorageGroupWithResponse request returning *DeleteObjectStorageGroupResponse
-func (c *ClientWithResponses) DeleteObjectStorageGroupWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteGroupServiceUuid, groupName ObjectStorage2DeleteGroupGroupName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageGroupResponse, error) {
+func (c *ClientWithResponses) DeleteObjectStorageGroupWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageGroupServiceUuid, groupName ObjectStorage2DeleteObjectStorageGroupGroupName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageGroupResponse, error) {
 	rsp, err := c.DeleteObjectStorageGroup(ctx, serviceUuid, groupName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11894,7 +16664,7 @@ func (c *ClientWithResponses) DeleteObjectStorageGroupWithResponse(ctx context.C
 }
 
 // GetObjectStorageGroupWithResponse request returning *GetObjectStorageGroupResponse
-func (c *ClientWithResponses) GetObjectStorageGroupWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetGroupServiceUuid, groupName ObjectStorage2GetGroupGroupName, reqEditors ...RequestEditorFn) (*GetObjectStorageGroupResponse, error) {
+func (c *ClientWithResponses) GetObjectStorageGroupWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageGroupServiceUuid, groupName ObjectStorage2GetObjectStorageGroupGroupName, reqEditors ...RequestEditorFn) (*GetObjectStorageGroupResponse, error) {
 	rsp, err := c.GetObjectStorageGroup(ctx, serviceUuid, groupName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11903,7 +16673,7 @@ func (c *ClientWithResponses) GetObjectStorageGroupWithResponse(ctx context.Cont
 }
 
 // ListObjectStorageGroupInlinePoliciesWithResponse request returning *ListObjectStorageGroupInlinePoliciesResponse
-func (c *ClientWithResponses) ListObjectStorageGroupInlinePoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListGroupInlinePoliciesServiceUuid, groupName ObjectStorage2ListGroupInlinePoliciesGroupName, reqEditors ...RequestEditorFn) (*ListObjectStorageGroupInlinePoliciesResponse, error) {
+func (c *ClientWithResponses) ListObjectStorageGroupInlinePoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageGroupInlinePoliciesServiceUuid, groupName ObjectStorage2ListObjectStorageGroupInlinePoliciesGroupName, reqEditors ...RequestEditorFn) (*ListObjectStorageGroupInlinePoliciesResponse, error) {
 	rsp, err := c.ListObjectStorageGroupInlinePolicies(ctx, serviceUuid, groupName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11912,7 +16682,7 @@ func (c *ClientWithResponses) ListObjectStorageGroupInlinePoliciesWithResponse(c
 }
 
 // CreateObjectStorageGroupInlinePolicyWithBodyWithResponse request with arbitrary body returning *CreateObjectStorageGroupInlinePolicyResponse
-func (c *ClientWithResponses) CreateObjectStorageGroupInlinePolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateGroupInlinePolicyServiceUuid, groupName ObjectStorage2CreateGroupInlinePolicyGroupName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageGroupInlinePolicyResponse, error) {
+func (c *ClientWithResponses) CreateObjectStorageGroupInlinePolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageGroupInlinePolicyServiceUuid, groupName ObjectStorage2CreateObjectStorageGroupInlinePolicyGroupName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageGroupInlinePolicyResponse, error) {
 	rsp, err := c.CreateObjectStorageGroupInlinePolicyWithBody(ctx, serviceUuid, groupName, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11920,7 +16690,7 @@ func (c *ClientWithResponses) CreateObjectStorageGroupInlinePolicyWithBodyWithRe
 	return ParseCreateObjectStorageGroupInlinePolicyResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateObjectStorageGroupInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateGroupInlinePolicyServiceUuid, groupName ObjectStorage2CreateGroupInlinePolicyGroupName, body CreateObjectStorageGroupInlinePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageGroupInlinePolicyResponse, error) {
+func (c *ClientWithResponses) CreateObjectStorageGroupInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageGroupInlinePolicyServiceUuid, groupName ObjectStorage2CreateObjectStorageGroupInlinePolicyGroupName, body CreateObjectStorageGroupInlinePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageGroupInlinePolicyResponse, error) {
 	rsp, err := c.CreateObjectStorageGroupInlinePolicy(ctx, serviceUuid, groupName, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11929,7 +16699,7 @@ func (c *ClientWithResponses) CreateObjectStorageGroupInlinePolicyWithResponse(c
 }
 
 // DeleteObjectStorageGroupInlinePolicyWithResponse request returning *DeleteObjectStorageGroupInlinePolicyResponse
-func (c *ClientWithResponses) DeleteObjectStorageGroupInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteGroupInlinePolicyServiceUuid, groupName ObjectStorage2DeleteGroupInlinePolicyGroupName, groupPolicyName ObjectStorage2DeleteGroupInlinePolicyGroupPolicyName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageGroupInlinePolicyResponse, error) {
+func (c *ClientWithResponses) DeleteObjectStorageGroupInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageGroupInlinePolicyServiceUuid, groupName ObjectStorage2DeleteObjectStorageGroupInlinePolicyGroupName, groupPolicyName ObjectStorage2DeleteObjectStorageGroupInlinePolicyGroupPolicyName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageGroupInlinePolicyResponse, error) {
 	rsp, err := c.DeleteObjectStorageGroupInlinePolicy(ctx, serviceUuid, groupName, groupPolicyName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11938,7 +16708,7 @@ func (c *ClientWithResponses) DeleteObjectStorageGroupInlinePolicyWithResponse(c
 }
 
 // GetObjectStorageGroupInlinePolicyWithResponse request returning *GetObjectStorageGroupInlinePolicyResponse
-func (c *ClientWithResponses) GetObjectStorageGroupInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetGroupInlinePolicyServiceUuid, groupName ObjectStorage2GetGroupInlinePolicyGroupName, groupPolicyName ObjectStorage2GetGroupInlinePolicyGroupPolicyName, reqEditors ...RequestEditorFn) (*GetObjectStorageGroupInlinePolicyResponse, error) {
+func (c *ClientWithResponses) GetObjectStorageGroupInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageGroupInlinePolicyServiceUuid, groupName ObjectStorage2GetObjectStorageGroupInlinePolicyGroupName, groupPolicyName ObjectStorage2GetObjectStorageGroupInlinePolicyGroupPolicyName, reqEditors ...RequestEditorFn) (*GetObjectStorageGroupInlinePolicyResponse, error) {
 	rsp, err := c.GetObjectStorageGroupInlinePolicy(ctx, serviceUuid, groupName, groupPolicyName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11947,7 +16717,7 @@ func (c *ClientWithResponses) GetObjectStorageGroupInlinePolicyWithResponse(ctx 
 }
 
 // ListObjectStorageIAMGroupPoliciesWithResponse request returning *ListObjectStorageIAMGroupPoliciesResponse
-func (c *ClientWithResponses) ListObjectStorageIAMGroupPoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListIAMGroupPoliciesServiceUuid, groupName ObjectStorage2ListIAMGroupPoliciesGroupName, reqEditors ...RequestEditorFn) (*ListObjectStorageIAMGroupPoliciesResponse, error) {
+func (c *ClientWithResponses) ListObjectStorageIAMGroupPoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageIAMGroupPoliciesServiceUuid, groupName ObjectStorage2ListObjectStorageIAMGroupPoliciesGroupName, reqEditors ...RequestEditorFn) (*ListObjectStorageIAMGroupPoliciesResponse, error) {
 	rsp, err := c.ListObjectStorageIAMGroupPolicies(ctx, serviceUuid, groupName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11956,7 +16726,7 @@ func (c *ClientWithResponses) ListObjectStorageIAMGroupPoliciesWithResponse(ctx 
 }
 
 // AttachObjectStorageIAMGroupPolicyWithBodyWithResponse request with arbitrary body returning *AttachObjectStorageIAMGroupPolicyResponse
-func (c *ClientWithResponses) AttachObjectStorageIAMGroupPolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachIAMGroupPolicyServiceUuid, groupName ObjectStorage2AttachIAMGroupPolicyGroupName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AttachObjectStorageIAMGroupPolicyResponse, error) {
+func (c *ClientWithResponses) AttachObjectStorageIAMGroupPolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageIAMGroupPolicyServiceUuid, groupName ObjectStorage2AttachObjectStorageIAMGroupPolicyGroupName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AttachObjectStorageIAMGroupPolicyResponse, error) {
 	rsp, err := c.AttachObjectStorageIAMGroupPolicyWithBody(ctx, serviceUuid, groupName, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11964,7 +16734,7 @@ func (c *ClientWithResponses) AttachObjectStorageIAMGroupPolicyWithBodyWithRespo
 	return ParseAttachObjectStorageIAMGroupPolicyResponse(rsp)
 }
 
-func (c *ClientWithResponses) AttachObjectStorageIAMGroupPolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachIAMGroupPolicyServiceUuid, groupName ObjectStorage2AttachIAMGroupPolicyGroupName, body AttachObjectStorageIAMGroupPolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*AttachObjectStorageIAMGroupPolicyResponse, error) {
+func (c *ClientWithResponses) AttachObjectStorageIAMGroupPolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageIAMGroupPolicyServiceUuid, groupName ObjectStorage2AttachObjectStorageIAMGroupPolicyGroupName, body AttachObjectStorageIAMGroupPolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*AttachObjectStorageIAMGroupPolicyResponse, error) {
 	rsp, err := c.AttachObjectStorageIAMGroupPolicy(ctx, serviceUuid, groupName, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11973,7 +16743,7 @@ func (c *ClientWithResponses) AttachObjectStorageIAMGroupPolicyWithResponse(ctx 
 }
 
 // DetachObjectStorageIAMGroupPolicyWithResponse request returning *DetachObjectStorageIAMGroupPolicyResponse
-func (c *ClientWithResponses) DetachObjectStorageIAMGroupPolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DetachIAMGroupPolicyServiceUuid, groupName ObjectStorage2DetachIAMGroupPolicyGroupName, policyName ObjectStorage2DetachIAMGroupPolicyPolicyName, reqEditors ...RequestEditorFn) (*DetachObjectStorageIAMGroupPolicyResponse, error) {
+func (c *ClientWithResponses) DetachObjectStorageIAMGroupPolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DetachObjectStorageIAMGroupPolicyServiceUuid, groupName ObjectStorage2DetachObjectStorageIAMGroupPolicyGroupName, policyName ObjectStorage2DetachObjectStorageIAMGroupPolicyPolicyName, reqEditors ...RequestEditorFn) (*DetachObjectStorageIAMGroupPolicyResponse, error) {
 	rsp, err := c.DetachObjectStorageIAMGroupPolicy(ctx, serviceUuid, groupName, policyName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11982,7 +16752,7 @@ func (c *ClientWithResponses) DetachObjectStorageIAMGroupPolicyWithResponse(ctx 
 }
 
 // RemoveObjectStorageUserFromGroupWithResponse request returning *RemoveObjectStorageUserFromGroupResponse
-func (c *ClientWithResponses) RemoveObjectStorageUserFromGroupWithResponse(ctx context.Context, serviceUuid ObjectStorage2RemoveUserFromGroupServiceUuid, groupName ObjectStorage2RemoveUserFromGroupGroupName, username ObjectStorage2RemoveUserFromGroupUsername, reqEditors ...RequestEditorFn) (*RemoveObjectStorageUserFromGroupResponse, error) {
+func (c *ClientWithResponses) RemoveObjectStorageUserFromGroupWithResponse(ctx context.Context, serviceUuid ObjectStorage2RemoveObjectStorageUserFromGroupServiceUuid, groupName ObjectStorage2RemoveObjectStorageUserFromGroupGroupName, username ObjectStorage2RemoveObjectStorageUserFromGroupUsername, reqEditors ...RequestEditorFn) (*RemoveObjectStorageUserFromGroupResponse, error) {
 	rsp, err := c.RemoveObjectStorageUserFromGroup(ctx, serviceUuid, groupName, username, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -11991,7 +16761,7 @@ func (c *ClientWithResponses) RemoveObjectStorageUserFromGroupWithResponse(ctx c
 }
 
 // AttachObjectStorageUserToGroupWithResponse request returning *AttachObjectStorageUserToGroupResponse
-func (c *ClientWithResponses) AttachObjectStorageUserToGroupWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachUserToGroupServiceUuid, groupName ObjectStorage2AttachUserToGroupGroupName, username ObjectStorage2AttachUserToGroupUsername, reqEditors ...RequestEditorFn) (*AttachObjectStorageUserToGroupResponse, error) {
+func (c *ClientWithResponses) AttachObjectStorageUserToGroupWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageUserToGroupServiceUuid, groupName ObjectStorage2AttachObjectStorageUserToGroupGroupName, username ObjectStorage2AttachObjectStorageUserToGroupUsername, reqEditors ...RequestEditorFn) (*AttachObjectStorageUserToGroupResponse, error) {
 	rsp, err := c.AttachObjectStorageUserToGroup(ctx, serviceUuid, groupName, username, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12000,7 +16770,7 @@ func (c *ClientWithResponses) AttachObjectStorageUserToGroupWithResponse(ctx con
 }
 
 // ListObjectStorageLabelsWithResponse request returning *ListObjectStorageLabelsResponse
-func (c *ClientWithResponses) ListObjectStorageLabelsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListLabelsServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageLabelsResponse, error) {
+func (c *ClientWithResponses) ListObjectStorageLabelsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageLabelsServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageLabelsResponse, error) {
 	rsp, err := c.ListObjectStorageLabels(ctx, serviceUuid, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12009,7 +16779,7 @@ func (c *ClientWithResponses) ListObjectStorageLabelsWithResponse(ctx context.Co
 }
 
 // CreateObjectStorageLabelWithBodyWithResponse request with arbitrary body returning *CreateObjectStorageLabelResponse
-func (c *ClientWithResponses) CreateObjectStorageLabelWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateLabelServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageLabelResponse, error) {
+func (c *ClientWithResponses) CreateObjectStorageLabelWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageLabelServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageLabelResponse, error) {
 	rsp, err := c.CreateObjectStorageLabelWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12017,7 +16787,7 @@ func (c *ClientWithResponses) CreateObjectStorageLabelWithBodyWithResponse(ctx c
 	return ParseCreateObjectStorageLabelResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateObjectStorageLabelWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateLabelServiceUuid, body CreateObjectStorageLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageLabelResponse, error) {
+func (c *ClientWithResponses) CreateObjectStorageLabelWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageLabelServiceUuid, body CreateObjectStorageLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageLabelResponse, error) {
 	rsp, err := c.CreateObjectStorageLabel(ctx, serviceUuid, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12026,7 +16796,7 @@ func (c *ClientWithResponses) CreateObjectStorageLabelWithResponse(ctx context.C
 }
 
 // DeleteObjectStorageLabelWithResponse request returning *DeleteObjectStorageLabelResponse
-func (c *ClientWithResponses) DeleteObjectStorageLabelWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteLabelServiceUuid, labelKey ObjectStorage2DeleteLabelLabelKey, reqEditors ...RequestEditorFn) (*DeleteObjectStorageLabelResponse, error) {
+func (c *ClientWithResponses) DeleteObjectStorageLabelWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageLabelServiceUuid, labelKey ObjectStorage2DeleteObjectStorageLabelLabelKey, reqEditors ...RequestEditorFn) (*DeleteObjectStorageLabelResponse, error) {
 	rsp, err := c.DeleteObjectStorageLabel(ctx, serviceUuid, labelKey, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12035,7 +16805,7 @@ func (c *ClientWithResponses) DeleteObjectStorageLabelWithResponse(ctx context.C
 }
 
 // GetObjectStorageLabelWithResponse request returning *GetObjectStorageLabelResponse
-func (c *ClientWithResponses) GetObjectStorageLabelWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetLabelDetailsServiceUuid, labelKey ObjectStorage2GetLabelDetailsLabelKey, reqEditors ...RequestEditorFn) (*GetObjectStorageLabelResponse, error) {
+func (c *ClientWithResponses) GetObjectStorageLabelWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageLabelServiceUuid, labelKey ObjectStorage2GetObjectStorageLabelLabelKey, reqEditors ...RequestEditorFn) (*GetObjectStorageLabelResponse, error) {
 	rsp, err := c.GetObjectStorageLabel(ctx, serviceUuid, labelKey, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12044,7 +16814,7 @@ func (c *ClientWithResponses) GetObjectStorageLabelWithResponse(ctx context.Cont
 }
 
 // ModifyObjectStorageLabelWithBodyWithResponse request with arbitrary body returning *ModifyObjectStorageLabelResponse
-func (c *ClientWithResponses) ModifyObjectStorageLabelWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyLabelServiceUuid, labelKey ObjectStorage2ModifyLabelLabelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyObjectStorageLabelResponse, error) {
+func (c *ClientWithResponses) ModifyObjectStorageLabelWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageLabelServiceUuid, labelKey ObjectStorage2ModifyObjectStorageLabelLabelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyObjectStorageLabelResponse, error) {
 	rsp, err := c.ModifyObjectStorageLabelWithBody(ctx, serviceUuid, labelKey, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12052,7 +16822,7 @@ func (c *ClientWithResponses) ModifyObjectStorageLabelWithBodyWithResponse(ctx c
 	return ParseModifyObjectStorageLabelResponse(rsp)
 }
 
-func (c *ClientWithResponses) ModifyObjectStorageLabelWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyLabelServiceUuid, labelKey ObjectStorage2ModifyLabelLabelKey, body ModifyObjectStorageLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyObjectStorageLabelResponse, error) {
+func (c *ClientWithResponses) ModifyObjectStorageLabelWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageLabelServiceUuid, labelKey ObjectStorage2ModifyObjectStorageLabelLabelKey, body ModifyObjectStorageLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyObjectStorageLabelResponse, error) {
 	rsp, err := c.ModifyObjectStorageLabel(ctx, serviceUuid, labelKey, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12061,7 +16831,7 @@ func (c *ClientWithResponses) ModifyObjectStorageLabelWithResponse(ctx context.C
 }
 
 // GetObjectStorageMetricsWithResponse request returning *GetObjectStorageMetricsResponse
-func (c *ClientWithResponses) GetObjectStorageMetricsWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetServiceMetricsServiceUuid, reqEditors ...RequestEditorFn) (*GetObjectStorageMetricsResponse, error) {
+func (c *ClientWithResponses) GetObjectStorageMetricsWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageMetricsServiceUuid, reqEditors ...RequestEditorFn) (*GetObjectStorageMetricsResponse, error) {
 	rsp, err := c.GetObjectStorageMetrics(ctx, serviceUuid, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12070,7 +16840,7 @@ func (c *ClientWithResponses) GetObjectStorageMetricsWithResponse(ctx context.Co
 }
 
 // ListObjectStorageMetricsSeriesWithResponse request returning *ListObjectStorageMetricsSeriesResponse
-func (c *ClientWithResponses) ListObjectStorageMetricsSeriesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListServiceMetricsSeriesServiceUuid, params *ListObjectStorageMetricsSeriesParams, reqEditors ...RequestEditorFn) (*ListObjectStorageMetricsSeriesResponse, error) {
+func (c *ClientWithResponses) ListObjectStorageMetricsSeriesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageMetricsSeriesServiceUuid, params *ListObjectStorageMetricsSeriesParams, reqEditors ...RequestEditorFn) (*ListObjectStorageMetricsSeriesResponse, error) {
 	rsp, err := c.ListObjectStorageMetricsSeries(ctx, serviceUuid, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12079,7 +16849,7 @@ func (c *ClientWithResponses) ListObjectStorageMetricsSeriesWithResponse(ctx con
 }
 
 // ListObjectStorageNetworksWithResponse request returning *ListObjectStorageNetworksResponse
-func (c *ClientWithResponses) ListObjectStorageNetworksWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListNetworksServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageNetworksResponse, error) {
+func (c *ClientWithResponses) ListObjectStorageNetworksWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageNetworksServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageNetworksResponse, error) {
 	rsp, err := c.ListObjectStorageNetworks(ctx, serviceUuid, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12088,7 +16858,7 @@ func (c *ClientWithResponses) ListObjectStorageNetworksWithResponse(ctx context.
 }
 
 // CreateObjectStorageNetworkWithBodyWithResponse request with arbitrary body returning *CreateObjectStorageNetworkResponse
-func (c *ClientWithResponses) CreateObjectStorageNetworkWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateNetworkServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageNetworkResponse, error) {
+func (c *ClientWithResponses) CreateObjectStorageNetworkWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageNetworkServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageNetworkResponse, error) {
 	rsp, err := c.CreateObjectStorageNetworkWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12096,7 +16866,7 @@ func (c *ClientWithResponses) CreateObjectStorageNetworkWithBodyWithResponse(ctx
 	return ParseCreateObjectStorageNetworkResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateObjectStorageNetworkWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateNetworkServiceUuid, body CreateObjectStorageNetworkJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageNetworkResponse, error) {
+func (c *ClientWithResponses) CreateObjectStorageNetworkWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageNetworkServiceUuid, body CreateObjectStorageNetworkJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageNetworkResponse, error) {
 	rsp, err := c.CreateObjectStorageNetwork(ctx, serviceUuid, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12105,7 +16875,7 @@ func (c *ClientWithResponses) CreateObjectStorageNetworkWithResponse(ctx context
 }
 
 // DeleteObjectStorageNetworkWithResponse request returning *DeleteObjectStorageNetworkResponse
-func (c *ClientWithResponses) DeleteObjectStorageNetworkWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteNetworkServiceUuid, networkName ObjectStorage2DeleteNetworkNetworkName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageNetworkResponse, error) {
+func (c *ClientWithResponses) DeleteObjectStorageNetworkWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageNetworkServiceUuid, networkName ObjectStorage2DeleteObjectStorageNetworkNetworkName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageNetworkResponse, error) {
 	rsp, err := c.DeleteObjectStorageNetwork(ctx, serviceUuid, networkName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12114,7 +16884,7 @@ func (c *ClientWithResponses) DeleteObjectStorageNetworkWithResponse(ctx context
 }
 
 // GetObjectStorageNetworkWithResponse request returning *GetObjectStorageNetworkResponse
-func (c *ClientWithResponses) GetObjectStorageNetworkWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetNetworkServiceUuid, networkName ObjectStorage2GetNetworkNetworkName, reqEditors ...RequestEditorFn) (*GetObjectStorageNetworkResponse, error) {
+func (c *ClientWithResponses) GetObjectStorageNetworkWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageNetworkServiceUuid, networkName ObjectStorage2GetObjectStorageNetworkNetworkName, reqEditors ...RequestEditorFn) (*GetObjectStorageNetworkResponse, error) {
 	rsp, err := c.GetObjectStorageNetwork(ctx, serviceUuid, networkName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12123,7 +16893,7 @@ func (c *ClientWithResponses) GetObjectStorageNetworkWithResponse(ctx context.Co
 }
 
 // ListObjectStoragePoliciesWithResponse request returning *ListObjectStoragePoliciesResponse
-func (c *ClientWithResponses) ListObjectStoragePoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListPoliciesServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStoragePoliciesResponse, error) {
+func (c *ClientWithResponses) ListObjectStoragePoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStoragePoliciesServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStoragePoliciesResponse, error) {
 	rsp, err := c.ListObjectStoragePolicies(ctx, serviceUuid, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12132,7 +16902,7 @@ func (c *ClientWithResponses) ListObjectStoragePoliciesWithResponse(ctx context.
 }
 
 // CreateObjectStoragePolicyWithBodyWithResponse request with arbitrary body returning *CreateObjectStoragePolicyResponse
-func (c *ClientWithResponses) CreateObjectStoragePolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreatePolicyServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStoragePolicyResponse, error) {
+func (c *ClientWithResponses) CreateObjectStoragePolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStoragePolicyServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStoragePolicyResponse, error) {
 	rsp, err := c.CreateObjectStoragePolicyWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12140,7 +16910,7 @@ func (c *ClientWithResponses) CreateObjectStoragePolicyWithBodyWithResponse(ctx 
 	return ParseCreateObjectStoragePolicyResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateObjectStoragePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreatePolicyServiceUuid, body CreateObjectStoragePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStoragePolicyResponse, error) {
+func (c *ClientWithResponses) CreateObjectStoragePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStoragePolicyServiceUuid, body CreateObjectStoragePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStoragePolicyResponse, error) {
 	rsp, err := c.CreateObjectStoragePolicy(ctx, serviceUuid, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12149,7 +16919,7 @@ func (c *ClientWithResponses) CreateObjectStoragePolicyWithResponse(ctx context.
 }
 
 // DeleteObjectStoragePolicyWithResponse request returning *DeleteObjectStoragePolicyResponse
-func (c *ClientWithResponses) DeleteObjectStoragePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeletePolicyServiceUuid, policyName ObjectStorage2DeletePolicyPolicyName, reqEditors ...RequestEditorFn) (*DeleteObjectStoragePolicyResponse, error) {
+func (c *ClientWithResponses) DeleteObjectStoragePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStoragePolicyServiceUuid, policyName ObjectStorage2DeleteObjectStoragePolicyPolicyName, reqEditors ...RequestEditorFn) (*DeleteObjectStoragePolicyResponse, error) {
 	rsp, err := c.DeleteObjectStoragePolicy(ctx, serviceUuid, policyName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12158,7 +16928,7 @@ func (c *ClientWithResponses) DeleteObjectStoragePolicyWithResponse(ctx context.
 }
 
 // GetObjectStoragePolicyWithResponse request returning *GetObjectStoragePolicyResponse
-func (c *ClientWithResponses) GetObjectStoragePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetPolicyDetailsServiceUuid, policyName ObjectStorage2GetPolicyDetailsPolicyName, reqEditors ...RequestEditorFn) (*GetObjectStoragePolicyResponse, error) {
+func (c *ClientWithResponses) GetObjectStoragePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStoragePolicyServiceUuid, policyName ObjectStorage2GetObjectStoragePolicyPolicyName, reqEditors ...RequestEditorFn) (*GetObjectStoragePolicyResponse, error) {
 	rsp, err := c.GetObjectStoragePolicy(ctx, serviceUuid, policyName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12167,7 +16937,7 @@ func (c *ClientWithResponses) GetObjectStoragePolicyWithResponse(ctx context.Con
 }
 
 // SetObjectStorageDefaultPolicyVersionWithBodyWithResponse request with arbitrary body returning *SetObjectStorageDefaultPolicyVersionResponse
-func (c *ClientWithResponses) SetObjectStorageDefaultPolicyVersionWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2SetDefaultPolicyVersionServiceUuid, policyName ObjectStorage2SetDefaultPolicyVersionPolicyName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*SetObjectStorageDefaultPolicyVersionResponse, error) {
+func (c *ClientWithResponses) SetObjectStorageDefaultPolicyVersionWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2SetObjectStorageDefaultPolicyVersionServiceUuid, policyName ObjectStorage2SetObjectStorageDefaultPolicyVersionPolicyName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*SetObjectStorageDefaultPolicyVersionResponse, error) {
 	rsp, err := c.SetObjectStorageDefaultPolicyVersionWithBody(ctx, serviceUuid, policyName, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12175,7 +16945,7 @@ func (c *ClientWithResponses) SetObjectStorageDefaultPolicyVersionWithBodyWithRe
 	return ParseSetObjectStorageDefaultPolicyVersionResponse(rsp)
 }
 
-func (c *ClientWithResponses) SetObjectStorageDefaultPolicyVersionWithResponse(ctx context.Context, serviceUuid ObjectStorage2SetDefaultPolicyVersionServiceUuid, policyName ObjectStorage2SetDefaultPolicyVersionPolicyName, body SetObjectStorageDefaultPolicyVersionJSONRequestBody, reqEditors ...RequestEditorFn) (*SetObjectStorageDefaultPolicyVersionResponse, error) {
+func (c *ClientWithResponses) SetObjectStorageDefaultPolicyVersionWithResponse(ctx context.Context, serviceUuid ObjectStorage2SetObjectStorageDefaultPolicyVersionServiceUuid, policyName ObjectStorage2SetObjectStorageDefaultPolicyVersionPolicyName, body SetObjectStorageDefaultPolicyVersionJSONRequestBody, reqEditors ...RequestEditorFn) (*SetObjectStorageDefaultPolicyVersionResponse, error) {
 	rsp, err := c.SetObjectStorageDefaultPolicyVersion(ctx, serviceUuid, policyName, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12184,7 +16954,7 @@ func (c *ClientWithResponses) SetObjectStorageDefaultPolicyVersionWithResponse(c
 }
 
 // ListObjectStoragePolicyVersionsWithResponse request returning *ListObjectStoragePolicyVersionsResponse
-func (c *ClientWithResponses) ListObjectStoragePolicyVersionsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListPolicyVersionsServiceUuid, policyName ObjectStorage2ListPolicyVersionsPolicyName, reqEditors ...RequestEditorFn) (*ListObjectStoragePolicyVersionsResponse, error) {
+func (c *ClientWithResponses) ListObjectStoragePolicyVersionsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStoragePolicyVersionsServiceUuid, policyName ObjectStorage2ListObjectStoragePolicyVersionsPolicyName, reqEditors ...RequestEditorFn) (*ListObjectStoragePolicyVersionsResponse, error) {
 	rsp, err := c.ListObjectStoragePolicyVersions(ctx, serviceUuid, policyName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12193,7 +16963,7 @@ func (c *ClientWithResponses) ListObjectStoragePolicyVersionsWithResponse(ctx co
 }
 
 // CreateObjectStoragePolicyVersionWithBodyWithResponse request with arbitrary body returning *CreateObjectStoragePolicyVersionResponse
-func (c *ClientWithResponses) CreateObjectStoragePolicyVersionWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreatePolicyVersionServiceUuid, policyName ObjectStorage2CreatePolicyVersionPolicyName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStoragePolicyVersionResponse, error) {
+func (c *ClientWithResponses) CreateObjectStoragePolicyVersionWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStoragePolicyVersionServiceUuid, policyName ObjectStorage2CreateObjectStoragePolicyVersionPolicyName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStoragePolicyVersionResponse, error) {
 	rsp, err := c.CreateObjectStoragePolicyVersionWithBody(ctx, serviceUuid, policyName, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12201,7 +16971,7 @@ func (c *ClientWithResponses) CreateObjectStoragePolicyVersionWithBodyWithRespon
 	return ParseCreateObjectStoragePolicyVersionResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateObjectStoragePolicyVersionWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreatePolicyVersionServiceUuid, policyName ObjectStorage2CreatePolicyVersionPolicyName, body CreateObjectStoragePolicyVersionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStoragePolicyVersionResponse, error) {
+func (c *ClientWithResponses) CreateObjectStoragePolicyVersionWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStoragePolicyVersionServiceUuid, policyName ObjectStorage2CreateObjectStoragePolicyVersionPolicyName, body CreateObjectStoragePolicyVersionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStoragePolicyVersionResponse, error) {
 	rsp, err := c.CreateObjectStoragePolicyVersion(ctx, serviceUuid, policyName, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12210,7 +16980,7 @@ func (c *ClientWithResponses) CreateObjectStoragePolicyVersionWithResponse(ctx c
 }
 
 // DeleteObjectStoragePolicyVersionWithResponse request returning *DeleteObjectStoragePolicyVersionResponse
-func (c *ClientWithResponses) DeleteObjectStoragePolicyVersionWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeletePolicyVersionServiceUuid, policyName ObjectStorage2DeletePolicyVersionPolicyName, policyVersion ObjectStorage2DeletePolicyVersionPolicyVersion, reqEditors ...RequestEditorFn) (*DeleteObjectStoragePolicyVersionResponse, error) {
+func (c *ClientWithResponses) DeleteObjectStoragePolicyVersionWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStoragePolicyVersionServiceUuid, policyName ObjectStorage2DeleteObjectStoragePolicyVersionPolicyName, policyVersion ObjectStorage2DeleteObjectStoragePolicyVersionPolicyVersion, reqEditors ...RequestEditorFn) (*DeleteObjectStoragePolicyVersionResponse, error) {
 	rsp, err := c.DeleteObjectStoragePolicyVersion(ctx, serviceUuid, policyName, policyVersion, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12219,7 +16989,7 @@ func (c *ClientWithResponses) DeleteObjectStoragePolicyVersionWithResponse(ctx c
 }
 
 // GetObjectStoragePolicyVersionWithResponse request returning *GetObjectStoragePolicyVersionResponse
-func (c *ClientWithResponses) GetObjectStoragePolicyVersionWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetPolicyVersionServiceUuid, policyName ObjectStorage2GetPolicyVersionPolicyName, policyVersion ObjectStorage2GetPolicyVersionPolicyVersion, reqEditors ...RequestEditorFn) (*GetObjectStoragePolicyVersionResponse, error) {
+func (c *ClientWithResponses) GetObjectStoragePolicyVersionWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStoragePolicyVersionServiceUuid, policyName ObjectStorage2GetObjectStoragePolicyVersionPolicyName, policyVersion ObjectStorage2GetObjectStoragePolicyVersionPolicyVersion, reqEditors ...RequestEditorFn) (*GetObjectStoragePolicyVersionResponse, error) {
 	rsp, err := c.GetObjectStoragePolicyVersion(ctx, serviceUuid, policyName, policyVersion, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12228,7 +16998,7 @@ func (c *ClientWithResponses) GetObjectStoragePolicyVersionWithResponse(ctx cont
 }
 
 // ListObjectStorageRolesWithResponse request returning *ListObjectStorageRolesResponse
-func (c *ClientWithResponses) ListObjectStorageRolesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListRolesServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageRolesResponse, error) {
+func (c *ClientWithResponses) ListObjectStorageRolesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageRolesServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageRolesResponse, error) {
 	rsp, err := c.ListObjectStorageRoles(ctx, serviceUuid, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12237,7 +17007,7 @@ func (c *ClientWithResponses) ListObjectStorageRolesWithResponse(ctx context.Con
 }
 
 // CreateObjectStorageRoleWithBodyWithResponse request with arbitrary body returning *CreateObjectStorageRoleResponse
-func (c *ClientWithResponses) CreateObjectStorageRoleWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateRoleServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageRoleResponse, error) {
+func (c *ClientWithResponses) CreateObjectStorageRoleWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageRoleServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageRoleResponse, error) {
 	rsp, err := c.CreateObjectStorageRoleWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12245,7 +17015,7 @@ func (c *ClientWithResponses) CreateObjectStorageRoleWithBodyWithResponse(ctx co
 	return ParseCreateObjectStorageRoleResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateObjectStorageRoleWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateRoleServiceUuid, body CreateObjectStorageRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageRoleResponse, error) {
+func (c *ClientWithResponses) CreateObjectStorageRoleWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageRoleServiceUuid, body CreateObjectStorageRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageRoleResponse, error) {
 	rsp, err := c.CreateObjectStorageRole(ctx, serviceUuid, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12254,7 +17024,7 @@ func (c *ClientWithResponses) CreateObjectStorageRoleWithResponse(ctx context.Co
 }
 
 // DeleteObjectStorageRoleWithResponse request returning *DeleteObjectStorageRoleResponse
-func (c *ClientWithResponses) DeleteObjectStorageRoleWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteRoleServiceUuid, roleName ObjectStorage2DeleteRoleRoleName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageRoleResponse, error) {
+func (c *ClientWithResponses) DeleteObjectStorageRoleWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageRoleServiceUuid, roleName ObjectStorage2DeleteObjectStorageRoleRoleName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageRoleResponse, error) {
 	rsp, err := c.DeleteObjectStorageRole(ctx, serviceUuid, roleName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12263,7 +17033,7 @@ func (c *ClientWithResponses) DeleteObjectStorageRoleWithResponse(ctx context.Co
 }
 
 // GetObjectStorageRoleWithResponse request returning *GetObjectStorageRoleResponse
-func (c *ClientWithResponses) GetObjectStorageRoleWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetRoleServiceUuid, roleName ObjectStorage2GetRoleRoleName, reqEditors ...RequestEditorFn) (*GetObjectStorageRoleResponse, error) {
+func (c *ClientWithResponses) GetObjectStorageRoleWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageRoleServiceUuid, roleName ObjectStorage2GetObjectStorageRoleRoleName, reqEditors ...RequestEditorFn) (*GetObjectStorageRoleResponse, error) {
 	rsp, err := c.GetObjectStorageRole(ctx, serviceUuid, roleName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12272,7 +17042,7 @@ func (c *ClientWithResponses) GetObjectStorageRoleWithResponse(ctx context.Conte
 }
 
 // UpdateObjectStorageRoleWithBodyWithResponse request with arbitrary body returning *UpdateObjectStorageRoleResponse
-func (c *ClientWithResponses) UpdateObjectStorageRoleWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2UpdateRoleServiceUuid, roleName ObjectStorage2UpdateRoleRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateObjectStorageRoleResponse, error) {
+func (c *ClientWithResponses) UpdateObjectStorageRoleWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2UpdateObjectStorageRoleServiceUuid, roleName ObjectStorage2UpdateObjectStorageRoleRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateObjectStorageRoleResponse, error) {
 	rsp, err := c.UpdateObjectStorageRoleWithBody(ctx, serviceUuid, roleName, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12280,7 +17050,7 @@ func (c *ClientWithResponses) UpdateObjectStorageRoleWithBodyWithResponse(ctx co
 	return ParseUpdateObjectStorageRoleResponse(rsp)
 }
 
-func (c *ClientWithResponses) UpdateObjectStorageRoleWithResponse(ctx context.Context, serviceUuid ObjectStorage2UpdateRoleServiceUuid, roleName ObjectStorage2UpdateRoleRoleName, body UpdateObjectStorageRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateObjectStorageRoleResponse, error) {
+func (c *ClientWithResponses) UpdateObjectStorageRoleWithResponse(ctx context.Context, serviceUuid ObjectStorage2UpdateObjectStorageRoleServiceUuid, roleName ObjectStorage2UpdateObjectStorageRoleRoleName, body UpdateObjectStorageRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateObjectStorageRoleResponse, error) {
 	rsp, err := c.UpdateObjectStorageRole(ctx, serviceUuid, roleName, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12289,7 +17059,7 @@ func (c *ClientWithResponses) UpdateObjectStorageRoleWithResponse(ctx context.Co
 }
 
 // AssumeObjectStorageRolePolicyWithBodyWithResponse request with arbitrary body returning *AssumeObjectStorageRolePolicyResponse
-func (c *ClientWithResponses) AssumeObjectStorageRolePolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AssumeRolePolicyServiceUuid, roleName ObjectStorage2AssumeRolePolicyRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AssumeObjectStorageRolePolicyResponse, error) {
+func (c *ClientWithResponses) AssumeObjectStorageRolePolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AssumeObjectStorageRolePolicyServiceUuid, roleName ObjectStorage2AssumeObjectStorageRolePolicyRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AssumeObjectStorageRolePolicyResponse, error) {
 	rsp, err := c.AssumeObjectStorageRolePolicyWithBody(ctx, serviceUuid, roleName, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12297,7 +17067,7 @@ func (c *ClientWithResponses) AssumeObjectStorageRolePolicyWithBodyWithResponse(
 	return ParseAssumeObjectStorageRolePolicyResponse(rsp)
 }
 
-func (c *ClientWithResponses) AssumeObjectStorageRolePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AssumeRolePolicyServiceUuid, roleName ObjectStorage2AssumeRolePolicyRoleName, body AssumeObjectStorageRolePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*AssumeObjectStorageRolePolicyResponse, error) {
+func (c *ClientWithResponses) AssumeObjectStorageRolePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AssumeObjectStorageRolePolicyServiceUuid, roleName ObjectStorage2AssumeObjectStorageRolePolicyRoleName, body AssumeObjectStorageRolePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*AssumeObjectStorageRolePolicyResponse, error) {
 	rsp, err := c.AssumeObjectStorageRolePolicy(ctx, serviceUuid, roleName, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12306,7 +17076,7 @@ func (c *ClientWithResponses) AssumeObjectStorageRolePolicyWithResponse(ctx cont
 }
 
 // ListObjectStorageRoleInlinePoliciesWithResponse request returning *ListObjectStorageRoleInlinePoliciesResponse
-func (c *ClientWithResponses) ListObjectStorageRoleInlinePoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListRoleInlinePoliciesServiceUuid, roleName ObjectStorage2ListRoleInlinePoliciesRoleName, reqEditors ...RequestEditorFn) (*ListObjectStorageRoleInlinePoliciesResponse, error) {
+func (c *ClientWithResponses) ListObjectStorageRoleInlinePoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageRoleInlinePoliciesServiceUuid, roleName ObjectStorage2ListObjectStorageRoleInlinePoliciesRoleName, reqEditors ...RequestEditorFn) (*ListObjectStorageRoleInlinePoliciesResponse, error) {
 	rsp, err := c.ListObjectStorageRoleInlinePolicies(ctx, serviceUuid, roleName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12315,7 +17085,7 @@ func (c *ClientWithResponses) ListObjectStorageRoleInlinePoliciesWithResponse(ct
 }
 
 // CreateObjectStorageRoleInlinePolicyWithBodyWithResponse request with arbitrary body returning *CreateObjectStorageRoleInlinePolicyResponse
-func (c *ClientWithResponses) CreateObjectStorageRoleInlinePolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateRoleInlinePolicyServiceUuid, roleName ObjectStorage2CreateRoleInlinePolicyRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageRoleInlinePolicyResponse, error) {
+func (c *ClientWithResponses) CreateObjectStorageRoleInlinePolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageRoleInlinePolicyServiceUuid, roleName ObjectStorage2CreateObjectStorageRoleInlinePolicyRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageRoleInlinePolicyResponse, error) {
 	rsp, err := c.CreateObjectStorageRoleInlinePolicyWithBody(ctx, serviceUuid, roleName, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12323,7 +17093,7 @@ func (c *ClientWithResponses) CreateObjectStorageRoleInlinePolicyWithBodyWithRes
 	return ParseCreateObjectStorageRoleInlinePolicyResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateObjectStorageRoleInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateRoleInlinePolicyServiceUuid, roleName ObjectStorage2CreateRoleInlinePolicyRoleName, body CreateObjectStorageRoleInlinePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageRoleInlinePolicyResponse, error) {
+func (c *ClientWithResponses) CreateObjectStorageRoleInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageRoleInlinePolicyServiceUuid, roleName ObjectStorage2CreateObjectStorageRoleInlinePolicyRoleName, body CreateObjectStorageRoleInlinePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageRoleInlinePolicyResponse, error) {
 	rsp, err := c.CreateObjectStorageRoleInlinePolicy(ctx, serviceUuid, roleName, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12332,7 +17102,7 @@ func (c *ClientWithResponses) CreateObjectStorageRoleInlinePolicyWithResponse(ct
 }
 
 // DeleteObjectStorageRoleInlinePolicyWithResponse request returning *DeleteObjectStorageRoleInlinePolicyResponse
-func (c *ClientWithResponses) DeleteObjectStorageRoleInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteRoleInlinePolicyServiceUuid, roleName ObjectStorage2DeleteRoleInlinePolicyRoleName, rolePolicyName ObjectStorage2DeleteRoleInlinePolicyRolePolicyName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageRoleInlinePolicyResponse, error) {
+func (c *ClientWithResponses) DeleteObjectStorageRoleInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageRoleInlinePolicyServiceUuid, roleName ObjectStorage2DeleteObjectStorageRoleInlinePolicyRoleName, rolePolicyName ObjectStorage2DeleteObjectStorageRoleInlinePolicyRolePolicyName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageRoleInlinePolicyResponse, error) {
 	rsp, err := c.DeleteObjectStorageRoleInlinePolicy(ctx, serviceUuid, roleName, rolePolicyName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12341,7 +17111,7 @@ func (c *ClientWithResponses) DeleteObjectStorageRoleInlinePolicyWithResponse(ct
 }
 
 // GetObjectStorageRoleInlinePolicyWithResponse request returning *GetObjectStorageRoleInlinePolicyResponse
-func (c *ClientWithResponses) GetObjectStorageRoleInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetRoleInlinePolicyServiceUuid, roleName ObjectStorage2GetRoleInlinePolicyRoleName, rolePolicyName ObjectStorage2GetRoleInlinePolicyRolePolicyName, reqEditors ...RequestEditorFn) (*GetObjectStorageRoleInlinePolicyResponse, error) {
+func (c *ClientWithResponses) GetObjectStorageRoleInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageRoleInlinePolicyServiceUuid, roleName ObjectStorage2GetObjectStorageRoleInlinePolicyRoleName, rolePolicyName ObjectStorage2GetObjectStorageRoleInlinePolicyRolePolicyName, reqEditors ...RequestEditorFn) (*GetObjectStorageRoleInlinePolicyResponse, error) {
 	rsp, err := c.GetObjectStorageRoleInlinePolicy(ctx, serviceUuid, roleName, rolePolicyName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12350,7 +17120,7 @@ func (c *ClientWithResponses) GetObjectStorageRoleInlinePolicyWithResponse(ctx c
 }
 
 // DeleteObjectStorageRolePermissionsBoundaryWithResponse request returning *DeleteObjectStorageRolePermissionsBoundaryResponse
-func (c *ClientWithResponses) DeleteObjectStorageRolePermissionsBoundaryWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2DeleteRolePermissionsBoundaryRoleName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageRolePermissionsBoundaryResponse, error) {
+func (c *ClientWithResponses) DeleteObjectStorageRolePermissionsBoundaryWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2DeleteObjectStorageRolePermissionsBoundaryRoleName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageRolePermissionsBoundaryResponse, error) {
 	rsp, err := c.DeleteObjectStorageRolePermissionsBoundary(ctx, serviceUuid, roleName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12359,7 +17129,7 @@ func (c *ClientWithResponses) DeleteObjectStorageRolePermissionsBoundaryWithResp
 }
 
 // CreateObjectStorageRolePermissionsBoundaryWithBodyWithResponse request with arbitrary body returning *CreateObjectStorageRolePermissionsBoundaryResponse
-func (c *ClientWithResponses) CreateObjectStorageRolePermissionsBoundaryWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2CreateRolePermissionsBoundaryRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageRolePermissionsBoundaryResponse, error) {
+func (c *ClientWithResponses) CreateObjectStorageRolePermissionsBoundaryWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2CreateObjectStorageRolePermissionsBoundaryRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageRolePermissionsBoundaryResponse, error) {
 	rsp, err := c.CreateObjectStorageRolePermissionsBoundaryWithBody(ctx, serviceUuid, roleName, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12367,7 +17137,7 @@ func (c *ClientWithResponses) CreateObjectStorageRolePermissionsBoundaryWithBody
 	return ParseCreateObjectStorageRolePermissionsBoundaryResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateObjectStorageRolePermissionsBoundaryWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2CreateRolePermissionsBoundaryRoleName, body CreateObjectStorageRolePermissionsBoundaryJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageRolePermissionsBoundaryResponse, error) {
+func (c *ClientWithResponses) CreateObjectStorageRolePermissionsBoundaryWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageRolePermissionsBoundaryServiceUuid, roleName ObjectStorage2CreateObjectStorageRolePermissionsBoundaryRoleName, body CreateObjectStorageRolePermissionsBoundaryJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageRolePermissionsBoundaryResponse, error) {
 	rsp, err := c.CreateObjectStorageRolePermissionsBoundary(ctx, serviceUuid, roleName, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12376,7 +17146,7 @@ func (c *ClientWithResponses) CreateObjectStorageRolePermissionsBoundaryWithResp
 }
 
 // ListObjectStorageAttachedRolePoliciesWithResponse request returning *ListObjectStorageAttachedRolePoliciesResponse
-func (c *ClientWithResponses) ListObjectStorageAttachedRolePoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListAttachedRolePoliciesServiceUuid, roleName ObjectStorage2ListAttachedRolePoliciesRoleName, reqEditors ...RequestEditorFn) (*ListObjectStorageAttachedRolePoliciesResponse, error) {
+func (c *ClientWithResponses) ListObjectStorageAttachedRolePoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageAttachedRolePoliciesServiceUuid, roleName ObjectStorage2ListObjectStorageAttachedRolePoliciesRoleName, reqEditors ...RequestEditorFn) (*ListObjectStorageAttachedRolePoliciesResponse, error) {
 	rsp, err := c.ListObjectStorageAttachedRolePolicies(ctx, serviceUuid, roleName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12385,7 +17155,7 @@ func (c *ClientWithResponses) ListObjectStorageAttachedRolePoliciesWithResponse(
 }
 
 // AttachObjectStoragePolicyToRoleWithBodyWithResponse request with arbitrary body returning *AttachObjectStoragePolicyToRoleResponse
-func (c *ClientWithResponses) AttachObjectStoragePolicyToRoleWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachPolicyToRoleServiceUuid, roleName ObjectStorage2AttachPolicyToRoleRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AttachObjectStoragePolicyToRoleResponse, error) {
+func (c *ClientWithResponses) AttachObjectStoragePolicyToRoleWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStoragePolicyToRoleServiceUuid, roleName ObjectStorage2AttachObjectStoragePolicyToRoleRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AttachObjectStoragePolicyToRoleResponse, error) {
 	rsp, err := c.AttachObjectStoragePolicyToRoleWithBody(ctx, serviceUuid, roleName, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12393,7 +17163,7 @@ func (c *ClientWithResponses) AttachObjectStoragePolicyToRoleWithBodyWithRespons
 	return ParseAttachObjectStoragePolicyToRoleResponse(rsp)
 }
 
-func (c *ClientWithResponses) AttachObjectStoragePolicyToRoleWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachPolicyToRoleServiceUuid, roleName ObjectStorage2AttachPolicyToRoleRoleName, body AttachObjectStoragePolicyToRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*AttachObjectStoragePolicyToRoleResponse, error) {
+func (c *ClientWithResponses) AttachObjectStoragePolicyToRoleWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStoragePolicyToRoleServiceUuid, roleName ObjectStorage2AttachObjectStoragePolicyToRoleRoleName, body AttachObjectStoragePolicyToRoleJSONRequestBody, reqEditors ...RequestEditorFn) (*AttachObjectStoragePolicyToRoleResponse, error) {
 	rsp, err := c.AttachObjectStoragePolicyToRole(ctx, serviceUuid, roleName, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12402,7 +17172,7 @@ func (c *ClientWithResponses) AttachObjectStoragePolicyToRoleWithResponse(ctx co
 }
 
 // DetachObjectStoragePolicyFromRoleWithResponse request returning *DetachObjectStoragePolicyFromRoleResponse
-func (c *ClientWithResponses) DetachObjectStoragePolicyFromRoleWithResponse(ctx context.Context, serviceUuid ObjectStorage2DetachPolicyFromRoleServiceUuid, roleName ObjectStorage2DetachPolicyFromRoleRoleName, rolePolicyName ObjectStorage2DetachPolicyFromRoleRolePolicyName, reqEditors ...RequestEditorFn) (*DetachObjectStoragePolicyFromRoleResponse, error) {
+func (c *ClientWithResponses) DetachObjectStoragePolicyFromRoleWithResponse(ctx context.Context, serviceUuid ObjectStorage2DetachObjectStoragePolicyFromRoleServiceUuid, roleName ObjectStorage2DetachObjectStoragePolicyFromRoleRoleName, rolePolicyName ObjectStorage2DetachObjectStoragePolicyFromRoleRolePolicyName, reqEditors ...RequestEditorFn) (*DetachObjectStoragePolicyFromRoleResponse, error) {
 	rsp, err := c.DetachObjectStoragePolicyFromRole(ctx, serviceUuid, roleName, rolePolicyName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12411,7 +17181,7 @@ func (c *ClientWithResponses) DetachObjectStoragePolicyFromRoleWithResponse(ctx 
 }
 
 // GetObjectStorageRoleTagsWithResponse request returning *GetObjectStorageRoleTagsResponse
-func (c *ClientWithResponses) GetObjectStorageRoleTagsWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetRoleTagsServiceUuid, roleName ObjectStorage2GetRoleTagsRoleName, reqEditors ...RequestEditorFn) (*GetObjectStorageRoleTagsResponse, error) {
+func (c *ClientWithResponses) GetObjectStorageRoleTagsWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageRoleTagsServiceUuid, roleName ObjectStorage2GetObjectStorageRoleTagsRoleName, reqEditors ...RequestEditorFn) (*GetObjectStorageRoleTagsResponse, error) {
 	rsp, err := c.GetObjectStorageRoleTags(ctx, serviceUuid, roleName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12420,7 +17190,7 @@ func (c *ClientWithResponses) GetObjectStorageRoleTagsWithResponse(ctx context.C
 }
 
 // ReplaceObjectStorageRoleTagsWithBodyWithResponse request with arbitrary body returning *ReplaceObjectStorageRoleTagsResponse
-func (c *ClientWithResponses) ReplaceObjectStorageRoleTagsWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ReplaceRoleTagsServiceUuid, roleName ObjectStorage2ReplaceRoleTagsRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplaceObjectStorageRoleTagsResponse, error) {
+func (c *ClientWithResponses) ReplaceObjectStorageRoleTagsWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ReplaceObjectStorageRoleTagsServiceUuid, roleName ObjectStorage2ReplaceObjectStorageRoleTagsRoleName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplaceObjectStorageRoleTagsResponse, error) {
 	rsp, err := c.ReplaceObjectStorageRoleTagsWithBody(ctx, serviceUuid, roleName, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12428,7 +17198,7 @@ func (c *ClientWithResponses) ReplaceObjectStorageRoleTagsWithBodyWithResponse(c
 	return ParseReplaceObjectStorageRoleTagsResponse(rsp)
 }
 
-func (c *ClientWithResponses) ReplaceObjectStorageRoleTagsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ReplaceRoleTagsServiceUuid, roleName ObjectStorage2ReplaceRoleTagsRoleName, body ReplaceObjectStorageRoleTagsJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplaceObjectStorageRoleTagsResponse, error) {
+func (c *ClientWithResponses) ReplaceObjectStorageRoleTagsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ReplaceObjectStorageRoleTagsServiceUuid, roleName ObjectStorage2ReplaceObjectStorageRoleTagsRoleName, body ReplaceObjectStorageRoleTagsJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplaceObjectStorageRoleTagsResponse, error) {
 	rsp, err := c.ReplaceObjectStorageRoleTags(ctx, serviceUuid, roleName, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12437,7 +17207,7 @@ func (c *ClientWithResponses) ReplaceObjectStorageRoleTagsWithResponse(ctx conte
 }
 
 // DeleteObjectStorageRoleTagWithResponse request returning *DeleteObjectStorageRoleTagResponse
-func (c *ClientWithResponses) DeleteObjectStorageRoleTagWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteRoleTagServiceUuid, roleName ObjectStorage2DeleteRoleTagRoleName, roleTagKey ObjectStorage2DeleteRoleTagRoleTagKey, reqEditors ...RequestEditorFn) (*DeleteObjectStorageRoleTagResponse, error) {
+func (c *ClientWithResponses) DeleteObjectStorageRoleTagWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageRoleTagServiceUuid, roleName ObjectStorage2DeleteObjectStorageRoleTagRoleName, roleTagKey ObjectStorage2DeleteObjectStorageRoleTagRoleTagKey, reqEditors ...RequestEditorFn) (*DeleteObjectStorageRoleTagResponse, error) {
 	rsp, err := c.DeleteObjectStorageRoleTag(ctx, serviceUuid, roleName, roleTagKey, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12445,69 +17215,69 @@ func (c *ClientWithResponses) DeleteObjectStorageRoleTagWithResponse(ctx context
 	return ParseDeleteObjectStorageRoleTagResponse(rsp)
 }
 
-// ListStaticWebsitesWithResponse request returning *ListStaticWebsitesResponse
-func (c *ClientWithResponses) ListStaticWebsitesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListStaticWebsitesServiceUuid, reqEditors ...RequestEditorFn) (*ListStaticWebsitesResponse, error) {
-	rsp, err := c.ListStaticWebsites(ctx, serviceUuid, reqEditors...)
+// ListObjectStorageStaticWebsitesWithResponse request returning *ListObjectStorageStaticWebsitesResponse
+func (c *ClientWithResponses) ListObjectStorageStaticWebsitesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageStaticWebsitesServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageStaticWebsitesResponse, error) {
+	rsp, err := c.ListObjectStorageStaticWebsites(ctx, serviceUuid, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseListStaticWebsitesResponse(rsp)
+	return ParseListObjectStorageStaticWebsitesResponse(rsp)
 }
 
-// CreateStaticWebsiteWithBodyWithResponse request with arbitrary body returning *CreateStaticWebsiteResponse
-func (c *ClientWithResponses) CreateStaticWebsiteWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateStaticWebsiteServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateStaticWebsiteResponse, error) {
-	rsp, err := c.CreateStaticWebsiteWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
+// CreateObjectStorageStaticWebsiteWithBodyWithResponse request with arbitrary body returning *CreateObjectStorageStaticWebsiteResponse
+func (c *ClientWithResponses) CreateObjectStorageStaticWebsiteWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageStaticWebsiteServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageStaticWebsiteResponse, error) {
+	rsp, err := c.CreateObjectStorageStaticWebsiteWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateStaticWebsiteResponse(rsp)
+	return ParseCreateObjectStorageStaticWebsiteResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateStaticWebsiteWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateStaticWebsiteServiceUuid, body CreateStaticWebsiteJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateStaticWebsiteResponse, error) {
-	rsp, err := c.CreateStaticWebsite(ctx, serviceUuid, body, reqEditors...)
+func (c *ClientWithResponses) CreateObjectStorageStaticWebsiteWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageStaticWebsiteServiceUuid, body CreateObjectStorageStaticWebsiteJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageStaticWebsiteResponse, error) {
+	rsp, err := c.CreateObjectStorageStaticWebsite(ctx, serviceUuid, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateStaticWebsiteResponse(rsp)
+	return ParseCreateObjectStorageStaticWebsiteResponse(rsp)
 }
 
-// DeleteStaticWebsiteWithResponse request returning *DeleteStaticWebsiteResponse
-func (c *ClientWithResponses) DeleteStaticWebsiteWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteStaticWebsiteServiceUuid, customDomainName ObjectStorage2DeleteStaticWebsiteCustomDomainName, reqEditors ...RequestEditorFn) (*DeleteStaticWebsiteResponse, error) {
-	rsp, err := c.DeleteStaticWebsite(ctx, serviceUuid, customDomainName, reqEditors...)
+// DeleteObjectStorageStaticWebsiteWithResponse request returning *DeleteObjectStorageStaticWebsiteResponse
+func (c *ClientWithResponses) DeleteObjectStorageStaticWebsiteWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageStaticWebsiteServiceUuid, customDomainName ObjectStorage2DeleteObjectStorageStaticWebsiteCustomDomainName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageStaticWebsiteResponse, error) {
+	rsp, err := c.DeleteObjectStorageStaticWebsite(ctx, serviceUuid, customDomainName, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseDeleteStaticWebsiteResponse(rsp)
+	return ParseDeleteObjectStorageStaticWebsiteResponse(rsp)
 }
 
-// GetStaticWebsiteWithResponse request returning *GetStaticWebsiteResponse
-func (c *ClientWithResponses) GetStaticWebsiteWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetStaticWebsiteServiceUuid, customDomainName ObjectStorage2GetStaticWebsiteCustomDomainName, reqEditors ...RequestEditorFn) (*GetStaticWebsiteResponse, error) {
-	rsp, err := c.GetStaticWebsite(ctx, serviceUuid, customDomainName, reqEditors...)
+// GetObjectStorageStaticWebsiteWithResponse request returning *GetObjectStorageStaticWebsiteResponse
+func (c *ClientWithResponses) GetObjectStorageStaticWebsiteWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageStaticWebsiteServiceUuid, customDomainName ObjectStorage2GetObjectStorageStaticWebsiteCustomDomainName, reqEditors ...RequestEditorFn) (*GetObjectStorageStaticWebsiteResponse, error) {
+	rsp, err := c.GetObjectStorageStaticWebsite(ctx, serviceUuid, customDomainName, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetStaticWebsiteResponse(rsp)
+	return ParseGetObjectStorageStaticWebsiteResponse(rsp)
 }
 
-// ModifyStaticWebsiteWithBodyWithResponse request with arbitrary body returning *ModifyStaticWebsiteResponse
-func (c *ClientWithResponses) ModifyStaticWebsiteWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyStaticWebsiteCustomDomainName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyStaticWebsiteResponse, error) {
-	rsp, err := c.ModifyStaticWebsiteWithBody(ctx, serviceUuid, customDomainName, contentType, body, reqEditors...)
+// ModifyObjectStorageStaticWebsiteWithBodyWithResponse request with arbitrary body returning *ModifyObjectStorageStaticWebsiteResponse
+func (c *ClientWithResponses) ModifyObjectStorageStaticWebsiteWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyObjectStorageStaticWebsiteCustomDomainName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyObjectStorageStaticWebsiteResponse, error) {
+	rsp, err := c.ModifyObjectStorageStaticWebsiteWithBody(ctx, serviceUuid, customDomainName, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseModifyStaticWebsiteResponse(rsp)
+	return ParseModifyObjectStorageStaticWebsiteResponse(rsp)
 }
 
-func (c *ClientWithResponses) ModifyStaticWebsiteWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyStaticWebsiteCustomDomainName, body ModifyStaticWebsiteJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyStaticWebsiteResponse, error) {
-	rsp, err := c.ModifyStaticWebsite(ctx, serviceUuid, customDomainName, body, reqEditors...)
+func (c *ClientWithResponses) ModifyObjectStorageStaticWebsiteWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageStaticWebsiteServiceUuid, customDomainName ObjectStorage2ModifyObjectStorageStaticWebsiteCustomDomainName, body ModifyObjectStorageStaticWebsiteJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyObjectStorageStaticWebsiteResponse, error) {
+	rsp, err := c.ModifyObjectStorageStaticWebsite(ctx, serviceUuid, customDomainName, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseModifyStaticWebsiteResponse(rsp)
+	return ParseModifyObjectStorageStaticWebsiteResponse(rsp)
 }
 
 // ListObjectStorageUsersWithResponse request returning *ListObjectStorageUsersResponse
-func (c *ClientWithResponses) ListObjectStorageUsersWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListUsersServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageUsersResponse, error) {
+func (c *ClientWithResponses) ListObjectStorageUsersWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageUsersServiceUuid, reqEditors ...RequestEditorFn) (*ListObjectStorageUsersResponse, error) {
 	rsp, err := c.ListObjectStorageUsers(ctx, serviceUuid, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12516,7 +17286,7 @@ func (c *ClientWithResponses) ListObjectStorageUsersWithResponse(ctx context.Con
 }
 
 // CreateObjectStorageUserWithBodyWithResponse request with arbitrary body returning *CreateObjectStorageUserResponse
-func (c *ClientWithResponses) CreateObjectStorageUserWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateUserServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageUserResponse, error) {
+func (c *ClientWithResponses) CreateObjectStorageUserWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageUserServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageUserResponse, error) {
 	rsp, err := c.CreateObjectStorageUserWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12524,7 +17294,7 @@ func (c *ClientWithResponses) CreateObjectStorageUserWithBodyWithResponse(ctx co
 	return ParseCreateObjectStorageUserResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateObjectStorageUserWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateUserServiceUuid, body CreateObjectStorageUserJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageUserResponse, error) {
+func (c *ClientWithResponses) CreateObjectStorageUserWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageUserServiceUuid, body CreateObjectStorageUserJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageUserResponse, error) {
 	rsp, err := c.CreateObjectStorageUser(ctx, serviceUuid, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12533,7 +17303,7 @@ func (c *ClientWithResponses) CreateObjectStorageUserWithResponse(ctx context.Co
 }
 
 // DeleteObjectStorageUserWithResponse request returning *DeleteObjectStorageUserResponse
-func (c *ClientWithResponses) DeleteObjectStorageUserWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteUserServiceUuid, username ObjectStorage2DeleteUserUsername, reqEditors ...RequestEditorFn) (*DeleteObjectStorageUserResponse, error) {
+func (c *ClientWithResponses) DeleteObjectStorageUserWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageUserServiceUuid, username ObjectStorage2DeleteObjectStorageUserUsername, reqEditors ...RequestEditorFn) (*DeleteObjectStorageUserResponse, error) {
 	rsp, err := c.DeleteObjectStorageUser(ctx, serviceUuid, username, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12542,7 +17312,7 @@ func (c *ClientWithResponses) DeleteObjectStorageUserWithResponse(ctx context.Co
 }
 
 // GetObjectStorageUserWithResponse request returning *GetObjectStorageUserResponse
-func (c *ClientWithResponses) GetObjectStorageUserWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetUserDetailsServiceUuid, username ObjectStorage2GetUserDetailsUsername, reqEditors ...RequestEditorFn) (*GetObjectStorageUserResponse, error) {
+func (c *ClientWithResponses) GetObjectStorageUserWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageUserServiceUuid, username ObjectStorage2GetObjectStorageUserUsername, reqEditors ...RequestEditorFn) (*GetObjectStorageUserResponse, error) {
 	rsp, err := c.GetObjectStorageUser(ctx, serviceUuid, username, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12551,7 +17321,7 @@ func (c *ClientWithResponses) GetObjectStorageUserWithResponse(ctx context.Conte
 }
 
 // ListObjectStorageAccessKeysWithResponse request returning *ListObjectStorageAccessKeysResponse
-func (c *ClientWithResponses) ListObjectStorageAccessKeysWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListAccessKeysServiceUuid, username ObjectStorage2ListAccessKeysUsername, reqEditors ...RequestEditorFn) (*ListObjectStorageAccessKeysResponse, error) {
+func (c *ClientWithResponses) ListObjectStorageAccessKeysWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageAccessKeysServiceUuid, username ObjectStorage2ListObjectStorageAccessKeysUsername, reqEditors ...RequestEditorFn) (*ListObjectStorageAccessKeysResponse, error) {
 	rsp, err := c.ListObjectStorageAccessKeys(ctx, serviceUuid, username, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12560,7 +17330,7 @@ func (c *ClientWithResponses) ListObjectStorageAccessKeysWithResponse(ctx contex
 }
 
 // CreateObjectStorageAccessKeyWithResponse request returning *CreateObjectStorageAccessKeyResponse
-func (c *ClientWithResponses) CreateObjectStorageAccessKeyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateAccessKeyServiceUuid, username ObjectStorage2CreateAccessKeyUsername, reqEditors ...RequestEditorFn) (*CreateObjectStorageAccessKeyResponse, error) {
+func (c *ClientWithResponses) CreateObjectStorageAccessKeyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageAccessKeyServiceUuid, username ObjectStorage2CreateObjectStorageAccessKeyUsername, reqEditors ...RequestEditorFn) (*CreateObjectStorageAccessKeyResponse, error) {
 	rsp, err := c.CreateObjectStorageAccessKey(ctx, serviceUuid, username, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12569,7 +17339,7 @@ func (c *ClientWithResponses) CreateObjectStorageAccessKeyWithResponse(ctx conte
 }
 
 // DeleteObjectStorageAccessKeyWithResponse request returning *DeleteObjectStorageAccessKeyResponse
-func (c *ClientWithResponses) DeleteObjectStorageAccessKeyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteAccessKeyServiceUuid, username ObjectStorage2DeleteAccessKeyUsername, accessKeyId ObjectStorage2DeleteAccessKeyAccessKeyId, reqEditors ...RequestEditorFn) (*DeleteObjectStorageAccessKeyResponse, error) {
+func (c *ClientWithResponses) DeleteObjectStorageAccessKeyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageAccessKeyServiceUuid, username ObjectStorage2DeleteObjectStorageAccessKeyUsername, accessKeyId ObjectStorage2DeleteObjectStorageAccessKeyAccessKeyId, reqEditors ...RequestEditorFn) (*DeleteObjectStorageAccessKeyResponse, error) {
 	rsp, err := c.DeleteObjectStorageAccessKey(ctx, serviceUuid, username, accessKeyId, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12578,7 +17348,7 @@ func (c *ClientWithResponses) DeleteObjectStorageAccessKeyWithResponse(ctx conte
 }
 
 // GetObjectStorageAccessKeyDetailsWithResponse request returning *GetObjectStorageAccessKeyDetailsResponse
-func (c *ClientWithResponses) GetObjectStorageAccessKeyDetailsWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetAccessKeyDetailsServiceUuid, username ObjectStorage2GetAccessKeyDetailsUsername, accessKeyId ObjectStorage2GetAccessKeyDetailsAccessKeyId, reqEditors ...RequestEditorFn) (*GetObjectStorageAccessKeyDetailsResponse, error) {
+func (c *ClientWithResponses) GetObjectStorageAccessKeyDetailsWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageAccessKeyDetailsServiceUuid, username ObjectStorage2GetObjectStorageAccessKeyDetailsUsername, accessKeyId ObjectStorage2GetObjectStorageAccessKeyDetailsAccessKeyId, reqEditors ...RequestEditorFn) (*GetObjectStorageAccessKeyDetailsResponse, error) {
 	rsp, err := c.GetObjectStorageAccessKeyDetails(ctx, serviceUuid, username, accessKeyId, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12587,7 +17357,7 @@ func (c *ClientWithResponses) GetObjectStorageAccessKeyDetailsWithResponse(ctx c
 }
 
 // ModifyObjectStorageAccessKeyDetailsWithBodyWithResponse request with arbitrary body returning *ModifyObjectStorageAccessKeyDetailsResponse
-func (c *ClientWithResponses) ModifyObjectStorageAccessKeyDetailsWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyAccessKeyDetailsServiceUuid, username ObjectStorage2ModifyAccessKeyDetailsUsername, accessKeyId ObjectStorage2ModifyAccessKeyDetailsAccessKeyId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyObjectStorageAccessKeyDetailsResponse, error) {
+func (c *ClientWithResponses) ModifyObjectStorageAccessKeyDetailsWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageAccessKeyDetailsServiceUuid, username ObjectStorage2ModifyObjectStorageAccessKeyDetailsUsername, accessKeyId ObjectStorage2ModifyObjectStorageAccessKeyDetailsAccessKeyId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyObjectStorageAccessKeyDetailsResponse, error) {
 	rsp, err := c.ModifyObjectStorageAccessKeyDetailsWithBody(ctx, serviceUuid, username, accessKeyId, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12595,7 +17365,7 @@ func (c *ClientWithResponses) ModifyObjectStorageAccessKeyDetailsWithBodyWithRes
 	return ParseModifyObjectStorageAccessKeyDetailsResponse(rsp)
 }
 
-func (c *ClientWithResponses) ModifyObjectStorageAccessKeyDetailsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyAccessKeyDetailsServiceUuid, username ObjectStorage2ModifyAccessKeyDetailsUsername, accessKeyId ObjectStorage2ModifyAccessKeyDetailsAccessKeyId, body ModifyObjectStorageAccessKeyDetailsJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyObjectStorageAccessKeyDetailsResponse, error) {
+func (c *ClientWithResponses) ModifyObjectStorageAccessKeyDetailsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ModifyObjectStorageAccessKeyDetailsServiceUuid, username ObjectStorage2ModifyObjectStorageAccessKeyDetailsUsername, accessKeyId ObjectStorage2ModifyObjectStorageAccessKeyDetailsAccessKeyId, body ModifyObjectStorageAccessKeyDetailsJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyObjectStorageAccessKeyDetailsResponse, error) {
 	rsp, err := c.ModifyObjectStorageAccessKeyDetails(ctx, serviceUuid, username, accessKeyId, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12604,7 +17374,7 @@ func (c *ClientWithResponses) ModifyObjectStorageAccessKeyDetailsWithResponse(ct
 }
 
 // ListObjectStorageUserInlinePoliciesWithResponse request returning *ListObjectStorageUserInlinePoliciesResponse
-func (c *ClientWithResponses) ListObjectStorageUserInlinePoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListUserInlinePoliciesServiceUuid, username ObjectStorage2ListUserInlinePoliciesUsername, reqEditors ...RequestEditorFn) (*ListObjectStorageUserInlinePoliciesResponse, error) {
+func (c *ClientWithResponses) ListObjectStorageUserInlinePoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageUserInlinePoliciesServiceUuid, username ObjectStorage2ListObjectStorageUserInlinePoliciesUsername, reqEditors ...RequestEditorFn) (*ListObjectStorageUserInlinePoliciesResponse, error) {
 	rsp, err := c.ListObjectStorageUserInlinePolicies(ctx, serviceUuid, username, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12613,7 +17383,7 @@ func (c *ClientWithResponses) ListObjectStorageUserInlinePoliciesWithResponse(ct
 }
 
 // CreateObjectStorageUserInlinePolicyWithBodyWithResponse request with arbitrary body returning *CreateObjectStorageUserInlinePolicyResponse
-func (c *ClientWithResponses) CreateObjectStorageUserInlinePolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateUserInlinePolicyServiceUuid, username ObjectStorage2CreateUserInlinePolicyUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageUserInlinePolicyResponse, error) {
+func (c *ClientWithResponses) CreateObjectStorageUserInlinePolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageUserInlinePolicyServiceUuid, username ObjectStorage2CreateObjectStorageUserInlinePolicyUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageUserInlinePolicyResponse, error) {
 	rsp, err := c.CreateObjectStorageUserInlinePolicyWithBody(ctx, serviceUuid, username, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12621,7 +17391,7 @@ func (c *ClientWithResponses) CreateObjectStorageUserInlinePolicyWithBodyWithRes
 	return ParseCreateObjectStorageUserInlinePolicyResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateObjectStorageUserInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateUserInlinePolicyServiceUuid, username ObjectStorage2CreateUserInlinePolicyUsername, body CreateObjectStorageUserInlinePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageUserInlinePolicyResponse, error) {
+func (c *ClientWithResponses) CreateObjectStorageUserInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageUserInlinePolicyServiceUuid, username ObjectStorage2CreateObjectStorageUserInlinePolicyUsername, body CreateObjectStorageUserInlinePolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageUserInlinePolicyResponse, error) {
 	rsp, err := c.CreateObjectStorageUserInlinePolicy(ctx, serviceUuid, username, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12630,7 +17400,7 @@ func (c *ClientWithResponses) CreateObjectStorageUserInlinePolicyWithResponse(ct
 }
 
 // DeleteObjectStorageUserInlinePolicyWithResponse request returning *DeleteObjectStorageUserInlinePolicyResponse
-func (c *ClientWithResponses) DeleteObjectStorageUserInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteUserInlinePolicyServiceUuid, username ObjectStorage2DeleteUserInlinePolicyUsername, userPolicyName ObjectStorage2DeleteUserInlinePolicyUserPolicyName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageUserInlinePolicyResponse, error) {
+func (c *ClientWithResponses) DeleteObjectStorageUserInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageUserInlinePolicyServiceUuid, username ObjectStorage2DeleteObjectStorageUserInlinePolicyUsername, userPolicyName ObjectStorage2DeleteObjectStorageUserInlinePolicyUserPolicyName, reqEditors ...RequestEditorFn) (*DeleteObjectStorageUserInlinePolicyResponse, error) {
 	rsp, err := c.DeleteObjectStorageUserInlinePolicy(ctx, serviceUuid, username, userPolicyName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12639,7 +17409,7 @@ func (c *ClientWithResponses) DeleteObjectStorageUserInlinePolicyWithResponse(ct
 }
 
 // GetObjectStorageUserInlinePolicyWithResponse request returning *GetObjectStorageUserInlinePolicyResponse
-func (c *ClientWithResponses) GetObjectStorageUserInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetUserInlinePolicyServiceUuid, username ObjectStorage2GetUserInlinePolicyUsername, userPolicyName ObjectStorage2GetUserInlinePolicyUserPolicyName, reqEditors ...RequestEditorFn) (*GetObjectStorageUserInlinePolicyResponse, error) {
+func (c *ClientWithResponses) GetObjectStorageUserInlinePolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageUserInlinePolicyServiceUuid, username ObjectStorage2GetObjectStorageUserInlinePolicyUsername, userPolicyName ObjectStorage2GetObjectStorageUserInlinePolicyUserPolicyName, reqEditors ...RequestEditorFn) (*GetObjectStorageUserInlinePolicyResponse, error) {
 	rsp, err := c.GetObjectStorageUserInlinePolicy(ctx, serviceUuid, username, userPolicyName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12648,7 +17418,7 @@ func (c *ClientWithResponses) GetObjectStorageUserInlinePolicyWithResponse(ctx c
 }
 
 // DeleteObjectStorageUserPermissionsBoundaryWithResponse request returning *DeleteObjectStorageUserPermissionsBoundaryResponse
-func (c *ClientWithResponses) DeleteObjectStorageUserPermissionsBoundaryWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteUserPermissionsBoundaryServiceUuid, username ObjectStorage2DeleteUserPermissionsBoundaryUsername, reqEditors ...RequestEditorFn) (*DeleteObjectStorageUserPermissionsBoundaryResponse, error) {
+func (c *ClientWithResponses) DeleteObjectStorageUserPermissionsBoundaryWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageUserPermissionsBoundaryServiceUuid, username ObjectStorage2DeleteObjectStorageUserPermissionsBoundaryUsername, reqEditors ...RequestEditorFn) (*DeleteObjectStorageUserPermissionsBoundaryResponse, error) {
 	rsp, err := c.DeleteObjectStorageUserPermissionsBoundary(ctx, serviceUuid, username, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12657,7 +17427,7 @@ func (c *ClientWithResponses) DeleteObjectStorageUserPermissionsBoundaryWithResp
 }
 
 // CreateObjectStorageUserPermissionsBoundaryWithBodyWithResponse request with arbitrary body returning *CreateObjectStorageUserPermissionsBoundaryResponse
-func (c *ClientWithResponses) CreateObjectStorageUserPermissionsBoundaryWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateUserPermissionsBoundaryServiceUuid, username ObjectStorage2CreateUserPermissionsBoundaryUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageUserPermissionsBoundaryResponse, error) {
+func (c *ClientWithResponses) CreateObjectStorageUserPermissionsBoundaryWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageUserPermissionsBoundaryServiceUuid, username ObjectStorage2CreateObjectStorageUserPermissionsBoundaryUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateObjectStorageUserPermissionsBoundaryResponse, error) {
 	rsp, err := c.CreateObjectStorageUserPermissionsBoundaryWithBody(ctx, serviceUuid, username, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12665,7 +17435,7 @@ func (c *ClientWithResponses) CreateObjectStorageUserPermissionsBoundaryWithBody
 	return ParseCreateObjectStorageUserPermissionsBoundaryResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateObjectStorageUserPermissionsBoundaryWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateUserPermissionsBoundaryServiceUuid, username ObjectStorage2CreateUserPermissionsBoundaryUsername, body CreateObjectStorageUserPermissionsBoundaryJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageUserPermissionsBoundaryResponse, error) {
+func (c *ClientWithResponses) CreateObjectStorageUserPermissionsBoundaryWithResponse(ctx context.Context, serviceUuid ObjectStorage2CreateObjectStorageUserPermissionsBoundaryServiceUuid, username ObjectStorage2CreateObjectStorageUserPermissionsBoundaryUsername, body CreateObjectStorageUserPermissionsBoundaryJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateObjectStorageUserPermissionsBoundaryResponse, error) {
 	rsp, err := c.CreateObjectStorageUserPermissionsBoundary(ctx, serviceUuid, username, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12674,7 +17444,7 @@ func (c *ClientWithResponses) CreateObjectStorageUserPermissionsBoundaryWithResp
 }
 
 // ListObjectStorageAttachedUserPoliciesWithResponse request returning *ListObjectStorageAttachedUserPoliciesResponse
-func (c *ClientWithResponses) ListObjectStorageAttachedUserPoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListAttachedUserPoliciesServiceUuid, username ObjectStorage2ListAttachedUserPoliciesUsername, reqEditors ...RequestEditorFn) (*ListObjectStorageAttachedUserPoliciesResponse, error) {
+func (c *ClientWithResponses) ListObjectStorageAttachedUserPoliciesWithResponse(ctx context.Context, serviceUuid ObjectStorage2ListObjectStorageAttachedUserPoliciesServiceUuid, username ObjectStorage2ListObjectStorageAttachedUserPoliciesUsername, reqEditors ...RequestEditorFn) (*ListObjectStorageAttachedUserPoliciesResponse, error) {
 	rsp, err := c.ListObjectStorageAttachedUserPolicies(ctx, serviceUuid, username, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12683,7 +17453,7 @@ func (c *ClientWithResponses) ListObjectStorageAttachedUserPoliciesWithResponse(
 }
 
 // AttachObjectStorageUserPolicyWithBodyWithResponse request with arbitrary body returning *AttachObjectStorageUserPolicyResponse
-func (c *ClientWithResponses) AttachObjectStorageUserPolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachUserPolicyServiceUuid, username ObjectStorage2AttachUserPolicyUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AttachObjectStorageUserPolicyResponse, error) {
+func (c *ClientWithResponses) AttachObjectStorageUserPolicyWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageUserPolicyServiceUuid, username ObjectStorage2AttachObjectStorageUserPolicyUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AttachObjectStorageUserPolicyResponse, error) {
 	rsp, err := c.AttachObjectStorageUserPolicyWithBody(ctx, serviceUuid, username, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12691,7 +17461,7 @@ func (c *ClientWithResponses) AttachObjectStorageUserPolicyWithBodyWithResponse(
 	return ParseAttachObjectStorageUserPolicyResponse(rsp)
 }
 
-func (c *ClientWithResponses) AttachObjectStorageUserPolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachUserPolicyServiceUuid, username ObjectStorage2AttachUserPolicyUsername, body AttachObjectStorageUserPolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*AttachObjectStorageUserPolicyResponse, error) {
+func (c *ClientWithResponses) AttachObjectStorageUserPolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2AttachObjectStorageUserPolicyServiceUuid, username ObjectStorage2AttachObjectStorageUserPolicyUsername, body AttachObjectStorageUserPolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*AttachObjectStorageUserPolicyResponse, error) {
 	rsp, err := c.AttachObjectStorageUserPolicy(ctx, serviceUuid, username, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12700,7 +17470,7 @@ func (c *ClientWithResponses) AttachObjectStorageUserPolicyWithResponse(ctx cont
 }
 
 // DetachObjectStorageUserPolicyWithResponse request returning *DetachObjectStorageUserPolicyResponse
-func (c *ClientWithResponses) DetachObjectStorageUserPolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DetachUserPolicyServiceUuid, username ObjectStorage2DetachUserPolicyUsername, nestedName ObjectStorage2DetachUserPolicyNestedName, reqEditors ...RequestEditorFn) (*DetachObjectStorageUserPolicyResponse, error) {
+func (c *ClientWithResponses) DetachObjectStorageUserPolicyWithResponse(ctx context.Context, serviceUuid ObjectStorage2DetachObjectStorageUserPolicyServiceUuid, username ObjectStorage2DetachObjectStorageUserPolicyUsername, nestedName ObjectStorage2DetachObjectStorageUserPolicyNestedName, reqEditors ...RequestEditorFn) (*DetachObjectStorageUserPolicyResponse, error) {
 	rsp, err := c.DetachObjectStorageUserPolicy(ctx, serviceUuid, username, nestedName, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12709,7 +17479,7 @@ func (c *ClientWithResponses) DetachObjectStorageUserPolicyWithResponse(ctx cont
 }
 
 // GetObjectStorageUserTagsWithResponse request returning *GetObjectStorageUserTagsResponse
-func (c *ClientWithResponses) GetObjectStorageUserTagsWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetUserTagsServiceUuid, username ObjectStorage2GetUserTagsUsername, reqEditors ...RequestEditorFn) (*GetObjectStorageUserTagsResponse, error) {
+func (c *ClientWithResponses) GetObjectStorageUserTagsWithResponse(ctx context.Context, serviceUuid ObjectStorage2GetObjectStorageUserTagsServiceUuid, username ObjectStorage2GetObjectStorageUserTagsUsername, reqEditors ...RequestEditorFn) (*GetObjectStorageUserTagsResponse, error) {
 	rsp, err := c.GetObjectStorageUserTags(ctx, serviceUuid, username, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12718,7 +17488,7 @@ func (c *ClientWithResponses) GetObjectStorageUserTagsWithResponse(ctx context.C
 }
 
 // ReplaceObjectStorageUserTagsWithBodyWithResponse request with arbitrary body returning *ReplaceObjectStorageUserTagsResponse
-func (c *ClientWithResponses) ReplaceObjectStorageUserTagsWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ReplaceUserTagsServiceUuid, username ObjectStorage2ReplaceUserTagsUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplaceObjectStorageUserTagsResponse, error) {
+func (c *ClientWithResponses) ReplaceObjectStorageUserTagsWithBodyWithResponse(ctx context.Context, serviceUuid ObjectStorage2ReplaceObjectStorageUserTagsServiceUuid, username ObjectStorage2ReplaceObjectStorageUserTagsUsername, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplaceObjectStorageUserTagsResponse, error) {
 	rsp, err := c.ReplaceObjectStorageUserTagsWithBody(ctx, serviceUuid, username, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12726,7 +17496,7 @@ func (c *ClientWithResponses) ReplaceObjectStorageUserTagsWithBodyWithResponse(c
 	return ParseReplaceObjectStorageUserTagsResponse(rsp)
 }
 
-func (c *ClientWithResponses) ReplaceObjectStorageUserTagsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ReplaceUserTagsServiceUuid, username ObjectStorage2ReplaceUserTagsUsername, body ReplaceObjectStorageUserTagsJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplaceObjectStorageUserTagsResponse, error) {
+func (c *ClientWithResponses) ReplaceObjectStorageUserTagsWithResponse(ctx context.Context, serviceUuid ObjectStorage2ReplaceObjectStorageUserTagsServiceUuid, username ObjectStorage2ReplaceObjectStorageUserTagsUsername, body ReplaceObjectStorageUserTagsJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplaceObjectStorageUserTagsResponse, error) {
 	rsp, err := c.ReplaceObjectStorageUserTags(ctx, serviceUuid, username, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -12735,12 +17505,822 @@ func (c *ClientWithResponses) ReplaceObjectStorageUserTagsWithResponse(ctx conte
 }
 
 // DeleteObjectStorageUserTagWithResponse request returning *DeleteObjectStorageUserTagResponse
-func (c *ClientWithResponses) DeleteObjectStorageUserTagWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteUserTagServiceUuid, username ObjectStorage2DeleteUserTagUsername, userTagKey ObjectStorage2DeleteUserTagUserTagKey, reqEditors ...RequestEditorFn) (*DeleteObjectStorageUserTagResponse, error) {
+func (c *ClientWithResponses) DeleteObjectStorageUserTagWithResponse(ctx context.Context, serviceUuid ObjectStorage2DeleteObjectStorageUserTagServiceUuid, username ObjectStorage2DeleteObjectStorageUserTagUsername, userTagKey ObjectStorage2DeleteObjectStorageUserTagUserTagKey, reqEditors ...RequestEditorFn) (*DeleteObjectStorageUserTagResponse, error) {
 	rsp, err := c.DeleteObjectStorageUserTag(ctx, serviceUuid, username, userTagKey, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseDeleteObjectStorageUserTagResponse(rsp)
+}
+
+// ParseListFirewallRulesetsResponse parses an HTTP response from a ListFirewallRulesetsWithResponse call
+func ParseListFirewallRulesetsResponse(rsp *http.Response) (*ListFirewallRulesetsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListFirewallRulesetsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ListFirewallRulesets200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ListFirewallRulesetsDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateFirewallRulesetResponse parses an HTTP response from a CreateFirewallRulesetWithResponse call
+func ParseCreateFirewallRulesetResponse(rsp *http.Response) (*CreateFirewallRulesetResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateFirewallRulesetResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest CreateFirewallRuleset201
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest CreateFirewallRulesetDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseAdminListServerFirewallRulesResponse parses an HTTP response from a AdminListServerFirewallRulesWithResponse call
+func ParseAdminListServerFirewallRulesResponse(rsp *http.Response) (*AdminListServerFirewallRulesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &AdminListServerFirewallRulesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest FirewallRulesetAdminListServerFirewallRules200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest FirewallRulesetAdminListServerFirewallRules400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest FirewallRulesetAdminListServerFirewallRules403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest FirewallRulesetAdminListServerFirewallRules404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest FirewallRulesetAdminListServerFirewallRules409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest FirewallRulesetAdminListServerFirewallRulesDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListServerFirewallRuleResponse parses an HTTP response from a ListServerFirewallRuleWithResponse call
+func ParseListServerFirewallRuleResponse(rsp *http.Response) (*ListServerFirewallRuleResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListServerFirewallRuleResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest FirewallRulesetListServerFirewallRule200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest FirewallRulesetListServerFirewallRuleDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateServerFirewallRuleResponse parses an HTTP response from a CreateServerFirewallRuleWithResponse call
+func ParseCreateServerFirewallRuleResponse(rsp *http.Response) (*CreateServerFirewallRuleResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateServerFirewallRuleResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest FirewallRulesetCreateServerFirewallRule201
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest FirewallRulesetCreateServerFirewallRule400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest FirewallRulesetCreateServerFirewallRule403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest FirewallRulesetCreateServerFirewallRule404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest FirewallRulesetCreateServerFirewallRule409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest FirewallRulesetCreateServerFirewallRuleDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateMultipleServerFirewallRulesResponse parses an HTTP response from a CreateMultipleServerFirewallRulesWithResponse call
+func ParseCreateMultipleServerFirewallRulesResponse(rsp *http.Response) (*CreateMultipleServerFirewallRulesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateMultipleServerFirewallRulesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest FirewallRulesetCreateMultipleServerFirewallRules200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest FirewallRulesetCreateMultipleServerFirewallRules400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest FirewallRulesetCreateMultipleServerFirewallRules403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest FirewallRulesetCreateMultipleServerFirewallRules404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest FirewallRulesetCreateMultipleServerFirewallRules409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest FirewallRulesetCreateMultipleServerFirewallRulesDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteServerFirewallRuleResponse parses an HTTP response from a DeleteServerFirewallRuleWithResponse call
+func ParseDeleteServerFirewallRuleResponse(rsp *http.Response) (*DeleteServerFirewallRuleResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteServerFirewallRuleResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest FirewallRulesetDeleteServerFirewallRule400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest FirewallRulesetDeleteServerFirewallRule403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest FirewallRulesetDeleteServerFirewallRule404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest FirewallRulesetDeleteServerFirewallRule409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest FirewallRulesetDeleteServerFirewallRuleDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetServerFirewallRuleResponse parses an HTTP response from a GetServerFirewallRuleWithResponse call
+func ParseGetServerFirewallRuleResponse(rsp *http.Response) (*GetServerFirewallRuleResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetServerFirewallRuleResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest FirewallRulesetGetServerFirewallRule200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest FirewallRulesetGetServerFirewallRuleDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteFirewallRulesetResponse parses an HTTP response from a DeleteFirewallRulesetWithResponse call
+func ParseDeleteFirewallRulesetResponse(rsp *http.Response) (*DeleteFirewallRulesetResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteFirewallRulesetResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest DeleteFirewallRulesetDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetFirewallRulesetResponse parses an HTTP response from a GetFirewallRulesetWithResponse call
+func ParseGetFirewallRulesetResponse(rsp *http.Response) (*GetFirewallRulesetResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetFirewallRulesetResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest GetFirewallRuleset200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest GetFirewallRulesetDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseModifyFirewallRulesetResponse parses an HTTP response from a ModifyFirewallRulesetWithResponse call
+func ParseModifyFirewallRulesetResponse(rsp *http.Response) (*ModifyFirewallRulesetResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ModifyFirewallRulesetResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ModifyFirewallRuleset200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ModifyFirewallRulesetDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListFirewallRulesetLabelsResponse parses an HTTP response from a ListFirewallRulesetLabelsWithResponse call
+func ParseListFirewallRulesetLabelsResponse(rsp *http.Response) (*ListFirewallRulesetLabelsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListFirewallRulesetLabelsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ListFirewallRulesetLabels200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ListFirewallRulesetLabelsDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateFirewallRulesetLabelResponse parses an HTTP response from a CreateFirewallRulesetLabelWithResponse call
+func ParseCreateFirewallRulesetLabelResponse(rsp *http.Response) (*CreateFirewallRulesetLabelResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateFirewallRulesetLabelResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest CreateFirewallRulesetLabel201
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest CreateFirewallRulesetLabelDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteFirewallRulesetLabelResponse parses an HTTP response from a DeleteFirewallRulesetLabelWithResponse call
+func ParseDeleteFirewallRulesetLabelResponse(rsp *http.Response) (*DeleteFirewallRulesetLabelResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteFirewallRulesetLabelResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest DeleteFirewallRulesetLabelDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetFirewallRulesetLabelResponse parses an HTTP response from a GetFirewallRulesetLabelWithResponse call
+func ParseGetFirewallRulesetLabelResponse(rsp *http.Response) (*GetFirewallRulesetLabelResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetFirewallRulesetLabelResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest GetFirewallRulesetLabel200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest GetFirewallRulesetLabelDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseModifyFirewallRulesetLabelResponse parses an HTTP response from a ModifyFirewallRulesetLabelWithResponse call
+func ParseModifyFirewallRulesetLabelResponse(rsp *http.Response) (*ModifyFirewallRulesetLabelResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ModifyFirewallRulesetLabelResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ModifyFirewallRulesetLabel200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ModifyFirewallRulesetLabelDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseRestoreFirewallRulesetResponse parses an HTTP response from a RestoreFirewallRulesetWithResponse call
+func ParseRestoreFirewallRulesetResponse(rsp *http.Response) (*RestoreFirewallRulesetResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &RestoreFirewallRulesetResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest RestoreFirewallRuleset200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest RestoreFirewallRulesetDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListFirewallRulesetRulesResponse parses an HTTP response from a ListFirewallRulesetRulesWithResponse call
+func ParseListFirewallRulesetRulesResponse(rsp *http.Response) (*ListFirewallRulesetRulesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListFirewallRulesetRulesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ListFirewallRulesetRules200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ListFirewallRulesetRulesDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateFirewallRulesetRuleResponse parses an HTTP response from a CreateFirewallRulesetRuleWithResponse call
+func ParseCreateFirewallRulesetRuleResponse(rsp *http.Response) (*CreateFirewallRulesetRuleResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateFirewallRulesetRuleResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest CreateFirewallRulesetRule201
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest CreateFirewallRulesetRuleDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteFirewallRulesetRuleResponse parses an HTTP response from a DeleteFirewallRulesetRuleWithResponse call
+func ParseDeleteFirewallRulesetRuleResponse(rsp *http.Response) (*DeleteFirewallRulesetRuleResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteFirewallRulesetRuleResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest DeleteFirewallRulesetRuleDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetFirewallRulesetRuleResponse parses an HTTP response from a GetFirewallRulesetRuleWithResponse call
+func ParseGetFirewallRulesetRuleResponse(rsp *http.Response) (*GetFirewallRulesetRuleResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetFirewallRulesetRuleResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest GetFirewallRulesetRule200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest GetFirewallRulesetRuleDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseModifyFirewallRulesetRuleResponse parses an HTTP response from a ModifyFirewallRulesetRuleWithResponse call
+func ParseModifyFirewallRulesetRuleResponse(rsp *http.Response) (*ModifyFirewallRulesetRuleResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ModifyFirewallRulesetRuleResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ModifyFirewallRulesetRule200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ModifyFirewallRulesetRuleDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
 }
 
 // ParseListObjectStoragesResponse parses an HTTP response from a ListObjectStoragesWithResponse call
@@ -12758,14 +18338,14 @@ func ParseListObjectStoragesResponse(rsp *http.Response) (*ListObjectStoragesRes
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2ListServices200
+		var dest ObjectStorage2ListObjectStorages200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ListServicesDefault
+		var dest ObjectStorage2ListObjectStoragesDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -12791,139 +18371,14 @@ func ParseCreateObjectStorageResponse(rsp *http.Response) (*CreateObjectStorageR
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest ObjectStorage2CreateService201
+		var dest CreateObjectStorage201
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON201 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2CreateServiceDefault
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSONDefault = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseListObjectStorageIntegrationServicesResponse parses an HTTP response from a ListObjectStorageIntegrationServicesWithResponse call
-func ParseListObjectStorageIntegrationServicesResponse(rsp *http.Response) (*ListObjectStorageIntegrationServicesResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &ListObjectStorageIntegrationServicesResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2IntegrationListServices200
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2IntegrationListServicesDefault
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSONDefault = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseGetObjectStorageIntegrationServiceResponse parses an HTTP response from a GetObjectStorageIntegrationServiceWithResponse call
-func ParseGetObjectStorageIntegrationServiceResponse(rsp *http.Response) (*GetObjectStorageIntegrationServiceResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetObjectStorageIntegrationServiceResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2IntegrationGetService200
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2IntegrationGetServiceDefault
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSONDefault = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseCreateObjectStorageIntegrationNetworkResponse parses an HTTP response from a CreateObjectStorageIntegrationNetworkWithResponse call
-func ParseCreateObjectStorageIntegrationNetworkResponse(rsp *http.Response) (*CreateObjectStorageIntegrationNetworkResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &CreateObjectStorageIntegrationNetworkResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest ObjectStorage2IntegrationCreateNetwork201
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON201 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2IntegrationCreateNetworkDefault
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSONDefault = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseDeleteObjectStorageIntegrationNetworkResponse parses an HTTP response from a DeleteObjectStorageIntegrationNetworkWithResponse call
-func ParseDeleteObjectStorageIntegrationNetworkResponse(rsp *http.Response) (*DeleteObjectStorageIntegrationNetworkResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &DeleteObjectStorageIntegrationNetworkResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2IntegrationDeleteNetworkDefault
+		var dest ObjectStorage2CreateObjectStorageDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -12949,14 +18404,14 @@ func ParseListObjectStorageRegionsResponse(rsp *http.Response) (*ListObjectStora
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2ListRegions200
+		var dest ObjectStorage2ListObjectStorageRegions200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ListRegionsDefault
+		var dest ObjectStorage2ListObjectStorageRegionsDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -12982,14 +18437,14 @@ func ParseGetObjectStorageRegionResponse(rsp *http.Response) (*GetObjectStorageR
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2GetRegionDetails200
+		var dest ObjectStorage2GetObjectStorageRegion200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2GetRegionDetailsDefault
+		var dest ObjectStorage2GetObjectStorageRegionDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13015,7 +18470,7 @@ func ParseDeleteObjectStorageResponse(rsp *http.Response) (*DeleteObjectStorageR
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2DeleteServiceDefault
+		var dest ObjectStorage2DeleteObjectStorageDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13041,14 +18496,14 @@ func ParseGetObjectStorageResponse(rsp *http.Response) (*GetObjectStorageRespons
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2GetService200
+		var dest GetObjectStorage200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2GetServiceDefault
+		var dest ObjectStorage2GetObjectStorageDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13074,14 +18529,14 @@ func ParseModifyObjectStorageResponse(rsp *http.Response) (*ModifyObjectStorageR
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2ModifyService200
+		var dest ModifyObjectStorage200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ModifyServiceDefault
+		var dest ObjectStorage2ModifyObjectStorageDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13107,14 +18562,14 @@ func ParseReplaceObjectStorageResponse(rsp *http.Response) (*ReplaceObjectStorag
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2ReplaceService200
+		var dest ReplaceObjectStorage200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ReplaceServiceDefault
+		var dest ObjectStorage2ReplaceObjectStorageDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13140,14 +18595,14 @@ func ParseListObjectStorageBucketMetricsResponse(rsp *http.Response) (*ListObjec
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2ListBucketMetrics200
+		var dest ObjectStorage2ListObjectStorageBucketMetrics200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ListBucketMetricsDefault
+		var dest ObjectStorage2ListObjectStorageBucketMetricsDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13173,14 +18628,14 @@ func ParseCreateObjectStorageBucketResponse(rsp *http.Response) (*CreateObjectSt
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest ObjectStorage2CreateBucket201
+		var dest ObjectStorage2CreateObjectStorageBucket201
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON201 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2CreateBucketDefault
+		var dest ObjectStorage2CreateObjectStorageBucketDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13206,7 +18661,7 @@ func ParseDeleteObjectStorageBucketResponse(rsp *http.Response) (*DeleteObjectSt
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2DeleteBucketDefault
+		var dest ObjectStorage2DeleteObjectStorageBucketDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13232,14 +18687,14 @@ func ParseListObjectStorageCustomDomainsResponse(rsp *http.Response) (*ListObjec
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2ListCustomDomains200
+		var dest ObjectStorage2ListObjectStorageCustomDomains200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ListCustomDomainsDefault
+		var dest ObjectStorage2ListObjectStorageCustomDomainsDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13265,14 +18720,14 @@ func ParseAttachObjectStorageCustomDomainResponse(rsp *http.Response) (*AttachOb
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest ObjectStorage2AttachCustomDomain201
+		var dest ObjectStorage2AttachObjectStorageCustomDomain201
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON201 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2AttachCustomDomainDefault
+		var dest ObjectStorage2AttachObjectStorageCustomDomainDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13298,7 +18753,7 @@ func ParseDeleteObjectStorageCustomDomainResponse(rsp *http.Response) (*DeleteOb
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2DeleteCustomDomainDefault
+		var dest ObjectStorage2DeleteObjectStorageCustomDomainDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13324,14 +18779,14 @@ func ParseGetObjectStorageCustomDomainResponse(rsp *http.Response) (*GetObjectSt
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2GetCustomDomainDetails200
+		var dest ObjectStorage2GetObjectStorageCustomDomain200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2GetCustomDomainDetailsDefault
+		var dest ObjectStorage2GetObjectStorageCustomDomainDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13357,14 +18812,14 @@ func ParseModifyObjectStorageCustomDomainResponse(rsp *http.Response) (*ModifyOb
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2ModifyCustomDomain200
+		var dest ObjectStorage2ModifyObjectStorageCustomDomain200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ModifyCustomDomainDefault
+		var dest ObjectStorage2ModifyObjectStorageCustomDomainDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13375,29 +18830,29 @@ func ParseModifyObjectStorageCustomDomainResponse(rsp *http.Response) (*ModifyOb
 	return response, nil
 }
 
-// ParseGetServiceDomainsResponse parses an HTTP response from a GetServiceDomainsWithResponse call
-func ParseGetServiceDomainsResponse(rsp *http.Response) (*GetServiceDomainsResponse, error) {
+// ParseListObjectStorageDomainsResponse parses an HTTP response from a ListObjectStorageDomainsWithResponse call
+func ParseListObjectStorageDomainsResponse(rsp *http.Response) (*ListObjectStorageDomainsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetServiceDomainsResponse{
+	response := &ListObjectStorageDomainsResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2GetServiceDomains200
+		var dest ObjectStorage2ListObjectStorageDomains200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2GetServiceDomainsDefault
+		var dest ObjectStorage2ListObjectStorageDomainsDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13423,14 +18878,14 @@ func ParseListObjectStorageGroupsResponse(rsp *http.Response) (*ListObjectStorag
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2ListGroups200
+		var dest ObjectStorage2ListObjectStorageGroups200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ListGroupsDefault
+		var dest ObjectStorage2ListObjectStorageGroupsDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13456,14 +18911,14 @@ func ParseCreateObjectStorageGroupResponse(rsp *http.Response) (*CreateObjectSto
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest ObjectStorage2CreateGroup201
+		var dest ObjectStorage2CreateObjectStorageGroup201
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON201 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2CreateGroupDefault
+		var dest ObjectStorage2CreateObjectStorageGroupDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13489,7 +18944,7 @@ func ParseDeleteObjectStorageGroupResponse(rsp *http.Response) (*DeleteObjectSto
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2DeleteGroupDefault
+		var dest ObjectStorage2DeleteObjectStorageGroupDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13515,14 +18970,14 @@ func ParseGetObjectStorageGroupResponse(rsp *http.Response) (*GetObjectStorageGr
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2GetGroup200
+		var dest ObjectStorage2GetObjectStorageGroup200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2GetGroupDefault
+		var dest ObjectStorage2GetObjectStorageGroupDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13548,14 +19003,14 @@ func ParseListObjectStorageGroupInlinePoliciesResponse(rsp *http.Response) (*Lis
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2ListGroupInlinePolicies200
+		var dest ObjectStorage2ListObjectStorageGroupInlinePolicies200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ListGroupInlinePoliciesDefault
+		var dest ObjectStorage2ListObjectStorageGroupInlinePoliciesDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13581,14 +19036,14 @@ func ParseCreateObjectStorageGroupInlinePolicyResponse(rsp *http.Response) (*Cre
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest ObjectStorage2CreateGroupInlinePolicy201
+		var dest ObjectStorage2CreateObjectStorageGroupInlinePolicy201
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON201 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2CreateGroupInlinePolicyDefault
+		var dest ObjectStorage2CreateObjectStorageGroupInlinePolicyDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13614,7 +19069,7 @@ func ParseDeleteObjectStorageGroupInlinePolicyResponse(rsp *http.Response) (*Del
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2DeleteGroupInlinePolicyDefault
+		var dest ObjectStorage2DeleteObjectStorageGroupInlinePolicyDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13640,14 +19095,14 @@ func ParseGetObjectStorageGroupInlinePolicyResponse(rsp *http.Response) (*GetObj
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2GetGroupInlinePolicy200
+		var dest ObjectStorage2GetObjectStorageGroupInlinePolicy200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2GetGroupInlinePolicyDefault
+		var dest ObjectStorage2GetObjectStorageGroupInlinePolicyDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13673,14 +19128,14 @@ func ParseListObjectStorageIAMGroupPoliciesResponse(rsp *http.Response) (*ListOb
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2ListIAMGroupPolicies200
+		var dest ObjectStorage2ListObjectStorageIAMGroupPolicies200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ListIAMGroupPoliciesDefault
+		var dest ObjectStorage2ListObjectStorageIAMGroupPoliciesDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13706,7 +19161,7 @@ func ParseAttachObjectStorageIAMGroupPolicyResponse(rsp *http.Response) (*Attach
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2AttachIAMGroupPolicyDefault
+		var dest ObjectStorage2AttachObjectStorageIAMGroupPolicyDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13732,7 +19187,7 @@ func ParseDetachObjectStorageIAMGroupPolicyResponse(rsp *http.Response) (*Detach
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2DetachIAMGroupPolicyDefault
+		var dest ObjectStorage2DetachObjectStorageIAMGroupPolicyDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13758,7 +19213,7 @@ func ParseRemoveObjectStorageUserFromGroupResponse(rsp *http.Response) (*RemoveO
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2RemoveUserFromGroupDefault
+		var dest ObjectStorage2RemoveObjectStorageUserFromGroupDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13784,7 +19239,7 @@ func ParseAttachObjectStorageUserToGroupResponse(rsp *http.Response) (*AttachObj
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2AttachUserToGroupDefault
+		var dest ObjectStorage2AttachObjectStorageUserToGroupDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13810,14 +19265,14 @@ func ParseListObjectStorageLabelsResponse(rsp *http.Response) (*ListObjectStorag
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2ListLabels200
+		var dest ObjectStorage2ListObjectStorageLabels200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ListLabelsDefault
+		var dest ObjectStorage2ListObjectStorageLabelsDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13843,14 +19298,14 @@ func ParseCreateObjectStorageLabelResponse(rsp *http.Response) (*CreateObjectSto
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest ObjectStorage2CreateLabel201
+		var dest ObjectStorage2CreateObjectStorageLabel201
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON201 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2CreateLabelDefault
+		var dest ObjectStorage2CreateObjectStorageLabelDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13876,7 +19331,7 @@ func ParseDeleteObjectStorageLabelResponse(rsp *http.Response) (*DeleteObjectSto
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2DeleteLabelDefault
+		var dest ObjectStorage2DeleteObjectStorageLabelDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13902,14 +19357,14 @@ func ParseGetObjectStorageLabelResponse(rsp *http.Response) (*GetObjectStorageLa
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2GetLabelDetails200
+		var dest ObjectStorage2GetObjectStorageLabel200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2GetLabelDetailsDefault
+		var dest ObjectStorage2GetObjectStorageLabelDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13935,14 +19390,14 @@ func ParseModifyObjectStorageLabelResponse(rsp *http.Response) (*ModifyObjectSto
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2ModifyLabel200
+		var dest ObjectStorage2ModifyObjectStorageLabel200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ModifyLabelDefault
+		var dest ObjectStorage2ModifyObjectStorageLabelDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -13968,14 +19423,14 @@ func ParseGetObjectStorageMetricsResponse(rsp *http.Response) (*GetObjectStorage
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2GetServiceMetrics200
+		var dest ObjectStorage2GetObjectStorageMetrics200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2GetServiceMetricsDefault
+		var dest ObjectStorage2GetObjectStorageMetricsDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14001,14 +19456,14 @@ func ParseListObjectStorageMetricsSeriesResponse(rsp *http.Response) (*ListObjec
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2ListServiceMetricsSeries200
+		var dest ObjectStorage2ListObjectStorageMetricsSeries200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ListServiceMetricsSeriesDefault
+		var dest ObjectStorage2ListObjectStorageMetricsSeriesDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14034,14 +19489,14 @@ func ParseListObjectStorageNetworksResponse(rsp *http.Response) (*ListObjectStor
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2ListNetworks200
+		var dest ObjectStorage2ListObjectStorageNetworks200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ListNetworksDefault
+		var dest ObjectStorage2ListObjectStorageNetworksDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14067,14 +19522,14 @@ func ParseCreateObjectStorageNetworkResponse(rsp *http.Response) (*CreateObjectS
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest ObjectStorage2CreateNetwork201
+		var dest ObjectStorage2CreateObjectStorageNetwork201
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON201 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2CreateNetworkDefault
+		var dest ObjectStorage2CreateObjectStorageNetworkDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14100,7 +19555,7 @@ func ParseDeleteObjectStorageNetworkResponse(rsp *http.Response) (*DeleteObjectS
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2DeleteNetworkDefault
+		var dest ObjectStorage2DeleteObjectStorageNetworkDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14126,14 +19581,14 @@ func ParseGetObjectStorageNetworkResponse(rsp *http.Response) (*GetObjectStorage
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2GetNetwork200
+		var dest ObjectStorage2GetObjectStorageNetwork200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2GetNetworkDefault
+		var dest ObjectStorage2GetObjectStorageNetworkDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14159,14 +19614,14 @@ func ParseListObjectStoragePoliciesResponse(rsp *http.Response) (*ListObjectStor
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2ListPolicies200
+		var dest ObjectStorage2ListObjectStoragePolicies200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ListPoliciesDefault
+		var dest ObjectStorage2ListObjectStoragePoliciesDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14192,14 +19647,14 @@ func ParseCreateObjectStoragePolicyResponse(rsp *http.Response) (*CreateObjectSt
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest ObjectStorage2CreatePolicy201
+		var dest ObjectStorage2CreateObjectStoragePolicy201
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON201 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2CreatePolicyDefault
+		var dest ObjectStorage2CreateObjectStoragePolicyDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14225,7 +19680,7 @@ func ParseDeleteObjectStoragePolicyResponse(rsp *http.Response) (*DeleteObjectSt
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2DeletePolicyDefault
+		var dest ObjectStorage2DeleteObjectStoragePolicyDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14251,14 +19706,14 @@ func ParseGetObjectStoragePolicyResponse(rsp *http.Response) (*GetObjectStorageP
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2GetPolicyDetails200
+		var dest ObjectStorage2GetObjectStoragePolicy200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2GetPolicyDetailsDefault
+		var dest ObjectStorage2GetObjectStoragePolicyDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14284,14 +19739,14 @@ func ParseSetObjectStorageDefaultPolicyVersionResponse(rsp *http.Response) (*Set
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2SetDefaultPolicyVersion200
+		var dest ObjectStorage2SetObjectStorageDefaultPolicyVersion200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2SetDefaultPolicyVersionDefault
+		var dest ObjectStorage2SetObjectStorageDefaultPolicyVersionDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14317,14 +19772,14 @@ func ParseListObjectStoragePolicyVersionsResponse(rsp *http.Response) (*ListObje
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2ListPolicyVersions200
+		var dest ObjectStorage2ListObjectStoragePolicyVersions200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ListPolicyVersionsDefault
+		var dest ObjectStorage2ListObjectStoragePolicyVersionsDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14350,14 +19805,14 @@ func ParseCreateObjectStoragePolicyVersionResponse(rsp *http.Response) (*CreateO
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest ObjectStorage2CreatePolicyVersion201
+		var dest ObjectStorage2CreateObjectStoragePolicyVersion201
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON201 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2CreatePolicyVersionDefault
+		var dest ObjectStorage2CreateObjectStoragePolicyVersionDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14383,7 +19838,7 @@ func ParseDeleteObjectStoragePolicyVersionResponse(rsp *http.Response) (*DeleteO
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2DeletePolicyVersionDefault
+		var dest ObjectStorage2DeleteObjectStoragePolicyVersionDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14409,14 +19864,14 @@ func ParseGetObjectStoragePolicyVersionResponse(rsp *http.Response) (*GetObjectS
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2GetPolicyVersion200
+		var dest ObjectStorage2GetObjectStoragePolicyVersion200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2GetPolicyVersionDefault
+		var dest ObjectStorage2GetObjectStoragePolicyVersionDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14442,14 +19897,14 @@ func ParseListObjectStorageRolesResponse(rsp *http.Response) (*ListObjectStorage
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2ListRoles200
+		var dest ObjectStorage2ListObjectStorageRoles200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ListRolesDefault
+		var dest ObjectStorage2ListObjectStorageRolesDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14475,14 +19930,14 @@ func ParseCreateObjectStorageRoleResponse(rsp *http.Response) (*CreateObjectStor
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest ObjectStorage2CreateRole201
+		var dest ObjectStorage2CreateObjectStorageRole201
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON201 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2CreateRoleDefault
+		var dest ObjectStorage2CreateObjectStorageRoleDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14508,7 +19963,7 @@ func ParseDeleteObjectStorageRoleResponse(rsp *http.Response) (*DeleteObjectStor
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2DeleteRoleDefault
+		var dest ObjectStorage2DeleteObjectStorageRoleDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14534,14 +19989,14 @@ func ParseGetObjectStorageRoleResponse(rsp *http.Response) (*GetObjectStorageRol
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2GetRole200
+		var dest ObjectStorage2GetObjectStorageRole200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2GetRoleDefault
+		var dest ObjectStorage2GetObjectStorageRoleDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14567,14 +20022,14 @@ func ParseUpdateObjectStorageRoleResponse(rsp *http.Response) (*UpdateObjectStor
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2UpdateRole200
+		var dest ObjectStorage2UpdateObjectStorageRole200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2UpdateRoleDefault
+		var dest ObjectStorage2UpdateObjectStorageRoleDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14600,14 +20055,14 @@ func ParseAssumeObjectStorageRolePolicyResponse(rsp *http.Response) (*AssumeObje
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2AssumeRolePolicy200
+		var dest ObjectStorage2AssumeObjectStorageRolePolicy200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2AssumeRolePolicyDefault
+		var dest ObjectStorage2AssumeObjectStorageRolePolicyDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14633,14 +20088,14 @@ func ParseListObjectStorageRoleInlinePoliciesResponse(rsp *http.Response) (*List
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2ListRoleInlinePolicies200
+		var dest ObjectStorage2ListObjectStorageRoleInlinePolicies200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ListRoleInlinePoliciesDefault
+		var dest ObjectStorage2ListObjectStorageRoleInlinePoliciesDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14666,14 +20121,14 @@ func ParseCreateObjectStorageRoleInlinePolicyResponse(rsp *http.Response) (*Crea
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest ObjectStorage2CreateRoleInlinePolicy201
+		var dest ObjectStorage2CreateObjectStorageRoleInlinePolicy201
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON201 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2CreateRoleInlinePolicyDefault
+		var dest ObjectStorage2CreateObjectStorageRoleInlinePolicyDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14699,7 +20154,7 @@ func ParseDeleteObjectStorageRoleInlinePolicyResponse(rsp *http.Response) (*Dele
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2DeleteRoleInlinePolicyDefault
+		var dest ObjectStorage2DeleteObjectStorageRoleInlinePolicyDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14725,14 +20180,14 @@ func ParseGetObjectStorageRoleInlinePolicyResponse(rsp *http.Response) (*GetObje
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2GetRoleInlinePolicy200
+		var dest ObjectStorage2GetObjectStorageRoleInlinePolicy200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2GetRoleInlinePolicyDefault
+		var dest ObjectStorage2GetObjectStorageRoleInlinePolicyDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14758,7 +20213,7 @@ func ParseDeleteObjectStorageRolePermissionsBoundaryResponse(rsp *http.Response)
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2DeleteRolePermissionsBoundaryDefault
+		var dest ObjectStorage2DeleteObjectStorageRolePermissionsBoundaryDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14784,14 +20239,14 @@ func ParseCreateObjectStorageRolePermissionsBoundaryResponse(rsp *http.Response)
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2CreateRolePermissionsBoundary200
+		var dest ObjectStorage2CreateObjectStorageRolePermissionsBoundary200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2CreateRolePermissionsBoundaryDefault
+		var dest ObjectStorage2CreateObjectStorageRolePermissionsBoundaryDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14817,14 +20272,14 @@ func ParseListObjectStorageAttachedRolePoliciesResponse(rsp *http.Response) (*Li
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2ListAttachedRolePolicies200
+		var dest ObjectStorage2ListObjectStorageAttachedRolePolicies200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ListAttachedRolePoliciesDefault
+		var dest ObjectStorage2ListObjectStorageAttachedRolePoliciesDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14850,7 +20305,7 @@ func ParseAttachObjectStoragePolicyToRoleResponse(rsp *http.Response) (*AttachOb
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2AttachPolicyToRoleDefault
+		var dest ObjectStorage2AttachObjectStoragePolicyToRoleDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14876,7 +20331,7 @@ func ParseDetachObjectStoragePolicyFromRoleResponse(rsp *http.Response) (*Detach
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2DetachPolicyFromRoleDefault
+		var dest ObjectStorage2DetachObjectStoragePolicyFromRoleDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14902,14 +20357,14 @@ func ParseGetObjectStorageRoleTagsResponse(rsp *http.Response) (*GetObjectStorag
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2GetRoleTags200
+		var dest ObjectStorage2GetObjectStorageRoleTags200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2GetRoleTagsDefault
+		var dest ObjectStorage2GetObjectStorageRoleTagsDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14935,14 +20390,14 @@ func ParseReplaceObjectStorageRoleTagsResponse(rsp *http.Response) (*ReplaceObje
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2ReplaceRoleTags200
+		var dest ObjectStorage2ReplaceObjectStorageRoleTags200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ReplaceRoleTagsDefault
+		var dest ObjectStorage2ReplaceObjectStorageRoleTagsDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14968,7 +20423,7 @@ func ParseDeleteObjectStorageRoleTagResponse(rsp *http.Response) (*DeleteObjectS
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2DeleteRoleTagDefault
+		var dest ObjectStorage2DeleteObjectStorageRoleTagDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -14979,22 +20434,22 @@ func ParseDeleteObjectStorageRoleTagResponse(rsp *http.Response) (*DeleteObjectS
 	return response, nil
 }
 
-// ParseListStaticWebsitesResponse parses an HTTP response from a ListStaticWebsitesWithResponse call
-func ParseListStaticWebsitesResponse(rsp *http.Response) (*ListStaticWebsitesResponse, error) {
+// ParseListObjectStorageStaticWebsitesResponse parses an HTTP response from a ListObjectStorageStaticWebsitesWithResponse call
+func ParseListObjectStorageStaticWebsitesResponse(rsp *http.Response) (*ListObjectStorageStaticWebsitesResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &ListStaticWebsitesResponse{
+	response := &ListObjectStorageStaticWebsitesResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ListStaticWebsitesDefault
+		var dest ObjectStorage2ListObjectStorageStaticWebsitesDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -15005,29 +20460,29 @@ func ParseListStaticWebsitesResponse(rsp *http.Response) (*ListStaticWebsitesRes
 	return response, nil
 }
 
-// ParseCreateStaticWebsiteResponse parses an HTTP response from a CreateStaticWebsiteWithResponse call
-func ParseCreateStaticWebsiteResponse(rsp *http.Response) (*CreateStaticWebsiteResponse, error) {
+// ParseCreateObjectStorageStaticWebsiteResponse parses an HTTP response from a CreateObjectStorageStaticWebsiteWithResponse call
+func ParseCreateObjectStorageStaticWebsiteResponse(rsp *http.Response) (*CreateObjectStorageStaticWebsiteResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &CreateStaticWebsiteResponse{
+	response := &CreateObjectStorageStaticWebsiteResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest ObjectStorage2CreateStaticWebsite201
+		var dest ObjectStorage2CreateObjectStorageStaticWebsite201
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON201 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2CreateStaticWebsiteDefault
+		var dest ObjectStorage2CreateObjectStorageStaticWebsiteDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -15038,22 +20493,22 @@ func ParseCreateStaticWebsiteResponse(rsp *http.Response) (*CreateStaticWebsiteR
 	return response, nil
 }
 
-// ParseDeleteStaticWebsiteResponse parses an HTTP response from a DeleteStaticWebsiteWithResponse call
-func ParseDeleteStaticWebsiteResponse(rsp *http.Response) (*DeleteStaticWebsiteResponse, error) {
+// ParseDeleteObjectStorageStaticWebsiteResponse parses an HTTP response from a DeleteObjectStorageStaticWebsiteWithResponse call
+func ParseDeleteObjectStorageStaticWebsiteResponse(rsp *http.Response) (*DeleteObjectStorageStaticWebsiteResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &DeleteStaticWebsiteResponse{
+	response := &DeleteObjectStorageStaticWebsiteResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2DeleteStaticWebsiteDefault
+		var dest ObjectStorage2DeleteObjectStorageStaticWebsiteDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -15064,62 +20519,62 @@ func ParseDeleteStaticWebsiteResponse(rsp *http.Response) (*DeleteStaticWebsiteR
 	return response, nil
 }
 
-// ParseGetStaticWebsiteResponse parses an HTTP response from a GetStaticWebsiteWithResponse call
-func ParseGetStaticWebsiteResponse(rsp *http.Response) (*GetStaticWebsiteResponse, error) {
+// ParseGetObjectStorageStaticWebsiteResponse parses an HTTP response from a GetObjectStorageStaticWebsiteWithResponse call
+func ParseGetObjectStorageStaticWebsiteResponse(rsp *http.Response) (*GetObjectStorageStaticWebsiteResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetStaticWebsiteResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2GetStaticWebsite200
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2GetStaticWebsiteDefault
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSONDefault = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseModifyStaticWebsiteResponse parses an HTTP response from a ModifyStaticWebsiteWithResponse call
-func ParseModifyStaticWebsiteResponse(rsp *http.Response) (*ModifyStaticWebsiteResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &ModifyStaticWebsiteResponse{
+	response := &GetObjectStorageStaticWebsiteResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2ModifyStaticWebsite200
+		var dest ObjectStorage2GetObjectStorageStaticWebsite200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ModifyStaticWebsiteDefault
+		var dest ObjectStorage2GetObjectStorageStaticWebsiteDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseModifyObjectStorageStaticWebsiteResponse parses an HTTP response from a ModifyObjectStorageStaticWebsiteWithResponse call
+func ParseModifyObjectStorageStaticWebsiteResponse(rsp *http.Response) (*ModifyObjectStorageStaticWebsiteResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ModifyObjectStorageStaticWebsiteResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ObjectStorage2ModifyObjectStorageStaticWebsite200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ObjectStorage2ModifyObjectStorageStaticWebsiteDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -15145,14 +20600,14 @@ func ParseListObjectStorageUsersResponse(rsp *http.Response) (*ListObjectStorage
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2ListUsers200
+		var dest ObjectStorage2ListObjectStorageUsers200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ListUsersDefault
+		var dest ObjectStorage2ListObjectStorageUsersDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -15178,14 +20633,14 @@ func ParseCreateObjectStorageUserResponse(rsp *http.Response) (*CreateObjectStor
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest ObjectStorage2CreateUser201
+		var dest ObjectStorage2CreateObjectStorageUser201
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON201 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2CreateUserDefault
+		var dest ObjectStorage2CreateObjectStorageUserDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -15211,7 +20666,7 @@ func ParseDeleteObjectStorageUserResponse(rsp *http.Response) (*DeleteObjectStor
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2DeleteUserDefault
+		var dest ObjectStorage2DeleteObjectStorageUserDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -15237,14 +20692,14 @@ func ParseGetObjectStorageUserResponse(rsp *http.Response) (*GetObjectStorageUse
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2GetUserDetails200
+		var dest ObjectStorage2GetObjectStorageUser200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2GetUserDetailsDefault
+		var dest ObjectStorage2GetObjectStorageUserDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -15270,14 +20725,14 @@ func ParseListObjectStorageAccessKeysResponse(rsp *http.Response) (*ListObjectSt
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2ListAccessKeys200
+		var dest ObjectStorage2ListObjectStorageAccessKeys200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ListAccessKeysDefault
+		var dest ObjectStorage2ListObjectStorageAccessKeysDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -15303,14 +20758,14 @@ func ParseCreateObjectStorageAccessKeyResponse(rsp *http.Response) (*CreateObjec
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest ObjectStorage2CreateAccessKey201
+		var dest ObjectStorage2CreateObjectStorageAccessKey201
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON201 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2CreateAccessKeyDefault
+		var dest ObjectStorage2CreateObjectStorageAccessKeyDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -15336,7 +20791,7 @@ func ParseDeleteObjectStorageAccessKeyResponse(rsp *http.Response) (*DeleteObjec
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2DeleteAccessKeyDefault
+		var dest ObjectStorage2DeleteObjectStorageAccessKeyDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -15362,14 +20817,14 @@ func ParseGetObjectStorageAccessKeyDetailsResponse(rsp *http.Response) (*GetObje
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2GetAccessKeyDetails200
+		var dest ObjectStorage2GetObjectStorageAccessKeyDetails200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2GetAccessKeyDetailsDefault
+		var dest ObjectStorage2GetObjectStorageAccessKeyDetailsDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -15395,14 +20850,14 @@ func ParseModifyObjectStorageAccessKeyDetailsResponse(rsp *http.Response) (*Modi
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2ModifyAccessKeyDetails200
+		var dest ObjectStorage2ModifyObjectStorageAccessKeyDetails200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ModifyAccessKeyDetailsDefault
+		var dest ObjectStorage2ModifyObjectStorageAccessKeyDetailsDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -15428,14 +20883,14 @@ func ParseListObjectStorageUserInlinePoliciesResponse(rsp *http.Response) (*List
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2ListUserInlinePolicies200
+		var dest ObjectStorage2ListObjectStorageUserInlinePolicies200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ListUserInlinePoliciesDefault
+		var dest ObjectStorage2ListObjectStorageUserInlinePoliciesDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -15461,14 +20916,14 @@ func ParseCreateObjectStorageUserInlinePolicyResponse(rsp *http.Response) (*Crea
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest ObjectStorage2CreateUserInlinePolicy201
+		var dest ObjectStorage2CreateObjectStorageUserInlinePolicy201
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON201 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2CreateUserInlinePolicyDefault
+		var dest ObjectStorage2CreateObjectStorageUserInlinePolicyDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -15494,7 +20949,7 @@ func ParseDeleteObjectStorageUserInlinePolicyResponse(rsp *http.Response) (*Dele
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2DeleteUserInlinePolicyDefault
+		var dest ObjectStorage2DeleteObjectStorageUserInlinePolicyDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -15520,14 +20975,14 @@ func ParseGetObjectStorageUserInlinePolicyResponse(rsp *http.Response) (*GetObje
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2GetUserInlinePolicy200
+		var dest ObjectStorage2GetObjectStorageUserInlinePolicy200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2GetUserInlinePolicyDefault
+		var dest ObjectStorage2GetObjectStorageUserInlinePolicyDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -15553,7 +21008,7 @@ func ParseDeleteObjectStorageUserPermissionsBoundaryResponse(rsp *http.Response)
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2DeleteUserPermissionsBoundaryDefault
+		var dest ObjectStorage2DeleteObjectStorageUserPermissionsBoundaryDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -15579,14 +21034,14 @@ func ParseCreateObjectStorageUserPermissionsBoundaryResponse(rsp *http.Response)
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2CreateUserPermissionsBoundary200
+		var dest ObjectStorage2CreateObjectStorageUserPermissionsBoundary200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2CreateUserPermissionsBoundaryDefault
+		var dest ObjectStorage2CreateObjectStorageUserPermissionsBoundaryDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -15612,14 +21067,14 @@ func ParseListObjectStorageAttachedUserPoliciesResponse(rsp *http.Response) (*Li
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2ListAttachedUserPolicies200
+		var dest ObjectStorage2ListObjectStorageAttachedUserPolicies200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ListAttachedUserPoliciesDefault
+		var dest ObjectStorage2ListObjectStorageAttachedUserPoliciesDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -15645,7 +21100,7 @@ func ParseAttachObjectStorageUserPolicyResponse(rsp *http.Response) (*AttachObje
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2AttachUserPolicyDefault
+		var dest ObjectStorage2AttachObjectStorageUserPolicyDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -15671,7 +21126,7 @@ func ParseDetachObjectStorageUserPolicyResponse(rsp *http.Response) (*DetachObje
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2DetachUserPolicyDefault
+		var dest ObjectStorage2DetachObjectStorageUserPolicyDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -15697,14 +21152,14 @@ func ParseGetObjectStorageUserTagsResponse(rsp *http.Response) (*GetObjectStorag
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2GetUserTags200
+		var dest ObjectStorage2GetObjectStorageUserTags200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2GetUserTagsDefault
+		var dest ObjectStorage2GetObjectStorageUserTagsDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -15730,14 +21185,14 @@ func ParseReplaceObjectStorageUserTagsResponse(rsp *http.Response) (*ReplaceObje
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ObjectStorage2ReplaceUserTags200
+		var dest ObjectStorage2ReplaceObjectStorageUserTags200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2ReplaceUserTagsDefault
+		var dest ObjectStorage2ReplaceObjectStorageUserTagsDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -15763,7 +21218,7 @@ func ParseDeleteObjectStorageUserTagResponse(rsp *http.Response) (*DeleteObjectS
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ObjectStorage2DeleteUserTagDefault
+		var dest ObjectStorage2DeleteObjectStorageUserTagDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
