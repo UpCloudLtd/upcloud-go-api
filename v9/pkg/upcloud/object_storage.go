@@ -9,13 +9,13 @@ import (
 	"github.com/google/uuid"
 )
 
-func (c *ClientWithResponses) WaitForObjectStorageOperationalState(ctx context.Context, serviceUUID string, desiredState string) (*ObjectStorage2GetService200, error) {
+func (c *ClientWithResponses) WaitForObjectStorageOperationalState(ctx context.Context, serviceUUID string, desiredState string) (*GetObjectStorage200, error) {
 	svcUUID, err := uuid.Parse(serviceUUID)
 	if err != nil {
 		return nil, err
 	}
 
-	return retry(ctx, func(_ int, _ context.Context) (*ObjectStorage2GetService200, error) {
+	return retry(ctx, func(_ int, _ context.Context) (*GetObjectStorage200, error) {
 		resp, retryErr := c.GetObjectStorageWithResponse(ctx, svcUUID)
 		if retryErr != nil {
 			return nil, retryErr
@@ -41,7 +41,7 @@ func (c *ClientWithResponses) WaitForObjectStorageOperationalState(ctx context.C
 			if resp.JSON200 != nil {
 				return resp.JSON200, nil
 			}
-			var dest ObjectStorage2GetService200
+			var dest GetObjectStorage200
 			if retryErr = json.Unmarshal(resp.Body, &dest); retryErr == nil {
 				return &dest, nil
 			}
@@ -58,7 +58,7 @@ func (c *ClientWithResponses) WaitForObjectStorageDeletion(ctx context.Context, 
 		return err
 	}
 
-	return retryUntilNil(ctx, func(_ int, _ context.Context) (*ObjectStorage2GetService200, error) {
+	return retryUntilNil(ctx, func(_ int, _ context.Context) (*GetObjectStorage200, error) {
 		resp, retryErr := c.GetObjectStorageWithResponse(ctx, svcUUID)
 		if retryErr != nil {
 			return nil, retryErr
