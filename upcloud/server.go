@@ -187,6 +187,7 @@ type ServerDetails struct {
 	IPAddresses          IPAddressSlice           `json:"ip_addresses"`
 	Labels               LabelSlice               `json:"labels"`
 	Metadata             Boolean                  `json:"metadata"`
+	GeneratedPassword    string                   `json:"password"`
 	NICModel             string                   `json:"nic_model"`
 	Networking           ServerNetworking         `json:"networking"`
 	ServerGroup          string                   `json:"server_group"`
