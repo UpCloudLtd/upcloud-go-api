@@ -47,3 +47,12 @@ actions:
     update:
       type: string
       nullable: true
+  # Remove properties with type: "null" from oneOf variants
+  # Context: Some oneOf schemas use "type": "null" properties to explicitly forbid certain fields
+  # in specific variants (e.g., loadBalancerCertificateBundleCreate has 3 bundle types where certain
+  # fields are forbidden depending on the type). Go has no "only null" type, and oapi-codegen cannot
+  # generate valid code for this pattern.
+  # Consequence: Client-side validation is relaxed (forbidden fields won't be caught by Go types),
+  # but the API will still reject invalid combinations with 400 errors.
+  - target: "$..oneOf[*].properties[?(@.type == 'null')]"
+    remove: true
