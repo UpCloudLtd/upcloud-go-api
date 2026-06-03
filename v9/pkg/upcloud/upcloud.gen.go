@@ -3367,6 +3367,24 @@ func (e PriceError400ErrorCode) Valid() bool {
 	}
 }
 
+// Defines values for RouterType.
+const (
+	RouterTypeNormal  RouterType = "normal"
+	RouterTypeService RouterType = "service"
+)
+
+// Valid indicates whether the value is a known member of the RouterType enum.
+func (e RouterType) Valid() bool {
+	switch e {
+	case RouterTypeNormal:
+		return true
+	case RouterTypeService:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ServerAccess.
 const (
 	ServerAccessPrivate ServerAccess = "private"
@@ -3428,6 +3446,8 @@ func (e ServerBooleanYesno) Valid() bool {
 const (
 	ASYNCINVALID                 ServerError400ErrorCode = "ASYNC_INVALID"
 	BACKUPDELETIONPOLICYINVALID  ServerError400ErrorCode = "BACKUP_DELETION_POLICY_INVALID"
+	DEVICESNOTAVAILABLE          ServerError400ErrorCode = "DEVICES_NOT_AVAILABLE"
+	DEVICESREQUIREHOST           ServerError400ErrorCode = "DEVICES_REQUIRE_HOST"
 	INVALIDDEVICEFILTER          ServerError400ErrorCode = "INVALID_DEVICE_FILTER"
 	INVALIDDEVICEFILTERKEY       ServerError400ErrorCode = "INVALID_DEVICE_FILTER_KEY"
 	INVALIDDEVICEFILTERTYPEVALUE ServerError400ErrorCode = "INVALID_DEVICE_FILTER_TYPE_VALUE"
@@ -3446,6 +3466,10 @@ func (e ServerError400ErrorCode) Valid() bool {
 	case ASYNCINVALID:
 		return true
 	case BACKUPDELETIONPOLICYINVALID:
+		return true
+	case DEVICESNOTAVAILABLE:
+		return true
+	case DEVICESREQUIREHOST:
 		return true
 	case INVALIDDEVICEFILTER:
 		return true
@@ -3487,9 +3511,31 @@ func (e ServerError403ErrorCode) Valid() bool {
 	}
 }
 
+// Defines values for ServerError404ErrorCode.
+const (
+	DEVICENOTFOUND ServerError404ErrorCode = "DEVICE_NOT_FOUND"
+	SERVERNOTFOUND ServerError404ErrorCode = "SERVER_NOT_FOUND"
+)
+
+// Valid indicates whether the value is a known member of the ServerError404ErrorCode enum.
+func (e ServerError404ErrorCode) Valid() bool {
+	switch e {
+	case DEVICENOTFOUND:
+		return true
+	case SERVERNOTFOUND:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ServerError409ErrorCode.
 const (
+	DEVICEALLOCATIONFAILED   ServerError409ErrorCode = "DEVICE_ALLOCATION_FAILED"
+	DEVICEDISABLED           ServerError409ErrorCode = "DEVICE_DISABLED"
 	DEVICEFILTERLIMITREACHED ServerError409ErrorCode = "DEVICE_FILTER_LIMIT_REACHED"
+	DEVICEHOSTMISMATCH       ServerError409ErrorCode = "DEVICE_HOST_MISMATCH"
+	DEVICEUNAVAILABLE        ServerError409ErrorCode = "DEVICE_UNAVAILABLE"
 	INVALIDUUID              ServerError409ErrorCode = "INVALID_UUID"
 	UUIDFILTERLIMITREACHED   ServerError409ErrorCode = "UUID_FILTER_LIMIT_REACHED"
 )
@@ -3497,7 +3543,15 @@ const (
 // Valid indicates whether the value is a known member of the ServerError409ErrorCode enum.
 func (e ServerError409ErrorCode) Valid() bool {
 	switch e {
+	case DEVICEALLOCATIONFAILED:
+		return true
+	case DEVICEDISABLED:
+		return true
 	case DEVICEFILTERLIMITREACHED:
+		return true
+	case DEVICEHOSTMISMATCH:
+		return true
+	case DEVICEUNAVAILABLE:
 		return true
 	case INVALIDUUID:
 		return true
@@ -3948,22 +4002,22 @@ func (e StorageState) Valid() bool {
 
 // Defines values for StorageType.
 const (
-	Backup   StorageType = "backup"
-	Cdrom    StorageType = "cdrom"
-	Normal   StorageType = "normal"
-	Template StorageType = "template"
+	StorageTypeBackup   StorageType = "backup"
+	StorageTypeCdrom    StorageType = "cdrom"
+	StorageTypeNormal   StorageType = "normal"
+	StorageTypeTemplate StorageType = "template"
 )
 
 // Valid indicates whether the value is a known member of the StorageType enum.
 func (e StorageType) Valid() bool {
 	switch e {
-	case Backup:
+	case StorageTypeBackup:
 		return true
-	case Cdrom:
+	case StorageTypeCdrom:
 		return true
-	case Normal:
+	case StorageTypeNormal:
 		return true
-	case Template:
+	case StorageTypeTemplate:
 		return true
 	default:
 		return false
@@ -12104,9 +12158,6 @@ type NetworkCreateInterfaceRequest struct {
 
 // NetworkDetails defines model for networkDetails.
 type NetworkDetails struct {
-	// Evi EVPN Instance identifier.
-	Evi *NetworkEvi `json:"evi,omitempty"`
-
 	// GrtExport Boolean value represented as yes/no
 	GrtExport  *NetworkBooleanYesno `json:"grt_export,omitempty"`
 	IpNetworks *struct {
@@ -12182,9 +12233,6 @@ type NetworkError struct {
 		ErrorMessage string `json:"error_message"`
 	} `json:"error"`
 }
-
-// NetworkEvi EVPN Instance identifier.
-type NetworkEvi = int32
 
 // NetworkInterface Response schema for listing network interfaces
 type NetworkInterface struct {
@@ -13440,6 +13488,92 @@ type Prices struct {
 // ResizeStorageResponse Response schema for resizing a storage volume TODO
 type ResizeStorageResponse = interface{}
 
+// Router Schema for a single router
+type Router struct {
+	// Router Router describes a virtual router that can route between SDN networks
+	Router RouterDetails `json:"router"`
+}
+
+// RouterDetails Router describes a virtual router that can route between SDN networks
+type RouterDetails struct {
+	// AttachedNetworks Networks attached to the router.
+	AttachedNetworks *struct {
+		Network []struct {
+			// Uuid Universally unique identifier
+			Uuid RouterUuid `json:"uuid"`
+		} `json:"network"`
+	} `json:"attached_networks,omitempty"`
+	Labels *RouterLabels `json:"labels,omitempty"`
+	Name   string        `json:"name"`
+
+	// StaticRoutes Static routes that will be added to the routing table of the SDN router
+	StaticRoutes *[]RouterRouteNexthop `json:"static_routes,omitempty"`
+
+	// Type Type of the router.
+	Type *RouterType `json:"type,omitempty"`
+
+	// Uuid Universally unique identifier
+	Uuid                 *RouterUuid            `json:"uuid,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// RouterError A general error response indicating that the request could not be fulfilled due to a technical issue.
+type RouterError struct {
+	Error struct {
+		ErrorCode    string `json:"error_code"`
+		ErrorMessage string `json:"error_message"`
+	} `json:"error"`
+}
+
+// RouterIpAddress IP address
+type RouterIpAddress struct {
+	union json.RawMessage
+}
+
+// RouterIpAddress0 IPv4 address
+type RouterIpAddress0 = string
+
+// RouterIpAddress1 IPv6 address
+type RouterIpAddress1 = string
+
+// RouterIpCidr IP CIDR
+type RouterIpCidr = string
+
+// RouterLabel A key/value pair to label and categorize resources
+type RouterLabel struct {
+	Key   string `json:"key"`
+	Value string `json:"value"`
+}
+
+// RouterLabels defines model for routerLabels.
+type RouterLabels struct {
+	Label *[]RouterLabel `json:"label,omitempty"`
+}
+
+// RouterRouteNexthop Static route with nexthop information.
+type RouterRouteNexthop struct {
+	Name *string `json:"name,omitempty"`
+
+	// Nexthop IP address
+	Nexthop *RouterIpAddress `json:"nexthop,omitempty"`
+
+	// Route IP CIDR
+	Route *RouterIpCidr `json:"route,omitempty"`
+}
+
+// RouterType Type of the router.
+type RouterType string
+
+// RouterUuid Universally unique identifier
+type RouterUuid = openapi_types.UUID
+
+// Routers A list of routers
+type Routers struct {
+	Routers struct {
+		Router []RouterDetails `json:"router"`
+	} `json:"routers"`
+}
+
 // Server Server object returned in responses
 type Server struct {
 	// Server Detailed information about a server
@@ -13574,6 +13708,17 @@ type ServerError403 struct {
 
 // ServerError403ErrorCode defines model for ServerError403.Error.Code.
 type ServerError403ErrorCode string
+
+// ServerError404 defines model for serverError404.
+type ServerError404 struct {
+	Error struct {
+		Code    ServerError404ErrorCode `json:"code"`
+		Message string                  `json:"message"`
+	} `json:"error"`
+}
+
+// ServerError404ErrorCode defines model for ServerError404.Error.Code.
+type ServerError404ErrorCode string
 
 // ServerError409 Conflict error
 type ServerError409 struct {
@@ -14525,6 +14670,9 @@ type DeleteNetworkInterfaceUuid = NetworkUuid
 // DeleteNetworkPeeringPeeringUuid defines model for deleteNetworkPeeringPeeringUuid.
 type DeleteNetworkPeeringPeeringUuid = openapi_types.UUID
 
+// DeleteRouterRouter Universally unique identifier
+type DeleteRouterRouter = RouterUuid
+
 // DeleteServerGroupUuid Universally unique identifier
 type DeleteServerGroupUuid = ServerGroupUuid
 
@@ -14888,6 +15036,9 @@ type GetNetworkInterfaceDetailsUuid = NetworkUuid
 // GetNetworkPeeringPeeringUuid defines model for getNetworkPeeringPeeringUuid.
 type GetNetworkPeeringPeeringUuid = openapi_types.UUID
 
+// GetRouterRouter Universally unique identifier
+type GetRouterRouter = RouterUuid
+
 // GetServerGroupUuid Universally unique identifier
 type GetServerGroupUuid = ServerGroupUuid
 
@@ -15116,6 +15267,9 @@ type ListNetworkPeeringsUuid = NetworkPeeringUuid
 // ListNetworksLabel A key/value pair to label and categorize resources
 type ListNetworksLabel = NetworkLabel
 
+// ListRoutersLabel A key/value pair to label and categorize resources
+type ListRoutersLabel = RouterLabel
+
 // ListServerGroupMembersUuid Universally unique identifier
 type ListServerGroupMembersUuid = ServerGroupUuid
 
@@ -15298,6 +15452,9 @@ type ModifyLoadBalancerServiceUuid = LoadBalancerServiceParameter
 
 // ModifyNetworkPeeringPeeringUuid defines model for modifyNetworkPeeringPeeringUuid.
 type ModifyNetworkPeeringPeeringUuid = openapi_types.UUID
+
+// ModifyRouterRouter Universally unique identifier
+type ModifyRouterRouter = RouterUuid
 
 // ModifyServerGroupUuid Universally unique identifier
 type ModifyServerGroupUuid = ServerGroupUuid
@@ -16238,6 +16395,18 @@ type CreatePartnerAccount409 = PartnerError409
 // CreatePartnerAccountDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type CreatePartnerAccountDefault = PartnerError
 
+// CreateRouter201 Schema for a single router
+type CreateRouter201 = Router
+
+// CreateRouter400 A general error response indicating that the request could not be fulfilled due to a technical issue.
+type CreateRouter400 = RouterError
+
+// CreateRouter409 A general error response indicating that the request could not be fulfilled due to a technical issue.
+type CreateRouter409 = RouterError
+
+// CreateRouterDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type CreateRouterDefault = RouterError
+
 // CreateServer202 Response schema for creating a server
 type CreateServer202 = CreateServerResponse
 
@@ -16246,6 +16415,9 @@ type CreateServer400 = ServerError400
 
 // CreateServer403 Forbidden error
 type CreateServer403 = ServerError403
+
+// CreateServer404 defines model for createServer404.
+type CreateServer404 = ServerError404
 
 // CreateServer409 Conflict error
 type CreateServer409 = ServerError409
@@ -16396,6 +16568,15 @@ type DeleteNetworkPeering404 = NetworkPeeringError
 
 // DeleteNetworkPeeringDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type DeleteNetworkPeeringDefault = NetworkPeeringError
+
+// DeleteRouter404 A general error response indicating that the request could not be fulfilled due to a technical issue.
+type DeleteRouter404 = RouterError
+
+// DeleteRouter409 A general error response indicating that the request could not be fulfilled due to a technical issue.
+type DeleteRouter409 = RouterError
+
+// DeleteRouterDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type DeleteRouterDefault = RouterError
 
 // DeleteServerGroupDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type DeleteServerGroupDefault = ServerGroupError
@@ -16880,6 +17061,15 @@ type GetPrice400 = PriceError400
 // GetPriceDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type GetPriceDefault = PriceError
 
+// GetRouter200 Schema for a single router
+type GetRouter200 = Router
+
+// GetRouter404 A general error response indicating that the request could not be fulfilled due to a technical issue.
+type GetRouter404 = RouterError
+
+// GetRouterDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type GetRouterDefault = RouterError
+
 // GetServerGroup200 A single server group
 type GetServerGroup200 = ServerGroup
 
@@ -17231,6 +17421,12 @@ type ListPlans200 = Plan
 // ListPlansDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ListPlansDefault = PlanError
 
+// ListRouters200 A list of routers
+type ListRouters200 = Routers
+
+// ListRoutersDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type ListRoutersDefault = RouterError
+
 // ListServerGroupMembers200 List of server UUIDs in the server group
 type ListServerGroupMembers200 = ServerGroupServers
 
@@ -17479,6 +17675,21 @@ type ModifyNetworkPeeringDefault = NetworkPeeringError
 
 // ModifyObjectStorage200 Response schema for service details, including UUID, name, and endpoints.
 type ModifyObjectStorage200 = ObjectStorage2ServiceDetailResponse
+
+// ModifyRouter200 Schema for a single router
+type ModifyRouter200 = Router
+
+// ModifyRouter400 A general error response indicating that the request could not be fulfilled due to a technical issue.
+type ModifyRouter400 = RouterError
+
+// ModifyRouter404 A general error response indicating that the request could not be fulfilled due to a technical issue.
+type ModifyRouter404 = RouterError
+
+// ModifyRouter409 A general error response indicating that the request could not be fulfilled due to a technical issue.
+type ModifyRouter409 = RouterError
+
+// ModifyRouterDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type ModifyRouterDefault = RouterError
 
 // ModifyServer202 Server object returned in responses
 type ModifyServer202 = Server
@@ -18191,6 +18402,9 @@ type CreateNetworkPeering = NetworkPeeringCreate
 // CreatePartnerAccount defines model for createPartnerAccount.
 type CreatePartnerAccount = PartnerCreateAccount
 
+// CreateRouter Router describes a virtual router that can route between SDN networks
+type CreateRouter = RouterDetails
+
 // CreateServerRequestBody Server creation parameters
 type CreateServerRequestBody = CreateServer
 
@@ -18331,6 +18545,9 @@ type ModifyLoadBalancerRule = LoadBalancerRuleModify
 
 // ModifyNetworkPeering Describes the mutable properties when modifying a network-peering
 type ModifyNetworkPeering = NetworkPeeringModify
+
+// ModifyRouter Router describes a virtual router that can route between SDN networks
+type ModifyRouter = RouterDetails
 
 // ModifyServer Server object returned in responses
 type ModifyServer = Server
@@ -18743,6 +18960,12 @@ type RevokeAllPermissionsByTargetParams struct {
 	MainAccountId *RevokeAllPermissionsByTargetMainAccountId `form:"main_account_id,omitempty" json:"main_account_id,omitempty"`
 }
 
+// ListRoutersParams defines parameters for ListRouters.
+type ListRoutersParams struct {
+	// Label A label filter. Can be specified multiple times to create an AND condition. Format: label=key:value
+	Label *ListRoutersLabel `form:"label,omitempty" json:"label,omitempty"`
+}
+
 // ListServerGroupsParams defines parameters for ListServerGroups.
 type ListServerGroupsParams struct {
 	// Label A label filter to apply. Format: key:value. Multiple labels can be specified by repeating the parameter.
@@ -19129,6 +19352,12 @@ type GrantPermissionJSONRequestBody = Permission
 
 // RevokePermissionJSONRequestBody defines body for RevokePermission for application/json ContentType.
 type RevokePermissionJSONRequestBody = Permission
+
+// CreateRouterJSONRequestBody defines body for CreateRouter for application/json ContentType.
+type CreateRouterJSONRequestBody = RouterDetails
+
+// ModifyRouterJSONRequestBody defines body for ModifyRouter for application/json ContentType.
+type ModifyRouterJSONRequestBody = RouterDetails
 
 // CreateServerJSONRequestBody defines body for CreateServer for application/json ContentType.
 type CreateServerJSONRequestBody = CreateServer
@@ -20030,6 +20259,147 @@ func (a LoadBalancerMatchStringWithArgResponse) MarshalJSON() ([]byte, error) {
 		object["value"], err = json.Marshal(a.Value)
 		if err != nil {
 			return nil, fmt.Errorf("error marshaling 'value': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
+
+// Getter for additional properties for RouterDetails. Returns the specified
+// element and whether it was found
+func (a RouterDetails) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for RouterDetails
+func (a *RouterDetails) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for RouterDetails to handle AdditionalProperties
+func (a *RouterDetails) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["attached_networks"]; found {
+		err = json.Unmarshal(raw, &a.AttachedNetworks)
+		if err != nil {
+			return fmt.Errorf("error reading 'attached_networks': %w", err)
+		}
+		delete(object, "attached_networks")
+	}
+
+	if raw, found := object["labels"]; found {
+		err = json.Unmarshal(raw, &a.Labels)
+		if err != nil {
+			return fmt.Errorf("error reading 'labels': %w", err)
+		}
+		delete(object, "labels")
+	}
+
+	if raw, found := object["name"]; found {
+		err = json.Unmarshal(raw, &a.Name)
+		if err != nil {
+			return fmt.Errorf("error reading 'name': %w", err)
+		}
+		delete(object, "name")
+	}
+
+	if raw, found := object["static_routes"]; found {
+		err = json.Unmarshal(raw, &a.StaticRoutes)
+		if err != nil {
+			return fmt.Errorf("error reading 'static_routes': %w", err)
+		}
+		delete(object, "static_routes")
+	}
+
+	if raw, found := object["type"]; found {
+		err = json.Unmarshal(raw, &a.Type)
+		if err != nil {
+			return fmt.Errorf("error reading 'type': %w", err)
+		}
+		delete(object, "type")
+	}
+
+	if raw, found := object["uuid"]; found {
+		err = json.Unmarshal(raw, &a.Uuid)
+		if err != nil {
+			return fmt.Errorf("error reading 'uuid': %w", err)
+		}
+		delete(object, "uuid")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for RouterDetails to handle AdditionalProperties
+func (a RouterDetails) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.AttachedNetworks != nil {
+		object["attached_networks"], err = json.Marshal(a.AttachedNetworks)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'attached_networks': %w", err)
+		}
+	}
+
+	if a.Labels != nil {
+		object["labels"], err = json.Marshal(a.Labels)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'labels': %w", err)
+		}
+	}
+
+	object["name"], err = json.Marshal(a.Name)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling 'name': %w", err)
+	}
+
+	if a.StaticRoutes != nil {
+		object["static_routes"], err = json.Marshal(a.StaticRoutes)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'static_routes': %w", err)
+		}
+	}
+
+	if a.Type != nil {
+		object["type"], err = json.Marshal(a.Type)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'type': %w", err)
+		}
+	}
+
+	if a.Uuid != nil {
+		object["uuid"], err = json.Marshal(a.Uuid)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'uuid': %w", err)
 		}
 	}
 
@@ -25889,6 +26259,68 @@ func (t *PartnerError400_Error) UnmarshalJSON(b []byte) error {
 	return err
 }
 
+// AsRouterIpAddress0 returns the union data inside the RouterIpAddress as a RouterIpAddress0
+func (t RouterIpAddress) AsRouterIpAddress0() (RouterIpAddress0, error) {
+	var body RouterIpAddress0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromRouterIpAddress0 overwrites any union data inside the RouterIpAddress as the provided RouterIpAddress0
+func (t *RouterIpAddress) FromRouterIpAddress0(v RouterIpAddress0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeRouterIpAddress0 performs a merge with any union data inside the RouterIpAddress, using the provided RouterIpAddress0
+func (t *RouterIpAddress) MergeRouterIpAddress0(v RouterIpAddress0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsRouterIpAddress1 returns the union data inside the RouterIpAddress as a RouterIpAddress1
+func (t RouterIpAddress) AsRouterIpAddress1() (RouterIpAddress1, error) {
+	var body RouterIpAddress1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromRouterIpAddress1 overwrites any union data inside the RouterIpAddress as the provided RouterIpAddress1
+func (t *RouterIpAddress) FromRouterIpAddress1(v RouterIpAddress1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeRouterIpAddress1 performs a merge with any union data inside the RouterIpAddress, using the provided RouterIpAddress1
+func (t *RouterIpAddress) MergeRouterIpAddress1(v RouterIpAddress1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t RouterIpAddress) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *RouterIpAddress) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
 // AsServerIpAddress0 returns the union data inside the ServerIpAddress as a ServerIpAddress0
 func (t ServerIpAddress) AsServerIpAddress0() (ServerIpAddress0, error) {
 	var body ServerIpAddress0
@@ -27311,6 +27743,25 @@ type ClientInterface interface {
 
 	// GetPrice request
 	GetPrice(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListRouters request
+	ListRouters(ctx context.Context, params *ListRoutersParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateRouterWithBody request with any body
+	CreateRouterWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CreateRouter(ctx context.Context, body CreateRouterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteRouter request
+	DeleteRouter(ctx context.Context, router DeleteRouterRouter, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetRouter request
+	GetRouter(ctx context.Context, router GetRouterRouter, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ModifyRouterWithBody request with any body
+	ModifyRouterWithBody(ctx context.Context, router ModifyRouterRouter, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	ModifyRouter(ctx context.Context, router ModifyRouterRouter, body ModifyRouterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateServerWithBody request with any body
 	CreateServerWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -32807,6 +33258,90 @@ func (c *Client) ListPlans(ctx context.Context, reqEditors ...RequestEditorFn) (
 
 func (c *Client) GetPrice(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetPriceRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ListRouters(ctx context.Context, params *ListRoutersParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListRoutersRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateRouterWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateRouterRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateRouter(ctx context.Context, body CreateRouterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateRouterRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) DeleteRouter(ctx context.Context, router DeleteRouterRouter, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteRouterRequest(c.Server, router)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetRouter(ctx context.Context, router GetRouterRouter, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetRouterRequest(c.Server, router)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ModifyRouterWithBody(ctx context.Context, router ModifyRouterRouter, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewModifyRouterRequestWithBody(c.Server, router, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ModifyRouter(ctx context.Context, router ModifyRouterRouter, body ModifyRouterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewModifyRouterRequest(c.Server, router, body)
 	if err != nil {
 		return nil, err
 	}
@@ -48538,6 +49073,210 @@ func NewGetPriceRequest(server string) (*http.Request, error) {
 	return req, nil
 }
 
+// NewListRoutersRequest generates requests for ListRouters
+func NewListRoutersRequest(server string, params *ListRoutersParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/router")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.Label != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "label", *params.Label, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateRouterRequest calls the generic CreateRouter builder with application/json body
+func NewCreateRouterRequest(server string, body CreateRouterJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateRouterRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCreateRouterRequestWithBody generates requests for CreateRouter with any type of body
+func NewCreateRouterRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/router")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeleteRouterRequest generates requests for DeleteRouter
+func NewDeleteRouterRequest(server string, router DeleteRouterRouter) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "router", router, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/router/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetRouterRequest generates requests for GetRouter
+func NewGetRouterRequest(server string, router GetRouterRouter) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "router", router, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/router/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewModifyRouterRequest calls the generic ModifyRouter builder with application/json body
+func NewModifyRouterRequest(server string, router ModifyRouterRouter, body ModifyRouterJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewModifyRouterRequestWithBody(server, router, "application/json", bodyReader)
+}
+
+// NewModifyRouterRequestWithBody generates requests for ModifyRouter with any type of body
+func NewModifyRouterRequestWithBody(server string, router ModifyRouterRouter, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "router", router, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/router/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PATCH", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
 // NewCreateServerRequest calls the generic CreateServer builder with application/json body
 func NewCreateServerRequest(server string, body CreateServerJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -51502,6 +52241,25 @@ type ClientWithResponsesInterface interface {
 
 	// GetPriceWithResponse request
 	GetPriceWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetPriceResp, error)
+
+	// ListRoutersWithResponse request
+	ListRoutersWithResponse(ctx context.Context, params *ListRoutersParams, reqEditors ...RequestEditorFn) (*ListRoutersResp, error)
+
+	// CreateRouterWithBodyWithResponse request with any body
+	CreateRouterWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateRouterResp, error)
+
+	CreateRouterWithResponse(ctx context.Context, body CreateRouterJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateRouterResp, error)
+
+	// DeleteRouterWithResponse request
+	DeleteRouterWithResponse(ctx context.Context, router DeleteRouterRouter, reqEditors ...RequestEditorFn) (*DeleteRouterResp, error)
+
+	// GetRouterWithResponse request
+	GetRouterWithResponse(ctx context.Context, router GetRouterRouter, reqEditors ...RequestEditorFn) (*GetRouterResp, error)
+
+	// ModifyRouterWithBodyWithResponse request with any body
+	ModifyRouterWithBodyWithResponse(ctx context.Context, router ModifyRouterRouter, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyRouterResp, error)
+
+	ModifyRouterWithResponse(ctx context.Context, router ModifyRouterRouter, body ModifyRouterJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyRouterResp, error)
 
 	// CreateServerWithBodyWithResponse request with any body
 	CreateServerWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateServerResp, error)
@@ -59346,12 +60104,135 @@ func (r GetPriceResp) StatusCode() int {
 	return 0
 }
 
+type ListRoutersResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *ListRouters200
+	JSONDefault  *ListRoutersDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r ListRoutersResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListRoutersResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type CreateRouterResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON201      *CreateRouter201
+	JSON400      *CreateRouter400
+	JSON409      *CreateRouter409
+	JSONDefault  *CreateRouterDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateRouterResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateRouterResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type DeleteRouterResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON404      *DeleteRouter404
+	JSON409      *DeleteRouter409
+	JSONDefault  *DeleteRouterDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteRouterResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteRouterResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetRouterResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *GetRouter200
+	JSON404      *GetRouter404
+	JSONDefault  *GetRouterDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r GetRouterResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetRouterResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type ModifyRouterResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *ModifyRouter200
+	JSON400      *ModifyRouter400
+	JSON404      *ModifyRouter404
+	JSON409      *ModifyRouter409
+	JSONDefault  *ModifyRouterDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r ModifyRouterResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ModifyRouterResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
 type CreateServerResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON202      *CreateServer202
 	JSON400      *CreateServer400
 	JSON403      *CreateServer403
+	JSON404      *CreateServer404
 	JSON409      *CreateServer409
 	JSONDefault  *CreateServerDefault
 }
@@ -64172,6 +65053,67 @@ func (c *ClientWithResponses) GetPriceWithResponse(ctx context.Context, reqEdito
 		return nil, err
 	}
 	return ParseGetPriceResp(rsp)
+}
+
+// ListRoutersWithResponse request returning *ListRoutersResp
+func (c *ClientWithResponses) ListRoutersWithResponse(ctx context.Context, params *ListRoutersParams, reqEditors ...RequestEditorFn) (*ListRoutersResp, error) {
+	rsp, err := c.ListRouters(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListRoutersResp(rsp)
+}
+
+// CreateRouterWithBodyWithResponse request with arbitrary body returning *CreateRouterResp
+func (c *ClientWithResponses) CreateRouterWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateRouterResp, error) {
+	rsp, err := c.CreateRouterWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateRouterResp(rsp)
+}
+
+func (c *ClientWithResponses) CreateRouterWithResponse(ctx context.Context, body CreateRouterJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateRouterResp, error) {
+	rsp, err := c.CreateRouter(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateRouterResp(rsp)
+}
+
+// DeleteRouterWithResponse request returning *DeleteRouterResp
+func (c *ClientWithResponses) DeleteRouterWithResponse(ctx context.Context, router DeleteRouterRouter, reqEditors ...RequestEditorFn) (*DeleteRouterResp, error) {
+	rsp, err := c.DeleteRouter(ctx, router, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteRouterResp(rsp)
+}
+
+// GetRouterWithResponse request returning *GetRouterResp
+func (c *ClientWithResponses) GetRouterWithResponse(ctx context.Context, router GetRouterRouter, reqEditors ...RequestEditorFn) (*GetRouterResp, error) {
+	rsp, err := c.GetRouter(ctx, router, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetRouterResp(rsp)
+}
+
+// ModifyRouterWithBodyWithResponse request with arbitrary body returning *ModifyRouterResp
+func (c *ClientWithResponses) ModifyRouterWithBodyWithResponse(ctx context.Context, router ModifyRouterRouter, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyRouterResp, error) {
+	rsp, err := c.ModifyRouterWithBody(ctx, router, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseModifyRouterResp(rsp)
+}
+
+func (c *ClientWithResponses) ModifyRouterWithResponse(ctx context.Context, router ModifyRouterRouter, body ModifyRouterJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyRouterResp, error) {
+	rsp, err := c.ModifyRouter(ctx, router, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseModifyRouterResp(rsp)
 }
 
 // CreateServerWithBodyWithResponse request with arbitrary body returning *CreateServerResp
@@ -75740,6 +76682,220 @@ func ParseGetPriceResp(rsp *http.Response) (*GetPriceResp, error) {
 	return response, nil
 }
 
+// ParseListRoutersResp parses an HTTP response from a ListRoutersWithResponse call
+func ParseListRoutersResp(rsp *http.Response) (*ListRoutersResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListRoutersResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ListRouters200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ListRoutersDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateRouterResp parses an HTTP response from a CreateRouterWithResponse call
+func ParseCreateRouterResp(rsp *http.Response) (*CreateRouterResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateRouterResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest CreateRouter201
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest CreateRouter400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest CreateRouter409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest CreateRouterDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteRouterResp parses an HTTP response from a DeleteRouterWithResponse call
+func ParseDeleteRouterResp(rsp *http.Response) (*DeleteRouterResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteRouterResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest DeleteRouter404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest DeleteRouter409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest DeleteRouterDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetRouterResp parses an HTTP response from a GetRouterWithResponse call
+func ParseGetRouterResp(rsp *http.Response) (*GetRouterResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetRouterResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest GetRouter200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest GetRouter404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest GetRouterDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseModifyRouterResp parses an HTTP response from a ModifyRouterWithResponse call
+func ParseModifyRouterResp(rsp *http.Response) (*ModifyRouterResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ModifyRouterResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ModifyRouter200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ModifyRouter400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ModifyRouter404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ModifyRouter409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ModifyRouterDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseCreateServerResp parses an HTTP response from a CreateServerWithResponse call
 func ParseCreateServerResp(rsp *http.Response) (*CreateServerResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -75774,6 +76930,13 @@ func ParseCreateServerResp(rsp *http.Response) (*CreateServerResp, error) {
 			return nil, err
 		}
 		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest CreateServer404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
 		var dest CreateServer409
