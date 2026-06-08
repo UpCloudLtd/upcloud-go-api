@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.38.0]
+
 ### Added
 
 - server: add `OneTimePassword` field to `upcloud.ServerDetails` for retrieving the system generated one-time password.
@@ -783,7 +785,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.37.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.38.0...HEAD
+[8.38.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.37.0...v8.38.0
 [8.37.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.36.1...v8.37.0
 [8.36.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.36.0...v8.36.1
 [8.36.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.35.0...v8.36.0
