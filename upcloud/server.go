@@ -182,12 +182,13 @@ type ServerDetails struct {
 	// TODO: Convert to boolean
 	Firewall string `json:"firewall"`
 	// Deprecated: Use HostID instead.
-	Host                 int                      `json:"host"`
-	HostID               int64                    `json:"-"`
-	IPAddresses          IPAddressSlice           `json:"ip_addresses"`
-	Labels               LabelSlice               `json:"labels"`
-	Metadata             Boolean                  `json:"metadata"`
-	GeneratedPassword    string                   `json:"password"`
+	Host        int            `json:"host"`
+	HostID      int64          `json:"-"`
+	IPAddresses IPAddressSlice `json:"ip_addresses"`
+	Labels      LabelSlice     `json:"labels"`
+	Metadata    Boolean        `json:"metadata"`
+	// The system generated one-time password. Only available in create response when the create_password login option was set to true.
+	OneTimePassword      string                   `json:"password"`
 	NICModel             string                   `json:"nic_model"`
 	Networking           ServerNetworking         `json:"networking"`
 	ServerGroup          string                   `json:"server_group"`

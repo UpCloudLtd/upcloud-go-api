@@ -5,6 +5,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+
+- server: add `OneTimePassword` field to `upcloud.ServerDetails` for retrieving the system generated one-time password.
+
 ## [8.37.0]
 
 ### Added
