@@ -459,13 +459,16 @@ func (e DatabaseServicePropertiesMysqlMigrationMethod) Valid() bool {
 
 // Defines values for DatabaseServicePropertiesMysqlVersion.
 const (
-	DatabaseServicePropertiesMysqlVersionN8 DatabaseServicePropertiesMysqlVersion = "8"
+	DatabaseServicePropertiesMysqlVersionN8  DatabaseServicePropertiesMysqlVersion = "8"
+	DatabaseServicePropertiesMysqlVersionN84 DatabaseServicePropertiesMysqlVersion = "8.4"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseServicePropertiesMysqlVersion enum.
 func (e DatabaseServicePropertiesMysqlVersion) Valid() bool {
 	switch e {
 	case DatabaseServicePropertiesMysqlVersionN8:
+		return true
+	case DatabaseServicePropertiesMysqlVersionN84:
 		return true
 	default:
 		return false
@@ -562,33 +565,6 @@ func (e DatabaseServicePropertiesOpensearchCustomReposType) Valid() bool {
 	case DatabaseServicePropertiesOpensearchCustomReposTypeGcs:
 		return true
 	case DatabaseServicePropertiesOpensearchCustomReposTypeS3:
-		return true
-	default:
-		return false
-	}
-}
-
-// Defines values for DatabaseServicePropertiesOpensearchElasticsearchVersion.
-const (
-	DatabaseServicePropertiesOpensearchElasticsearchVersionN1   DatabaseServicePropertiesOpensearchElasticsearchVersion = "1"
-	DatabaseServicePropertiesOpensearchElasticsearchVersionN2   DatabaseServicePropertiesOpensearchElasticsearchVersion = "2"
-	DatabaseServicePropertiesOpensearchElasticsearchVersionN219 DatabaseServicePropertiesOpensearchElasticsearchVersion = "2.19"
-	DatabaseServicePropertiesOpensearchElasticsearchVersionN33  DatabaseServicePropertiesOpensearchElasticsearchVersion = "3.3"
-	DatabaseServicePropertiesOpensearchElasticsearchVersionN7   DatabaseServicePropertiesOpensearchElasticsearchVersion = "7"
-)
-
-// Valid indicates whether the value is a known member of the DatabaseServicePropertiesOpensearchElasticsearchVersion enum.
-func (e DatabaseServicePropertiesOpensearchElasticsearchVersion) Valid() bool {
-	switch e {
-	case DatabaseServicePropertiesOpensearchElasticsearchVersionN1:
-		return true
-	case DatabaseServicePropertiesOpensearchElasticsearchVersionN2:
-		return true
-	case DatabaseServicePropertiesOpensearchElasticsearchVersionN219:
-		return true
-	case DatabaseServicePropertiesOpensearchElasticsearchVersionN33:
-		return true
-	case DatabaseServicePropertiesOpensearchElasticsearchVersionN7:
 		return true
 	default:
 		return false
@@ -1065,25 +1041,22 @@ func (e DatabaseServicePropertiesPgVariant) Valid() bool {
 
 // Defines values for DatabaseServicePropertiesPgVersion.
 const (
-	DatabaseServicePropertiesPgVersionN14 DatabaseServicePropertiesPgVersion = "14"
-	DatabaseServicePropertiesPgVersionN15 DatabaseServicePropertiesPgVersion = "15"
-	DatabaseServicePropertiesPgVersionN16 DatabaseServicePropertiesPgVersion = "16"
-	DatabaseServicePropertiesPgVersionN17 DatabaseServicePropertiesPgVersion = "17"
-	DatabaseServicePropertiesPgVersionN18 DatabaseServicePropertiesPgVersion = "18"
+	N15 DatabaseServicePropertiesPgVersion = "15"
+	N16 DatabaseServicePropertiesPgVersion = "16"
+	N17 DatabaseServicePropertiesPgVersion = "17"
+	N18 DatabaseServicePropertiesPgVersion = "18"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseServicePropertiesPgVersion enum.
 func (e DatabaseServicePropertiesPgVersion) Valid() bool {
 	switch e {
-	case DatabaseServicePropertiesPgVersionN14:
+	case N15:
 		return true
-	case DatabaseServicePropertiesPgVersionN15:
+	case N16:
 		return true
-	case DatabaseServicePropertiesPgVersionN16:
+	case N17:
 		return true
-	case DatabaseServicePropertiesPgVersionN17:
-		return true
-	case DatabaseServicePropertiesPgVersionN18:
+	case N18:
 		return true
 	default:
 		return false
@@ -6979,11 +6952,17 @@ type DatabaseServicePropertiesMysql struct {
 	// NetWriteTimeout The number of seconds to wait for a block to be written to a connection before aborting the write.
 	NetWriteTimeout *int `json:"net_write_timeout,omitempty"`
 
+	// PerformanceSchemaEventsStatementsHistorySize The number of rows per thread in the events_statements_history table. Changing this parameter will lead to a restart of the MySQL service.
+	PerformanceSchemaEventsStatementsHistorySize *int `json:"performance_schema_events_statements_history_size,omitempty"`
+
 	// PublicAccess Allow access to the service from the public Internet
 	PublicAccess *bool `json:"public_access,omitempty"`
 
 	// PublicAccessPrometheus Allow access to Prometheus metrics from the public Internet
 	PublicAccessPrometheus *bool `json:"public_access_prometheus,omitempty"`
+
+	// RelayLogSpaceLimit The maximum amount of space in bytes to use for all relay logs while replicating from an external migration source. When the limit is reached, the replication I/O thread stops fetching relay log events until the SQL thread has caught up. Raise this to give a large migration a bigger relay-log budget; ensure the service disk is sized accordingly. The setting applies only on the node replicating from the external source; standby nodes always use the UpCloud-managed default (the smaller of 5 GiB and 30% of the service disk), which is also used when this option is left unset. Changing this parameter will lead to a restart of the MySQL service.
+	RelayLogSpaceLimit *int `json:"relay_log_space_limit,omitempty"`
 
 	// ServiceLog Store logs for the service so that they are available in the HTTP API and console.
 	ServiceLog *bool `json:"service_log,omitempty"`
@@ -7119,7 +7098,6 @@ type DatabaseServicePropertiesOpensearch struct {
 		// Low The low watermark for disk usage.
 		Low int `json:"low"`
 	} `json:"disk_watermarks,omitempty"`
-	ElasticsearchVersion *DatabaseServicePropertiesOpensearchElasticsearchVersion `json:"elasticsearch_version,omitempty"`
 
 	// EmailSenderName This should be identical to the Sender name defined in Opensearch dashboards
 	EmailSenderName *string `json:"email_sender_name,omitempty"`
@@ -7715,9 +7693,6 @@ type DatabaseServicePropertiesOpensearch_CustomRepos_Settings struct {
 
 // DatabaseServicePropertiesOpensearchCustomReposType defines model for DatabaseServicePropertiesOpensearch.CustomRepos.Type.
 type DatabaseServicePropertiesOpensearchCustomReposType string
-
-// DatabaseServicePropertiesOpensearchElasticsearchVersion defines model for DatabaseServicePropertiesOpensearch.ElasticsearchVersion.
-type DatabaseServicePropertiesOpensearchElasticsearchVersion string
 
 // DatabaseServicePropertiesOpensearchIndexPatternsSortingAlgorithm defines model for DatabaseServicePropertiesOpensearch.IndexPatterns.SortingAlgorithm.
 type DatabaseServicePropertiesOpensearchIndexPatternsSortingAlgorithm string
@@ -15831,6 +15806,24 @@ type CreateFirewallRulesetLabelRulesetUuid = FirewallRulesetServerUuid
 // CreateFirewallRulesetRuleRulesetUuid The unique identifier for the server.
 type CreateFirewallRulesetRuleRulesetUuid = FirewallRulesetServerUuid
 
+// CreateGatewayAddressServiceUuid The unique identifier for the resource.
+type CreateGatewayAddressServiceUuid = GatewayUuid
+
+// CreateGatewayConnectionServiceUuid The unique identifier for the resource.
+type CreateGatewayConnectionServiceUuid = GatewayUuid
+
+// CreateGatewayServiceLabelServiceUuid The unique identifier for the resource.
+type CreateGatewayServiceLabelServiceUuid = GatewayUuid
+
+// CreateGatewayServiceLogSessionServiceUuid The unique identifier for the resource.
+type CreateGatewayServiceLogSessionServiceUuid = GatewayUuid
+
+// CreateGatewayTunnelConnectionUuid The unique identifier for the resource.
+type CreateGatewayTunnelConnectionUuid = GatewayUuid
+
+// CreateGatewayTunnelServiceUuid The unique identifier for the resource.
+type CreateGatewayTunnelServiceUuid = GatewayUuid
+
 // CreateLoadBalancerBackendServiceUuid The UUID of the service.
 type CreateLoadBalancerBackendServiceUuid = LoadBalancerServiceParameter
 
@@ -15968,6 +15961,36 @@ type DeleteFirewallRulesetRuleRulesetUuid = FirewallRulesetServerUuid
 
 // DeleteFirewallRulesetRulesetUuid The unique identifier for the server.
 type DeleteFirewallRulesetRulesetUuid = FirewallRulesetServerUuid
+
+// DeleteGatewayAddressAddressName The unique identifier for the resource.
+type DeleteGatewayAddressAddressName = GatewayUuid
+
+// DeleteGatewayAddressServiceUuid The unique identifier for the resource.
+type DeleteGatewayAddressServiceUuid = GatewayUuid
+
+// DeleteGatewayConnectionConnectionUuid The unique identifier for the resource.
+type DeleteGatewayConnectionConnectionUuid = GatewayUuid
+
+// DeleteGatewayConnectionServiceUuid The unique identifier for the resource.
+type DeleteGatewayConnectionServiceUuid = GatewayUuid
+
+// DeleteGatewayServiceLabelLabelKey The key of a label.
+type DeleteGatewayServiceLabelLabelKey = GatewayLabelKey
+
+// DeleteGatewayServiceLabelServiceUuid The unique identifier for the resource.
+type DeleteGatewayServiceLabelServiceUuid = GatewayUuid
+
+// DeleteGatewayServiceServiceUuid The unique identifier for the resource.
+type DeleteGatewayServiceServiceUuid = GatewayUuid
+
+// DeleteGatewayTunnelConnectionUuid The unique identifier for the resource.
+type DeleteGatewayTunnelConnectionUuid = GatewayUuid
+
+// DeleteGatewayTunnelServiceUuid The unique identifier for the resource.
+type DeleteGatewayTunnelServiceUuid = GatewayUuid
+
+// DeleteGatewayTunnelTunnelUuid The unique identifier for the resource.
+type DeleteGatewayTunnelTunnelUuid = GatewayUuid
 
 // DeleteIPAddressAddress IP address
 type DeleteIPAddressAddress = IpAddress
@@ -16116,146 +16139,17 @@ type FirewallRulesetListServerFirewallRuleServerUuid = FirewallRulesetServerUuid
 // FirewallRulesetListServerFirewallRuleSort Schema for a query parameter specifying the sort field.
 type FirewallRulesetListServerFirewallRuleSort = FirewallRulesetQueryParamSort
 
-// GatewayCreateAddressServiceUuid The unique identifier for the resource.
-type GatewayCreateAddressServiceUuid = GatewayUuid
-
-// GatewayCreateConnectionServiceUuid The unique identifier for the resource.
-type GatewayCreateConnectionServiceUuid = GatewayUuid
-
-// GatewayCreateServiceLabelServiceUuid The unique identifier for the resource.
-type GatewayCreateServiceLabelServiceUuid = GatewayUuid
-
-// GatewayCreateServiceogSessionServiceUuid The unique identifier for the resource.
-type GatewayCreateServiceogSessionServiceUuid = GatewayUuid
-
-// GatewayCreateTunnelConnectionUuid The unique identifier for the resource.
-type GatewayCreateTunnelConnectionUuid = GatewayUuid
-
-// GatewayCreateTunnelServiceUuid The unique identifier for the resource.
-type GatewayCreateTunnelServiceUuid = GatewayUuid
-
-// GatewayDeleteAddressAddressName The unique identifier for the resource.
-type GatewayDeleteAddressAddressName = GatewayUuid
-
-// GatewayDeleteAddressServiceUuid The unique identifier for the resource.
-type GatewayDeleteAddressServiceUuid = GatewayUuid
-
-// GatewayDeleteConnectionConnectionUuid The unique identifier for the resource.
-type GatewayDeleteConnectionConnectionUuid = GatewayUuid
-
-// GatewayDeleteConnectionServiceUuid The unique identifier for the resource.
-type GatewayDeleteConnectionServiceUuid = GatewayUuid
-
-// GatewayDeleteServiceLabelLabelKey The key of a label.
-type GatewayDeleteServiceLabelLabelKey = GatewayLabelKey
-
-// GatewayDeleteServiceLabelServiceUuid The unique identifier for the resource.
-type GatewayDeleteServiceLabelServiceUuid = GatewayUuid
-
-// GatewayDeleteServiceServiceUuid The unique identifier for the resource.
-type GatewayDeleteServiceServiceUuid = GatewayUuid
-
-// GatewayDeleteTunnelConnectionUuid The unique identifier for the resource.
-type GatewayDeleteTunnelConnectionUuid = GatewayUuid
-
-// GatewayDeleteTunnelServiceUuid The unique identifier for the resource.
-type GatewayDeleteTunnelServiceUuid = GatewayUuid
-
-// GatewayDeleteTunnelTunnelUuid The unique identifier for the resource.
-type GatewayDeleteTunnelTunnelUuid = GatewayUuid
-
-// GatewayFlushNatServiceUuid The unique identifier for the resource.
-type GatewayFlushNatServiceUuid = GatewayUuid
-
-// GatewayGetAddressAddressName The unique identifier for the resource.
-type GatewayGetAddressAddressName = GatewayUuid
-
-// GatewayGetAddressServiceUuid The unique identifier for the resource.
-type GatewayGetAddressServiceUuid = GatewayUuid
-
-// GatewayGetConnectionConnectionUuid The unique identifier for the resource.
-type GatewayGetConnectionConnectionUuid = GatewayUuid
-
-// GatewayGetConnectionServiceUuid The unique identifier for the resource.
-type GatewayGetConnectionServiceUuid = GatewayUuid
-
-// GatewayGetMetricsServiceUuid The unique identifier for the resource.
-type GatewayGetMetricsServiceUuid = GatewayUuid
+// FlushGatewayNatServiceUuid The unique identifier for the resource.
+type FlushGatewayNatServiceUuid = GatewayUuid
 
 // GatewayGetPlanPlanName The unique identifier for the resource.
 type GatewayGetPlanPlanName = GatewayUuid
-
-// GatewayGetServiceLabelLabelKey The key of a label.
-type GatewayGetServiceLabelLabelKey = GatewayLabelKey
-
-// GatewayGetServiceLabelServiceUuid The unique identifier for the resource.
-type GatewayGetServiceLabelServiceUuid = GatewayUuid
-
-// GatewayGetServiceServiceUuid The unique identifier for the resource.
-type GatewayGetServiceServiceUuid = GatewayUuid
-
-// GatewayGetTunnelConnectionUuid The unique identifier for the resource.
-type GatewayGetTunnelConnectionUuid = GatewayUuid
-
-// GatewayGetTunnelServiceUuid The unique identifier for the resource.
-type GatewayGetTunnelServiceUuid = GatewayUuid
-
-// GatewayGetTunnelTunnelUuid The unique identifier for the resource.
-type GatewayGetTunnelTunnelUuid = GatewayUuid
-
-// GatewayListAddressesServiceUuid The unique identifier for the resource.
-type GatewayListAddressesServiceUuid = GatewayUuid
-
-// GatewayListConnectionsServiceUuid The unique identifier for the resource.
-type GatewayListConnectionsServiceUuid = GatewayUuid
 
 // GatewayListPlansLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
 type GatewayListPlansLimit = GatewayQueryParamlimit
 
 // GatewayListPlansOffset Schema for a query parameter specifying the offset for pagination.
 type GatewayListPlansOffset = GatewayQueryParamOffset
-
-// GatewayListServiceLabelsServiceUuid The unique identifier for the resource.
-type GatewayListServiceLabelsServiceUuid = GatewayUuid
-
-// GatewayListServicesLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
-type GatewayListServicesLimit = GatewayQueryParamlimit
-
-// GatewayListServicesOffset Schema for a query parameter specifying the offset for pagination.
-type GatewayListServicesOffset = GatewayQueryParamOffset
-
-// GatewayListTunnelsConnectionUuid The unique identifier for the resource.
-type GatewayListTunnelsConnectionUuid = GatewayUuid
-
-// GatewayListTunnelsServiceUuid The unique identifier for the resource.
-type GatewayListTunnelsServiceUuid = GatewayUuid
-
-// GatewayModifyConnectionConnectionUuid The unique identifier for the resource.
-type GatewayModifyConnectionConnectionUuid = GatewayUuid
-
-// GatewayModifyConnectionServiceUuid The unique identifier for the resource.
-type GatewayModifyConnectionServiceUuid = GatewayUuid
-
-// GatewayModifyServiceLabelLabelKey The key of a label.
-type GatewayModifyServiceLabelLabelKey = GatewayLabelKey
-
-// GatewayModifyServiceLabelServiceUuid The unique identifier for the resource.
-type GatewayModifyServiceLabelServiceUuid = GatewayUuid
-
-// GatewayModifyServiceServiceUuid The unique identifier for the resource.
-type GatewayModifyServiceServiceUuid = GatewayUuid
-
-// GatewayModifyTunnelConnectionUuid The unique identifier for the resource.
-type GatewayModifyTunnelConnectionUuid = GatewayUuid
-
-// GatewayModifyTunnelServiceUuid The unique identifier for the resource.
-type GatewayModifyTunnelServiceUuid = GatewayUuid
-
-// GatewayModifyTunnelTunnelUuid The unique identifier for the resource.
-type GatewayModifyTunnelTunnelUuid = GatewayUuid
-
-// GatewayReplaceServiceServiceUuid The unique identifier for the resource.
-type GatewayReplaceServiceServiceUuid = GatewayUuid
 
 // GetAvailablePassthroughDevicesType defines model for getAvailablePassthroughDevicesType.
 type GetAvailablePassthroughDevicesType string
@@ -16418,6 +16312,39 @@ type GetFirewallRulesetRuleRulesetUuid = FirewallRulesetServerUuid
 
 // GetFirewallRulesetRulesetUuid The unique identifier for the server.
 type GetFirewallRulesetRulesetUuid = FirewallRulesetServerUuid
+
+// GetGatewayAddressAddressName The unique identifier for the resource.
+type GetGatewayAddressAddressName = GatewayUuid
+
+// GetGatewayAddressServiceUuid The unique identifier for the resource.
+type GetGatewayAddressServiceUuid = GatewayUuid
+
+// GetGatewayConnectionConnectionUuid The unique identifier for the resource.
+type GetGatewayConnectionConnectionUuid = GatewayUuid
+
+// GetGatewayConnectionServiceUuid The unique identifier for the resource.
+type GetGatewayConnectionServiceUuid = GatewayUuid
+
+// GetGatewayMetricsServiceUuid The unique identifier for the resource.
+type GetGatewayMetricsServiceUuid = GatewayUuid
+
+// GetGatewayServiceLabelLabelKey The key of a label.
+type GetGatewayServiceLabelLabelKey = GatewayLabelKey
+
+// GetGatewayServiceLabelServiceUuid The unique identifier for the resource.
+type GetGatewayServiceLabelServiceUuid = GatewayUuid
+
+// GetGatewayServiceServiceUuid The unique identifier for the resource.
+type GetGatewayServiceServiceUuid = GatewayUuid
+
+// GetGatewayTunnelConnectionUuid The unique identifier for the resource.
+type GetGatewayTunnelConnectionUuid = GatewayUuid
+
+// GetGatewayTunnelServiceUuid The unique identifier for the resource.
+type GetGatewayTunnelServiceUuid = GatewayUuid
+
+// GetGatewayTunnelTunnelUuid The unique identifier for the resource.
+type GetGatewayTunnelTunnelUuid = GatewayUuid
 
 // GetIPAddressDetailsAddress defines model for getIPAddressDetailsAddress.
 type GetIPAddressDetailsAddress = string
@@ -16716,6 +16643,27 @@ type ListFirewallRulesetsOffset = FirewallRulesetQueryParamOffset
 // ListFirewallRulesetsSort Schema for a query parameter specifying the sort field.
 type ListFirewallRulesetsSort = FirewallRulesetQueryParamSort
 
+// ListGatewayAddressesServiceUuid The unique identifier for the resource.
+type ListGatewayAddressesServiceUuid = GatewayUuid
+
+// ListGatewayConnectionsServiceUuid The unique identifier for the resource.
+type ListGatewayConnectionsServiceUuid = GatewayUuid
+
+// ListGatewayServiceLabelsServiceUuid The unique identifier for the resource.
+type ListGatewayServiceLabelsServiceUuid = GatewayUuid
+
+// ListGatewayServicesLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
+type ListGatewayServicesLimit = GatewayQueryParamlimit
+
+// ListGatewayServicesOffset Schema for a query parameter specifying the offset for pagination.
+type ListGatewayServicesOffset = GatewayQueryParamOffset
+
+// ListGatewayTunnelsConnectionUuid The unique identifier for the resource.
+type ListGatewayTunnelsConnectionUuid = GatewayUuid
+
+// ListGatewayTunnelsServiceUuid The unique identifier for the resource.
+type ListGatewayTunnelsServiceUuid = GatewayUuid
+
 // ListLoadBalancerBackendTlsConfigsBackendName The name of the backend.
 type ListLoadBalancerBackendTlsConfigsBackendName = LoadBalancerBackendParameter
 
@@ -16901,6 +16849,30 @@ type ModifyFirewallRulesetRuleRulesetUuid = FirewallRulesetServerUuid
 
 // ModifyFirewallRulesetRulesetUuid The unique identifier for the server.
 type ModifyFirewallRulesetRulesetUuid = FirewallRulesetServerUuid
+
+// ModifyGatewayConnectionConnectionUuid The unique identifier for the resource.
+type ModifyGatewayConnectionConnectionUuid = GatewayUuid
+
+// ModifyGatewayConnectionServiceUuid The unique identifier for the resource.
+type ModifyGatewayConnectionServiceUuid = GatewayUuid
+
+// ModifyGatewayServiceLabelLabelKey The key of a label.
+type ModifyGatewayServiceLabelLabelKey = GatewayLabelKey
+
+// ModifyGatewayServiceLabelServiceUuid The unique identifier for the resource.
+type ModifyGatewayServiceLabelServiceUuid = GatewayUuid
+
+// ModifyGatewayServiceServiceUuid The unique identifier for the resource.
+type ModifyGatewayServiceServiceUuid = GatewayUuid
+
+// ModifyGatewayTunnelConnectionUuid The unique identifier for the resource.
+type ModifyGatewayTunnelConnectionUuid = GatewayUuid
+
+// ModifyGatewayTunnelServiceUuid The unique identifier for the resource.
+type ModifyGatewayTunnelServiceUuid = GatewayUuid
+
+// ModifyGatewayTunnelTunnelUuid The unique identifier for the resource.
+type ModifyGatewayTunnelTunnelUuid = GatewayUuid
 
 // ModifyIPAddressAddress IP address
 type ModifyIPAddressAddress = IpAddress
@@ -17565,6 +17537,9 @@ type RemoveStorageFromFavoritesUuid = StorageUuid
 // ReplaceFileStorageServiceUuid The unique identifier.
 type ReplaceFileStorageServiceUuid = FileStorageEntityUUID
 
+// ReplaceGatewayServiceServiceUuid The unique identifier for the resource.
+type ReplaceGatewayServiceServiceUuid = GatewayUuid
+
 // ReplaceLoadBalancerRuleFrontendName The name of the frontend.
 type ReplaceLoadBalancerRuleFrontendName = LoadBalancerFrontendParameter
 
@@ -17820,6 +17795,39 @@ type CreateFirewallRulesetRule201 = FirewallRulesetRuleDetailResponse
 // CreateFirewallRulesetRuleDefault Schema for error responses from the API.
 type CreateFirewallRulesetRuleDefault = FirewallRulesetErrorResponse
 
+// CreateGatewayAddress200 Details about a specific address
+type CreateGatewayAddress200 = GatewayAddressDetailsResponse
+
+// CreateGatewayAddressDefault Schema for error responses from the API.
+type CreateGatewayAddressDefault = GatewayErrorResponse
+
+// CreateGatewayConnection200 Response schema for gwaas connection details.
+type CreateGatewayConnection200 = GatewayConnectionDetailsResponse
+
+// CreateGatewayConnectionDefault Schema for error responses from the API.
+type CreateGatewayConnectionDefault = GatewayErrorResponse
+
+// CreateGatewayService200 Gateway Service
+type CreateGatewayService200 = GatewayServiceDetailsResponse
+
+// CreateGatewayServiceDefault Schema for error responses from the API.
+type CreateGatewayServiceDefault = GatewayErrorResponse
+
+// CreateGatewayServiceLabelDefault Schema for error responses from the API.
+type CreateGatewayServiceLabelDefault = GatewayErrorResponse
+
+// CreateGatewayServiceLogSession200 Response for creating a new log session for a service
+type CreateGatewayServiceLogSession200 = GatewayServiceLogSessionCreateResponse
+
+// CreateGatewayServiceLogSessionDefault Schema for error responses from the API.
+type CreateGatewayServiceLogSessionDefault = GatewayErrorResponse
+
+// CreateGatewayTunnel200 Response schema for gwaas tunnel details.
+type CreateGatewayTunnel200 = GatewayTunnelDetailsResponse
+
+// CreateGatewayTunnelDefault Schema for error responses from the API.
+type CreateGatewayTunnelDefault = GatewayErrorResponse
+
 // CreateLoadBalancer201 Represents a load balancer service instance that groups together frontends, backends, and related agents. It defines the service plan, network configuration, and operational state across all nodes.
 type CreateLoadBalancer201 = LoadBalancerService
 
@@ -18063,6 +18071,21 @@ type DeleteFirewallRulesetLabelDefault = FirewallRulesetErrorResponse
 // DeleteFirewallRulesetRuleDefault Schema for error responses from the API.
 type DeleteFirewallRulesetRuleDefault = FirewallRulesetErrorResponse
 
+// DeleteGatewayAddressDefault Schema for error responses from the API.
+type DeleteGatewayAddressDefault = GatewayErrorResponse
+
+// DeleteGatewayConnectionDefault Schema for error responses from the API.
+type DeleteGatewayConnectionDefault = GatewayErrorResponse
+
+// DeleteGatewayServiceDefault Schema for error responses from the API.
+type DeleteGatewayServiceDefault = GatewayErrorResponse
+
+// DeleteGatewayServiceLabelDefault Schema for error responses from the API.
+type DeleteGatewayServiceLabelDefault = GatewayErrorResponse
+
+// DeleteGatewayTunnelDefault Schema for error responses from the API.
+type DeleteGatewayTunnelDefault = GatewayErrorResponse
+
 // DeleteIPAddressDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type DeleteIPAddressDefault = IpAddressError
 
@@ -18237,74 +18260,8 @@ type FirewallRulesetListServerFirewallRule200 = FirewallRulesetServerFirewallDet
 // FirewallRulesetListServerFirewallRuleDefault Schema for error responses from the API.
 type FirewallRulesetListServerFirewallRuleDefault = FirewallRulesetErrorResponse
 
-// GatewayCreateAddress200 Details about a specific address
-type GatewayCreateAddress200 = GatewayAddressDetailsResponse
-
-// GatewayCreateAddressDefault Schema for error responses from the API.
-type GatewayCreateAddressDefault = GatewayErrorResponse
-
-// GatewayCreateConnection200 Response schema for gwaas connection details.
-type GatewayCreateConnection200 = GatewayConnectionDetailsResponse
-
-// GatewayCreateConnectionDefault Schema for error responses from the API.
-type GatewayCreateConnectionDefault = GatewayErrorResponse
-
-// GatewayCreateService200 Gateway Service
-type GatewayCreateService200 = GatewayServiceDetailsResponse
-
-// GatewayCreateServiceDefault Schema for error responses from the API.
-type GatewayCreateServiceDefault = GatewayErrorResponse
-
-// GatewayCreateServiceLabelDefault Schema for error responses from the API.
-type GatewayCreateServiceLabelDefault = GatewayErrorResponse
-
-// GatewayCreateServiceogSession200 Response for creating a new log session for a service
-type GatewayCreateServiceogSession200 = GatewayServiceLogSessionCreateResponse
-
-// GatewayCreateServiceogSessionDefault Schema for error responses from the API.
-type GatewayCreateServiceogSessionDefault = GatewayErrorResponse
-
-// GatewayCreateTunnel200 Response schema for gwaas tunnel details.
-type GatewayCreateTunnel200 = GatewayTunnelDetailsResponse
-
-// GatewayCreateTunnelDefault Schema for error responses from the API.
-type GatewayCreateTunnelDefault = GatewayErrorResponse
-
-// GatewayDeleteAddressDefault Schema for error responses from the API.
-type GatewayDeleteAddressDefault = GatewayErrorResponse
-
-// GatewayDeleteConnectionDefault Schema for error responses from the API.
-type GatewayDeleteConnectionDefault = GatewayErrorResponse
-
-// GatewayDeleteServiceDefault Schema for error responses from the API.
-type GatewayDeleteServiceDefault = GatewayErrorResponse
-
-// GatewayDeleteServiceLabelDefault Schema for error responses from the API.
-type GatewayDeleteServiceLabelDefault = GatewayErrorResponse
-
-// GatewayDeleteTunnelDefault Schema for error responses from the API.
-type GatewayDeleteTunnelDefault = GatewayErrorResponse
-
-// GatewayFlushNatDefault Schema for error responses from the API.
-type GatewayFlushNatDefault = GatewayErrorResponse
-
-// GatewayGetAddress200 Details about a specific address
-type GatewayGetAddress200 = GatewayAddressDetailsResponse
-
-// GatewayGetAddressDefault Schema for error responses from the API.
-type GatewayGetAddressDefault = GatewayErrorResponse
-
-// GatewayGetConnection200 Response schema for gwaas connection details.
-type GatewayGetConnection200 = GatewayConnectionDetailsResponse
-
-// GatewayGetConnectionDefault Schema for error responses from the API.
-type GatewayGetConnectionDefault = GatewayErrorResponse
-
-// GatewayGetMetrics200 Response schema for a service metrics.
-type GatewayGetMetrics200 = GatewayServiceMetricsResponse
-
-// GatewayGetMetricsDefault Schema for error responses from the API.
-type GatewayGetMetricsDefault = GatewayErrorResponse
+// FlushGatewayNatDefault Schema for error responses from the API.
+type FlushGatewayNatDefault = GatewayErrorResponse
 
 // GatewayGetPlan200 Response schema for gwaas plan details.
 type GatewayGetPlan200 = GatewayPlanDetailsResponse
@@ -18312,86 +18269,11 @@ type GatewayGetPlan200 = GatewayPlanDetailsResponse
 // GatewayGetPlanDefault Schema for error responses from the API.
 type GatewayGetPlanDefault = GatewayErrorResponse
 
-// GatewayGetService200 Gateway Service
-type GatewayGetService200 = GatewayServiceDetailsResponse
-
-// GatewayGetServiceDefault Schema for error responses from the API.
-type GatewayGetServiceDefault = GatewayErrorResponse
-
-// GatewayGetServiceLabel200 UpCloud gateway Label
-type GatewayGetServiceLabel200 = GatewayLabelDetailsResponse
-
-// GatewayGetServiceLabelDefault Schema for error responses from the API.
-type GatewayGetServiceLabelDefault = GatewayErrorResponse
-
-// GatewayGetTunnel200 Response schema for gwaas tunnel details.
-type GatewayGetTunnel200 = GatewayTunnelDetailsResponse
-
-// GatewayGetTunnelDefault Schema for error responses from the API.
-type GatewayGetTunnelDefault = GatewayErrorResponse
-
-// GatewayListAddresses200 Response schema for a list of gwaas addresses.
-type GatewayListAddresses200 = GatewayAddressListResponse
-
-// GatewayListAddressesDefault Schema for error responses from the API.
-type GatewayListAddressesDefault = GatewayErrorResponse
-
-// GatewayListConnections200 Response schema for a list of gwaas connections.
-type GatewayListConnections200 = GatewayConnectionListResponse
-
-// GatewayListConnectionsDefault Schema for error responses from the API.
-type GatewayListConnectionsDefault = GatewayErrorResponse
-
 // GatewayListPlans200 Response schema for a list of gwaas plans.
 type GatewayListPlans200 = GatewayPlanListResponse
 
 // GatewayListPlansDefault Schema for error responses from the API.
 type GatewayListPlansDefault = GatewayErrorResponse
-
-// GatewayListServiceLabels200 Response schema for a list of service labels.
-type GatewayListServiceLabels200 = GatewayServiceLabelListResponse
-
-// GatewayListServiceLabelsDefault Schema for error responses from the API.
-type GatewayListServiceLabelsDefault = GatewayErrorResponse
-
-// GatewayListServices200 Response schema for a list of gwaas services.
-type GatewayListServices200 = GatewayServiceListResponse
-
-// GatewayListServicesDefault Schema for error responses from the API.
-type GatewayListServicesDefault = GatewayErrorResponse
-
-// GatewayListTunnels200 Response schema for a list of gwaas tunnels.
-type GatewayListTunnels200 = GatewayTunnelListResponse
-
-// GatewayListTunnelsDefault Schema for error responses from the API.
-type GatewayListTunnelsDefault = GatewayErrorResponse
-
-// GatewayModifyConnection200 Response schema for gwaas connection details.
-type GatewayModifyConnection200 = GatewayConnectionDetailsResponse
-
-// GatewayModifyConnectionDefault Schema for error responses from the API.
-type GatewayModifyConnectionDefault = GatewayErrorResponse
-
-// GatewayModifyService200 Gateway Service
-type GatewayModifyService200 = GatewayServiceDetailsResponse
-
-// GatewayModifyServiceDefault Schema for error responses from the API.
-type GatewayModifyServiceDefault = GatewayErrorResponse
-
-// GatewayModifyServiceLabelDefault Schema for error responses from the API.
-type GatewayModifyServiceLabelDefault = GatewayErrorResponse
-
-// GatewayModifyTunnel200 Response schema for gwaas tunnel details.
-type GatewayModifyTunnel200 = GatewayTunnelDetailsResponse
-
-// GatewayModifyTunnelDefault Schema for error responses from the API.
-type GatewayModifyTunnelDefault = GatewayErrorResponse
-
-// GatewayReplaceService200 Gateway Service
-type GatewayReplaceService200 = GatewayServiceDetailsResponse
-
-// GatewayReplaceServiceDefault Schema for error responses from the API.
-type GatewayReplaceServiceDefault = GatewayErrorResponse
 
 // GetAvailablePassthroughDevices200 Zone device availability
 type GetAvailablePassthroughDevices200 = Devices
@@ -18596,6 +18478,42 @@ type GetFirewallRulesetRule200 = FirewallRulesetRuleDetailResponse
 
 // GetFirewallRulesetRuleDefault Schema for error responses from the API.
 type GetFirewallRulesetRuleDefault = FirewallRulesetErrorResponse
+
+// GetGatewayAddress200 Details about a specific address
+type GetGatewayAddress200 = GatewayAddressDetailsResponse
+
+// GetGatewayAddressDefault Schema for error responses from the API.
+type GetGatewayAddressDefault = GatewayErrorResponse
+
+// GetGatewayConnection200 Response schema for gwaas connection details.
+type GetGatewayConnection200 = GatewayConnectionDetailsResponse
+
+// GetGatewayConnectionDefault Schema for error responses from the API.
+type GetGatewayConnectionDefault = GatewayErrorResponse
+
+// GetGatewayMetrics200 Response schema for a service metrics.
+type GetGatewayMetrics200 = GatewayServiceMetricsResponse
+
+// GetGatewayMetricsDefault Schema for error responses from the API.
+type GetGatewayMetricsDefault = GatewayErrorResponse
+
+// GetGatewayService200 Gateway Service
+type GetGatewayService200 = GatewayServiceDetailsResponse
+
+// GetGatewayServiceDefault Schema for error responses from the API.
+type GetGatewayServiceDefault = GatewayErrorResponse
+
+// GetGatewayServiceLabel200 UpCloud gateway Label
+type GetGatewayServiceLabel200 = GatewayLabelDetailsResponse
+
+// GetGatewayServiceLabelDefault Schema for error responses from the API.
+type GetGatewayServiceLabelDefault = GatewayErrorResponse
+
+// GetGatewayTunnel200 Response schema for gwaas tunnel details.
+type GetGatewayTunnel200 = GatewayTunnelDetailsResponse
+
+// GetGatewayTunnelDefault Schema for error responses from the API.
+type GetGatewayTunnelDefault = GatewayErrorResponse
 
 // GetIPAddressDetails200 Request schema for IP address operations
 type GetIPAddressDetails200 = IpAddressResponse
@@ -19008,6 +18926,36 @@ type ListFirewallRulesets200 = FirewallRulesetListResponse
 // ListFirewallRulesetsDefault Schema for error responses from the API.
 type ListFirewallRulesetsDefault = FirewallRulesetErrorResponse
 
+// ListGatewayAddresses200 Response schema for a list of gwaas addresses.
+type ListGatewayAddresses200 = GatewayAddressListResponse
+
+// ListGatewayAddressesDefault Schema for error responses from the API.
+type ListGatewayAddressesDefault = GatewayErrorResponse
+
+// ListGatewayConnections200 Response schema for a list of gwaas connections.
+type ListGatewayConnections200 = GatewayConnectionListResponse
+
+// ListGatewayConnectionsDefault Schema for error responses from the API.
+type ListGatewayConnectionsDefault = GatewayErrorResponse
+
+// ListGatewayServiceLabels200 Response schema for a list of service labels.
+type ListGatewayServiceLabels200 = GatewayServiceLabelListResponse
+
+// ListGatewayServiceLabelsDefault Schema for error responses from the API.
+type ListGatewayServiceLabelsDefault = GatewayErrorResponse
+
+// ListGatewayServices200 Response schema for a list of gwaas services.
+type ListGatewayServices200 = GatewayServiceListResponse
+
+// ListGatewayServicesDefault Schema for error responses from the API.
+type ListGatewayServicesDefault = GatewayErrorResponse
+
+// ListGatewayTunnels200 Response schema for a list of gwaas tunnels.
+type ListGatewayTunnels200 = GatewayTunnelListResponse
+
+// ListGatewayTunnelsDefault Schema for error responses from the API.
+type ListGatewayTunnelsDefault = GatewayErrorResponse
+
 // ListIPAddresses200 Request schema for IP address operations
 type ListIPAddresses200 = IpAddressesResponse
 
@@ -19289,6 +19237,27 @@ type ModifyFirewallRulesetRule200 = FirewallRulesetRuleDetailResponse
 
 // ModifyFirewallRulesetRuleDefault Schema for error responses from the API.
 type ModifyFirewallRulesetRuleDefault = FirewallRulesetErrorResponse
+
+// ModifyGatewayConnection200 Response schema for gwaas connection details.
+type ModifyGatewayConnection200 = GatewayConnectionDetailsResponse
+
+// ModifyGatewayConnectionDefault Schema for error responses from the API.
+type ModifyGatewayConnectionDefault = GatewayErrorResponse
+
+// ModifyGatewayService200 Gateway Service
+type ModifyGatewayService200 = GatewayServiceDetailsResponse
+
+// ModifyGatewayServiceDefault Schema for error responses from the API.
+type ModifyGatewayServiceDefault = GatewayErrorResponse
+
+// ModifyGatewayServiceLabelDefault Schema for error responses from the API.
+type ModifyGatewayServiceLabelDefault = GatewayErrorResponse
+
+// ModifyGatewayTunnel200 Response schema for gwaas tunnel details.
+type ModifyGatewayTunnel200 = GatewayTunnelDetailsResponse
+
+// ModifyGatewayTunnelDefault Schema for error responses from the API.
+type ModifyGatewayTunnelDefault = GatewayErrorResponse
 
 // ModifyIPAddress202 Request schema for IP address operations
 type ModifyIPAddress202 = IpAddressRequest
@@ -19923,6 +19892,12 @@ type ReplaceFileStorage200 = FileStorageServiceDetailResponse
 // ReplaceFileStorageDefault Schema for error responses from the API.
 type ReplaceFileStorageDefault = FileStorageErrorResponse
 
+// ReplaceGatewayService200 Gateway Service
+type ReplaceGatewayService200 = GatewayServiceDetailsResponse
+
+// ReplaceGatewayServiceDefault Schema for error responses from the API.
+type ReplaceGatewayServiceDefault = GatewayErrorResponse
+
 // ReplaceLoadBalancer200 Represents a load balancer service instance that groups together frontends, backends, and related agents. It defines the service plan, network configuration, and operational state across all nodes.
 type ReplaceLoadBalancer200 = LoadBalancerService
 
@@ -20070,6 +20045,24 @@ type CreateFirewallRulesetLabel = FirewallRulesetCreateLabel
 // CreateFirewallRulesetRule defines model for createFirewallRulesetRule.
 type CreateFirewallRulesetRule = FirewallRulesetFirewallRuleCreate
 
+// CreateGatewayAddress Address create request
+type CreateGatewayAddress = GatewayAddressCreateRequest
+
+// CreateGatewayConnection Network gateway VPN connection
+type CreateGatewayConnection = GatewayConnectionCreateRequest
+
+// CreateGatewayService Gateway service
+type CreateGatewayService = GatewayServiceCreateRequest
+
+// CreateGatewayServiceLabel Gateway Label
+type CreateGatewayServiceLabel = GatewayLabelCreateRequest
+
+// CreateGatewayServiceLogSession Request to create a new log session for a service
+type CreateGatewayServiceLogSession = GatewayServiceLogSessionCreateRequest
+
+// CreateGatewayTunnel Network gateway VPN connection tunnel
+type CreateGatewayTunnel = GatewayConnectionTunnel
+
 // CreateLoadBalancer Load Balancer Service
 type CreateLoadBalancer = LoadBalancerServiceCreate
 
@@ -20148,39 +20141,6 @@ type FirewallRulesetCreateMultipleServerFirewallRules = FirewallRulesetServerMul
 // FirewallRulesetCreateServerFirewallRule defines model for firewallRulesetCreateServerFirewallRule.
 type FirewallRulesetCreateServerFirewallRule = FirewallRulesetServerFirewallRuleCreate
 
-// GatewayCreateAddress Address create request
-type GatewayCreateAddress = GatewayAddressCreateRequest
-
-// GatewayCreateConnection Network gateway VPN connection
-type GatewayCreateConnection = GatewayConnectionCreateRequest
-
-// GatewayCreateService Gateway service
-type GatewayCreateService = GatewayServiceCreateRequest
-
-// GatewayCreateServiceLabel Gateway Label
-type GatewayCreateServiceLabel = GatewayLabelCreateRequest
-
-// GatewayCreateServiceogSession Request to create a new log session for a service
-type GatewayCreateServiceogSession = GatewayServiceLogSessionCreateRequest
-
-// GatewayCreateTunnel Network gateway VPN connection tunnel
-type GatewayCreateTunnel = GatewayConnectionTunnel
-
-// GatewayModifyConnection Network gateway VPN connection
-type GatewayModifyConnection = GatewayConnectionModifyRequest
-
-// GatewayModifyService Request to modify a gateway service
-type GatewayModifyService = GatewayServiceModifyRequest
-
-// GatewayModifyServiceLabel Gateway Label
-type GatewayModifyServiceLabel = GatewayLabelModifyRequest
-
-// GatewayModifyTunnel Request to modify a VPN tunnel
-type GatewayModifyTunnel = GatewayTunnelModifyRequest
-
-// GatewayReplaceService Request to replace a gateway service
-type GatewayReplaceService = GatewayServiceReplaceRequest
-
 // GrantPermission A single permission object.
 type GrantPermission = Permission
 
@@ -20252,6 +20212,18 @@ type ModifyFirewallRulesetLabel = FirewallRulesetLabelModify
 
 // ModifyFirewallRulesetRule defines model for modifyFirewallRulesetRule.
 type ModifyFirewallRulesetRule = FirewallRulesetFirewallRuleModify
+
+// ModifyGatewayConnection Network gateway VPN connection
+type ModifyGatewayConnection = GatewayConnectionModifyRequest
+
+// ModifyGatewayService Request to modify a gateway service
+type ModifyGatewayService = GatewayServiceModifyRequest
+
+// ModifyGatewayServiceLabel Gateway Label
+type ModifyGatewayServiceLabel = GatewayLabelModifyRequest
+
+// ModifyGatewayTunnel Request to modify a VPN tunnel
+type ModifyGatewayTunnel = GatewayTunnelModifyRequest
 
 // ModifyIPAddress Request schema for modifying an IP address
 type ModifyIPAddress = ModifyIpAddressRequestV10
@@ -20406,6 +20378,9 @@ type ObjectStorage2UpdateObjectStorageRole = ObjectStorage2RoleUpdate
 // ReplaceFileStorage Schema for replacing an existing service with a new configuration.
 type ReplaceFileStorage = FileStorageServiceReplace
 
+// ReplaceGatewayService Request to replace a gateway service
+type ReplaceGatewayService = GatewayServiceReplaceRequest
+
 // ReplaceLoadBalancer Load Balancer Service.
 type ReplaceLoadBalancer = LoadBalancerServiceReplace
 
@@ -20559,13 +20534,13 @@ type ListFirewallRulesetRulesParams struct {
 	Sort *ListFirewallRulesetRulesSort `form:"sort,omitempty" json:"sort,omitempty"`
 }
 
-// ListServicesParams defines parameters for ListServices.
-type ListServicesParams struct {
+// ListGatewayServicesParams defines parameters for ListGatewayServices.
+type ListGatewayServicesParams struct {
 	// Limit Number of entries to receive at most.
-	Limit *GatewayListServicesLimit `form:"limit,omitempty" json:"limit,omitempty"`
+	Limit *ListGatewayServicesLimit `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Offset Offset for retrieved results.
-	Offset *GatewayListServicesOffset `form:"offset,omitempty" json:"offset,omitempty"`
+	Offset *ListGatewayServicesOffset `form:"offset,omitempty" json:"offset,omitempty"`
 }
 
 // ListPlansParams defines parameters for ListPlans.
@@ -20916,38 +20891,38 @@ type CreateFirewallRulesetRuleJSONRequestBody = FirewallRulesetFirewallRuleCreat
 // ModifyFirewallRulesetRuleJSONRequestBody defines body for ModifyFirewallRulesetRule for application/json ContentType.
 type ModifyFirewallRulesetRuleJSONRequestBody = FirewallRulesetFirewallRuleModify
 
-// CreateServiceJSONRequestBody defines body for CreateService for application/json ContentType.
-type CreateServiceJSONRequestBody = GatewayServiceCreateRequest
+// CreateGatewayServiceJSONRequestBody defines body for CreateGatewayService for application/json ContentType.
+type CreateGatewayServiceJSONRequestBody = GatewayServiceCreateRequest
 
-// ModifyServiceJSONRequestBody defines body for ModifyService for application/json ContentType.
-type ModifyServiceJSONRequestBody = GatewayServiceModifyRequest
+// ModifyGatewayServiceJSONRequestBody defines body for ModifyGatewayService for application/json ContentType.
+type ModifyGatewayServiceJSONRequestBody = GatewayServiceModifyRequest
 
-// ReplaceServiceJSONRequestBody defines body for ReplaceService for application/json ContentType.
-type ReplaceServiceJSONRequestBody = GatewayServiceReplaceRequest
+// ReplaceGatewayServiceJSONRequestBody defines body for ReplaceGatewayService for application/json ContentType.
+type ReplaceGatewayServiceJSONRequestBody = GatewayServiceReplaceRequest
 
-// CreateAddressJSONRequestBody defines body for CreateAddress for application/json ContentType.
-type CreateAddressJSONRequestBody = GatewayAddressCreateRequest
+// CreateGatewayAddressJSONRequestBody defines body for CreateGatewayAddress for application/json ContentType.
+type CreateGatewayAddressJSONRequestBody = GatewayAddressCreateRequest
 
-// CreateConnectionJSONRequestBody defines body for CreateConnection for application/json ContentType.
-type CreateConnectionJSONRequestBody = GatewayConnectionCreateRequest
+// CreateGatewayConnectionJSONRequestBody defines body for CreateGatewayConnection for application/json ContentType.
+type CreateGatewayConnectionJSONRequestBody = GatewayConnectionCreateRequest
 
-// ModifyConnectionJSONRequestBody defines body for ModifyConnection for application/json ContentType.
-type ModifyConnectionJSONRequestBody = GatewayConnectionModifyRequest
+// ModifyGatewayConnectionJSONRequestBody defines body for ModifyGatewayConnection for application/json ContentType.
+type ModifyGatewayConnectionJSONRequestBody = GatewayConnectionModifyRequest
 
-// CreateTunnelJSONRequestBody defines body for CreateTunnel for application/json ContentType.
-type CreateTunnelJSONRequestBody = GatewayConnectionTunnel
+// CreateGatewayTunnelJSONRequestBody defines body for CreateGatewayTunnel for application/json ContentType.
+type CreateGatewayTunnelJSONRequestBody = GatewayConnectionTunnel
 
-// ModifyTunnelJSONRequestBody defines body for ModifyTunnel for application/json ContentType.
-type ModifyTunnelJSONRequestBody = GatewayTunnelModifyRequest
+// ModifyGatewayTunnelJSONRequestBody defines body for ModifyGatewayTunnel for application/json ContentType.
+type ModifyGatewayTunnelJSONRequestBody = GatewayTunnelModifyRequest
 
-// CreateServiceLabelJSONRequestBody defines body for CreateServiceLabel for application/json ContentType.
-type CreateServiceLabelJSONRequestBody = GatewayLabelCreateRequest
+// CreateGatewayServiceLabelJSONRequestBody defines body for CreateGatewayServiceLabel for application/json ContentType.
+type CreateGatewayServiceLabelJSONRequestBody = GatewayLabelCreateRequest
 
-// ModifyServiceLabelJSONRequestBody defines body for ModifyServiceLabel for application/json ContentType.
-type ModifyServiceLabelJSONRequestBody = GatewayLabelModifyRequest
+// ModifyGatewayServiceLabelJSONRequestBody defines body for ModifyGatewayServiceLabel for application/json ContentType.
+type ModifyGatewayServiceLabelJSONRequestBody = GatewayLabelModifyRequest
 
-// CreateServiceogSessionJSONRequestBody defines body for CreateServiceogSession for application/json ContentType.
-type CreateServiceogSessionJSONRequestBody = GatewayServiceLogSessionCreateRequest
+// CreateGatewayServiceLogSessionJSONRequestBody defines body for CreateGatewayServiceLogSession for application/json ContentType.
+type CreateGatewayServiceLogSessionJSONRequestBody = GatewayServiceLogSessionCreateRequest
 
 // ModifyIPAddressJSONRequestBody defines body for ModifyIPAddress for application/json ContentType.
 type ModifyIPAddressJSONRequestBody = ModifyIpAddressRequestV10
@@ -28794,13 +28769,13 @@ type ClientInterface interface {
 
 	ModifyFirewallRulesetRule(ctx context.Context, rulesetUuid ModifyFirewallRulesetRuleRulesetUuid, ruleId ModifyFirewallRulesetRuleRuleId, body ModifyFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ListServices request
-	ListServices(ctx context.Context, params *ListServicesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// ListGatewayServices request
+	ListGatewayServices(ctx context.Context, params *ListGatewayServicesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateServiceWithBody request with any body
-	CreateServiceWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// CreateGatewayServiceWithBody request with any body
+	CreateGatewayServiceWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateService(ctx context.Context, body CreateServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateGatewayService(ctx context.Context, body CreateGatewayServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListPlans request
 	ListPlans(ctx context.Context, params *ListPlansParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -28808,103 +28783,103 @@ type ClientInterface interface {
 	// GetPlan request
 	GetPlan(ctx context.Context, planName GatewayGetPlanPlanName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// DeleteService request
-	DeleteService(ctx context.Context, serviceUuid GatewayDeleteServiceServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// DeleteGatewayService request
+	DeleteGatewayService(ctx context.Context, serviceUuid DeleteGatewayServiceServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetService request
-	GetService(ctx context.Context, serviceUuid GatewayGetServiceServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// GetGatewayService request
+	GetGatewayService(ctx context.Context, serviceUuid GetGatewayServiceServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ModifyServiceWithBody request with any body
-	ModifyServiceWithBody(ctx context.Context, serviceUuid GatewayModifyServiceServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// ModifyGatewayServiceWithBody request with any body
+	ModifyGatewayServiceWithBody(ctx context.Context, serviceUuid ModifyGatewayServiceServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	ModifyService(ctx context.Context, serviceUuid GatewayModifyServiceServiceUuid, body ModifyServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ModifyGatewayService(ctx context.Context, serviceUuid ModifyGatewayServiceServiceUuid, body ModifyGatewayServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ReplaceServiceWithBody request with any body
-	ReplaceServiceWithBody(ctx context.Context, serviceUuid GatewayReplaceServiceServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// ReplaceGatewayServiceWithBody request with any body
+	ReplaceGatewayServiceWithBody(ctx context.Context, serviceUuid ReplaceGatewayServiceServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	ReplaceService(ctx context.Context, serviceUuid GatewayReplaceServiceServiceUuid, body ReplaceServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ReplaceGatewayService(ctx context.Context, serviceUuid ReplaceGatewayServiceServiceUuid, body ReplaceGatewayServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// FlushNat request
-	FlushNat(ctx context.Context, serviceUuid GatewayFlushNatServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// FlushGatewayNat request
+	FlushGatewayNat(ctx context.Context, serviceUuid FlushGatewayNatServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ListAddresses request
-	ListAddresses(ctx context.Context, serviceUuid GatewayListAddressesServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// ListGatewayAddresses request
+	ListGatewayAddresses(ctx context.Context, serviceUuid ListGatewayAddressesServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateAddressWithBody request with any body
-	CreateAddressWithBody(ctx context.Context, serviceUuid GatewayCreateAddressServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// CreateGatewayAddressWithBody request with any body
+	CreateGatewayAddressWithBody(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateAddress(ctx context.Context, serviceUuid GatewayCreateAddressServiceUuid, body CreateAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateGatewayAddress(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, body CreateGatewayAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// DeleteAddress request
-	DeleteAddress(ctx context.Context, serviceUuid GatewayDeleteAddressServiceUuid, addressName GatewayDeleteAddressAddressName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// DeleteGatewayAddress request
+	DeleteGatewayAddress(ctx context.Context, serviceUuid DeleteGatewayAddressServiceUuid, addressName DeleteGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetAddress request
-	GetAddress(ctx context.Context, serviceUuid GatewayGetAddressServiceUuid, addressName GatewayGetAddressAddressName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// GetGatewayAddress request
+	GetGatewayAddress(ctx context.Context, serviceUuid GetGatewayAddressServiceUuid, addressName GetGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ListConnections request
-	ListConnections(ctx context.Context, serviceUuid GatewayListConnectionsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// ListGatewayConnections request
+	ListGatewayConnections(ctx context.Context, serviceUuid ListGatewayConnectionsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateConnectionWithBody request with any body
-	CreateConnectionWithBody(ctx context.Context, serviceUuid GatewayCreateConnectionServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// CreateGatewayConnectionWithBody request with any body
+	CreateGatewayConnectionWithBody(ctx context.Context, serviceUuid CreateGatewayConnectionServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateConnection(ctx context.Context, serviceUuid GatewayCreateConnectionServiceUuid, body CreateConnectionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateGatewayConnection(ctx context.Context, serviceUuid CreateGatewayConnectionServiceUuid, body CreateGatewayConnectionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// DeleteConnection request
-	DeleteConnection(ctx context.Context, serviceUuid GatewayDeleteConnectionServiceUuid, connectionUuid GatewayDeleteConnectionConnectionUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// DeleteGatewayConnection request
+	DeleteGatewayConnection(ctx context.Context, serviceUuid DeleteGatewayConnectionServiceUuid, connectionUuid DeleteGatewayConnectionConnectionUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetConnection request
-	GetConnection(ctx context.Context, serviceUuid GatewayGetConnectionServiceUuid, connectionUuid GatewayGetConnectionConnectionUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// GetGatewayConnection request
+	GetGatewayConnection(ctx context.Context, serviceUuid GetGatewayConnectionServiceUuid, connectionUuid GetGatewayConnectionConnectionUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ModifyConnectionWithBody request with any body
-	ModifyConnectionWithBody(ctx context.Context, serviceUuid GatewayModifyConnectionServiceUuid, connectionUuid GatewayModifyConnectionConnectionUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// ModifyGatewayConnectionWithBody request with any body
+	ModifyGatewayConnectionWithBody(ctx context.Context, serviceUuid ModifyGatewayConnectionServiceUuid, connectionUuid ModifyGatewayConnectionConnectionUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	ModifyConnection(ctx context.Context, serviceUuid GatewayModifyConnectionServiceUuid, connectionUuid GatewayModifyConnectionConnectionUuid, body ModifyConnectionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ModifyGatewayConnection(ctx context.Context, serviceUuid ModifyGatewayConnectionServiceUuid, connectionUuid ModifyGatewayConnectionConnectionUuid, body ModifyGatewayConnectionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ListTunnels request
-	ListTunnels(ctx context.Context, serviceUuid GatewayListTunnelsServiceUuid, connectionUuid GatewayListTunnelsConnectionUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// ListGatewayTunnels request
+	ListGatewayTunnels(ctx context.Context, serviceUuid ListGatewayTunnelsServiceUuid, connectionUuid ListGatewayTunnelsConnectionUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateTunnelWithBody request with any body
-	CreateTunnelWithBody(ctx context.Context, serviceUuid GatewayCreateTunnelServiceUuid, connectionUuid GatewayCreateTunnelConnectionUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// CreateGatewayTunnelWithBody request with any body
+	CreateGatewayTunnelWithBody(ctx context.Context, serviceUuid CreateGatewayTunnelServiceUuid, connectionUuid CreateGatewayTunnelConnectionUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateTunnel(ctx context.Context, serviceUuid GatewayCreateTunnelServiceUuid, connectionUuid GatewayCreateTunnelConnectionUuid, body CreateTunnelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateGatewayTunnel(ctx context.Context, serviceUuid CreateGatewayTunnelServiceUuid, connectionUuid CreateGatewayTunnelConnectionUuid, body CreateGatewayTunnelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// DeleteTunnel request
-	DeleteTunnel(ctx context.Context, serviceUuid GatewayDeleteTunnelServiceUuid, connectionUuid GatewayDeleteTunnelConnectionUuid, tunnelUuid GatewayDeleteTunnelTunnelUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// DeleteGatewayTunnel request
+	DeleteGatewayTunnel(ctx context.Context, serviceUuid DeleteGatewayTunnelServiceUuid, connectionUuid DeleteGatewayTunnelConnectionUuid, tunnelUuid DeleteGatewayTunnelTunnelUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetTunnel request
-	GetTunnel(ctx context.Context, serviceUuid GatewayGetTunnelServiceUuid, connectionUuid GatewayGetTunnelConnectionUuid, tunnelUuid GatewayGetTunnelTunnelUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// GetGatewayTunnel request
+	GetGatewayTunnel(ctx context.Context, serviceUuid GetGatewayTunnelServiceUuid, connectionUuid GetGatewayTunnelConnectionUuid, tunnelUuid GetGatewayTunnelTunnelUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ModifyTunnelWithBody request with any body
-	ModifyTunnelWithBody(ctx context.Context, serviceUuid GatewayModifyTunnelServiceUuid, connectionUuid GatewayModifyTunnelConnectionUuid, tunnelUuid GatewayModifyTunnelTunnelUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// ModifyGatewayTunnelWithBody request with any body
+	ModifyGatewayTunnelWithBody(ctx context.Context, serviceUuid ModifyGatewayTunnelServiceUuid, connectionUuid ModifyGatewayTunnelConnectionUuid, tunnelUuid ModifyGatewayTunnelTunnelUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	ModifyTunnel(ctx context.Context, serviceUuid GatewayModifyTunnelServiceUuid, connectionUuid GatewayModifyTunnelConnectionUuid, tunnelUuid GatewayModifyTunnelTunnelUuid, body ModifyTunnelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ModifyGatewayTunnel(ctx context.Context, serviceUuid ModifyGatewayTunnelServiceUuid, connectionUuid ModifyGatewayTunnelConnectionUuid, tunnelUuid ModifyGatewayTunnelTunnelUuid, body ModifyGatewayTunnelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ListServiceLabels request
-	ListServiceLabels(ctx context.Context, serviceUuid GatewayListServiceLabelsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// ListGatewayServiceLabels request
+	ListGatewayServiceLabels(ctx context.Context, serviceUuid ListGatewayServiceLabelsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateServiceLabelWithBody request with any body
-	CreateServiceLabelWithBody(ctx context.Context, serviceUuid GatewayCreateServiceLabelServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// CreateGatewayServiceLabelWithBody request with any body
+	CreateGatewayServiceLabelWithBody(ctx context.Context, serviceUuid CreateGatewayServiceLabelServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateServiceLabel(ctx context.Context, serviceUuid GatewayCreateServiceLabelServiceUuid, body CreateServiceLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateGatewayServiceLabel(ctx context.Context, serviceUuid CreateGatewayServiceLabelServiceUuid, body CreateGatewayServiceLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// DeleteServiceLabel request
-	DeleteServiceLabel(ctx context.Context, serviceUuid GatewayDeleteServiceLabelServiceUuid, labelKey GatewayDeleteServiceLabelLabelKey, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// DeleteGatewayServiceLabel request
+	DeleteGatewayServiceLabel(ctx context.Context, serviceUuid DeleteGatewayServiceLabelServiceUuid, labelKey DeleteGatewayServiceLabelLabelKey, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetServiceLabel request
-	GetServiceLabel(ctx context.Context, serviceUuid GatewayGetServiceLabelServiceUuid, labelKey GatewayGetServiceLabelLabelKey, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// GetGatewayServiceLabel request
+	GetGatewayServiceLabel(ctx context.Context, serviceUuid GetGatewayServiceLabelServiceUuid, labelKey GetGatewayServiceLabelLabelKey, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ModifyServiceLabelWithBody request with any body
-	ModifyServiceLabelWithBody(ctx context.Context, serviceUuid GatewayModifyServiceLabelServiceUuid, labelKey GatewayModifyServiceLabelLabelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// ModifyGatewayServiceLabelWithBody request with any body
+	ModifyGatewayServiceLabelWithBody(ctx context.Context, serviceUuid ModifyGatewayServiceLabelServiceUuid, labelKey ModifyGatewayServiceLabelLabelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	ModifyServiceLabel(ctx context.Context, serviceUuid GatewayModifyServiceLabelServiceUuid, labelKey GatewayModifyServiceLabelLabelKey, body ModifyServiceLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ModifyGatewayServiceLabel(ctx context.Context, serviceUuid ModifyGatewayServiceLabelServiceUuid, labelKey ModifyGatewayServiceLabelLabelKey, body ModifyGatewayServiceLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateServiceogSessionWithBody request with any body
-	CreateServiceogSessionWithBody(ctx context.Context, serviceUuid GatewayCreateServiceogSessionServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// CreateGatewayServiceLogSessionWithBody request with any body
+	CreateGatewayServiceLogSessionWithBody(ctx context.Context, serviceUuid CreateGatewayServiceLogSessionServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateServiceogSession(ctx context.Context, serviceUuid GatewayCreateServiceogSessionServiceUuid, body CreateServiceogSessionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateGatewayServiceLogSession(ctx context.Context, serviceUuid CreateGatewayServiceLogSessionServiceUuid, body CreateGatewayServiceLogSessionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetMetrics request
-	GetMetrics(ctx context.Context, serviceUuid GatewayGetMetricsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// GetGatewayMetrics request
+	GetGatewayMetrics(ctx context.Context, serviceUuid GetGatewayMetricsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListIPAddresses request
 	ListIPAddresses(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -31893,8 +31868,8 @@ func (c *Client) ModifyFirewallRulesetRule(ctx context.Context, rulesetUuid Modi
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListServices(ctx context.Context, params *ListServicesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListServicesRequest(c.Server, params)
+func (c *Client) ListGatewayServices(ctx context.Context, params *ListGatewayServicesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListGatewayServicesRequest(c.Server, params)
 	if err != nil {
 		return nil, err
 	}
@@ -31905,8 +31880,8 @@ func (c *Client) ListServices(ctx context.Context, params *ListServicesParams, r
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateServiceWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateServiceRequestWithBody(c.Server, contentType, body)
+func (c *Client) CreateGatewayServiceWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateGatewayServiceRequestWithBody(c.Server, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -31917,8 +31892,8 @@ func (c *Client) CreateServiceWithBody(ctx context.Context, contentType string, 
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateService(ctx context.Context, body CreateServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateServiceRequest(c.Server, body)
+func (c *Client) CreateGatewayService(ctx context.Context, body CreateGatewayServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateGatewayServiceRequest(c.Server, body)
 	if err != nil {
 		return nil, err
 	}
@@ -31953,8 +31928,8 @@ func (c *Client) GetPlan(ctx context.Context, planName GatewayGetPlanPlanName, r
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteService(ctx context.Context, serviceUuid GatewayDeleteServiceServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteServiceRequest(c.Server, serviceUuid)
+func (c *Client) DeleteGatewayService(ctx context.Context, serviceUuid DeleteGatewayServiceServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteGatewayServiceRequest(c.Server, serviceUuid)
 	if err != nil {
 		return nil, err
 	}
@@ -31965,8 +31940,8 @@ func (c *Client) DeleteService(ctx context.Context, serviceUuid GatewayDeleteSer
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetService(ctx context.Context, serviceUuid GatewayGetServiceServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetServiceRequest(c.Server, serviceUuid)
+func (c *Client) GetGatewayService(ctx context.Context, serviceUuid GetGatewayServiceServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetGatewayServiceRequest(c.Server, serviceUuid)
 	if err != nil {
 		return nil, err
 	}
@@ -31977,8 +31952,8 @@ func (c *Client) GetService(ctx context.Context, serviceUuid GatewayGetServiceSe
 	return c.Client.Do(req)
 }
 
-func (c *Client) ModifyServiceWithBody(ctx context.Context, serviceUuid GatewayModifyServiceServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewModifyServiceRequestWithBody(c.Server, serviceUuid, contentType, body)
+func (c *Client) ModifyGatewayServiceWithBody(ctx context.Context, serviceUuid ModifyGatewayServiceServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewModifyGatewayServiceRequestWithBody(c.Server, serviceUuid, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -31989,8 +31964,8 @@ func (c *Client) ModifyServiceWithBody(ctx context.Context, serviceUuid GatewayM
 	return c.Client.Do(req)
 }
 
-func (c *Client) ModifyService(ctx context.Context, serviceUuid GatewayModifyServiceServiceUuid, body ModifyServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewModifyServiceRequest(c.Server, serviceUuid, body)
+func (c *Client) ModifyGatewayService(ctx context.Context, serviceUuid ModifyGatewayServiceServiceUuid, body ModifyGatewayServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewModifyGatewayServiceRequest(c.Server, serviceUuid, body)
 	if err != nil {
 		return nil, err
 	}
@@ -32001,8 +31976,8 @@ func (c *Client) ModifyService(ctx context.Context, serviceUuid GatewayModifySer
 	return c.Client.Do(req)
 }
 
-func (c *Client) ReplaceServiceWithBody(ctx context.Context, serviceUuid GatewayReplaceServiceServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewReplaceServiceRequestWithBody(c.Server, serviceUuid, contentType, body)
+func (c *Client) ReplaceGatewayServiceWithBody(ctx context.Context, serviceUuid ReplaceGatewayServiceServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewReplaceGatewayServiceRequestWithBody(c.Server, serviceUuid, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -32013,8 +31988,8 @@ func (c *Client) ReplaceServiceWithBody(ctx context.Context, serviceUuid Gateway
 	return c.Client.Do(req)
 }
 
-func (c *Client) ReplaceService(ctx context.Context, serviceUuid GatewayReplaceServiceServiceUuid, body ReplaceServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewReplaceServiceRequest(c.Server, serviceUuid, body)
+func (c *Client) ReplaceGatewayService(ctx context.Context, serviceUuid ReplaceGatewayServiceServiceUuid, body ReplaceGatewayServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewReplaceGatewayServiceRequest(c.Server, serviceUuid, body)
 	if err != nil {
 		return nil, err
 	}
@@ -32025,8 +32000,8 @@ func (c *Client) ReplaceService(ctx context.Context, serviceUuid GatewayReplaceS
 	return c.Client.Do(req)
 }
 
-func (c *Client) FlushNat(ctx context.Context, serviceUuid GatewayFlushNatServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewFlushNatRequest(c.Server, serviceUuid)
+func (c *Client) FlushGatewayNat(ctx context.Context, serviceUuid FlushGatewayNatServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewFlushGatewayNatRequest(c.Server, serviceUuid)
 	if err != nil {
 		return nil, err
 	}
@@ -32037,8 +32012,8 @@ func (c *Client) FlushNat(ctx context.Context, serviceUuid GatewayFlushNatServic
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListAddresses(ctx context.Context, serviceUuid GatewayListAddressesServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListAddressesRequest(c.Server, serviceUuid)
+func (c *Client) ListGatewayAddresses(ctx context.Context, serviceUuid ListGatewayAddressesServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListGatewayAddressesRequest(c.Server, serviceUuid)
 	if err != nil {
 		return nil, err
 	}
@@ -32049,8 +32024,8 @@ func (c *Client) ListAddresses(ctx context.Context, serviceUuid GatewayListAddre
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateAddressWithBody(ctx context.Context, serviceUuid GatewayCreateAddressServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateAddressRequestWithBody(c.Server, serviceUuid, contentType, body)
+func (c *Client) CreateGatewayAddressWithBody(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateGatewayAddressRequestWithBody(c.Server, serviceUuid, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -32061,8 +32036,8 @@ func (c *Client) CreateAddressWithBody(ctx context.Context, serviceUuid GatewayC
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateAddress(ctx context.Context, serviceUuid GatewayCreateAddressServiceUuid, body CreateAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateAddressRequest(c.Server, serviceUuid, body)
+func (c *Client) CreateGatewayAddress(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, body CreateGatewayAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateGatewayAddressRequest(c.Server, serviceUuid, body)
 	if err != nil {
 		return nil, err
 	}
@@ -32073,8 +32048,8 @@ func (c *Client) CreateAddress(ctx context.Context, serviceUuid GatewayCreateAdd
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteAddress(ctx context.Context, serviceUuid GatewayDeleteAddressServiceUuid, addressName GatewayDeleteAddressAddressName, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteAddressRequest(c.Server, serviceUuid, addressName)
+func (c *Client) DeleteGatewayAddress(ctx context.Context, serviceUuid DeleteGatewayAddressServiceUuid, addressName DeleteGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteGatewayAddressRequest(c.Server, serviceUuid, addressName)
 	if err != nil {
 		return nil, err
 	}
@@ -32085,8 +32060,8 @@ func (c *Client) DeleteAddress(ctx context.Context, serviceUuid GatewayDeleteAdd
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetAddress(ctx context.Context, serviceUuid GatewayGetAddressServiceUuid, addressName GatewayGetAddressAddressName, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetAddressRequest(c.Server, serviceUuid, addressName)
+func (c *Client) GetGatewayAddress(ctx context.Context, serviceUuid GetGatewayAddressServiceUuid, addressName GetGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetGatewayAddressRequest(c.Server, serviceUuid, addressName)
 	if err != nil {
 		return nil, err
 	}
@@ -32097,8 +32072,8 @@ func (c *Client) GetAddress(ctx context.Context, serviceUuid GatewayGetAddressSe
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListConnections(ctx context.Context, serviceUuid GatewayListConnectionsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListConnectionsRequest(c.Server, serviceUuid)
+func (c *Client) ListGatewayConnections(ctx context.Context, serviceUuid ListGatewayConnectionsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListGatewayConnectionsRequest(c.Server, serviceUuid)
 	if err != nil {
 		return nil, err
 	}
@@ -32109,8 +32084,8 @@ func (c *Client) ListConnections(ctx context.Context, serviceUuid GatewayListCon
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateConnectionWithBody(ctx context.Context, serviceUuid GatewayCreateConnectionServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateConnectionRequestWithBody(c.Server, serviceUuid, contentType, body)
+func (c *Client) CreateGatewayConnectionWithBody(ctx context.Context, serviceUuid CreateGatewayConnectionServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateGatewayConnectionRequestWithBody(c.Server, serviceUuid, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -32121,8 +32096,8 @@ func (c *Client) CreateConnectionWithBody(ctx context.Context, serviceUuid Gatew
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateConnection(ctx context.Context, serviceUuid GatewayCreateConnectionServiceUuid, body CreateConnectionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateConnectionRequest(c.Server, serviceUuid, body)
+func (c *Client) CreateGatewayConnection(ctx context.Context, serviceUuid CreateGatewayConnectionServiceUuid, body CreateGatewayConnectionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateGatewayConnectionRequest(c.Server, serviceUuid, body)
 	if err != nil {
 		return nil, err
 	}
@@ -32133,8 +32108,8 @@ func (c *Client) CreateConnection(ctx context.Context, serviceUuid GatewayCreate
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteConnection(ctx context.Context, serviceUuid GatewayDeleteConnectionServiceUuid, connectionUuid GatewayDeleteConnectionConnectionUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteConnectionRequest(c.Server, serviceUuid, connectionUuid)
+func (c *Client) DeleteGatewayConnection(ctx context.Context, serviceUuid DeleteGatewayConnectionServiceUuid, connectionUuid DeleteGatewayConnectionConnectionUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteGatewayConnectionRequest(c.Server, serviceUuid, connectionUuid)
 	if err != nil {
 		return nil, err
 	}
@@ -32145,8 +32120,8 @@ func (c *Client) DeleteConnection(ctx context.Context, serviceUuid GatewayDelete
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetConnection(ctx context.Context, serviceUuid GatewayGetConnectionServiceUuid, connectionUuid GatewayGetConnectionConnectionUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetConnectionRequest(c.Server, serviceUuid, connectionUuid)
+func (c *Client) GetGatewayConnection(ctx context.Context, serviceUuid GetGatewayConnectionServiceUuid, connectionUuid GetGatewayConnectionConnectionUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetGatewayConnectionRequest(c.Server, serviceUuid, connectionUuid)
 	if err != nil {
 		return nil, err
 	}
@@ -32157,8 +32132,8 @@ func (c *Client) GetConnection(ctx context.Context, serviceUuid GatewayGetConnec
 	return c.Client.Do(req)
 }
 
-func (c *Client) ModifyConnectionWithBody(ctx context.Context, serviceUuid GatewayModifyConnectionServiceUuid, connectionUuid GatewayModifyConnectionConnectionUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewModifyConnectionRequestWithBody(c.Server, serviceUuid, connectionUuid, contentType, body)
+func (c *Client) ModifyGatewayConnectionWithBody(ctx context.Context, serviceUuid ModifyGatewayConnectionServiceUuid, connectionUuid ModifyGatewayConnectionConnectionUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewModifyGatewayConnectionRequestWithBody(c.Server, serviceUuid, connectionUuid, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -32169,8 +32144,8 @@ func (c *Client) ModifyConnectionWithBody(ctx context.Context, serviceUuid Gatew
 	return c.Client.Do(req)
 }
 
-func (c *Client) ModifyConnection(ctx context.Context, serviceUuid GatewayModifyConnectionServiceUuid, connectionUuid GatewayModifyConnectionConnectionUuid, body ModifyConnectionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewModifyConnectionRequest(c.Server, serviceUuid, connectionUuid, body)
+func (c *Client) ModifyGatewayConnection(ctx context.Context, serviceUuid ModifyGatewayConnectionServiceUuid, connectionUuid ModifyGatewayConnectionConnectionUuid, body ModifyGatewayConnectionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewModifyGatewayConnectionRequest(c.Server, serviceUuid, connectionUuid, body)
 	if err != nil {
 		return nil, err
 	}
@@ -32181,8 +32156,8 @@ func (c *Client) ModifyConnection(ctx context.Context, serviceUuid GatewayModify
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListTunnels(ctx context.Context, serviceUuid GatewayListTunnelsServiceUuid, connectionUuid GatewayListTunnelsConnectionUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListTunnelsRequest(c.Server, serviceUuid, connectionUuid)
+func (c *Client) ListGatewayTunnels(ctx context.Context, serviceUuid ListGatewayTunnelsServiceUuid, connectionUuid ListGatewayTunnelsConnectionUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListGatewayTunnelsRequest(c.Server, serviceUuid, connectionUuid)
 	if err != nil {
 		return nil, err
 	}
@@ -32193,8 +32168,8 @@ func (c *Client) ListTunnels(ctx context.Context, serviceUuid GatewayListTunnels
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateTunnelWithBody(ctx context.Context, serviceUuid GatewayCreateTunnelServiceUuid, connectionUuid GatewayCreateTunnelConnectionUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateTunnelRequestWithBody(c.Server, serviceUuid, connectionUuid, contentType, body)
+func (c *Client) CreateGatewayTunnelWithBody(ctx context.Context, serviceUuid CreateGatewayTunnelServiceUuid, connectionUuid CreateGatewayTunnelConnectionUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateGatewayTunnelRequestWithBody(c.Server, serviceUuid, connectionUuid, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -32205,8 +32180,8 @@ func (c *Client) CreateTunnelWithBody(ctx context.Context, serviceUuid GatewayCr
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateTunnel(ctx context.Context, serviceUuid GatewayCreateTunnelServiceUuid, connectionUuid GatewayCreateTunnelConnectionUuid, body CreateTunnelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateTunnelRequest(c.Server, serviceUuid, connectionUuid, body)
+func (c *Client) CreateGatewayTunnel(ctx context.Context, serviceUuid CreateGatewayTunnelServiceUuid, connectionUuid CreateGatewayTunnelConnectionUuid, body CreateGatewayTunnelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateGatewayTunnelRequest(c.Server, serviceUuid, connectionUuid, body)
 	if err != nil {
 		return nil, err
 	}
@@ -32217,8 +32192,8 @@ func (c *Client) CreateTunnel(ctx context.Context, serviceUuid GatewayCreateTunn
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteTunnel(ctx context.Context, serviceUuid GatewayDeleteTunnelServiceUuid, connectionUuid GatewayDeleteTunnelConnectionUuid, tunnelUuid GatewayDeleteTunnelTunnelUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteTunnelRequest(c.Server, serviceUuid, connectionUuid, tunnelUuid)
+func (c *Client) DeleteGatewayTunnel(ctx context.Context, serviceUuid DeleteGatewayTunnelServiceUuid, connectionUuid DeleteGatewayTunnelConnectionUuid, tunnelUuid DeleteGatewayTunnelTunnelUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteGatewayTunnelRequest(c.Server, serviceUuid, connectionUuid, tunnelUuid)
 	if err != nil {
 		return nil, err
 	}
@@ -32229,8 +32204,8 @@ func (c *Client) DeleteTunnel(ctx context.Context, serviceUuid GatewayDeleteTunn
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetTunnel(ctx context.Context, serviceUuid GatewayGetTunnelServiceUuid, connectionUuid GatewayGetTunnelConnectionUuid, tunnelUuid GatewayGetTunnelTunnelUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetTunnelRequest(c.Server, serviceUuid, connectionUuid, tunnelUuid)
+func (c *Client) GetGatewayTunnel(ctx context.Context, serviceUuid GetGatewayTunnelServiceUuid, connectionUuid GetGatewayTunnelConnectionUuid, tunnelUuid GetGatewayTunnelTunnelUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetGatewayTunnelRequest(c.Server, serviceUuid, connectionUuid, tunnelUuid)
 	if err != nil {
 		return nil, err
 	}
@@ -32241,8 +32216,8 @@ func (c *Client) GetTunnel(ctx context.Context, serviceUuid GatewayGetTunnelServ
 	return c.Client.Do(req)
 }
 
-func (c *Client) ModifyTunnelWithBody(ctx context.Context, serviceUuid GatewayModifyTunnelServiceUuid, connectionUuid GatewayModifyTunnelConnectionUuid, tunnelUuid GatewayModifyTunnelTunnelUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewModifyTunnelRequestWithBody(c.Server, serviceUuid, connectionUuid, tunnelUuid, contentType, body)
+func (c *Client) ModifyGatewayTunnelWithBody(ctx context.Context, serviceUuid ModifyGatewayTunnelServiceUuid, connectionUuid ModifyGatewayTunnelConnectionUuid, tunnelUuid ModifyGatewayTunnelTunnelUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewModifyGatewayTunnelRequestWithBody(c.Server, serviceUuid, connectionUuid, tunnelUuid, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -32253,8 +32228,8 @@ func (c *Client) ModifyTunnelWithBody(ctx context.Context, serviceUuid GatewayMo
 	return c.Client.Do(req)
 }
 
-func (c *Client) ModifyTunnel(ctx context.Context, serviceUuid GatewayModifyTunnelServiceUuid, connectionUuid GatewayModifyTunnelConnectionUuid, tunnelUuid GatewayModifyTunnelTunnelUuid, body ModifyTunnelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewModifyTunnelRequest(c.Server, serviceUuid, connectionUuid, tunnelUuid, body)
+func (c *Client) ModifyGatewayTunnel(ctx context.Context, serviceUuid ModifyGatewayTunnelServiceUuid, connectionUuid ModifyGatewayTunnelConnectionUuid, tunnelUuid ModifyGatewayTunnelTunnelUuid, body ModifyGatewayTunnelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewModifyGatewayTunnelRequest(c.Server, serviceUuid, connectionUuid, tunnelUuid, body)
 	if err != nil {
 		return nil, err
 	}
@@ -32265,8 +32240,8 @@ func (c *Client) ModifyTunnel(ctx context.Context, serviceUuid GatewayModifyTunn
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListServiceLabels(ctx context.Context, serviceUuid GatewayListServiceLabelsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListServiceLabelsRequest(c.Server, serviceUuid)
+func (c *Client) ListGatewayServiceLabels(ctx context.Context, serviceUuid ListGatewayServiceLabelsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListGatewayServiceLabelsRequest(c.Server, serviceUuid)
 	if err != nil {
 		return nil, err
 	}
@@ -32277,8 +32252,8 @@ func (c *Client) ListServiceLabels(ctx context.Context, serviceUuid GatewayListS
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateServiceLabelWithBody(ctx context.Context, serviceUuid GatewayCreateServiceLabelServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateServiceLabelRequestWithBody(c.Server, serviceUuid, contentType, body)
+func (c *Client) CreateGatewayServiceLabelWithBody(ctx context.Context, serviceUuid CreateGatewayServiceLabelServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateGatewayServiceLabelRequestWithBody(c.Server, serviceUuid, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -32289,8 +32264,8 @@ func (c *Client) CreateServiceLabelWithBody(ctx context.Context, serviceUuid Gat
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateServiceLabel(ctx context.Context, serviceUuid GatewayCreateServiceLabelServiceUuid, body CreateServiceLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateServiceLabelRequest(c.Server, serviceUuid, body)
+func (c *Client) CreateGatewayServiceLabel(ctx context.Context, serviceUuid CreateGatewayServiceLabelServiceUuid, body CreateGatewayServiceLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateGatewayServiceLabelRequest(c.Server, serviceUuid, body)
 	if err != nil {
 		return nil, err
 	}
@@ -32301,8 +32276,8 @@ func (c *Client) CreateServiceLabel(ctx context.Context, serviceUuid GatewayCrea
 	return c.Client.Do(req)
 }
 
-func (c *Client) DeleteServiceLabel(ctx context.Context, serviceUuid GatewayDeleteServiceLabelServiceUuid, labelKey GatewayDeleteServiceLabelLabelKey, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteServiceLabelRequest(c.Server, serviceUuid, labelKey)
+func (c *Client) DeleteGatewayServiceLabel(ctx context.Context, serviceUuid DeleteGatewayServiceLabelServiceUuid, labelKey DeleteGatewayServiceLabelLabelKey, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteGatewayServiceLabelRequest(c.Server, serviceUuid, labelKey)
 	if err != nil {
 		return nil, err
 	}
@@ -32313,8 +32288,8 @@ func (c *Client) DeleteServiceLabel(ctx context.Context, serviceUuid GatewayDele
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetServiceLabel(ctx context.Context, serviceUuid GatewayGetServiceLabelServiceUuid, labelKey GatewayGetServiceLabelLabelKey, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetServiceLabelRequest(c.Server, serviceUuid, labelKey)
+func (c *Client) GetGatewayServiceLabel(ctx context.Context, serviceUuid GetGatewayServiceLabelServiceUuid, labelKey GetGatewayServiceLabelLabelKey, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetGatewayServiceLabelRequest(c.Server, serviceUuid, labelKey)
 	if err != nil {
 		return nil, err
 	}
@@ -32325,8 +32300,8 @@ func (c *Client) GetServiceLabel(ctx context.Context, serviceUuid GatewayGetServ
 	return c.Client.Do(req)
 }
 
-func (c *Client) ModifyServiceLabelWithBody(ctx context.Context, serviceUuid GatewayModifyServiceLabelServiceUuid, labelKey GatewayModifyServiceLabelLabelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewModifyServiceLabelRequestWithBody(c.Server, serviceUuid, labelKey, contentType, body)
+func (c *Client) ModifyGatewayServiceLabelWithBody(ctx context.Context, serviceUuid ModifyGatewayServiceLabelServiceUuid, labelKey ModifyGatewayServiceLabelLabelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewModifyGatewayServiceLabelRequestWithBody(c.Server, serviceUuid, labelKey, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -32337,8 +32312,8 @@ func (c *Client) ModifyServiceLabelWithBody(ctx context.Context, serviceUuid Gat
 	return c.Client.Do(req)
 }
 
-func (c *Client) ModifyServiceLabel(ctx context.Context, serviceUuid GatewayModifyServiceLabelServiceUuid, labelKey GatewayModifyServiceLabelLabelKey, body ModifyServiceLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewModifyServiceLabelRequest(c.Server, serviceUuid, labelKey, body)
+func (c *Client) ModifyGatewayServiceLabel(ctx context.Context, serviceUuid ModifyGatewayServiceLabelServiceUuid, labelKey ModifyGatewayServiceLabelLabelKey, body ModifyGatewayServiceLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewModifyGatewayServiceLabelRequest(c.Server, serviceUuid, labelKey, body)
 	if err != nil {
 		return nil, err
 	}
@@ -32349,8 +32324,8 @@ func (c *Client) ModifyServiceLabel(ctx context.Context, serviceUuid GatewayModi
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateServiceogSessionWithBody(ctx context.Context, serviceUuid GatewayCreateServiceogSessionServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateServiceogSessionRequestWithBody(c.Server, serviceUuid, contentType, body)
+func (c *Client) CreateGatewayServiceLogSessionWithBody(ctx context.Context, serviceUuid CreateGatewayServiceLogSessionServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateGatewayServiceLogSessionRequestWithBody(c.Server, serviceUuid, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -32361,8 +32336,8 @@ func (c *Client) CreateServiceogSessionWithBody(ctx context.Context, serviceUuid
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateServiceogSession(ctx context.Context, serviceUuid GatewayCreateServiceogSessionServiceUuid, body CreateServiceogSessionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateServiceogSessionRequest(c.Server, serviceUuid, body)
+func (c *Client) CreateGatewayServiceLogSession(ctx context.Context, serviceUuid CreateGatewayServiceLogSessionServiceUuid, body CreateGatewayServiceLogSessionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateGatewayServiceLogSessionRequest(c.Server, serviceUuid, body)
 	if err != nil {
 		return nil, err
 	}
@@ -32373,8 +32348,8 @@ func (c *Client) CreateServiceogSession(ctx context.Context, serviceUuid Gateway
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetMetrics(ctx context.Context, serviceUuid GatewayGetMetricsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetMetricsRequest(c.Server, serviceUuid)
+func (c *Client) GetGatewayMetrics(ctx context.Context, serviceUuid GetGatewayMetricsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetGatewayMetricsRequest(c.Server, serviceUuid)
 	if err != nil {
 		return nil, err
 	}
@@ -42160,8 +42135,8 @@ func NewModifyFirewallRulesetRuleRequestWithBody(server string, rulesetUuid Modi
 	return req, nil
 }
 
-// NewListServicesRequest generates requests for ListServices
-func NewListServicesRequest(server string, params *ListServicesParams) (*http.Request, error) {
+// NewListGatewayServicesRequest generates requests for ListGatewayServices
+func NewListGatewayServicesRequest(server string, params *ListGatewayServicesParams) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -42225,19 +42200,19 @@ func NewListServicesRequest(server string, params *ListServicesParams) (*http.Re
 	return req, nil
 }
 
-// NewCreateServiceRequest calls the generic CreateService builder with application/json body
-func NewCreateServiceRequest(server string, body CreateServiceJSONRequestBody) (*http.Request, error) {
+// NewCreateGatewayServiceRequest calls the generic CreateGatewayService builder with application/json body
+func NewCreateGatewayServiceRequest(server string, body CreateGatewayServiceJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewCreateServiceRequestWithBody(server, "application/json", bodyReader)
+	return NewCreateGatewayServiceRequestWithBody(server, "application/json", bodyReader)
 }
 
-// NewCreateServiceRequestWithBody generates requests for CreateService with any type of body
-func NewCreateServiceRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+// NewCreateGatewayServiceRequestWithBody generates requests for CreateGatewayService with any type of body
+func NewCreateGatewayServiceRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -42364,8 +42339,8 @@ func NewGetPlanRequest(server string, planName GatewayGetPlanPlanName) (*http.Re
 	return req, nil
 }
 
-// NewDeleteServiceRequest generates requests for DeleteService
-func NewDeleteServiceRequest(server string, serviceUuid GatewayDeleteServiceServiceUuid) (*http.Request, error) {
+// NewDeleteGatewayServiceRequest generates requests for DeleteGatewayService
+func NewDeleteGatewayServiceRequest(server string, serviceUuid DeleteGatewayServiceServiceUuid) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -42398,8 +42373,8 @@ func NewDeleteServiceRequest(server string, serviceUuid GatewayDeleteServiceServ
 	return req, nil
 }
 
-// NewGetServiceRequest generates requests for GetService
-func NewGetServiceRequest(server string, serviceUuid GatewayGetServiceServiceUuid) (*http.Request, error) {
+// NewGetGatewayServiceRequest generates requests for GetGatewayService
+func NewGetGatewayServiceRequest(server string, serviceUuid GetGatewayServiceServiceUuid) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -42432,19 +42407,19 @@ func NewGetServiceRequest(server string, serviceUuid GatewayGetServiceServiceUui
 	return req, nil
 }
 
-// NewModifyServiceRequest calls the generic ModifyService builder with application/json body
-func NewModifyServiceRequest(server string, serviceUuid GatewayModifyServiceServiceUuid, body ModifyServiceJSONRequestBody) (*http.Request, error) {
+// NewModifyGatewayServiceRequest calls the generic ModifyGatewayService builder with application/json body
+func NewModifyGatewayServiceRequest(server string, serviceUuid ModifyGatewayServiceServiceUuid, body ModifyGatewayServiceJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewModifyServiceRequestWithBody(server, serviceUuid, "application/json", bodyReader)
+	return NewModifyGatewayServiceRequestWithBody(server, serviceUuid, "application/json", bodyReader)
 }
 
-// NewModifyServiceRequestWithBody generates requests for ModifyService with any type of body
-func NewModifyServiceRequestWithBody(server string, serviceUuid GatewayModifyServiceServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
+// NewModifyGatewayServiceRequestWithBody generates requests for ModifyGatewayService with any type of body
+func NewModifyGatewayServiceRequestWithBody(server string, serviceUuid ModifyGatewayServiceServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -42479,19 +42454,19 @@ func NewModifyServiceRequestWithBody(server string, serviceUuid GatewayModifySer
 	return req, nil
 }
 
-// NewReplaceServiceRequest calls the generic ReplaceService builder with application/json body
-func NewReplaceServiceRequest(server string, serviceUuid GatewayReplaceServiceServiceUuid, body ReplaceServiceJSONRequestBody) (*http.Request, error) {
+// NewReplaceGatewayServiceRequest calls the generic ReplaceGatewayService builder with application/json body
+func NewReplaceGatewayServiceRequest(server string, serviceUuid ReplaceGatewayServiceServiceUuid, body ReplaceGatewayServiceJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewReplaceServiceRequestWithBody(server, serviceUuid, "application/json", bodyReader)
+	return NewReplaceGatewayServiceRequestWithBody(server, serviceUuid, "application/json", bodyReader)
 }
 
-// NewReplaceServiceRequestWithBody generates requests for ReplaceService with any type of body
-func NewReplaceServiceRequestWithBody(server string, serviceUuid GatewayReplaceServiceServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
+// NewReplaceGatewayServiceRequestWithBody generates requests for ReplaceGatewayService with any type of body
+func NewReplaceGatewayServiceRequestWithBody(server string, serviceUuid ReplaceGatewayServiceServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -42526,8 +42501,8 @@ func NewReplaceServiceRequestWithBody(server string, serviceUuid GatewayReplaceS
 	return req, nil
 }
 
-// NewFlushNatRequest generates requests for FlushNat
-func NewFlushNatRequest(server string, serviceUuid GatewayFlushNatServiceUuid) (*http.Request, error) {
+// NewFlushGatewayNatRequest generates requests for FlushGatewayNat
+func NewFlushGatewayNatRequest(server string, serviceUuid FlushGatewayNatServiceUuid) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -42560,8 +42535,8 @@ func NewFlushNatRequest(server string, serviceUuid GatewayFlushNatServiceUuid) (
 	return req, nil
 }
 
-// NewListAddressesRequest generates requests for ListAddresses
-func NewListAddressesRequest(server string, serviceUuid GatewayListAddressesServiceUuid) (*http.Request, error) {
+// NewListGatewayAddressesRequest generates requests for ListGatewayAddresses
+func NewListGatewayAddressesRequest(server string, serviceUuid ListGatewayAddressesServiceUuid) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -42594,19 +42569,19 @@ func NewListAddressesRequest(server string, serviceUuid GatewayListAddressesServ
 	return req, nil
 }
 
-// NewCreateAddressRequest calls the generic CreateAddress builder with application/json body
-func NewCreateAddressRequest(server string, serviceUuid GatewayCreateAddressServiceUuid, body CreateAddressJSONRequestBody) (*http.Request, error) {
+// NewCreateGatewayAddressRequest calls the generic CreateGatewayAddress builder with application/json body
+func NewCreateGatewayAddressRequest(server string, serviceUuid CreateGatewayAddressServiceUuid, body CreateGatewayAddressJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewCreateAddressRequestWithBody(server, serviceUuid, "application/json", bodyReader)
+	return NewCreateGatewayAddressRequestWithBody(server, serviceUuid, "application/json", bodyReader)
 }
 
-// NewCreateAddressRequestWithBody generates requests for CreateAddress with any type of body
-func NewCreateAddressRequestWithBody(server string, serviceUuid GatewayCreateAddressServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
+// NewCreateGatewayAddressRequestWithBody generates requests for CreateGatewayAddress with any type of body
+func NewCreateGatewayAddressRequestWithBody(server string, serviceUuid CreateGatewayAddressServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -42641,8 +42616,8 @@ func NewCreateAddressRequestWithBody(server string, serviceUuid GatewayCreateAdd
 	return req, nil
 }
 
-// NewDeleteAddressRequest generates requests for DeleteAddress
-func NewDeleteAddressRequest(server string, serviceUuid GatewayDeleteAddressServiceUuid, addressName GatewayDeleteAddressAddressName) (*http.Request, error) {
+// NewDeleteGatewayAddressRequest generates requests for DeleteGatewayAddress
+func NewDeleteGatewayAddressRequest(server string, serviceUuid DeleteGatewayAddressServiceUuid, addressName DeleteGatewayAddressAddressName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -42682,8 +42657,8 @@ func NewDeleteAddressRequest(server string, serviceUuid GatewayDeleteAddressServ
 	return req, nil
 }
 
-// NewGetAddressRequest generates requests for GetAddress
-func NewGetAddressRequest(server string, serviceUuid GatewayGetAddressServiceUuid, addressName GatewayGetAddressAddressName) (*http.Request, error) {
+// NewGetGatewayAddressRequest generates requests for GetGatewayAddress
+func NewGetGatewayAddressRequest(server string, serviceUuid GetGatewayAddressServiceUuid, addressName GetGatewayAddressAddressName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -42723,8 +42698,8 @@ func NewGetAddressRequest(server string, serviceUuid GatewayGetAddressServiceUui
 	return req, nil
 }
 
-// NewListConnectionsRequest generates requests for ListConnections
-func NewListConnectionsRequest(server string, serviceUuid GatewayListConnectionsServiceUuid) (*http.Request, error) {
+// NewListGatewayConnectionsRequest generates requests for ListGatewayConnections
+func NewListGatewayConnectionsRequest(server string, serviceUuid ListGatewayConnectionsServiceUuid) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -42757,19 +42732,19 @@ func NewListConnectionsRequest(server string, serviceUuid GatewayListConnections
 	return req, nil
 }
 
-// NewCreateConnectionRequest calls the generic CreateConnection builder with application/json body
-func NewCreateConnectionRequest(server string, serviceUuid GatewayCreateConnectionServiceUuid, body CreateConnectionJSONRequestBody) (*http.Request, error) {
+// NewCreateGatewayConnectionRequest calls the generic CreateGatewayConnection builder with application/json body
+func NewCreateGatewayConnectionRequest(server string, serviceUuid CreateGatewayConnectionServiceUuid, body CreateGatewayConnectionJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewCreateConnectionRequestWithBody(server, serviceUuid, "application/json", bodyReader)
+	return NewCreateGatewayConnectionRequestWithBody(server, serviceUuid, "application/json", bodyReader)
 }
 
-// NewCreateConnectionRequestWithBody generates requests for CreateConnection with any type of body
-func NewCreateConnectionRequestWithBody(server string, serviceUuid GatewayCreateConnectionServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
+// NewCreateGatewayConnectionRequestWithBody generates requests for CreateGatewayConnection with any type of body
+func NewCreateGatewayConnectionRequestWithBody(server string, serviceUuid CreateGatewayConnectionServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -42804,8 +42779,8 @@ func NewCreateConnectionRequestWithBody(server string, serviceUuid GatewayCreate
 	return req, nil
 }
 
-// NewDeleteConnectionRequest generates requests for DeleteConnection
-func NewDeleteConnectionRequest(server string, serviceUuid GatewayDeleteConnectionServiceUuid, connectionUuid GatewayDeleteConnectionConnectionUuid) (*http.Request, error) {
+// NewDeleteGatewayConnectionRequest generates requests for DeleteGatewayConnection
+func NewDeleteGatewayConnectionRequest(server string, serviceUuid DeleteGatewayConnectionServiceUuid, connectionUuid DeleteGatewayConnectionConnectionUuid) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -42845,8 +42820,8 @@ func NewDeleteConnectionRequest(server string, serviceUuid GatewayDeleteConnecti
 	return req, nil
 }
 
-// NewGetConnectionRequest generates requests for GetConnection
-func NewGetConnectionRequest(server string, serviceUuid GatewayGetConnectionServiceUuid, connectionUuid GatewayGetConnectionConnectionUuid) (*http.Request, error) {
+// NewGetGatewayConnectionRequest generates requests for GetGatewayConnection
+func NewGetGatewayConnectionRequest(server string, serviceUuid GetGatewayConnectionServiceUuid, connectionUuid GetGatewayConnectionConnectionUuid) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -42886,19 +42861,19 @@ func NewGetConnectionRequest(server string, serviceUuid GatewayGetConnectionServ
 	return req, nil
 }
 
-// NewModifyConnectionRequest calls the generic ModifyConnection builder with application/json body
-func NewModifyConnectionRequest(server string, serviceUuid GatewayModifyConnectionServiceUuid, connectionUuid GatewayModifyConnectionConnectionUuid, body ModifyConnectionJSONRequestBody) (*http.Request, error) {
+// NewModifyGatewayConnectionRequest calls the generic ModifyGatewayConnection builder with application/json body
+func NewModifyGatewayConnectionRequest(server string, serviceUuid ModifyGatewayConnectionServiceUuid, connectionUuid ModifyGatewayConnectionConnectionUuid, body ModifyGatewayConnectionJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewModifyConnectionRequestWithBody(server, serviceUuid, connectionUuid, "application/json", bodyReader)
+	return NewModifyGatewayConnectionRequestWithBody(server, serviceUuid, connectionUuid, "application/json", bodyReader)
 }
 
-// NewModifyConnectionRequestWithBody generates requests for ModifyConnection with any type of body
-func NewModifyConnectionRequestWithBody(server string, serviceUuid GatewayModifyConnectionServiceUuid, connectionUuid GatewayModifyConnectionConnectionUuid, contentType string, body io.Reader) (*http.Request, error) {
+// NewModifyGatewayConnectionRequestWithBody generates requests for ModifyGatewayConnection with any type of body
+func NewModifyGatewayConnectionRequestWithBody(server string, serviceUuid ModifyGatewayConnectionServiceUuid, connectionUuid ModifyGatewayConnectionConnectionUuid, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -42940,8 +42915,8 @@ func NewModifyConnectionRequestWithBody(server string, serviceUuid GatewayModify
 	return req, nil
 }
 
-// NewListTunnelsRequest generates requests for ListTunnels
-func NewListTunnelsRequest(server string, serviceUuid GatewayListTunnelsServiceUuid, connectionUuid GatewayListTunnelsConnectionUuid) (*http.Request, error) {
+// NewListGatewayTunnelsRequest generates requests for ListGatewayTunnels
+func NewListGatewayTunnelsRequest(server string, serviceUuid ListGatewayTunnelsServiceUuid, connectionUuid ListGatewayTunnelsConnectionUuid) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -42981,19 +42956,19 @@ func NewListTunnelsRequest(server string, serviceUuid GatewayListTunnelsServiceU
 	return req, nil
 }
 
-// NewCreateTunnelRequest calls the generic CreateTunnel builder with application/json body
-func NewCreateTunnelRequest(server string, serviceUuid GatewayCreateTunnelServiceUuid, connectionUuid GatewayCreateTunnelConnectionUuid, body CreateTunnelJSONRequestBody) (*http.Request, error) {
+// NewCreateGatewayTunnelRequest calls the generic CreateGatewayTunnel builder with application/json body
+func NewCreateGatewayTunnelRequest(server string, serviceUuid CreateGatewayTunnelServiceUuid, connectionUuid CreateGatewayTunnelConnectionUuid, body CreateGatewayTunnelJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewCreateTunnelRequestWithBody(server, serviceUuid, connectionUuid, "application/json", bodyReader)
+	return NewCreateGatewayTunnelRequestWithBody(server, serviceUuid, connectionUuid, "application/json", bodyReader)
 }
 
-// NewCreateTunnelRequestWithBody generates requests for CreateTunnel with any type of body
-func NewCreateTunnelRequestWithBody(server string, serviceUuid GatewayCreateTunnelServiceUuid, connectionUuid GatewayCreateTunnelConnectionUuid, contentType string, body io.Reader) (*http.Request, error) {
+// NewCreateGatewayTunnelRequestWithBody generates requests for CreateGatewayTunnel with any type of body
+func NewCreateGatewayTunnelRequestWithBody(server string, serviceUuid CreateGatewayTunnelServiceUuid, connectionUuid CreateGatewayTunnelConnectionUuid, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -43035,8 +43010,8 @@ func NewCreateTunnelRequestWithBody(server string, serviceUuid GatewayCreateTunn
 	return req, nil
 }
 
-// NewDeleteTunnelRequest generates requests for DeleteTunnel
-func NewDeleteTunnelRequest(server string, serviceUuid GatewayDeleteTunnelServiceUuid, connectionUuid GatewayDeleteTunnelConnectionUuid, tunnelUuid GatewayDeleteTunnelTunnelUuid) (*http.Request, error) {
+// NewDeleteGatewayTunnelRequest generates requests for DeleteGatewayTunnel
+func NewDeleteGatewayTunnelRequest(server string, serviceUuid DeleteGatewayTunnelServiceUuid, connectionUuid DeleteGatewayTunnelConnectionUuid, tunnelUuid DeleteGatewayTunnelTunnelUuid) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -43083,8 +43058,8 @@ func NewDeleteTunnelRequest(server string, serviceUuid GatewayDeleteTunnelServic
 	return req, nil
 }
 
-// NewGetTunnelRequest generates requests for GetTunnel
-func NewGetTunnelRequest(server string, serviceUuid GatewayGetTunnelServiceUuid, connectionUuid GatewayGetTunnelConnectionUuid, tunnelUuid GatewayGetTunnelTunnelUuid) (*http.Request, error) {
+// NewGetGatewayTunnelRequest generates requests for GetGatewayTunnel
+func NewGetGatewayTunnelRequest(server string, serviceUuid GetGatewayTunnelServiceUuid, connectionUuid GetGatewayTunnelConnectionUuid, tunnelUuid GetGatewayTunnelTunnelUuid) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -43131,19 +43106,19 @@ func NewGetTunnelRequest(server string, serviceUuid GatewayGetTunnelServiceUuid,
 	return req, nil
 }
 
-// NewModifyTunnelRequest calls the generic ModifyTunnel builder with application/json body
-func NewModifyTunnelRequest(server string, serviceUuid GatewayModifyTunnelServiceUuid, connectionUuid GatewayModifyTunnelConnectionUuid, tunnelUuid GatewayModifyTunnelTunnelUuid, body ModifyTunnelJSONRequestBody) (*http.Request, error) {
+// NewModifyGatewayTunnelRequest calls the generic ModifyGatewayTunnel builder with application/json body
+func NewModifyGatewayTunnelRequest(server string, serviceUuid ModifyGatewayTunnelServiceUuid, connectionUuid ModifyGatewayTunnelConnectionUuid, tunnelUuid ModifyGatewayTunnelTunnelUuid, body ModifyGatewayTunnelJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewModifyTunnelRequestWithBody(server, serviceUuid, connectionUuid, tunnelUuid, "application/json", bodyReader)
+	return NewModifyGatewayTunnelRequestWithBody(server, serviceUuid, connectionUuid, tunnelUuid, "application/json", bodyReader)
 }
 
-// NewModifyTunnelRequestWithBody generates requests for ModifyTunnel with any type of body
-func NewModifyTunnelRequestWithBody(server string, serviceUuid GatewayModifyTunnelServiceUuid, connectionUuid GatewayModifyTunnelConnectionUuid, tunnelUuid GatewayModifyTunnelTunnelUuid, contentType string, body io.Reader) (*http.Request, error) {
+// NewModifyGatewayTunnelRequestWithBody generates requests for ModifyGatewayTunnel with any type of body
+func NewModifyGatewayTunnelRequestWithBody(server string, serviceUuid ModifyGatewayTunnelServiceUuid, connectionUuid ModifyGatewayTunnelConnectionUuid, tunnelUuid ModifyGatewayTunnelTunnelUuid, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -43192,8 +43167,8 @@ func NewModifyTunnelRequestWithBody(server string, serviceUuid GatewayModifyTunn
 	return req, nil
 }
 
-// NewListServiceLabelsRequest generates requests for ListServiceLabels
-func NewListServiceLabelsRequest(server string, serviceUuid GatewayListServiceLabelsServiceUuid) (*http.Request, error) {
+// NewListGatewayServiceLabelsRequest generates requests for ListGatewayServiceLabels
+func NewListGatewayServiceLabelsRequest(server string, serviceUuid ListGatewayServiceLabelsServiceUuid) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -43226,19 +43201,19 @@ func NewListServiceLabelsRequest(server string, serviceUuid GatewayListServiceLa
 	return req, nil
 }
 
-// NewCreateServiceLabelRequest calls the generic CreateServiceLabel builder with application/json body
-func NewCreateServiceLabelRequest(server string, serviceUuid GatewayCreateServiceLabelServiceUuid, body CreateServiceLabelJSONRequestBody) (*http.Request, error) {
+// NewCreateGatewayServiceLabelRequest calls the generic CreateGatewayServiceLabel builder with application/json body
+func NewCreateGatewayServiceLabelRequest(server string, serviceUuid CreateGatewayServiceLabelServiceUuid, body CreateGatewayServiceLabelJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewCreateServiceLabelRequestWithBody(server, serviceUuid, "application/json", bodyReader)
+	return NewCreateGatewayServiceLabelRequestWithBody(server, serviceUuid, "application/json", bodyReader)
 }
 
-// NewCreateServiceLabelRequestWithBody generates requests for CreateServiceLabel with any type of body
-func NewCreateServiceLabelRequestWithBody(server string, serviceUuid GatewayCreateServiceLabelServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
+// NewCreateGatewayServiceLabelRequestWithBody generates requests for CreateGatewayServiceLabel with any type of body
+func NewCreateGatewayServiceLabelRequestWithBody(server string, serviceUuid CreateGatewayServiceLabelServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -43273,8 +43248,8 @@ func NewCreateServiceLabelRequestWithBody(server string, serviceUuid GatewayCrea
 	return req, nil
 }
 
-// NewDeleteServiceLabelRequest generates requests for DeleteServiceLabel
-func NewDeleteServiceLabelRequest(server string, serviceUuid GatewayDeleteServiceLabelServiceUuid, labelKey GatewayDeleteServiceLabelLabelKey) (*http.Request, error) {
+// NewDeleteGatewayServiceLabelRequest generates requests for DeleteGatewayServiceLabel
+func NewDeleteGatewayServiceLabelRequest(server string, serviceUuid DeleteGatewayServiceLabelServiceUuid, labelKey DeleteGatewayServiceLabelLabelKey) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -43314,8 +43289,8 @@ func NewDeleteServiceLabelRequest(server string, serviceUuid GatewayDeleteServic
 	return req, nil
 }
 
-// NewGetServiceLabelRequest generates requests for GetServiceLabel
-func NewGetServiceLabelRequest(server string, serviceUuid GatewayGetServiceLabelServiceUuid, labelKey GatewayGetServiceLabelLabelKey) (*http.Request, error) {
+// NewGetGatewayServiceLabelRequest generates requests for GetGatewayServiceLabel
+func NewGetGatewayServiceLabelRequest(server string, serviceUuid GetGatewayServiceLabelServiceUuid, labelKey GetGatewayServiceLabelLabelKey) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -43355,19 +43330,19 @@ func NewGetServiceLabelRequest(server string, serviceUuid GatewayGetServiceLabel
 	return req, nil
 }
 
-// NewModifyServiceLabelRequest calls the generic ModifyServiceLabel builder with application/json body
-func NewModifyServiceLabelRequest(server string, serviceUuid GatewayModifyServiceLabelServiceUuid, labelKey GatewayModifyServiceLabelLabelKey, body ModifyServiceLabelJSONRequestBody) (*http.Request, error) {
+// NewModifyGatewayServiceLabelRequest calls the generic ModifyGatewayServiceLabel builder with application/json body
+func NewModifyGatewayServiceLabelRequest(server string, serviceUuid ModifyGatewayServiceLabelServiceUuid, labelKey ModifyGatewayServiceLabelLabelKey, body ModifyGatewayServiceLabelJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewModifyServiceLabelRequestWithBody(server, serviceUuid, labelKey, "application/json", bodyReader)
+	return NewModifyGatewayServiceLabelRequestWithBody(server, serviceUuid, labelKey, "application/json", bodyReader)
 }
 
-// NewModifyServiceLabelRequestWithBody generates requests for ModifyServiceLabel with any type of body
-func NewModifyServiceLabelRequestWithBody(server string, serviceUuid GatewayModifyServiceLabelServiceUuid, labelKey GatewayModifyServiceLabelLabelKey, contentType string, body io.Reader) (*http.Request, error) {
+// NewModifyGatewayServiceLabelRequestWithBody generates requests for ModifyGatewayServiceLabel with any type of body
+func NewModifyGatewayServiceLabelRequestWithBody(server string, serviceUuid ModifyGatewayServiceLabelServiceUuid, labelKey ModifyGatewayServiceLabelLabelKey, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -43409,19 +43384,19 @@ func NewModifyServiceLabelRequestWithBody(server string, serviceUuid GatewayModi
 	return req, nil
 }
 
-// NewCreateServiceogSessionRequest calls the generic CreateServiceogSession builder with application/json body
-func NewCreateServiceogSessionRequest(server string, serviceUuid GatewayCreateServiceogSessionServiceUuid, body CreateServiceogSessionJSONRequestBody) (*http.Request, error) {
+// NewCreateGatewayServiceLogSessionRequest calls the generic CreateGatewayServiceLogSession builder with application/json body
+func NewCreateGatewayServiceLogSessionRequest(server string, serviceUuid CreateGatewayServiceLogSessionServiceUuid, body CreateGatewayServiceLogSessionJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewCreateServiceogSessionRequestWithBody(server, serviceUuid, "application/json", bodyReader)
+	return NewCreateGatewayServiceLogSessionRequestWithBody(server, serviceUuid, "application/json", bodyReader)
 }
 
-// NewCreateServiceogSessionRequestWithBody generates requests for CreateServiceogSession with any type of body
-func NewCreateServiceogSessionRequestWithBody(server string, serviceUuid GatewayCreateServiceogSessionServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
+// NewCreateGatewayServiceLogSessionRequestWithBody generates requests for CreateGatewayServiceLogSession with any type of body
+func NewCreateGatewayServiceLogSessionRequestWithBody(server string, serviceUuid CreateGatewayServiceLogSessionServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -43456,8 +43431,8 @@ func NewCreateServiceogSessionRequestWithBody(server string, serviceUuid Gateway
 	return req, nil
 }
 
-// NewGetMetricsRequest generates requests for GetMetrics
-func NewGetMetricsRequest(server string, serviceUuid GatewayGetMetricsServiceUuid) (*http.Request, error) {
+// NewGetGatewayMetricsRequest generates requests for GetGatewayMetrics
+func NewGetGatewayMetricsRequest(server string, serviceUuid GetGatewayMetricsServiceUuid) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -55469,13 +55444,13 @@ type ClientWithResponsesInterface interface {
 
 	ModifyFirewallRulesetRuleWithResponse(ctx context.Context, rulesetUuid ModifyFirewallRulesetRuleRulesetUuid, ruleId ModifyFirewallRulesetRuleRuleId, body ModifyFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyFirewallRulesetRuleResp, error)
 
-	// ListServicesWithResponse request
-	ListServicesWithResponse(ctx context.Context, params *ListServicesParams, reqEditors ...RequestEditorFn) (*ListServicesResp, error)
+	// ListGatewayServicesWithResponse request
+	ListGatewayServicesWithResponse(ctx context.Context, params *ListGatewayServicesParams, reqEditors ...RequestEditorFn) (*ListGatewayServicesResp, error)
 
-	// CreateServiceWithBodyWithResponse request with any body
-	CreateServiceWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateServiceResp, error)
+	// CreateGatewayServiceWithBodyWithResponse request with any body
+	CreateGatewayServiceWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateGatewayServiceResp, error)
 
-	CreateServiceWithResponse(ctx context.Context, body CreateServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateServiceResp, error)
+	CreateGatewayServiceWithResponse(ctx context.Context, body CreateGatewayServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateGatewayServiceResp, error)
 
 	// ListPlansWithResponse request
 	ListPlansWithResponse(ctx context.Context, params *ListPlansParams, reqEditors ...RequestEditorFn) (*ListPlansResp, error)
@@ -55483,103 +55458,103 @@ type ClientWithResponsesInterface interface {
 	// GetPlanWithResponse request
 	GetPlanWithResponse(ctx context.Context, planName GatewayGetPlanPlanName, reqEditors ...RequestEditorFn) (*GetPlanResp, error)
 
-	// DeleteServiceWithResponse request
-	DeleteServiceWithResponse(ctx context.Context, serviceUuid GatewayDeleteServiceServiceUuid, reqEditors ...RequestEditorFn) (*DeleteServiceResp, error)
+	// DeleteGatewayServiceWithResponse request
+	DeleteGatewayServiceWithResponse(ctx context.Context, serviceUuid DeleteGatewayServiceServiceUuid, reqEditors ...RequestEditorFn) (*DeleteGatewayServiceResp, error)
 
-	// GetServiceWithResponse request
-	GetServiceWithResponse(ctx context.Context, serviceUuid GatewayGetServiceServiceUuid, reqEditors ...RequestEditorFn) (*GetServiceResp, error)
+	// GetGatewayServiceWithResponse request
+	GetGatewayServiceWithResponse(ctx context.Context, serviceUuid GetGatewayServiceServiceUuid, reqEditors ...RequestEditorFn) (*GetGatewayServiceResp, error)
 
-	// ModifyServiceWithBodyWithResponse request with any body
-	ModifyServiceWithBodyWithResponse(ctx context.Context, serviceUuid GatewayModifyServiceServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyServiceResp, error)
+	// ModifyGatewayServiceWithBodyWithResponse request with any body
+	ModifyGatewayServiceWithBodyWithResponse(ctx context.Context, serviceUuid ModifyGatewayServiceServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyGatewayServiceResp, error)
 
-	ModifyServiceWithResponse(ctx context.Context, serviceUuid GatewayModifyServiceServiceUuid, body ModifyServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyServiceResp, error)
+	ModifyGatewayServiceWithResponse(ctx context.Context, serviceUuid ModifyGatewayServiceServiceUuid, body ModifyGatewayServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyGatewayServiceResp, error)
 
-	// ReplaceServiceWithBodyWithResponse request with any body
-	ReplaceServiceWithBodyWithResponse(ctx context.Context, serviceUuid GatewayReplaceServiceServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplaceServiceResp, error)
+	// ReplaceGatewayServiceWithBodyWithResponse request with any body
+	ReplaceGatewayServiceWithBodyWithResponse(ctx context.Context, serviceUuid ReplaceGatewayServiceServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplaceGatewayServiceResp, error)
 
-	ReplaceServiceWithResponse(ctx context.Context, serviceUuid GatewayReplaceServiceServiceUuid, body ReplaceServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplaceServiceResp, error)
+	ReplaceGatewayServiceWithResponse(ctx context.Context, serviceUuid ReplaceGatewayServiceServiceUuid, body ReplaceGatewayServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplaceGatewayServiceResp, error)
 
-	// FlushNatWithResponse request
-	FlushNatWithResponse(ctx context.Context, serviceUuid GatewayFlushNatServiceUuid, reqEditors ...RequestEditorFn) (*FlushNatResp, error)
+	// FlushGatewayNatWithResponse request
+	FlushGatewayNatWithResponse(ctx context.Context, serviceUuid FlushGatewayNatServiceUuid, reqEditors ...RequestEditorFn) (*FlushGatewayNatResp, error)
 
-	// ListAddressesWithResponse request
-	ListAddressesWithResponse(ctx context.Context, serviceUuid GatewayListAddressesServiceUuid, reqEditors ...RequestEditorFn) (*ListAddressesResp, error)
+	// ListGatewayAddressesWithResponse request
+	ListGatewayAddressesWithResponse(ctx context.Context, serviceUuid ListGatewayAddressesServiceUuid, reqEditors ...RequestEditorFn) (*ListGatewayAddressesResp, error)
 
-	// CreateAddressWithBodyWithResponse request with any body
-	CreateAddressWithBodyWithResponse(ctx context.Context, serviceUuid GatewayCreateAddressServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateAddressResp, error)
+	// CreateGatewayAddressWithBodyWithResponse request with any body
+	CreateGatewayAddressWithBodyWithResponse(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateGatewayAddressResp, error)
 
-	CreateAddressWithResponse(ctx context.Context, serviceUuid GatewayCreateAddressServiceUuid, body CreateAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateAddressResp, error)
+	CreateGatewayAddressWithResponse(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, body CreateGatewayAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateGatewayAddressResp, error)
 
-	// DeleteAddressWithResponse request
-	DeleteAddressWithResponse(ctx context.Context, serviceUuid GatewayDeleteAddressServiceUuid, addressName GatewayDeleteAddressAddressName, reqEditors ...RequestEditorFn) (*DeleteAddressResp, error)
+	// DeleteGatewayAddressWithResponse request
+	DeleteGatewayAddressWithResponse(ctx context.Context, serviceUuid DeleteGatewayAddressServiceUuid, addressName DeleteGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*DeleteGatewayAddressResp, error)
 
-	// GetAddressWithResponse request
-	GetAddressWithResponse(ctx context.Context, serviceUuid GatewayGetAddressServiceUuid, addressName GatewayGetAddressAddressName, reqEditors ...RequestEditorFn) (*GetAddressResp, error)
+	// GetGatewayAddressWithResponse request
+	GetGatewayAddressWithResponse(ctx context.Context, serviceUuid GetGatewayAddressServiceUuid, addressName GetGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*GetGatewayAddressResp, error)
 
-	// ListConnectionsWithResponse request
-	ListConnectionsWithResponse(ctx context.Context, serviceUuid GatewayListConnectionsServiceUuid, reqEditors ...RequestEditorFn) (*ListConnectionsResp, error)
+	// ListGatewayConnectionsWithResponse request
+	ListGatewayConnectionsWithResponse(ctx context.Context, serviceUuid ListGatewayConnectionsServiceUuid, reqEditors ...RequestEditorFn) (*ListGatewayConnectionsResp, error)
 
-	// CreateConnectionWithBodyWithResponse request with any body
-	CreateConnectionWithBodyWithResponse(ctx context.Context, serviceUuid GatewayCreateConnectionServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateConnectionResp, error)
+	// CreateGatewayConnectionWithBodyWithResponse request with any body
+	CreateGatewayConnectionWithBodyWithResponse(ctx context.Context, serviceUuid CreateGatewayConnectionServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateGatewayConnectionResp, error)
 
-	CreateConnectionWithResponse(ctx context.Context, serviceUuid GatewayCreateConnectionServiceUuid, body CreateConnectionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateConnectionResp, error)
+	CreateGatewayConnectionWithResponse(ctx context.Context, serviceUuid CreateGatewayConnectionServiceUuid, body CreateGatewayConnectionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateGatewayConnectionResp, error)
 
-	// DeleteConnectionWithResponse request
-	DeleteConnectionWithResponse(ctx context.Context, serviceUuid GatewayDeleteConnectionServiceUuid, connectionUuid GatewayDeleteConnectionConnectionUuid, reqEditors ...RequestEditorFn) (*DeleteConnectionResp, error)
+	// DeleteGatewayConnectionWithResponse request
+	DeleteGatewayConnectionWithResponse(ctx context.Context, serviceUuid DeleteGatewayConnectionServiceUuid, connectionUuid DeleteGatewayConnectionConnectionUuid, reqEditors ...RequestEditorFn) (*DeleteGatewayConnectionResp, error)
 
-	// GetConnectionWithResponse request
-	GetConnectionWithResponse(ctx context.Context, serviceUuid GatewayGetConnectionServiceUuid, connectionUuid GatewayGetConnectionConnectionUuid, reqEditors ...RequestEditorFn) (*GetConnectionResp, error)
+	// GetGatewayConnectionWithResponse request
+	GetGatewayConnectionWithResponse(ctx context.Context, serviceUuid GetGatewayConnectionServiceUuid, connectionUuid GetGatewayConnectionConnectionUuid, reqEditors ...RequestEditorFn) (*GetGatewayConnectionResp, error)
 
-	// ModifyConnectionWithBodyWithResponse request with any body
-	ModifyConnectionWithBodyWithResponse(ctx context.Context, serviceUuid GatewayModifyConnectionServiceUuid, connectionUuid GatewayModifyConnectionConnectionUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyConnectionResp, error)
+	// ModifyGatewayConnectionWithBodyWithResponse request with any body
+	ModifyGatewayConnectionWithBodyWithResponse(ctx context.Context, serviceUuid ModifyGatewayConnectionServiceUuid, connectionUuid ModifyGatewayConnectionConnectionUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyGatewayConnectionResp, error)
 
-	ModifyConnectionWithResponse(ctx context.Context, serviceUuid GatewayModifyConnectionServiceUuid, connectionUuid GatewayModifyConnectionConnectionUuid, body ModifyConnectionJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyConnectionResp, error)
+	ModifyGatewayConnectionWithResponse(ctx context.Context, serviceUuid ModifyGatewayConnectionServiceUuid, connectionUuid ModifyGatewayConnectionConnectionUuid, body ModifyGatewayConnectionJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyGatewayConnectionResp, error)
 
-	// ListTunnelsWithResponse request
-	ListTunnelsWithResponse(ctx context.Context, serviceUuid GatewayListTunnelsServiceUuid, connectionUuid GatewayListTunnelsConnectionUuid, reqEditors ...RequestEditorFn) (*ListTunnelsResp, error)
+	// ListGatewayTunnelsWithResponse request
+	ListGatewayTunnelsWithResponse(ctx context.Context, serviceUuid ListGatewayTunnelsServiceUuid, connectionUuid ListGatewayTunnelsConnectionUuid, reqEditors ...RequestEditorFn) (*ListGatewayTunnelsResp, error)
 
-	// CreateTunnelWithBodyWithResponse request with any body
-	CreateTunnelWithBodyWithResponse(ctx context.Context, serviceUuid GatewayCreateTunnelServiceUuid, connectionUuid GatewayCreateTunnelConnectionUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateTunnelResp, error)
+	// CreateGatewayTunnelWithBodyWithResponse request with any body
+	CreateGatewayTunnelWithBodyWithResponse(ctx context.Context, serviceUuid CreateGatewayTunnelServiceUuid, connectionUuid CreateGatewayTunnelConnectionUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateGatewayTunnelResp, error)
 
-	CreateTunnelWithResponse(ctx context.Context, serviceUuid GatewayCreateTunnelServiceUuid, connectionUuid GatewayCreateTunnelConnectionUuid, body CreateTunnelJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateTunnelResp, error)
+	CreateGatewayTunnelWithResponse(ctx context.Context, serviceUuid CreateGatewayTunnelServiceUuid, connectionUuid CreateGatewayTunnelConnectionUuid, body CreateGatewayTunnelJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateGatewayTunnelResp, error)
 
-	// DeleteTunnelWithResponse request
-	DeleteTunnelWithResponse(ctx context.Context, serviceUuid GatewayDeleteTunnelServiceUuid, connectionUuid GatewayDeleteTunnelConnectionUuid, tunnelUuid GatewayDeleteTunnelTunnelUuid, reqEditors ...RequestEditorFn) (*DeleteTunnelResp, error)
+	// DeleteGatewayTunnelWithResponse request
+	DeleteGatewayTunnelWithResponse(ctx context.Context, serviceUuid DeleteGatewayTunnelServiceUuid, connectionUuid DeleteGatewayTunnelConnectionUuid, tunnelUuid DeleteGatewayTunnelTunnelUuid, reqEditors ...RequestEditorFn) (*DeleteGatewayTunnelResp, error)
 
-	// GetTunnelWithResponse request
-	GetTunnelWithResponse(ctx context.Context, serviceUuid GatewayGetTunnelServiceUuid, connectionUuid GatewayGetTunnelConnectionUuid, tunnelUuid GatewayGetTunnelTunnelUuid, reqEditors ...RequestEditorFn) (*GetTunnelResp, error)
+	// GetGatewayTunnelWithResponse request
+	GetGatewayTunnelWithResponse(ctx context.Context, serviceUuid GetGatewayTunnelServiceUuid, connectionUuid GetGatewayTunnelConnectionUuid, tunnelUuid GetGatewayTunnelTunnelUuid, reqEditors ...RequestEditorFn) (*GetGatewayTunnelResp, error)
 
-	// ModifyTunnelWithBodyWithResponse request with any body
-	ModifyTunnelWithBodyWithResponse(ctx context.Context, serviceUuid GatewayModifyTunnelServiceUuid, connectionUuid GatewayModifyTunnelConnectionUuid, tunnelUuid GatewayModifyTunnelTunnelUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyTunnelResp, error)
+	// ModifyGatewayTunnelWithBodyWithResponse request with any body
+	ModifyGatewayTunnelWithBodyWithResponse(ctx context.Context, serviceUuid ModifyGatewayTunnelServiceUuid, connectionUuid ModifyGatewayTunnelConnectionUuid, tunnelUuid ModifyGatewayTunnelTunnelUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyGatewayTunnelResp, error)
 
-	ModifyTunnelWithResponse(ctx context.Context, serviceUuid GatewayModifyTunnelServiceUuid, connectionUuid GatewayModifyTunnelConnectionUuid, tunnelUuid GatewayModifyTunnelTunnelUuid, body ModifyTunnelJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyTunnelResp, error)
+	ModifyGatewayTunnelWithResponse(ctx context.Context, serviceUuid ModifyGatewayTunnelServiceUuid, connectionUuid ModifyGatewayTunnelConnectionUuid, tunnelUuid ModifyGatewayTunnelTunnelUuid, body ModifyGatewayTunnelJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyGatewayTunnelResp, error)
 
-	// ListServiceLabelsWithResponse request
-	ListServiceLabelsWithResponse(ctx context.Context, serviceUuid GatewayListServiceLabelsServiceUuid, reqEditors ...RequestEditorFn) (*ListServiceLabelsResp, error)
+	// ListGatewayServiceLabelsWithResponse request
+	ListGatewayServiceLabelsWithResponse(ctx context.Context, serviceUuid ListGatewayServiceLabelsServiceUuid, reqEditors ...RequestEditorFn) (*ListGatewayServiceLabelsResp, error)
 
-	// CreateServiceLabelWithBodyWithResponse request with any body
-	CreateServiceLabelWithBodyWithResponse(ctx context.Context, serviceUuid GatewayCreateServiceLabelServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateServiceLabelResp, error)
+	// CreateGatewayServiceLabelWithBodyWithResponse request with any body
+	CreateGatewayServiceLabelWithBodyWithResponse(ctx context.Context, serviceUuid CreateGatewayServiceLabelServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateGatewayServiceLabelResp, error)
 
-	CreateServiceLabelWithResponse(ctx context.Context, serviceUuid GatewayCreateServiceLabelServiceUuid, body CreateServiceLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateServiceLabelResp, error)
+	CreateGatewayServiceLabelWithResponse(ctx context.Context, serviceUuid CreateGatewayServiceLabelServiceUuid, body CreateGatewayServiceLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateGatewayServiceLabelResp, error)
 
-	// DeleteServiceLabelWithResponse request
-	DeleteServiceLabelWithResponse(ctx context.Context, serviceUuid GatewayDeleteServiceLabelServiceUuid, labelKey GatewayDeleteServiceLabelLabelKey, reqEditors ...RequestEditorFn) (*DeleteServiceLabelResp, error)
+	// DeleteGatewayServiceLabelWithResponse request
+	DeleteGatewayServiceLabelWithResponse(ctx context.Context, serviceUuid DeleteGatewayServiceLabelServiceUuid, labelKey DeleteGatewayServiceLabelLabelKey, reqEditors ...RequestEditorFn) (*DeleteGatewayServiceLabelResp, error)
 
-	// GetServiceLabelWithResponse request
-	GetServiceLabelWithResponse(ctx context.Context, serviceUuid GatewayGetServiceLabelServiceUuid, labelKey GatewayGetServiceLabelLabelKey, reqEditors ...RequestEditorFn) (*GetServiceLabelResp, error)
+	// GetGatewayServiceLabelWithResponse request
+	GetGatewayServiceLabelWithResponse(ctx context.Context, serviceUuid GetGatewayServiceLabelServiceUuid, labelKey GetGatewayServiceLabelLabelKey, reqEditors ...RequestEditorFn) (*GetGatewayServiceLabelResp, error)
 
-	// ModifyServiceLabelWithBodyWithResponse request with any body
-	ModifyServiceLabelWithBodyWithResponse(ctx context.Context, serviceUuid GatewayModifyServiceLabelServiceUuid, labelKey GatewayModifyServiceLabelLabelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyServiceLabelResp, error)
+	// ModifyGatewayServiceLabelWithBodyWithResponse request with any body
+	ModifyGatewayServiceLabelWithBodyWithResponse(ctx context.Context, serviceUuid ModifyGatewayServiceLabelServiceUuid, labelKey ModifyGatewayServiceLabelLabelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyGatewayServiceLabelResp, error)
 
-	ModifyServiceLabelWithResponse(ctx context.Context, serviceUuid GatewayModifyServiceLabelServiceUuid, labelKey GatewayModifyServiceLabelLabelKey, body ModifyServiceLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyServiceLabelResp, error)
+	ModifyGatewayServiceLabelWithResponse(ctx context.Context, serviceUuid ModifyGatewayServiceLabelServiceUuid, labelKey ModifyGatewayServiceLabelLabelKey, body ModifyGatewayServiceLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyGatewayServiceLabelResp, error)
 
-	// CreateServiceogSessionWithBodyWithResponse request with any body
-	CreateServiceogSessionWithBodyWithResponse(ctx context.Context, serviceUuid GatewayCreateServiceogSessionServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateServiceogSessionResp, error)
+	// CreateGatewayServiceLogSessionWithBodyWithResponse request with any body
+	CreateGatewayServiceLogSessionWithBodyWithResponse(ctx context.Context, serviceUuid CreateGatewayServiceLogSessionServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateGatewayServiceLogSessionResp, error)
 
-	CreateServiceogSessionWithResponse(ctx context.Context, serviceUuid GatewayCreateServiceogSessionServiceUuid, body CreateServiceogSessionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateServiceogSessionResp, error)
+	CreateGatewayServiceLogSessionWithResponse(ctx context.Context, serviceUuid CreateGatewayServiceLogSessionServiceUuid, body CreateGatewayServiceLogSessionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateGatewayServiceLogSessionResp, error)
 
-	// GetMetricsWithResponse request
-	GetMetricsWithResponse(ctx context.Context, serviceUuid GatewayGetMetricsServiceUuid, reqEditors ...RequestEditorFn) (*GetMetricsResp, error)
+	// GetGatewayMetricsWithResponse request
+	GetGatewayMetricsWithResponse(ctx context.Context, serviceUuid GetGatewayMetricsServiceUuid, reqEditors ...RequestEditorFn) (*GetGatewayMetricsResp, error)
 
 	// ListIPAddressesWithResponse request
 	ListIPAddressesWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListIPAddressesResp, error)
@@ -59455,15 +59430,15 @@ func (r ModifyFirewallRulesetRuleResp) StatusCode() int {
 	return 0
 }
 
-type ListServicesResp struct {
+type ListGatewayServicesResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *GatewayListServices200
-	ApplicationproblemJSONDefault *GatewayListServicesDefault
+	JSON200                       *ListGatewayServices200
+	ApplicationproblemJSONDefault *ListGatewayServicesDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r ListServicesResp) Status() string {
+func (r ListGatewayServicesResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -59471,22 +59446,22 @@ func (r ListServicesResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r ListServicesResp) StatusCode() int {
+func (r ListGatewayServicesResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type CreateServiceResp struct {
+type CreateGatewayServiceResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *GatewayCreateService200
-	ApplicationproblemJSONDefault *GatewayCreateServiceDefault
+	JSON200                       *CreateGatewayService200
+	ApplicationproblemJSONDefault *CreateGatewayServiceDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r CreateServiceResp) Status() string {
+func (r CreateGatewayServiceResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -59494,7 +59469,7 @@ func (r CreateServiceResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r CreateServiceResp) StatusCode() int {
+func (r CreateGatewayServiceResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -59547,14 +59522,14 @@ func (r GetPlanResp) StatusCode() int {
 	return 0
 }
 
-type DeleteServiceResp struct {
+type DeleteGatewayServiceResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *GatewayDeleteServiceDefault
+	ApplicationproblemJSONDefault *DeleteGatewayServiceDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r DeleteServiceResp) Status() string {
+func (r DeleteGatewayServiceResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -59562,22 +59537,22 @@ func (r DeleteServiceResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r DeleteServiceResp) StatusCode() int {
+func (r DeleteGatewayServiceResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetServiceResp struct {
+type GetGatewayServiceResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *GatewayGetService200
-	ApplicationproblemJSONDefault *GatewayGetServiceDefault
+	JSON200                       *GetGatewayService200
+	ApplicationproblemJSONDefault *GetGatewayServiceDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r GetServiceResp) Status() string {
+func (r GetGatewayServiceResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -59585,22 +59560,22 @@ func (r GetServiceResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetServiceResp) StatusCode() int {
+func (r GetGatewayServiceResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type ModifyServiceResp struct {
+type ModifyGatewayServiceResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *GatewayModifyService200
-	ApplicationproblemJSONDefault *GatewayModifyServiceDefault
+	JSON200                       *ModifyGatewayService200
+	ApplicationproblemJSONDefault *ModifyGatewayServiceDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r ModifyServiceResp) Status() string {
+func (r ModifyGatewayServiceResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -59608,22 +59583,22 @@ func (r ModifyServiceResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r ModifyServiceResp) StatusCode() int {
+func (r ModifyGatewayServiceResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type ReplaceServiceResp struct {
+type ReplaceGatewayServiceResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *GatewayReplaceService200
-	ApplicationproblemJSONDefault *GatewayReplaceServiceDefault
+	JSON200                       *ReplaceGatewayService200
+	ApplicationproblemJSONDefault *ReplaceGatewayServiceDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r ReplaceServiceResp) Status() string {
+func (r ReplaceGatewayServiceResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -59631,21 +59606,21 @@ func (r ReplaceServiceResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r ReplaceServiceResp) StatusCode() int {
+func (r ReplaceGatewayServiceResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type FlushNatResp struct {
+type FlushGatewayNatResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *GatewayFlushNatDefault
+	ApplicationproblemJSONDefault *FlushGatewayNatDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r FlushNatResp) Status() string {
+func (r FlushGatewayNatResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -59653,22 +59628,22 @@ func (r FlushNatResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r FlushNatResp) StatusCode() int {
+func (r FlushGatewayNatResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type ListAddressesResp struct {
+type ListGatewayAddressesResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *GatewayListAddresses200
-	ApplicationproblemJSONDefault *GatewayListAddressesDefault
+	JSON200                       *ListGatewayAddresses200
+	ApplicationproblemJSONDefault *ListGatewayAddressesDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r ListAddressesResp) Status() string {
+func (r ListGatewayAddressesResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -59676,22 +59651,22 @@ func (r ListAddressesResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r ListAddressesResp) StatusCode() int {
+func (r ListGatewayAddressesResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type CreateAddressResp struct {
+type CreateGatewayAddressResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *GatewayCreateAddress200
-	ApplicationproblemJSONDefault *GatewayCreateAddressDefault
+	JSON200                       *CreateGatewayAddress200
+	ApplicationproblemJSONDefault *CreateGatewayAddressDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r CreateAddressResp) Status() string {
+func (r CreateGatewayAddressResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -59699,21 +59674,21 @@ func (r CreateAddressResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r CreateAddressResp) StatusCode() int {
+func (r CreateGatewayAddressResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type DeleteAddressResp struct {
+type DeleteGatewayAddressResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *GatewayDeleteAddressDefault
+	ApplicationproblemJSONDefault *DeleteGatewayAddressDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r DeleteAddressResp) Status() string {
+func (r DeleteGatewayAddressResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -59721,22 +59696,22 @@ func (r DeleteAddressResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r DeleteAddressResp) StatusCode() int {
+func (r DeleteGatewayAddressResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetAddressResp struct {
+type GetGatewayAddressResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *GatewayGetAddress200
-	ApplicationproblemJSONDefault *GatewayGetAddressDefault
+	JSON200                       *GetGatewayAddress200
+	ApplicationproblemJSONDefault *GetGatewayAddressDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r GetAddressResp) Status() string {
+func (r GetGatewayAddressResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -59744,22 +59719,22 @@ func (r GetAddressResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetAddressResp) StatusCode() int {
+func (r GetGatewayAddressResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type ListConnectionsResp struct {
+type ListGatewayConnectionsResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *GatewayListConnections200
-	ApplicationproblemJSONDefault *GatewayListConnectionsDefault
+	JSON200                       *ListGatewayConnections200
+	ApplicationproblemJSONDefault *ListGatewayConnectionsDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r ListConnectionsResp) Status() string {
+func (r ListGatewayConnectionsResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -59767,22 +59742,22 @@ func (r ListConnectionsResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r ListConnectionsResp) StatusCode() int {
+func (r ListGatewayConnectionsResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type CreateConnectionResp struct {
+type CreateGatewayConnectionResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *GatewayCreateConnection200
-	ApplicationproblemJSONDefault *GatewayCreateConnectionDefault
+	JSON200                       *CreateGatewayConnection200
+	ApplicationproblemJSONDefault *CreateGatewayConnectionDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r CreateConnectionResp) Status() string {
+func (r CreateGatewayConnectionResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -59790,21 +59765,21 @@ func (r CreateConnectionResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r CreateConnectionResp) StatusCode() int {
+func (r CreateGatewayConnectionResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type DeleteConnectionResp struct {
+type DeleteGatewayConnectionResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *GatewayDeleteConnectionDefault
+	ApplicationproblemJSONDefault *DeleteGatewayConnectionDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r DeleteConnectionResp) Status() string {
+func (r DeleteGatewayConnectionResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -59812,22 +59787,22 @@ func (r DeleteConnectionResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r DeleteConnectionResp) StatusCode() int {
+func (r DeleteGatewayConnectionResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetConnectionResp struct {
+type GetGatewayConnectionResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *GatewayGetConnection200
-	ApplicationproblemJSONDefault *GatewayGetConnectionDefault
+	JSON200                       *GetGatewayConnection200
+	ApplicationproblemJSONDefault *GetGatewayConnectionDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r GetConnectionResp) Status() string {
+func (r GetGatewayConnectionResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -59835,22 +59810,22 @@ func (r GetConnectionResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetConnectionResp) StatusCode() int {
+func (r GetGatewayConnectionResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type ModifyConnectionResp struct {
+type ModifyGatewayConnectionResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *GatewayModifyConnection200
-	ApplicationproblemJSONDefault *GatewayModifyConnectionDefault
+	JSON200                       *ModifyGatewayConnection200
+	ApplicationproblemJSONDefault *ModifyGatewayConnectionDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r ModifyConnectionResp) Status() string {
+func (r ModifyGatewayConnectionResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -59858,22 +59833,22 @@ func (r ModifyConnectionResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r ModifyConnectionResp) StatusCode() int {
+func (r ModifyGatewayConnectionResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type ListTunnelsResp struct {
+type ListGatewayTunnelsResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *GatewayListTunnels200
-	ApplicationproblemJSONDefault *GatewayListTunnelsDefault
+	JSON200                       *ListGatewayTunnels200
+	ApplicationproblemJSONDefault *ListGatewayTunnelsDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r ListTunnelsResp) Status() string {
+func (r ListGatewayTunnelsResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -59881,22 +59856,22 @@ func (r ListTunnelsResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r ListTunnelsResp) StatusCode() int {
+func (r ListGatewayTunnelsResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type CreateTunnelResp struct {
+type CreateGatewayTunnelResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *GatewayCreateTunnel200
-	ApplicationproblemJSONDefault *GatewayCreateTunnelDefault
+	JSON200                       *CreateGatewayTunnel200
+	ApplicationproblemJSONDefault *CreateGatewayTunnelDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r CreateTunnelResp) Status() string {
+func (r CreateGatewayTunnelResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -59904,21 +59879,21 @@ func (r CreateTunnelResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r CreateTunnelResp) StatusCode() int {
+func (r CreateGatewayTunnelResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type DeleteTunnelResp struct {
+type DeleteGatewayTunnelResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *GatewayDeleteTunnelDefault
+	ApplicationproblemJSONDefault *DeleteGatewayTunnelDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r DeleteTunnelResp) Status() string {
+func (r DeleteGatewayTunnelResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -59926,22 +59901,22 @@ func (r DeleteTunnelResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r DeleteTunnelResp) StatusCode() int {
+func (r DeleteGatewayTunnelResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetTunnelResp struct {
+type GetGatewayTunnelResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *GatewayGetTunnel200
-	ApplicationproblemJSONDefault *GatewayGetTunnelDefault
+	JSON200                       *GetGatewayTunnel200
+	ApplicationproblemJSONDefault *GetGatewayTunnelDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r GetTunnelResp) Status() string {
+func (r GetGatewayTunnelResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -59949,22 +59924,22 @@ func (r GetTunnelResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetTunnelResp) StatusCode() int {
+func (r GetGatewayTunnelResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type ModifyTunnelResp struct {
+type ModifyGatewayTunnelResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *GatewayModifyTunnel200
-	ApplicationproblemJSONDefault *GatewayModifyTunnelDefault
+	JSON200                       *ModifyGatewayTunnel200
+	ApplicationproblemJSONDefault *ModifyGatewayTunnelDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r ModifyTunnelResp) Status() string {
+func (r ModifyGatewayTunnelResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -59972,22 +59947,22 @@ func (r ModifyTunnelResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r ModifyTunnelResp) StatusCode() int {
+func (r ModifyGatewayTunnelResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type ListServiceLabelsResp struct {
+type ListGatewayServiceLabelsResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *GatewayListServiceLabels200
-	ApplicationproblemJSONDefault *GatewayListServiceLabelsDefault
+	JSON200                       *ListGatewayServiceLabels200
+	ApplicationproblemJSONDefault *ListGatewayServiceLabelsDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r ListServiceLabelsResp) Status() string {
+func (r ListGatewayServiceLabelsResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -59995,21 +59970,21 @@ func (r ListServiceLabelsResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r ListServiceLabelsResp) StatusCode() int {
+func (r ListGatewayServiceLabelsResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type CreateServiceLabelResp struct {
+type CreateGatewayServiceLabelResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *GatewayCreateServiceLabelDefault
+	ApplicationproblemJSONDefault *CreateGatewayServiceLabelDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r CreateServiceLabelResp) Status() string {
+func (r CreateGatewayServiceLabelResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -60017,21 +59992,21 @@ func (r CreateServiceLabelResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r CreateServiceLabelResp) StatusCode() int {
+func (r CreateGatewayServiceLabelResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type DeleteServiceLabelResp struct {
+type DeleteGatewayServiceLabelResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *GatewayDeleteServiceLabelDefault
+	ApplicationproblemJSONDefault *DeleteGatewayServiceLabelDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r DeleteServiceLabelResp) Status() string {
+func (r DeleteGatewayServiceLabelResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -60039,22 +60014,22 @@ func (r DeleteServiceLabelResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r DeleteServiceLabelResp) StatusCode() int {
+func (r DeleteGatewayServiceLabelResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetServiceLabelResp struct {
+type GetGatewayServiceLabelResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *GatewayGetServiceLabel200
-	ApplicationproblemJSONDefault *GatewayGetServiceLabelDefault
+	JSON200                       *GetGatewayServiceLabel200
+	ApplicationproblemJSONDefault *GetGatewayServiceLabelDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r GetServiceLabelResp) Status() string {
+func (r GetGatewayServiceLabelResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -60062,21 +60037,21 @@ func (r GetServiceLabelResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetServiceLabelResp) StatusCode() int {
+func (r GetGatewayServiceLabelResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type ModifyServiceLabelResp struct {
+type ModifyGatewayServiceLabelResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *GatewayModifyServiceLabelDefault
+	ApplicationproblemJSONDefault *ModifyGatewayServiceLabelDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r ModifyServiceLabelResp) Status() string {
+func (r ModifyGatewayServiceLabelResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -60084,22 +60059,22 @@ func (r ModifyServiceLabelResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r ModifyServiceLabelResp) StatusCode() int {
+func (r ModifyGatewayServiceLabelResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type CreateServiceogSessionResp struct {
+type CreateGatewayServiceLogSessionResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *GatewayCreateServiceogSession200
-	ApplicationproblemJSONDefault *GatewayCreateServiceogSessionDefault
+	JSON200                       *CreateGatewayServiceLogSession200
+	ApplicationproblemJSONDefault *CreateGatewayServiceLogSessionDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r CreateServiceogSessionResp) Status() string {
+func (r CreateGatewayServiceLogSessionResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -60107,22 +60082,22 @@ func (r CreateServiceogSessionResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r CreateServiceogSessionResp) StatusCode() int {
+func (r CreateGatewayServiceLogSessionResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetMetricsResp struct {
+type GetGatewayMetricsResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *GatewayGetMetrics200
-	ApplicationproblemJSONDefault *GatewayGetMetricsDefault
+	JSON200                       *GetGatewayMetrics200
+	ApplicationproblemJSONDefault *GetGatewayMetricsDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r GetMetricsResp) Status() string {
+func (r GetGatewayMetricsResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -60130,7 +60105,7 @@ func (r GetMetricsResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetMetricsResp) StatusCode() int {
+func (r GetGatewayMetricsResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -67527,30 +67502,30 @@ func (c *ClientWithResponses) ModifyFirewallRulesetRuleWithResponse(ctx context.
 	return ParseModifyFirewallRulesetRuleResp(rsp)
 }
 
-// ListServicesWithResponse request returning *ListServicesResp
-func (c *ClientWithResponses) ListServicesWithResponse(ctx context.Context, params *ListServicesParams, reqEditors ...RequestEditorFn) (*ListServicesResp, error) {
-	rsp, err := c.ListServices(ctx, params, reqEditors...)
+// ListGatewayServicesWithResponse request returning *ListGatewayServicesResp
+func (c *ClientWithResponses) ListGatewayServicesWithResponse(ctx context.Context, params *ListGatewayServicesParams, reqEditors ...RequestEditorFn) (*ListGatewayServicesResp, error) {
+	rsp, err := c.ListGatewayServices(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseListServicesResp(rsp)
+	return ParseListGatewayServicesResp(rsp)
 }
 
-// CreateServiceWithBodyWithResponse request with arbitrary body returning *CreateServiceResp
-func (c *ClientWithResponses) CreateServiceWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateServiceResp, error) {
-	rsp, err := c.CreateServiceWithBody(ctx, contentType, body, reqEditors...)
+// CreateGatewayServiceWithBodyWithResponse request with arbitrary body returning *CreateGatewayServiceResp
+func (c *ClientWithResponses) CreateGatewayServiceWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateGatewayServiceResp, error) {
+	rsp, err := c.CreateGatewayServiceWithBody(ctx, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateServiceResp(rsp)
+	return ParseCreateGatewayServiceResp(rsp)
 }
 
-func (c *ClientWithResponses) CreateServiceWithResponse(ctx context.Context, body CreateServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateServiceResp, error) {
-	rsp, err := c.CreateService(ctx, body, reqEditors...)
+func (c *ClientWithResponses) CreateGatewayServiceWithResponse(ctx context.Context, body CreateGatewayServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateGatewayServiceResp, error) {
+	rsp, err := c.CreateGatewayService(ctx, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateServiceResp(rsp)
+	return ParseCreateGatewayServiceResp(rsp)
 }
 
 // ListPlansWithResponse request returning *ListPlansResp
@@ -67571,318 +67546,318 @@ func (c *ClientWithResponses) GetPlanWithResponse(ctx context.Context, planName 
 	return ParseGetPlanResp(rsp)
 }
 
-// DeleteServiceWithResponse request returning *DeleteServiceResp
-func (c *ClientWithResponses) DeleteServiceWithResponse(ctx context.Context, serviceUuid GatewayDeleteServiceServiceUuid, reqEditors ...RequestEditorFn) (*DeleteServiceResp, error) {
-	rsp, err := c.DeleteService(ctx, serviceUuid, reqEditors...)
+// DeleteGatewayServiceWithResponse request returning *DeleteGatewayServiceResp
+func (c *ClientWithResponses) DeleteGatewayServiceWithResponse(ctx context.Context, serviceUuid DeleteGatewayServiceServiceUuid, reqEditors ...RequestEditorFn) (*DeleteGatewayServiceResp, error) {
+	rsp, err := c.DeleteGatewayService(ctx, serviceUuid, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseDeleteServiceResp(rsp)
+	return ParseDeleteGatewayServiceResp(rsp)
 }
 
-// GetServiceWithResponse request returning *GetServiceResp
-func (c *ClientWithResponses) GetServiceWithResponse(ctx context.Context, serviceUuid GatewayGetServiceServiceUuid, reqEditors ...RequestEditorFn) (*GetServiceResp, error) {
-	rsp, err := c.GetService(ctx, serviceUuid, reqEditors...)
+// GetGatewayServiceWithResponse request returning *GetGatewayServiceResp
+func (c *ClientWithResponses) GetGatewayServiceWithResponse(ctx context.Context, serviceUuid GetGatewayServiceServiceUuid, reqEditors ...RequestEditorFn) (*GetGatewayServiceResp, error) {
+	rsp, err := c.GetGatewayService(ctx, serviceUuid, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetServiceResp(rsp)
+	return ParseGetGatewayServiceResp(rsp)
 }
 
-// ModifyServiceWithBodyWithResponse request with arbitrary body returning *ModifyServiceResp
-func (c *ClientWithResponses) ModifyServiceWithBodyWithResponse(ctx context.Context, serviceUuid GatewayModifyServiceServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyServiceResp, error) {
-	rsp, err := c.ModifyServiceWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
+// ModifyGatewayServiceWithBodyWithResponse request with arbitrary body returning *ModifyGatewayServiceResp
+func (c *ClientWithResponses) ModifyGatewayServiceWithBodyWithResponse(ctx context.Context, serviceUuid ModifyGatewayServiceServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyGatewayServiceResp, error) {
+	rsp, err := c.ModifyGatewayServiceWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseModifyServiceResp(rsp)
+	return ParseModifyGatewayServiceResp(rsp)
 }
 
-func (c *ClientWithResponses) ModifyServiceWithResponse(ctx context.Context, serviceUuid GatewayModifyServiceServiceUuid, body ModifyServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyServiceResp, error) {
-	rsp, err := c.ModifyService(ctx, serviceUuid, body, reqEditors...)
+func (c *ClientWithResponses) ModifyGatewayServiceWithResponse(ctx context.Context, serviceUuid ModifyGatewayServiceServiceUuid, body ModifyGatewayServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyGatewayServiceResp, error) {
+	rsp, err := c.ModifyGatewayService(ctx, serviceUuid, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseModifyServiceResp(rsp)
+	return ParseModifyGatewayServiceResp(rsp)
 }
 
-// ReplaceServiceWithBodyWithResponse request with arbitrary body returning *ReplaceServiceResp
-func (c *ClientWithResponses) ReplaceServiceWithBodyWithResponse(ctx context.Context, serviceUuid GatewayReplaceServiceServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplaceServiceResp, error) {
-	rsp, err := c.ReplaceServiceWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
+// ReplaceGatewayServiceWithBodyWithResponse request with arbitrary body returning *ReplaceGatewayServiceResp
+func (c *ClientWithResponses) ReplaceGatewayServiceWithBodyWithResponse(ctx context.Context, serviceUuid ReplaceGatewayServiceServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReplaceGatewayServiceResp, error) {
+	rsp, err := c.ReplaceGatewayServiceWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseReplaceServiceResp(rsp)
+	return ParseReplaceGatewayServiceResp(rsp)
 }
 
-func (c *ClientWithResponses) ReplaceServiceWithResponse(ctx context.Context, serviceUuid GatewayReplaceServiceServiceUuid, body ReplaceServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplaceServiceResp, error) {
-	rsp, err := c.ReplaceService(ctx, serviceUuid, body, reqEditors...)
+func (c *ClientWithResponses) ReplaceGatewayServiceWithResponse(ctx context.Context, serviceUuid ReplaceGatewayServiceServiceUuid, body ReplaceGatewayServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*ReplaceGatewayServiceResp, error) {
+	rsp, err := c.ReplaceGatewayService(ctx, serviceUuid, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseReplaceServiceResp(rsp)
+	return ParseReplaceGatewayServiceResp(rsp)
 }
 
-// FlushNatWithResponse request returning *FlushNatResp
-func (c *ClientWithResponses) FlushNatWithResponse(ctx context.Context, serviceUuid GatewayFlushNatServiceUuid, reqEditors ...RequestEditorFn) (*FlushNatResp, error) {
-	rsp, err := c.FlushNat(ctx, serviceUuid, reqEditors...)
+// FlushGatewayNatWithResponse request returning *FlushGatewayNatResp
+func (c *ClientWithResponses) FlushGatewayNatWithResponse(ctx context.Context, serviceUuid FlushGatewayNatServiceUuid, reqEditors ...RequestEditorFn) (*FlushGatewayNatResp, error) {
+	rsp, err := c.FlushGatewayNat(ctx, serviceUuid, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseFlushNatResp(rsp)
+	return ParseFlushGatewayNatResp(rsp)
 }
 
-// ListAddressesWithResponse request returning *ListAddressesResp
-func (c *ClientWithResponses) ListAddressesWithResponse(ctx context.Context, serviceUuid GatewayListAddressesServiceUuid, reqEditors ...RequestEditorFn) (*ListAddressesResp, error) {
-	rsp, err := c.ListAddresses(ctx, serviceUuid, reqEditors...)
+// ListGatewayAddressesWithResponse request returning *ListGatewayAddressesResp
+func (c *ClientWithResponses) ListGatewayAddressesWithResponse(ctx context.Context, serviceUuid ListGatewayAddressesServiceUuid, reqEditors ...RequestEditorFn) (*ListGatewayAddressesResp, error) {
+	rsp, err := c.ListGatewayAddresses(ctx, serviceUuid, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseListAddressesResp(rsp)
+	return ParseListGatewayAddressesResp(rsp)
 }
 
-// CreateAddressWithBodyWithResponse request with arbitrary body returning *CreateAddressResp
-func (c *ClientWithResponses) CreateAddressWithBodyWithResponse(ctx context.Context, serviceUuid GatewayCreateAddressServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateAddressResp, error) {
-	rsp, err := c.CreateAddressWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
+// CreateGatewayAddressWithBodyWithResponse request with arbitrary body returning *CreateGatewayAddressResp
+func (c *ClientWithResponses) CreateGatewayAddressWithBodyWithResponse(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateGatewayAddressResp, error) {
+	rsp, err := c.CreateGatewayAddressWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateAddressResp(rsp)
+	return ParseCreateGatewayAddressResp(rsp)
 }
 
-func (c *ClientWithResponses) CreateAddressWithResponse(ctx context.Context, serviceUuid GatewayCreateAddressServiceUuid, body CreateAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateAddressResp, error) {
-	rsp, err := c.CreateAddress(ctx, serviceUuid, body, reqEditors...)
+func (c *ClientWithResponses) CreateGatewayAddressWithResponse(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, body CreateGatewayAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateGatewayAddressResp, error) {
+	rsp, err := c.CreateGatewayAddress(ctx, serviceUuid, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateAddressResp(rsp)
+	return ParseCreateGatewayAddressResp(rsp)
 }
 
-// DeleteAddressWithResponse request returning *DeleteAddressResp
-func (c *ClientWithResponses) DeleteAddressWithResponse(ctx context.Context, serviceUuid GatewayDeleteAddressServiceUuid, addressName GatewayDeleteAddressAddressName, reqEditors ...RequestEditorFn) (*DeleteAddressResp, error) {
-	rsp, err := c.DeleteAddress(ctx, serviceUuid, addressName, reqEditors...)
+// DeleteGatewayAddressWithResponse request returning *DeleteGatewayAddressResp
+func (c *ClientWithResponses) DeleteGatewayAddressWithResponse(ctx context.Context, serviceUuid DeleteGatewayAddressServiceUuid, addressName DeleteGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*DeleteGatewayAddressResp, error) {
+	rsp, err := c.DeleteGatewayAddress(ctx, serviceUuid, addressName, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseDeleteAddressResp(rsp)
+	return ParseDeleteGatewayAddressResp(rsp)
 }
 
-// GetAddressWithResponse request returning *GetAddressResp
-func (c *ClientWithResponses) GetAddressWithResponse(ctx context.Context, serviceUuid GatewayGetAddressServiceUuid, addressName GatewayGetAddressAddressName, reqEditors ...RequestEditorFn) (*GetAddressResp, error) {
-	rsp, err := c.GetAddress(ctx, serviceUuid, addressName, reqEditors...)
+// GetGatewayAddressWithResponse request returning *GetGatewayAddressResp
+func (c *ClientWithResponses) GetGatewayAddressWithResponse(ctx context.Context, serviceUuid GetGatewayAddressServiceUuid, addressName GetGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*GetGatewayAddressResp, error) {
+	rsp, err := c.GetGatewayAddress(ctx, serviceUuid, addressName, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetAddressResp(rsp)
+	return ParseGetGatewayAddressResp(rsp)
 }
 
-// ListConnectionsWithResponse request returning *ListConnectionsResp
-func (c *ClientWithResponses) ListConnectionsWithResponse(ctx context.Context, serviceUuid GatewayListConnectionsServiceUuid, reqEditors ...RequestEditorFn) (*ListConnectionsResp, error) {
-	rsp, err := c.ListConnections(ctx, serviceUuid, reqEditors...)
+// ListGatewayConnectionsWithResponse request returning *ListGatewayConnectionsResp
+func (c *ClientWithResponses) ListGatewayConnectionsWithResponse(ctx context.Context, serviceUuid ListGatewayConnectionsServiceUuid, reqEditors ...RequestEditorFn) (*ListGatewayConnectionsResp, error) {
+	rsp, err := c.ListGatewayConnections(ctx, serviceUuid, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseListConnectionsResp(rsp)
+	return ParseListGatewayConnectionsResp(rsp)
 }
 
-// CreateConnectionWithBodyWithResponse request with arbitrary body returning *CreateConnectionResp
-func (c *ClientWithResponses) CreateConnectionWithBodyWithResponse(ctx context.Context, serviceUuid GatewayCreateConnectionServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateConnectionResp, error) {
-	rsp, err := c.CreateConnectionWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
+// CreateGatewayConnectionWithBodyWithResponse request with arbitrary body returning *CreateGatewayConnectionResp
+func (c *ClientWithResponses) CreateGatewayConnectionWithBodyWithResponse(ctx context.Context, serviceUuid CreateGatewayConnectionServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateGatewayConnectionResp, error) {
+	rsp, err := c.CreateGatewayConnectionWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateConnectionResp(rsp)
+	return ParseCreateGatewayConnectionResp(rsp)
 }
 
-func (c *ClientWithResponses) CreateConnectionWithResponse(ctx context.Context, serviceUuid GatewayCreateConnectionServiceUuid, body CreateConnectionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateConnectionResp, error) {
-	rsp, err := c.CreateConnection(ctx, serviceUuid, body, reqEditors...)
+func (c *ClientWithResponses) CreateGatewayConnectionWithResponse(ctx context.Context, serviceUuid CreateGatewayConnectionServiceUuid, body CreateGatewayConnectionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateGatewayConnectionResp, error) {
+	rsp, err := c.CreateGatewayConnection(ctx, serviceUuid, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateConnectionResp(rsp)
+	return ParseCreateGatewayConnectionResp(rsp)
 }
 
-// DeleteConnectionWithResponse request returning *DeleteConnectionResp
-func (c *ClientWithResponses) DeleteConnectionWithResponse(ctx context.Context, serviceUuid GatewayDeleteConnectionServiceUuid, connectionUuid GatewayDeleteConnectionConnectionUuid, reqEditors ...RequestEditorFn) (*DeleteConnectionResp, error) {
-	rsp, err := c.DeleteConnection(ctx, serviceUuid, connectionUuid, reqEditors...)
+// DeleteGatewayConnectionWithResponse request returning *DeleteGatewayConnectionResp
+func (c *ClientWithResponses) DeleteGatewayConnectionWithResponse(ctx context.Context, serviceUuid DeleteGatewayConnectionServiceUuid, connectionUuid DeleteGatewayConnectionConnectionUuid, reqEditors ...RequestEditorFn) (*DeleteGatewayConnectionResp, error) {
+	rsp, err := c.DeleteGatewayConnection(ctx, serviceUuid, connectionUuid, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseDeleteConnectionResp(rsp)
+	return ParseDeleteGatewayConnectionResp(rsp)
 }
 
-// GetConnectionWithResponse request returning *GetConnectionResp
-func (c *ClientWithResponses) GetConnectionWithResponse(ctx context.Context, serviceUuid GatewayGetConnectionServiceUuid, connectionUuid GatewayGetConnectionConnectionUuid, reqEditors ...RequestEditorFn) (*GetConnectionResp, error) {
-	rsp, err := c.GetConnection(ctx, serviceUuid, connectionUuid, reqEditors...)
+// GetGatewayConnectionWithResponse request returning *GetGatewayConnectionResp
+func (c *ClientWithResponses) GetGatewayConnectionWithResponse(ctx context.Context, serviceUuid GetGatewayConnectionServiceUuid, connectionUuid GetGatewayConnectionConnectionUuid, reqEditors ...RequestEditorFn) (*GetGatewayConnectionResp, error) {
+	rsp, err := c.GetGatewayConnection(ctx, serviceUuid, connectionUuid, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetConnectionResp(rsp)
+	return ParseGetGatewayConnectionResp(rsp)
 }
 
-// ModifyConnectionWithBodyWithResponse request with arbitrary body returning *ModifyConnectionResp
-func (c *ClientWithResponses) ModifyConnectionWithBodyWithResponse(ctx context.Context, serviceUuid GatewayModifyConnectionServiceUuid, connectionUuid GatewayModifyConnectionConnectionUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyConnectionResp, error) {
-	rsp, err := c.ModifyConnectionWithBody(ctx, serviceUuid, connectionUuid, contentType, body, reqEditors...)
+// ModifyGatewayConnectionWithBodyWithResponse request with arbitrary body returning *ModifyGatewayConnectionResp
+func (c *ClientWithResponses) ModifyGatewayConnectionWithBodyWithResponse(ctx context.Context, serviceUuid ModifyGatewayConnectionServiceUuid, connectionUuid ModifyGatewayConnectionConnectionUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyGatewayConnectionResp, error) {
+	rsp, err := c.ModifyGatewayConnectionWithBody(ctx, serviceUuid, connectionUuid, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseModifyConnectionResp(rsp)
+	return ParseModifyGatewayConnectionResp(rsp)
 }
 
-func (c *ClientWithResponses) ModifyConnectionWithResponse(ctx context.Context, serviceUuid GatewayModifyConnectionServiceUuid, connectionUuid GatewayModifyConnectionConnectionUuid, body ModifyConnectionJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyConnectionResp, error) {
-	rsp, err := c.ModifyConnection(ctx, serviceUuid, connectionUuid, body, reqEditors...)
+func (c *ClientWithResponses) ModifyGatewayConnectionWithResponse(ctx context.Context, serviceUuid ModifyGatewayConnectionServiceUuid, connectionUuid ModifyGatewayConnectionConnectionUuid, body ModifyGatewayConnectionJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyGatewayConnectionResp, error) {
+	rsp, err := c.ModifyGatewayConnection(ctx, serviceUuid, connectionUuid, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseModifyConnectionResp(rsp)
+	return ParseModifyGatewayConnectionResp(rsp)
 }
 
-// ListTunnelsWithResponse request returning *ListTunnelsResp
-func (c *ClientWithResponses) ListTunnelsWithResponse(ctx context.Context, serviceUuid GatewayListTunnelsServiceUuid, connectionUuid GatewayListTunnelsConnectionUuid, reqEditors ...RequestEditorFn) (*ListTunnelsResp, error) {
-	rsp, err := c.ListTunnels(ctx, serviceUuid, connectionUuid, reqEditors...)
+// ListGatewayTunnelsWithResponse request returning *ListGatewayTunnelsResp
+func (c *ClientWithResponses) ListGatewayTunnelsWithResponse(ctx context.Context, serviceUuid ListGatewayTunnelsServiceUuid, connectionUuid ListGatewayTunnelsConnectionUuid, reqEditors ...RequestEditorFn) (*ListGatewayTunnelsResp, error) {
+	rsp, err := c.ListGatewayTunnels(ctx, serviceUuid, connectionUuid, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseListTunnelsResp(rsp)
+	return ParseListGatewayTunnelsResp(rsp)
 }
 
-// CreateTunnelWithBodyWithResponse request with arbitrary body returning *CreateTunnelResp
-func (c *ClientWithResponses) CreateTunnelWithBodyWithResponse(ctx context.Context, serviceUuid GatewayCreateTunnelServiceUuid, connectionUuid GatewayCreateTunnelConnectionUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateTunnelResp, error) {
-	rsp, err := c.CreateTunnelWithBody(ctx, serviceUuid, connectionUuid, contentType, body, reqEditors...)
+// CreateGatewayTunnelWithBodyWithResponse request with arbitrary body returning *CreateGatewayTunnelResp
+func (c *ClientWithResponses) CreateGatewayTunnelWithBodyWithResponse(ctx context.Context, serviceUuid CreateGatewayTunnelServiceUuid, connectionUuid CreateGatewayTunnelConnectionUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateGatewayTunnelResp, error) {
+	rsp, err := c.CreateGatewayTunnelWithBody(ctx, serviceUuid, connectionUuid, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateTunnelResp(rsp)
+	return ParseCreateGatewayTunnelResp(rsp)
 }
 
-func (c *ClientWithResponses) CreateTunnelWithResponse(ctx context.Context, serviceUuid GatewayCreateTunnelServiceUuid, connectionUuid GatewayCreateTunnelConnectionUuid, body CreateTunnelJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateTunnelResp, error) {
-	rsp, err := c.CreateTunnel(ctx, serviceUuid, connectionUuid, body, reqEditors...)
+func (c *ClientWithResponses) CreateGatewayTunnelWithResponse(ctx context.Context, serviceUuid CreateGatewayTunnelServiceUuid, connectionUuid CreateGatewayTunnelConnectionUuid, body CreateGatewayTunnelJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateGatewayTunnelResp, error) {
+	rsp, err := c.CreateGatewayTunnel(ctx, serviceUuid, connectionUuid, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateTunnelResp(rsp)
+	return ParseCreateGatewayTunnelResp(rsp)
 }
 
-// DeleteTunnelWithResponse request returning *DeleteTunnelResp
-func (c *ClientWithResponses) DeleteTunnelWithResponse(ctx context.Context, serviceUuid GatewayDeleteTunnelServiceUuid, connectionUuid GatewayDeleteTunnelConnectionUuid, tunnelUuid GatewayDeleteTunnelTunnelUuid, reqEditors ...RequestEditorFn) (*DeleteTunnelResp, error) {
-	rsp, err := c.DeleteTunnel(ctx, serviceUuid, connectionUuid, tunnelUuid, reqEditors...)
+// DeleteGatewayTunnelWithResponse request returning *DeleteGatewayTunnelResp
+func (c *ClientWithResponses) DeleteGatewayTunnelWithResponse(ctx context.Context, serviceUuid DeleteGatewayTunnelServiceUuid, connectionUuid DeleteGatewayTunnelConnectionUuid, tunnelUuid DeleteGatewayTunnelTunnelUuid, reqEditors ...RequestEditorFn) (*DeleteGatewayTunnelResp, error) {
+	rsp, err := c.DeleteGatewayTunnel(ctx, serviceUuid, connectionUuid, tunnelUuid, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseDeleteTunnelResp(rsp)
+	return ParseDeleteGatewayTunnelResp(rsp)
 }
 
-// GetTunnelWithResponse request returning *GetTunnelResp
-func (c *ClientWithResponses) GetTunnelWithResponse(ctx context.Context, serviceUuid GatewayGetTunnelServiceUuid, connectionUuid GatewayGetTunnelConnectionUuid, tunnelUuid GatewayGetTunnelTunnelUuid, reqEditors ...RequestEditorFn) (*GetTunnelResp, error) {
-	rsp, err := c.GetTunnel(ctx, serviceUuid, connectionUuid, tunnelUuid, reqEditors...)
+// GetGatewayTunnelWithResponse request returning *GetGatewayTunnelResp
+func (c *ClientWithResponses) GetGatewayTunnelWithResponse(ctx context.Context, serviceUuid GetGatewayTunnelServiceUuid, connectionUuid GetGatewayTunnelConnectionUuid, tunnelUuid GetGatewayTunnelTunnelUuid, reqEditors ...RequestEditorFn) (*GetGatewayTunnelResp, error) {
+	rsp, err := c.GetGatewayTunnel(ctx, serviceUuid, connectionUuid, tunnelUuid, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetTunnelResp(rsp)
+	return ParseGetGatewayTunnelResp(rsp)
 }
 
-// ModifyTunnelWithBodyWithResponse request with arbitrary body returning *ModifyTunnelResp
-func (c *ClientWithResponses) ModifyTunnelWithBodyWithResponse(ctx context.Context, serviceUuid GatewayModifyTunnelServiceUuid, connectionUuid GatewayModifyTunnelConnectionUuid, tunnelUuid GatewayModifyTunnelTunnelUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyTunnelResp, error) {
-	rsp, err := c.ModifyTunnelWithBody(ctx, serviceUuid, connectionUuid, tunnelUuid, contentType, body, reqEditors...)
+// ModifyGatewayTunnelWithBodyWithResponse request with arbitrary body returning *ModifyGatewayTunnelResp
+func (c *ClientWithResponses) ModifyGatewayTunnelWithBodyWithResponse(ctx context.Context, serviceUuid ModifyGatewayTunnelServiceUuid, connectionUuid ModifyGatewayTunnelConnectionUuid, tunnelUuid ModifyGatewayTunnelTunnelUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyGatewayTunnelResp, error) {
+	rsp, err := c.ModifyGatewayTunnelWithBody(ctx, serviceUuid, connectionUuid, tunnelUuid, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseModifyTunnelResp(rsp)
+	return ParseModifyGatewayTunnelResp(rsp)
 }
 
-func (c *ClientWithResponses) ModifyTunnelWithResponse(ctx context.Context, serviceUuid GatewayModifyTunnelServiceUuid, connectionUuid GatewayModifyTunnelConnectionUuid, tunnelUuid GatewayModifyTunnelTunnelUuid, body ModifyTunnelJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyTunnelResp, error) {
-	rsp, err := c.ModifyTunnel(ctx, serviceUuid, connectionUuid, tunnelUuid, body, reqEditors...)
+func (c *ClientWithResponses) ModifyGatewayTunnelWithResponse(ctx context.Context, serviceUuid ModifyGatewayTunnelServiceUuid, connectionUuid ModifyGatewayTunnelConnectionUuid, tunnelUuid ModifyGatewayTunnelTunnelUuid, body ModifyGatewayTunnelJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyGatewayTunnelResp, error) {
+	rsp, err := c.ModifyGatewayTunnel(ctx, serviceUuid, connectionUuid, tunnelUuid, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseModifyTunnelResp(rsp)
+	return ParseModifyGatewayTunnelResp(rsp)
 }
 
-// ListServiceLabelsWithResponse request returning *ListServiceLabelsResp
-func (c *ClientWithResponses) ListServiceLabelsWithResponse(ctx context.Context, serviceUuid GatewayListServiceLabelsServiceUuid, reqEditors ...RequestEditorFn) (*ListServiceLabelsResp, error) {
-	rsp, err := c.ListServiceLabels(ctx, serviceUuid, reqEditors...)
+// ListGatewayServiceLabelsWithResponse request returning *ListGatewayServiceLabelsResp
+func (c *ClientWithResponses) ListGatewayServiceLabelsWithResponse(ctx context.Context, serviceUuid ListGatewayServiceLabelsServiceUuid, reqEditors ...RequestEditorFn) (*ListGatewayServiceLabelsResp, error) {
+	rsp, err := c.ListGatewayServiceLabels(ctx, serviceUuid, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseListServiceLabelsResp(rsp)
+	return ParseListGatewayServiceLabelsResp(rsp)
 }
 
-// CreateServiceLabelWithBodyWithResponse request with arbitrary body returning *CreateServiceLabelResp
-func (c *ClientWithResponses) CreateServiceLabelWithBodyWithResponse(ctx context.Context, serviceUuid GatewayCreateServiceLabelServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateServiceLabelResp, error) {
-	rsp, err := c.CreateServiceLabelWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
+// CreateGatewayServiceLabelWithBodyWithResponse request with arbitrary body returning *CreateGatewayServiceLabelResp
+func (c *ClientWithResponses) CreateGatewayServiceLabelWithBodyWithResponse(ctx context.Context, serviceUuid CreateGatewayServiceLabelServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateGatewayServiceLabelResp, error) {
+	rsp, err := c.CreateGatewayServiceLabelWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateServiceLabelResp(rsp)
+	return ParseCreateGatewayServiceLabelResp(rsp)
 }
 
-func (c *ClientWithResponses) CreateServiceLabelWithResponse(ctx context.Context, serviceUuid GatewayCreateServiceLabelServiceUuid, body CreateServiceLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateServiceLabelResp, error) {
-	rsp, err := c.CreateServiceLabel(ctx, serviceUuid, body, reqEditors...)
+func (c *ClientWithResponses) CreateGatewayServiceLabelWithResponse(ctx context.Context, serviceUuid CreateGatewayServiceLabelServiceUuid, body CreateGatewayServiceLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateGatewayServiceLabelResp, error) {
+	rsp, err := c.CreateGatewayServiceLabel(ctx, serviceUuid, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateServiceLabelResp(rsp)
+	return ParseCreateGatewayServiceLabelResp(rsp)
 }
 
-// DeleteServiceLabelWithResponse request returning *DeleteServiceLabelResp
-func (c *ClientWithResponses) DeleteServiceLabelWithResponse(ctx context.Context, serviceUuid GatewayDeleteServiceLabelServiceUuid, labelKey GatewayDeleteServiceLabelLabelKey, reqEditors ...RequestEditorFn) (*DeleteServiceLabelResp, error) {
-	rsp, err := c.DeleteServiceLabel(ctx, serviceUuid, labelKey, reqEditors...)
+// DeleteGatewayServiceLabelWithResponse request returning *DeleteGatewayServiceLabelResp
+func (c *ClientWithResponses) DeleteGatewayServiceLabelWithResponse(ctx context.Context, serviceUuid DeleteGatewayServiceLabelServiceUuid, labelKey DeleteGatewayServiceLabelLabelKey, reqEditors ...RequestEditorFn) (*DeleteGatewayServiceLabelResp, error) {
+	rsp, err := c.DeleteGatewayServiceLabel(ctx, serviceUuid, labelKey, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseDeleteServiceLabelResp(rsp)
+	return ParseDeleteGatewayServiceLabelResp(rsp)
 }
 
-// GetServiceLabelWithResponse request returning *GetServiceLabelResp
-func (c *ClientWithResponses) GetServiceLabelWithResponse(ctx context.Context, serviceUuid GatewayGetServiceLabelServiceUuid, labelKey GatewayGetServiceLabelLabelKey, reqEditors ...RequestEditorFn) (*GetServiceLabelResp, error) {
-	rsp, err := c.GetServiceLabel(ctx, serviceUuid, labelKey, reqEditors...)
+// GetGatewayServiceLabelWithResponse request returning *GetGatewayServiceLabelResp
+func (c *ClientWithResponses) GetGatewayServiceLabelWithResponse(ctx context.Context, serviceUuid GetGatewayServiceLabelServiceUuid, labelKey GetGatewayServiceLabelLabelKey, reqEditors ...RequestEditorFn) (*GetGatewayServiceLabelResp, error) {
+	rsp, err := c.GetGatewayServiceLabel(ctx, serviceUuid, labelKey, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetServiceLabelResp(rsp)
+	return ParseGetGatewayServiceLabelResp(rsp)
 }
 
-// ModifyServiceLabelWithBodyWithResponse request with arbitrary body returning *ModifyServiceLabelResp
-func (c *ClientWithResponses) ModifyServiceLabelWithBodyWithResponse(ctx context.Context, serviceUuid GatewayModifyServiceLabelServiceUuid, labelKey GatewayModifyServiceLabelLabelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyServiceLabelResp, error) {
-	rsp, err := c.ModifyServiceLabelWithBody(ctx, serviceUuid, labelKey, contentType, body, reqEditors...)
+// ModifyGatewayServiceLabelWithBodyWithResponse request with arbitrary body returning *ModifyGatewayServiceLabelResp
+func (c *ClientWithResponses) ModifyGatewayServiceLabelWithBodyWithResponse(ctx context.Context, serviceUuid ModifyGatewayServiceLabelServiceUuid, labelKey ModifyGatewayServiceLabelLabelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyGatewayServiceLabelResp, error) {
+	rsp, err := c.ModifyGatewayServiceLabelWithBody(ctx, serviceUuid, labelKey, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseModifyServiceLabelResp(rsp)
+	return ParseModifyGatewayServiceLabelResp(rsp)
 }
 
-func (c *ClientWithResponses) ModifyServiceLabelWithResponse(ctx context.Context, serviceUuid GatewayModifyServiceLabelServiceUuid, labelKey GatewayModifyServiceLabelLabelKey, body ModifyServiceLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyServiceLabelResp, error) {
-	rsp, err := c.ModifyServiceLabel(ctx, serviceUuid, labelKey, body, reqEditors...)
+func (c *ClientWithResponses) ModifyGatewayServiceLabelWithResponse(ctx context.Context, serviceUuid ModifyGatewayServiceLabelServiceUuid, labelKey ModifyGatewayServiceLabelLabelKey, body ModifyGatewayServiceLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyGatewayServiceLabelResp, error) {
+	rsp, err := c.ModifyGatewayServiceLabel(ctx, serviceUuid, labelKey, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseModifyServiceLabelResp(rsp)
+	return ParseModifyGatewayServiceLabelResp(rsp)
 }
 
-// CreateServiceogSessionWithBodyWithResponse request with arbitrary body returning *CreateServiceogSessionResp
-func (c *ClientWithResponses) CreateServiceogSessionWithBodyWithResponse(ctx context.Context, serviceUuid GatewayCreateServiceogSessionServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateServiceogSessionResp, error) {
-	rsp, err := c.CreateServiceogSessionWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
+// CreateGatewayServiceLogSessionWithBodyWithResponse request with arbitrary body returning *CreateGatewayServiceLogSessionResp
+func (c *ClientWithResponses) CreateGatewayServiceLogSessionWithBodyWithResponse(ctx context.Context, serviceUuid CreateGatewayServiceLogSessionServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateGatewayServiceLogSessionResp, error) {
+	rsp, err := c.CreateGatewayServiceLogSessionWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateServiceogSessionResp(rsp)
+	return ParseCreateGatewayServiceLogSessionResp(rsp)
 }
 
-func (c *ClientWithResponses) CreateServiceogSessionWithResponse(ctx context.Context, serviceUuid GatewayCreateServiceogSessionServiceUuid, body CreateServiceogSessionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateServiceogSessionResp, error) {
-	rsp, err := c.CreateServiceogSession(ctx, serviceUuid, body, reqEditors...)
+func (c *ClientWithResponses) CreateGatewayServiceLogSessionWithResponse(ctx context.Context, serviceUuid CreateGatewayServiceLogSessionServiceUuid, body CreateGatewayServiceLogSessionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateGatewayServiceLogSessionResp, error) {
+	rsp, err := c.CreateGatewayServiceLogSession(ctx, serviceUuid, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateServiceogSessionResp(rsp)
+	return ParseCreateGatewayServiceLogSessionResp(rsp)
 }
 
-// GetMetricsWithResponse request returning *GetMetricsResp
-func (c *ClientWithResponses) GetMetricsWithResponse(ctx context.Context, serviceUuid GatewayGetMetricsServiceUuid, reqEditors ...RequestEditorFn) (*GetMetricsResp, error) {
-	rsp, err := c.GetMetrics(ctx, serviceUuid, reqEditors...)
+// GetGatewayMetricsWithResponse request returning *GetGatewayMetricsResp
+func (c *ClientWithResponses) GetGatewayMetricsWithResponse(ctx context.Context, serviceUuid GetGatewayMetricsServiceUuid, reqEditors ...RequestEditorFn) (*GetGatewayMetricsResp, error) {
+	rsp, err := c.GetGatewayMetrics(ctx, serviceUuid, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetMetricsResp(rsp)
+	return ParseGetGatewayMetricsResp(rsp)
 }
 
 // ListIPAddressesWithResponse request returning *ListIPAddressesResp
@@ -75134,29 +75109,29 @@ func ParseModifyFirewallRulesetRuleResp(rsp *http.Response) (*ModifyFirewallRule
 	return response, nil
 }
 
-// ParseListServicesResp parses an HTTP response from a ListServicesWithResponse call
-func ParseListServicesResp(rsp *http.Response) (*ListServicesResp, error) {
+// ParseListGatewayServicesResp parses an HTTP response from a ListGatewayServicesWithResponse call
+func ParseListGatewayServicesResp(rsp *http.Response) (*ListGatewayServicesResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &ListServicesResp{
+	response := &ListGatewayServicesResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GatewayListServices200
+		var dest ListGatewayServices200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayListServicesDefault
+		var dest ListGatewayServicesDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75167,29 +75142,29 @@ func ParseListServicesResp(rsp *http.Response) (*ListServicesResp, error) {
 	return response, nil
 }
 
-// ParseCreateServiceResp parses an HTTP response from a CreateServiceWithResponse call
-func ParseCreateServiceResp(rsp *http.Response) (*CreateServiceResp, error) {
+// ParseCreateGatewayServiceResp parses an HTTP response from a CreateGatewayServiceWithResponse call
+func ParseCreateGatewayServiceResp(rsp *http.Response) (*CreateGatewayServiceResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &CreateServiceResp{
+	response := &CreateGatewayServiceResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GatewayCreateService200
+		var dest CreateGatewayService200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayCreateServiceDefault
+		var dest CreateGatewayServiceDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75266,22 +75241,22 @@ func ParseGetPlanResp(rsp *http.Response) (*GetPlanResp, error) {
 	return response, nil
 }
 
-// ParseDeleteServiceResp parses an HTTP response from a DeleteServiceWithResponse call
-func ParseDeleteServiceResp(rsp *http.Response) (*DeleteServiceResp, error) {
+// ParseDeleteGatewayServiceResp parses an HTTP response from a DeleteGatewayServiceWithResponse call
+func ParseDeleteGatewayServiceResp(rsp *http.Response) (*DeleteGatewayServiceResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &DeleteServiceResp{
+	response := &DeleteGatewayServiceResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayDeleteServiceDefault
+		var dest DeleteGatewayServiceDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75292,29 +75267,29 @@ func ParseDeleteServiceResp(rsp *http.Response) (*DeleteServiceResp, error) {
 	return response, nil
 }
 
-// ParseGetServiceResp parses an HTTP response from a GetServiceWithResponse call
-func ParseGetServiceResp(rsp *http.Response) (*GetServiceResp, error) {
+// ParseGetGatewayServiceResp parses an HTTP response from a GetGatewayServiceWithResponse call
+func ParseGetGatewayServiceResp(rsp *http.Response) (*GetGatewayServiceResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetServiceResp{
+	response := &GetGatewayServiceResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GatewayGetService200
+		var dest GetGatewayService200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayGetServiceDefault
+		var dest GetGatewayServiceDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75325,29 +75300,29 @@ func ParseGetServiceResp(rsp *http.Response) (*GetServiceResp, error) {
 	return response, nil
 }
 
-// ParseModifyServiceResp parses an HTTP response from a ModifyServiceWithResponse call
-func ParseModifyServiceResp(rsp *http.Response) (*ModifyServiceResp, error) {
+// ParseModifyGatewayServiceResp parses an HTTP response from a ModifyGatewayServiceWithResponse call
+func ParseModifyGatewayServiceResp(rsp *http.Response) (*ModifyGatewayServiceResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &ModifyServiceResp{
+	response := &ModifyGatewayServiceResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GatewayModifyService200
+		var dest ModifyGatewayService200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayModifyServiceDefault
+		var dest ModifyGatewayServiceDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75358,29 +75333,29 @@ func ParseModifyServiceResp(rsp *http.Response) (*ModifyServiceResp, error) {
 	return response, nil
 }
 
-// ParseReplaceServiceResp parses an HTTP response from a ReplaceServiceWithResponse call
-func ParseReplaceServiceResp(rsp *http.Response) (*ReplaceServiceResp, error) {
+// ParseReplaceGatewayServiceResp parses an HTTP response from a ReplaceGatewayServiceWithResponse call
+func ParseReplaceGatewayServiceResp(rsp *http.Response) (*ReplaceGatewayServiceResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &ReplaceServiceResp{
+	response := &ReplaceGatewayServiceResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GatewayReplaceService200
+		var dest ReplaceGatewayService200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayReplaceServiceDefault
+		var dest ReplaceGatewayServiceDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75391,22 +75366,22 @@ func ParseReplaceServiceResp(rsp *http.Response) (*ReplaceServiceResp, error) {
 	return response, nil
 }
 
-// ParseFlushNatResp parses an HTTP response from a FlushNatWithResponse call
-func ParseFlushNatResp(rsp *http.Response) (*FlushNatResp, error) {
+// ParseFlushGatewayNatResp parses an HTTP response from a FlushGatewayNatWithResponse call
+func ParseFlushGatewayNatResp(rsp *http.Response) (*FlushGatewayNatResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &FlushNatResp{
+	response := &FlushGatewayNatResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayFlushNatDefault
+		var dest FlushGatewayNatDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75417,29 +75392,29 @@ func ParseFlushNatResp(rsp *http.Response) (*FlushNatResp, error) {
 	return response, nil
 }
 
-// ParseListAddressesResp parses an HTTP response from a ListAddressesWithResponse call
-func ParseListAddressesResp(rsp *http.Response) (*ListAddressesResp, error) {
+// ParseListGatewayAddressesResp parses an HTTP response from a ListGatewayAddressesWithResponse call
+func ParseListGatewayAddressesResp(rsp *http.Response) (*ListGatewayAddressesResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &ListAddressesResp{
+	response := &ListGatewayAddressesResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GatewayListAddresses200
+		var dest ListGatewayAddresses200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayListAddressesDefault
+		var dest ListGatewayAddressesDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75450,29 +75425,29 @@ func ParseListAddressesResp(rsp *http.Response) (*ListAddressesResp, error) {
 	return response, nil
 }
 
-// ParseCreateAddressResp parses an HTTP response from a CreateAddressWithResponse call
-func ParseCreateAddressResp(rsp *http.Response) (*CreateAddressResp, error) {
+// ParseCreateGatewayAddressResp parses an HTTP response from a CreateGatewayAddressWithResponse call
+func ParseCreateGatewayAddressResp(rsp *http.Response) (*CreateGatewayAddressResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &CreateAddressResp{
+	response := &CreateGatewayAddressResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GatewayCreateAddress200
+		var dest CreateGatewayAddress200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayCreateAddressDefault
+		var dest CreateGatewayAddressDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75483,22 +75458,22 @@ func ParseCreateAddressResp(rsp *http.Response) (*CreateAddressResp, error) {
 	return response, nil
 }
 
-// ParseDeleteAddressResp parses an HTTP response from a DeleteAddressWithResponse call
-func ParseDeleteAddressResp(rsp *http.Response) (*DeleteAddressResp, error) {
+// ParseDeleteGatewayAddressResp parses an HTTP response from a DeleteGatewayAddressWithResponse call
+func ParseDeleteGatewayAddressResp(rsp *http.Response) (*DeleteGatewayAddressResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &DeleteAddressResp{
+	response := &DeleteGatewayAddressResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayDeleteAddressDefault
+		var dest DeleteGatewayAddressDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75509,29 +75484,29 @@ func ParseDeleteAddressResp(rsp *http.Response) (*DeleteAddressResp, error) {
 	return response, nil
 }
 
-// ParseGetAddressResp parses an HTTP response from a GetAddressWithResponse call
-func ParseGetAddressResp(rsp *http.Response) (*GetAddressResp, error) {
+// ParseGetGatewayAddressResp parses an HTTP response from a GetGatewayAddressWithResponse call
+func ParseGetGatewayAddressResp(rsp *http.Response) (*GetGatewayAddressResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetAddressResp{
+	response := &GetGatewayAddressResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GatewayGetAddress200
+		var dest GetGatewayAddress200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayGetAddressDefault
+		var dest GetGatewayAddressDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75542,29 +75517,29 @@ func ParseGetAddressResp(rsp *http.Response) (*GetAddressResp, error) {
 	return response, nil
 }
 
-// ParseListConnectionsResp parses an HTTP response from a ListConnectionsWithResponse call
-func ParseListConnectionsResp(rsp *http.Response) (*ListConnectionsResp, error) {
+// ParseListGatewayConnectionsResp parses an HTTP response from a ListGatewayConnectionsWithResponse call
+func ParseListGatewayConnectionsResp(rsp *http.Response) (*ListGatewayConnectionsResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &ListConnectionsResp{
+	response := &ListGatewayConnectionsResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GatewayListConnections200
+		var dest ListGatewayConnections200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayListConnectionsDefault
+		var dest ListGatewayConnectionsDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75575,29 +75550,29 @@ func ParseListConnectionsResp(rsp *http.Response) (*ListConnectionsResp, error) 
 	return response, nil
 }
 
-// ParseCreateConnectionResp parses an HTTP response from a CreateConnectionWithResponse call
-func ParseCreateConnectionResp(rsp *http.Response) (*CreateConnectionResp, error) {
+// ParseCreateGatewayConnectionResp parses an HTTP response from a CreateGatewayConnectionWithResponse call
+func ParseCreateGatewayConnectionResp(rsp *http.Response) (*CreateGatewayConnectionResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &CreateConnectionResp{
+	response := &CreateGatewayConnectionResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GatewayCreateConnection200
+		var dest CreateGatewayConnection200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayCreateConnectionDefault
+		var dest CreateGatewayConnectionDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75608,22 +75583,22 @@ func ParseCreateConnectionResp(rsp *http.Response) (*CreateConnectionResp, error
 	return response, nil
 }
 
-// ParseDeleteConnectionResp parses an HTTP response from a DeleteConnectionWithResponse call
-func ParseDeleteConnectionResp(rsp *http.Response) (*DeleteConnectionResp, error) {
+// ParseDeleteGatewayConnectionResp parses an HTTP response from a DeleteGatewayConnectionWithResponse call
+func ParseDeleteGatewayConnectionResp(rsp *http.Response) (*DeleteGatewayConnectionResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &DeleteConnectionResp{
+	response := &DeleteGatewayConnectionResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayDeleteConnectionDefault
+		var dest DeleteGatewayConnectionDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75634,29 +75609,29 @@ func ParseDeleteConnectionResp(rsp *http.Response) (*DeleteConnectionResp, error
 	return response, nil
 }
 
-// ParseGetConnectionResp parses an HTTP response from a GetConnectionWithResponse call
-func ParseGetConnectionResp(rsp *http.Response) (*GetConnectionResp, error) {
+// ParseGetGatewayConnectionResp parses an HTTP response from a GetGatewayConnectionWithResponse call
+func ParseGetGatewayConnectionResp(rsp *http.Response) (*GetGatewayConnectionResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetConnectionResp{
+	response := &GetGatewayConnectionResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GatewayGetConnection200
+		var dest GetGatewayConnection200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayGetConnectionDefault
+		var dest GetGatewayConnectionDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75667,29 +75642,29 @@ func ParseGetConnectionResp(rsp *http.Response) (*GetConnectionResp, error) {
 	return response, nil
 }
 
-// ParseModifyConnectionResp parses an HTTP response from a ModifyConnectionWithResponse call
-func ParseModifyConnectionResp(rsp *http.Response) (*ModifyConnectionResp, error) {
+// ParseModifyGatewayConnectionResp parses an HTTP response from a ModifyGatewayConnectionWithResponse call
+func ParseModifyGatewayConnectionResp(rsp *http.Response) (*ModifyGatewayConnectionResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &ModifyConnectionResp{
+	response := &ModifyGatewayConnectionResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GatewayModifyConnection200
+		var dest ModifyGatewayConnection200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayModifyConnectionDefault
+		var dest ModifyGatewayConnectionDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75700,29 +75675,29 @@ func ParseModifyConnectionResp(rsp *http.Response) (*ModifyConnectionResp, error
 	return response, nil
 }
 
-// ParseListTunnelsResp parses an HTTP response from a ListTunnelsWithResponse call
-func ParseListTunnelsResp(rsp *http.Response) (*ListTunnelsResp, error) {
+// ParseListGatewayTunnelsResp parses an HTTP response from a ListGatewayTunnelsWithResponse call
+func ParseListGatewayTunnelsResp(rsp *http.Response) (*ListGatewayTunnelsResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &ListTunnelsResp{
+	response := &ListGatewayTunnelsResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GatewayListTunnels200
+		var dest ListGatewayTunnels200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayListTunnelsDefault
+		var dest ListGatewayTunnelsDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75733,29 +75708,29 @@ func ParseListTunnelsResp(rsp *http.Response) (*ListTunnelsResp, error) {
 	return response, nil
 }
 
-// ParseCreateTunnelResp parses an HTTP response from a CreateTunnelWithResponse call
-func ParseCreateTunnelResp(rsp *http.Response) (*CreateTunnelResp, error) {
+// ParseCreateGatewayTunnelResp parses an HTTP response from a CreateGatewayTunnelWithResponse call
+func ParseCreateGatewayTunnelResp(rsp *http.Response) (*CreateGatewayTunnelResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &CreateTunnelResp{
+	response := &CreateGatewayTunnelResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GatewayCreateTunnel200
+		var dest CreateGatewayTunnel200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayCreateTunnelDefault
+		var dest CreateGatewayTunnelDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75766,22 +75741,22 @@ func ParseCreateTunnelResp(rsp *http.Response) (*CreateTunnelResp, error) {
 	return response, nil
 }
 
-// ParseDeleteTunnelResp parses an HTTP response from a DeleteTunnelWithResponse call
-func ParseDeleteTunnelResp(rsp *http.Response) (*DeleteTunnelResp, error) {
+// ParseDeleteGatewayTunnelResp parses an HTTP response from a DeleteGatewayTunnelWithResponse call
+func ParseDeleteGatewayTunnelResp(rsp *http.Response) (*DeleteGatewayTunnelResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &DeleteTunnelResp{
+	response := &DeleteGatewayTunnelResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayDeleteTunnelDefault
+		var dest DeleteGatewayTunnelDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75792,29 +75767,29 @@ func ParseDeleteTunnelResp(rsp *http.Response) (*DeleteTunnelResp, error) {
 	return response, nil
 }
 
-// ParseGetTunnelResp parses an HTTP response from a GetTunnelWithResponse call
-func ParseGetTunnelResp(rsp *http.Response) (*GetTunnelResp, error) {
+// ParseGetGatewayTunnelResp parses an HTTP response from a GetGatewayTunnelWithResponse call
+func ParseGetGatewayTunnelResp(rsp *http.Response) (*GetGatewayTunnelResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetTunnelResp{
+	response := &GetGatewayTunnelResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GatewayGetTunnel200
+		var dest GetGatewayTunnel200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayGetTunnelDefault
+		var dest GetGatewayTunnelDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75825,29 +75800,29 @@ func ParseGetTunnelResp(rsp *http.Response) (*GetTunnelResp, error) {
 	return response, nil
 }
 
-// ParseModifyTunnelResp parses an HTTP response from a ModifyTunnelWithResponse call
-func ParseModifyTunnelResp(rsp *http.Response) (*ModifyTunnelResp, error) {
+// ParseModifyGatewayTunnelResp parses an HTTP response from a ModifyGatewayTunnelWithResponse call
+func ParseModifyGatewayTunnelResp(rsp *http.Response) (*ModifyGatewayTunnelResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &ModifyTunnelResp{
+	response := &ModifyGatewayTunnelResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GatewayModifyTunnel200
+		var dest ModifyGatewayTunnel200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayModifyTunnelDefault
+		var dest ModifyGatewayTunnelDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75858,29 +75833,29 @@ func ParseModifyTunnelResp(rsp *http.Response) (*ModifyTunnelResp, error) {
 	return response, nil
 }
 
-// ParseListServiceLabelsResp parses an HTTP response from a ListServiceLabelsWithResponse call
-func ParseListServiceLabelsResp(rsp *http.Response) (*ListServiceLabelsResp, error) {
+// ParseListGatewayServiceLabelsResp parses an HTTP response from a ListGatewayServiceLabelsWithResponse call
+func ParseListGatewayServiceLabelsResp(rsp *http.Response) (*ListGatewayServiceLabelsResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &ListServiceLabelsResp{
+	response := &ListGatewayServiceLabelsResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GatewayListServiceLabels200
+		var dest ListGatewayServiceLabels200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayListServiceLabelsDefault
+		var dest ListGatewayServiceLabelsDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75891,22 +75866,22 @@ func ParseListServiceLabelsResp(rsp *http.Response) (*ListServiceLabelsResp, err
 	return response, nil
 }
 
-// ParseCreateServiceLabelResp parses an HTTP response from a CreateServiceLabelWithResponse call
-func ParseCreateServiceLabelResp(rsp *http.Response) (*CreateServiceLabelResp, error) {
+// ParseCreateGatewayServiceLabelResp parses an HTTP response from a CreateGatewayServiceLabelWithResponse call
+func ParseCreateGatewayServiceLabelResp(rsp *http.Response) (*CreateGatewayServiceLabelResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &CreateServiceLabelResp{
+	response := &CreateGatewayServiceLabelResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayCreateServiceLabelDefault
+		var dest CreateGatewayServiceLabelDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75917,22 +75892,22 @@ func ParseCreateServiceLabelResp(rsp *http.Response) (*CreateServiceLabelResp, e
 	return response, nil
 }
 
-// ParseDeleteServiceLabelResp parses an HTTP response from a DeleteServiceLabelWithResponse call
-func ParseDeleteServiceLabelResp(rsp *http.Response) (*DeleteServiceLabelResp, error) {
+// ParseDeleteGatewayServiceLabelResp parses an HTTP response from a DeleteGatewayServiceLabelWithResponse call
+func ParseDeleteGatewayServiceLabelResp(rsp *http.Response) (*DeleteGatewayServiceLabelResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &DeleteServiceLabelResp{
+	response := &DeleteGatewayServiceLabelResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayDeleteServiceLabelDefault
+		var dest DeleteGatewayServiceLabelDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75943,29 +75918,29 @@ func ParseDeleteServiceLabelResp(rsp *http.Response) (*DeleteServiceLabelResp, e
 	return response, nil
 }
 
-// ParseGetServiceLabelResp parses an HTTP response from a GetServiceLabelWithResponse call
-func ParseGetServiceLabelResp(rsp *http.Response) (*GetServiceLabelResp, error) {
+// ParseGetGatewayServiceLabelResp parses an HTTP response from a GetGatewayServiceLabelWithResponse call
+func ParseGetGatewayServiceLabelResp(rsp *http.Response) (*GetGatewayServiceLabelResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetServiceLabelResp{
+	response := &GetGatewayServiceLabelResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GatewayGetServiceLabel200
+		var dest GetGatewayServiceLabel200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayGetServiceLabelDefault
+		var dest GetGatewayServiceLabelDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75976,22 +75951,22 @@ func ParseGetServiceLabelResp(rsp *http.Response) (*GetServiceLabelResp, error) 
 	return response, nil
 }
 
-// ParseModifyServiceLabelResp parses an HTTP response from a ModifyServiceLabelWithResponse call
-func ParseModifyServiceLabelResp(rsp *http.Response) (*ModifyServiceLabelResp, error) {
+// ParseModifyGatewayServiceLabelResp parses an HTTP response from a ModifyGatewayServiceLabelWithResponse call
+func ParseModifyGatewayServiceLabelResp(rsp *http.Response) (*ModifyGatewayServiceLabelResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &ModifyServiceLabelResp{
+	response := &ModifyGatewayServiceLabelResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayModifyServiceLabelDefault
+		var dest ModifyGatewayServiceLabelDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -76002,62 +75977,62 @@ func ParseModifyServiceLabelResp(rsp *http.Response) (*ModifyServiceLabelResp, e
 	return response, nil
 }
 
-// ParseCreateServiceogSessionResp parses an HTTP response from a CreateServiceogSessionWithResponse call
-func ParseCreateServiceogSessionResp(rsp *http.Response) (*CreateServiceogSessionResp, error) {
+// ParseCreateGatewayServiceLogSessionResp parses an HTTP response from a CreateGatewayServiceLogSessionWithResponse call
+func ParseCreateGatewayServiceLogSessionResp(rsp *http.Response) (*CreateGatewayServiceLogSessionResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &CreateServiceogSessionResp{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GatewayCreateServiceogSession200
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayCreateServiceogSessionDefault
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSONDefault = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseGetMetricsResp parses an HTTP response from a GetMetricsWithResponse call
-func ParseGetMetricsResp(rsp *http.Response) (*GetMetricsResp, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetMetricsResp{
+	response := &CreateGatewayServiceLogSessionResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GatewayGetMetrics200
+		var dest CreateGatewayServiceLogSession200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayGetMetricsDefault
+		var dest CreateGatewayServiceLogSessionDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetGatewayMetricsResp parses an HTTP response from a GetGatewayMetricsWithResponse call
+func ParseGetGatewayMetricsResp(rsp *http.Response) (*GetGatewayMetricsResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetGatewayMetricsResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest GetGatewayMetrics200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest GetGatewayMetricsDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
