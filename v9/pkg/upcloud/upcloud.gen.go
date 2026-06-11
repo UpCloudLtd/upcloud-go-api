@@ -16142,15 +16142,6 @@ type FirewallRulesetListServerFirewallRuleSort = FirewallRulesetQueryParamSort
 // FlushGatewayNatServiceUuid The unique identifier for the resource.
 type FlushGatewayNatServiceUuid = GatewayUuid
 
-// GatewayGetPlanPlanName The unique identifier for the resource.
-type GatewayGetPlanPlanName = GatewayUuid
-
-// GatewayListPlansLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
-type GatewayListPlansLimit = GatewayQueryParamlimit
-
-// GatewayListPlansOffset Schema for a query parameter specifying the offset for pagination.
-type GatewayListPlansOffset = GatewayQueryParamOffset
-
 // GetAvailablePassthroughDevicesType defines model for getAvailablePassthroughDevicesType.
 type GetAvailablePassthroughDevicesType string
 
@@ -16327,6 +16318,9 @@ type GetGatewayConnectionServiceUuid = GatewayUuid
 
 // GetGatewayMetricsServiceUuid The unique identifier for the resource.
 type GetGatewayMetricsServiceUuid = GatewayUuid
+
+// GetGatewayPlanPlanName The unique identifier for the resource.
+type GetGatewayPlanPlanName = GatewayUuid
 
 // GetGatewayServiceLabelLabelKey The key of a label.
 type GetGatewayServiceLabelLabelKey = GatewayLabelKey
@@ -16648,6 +16642,12 @@ type ListGatewayAddressesServiceUuid = GatewayUuid
 
 // ListGatewayConnectionsServiceUuid The unique identifier for the resource.
 type ListGatewayConnectionsServiceUuid = GatewayUuid
+
+// ListGatewayPlansLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
+type ListGatewayPlansLimit = GatewayQueryParamlimit
+
+// ListGatewayPlansOffset Schema for a query parameter specifying the offset for pagination.
+type ListGatewayPlansOffset = GatewayQueryParamOffset
 
 // ListGatewayServiceLabelsServiceUuid The unique identifier for the resource.
 type ListGatewayServiceLabelsServiceUuid = GatewayUuid
@@ -18263,18 +18263,6 @@ type FirewallRulesetListServerFirewallRuleDefault = FirewallRulesetErrorResponse
 // FlushGatewayNatDefault Schema for error responses from the API.
 type FlushGatewayNatDefault = GatewayErrorResponse
 
-// GatewayGetPlan200 Response schema for gwaas plan details.
-type GatewayGetPlan200 = GatewayPlanDetailsResponse
-
-// GatewayGetPlanDefault Schema for error responses from the API.
-type GatewayGetPlanDefault = GatewayErrorResponse
-
-// GatewayListPlans200 Response schema for a list of gwaas plans.
-type GatewayListPlans200 = GatewayPlanListResponse
-
-// GatewayListPlansDefault Schema for error responses from the API.
-type GatewayListPlansDefault = GatewayErrorResponse
-
 // GetAvailablePassthroughDevices200 Zone device availability
 type GetAvailablePassthroughDevices200 = Devices
 
@@ -18496,6 +18484,12 @@ type GetGatewayMetrics200 = GatewayServiceMetricsResponse
 
 // GetGatewayMetricsDefault Schema for error responses from the API.
 type GetGatewayMetricsDefault = GatewayErrorResponse
+
+// GetGatewayPlan200 Response schema for gwaas plan details.
+type GetGatewayPlan200 = GatewayPlanDetailsResponse
+
+// GetGatewayPlanDefault Schema for error responses from the API.
+type GetGatewayPlanDefault = GatewayErrorResponse
 
 // GetGatewayService200 Gateway Service
 type GetGatewayService200 = GatewayServiceDetailsResponse
@@ -18937,6 +18931,12 @@ type ListGatewayConnections200 = GatewayConnectionListResponse
 
 // ListGatewayConnectionsDefault Schema for error responses from the API.
 type ListGatewayConnectionsDefault = GatewayErrorResponse
+
+// ListGatewayPlans200 Response schema for a list of gwaas plans.
+type ListGatewayPlans200 = GatewayPlanListResponse
+
+// ListGatewayPlansDefault Schema for error responses from the API.
+type ListGatewayPlansDefault = GatewayErrorResponse
 
 // ListGatewayServiceLabels200 Response schema for a list of service labels.
 type ListGatewayServiceLabels200 = GatewayServiceLabelListResponse
@@ -20543,13 +20543,13 @@ type ListGatewayServicesParams struct {
 	Offset *ListGatewayServicesOffset `form:"offset,omitempty" json:"offset,omitempty"`
 }
 
-// ListPlansParams defines parameters for ListPlans.
-type ListPlansParams struct {
+// ListGatewayPlansParams defines parameters for ListGatewayPlans.
+type ListGatewayPlansParams struct {
 	// Limit Number of entries to receive at most.
-	Limit *GatewayListPlansLimit `form:"limit,omitempty" json:"limit,omitempty"`
+	Limit *ListGatewayPlansLimit `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Offset Offset for retrieved results.
-	Offset *GatewayListPlansOffset `form:"offset,omitempty" json:"offset,omitempty"`
+	Offset *ListGatewayPlansOffset `form:"offset,omitempty" json:"offset,omitempty"`
 }
 
 // ListLoadBalancersParams defines parameters for ListLoadBalancers.
@@ -28777,11 +28777,11 @@ type ClientInterface interface {
 
 	CreateGatewayService(ctx context.Context, body CreateGatewayServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ListPlans request
-	ListPlans(ctx context.Context, params *ListPlansParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// ListGatewayPlans request
+	ListGatewayPlans(ctx context.Context, params *ListGatewayPlansParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetPlan request
-	GetPlan(ctx context.Context, planName GatewayGetPlanPlanName, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// GetGatewayPlan request
+	GetGatewayPlan(ctx context.Context, planName GetGatewayPlanPlanName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteGatewayService request
 	DeleteGatewayService(ctx context.Context, serviceUuid DeleteGatewayServiceServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -31904,8 +31904,8 @@ func (c *Client) CreateGatewayService(ctx context.Context, body CreateGatewaySer
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListPlans(ctx context.Context, params *ListPlansParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListPlansRequest(c.Server, params)
+func (c *Client) ListGatewayPlans(ctx context.Context, params *ListGatewayPlansParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListGatewayPlansRequest(c.Server, params)
 	if err != nil {
 		return nil, err
 	}
@@ -31916,8 +31916,8 @@ func (c *Client) ListPlans(ctx context.Context, params *ListPlansParams, reqEdit
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetPlan(ctx context.Context, planName GatewayGetPlanPlanName, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetPlanRequest(c.Server, planName)
+func (c *Client) GetGatewayPlan(ctx context.Context, planName GetGatewayPlanPlanName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetGatewayPlanRequest(c.Server, planName)
 	if err != nil {
 		return nil, err
 	}
@@ -42240,8 +42240,8 @@ func NewCreateGatewayServiceRequestWithBody(server string, contentType string, b
 	return req, nil
 }
 
-// NewListPlansRequest generates requests for ListPlans
-func NewListPlansRequest(server string, params *ListPlansParams) (*http.Request, error) {
+// NewListGatewayPlansRequest generates requests for ListGatewayPlans
+func NewListGatewayPlansRequest(server string, params *ListGatewayPlansParams) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -42305,8 +42305,8 @@ func NewListPlansRequest(server string, params *ListPlansParams) (*http.Request,
 	return req, nil
 }
 
-// NewGetPlanRequest generates requests for GetPlan
-func NewGetPlanRequest(server string, planName GatewayGetPlanPlanName) (*http.Request, error) {
+// NewGetGatewayPlanRequest generates requests for GetGatewayPlan
+func NewGetGatewayPlanRequest(server string, planName GetGatewayPlanPlanName) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -55452,11 +55452,11 @@ type ClientWithResponsesInterface interface {
 
 	CreateGatewayServiceWithResponse(ctx context.Context, body CreateGatewayServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateGatewayServiceResp, error)
 
-	// ListPlansWithResponse request
-	ListPlansWithResponse(ctx context.Context, params *ListPlansParams, reqEditors ...RequestEditorFn) (*ListPlansResp, error)
+	// ListGatewayPlansWithResponse request
+	ListGatewayPlansWithResponse(ctx context.Context, params *ListGatewayPlansParams, reqEditors ...RequestEditorFn) (*ListGatewayPlansResp, error)
 
-	// GetPlanWithResponse request
-	GetPlanWithResponse(ctx context.Context, planName GatewayGetPlanPlanName, reqEditors ...RequestEditorFn) (*GetPlanResp, error)
+	// GetGatewayPlanWithResponse request
+	GetGatewayPlanWithResponse(ctx context.Context, planName GetGatewayPlanPlanName, reqEditors ...RequestEditorFn) (*GetGatewayPlanResp, error)
 
 	// DeleteGatewayServiceWithResponse request
 	DeleteGatewayServiceWithResponse(ctx context.Context, serviceUuid DeleteGatewayServiceServiceUuid, reqEditors ...RequestEditorFn) (*DeleteGatewayServiceResp, error)
@@ -59476,15 +59476,15 @@ func (r CreateGatewayServiceResp) StatusCode() int {
 	return 0
 }
 
-type ListPlansResp struct {
+type ListGatewayPlansResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *GatewayListPlans200
-	ApplicationproblemJSONDefault *GatewayListPlansDefault
+	JSON200                       *ListGatewayPlans200
+	ApplicationproblemJSONDefault *ListGatewayPlansDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r ListPlansResp) Status() string {
+func (r ListGatewayPlansResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -59492,22 +59492,22 @@ func (r ListPlansResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r ListPlansResp) StatusCode() int {
+func (r ListGatewayPlansResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetPlanResp struct {
+type GetGatewayPlanResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
-	JSON200                       *GatewayGetPlan200
-	ApplicationproblemJSONDefault *GatewayGetPlanDefault
+	JSON200                       *GetGatewayPlan200
+	ApplicationproblemJSONDefault *GetGatewayPlanDefault
 }
 
 // Status returns HTTPResponse.Status
-func (r GetPlanResp) Status() string {
+func (r GetGatewayPlanResp) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -59515,7 +59515,7 @@ func (r GetPlanResp) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetPlanResp) StatusCode() int {
+func (r GetGatewayPlanResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -67528,22 +67528,22 @@ func (c *ClientWithResponses) CreateGatewayServiceWithResponse(ctx context.Conte
 	return ParseCreateGatewayServiceResp(rsp)
 }
 
-// ListPlansWithResponse request returning *ListPlansResp
-func (c *ClientWithResponses) ListPlansWithResponse(ctx context.Context, params *ListPlansParams, reqEditors ...RequestEditorFn) (*ListPlansResp, error) {
-	rsp, err := c.ListPlans(ctx, params, reqEditors...)
+// ListGatewayPlansWithResponse request returning *ListGatewayPlansResp
+func (c *ClientWithResponses) ListGatewayPlansWithResponse(ctx context.Context, params *ListGatewayPlansParams, reqEditors ...RequestEditorFn) (*ListGatewayPlansResp, error) {
+	rsp, err := c.ListGatewayPlans(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseListPlansResp(rsp)
+	return ParseListGatewayPlansResp(rsp)
 }
 
-// GetPlanWithResponse request returning *GetPlanResp
-func (c *ClientWithResponses) GetPlanWithResponse(ctx context.Context, planName GatewayGetPlanPlanName, reqEditors ...RequestEditorFn) (*GetPlanResp, error) {
-	rsp, err := c.GetPlan(ctx, planName, reqEditors...)
+// GetGatewayPlanWithResponse request returning *GetGatewayPlanResp
+func (c *ClientWithResponses) GetGatewayPlanWithResponse(ctx context.Context, planName GetGatewayPlanPlanName, reqEditors ...RequestEditorFn) (*GetGatewayPlanResp, error) {
+	rsp, err := c.GetGatewayPlan(ctx, planName, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetPlanResp(rsp)
+	return ParseGetGatewayPlanResp(rsp)
 }
 
 // DeleteGatewayServiceWithResponse request returning *DeleteGatewayServiceResp
@@ -75175,29 +75175,29 @@ func ParseCreateGatewayServiceResp(rsp *http.Response) (*CreateGatewayServiceRes
 	return response, nil
 }
 
-// ParseListPlansResp parses an HTTP response from a ListPlansWithResponse call
-func ParseListPlansResp(rsp *http.Response) (*ListPlansResp, error) {
+// ParseListGatewayPlansResp parses an HTTP response from a ListGatewayPlansWithResponse call
+func ParseListGatewayPlansResp(rsp *http.Response) (*ListGatewayPlansResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &ListPlansResp{
+	response := &ListGatewayPlansResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GatewayListPlans200
+		var dest ListGatewayPlans200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayListPlansDefault
+		var dest ListGatewayPlansDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75208,29 +75208,29 @@ func ParseListPlansResp(rsp *http.Response) (*ListPlansResp, error) {
 	return response, nil
 }
 
-// ParseGetPlanResp parses an HTTP response from a GetPlanWithResponse call
-func ParseGetPlanResp(rsp *http.Response) (*GetPlanResp, error) {
+// ParseGetGatewayPlanResp parses an HTTP response from a GetGatewayPlanWithResponse call
+func ParseGetGatewayPlanResp(rsp *http.Response) (*GetGatewayPlanResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetPlanResp{
+	response := &GetGatewayPlanResp{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GatewayGetPlan200
+		var dest GetGatewayPlan200
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GatewayGetPlanDefault
+		var dest GetGatewayPlanDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
