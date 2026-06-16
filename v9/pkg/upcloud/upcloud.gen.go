@@ -477,13 +477,13 @@ func (e DatabaseServicePropertiesMysqlVersion) Valid() bool {
 
 // Defines values for DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingAuthenticationBackend.
 const (
-	DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingAuthenticationBackendInternal DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingAuthenticationBackend = "internal"
+	Internal DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingAuthenticationBackend = "internal"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingAuthenticationBackend enum.
 func (e DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingAuthenticationBackend) Valid() bool {
 	switch e {
-	case DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingAuthenticationBackendInternal:
+	case Internal:
 		return true
 	default:
 		return false
@@ -2878,24 +2878,6 @@ func (e LoadBalancerNetworkType) Valid() bool {
 	case LoadBalancerNetworkTypePrivate:
 		return true
 	case LoadBalancerNetworkTypePublic:
-		return true
-	default:
-		return false
-	}
-}
-
-// Defines values for LoadBalancerPlanType.
-const (
-	LoadBalancerPlanTypeInternal LoadBalancerPlanType = "internal"
-	LoadBalancerPlanTypePublic   LoadBalancerPlanType = "public"
-)
-
-// Valid indicates whether the value is a known member of the LoadBalancerPlanType enum.
-func (e LoadBalancerPlanType) Valid() bool {
-	switch e {
-	case LoadBalancerPlanTypeInternal:
-		return true
-	case LoadBalancerPlanTypePublic:
 		return true
 	default:
 		return false
@@ -9024,6 +9006,11 @@ type FirewallRulesetErrorResponse struct {
 	Type string `json:"type"`
 }
 
+// FirewallRulesetFirewallMultipleRuleCreate defines model for firewallRulesetFirewallMultipleRuleCreate.
+type FirewallRulesetFirewallMultipleRuleCreate struct {
+	Rules []FirewallRulesetFirewallRuleCreate `json:"rules"`
+}
+
 // FirewallRulesetFirewallRuleCreate defines model for firewallRulesetFirewallRuleCreate.
 type FirewallRulesetFirewallRuleCreate struct {
 	Action interface{} `json:"action"`
@@ -9493,7 +9480,7 @@ type GatewayAddressDetailsResponse struct {
 	Name *string `json:"name,omitempty"`
 }
 
-// GatewayAddressListResponse Response schema for a list of gwaas addresses.
+// GatewayAddressListResponse Response schema for a list of Gateway addresses.
 type GatewayAddressListResponse = []GatewayAddressDetailsResponse
 
 // GatewayAuthenticationDetailsResponse Authentication details
@@ -9535,7 +9522,7 @@ type GatewayConnectionCreateRequest struct {
 	Type *GatewayConnectionType `json:"type,omitempty"`
 }
 
-// GatewayConnectionDetailsResponse Response schema for gwaas connection details.
+// GatewayConnectionDetailsResponse Response schema for Gateway connection details.
 type GatewayConnectionDetailsResponse struct {
 	// CreatedAt Timestamp of when the connection was created.
 	CreatedAt *time.Time `json:"created_at,omitempty"`
@@ -9560,7 +9547,7 @@ type GatewayConnectionDetailsResponse struct {
 	Uuid *GatewayUuid `json:"uuid,omitempty"`
 }
 
-// GatewayConnectionListResponse Response schema for a list of gwaas connections.
+// GatewayConnectionListResponse Response schema for a list of Gateway connections.
 type GatewayConnectionListResponse = []GatewayConnectionDetailsResponse
 
 // GatewayConnectionModifyRequest Network gateway VPN connection
@@ -9584,7 +9571,7 @@ type GatewayConnectionModifyRequest struct {
 	Uuid *GatewayUuid `json:"uuid,omitempty"`
 }
 
-// GatewayConnectionRouteDetailsResponse Response schema for gwaas connection route details.
+// GatewayConnectionRouteDetailsResponse Response schema for Gateway connection route details.
 type GatewayConnectionRouteDetailsResponse struct {
 	// Name Name of the connection
 	Name *string `json:"name,omitempty"`
@@ -9917,7 +9904,7 @@ type GatewayMetricsDetailsResponse struct {
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 }
 
-// GatewayPlanDetailsResponse Response schema for gwaas plan details.
+// GatewayPlanDetailsResponse Response schema for Gateway plan details.
 type GatewayPlanDetailsResponse struct {
 	// Name Name of the plan
 	Name *string `json:"name,omitempty"`
@@ -9939,7 +9926,7 @@ type GatewayPlanDetailsResponse struct {
 	VpnTunnelAmount *int64 `json:"vpn_tunnel_amount,omitempty"`
 }
 
-// GatewayPlanListResponse Response schema for a list of gwaas plans.
+// GatewayPlanListResponse Response schema for a list of Gateway plans.
 type GatewayPlanListResponse = []GatewayPlanDetailsResponse
 
 // GatewayQueryParamOffset Schema for a query parameter specifying the offset for pagination.
@@ -10056,7 +10043,7 @@ type GatewayServiceFeatures string
 // GatewayServiceLabelListResponse Response schema for a list of service labels.
 type GatewayServiceLabelListResponse = []GatewayLabelDetailsResponse
 
-// GatewayServiceListResponse Response schema for a list of gwaas services.
+// GatewayServiceListResponse Response schema for a list of Gateway services.
 type GatewayServiceListResponse = []GatewayServiceDetailsResponse
 
 // GatewayServiceLogSessionCreateRequest Request to create a new log session for a service
@@ -10145,7 +10132,7 @@ type GatewaySupportedIntegrityAlgorithms string
 // GatewaySupportedProposalAlgorithms List of supported IPsec proposal algorithms
 type GatewaySupportedProposalAlgorithms string
 
-// GatewayTunnelDetailsResponse Response schema for gwaas tunnel details.
+// GatewayTunnelDetailsResponse Response schema for Gateway tunnel details.
 type GatewayTunnelDetailsResponse struct {
 	// Bgp Details about the BGP configuration
 	Bgp *GatewayBgpDetailsResponse `json:"bgp,omitempty"`
@@ -10174,7 +10161,7 @@ type GatewayTunnelDetailsResponse struct {
 	// TunnelHealthy Indicates whether the tunnel is healthy
 	TunnelHealthy *bool `json:"tunnel_healthy,omitempty"`
 
-	// TunnelInternalIp Response schema for gwaas tunnel internal IP details.
+	// TunnelInternalIp Response schema for VPN Gateway tunnel internal IP details.
 	TunnelInternalIp *GatewayTunnelInternalIpDetailsResponse `json:"tunnel_internal_ip,omitempty"`
 
 	// TunnelUp Indicates whether the tunnel is up
@@ -10187,14 +10174,14 @@ type GatewayTunnelDetailsResponse struct {
 	Uuid *GatewayUuid `json:"uuid,omitempty"`
 }
 
-// GatewayTunnelInternalIpDetailsResponse Response schema for gwaas tunnel internal IP details.
+// GatewayTunnelInternalIpDetailsResponse Response schema for VPN Gateway tunnel internal IP details.
 type GatewayTunnelInternalIpDetailsResponse struct {
 	// HasParseError Indicates if there is a parse error with the tunnel internal IP
 	HasParseError *bool           `json:"hasParseError,omitempty"`
 	Ip            *GatewayAddress `json:"ip,omitempty"`
 }
 
-// GatewayTunnelListResponse Response schema for a list of gwaas tunnels.
+// GatewayTunnelListResponse Response schema for a list of Gateway tunnels.
 type GatewayTunnelListResponse = []GatewayTunnelDetailsResponse
 
 // GatewayTunnelModifyRequest Request to modify a VPN tunnel
@@ -12882,45 +12869,15 @@ type LoadBalancerOffsetParameter = int32
 
 // LoadBalancerPlan Represents a load balancer plan, defining the node size, performance characteristics, and associated pricing options.
 type LoadBalancerPlan struct {
-	// AllowTrialAccounts Indicates whether trial accounts are allowed for this plan.
-	AllowTrialAccounts *bool `json:"allow_trial_accounts,omitempty"`
-
-	// CoreNumber Number of CPU cores assigned per server.
-	CoreNumber *int32 `json:"core_number,omitempty"`
-
-	// CreatedAt Timestamp when the plan was created.
-	CreatedAt *time.Time `json:"created_at,omitempty"`
-
-	// Id Unique identifier of the plan.
-	Id *int64 `json:"id,omitempty"`
-
-	// MemoryAmount Amount of memory per server in mebibytes.
-	MemoryAmount *int32 `json:"memory_amount,omitempty"`
-
 	// Name Name of the plan.
 	Name *string `json:"name,omitempty"`
 
 	// PerServerMaxSessions Maximum number of sessions allowed per server.
 	PerServerMaxSessions *int32 `json:"per_server_max_sessions,omitempty"`
 
-	// PublicIfaceBwInMbits Public interface inbound bandwidth in Mbit/s.
-	PublicIfaceBwInMbits *int32 `json:"public_iface_bw_in_mbits,omitempty"`
-
-	// PublicIfaceBwOutMbits Public interface outbound bandwidth in Mbit/s.
-	PublicIfaceBwOutMbits *int32 `json:"public_iface_bw_out_mbits,omitempty"`
-
 	// ServerNumber Number of servers included in the plan.
 	ServerNumber *int32 `json:"server_number,omitempty"`
-
-	// Type The type of plan.
-	Type *LoadBalancerPlanType `json:"type,omitempty"`
-
-	// UpdatedAt Timestamp when the plan was last updated.
-	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 }
-
-// LoadBalancerPlanType The type of plan.
-type LoadBalancerPlanType string
 
 // LoadBalancerPlanParameter The name of the plan.
 type LoadBalancerPlanParameter = string
@@ -15806,9 +15763,6 @@ type CreateFirewallRulesetLabelRulesetUuid = FirewallRulesetServerUuid
 // CreateFirewallRulesetRuleRulesetUuid The unique identifier for the server.
 type CreateFirewallRulesetRuleRulesetUuid = FirewallRulesetServerUuid
 
-// CreateGatewayAddressServiceUuid The unique identifier for the resource.
-type CreateGatewayAddressServiceUuid = GatewayUuid
-
 // CreateGatewayConnectionServiceUuid The unique identifier for the resource.
 type CreateGatewayConnectionServiceUuid = GatewayUuid
 
@@ -15865,6 +15819,9 @@ type CreateLoadBalancerRuleFrontendName = LoadBalancerFrontendParameter
 
 // CreateLoadBalancerRuleServiceUuid The UUID of the service.
 type CreateLoadBalancerRuleServiceUuid = LoadBalancerServiceParameter
+
+// CreateMultipleFirewallRulesetRuleRulesetUuid The unique identifier for the server.
+type CreateMultipleFirewallRulesetRuleRulesetUuid = FirewallRulesetServerUuid
 
 // CreateTemplateFromStorageUuid Universally unique identifier
 type CreateTemplateFromStorageUuid = StorageUuid
@@ -15961,12 +15918,6 @@ type DeleteFirewallRulesetRuleRulesetUuid = FirewallRulesetServerUuid
 
 // DeleteFirewallRulesetRulesetUuid The unique identifier for the server.
 type DeleteFirewallRulesetRulesetUuid = FirewallRulesetServerUuid
-
-// DeleteGatewayAddressAddressName The unique identifier for the resource.
-type DeleteGatewayAddressAddressName = GatewayUuid
-
-// DeleteGatewayAddressServiceUuid The unique identifier for the resource.
-type DeleteGatewayAddressServiceUuid = GatewayUuid
 
 // DeleteGatewayConnectionConnectionUuid The unique identifier for the resource.
 type DeleteGatewayConnectionConnectionUuid = GatewayUuid
@@ -16105,9 +16056,6 @@ type EnableDatabaseSecurityAdminUuid = DatabaseUuid
 
 // EnableDatabaseTemporaryWritesUuid The unique identifier for the integration.
 type EnableDatabaseTemporaryWritesUuid = DatabaseUuid
-
-// FirewallRulesetAdminListServerFirewallRulesServerUuid The unique identifier for the server.
-type FirewallRulesetAdminListServerFirewallRulesServerUuid = FirewallRulesetServerUuid
 
 // FirewallRulesetCreateMultipleServerFirewallRulesServerUuid The unique identifier for the server.
 type FirewallRulesetCreateMultipleServerFirewallRulesServerUuid = FirewallRulesetServerUuid
@@ -16612,6 +16560,9 @@ type ListFileStoragesOffset = FileStorageQueryParamOffset
 
 // ListFileStoragesSort Query parameter to specify the sorting order of results in API responses, allowing clients to order data based on specific fields.
 type ListFileStoragesSort = FileStorageQueryParamSort
+
+// ListFirewallRulesetAttachedServersRulesetUuid The unique identifier for the server.
+type ListFirewallRulesetAttachedServersRulesetUuid = FirewallRulesetServerUuid
 
 // ListFirewallRulesetLabelsRulesetUuid The unique identifier for the server.
 type ListFirewallRulesetLabelsRulesetUuid = FirewallRulesetServerUuid
@@ -17795,13 +17746,7 @@ type CreateFirewallRulesetRule201 = FirewallRulesetRuleDetailResponse
 // CreateFirewallRulesetRuleDefault Schema for error responses from the API.
 type CreateFirewallRulesetRuleDefault = FirewallRulesetErrorResponse
 
-// CreateGatewayAddress200 Details about a specific address
-type CreateGatewayAddress200 = GatewayAddressDetailsResponse
-
-// CreateGatewayAddressDefault Schema for error responses from the API.
-type CreateGatewayAddressDefault = GatewayErrorResponse
-
-// CreateGatewayConnection200 Response schema for gwaas connection details.
+// CreateGatewayConnection200 Response schema for Gateway connection details.
 type CreateGatewayConnection200 = GatewayConnectionDetailsResponse
 
 // CreateGatewayConnectionDefault Schema for error responses from the API.
@@ -17822,7 +17767,7 @@ type CreateGatewayServiceLogSession200 = GatewayServiceLogSessionCreateResponse
 // CreateGatewayServiceLogSessionDefault Schema for error responses from the API.
 type CreateGatewayServiceLogSessionDefault = GatewayErrorResponse
 
-// CreateGatewayTunnel200 Response schema for gwaas tunnel details.
+// CreateGatewayTunnel200 Response schema for Gateway tunnel details.
 type CreateGatewayTunnel200 = GatewayTunnelDetailsResponse
 
 // CreateGatewayTunnelDefault Schema for error responses from the API.
@@ -17899,6 +17844,12 @@ type CreateLoadBalancerRule201 = LoadBalancerRule
 
 // CreateLoadBalancerRuleDefault Schema for error responses from the API.
 type CreateLoadBalancerRuleDefault = LoadBalancerErrorResponse
+
+// CreateMultipleFirewallRulesetRule200 Response schema for a list of firewall ruleset rules.
+type CreateMultipleFirewallRulesetRule200 = FirewallRulesetFirewallRuleListResponse
+
+// CreateMultipleFirewallRulesetRuleDefault Schema for error responses from the API.
+type CreateMultipleFirewallRulesetRuleDefault = FirewallRulesetErrorResponse
 
 // CreateNetwork201 defines model for createNetwork201.
 type CreateNetwork201 = Network
@@ -18071,9 +18022,6 @@ type DeleteFirewallRulesetLabelDefault = FirewallRulesetErrorResponse
 // DeleteFirewallRulesetRuleDefault Schema for error responses from the API.
 type DeleteFirewallRulesetRuleDefault = FirewallRulesetErrorResponse
 
-// DeleteGatewayAddressDefault Schema for error responses from the API.
-type DeleteGatewayAddressDefault = GatewayErrorResponse
-
 // DeleteGatewayConnectionDefault Schema for error responses from the API.
 type DeleteGatewayConnectionDefault = GatewayErrorResponse
 
@@ -18178,24 +18126,6 @@ type EnableDatabaseTemporaryWrites201 = DatabaseUpCloudApiResponse
 
 // EnableDatabaseTemporaryWritesDefault Schema for error responses from the API.
 type EnableDatabaseTemporaryWritesDefault = DatabaseErrorResponse
-
-// FirewallRulesetAdminListServerFirewallRules200 Server firewall detail response.
-type FirewallRulesetAdminListServerFirewallRules200 = FirewallRulesetServerFirewallDetailResponse
-
-// FirewallRulesetAdminListServerFirewallRules400 Schema for legacy error responses from API.
-type FirewallRulesetAdminListServerFirewallRules400 = FirewallRulesetErrorLegacyResponse
-
-// FirewallRulesetAdminListServerFirewallRules403 Schema for legacy error responses from API.
-type FirewallRulesetAdminListServerFirewallRules403 = FirewallRulesetErrorLegacyResponse
-
-// FirewallRulesetAdminListServerFirewallRules404 Schema for legacy error responses from API.
-type FirewallRulesetAdminListServerFirewallRules404 = FirewallRulesetErrorLegacyResponse
-
-// FirewallRulesetAdminListServerFirewallRules409 Schema for legacy error responses from API.
-type FirewallRulesetAdminListServerFirewallRules409 = FirewallRulesetErrorLegacyResponse
-
-// FirewallRulesetAdminListServerFirewallRulesDefault Schema for error responses from the API.
-type FirewallRulesetAdminListServerFirewallRulesDefault = FirewallRulesetErrorResponse
 
 // FirewallRulesetCreateMultipleServerFirewallRules200 Server firewall detail response.
 type FirewallRulesetCreateMultipleServerFirewallRules200 = FirewallRulesetServerFirewallDetailResponse
@@ -18473,7 +18403,7 @@ type GetGatewayAddress200 = GatewayAddressDetailsResponse
 // GetGatewayAddressDefault Schema for error responses from the API.
 type GetGatewayAddressDefault = GatewayErrorResponse
 
-// GetGatewayConnection200 Response schema for gwaas connection details.
+// GetGatewayConnection200 Response schema for Gateway connection details.
 type GetGatewayConnection200 = GatewayConnectionDetailsResponse
 
 // GetGatewayConnectionDefault Schema for error responses from the API.
@@ -18485,7 +18415,7 @@ type GetGatewayMetrics200 = GatewayServiceMetricsResponse
 // GetGatewayMetricsDefault Schema for error responses from the API.
 type GetGatewayMetricsDefault = GatewayErrorResponse
 
-// GetGatewayPlan200 Response schema for gwaas plan details.
+// GetGatewayPlan200 Response schema for Gateway plan details.
 type GetGatewayPlan200 = GatewayPlanDetailsResponse
 
 // GetGatewayPlanDefault Schema for error responses from the API.
@@ -18503,7 +18433,7 @@ type GetGatewayServiceLabel200 = GatewayLabelDetailsResponse
 // GetGatewayServiceLabelDefault Schema for error responses from the API.
 type GetGatewayServiceLabelDefault = GatewayErrorResponse
 
-// GetGatewayTunnel200 Response schema for gwaas tunnel details.
+// GetGatewayTunnel200 Response schema for Gateway tunnel details.
 type GetGatewayTunnel200 = GatewayTunnelDetailsResponse
 
 // GetGatewayTunnelDefault Schema for error responses from the API.
@@ -18902,6 +18832,12 @@ type ListFileStorages200 = FileStorageServiceListResponse
 // ListFileStoragesDefault Schema for error responses from the API.
 type ListFileStoragesDefault = FileStorageErrorResponse
 
+// ListFirewallRulesetAttachedServers200 Response schema for listing labels.
+type ListFirewallRulesetAttachedServers200 = FirewallRulesetLabelListResponse
+
+// ListFirewallRulesetAttachedServersDefault Schema for error responses from the API.
+type ListFirewallRulesetAttachedServersDefault = FirewallRulesetErrorResponse
+
 // ListFirewallRulesetLabels200 Response schema for listing labels.
 type ListFirewallRulesetLabels200 = FirewallRulesetLabelListResponse
 
@@ -18920,19 +18856,19 @@ type ListFirewallRulesets200 = FirewallRulesetListResponse
 // ListFirewallRulesetsDefault Schema for error responses from the API.
 type ListFirewallRulesetsDefault = FirewallRulesetErrorResponse
 
-// ListGatewayAddresses200 Response schema for a list of gwaas addresses.
+// ListGatewayAddresses200 Response schema for a list of Gateway addresses.
 type ListGatewayAddresses200 = GatewayAddressListResponse
 
 // ListGatewayAddressesDefault Schema for error responses from the API.
 type ListGatewayAddressesDefault = GatewayErrorResponse
 
-// ListGatewayConnections200 Response schema for a list of gwaas connections.
+// ListGatewayConnections200 Response schema for a list of Gateway connections.
 type ListGatewayConnections200 = GatewayConnectionListResponse
 
 // ListGatewayConnectionsDefault Schema for error responses from the API.
 type ListGatewayConnectionsDefault = GatewayErrorResponse
 
-// ListGatewayPlans200 Response schema for a list of gwaas plans.
+// ListGatewayPlans200 Response schema for a list of Gateway plans.
 type ListGatewayPlans200 = GatewayPlanListResponse
 
 // ListGatewayPlansDefault Schema for error responses from the API.
@@ -18944,13 +18880,13 @@ type ListGatewayServiceLabels200 = GatewayServiceLabelListResponse
 // ListGatewayServiceLabelsDefault Schema for error responses from the API.
 type ListGatewayServiceLabelsDefault = GatewayErrorResponse
 
-// ListGatewayServices200 Response schema for a list of gwaas services.
+// ListGatewayServices200 Response schema for a list of Gateway services.
 type ListGatewayServices200 = GatewayServiceListResponse
 
 // ListGatewayServicesDefault Schema for error responses from the API.
 type ListGatewayServicesDefault = GatewayErrorResponse
 
-// ListGatewayTunnels200 Response schema for a list of gwaas tunnels.
+// ListGatewayTunnels200 Response schema for a list of Gateway tunnels.
 type ListGatewayTunnels200 = GatewayTunnelListResponse
 
 // ListGatewayTunnelsDefault Schema for error responses from the API.
@@ -19238,7 +19174,7 @@ type ModifyFirewallRulesetRule200 = FirewallRulesetRuleDetailResponse
 // ModifyFirewallRulesetRuleDefault Schema for error responses from the API.
 type ModifyFirewallRulesetRuleDefault = FirewallRulesetErrorResponse
 
-// ModifyGatewayConnection200 Response schema for gwaas connection details.
+// ModifyGatewayConnection200 Response schema for Gateway connection details.
 type ModifyGatewayConnection200 = GatewayConnectionDetailsResponse
 
 // ModifyGatewayConnectionDefault Schema for error responses from the API.
@@ -19253,7 +19189,7 @@ type ModifyGatewayServiceDefault = GatewayErrorResponse
 // ModifyGatewayServiceLabelDefault Schema for error responses from the API.
 type ModifyGatewayServiceLabelDefault = GatewayErrorResponse
 
-// ModifyGatewayTunnel200 Response schema for gwaas tunnel details.
+// ModifyGatewayTunnel200 Response schema for Gateway tunnel details.
 type ModifyGatewayTunnel200 = GatewayTunnelDetailsResponse
 
 // ModifyGatewayTunnelDefault Schema for error responses from the API.
@@ -20045,9 +19981,6 @@ type CreateFirewallRulesetLabel = FirewallRulesetCreateLabel
 // CreateFirewallRulesetRule defines model for createFirewallRulesetRule.
 type CreateFirewallRulesetRule = FirewallRulesetFirewallRuleCreate
 
-// CreateGatewayAddress Address create request
-type CreateGatewayAddress = GatewayAddressCreateRequest
-
 // CreateGatewayConnection Network gateway VPN connection
 type CreateGatewayConnection = GatewayConnectionCreateRequest
 
@@ -20099,6 +20032,9 @@ type CreateLoadBalancerResolver = LoadBalancerResolverCreate
 // CreateLoadBalancerRule Load Balancer Forwarding Rule
 type CreateLoadBalancerRule = LoadBalancerRuleCreate
 
+// CreateMultipleFirewallRulesetRule defines model for createMultipleFirewallRulesetRule.
+type CreateMultipleFirewallRulesetRule = FirewallRulesetFirewallMultipleRuleCreate
+
 // CreateNetwork Request schema for creating a network
 type CreateNetwork = CreateNetworkRequest
 
@@ -20131,9 +20067,6 @@ type CreateTemplateFromStorage = CreateStorageTemplateRequest
 
 // EnableDatabaseSecurityAdmin Schema for enabling security on a service instance
 type EnableDatabaseSecurityAdmin = DatabaseServiceSecurityEnable
-
-// FirewallRulesetAdminListServerFirewallRules defines model for firewallRulesetAdminListServerFirewallRules.
-type FirewallRulesetAdminListServerFirewallRules = FirewallRulesetServerFirewallRuleCreate
 
 // FirewallRulesetCreateMultipleServerFirewallRules Creates multiple server firewall rules.
 type FirewallRulesetCreateMultipleServerFirewallRules = FirewallRulesetServerMultipleFirewallRulesCreate
@@ -20867,9 +20800,6 @@ type ModifyFileStorageAclJSONRequestBody = FileStorageAclModify
 // CreateFirewallRulesetJSONRequestBody defines body for CreateFirewallRuleset for application/json ContentType.
 type CreateFirewallRulesetJSONRequestBody = CreateFirewallRuleset
 
-// AdminListServerFirewallRulesJSONRequestBody defines body for AdminListServerFirewallRules for application/json ContentType.
-type AdminListServerFirewallRulesJSONRequestBody = FirewallRulesetServerFirewallRuleCreate
-
 // CreateServerFirewallRuleJSONRequestBody defines body for CreateServerFirewallRule for application/json ContentType.
 type CreateServerFirewallRuleJSONRequestBody = FirewallRulesetServerFirewallRuleCreate
 
@@ -20888,6 +20818,9 @@ type ModifyFirewallRulesetLabelJSONRequestBody = FirewallRulesetLabelModify
 // CreateFirewallRulesetRuleJSONRequestBody defines body for CreateFirewallRulesetRule for application/json ContentType.
 type CreateFirewallRulesetRuleJSONRequestBody = FirewallRulesetFirewallRuleCreate
 
+// CreateMultipleFirewallRulesetRuleJSONRequestBody defines body for CreateMultipleFirewallRulesetRule for application/json ContentType.
+type CreateMultipleFirewallRulesetRuleJSONRequestBody = FirewallRulesetFirewallMultipleRuleCreate
+
 // ModifyFirewallRulesetRuleJSONRequestBody defines body for ModifyFirewallRulesetRule for application/json ContentType.
 type ModifyFirewallRulesetRuleJSONRequestBody = FirewallRulesetFirewallRuleModify
 
@@ -20899,9 +20832,6 @@ type ModifyGatewayServiceJSONRequestBody = GatewayServiceModifyRequest
 
 // ReplaceGatewayServiceJSONRequestBody defines body for ReplaceGatewayService for application/json ContentType.
 type ReplaceGatewayServiceJSONRequestBody = GatewayServiceReplaceRequest
-
-// CreateGatewayAddressJSONRequestBody defines body for CreateGatewayAddress for application/json ContentType.
-type CreateGatewayAddressJSONRequestBody = GatewayAddressCreateRequest
 
 // CreateGatewayConnectionJSONRequestBody defines body for CreateGatewayConnection for application/json ContentType.
 type CreateGatewayConnectionJSONRequestBody = GatewayConnectionCreateRequest
@@ -28693,11 +28623,6 @@ type ClientInterface interface {
 
 	CreateFirewallRuleset(ctx context.Context, body CreateFirewallRulesetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// AdminListServerFirewallRulesWithBody request with any body
-	AdminListServerFirewallRulesWithBody(ctx context.Context, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	AdminListServerFirewallRules(ctx context.Context, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, body AdminListServerFirewallRulesJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// ListServerFirewallRule request
 	ListServerFirewallRule(ctx context.Context, serverUuid FirewallRulesetListServerFirewallRuleServerUuid, params *ListServerFirewallRuleParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -28758,6 +28683,11 @@ type ClientInterface interface {
 
 	CreateFirewallRulesetRule(ctx context.Context, rulesetUuid CreateFirewallRulesetRuleRulesetUuid, body CreateFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// CreateMultipleFirewallRulesetRuleWithBody request with any body
+	CreateMultipleFirewallRulesetRuleWithBody(ctx context.Context, rulesetUuid CreateMultipleFirewallRulesetRuleRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CreateMultipleFirewallRulesetRule(ctx context.Context, rulesetUuid CreateMultipleFirewallRulesetRuleRulesetUuid, body CreateMultipleFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// DeleteFirewallRulesetRule request
 	DeleteFirewallRulesetRule(ctx context.Context, rulesetUuid DeleteFirewallRulesetRuleRulesetUuid, ruleId DeleteFirewallRulesetRuleRuleId, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -28768,6 +28698,9 @@ type ClientInterface interface {
 	ModifyFirewallRulesetRuleWithBody(ctx context.Context, rulesetUuid ModifyFirewallRulesetRuleRulesetUuid, ruleId ModifyFirewallRulesetRuleRuleId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	ModifyFirewallRulesetRule(ctx context.Context, rulesetUuid ModifyFirewallRulesetRuleRulesetUuid, ruleId ModifyFirewallRulesetRuleRuleId, body ModifyFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListFirewallRulesetAttachedServers request
+	ListFirewallRulesetAttachedServers(ctx context.Context, rulesetUuid ListFirewallRulesetAttachedServersRulesetUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListGatewayServices request
 	ListGatewayServices(ctx context.Context, params *ListGatewayServicesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -28804,14 +28737,6 @@ type ClientInterface interface {
 
 	// ListGatewayAddresses request
 	ListGatewayAddresses(ctx context.Context, serviceUuid ListGatewayAddressesServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateGatewayAddressWithBody request with any body
-	CreateGatewayAddressWithBody(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	CreateGatewayAddress(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, body CreateGatewayAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// DeleteGatewayAddress request
-	DeleteGatewayAddress(ctx context.Context, serviceUuid DeleteGatewayAddressServiceUuid, addressName DeleteGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetGatewayAddress request
 	GetGatewayAddress(ctx context.Context, serviceUuid GetGatewayAddressServiceUuid, addressName GetGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -31532,30 +31457,6 @@ func (c *Client) CreateFirewallRuleset(ctx context.Context, body CreateFirewallR
 	return c.Client.Do(req)
 }
 
-func (c *Client) AdminListServerFirewallRulesWithBody(ctx context.Context, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewAdminListServerFirewallRulesRequestWithBody(c.Server, serverUuid, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) AdminListServerFirewallRules(ctx context.Context, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, body AdminListServerFirewallRulesJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewAdminListServerFirewallRulesRequest(c.Server, serverUuid, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 func (c *Client) ListServerFirewallRule(ctx context.Context, serverUuid FirewallRulesetListServerFirewallRuleServerUuid, params *ListServerFirewallRuleParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListServerFirewallRuleRequest(c.Server, serverUuid, params)
 	if err != nil {
@@ -31820,6 +31721,30 @@ func (c *Client) CreateFirewallRulesetRule(ctx context.Context, rulesetUuid Crea
 	return c.Client.Do(req)
 }
 
+func (c *Client) CreateMultipleFirewallRulesetRuleWithBody(ctx context.Context, rulesetUuid CreateMultipleFirewallRulesetRuleRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateMultipleFirewallRulesetRuleRequestWithBody(c.Server, rulesetUuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateMultipleFirewallRulesetRule(ctx context.Context, rulesetUuid CreateMultipleFirewallRulesetRuleRulesetUuid, body CreateMultipleFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateMultipleFirewallRulesetRuleRequest(c.Server, rulesetUuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 func (c *Client) DeleteFirewallRulesetRule(ctx context.Context, rulesetUuid DeleteFirewallRulesetRuleRulesetUuid, ruleId DeleteFirewallRulesetRuleRuleId, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteFirewallRulesetRuleRequest(c.Server, rulesetUuid, ruleId)
 	if err != nil {
@@ -31858,6 +31783,18 @@ func (c *Client) ModifyFirewallRulesetRuleWithBody(ctx context.Context, rulesetU
 
 func (c *Client) ModifyFirewallRulesetRule(ctx context.Context, rulesetUuid ModifyFirewallRulesetRuleRulesetUuid, ruleId ModifyFirewallRulesetRuleRuleId, body ModifyFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewModifyFirewallRulesetRuleRequest(c.Server, rulesetUuid, ruleId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ListFirewallRulesetAttachedServers(ctx context.Context, rulesetUuid ListFirewallRulesetAttachedServersRulesetUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListFirewallRulesetAttachedServersRequest(c.Server, rulesetUuid)
 	if err != nil {
 		return nil, err
 	}
@@ -32014,42 +31951,6 @@ func (c *Client) FlushGatewayNat(ctx context.Context, serviceUuid FlushGatewayNa
 
 func (c *Client) ListGatewayAddresses(ctx context.Context, serviceUuid ListGatewayAddressesServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListGatewayAddressesRequest(c.Server, serviceUuid)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) CreateGatewayAddressWithBody(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateGatewayAddressRequestWithBody(c.Server, serviceUuid, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) CreateGatewayAddress(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, body CreateGatewayAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateGatewayAddressRequest(c.Server, serviceUuid, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) DeleteGatewayAddress(ctx context.Context, serviceUuid DeleteGatewayAddressServiceUuid, addressName DeleteGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteGatewayAddressRequest(c.Server, serviceUuid, addressName)
 	if err != nil {
 		return nil, err
 	}
@@ -41180,53 +41081,6 @@ func NewCreateFirewallRulesetRequestWithBody(server string, contentType string, 
 	return req, nil
 }
 
-// NewAdminListServerFirewallRulesRequest calls the generic AdminListServerFirewallRules builder with application/json body
-func NewAdminListServerFirewallRulesRequest(server string, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, body AdminListServerFirewallRulesJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewAdminListServerFirewallRulesRequestWithBody(server, serverUuid, "application/json", bodyReader)
-}
-
-// NewAdminListServerFirewallRulesRequestWithBody generates requests for AdminListServerFirewallRules with any type of body
-func NewAdminListServerFirewallRulesRequestWithBody(server string, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "server-uuid", serverUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/admin/server/%s/firewall-rule", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
 // NewListServerFirewallRuleRequest generates requests for ListServerFirewallRule
 func NewListServerFirewallRuleRequest(server string, serverUuid FirewallRulesetListServerFirewallRuleServerUuid, params *ListServerFirewallRuleParams) (*http.Request, error) {
 	var err error
@@ -41999,6 +41853,53 @@ func NewCreateFirewallRulesetRuleRequestWithBody(server string, rulesetUuid Crea
 	return req, nil
 }
 
+// NewCreateMultipleFirewallRulesetRuleRequest calls the generic CreateMultipleFirewallRulesetRule builder with application/json body
+func NewCreateMultipleFirewallRulesetRuleRequest(server string, rulesetUuid CreateMultipleFirewallRulesetRuleRulesetUuid, body CreateMultipleFirewallRulesetRuleJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateMultipleFirewallRulesetRuleRequestWithBody(server, rulesetUuid, "application/json", bodyReader)
+}
+
+// NewCreateMultipleFirewallRulesetRuleRequestWithBody generates requests for CreateMultipleFirewallRulesetRule with any type of body
+func NewCreateMultipleFirewallRulesetRuleRequestWithBody(server string, rulesetUuid CreateMultipleFirewallRulesetRuleRulesetUuid, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "ruleset-uuid", rulesetUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/%s/rule", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PUT", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
 // NewDeleteFirewallRulesetRuleRequest generates requests for DeleteFirewallRulesetRule
 func NewDeleteFirewallRulesetRuleRequest(server string, rulesetUuid DeleteFirewallRulesetRuleRulesetUuid, ruleId DeleteFirewallRulesetRuleRuleId) (*http.Request, error) {
 	var err error
@@ -42131,6 +42032,40 @@ func NewModifyFirewallRulesetRuleRequestWithBody(server string, rulesetUuid Modi
 	}
 
 	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewListFirewallRulesetAttachedServersRequest generates requests for ListFirewallRulesetAttachedServers
+func NewListFirewallRulesetAttachedServersRequest(server string, rulesetUuid ListFirewallRulesetAttachedServersRulesetUuid) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "ruleset-uuid", rulesetUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/%s/servers", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
 
 	return req, nil
 }
@@ -42562,94 +42497,6 @@ func NewListGatewayAddressesRequest(server string, serviceUuid ListGatewayAddres
 	}
 
 	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewCreateGatewayAddressRequest calls the generic CreateGatewayAddress builder with application/json body
-func NewCreateGatewayAddressRequest(server string, serviceUuid CreateGatewayAddressServiceUuid, body CreateGatewayAddressJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewCreateGatewayAddressRequestWithBody(server, serviceUuid, "application/json", bodyReader)
-}
-
-// NewCreateGatewayAddressRequestWithBody generates requests for CreateGatewayAddress with any type of body
-func NewCreateGatewayAddressRequestWithBody(server string, serviceUuid CreateGatewayAddressServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "service-uuid", serviceUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/1.3/gateway/%s/addresses", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("POST", queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
-// NewDeleteGatewayAddressRequest generates requests for DeleteGatewayAddress
-func NewDeleteGatewayAddressRequest(server string, serviceUuid DeleteGatewayAddressServiceUuid, addressName DeleteGatewayAddressAddressName) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "service-uuid", serviceUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam1 string
-
-	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "address-name", addressName, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/1.3/gateway/%s/addresses/%s", pathParam0, pathParam1)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -55368,11 +55215,6 @@ type ClientWithResponsesInterface interface {
 
 	CreateFirewallRulesetWithResponse(ctx context.Context, body CreateFirewallRulesetJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateFirewallRulesetResp, error)
 
-	// AdminListServerFirewallRulesWithBodyWithResponse request with any body
-	AdminListServerFirewallRulesWithBodyWithResponse(ctx context.Context, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AdminListServerFirewallRulesResp, error)
-
-	AdminListServerFirewallRulesWithResponse(ctx context.Context, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, body AdminListServerFirewallRulesJSONRequestBody, reqEditors ...RequestEditorFn) (*AdminListServerFirewallRulesResp, error)
-
 	// ListServerFirewallRuleWithResponse request
 	ListServerFirewallRuleWithResponse(ctx context.Context, serverUuid FirewallRulesetListServerFirewallRuleServerUuid, params *ListServerFirewallRuleParams, reqEditors ...RequestEditorFn) (*ListServerFirewallRuleResp, error)
 
@@ -55433,6 +55275,11 @@ type ClientWithResponsesInterface interface {
 
 	CreateFirewallRulesetRuleWithResponse(ctx context.Context, rulesetUuid CreateFirewallRulesetRuleRulesetUuid, body CreateFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateFirewallRulesetRuleResp, error)
 
+	// CreateMultipleFirewallRulesetRuleWithBodyWithResponse request with any body
+	CreateMultipleFirewallRulesetRuleWithBodyWithResponse(ctx context.Context, rulesetUuid CreateMultipleFirewallRulesetRuleRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateMultipleFirewallRulesetRuleResp, error)
+
+	CreateMultipleFirewallRulesetRuleWithResponse(ctx context.Context, rulesetUuid CreateMultipleFirewallRulesetRuleRulesetUuid, body CreateMultipleFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateMultipleFirewallRulesetRuleResp, error)
+
 	// DeleteFirewallRulesetRuleWithResponse request
 	DeleteFirewallRulesetRuleWithResponse(ctx context.Context, rulesetUuid DeleteFirewallRulesetRuleRulesetUuid, ruleId DeleteFirewallRulesetRuleRuleId, reqEditors ...RequestEditorFn) (*DeleteFirewallRulesetRuleResp, error)
 
@@ -55443,6 +55290,9 @@ type ClientWithResponsesInterface interface {
 	ModifyFirewallRulesetRuleWithBodyWithResponse(ctx context.Context, rulesetUuid ModifyFirewallRulesetRuleRulesetUuid, ruleId ModifyFirewallRulesetRuleRuleId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyFirewallRulesetRuleResp, error)
 
 	ModifyFirewallRulesetRuleWithResponse(ctx context.Context, rulesetUuid ModifyFirewallRulesetRuleRulesetUuid, ruleId ModifyFirewallRulesetRuleRuleId, body ModifyFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyFirewallRulesetRuleResp, error)
+
+	// ListFirewallRulesetAttachedServersWithResponse request
+	ListFirewallRulesetAttachedServersWithResponse(ctx context.Context, rulesetUuid ListFirewallRulesetAttachedServersRulesetUuid, reqEditors ...RequestEditorFn) (*ListFirewallRulesetAttachedServersResp, error)
 
 	// ListGatewayServicesWithResponse request
 	ListGatewayServicesWithResponse(ctx context.Context, params *ListGatewayServicesParams, reqEditors ...RequestEditorFn) (*ListGatewayServicesResp, error)
@@ -55479,14 +55329,6 @@ type ClientWithResponsesInterface interface {
 
 	// ListGatewayAddressesWithResponse request
 	ListGatewayAddressesWithResponse(ctx context.Context, serviceUuid ListGatewayAddressesServiceUuid, reqEditors ...RequestEditorFn) (*ListGatewayAddressesResp, error)
-
-	// CreateGatewayAddressWithBodyWithResponse request with any body
-	CreateGatewayAddressWithBodyWithResponse(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateGatewayAddressResp, error)
-
-	CreateGatewayAddressWithResponse(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, body CreateGatewayAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateGatewayAddressResp, error)
-
-	// DeleteGatewayAddressWithResponse request
-	DeleteGatewayAddressWithResponse(ctx context.Context, serviceUuid DeleteGatewayAddressServiceUuid, addressName DeleteGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*DeleteGatewayAddressResp, error)
 
 	// GetGatewayAddressWithResponse request
 	GetGatewayAddressWithResponse(ctx context.Context, serviceUuid GetGatewayAddressServiceUuid, addressName GetGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*GetGatewayAddressResp, error)
@@ -58958,33 +58800,6 @@ func (r CreateFirewallRulesetResp) StatusCode() int {
 	return 0
 }
 
-type AdminListServerFirewallRulesResp struct {
-	Body                          []byte
-	HTTPResponse                  *http.Response
-	JSON200                       *FirewallRulesetAdminListServerFirewallRules200
-	ApplicationproblemJSON400     *FirewallRulesetAdminListServerFirewallRules400
-	ApplicationproblemJSON403     *FirewallRulesetAdminListServerFirewallRules403
-	ApplicationproblemJSON404     *FirewallRulesetAdminListServerFirewallRules404
-	ApplicationproblemJSON409     *FirewallRulesetAdminListServerFirewallRules409
-	ApplicationproblemJSONDefault *FirewallRulesetAdminListServerFirewallRulesDefault
-}
-
-// Status returns HTTPResponse.Status
-func (r AdminListServerFirewallRulesResp) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r AdminListServerFirewallRulesResp) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
 type ListServerFirewallRuleResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
@@ -59362,6 +59177,29 @@ func (r CreateFirewallRulesetRuleResp) StatusCode() int {
 	return 0
 }
 
+type CreateMultipleFirewallRulesetRuleResp struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *CreateMultipleFirewallRulesetRule200
+	ApplicationproblemJSONDefault *CreateMultipleFirewallRulesetRuleDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateMultipleFirewallRulesetRuleResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateMultipleFirewallRulesetRuleResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
 type DeleteFirewallRulesetRuleResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
@@ -59424,6 +59262,29 @@ func (r ModifyFirewallRulesetRuleResp) Status() string {
 
 // StatusCode returns HTTPResponse.StatusCode
 func (r ModifyFirewallRulesetRuleResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type ListFirewallRulesetAttachedServersResp struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *ListFirewallRulesetAttachedServers200
+	ApplicationproblemJSONDefault *ListFirewallRulesetAttachedServersDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r ListFirewallRulesetAttachedServersResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListFirewallRulesetAttachedServersResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -59652,51 +59513,6 @@ func (r ListGatewayAddressesResp) Status() string {
 
 // StatusCode returns HTTPResponse.StatusCode
 func (r ListGatewayAddressesResp) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type CreateGatewayAddressResp struct {
-	Body                          []byte
-	HTTPResponse                  *http.Response
-	JSON200                       *CreateGatewayAddress200
-	ApplicationproblemJSONDefault *CreateGatewayAddressDefault
-}
-
-// Status returns HTTPResponse.Status
-func (r CreateGatewayAddressResp) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r CreateGatewayAddressResp) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type DeleteGatewayAddressResp struct {
-	Body                          []byte
-	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *DeleteGatewayAddressDefault
-}
-
-// Status returns HTTPResponse.Status
-func (r DeleteGatewayAddressResp) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r DeleteGatewayAddressResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -67258,23 +67074,6 @@ func (c *ClientWithResponses) CreateFirewallRulesetWithResponse(ctx context.Cont
 	return ParseCreateFirewallRulesetResp(rsp)
 }
 
-// AdminListServerFirewallRulesWithBodyWithResponse request with arbitrary body returning *AdminListServerFirewallRulesResp
-func (c *ClientWithResponses) AdminListServerFirewallRulesWithBodyWithResponse(ctx context.Context, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AdminListServerFirewallRulesResp, error) {
-	rsp, err := c.AdminListServerFirewallRulesWithBody(ctx, serverUuid, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseAdminListServerFirewallRulesResp(rsp)
-}
-
-func (c *ClientWithResponses) AdminListServerFirewallRulesWithResponse(ctx context.Context, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, body AdminListServerFirewallRulesJSONRequestBody, reqEditors ...RequestEditorFn) (*AdminListServerFirewallRulesResp, error) {
-	rsp, err := c.AdminListServerFirewallRules(ctx, serverUuid, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseAdminListServerFirewallRulesResp(rsp)
-}
-
 // ListServerFirewallRuleWithResponse request returning *ListServerFirewallRuleResp
 func (c *ClientWithResponses) ListServerFirewallRuleWithResponse(ctx context.Context, serverUuid FirewallRulesetListServerFirewallRuleServerUuid, params *ListServerFirewallRuleParams, reqEditors ...RequestEditorFn) (*ListServerFirewallRuleResp, error) {
 	rsp, err := c.ListServerFirewallRule(ctx, serverUuid, params, reqEditors...)
@@ -67467,6 +67266,23 @@ func (c *ClientWithResponses) CreateFirewallRulesetRuleWithResponse(ctx context.
 	return ParseCreateFirewallRulesetRuleResp(rsp)
 }
 
+// CreateMultipleFirewallRulesetRuleWithBodyWithResponse request with arbitrary body returning *CreateMultipleFirewallRulesetRuleResp
+func (c *ClientWithResponses) CreateMultipleFirewallRulesetRuleWithBodyWithResponse(ctx context.Context, rulesetUuid CreateMultipleFirewallRulesetRuleRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateMultipleFirewallRulesetRuleResp, error) {
+	rsp, err := c.CreateMultipleFirewallRulesetRuleWithBody(ctx, rulesetUuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateMultipleFirewallRulesetRuleResp(rsp)
+}
+
+func (c *ClientWithResponses) CreateMultipleFirewallRulesetRuleWithResponse(ctx context.Context, rulesetUuid CreateMultipleFirewallRulesetRuleRulesetUuid, body CreateMultipleFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateMultipleFirewallRulesetRuleResp, error) {
+	rsp, err := c.CreateMultipleFirewallRulesetRule(ctx, rulesetUuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateMultipleFirewallRulesetRuleResp(rsp)
+}
+
 // DeleteFirewallRulesetRuleWithResponse request returning *DeleteFirewallRulesetRuleResp
 func (c *ClientWithResponses) DeleteFirewallRulesetRuleWithResponse(ctx context.Context, rulesetUuid DeleteFirewallRulesetRuleRulesetUuid, ruleId DeleteFirewallRulesetRuleRuleId, reqEditors ...RequestEditorFn) (*DeleteFirewallRulesetRuleResp, error) {
 	rsp, err := c.DeleteFirewallRulesetRule(ctx, rulesetUuid, ruleId, reqEditors...)
@@ -67500,6 +67316,15 @@ func (c *ClientWithResponses) ModifyFirewallRulesetRuleWithResponse(ctx context.
 		return nil, err
 	}
 	return ParseModifyFirewallRulesetRuleResp(rsp)
+}
+
+// ListFirewallRulesetAttachedServersWithResponse request returning *ListFirewallRulesetAttachedServersResp
+func (c *ClientWithResponses) ListFirewallRulesetAttachedServersWithResponse(ctx context.Context, rulesetUuid ListFirewallRulesetAttachedServersRulesetUuid, reqEditors ...RequestEditorFn) (*ListFirewallRulesetAttachedServersResp, error) {
+	rsp, err := c.ListFirewallRulesetAttachedServers(ctx, rulesetUuid, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListFirewallRulesetAttachedServersResp(rsp)
 }
 
 // ListGatewayServicesWithResponse request returning *ListGatewayServicesResp
@@ -67614,32 +67439,6 @@ func (c *ClientWithResponses) ListGatewayAddressesWithResponse(ctx context.Conte
 		return nil, err
 	}
 	return ParseListGatewayAddressesResp(rsp)
-}
-
-// CreateGatewayAddressWithBodyWithResponse request with arbitrary body returning *CreateGatewayAddressResp
-func (c *ClientWithResponses) CreateGatewayAddressWithBodyWithResponse(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateGatewayAddressResp, error) {
-	rsp, err := c.CreateGatewayAddressWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateGatewayAddressResp(rsp)
-}
-
-func (c *ClientWithResponses) CreateGatewayAddressWithResponse(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, body CreateGatewayAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateGatewayAddressResp, error) {
-	rsp, err := c.CreateGatewayAddress(ctx, serviceUuid, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateGatewayAddressResp(rsp)
-}
-
-// DeleteGatewayAddressWithResponse request returning *DeleteGatewayAddressResp
-func (c *ClientWithResponses) DeleteGatewayAddressWithResponse(ctx context.Context, serviceUuid DeleteGatewayAddressServiceUuid, addressName DeleteGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*DeleteGatewayAddressResp, error) {
-	rsp, err := c.DeleteGatewayAddress(ctx, serviceUuid, addressName, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseDeleteGatewayAddressResp(rsp)
 }
 
 // GetGatewayAddressWithResponse request returning *GetGatewayAddressResp
@@ -74365,67 +74164,6 @@ func ParseCreateFirewallRulesetResp(rsp *http.Response) (*CreateFirewallRulesetR
 	return response, nil
 }
 
-// ParseAdminListServerFirewallRulesResp parses an HTTP response from a AdminListServerFirewallRulesWithResponse call
-func ParseAdminListServerFirewallRulesResp(rsp *http.Response) (*AdminListServerFirewallRulesResp, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &AdminListServerFirewallRulesResp{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest FirewallRulesetAdminListServerFirewallRules200
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest FirewallRulesetAdminListServerFirewallRules400
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON400 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest FirewallRulesetAdminListServerFirewallRules403
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON403 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest FirewallRulesetAdminListServerFirewallRules404
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON404 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest FirewallRulesetAdminListServerFirewallRules409
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON409 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest FirewallRulesetAdminListServerFirewallRulesDefault
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSONDefault = &dest
-
-	}
-
-	return response, nil
-}
-
 // ParseListServerFirewallRuleResp parses an HTTP response from a ListServerFirewallRuleWithResponse call
 func ParseListServerFirewallRuleResp(rsp *http.Response) (*ListServerFirewallRuleResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -75017,6 +74755,39 @@ func ParseCreateFirewallRulesetRuleResp(rsp *http.Response) (*CreateFirewallRule
 	return response, nil
 }
 
+// ParseCreateMultipleFirewallRulesetRuleResp parses an HTTP response from a CreateMultipleFirewallRulesetRuleWithResponse call
+func ParseCreateMultipleFirewallRulesetRuleResp(rsp *http.Response) (*CreateMultipleFirewallRulesetRuleResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateMultipleFirewallRulesetRuleResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest CreateMultipleFirewallRulesetRule200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest CreateMultipleFirewallRulesetRuleDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseDeleteFirewallRulesetRuleResp parses an HTTP response from a DeleteFirewallRulesetRuleWithResponse call
 func ParseDeleteFirewallRulesetRuleResp(rsp *http.Response) (*DeleteFirewallRulesetRuleResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -75099,6 +74870,39 @@ func ParseModifyFirewallRulesetRuleResp(rsp *http.Response) (*ModifyFirewallRule
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest ModifyFirewallRulesetRuleDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListFirewallRulesetAttachedServersResp parses an HTTP response from a ListFirewallRulesetAttachedServersWithResponse call
+func ParseListFirewallRulesetAttachedServersResp(rsp *http.Response) (*ListFirewallRulesetAttachedServersResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListFirewallRulesetAttachedServersResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ListFirewallRulesetAttachedServers200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ListFirewallRulesetAttachedServersDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75415,65 +75219,6 @@ func ParseListGatewayAddressesResp(rsp *http.Response) (*ListGatewayAddressesRes
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest ListGatewayAddressesDefault
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSONDefault = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseCreateGatewayAddressResp parses an HTTP response from a CreateGatewayAddressWithResponse call
-func ParseCreateGatewayAddressResp(rsp *http.Response) (*CreateGatewayAddressResp, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &CreateGatewayAddressResp{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest CreateGatewayAddress200
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest CreateGatewayAddressDefault
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSONDefault = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseDeleteGatewayAddressResp parses an HTTP response from a DeleteGatewayAddressWithResponse call
-func ParseDeleteGatewayAddressResp(rsp *http.Response) (*DeleteGatewayAddressResp, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &DeleteGatewayAddressResp{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest DeleteGatewayAddressDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
