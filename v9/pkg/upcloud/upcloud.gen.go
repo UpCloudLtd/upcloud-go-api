@@ -139,6 +139,294 @@ func (e AccountTokensProblem409Status) Valid() bool {
 	}
 }
 
+// Defines values for AuditLogsAuditLogAction.
+const (
+	AuditLogsAuditLogActionAccessGranted           AuditLogsAuditLogAction = "access-granted"
+	AuditLogsAuditLogActionAccessGrantedKubeconfig AuditLogsAuditLogAction = "access-granted-kubeconfig"
+	AuditLogsAuditLogActionAccessModified          AuditLogsAuditLogAction = "access-modified"
+	AuditLogsAuditLogActionAccessUpdate            AuditLogsAuditLogAction = "access-update"
+	AuditLogsAuditLogActionAttach                  AuditLogsAuditLogAction = "attach"
+	AuditLogsAuditLogActionClone                   AuditLogsAuditLogAction = "clone"
+	AuditLogsAuditLogActionCreate                  AuditLogsAuditLogAction = "create"
+	AuditLogsAuditLogActionDelete                  AuditLogsAuditLogAction = "delete"
+	AuditLogsAuditLogActionDetach                  AuditLogsAuditLogAction = "detach"
+	AuditLogsAuditLogActionLogin                   AuditLogsAuditLogAction = "login"
+	AuditLogsAuditLogActionLogout                  AuditLogsAuditLogAction = "logout"
+	AuditLogsAuditLogActionMaintenanceStart        AuditLogsAuditLogAction = "maintenance-start"
+	AuditLogsAuditLogActionOwnerChange             AuditLogsAuditLogAction = "owner-change"
+	AuditLogsAuditLogActionRead                    AuditLogsAuditLogAction = "read"
+	AuditLogsAuditLogActionStart                   AuditLogsAuditLogAction = "start"
+	AuditLogsAuditLogActionStop                    AuditLogsAuditLogAction = "stop"
+	AuditLogsAuditLogActionUpdate                  AuditLogsAuditLogAction = "update"
+	AuditLogsAuditLogActionWritesEnable            AuditLogsAuditLogAction = "writes-enable"
+)
+
+// Valid indicates whether the value is a known member of the AuditLogsAuditLogAction enum.
+func (e AuditLogsAuditLogAction) Valid() bool {
+	switch e {
+	case AuditLogsAuditLogActionAccessGranted:
+		return true
+	case AuditLogsAuditLogActionAccessGrantedKubeconfig:
+		return true
+	case AuditLogsAuditLogActionAccessModified:
+		return true
+	case AuditLogsAuditLogActionAccessUpdate:
+		return true
+	case AuditLogsAuditLogActionAttach:
+		return true
+	case AuditLogsAuditLogActionClone:
+		return true
+	case AuditLogsAuditLogActionCreate:
+		return true
+	case AuditLogsAuditLogActionDelete:
+		return true
+	case AuditLogsAuditLogActionDetach:
+		return true
+	case AuditLogsAuditLogActionLogin:
+		return true
+	case AuditLogsAuditLogActionLogout:
+		return true
+	case AuditLogsAuditLogActionMaintenanceStart:
+		return true
+	case AuditLogsAuditLogActionOwnerChange:
+		return true
+	case AuditLogsAuditLogActionRead:
+		return true
+	case AuditLogsAuditLogActionStart:
+		return true
+	case AuditLogsAuditLogActionStop:
+		return true
+	case AuditLogsAuditLogActionUpdate:
+		return true
+	case AuditLogsAuditLogActionWritesEnable:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AuditLogsAuditLogOrigin.
+const (
+	AuditLogsAuditLogOriginApi             AuditLogsAuditLogOrigin = "api"
+	AuditLogsAuditLogOriginGui             AuditLogsAuditLogOrigin = "gui"
+	AuditLogsAuditLogOriginUpcloudInternal AuditLogsAuditLogOrigin = "upcloud_internal"
+)
+
+// Valid indicates whether the value is a known member of the AuditLogsAuditLogOrigin enum.
+func (e AuditLogsAuditLogOrigin) Valid() bool {
+	switch e {
+	case AuditLogsAuditLogOriginApi:
+		return true
+	case AuditLogsAuditLogOriginGui:
+		return true
+	case AuditLogsAuditLogOriginUpcloudInternal:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AuditLogsAuditLogResourceType.
+const (
+	AuditLogsAuditLogResourceTypeAccount                              AuditLogsAuditLogResourceType = "account"
+	AuditLogsAuditLogResourceTypeAuth                                 AuditLogsAuditLogResourceType = "auth"
+	AuditLogsAuditLogResourceTypeInitScript                           AuditLogsAuditLogResourceType = "init-script"
+	AuditLogsAuditLogResourceTypeManagedDatabase                      AuditLogsAuditLogResourceType = "managed-database"
+	AuditLogsAuditLogResourceTypeManagedLoadbalancer                  AuditLogsAuditLogResourceType = "managed-loadbalancer"
+	AuditLogsAuditLogResourceTypeManagedLoadbalancerCertificateBundle AuditLogsAuditLogResourceType = "managed-loadbalancer-certificate-bundle"
+	AuditLogsAuditLogResourceTypeManagedObjectStorage                 AuditLogsAuditLogResourceType = "managed-object-storage"
+	AuditLogsAuditLogResourceTypeNetworkGateway                       AuditLogsAuditLogResourceType = "network-gateway"
+	AuditLogsAuditLogResourceTypeServer                               AuditLogsAuditLogResourceType = "server"
+	AuditLogsAuditLogResourceTypeSshKey                               AuditLogsAuditLogResourceType = "ssh-key"
+	AuditLogsAuditLogResourceTypeStorage                              AuditLogsAuditLogResourceType = "storage"
+	AuditLogsAuditLogResourceTypeUks                                  AuditLogsAuditLogResourceType = "uks"
+)
+
+// Valid indicates whether the value is a known member of the AuditLogsAuditLogResourceType enum.
+func (e AuditLogsAuditLogResourceType) Valid() bool {
+	switch e {
+	case AuditLogsAuditLogResourceTypeAccount:
+		return true
+	case AuditLogsAuditLogResourceTypeAuth:
+		return true
+	case AuditLogsAuditLogResourceTypeInitScript:
+		return true
+	case AuditLogsAuditLogResourceTypeManagedDatabase:
+		return true
+	case AuditLogsAuditLogResourceTypeManagedLoadbalancer:
+		return true
+	case AuditLogsAuditLogResourceTypeManagedLoadbalancerCertificateBundle:
+		return true
+	case AuditLogsAuditLogResourceTypeManagedObjectStorage:
+		return true
+	case AuditLogsAuditLogResourceTypeNetworkGateway:
+		return true
+	case AuditLogsAuditLogResourceTypeServer:
+		return true
+	case AuditLogsAuditLogResourceTypeSshKey:
+		return true
+	case AuditLogsAuditLogResourceTypeStorage:
+		return true
+	case AuditLogsAuditLogResourceTypeUks:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AuditLogsFilterOptionsResponseActions.
+const (
+	AuditLogsFilterOptionsResponseActionsAccessGranted           AuditLogsFilterOptionsResponseActions = "access-granted"
+	AuditLogsFilterOptionsResponseActionsAccessGrantedKubeconfig AuditLogsFilterOptionsResponseActions = "access-granted-kubeconfig"
+	AuditLogsFilterOptionsResponseActionsAccessModified          AuditLogsFilterOptionsResponseActions = "access-modified"
+	AuditLogsFilterOptionsResponseActionsAccessUpdate            AuditLogsFilterOptionsResponseActions = "access-update"
+	AuditLogsFilterOptionsResponseActionsAttach                  AuditLogsFilterOptionsResponseActions = "attach"
+	AuditLogsFilterOptionsResponseActionsClone                   AuditLogsFilterOptionsResponseActions = "clone"
+	AuditLogsFilterOptionsResponseActionsCreate                  AuditLogsFilterOptionsResponseActions = "create"
+	AuditLogsFilterOptionsResponseActionsDelete                  AuditLogsFilterOptionsResponseActions = "delete"
+	AuditLogsFilterOptionsResponseActionsDetach                  AuditLogsFilterOptionsResponseActions = "detach"
+	AuditLogsFilterOptionsResponseActionsLogin                   AuditLogsFilterOptionsResponseActions = "login"
+	AuditLogsFilterOptionsResponseActionsLogout                  AuditLogsFilterOptionsResponseActions = "logout"
+	AuditLogsFilterOptionsResponseActionsMaintenanceStart        AuditLogsFilterOptionsResponseActions = "maintenance-start"
+	AuditLogsFilterOptionsResponseActionsOwnerChange             AuditLogsFilterOptionsResponseActions = "owner-change"
+	AuditLogsFilterOptionsResponseActionsRead                    AuditLogsFilterOptionsResponseActions = "read"
+	AuditLogsFilterOptionsResponseActionsStart                   AuditLogsFilterOptionsResponseActions = "start"
+	AuditLogsFilterOptionsResponseActionsStop                    AuditLogsFilterOptionsResponseActions = "stop"
+	AuditLogsFilterOptionsResponseActionsUpdate                  AuditLogsFilterOptionsResponseActions = "update"
+	AuditLogsFilterOptionsResponseActionsWritesEnable            AuditLogsFilterOptionsResponseActions = "writes-enable"
+)
+
+// Valid indicates whether the value is a known member of the AuditLogsFilterOptionsResponseActions enum.
+func (e AuditLogsFilterOptionsResponseActions) Valid() bool {
+	switch e {
+	case AuditLogsFilterOptionsResponseActionsAccessGranted:
+		return true
+	case AuditLogsFilterOptionsResponseActionsAccessGrantedKubeconfig:
+		return true
+	case AuditLogsFilterOptionsResponseActionsAccessModified:
+		return true
+	case AuditLogsFilterOptionsResponseActionsAccessUpdate:
+		return true
+	case AuditLogsFilterOptionsResponseActionsAttach:
+		return true
+	case AuditLogsFilterOptionsResponseActionsClone:
+		return true
+	case AuditLogsFilterOptionsResponseActionsCreate:
+		return true
+	case AuditLogsFilterOptionsResponseActionsDelete:
+		return true
+	case AuditLogsFilterOptionsResponseActionsDetach:
+		return true
+	case AuditLogsFilterOptionsResponseActionsLogin:
+		return true
+	case AuditLogsFilterOptionsResponseActionsLogout:
+		return true
+	case AuditLogsFilterOptionsResponseActionsMaintenanceStart:
+		return true
+	case AuditLogsFilterOptionsResponseActionsOwnerChange:
+		return true
+	case AuditLogsFilterOptionsResponseActionsRead:
+		return true
+	case AuditLogsFilterOptionsResponseActionsStart:
+		return true
+	case AuditLogsFilterOptionsResponseActionsStop:
+		return true
+	case AuditLogsFilterOptionsResponseActionsUpdate:
+		return true
+	case AuditLogsFilterOptionsResponseActionsWritesEnable:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AuditLogsFilterOptionsResponseOrigins.
+const (
+	AuditLogsFilterOptionsResponseOriginsApi             AuditLogsFilterOptionsResponseOrigins = "api"
+	AuditLogsFilterOptionsResponseOriginsGui             AuditLogsFilterOptionsResponseOrigins = "gui"
+	AuditLogsFilterOptionsResponseOriginsUpcloudInternal AuditLogsFilterOptionsResponseOrigins = "upcloud_internal"
+)
+
+// Valid indicates whether the value is a known member of the AuditLogsFilterOptionsResponseOrigins enum.
+func (e AuditLogsFilterOptionsResponseOrigins) Valid() bool {
+	switch e {
+	case AuditLogsFilterOptionsResponseOriginsApi:
+		return true
+	case AuditLogsFilterOptionsResponseOriginsGui:
+		return true
+	case AuditLogsFilterOptionsResponseOriginsUpcloudInternal:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AuditLogsFilterOptionsResponseResourceTypes.
+const (
+	AuditLogsFilterOptionsResponseResourceTypesAccount                              AuditLogsFilterOptionsResponseResourceTypes = "account"
+	AuditLogsFilterOptionsResponseResourceTypesAuth                                 AuditLogsFilterOptionsResponseResourceTypes = "auth"
+	AuditLogsFilterOptionsResponseResourceTypesInitScript                           AuditLogsFilterOptionsResponseResourceTypes = "init-script"
+	AuditLogsFilterOptionsResponseResourceTypesManagedDatabase                      AuditLogsFilterOptionsResponseResourceTypes = "managed-database"
+	AuditLogsFilterOptionsResponseResourceTypesManagedLoadbalancer                  AuditLogsFilterOptionsResponseResourceTypes = "managed-loadbalancer"
+	AuditLogsFilterOptionsResponseResourceTypesManagedLoadbalancerCertificateBundle AuditLogsFilterOptionsResponseResourceTypes = "managed-loadbalancer-certificate-bundle"
+	AuditLogsFilterOptionsResponseResourceTypesManagedObjectStorage                 AuditLogsFilterOptionsResponseResourceTypes = "managed-object-storage"
+	AuditLogsFilterOptionsResponseResourceTypesNetworkGateway                       AuditLogsFilterOptionsResponseResourceTypes = "network-gateway"
+	AuditLogsFilterOptionsResponseResourceTypesServer                               AuditLogsFilterOptionsResponseResourceTypes = "server"
+	AuditLogsFilterOptionsResponseResourceTypesSshKey                               AuditLogsFilterOptionsResponseResourceTypes = "ssh-key"
+	AuditLogsFilterOptionsResponseResourceTypesStorage                              AuditLogsFilterOptionsResponseResourceTypes = "storage"
+	AuditLogsFilterOptionsResponseResourceTypesUks                                  AuditLogsFilterOptionsResponseResourceTypes = "uks"
+)
+
+// Valid indicates whether the value is a known member of the AuditLogsFilterOptionsResponseResourceTypes enum.
+func (e AuditLogsFilterOptionsResponseResourceTypes) Valid() bool {
+	switch e {
+	case AuditLogsFilterOptionsResponseResourceTypesAccount:
+		return true
+	case AuditLogsFilterOptionsResponseResourceTypesAuth:
+		return true
+	case AuditLogsFilterOptionsResponseResourceTypesInitScript:
+		return true
+	case AuditLogsFilterOptionsResponseResourceTypesManagedDatabase:
+		return true
+	case AuditLogsFilterOptionsResponseResourceTypesManagedLoadbalancer:
+		return true
+	case AuditLogsFilterOptionsResponseResourceTypesManagedLoadbalancerCertificateBundle:
+		return true
+	case AuditLogsFilterOptionsResponseResourceTypesManagedObjectStorage:
+		return true
+	case AuditLogsFilterOptionsResponseResourceTypesNetworkGateway:
+		return true
+	case AuditLogsFilterOptionsResponseResourceTypesServer:
+		return true
+	case AuditLogsFilterOptionsResponseResourceTypesSshKey:
+		return true
+	case AuditLogsFilterOptionsResponseResourceTypesStorage:
+		return true
+	case AuditLogsFilterOptionsResponseResourceTypesUks:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AuditLogsFormatParameter.
+const (
+	Csv  AuditLogsFormatParameter = "csv"
+	Json AuditLogsFormatParameter = "json"
+)
+
+// Valid indicates whether the value is a known member of the AuditLogsFormatParameter enum.
+func (e AuditLogsFormatParameter) Valid() bool {
+	switch e {
+	case Csv:
+		return true
+	case Json:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for DatabaseConnectionPoolCreatePoolMode.
 const (
 	DatabaseConnectionPoolCreatePoolModeSession     DatabaseConnectionPoolCreatePoolMode = "session"
@@ -477,13 +765,13 @@ func (e DatabaseServicePropertiesMysqlVersion) Valid() bool {
 
 // Defines values for DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingAuthenticationBackend.
 const (
-	DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingAuthenticationBackendInternal DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingAuthenticationBackend = "internal"
+	Internal DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingAuthenticationBackend = "internal"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingAuthenticationBackend enum.
 func (e DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingAuthenticationBackend) Valid() bool {
 	switch e {
-	case DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingAuthenticationBackendInternal:
+	case Internal:
 		return true
 	default:
 		return false
@@ -2884,24 +3172,6 @@ func (e LoadBalancerNetworkType) Valid() bool {
 	}
 }
 
-// Defines values for LoadBalancerPlanType.
-const (
-	LoadBalancerPlanTypeInternal LoadBalancerPlanType = "internal"
-	LoadBalancerPlanTypePublic   LoadBalancerPlanType = "public"
-)
-
-// Valid indicates whether the value is a known member of the LoadBalancerPlanType enum.
-func (e LoadBalancerPlanType) Valid() bool {
-	switch e {
-	case LoadBalancerPlanTypeInternal:
-		return true
-	case LoadBalancerPlanTypePublic:
-		return true
-	default:
-		return false
-	}
-}
-
 // Defines values for LoadBalancerProxyProtocolVersionOrDisabled.
 const (
 	LoadBalancerProxyProtocolVersionOrDisabledEmpty LoadBalancerProxyProtocolVersionOrDisabled = ""
@@ -4986,6 +5256,136 @@ type AttachStorage struct {
 		Storage *string `json:"storage,omitempty"`
 		Type    *string `json:"type,omitempty"`
 	} `json:"storage_device"`
+}
+
+// AuditLogsActionsParameter List of actions to filter by
+type AuditLogsActionsParameter = []string
+
+// AuditLogsAuditLog A single audit log event
+type AuditLogsAuditLog struct {
+	// AccountUsername Username that performed the action
+	AccountUsername string `json:"account_username"`
+
+	// Action Action performed
+	Action AuditLogsAuditLogAction `json:"action"`
+
+	// AuthType Authentication type used (e.g., 'gui', 'api', 'basic_auth')
+	AuthType string `json:"auth_type"`
+
+	// CloudEventId Cloud event ID in ULID format
+	CloudEventId string `json:"cloud_event_id"`
+
+	// CurrentState Current state of the resource after the action (only present for create/update actions). Structure varies by resource_type.
+	CurrentState *map[string]interface{} `json:"current_state,omitempty"`
+
+	// IpAddress IP address of the request origin (IPv4 or IPv6). May be masked for internal UpCloud services.
+	IpAddress *string `json:"ip_address,omitempty"`
+
+	// Origin Origin of the request
+	Origin AuditLogsAuditLogOrigin `json:"origin"`
+
+	// PreviousState Previous state of the resource before the action (only present for update/delete actions). Structure varies by resource_type.
+	PreviousState *map[string]interface{} `json:"previous_state,omitempty"`
+
+	// ResourceId ID of the affected resource. May be hidden for sensitive resources like auth and account.
+	ResourceId *string `json:"resource_id,omitempty"`
+
+	// ResourceSubType Subtype of resource affected (e.g., 'session-api-token')
+	ResourceSubType *string `json:"resource_sub_type,omitempty"`
+
+	// ResourceType Type of resource affected
+	ResourceType AuditLogsAuditLogResourceType `json:"resource_type"`
+
+	// Time Timestamp of the event
+	Time time.Time `json:"time"`
+
+	// UpcloudCorrelationId UpCloud correlation ID for request tracing
+	UpcloudCorrelationId string `json:"upcloud_correlation_id"`
+}
+
+// AuditLogsAuditLogAction Action performed
+type AuditLogsAuditLogAction string
+
+// AuditLogsAuditLogOrigin Origin of the request
+type AuditLogsAuditLogOrigin string
+
+// AuditLogsAuditLogResourceType Type of resource affected
+type AuditLogsAuditLogResourceType string
+
+// AuditLogsCloudEventIDParameter Cloud event ID (ULID format)
+type AuditLogsCloudEventIDParameter = string
+
+// AuditLogsCreatedAfterParameter List audit logs created after the given timestamp (including the time of timestamp). Format: ISO timestamp eg. 2024-01-01T23:45:56Z
+type AuditLogsCreatedAfterParameter = time.Time
+
+// AuditLogsCreatedBeforeParameter List audit logs created before the given timestamp (including the time of timestamp). Format: ISO timestamp eg. 2024-01-01T23:45:56Z
+type AuditLogsCreatedBeforeParameter = time.Time
+
+// AuditLogsErrorResponse JSON Problem Details for HTTP APIs
+type AuditLogsErrorResponse struct {
+	// CorrelationId A unique identifier for the request. This identifier is generated by the server and can be used to track the request in the server logs. It is useful for debugging and support purposes.
+	CorrelationId *string `json:"correlation_id,omitempty"`
+
+	// Detail A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+	Detail        *string `json:"detail,omitempty"`
+	InvalidParams *[]struct {
+		Name   string `json:"name"`
+		Reason string `json:"reason"`
+	} `json:"invalid_params,omitempty"`
+
+	// Status The HTTP status code generated by the origin server for this occurrence of the problem.
+	Status int32 `json:"status"`
+
+	// Title A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+	Title string `json:"title"`
+
+	// Type A URI reference that uniquely identifies the problem type only in the context of the provided API. It is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+	Type string `json:"type"`
+}
+
+// AuditLogsFilterOptionsResponse Available filter options for audit logs
+type AuditLogsFilterOptionsResponse struct {
+	// Actions List of available actions
+	Actions []AuditLogsFilterOptionsResponseActions `json:"actions"`
+
+	// Origins List of available origins
+	Origins []AuditLogsFilterOptionsResponseOrigins `json:"origins"`
+
+	// ResourceTypes List of available resource types
+	ResourceTypes []AuditLogsFilterOptionsResponseResourceTypes `json:"resource_types"`
+}
+
+// AuditLogsFilterOptionsResponseActions defines model for AuditLogsFilterOptionsResponse.Actions.
+type AuditLogsFilterOptionsResponseActions string
+
+// AuditLogsFilterOptionsResponseOrigins defines model for AuditLogsFilterOptionsResponse.Origins.
+type AuditLogsFilterOptionsResponseOrigins string
+
+// AuditLogsFilterOptionsResponseResourceTypes defines model for AuditLogsFilterOptionsResponse.ResourceTypes.
+type AuditLogsFilterOptionsResponseResourceTypes string
+
+// AuditLogsFormatParameter Export format
+type AuditLogsFormatParameter string
+
+// AuditLogsLimitParameter Number of results to return
+type AuditLogsLimitParameter = int32
+
+// AuditLogsOffsetParameter Page for retrieved results. Note: 0 and 1 retrieve the same first page results. (default 0)
+type AuditLogsOffsetParameter = int32
+
+// AuditLogsOriginsParameter List of origins to filter by
+type AuditLogsOriginsParameter = []string
+
+// AuditLogsQueryParameter Search string
+type AuditLogsQueryParameter = string
+
+// AuditLogsResourceTypesParameter List of resource types to filter by
+type AuditLogsResourceTypesParameter = []string
+
+// AuditLogsResponse Response schema for a list of audit logs
+type AuditLogsResponse struct {
+	// AuditLogs List of audit log events
+	AuditLogs []AuditLogsAuditLog `json:"audit_logs"`
 }
 
 // CloneStorageRequest TODO
@@ -9024,6 +9424,11 @@ type FirewallRulesetErrorResponse struct {
 	Type string `json:"type"`
 }
 
+// FirewallRulesetFirewallMultipleRuleCreate defines model for firewallRulesetFirewallMultipleRuleCreate.
+type FirewallRulesetFirewallMultipleRuleCreate struct {
+	Rules []FirewallRulesetFirewallRuleCreate `json:"rules"`
+}
+
 // FirewallRulesetFirewallRuleCreate defines model for firewallRulesetFirewallRuleCreate.
 type FirewallRulesetFirewallRuleCreate struct {
 	Action interface{} `json:"action"`
@@ -9493,7 +9898,7 @@ type GatewayAddressDetailsResponse struct {
 	Name *string `json:"name,omitempty"`
 }
 
-// GatewayAddressListResponse Response schema for a list of gwaas addresses.
+// GatewayAddressListResponse Response schema for a list of Gateway addresses.
 type GatewayAddressListResponse = []GatewayAddressDetailsResponse
 
 // GatewayAuthenticationDetailsResponse Authentication details
@@ -9535,7 +9940,7 @@ type GatewayConnectionCreateRequest struct {
 	Type *GatewayConnectionType `json:"type,omitempty"`
 }
 
-// GatewayConnectionDetailsResponse Response schema for gwaas connection details.
+// GatewayConnectionDetailsResponse Response schema for Gateway connection details.
 type GatewayConnectionDetailsResponse struct {
 	// CreatedAt Timestamp of when the connection was created.
 	CreatedAt *time.Time `json:"created_at,omitempty"`
@@ -9560,7 +9965,7 @@ type GatewayConnectionDetailsResponse struct {
 	Uuid *GatewayUuid `json:"uuid,omitempty"`
 }
 
-// GatewayConnectionListResponse Response schema for a list of gwaas connections.
+// GatewayConnectionListResponse Response schema for a list of Gateway connections.
 type GatewayConnectionListResponse = []GatewayConnectionDetailsResponse
 
 // GatewayConnectionModifyRequest Network gateway VPN connection
@@ -9584,7 +9989,7 @@ type GatewayConnectionModifyRequest struct {
 	Uuid *GatewayUuid `json:"uuid,omitempty"`
 }
 
-// GatewayConnectionRouteDetailsResponse Response schema for gwaas connection route details.
+// GatewayConnectionRouteDetailsResponse Response schema for Gateway connection route details.
 type GatewayConnectionRouteDetailsResponse struct {
 	// Name Name of the connection
 	Name *string `json:"name,omitempty"`
@@ -9917,7 +10322,7 @@ type GatewayMetricsDetailsResponse struct {
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 }
 
-// GatewayPlanDetailsResponse Response schema for gwaas plan details.
+// GatewayPlanDetailsResponse Response schema for Gateway plan details.
 type GatewayPlanDetailsResponse struct {
 	// Name Name of the plan
 	Name *string `json:"name,omitempty"`
@@ -9939,7 +10344,7 @@ type GatewayPlanDetailsResponse struct {
 	VpnTunnelAmount *int64 `json:"vpn_tunnel_amount,omitempty"`
 }
 
-// GatewayPlanListResponse Response schema for a list of gwaas plans.
+// GatewayPlanListResponse Response schema for a list of Gateway plans.
 type GatewayPlanListResponse = []GatewayPlanDetailsResponse
 
 // GatewayQueryParamOffset Schema for a query parameter specifying the offset for pagination.
@@ -10056,7 +10461,7 @@ type GatewayServiceFeatures string
 // GatewayServiceLabelListResponse Response schema for a list of service labels.
 type GatewayServiceLabelListResponse = []GatewayLabelDetailsResponse
 
-// GatewayServiceListResponse Response schema for a list of gwaas services.
+// GatewayServiceListResponse Response schema for a list of Gateway services.
 type GatewayServiceListResponse = []GatewayServiceDetailsResponse
 
 // GatewayServiceLogSessionCreateRequest Request to create a new log session for a service
@@ -10145,7 +10550,7 @@ type GatewaySupportedIntegrityAlgorithms string
 // GatewaySupportedProposalAlgorithms List of supported IPsec proposal algorithms
 type GatewaySupportedProposalAlgorithms string
 
-// GatewayTunnelDetailsResponse Response schema for gwaas tunnel details.
+// GatewayTunnelDetailsResponse Response schema for Gateway tunnel details.
 type GatewayTunnelDetailsResponse struct {
 	// Bgp Details about the BGP configuration
 	Bgp *GatewayBgpDetailsResponse `json:"bgp,omitempty"`
@@ -10174,7 +10579,7 @@ type GatewayTunnelDetailsResponse struct {
 	// TunnelHealthy Indicates whether the tunnel is healthy
 	TunnelHealthy *bool `json:"tunnel_healthy,omitempty"`
 
-	// TunnelInternalIp Response schema for gwaas tunnel internal IP details.
+	// TunnelInternalIp Response schema for VPN Gateway tunnel internal IP details.
 	TunnelInternalIp *GatewayTunnelInternalIpDetailsResponse `json:"tunnel_internal_ip,omitempty"`
 
 	// TunnelUp Indicates whether the tunnel is up
@@ -10187,14 +10592,14 @@ type GatewayTunnelDetailsResponse struct {
 	Uuid *GatewayUuid `json:"uuid,omitempty"`
 }
 
-// GatewayTunnelInternalIpDetailsResponse Response schema for gwaas tunnel internal IP details.
+// GatewayTunnelInternalIpDetailsResponse Response schema for VPN Gateway tunnel internal IP details.
 type GatewayTunnelInternalIpDetailsResponse struct {
 	// HasParseError Indicates if there is a parse error with the tunnel internal IP
 	HasParseError *bool           `json:"hasParseError,omitempty"`
 	Ip            *GatewayAddress `json:"ip,omitempty"`
 }
 
-// GatewayTunnelListResponse Response schema for a list of gwaas tunnels.
+// GatewayTunnelListResponse Response schema for a list of Gateway tunnels.
 type GatewayTunnelListResponse = []GatewayTunnelDetailsResponse
 
 // GatewayTunnelModifyRequest Request to modify a VPN tunnel
@@ -12882,45 +13287,15 @@ type LoadBalancerOffsetParameter = int32
 
 // LoadBalancerPlan Represents a load balancer plan, defining the node size, performance characteristics, and associated pricing options.
 type LoadBalancerPlan struct {
-	// AllowTrialAccounts Indicates whether trial accounts are allowed for this plan.
-	AllowTrialAccounts *bool `json:"allow_trial_accounts,omitempty"`
-
-	// CoreNumber Number of CPU cores assigned per server.
-	CoreNumber *int32 `json:"core_number,omitempty"`
-
-	// CreatedAt Timestamp when the plan was created.
-	CreatedAt *time.Time `json:"created_at,omitempty"`
-
-	// Id Unique identifier of the plan.
-	Id *int64 `json:"id,omitempty"`
-
-	// MemoryAmount Amount of memory per server in mebibytes.
-	MemoryAmount *int32 `json:"memory_amount,omitempty"`
-
 	// Name Name of the plan.
 	Name *string `json:"name,omitempty"`
 
 	// PerServerMaxSessions Maximum number of sessions allowed per server.
 	PerServerMaxSessions *int32 `json:"per_server_max_sessions,omitempty"`
 
-	// PublicIfaceBwInMbits Public interface inbound bandwidth in Mbit/s.
-	PublicIfaceBwInMbits *int32 `json:"public_iface_bw_in_mbits,omitempty"`
-
-	// PublicIfaceBwOutMbits Public interface outbound bandwidth in Mbit/s.
-	PublicIfaceBwOutMbits *int32 `json:"public_iface_bw_out_mbits,omitempty"`
-
 	// ServerNumber Number of servers included in the plan.
 	ServerNumber *int32 `json:"server_number,omitempty"`
-
-	// Type The type of plan.
-	Type *LoadBalancerPlanType `json:"type,omitempty"`
-
-	// UpdatedAt Timestamp when the plan was last updated.
-	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 }
-
-// LoadBalancerPlanType The type of plan.
-type LoadBalancerPlanType string
 
 // LoadBalancerPlanParameter The name of the plan.
 type LoadBalancerPlanParameter = string
@@ -15755,6 +16130,9 @@ type AddStorageToFavoritesUuid = StorageUuid
 // AttachStorageToServerUuid Universally unique identifier
 type AttachStorageToServerUuid = StorageUuid
 
+// AuditLogsGetAuditLogCloudEventID Cloud event ID (ULID format)
+type AuditLogsGetAuditLogCloudEventID = AuditLogsCloudEventIDParameter
+
 // CancelStorageOperationUuid Universally unique identifier
 type CancelStorageOperationUuid = StorageUuid
 
@@ -15805,9 +16183,6 @@ type CreateFirewallRulesetLabelRulesetUuid = FirewallRulesetServerUuid
 
 // CreateFirewallRulesetRuleRulesetUuid The unique identifier for the server.
 type CreateFirewallRulesetRuleRulesetUuid = FirewallRulesetServerUuid
-
-// CreateGatewayAddressServiceUuid The unique identifier for the resource.
-type CreateGatewayAddressServiceUuid = GatewayUuid
 
 // CreateGatewayConnectionServiceUuid The unique identifier for the resource.
 type CreateGatewayConnectionServiceUuid = GatewayUuid
@@ -15865,6 +16240,9 @@ type CreateLoadBalancerRuleFrontendName = LoadBalancerFrontendParameter
 
 // CreateLoadBalancerRuleServiceUuid The UUID of the service.
 type CreateLoadBalancerRuleServiceUuid = LoadBalancerServiceParameter
+
+// CreateMultipleFirewallRulesetRuleRulesetUuid The unique identifier for the server.
+type CreateMultipleFirewallRulesetRuleRulesetUuid = FirewallRulesetServerUuid
 
 // CreateTemplateFromStorageUuid Universally unique identifier
 type CreateTemplateFromStorageUuid = StorageUuid
@@ -15961,12 +16339,6 @@ type DeleteFirewallRulesetRuleRulesetUuid = FirewallRulesetServerUuid
 
 // DeleteFirewallRulesetRulesetUuid The unique identifier for the server.
 type DeleteFirewallRulesetRulesetUuid = FirewallRulesetServerUuid
-
-// DeleteGatewayAddressAddressName The unique identifier for the resource.
-type DeleteGatewayAddressAddressName = GatewayUuid
-
-// DeleteGatewayAddressServiceUuid The unique identifier for the resource.
-type DeleteGatewayAddressServiceUuid = GatewayUuid
 
 // DeleteGatewayConnectionConnectionUuid The unique identifier for the resource.
 type DeleteGatewayConnectionConnectionUuid = GatewayUuid
@@ -16106,8 +16478,8 @@ type EnableDatabaseSecurityAdminUuid = DatabaseUuid
 // EnableDatabaseTemporaryWritesUuid The unique identifier for the integration.
 type EnableDatabaseTemporaryWritesUuid = DatabaseUuid
 
-// FirewallRulesetAdminListServerFirewallRulesServerUuid The unique identifier for the server.
-type FirewallRulesetAdminListServerFirewallRulesServerUuid = FirewallRulesetServerUuid
+// ExportAuditLogsFormat Export format
+type ExportAuditLogsFormat = AuditLogsFormatParameter
 
 // FirewallRulesetCreateMultipleServerFirewallRulesServerUuid The unique identifier for the server.
 type FirewallRulesetCreateMultipleServerFirewallRulesServerUuid = FirewallRulesetServerUuid
@@ -16547,6 +16919,30 @@ type KubernetesNodeNameParameter = KubernetesNodeName
 // KubernetesUuidParameter UUID
 type KubernetesUuidParameter = KubernetesUuid
 
+// ListAuditLogsActions List of actions to filter by
+type ListAuditLogsActions = AuditLogsActionsParameter
+
+// ListAuditLogsCreatedAfter List audit logs created after the given timestamp (including the time of timestamp). Format: ISO timestamp eg. 2024-01-01T23:45:56Z
+type ListAuditLogsCreatedAfter = AuditLogsCreatedAfterParameter
+
+// ListAuditLogsCreatedBefore List audit logs created before the given timestamp (including the time of timestamp). Format: ISO timestamp eg. 2024-01-01T23:45:56Z
+type ListAuditLogsCreatedBefore = AuditLogsCreatedBeforeParameter
+
+// ListAuditLogsLimit Number of results to return
+type ListAuditLogsLimit = AuditLogsLimitParameter
+
+// ListAuditLogsOffset Page for retrieved results. Note: 0 and 1 retrieve the same first page results. (default 0)
+type ListAuditLogsOffset = AuditLogsOffsetParameter
+
+// ListAuditLogsOrigins List of origins to filter by
+type ListAuditLogsOrigins = AuditLogsOriginsParameter
+
+// ListAuditLogsQ Search string
+type ListAuditLogsQ = AuditLogsQueryParameter
+
+// ListAuditLogsResourceTypes List of resource types to filter by
+type ListAuditLogsResourceTypes = AuditLogsResourceTypesParameter
+
 // ListDatabaseConnectionPoolsSort Schema for a query parameter specifying the order.
 type ListDatabaseConnectionPoolsSort = DatabaseQueryParamOrder
 
@@ -16612,6 +17008,9 @@ type ListFileStoragesOffset = FileStorageQueryParamOffset
 
 // ListFileStoragesSort Query parameter to specify the sorting order of results in API responses, allowing clients to order data based on specific fields.
 type ListFileStoragesSort = FileStorageQueryParamSort
+
+// ListFirewallRulesetAttachedServersRulesetUuid The unique identifier for the server.
+type ListFirewallRulesetAttachedServersRulesetUuid = FirewallRulesetServerUuid
 
 // ListFirewallRulesetLabelsRulesetUuid The unique identifier for the server.
 type ListFirewallRulesetLabelsRulesetUuid = FirewallRulesetServerUuid
@@ -17672,6 +18071,18 @@ type AddStorageToFavoritesDefault = StorageError
 // AttachStorageToServerDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type AttachStorageToServerDefault = StorageError
 
+// AuditLogsGetAuditLog200 A single audit log event
+type AuditLogsGetAuditLog200 = AuditLogsAuditLog
+
+// AuditLogsGetAuditLogDefault JSON Problem Details for HTTP APIs
+type AuditLogsGetAuditLogDefault = AuditLogsErrorResponse
+
+// AuditLogsGetFilterOptions200 Available filter options for audit logs
+type AuditLogsGetFilterOptions200 = AuditLogsFilterOptionsResponse
+
+// AuditLogsGetFilterOptionsDefault JSON Problem Details for HTTP APIs
+type AuditLogsGetFilterOptionsDefault = AuditLogsErrorResponse
+
 // CancelStorageOperationDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type CancelStorageOperationDefault = StorageError
 
@@ -17795,13 +18206,7 @@ type CreateFirewallRulesetRule201 = FirewallRulesetRuleDetailResponse
 // CreateFirewallRulesetRuleDefault Schema for error responses from the API.
 type CreateFirewallRulesetRuleDefault = FirewallRulesetErrorResponse
 
-// CreateGatewayAddress200 Details about a specific address
-type CreateGatewayAddress200 = GatewayAddressDetailsResponse
-
-// CreateGatewayAddressDefault Schema for error responses from the API.
-type CreateGatewayAddressDefault = GatewayErrorResponse
-
-// CreateGatewayConnection200 Response schema for gwaas connection details.
+// CreateGatewayConnection200 Response schema for Gateway connection details.
 type CreateGatewayConnection200 = GatewayConnectionDetailsResponse
 
 // CreateGatewayConnectionDefault Schema for error responses from the API.
@@ -17822,7 +18227,7 @@ type CreateGatewayServiceLogSession200 = GatewayServiceLogSessionCreateResponse
 // CreateGatewayServiceLogSessionDefault Schema for error responses from the API.
 type CreateGatewayServiceLogSessionDefault = GatewayErrorResponse
 
-// CreateGatewayTunnel200 Response schema for gwaas tunnel details.
+// CreateGatewayTunnel200 Response schema for Gateway tunnel details.
 type CreateGatewayTunnel200 = GatewayTunnelDetailsResponse
 
 // CreateGatewayTunnelDefault Schema for error responses from the API.
@@ -17899,6 +18304,12 @@ type CreateLoadBalancerRule201 = LoadBalancerRule
 
 // CreateLoadBalancerRuleDefault Schema for error responses from the API.
 type CreateLoadBalancerRuleDefault = LoadBalancerErrorResponse
+
+// CreateMultipleFirewallRulesetRule200 Response schema for a list of firewall ruleset rules.
+type CreateMultipleFirewallRulesetRule200 = FirewallRulesetFirewallRuleListResponse
+
+// CreateMultipleFirewallRulesetRuleDefault Schema for error responses from the API.
+type CreateMultipleFirewallRulesetRuleDefault = FirewallRulesetErrorResponse
 
 // CreateNetwork201 defines model for createNetwork201.
 type CreateNetwork201 = Network
@@ -18071,9 +18482,6 @@ type DeleteFirewallRulesetLabelDefault = FirewallRulesetErrorResponse
 // DeleteFirewallRulesetRuleDefault Schema for error responses from the API.
 type DeleteFirewallRulesetRuleDefault = FirewallRulesetErrorResponse
 
-// DeleteGatewayAddressDefault Schema for error responses from the API.
-type DeleteGatewayAddressDefault = GatewayErrorResponse
-
 // DeleteGatewayConnectionDefault Schema for error responses from the API.
 type DeleteGatewayConnectionDefault = GatewayErrorResponse
 
@@ -18179,23 +18587,11 @@ type EnableDatabaseTemporaryWrites201 = DatabaseUpCloudApiResponse
 // EnableDatabaseTemporaryWritesDefault Schema for error responses from the API.
 type EnableDatabaseTemporaryWritesDefault = DatabaseErrorResponse
 
-// FirewallRulesetAdminListServerFirewallRules200 Server firewall detail response.
-type FirewallRulesetAdminListServerFirewallRules200 = FirewallRulesetServerFirewallDetailResponse
+// ExportAuditLogs200 Response schema for a list of audit logs
+type ExportAuditLogs200 = AuditLogsResponse
 
-// FirewallRulesetAdminListServerFirewallRules400 Schema for legacy error responses from API.
-type FirewallRulesetAdminListServerFirewallRules400 = FirewallRulesetErrorLegacyResponse
-
-// FirewallRulesetAdminListServerFirewallRules403 Schema for legacy error responses from API.
-type FirewallRulesetAdminListServerFirewallRules403 = FirewallRulesetErrorLegacyResponse
-
-// FirewallRulesetAdminListServerFirewallRules404 Schema for legacy error responses from API.
-type FirewallRulesetAdminListServerFirewallRules404 = FirewallRulesetErrorLegacyResponse
-
-// FirewallRulesetAdminListServerFirewallRules409 Schema for legacy error responses from API.
-type FirewallRulesetAdminListServerFirewallRules409 = FirewallRulesetErrorLegacyResponse
-
-// FirewallRulesetAdminListServerFirewallRulesDefault Schema for error responses from the API.
-type FirewallRulesetAdminListServerFirewallRulesDefault = FirewallRulesetErrorResponse
+// ExportAuditLogsDefault JSON Problem Details for HTTP APIs
+type ExportAuditLogsDefault = AuditLogsErrorResponse
 
 // FirewallRulesetCreateMultipleServerFirewallRules200 Server firewall detail response.
 type FirewallRulesetCreateMultipleServerFirewallRules200 = FirewallRulesetServerFirewallDetailResponse
@@ -18473,7 +18869,7 @@ type GetGatewayAddress200 = GatewayAddressDetailsResponse
 // GetGatewayAddressDefault Schema for error responses from the API.
 type GetGatewayAddressDefault = GatewayErrorResponse
 
-// GetGatewayConnection200 Response schema for gwaas connection details.
+// GetGatewayConnection200 Response schema for Gateway connection details.
 type GetGatewayConnection200 = GatewayConnectionDetailsResponse
 
 // GetGatewayConnectionDefault Schema for error responses from the API.
@@ -18485,7 +18881,7 @@ type GetGatewayMetrics200 = GatewayServiceMetricsResponse
 // GetGatewayMetricsDefault Schema for error responses from the API.
 type GetGatewayMetricsDefault = GatewayErrorResponse
 
-// GetGatewayPlan200 Response schema for gwaas plan details.
+// GetGatewayPlan200 Response schema for Gateway plan details.
 type GetGatewayPlan200 = GatewayPlanDetailsResponse
 
 // GetGatewayPlanDefault Schema for error responses from the API.
@@ -18503,7 +18899,7 @@ type GetGatewayServiceLabel200 = GatewayLabelDetailsResponse
 // GetGatewayServiceLabelDefault Schema for error responses from the API.
 type GetGatewayServiceLabelDefault = GatewayErrorResponse
 
-// GetGatewayTunnel200 Response schema for gwaas tunnel details.
+// GetGatewayTunnel200 Response schema for Gateway tunnel details.
 type GetGatewayTunnel200 = GatewayTunnelDetailsResponse
 
 // GetGatewayTunnelDefault Schema for error responses from the API.
@@ -18800,6 +19196,12 @@ type KubernetesUnAuthorized = KubernetesError
 // KubernetesUnProcessableEntity Response error
 type KubernetesUnProcessableEntity = KubernetesError
 
+// ListAuditLogs200 Response schema for a list of audit logs
+type ListAuditLogs200 = AuditLogsResponse
+
+// ListAuditLogsDefault JSON Problem Details for HTTP APIs
+type ListAuditLogsDefault = AuditLogsErrorResponse
+
 // ListDatabaseAlerts200 Schema for a project alerts
 type ListDatabaseAlerts200 = DatabaseProjectAlertsResponse
 
@@ -18902,6 +19304,12 @@ type ListFileStorages200 = FileStorageServiceListResponse
 // ListFileStoragesDefault Schema for error responses from the API.
 type ListFileStoragesDefault = FileStorageErrorResponse
 
+// ListFirewallRulesetAttachedServers200 Response schema for listing labels.
+type ListFirewallRulesetAttachedServers200 = FirewallRulesetLabelListResponse
+
+// ListFirewallRulesetAttachedServersDefault Schema for error responses from the API.
+type ListFirewallRulesetAttachedServersDefault = FirewallRulesetErrorResponse
+
 // ListFirewallRulesetLabels200 Response schema for listing labels.
 type ListFirewallRulesetLabels200 = FirewallRulesetLabelListResponse
 
@@ -18920,19 +19328,19 @@ type ListFirewallRulesets200 = FirewallRulesetListResponse
 // ListFirewallRulesetsDefault Schema for error responses from the API.
 type ListFirewallRulesetsDefault = FirewallRulesetErrorResponse
 
-// ListGatewayAddresses200 Response schema for a list of gwaas addresses.
+// ListGatewayAddresses200 Response schema for a list of Gateway addresses.
 type ListGatewayAddresses200 = GatewayAddressListResponse
 
 // ListGatewayAddressesDefault Schema for error responses from the API.
 type ListGatewayAddressesDefault = GatewayErrorResponse
 
-// ListGatewayConnections200 Response schema for a list of gwaas connections.
+// ListGatewayConnections200 Response schema for a list of Gateway connections.
 type ListGatewayConnections200 = GatewayConnectionListResponse
 
 // ListGatewayConnectionsDefault Schema for error responses from the API.
 type ListGatewayConnectionsDefault = GatewayErrorResponse
 
-// ListGatewayPlans200 Response schema for a list of gwaas plans.
+// ListGatewayPlans200 Response schema for a list of Gateway plans.
 type ListGatewayPlans200 = GatewayPlanListResponse
 
 // ListGatewayPlansDefault Schema for error responses from the API.
@@ -18944,13 +19352,13 @@ type ListGatewayServiceLabels200 = GatewayServiceLabelListResponse
 // ListGatewayServiceLabelsDefault Schema for error responses from the API.
 type ListGatewayServiceLabelsDefault = GatewayErrorResponse
 
-// ListGatewayServices200 Response schema for a list of gwaas services.
+// ListGatewayServices200 Response schema for a list of Gateway services.
 type ListGatewayServices200 = GatewayServiceListResponse
 
 // ListGatewayServicesDefault Schema for error responses from the API.
 type ListGatewayServicesDefault = GatewayErrorResponse
 
-// ListGatewayTunnels200 Response schema for a list of gwaas tunnels.
+// ListGatewayTunnels200 Response schema for a list of Gateway tunnels.
 type ListGatewayTunnels200 = GatewayTunnelListResponse
 
 // ListGatewayTunnelsDefault Schema for error responses from the API.
@@ -19238,7 +19646,7 @@ type ModifyFirewallRulesetRule200 = FirewallRulesetRuleDetailResponse
 // ModifyFirewallRulesetRuleDefault Schema for error responses from the API.
 type ModifyFirewallRulesetRuleDefault = FirewallRulesetErrorResponse
 
-// ModifyGatewayConnection200 Response schema for gwaas connection details.
+// ModifyGatewayConnection200 Response schema for Gateway connection details.
 type ModifyGatewayConnection200 = GatewayConnectionDetailsResponse
 
 // ModifyGatewayConnectionDefault Schema for error responses from the API.
@@ -19253,7 +19661,7 @@ type ModifyGatewayServiceDefault = GatewayErrorResponse
 // ModifyGatewayServiceLabelDefault Schema for error responses from the API.
 type ModifyGatewayServiceLabelDefault = GatewayErrorResponse
 
-// ModifyGatewayTunnel200 Response schema for gwaas tunnel details.
+// ModifyGatewayTunnel200 Response schema for Gateway tunnel details.
 type ModifyGatewayTunnel200 = GatewayTunnelDetailsResponse
 
 // ModifyGatewayTunnelDefault Schema for error responses from the API.
@@ -20045,9 +20453,6 @@ type CreateFirewallRulesetLabel = FirewallRulesetCreateLabel
 // CreateFirewallRulesetRule defines model for createFirewallRulesetRule.
 type CreateFirewallRulesetRule = FirewallRulesetFirewallRuleCreate
 
-// CreateGatewayAddress Address create request
-type CreateGatewayAddress = GatewayAddressCreateRequest
-
 // CreateGatewayConnection Network gateway VPN connection
 type CreateGatewayConnection = GatewayConnectionCreateRequest
 
@@ -20099,6 +20504,9 @@ type CreateLoadBalancerResolver = LoadBalancerResolverCreate
 // CreateLoadBalancerRule Load Balancer Forwarding Rule
 type CreateLoadBalancerRule = LoadBalancerRuleCreate
 
+// CreateMultipleFirewallRulesetRule defines model for createMultipleFirewallRulesetRule.
+type CreateMultipleFirewallRulesetRule = FirewallRulesetFirewallMultipleRuleCreate
+
 // CreateNetwork Request schema for creating a network
 type CreateNetwork = CreateNetworkRequest
 
@@ -20131,9 +20539,6 @@ type CreateTemplateFromStorage = CreateStorageTemplateRequest
 
 // EnableDatabaseSecurityAdmin Schema for enabling security on a service instance
 type EnableDatabaseSecurityAdmin = DatabaseServiceSecurityEnable
-
-// FirewallRulesetAdminListServerFirewallRules defines model for firewallRulesetAdminListServerFirewallRules.
-type FirewallRulesetAdminListServerFirewallRules = FirewallRulesetServerFirewallRuleCreate
 
 // FirewallRulesetCreateMultipleServerFirewallRules Creates multiple server firewall rules.
 type FirewallRulesetCreateMultipleServerFirewallRules = FirewallRulesetServerMultipleFirewallRulesCreate
@@ -20418,6 +20823,39 @@ type ListTokensParams struct {
 
 	// Sort Comma-separated list of fields to sort by. Prefix with '+' for ascending or '-' for descending order. Supported fields: created_at, expires_at, last_used_at, name. Example: sort=+name,-created_at. If no prefix is given, descending is assumed. Follows OpenAPI collectionFormat 'csv'.
 	Sort *AccountTokensListTokensSort `form:"sort,omitempty" json:"sort,omitempty"`
+}
+
+// ListAuditLogsParams defines parameters for ListAuditLogs.
+type ListAuditLogsParams struct {
+	// Q Filter audit logs using a keyword such as account username, resource ID or IP address.
+	Q *ListAuditLogsQ `form:"q,omitempty" json:"q,omitempty"`
+
+	// Limit Number of results to return (max 100, default 50)
+	Limit *ListAuditLogsLimit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Offset Offset for retrieved results. (default 0)
+	Offset *ListAuditLogsOffset `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// Actions List of actions to filter by
+	Actions *ListAuditLogsActions `form:"actions,omitempty" json:"actions,omitempty"`
+
+	// Origins List of origins to filter by
+	Origins *ListAuditLogsOrigins `form:"origins,omitempty" json:"origins,omitempty"`
+
+	// ResourceTypes List of resource types to filter by
+	ResourceTypes *ListAuditLogsResourceTypes `form:"resource_types,omitempty" json:"resource_types,omitempty"`
+
+	// CreatedAfter List audit logs created after the given timestamp (including the time of timestamp). Format: ISO timestamp eg. 2024-01-01T23:45:56Z
+	CreatedAfter *ListAuditLogsCreatedAfter `form:"created_after,omitempty" json:"created_after,omitempty"`
+
+	// CreatedBefore List audit logs created before the given timestamp (including the time of timestamp). Format: ISO timestamp eg. 2024-01-01T23:45:56Z
+	CreatedBefore *ListAuditLogsCreatedBefore `form:"created_before,omitempty" json:"created_before,omitempty"`
+}
+
+// ExportAuditLogsParams defines parameters for ExportAuditLogs.
+type ExportAuditLogsParams struct {
+	// Format Export format: 'csv' or 'json' (default: csv)
+	Format *ExportAuditLogsFormat `form:"format,omitempty" json:"format,omitempty"`
 }
 
 // ListDatabasesParams defines parameters for ListDatabases.
@@ -20867,9 +21305,6 @@ type ModifyFileStorageAclJSONRequestBody = FileStorageAclModify
 // CreateFirewallRulesetJSONRequestBody defines body for CreateFirewallRuleset for application/json ContentType.
 type CreateFirewallRulesetJSONRequestBody = CreateFirewallRuleset
 
-// AdminListServerFirewallRulesJSONRequestBody defines body for AdminListServerFirewallRules for application/json ContentType.
-type AdminListServerFirewallRulesJSONRequestBody = FirewallRulesetServerFirewallRuleCreate
-
 // CreateServerFirewallRuleJSONRequestBody defines body for CreateServerFirewallRule for application/json ContentType.
 type CreateServerFirewallRuleJSONRequestBody = FirewallRulesetServerFirewallRuleCreate
 
@@ -20888,6 +21323,9 @@ type ModifyFirewallRulesetLabelJSONRequestBody = FirewallRulesetLabelModify
 // CreateFirewallRulesetRuleJSONRequestBody defines body for CreateFirewallRulesetRule for application/json ContentType.
 type CreateFirewallRulesetRuleJSONRequestBody = FirewallRulesetFirewallRuleCreate
 
+// CreateMultipleFirewallRulesetRuleJSONRequestBody defines body for CreateMultipleFirewallRulesetRule for application/json ContentType.
+type CreateMultipleFirewallRulesetRuleJSONRequestBody = FirewallRulesetFirewallMultipleRuleCreate
+
 // ModifyFirewallRulesetRuleJSONRequestBody defines body for ModifyFirewallRulesetRule for application/json ContentType.
 type ModifyFirewallRulesetRuleJSONRequestBody = FirewallRulesetFirewallRuleModify
 
@@ -20899,9 +21337,6 @@ type ModifyGatewayServiceJSONRequestBody = GatewayServiceModifyRequest
 
 // ReplaceGatewayServiceJSONRequestBody defines body for ReplaceGatewayService for application/json ContentType.
 type ReplaceGatewayServiceJSONRequestBody = GatewayServiceReplaceRequest
-
-// CreateGatewayAddressJSONRequestBody defines body for CreateGatewayAddress for application/json ContentType.
-type CreateGatewayAddressJSONRequestBody = GatewayAddressCreateRequest
 
 // CreateGatewayConnectionJSONRequestBody defines body for CreateGatewayConnection for application/json ContentType.
 type CreateGatewayConnectionJSONRequestBody = GatewayConnectionCreateRequest
@@ -28322,6 +28757,18 @@ type ClientInterface interface {
 	// GetToken request
 	GetToken(ctx context.Context, tokenUuid AccountTokensGetTokenTokenUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ListAuditLogs request
+	ListAuditLogs(ctx context.Context, params *ListAuditLogsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ExportAuditLogs request
+	ExportAuditLogs(ctx context.Context, params *ExportAuditLogsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetFilterOptions request
+	GetFilterOptions(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetAuditLog request
+	GetAuditLog(ctx context.Context, cloudEventID AuditLogsGetAuditLogCloudEventID, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ListCurrencies request
 	ListCurrencies(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -28693,11 +29140,6 @@ type ClientInterface interface {
 
 	CreateFirewallRuleset(ctx context.Context, body CreateFirewallRulesetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// AdminListServerFirewallRulesWithBody request with any body
-	AdminListServerFirewallRulesWithBody(ctx context.Context, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	AdminListServerFirewallRules(ctx context.Context, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, body AdminListServerFirewallRulesJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// ListServerFirewallRule request
 	ListServerFirewallRule(ctx context.Context, serverUuid FirewallRulesetListServerFirewallRuleServerUuid, params *ListServerFirewallRuleParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -28758,6 +29200,11 @@ type ClientInterface interface {
 
 	CreateFirewallRulesetRule(ctx context.Context, rulesetUuid CreateFirewallRulesetRuleRulesetUuid, body CreateFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// CreateMultipleFirewallRulesetRuleWithBody request with any body
+	CreateMultipleFirewallRulesetRuleWithBody(ctx context.Context, rulesetUuid CreateMultipleFirewallRulesetRuleRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CreateMultipleFirewallRulesetRule(ctx context.Context, rulesetUuid CreateMultipleFirewallRulesetRuleRulesetUuid, body CreateMultipleFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// DeleteFirewallRulesetRule request
 	DeleteFirewallRulesetRule(ctx context.Context, rulesetUuid DeleteFirewallRulesetRuleRulesetUuid, ruleId DeleteFirewallRulesetRuleRuleId, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -28768,6 +29215,9 @@ type ClientInterface interface {
 	ModifyFirewallRulesetRuleWithBody(ctx context.Context, rulesetUuid ModifyFirewallRulesetRuleRulesetUuid, ruleId ModifyFirewallRulesetRuleRuleId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	ModifyFirewallRulesetRule(ctx context.Context, rulesetUuid ModifyFirewallRulesetRuleRulesetUuid, ruleId ModifyFirewallRulesetRuleRuleId, body ModifyFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListFirewallRulesetAttachedServers request
+	ListFirewallRulesetAttachedServers(ctx context.Context, rulesetUuid ListFirewallRulesetAttachedServersRulesetUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListGatewayServices request
 	ListGatewayServices(ctx context.Context, params *ListGatewayServicesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -28804,14 +29254,6 @@ type ClientInterface interface {
 
 	// ListGatewayAddresses request
 	ListGatewayAddresses(ctx context.Context, serviceUuid ListGatewayAddressesServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateGatewayAddressWithBody request with any body
-	CreateGatewayAddressWithBody(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	CreateGatewayAddress(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, body CreateGatewayAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// DeleteGatewayAddress request
-	DeleteGatewayAddress(ctx context.Context, serviceUuid DeleteGatewayAddressServiceUuid, addressName DeleteGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetGatewayAddress request
 	GetGatewayAddress(ctx context.Context, serviceUuid GetGatewayAddressServiceUuid, addressName GetGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -29902,6 +30344,54 @@ func (c *Client) RevokeToken(ctx context.Context, tokenUuid AccountTokensRevokeT
 
 func (c *Client) GetToken(ctx context.Context, tokenUuid AccountTokensGetTokenTokenUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetTokenRequest(c.Server, tokenUuid)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ListAuditLogs(ctx context.Context, params *ListAuditLogsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListAuditLogsRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ExportAuditLogs(ctx context.Context, params *ExportAuditLogsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewExportAuditLogsRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetFilterOptions(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetFilterOptionsRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetAuditLog(ctx context.Context, cloudEventID AuditLogsGetAuditLogCloudEventID, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetAuditLogRequest(c.Server, cloudEventID)
 	if err != nil {
 		return nil, err
 	}
@@ -31532,30 +32022,6 @@ func (c *Client) CreateFirewallRuleset(ctx context.Context, body CreateFirewallR
 	return c.Client.Do(req)
 }
 
-func (c *Client) AdminListServerFirewallRulesWithBody(ctx context.Context, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewAdminListServerFirewallRulesRequestWithBody(c.Server, serverUuid, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) AdminListServerFirewallRules(ctx context.Context, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, body AdminListServerFirewallRulesJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewAdminListServerFirewallRulesRequest(c.Server, serverUuid, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 func (c *Client) ListServerFirewallRule(ctx context.Context, serverUuid FirewallRulesetListServerFirewallRuleServerUuid, params *ListServerFirewallRuleParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListServerFirewallRuleRequest(c.Server, serverUuid, params)
 	if err != nil {
@@ -31820,6 +32286,30 @@ func (c *Client) CreateFirewallRulesetRule(ctx context.Context, rulesetUuid Crea
 	return c.Client.Do(req)
 }
 
+func (c *Client) CreateMultipleFirewallRulesetRuleWithBody(ctx context.Context, rulesetUuid CreateMultipleFirewallRulesetRuleRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateMultipleFirewallRulesetRuleRequestWithBody(c.Server, rulesetUuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateMultipleFirewallRulesetRule(ctx context.Context, rulesetUuid CreateMultipleFirewallRulesetRuleRulesetUuid, body CreateMultipleFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateMultipleFirewallRulesetRuleRequest(c.Server, rulesetUuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 func (c *Client) DeleteFirewallRulesetRule(ctx context.Context, rulesetUuid DeleteFirewallRulesetRuleRulesetUuid, ruleId DeleteFirewallRulesetRuleRuleId, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteFirewallRulesetRuleRequest(c.Server, rulesetUuid, ruleId)
 	if err != nil {
@@ -31858,6 +32348,18 @@ func (c *Client) ModifyFirewallRulesetRuleWithBody(ctx context.Context, rulesetU
 
 func (c *Client) ModifyFirewallRulesetRule(ctx context.Context, rulesetUuid ModifyFirewallRulesetRuleRulesetUuid, ruleId ModifyFirewallRulesetRuleRuleId, body ModifyFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewModifyFirewallRulesetRuleRequest(c.Server, rulesetUuid, ruleId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ListFirewallRulesetAttachedServers(ctx context.Context, rulesetUuid ListFirewallRulesetAttachedServersRulesetUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListFirewallRulesetAttachedServersRequest(c.Server, rulesetUuid)
 	if err != nil {
 		return nil, err
 	}
@@ -32014,42 +32516,6 @@ func (c *Client) FlushGatewayNat(ctx context.Context, serviceUuid FlushGatewayNa
 
 func (c *Client) ListGatewayAddresses(ctx context.Context, serviceUuid ListGatewayAddressesServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListGatewayAddressesRequest(c.Server, serviceUuid)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) CreateGatewayAddressWithBody(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateGatewayAddressRequestWithBody(c.Server, serviceUuid, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) CreateGatewayAddress(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, body CreateGatewayAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateGatewayAddressRequest(c.Server, serviceUuid, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) DeleteGatewayAddress(ctx context.Context, serviceUuid DeleteGatewayAddressServiceUuid, addressName DeleteGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteGatewayAddressRequest(c.Server, serviceUuid, addressName)
 	if err != nil {
 		return nil, err
 	}
@@ -36759,6 +37225,277 @@ func NewGetTokenRequest(server string, tokenUuid AccountTokensGetTokenTokenUuid)
 	return req, nil
 }
 
+// NewListAuditLogsRequest generates requests for ListAuditLogs
+func NewListAuditLogsRequest(server string, params *ListAuditLogsParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/audit-logs")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.Q != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "q", *params.Q, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Offset != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "offset", *params.Offset, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Actions != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "actions", *params.Actions, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "array", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Origins != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "origins", *params.Origins, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "array", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.ResourceTypes != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "resource_types", *params.ResourceTypes, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "array", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.CreatedAfter != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "created_after", *params.CreatedAfter, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date-time"}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.CreatedBefore != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "created_before", *params.CreatedBefore, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date-time"}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewExportAuditLogsRequest generates requests for ExportAuditLogs
+func NewExportAuditLogsRequest(server string, params *ExportAuditLogsParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/audit-logs/export")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.Format != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "format", *params.Format, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetFilterOptionsRequest generates requests for GetFilterOptions
+func NewGetFilterOptionsRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/audit-logs/filter-options")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetAuditLogRequest generates requests for GetAuditLog
+func NewGetAuditLogRequest(server string, cloudEventID AuditLogsGetAuditLogCloudEventID) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "cloudEventID", cloudEventID, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/audit-logs/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewListCurrenciesRequest generates requests for ListCurrencies
 func NewListCurrenciesRequest(server string) (*http.Request, error) {
 	var err error
@@ -41180,53 +41917,6 @@ func NewCreateFirewallRulesetRequestWithBody(server string, contentType string, 
 	return req, nil
 }
 
-// NewAdminListServerFirewallRulesRequest calls the generic AdminListServerFirewallRules builder with application/json body
-func NewAdminListServerFirewallRulesRequest(server string, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, body AdminListServerFirewallRulesJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewAdminListServerFirewallRulesRequestWithBody(server, serverUuid, "application/json", bodyReader)
-}
-
-// NewAdminListServerFirewallRulesRequestWithBody generates requests for AdminListServerFirewallRules with any type of body
-func NewAdminListServerFirewallRulesRequestWithBody(server string, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "server-uuid", serverUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/admin/server/%s/firewall-rule", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
 // NewListServerFirewallRuleRequest generates requests for ListServerFirewallRule
 func NewListServerFirewallRuleRequest(server string, serverUuid FirewallRulesetListServerFirewallRuleServerUuid, params *ListServerFirewallRuleParams) (*http.Request, error) {
 	var err error
@@ -41999,6 +42689,53 @@ func NewCreateFirewallRulesetRuleRequestWithBody(server string, rulesetUuid Crea
 	return req, nil
 }
 
+// NewCreateMultipleFirewallRulesetRuleRequest calls the generic CreateMultipleFirewallRulesetRule builder with application/json body
+func NewCreateMultipleFirewallRulesetRuleRequest(server string, rulesetUuid CreateMultipleFirewallRulesetRuleRulesetUuid, body CreateMultipleFirewallRulesetRuleJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateMultipleFirewallRulesetRuleRequestWithBody(server, rulesetUuid, "application/json", bodyReader)
+}
+
+// NewCreateMultipleFirewallRulesetRuleRequestWithBody generates requests for CreateMultipleFirewallRulesetRule with any type of body
+func NewCreateMultipleFirewallRulesetRuleRequestWithBody(server string, rulesetUuid CreateMultipleFirewallRulesetRuleRulesetUuid, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "ruleset-uuid", rulesetUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/%s/rule", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PUT", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
 // NewDeleteFirewallRulesetRuleRequest generates requests for DeleteFirewallRulesetRule
 func NewDeleteFirewallRulesetRuleRequest(server string, rulesetUuid DeleteFirewallRulesetRuleRulesetUuid, ruleId DeleteFirewallRulesetRuleRuleId) (*http.Request, error) {
 	var err error
@@ -42131,6 +42868,40 @@ func NewModifyFirewallRulesetRuleRequestWithBody(server string, rulesetUuid Modi
 	}
 
 	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewListFirewallRulesetAttachedServersRequest generates requests for ListFirewallRulesetAttachedServers
+func NewListFirewallRulesetAttachedServersRequest(server string, rulesetUuid ListFirewallRulesetAttachedServersRulesetUuid) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "ruleset-uuid", rulesetUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/%s/servers", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
 
 	return req, nil
 }
@@ -42562,94 +43333,6 @@ func NewListGatewayAddressesRequest(server string, serviceUuid ListGatewayAddres
 	}
 
 	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewCreateGatewayAddressRequest calls the generic CreateGatewayAddress builder with application/json body
-func NewCreateGatewayAddressRequest(server string, serviceUuid CreateGatewayAddressServiceUuid, body CreateGatewayAddressJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewCreateGatewayAddressRequestWithBody(server, serviceUuid, "application/json", bodyReader)
-}
-
-// NewCreateGatewayAddressRequestWithBody generates requests for CreateGatewayAddress with any type of body
-func NewCreateGatewayAddressRequestWithBody(server string, serviceUuid CreateGatewayAddressServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "service-uuid", serviceUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/1.3/gateway/%s/addresses", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("POST", queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
-// NewDeleteGatewayAddressRequest generates requests for DeleteGatewayAddress
-func NewDeleteGatewayAddressRequest(server string, serviceUuid DeleteGatewayAddressServiceUuid, addressName DeleteGatewayAddressAddressName) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "service-uuid", serviceUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam1 string
-
-	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "address-name", addressName, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/1.3/gateway/%s/addresses/%s", pathParam0, pathParam1)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -54997,6 +55680,18 @@ type ClientWithResponsesInterface interface {
 	// GetTokenWithResponse request
 	GetTokenWithResponse(ctx context.Context, tokenUuid AccountTokensGetTokenTokenUuid, reqEditors ...RequestEditorFn) (*GetTokenResp, error)
 
+	// ListAuditLogsWithResponse request
+	ListAuditLogsWithResponse(ctx context.Context, params *ListAuditLogsParams, reqEditors ...RequestEditorFn) (*ListAuditLogsResp, error)
+
+	// ExportAuditLogsWithResponse request
+	ExportAuditLogsWithResponse(ctx context.Context, params *ExportAuditLogsParams, reqEditors ...RequestEditorFn) (*ExportAuditLogsResp, error)
+
+	// GetFilterOptionsWithResponse request
+	GetFilterOptionsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetFilterOptionsResp, error)
+
+	// GetAuditLogWithResponse request
+	GetAuditLogWithResponse(ctx context.Context, cloudEventID AuditLogsGetAuditLogCloudEventID, reqEditors ...RequestEditorFn) (*GetAuditLogResp, error)
+
 	// ListCurrenciesWithResponse request
 	ListCurrenciesWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListCurrenciesResp, error)
 
@@ -55368,11 +56063,6 @@ type ClientWithResponsesInterface interface {
 
 	CreateFirewallRulesetWithResponse(ctx context.Context, body CreateFirewallRulesetJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateFirewallRulesetResp, error)
 
-	// AdminListServerFirewallRulesWithBodyWithResponse request with any body
-	AdminListServerFirewallRulesWithBodyWithResponse(ctx context.Context, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AdminListServerFirewallRulesResp, error)
-
-	AdminListServerFirewallRulesWithResponse(ctx context.Context, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, body AdminListServerFirewallRulesJSONRequestBody, reqEditors ...RequestEditorFn) (*AdminListServerFirewallRulesResp, error)
-
 	// ListServerFirewallRuleWithResponse request
 	ListServerFirewallRuleWithResponse(ctx context.Context, serverUuid FirewallRulesetListServerFirewallRuleServerUuid, params *ListServerFirewallRuleParams, reqEditors ...RequestEditorFn) (*ListServerFirewallRuleResp, error)
 
@@ -55433,6 +56123,11 @@ type ClientWithResponsesInterface interface {
 
 	CreateFirewallRulesetRuleWithResponse(ctx context.Context, rulesetUuid CreateFirewallRulesetRuleRulesetUuid, body CreateFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateFirewallRulesetRuleResp, error)
 
+	// CreateMultipleFirewallRulesetRuleWithBodyWithResponse request with any body
+	CreateMultipleFirewallRulesetRuleWithBodyWithResponse(ctx context.Context, rulesetUuid CreateMultipleFirewallRulesetRuleRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateMultipleFirewallRulesetRuleResp, error)
+
+	CreateMultipleFirewallRulesetRuleWithResponse(ctx context.Context, rulesetUuid CreateMultipleFirewallRulesetRuleRulesetUuid, body CreateMultipleFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateMultipleFirewallRulesetRuleResp, error)
+
 	// DeleteFirewallRulesetRuleWithResponse request
 	DeleteFirewallRulesetRuleWithResponse(ctx context.Context, rulesetUuid DeleteFirewallRulesetRuleRulesetUuid, ruleId DeleteFirewallRulesetRuleRuleId, reqEditors ...RequestEditorFn) (*DeleteFirewallRulesetRuleResp, error)
 
@@ -55443,6 +56138,9 @@ type ClientWithResponsesInterface interface {
 	ModifyFirewallRulesetRuleWithBodyWithResponse(ctx context.Context, rulesetUuid ModifyFirewallRulesetRuleRulesetUuid, ruleId ModifyFirewallRulesetRuleRuleId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyFirewallRulesetRuleResp, error)
 
 	ModifyFirewallRulesetRuleWithResponse(ctx context.Context, rulesetUuid ModifyFirewallRulesetRuleRulesetUuid, ruleId ModifyFirewallRulesetRuleRuleId, body ModifyFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyFirewallRulesetRuleResp, error)
+
+	// ListFirewallRulesetAttachedServersWithResponse request
+	ListFirewallRulesetAttachedServersWithResponse(ctx context.Context, rulesetUuid ListFirewallRulesetAttachedServersRulesetUuid, reqEditors ...RequestEditorFn) (*ListFirewallRulesetAttachedServersResp, error)
 
 	// ListGatewayServicesWithResponse request
 	ListGatewayServicesWithResponse(ctx context.Context, params *ListGatewayServicesParams, reqEditors ...RequestEditorFn) (*ListGatewayServicesResp, error)
@@ -55479,14 +56177,6 @@ type ClientWithResponsesInterface interface {
 
 	// ListGatewayAddressesWithResponse request
 	ListGatewayAddressesWithResponse(ctx context.Context, serviceUuid ListGatewayAddressesServiceUuid, reqEditors ...RequestEditorFn) (*ListGatewayAddressesResp, error)
-
-	// CreateGatewayAddressWithBodyWithResponse request with any body
-	CreateGatewayAddressWithBodyWithResponse(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateGatewayAddressResp, error)
-
-	CreateGatewayAddressWithResponse(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, body CreateGatewayAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateGatewayAddressResp, error)
-
-	// DeleteGatewayAddressWithResponse request
-	DeleteGatewayAddressWithResponse(ctx context.Context, serviceUuid DeleteGatewayAddressServiceUuid, addressName DeleteGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*DeleteGatewayAddressResp, error)
 
 	// GetGatewayAddressWithResponse request
 	GetGatewayAddressWithResponse(ctx context.Context, serviceUuid GetGatewayAddressServiceUuid, addressName GetGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*GetGatewayAddressResp, error)
@@ -56643,6 +57333,98 @@ func (r GetTokenResp) Status() string {
 
 // StatusCode returns HTTPResponse.StatusCode
 func (r GetTokenResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type ListAuditLogsResp struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *ListAuditLogs200
+	ApplicationproblemJSONDefault *ListAuditLogsDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r ListAuditLogsResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListAuditLogsResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type ExportAuditLogsResp struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *ExportAuditLogs200
+	ApplicationproblemJSONDefault *ExportAuditLogsDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r ExportAuditLogsResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ExportAuditLogsResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetFilterOptionsResp struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *AuditLogsGetFilterOptions200
+	ApplicationproblemJSONDefault *AuditLogsGetFilterOptionsDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r GetFilterOptionsResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetFilterOptionsResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetAuditLogResp struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *AuditLogsGetAuditLog200
+	ApplicationproblemJSONDefault *AuditLogsGetAuditLogDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r GetAuditLogResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetAuditLogResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -58958,33 +59740,6 @@ func (r CreateFirewallRulesetResp) StatusCode() int {
 	return 0
 }
 
-type AdminListServerFirewallRulesResp struct {
-	Body                          []byte
-	HTTPResponse                  *http.Response
-	JSON200                       *FirewallRulesetAdminListServerFirewallRules200
-	ApplicationproblemJSON400     *FirewallRulesetAdminListServerFirewallRules400
-	ApplicationproblemJSON403     *FirewallRulesetAdminListServerFirewallRules403
-	ApplicationproblemJSON404     *FirewallRulesetAdminListServerFirewallRules404
-	ApplicationproblemJSON409     *FirewallRulesetAdminListServerFirewallRules409
-	ApplicationproblemJSONDefault *FirewallRulesetAdminListServerFirewallRulesDefault
-}
-
-// Status returns HTTPResponse.Status
-func (r AdminListServerFirewallRulesResp) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r AdminListServerFirewallRulesResp) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
 type ListServerFirewallRuleResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
@@ -59362,6 +60117,29 @@ func (r CreateFirewallRulesetRuleResp) StatusCode() int {
 	return 0
 }
 
+type CreateMultipleFirewallRulesetRuleResp struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *CreateMultipleFirewallRulesetRule200
+	ApplicationproblemJSONDefault *CreateMultipleFirewallRulesetRuleDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateMultipleFirewallRulesetRuleResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateMultipleFirewallRulesetRuleResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
 type DeleteFirewallRulesetRuleResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
@@ -59424,6 +60202,29 @@ func (r ModifyFirewallRulesetRuleResp) Status() string {
 
 // StatusCode returns HTTPResponse.StatusCode
 func (r ModifyFirewallRulesetRuleResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type ListFirewallRulesetAttachedServersResp struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *ListFirewallRulesetAttachedServers200
+	ApplicationproblemJSONDefault *ListFirewallRulesetAttachedServersDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r ListFirewallRulesetAttachedServersResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListFirewallRulesetAttachedServersResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -59652,51 +60453,6 @@ func (r ListGatewayAddressesResp) Status() string {
 
 // StatusCode returns HTTPResponse.StatusCode
 func (r ListGatewayAddressesResp) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type CreateGatewayAddressResp struct {
-	Body                          []byte
-	HTTPResponse                  *http.Response
-	JSON200                       *CreateGatewayAddress200
-	ApplicationproblemJSONDefault *CreateGatewayAddressDefault
-}
-
-// Status returns HTTPResponse.Status
-func (r CreateGatewayAddressResp) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r CreateGatewayAddressResp) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type DeleteGatewayAddressResp struct {
-	Body                          []byte
-	HTTPResponse                  *http.Response
-	ApplicationproblemJSONDefault *DeleteGatewayAddressDefault
-}
-
-// Status returns HTTPResponse.Status
-func (r DeleteGatewayAddressResp) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r DeleteGatewayAddressResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -66077,6 +66833,42 @@ func (c *ClientWithResponses) GetTokenWithResponse(ctx context.Context, tokenUui
 	return ParseGetTokenResp(rsp)
 }
 
+// ListAuditLogsWithResponse request returning *ListAuditLogsResp
+func (c *ClientWithResponses) ListAuditLogsWithResponse(ctx context.Context, params *ListAuditLogsParams, reqEditors ...RequestEditorFn) (*ListAuditLogsResp, error) {
+	rsp, err := c.ListAuditLogs(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListAuditLogsResp(rsp)
+}
+
+// ExportAuditLogsWithResponse request returning *ExportAuditLogsResp
+func (c *ClientWithResponses) ExportAuditLogsWithResponse(ctx context.Context, params *ExportAuditLogsParams, reqEditors ...RequestEditorFn) (*ExportAuditLogsResp, error) {
+	rsp, err := c.ExportAuditLogs(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseExportAuditLogsResp(rsp)
+}
+
+// GetFilterOptionsWithResponse request returning *GetFilterOptionsResp
+func (c *ClientWithResponses) GetFilterOptionsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetFilterOptionsResp, error) {
+	rsp, err := c.GetFilterOptions(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetFilterOptionsResp(rsp)
+}
+
+// GetAuditLogWithResponse request returning *GetAuditLogResp
+func (c *ClientWithResponses) GetAuditLogWithResponse(ctx context.Context, cloudEventID AuditLogsGetAuditLogCloudEventID, reqEditors ...RequestEditorFn) (*GetAuditLogResp, error) {
+	rsp, err := c.GetAuditLog(ctx, cloudEventID, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetAuditLogResp(rsp)
+}
+
 // ListCurrenciesWithResponse request returning *ListCurrenciesResp
 func (c *ClientWithResponses) ListCurrenciesWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListCurrenciesResp, error) {
 	rsp, err := c.ListCurrencies(ctx, reqEditors...)
@@ -67258,23 +68050,6 @@ func (c *ClientWithResponses) CreateFirewallRulesetWithResponse(ctx context.Cont
 	return ParseCreateFirewallRulesetResp(rsp)
 }
 
-// AdminListServerFirewallRulesWithBodyWithResponse request with arbitrary body returning *AdminListServerFirewallRulesResp
-func (c *ClientWithResponses) AdminListServerFirewallRulesWithBodyWithResponse(ctx context.Context, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AdminListServerFirewallRulesResp, error) {
-	rsp, err := c.AdminListServerFirewallRulesWithBody(ctx, serverUuid, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseAdminListServerFirewallRulesResp(rsp)
-}
-
-func (c *ClientWithResponses) AdminListServerFirewallRulesWithResponse(ctx context.Context, serverUuid FirewallRulesetAdminListServerFirewallRulesServerUuid, body AdminListServerFirewallRulesJSONRequestBody, reqEditors ...RequestEditorFn) (*AdminListServerFirewallRulesResp, error) {
-	rsp, err := c.AdminListServerFirewallRules(ctx, serverUuid, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseAdminListServerFirewallRulesResp(rsp)
-}
-
 // ListServerFirewallRuleWithResponse request returning *ListServerFirewallRuleResp
 func (c *ClientWithResponses) ListServerFirewallRuleWithResponse(ctx context.Context, serverUuid FirewallRulesetListServerFirewallRuleServerUuid, params *ListServerFirewallRuleParams, reqEditors ...RequestEditorFn) (*ListServerFirewallRuleResp, error) {
 	rsp, err := c.ListServerFirewallRule(ctx, serverUuid, params, reqEditors...)
@@ -67467,6 +68242,23 @@ func (c *ClientWithResponses) CreateFirewallRulesetRuleWithResponse(ctx context.
 	return ParseCreateFirewallRulesetRuleResp(rsp)
 }
 
+// CreateMultipleFirewallRulesetRuleWithBodyWithResponse request with arbitrary body returning *CreateMultipleFirewallRulesetRuleResp
+func (c *ClientWithResponses) CreateMultipleFirewallRulesetRuleWithBodyWithResponse(ctx context.Context, rulesetUuid CreateMultipleFirewallRulesetRuleRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateMultipleFirewallRulesetRuleResp, error) {
+	rsp, err := c.CreateMultipleFirewallRulesetRuleWithBody(ctx, rulesetUuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateMultipleFirewallRulesetRuleResp(rsp)
+}
+
+func (c *ClientWithResponses) CreateMultipleFirewallRulesetRuleWithResponse(ctx context.Context, rulesetUuid CreateMultipleFirewallRulesetRuleRulesetUuid, body CreateMultipleFirewallRulesetRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateMultipleFirewallRulesetRuleResp, error) {
+	rsp, err := c.CreateMultipleFirewallRulesetRule(ctx, rulesetUuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateMultipleFirewallRulesetRuleResp(rsp)
+}
+
 // DeleteFirewallRulesetRuleWithResponse request returning *DeleteFirewallRulesetRuleResp
 func (c *ClientWithResponses) DeleteFirewallRulesetRuleWithResponse(ctx context.Context, rulesetUuid DeleteFirewallRulesetRuleRulesetUuid, ruleId DeleteFirewallRulesetRuleRuleId, reqEditors ...RequestEditorFn) (*DeleteFirewallRulesetRuleResp, error) {
 	rsp, err := c.DeleteFirewallRulesetRule(ctx, rulesetUuid, ruleId, reqEditors...)
@@ -67500,6 +68292,15 @@ func (c *ClientWithResponses) ModifyFirewallRulesetRuleWithResponse(ctx context.
 		return nil, err
 	}
 	return ParseModifyFirewallRulesetRuleResp(rsp)
+}
+
+// ListFirewallRulesetAttachedServersWithResponse request returning *ListFirewallRulesetAttachedServersResp
+func (c *ClientWithResponses) ListFirewallRulesetAttachedServersWithResponse(ctx context.Context, rulesetUuid ListFirewallRulesetAttachedServersRulesetUuid, reqEditors ...RequestEditorFn) (*ListFirewallRulesetAttachedServersResp, error) {
+	rsp, err := c.ListFirewallRulesetAttachedServers(ctx, rulesetUuid, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListFirewallRulesetAttachedServersResp(rsp)
 }
 
 // ListGatewayServicesWithResponse request returning *ListGatewayServicesResp
@@ -67614,32 +68415,6 @@ func (c *ClientWithResponses) ListGatewayAddressesWithResponse(ctx context.Conte
 		return nil, err
 	}
 	return ParseListGatewayAddressesResp(rsp)
-}
-
-// CreateGatewayAddressWithBodyWithResponse request with arbitrary body returning *CreateGatewayAddressResp
-func (c *ClientWithResponses) CreateGatewayAddressWithBodyWithResponse(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateGatewayAddressResp, error) {
-	rsp, err := c.CreateGatewayAddressWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateGatewayAddressResp(rsp)
-}
-
-func (c *ClientWithResponses) CreateGatewayAddressWithResponse(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, body CreateGatewayAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateGatewayAddressResp, error) {
-	rsp, err := c.CreateGatewayAddress(ctx, serviceUuid, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateGatewayAddressResp(rsp)
-}
-
-// DeleteGatewayAddressWithResponse request returning *DeleteGatewayAddressResp
-func (c *ClientWithResponses) DeleteGatewayAddressWithResponse(ctx context.Context, serviceUuid DeleteGatewayAddressServiceUuid, addressName DeleteGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*DeleteGatewayAddressResp, error) {
-	rsp, err := c.DeleteGatewayAddress(ctx, serviceUuid, addressName, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseDeleteGatewayAddressResp(rsp)
 }
 
 // GetGatewayAddressWithResponse request returning *GetGatewayAddressResp
@@ -71130,6 +71905,138 @@ func ParseGetTokenResp(rsp *http.Response) (*GetTokenResp, error) {
 	return response, nil
 }
 
+// ParseListAuditLogsResp parses an HTTP response from a ListAuditLogsWithResponse call
+func ParseListAuditLogsResp(rsp *http.Response) (*ListAuditLogsResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListAuditLogsResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ListAuditLogs200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ListAuditLogsDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseExportAuditLogsResp parses an HTTP response from a ExportAuditLogsWithResponse call
+func ParseExportAuditLogsResp(rsp *http.Response) (*ExportAuditLogsResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ExportAuditLogsResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ExportAuditLogs200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ExportAuditLogsDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetFilterOptionsResp parses an HTTP response from a GetFilterOptionsWithResponse call
+func ParseGetFilterOptionsResp(rsp *http.Response) (*GetFilterOptionsResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetFilterOptionsResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AuditLogsGetFilterOptions200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest AuditLogsGetFilterOptionsDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetAuditLogResp parses an HTTP response from a GetAuditLogWithResponse call
+func ParseGetAuditLogResp(rsp *http.Response) (*GetAuditLogResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetAuditLogResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AuditLogsGetAuditLog200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest AuditLogsGetAuditLogDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseListCurrenciesResp parses an HTTP response from a ListCurrenciesWithResponse call
 func ParseListCurrenciesResp(rsp *http.Response) (*ListCurrenciesResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -74365,67 +75272,6 @@ func ParseCreateFirewallRulesetResp(rsp *http.Response) (*CreateFirewallRulesetR
 	return response, nil
 }
 
-// ParseAdminListServerFirewallRulesResp parses an HTTP response from a AdminListServerFirewallRulesWithResponse call
-func ParseAdminListServerFirewallRulesResp(rsp *http.Response) (*AdminListServerFirewallRulesResp, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &AdminListServerFirewallRulesResp{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest FirewallRulesetAdminListServerFirewallRules200
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest FirewallRulesetAdminListServerFirewallRules400
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON400 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest FirewallRulesetAdminListServerFirewallRules403
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON403 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest FirewallRulesetAdminListServerFirewallRules404
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON404 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest FirewallRulesetAdminListServerFirewallRules409
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON409 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest FirewallRulesetAdminListServerFirewallRulesDefault
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSONDefault = &dest
-
-	}
-
-	return response, nil
-}
-
 // ParseListServerFirewallRuleResp parses an HTTP response from a ListServerFirewallRuleWithResponse call
 func ParseListServerFirewallRuleResp(rsp *http.Response) (*ListServerFirewallRuleResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -75017,6 +75863,39 @@ func ParseCreateFirewallRulesetRuleResp(rsp *http.Response) (*CreateFirewallRule
 	return response, nil
 }
 
+// ParseCreateMultipleFirewallRulesetRuleResp parses an HTTP response from a CreateMultipleFirewallRulesetRuleWithResponse call
+func ParseCreateMultipleFirewallRulesetRuleResp(rsp *http.Response) (*CreateMultipleFirewallRulesetRuleResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateMultipleFirewallRulesetRuleResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest CreateMultipleFirewallRulesetRule200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest CreateMultipleFirewallRulesetRuleDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseDeleteFirewallRulesetRuleResp parses an HTTP response from a DeleteFirewallRulesetRuleWithResponse call
 func ParseDeleteFirewallRulesetRuleResp(rsp *http.Response) (*DeleteFirewallRulesetRuleResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -75099,6 +75978,39 @@ func ParseModifyFirewallRulesetRuleResp(rsp *http.Response) (*ModifyFirewallRule
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest ModifyFirewallRulesetRuleDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListFirewallRulesetAttachedServersResp parses an HTTP response from a ListFirewallRulesetAttachedServersWithResponse call
+func ParseListFirewallRulesetAttachedServersResp(rsp *http.Response) (*ListFirewallRulesetAttachedServersResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListFirewallRulesetAttachedServersResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ListFirewallRulesetAttachedServers200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ListFirewallRulesetAttachedServersDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -75415,65 +76327,6 @@ func ParseListGatewayAddressesResp(rsp *http.Response) (*ListGatewayAddressesRes
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest ListGatewayAddressesDefault
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSONDefault = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseCreateGatewayAddressResp parses an HTTP response from a CreateGatewayAddressWithResponse call
-func ParseCreateGatewayAddressResp(rsp *http.Response) (*CreateGatewayAddressResp, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &CreateGatewayAddressResp{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest CreateGatewayAddress200
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest CreateGatewayAddressDefault
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSONDefault = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseDeleteGatewayAddressResp parses an HTTP response from a DeleteGatewayAddressWithResponse call
-func ParseDeleteGatewayAddressResp(rsp *http.Response) (*DeleteGatewayAddressResp, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &DeleteGatewayAddressResp{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest DeleteGatewayAddressDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
