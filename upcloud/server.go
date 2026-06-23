@@ -180,11 +180,15 @@ type ServerDetails struct {
 	BootOrder string      `json:"boot_order"`
 	Devices   DeviceSlice `json:"devices"`
 	// TODO: Convert to boolean
-	Firewall             string                   `json:"firewall"`
-	Host                 int                      `json:"host"`
-	IPAddresses          IPAddressSlice           `json:"ip_addresses"`
-	Labels               LabelSlice               `json:"labels"`
-	Metadata             Boolean                  `json:"metadata"`
+	Firewall string `json:"firewall"`
+	// Deprecated: Use HostID instead.
+	Host        int            `json:"host"`
+	HostID      int64          `json:"-"`
+	IPAddresses IPAddressSlice `json:"ip_addresses"`
+	Labels      LabelSlice     `json:"labels"`
+	Metadata    Boolean        `json:"metadata"`
+	// The system generated one-time password. Only available in create response when the create_password login option was set to true.
+	OneTimePassword      string                   `json:"password"`
 	NICModel             string                   `json:"nic_model"`
 	Networking           ServerNetworking         `json:"networking"`
 	ServerGroup          string                   `json:"server_group"`
@@ -212,16 +216,30 @@ func (s *ServerDetails) StorageDevice(storageUUID string) *ServerStorageDevice {
 // deeply embedded values.
 func (s *ServerDetails) UnmarshalJSON(b []byte) error {
 	type localServerDetails ServerDetails
+	type serverDetailsWrapper struct {
+		localServerDetails
+
+		Host int64 `json:"host"`
+	}
 
 	v := struct {
-		ServerDetails localServerDetails `json:"server"`
+		ServerDetails serverDetailsWrapper `json:"server"`
 	}{}
 	err := json.Unmarshal(b, &v)
 	if err != nil {
 		return err
 	}
 
-	(*s) = ServerDetails(v.ServerDetails)
+	*s = ServerDetails(v.ServerDetails.localServerDetails)
+	s.setHostID(v.ServerDetails.Host)
 
 	return nil
+}
+
+func (s *ServerDetails) setHostID(hostID int64) {
+	s.HostID = hostID
+	s.Host = 0
+	if int64FitsInt(hostID) {
+		s.Host = int(hostID)
+	}
 }

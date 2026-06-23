@@ -5,6 +5,34 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.38.0]
+
+### Added
+
+- server: add `OneTimePassword` field to `upcloud.ServerDetails` for retrieving the system generated one-time password.
+
+## [8.37.0]
+
+### Added
+
+- file-storage: add `Encrypted` field to `request.CreateFileStorageRequest` and `upcloud.FileStorage` structs.
+
+## [8.36.1]
+
+### Fixed
+
+- changelog: add missing changelog entry omitted from the `v8.36.0` tag
+
+## [8.36.0]
+
+### Added
+
+- server, host: add `int64` host identifier fields for safe JSON handling on 32-bit builds
+
+### Deprecated
+
+- server, host: `int` host identifier fields in favor of the `int64` alternatives
+
 ## [8.35.0]
 
 ### Added
@@ -757,7 +785,11 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.35.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.38.0...HEAD
+[8.38.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.37.0...v8.38.0
+[8.37.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.36.1...v8.37.0
+[8.36.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.36.0...v8.36.1
+[8.36.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.35.0...v8.36.0
 [8.35.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.34.3...v8.35.0
 [8.34.3]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.34.2...v8.34.3
 [8.34.2]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.34.1...v8.34.2

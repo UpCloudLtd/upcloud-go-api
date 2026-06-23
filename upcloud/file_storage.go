@@ -26,6 +26,7 @@ type FileStorage struct {
 	UUID             string                      `json:"uuid"`
 	Name             string                      `json:"name"`
 	Zone             string                      `json:"zone"`
+	Encrypted        bool                        `json:"encrypted"`
 	ConfiguredStatus FileStorageConfiguredStatus `json:"configured_status"`
 	OperationalState string                      `json:"operational_state,omitempty"`
 	SizeGiB          int                         `json:"size_gib"`

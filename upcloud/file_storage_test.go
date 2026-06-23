@@ -63,6 +63,29 @@ func TestFileStorage_MarshalUnmarshalJSON(t *testing.T) {
 	}
 }
 
+func TestFileStorage_Encrypted(t *testing.T) {
+	t.Run("EncryptedTrue", func(t *testing.T) {
+		var fs FileStorage
+		assert.NoError(t, json.Unmarshal([]byte(`{"uuid":"fs-1","encrypted":true}`), &fs))
+		assert.True(t, fs.Encrypted)
+	})
+
+	t.Run("EncryptedFalse", func(t *testing.T) {
+		var fs FileStorage
+		assert.NoError(t, json.Unmarshal([]byte(`{"uuid":"fs-2","encrypted":false}`), &fs))
+		assert.False(t, fs.Encrypted)
+	})
+
+	t.Run("RoundTrip", func(t *testing.T) {
+		fs := FileStorage{UUID: "fs-3", Encrypted: true}
+		data, err := json.Marshal(fs)
+		assert.NoError(t, err)
+		var out FileStorage
+		assert.NoError(t, json.Unmarshal(data, &out))
+		assert.Equal(t, fs.Encrypted, out.Encrypted)
+	})
+}
+
 func TestFileStorage_MarshalUnmarshalJSON_Errors(t *testing.T) {
 	invalidJSON := []string{
 		"{invalid}",

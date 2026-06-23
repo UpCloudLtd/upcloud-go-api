@@ -13,9 +13,8 @@ type Hosts struct {
 // UnmarshalJSON is a custom unmarshaller that deals with
 // deeply embedded values.
 func (n *Hosts) UnmarshalJSON(b []byte) error {
-	type localHost Host
 	type hostWrapper struct {
-		Hosts []localHost `json:"host"`
+		Hosts []Host `json:"host"`
 	}
 
 	v := struct {
@@ -26,9 +25,7 @@ func (n *Hosts) UnmarshalJSON(b []byte) error {
 		return err
 	}
 
-	for _, ln := range v.Hosts.Hosts {
-		n.Hosts = append(n.Hosts, Host(ln))
-	}
+	n.Hosts = append(n.Hosts, v.Hosts.Hosts...)
 
 	return nil
 }
@@ -55,7 +52,9 @@ func (t *StatSlice) UnmarshalJSON(b []byte) error {
 
 // Host represents an individual Host in a response
 type Host struct {
+	// Deprecated: Use HostID instead.
 	ID             int       `json:"id"`
+	HostID         int64     `json:"-"`
 	Description    string    `json:"description"`
 	Zone           string    `json:"zone"`
 	WindowsEnabled Boolean   `json:"windows_enabled"`
@@ -66,18 +65,42 @@ type Host struct {
 // deeply embedded values.
 func (s *Host) UnmarshalJSON(b []byte) error {
 	type localHost Host
+	type hostWrapper struct {
+		localHost
+
+		ID int64 `json:"id"`
+	}
 
 	v := struct {
-		Host localHost `json:"host"`
+		Host *hostWrapper `json:"host"`
 	}{}
 	err := json.Unmarshal(b, &v)
 	if err != nil {
 		return err
 	}
 
-	(*s) = Host(v.Host)
+	host := hostWrapper{}
+	if v.Host != nil {
+		host = *v.Host
+	} else {
+		err = json.Unmarshal(b, &host)
+		if err != nil {
+			return err
+		}
+	}
+
+	*s = Host(host.localHost)
+	s.setHostID(host.ID)
 
 	return nil
+}
+
+func (s *Host) setHostID(hostID int64) {
+	s.HostID = hostID
+	s.ID = 0
+	if int64FitsInt(hostID) {
+		s.ID = int(hostID)
+	}
 }
 
 // Stat represents Host stats in a response
