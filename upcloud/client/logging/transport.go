@@ -18,13 +18,17 @@ func (t LoggingTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	}
 
 	if t.Logger != nil {
-		bodyReader, err := req.GetBody()
-		if err != nil {
-			return nil, fmt.Errorf("failed to get request body: %w", err)
-		}
-		body, err := io.ReadAll(bodyReader)
-		if err != nil {
-			return nil, fmt.Errorf("failed to read request body: %w", err)
+		var body []byte
+
+		if req.GetBody != nil {
+			bodyReader, err := req.GetBody()
+			if err != nil {
+				return nil, fmt.Errorf("failed to get request body: %w", err)
+			}
+			body, err = io.ReadAll(bodyReader)
+			if err != nil {
+				return nil, fmt.Errorf("failed to read request body: %w", err)
+			}
 		}
 		t.Logger.LogRequest(req, body)
 	}

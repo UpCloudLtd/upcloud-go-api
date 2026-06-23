@@ -14,6 +14,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/client/logging"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -219,11 +220,8 @@ func TestClientGetContextDeadline(t *testing.T) {
 	require.True(t, errors.Is(err, context.DeadlineExceeded))
 }
 
-func TestClientWithLogger(t *testing.T) {
-	t.Parallel()
-
-	var output strings.Builder
-	logger := slog.New(slog.NewJSONHandler(&output, &slog.HandlerOptions{
+func getTestLogFn(w io.Writer) logging.LogFn {
+	return slog.New(slog.NewJSONHandler(w, &slog.HandlerOptions{
 		Level: slog.LevelDebug,
 		ReplaceAttr: func(groups []string, a slog.Attr) slog.Attr {
 			// Replace time with a static value
@@ -238,22 +236,61 @@ func TestClientWithLogger(t *testing.T) {
 			}
 			return a
 		},
-	}))
+	})).DebugContext
+}
+
+func TestClientRequestLogging(t *testing.T) {
+	t.Parallel()
 
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Date", "Fri, 11 Oct 2024 23:58:00 GMT")
 		fmt.Fprintf(w, `{"method": "%s", "path": "%s"}`, r.Method, r.URL.Path) //gosec:disable G705 -- test server handler uses only trusted request metadata
 	}))
-	defer srv.Close()
+	t.Cleanup(func() {
+		srv.Close()
+	})
 
-	c := New("username", "password", WithBaseURL(srv.URL), WithLogger(logger.DebugContext))
-	_, err := c.Get(context.TODO(), "/test")
-	require.NoError(t, err)
+	tests := []struct {
+		name      string
+		configFns func(w io.Writer) []ConfigFn
+	}{
+		{
+			name:      "WithLogger",
+			configFns: func(w io.Writer) []ConfigFn { return []ConfigFn{WithLogger(getTestLogFn(w))} },
+		},
+		{
+			name: "WithLoggingTransport",
+			configFns: func(w io.Writer) []ConfigFn {
+				return []ConfigFn{
+					WithHTTPClient(&http.Client{
+						Transport: &logging.LoggingTransport{
+							Logger: logging.NewLogger(getTestLogFn(w)),
+						},
+					}),
+				}
+			},
+		},
+	}
 
-	expected := fmt.Sprintf(`{"time":"2 Minutes to Midnight","level":"DEBUG","msg":"Sending request to UpCloud API","url":"http://server/1.3/test","method":"GET","headers":{"Accept":["application/json"],"Authorization":["Basic [REDACTED]"],"Content-Type":["application/json"],"User-Agent":["upcloud-go-api/%s"]},"body":""}
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+
+			var output strings.Builder
+			c := New("username", "password", append(test.configFns(&output), WithBaseURL(srv.URL))...)
+			_, err := c.Get(context.TODO(), "/test")
+			require.NoError(t, err)
+			_, err = c.Post(context.TODO(), "/test", []byte(`{"name": "test"}`))
+			require.NoError(t, err)
+
+			expected := fmt.Sprintf(`{"time":"2 Minutes to Midnight","level":"DEBUG","msg":"Sending request to UpCloud API","url":"http://server/1.3/test","method":"GET","headers":{"Accept":["application/json"],"Authorization":["Basic [REDACTED]"],"Content-Type":["application/json"],"User-Agent":["upcloud-go-api/%s"]},"body":""}
 {"time":"2 Minutes to Midnight","level":"DEBUG","msg":"Received response from UpCloud API","url":"http://server/1.3/test","status":"200 OK","headers":{"Content-Length":["38"],"Content-Type":["text/plain; charset=utf-8"],"Date":["Fri, 11 Oct 2024 23:58:00 GMT"]},"body":"{\n  \"method\": \"GET\",\n  \"path\": \"/1.3/test\"\n}"}
+{"time":"2 Minutes to Midnight","level":"DEBUG","msg":"Sending request to UpCloud API","url":"http://server/1.3/test","method":"POST","headers":{"Accept":["application/json"],"Authorization":["Basic [REDACTED]"],"Content-Type":["application/json"],"User-Agent":["upcloud-go-api/8.38.0"]},"body":"{\n  \"name\": \"test\"\n}"}
+{"time":"2 Minutes to Midnight","level":"DEBUG","msg":"Received response from UpCloud API","url":"http://server/1.3/test","status":"200 OK","headers":{"Content-Length":["39"],"Content-Type":["text/plain; charset=utf-8"],"Date":["Fri, 11 Oct 2024 23:58:00 GMT"]},"body":"{\n  \"method\": \"POST\",\n  \"path\": \"/1.3/test\"\n}"}
 `, Version)
-	assert.Equal(t, expected, output.String())
+			assert.Equal(t, expected, output.String())
+		})
+	}
 }
 
 func ExampleWithTimeout() {
