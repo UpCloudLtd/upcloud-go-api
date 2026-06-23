@@ -9,6 +9,8 @@ import (
 
 	"github.com/UpCloudLtd/upcloud-go-api/credentials"
 	"github.com/oapi-codegen/oapi-codegen/v2/pkg/securityprovider"
+
+	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/client/logging"
 )
 
 const (
@@ -101,4 +103,21 @@ func WithInsecureSkipVerify() ClientOption {
 			TLSClientConfig: &tls.Config{InsecureSkipVerify: true}, //nolint:gosec
 		},
 	})
+}
+
+func WithLogger(logger logging.LogFn) ClientOption {
+	return func(c *Client) error {
+		client, ok := c.Client.(*http.Client)
+		if !ok {
+			client = &http.Client{}
+		}
+
+		client.Transport = &logging.LoggingTransport{
+			Logger:    logging.NewLogger(logger),
+			Transport: client.Transport,
+		}
+
+		c.Client = client
+		return nil
+	}
 }
