@@ -14,7 +14,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/client/logging"
+	"github.com/UpCloudLtd/httplog"
 )
 
 const (
@@ -35,7 +35,7 @@ type config struct {
 	token      string
 	baseURL    string
 	httpClient *http.Client
-	logger     *logging.Logger
+	logger     *httplog.Logger
 }
 
 // Client represents an API client
@@ -309,9 +309,9 @@ func WithTimeout(timeout time.Duration) ConfigFn {
 }
 
 // WithLogger configures logging function that logs requests and responses
-func WithLogger(logger logging.LogFn) ConfigFn {
+func WithLogger(logger httplog.LogFn) ConfigFn {
 	return func(c *config) {
-		c.logger = logging.NewLogger(logger)
+		c.logger = httplog.NewLogger(logger)
 	}
 }
 

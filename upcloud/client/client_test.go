@@ -14,7 +14,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/client/logging"
+	"github.com/UpCloudLtd/httplog"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -220,7 +220,7 @@ func TestClientGetContextDeadline(t *testing.T) {
 	require.True(t, errors.Is(err, context.DeadlineExceeded))
 }
 
-func getTestLogFn(w io.Writer) logging.LogFn {
+func getTestLogFn(w io.Writer) httplog.LogFn {
 	return slog.New(slog.NewJSONHandler(w, &slog.HandlerOptions{
 		Level: slog.LevelDebug,
 		ReplaceAttr: func(groups []string, a slog.Attr) slog.Attr {
@@ -263,8 +263,8 @@ func TestClientRequestLogging(t *testing.T) {
 			configFns: func(w io.Writer) []ConfigFn {
 				return []ConfigFn{
 					WithHTTPClient(&http.Client{
-						Transport: &logging.LoggingTransport{
-							Logger: logging.NewLogger(getTestLogFn(w)),
+						Transport: &httplog.LoggingTransport{
+							Logger: httplog.NewLogger(getTestLogFn(w)),
 						},
 					}),
 				}
@@ -283,10 +283,10 @@ func TestClientRequestLogging(t *testing.T) {
 			_, err = c.Post(context.TODO(), "/test", []byte(`{"name": "test"}`))
 			require.NoError(t, err)
 
-			expected := fmt.Sprintf(`{"time":"2 Minutes to Midnight","level":"DEBUG","msg":"Sending request to UpCloud API","url":"http://server/1.3/test","method":"GET","headers":{"Accept":["application/json"],"Authorization":["Basic [REDACTED]"],"Content-Type":["application/json"],"User-Agent":["upcloud-go-api/%s"]},"body":""}
-{"time":"2 Minutes to Midnight","level":"DEBUG","msg":"Received response from UpCloud API","url":"http://server/1.3/test","status":"200 OK","headers":{"Content-Length":["38"],"Content-Type":["text/plain; charset=utf-8"],"Date":["Fri, 11 Oct 2024 23:58:00 GMT"]},"body":"{\n  \"method\": \"GET\",\n  \"path\": \"/1.3/test\"\n}"}
-{"time":"2 Minutes to Midnight","level":"DEBUG","msg":"Sending request to UpCloud API","url":"http://server/1.3/test","method":"POST","headers":{"Accept":["application/json"],"Authorization":["Basic [REDACTED]"],"Content-Type":["application/json"],"User-Agent":["upcloud-go-api/8.38.0"]},"body":"{\n  \"name\": \"test\"\n}"}
-{"time":"2 Minutes to Midnight","level":"DEBUG","msg":"Received response from UpCloud API","url":"http://server/1.3/test","status":"200 OK","headers":{"Content-Length":["39"],"Content-Type":["text/plain; charset=utf-8"],"Date":["Fri, 11 Oct 2024 23:58:00 GMT"]},"body":"{\n  \"method\": \"POST\",\n  \"path\": \"/1.3/test\"\n}"}
+			expected := fmt.Sprintf(`{"time":"2 Minutes to Midnight","level":"DEBUG","msg":"Sending request to 127.0.0.1","url":"http://server/1.3/test","method":"GET","headers":{"Accept":["application/json"],"Authorization":["Basic [REDACTED]"],"Content-Type":["application/json"],"User-Agent":["upcloud-go-api/%s"]},"body":""}
+{"time":"2 Minutes to Midnight","level":"DEBUG","msg":"Received response from 127.0.0.1","url":"http://server/1.3/test","status":"200 OK","headers":{"Content-Length":["38"],"Content-Type":["text/plain; charset=utf-8"],"Date":["Fri, 11 Oct 2024 23:58:00 GMT"]},"body":"{\n  \"method\": \"GET\",\n  \"path\": \"/1.3/test\"\n}"}
+{"time":"2 Minutes to Midnight","level":"DEBUG","msg":"Sending request to 127.0.0.1","url":"http://server/1.3/test","method":"POST","headers":{"Accept":["application/json"],"Authorization":["Basic [REDACTED]"],"Content-Type":["application/json"],"User-Agent":["upcloud-go-api/8.38.0"]},"body":"{\n  \"name\": \"test\"\n}"}
+{"time":"2 Minutes to Midnight","level":"DEBUG","msg":"Received response from 127.0.0.1","url":"http://server/1.3/test","status":"200 OK","headers":{"Content-Length":["39"],"Content-Type":["text/plain; charset=utf-8"],"Date":["Fri, 11 Oct 2024 23:58:00 GMT"]},"body":"{\n  \"method\": \"POST\",\n  \"path\": \"/1.3/test\"\n}"}
 `, Version)
 			assert.Equal(t, expected, output.String())
 		})
