@@ -1,8 +1,9 @@
 module github.com/UpCloudLtd/upcloud-go-api/v8
 
-go 1.24.13
+go 1.25
 
 require (
+	github.com/UpCloudLtd/httplog v0.0.0-20260624214043-23b0cab8e085
 	github.com/davecgh/go-spew v1.1.1
 	github.com/dnaeon/go-vcr v1.2.0
 	github.com/stretchr/testify v1.11.1

@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"crypto/tls"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
@@ -14,6 +13,8 @@ import (
 	"os"
 	"strings"
 	"time"
+
+	"github.com/UpCloudLtd/httplog"
 )
 
 const (
@@ -28,16 +29,13 @@ const (
 	EnvPassword                   string = "UPCLOUD_PASSWORD"
 )
 
-// LogFn is a function that logs a message with context and optional key-value pairs, e.g., slog.DebugContext
-type LogFn func(context.Context, string, ...any)
-
 type config struct {
 	username   string
 	password   string
 	token      string
 	baseURL    string
 	httpClient *http.Client
-	logger     LogFn
+	logger     *httplog.Logger
 }
 
 // Client represents an API client
@@ -173,7 +171,7 @@ func (c *Client) createRequest(ctx context.Context, method, path string, body []
 		return nil, err
 	}
 	c.addDefaultHeaders(req)
-	c.logRequest(req, body)
+	c.config.logger.LogRequest(req, body)
 	return req, err
 }
 
@@ -191,7 +189,7 @@ func (c *Client) prepareResponse(response *http.Response) (io.ReadCloser, error)
 		default:
 			errorType = ErrorTypeError
 		}
-		c.logResponse(response, errorBody)
+		c.config.logger.LogResponse(response, errorBody)
 		return nil, &Error{response.StatusCode, response.Status, errorBody, errorType}
 	}
 
@@ -207,7 +205,7 @@ func (c *Client) handleResponse(response *http.Response) ([]byte, error) {
 	defer body.Close()
 
 	responseBody, err := io.ReadAll(body)
-	c.logResponse(response, responseBody)
+	c.config.logger.LogResponse(response, responseBody)
 
 	return responseBody, err
 }
@@ -248,50 +246,6 @@ func (c *Client) getBaseURL() string {
 		c.config.baseURL = clientBaseURL(os.Getenv(EnvDebugAPIBaseURL))
 	}
 	return fmt.Sprintf("%s/%s", c.config.baseURL, APIVersion)
-}
-
-// Pretty prints given JSON bytes. If the JSON is not valid, returns the original bytes as string.
-func prettyJSON(i []byte) string {
-	var o bytes.Buffer
-	if err := json.Indent(&o, i, "", "  "); err != nil {
-		return string(i)
-	}
-	return o.String()
-}
-
-func (c *Client) logRequest(r *http.Request, body []byte) {
-	const authorization string = "Authorization"
-
-	if c.config.logger != nil {
-		headers := r.Header.Clone()
-		if _, ok := headers[authorization]; ok {
-			auth := strings.Split(headers.Get(authorization), " ")
-			// Redact the token part of the Authorization header or the whole value if there is no space to separate scheme from parameters.
-			if len(auth) > 1 {
-				headers.Set(authorization, fmt.Sprintf("%s [REDACTED]", auth[0]))
-			} else {
-				headers.Set(authorization, "[REDACTED]")
-			}
-		}
-
-		c.config.logger(r.Context(), "Sending request to UpCloud API",
-			"url", r.URL.Redacted(),
-			"method", r.Method,
-			"headers", headers,
-			"body", prettyJSON(body),
-		)
-	}
-}
-
-func (c *Client) logResponse(r *http.Response, body []byte) {
-	if c.config.logger != nil {
-		c.config.logger(r.Request.Context(), "Received response from UpCloud API",
-			"url", r.Request.URL.Redacted(),
-			"status", r.Status,
-			"headers", r.Header,
-			"body", prettyJSON(body),
-		)
-	}
 }
 
 type ConfigFn func(o *config)
@@ -355,9 +309,9 @@ func WithTimeout(timeout time.Duration) ConfigFn {
 }
 
 // WithLogger configures logging function that logs requests and responses
-func WithLogger(logger LogFn) ConfigFn {
+func WithLogger(logger httplog.LogFn) ConfigFn {
 	return func(c *config) {
-		c.logger = logger
+		c.logger = httplog.NewLogger(logger)
 	}
 }
 
