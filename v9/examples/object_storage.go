@@ -39,7 +39,7 @@ func main() {
 	createResp, err := client.CreateObjectStorageWithResponse(ctx, upcloud.ObjectStorage2ServiceCreate{
 		Name:             name,
 		Region:           region,
-		ConfiguredStatus: upcloud.Started,
+		ConfiguredStatus: upcloud.ObjectStorage2PropertyConfiguredStatusStarted,
 	})
 	if err != nil {
 		log.Fatalf("create service: %v", err)
