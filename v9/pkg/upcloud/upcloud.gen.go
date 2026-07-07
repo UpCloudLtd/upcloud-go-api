@@ -1882,123 +1882,153 @@ func (e GatewayIpsecAuthenticationType) Valid() bool {
 	}
 }
 
-// Defines values for GatewayIpsecMetricsIkeSaDetailsResponseChildSasState.
+// Defines values for GatewayIpsecIkeSaMetricsDetailsResponseChildSasState.
 const (
-	GatewayIpsecMetricsIkeSaDetailsResponseChildSasStateCreated     GatewayIpsecMetricsIkeSaDetailsResponseChildSasState = "created"
-	GatewayIpsecMetricsIkeSaDetailsResponseChildSasStateDeleted     GatewayIpsecMetricsIkeSaDetailsResponseChildSasState = "deleted"
-	GatewayIpsecMetricsIkeSaDetailsResponseChildSasStateDeleting    GatewayIpsecMetricsIkeSaDetailsResponseChildSasState = "deleting"
-	GatewayIpsecMetricsIkeSaDetailsResponseChildSasStateDestroying  GatewayIpsecMetricsIkeSaDetailsResponseChildSasState = "destroying"
-	GatewayIpsecMetricsIkeSaDetailsResponseChildSasStateInstalled   GatewayIpsecMetricsIkeSaDetailsResponseChildSasState = "installed"
-	GatewayIpsecMetricsIkeSaDetailsResponseChildSasStateInstalling  GatewayIpsecMetricsIkeSaDetailsResponseChildSasState = "installing"
-	GatewayIpsecMetricsIkeSaDetailsResponseChildSasStateRekeyed     GatewayIpsecMetricsIkeSaDetailsResponseChildSasState = "rekeyed"
-	GatewayIpsecMetricsIkeSaDetailsResponseChildSasStateRekeying    GatewayIpsecMetricsIkeSaDetailsResponseChildSasState = "rekeying"
-	GatewayIpsecMetricsIkeSaDetailsResponseChildSasStateRetrying    GatewayIpsecMetricsIkeSaDetailsResponseChildSasState = "retrying"
-	GatewayIpsecMetricsIkeSaDetailsResponseChildSasStateRouted      GatewayIpsecMetricsIkeSaDetailsResponseChildSasState = "routed"
-	GatewayIpsecMetricsIkeSaDetailsResponseChildSasStateUnavailable GatewayIpsecMetricsIkeSaDetailsResponseChildSasState = "unavailable"
-	GatewayIpsecMetricsIkeSaDetailsResponseChildSasStateUnknown     GatewayIpsecMetricsIkeSaDetailsResponseChildSasState = "unknown"
-	GatewayIpsecMetricsIkeSaDetailsResponseChildSasStateUpdating    GatewayIpsecMetricsIkeSaDetailsResponseChildSasState = "updating"
+	GatewayIpsecIkeSaMetricsDetailsResponseChildSasStateCreated     GatewayIpsecIkeSaMetricsDetailsResponseChildSasState = "created"
+	GatewayIpsecIkeSaMetricsDetailsResponseChildSasStateDeleted     GatewayIpsecIkeSaMetricsDetailsResponseChildSasState = "deleted"
+	GatewayIpsecIkeSaMetricsDetailsResponseChildSasStateDeleting    GatewayIpsecIkeSaMetricsDetailsResponseChildSasState = "deleting"
+	GatewayIpsecIkeSaMetricsDetailsResponseChildSasStateDestroying  GatewayIpsecIkeSaMetricsDetailsResponseChildSasState = "destroying"
+	GatewayIpsecIkeSaMetricsDetailsResponseChildSasStateInstalled   GatewayIpsecIkeSaMetricsDetailsResponseChildSasState = "installed"
+	GatewayIpsecIkeSaMetricsDetailsResponseChildSasStateInstalling  GatewayIpsecIkeSaMetricsDetailsResponseChildSasState = "installing"
+	GatewayIpsecIkeSaMetricsDetailsResponseChildSasStateRekeyed     GatewayIpsecIkeSaMetricsDetailsResponseChildSasState = "rekeyed"
+	GatewayIpsecIkeSaMetricsDetailsResponseChildSasStateRekeying    GatewayIpsecIkeSaMetricsDetailsResponseChildSasState = "rekeying"
+	GatewayIpsecIkeSaMetricsDetailsResponseChildSasStateRetrying    GatewayIpsecIkeSaMetricsDetailsResponseChildSasState = "retrying"
+	GatewayIpsecIkeSaMetricsDetailsResponseChildSasStateRouted      GatewayIpsecIkeSaMetricsDetailsResponseChildSasState = "routed"
+	GatewayIpsecIkeSaMetricsDetailsResponseChildSasStateUnavailable GatewayIpsecIkeSaMetricsDetailsResponseChildSasState = "unavailable"
+	GatewayIpsecIkeSaMetricsDetailsResponseChildSasStateUnknown     GatewayIpsecIkeSaMetricsDetailsResponseChildSasState = "unknown"
+	GatewayIpsecIkeSaMetricsDetailsResponseChildSasStateUpdating    GatewayIpsecIkeSaMetricsDetailsResponseChildSasState = "updating"
 )
 
-// Valid indicates whether the value is a known member of the GatewayIpsecMetricsIkeSaDetailsResponseChildSasState enum.
-func (e GatewayIpsecMetricsIkeSaDetailsResponseChildSasState) Valid() bool {
+// Valid indicates whether the value is a known member of the GatewayIpsecIkeSaMetricsDetailsResponseChildSasState enum.
+func (e GatewayIpsecIkeSaMetricsDetailsResponseChildSasState) Valid() bool {
 	switch e {
-	case GatewayIpsecMetricsIkeSaDetailsResponseChildSasStateCreated:
+	case GatewayIpsecIkeSaMetricsDetailsResponseChildSasStateCreated:
 		return true
-	case GatewayIpsecMetricsIkeSaDetailsResponseChildSasStateDeleted:
+	case GatewayIpsecIkeSaMetricsDetailsResponseChildSasStateDeleted:
 		return true
-	case GatewayIpsecMetricsIkeSaDetailsResponseChildSasStateDeleting:
+	case GatewayIpsecIkeSaMetricsDetailsResponseChildSasStateDeleting:
 		return true
-	case GatewayIpsecMetricsIkeSaDetailsResponseChildSasStateDestroying:
+	case GatewayIpsecIkeSaMetricsDetailsResponseChildSasStateDestroying:
 		return true
-	case GatewayIpsecMetricsIkeSaDetailsResponseChildSasStateInstalled:
+	case GatewayIpsecIkeSaMetricsDetailsResponseChildSasStateInstalled:
 		return true
-	case GatewayIpsecMetricsIkeSaDetailsResponseChildSasStateInstalling:
+	case GatewayIpsecIkeSaMetricsDetailsResponseChildSasStateInstalling:
 		return true
-	case GatewayIpsecMetricsIkeSaDetailsResponseChildSasStateRekeyed:
+	case GatewayIpsecIkeSaMetricsDetailsResponseChildSasStateRekeyed:
 		return true
-	case GatewayIpsecMetricsIkeSaDetailsResponseChildSasStateRekeying:
+	case GatewayIpsecIkeSaMetricsDetailsResponseChildSasStateRekeying:
 		return true
-	case GatewayIpsecMetricsIkeSaDetailsResponseChildSasStateRetrying:
+	case GatewayIpsecIkeSaMetricsDetailsResponseChildSasStateRetrying:
 		return true
-	case GatewayIpsecMetricsIkeSaDetailsResponseChildSasStateRouted:
+	case GatewayIpsecIkeSaMetricsDetailsResponseChildSasStateRouted:
 		return true
-	case GatewayIpsecMetricsIkeSaDetailsResponseChildSasStateUnavailable:
+	case GatewayIpsecIkeSaMetricsDetailsResponseChildSasStateUnavailable:
 		return true
-	case GatewayIpsecMetricsIkeSaDetailsResponseChildSasStateUnknown:
+	case GatewayIpsecIkeSaMetricsDetailsResponseChildSasStateUnknown:
 		return true
-	case GatewayIpsecMetricsIkeSaDetailsResponseChildSasStateUpdating:
+	case GatewayIpsecIkeSaMetricsDetailsResponseChildSasStateUpdating:
 		return true
 	default:
 		return false
 	}
 }
 
-// Defines values for GatewayIpsecMetricsIkeSaDetailsResponseInternalState.
+// Defines values for GatewayIpsecIkeSaMetricsDetailsResponseInternalState.
 const (
-	GatewayIpsecMetricsIkeSaDetailsResponseInternalStateConnecting    GatewayIpsecMetricsIkeSaDetailsResponseInternalState = "connecting"
-	GatewayIpsecMetricsIkeSaDetailsResponseInternalStateCreated       GatewayIpsecMetricsIkeSaDetailsResponseInternalState = "created"
-	GatewayIpsecMetricsIkeSaDetailsResponseInternalStateDeleting      GatewayIpsecMetricsIkeSaDetailsResponseInternalState = "deleting"
-	GatewayIpsecMetricsIkeSaDetailsResponseInternalStateDestroying    GatewayIpsecMetricsIkeSaDetailsResponseInternalState = "destroying"
-	GatewayIpsecMetricsIkeSaDetailsResponseInternalStateEstablished   GatewayIpsecMetricsIkeSaDetailsResponseInternalState = "established"
-	GatewayIpsecMetricsIkeSaDetailsResponseInternalStatePassive       GatewayIpsecMetricsIkeSaDetailsResponseInternalState = "passive"
-	GatewayIpsecMetricsIkeSaDetailsResponseInternalStateRekeyed       GatewayIpsecMetricsIkeSaDetailsResponseInternalState = "rekeyed"
-	GatewayIpsecMetricsIkeSaDetailsResponseInternalStateRekeying      GatewayIpsecMetricsIkeSaDetailsResponseInternalState = "rekeying"
-	GatewayIpsecMetricsIkeSaDetailsResponseInternalStateUnavailable   GatewayIpsecMetricsIkeSaDetailsResponseInternalState = "unavailable"
-	GatewayIpsecMetricsIkeSaDetailsResponseInternalStateUninitialized GatewayIpsecMetricsIkeSaDetailsResponseInternalState = "uninitialized"
-	GatewayIpsecMetricsIkeSaDetailsResponseInternalStateUnknown       GatewayIpsecMetricsIkeSaDetailsResponseInternalState = "unknown"
+	GatewayIpsecIkeSaMetricsDetailsResponseInternalStateConnecting    GatewayIpsecIkeSaMetricsDetailsResponseInternalState = "connecting"
+	GatewayIpsecIkeSaMetricsDetailsResponseInternalStateCreated       GatewayIpsecIkeSaMetricsDetailsResponseInternalState = "created"
+	GatewayIpsecIkeSaMetricsDetailsResponseInternalStateDeleting      GatewayIpsecIkeSaMetricsDetailsResponseInternalState = "deleting"
+	GatewayIpsecIkeSaMetricsDetailsResponseInternalStateDestroying    GatewayIpsecIkeSaMetricsDetailsResponseInternalState = "destroying"
+	GatewayIpsecIkeSaMetricsDetailsResponseInternalStateEstablished   GatewayIpsecIkeSaMetricsDetailsResponseInternalState = "established"
+	GatewayIpsecIkeSaMetricsDetailsResponseInternalStatePassive       GatewayIpsecIkeSaMetricsDetailsResponseInternalState = "passive"
+	GatewayIpsecIkeSaMetricsDetailsResponseInternalStateRekeyed       GatewayIpsecIkeSaMetricsDetailsResponseInternalState = "rekeyed"
+	GatewayIpsecIkeSaMetricsDetailsResponseInternalStateRekeying      GatewayIpsecIkeSaMetricsDetailsResponseInternalState = "rekeying"
+	GatewayIpsecIkeSaMetricsDetailsResponseInternalStateUnavailable   GatewayIpsecIkeSaMetricsDetailsResponseInternalState = "unavailable"
+	GatewayIpsecIkeSaMetricsDetailsResponseInternalStateUninitialized GatewayIpsecIkeSaMetricsDetailsResponseInternalState = "uninitialized"
+	GatewayIpsecIkeSaMetricsDetailsResponseInternalStateUnknown       GatewayIpsecIkeSaMetricsDetailsResponseInternalState = "unknown"
 )
 
-// Valid indicates whether the value is a known member of the GatewayIpsecMetricsIkeSaDetailsResponseInternalState enum.
-func (e GatewayIpsecMetricsIkeSaDetailsResponseInternalState) Valid() bool {
+// Valid indicates whether the value is a known member of the GatewayIpsecIkeSaMetricsDetailsResponseInternalState enum.
+func (e GatewayIpsecIkeSaMetricsDetailsResponseInternalState) Valid() bool {
 	switch e {
-	case GatewayIpsecMetricsIkeSaDetailsResponseInternalStateConnecting:
+	case GatewayIpsecIkeSaMetricsDetailsResponseInternalStateConnecting:
 		return true
-	case GatewayIpsecMetricsIkeSaDetailsResponseInternalStateCreated:
+	case GatewayIpsecIkeSaMetricsDetailsResponseInternalStateCreated:
 		return true
-	case GatewayIpsecMetricsIkeSaDetailsResponseInternalStateDeleting:
+	case GatewayIpsecIkeSaMetricsDetailsResponseInternalStateDeleting:
 		return true
-	case GatewayIpsecMetricsIkeSaDetailsResponseInternalStateDestroying:
+	case GatewayIpsecIkeSaMetricsDetailsResponseInternalStateDestroying:
 		return true
-	case GatewayIpsecMetricsIkeSaDetailsResponseInternalStateEstablished:
+	case GatewayIpsecIkeSaMetricsDetailsResponseInternalStateEstablished:
 		return true
-	case GatewayIpsecMetricsIkeSaDetailsResponseInternalStatePassive:
+	case GatewayIpsecIkeSaMetricsDetailsResponseInternalStatePassive:
 		return true
-	case GatewayIpsecMetricsIkeSaDetailsResponseInternalStateRekeyed:
+	case GatewayIpsecIkeSaMetricsDetailsResponseInternalStateRekeyed:
 		return true
-	case GatewayIpsecMetricsIkeSaDetailsResponseInternalStateRekeying:
+	case GatewayIpsecIkeSaMetricsDetailsResponseInternalStateRekeying:
 		return true
-	case GatewayIpsecMetricsIkeSaDetailsResponseInternalStateUnavailable:
+	case GatewayIpsecIkeSaMetricsDetailsResponseInternalStateUnavailable:
 		return true
-	case GatewayIpsecMetricsIkeSaDetailsResponseInternalStateUninitialized:
+	case GatewayIpsecIkeSaMetricsDetailsResponseInternalStateUninitialized:
 		return true
-	case GatewayIpsecMetricsIkeSaDetailsResponseInternalStateUnknown:
+	case GatewayIpsecIkeSaMetricsDetailsResponseInternalStateUnknown:
 		return true
 	default:
 		return false
 	}
 }
 
-// Defines values for GatewayIpsecMetricsIkeSaDetailsResponseOperationalState.
+// Defines values for GatewayIpsecIkeSaMetricsDetailsResponseOperationalState.
 const (
-	GatewayIpsecMetricsIkeSaDetailsResponseOperationalStateConnecting  GatewayIpsecMetricsIkeSaDetailsResponseOperationalState = "connecting"
-	GatewayIpsecMetricsIkeSaDetailsResponseOperationalStateDestroying  GatewayIpsecMetricsIkeSaDetailsResponseOperationalState = "destroying"
-	GatewayIpsecMetricsIkeSaDetailsResponseOperationalStateEstablished GatewayIpsecMetricsIkeSaDetailsResponseOperationalState = "established"
-	GatewayIpsecMetricsIkeSaDetailsResponseOperationalStateIdle        GatewayIpsecMetricsIkeSaDetailsResponseOperationalState = "idle"
-	GatewayIpsecMetricsIkeSaDetailsResponseOperationalStateUnknown     GatewayIpsecMetricsIkeSaDetailsResponseOperationalState = "unknown"
+	GatewayIpsecIkeSaMetricsDetailsResponseOperationalStateConnecting  GatewayIpsecIkeSaMetricsDetailsResponseOperationalState = "connecting"
+	GatewayIpsecIkeSaMetricsDetailsResponseOperationalStateDestroying  GatewayIpsecIkeSaMetricsDetailsResponseOperationalState = "destroying"
+	GatewayIpsecIkeSaMetricsDetailsResponseOperationalStateEstablished GatewayIpsecIkeSaMetricsDetailsResponseOperationalState = "established"
+	GatewayIpsecIkeSaMetricsDetailsResponseOperationalStateIdle        GatewayIpsecIkeSaMetricsDetailsResponseOperationalState = "idle"
+	GatewayIpsecIkeSaMetricsDetailsResponseOperationalStateUnknown     GatewayIpsecIkeSaMetricsDetailsResponseOperationalState = "unknown"
 )
 
-// Valid indicates whether the value is a known member of the GatewayIpsecMetricsIkeSaDetailsResponseOperationalState enum.
-func (e GatewayIpsecMetricsIkeSaDetailsResponseOperationalState) Valid() bool {
+// Valid indicates whether the value is a known member of the GatewayIpsecIkeSaMetricsDetailsResponseOperationalState enum.
+func (e GatewayIpsecIkeSaMetricsDetailsResponseOperationalState) Valid() bool {
 	switch e {
-	case GatewayIpsecMetricsIkeSaDetailsResponseOperationalStateConnecting:
+	case GatewayIpsecIkeSaMetricsDetailsResponseOperationalStateConnecting:
 		return true
-	case GatewayIpsecMetricsIkeSaDetailsResponseOperationalStateDestroying:
+	case GatewayIpsecIkeSaMetricsDetailsResponseOperationalStateDestroying:
 		return true
-	case GatewayIpsecMetricsIkeSaDetailsResponseOperationalStateEstablished:
+	case GatewayIpsecIkeSaMetricsDetailsResponseOperationalStateEstablished:
 		return true
-	case GatewayIpsecMetricsIkeSaDetailsResponseOperationalStateIdle:
+	case GatewayIpsecIkeSaMetricsDetailsResponseOperationalStateIdle:
 		return true
-	case GatewayIpsecMetricsIkeSaDetailsResponseOperationalStateUnknown:
+	case GatewayIpsecIkeSaMetricsDetailsResponseOperationalStateUnknown:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for GatewayQueryParamSortServices.
+const (
+	GatewayQueryParamSortServicesCreatedAt      GatewayQueryParamSortServices = "created_at"
+	GatewayQueryParamSortServicesMinusCreatedAt GatewayQueryParamSortServices = "-created_at"
+	GatewayQueryParamSortServicesMinusName      GatewayQueryParamSortServices = "-name"
+	GatewayQueryParamSortServicesMinusUuid      GatewayQueryParamSortServices = "-uuid"
+	GatewayQueryParamSortServicesName           GatewayQueryParamSortServices = "name"
+	GatewayQueryParamSortServicesUuid           GatewayQueryParamSortServices = "uuid"
+)
+
+// Valid indicates whether the value is a known member of the GatewayQueryParamSortServices enum.
+func (e GatewayQueryParamSortServices) Valid() bool {
+	switch e {
+	case GatewayQueryParamSortServicesCreatedAt:
+		return true
+	case GatewayQueryParamSortServicesMinusCreatedAt:
+		return true
+	case GatewayQueryParamSortServicesMinusName:
+		return true
+	case GatewayQueryParamSortServicesMinusUuid:
+		return true
+	case GatewayQueryParamSortServicesName:
+		return true
+	case GatewayQueryParamSortServicesUuid:
 		return true
 	default:
 		return false
@@ -3834,34 +3864,34 @@ func (e ObjectStorage2PropertyConfiguredStatus) Valid() bool {
 
 // Defines values for ObjectStorage2QueryParamSort.
 const (
-	ObjectStorage2QueryParamSortCreatedAt             ObjectStorage2QueryParamSort = "created_at"
-	ObjectStorage2QueryParamSortMinusCreatedAt        ObjectStorage2QueryParamSort = "-created_at"
-	ObjectStorage2QueryParamSortMinusOperationalState ObjectStorage2QueryParamSort = "-operational_state"
-	ObjectStorage2QueryParamSortMinusRegionName       ObjectStorage2QueryParamSort = "-region_name"
-	ObjectStorage2QueryParamSortMinusServiceName      ObjectStorage2QueryParamSort = "-service_name"
-	ObjectStorage2QueryParamSortOperationalState      ObjectStorage2QueryParamSort = "operational_state"
-	ObjectStorage2QueryParamSortRegionName            ObjectStorage2QueryParamSort = "region_name"
-	ObjectStorage2QueryParamSortServiceName           ObjectStorage2QueryParamSort = "service_name"
+	CreatedAt             ObjectStorage2QueryParamSort = "created_at"
+	MinusCreatedAt        ObjectStorage2QueryParamSort = "-created_at"
+	MinusOperationalState ObjectStorage2QueryParamSort = "-operational_state"
+	MinusRegionName       ObjectStorage2QueryParamSort = "-region_name"
+	MinusServiceName      ObjectStorage2QueryParamSort = "-service_name"
+	OperationalState      ObjectStorage2QueryParamSort = "operational_state"
+	RegionName            ObjectStorage2QueryParamSort = "region_name"
+	ServiceName           ObjectStorage2QueryParamSort = "service_name"
 )
 
 // Valid indicates whether the value is a known member of the ObjectStorage2QueryParamSort enum.
 func (e ObjectStorage2QueryParamSort) Valid() bool {
 	switch e {
-	case ObjectStorage2QueryParamSortCreatedAt:
+	case CreatedAt:
 		return true
-	case ObjectStorage2QueryParamSortMinusCreatedAt:
+	case MinusCreatedAt:
 		return true
-	case ObjectStorage2QueryParamSortMinusOperationalState:
+	case MinusOperationalState:
 		return true
-	case ObjectStorage2QueryParamSortMinusRegionName:
+	case MinusRegionName:
 		return true
-	case ObjectStorage2QueryParamSortMinusServiceName:
+	case MinusServiceName:
 		return true
-	case ObjectStorage2QueryParamSortOperationalState:
+	case OperationalState:
 		return true
-	case ObjectStorage2QueryParamSortRegionName:
+	case RegionName:
 		return true
-	case ObjectStorage2QueryParamSortServiceName:
+	case ServiceName:
 		return true
 	default:
 		return false
@@ -9885,43 +9915,40 @@ type GatewayAddress struct {
 	Addr *int64 `json:"addr,omitempty"`
 }
 
-// GatewayAddressCreateRequest Address create request
+// GatewayAddressCreateRequest Gateway address
 type GatewayAddressCreateRequest struct {
+	// Address Floating IP address
+	Address *string `json:"address,omitempty"`
+
 	// Name Name of the address
 	Name string `json:"name"`
 }
 
-// GatewayAddressDetailsResponse Details about a specific address
+// GatewayAddressDetailsResponse Response schema for gateway address details.
 type GatewayAddressDetailsResponse struct {
 	// Address VPN address
 	Address *string `json:"address,omitempty"`
 
 	// Name Name of the address
 	Name *string `json:"name,omitempty"`
+
+	// ProvisionedBy Provisioner of the address
+	ProvisionedBy *string `json:"provisioned_by,omitempty"`
 }
 
-// GatewayAddressListResponse Response schema for a list of Gateway addresses.
+// GatewayAddressListResponse Response schema for a list of gateway addresses.
 type GatewayAddressListResponse = []GatewayAddressDetailsResponse
 
-// GatewayAuthenticationDetailsResponse Authentication details
-type GatewayAuthenticationDetailsResponse struct {
-	// Authentication Ipsec authentication type
-	Authentication *GatewayIpsecAuthenticationType `json:"authentication,omitempty"`
+// GatewayAddressModifyRequest Gateway service address modify request
+type GatewayAddressModifyRequest struct {
+	// Address Floating IP address
+	Address string `json:"address"`
 }
 
-// GatewayBgpDetailsResponse Details about the BGP configuration
-type GatewayBgpDetailsResponse struct {
-	// LocalAddress Local BGP address
-	LocalAddress *string `json:"local_address,omitempty"`
-
-	// LocalAsn Local BGP ASN
-	LocalAsn *int64 `json:"local_asn,omitempty"`
-
-	// RemoteAddress Remote BGP address
-	RemoteAddress *string `json:"remote_address,omitempty"`
-
-	// RemoteAsn Remote BGP ASN
-	RemoteAsn *int64 `json:"remote_asn,omitempty"`
+// GatewayAuthenticationDetailsResponse Response schema for authentication details.
+type GatewayAuthenticationDetailsResponse struct {
+	// Authentication IPsec authentication type
+	Authentication *GatewayIpsecAuthenticationType `json:"authentication,omitempty"`
 }
 
 // GatewayConnectionCreateRequest Network gateway VPN connection
@@ -9936,13 +9963,16 @@ type GatewayConnectionCreateRequest struct {
 	RemoteRoutes *[]GatewayConnectionRouteRequest `json:"remote_routes,omitempty"`
 
 	// Tunnels Connection tunnels
-	Tunnels *[]GatewayConnectionTunnel `json:"tunnels,omitempty"`
+	Tunnels *[]GatewayTunnelCreateRequest `json:"tunnels,omitempty"`
 
 	// Type Connection type
-	Type *GatewayConnectionType `json:"type,omitempty"`
+	Type GatewayConnectionType `json:"type"`
+
+	// Uuid The unique identifier for the resource.
+	Uuid *GatewayUuid `json:"uuid,omitempty"`
 }
 
-// GatewayConnectionDetailsResponse Response schema for Gateway connection details.
+// GatewayConnectionDetailsResponse Response schema for gateway connection details.
 type GatewayConnectionDetailsResponse struct {
 	// CreatedAt Timestamp of when the connection was created.
 	CreatedAt *time.Time `json:"created_at,omitempty"`
@@ -9967,7 +9997,7 @@ type GatewayConnectionDetailsResponse struct {
 	Uuid *GatewayUuid `json:"uuid,omitempty"`
 }
 
-// GatewayConnectionListResponse Response schema for a list of Gateway connections.
+// GatewayConnectionListResponse Response schema for a list of gateway connections.
 type GatewayConnectionListResponse = []GatewayConnectionDetailsResponse
 
 // GatewayConnectionModifyRequest Network gateway VPN connection
@@ -9991,7 +10021,7 @@ type GatewayConnectionModifyRequest struct {
 	Uuid *GatewayUuid `json:"uuid,omitempty"`
 }
 
-// GatewayConnectionRouteDetailsResponse Response schema for Gateway connection route details.
+// GatewayConnectionRouteDetailsResponse Response schema for gateway connection route details.
 type GatewayConnectionRouteDetailsResponse struct {
 	// Name Name of the connection
 	Name *string `json:"name,omitempty"`
@@ -10018,75 +10048,6 @@ type GatewayConnectionRouteRequest struct {
 // GatewayConnectionRouteType Connection route type
 type GatewayConnectionRouteType string
 
-// GatewayConnectionTunnel Network gateway VPN connection tunnel
-type GatewayConnectionTunnel struct {
-	// Bgp BGP configuration
-	Bgp *struct {
-		// LocalAddress Local BGP address
-		LocalAddress *string `json:"local_address,omitempty"`
-
-		// LocalAsn Local BGP ASN
-		LocalAsn *int64 `json:"local_asn,omitempty"`
-
-		// RemoteAddress Remote BGP address
-		RemoteAddress *string `json:"remote_address,omitempty"`
-
-		// RemoteAsn Remote BGP ASN
-		RemoteAsn *int64 `json:"remote_asn,omitempty"`
-	} `json:"bgp,omitempty"`
-
-	// InternalPeerPingInterval Internal peer ping inverval in seconds, or zero if disabled
-	InternalPeerPingInterval *int64 `json:"internal_peer_ping_interval,omitempty"`
-
-	// Ipsec IPSec configuration
-	Ipsec *struct {
-		// Authentication IPSec authentication configuration
-		Authentication *struct {
-			// Psk IPSec PSK
-			Psk *string `json:"psk,omitempty"`
-
-			// Type Ipsec authentication type
-			Type *GatewayIpsecAuthenticationType `json:"type,omitempty"`
-		} `json:"authentication,omitempty"`
-
-		// Phase1Algorithms Phase 1 algorithms
-		Phase1Algorithms *[]GatewaySupportedProposalAlgorithms `json:"phase1_algorithms,omitempty"`
-
-		// Phase1DhGroupNumbers Phase 1 Diffie-Hellman group numbers
-		Phase1DhGroupNumbers *[]GatewayDiffieHellmanGroupNumber `json:"phase1_dh_group_numbers,omitempty"`
-
-		// Phase1IntegrityAlgorithms Phase 1 integrity algorithms
-		Phase1IntegrityAlgorithms *[]GatewaySupportedIntegrityAlgorithms `json:"phase1_integrity_algorithms,omitempty"`
-
-		// Phase2Algorithms Phase 2 algorithms
-		Phase2Algorithms *[]GatewaySupportedProposalAlgorithms `json:"phase2_algorithms,omitempty"`
-
-		// Phase2DhGroupNumbers Phase 2 Diffie-Hellman group numbers
-		Phase2DhGroupNumbers *[]GatewayDiffieHellmanGroupNumber `json:"phase2_dh_group_numbers,omitempty"`
-
-		// Phase2IntegrityAlgorithms Phase 2 integrity algorithms
-		Phase2IntegrityAlgorithms *[]GatewaySupportedIntegrityAlgorithms `json:"phase2_integrity_algorithms,omitempty"`
-	} `json:"ipsec,omitempty"`
-
-	// LocalAddress Local peer address
-	LocalAddress *struct {
-		// Name Name of the local peer address
-		Name *string `json:"name,omitempty"`
-	} `json:"local_address,omitempty"`
-
-	// Name Name of the tunnel
-	Name string `json:"name"`
-
-	// RemoteAddress Remote peer address
-	RemoteAddress *struct {
-		// Address Remote peer address
-		Address *string `json:"address,omitempty"`
-	} `json:"remote_address,omitempty"`
-
-	// TunnelInternalIp Tunnel internal IP address, "" if disabled
-	TunnelInternalIp *string `json:"tunnel_internal_ip,omitempty"`
-}
-
 // GatewayConnectionType Connection type
 type GatewayConnectionType string
 
@@ -10111,61 +10072,55 @@ type GatewayErrorResponse struct {
 	Type string `json:"type"`
 }
 
-// GatewayIpsecAuthenticationType Ipsec authentication type
+// GatewayIpsecAuthenticationType IPsec authentication type
 type GatewayIpsecAuthenticationType string
 
-// GatewayIpsecDetailsResponse Details about the IPsec configuration
+// GatewayIpsecDetailsResponse Response schema for IPsec configuration details.
 type GatewayIpsecDetailsResponse struct {
-	// Authentication Authentication details
+	// Authentication Response schema for authentication details.
 	Authentication *GatewayAuthenticationDetailsResponse `json:"authentication,omitempty"`
 
-	// ChildRekeyTime Child SA rekey time in seconds
-	ChildRekeyTime *int64 `json:"child_rekey_time,omitempty"`
+	// ChildRekeyTime IKE child SA rekey time in seconds
+	ChildRekeyTime *int32 `json:"child_rekey_time,omitempty"`
 
-	// DpdDelay DPD delay in seconds
-	DpdDelay *int64 `json:"dpd_delay,omitempty"`
+	// DpdDelay Delay before sending Dead Peer Detection packets if no traffic is detected, in seconds
+	DpdDelay *int32 `json:"dpd_delay,omitempty"`
 
-	// DpdTimeout DPD timeout in seconds
-	DpdTimeout *int64 `json:"dpd_timeout,omitempty"`
+	// DpdTimeout Timeout period for DPD reply before considering the peer to be dead, in seconds
+	DpdTimeout *int32 `json:"dpd_timeout,omitempty"`
 
-	// IkeLifetime IKE lifetime in seconds
-	IkeLifetime *int64 `json:"ike_lifetime,omitempty"`
+	// IkeLifetime Maximum IKE SA lifetime in seconds
+	IkeLifetime *int32 `json:"ike_lifetime,omitempty"`
 
-	// Phase1Algorithms List of supported IPsec proposal algorithms
-	Phase1Algorithms *GatewaySupportedProposalAlgorithms `json:"phase1_algorithms,omitempty"`
+	// Phase1Algorithms Phase 1 proposal algorithms
+	Phase1Algorithms *[]GatewaySupportedProposalAlgorithms `json:"phase1_algorithms,omitempty"`
 
-	// Phase1DhGroupNumbers Diffie-Hellman group number
-	Phase1DhGroupNumbers *GatewayDiffieHellmanGroupNumber `json:"phase1_dh_group_numbers,omitempty"`
+	// Phase1DhGroupNumbers Phase 1 Diffie-Hellman group numbers
+	Phase1DhGroupNumbers *[]GatewayDiffieHellmanGroupNumber `json:"phase1_dh_group_numbers,omitempty"`
 
-	// Phase1IntegrityAlgorithms List of supported IPsec integrity algorithms
-	Phase1IntegrityAlgorithms *GatewaySupportedIntegrityAlgorithms `json:"phase1_integrity_algorithms,omitempty"`
+	// Phase1IntegrityAlgorithms Phase 1 integrity algorithms
+	Phase1IntegrityAlgorithms *[]GatewaySupportedIntegrityAlgorithms `json:"phase1_integrity_algorithms,omitempty"`
 
-	// Phase2Algorithms List of supported IPsec proposal algorithms
-	Phase2Algorithms *GatewaySupportedProposalAlgorithms `json:"phase2_algorithms,omitempty"`
+	// Phase2Algorithms Phase 2 security association algorithms
+	Phase2Algorithms *[]GatewaySupportedProposalAlgorithms `json:"phase2_algorithms,omitempty"`
 
-	// Phase2DhGroupNumbers Diffie-Hellman group number
-	Phase2DhGroupNumbers *GatewayDiffieHellmanGroupNumber `json:"phase2_dh_group_numbers,omitempty"`
+	// Phase2DhGroupNumbers Phase 2 Diffie-Hellman group numbers
+	Phase2DhGroupNumbers *[]GatewayDiffieHellmanGroupNumber `json:"phase2_dh_group_numbers,omitempty"`
 
-	// Phase2IntegrityAlgorithms List of supported IPsec integrity algorithms
-	Phase2IntegrityAlgorithms *GatewaySupportedIntegrityAlgorithms `json:"phase2_integrity_algorithms,omitempty"`
+	// Phase2IntegrityAlgorithms Phase 2 integrity algorithms
+	Phase2IntegrityAlgorithms *[]GatewaySupportedIntegrityAlgorithms `json:"phase2_integrity_algorithms,omitempty"`
 
-	// RekeyTime Rekey time in seconds
-	RekeyTime *int64 `json:"rekey_time,omitempty"`
+	// RekeyTime IKE SA rekey time in seconds
+	RekeyTime *int32 `json:"rekey_time,omitempty"`
 }
 
-// GatewayIpsecMetricsDetailsResponse Response schema for IPsec Ike Sa metrics details response.
-type GatewayIpsecMetricsDetailsResponse struct {
-	// IkeSas List of IKE SAs
-	IkeSas *[]GatewayIpsecMetricsIkeSaDetailsResponse `json:"ike_sas,omitempty"`
-}
-
-// GatewayIpsecMetricsIkeSaDetailsResponse Response schema for IPsec metrics ike sa details response.
-type GatewayIpsecMetricsIkeSaDetailsResponse struct {
+// GatewayIpsecIkeSaMetricsDetailsResponse Response schema for IPsec IKE SA metrics details.
+type GatewayIpsecIkeSaMetricsDetailsResponse struct {
 	ChildSas *[]struct {
 		BytesIn  *int64 `json:"bytes_in,omitempty"`
 		BytesOut *int64 `json:"bytes_out,omitempty"`
 
-		// CreatedAt Timestamp of when the plan was created.
+		// CreatedAt Timestamp of when the child SA was created.
 		CreatedAt            *time.Time `json:"created_at,omitempty"`
 		InstallTime          *int64     `json:"install_time,omitempty"`
 		LifeTime             *int64     `json:"life_time,omitempty"`
@@ -10181,17 +10136,17 @@ type GatewayIpsecMetricsIkeSaDetailsResponse struct {
 		SpiOut                *string   `json:"spi_out,omitempty"`
 
 		// State Operational state of the child SA
-		State    *GatewayIpsecMetricsIkeSaDetailsResponseChildSasState `json:"state,omitempty"`
+		State    *GatewayIpsecIkeSaMetricsDetailsResponseChildSasState `json:"state,omitempty"`
 		TunnelId *int64                                                `json:"tunnel_id,omitempty"`
 
 		// UniqueId Unique ID of the child SA
 		UniqueId *string `json:"unique_id,omitempty"`
 
-		// UpdatedAt Timestamp of when the plan was last updated.
+		// UpdatedAt Timestamp of when the child SA was last updated.
 		UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	} `json:"child_sas,omitempty"`
 
-	// CreatedAt Timestamp of when the plan was created.
+	// CreatedAt Timestamp of when the IKE SA was created.
 	CreatedAt   *time.Time `json:"created_at,omitempty"`
 	Established *int64     `json:"established,omitempty"`
 
@@ -10220,26 +10175,26 @@ type GatewayIpsecMetricsIkeSaDetailsResponse struct {
 	Initator *bool `json:"initator,omitempty"`
 
 	// InternalState Internal state of the IKE SA
-	InternalState *GatewayIpsecMetricsIkeSaDetailsResponseInternalState `json:"internal_state,omitempty"`
+	InternalState *GatewayIpsecIkeSaMetricsDetailsResponseInternalState `json:"internal_state,omitempty"`
 
 	// LocalHost Local host IP address
 	LocalHost *string `json:"local_host,omitempty"`
 
-	// LocalId Local host IP address
+	// LocalId Local IKE identity
 	LocalId *string `json:"local_id,omitempty"`
 
-	// Name Name of the plan
+	// Name Name of the gateway
 	Name *string `json:"name,omitempty"`
 
 	// OperationalState Operational state of the IKE SA
-	OperationalState *GatewayIpsecMetricsIkeSaDetailsResponseOperationalState `json:"operational_state,omitempty"`
+	OperationalState *GatewayIpsecIkeSaMetricsDetailsResponseOperationalState `json:"operational_state,omitempty"`
 	ReauthTime       *int64                                                   `json:"reauth_time,omitempty"`
 	RekeyTime        *int64                                                   `json:"rekey_time,omitempty"`
 
-	// RemoteHost Local host IP address
+	// RemoteHost Remote host IP address
 	RemoteHost *string `json:"remote_host,omitempty"`
 
-	// RemoteId Local host IP address
+	// RemoteId Remote IKE identity
 	RemoteId *string `json:"remote_id,omitempty"`
 
 	// TunnelId ID of the tunnel
@@ -10248,32 +10203,38 @@ type GatewayIpsecMetricsIkeSaDetailsResponse struct {
 	// UniqueId Unique ID of the IKE SA
 	UniqueId *string `json:"unique_id,omitempty"`
 
-	// UpdatedAt Timestamp of when the plan was last updated.
+	// UpdatedAt Timestamp of when the IKE SA was last updated.
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 
 	// Version Version of the IKE SA
 	Version *int64 `json:"version,omitempty"`
 }
 
-// GatewayIpsecMetricsIkeSaDetailsResponseChildSasState Operational state of the child SA
-type GatewayIpsecMetricsIkeSaDetailsResponseChildSasState string
+// GatewayIpsecIkeSaMetricsDetailsResponseChildSasState Operational state of the child SA
+type GatewayIpsecIkeSaMetricsDetailsResponseChildSasState string
 
-// GatewayIpsecMetricsIkeSaDetailsResponseInternalState Internal state of the IKE SA
-type GatewayIpsecMetricsIkeSaDetailsResponseInternalState string
+// GatewayIpsecIkeSaMetricsDetailsResponseInternalState Internal state of the IKE SA
+type GatewayIpsecIkeSaMetricsDetailsResponseInternalState string
 
-// GatewayIpsecMetricsIkeSaDetailsResponseOperationalState Operational state of the IKE SA
-type GatewayIpsecMetricsIkeSaDetailsResponseOperationalState string
+// GatewayIpsecIkeSaMetricsDetailsResponseOperationalState Operational state of the IKE SA
+type GatewayIpsecIkeSaMetricsDetailsResponseOperationalState string
 
-// GatewayLabelCreateRequest Gateway Label
+// GatewayIpsecMetricsDetailsResponse Response schema for IPsec IKE SA metrics details.
+type GatewayIpsecMetricsDetailsResponse struct {
+	// IkeSas List of IKE SAs
+	IkeSas *[]GatewayIpsecIkeSaMetricsDetailsResponse `json:"ike_sas,omitempty"`
+}
+
+// GatewayLabelCreateRequest Gateway label
 type GatewayLabelCreateRequest struct {
 	// Key The key of a label.
 	Key GatewayLabelKey `json:"key"`
 
-	// Value Schema for a label value property, allowing a string or null with specific character constraints.
+	// Value The value of a label.
 	Value *GatewayLabelValue `json:"value"`
 }
 
-// GatewayLabelDetailsResponse UpCloud gateway Label
+// GatewayLabelDetailsResponse Gateway label
 type GatewayLabelDetailsResponse struct {
 	// Key Key
 	Key string `json:"key"`
@@ -10285,33 +10246,33 @@ type GatewayLabelDetailsResponse struct {
 // GatewayLabelKey The key of a label.
 type GatewayLabelKey = string
 
-// GatewayLabelModifyRequest Gateway Label
+// GatewayLabelModifyRequest Gateway label
 type GatewayLabelModifyRequest struct {
 	// Key The key of a label.
 	Key *GatewayLabelKey `json:"key,omitempty"`
 
-	// Value Schema for a label value property, allowing a string or null with specific character constraints.
+	// Value The value of a label.
 	Value *GatewayLabelValue `json:"value,omitempty"`
 }
 
-// GatewayLabelValue Schema for a label value property, allowing a string or null with specific character constraints.
+// GatewayLabelValue The value of a label.
 type GatewayLabelValue = string
 
-// GatewayLocalPeerAddressDetailsResponse Details about the local peer address for the tunnel
+// GatewayLocalPeerAddressDetailsResponse Response schema for local peer address details.
 type GatewayLocalPeerAddressDetailsResponse struct {
 	// Name Name of the local peer
 	Name *string `json:"name,omitempty"`
 }
 
-// GatewayMetricsDetailsResponse Response schema for Gateway metrics details response.
+// GatewayMetricsDetailsResponse Response schema for gateway metrics details.
 type GatewayMetricsDetailsResponse struct {
 	// ActiveConnections Number of active connections
 	ActiveConnections *int64 `json:"active_connections,omitempty"`
 
-	// CreatedAt Timestamp of when the plan was created.
+	// CreatedAt Timestamp of when the metrics was created.
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 
-	// Name Name of the plan
+	// Name Name of the gateway
 	Name *string `json:"name,omitempty"`
 
 	// TotalAcceptedConnections Number of accepted connections
@@ -10320,11 +10281,14 @@ type GatewayMetricsDetailsResponse struct {
 	// TotalRejectedSessions Number of rejected sessions
 	TotalRejectedSessions *int64 `json:"total_rejected_sessions,omitempty"`
 
-	// UpdatedAt Timestamp of when the plan was last updated.
+	// UpdatedAt Timestamp of when the metrics was last updated.
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 }
 
-// GatewayPlanDetailsResponse Response schema for Gateway plan details.
+// GatewayName The name for the resource.
+type GatewayName = string
+
+// GatewayPlanDetailsResponse Response schema for gateway plan details.
 type GatewayPlanDetailsResponse struct {
 	// Name Name of the plan
 	Name *string `json:"name,omitempty"`
@@ -10346,16 +10310,19 @@ type GatewayPlanDetailsResponse struct {
 	VpnTunnelAmount *int64 `json:"vpn_tunnel_amount,omitempty"`
 }
 
-// GatewayPlanListResponse Response schema for a list of Gateway plans.
+// GatewayPlanListResponse Response schema for a list of gateway plans.
 type GatewayPlanListResponse = []GatewayPlanDetailsResponse
+
+// GatewayQueryParamLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
+type GatewayQueryParamLimit = int64
 
 // GatewayQueryParamOffset Schema for a query parameter specifying the offset for pagination.
 type GatewayQueryParamOffset = int64
 
-// GatewayQueryParamlimit Schema for a query parameter specifying the maximum number of entries to return (limit).
-type GatewayQueryParamlimit = int64
+// GatewayQueryParamSortServices Sort services by field. Prefix with '-' for descending order.
+type GatewayQueryParamSortServices string
 
-// GatewayRemotePeerAddressDetailsResponse Details about the remote peer address for the tunnel
+// GatewayRemotePeerAddressDetailsResponse Response schema for remote peer address details.
 type GatewayRemotePeerAddressDetailsResponse struct {
 	// Address Remote peer address
 	Address *string `json:"address,omitempty"`
@@ -10367,12 +10334,12 @@ type GatewayRouterCreateRequest struct {
 	Uuid GatewayUuid `json:"uuid"`
 }
 
-// GatewayRouterDetailsResponse Response containing details of a network gateway router
+// GatewayRouterDetailsResponse Response schema for gateway router details.
 type GatewayRouterDetailsResponse struct {
-	// CreatedAt Timestamp of when the plan was created.
+	// CreatedAt Timestamp of when the router was created.
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 
-	// UpdatedAt Timestamp of when the plan was last updated.
+	// UpdatedAt Timestamp of when the router was last updated.
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 
 	// Uuid Router UUID
@@ -10406,7 +10373,7 @@ type GatewayServiceCreateRequest struct {
 	Name string `json:"name"`
 
 	// Plan Plan
-	Plan *string `json:"plan,omitempty"`
+	Plan string `json:"plan"`
 
 	// Routers Service routers
 	Routers []GatewayRouterCreateRequest `json:"routers"`
@@ -10415,7 +10382,7 @@ type GatewayServiceCreateRequest struct {
 	Zone string `json:"zone"`
 }
 
-// GatewayServiceDetailsResponse Gateway Service
+// GatewayServiceDetailsResponse Gateway service
 type GatewayServiceDetailsResponse struct {
 	Addresses *[]GatewayAddressDetailsResponse `json:"addresses,omitempty"`
 
@@ -10444,7 +10411,7 @@ type GatewayServiceDetailsResponse struct {
 	// Plan Plan
 	Plan *string `json:"plan,omitempty"`
 
-	// Routers Response containing details of a network gateway router
+	// Routers Response schema for gateway router details.
 	Routers *GatewayRouterDetailsResponse `json:"routers,omitempty"`
 
 	// UpdatedAt Timestamp of when the service was last updated.
@@ -10463,16 +10430,16 @@ type GatewayServiceFeatures string
 // GatewayServiceLabelListResponse Response schema for a list of service labels.
 type GatewayServiceLabelListResponse = []GatewayLabelDetailsResponse
 
-// GatewayServiceListResponse Response schema for a list of Gateway services.
+// GatewayServiceListResponse Response schema for a list of gateway services.
 type GatewayServiceListResponse = []GatewayServiceDetailsResponse
 
-// GatewayServiceLogSessionCreateRequest Request to create a new log session for a service
+// GatewayServiceLogSessionCreateRequest Request to create a new log session for a service.
 type GatewayServiceLogSessionCreateRequest struct {
 	// SessionType Service log session types
 	SessionType GatewayServiceLogSessionTypes `json:"session_type"`
 }
 
-// GatewayServiceLogSessionCreateResponse Response for creating a new log session for a service
+// GatewayServiceLogSessionCreateResponse Response schema for service log session creation.
 type GatewayServiceLogSessionCreateResponse struct {
 	// Sessions List of service sessions created.
 	Sessions []GatewayServiceLogSessionDetailsResponse `json:"sessions"`
@@ -10490,11 +10457,11 @@ type GatewayServiceLogSessionDetailsResponse struct {
 // GatewayServiceLogSessionTypes Service log session types
 type GatewayServiceLogSessionTypes string
 
-// GatewayServiceMetricsResponse Response schema for a service metrics.
+// GatewayServiceMetricsResponse Response schema for service metrics.
 type GatewayServiceMetricsResponse struct {
 	Gateways *[]GatewayMetricsDetailsResponse `json:"gateways,omitempty"`
 
-	// IpsecMetrics Response schema for IPsec Ike Sa metrics details response.
+	// IpsecMetrics Response schema for IPsec IKE SA metrics details.
 	IpsecMetrics *GatewayIpsecMetricsDetailsResponse `json:"ipsec_metrics,omitempty"`
 }
 
@@ -10552,21 +10519,90 @@ type GatewaySupportedIntegrityAlgorithms string
 // GatewaySupportedProposalAlgorithms List of supported IPsec proposal algorithms
 type GatewaySupportedProposalAlgorithms string
 
-// GatewayTunnelDetailsResponse Response schema for Gateway tunnel details.
-type GatewayTunnelDetailsResponse struct {
-	// Bgp Details about the BGP configuration
-	Bgp *GatewayBgpDetailsResponse `json:"bgp,omitempty"`
+// GatewayTunnelCreateRequest Network gateway VPN connection tunnel
+type GatewayTunnelCreateRequest struct {
+	// InternalPeerPingInterval Internal peer ping interval in seconds, or zero if disabled
+	InternalPeerPingInterval *int64 `json:"internal_peer_ping_interval,omitempty"`
 
-	// CreatedAt Timestamp of when the connection was created.
+	// Ipsec IPsec configuration
+	Ipsec struct {
+		// Authentication IPsec authentication configuration
+		Authentication struct {
+			// Authentication IPsec authentication type
+			Authentication GatewayIpsecAuthenticationType `json:"authentication"`
+
+			// Psk IPsec PSK
+			Psk string `json:"psk"`
+		} `json:"authentication"`
+
+		// ChildRekeyTime IKE child SA rekey time in seconds
+		ChildRekeyTime *int32 `json:"child_rekey_time,omitempty"`
+
+		// DpdDelay Delay before sending Dead Peer Detection packets if no traffic is detected, in seconds
+		DpdDelay *int32 `json:"dpd_delay,omitempty"`
+
+		// DpdTimeout Timeout period for DPD reply before considering the peer to be dead, in seconds
+		DpdTimeout *int32 `json:"dpd_timeout,omitempty"`
+
+		// IkeLifetime Maximum IKE SA lifetime in seconds
+		IkeLifetime *int32 `json:"ike_lifetime,omitempty"`
+
+		// Phase1Algorithms Phase 1 proposal algorithms
+		Phase1Algorithms *[]GatewaySupportedProposalAlgorithms `json:"phase1_algorithms,omitempty"`
+
+		// Phase1DhGroupNumbers Phase 1 Diffie-Hellman group numbers
+		Phase1DhGroupNumbers *[]GatewayDiffieHellmanGroupNumber `json:"phase1_dh_group_numbers,omitempty"`
+
+		// Phase1IntegrityAlgorithms Phase 1 integrity algorithms
+		Phase1IntegrityAlgorithms *[]GatewaySupportedIntegrityAlgorithms `json:"phase1_integrity_algorithms,omitempty"`
+
+		// Phase2Algorithms Phase 2 security association algorithms
+		Phase2Algorithms *[]GatewaySupportedProposalAlgorithms `json:"phase2_algorithms,omitempty"`
+
+		// Phase2DhGroupNumbers Phase 2 Diffie-Hellman group numbers
+		Phase2DhGroupNumbers *[]GatewayDiffieHellmanGroupNumber `json:"phase2_dh_group_numbers,omitempty"`
+
+		// Phase2IntegrityAlgorithms Phase 2 integrity algorithms
+		Phase2IntegrityAlgorithms *[]GatewaySupportedIntegrityAlgorithms `json:"phase2_integrity_algorithms,omitempty"`
+
+		// RekeyTime IKE SA rekey time in seconds
+		RekeyTime *int32 `json:"rekey_time,omitempty"`
+	} `json:"ipsec"`
+
+	// LocalAddress Local peer address
+	LocalAddress struct {
+		// Name Name of the local peer address
+		Name *string `json:"name,omitempty"`
+	} `json:"local_address"`
+
+	// Name Name of the tunnel
+	Name string `json:"name"`
+
+	// RemoteAddress Remote peer address
+	RemoteAddress struct {
+		// Address Remote peer address
+		Address *string `json:"address,omitempty"`
+	} `json:"remote_address"`
+
+	// TunnelInternalIp Tunnel internal IP address, "" if disabled
+	TunnelInternalIp *string `json:"tunnel_internal_ip,omitempty"`
+
+	// Uuid The unique identifier for the resource.
+	Uuid *GatewayUuid `json:"uuid,omitempty"`
+}
+
+// GatewayTunnelDetailsResponse Response schema for gateway tunnel details.
+type GatewayTunnelDetailsResponse struct {
+	// CreatedAt Timestamp of when the tunnel was created.
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 
 	// InternalPeerPingInterval Internal peer ping interval in seconds
 	InternalPeerPingInterval *int64 `json:"internal_peer_ping_interval,omitempty"`
 
-	// Ipsec Details about the IPsec configuration
+	// Ipsec Response schema for IPsec configuration details.
 	Ipsec *GatewayIpsecDetailsResponse `json:"ipsec,omitempty"`
 
-	// LocalAddress Details about the local peer address for the tunnel
+	// LocalAddress Response schema for local peer address details.
 	LocalAddress *GatewayLocalPeerAddressDetailsResponse `json:"local_address,omitempty"`
 
 	// Name Name of the tunnel
@@ -10575,65 +10611,62 @@ type GatewayTunnelDetailsResponse struct {
 	// OperationalState Tunnel operational state
 	OperationalState *GatewayTunnelOperationalState `json:"operational_state,omitempty"`
 
-	// RemoteAddress Details about the remote peer address for the tunnel
+	// RemoteAddress Response schema for remote peer address details.
 	RemoteAddress *GatewayRemotePeerAddressDetailsResponse `json:"remote_address,omitempty"`
 
 	// TunnelHealthy Indicates whether the tunnel is healthy
 	TunnelHealthy *bool `json:"tunnel_healthy,omitempty"`
 
-	// TunnelInternalIp Response schema for VPN Gateway tunnel internal IP details.
+	// TunnelInternalIp Response schema for gateway tunnel internal IP details.
 	TunnelInternalIp *GatewayTunnelInternalIpDetailsResponse `json:"tunnel_internal_ip,omitempty"`
 
 	// TunnelUp Indicates whether the tunnel is up
 	TunnelUp *bool `json:"tunnel_up,omitempty"`
 
-	// UpdatedAt Timestamp of when the connection was last updated.
+	// UpdatedAt Timestamp of when the tunnel was last updated.
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 
 	// Uuid The unique identifier for the resource.
 	Uuid *GatewayUuid `json:"uuid,omitempty"`
 }
 
-// GatewayTunnelInternalIpDetailsResponse Response schema for VPN Gateway tunnel internal IP details.
+// GatewayTunnelInternalIpDetailsResponse Response schema for gateway tunnel internal IP details.
 type GatewayTunnelInternalIpDetailsResponse struct {
 	// HasParseError Indicates if there is a parse error with the tunnel internal IP
 	HasParseError *bool           `json:"hasParseError,omitempty"`
 	Ip            *GatewayAddress `json:"ip,omitempty"`
 }
 
-// GatewayTunnelListResponse Response schema for a list of Gateway tunnels.
+// GatewayTunnelListResponse Response schema for a list of gateway tunnels.
 type GatewayTunnelListResponse = []GatewayTunnelDetailsResponse
 
 // GatewayTunnelModifyRequest Request to modify a VPN tunnel
 type GatewayTunnelModifyRequest struct {
-	// Bgp BGP configuration
-	Bgp *struct {
-		// LocalAddress Local BGP address
-		LocalAddress *string `json:"local_address,omitempty"`
-
-		// LocalAsn Local BGP ASN
-		LocalAsn *int64 `json:"local_asn,omitempty"`
-
-		// RemoteAddress Remote BGP address
-		RemoteAddress *string `json:"remote_address,omitempty"`
-
-		// RemoteAsn Remote BGP ASN
-		RemoteAsn *int64 `json:"remote_asn,omitempty"`
-	} `json:"bgp,omitempty"`
-
-	// InternalPeerPingInterval Internal peer ping inverval in seconds, or zero if disabled
+	// InternalPeerPingInterval Internal peer ping interval in seconds, or zero if disabled
 	InternalPeerPingInterval *int64 `json:"internal_peer_ping_interval,omitempty"`
 
-	// Ipsec IPSec configuration
+	// Ipsec IPsec configuration
 	Ipsec *struct {
-		// Authentication IPSec authentication configuration
-		Authentication *struct {
-			// Psk IPSec PSK
-			Psk *string `json:"psk,omitempty"`
+		// Authentication IPsec authentication configuration
+		Authentication struct {
+			// Authentication IPsec authentication type
+			Authentication GatewayIpsecAuthenticationType `json:"authentication"`
 
-			// Type Ipsec authentication type
-			Type *GatewayIpsecAuthenticationType `json:"type,omitempty"`
-		} `json:"authentication,omitempty"`
+			// Psk IPsec PSK
+			Psk *string `json:"psk,omitempty"`
+		} `json:"authentication"`
+
+		// ChildRekeyTime IKE child SA rekey time in seconds
+		ChildRekeyTime *int32 `json:"child_rekey_time,omitempty"`
+
+		// DpdDelay Delay before sending Dead Peer Detection packets if no traffic is detected, in seconds
+		DpdDelay *int32 `json:"dpd_delay,omitempty"`
+
+		// DpdTimeout Timeout period for DPD reply before considering the peer to be dead, in seconds
+		DpdTimeout *int32 `json:"dpd_timeout,omitempty"`
+
+		// IkeLifetime Maximum IKE SA lifetime in seconds
+		IkeLifetime *int32 `json:"ike_lifetime,omitempty"`
 
 		// Phase1Algorithms Phase 1 algorithms
 		Phase1Algorithms *[]GatewaySupportedProposalAlgorithms `json:"phase1_algorithms,omitempty"`
@@ -10652,6 +10685,9 @@ type GatewayTunnelModifyRequest struct {
 
 		// Phase2IntegrityAlgorithms Phase 2 integrity algorithms
 		Phase2IntegrityAlgorithms *[]GatewaySupportedIntegrityAlgorithms `json:"phase2_integrity_algorithms,omitempty"`
+
+		// RekeyTime IKE SA rekey time in seconds
+		RekeyTime *int32 `json:"rekey_time,omitempty"`
 	} `json:"ipsec,omitempty"`
 
 	// LocalAddress Local peer address
@@ -16186,6 +16222,9 @@ type CreateFirewallRulesetLabelRulesetUuid = FirewallRulesetServerUuid
 // CreateFirewallRulesetRuleRulesetUuid The unique identifier for the server.
 type CreateFirewallRulesetRuleRulesetUuid = FirewallRulesetServerUuid
 
+// CreateGatewayAddressServiceUuid The unique identifier for the resource.
+type CreateGatewayAddressServiceUuid = GatewayUuid
+
 // CreateGatewayConnectionServiceUuid The unique identifier for the resource.
 type CreateGatewayConnectionServiceUuid = GatewayUuid
 
@@ -16341,6 +16380,12 @@ type DeleteFirewallRulesetRuleRulesetUuid = FirewallRulesetServerUuid
 
 // DeleteFirewallRulesetRulesetUuid The unique identifier for the server.
 type DeleteFirewallRulesetRulesetUuid = FirewallRulesetServerUuid
+
+// DeleteGatewayAddressAddressName The name for the resource.
+type DeleteGatewayAddressAddressName = GatewayName
+
+// DeleteGatewayAddressServiceUuid The unique identifier for the resource.
+type DeleteGatewayAddressServiceUuid = GatewayUuid
 
 // DeleteGatewayConnectionConnectionUuid The unique identifier for the resource.
 type DeleteGatewayConnectionConnectionUuid = GatewayUuid
@@ -16678,8 +16723,8 @@ type GetFirewallRulesetRuleRulesetUuid = FirewallRulesetServerUuid
 // GetFirewallRulesetRulesetUuid The unique identifier for the server.
 type GetFirewallRulesetRulesetUuid = FirewallRulesetServerUuid
 
-// GetGatewayAddressAddressName The unique identifier for the resource.
-type GetGatewayAddressAddressName = GatewayUuid
+// GetGatewayAddressAddressName The name for the resource.
+type GetGatewayAddressAddressName = GatewayName
 
 // GetGatewayAddressServiceUuid The unique identifier for the resource.
 type GetGatewayAddressServiceUuid = GatewayUuid
@@ -16693,8 +16738,8 @@ type GetGatewayConnectionServiceUuid = GatewayUuid
 // GetGatewayMetricsServiceUuid The unique identifier for the resource.
 type GetGatewayMetricsServiceUuid = GatewayUuid
 
-// GetGatewayPlanPlanName The unique identifier for the resource.
-type GetGatewayPlanPlanName = GatewayUuid
+// GetGatewayPlanPlanName The name for the resource.
+type GetGatewayPlanPlanName = GatewayName
 
 // GetGatewayServiceLabelLabelKey The key of a label.
 type GetGatewayServiceLabelLabelKey = GatewayLabelKey
@@ -17045,7 +17090,7 @@ type ListGatewayAddressesServiceUuid = GatewayUuid
 type ListGatewayConnectionsServiceUuid = GatewayUuid
 
 // ListGatewayPlansLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
-type ListGatewayPlansLimit = GatewayQueryParamlimit
+type ListGatewayPlansLimit = GatewayQueryParamLimit
 
 // ListGatewayPlansOffset Schema for a query parameter specifying the offset for pagination.
 type ListGatewayPlansOffset = GatewayQueryParamOffset
@@ -17054,10 +17099,13 @@ type ListGatewayPlansOffset = GatewayQueryParamOffset
 type ListGatewayServiceLabelsServiceUuid = GatewayUuid
 
 // ListGatewayServicesLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
-type ListGatewayServicesLimit = GatewayQueryParamlimit
+type ListGatewayServicesLimit = GatewayQueryParamLimit
 
 // ListGatewayServicesOffset Schema for a query parameter specifying the offset for pagination.
 type ListGatewayServicesOffset = GatewayQueryParamOffset
+
+// ListGatewayServicesSort Sort services by field. Prefix with '-' for descending order.
+type ListGatewayServicesSort = GatewayQueryParamSortServices
 
 // ListGatewayTunnelsConnectionUuid The unique identifier for the resource.
 type ListGatewayTunnelsConnectionUuid = GatewayUuid
@@ -17250,6 +17298,12 @@ type ModifyFirewallRulesetRuleRulesetUuid = FirewallRulesetServerUuid
 
 // ModifyFirewallRulesetRulesetUuid The unique identifier for the server.
 type ModifyFirewallRulesetRulesetUuid = FirewallRulesetServerUuid
+
+// ModifyGatewayAddressAddressName The name for the resource.
+type ModifyGatewayAddressAddressName = GatewayName
+
+// ModifyGatewayAddressServiceUuid The unique identifier for the resource.
+type ModifyGatewayAddressServiceUuid = GatewayUuid
 
 // ModifyGatewayConnectionConnectionUuid The unique identifier for the resource.
 type ModifyGatewayConnectionConnectionUuid = GatewayUuid
@@ -18208,13 +18262,19 @@ type CreateFirewallRulesetRule201 = FirewallRulesetRuleDetailResponse
 // CreateFirewallRulesetRuleDefault Schema for error responses from the API.
 type CreateFirewallRulesetRuleDefault = FirewallRulesetErrorResponse
 
-// CreateGatewayConnection200 Response schema for Gateway connection details.
+// CreateGatewayAddress201 Response schema for gateway address details.
+type CreateGatewayAddress201 = GatewayAddressDetailsResponse
+
+// CreateGatewayAddressDefault Schema for error responses from the API.
+type CreateGatewayAddressDefault = GatewayErrorResponse
+
+// CreateGatewayConnection200 Response schema for gateway connection details.
 type CreateGatewayConnection200 = GatewayConnectionDetailsResponse
 
 // CreateGatewayConnectionDefault Schema for error responses from the API.
 type CreateGatewayConnectionDefault = GatewayErrorResponse
 
-// CreateGatewayService200 Gateway Service
+// CreateGatewayService200 Gateway service
 type CreateGatewayService200 = GatewayServiceDetailsResponse
 
 // CreateGatewayServiceDefault Schema for error responses from the API.
@@ -18223,13 +18283,13 @@ type CreateGatewayServiceDefault = GatewayErrorResponse
 // CreateGatewayServiceLabelDefault Schema for error responses from the API.
 type CreateGatewayServiceLabelDefault = GatewayErrorResponse
 
-// CreateGatewayServiceLogSession200 Response for creating a new log session for a service
+// CreateGatewayServiceLogSession200 Response schema for service log session creation.
 type CreateGatewayServiceLogSession200 = GatewayServiceLogSessionCreateResponse
 
 // CreateGatewayServiceLogSessionDefault Schema for error responses from the API.
 type CreateGatewayServiceLogSessionDefault = GatewayErrorResponse
 
-// CreateGatewayTunnel200 Response schema for Gateway tunnel details.
+// CreateGatewayTunnel200 Response schema for gateway tunnel details.
 type CreateGatewayTunnel200 = GatewayTunnelDetailsResponse
 
 // CreateGatewayTunnelDefault Schema for error responses from the API.
@@ -18483,6 +18543,9 @@ type DeleteFirewallRulesetLabelDefault = FirewallRulesetErrorResponse
 
 // DeleteFirewallRulesetRuleDefault Schema for error responses from the API.
 type DeleteFirewallRulesetRuleDefault = FirewallRulesetErrorResponse
+
+// DeleteGatewayAddressDefault Schema for error responses from the API.
+type DeleteGatewayAddressDefault = GatewayErrorResponse
 
 // DeleteGatewayConnectionDefault Schema for error responses from the API.
 type DeleteGatewayConnectionDefault = GatewayErrorResponse
@@ -18865,43 +18928,43 @@ type GetFirewallRulesetRule200 = FirewallRulesetRuleDetailResponse
 // GetFirewallRulesetRuleDefault Schema for error responses from the API.
 type GetFirewallRulesetRuleDefault = FirewallRulesetErrorResponse
 
-// GetGatewayAddress200 Details about a specific address
+// GetGatewayAddress200 Response schema for gateway address details.
 type GetGatewayAddress200 = GatewayAddressDetailsResponse
 
 // GetGatewayAddressDefault Schema for error responses from the API.
 type GetGatewayAddressDefault = GatewayErrorResponse
 
-// GetGatewayConnection200 Response schema for Gateway connection details.
+// GetGatewayConnection200 Response schema for gateway connection details.
 type GetGatewayConnection200 = GatewayConnectionDetailsResponse
 
 // GetGatewayConnectionDefault Schema for error responses from the API.
 type GetGatewayConnectionDefault = GatewayErrorResponse
 
-// GetGatewayMetrics200 Response schema for a service metrics.
+// GetGatewayMetrics200 Response schema for service metrics.
 type GetGatewayMetrics200 = GatewayServiceMetricsResponse
 
 // GetGatewayMetricsDefault Schema for error responses from the API.
 type GetGatewayMetricsDefault = GatewayErrorResponse
 
-// GetGatewayPlan200 Response schema for Gateway plan details.
+// GetGatewayPlan200 Response schema for gateway plan details.
 type GetGatewayPlan200 = GatewayPlanDetailsResponse
 
 // GetGatewayPlanDefault Schema for error responses from the API.
 type GetGatewayPlanDefault = GatewayErrorResponse
 
-// GetGatewayService200 Gateway Service
+// GetGatewayService200 Gateway service
 type GetGatewayService200 = GatewayServiceDetailsResponse
 
 // GetGatewayServiceDefault Schema for error responses from the API.
 type GetGatewayServiceDefault = GatewayErrorResponse
 
-// GetGatewayServiceLabel200 UpCloud gateway Label
+// GetGatewayServiceLabel200 Gateway label
 type GetGatewayServiceLabel200 = GatewayLabelDetailsResponse
 
 // GetGatewayServiceLabelDefault Schema for error responses from the API.
 type GetGatewayServiceLabelDefault = GatewayErrorResponse
 
-// GetGatewayTunnel200 Response schema for Gateway tunnel details.
+// GetGatewayTunnel200 Response schema for gateway tunnel details.
 type GetGatewayTunnel200 = GatewayTunnelDetailsResponse
 
 // GetGatewayTunnelDefault Schema for error responses from the API.
@@ -19330,19 +19393,19 @@ type ListFirewallRulesets200 = FirewallRulesetListResponse
 // ListFirewallRulesetsDefault Schema for error responses from the API.
 type ListFirewallRulesetsDefault = FirewallRulesetErrorResponse
 
-// ListGatewayAddresses200 Response schema for a list of Gateway addresses.
+// ListGatewayAddresses200 Response schema for a list of gateway addresses.
 type ListGatewayAddresses200 = GatewayAddressListResponse
 
 // ListGatewayAddressesDefault Schema for error responses from the API.
 type ListGatewayAddressesDefault = GatewayErrorResponse
 
-// ListGatewayConnections200 Response schema for a list of Gateway connections.
+// ListGatewayConnections200 Response schema for a list of gateway connections.
 type ListGatewayConnections200 = GatewayConnectionListResponse
 
 // ListGatewayConnectionsDefault Schema for error responses from the API.
 type ListGatewayConnectionsDefault = GatewayErrorResponse
 
-// ListGatewayPlans200 Response schema for a list of Gateway plans.
+// ListGatewayPlans200 Response schema for a list of gateway plans.
 type ListGatewayPlans200 = GatewayPlanListResponse
 
 // ListGatewayPlansDefault Schema for error responses from the API.
@@ -19354,13 +19417,13 @@ type ListGatewayServiceLabels200 = GatewayServiceLabelListResponse
 // ListGatewayServiceLabelsDefault Schema for error responses from the API.
 type ListGatewayServiceLabelsDefault = GatewayErrorResponse
 
-// ListGatewayServices200 Response schema for a list of Gateway services.
+// ListGatewayServices200 Response schema for a list of gateway services.
 type ListGatewayServices200 = GatewayServiceListResponse
 
 // ListGatewayServicesDefault Schema for error responses from the API.
 type ListGatewayServicesDefault = GatewayErrorResponse
 
-// ListGatewayTunnels200 Response schema for a list of Gateway tunnels.
+// ListGatewayTunnels200 Response schema for a list of gateway tunnels.
 type ListGatewayTunnels200 = GatewayTunnelListResponse
 
 // ListGatewayTunnelsDefault Schema for error responses from the API.
@@ -19648,13 +19711,19 @@ type ModifyFirewallRulesetRule200 = FirewallRulesetRuleDetailResponse
 // ModifyFirewallRulesetRuleDefault Schema for error responses from the API.
 type ModifyFirewallRulesetRuleDefault = FirewallRulesetErrorResponse
 
-// ModifyGatewayConnection200 Response schema for Gateway connection details.
+// ModifyGatewayAddress200 Response schema for gateway address details.
+type ModifyGatewayAddress200 = GatewayAddressDetailsResponse
+
+// ModifyGatewayAddressDefault Schema for error responses from the API.
+type ModifyGatewayAddressDefault = GatewayErrorResponse
+
+// ModifyGatewayConnection200 Response schema for gateway connection details.
 type ModifyGatewayConnection200 = GatewayConnectionDetailsResponse
 
 // ModifyGatewayConnectionDefault Schema for error responses from the API.
 type ModifyGatewayConnectionDefault = GatewayErrorResponse
 
-// ModifyGatewayService200 Gateway Service
+// ModifyGatewayService200 Gateway service
 type ModifyGatewayService200 = GatewayServiceDetailsResponse
 
 // ModifyGatewayServiceDefault Schema for error responses from the API.
@@ -19663,7 +19732,7 @@ type ModifyGatewayServiceDefault = GatewayErrorResponse
 // ModifyGatewayServiceLabelDefault Schema for error responses from the API.
 type ModifyGatewayServiceLabelDefault = GatewayErrorResponse
 
-// ModifyGatewayTunnel200 Response schema for Gateway tunnel details.
+// ModifyGatewayTunnel200 Response schema for gateway tunnel details.
 type ModifyGatewayTunnel200 = GatewayTunnelDetailsResponse
 
 // ModifyGatewayTunnelDefault Schema for error responses from the API.
@@ -20302,7 +20371,7 @@ type ReplaceFileStorage200 = FileStorageServiceDetailResponse
 // ReplaceFileStorageDefault Schema for error responses from the API.
 type ReplaceFileStorageDefault = FileStorageErrorResponse
 
-// ReplaceGatewayService200 Gateway Service
+// ReplaceGatewayService200 Gateway service
 type ReplaceGatewayService200 = GatewayServiceDetailsResponse
 
 // ReplaceGatewayServiceDefault Schema for error responses from the API.
@@ -20455,20 +20524,23 @@ type CreateFirewallRulesetLabel = FirewallRulesetCreateLabel
 // CreateFirewallRulesetRule defines model for createFirewallRulesetRule.
 type CreateFirewallRulesetRule = FirewallRulesetFirewallRuleCreate
 
+// CreateGatewayAddress Gateway address
+type CreateGatewayAddress = GatewayAddressCreateRequest
+
 // CreateGatewayConnection Network gateway VPN connection
 type CreateGatewayConnection = GatewayConnectionCreateRequest
 
 // CreateGatewayService Gateway service
 type CreateGatewayService = GatewayServiceCreateRequest
 
-// CreateGatewayServiceLabel Gateway Label
+// CreateGatewayServiceLabel Gateway label
 type CreateGatewayServiceLabel = GatewayLabelCreateRequest
 
-// CreateGatewayServiceLogSession Request to create a new log session for a service
+// CreateGatewayServiceLogSession Request to create a new log session for a service.
 type CreateGatewayServiceLogSession = GatewayServiceLogSessionCreateRequest
 
 // CreateGatewayTunnel Network gateway VPN connection tunnel
-type CreateGatewayTunnel = GatewayConnectionTunnel
+type CreateGatewayTunnel = GatewayTunnelCreateRequest
 
 // CreateLoadBalancer Load Balancer Service
 type CreateLoadBalancer = LoadBalancerServiceCreate
@@ -20620,13 +20692,16 @@ type ModifyFirewallRulesetLabel = FirewallRulesetLabelModify
 // ModifyFirewallRulesetRule defines model for modifyFirewallRulesetRule.
 type ModifyFirewallRulesetRule = FirewallRulesetFirewallRuleModify
 
+// ModifyGatewayAddress Gateway service address modify request
+type ModifyGatewayAddress = GatewayAddressModifyRequest
+
 // ModifyGatewayConnection Network gateway VPN connection
 type ModifyGatewayConnection = GatewayConnectionModifyRequest
 
 // ModifyGatewayService Request to modify a gateway service
 type ModifyGatewayService = GatewayServiceModifyRequest
 
-// ModifyGatewayServiceLabel Gateway Label
+// ModifyGatewayServiceLabel Gateway label
 type ModifyGatewayServiceLabel = GatewayLabelModifyRequest
 
 // ModifyGatewayTunnel Request to modify a VPN tunnel
@@ -20981,6 +21056,9 @@ type ListGatewayServicesParams struct {
 
 	// Offset Offset for retrieved results.
 	Offset *ListGatewayServicesOffset `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// Sort Sort resources by field. Prefix with '-' for descending order.
+	Sort *ListGatewayServicesSort `form:"sort,omitempty" json:"sort,omitempty"`
 }
 
 // ListGatewayPlansParams defines parameters for ListGatewayPlans.
@@ -21340,6 +21418,12 @@ type ModifyGatewayServiceJSONRequestBody = GatewayServiceModifyRequest
 // ReplaceGatewayServiceJSONRequestBody defines body for ReplaceGatewayService for application/json ContentType.
 type ReplaceGatewayServiceJSONRequestBody = GatewayServiceReplaceRequest
 
+// CreateGatewayAddressJSONRequestBody defines body for CreateGatewayAddress for application/json ContentType.
+type CreateGatewayAddressJSONRequestBody = GatewayAddressCreateRequest
+
+// ModifyGatewayAddressJSONRequestBody defines body for ModifyGatewayAddress for application/json ContentType.
+type ModifyGatewayAddressJSONRequestBody = GatewayAddressModifyRequest
+
 // CreateGatewayConnectionJSONRequestBody defines body for CreateGatewayConnection for application/json ContentType.
 type CreateGatewayConnectionJSONRequestBody = GatewayConnectionCreateRequest
 
@@ -21347,7 +21431,7 @@ type CreateGatewayConnectionJSONRequestBody = GatewayConnectionCreateRequest
 type ModifyGatewayConnectionJSONRequestBody = GatewayConnectionModifyRequest
 
 // CreateGatewayTunnelJSONRequestBody defines body for CreateGatewayTunnel for application/json ContentType.
-type CreateGatewayTunnelJSONRequestBody = GatewayConnectionTunnel
+type CreateGatewayTunnelJSONRequestBody = GatewayTunnelCreateRequest
 
 // ModifyGatewayTunnelJSONRequestBody defines body for ModifyGatewayTunnel for application/json ContentType.
 type ModifyGatewayTunnelJSONRequestBody = GatewayTunnelModifyRequest
@@ -29257,8 +29341,21 @@ type ClientInterface interface {
 	// ListGatewayAddresses request
 	ListGatewayAddresses(ctx context.Context, serviceUuid ListGatewayAddressesServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// CreateGatewayAddressWithBody request with any body
+	CreateGatewayAddressWithBody(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CreateGatewayAddress(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, body CreateGatewayAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteGatewayAddress request
+	DeleteGatewayAddress(ctx context.Context, serviceUuid DeleteGatewayAddressServiceUuid, addressName DeleteGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// GetGatewayAddress request
 	GetGatewayAddress(ctx context.Context, serviceUuid GetGatewayAddressServiceUuid, addressName GetGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ModifyGatewayAddressWithBody request with any body
+	ModifyGatewayAddressWithBody(ctx context.Context, serviceUuid ModifyGatewayAddressServiceUuid, addressName ModifyGatewayAddressAddressName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	ModifyGatewayAddress(ctx context.Context, serviceUuid ModifyGatewayAddressServiceUuid, addressName ModifyGatewayAddressAddressName, body ModifyGatewayAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListGatewayConnections request
 	ListGatewayConnections(ctx context.Context, serviceUuid ListGatewayConnectionsServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -32528,8 +32625,68 @@ func (c *Client) ListGatewayAddresses(ctx context.Context, serviceUuid ListGatew
 	return c.Client.Do(req)
 }
 
+func (c *Client) CreateGatewayAddressWithBody(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateGatewayAddressRequestWithBody(c.Server, serviceUuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreateGatewayAddress(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, body CreateGatewayAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateGatewayAddressRequest(c.Server, serviceUuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) DeleteGatewayAddress(ctx context.Context, serviceUuid DeleteGatewayAddressServiceUuid, addressName DeleteGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteGatewayAddressRequest(c.Server, serviceUuid, addressName)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 func (c *Client) GetGatewayAddress(ctx context.Context, serviceUuid GetGatewayAddressServiceUuid, addressName GetGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetGatewayAddressRequest(c.Server, serviceUuid, addressName)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ModifyGatewayAddressWithBody(ctx context.Context, serviceUuid ModifyGatewayAddressServiceUuid, addressName ModifyGatewayAddressAddressName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewModifyGatewayAddressRequestWithBody(c.Server, serviceUuid, addressName, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ModifyGatewayAddress(ctx context.Context, serviceUuid ModifyGatewayAddressServiceUuid, addressName ModifyGatewayAddressAddressName, body ModifyGatewayAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewModifyGatewayAddressRequest(c.Server, serviceUuid, addressName, body)
 	if err != nil {
 		return nil, err
 	}
@@ -42962,6 +43119,22 @@ func NewListGatewayServicesRequest(server string, params *ListGatewayServicesPar
 
 		}
 
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		queryURL.RawQuery = queryValues.Encode()
 	}
 
@@ -43084,7 +43257,7 @@ func NewGetGatewayPlanRequest(server string, planName GetGatewayPlanPlanName) (*
 
 	var pathParam0 string
 
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "plan-name", planName, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "plan-name", planName, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
 	if err != nil {
 		return nil, err
 	}
@@ -43342,6 +43515,94 @@ func NewListGatewayAddressesRequest(server string, serviceUuid ListGatewayAddres
 	return req, nil
 }
 
+// NewCreateGatewayAddressRequest calls the generic CreateGatewayAddress builder with application/json body
+func NewCreateGatewayAddressRequest(server string, serviceUuid CreateGatewayAddressServiceUuid, body CreateGatewayAddressJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateGatewayAddressRequestWithBody(server, serviceUuid, "application/json", bodyReader)
+}
+
+// NewCreateGatewayAddressRequestWithBody generates requests for CreateGatewayAddress with any type of body
+func NewCreateGatewayAddressRequestWithBody(server string, serviceUuid CreateGatewayAddressServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "service-uuid", serviceUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/gateway/%s/addresses", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeleteGatewayAddressRequest generates requests for DeleteGatewayAddress
+func NewDeleteGatewayAddressRequest(server string, serviceUuid DeleteGatewayAddressServiceUuid, addressName DeleteGatewayAddressAddressName) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "service-uuid", serviceUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "address-name", addressName, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/gateway/%s/addresses/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewGetGatewayAddressRequest generates requests for GetGatewayAddress
 func NewGetGatewayAddressRequest(server string, serviceUuid GetGatewayAddressServiceUuid, addressName GetGatewayAddressAddressName) (*http.Request, error) {
 	var err error
@@ -43355,7 +43616,7 @@ func NewGetGatewayAddressRequest(server string, serviceUuid GetGatewayAddressSer
 
 	var pathParam1 string
 
-	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "address-name", addressName, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "address-name", addressName, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
 	if err != nil {
 		return nil, err
 	}
@@ -43379,6 +43640,60 @@ func NewGetGatewayAddressRequest(server string, serviceUuid GetGatewayAddressSer
 	if err != nil {
 		return nil, err
 	}
+
+	return req, nil
+}
+
+// NewModifyGatewayAddressRequest calls the generic ModifyGatewayAddress builder with application/json body
+func NewModifyGatewayAddressRequest(server string, serviceUuid ModifyGatewayAddressServiceUuid, addressName ModifyGatewayAddressAddressName, body ModifyGatewayAddressJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewModifyGatewayAddressRequestWithBody(server, serviceUuid, addressName, "application/json", bodyReader)
+}
+
+// NewModifyGatewayAddressRequestWithBody generates requests for ModifyGatewayAddress with any type of body
+func NewModifyGatewayAddressRequestWithBody(server string, serviceUuid ModifyGatewayAddressServiceUuid, addressName ModifyGatewayAddressAddressName, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "service-uuid", serviceUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "address-name", addressName, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/gateway/%s/addresses/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PATCH", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -56180,8 +56495,21 @@ type ClientWithResponsesInterface interface {
 	// ListGatewayAddressesWithResponse request
 	ListGatewayAddressesWithResponse(ctx context.Context, serviceUuid ListGatewayAddressesServiceUuid, reqEditors ...RequestEditorFn) (*ListGatewayAddressesResp, error)
 
+	// CreateGatewayAddressWithBodyWithResponse request with any body
+	CreateGatewayAddressWithBodyWithResponse(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateGatewayAddressResp, error)
+
+	CreateGatewayAddressWithResponse(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, body CreateGatewayAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateGatewayAddressResp, error)
+
+	// DeleteGatewayAddressWithResponse request
+	DeleteGatewayAddressWithResponse(ctx context.Context, serviceUuid DeleteGatewayAddressServiceUuid, addressName DeleteGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*DeleteGatewayAddressResp, error)
+
 	// GetGatewayAddressWithResponse request
 	GetGatewayAddressWithResponse(ctx context.Context, serviceUuid GetGatewayAddressServiceUuid, addressName GetGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*GetGatewayAddressResp, error)
+
+	// ModifyGatewayAddressWithBodyWithResponse request with any body
+	ModifyGatewayAddressWithBodyWithResponse(ctx context.Context, serviceUuid ModifyGatewayAddressServiceUuid, addressName ModifyGatewayAddressAddressName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyGatewayAddressResp, error)
+
+	ModifyGatewayAddressWithResponse(ctx context.Context, serviceUuid ModifyGatewayAddressServiceUuid, addressName ModifyGatewayAddressAddressName, body ModifyGatewayAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyGatewayAddressResp, error)
 
 	// ListGatewayConnectionsWithResponse request
 	ListGatewayConnectionsWithResponse(ctx context.Context, serviceUuid ListGatewayConnectionsServiceUuid, reqEditors ...RequestEditorFn) (*ListGatewayConnectionsResp, error)
@@ -60461,6 +60789,51 @@ func (r ListGatewayAddressesResp) StatusCode() int {
 	return 0
 }
 
+type CreateGatewayAddressResp struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON201                       *CreateGatewayAddress201
+	ApplicationproblemJSONDefault *CreateGatewayAddressDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateGatewayAddressResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateGatewayAddressResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type DeleteGatewayAddressResp struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	ApplicationproblemJSONDefault *DeleteGatewayAddressDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteGatewayAddressResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteGatewayAddressResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
 type GetGatewayAddressResp struct {
 	Body                          []byte
 	HTTPResponse                  *http.Response
@@ -60478,6 +60851,29 @@ func (r GetGatewayAddressResp) Status() string {
 
 // StatusCode returns HTTPResponse.StatusCode
 func (r GetGatewayAddressResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type ModifyGatewayAddressResp struct {
+	Body                          []byte
+	HTTPResponse                  *http.Response
+	JSON200                       *ModifyGatewayAddress200
+	ApplicationproblemJSONDefault *ModifyGatewayAddressDefault
+}
+
+// Status returns HTTPResponse.Status
+func (r ModifyGatewayAddressResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ModifyGatewayAddressResp) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -68419,6 +68815,32 @@ func (c *ClientWithResponses) ListGatewayAddressesWithResponse(ctx context.Conte
 	return ParseListGatewayAddressesResp(rsp)
 }
 
+// CreateGatewayAddressWithBodyWithResponse request with arbitrary body returning *CreateGatewayAddressResp
+func (c *ClientWithResponses) CreateGatewayAddressWithBodyWithResponse(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateGatewayAddressResp, error) {
+	rsp, err := c.CreateGatewayAddressWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateGatewayAddressResp(rsp)
+}
+
+func (c *ClientWithResponses) CreateGatewayAddressWithResponse(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, body CreateGatewayAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateGatewayAddressResp, error) {
+	rsp, err := c.CreateGatewayAddress(ctx, serviceUuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateGatewayAddressResp(rsp)
+}
+
+// DeleteGatewayAddressWithResponse request returning *DeleteGatewayAddressResp
+func (c *ClientWithResponses) DeleteGatewayAddressWithResponse(ctx context.Context, serviceUuid DeleteGatewayAddressServiceUuid, addressName DeleteGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*DeleteGatewayAddressResp, error) {
+	rsp, err := c.DeleteGatewayAddress(ctx, serviceUuid, addressName, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteGatewayAddressResp(rsp)
+}
+
 // GetGatewayAddressWithResponse request returning *GetGatewayAddressResp
 func (c *ClientWithResponses) GetGatewayAddressWithResponse(ctx context.Context, serviceUuid GetGatewayAddressServiceUuid, addressName GetGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*GetGatewayAddressResp, error) {
 	rsp, err := c.GetGatewayAddress(ctx, serviceUuid, addressName, reqEditors...)
@@ -68426,6 +68848,23 @@ func (c *ClientWithResponses) GetGatewayAddressWithResponse(ctx context.Context,
 		return nil, err
 	}
 	return ParseGetGatewayAddressResp(rsp)
+}
+
+// ModifyGatewayAddressWithBodyWithResponse request with arbitrary body returning *ModifyGatewayAddressResp
+func (c *ClientWithResponses) ModifyGatewayAddressWithBodyWithResponse(ctx context.Context, serviceUuid ModifyGatewayAddressServiceUuid, addressName ModifyGatewayAddressAddressName, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyGatewayAddressResp, error) {
+	rsp, err := c.ModifyGatewayAddressWithBody(ctx, serviceUuid, addressName, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseModifyGatewayAddressResp(rsp)
+}
+
+func (c *ClientWithResponses) ModifyGatewayAddressWithResponse(ctx context.Context, serviceUuid ModifyGatewayAddressServiceUuid, addressName ModifyGatewayAddressAddressName, body ModifyGatewayAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyGatewayAddressResp, error) {
+	rsp, err := c.ModifyGatewayAddress(ctx, serviceUuid, addressName, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseModifyGatewayAddressResp(rsp)
 }
 
 // ListGatewayConnectionsWithResponse request returning *ListGatewayConnectionsResp
@@ -76339,6 +76778,65 @@ func ParseListGatewayAddressesResp(rsp *http.Response) (*ListGatewayAddressesRes
 	return response, nil
 }
 
+// ParseCreateGatewayAddressResp parses an HTTP response from a CreateGatewayAddressWithResponse call
+func ParseCreateGatewayAddressResp(rsp *http.Response) (*CreateGatewayAddressResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateGatewayAddressResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest CreateGatewayAddress201
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest CreateGatewayAddressDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteGatewayAddressResp parses an HTTP response from a DeleteGatewayAddressWithResponse call
+func ParseDeleteGatewayAddressResp(rsp *http.Response) (*DeleteGatewayAddressResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteGatewayAddressResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest DeleteGatewayAddressDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseGetGatewayAddressResp parses an HTTP response from a GetGatewayAddressWithResponse call
 func ParseGetGatewayAddressResp(rsp *http.Response) (*GetGatewayAddressResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -76362,6 +76860,39 @@ func ParseGetGatewayAddressResp(rsp *http.Response) (*GetGatewayAddressResp, err
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest GetGatewayAddressDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseModifyGatewayAddressResp parses an HTTP response from a ModifyGatewayAddressWithResponse call
+func ParseModifyGatewayAddressResp(rsp *http.Response) (*ModifyGatewayAddressResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ModifyGatewayAddressResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ModifyGatewayAddress200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ModifyGatewayAddressDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
