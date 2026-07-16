@@ -924,3 +924,40 @@ type ManagedDatabaseAccessControl struct {
 	ACLsEnabled         *bool `json:"access_control"`
 	ExtendedACLsEnabled *bool `json:"extended_access_control"`
 }
+
+// ManagedDatabasePlanServiceType represents details of database plans for a specific service type.
+type ManagedDatabasePlanServiceType struct {
+	Type          string                            `json:"type"`
+	LatestVersion string                            `json:"latest_version"`
+	Componentised bool                              `json:"componentised"`
+	Zones         []string                          `json:"zones"`
+	BackupTiers   []string                          `json:"backup_tiers"`
+	NodeCounts    []int                             `json:"node_counts"`
+	ComputeShapes []ManagedDatabasePlanComputeShape `json:"compute_shapes"`
+}
+
+// ManagedDatabasePlanComputeShape represents details of a computer shape for database plans.
+type ManagedDatabasePlanComputeShape struct {
+	Compute                 string                         `json:"compute"`
+	Family                  string                         `json:"family"`
+	CPU                     int                            `json:"cpu"`
+	MemoryGB                int                            `json:"memory_gb"`
+	DynamicStorageSupported bool                           `json:"dynamic_storage_supported"`
+	NodeCounts              []int                          `json:"node_counts"`
+	Backups                 []string                       `json:"backups"`
+	Storage                 ManagedDatabasePlanStorageInfo `json:"storage"`
+}
+
+// ManagedDatabasePlanStorageInfo represents dynamic and option-based storage specifications.
+type ManagedDatabasePlanStorageInfo struct {
+	StepGiB              int                                `json:"step_gib"`
+	DynamicMaxMultiplier int                                `json:"dynamic_max_multiplier"`
+	TotalCapGiB          int                                `json:"total_cap_gib"`
+	Options              []ManagedDatabasePlanStorageOption `json:"options"`
+}
+
+// ManagedDatabasePlanStorageOption represents storage base and limit sizes.
+type ManagedDatabasePlanStorageOption struct {
+	BaseGiB int `json:"base_gib"`
+	MaxGiB  int `json:"max_gib"`
+}

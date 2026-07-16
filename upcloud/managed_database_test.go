@@ -789,3 +789,83 @@ func TestManagedDatabaseUser(t *testing.T) {
 	}
 	assert.Equal(t, want, got)
 }
+
+func TestManagedDatabasePlans_Unmarshal(t *testing.T) {
+	const d = `{
+		"service_types": [
+			{
+				"type": "mysql",
+				"latest_version": "8.4.8",
+				"componentised": true,
+				"zones": [
+					"au-syd1",
+					"de-fra1"
+				],
+				"backup_tiers": [
+					"mini",
+					"regular"
+				],
+				"node_counts": [
+					1,
+					2
+				],
+				"compute_shapes": [
+					{
+						"compute": "rdb.development.1CPU-1GB",
+						"family": "development",
+						"cpu": 1,
+						"memory_gb": 1,
+						"dynamic_storage_supported": true,
+						"node_counts": [
+							1
+						],
+						"backups": [
+							"mini"
+						],
+						"storage": {
+							"step_gib": 10,
+							"dynamic_max_multiplier": 4,
+							"total_cap_gib": 7168,
+							"options": [
+								{
+									"base_gib": 10,
+									"max_gib": 50
+								}
+							]
+						}
+					}
+				]
+			}
+		]
+	}`
+
+	var resp struct {
+		ServiceTypes []ManagedDatabasePlanServiceType `json:"service_types"`
+	}
+	err := json.Unmarshal([]byte(d), &resp)
+	require.NoError(t, err)
+
+	require.NotEmpty(t, resp.ServiceTypes)
+	assert.Equal(t, "mysql", resp.ServiceTypes[0].Type)
+	assert.Equal(t, "8.4.8", resp.ServiceTypes[0].LatestVersion)
+	assert.True(t, resp.ServiceTypes[0].Componentised)
+	assert.Equal(t, []string{"au-syd1", "de-fra1"}, resp.ServiceTypes[0].Zones)
+	assert.Equal(t, []string{"mini", "regular"}, resp.ServiceTypes[0].BackupTiers)
+	assert.Equal(t, []int{1, 2}, resp.ServiceTypes[0].NodeCounts)
+	require.NotEmpty(t, resp.ServiceTypes[0].ComputeShapes)
+
+	shape := resp.ServiceTypes[0].ComputeShapes[0]
+	assert.Equal(t, "rdb.development.1CPU-1GB", shape.Compute)
+	assert.Equal(t, "development", shape.Family)
+	assert.Equal(t, 1, shape.CPU)
+	assert.Equal(t, 1, shape.MemoryGB)
+	assert.True(t, shape.DynamicStorageSupported)
+	assert.Equal(t, []int{1}, shape.NodeCounts)
+	assert.Equal(t, []string{"mini"}, shape.Backups)
+	assert.Equal(t, 10, shape.Storage.StepGiB)
+	assert.Equal(t, 4, shape.Storage.DynamicMaxMultiplier)
+	assert.Equal(t, 7168, shape.Storage.TotalCapGiB)
+	require.NotEmpty(t, shape.Storage.Options)
+	assert.Equal(t, 10, shape.Storage.Options[0].BaseGiB)
+	assert.Equal(t, 50, shape.Storage.Options[0].MaxGiB)
+}

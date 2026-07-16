@@ -795,6 +795,16 @@ func TestService_GetManagedDatabaseServiceTypes(t *testing.T) {
 	})
 }
 
+func TestService_GetManagedDatabasePlans(t *testing.T) {
+	record(t, "getmanageddatabaseplans", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		plans, err := svc.GetManagedDatabasePlans(ctx, &request.GetManagedDatabasePlansRequest{})
+		require.NoError(t, err)
+		require.NotEmpty(t, plans)
+		assert.NotEmpty(t, plans[0].Type)
+		assert.NotEmpty(t, plans[1].Type)
+	})
+}
+
 func TestService_ModifyManagedDatabaseUserPostgreSQLAccessControl(t *testing.T) {
 	record(t, "modifymanageddatabaseuserpostgreqlsaccesscontrol", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
 		db, err := svc.CreateManagedDatabase(ctx, getTestCreateRequest("modifyuseraccesscontrol", upcloud.ManagedDatabaseServiceTypePostgreSQL))
