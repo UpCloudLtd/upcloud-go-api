@@ -250,6 +250,14 @@ func (g *GetManagedDatabaseServiceTypesRequest) RequestURL() string {
 	return "/database/service-types"
 }
 
+// GetManagedDatabasePlansRequest represents a request to get available database plans
+type GetManagedDatabasePlansRequest struct{}
+
+// RequestURL implements the request.Request interface
+func (g *GetManagedDatabasePlansRequest) RequestURL() string {
+	return "/database/plans"
+}
+
 // GetManagedDatabaseSessionsRequest represents a request to get managed database instance's current connections
 type GetManagedDatabaseSessionsRequest struct {
 	// UUID selects a managed database instance to query connections from

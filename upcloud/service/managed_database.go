@@ -37,6 +37,7 @@ type ManagedDatabaseServiceManager interface {
 	WaitForManagedDatabaseState(ctx context.Context, r *request.WaitForManagedDatabaseStateRequest) (*upcloud.ManagedDatabase, error)
 	GetManagedDatabaseServiceType(ctx context.Context, r *request.GetManagedDatabaseServiceTypeRequest) (*upcloud.ManagedDatabaseType, error)
 	GetManagedDatabaseServiceTypes(ctx context.Context, r *request.GetManagedDatabaseServiceTypesRequest) (map[string]upcloud.ManagedDatabaseType, error)
+	GetManagedDatabasePlans(ctx context.Context, r *request.GetManagedDatabasePlansRequest) ([]upcloud.ManagedDatabasePlanServiceType, error)
 	GetAllManagedDatabases(ctx context.Context) ([]upcloud.ManagedDatabase, error)
 }
 
@@ -275,6 +276,18 @@ func (s *Service) GetManagedDatabaseServiceType(ctx context.Context, r *request.
 func (s *Service) GetManagedDatabaseServiceTypes(ctx context.Context, r *request.GetManagedDatabaseServiceTypesRequest) (map[string]upcloud.ManagedDatabaseType, error) {
 	serviceTypes := make(map[string]upcloud.ManagedDatabaseType)
 	return serviceTypes, s.get(ctx, r.RequestURL(), &serviceTypes)
+}
+
+// GetManagedDatabasePlans returns a slice of available database plans for a specific service type
+func (s *Service) GetManagedDatabasePlans(ctx context.Context, r *request.GetManagedDatabasePlansRequest) ([]upcloud.ManagedDatabasePlanServiceType, error) {
+	var resp struct {
+		ServiceTypes []upcloud.ManagedDatabasePlanServiceType `json:"service_types"`
+	}
+	err := s.get(ctx, r.RequestURL(), &resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp.ServiceTypes, nil
 }
 
 // GetAllManagedDatabases returns all managed databases, across pages.
