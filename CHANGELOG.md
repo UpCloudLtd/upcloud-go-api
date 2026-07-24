@@ -5,6 +5,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+
+- gateway: add `WaitForGatewayOperationalState` and `WaitForGatewayDeletion` service methods with matching request types
+
 ## [8.39.0]
 
 ### Added

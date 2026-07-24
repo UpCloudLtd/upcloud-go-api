@@ -2,6 +2,8 @@ package service
 
 import (
 	"context"
+	"errors"
+	"net/http"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/request"
@@ -14,6 +16,8 @@ type Gateway interface {
 	CreateGateway(ctx context.Context, r *request.CreateGatewayRequest) (*upcloud.Gateway, error)
 	ModifyGateway(ctx context.Context, r *request.ModifyGatewayRequest) (*upcloud.Gateway, error)
 	DeleteGateway(ctx context.Context, r *request.DeleteGatewayRequest) error
+	WaitForGatewayOperationalState(ctx context.Context, r *request.WaitForGatewayOperationalStateRequest) (*upcloud.Gateway, error)
+	WaitForGatewayDeletion(ctx context.Context, r *request.WaitForGatewayDeletionRequest) error
 
 	GetGatewayConnections(ctx context.Context, r *request.GetGatewayConnectionsRequest) ([]upcloud.GatewayConnection, error)
 	GetGatewayConnection(ctx context.Context, r *request.GetGatewayConnectionRequest) (*upcloud.GatewayConnection, error)
@@ -64,6 +68,41 @@ func (s *Service) ModifyGateway(ctx context.Context, r *request.ModifyGatewayReq
 // DeleteGateway deletes a network gateway.
 func (s *Service) DeleteGateway(ctx context.Context, r *request.DeleteGatewayRequest) error {
 	return s.delete(ctx, r)
+}
+
+// WaitForGatewayOperationalState blocks execution until the specified gateway service has entered the specified state.
+func (s *Service) WaitForGatewayOperationalState(ctx context.Context, r *request.WaitForGatewayOperationalStateRequest) (*upcloud.Gateway, error) {
+	return retry(ctx, func(_ int, c context.Context) (*upcloud.Gateway, error) {
+		details, err := s.GetGateway(c, &request.GetGatewayRequest{UUID: r.UUID})
+		if err != nil {
+			return nil, err
+		}
+
+		if details.OperationalState == r.DesiredState {
+			return details, nil
+		}
+
+		return nil, nil
+	}, nil)
+}
+
+// WaitForGatewayDeletion blocks execution until the specified gateway service has been deleted.
+func (s *Service) WaitForGatewayDeletion(ctx context.Context, r *request.WaitForGatewayDeletionRequest) error {
+	_, err := retry(ctx, func(_ int, c context.Context) (*upcloud.Gateway, error) {
+		details, err := s.GetGateway(c, &request.GetGatewayRequest{UUID: r.UUID})
+		if err != nil {
+			var ucErr *upcloud.Problem
+			if errors.As(err, &ucErr) && ucErr.Status == http.StatusNotFound {
+				return nil, nil
+			}
+
+			return nil, err
+		}
+
+		return details, nil
+	}, &retryConfig{inverse: true})
+
+	return err
 }
 
 // GetGatewayConnections retrieves a list of specific gateway connections

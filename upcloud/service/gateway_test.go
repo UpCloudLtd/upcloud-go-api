@@ -2,12 +2,10 @@ package service
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"log"
 	"net/http"
 	"testing"
-	"time"
 
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud/client"
@@ -796,8 +794,6 @@ func waitGatewayToStart(ctx context.Context, rec *recorder.Recorder, svc *Servic
 		return nil
 	}
 
-	const timeout = 10 * time.Minute
-
 	rec.AddPassthrough(func(h *http.Request) bool {
 		return true
 	})
@@ -805,20 +801,12 @@ func waitGatewayToStart(ctx context.Context, rec *recorder.Recorder, svc *Servic
 		rec.Passthroughs = nil
 	}()
 
-	waitUntil := time.Now().Add(timeout)
-	for {
-		gw, err := svc.GetGateway(ctx, &request.GetGatewayRequest{UUID: UUID})
-		if err != nil {
-			return err
-		}
-		if gw.OperationalState == upcloud.GatewayOperationalStateRunning {
-			return nil
-		}
-		if time.Now().After(waitUntil) {
-			return fmt.Errorf("timeout %s reached", timeout.String())
-		}
-		time.Sleep(5 * time.Second)
-	}
+	_, err := svc.WaitForGatewayOperationalState(ctx, &request.WaitForGatewayOperationalStateRequest{
+		UUID:         UUID,
+		DesiredState: upcloud.GatewayOperationalStateRunning,
+	})
+
+	return err
 }
 
 func waitGatewayToDelete(ctx context.Context, rec *recorder.Recorder, svc *Service, UUID string) error {
@@ -826,8 +814,6 @@ func waitGatewayToDelete(ctx context.Context, rec *recorder.Recorder, svc *Servi
 		return nil
 	}
 
-	const timeout = 10 * time.Minute
-
 	rec.AddPassthrough(func(h *http.Request) bool {
 		return true
 	})
@@ -835,20 +821,10 @@ func waitGatewayToDelete(ctx context.Context, rec *recorder.Recorder, svc *Servi
 		rec.Passthroughs = nil
 	}()
 
-	waitUntil := time.Now().Add(timeout)
-	for {
-		_, err := svc.GetGateway(ctx, &request.GetGatewayRequest{UUID: UUID})
-		if err != nil {
-			var ucErr *upcloud.Problem
-			if errors.As(err, &ucErr) && ucErr.Status == http.StatusNotFound {
-				return nil
-			}
-			log.Printf("ERROR: %+v", err)
-			return err
-		}
-		if time.Now().After(waitUntil) {
-			return fmt.Errorf("timeout %s reached", timeout.String())
-		}
-		time.Sleep(5 * time.Second)
+	if err := svc.WaitForGatewayDeletion(ctx, &request.WaitForGatewayDeletionRequest{UUID: UUID}); err != nil {
+		log.Printf("ERROR: %+v", err)
+		return err
 	}
+
+	return nil
 }
