@@ -76,6 +76,17 @@ func (r *DeleteGatewayRequest) RequestURL() string {
 	return fmt.Sprintf("%s/%s", gatewayBaseURL, r.UUID)
 }
 
+// WaitForGatewayOperationalStateRequest represents a request to wait for a gateway service to enter a specific state.
+type WaitForGatewayOperationalStateRequest struct {
+	UUID         string
+	DesiredState upcloud.GatewayOperationalState
+}
+
+// WaitForGatewayDeletionRequest represents a request to wait for a gateway service to be deleted.
+type WaitForGatewayDeletionRequest struct {
+	UUID string
+}
+
 type GatewayConnection struct {
 	Name         string                        `json:"name,omitempty"`
 	Type         upcloud.GatewayConnectionType `json:"type,omitempty"`
