@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.40.0]
+
 ### Added
 
 - gateway: add `WaitForGatewayOperationalState` and `WaitForGatewayDeletion` service methods with matching request types
@@ -795,7 +797,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.39.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.40.0...HEAD
+[8.40.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.39.0...v8.40.0
 [8.39.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.38.0...v8.39.0
 [8.38.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.37.0...v8.38.0
 [8.37.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.36.1...v8.37.0
