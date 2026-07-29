@@ -14,16 +14,16 @@ import (
 
 // Defines values for FirewallRulesetRuleAction.
 const (
-	Accept FirewallRulesetRuleAction = "accept"
-	Drop   FirewallRulesetRuleAction = "drop"
+	FirewallRulesetRuleActionAccept FirewallRulesetRuleAction = "accept"
+	FirewallRulesetRuleActionDrop   FirewallRulesetRuleAction = "drop"
 )
 
 // Valid indicates whether the value is a known member of the FirewallRulesetRuleAction enum.
 func (e FirewallRulesetRuleAction) Valid() bool {
 	switch e {
-	case Accept:
+	case FirewallRulesetRuleActionAccept:
 		return true
-	case Drop:
+	case FirewallRulesetRuleActionDrop:
 		return true
 	default:
 		return false
@@ -32,16 +32,16 @@ func (e FirewallRulesetRuleAction) Valid() bool {
 
 // Defines values for FirewallRulesetRuleDirection.
 const (
-	In  FirewallRulesetRuleDirection = "in"
-	Out FirewallRulesetRuleDirection = "out"
+	FirewallRulesetRuleDirectionIn  FirewallRulesetRuleDirection = "in"
+	FirewallRulesetRuleDirectionOut FirewallRulesetRuleDirection = "out"
 )
 
 // Valid indicates whether the value is a known member of the FirewallRulesetRuleDirection enum.
 func (e FirewallRulesetRuleDirection) Valid() bool {
 	switch e {
-	case In:
+	case FirewallRulesetRuleDirectionIn:
 		return true
-	case Out:
+	case FirewallRulesetRuleDirectionOut:
 		return true
 	default:
 		return false

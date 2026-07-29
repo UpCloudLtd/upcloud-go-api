@@ -45,16 +45,16 @@ func (e NetworkPeeringCreateConfiguredStatus) Valid() bool {
 
 // Defines values for NetworkPeeringIpFamily.
 const (
-	IPv4 NetworkPeeringIpFamily = "IPv4"
-	IPv6 NetworkPeeringIpFamily = "IPv6"
+	NetworkPeeringIpFamilyIPv4 NetworkPeeringIpFamily = "IPv4"
+	NetworkPeeringIpFamilyIPv6 NetworkPeeringIpFamily = "IPv6"
 )
 
 // Valid indicates whether the value is a known member of the NetworkPeeringIpFamily enum.
 func (e NetworkPeeringIpFamily) Valid() bool {
 	switch e {
-	case IPv4:
+	case NetworkPeeringIpFamilyIPv4:
 		return true
-	case IPv6:
+	case NetworkPeeringIpFamilyIPv6:
 		return true
 	default:
 		return false
@@ -63,40 +63,40 @@ func (e NetworkPeeringIpFamily) Valid() bool {
 
 // Defines values for NetworkPeeringState.
 const (
-	Active             NetworkPeeringState = "active"
-	ConflictSubnet     NetworkPeeringState = "conflict-subnet"
-	DeletedPeerNetwork NetworkPeeringState = "deleted-peer-network"
-	Disabled           NetworkPeeringState = "disabled"
-	Error              NetworkPeeringState = "error"
-	MissingLocalRouter NetworkPeeringState = "missing-local-router"
-	MissingPeerRouter  NetworkPeeringState = "missing-peer-router"
-	PeerDisabled       NetworkPeeringState = "peer-disabled"
-	PendingPeer        NetworkPeeringState = "pending-peer"
-	Provisioning       NetworkPeeringState = "provisioning"
+	NetworkPeeringStateActive             NetworkPeeringState = "active"
+	NetworkPeeringStateConflictSubnet     NetworkPeeringState = "conflict-subnet"
+	NetworkPeeringStateDeletedPeerNetwork NetworkPeeringState = "deleted-peer-network"
+	NetworkPeeringStateDisabled           NetworkPeeringState = "disabled"
+	NetworkPeeringStateError              NetworkPeeringState = "error"
+	NetworkPeeringStateMissingLocalRouter NetworkPeeringState = "missing-local-router"
+	NetworkPeeringStateMissingPeerRouter  NetworkPeeringState = "missing-peer-router"
+	NetworkPeeringStatePeerDisabled       NetworkPeeringState = "peer-disabled"
+	NetworkPeeringStatePendingPeer        NetworkPeeringState = "pending-peer"
+	NetworkPeeringStateProvisioning       NetworkPeeringState = "provisioning"
 )
 
 // Valid indicates whether the value is a known member of the NetworkPeeringState enum.
 func (e NetworkPeeringState) Valid() bool {
 	switch e {
-	case Active:
+	case NetworkPeeringStateActive:
 		return true
-	case ConflictSubnet:
+	case NetworkPeeringStateConflictSubnet:
 		return true
-	case DeletedPeerNetwork:
+	case NetworkPeeringStateDeletedPeerNetwork:
 		return true
-	case Disabled:
+	case NetworkPeeringStateDisabled:
 		return true
-	case Error:
+	case NetworkPeeringStateError:
 		return true
-	case MissingLocalRouter:
+	case NetworkPeeringStateMissingLocalRouter:
 		return true
-	case MissingPeerRouter:
+	case NetworkPeeringStateMissingPeerRouter:
 		return true
-	case PeerDisabled:
+	case NetworkPeeringStatePeerDisabled:
 		return true
-	case PendingPeer:
+	case NetworkPeeringStatePendingPeer:
 		return true
-	case Provisioning:
+	case NetworkPeeringStateProvisioning:
 		return true
 	default:
 		return false

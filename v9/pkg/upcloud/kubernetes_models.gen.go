@@ -9,25 +9,25 @@ import (
 
 // Defines values for KubernetesClusterPlan.
 const (
-	DevMd           KubernetesClusterPlan = "dev-md"
-	Development     KubernetesClusterPlan = "development"
-	ProdMd          KubernetesClusterPlan = "prod-md"
-	ProdMdHa        KubernetesClusterPlan = "prod-md-ha"
-	ProductionSmall KubernetesClusterPlan = "production-small"
+	KubernetesClusterPlanDevMd           KubernetesClusterPlan = "dev-md"
+	KubernetesClusterPlanDevelopment     KubernetesClusterPlan = "development"
+	KubernetesClusterPlanProdMd          KubernetesClusterPlan = "prod-md"
+	KubernetesClusterPlanProdMdHa        KubernetesClusterPlan = "prod-md-ha"
+	KubernetesClusterPlanProductionSmall KubernetesClusterPlan = "production-small"
 )
 
 // Valid indicates whether the value is a known member of the KubernetesClusterPlan enum.
 func (e KubernetesClusterPlan) Valid() bool {
 	switch e {
-	case DevMd:
+	case KubernetesClusterPlanDevMd:
 		return true
-	case Development:
+	case KubernetesClusterPlanDevelopment:
 		return true
-	case ProdMd:
+	case KubernetesClusterPlanProdMd:
 		return true
-	case ProdMdHa:
+	case KubernetesClusterPlanProdMdHa:
 		return true
-	case ProductionSmall:
+	case KubernetesClusterPlanProductionSmall:
 		return true
 	default:
 		return false
@@ -78,16 +78,16 @@ func (e KubernetesClusterState) Valid() bool {
 
 // Defines values for KubernetesClusterUpgradeStrategyType.
 const (
-	Manual        KubernetesClusterUpgradeStrategyType = "manual"
-	RollingUpdate KubernetesClusterUpgradeStrategyType = "rolling-update"
+	KubernetesClusterUpgradeStrategyTypeManual        KubernetesClusterUpgradeStrategyType = "manual"
+	KubernetesClusterUpgradeStrategyTypeRollingUpdate KubernetesClusterUpgradeStrategyType = "rolling-update"
 )
 
 // Valid indicates whether the value is a known member of the KubernetesClusterUpgradeStrategyType enum.
 func (e KubernetesClusterUpgradeStrategyType) Valid() bool {
 	switch e {
-	case Manual:
+	case KubernetesClusterUpgradeStrategyTypeManual:
 		return true
-	case RollingUpdate:
+	case KubernetesClusterUpgradeStrategyTypeRollingUpdate:
 		return true
 	default:
 		return false
@@ -114,19 +114,19 @@ func (e KubernetesDefaultStorageEncryption) Valid() bool {
 
 // Defines values for KubernetesEffect.
 const (
-	NoExecute        KubernetesEffect = "NoExecute"
-	NoSchedule       KubernetesEffect = "NoSchedule"
-	PreferNoSchedule KubernetesEffect = "PreferNoSchedule"
+	KubernetesEffectNoExecute        KubernetesEffect = "NoExecute"
+	KubernetesEffectNoSchedule       KubernetesEffect = "NoSchedule"
+	KubernetesEffectPreferNoSchedule KubernetesEffect = "PreferNoSchedule"
 )
 
 // Valid indicates whether the value is a known member of the KubernetesEffect enum.
 func (e KubernetesEffect) Valid() bool {
 	switch e {
-	case NoExecute:
+	case KubernetesEffectNoExecute:
 		return true
-	case NoSchedule:
+	case KubernetesEffectNoSchedule:
 		return true
-	case PreferNoSchedule:
+	case KubernetesEffectPreferNoSchedule:
 		return true
 	default:
 		return false
@@ -168,25 +168,25 @@ func (e KubernetesNodeGroupState) Valid() bool {
 
 // Defines values for KubernetesNodeState.
 const (
-	Failed      KubernetesNodeState = "failed"
-	Pending     KubernetesNodeState = "pending"
-	Running     KubernetesNodeState = "running"
-	Terminating KubernetesNodeState = "terminating"
-	Unknown     KubernetesNodeState = "unknown"
+	KubernetesNodeStateFailed      KubernetesNodeState = "failed"
+	KubernetesNodeStatePending     KubernetesNodeState = "pending"
+	KubernetesNodeStateRunning     KubernetesNodeState = "running"
+	KubernetesNodeStateTerminating KubernetesNodeState = "terminating"
+	KubernetesNodeStateUnknown     KubernetesNodeState = "unknown"
 )
 
 // Valid indicates whether the value is a known member of the KubernetesNodeState enum.
 func (e KubernetesNodeState) Valid() bool {
 	switch e {
-	case Failed:
+	case KubernetesNodeStateFailed:
 		return true
-	case Pending:
+	case KubernetesNodeStatePending:
 		return true
-	case Running:
+	case KubernetesNodeStateRunning:
 		return true
-	case Terminating:
+	case KubernetesNodeStateTerminating:
 		return true
-	case Unknown:
+	case KubernetesNodeStateUnknown:
 		return true
 	default:
 		return false
@@ -195,34 +195,34 @@ func (e KubernetesNodeState) Valid() bool {
 
 // Defines values for KubernetesNodeUpdatesScheduleDow.
 const (
-	Daily     KubernetesNodeUpdatesScheduleDow = "daily"
-	Friday    KubernetesNodeUpdatesScheduleDow = "Friday"
-	Monday    KubernetesNodeUpdatesScheduleDow = "Monday"
-	Saturday  KubernetesNodeUpdatesScheduleDow = "Saturday"
-	Sunday    KubernetesNodeUpdatesScheduleDow = "Sunday"
-	Thursday  KubernetesNodeUpdatesScheduleDow = "Thursday"
-	Tuesday   KubernetesNodeUpdatesScheduleDow = "Tuesday"
-	Wednesday KubernetesNodeUpdatesScheduleDow = "Wednesday"
+	KubernetesNodeUpdatesScheduleDowDaily     KubernetesNodeUpdatesScheduleDow = "daily"
+	KubernetesNodeUpdatesScheduleDowFriday    KubernetesNodeUpdatesScheduleDow = "Friday"
+	KubernetesNodeUpdatesScheduleDowMonday    KubernetesNodeUpdatesScheduleDow = "Monday"
+	KubernetesNodeUpdatesScheduleDowSaturday  KubernetesNodeUpdatesScheduleDow = "Saturday"
+	KubernetesNodeUpdatesScheduleDowSunday    KubernetesNodeUpdatesScheduleDow = "Sunday"
+	KubernetesNodeUpdatesScheduleDowThursday  KubernetesNodeUpdatesScheduleDow = "Thursday"
+	KubernetesNodeUpdatesScheduleDowTuesday   KubernetesNodeUpdatesScheduleDow = "Tuesday"
+	KubernetesNodeUpdatesScheduleDowWednesday KubernetesNodeUpdatesScheduleDow = "Wednesday"
 )
 
 // Valid indicates whether the value is a known member of the KubernetesNodeUpdatesScheduleDow enum.
 func (e KubernetesNodeUpdatesScheduleDow) Valid() bool {
 	switch e {
-	case Daily:
+	case KubernetesNodeUpdatesScheduleDowDaily:
 		return true
-	case Friday:
+	case KubernetesNodeUpdatesScheduleDowFriday:
 		return true
-	case Monday:
+	case KubernetesNodeUpdatesScheduleDowMonday:
 		return true
-	case Saturday:
+	case KubernetesNodeUpdatesScheduleDowSaturday:
 		return true
-	case Sunday:
+	case KubernetesNodeUpdatesScheduleDowSunday:
 		return true
-	case Thursday:
+	case KubernetesNodeUpdatesScheduleDowThursday:
 		return true
-	case Tuesday:
+	case KubernetesNodeUpdatesScheduleDowTuesday:
 		return true
-	case Wednesday:
+	case KubernetesNodeUpdatesScheduleDowWednesday:
 		return true
 	default:
 		return false
@@ -249,19 +249,19 @@ func (e KubernetesStorageEncryption) Valid() bool {
 
 // Defines values for KubernetesStorageTier.
 const (
-	Hdd      KubernetesStorageTier = "hdd"
-	Maxiops  KubernetesStorageTier = "maxiops"
-	Standard KubernetesStorageTier = "standard"
+	KubernetesStorageTierHdd      KubernetesStorageTier = "hdd"
+	KubernetesStorageTierMaxiops  KubernetesStorageTier = "maxiops"
+	KubernetesStorageTierStandard KubernetesStorageTier = "standard"
 )
 
 // Valid indicates whether the value is a known member of the KubernetesStorageTier enum.
 func (e KubernetesStorageTier) Valid() bool {
 	switch e {
-	case Hdd:
+	case KubernetesStorageTierHdd:
 		return true
-	case Maxiops:
+	case KubernetesStorageTierMaxiops:
 		return true
-	case Standard:
+	case KubernetesStorageTierStandard:
 		return true
 	default:
 		return false

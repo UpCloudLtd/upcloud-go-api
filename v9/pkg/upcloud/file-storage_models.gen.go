@@ -11,16 +11,16 @@ import (
 
 // Defines values for FileStorageConfiguredStatus.
 const (
-	Started FileStorageConfiguredStatus = "started"
-	Stopped FileStorageConfiguredStatus = "stopped"
+	FileStorageConfiguredStatusStarted FileStorageConfiguredStatus = "started"
+	FileStorageConfiguredStatusStopped FileStorageConfiguredStatus = "stopped"
 )
 
 // Valid indicates whether the value is a known member of the FileStorageConfiguredStatus enum.
 func (e FileStorageConfiguredStatus) Valid() bool {
 	switch e {
-	case Started:
+	case FileStorageConfiguredStatusStarted:
 		return true
-	case Stopped:
+	case FileStorageConfiguredStatusStopped:
 		return true
 	default:
 		return false
@@ -29,22 +29,22 @@ func (e FileStorageConfiguredStatus) Valid() bool {
 
 // Defines values for FileStorageErrorResponseType.
 const (
-	HttpsdevelopersUpcloudCom13errorsERRORGENERALFAILURE      FileStorageErrorResponseType = "https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"
-	HttpsdevelopersUpcloudCom13errorsERRORINSUFFICIENTCREDITS FileStorageErrorResponseType = "https://developers.upcloud.com/1.3/errors#ERROR_INSUFFICIENT_CREDITS"
-	HttpsdevelopersUpcloudCom13errorsERRORINVALIDREQUEST      FileStorageErrorResponseType = "https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"
-	HttpsdevelopersUpcloudCom13errorsERRORRESOURCENOTFOUND    FileStorageErrorResponseType = "https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"
+	FileStorageErrorResponseTypeHttpsdevelopersUpcloudCom13errorsERRORGENERALFAILURE      FileStorageErrorResponseType = "https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"
+	FileStorageErrorResponseTypeHttpsdevelopersUpcloudCom13errorsERRORINSUFFICIENTCREDITS FileStorageErrorResponseType = "https://developers.upcloud.com/1.3/errors#ERROR_INSUFFICIENT_CREDITS"
+	FileStorageErrorResponseTypeHttpsdevelopersUpcloudCom13errorsERRORINVALIDREQUEST      FileStorageErrorResponseType = "https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"
+	FileStorageErrorResponseTypeHttpsdevelopersUpcloudCom13errorsERRORRESOURCENOTFOUND    FileStorageErrorResponseType = "https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"
 )
 
 // Valid indicates whether the value is a known member of the FileStorageErrorResponseType enum.
 func (e FileStorageErrorResponseType) Valid() bool {
 	switch e {
-	case HttpsdevelopersUpcloudCom13errorsERRORGENERALFAILURE:
+	case FileStorageErrorResponseTypeHttpsdevelopersUpcloudCom13errorsERRORGENERALFAILURE:
 		return true
-	case HttpsdevelopersUpcloudCom13errorsERRORINSUFFICIENTCREDITS:
+	case FileStorageErrorResponseTypeHttpsdevelopersUpcloudCom13errorsERRORINSUFFICIENTCREDITS:
 		return true
-	case HttpsdevelopersUpcloudCom13errorsERRORINVALIDREQUEST:
+	case FileStorageErrorResponseTypeHttpsdevelopersUpcloudCom13errorsERRORINVALIDREQUEST:
 		return true
-	case HttpsdevelopersUpcloudCom13errorsERRORRESOURCENOTFOUND:
+	case FileStorageErrorResponseTypeHttpsdevelopersUpcloudCom13errorsERRORRESOURCENOTFOUND:
 		return true
 	default:
 		return false
@@ -53,16 +53,16 @@ func (e FileStorageErrorResponseType) Valid() bool {
 
 // Defines values for FileStorageNetworkFamily.
 const (
-	IPv4 FileStorageNetworkFamily = "IPv4"
-	IPv6 FileStorageNetworkFamily = "IPv6"
+	FileStorageNetworkFamilyIPv4 FileStorageNetworkFamily = "IPv4"
+	FileStorageNetworkFamilyIPv6 FileStorageNetworkFamily = "IPv6"
 )
 
 // Valid indicates whether the value is a known member of the FileStorageNetworkFamily enum.
 func (e FileStorageNetworkFamily) Valid() bool {
 	switch e {
-	case IPv4:
+	case FileStorageNetworkFamilyIPv4:
 		return true
-	case IPv6:
+	case FileStorageNetworkFamilyIPv6:
 		return true
 	default:
 		return false
@@ -71,16 +71,16 @@ func (e FileStorageNetworkFamily) Valid() bool {
 
 // Defines values for FileStoragePermission.
 const (
-	Ro FileStoragePermission = "ro"
-	Rw FileStoragePermission = "rw"
+	FileStoragePermissionRo FileStoragePermission = "ro"
+	FileStoragePermissionRw FileStoragePermission = "rw"
 )
 
 // Valid indicates whether the value is a known member of the FileStoragePermission enum.
 func (e FileStoragePermission) Valid() bool {
 	switch e {
-	case Ro:
+	case FileStoragePermissionRo:
 		return true
-	case Rw:
+	case FileStoragePermissionRw:
 		return true
 	default:
 		return false
@@ -89,16 +89,16 @@ func (e FileStoragePermission) Valid() bool {
 
 // Defines values for FileStorageQueryParamSort.
 const (
-	CreatedAt      FileStorageQueryParamSort = "created_at"
-	MinusCreatedAt FileStorageQueryParamSort = "-created_at"
+	FileStorageQueryParamSortCreatedAt      FileStorageQueryParamSort = "created_at"
+	FileStorageQueryParamSortMinusCreatedAt FileStorageQueryParamSort = "-created_at"
 )
 
 // Valid indicates whether the value is a known member of the FileStorageQueryParamSort enum.
 func (e FileStorageQueryParamSort) Valid() bool {
 	switch e {
-	case CreatedAt:
+	case FileStorageQueryParamSortCreatedAt:
 		return true
-	case MinusCreatedAt:
+	case FileStorageQueryParamSortMinusCreatedAt:
 		return true
 	default:
 		return false

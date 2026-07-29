@@ -36,4 +36,8 @@ done
 # Clean up processed spec
 rm -f "$SPEC_FILE"
 
+# De-duplicate any duplicate types/constants across tag-filtered model files
+echo "De-duplicating generated types and constants"
+go run ./generator/scripts/dedup.go
+
 echo "Generation complete."

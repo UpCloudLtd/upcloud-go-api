@@ -9,19 +9,19 @@ import (
 
 // Defines values for ServerGroupAntiAffinity.
 const (
-	No     ServerGroupAntiAffinity = "no"
-	Strict ServerGroupAntiAffinity = "strict"
-	Yes    ServerGroupAntiAffinity = "yes"
+	ServerGroupAntiAffinityNo     ServerGroupAntiAffinity = "no"
+	ServerGroupAntiAffinityStrict ServerGroupAntiAffinity = "strict"
+	ServerGroupAntiAffinityYes    ServerGroupAntiAffinity = "yes"
 )
 
 // Valid indicates whether the value is a known member of the ServerGroupAntiAffinity enum.
 func (e ServerGroupAntiAffinity) Valid() bool {
 	switch e {
-	case No:
+	case ServerGroupAntiAffinityNo:
 		return true
-	case Strict:
+	case ServerGroupAntiAffinityStrict:
 		return true
-	case Yes:
+	case ServerGroupAntiAffinityYes:
 		return true
 	default:
 		return false
@@ -30,16 +30,16 @@ func (e ServerGroupAntiAffinity) Valid() bool {
 
 // Defines values for ServerGroupAntiAffinityStatusStatus.
 const (
-	Met   ServerGroupAntiAffinityStatusStatus = "met"
-	Unmet ServerGroupAntiAffinityStatusStatus = "unmet"
+	ServerGroupAntiAffinityStatusStatusMet   ServerGroupAntiAffinityStatusStatus = "met"
+	ServerGroupAntiAffinityStatusStatusUnmet ServerGroupAntiAffinityStatusStatus = "unmet"
 )
 
 // Valid indicates whether the value is a known member of the ServerGroupAntiAffinityStatusStatus enum.
 func (e ServerGroupAntiAffinityStatusStatus) Valid() bool {
 	switch e {
-	case Met:
+	case ServerGroupAntiAffinityStatusStatusMet:
 		return true
-	case Unmet:
+	case ServerGroupAntiAffinityStatusStatusUnmet:
 		return true
 	default:
 		return false

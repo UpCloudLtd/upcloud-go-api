@@ -34,16 +34,16 @@ func (e ServerAccess) Valid() bool {
 
 // Defines values for ServerBooleanOnoff.
 const (
-	Off ServerBooleanOnoff = "off"
-	On  ServerBooleanOnoff = "on"
+	ServerBooleanOnoffOff ServerBooleanOnoff = "off"
+	ServerBooleanOnoffOn  ServerBooleanOnoff = "on"
 )
 
 // Valid indicates whether the value is a known member of the ServerBooleanOnoff enum.
 func (e ServerBooleanOnoff) Valid() bool {
 	switch e {
-	case Off:
+	case ServerBooleanOnoffOff:
 		return true
-	case On:
+	case ServerBooleanOnoffOn:
 		return true
 	default:
 		return false
@@ -52,16 +52,16 @@ func (e ServerBooleanOnoff) Valid() bool {
 
 // Defines values for ServerBooleanYesno.
 const (
-	No  ServerBooleanYesno = "no"
-	Yes ServerBooleanYesno = "yes"
+	ServerBooleanYesnoNo  ServerBooleanYesno = "no"
+	ServerBooleanYesnoYes ServerBooleanYesno = "yes"
 )
 
 // Valid indicates whether the value is a known member of the ServerBooleanYesno enum.
 func (e ServerBooleanYesno) Valid() bool {
 	switch e {
-	case No:
+	case ServerBooleanYesnoNo:
 		return true
-	case Yes:
+	case ServerBooleanYesnoYes:
 		return true
 	default:
 		return false
@@ -70,52 +70,52 @@ func (e ServerBooleanYesno) Valid() bool {
 
 // Defines values for ServerError400ErrorCode.
 const (
-	ASYNCINVALID                 ServerError400ErrorCode = "ASYNC_INVALID"
-	BACKUPDELETIONPOLICYINVALID  ServerError400ErrorCode = "BACKUP_DELETION_POLICY_INVALID"
-	DEVICESNOTAVAILABLE          ServerError400ErrorCode = "DEVICES_NOT_AVAILABLE"
-	DEVICESREQUIREHOST           ServerError400ErrorCode = "DEVICES_REQUIRE_HOST"
-	INVALIDDEVICEFILTER          ServerError400ErrorCode = "INVALID_DEVICE_FILTER"
-	INVALIDDEVICEFILTERKEY       ServerError400ErrorCode = "INVALID_DEVICE_FILTER_KEY"
-	INVALIDDEVICEFILTERTYPEVALUE ServerError400ErrorCode = "INVALID_DEVICE_FILTER_TYPE_VALUE"
-	INVALIDDEVICEFILTERVALUE     ServerError400ErrorCode = "INVALID_DEVICE_FILTER_VALUE"
-	INVALIDHOSTID                ServerError400ErrorCode = "INVALID_HOST_ID"
-	INVALIDORDERBY               ServerError400ErrorCode = "INVALID_ORDER_BY"
-	INVALIDSEARCH                ServerError400ErrorCode = "INVALID_SEARCH"
-	REQUESTINVALID               ServerError400ErrorCode = "REQUEST_INVALID"
-	SERVERINVALID                ServerError400ErrorCode = "SERVER_INVALID"
-	STORAGEDELETIONPOLICYINVALID ServerError400ErrorCode = "STORAGE_DELETION_POLICY_INVALID"
+	ServerError400ErrorCodeASYNCINVALID                 ServerError400ErrorCode = "ASYNC_INVALID"
+	ServerError400ErrorCodeBACKUPDELETIONPOLICYINVALID  ServerError400ErrorCode = "BACKUP_DELETION_POLICY_INVALID"
+	ServerError400ErrorCodeDEVICESNOTAVAILABLE          ServerError400ErrorCode = "DEVICES_NOT_AVAILABLE"
+	ServerError400ErrorCodeDEVICESREQUIREHOST           ServerError400ErrorCode = "DEVICES_REQUIRE_HOST"
+	ServerError400ErrorCodeINVALIDDEVICEFILTER          ServerError400ErrorCode = "INVALID_DEVICE_FILTER"
+	ServerError400ErrorCodeINVALIDDEVICEFILTERKEY       ServerError400ErrorCode = "INVALID_DEVICE_FILTER_KEY"
+	ServerError400ErrorCodeINVALIDDEVICEFILTERTYPEVALUE ServerError400ErrorCode = "INVALID_DEVICE_FILTER_TYPE_VALUE"
+	ServerError400ErrorCodeINVALIDDEVICEFILTERVALUE     ServerError400ErrorCode = "INVALID_DEVICE_FILTER_VALUE"
+	ServerError400ErrorCodeINVALIDHOSTID                ServerError400ErrorCode = "INVALID_HOST_ID"
+	ServerError400ErrorCodeINVALIDORDERBY               ServerError400ErrorCode = "INVALID_ORDER_BY"
+	ServerError400ErrorCodeINVALIDSEARCH                ServerError400ErrorCode = "INVALID_SEARCH"
+	ServerError400ErrorCodeREQUESTINVALID               ServerError400ErrorCode = "REQUEST_INVALID"
+	ServerError400ErrorCodeSERVERINVALID                ServerError400ErrorCode = "SERVER_INVALID"
+	ServerError400ErrorCodeSTORAGEDELETIONPOLICYINVALID ServerError400ErrorCode = "STORAGE_DELETION_POLICY_INVALID"
 )
 
 // Valid indicates whether the value is a known member of the ServerError400ErrorCode enum.
 func (e ServerError400ErrorCode) Valid() bool {
 	switch e {
-	case ASYNCINVALID:
+	case ServerError400ErrorCodeASYNCINVALID:
 		return true
-	case BACKUPDELETIONPOLICYINVALID:
+	case ServerError400ErrorCodeBACKUPDELETIONPOLICYINVALID:
 		return true
-	case DEVICESNOTAVAILABLE:
+	case ServerError400ErrorCodeDEVICESNOTAVAILABLE:
 		return true
-	case DEVICESREQUIREHOST:
+	case ServerError400ErrorCodeDEVICESREQUIREHOST:
 		return true
-	case INVALIDDEVICEFILTER:
+	case ServerError400ErrorCodeINVALIDDEVICEFILTER:
 		return true
-	case INVALIDDEVICEFILTERKEY:
+	case ServerError400ErrorCodeINVALIDDEVICEFILTERKEY:
 		return true
-	case INVALIDDEVICEFILTERTYPEVALUE:
+	case ServerError400ErrorCodeINVALIDDEVICEFILTERTYPEVALUE:
 		return true
-	case INVALIDDEVICEFILTERVALUE:
+	case ServerError400ErrorCodeINVALIDDEVICEFILTERVALUE:
 		return true
-	case INVALIDHOSTID:
+	case ServerError400ErrorCodeINVALIDHOSTID:
 		return true
-	case INVALIDORDERBY:
+	case ServerError400ErrorCodeINVALIDORDERBY:
 		return true
-	case INVALIDSEARCH:
+	case ServerError400ErrorCodeINVALIDSEARCH:
 		return true
-	case REQUESTINVALID:
+	case ServerError400ErrorCodeREQUESTINVALID:
 		return true
-	case SERVERINVALID:
+	case ServerError400ErrorCodeSERVERINVALID:
 		return true
-	case STORAGEDELETIONPOLICYINVALID:
+	case ServerError400ErrorCodeSTORAGEDELETIONPOLICYINVALID:
 		return true
 	default:
 		return false
@@ -124,13 +124,13 @@ func (e ServerError400ErrorCode) Valid() bool {
 
 // Defines values for ServerError403ErrorCode.
 const (
-	SERVERFORBIDDEN ServerError403ErrorCode = "SERVER_FORBIDDEN"
+	ServerError403ErrorCodeSERVERFORBIDDEN ServerError403ErrorCode = "SERVER_FORBIDDEN"
 )
 
 // Valid indicates whether the value is a known member of the ServerError403ErrorCode enum.
 func (e ServerError403ErrorCode) Valid() bool {
 	switch e {
-	case SERVERFORBIDDEN:
+	case ServerError403ErrorCodeSERVERFORBIDDEN:
 		return true
 	default:
 		return false
@@ -139,16 +139,16 @@ func (e ServerError403ErrorCode) Valid() bool {
 
 // Defines values for ServerError404ErrorCode.
 const (
-	DEVICENOTFOUND ServerError404ErrorCode = "DEVICE_NOT_FOUND"
-	SERVERNOTFOUND ServerError404ErrorCode = "SERVER_NOT_FOUND"
+	ServerError404ErrorCodeDEVICENOTFOUND ServerError404ErrorCode = "DEVICE_NOT_FOUND"
+	ServerError404ErrorCodeSERVERNOTFOUND ServerError404ErrorCode = "SERVER_NOT_FOUND"
 )
 
 // Valid indicates whether the value is a known member of the ServerError404ErrorCode enum.
 func (e ServerError404ErrorCode) Valid() bool {
 	switch e {
-	case DEVICENOTFOUND:
+	case ServerError404ErrorCodeDEVICENOTFOUND:
 		return true
-	case SERVERNOTFOUND:
+	case ServerError404ErrorCodeSERVERNOTFOUND:
 		return true
 	default:
 		return false
@@ -157,31 +157,31 @@ func (e ServerError404ErrorCode) Valid() bool {
 
 // Defines values for ServerError409ErrorCode.
 const (
-	DEVICEALLOCATIONFAILED   ServerError409ErrorCode = "DEVICE_ALLOCATION_FAILED"
-	DEVICEDISABLED           ServerError409ErrorCode = "DEVICE_DISABLED"
-	DEVICEFILTERLIMITREACHED ServerError409ErrorCode = "DEVICE_FILTER_LIMIT_REACHED"
-	DEVICEHOSTMISMATCH       ServerError409ErrorCode = "DEVICE_HOST_MISMATCH"
-	DEVICEUNAVAILABLE        ServerError409ErrorCode = "DEVICE_UNAVAILABLE"
-	INVALIDUUID              ServerError409ErrorCode = "INVALID_UUID"
-	UUIDFILTERLIMITREACHED   ServerError409ErrorCode = "UUID_FILTER_LIMIT_REACHED"
+	ServerError409ErrorCodeDEVICEALLOCATIONFAILED   ServerError409ErrorCode = "DEVICE_ALLOCATION_FAILED"
+	ServerError409ErrorCodeDEVICEDISABLED           ServerError409ErrorCode = "DEVICE_DISABLED"
+	ServerError409ErrorCodeDEVICEFILTERLIMITREACHED ServerError409ErrorCode = "DEVICE_FILTER_LIMIT_REACHED"
+	ServerError409ErrorCodeDEVICEHOSTMISMATCH       ServerError409ErrorCode = "DEVICE_HOST_MISMATCH"
+	ServerError409ErrorCodeDEVICEUNAVAILABLE        ServerError409ErrorCode = "DEVICE_UNAVAILABLE"
+	ServerError409ErrorCodeINVALIDUUID              ServerError409ErrorCode = "INVALID_UUID"
+	ServerError409ErrorCodeUUIDFILTERLIMITREACHED   ServerError409ErrorCode = "UUID_FILTER_LIMIT_REACHED"
 )
 
 // Valid indicates whether the value is a known member of the ServerError409ErrorCode enum.
 func (e ServerError409ErrorCode) Valid() bool {
 	switch e {
-	case DEVICEALLOCATIONFAILED:
+	case ServerError409ErrorCodeDEVICEALLOCATIONFAILED:
 		return true
-	case DEVICEDISABLED:
+	case ServerError409ErrorCodeDEVICEDISABLED:
 		return true
-	case DEVICEFILTERLIMITREACHED:
+	case ServerError409ErrorCodeDEVICEFILTERLIMITREACHED:
 		return true
-	case DEVICEHOSTMISMATCH:
+	case ServerError409ErrorCodeDEVICEHOSTMISMATCH:
 		return true
-	case DEVICEUNAVAILABLE:
+	case ServerError409ErrorCodeDEVICEUNAVAILABLE:
 		return true
-	case INVALIDUUID:
+	case ServerError409ErrorCodeINVALIDUUID:
 		return true
-	case UUIDFILTERLIMITREACHED:
+	case ServerError409ErrorCodeUUIDFILTERLIMITREACHED:
 		return true
 	default:
 		return false
@@ -190,16 +190,16 @@ func (e ServerError409ErrorCode) Valid() bool {
 
 // Defines values for ServerIpFamily.
 const (
-	IPv4 ServerIpFamily = "IPv4"
-	IPv6 ServerIpFamily = "IPv6"
+	ServerIpFamilyIPv4 ServerIpFamily = "IPv4"
+	ServerIpFamilyIPv6 ServerIpFamily = "IPv6"
 )
 
 // Valid indicates whether the value is a known member of the ServerIpFamily enum.
 func (e ServerIpFamily) Valid() bool {
 	switch e {
-	case IPv4:
+	case ServerIpFamilyIPv4:
 		return true
-	case IPv6:
+	case ServerIpFamilyIPv6:
 		return true
 	default:
 		return false
@@ -208,16 +208,16 @@ func (e ServerIpFamily) Valid() bool {
 
 // Defines values for ServerIpReleasePolicy.
 const (
-	Keep    ServerIpReleasePolicy = "keep"
-	Release ServerIpReleasePolicy = "release"
+	ServerIpReleasePolicyKeep    ServerIpReleasePolicy = "keep"
+	ServerIpReleasePolicyRelease ServerIpReleasePolicy = "release"
 )
 
 // Valid indicates whether the value is a known member of the ServerIpReleasePolicy enum.
 func (e ServerIpReleasePolicy) Valid() bool {
 	switch e {
-	case Keep:
+	case ServerIpReleasePolicyKeep:
 		return true
-	case Release:
+	case ServerIpReleasePolicyRelease:
 		return true
 	default:
 		return false
@@ -247,19 +247,19 @@ func (e ServerNetworkType) Valid() bool {
 
 // Defines values for ServerNicModel.
 const (
-	E1000   ServerNicModel = "e1000"
-	Rtl8139 ServerNicModel = "rtl8139"
-	Virtio  ServerNicModel = "virtio"
+	ServerNicModelE1000   ServerNicModel = "e1000"
+	ServerNicModelRtl8139 ServerNicModel = "rtl8139"
+	ServerNicModelVirtio  ServerNicModel = "virtio"
 )
 
 // Valid indicates whether the value is a known member of the ServerNicModel enum.
 func (e ServerNicModel) Valid() bool {
 	switch e {
-	case E1000:
+	case ServerNicModelE1000:
 		return true
-	case Rtl8139:
+	case ServerNicModelRtl8139:
 		return true
-	case Virtio:
+	case ServerNicModelVirtio:
 		return true
 	default:
 		return false
@@ -268,37 +268,37 @@ func (e ServerNicModel) Valid() bool {
 
 // Defines values for ServerOsType.
 const (
-	Centos      ServerOsType = "centos"
-	Coreos      ServerOsType = "coreos"
-	Debian      ServerOsType = "debian"
-	Fedora      ServerOsType = "fedora"
-	Ubuntu      ServerOsType = "ubuntu"
-	Unknown     ServerOsType = "unknown"
-	Windows2003 ServerOsType = "windows2003"
-	Windows2008 ServerOsType = "windows2008"
-	Windows2012 ServerOsType = "windows2012"
+	ServerOsTypeCentos      ServerOsType = "centos"
+	ServerOsTypeCoreos      ServerOsType = "coreos"
+	ServerOsTypeDebian      ServerOsType = "debian"
+	ServerOsTypeFedora      ServerOsType = "fedora"
+	ServerOsTypeUbuntu      ServerOsType = "ubuntu"
+	ServerOsTypeUnknown     ServerOsType = "unknown"
+	ServerOsTypeWindows2003 ServerOsType = "windows2003"
+	ServerOsTypeWindows2008 ServerOsType = "windows2008"
+	ServerOsTypeWindows2012 ServerOsType = "windows2012"
 )
 
 // Valid indicates whether the value is a known member of the ServerOsType enum.
 func (e ServerOsType) Valid() bool {
 	switch e {
-	case Centos:
+	case ServerOsTypeCentos:
 		return true
-	case Coreos:
+	case ServerOsTypeCoreos:
 		return true
-	case Debian:
+	case ServerOsTypeDebian:
 		return true
-	case Fedora:
+	case ServerOsTypeFedora:
 		return true
-	case Ubuntu:
+	case ServerOsTypeUbuntu:
 		return true
-	case Unknown:
+	case ServerOsTypeUnknown:
 		return true
-	case Windows2003:
+	case ServerOsTypeWindows2003:
 		return true
-	case Windows2008:
+	case ServerOsTypeWindows2008:
 		return true
-	case Windows2012:
+	case ServerOsTypeWindows2012:
 		return true
 	default:
 		return false
@@ -307,25 +307,25 @@ func (e ServerOsType) Valid() bool {
 
 // Defines values for ServerState.
 const (
-	Error         ServerState = "error"
-	Maintenance   ServerState = "maintenance"
-	PendingDelete ServerState = "pending_delete"
-	Started       ServerState = "started"
-	Stopped       ServerState = "stopped"
+	ServerStateError         ServerState = "error"
+	ServerStateMaintenance   ServerState = "maintenance"
+	ServerStatePendingDelete ServerState = "pending_delete"
+	ServerStateStarted       ServerState = "started"
+	ServerStateStopped       ServerState = "stopped"
 )
 
 // Valid indicates whether the value is a known member of the ServerState enum.
 func (e ServerState) Valid() bool {
 	switch e {
-	case Error:
+	case ServerStateError:
 		return true
-	case Maintenance:
+	case ServerStateMaintenance:
 		return true
-	case PendingDelete:
+	case ServerStatePendingDelete:
 		return true
-	case Started:
+	case ServerStateStarted:
 		return true
-	case Stopped:
+	case ServerStateStopped:
 		return true
 	default:
 		return false

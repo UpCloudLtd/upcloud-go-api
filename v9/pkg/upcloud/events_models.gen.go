@@ -11,31 +11,31 @@ import (
 
 // Defines values for EventsEventType.
 const (
-	ServerCreate    EventsEventType = "server_create"
-	ServerError     EventsEventType = "server_error"
-	ServerModify    EventsEventType = "server_modify"
-	ServerShutdown  EventsEventType = "server_shutdown"
-	ServerStart     EventsEventType = "server_start"
-	ServerStartInit EventsEventType = "server_start_init"
-	ServerStop      EventsEventType = "server_stop"
+	EventsEventTypeServerCreate    EventsEventType = "server_create"
+	EventsEventTypeServerError     EventsEventType = "server_error"
+	EventsEventTypeServerModify    EventsEventType = "server_modify"
+	EventsEventTypeServerShutdown  EventsEventType = "server_shutdown"
+	EventsEventTypeServerStart     EventsEventType = "server_start"
+	EventsEventTypeServerStartInit EventsEventType = "server_start_init"
+	EventsEventTypeServerStop      EventsEventType = "server_stop"
 )
 
 // Valid indicates whether the value is a known member of the EventsEventType enum.
 func (e EventsEventType) Valid() bool {
 	switch e {
-	case ServerCreate:
+	case EventsEventTypeServerCreate:
 		return true
-	case ServerError:
+	case EventsEventTypeServerError:
 		return true
-	case ServerModify:
+	case EventsEventTypeServerModify:
 		return true
-	case ServerShutdown:
+	case EventsEventTypeServerShutdown:
 		return true
-	case ServerStart:
+	case EventsEventTypeServerStart:
 		return true
-	case ServerStartInit:
+	case EventsEventTypeServerStartInit:
 		return true
-	case ServerStop:
+	case EventsEventTypeServerStop:
 		return true
 	default:
 		return false

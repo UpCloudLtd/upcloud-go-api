@@ -86,37 +86,37 @@ func (e LoadBalancerActionHttpRedirectCreate1Status) Valid() bool {
 
 // Defines values for LoadBalancerActionResponseType.
 const (
-	HttpRedirect        LoadBalancerActionResponseType = "http_redirect"
-	HttpReturn          LoadBalancerActionResponseType = "http_return"
-	HttpRewritePath     LoadBalancerActionResponseType = "http_rewrite_path"
-	HttpRewriteUri      LoadBalancerActionResponseType = "http_rewrite_uri"
-	SetForwardedHeaders LoadBalancerActionResponseType = "set_forwarded_headers"
-	SetRequestHeader    LoadBalancerActionResponseType = "set_request_header"
-	SetResponseHeader   LoadBalancerActionResponseType = "set_response_header"
-	TcpReject           LoadBalancerActionResponseType = "tcp_reject"
-	UseBackend          LoadBalancerActionResponseType = "use_backend"
+	LoadBalancerActionResponseTypeHttpRedirect        LoadBalancerActionResponseType = "http_redirect"
+	LoadBalancerActionResponseTypeHttpReturn          LoadBalancerActionResponseType = "http_return"
+	LoadBalancerActionResponseTypeHttpRewritePath     LoadBalancerActionResponseType = "http_rewrite_path"
+	LoadBalancerActionResponseTypeHttpRewriteUri      LoadBalancerActionResponseType = "http_rewrite_uri"
+	LoadBalancerActionResponseTypeSetForwardedHeaders LoadBalancerActionResponseType = "set_forwarded_headers"
+	LoadBalancerActionResponseTypeSetRequestHeader    LoadBalancerActionResponseType = "set_request_header"
+	LoadBalancerActionResponseTypeSetResponseHeader   LoadBalancerActionResponseType = "set_response_header"
+	LoadBalancerActionResponseTypeTcpReject           LoadBalancerActionResponseType = "tcp_reject"
+	LoadBalancerActionResponseTypeUseBackend          LoadBalancerActionResponseType = "use_backend"
 )
 
 // Valid indicates whether the value is a known member of the LoadBalancerActionResponseType enum.
 func (e LoadBalancerActionResponseType) Valid() bool {
 	switch e {
-	case HttpRedirect:
+	case LoadBalancerActionResponseTypeHttpRedirect:
 		return true
-	case HttpReturn:
+	case LoadBalancerActionResponseTypeHttpReturn:
 		return true
-	case HttpRewritePath:
+	case LoadBalancerActionResponseTypeHttpRewritePath:
 		return true
-	case HttpRewriteUri:
+	case LoadBalancerActionResponseTypeHttpRewriteUri:
 		return true
-	case SetForwardedHeaders:
+	case LoadBalancerActionResponseTypeSetForwardedHeaders:
 		return true
-	case SetRequestHeader:
+	case LoadBalancerActionResponseTypeSetRequestHeader:
 		return true
-	case SetResponseHeader:
+	case LoadBalancerActionResponseTypeSetResponseHeader:
 		return true
-	case TcpReject:
+	case LoadBalancerActionResponseTypeTcpReject:
 		return true
-	case UseBackend:
+	case LoadBalancerActionResponseTypeUseBackend:
 		return true
 	default:
 		return false
@@ -248,22 +248,22 @@ func (e LoadBalancerChecksOnDown) Valid() bool {
 
 // Defines values for LoadBalancerContentTypes.
 const (
-	Applicationjavascript LoadBalancerContentTypes = "application/javascript"
-	Applicationjson       LoadBalancerContentTypes = "application/json"
-	Texthtml              LoadBalancerContentTypes = "text/html"
-	Textplain             LoadBalancerContentTypes = "text/plain"
+	LoadBalancerContentTypesApplicationjavascript LoadBalancerContentTypes = "application/javascript"
+	LoadBalancerContentTypesApplicationjson       LoadBalancerContentTypes = "application/json"
+	LoadBalancerContentTypesTexthtml              LoadBalancerContentTypes = "text/html"
+	LoadBalancerContentTypesTextplain             LoadBalancerContentTypes = "text/plain"
 )
 
 // Valid indicates whether the value is a known member of the LoadBalancerContentTypes enum.
 func (e LoadBalancerContentTypes) Valid() bool {
 	switch e {
-	case Applicationjavascript:
+	case LoadBalancerContentTypesApplicationjavascript:
 		return true
-	case Applicationjson:
+	case LoadBalancerContentTypesApplicationjson:
 		return true
-	case Texthtml:
+	case LoadBalancerContentTypesTexthtml:
 		return true
-	case Textplain:
+	case LoadBalancerContentTypesTextplain:
 		return true
 	default:
 		return false
@@ -290,16 +290,16 @@ func (e LoadBalancerFrontendMode) Valid() bool {
 
 // Defines values for LoadBalancerHealthCheckType.
 const (
-	Http LoadBalancerHealthCheckType = "http"
-	Tcp  LoadBalancerHealthCheckType = "tcp"
+	LoadBalancerHealthCheckTypeHttp LoadBalancerHealthCheckType = "http"
+	LoadBalancerHealthCheckTypeTcp  LoadBalancerHealthCheckType = "tcp"
 )
 
 // Valid indicates whether the value is a known member of the LoadBalancerHealthCheckType enum.
 func (e LoadBalancerHealthCheckType) Valid() bool {
 	switch e {
-	case Http:
+	case LoadBalancerHealthCheckTypeHttp:
 		return true
-	case Tcp:
+	case LoadBalancerHealthCheckTypeTcp:
 		return true
 	default:
 		return false
@@ -308,37 +308,37 @@ func (e LoadBalancerHealthCheckType) Valid() bool {
 
 // Defines values for LoadBalancerHttpMethods.
 const (
-	CONNECT LoadBalancerHttpMethods = "CONNECT"
-	DELETE  LoadBalancerHttpMethods = "DELETE"
-	GET     LoadBalancerHttpMethods = "GET"
-	HEAD    LoadBalancerHttpMethods = "HEAD"
-	OPTIONS LoadBalancerHttpMethods = "OPTIONS"
-	PATCH   LoadBalancerHttpMethods = "PATCH"
-	POST    LoadBalancerHttpMethods = "POST"
-	PUT     LoadBalancerHttpMethods = "PUT"
-	TRACE   LoadBalancerHttpMethods = "TRACE"
+	LoadBalancerHttpMethodsCONNECT LoadBalancerHttpMethods = "CONNECT"
+	LoadBalancerHttpMethodsDELETE  LoadBalancerHttpMethods = "DELETE"
+	LoadBalancerHttpMethodsGET     LoadBalancerHttpMethods = "GET"
+	LoadBalancerHttpMethodsHEAD    LoadBalancerHttpMethods = "HEAD"
+	LoadBalancerHttpMethodsOPTIONS LoadBalancerHttpMethods = "OPTIONS"
+	LoadBalancerHttpMethodsPATCH   LoadBalancerHttpMethods = "PATCH"
+	LoadBalancerHttpMethodsPOST    LoadBalancerHttpMethods = "POST"
+	LoadBalancerHttpMethodsPUT     LoadBalancerHttpMethods = "PUT"
+	LoadBalancerHttpMethodsTRACE   LoadBalancerHttpMethods = "TRACE"
 )
 
 // Valid indicates whether the value is a known member of the LoadBalancerHttpMethods enum.
 func (e LoadBalancerHttpMethods) Valid() bool {
 	switch e {
-	case CONNECT:
+	case LoadBalancerHttpMethodsCONNECT:
 		return true
-	case DELETE:
+	case LoadBalancerHttpMethodsDELETE:
 		return true
-	case GET:
+	case LoadBalancerHttpMethodsGET:
 		return true
-	case HEAD:
+	case LoadBalancerHttpMethodsHEAD:
 		return true
-	case OPTIONS:
+	case LoadBalancerHttpMethodsOPTIONS:
 		return true
-	case PATCH:
+	case LoadBalancerHttpMethodsPATCH:
 		return true
-	case POST:
+	case LoadBalancerHttpMethodsPOST:
 		return true
-	case PUT:
+	case LoadBalancerHttpMethodsPUT:
 		return true
-	case TRACE:
+	case LoadBalancerHttpMethodsTRACE:
 		return true
 	default:
 		return false
@@ -488,55 +488,55 @@ func (e LoadBalancerMatchStringWithArgResponseMethod) Valid() bool {
 
 // Defines values for LoadBalancerMatcherResponseType.
 const (
-	BodySize       LoadBalancerMatcherResponseType = "body_size"
-	Cookie         LoadBalancerMatcherResponseType = "cookie"
-	Header         LoadBalancerMatcherResponseType = "header"
-	Host           LoadBalancerMatcherResponseType = "host"
-	HttpMethod     LoadBalancerMatcherResponseType = "http_method"
-	HttpStatus     LoadBalancerMatcherResponseType = "http_status"
-	NumMembersUp   LoadBalancerMatcherResponseType = "num_members_up"
-	Path           LoadBalancerMatcherResponseType = "path"
-	RequestHeader  LoadBalancerMatcherResponseType = "request_header"
-	ResponseHeader LoadBalancerMatcherResponseType = "response_header"
-	SrcIp          LoadBalancerMatcherResponseType = "src_ip"
-	SrcPort        LoadBalancerMatcherResponseType = "src_port"
-	Url            LoadBalancerMatcherResponseType = "url"
-	UrlParam       LoadBalancerMatcherResponseType = "url_param"
-	UrlQuery       LoadBalancerMatcherResponseType = "url_query"
+	LoadBalancerMatcherResponseTypeBodySize       LoadBalancerMatcherResponseType = "body_size"
+	LoadBalancerMatcherResponseTypeCookie         LoadBalancerMatcherResponseType = "cookie"
+	LoadBalancerMatcherResponseTypeHeader         LoadBalancerMatcherResponseType = "header"
+	LoadBalancerMatcherResponseTypeHost           LoadBalancerMatcherResponseType = "host"
+	LoadBalancerMatcherResponseTypeHttpMethod     LoadBalancerMatcherResponseType = "http_method"
+	LoadBalancerMatcherResponseTypeHttpStatus     LoadBalancerMatcherResponseType = "http_status"
+	LoadBalancerMatcherResponseTypeNumMembersUp   LoadBalancerMatcherResponseType = "num_members_up"
+	LoadBalancerMatcherResponseTypePath           LoadBalancerMatcherResponseType = "path"
+	LoadBalancerMatcherResponseTypeRequestHeader  LoadBalancerMatcherResponseType = "request_header"
+	LoadBalancerMatcherResponseTypeResponseHeader LoadBalancerMatcherResponseType = "response_header"
+	LoadBalancerMatcherResponseTypeSrcIp          LoadBalancerMatcherResponseType = "src_ip"
+	LoadBalancerMatcherResponseTypeSrcPort        LoadBalancerMatcherResponseType = "src_port"
+	LoadBalancerMatcherResponseTypeUrl            LoadBalancerMatcherResponseType = "url"
+	LoadBalancerMatcherResponseTypeUrlParam       LoadBalancerMatcherResponseType = "url_param"
+	LoadBalancerMatcherResponseTypeUrlQuery       LoadBalancerMatcherResponseType = "url_query"
 )
 
 // Valid indicates whether the value is a known member of the LoadBalancerMatcherResponseType enum.
 func (e LoadBalancerMatcherResponseType) Valid() bool {
 	switch e {
-	case BodySize:
+	case LoadBalancerMatcherResponseTypeBodySize:
 		return true
-	case Cookie:
+	case LoadBalancerMatcherResponseTypeCookie:
 		return true
-	case Header:
+	case LoadBalancerMatcherResponseTypeHeader:
 		return true
-	case Host:
+	case LoadBalancerMatcherResponseTypeHost:
 		return true
-	case HttpMethod:
+	case LoadBalancerMatcherResponseTypeHttpMethod:
 		return true
-	case HttpStatus:
+	case LoadBalancerMatcherResponseTypeHttpStatus:
 		return true
-	case NumMembersUp:
+	case LoadBalancerMatcherResponseTypeNumMembersUp:
 		return true
-	case Path:
+	case LoadBalancerMatcherResponseTypePath:
 		return true
-	case RequestHeader:
+	case LoadBalancerMatcherResponseTypeRequestHeader:
 		return true
-	case ResponseHeader:
+	case LoadBalancerMatcherResponseTypeResponseHeader:
 		return true
-	case SrcIp:
+	case LoadBalancerMatcherResponseTypeSrcIp:
 		return true
-	case SrcPort:
+	case LoadBalancerMatcherResponseTypeSrcPort:
 		return true
-	case Url:
+	case LoadBalancerMatcherResponseTypeUrl:
 		return true
-	case UrlParam:
+	case LoadBalancerMatcherResponseTypeUrlParam:
 		return true
-	case UrlQuery:
+	case LoadBalancerMatcherResponseTypeUrlQuery:
 		return true
 	default:
 		return false
@@ -563,16 +563,16 @@ func (e LoadBalancerMatchingCondition) Valid() bool {
 
 // Defines values for LoadBalancerMemberType.
 const (
-	Dynamic LoadBalancerMemberType = "dynamic"
-	Static  LoadBalancerMemberType = "static"
+	LoadBalancerMemberTypeDynamic LoadBalancerMemberType = "dynamic"
+	LoadBalancerMemberTypeStatic  LoadBalancerMemberType = "static"
 )
 
 // Valid indicates whether the value is a known member of the LoadBalancerMemberType enum.
 func (e LoadBalancerMemberType) Valid() bool {
 	switch e {
-	case Dynamic:
+	case LoadBalancerMemberTypeDynamic:
 		return true
-	case Static:
+	case LoadBalancerMemberTypeStatic:
 		return true
 	default:
 		return false
@@ -581,16 +581,16 @@ func (e LoadBalancerMemberType) Valid() bool {
 
 // Defines values for LoadBalancerMetricsSortParameter.
 const (
-	MinusStartAt LoadBalancerMetricsSortParameter = "-start_at"
-	StartAt      LoadBalancerMetricsSortParameter = "start_at"
+	LoadBalancerMetricsSortParameterMinusStartAt LoadBalancerMetricsSortParameter = "-start_at"
+	LoadBalancerMetricsSortParameterStartAt      LoadBalancerMetricsSortParameter = "start_at"
 )
 
 // Valid indicates whether the value is a known member of the LoadBalancerMetricsSortParameter enum.
 func (e LoadBalancerMetricsSortParameter) Valid() bool {
 	switch e {
-	case MinusStartAt:
+	case LoadBalancerMetricsSortParameterMinusStartAt:
 		return true
-	case StartAt:
+	case LoadBalancerMetricsSortParameterStartAt:
 		return true
 	default:
 		return false
@@ -599,16 +599,16 @@ func (e LoadBalancerMetricsSortParameter) Valid() bool {
 
 // Defines values for LoadBalancerNetworkFamily.
 const (
-	IPv4 LoadBalancerNetworkFamily = "IPv4"
-	IPv6 LoadBalancerNetworkFamily = "IPv6"
+	LoadBalancerNetworkFamilyIPv4 LoadBalancerNetworkFamily = "IPv4"
+	LoadBalancerNetworkFamilyIPv6 LoadBalancerNetworkFamily = "IPv6"
 )
 
 // Valid indicates whether the value is a known member of the LoadBalancerNetworkFamily enum.
 func (e LoadBalancerNetworkFamily) Valid() bool {
 	switch e {
-	case IPv4:
+	case LoadBalancerNetworkFamilyIPv4:
 		return true
-	case IPv6:
+	case LoadBalancerNetworkFamilyIPv6:
 		return true
 	default:
 		return false
@@ -617,16 +617,16 @@ func (e LoadBalancerNetworkFamily) Valid() bool {
 
 // Defines values for LoadBalancerNetworkType.
 const (
-	Private LoadBalancerNetworkType = "private"
-	Public  LoadBalancerNetworkType = "public"
+	LoadBalancerNetworkTypePrivate LoadBalancerNetworkType = "private"
+	LoadBalancerNetworkTypePublic  LoadBalancerNetworkType = "public"
 )
 
 // Valid indicates whether the value is a known member of the LoadBalancerNetworkType enum.
 func (e LoadBalancerNetworkType) Valid() bool {
 	switch e {
-	case Private:
+	case LoadBalancerNetworkTypePrivate:
 		return true
-	case Public:
+	case LoadBalancerNetworkTypePublic:
 		return true
 	default:
 		return false
@@ -674,28 +674,28 @@ func (e LoadBalancerRuleMatchingCondition) Valid() bool {
 
 // Defines values for LoadBalancerRuleMatcherIntMethod.
 const (
-	Equal          LoadBalancerRuleMatcherIntMethod = "equal"
-	Greater        LoadBalancerRuleMatcherIntMethod = "greater"
-	GreaterOrEqual LoadBalancerRuleMatcherIntMethod = "greater_or_equal"
-	Less           LoadBalancerRuleMatcherIntMethod = "less"
-	LessOrEqual    LoadBalancerRuleMatcherIntMethod = "less_or_equal"
-	Range          LoadBalancerRuleMatcherIntMethod = "range"
+	LoadBalancerRuleMatcherIntMethodEqual          LoadBalancerRuleMatcherIntMethod = "equal"
+	LoadBalancerRuleMatcherIntMethodGreater        LoadBalancerRuleMatcherIntMethod = "greater"
+	LoadBalancerRuleMatcherIntMethodGreaterOrEqual LoadBalancerRuleMatcherIntMethod = "greater_or_equal"
+	LoadBalancerRuleMatcherIntMethodLess           LoadBalancerRuleMatcherIntMethod = "less"
+	LoadBalancerRuleMatcherIntMethodLessOrEqual    LoadBalancerRuleMatcherIntMethod = "less_or_equal"
+	LoadBalancerRuleMatcherIntMethodRange          LoadBalancerRuleMatcherIntMethod = "range"
 )
 
 // Valid indicates whether the value is a known member of the LoadBalancerRuleMatcherIntMethod enum.
 func (e LoadBalancerRuleMatcherIntMethod) Valid() bool {
 	switch e {
-	case Equal:
+	case LoadBalancerRuleMatcherIntMethodEqual:
 		return true
-	case Greater:
+	case LoadBalancerRuleMatcherIntMethodGreater:
 		return true
-	case GreaterOrEqual:
+	case LoadBalancerRuleMatcherIntMethodGreaterOrEqual:
 		return true
-	case Less:
+	case LoadBalancerRuleMatcherIntMethodLess:
 		return true
-	case LessOrEqual:
+	case LoadBalancerRuleMatcherIntMethodLessOrEqual:
 		return true
-	case Range:
+	case LoadBalancerRuleMatcherIntMethodRange:
 		return true
 	default:
 		return false
@@ -764,16 +764,16 @@ func (e LoadBalancerServiceOperationalState) Valid() bool {
 
 // Defines values for LoadBalancerServiceConfiguredStatus.
 const (
-	Started LoadBalancerServiceConfiguredStatus = "started"
-	Stopped LoadBalancerServiceConfiguredStatus = "stopped"
+	LoadBalancerServiceConfiguredStatusStarted LoadBalancerServiceConfiguredStatus = "started"
+	LoadBalancerServiceConfiguredStatusStopped LoadBalancerServiceConfiguredStatus = "stopped"
 )
 
 // Valid indicates whether the value is a known member of the LoadBalancerServiceConfiguredStatus enum.
 func (e LoadBalancerServiceConfiguredStatus) Valid() bool {
 	switch e {
-	case Started:
+	case LoadBalancerServiceConfiguredStatusStarted:
 		return true
-	case Stopped:
+	case LoadBalancerServiceConfiguredStatusStopped:
 		return true
 	default:
 		return false
@@ -782,28 +782,28 @@ func (e LoadBalancerServiceConfiguredStatus) Valid() bool {
 
 // Defines values for LoadBalancerSortServicesParameter.
 const (
-	CreatedAt      LoadBalancerSortServicesParameter = "created_at"
-	MinusCreatedAt LoadBalancerSortServicesParameter = "-created_at"
-	MinusName      LoadBalancerSortServicesParameter = "-name"
-	MinusUuid      LoadBalancerSortServicesParameter = "-uuid"
-	Name           LoadBalancerSortServicesParameter = "name"
-	Uuid           LoadBalancerSortServicesParameter = "uuid"
+	LoadBalancerSortServicesParameterCreatedAt      LoadBalancerSortServicesParameter = "created_at"
+	LoadBalancerSortServicesParameterMinusCreatedAt LoadBalancerSortServicesParameter = "-created_at"
+	LoadBalancerSortServicesParameterMinusName      LoadBalancerSortServicesParameter = "-name"
+	LoadBalancerSortServicesParameterMinusUuid      LoadBalancerSortServicesParameter = "-uuid"
+	LoadBalancerSortServicesParameterName           LoadBalancerSortServicesParameter = "name"
+	LoadBalancerSortServicesParameterUuid           LoadBalancerSortServicesParameter = "uuid"
 )
 
 // Valid indicates whether the value is a known member of the LoadBalancerSortServicesParameter enum.
 func (e LoadBalancerSortServicesParameter) Valid() bool {
 	switch e {
-	case CreatedAt:
+	case LoadBalancerSortServicesParameterCreatedAt:
 		return true
-	case MinusCreatedAt:
+	case LoadBalancerSortServicesParameterMinusCreatedAt:
 		return true
-	case MinusName:
+	case LoadBalancerSortServicesParameterMinusName:
 		return true
-	case MinusUuid:
+	case LoadBalancerSortServicesParameterMinusUuid:
 		return true
-	case Name:
+	case LoadBalancerSortServicesParameterName:
 		return true
-	case Uuid:
+	case LoadBalancerSortServicesParameterUuid:
 		return true
 	default:
 		return false
@@ -812,28 +812,28 @@ func (e LoadBalancerSortServicesParameter) Valid() bool {
 
 // Defines values for LoadBalancerStringMatcherMethods.
 const (
-	Domain    LoadBalancerStringMatcherMethods = "domain"
-	Ends      LoadBalancerStringMatcherMethods = "ends"
-	Exact     LoadBalancerStringMatcherMethods = "exact"
-	Regexp    LoadBalancerStringMatcherMethods = "regexp"
-	Starts    LoadBalancerStringMatcherMethods = "starts"
-	Substring LoadBalancerStringMatcherMethods = "substring"
+	LoadBalancerStringMatcherMethodsDomain    LoadBalancerStringMatcherMethods = "domain"
+	LoadBalancerStringMatcherMethodsEnds      LoadBalancerStringMatcherMethods = "ends"
+	LoadBalancerStringMatcherMethodsExact     LoadBalancerStringMatcherMethods = "exact"
+	LoadBalancerStringMatcherMethodsRegexp    LoadBalancerStringMatcherMethods = "regexp"
+	LoadBalancerStringMatcherMethodsStarts    LoadBalancerStringMatcherMethods = "starts"
+	LoadBalancerStringMatcherMethodsSubstring LoadBalancerStringMatcherMethods = "substring"
 )
 
 // Valid indicates whether the value is a known member of the LoadBalancerStringMatcherMethods enum.
 func (e LoadBalancerStringMatcherMethods) Valid() bool {
 	switch e {
-	case Domain:
+	case LoadBalancerStringMatcherMethodsDomain:
 		return true
-	case Ends:
+	case LoadBalancerStringMatcherMethodsEnds:
 		return true
-	case Exact:
+	case LoadBalancerStringMatcherMethodsExact:
 		return true
-	case Regexp:
+	case LoadBalancerStringMatcherMethodsRegexp:
 		return true
-	case Starts:
+	case LoadBalancerStringMatcherMethodsStarts:
 		return true
-	case Substring:
+	case LoadBalancerStringMatcherMethodsSubstring:
 		return true
 	default:
 		return false
@@ -842,16 +842,16 @@ func (e LoadBalancerStringMatcherMethods) Valid() bool {
 
 // Defines values for LoadBalancerStringMatcherMethodsNoValue.
 const (
-	Exists LoadBalancerStringMatcherMethodsNoValue = "exists"
-	Ip     LoadBalancerStringMatcherMethodsNoValue = "ip"
+	LoadBalancerStringMatcherMethodsNoValueExists LoadBalancerStringMatcherMethodsNoValue = "exists"
+	LoadBalancerStringMatcherMethodsNoValueIp     LoadBalancerStringMatcherMethodsNoValue = "ip"
 )
 
 // Valid indicates whether the value is a known member of the LoadBalancerStringMatcherMethodsNoValue enum.
 func (e LoadBalancerStringMatcherMethodsNoValue) Valid() bool {
 	switch e {
-	case Exists:
+	case LoadBalancerStringMatcherMethodsNoValueExists:
 		return true
-	case Ip:
+	case LoadBalancerStringMatcherMethodsNoValueIp:
 		return true
 	default:
 		return false

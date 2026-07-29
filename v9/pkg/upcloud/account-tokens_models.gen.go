@@ -12,6 +12,10 @@ import (
 	openapi_types "github.com/oapi-codegen/runtime/types"
 )
 
+const (
+	ApiTokenScopes = "apiToken.Scopes"
+)
+
 // Defines values for AccountTokensProblem400Status.
 const (
 	AccountTokensProblem400StatusN400 AccountTokensProblem400Status = 400
@@ -29,13 +33,13 @@ func (e AccountTokensProblem400Status) Valid() bool {
 
 // Defines values for AccountTokensProblem401Status.
 const (
-	N401 AccountTokensProblem401Status = 401
+	AccountTokensProblem401StatusN401 AccountTokensProblem401Status = 401
 )
 
 // Valid indicates whether the value is a known member of the AccountTokensProblem401Status enum.
 func (e AccountTokensProblem401Status) Valid() bool {
 	switch e {
-	case N401:
+	case AccountTokensProblem401StatusN401:
 		return true
 	default:
 		return false
@@ -44,13 +48,13 @@ func (e AccountTokensProblem401Status) Valid() bool {
 
 // Defines values for AccountTokensProblem403Status.
 const (
-	N403 AccountTokensProblem403Status = 403
+	AccountTokensProblem403StatusN403 AccountTokensProblem403Status = 403
 )
 
 // Valid indicates whether the value is a known member of the AccountTokensProblem403Status enum.
 func (e AccountTokensProblem403Status) Valid() bool {
 	switch e {
-	case N403:
+	case AccountTokensProblem403StatusN403:
 		return true
 	default:
 		return false
@@ -59,13 +63,13 @@ func (e AccountTokensProblem403Status) Valid() bool {
 
 // Defines values for AccountTokensProblem404Status.
 const (
-	N404 AccountTokensProblem404Status = 404
+	AccountTokensProblem404StatusN404 AccountTokensProblem404Status = 404
 )
 
 // Valid indicates whether the value is a known member of the AccountTokensProblem404Status enum.
 func (e AccountTokensProblem404Status) Valid() bool {
 	switch e {
-	case N404:
+	case AccountTokensProblem404StatusN404:
 		return true
 	default:
 		return false

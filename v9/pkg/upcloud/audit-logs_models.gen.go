@@ -279,16 +279,16 @@ func (e AuditLogsFilterOptionsResponseResourceTypes) Valid() bool {
 
 // Defines values for AuditLogsFormatParameter.
 const (
-	Csv  AuditLogsFormatParameter = "csv"
-	Json AuditLogsFormatParameter = "json"
+	AuditLogsFormatParameterCsv  AuditLogsFormatParameter = "csv"
+	AuditLogsFormatParameterJson AuditLogsFormatParameter = "json"
 )
 
 // Valid indicates whether the value is a known member of the AuditLogsFormatParameter enum.
 func (e AuditLogsFormatParameter) Valid() bool {
 	switch e {
-	case Csv:
+	case AuditLogsFormatParameterCsv:
 		return true
-	case Json:
+	case AuditLogsFormatParameterJson:
 		return true
 	default:
 		return false

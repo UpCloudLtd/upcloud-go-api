@@ -5,16 +5,16 @@ package upcloud
 
 // Defines values for PlanBooleanYesno.
 const (
-	No  PlanBooleanYesno = "no"
-	Yes PlanBooleanYesno = "yes"
+	PlanBooleanYesnoNo  PlanBooleanYesno = "no"
+	PlanBooleanYesnoYes PlanBooleanYesno = "yes"
 )
 
 // Valid indicates whether the value is a known member of the PlanBooleanYesno enum.
 func (e PlanBooleanYesno) Valid() bool {
 	switch e {
-	case No:
+	case PlanBooleanYesnoNo:
 		return true
-	case Yes:
+	case PlanBooleanYesnoYes:
 		return true
 	default:
 		return false
@@ -23,28 +23,28 @@ func (e PlanBooleanYesno) Valid() bool {
 
 // Defines values for PlanFamily.
 const (
-	CloudNative    PlanFamily = "cloud_native"
-	Developer      PlanFamily = "developer"
-	GeneralPurpose PlanFamily = "general_purpose"
-	Gpu            PlanFamily = "gpu"
-	Premium        PlanFamily = "premium"
-	Starter        PlanFamily = "starter"
+	PlanFamilyCloudNative    PlanFamily = "cloud_native"
+	PlanFamilyDeveloper      PlanFamily = "developer"
+	PlanFamilyGeneralPurpose PlanFamily = "general_purpose"
+	PlanFamilyGpu            PlanFamily = "gpu"
+	PlanFamilyPremium        PlanFamily = "premium"
+	PlanFamilyStarter        PlanFamily = "starter"
 )
 
 // Valid indicates whether the value is a known member of the PlanFamily enum.
 func (e PlanFamily) Valid() bool {
 	switch e {
-	case CloudNative:
+	case PlanFamilyCloudNative:
 		return true
-	case Developer:
+	case PlanFamilyDeveloper:
 		return true
-	case GeneralPurpose:
+	case PlanFamilyGeneralPurpose:
 		return true
-	case Gpu:
+	case PlanFamilyGpu:
 		return true
-	case Premium:
+	case PlanFamilyPremium:
 		return true
-	case Starter:
+	case PlanFamilyStarter:
 		return true
 	default:
 		return false

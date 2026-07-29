@@ -12,16 +12,16 @@ import (
 
 // Defines values for IpAddressBooleanYesno.
 const (
-	No  IpAddressBooleanYesno = "no"
-	Yes IpAddressBooleanYesno = "yes"
+	IpAddressBooleanYesnoNo  IpAddressBooleanYesno = "no"
+	IpAddressBooleanYesnoYes IpAddressBooleanYesno = "yes"
 )
 
 // Valid indicates whether the value is a known member of the IpAddressBooleanYesno enum.
 func (e IpAddressBooleanYesno) Valid() bool {
 	switch e {
-	case No:
+	case IpAddressBooleanYesnoNo:
 		return true
-	case Yes:
+	case IpAddressBooleanYesnoYes:
 		return true
 	default:
 		return false
@@ -30,16 +30,16 @@ func (e IpAddressBooleanYesno) Valid() bool {
 
 // Defines values for IpAddressIpFamily.
 const (
-	IPv4 IpAddressIpFamily = "IPv4"
-	IPv6 IpAddressIpFamily = "IPv6"
+	IpAddressIpFamilyIPv4 IpAddressIpFamily = "IPv4"
+	IpAddressIpFamilyIPv6 IpAddressIpFamily = "IPv6"
 )
 
 // Valid indicates whether the value is a known member of the IpAddressIpFamily enum.
 func (e IpAddressIpFamily) Valid() bool {
 	switch e {
-	case IPv4:
+	case IpAddressIpFamilyIPv4:
 		return true
-	case IPv6:
+	case IpAddressIpFamilyIPv6:
 		return true
 	default:
 		return false
@@ -48,16 +48,16 @@ func (e IpAddressIpFamily) Valid() bool {
 
 // Defines values for IpAddressIpReleasePolicy.
 const (
-	Keep    IpAddressIpReleasePolicy = "keep"
-	Release IpAddressIpReleasePolicy = "release"
+	IpAddressIpReleasePolicyKeep    IpAddressIpReleasePolicy = "keep"
+	IpAddressIpReleasePolicyRelease IpAddressIpReleasePolicy = "release"
 )
 
 // Valid indicates whether the value is a known member of the IpAddressIpReleasePolicy enum.
 func (e IpAddressIpReleasePolicy) Valid() bool {
 	switch e {
-	case Keep:
+	case IpAddressIpReleasePolicyKeep:
 		return true
-	case Release:
+	case IpAddressIpReleasePolicyRelease:
 		return true
 	default:
 		return false
@@ -66,19 +66,19 @@ func (e IpAddressIpReleasePolicy) Valid() bool {
 
 // Defines values for IpAddressNetworkType.
 const (
-	Private IpAddressNetworkType = "private"
-	Public  IpAddressNetworkType = "public"
-	Utility IpAddressNetworkType = "utility"
+	IpAddressNetworkTypePrivate IpAddressNetworkType = "private"
+	IpAddressNetworkTypePublic  IpAddressNetworkType = "public"
+	IpAddressNetworkTypeUtility IpAddressNetworkType = "utility"
 )
 
 // Valid indicates whether the value is a known member of the IpAddressNetworkType enum.
 func (e IpAddressNetworkType) Valid() bool {
 	switch e {
-	case Private:
+	case IpAddressNetworkTypePrivate:
 		return true
-	case Public:
+	case IpAddressNetworkTypePublic:
 		return true
-	case Utility:
+	case IpAddressNetworkTypeUtility:
 		return true
 	default:
 		return false

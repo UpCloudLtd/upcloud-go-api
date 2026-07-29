@@ -76,31 +76,31 @@ func (e DatabaseIntegrationEndpoint) Valid() bool {
 
 // Defines values for DatabaseMaintenanceDow.
 const (
-	Friday    DatabaseMaintenanceDow = "friday"
-	Monday    DatabaseMaintenanceDow = "monday"
-	Saturday  DatabaseMaintenanceDow = "saturday"
-	Sunday    DatabaseMaintenanceDow = "sunday"
-	Thursday  DatabaseMaintenanceDow = "thursday"
-	Tuesday   DatabaseMaintenanceDow = "tuesday"
-	Wednesday DatabaseMaintenanceDow = "wednesday"
+	DatabaseMaintenanceDowFriday    DatabaseMaintenanceDow = "friday"
+	DatabaseMaintenanceDowMonday    DatabaseMaintenanceDow = "monday"
+	DatabaseMaintenanceDowSaturday  DatabaseMaintenanceDow = "saturday"
+	DatabaseMaintenanceDowSunday    DatabaseMaintenanceDow = "sunday"
+	DatabaseMaintenanceDowThursday  DatabaseMaintenanceDow = "thursday"
+	DatabaseMaintenanceDowTuesday   DatabaseMaintenanceDow = "tuesday"
+	DatabaseMaintenanceDowWednesday DatabaseMaintenanceDow = "wednesday"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseMaintenanceDow enum.
 func (e DatabaseMaintenanceDow) Valid() bool {
 	switch e {
-	case Friday:
+	case DatabaseMaintenanceDowFriday:
 		return true
-	case Monday:
+	case DatabaseMaintenanceDowMonday:
 		return true
-	case Saturday:
+	case DatabaseMaintenanceDowSaturday:
 		return true
-	case Sunday:
+	case DatabaseMaintenanceDowSunday:
 		return true
-	case Thursday:
+	case DatabaseMaintenanceDowThursday:
 		return true
-	case Tuesday:
+	case DatabaseMaintenanceDowTuesday:
 		return true
-	case Wednesday:
+	case DatabaseMaintenanceDowWednesday:
 		return true
 	default:
 		return false
@@ -178,19 +178,19 @@ func (e DatabaseNetworkType) Valid() bool {
 
 // Defines values for DatabasePlanComponentsResponseBackupsName.
 const (
-	Extended DatabasePlanComponentsResponseBackupsName = "extended"
-	Mini     DatabasePlanComponentsResponseBackupsName = "mini"
-	Regular  DatabasePlanComponentsResponseBackupsName = "regular"
+	DatabasePlanComponentsResponseBackupsNameExtended DatabasePlanComponentsResponseBackupsName = "extended"
+	DatabasePlanComponentsResponseBackupsNameMini     DatabasePlanComponentsResponseBackupsName = "mini"
+	DatabasePlanComponentsResponseBackupsNameRegular  DatabasePlanComponentsResponseBackupsName = "regular"
 )
 
 // Valid indicates whether the value is a known member of the DatabasePlanComponentsResponseBackupsName enum.
 func (e DatabasePlanComponentsResponseBackupsName) Valid() bool {
 	switch e {
-	case Extended:
+	case DatabasePlanComponentsResponseBackupsNameExtended:
 		return true
-	case Mini:
+	case DatabasePlanComponentsResponseBackupsNameMini:
 		return true
-	case Regular:
+	case DatabasePlanComponentsResponseBackupsNameRegular:
 		return true
 	default:
 		return false
@@ -199,19 +199,19 @@ func (e DatabasePlanComponentsResponseBackupsName) Valid() bool {
 
 // Defines values for DatabasePlanComponentsResponseComputeFamily.
 const (
-	Development DatabasePlanComponentsResponseComputeFamily = "development"
-	Memory      DatabasePlanComponentsResponseComputeFamily = "memory"
-	Standard    DatabasePlanComponentsResponseComputeFamily = "standard"
+	DatabasePlanComponentsResponseComputeFamilyDevelopment DatabasePlanComponentsResponseComputeFamily = "development"
+	DatabasePlanComponentsResponseComputeFamilyMemory      DatabasePlanComponentsResponseComputeFamily = "memory"
+	DatabasePlanComponentsResponseComputeFamilyStandard    DatabasePlanComponentsResponseComputeFamily = "standard"
 )
 
 // Valid indicates whether the value is a known member of the DatabasePlanComponentsResponseComputeFamily enum.
 func (e DatabasePlanComponentsResponseComputeFamily) Valid() bool {
 	switch e {
-	case Development:
+	case DatabasePlanComponentsResponseComputeFamilyDevelopment:
 		return true
-	case Memory:
+	case DatabasePlanComponentsResponseComputeFamilyMemory:
 		return true
-	case Standard:
+	case DatabasePlanComponentsResponseComputeFamilyStandard:
 		return true
 	default:
 		return false
@@ -220,34 +220,34 @@ func (e DatabasePlanComponentsResponseComputeFamily) Valid() bool {
 
 // Defines values for DatabaseQueryParamSort.
 const (
-	CreatedAt             DatabaseQueryParamSort = "created_at"
-	MinusCreatedAt        DatabaseQueryParamSort = "-created_at"
-	MinusName             DatabaseQueryParamSort = "-name"
-	MinusOperationalState DatabaseQueryParamSort = "-operational_state"
-	MinusZone             DatabaseQueryParamSort = "-zone"
-	Name                  DatabaseQueryParamSort = "name"
-	OperationalState      DatabaseQueryParamSort = "operational_state"
-	Zone                  DatabaseQueryParamSort = "zone"
+	DatabaseQueryParamSortCreatedAt             DatabaseQueryParamSort = "created_at"
+	DatabaseQueryParamSortMinusCreatedAt        DatabaseQueryParamSort = "-created_at"
+	DatabaseQueryParamSortMinusName             DatabaseQueryParamSort = "-name"
+	DatabaseQueryParamSortMinusOperationalState DatabaseQueryParamSort = "-operational_state"
+	DatabaseQueryParamSortMinusZone             DatabaseQueryParamSort = "-zone"
+	DatabaseQueryParamSortName                  DatabaseQueryParamSort = "name"
+	DatabaseQueryParamSortOperationalState      DatabaseQueryParamSort = "operational_state"
+	DatabaseQueryParamSortZone                  DatabaseQueryParamSort = "zone"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseQueryParamSort enum.
 func (e DatabaseQueryParamSort) Valid() bool {
 	switch e {
-	case CreatedAt:
+	case DatabaseQueryParamSortCreatedAt:
 		return true
-	case MinusCreatedAt:
+	case DatabaseQueryParamSortMinusCreatedAt:
 		return true
-	case MinusName:
+	case DatabaseQueryParamSortMinusName:
 		return true
-	case MinusOperationalState:
+	case DatabaseQueryParamSortMinusOperationalState:
 		return true
-	case MinusZone:
+	case DatabaseQueryParamSortMinusZone:
 		return true
-	case Name:
+	case DatabaseQueryParamSortName:
 		return true
-	case OperationalState:
+	case DatabaseQueryParamSortOperationalState:
 		return true
-	case Zone:
+	case DatabaseQueryParamSortZone:
 		return true
 	default:
 		return false
@@ -277,16 +277,16 @@ func (e DatabaseServiceIntegration) Valid() bool {
 
 // Defines values for DatabaseServicePropertiesMysqlInternalTmpMemStorageEngine.
 const (
-	MEMORY    DatabaseServicePropertiesMysqlInternalTmpMemStorageEngine = "MEMORY"
-	TempTable DatabaseServicePropertiesMysqlInternalTmpMemStorageEngine = "TempTable"
+	DatabaseServicePropertiesMysqlInternalTmpMemStorageEngineMEMORY    DatabaseServicePropertiesMysqlInternalTmpMemStorageEngine = "MEMORY"
+	DatabaseServicePropertiesMysqlInternalTmpMemStorageEngineTempTable DatabaseServicePropertiesMysqlInternalTmpMemStorageEngine = "TempTable"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseServicePropertiesMysqlInternalTmpMemStorageEngine enum.
 func (e DatabaseServicePropertiesMysqlInternalTmpMemStorageEngine) Valid() bool {
 	switch e {
-	case MEMORY:
+	case DatabaseServicePropertiesMysqlInternalTmpMemStorageEngineMEMORY:
 		return true
-	case TempTable:
+	case DatabaseServicePropertiesMysqlInternalTmpMemStorageEngineTempTable:
 		return true
 	default:
 		return false
@@ -295,22 +295,22 @@ func (e DatabaseServicePropertiesMysqlInternalTmpMemStorageEngine) Valid() bool 
 
 // Defines values for DatabaseServicePropertiesMysqlLogOutput.
 const (
-	INSIGHTS      DatabaseServicePropertiesMysqlLogOutput = "INSIGHTS"
-	INSIGHTSTABLE DatabaseServicePropertiesMysqlLogOutput = "INSIGHTS,TABLE"
-	NONE          DatabaseServicePropertiesMysqlLogOutput = "NONE"
-	TABLE         DatabaseServicePropertiesMysqlLogOutput = "TABLE"
+	DatabaseServicePropertiesMysqlLogOutputINSIGHTS      DatabaseServicePropertiesMysqlLogOutput = "INSIGHTS"
+	DatabaseServicePropertiesMysqlLogOutputINSIGHTSTABLE DatabaseServicePropertiesMysqlLogOutput = "INSIGHTS,TABLE"
+	DatabaseServicePropertiesMysqlLogOutputNONE          DatabaseServicePropertiesMysqlLogOutput = "NONE"
+	DatabaseServicePropertiesMysqlLogOutputTABLE         DatabaseServicePropertiesMysqlLogOutput = "TABLE"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseServicePropertiesMysqlLogOutput enum.
 func (e DatabaseServicePropertiesMysqlLogOutput) Valid() bool {
 	switch e {
-	case INSIGHTS:
+	case DatabaseServicePropertiesMysqlLogOutputINSIGHTS:
 		return true
-	case INSIGHTSTABLE:
+	case DatabaseServicePropertiesMysqlLogOutputINSIGHTSTABLE:
 		return true
-	case NONE:
+	case DatabaseServicePropertiesMysqlLogOutputNONE:
 		return true
-	case TABLE:
+	case DatabaseServicePropertiesMysqlLogOutputTABLE:
 		return true
 	default:
 		return false
@@ -337,16 +337,16 @@ func (e DatabaseServicePropertiesMysqlLowerCaseTableNames) Valid() bool {
 
 // Defines values for DatabaseServicePropertiesMysqlMigrationDumpTool.
 const (
-	Mydumper  DatabaseServicePropertiesMysqlMigrationDumpTool = "mydumper"
-	Mysqldump DatabaseServicePropertiesMysqlMigrationDumpTool = "mysqldump"
+	DatabaseServicePropertiesMysqlMigrationDumpToolMydumper  DatabaseServicePropertiesMysqlMigrationDumpTool = "mydumper"
+	DatabaseServicePropertiesMysqlMigrationDumpToolMysqldump DatabaseServicePropertiesMysqlMigrationDumpTool = "mysqldump"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseServicePropertiesMysqlMigrationDumpTool enum.
 func (e DatabaseServicePropertiesMysqlMigrationDumpTool) Valid() bool {
 	switch e {
-	case Mydumper:
+	case DatabaseServicePropertiesMysqlMigrationDumpToolMydumper:
 		return true
-	case Mysqldump:
+	case DatabaseServicePropertiesMysqlMigrationDumpToolMysqldump:
 		return true
 	default:
 		return false
@@ -391,13 +391,13 @@ func (e DatabaseServicePropertiesMysqlVersion) Valid() bool {
 
 // Defines values for DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingAuthenticationBackend.
 const (
-	Internal DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingAuthenticationBackend = "internal"
+	DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingAuthenticationBackendInternal DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingAuthenticationBackend = "internal"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingAuthenticationBackend enum.
 func (e DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingAuthenticationBackend) Valid() bool {
 	switch e {
-	case Internal:
+	case DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingAuthenticationBackendInternal:
 		return true
 	default:
 		return false
@@ -406,13 +406,13 @@ func (e DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthentic
 
 // Defines values for DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingType.
 const (
-	Username DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingType = "username"
+	DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingTypeUsername DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingType = "username"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingType enum.
 func (e DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingType) Valid() bool {
 	switch e {
-	case Username:
+	case DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingTypeUsername:
 		return true
 	default:
 		return false
@@ -487,16 +487,16 @@ func (e DatabaseServicePropertiesOpensearchCustomReposType) Valid() bool {
 
 // Defines values for DatabaseServicePropertiesOpensearchIndexPatternsSortingAlgorithm.
 const (
-	Alphabetical DatabaseServicePropertiesOpensearchIndexPatternsSortingAlgorithm = "alphabetical"
-	CreationDate DatabaseServicePropertiesOpensearchIndexPatternsSortingAlgorithm = "creation_date"
+	DatabaseServicePropertiesOpensearchIndexPatternsSortingAlgorithmAlphabetical DatabaseServicePropertiesOpensearchIndexPatternsSortingAlgorithm = "alphabetical"
+	DatabaseServicePropertiesOpensearchIndexPatternsSortingAlgorithmCreationDate DatabaseServicePropertiesOpensearchIndexPatternsSortingAlgorithm = "creation_date"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseServicePropertiesOpensearchIndexPatternsSortingAlgorithm enum.
 func (e DatabaseServicePropertiesOpensearchIndexPatternsSortingAlgorithm) Valid() bool {
 	switch e {
-	case Alphabetical:
+	case DatabaseServicePropertiesOpensearchIndexPatternsSortingAlgorithmAlphabetical:
 		return true
-	case CreationDate:
+	case DatabaseServicePropertiesOpensearchIndexPatternsSortingAlgorithmCreationDate:
 		return true
 	default:
 		return false
@@ -505,19 +505,19 @@ func (e DatabaseServicePropertiesOpensearchIndexPatternsSortingAlgorithm) Valid(
 
 // Defines values for DatabaseServicePropertiesOpensearchSearchBackpressureMode.
 const (
-	Disabled    DatabaseServicePropertiesOpensearchSearchBackpressureMode = "disabled"
-	Enforced    DatabaseServicePropertiesOpensearchSearchBackpressureMode = "enforced"
-	MonitorOnly DatabaseServicePropertiesOpensearchSearchBackpressureMode = "monitor_only"
+	DatabaseServicePropertiesOpensearchSearchBackpressureModeDisabled    DatabaseServicePropertiesOpensearchSearchBackpressureMode = "disabled"
+	DatabaseServicePropertiesOpensearchSearchBackpressureModeEnforced    DatabaseServicePropertiesOpensearchSearchBackpressureMode = "enforced"
+	DatabaseServicePropertiesOpensearchSearchBackpressureModeMonitorOnly DatabaseServicePropertiesOpensearchSearchBackpressureMode = "monitor_only"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseServicePropertiesOpensearchSearchBackpressureMode enum.
 func (e DatabaseServicePropertiesOpensearchSearchBackpressureMode) Valid() bool {
 	switch e {
-	case Disabled:
+	case DatabaseServicePropertiesOpensearchSearchBackpressureModeDisabled:
 		return true
-	case Enforced:
+	case DatabaseServicePropertiesOpensearchSearchBackpressureModeEnforced:
 		return true
-	case MonitorOnly:
+	case DatabaseServicePropertiesOpensearchSearchBackpressureModeMonitorOnly:
 		return true
 	default:
 		return false
@@ -580,16 +580,16 @@ func (e DatabaseServicePropertiesPgBackupIntervalHours) Valid() bool {
 
 // Defines values for DatabaseServicePropertiesPgDefaultToastCompression.
 const (
-	Lz4  DatabaseServicePropertiesPgDefaultToastCompression = "lz4"
-	Pglz DatabaseServicePropertiesPgDefaultToastCompression = "pglz"
+	DatabaseServicePropertiesPgDefaultToastCompressionLz4  DatabaseServicePropertiesPgDefaultToastCompression = "lz4"
+	DatabaseServicePropertiesPgDefaultToastCompressionPglz DatabaseServicePropertiesPgDefaultToastCompression = "pglz"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseServicePropertiesPgDefaultToastCompression enum.
 func (e DatabaseServicePropertiesPgDefaultToastCompression) Valid() bool {
 	switch e {
-	case Lz4:
+	case DatabaseServicePropertiesPgDefaultToastCompressionLz4:
 		return true
-	case Pglz:
+	case DatabaseServicePropertiesPgDefaultToastCompressionPglz:
 		return true
 	default:
 		return false
@@ -598,19 +598,19 @@ func (e DatabaseServicePropertiesPgDefaultToastCompression) Valid() bool {
 
 // Defines values for DatabaseServicePropertiesPgIoMethod.
 const (
-	IoUring DatabaseServicePropertiesPgIoMethod = "io_uring"
-	Sync    DatabaseServicePropertiesPgIoMethod = "sync"
-	Worker  DatabaseServicePropertiesPgIoMethod = "worker"
+	DatabaseServicePropertiesPgIoMethodIoUring DatabaseServicePropertiesPgIoMethod = "io_uring"
+	DatabaseServicePropertiesPgIoMethodSync    DatabaseServicePropertiesPgIoMethod = "sync"
+	DatabaseServicePropertiesPgIoMethodWorker  DatabaseServicePropertiesPgIoMethod = "worker"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseServicePropertiesPgIoMethod enum.
 func (e DatabaseServicePropertiesPgIoMethod) Valid() bool {
 	switch e {
-	case IoUring:
+	case DatabaseServicePropertiesPgIoMethodIoUring:
 		return true
-	case Sync:
+	case DatabaseServicePropertiesPgIoMethodSync:
 		return true
-	case Worker:
+	case DatabaseServicePropertiesPgIoMethodWorker:
 		return true
 	default:
 		return false
@@ -619,19 +619,19 @@ func (e DatabaseServicePropertiesPgIoMethod) Valid() bool {
 
 // Defines values for DatabaseServicePropertiesPgLogErrorVerbosity.
 const (
-	DEFAULT DatabaseServicePropertiesPgLogErrorVerbosity = "DEFAULT"
-	TERSE   DatabaseServicePropertiesPgLogErrorVerbosity = "TERSE"
-	VERBOSE DatabaseServicePropertiesPgLogErrorVerbosity = "VERBOSE"
+	DatabaseServicePropertiesPgLogErrorVerbosityDEFAULT DatabaseServicePropertiesPgLogErrorVerbosity = "DEFAULT"
+	DatabaseServicePropertiesPgLogErrorVerbosityTERSE   DatabaseServicePropertiesPgLogErrorVerbosity = "TERSE"
+	DatabaseServicePropertiesPgLogErrorVerbosityVERBOSE DatabaseServicePropertiesPgLogErrorVerbosity = "VERBOSE"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseServicePropertiesPgLogErrorVerbosity enum.
 func (e DatabaseServicePropertiesPgLogErrorVerbosity) Valid() bool {
 	switch e {
-	case DEFAULT:
+	case DatabaseServicePropertiesPgLogErrorVerbosityDEFAULT:
 		return true
-	case TERSE:
+	case DatabaseServicePropertiesPgLogErrorVerbosityTERSE:
 		return true
-	case VERBOSE:
+	case DatabaseServicePropertiesPgLogErrorVerbosityVERBOSE:
 		return true
 	default:
 		return false
@@ -640,22 +640,22 @@ func (e DatabaseServicePropertiesPgLogErrorVerbosity) Valid() bool {
 
 // Defines values for DatabaseServicePropertiesPgLogLinePrefix.
 const (
-	MpqUserudbdappa                  DatabaseServicePropertiesPgLogLinePrefix = "'%m [%p] %q[user=%u,db=%d,app=%a] '"
-	Pidpuserudbdappaclienth          DatabaseServicePropertiesPgLogLinePrefix = "'pid=%p,user=%u,db=%d,app=%a,client=%h '"
-	PidpuserudbdappaclienthtxidxqidQ DatabaseServicePropertiesPgLogLinePrefix = "'pid=%p,user=%u,db=%d,app=%a,client=%h,txid=%x,qid=%Q '"
-	Tpl1Userudbdappaclienth          DatabaseServicePropertiesPgLogLinePrefix = "'%t [%p]: [%l-1] user=%u,db=%d,app=%a,client=%h '"
+	DatabaseServicePropertiesPgLogLinePrefixMpqUserudbdappa                  DatabaseServicePropertiesPgLogLinePrefix = "'%m [%p] %q[user=%u,db=%d,app=%a] '"
+	DatabaseServicePropertiesPgLogLinePrefixPidpuserudbdappaclienth          DatabaseServicePropertiesPgLogLinePrefix = "'pid=%p,user=%u,db=%d,app=%a,client=%h '"
+	DatabaseServicePropertiesPgLogLinePrefixPidpuserudbdappaclienthtxidxqidQ DatabaseServicePropertiesPgLogLinePrefix = "'pid=%p,user=%u,db=%d,app=%a,client=%h,txid=%x,qid=%Q '"
+	DatabaseServicePropertiesPgLogLinePrefixTpl1Userudbdappaclienth          DatabaseServicePropertiesPgLogLinePrefix = "'%t [%p]: [%l-1] user=%u,db=%d,app=%a,client=%h '"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseServicePropertiesPgLogLinePrefix enum.
 func (e DatabaseServicePropertiesPgLogLinePrefix) Valid() bool {
 	switch e {
-	case MpqUserudbdappa:
+	case DatabaseServicePropertiesPgLogLinePrefixMpqUserudbdappa:
 		return true
-	case Pidpuserudbdappaclienth:
+	case DatabaseServicePropertiesPgLogLinePrefixPidpuserudbdappaclienth:
 		return true
-	case PidpuserudbdappaclienthtxidxqidQ:
+	case DatabaseServicePropertiesPgLogLinePrefixPidpuserudbdappaclienthtxidxqidQ:
 		return true
-	case Tpl1Userudbdappaclienth:
+	case DatabaseServicePropertiesPgLogLinePrefixTpl1Userudbdappaclienth:
 		return true
 	default:
 		return false
@@ -682,16 +682,16 @@ func (e DatabaseServicePropertiesPgMigrationMethod) Valid() bool {
 
 // Defines values for DatabaseServicePropertiesPgPasswordEncryption.
 const (
-	Md5         DatabaseServicePropertiesPgPasswordEncryption = "md5"
-	ScramSha256 DatabaseServicePropertiesPgPasswordEncryption = "scram-sha-256"
+	DatabaseServicePropertiesPgPasswordEncryptionMd5         DatabaseServicePropertiesPgPasswordEncryption = "md5"
+	DatabaseServicePropertiesPgPasswordEncryptionScramSha256 DatabaseServicePropertiesPgPasswordEncryption = "scram-sha-256"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseServicePropertiesPgPasswordEncryption enum.
 func (e DatabaseServicePropertiesPgPasswordEncryption) Valid() bool {
 	switch e {
-	case Md5:
+	case DatabaseServicePropertiesPgPasswordEncryptionMd5:
 		return true
-	case ScramSha256:
+	case DatabaseServicePropertiesPgPasswordEncryptionScramSha256:
 		return true
 	default:
 		return false
@@ -796,19 +796,19 @@ func (e DatabaseServicePropertiesPgPgauditLogLevel) Valid() bool {
 
 // Defines values for DatabaseServicePropertiesPgPgbouncerAutodbPoolMode.
 const (
-	Session     DatabaseServicePropertiesPgPgbouncerAutodbPoolMode = "session"
-	Statement   DatabaseServicePropertiesPgPgbouncerAutodbPoolMode = "statement"
-	Transaction DatabaseServicePropertiesPgPgbouncerAutodbPoolMode = "transaction"
+	DatabaseServicePropertiesPgPgbouncerAutodbPoolModeSession     DatabaseServicePropertiesPgPgbouncerAutodbPoolMode = "session"
+	DatabaseServicePropertiesPgPgbouncerAutodbPoolModeStatement   DatabaseServicePropertiesPgPgbouncerAutodbPoolMode = "statement"
+	DatabaseServicePropertiesPgPgbouncerAutodbPoolModeTransaction DatabaseServicePropertiesPgPgbouncerAutodbPoolMode = "transaction"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseServicePropertiesPgPgbouncerAutodbPoolMode enum.
 func (e DatabaseServicePropertiesPgPgbouncerAutodbPoolMode) Valid() bool {
 	switch e {
-	case Session:
+	case DatabaseServicePropertiesPgPgbouncerAutodbPoolModeSession:
 		return true
-	case Statement:
+	case DatabaseServicePropertiesPgPgbouncerAutodbPoolModeStatement:
 		return true
-	case Transaction:
+	case DatabaseServicePropertiesPgPgbouncerAutodbPoolModeTransaction:
 		return true
 	default:
 		return false
@@ -817,16 +817,16 @@ func (e DatabaseServicePropertiesPgPgbouncerAutodbPoolMode) Valid() bool {
 
 // Defines values for DatabaseServicePropertiesPgPgbouncerIgnoreStartupParameters.
 const (
-	ExtraFloatDigits DatabaseServicePropertiesPgPgbouncerIgnoreStartupParameters = "extra_float_digits"
-	SearchPath       DatabaseServicePropertiesPgPgbouncerIgnoreStartupParameters = "search_path"
+	DatabaseServicePropertiesPgPgbouncerIgnoreStartupParametersExtraFloatDigits DatabaseServicePropertiesPgPgbouncerIgnoreStartupParameters = "extra_float_digits"
+	DatabaseServicePropertiesPgPgbouncerIgnoreStartupParametersSearchPath       DatabaseServicePropertiesPgPgbouncerIgnoreStartupParameters = "search_path"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseServicePropertiesPgPgbouncerIgnoreStartupParameters enum.
 func (e DatabaseServicePropertiesPgPgbouncerIgnoreStartupParameters) Valid() bool {
 	switch e {
-	case ExtraFloatDigits:
+	case DatabaseServicePropertiesPgPgbouncerIgnoreStartupParametersExtraFloatDigits:
 		return true
-	case SearchPath:
+	case DatabaseServicePropertiesPgPgbouncerIgnoreStartupParametersSearchPath:
 		return true
 	default:
 		return false
@@ -898,19 +898,19 @@ func (e DatabaseServicePropertiesPgTrackCommitTimestamp) Valid() bool {
 
 // Defines values for DatabaseServicePropertiesPgTrackFunctions.
 const (
-	All  DatabaseServicePropertiesPgTrackFunctions = "all"
-	None DatabaseServicePropertiesPgTrackFunctions = "none"
-	Pl   DatabaseServicePropertiesPgTrackFunctions = "pl"
+	DatabaseServicePropertiesPgTrackFunctionsAll  DatabaseServicePropertiesPgTrackFunctions = "all"
+	DatabaseServicePropertiesPgTrackFunctionsNone DatabaseServicePropertiesPgTrackFunctions = "none"
+	DatabaseServicePropertiesPgTrackFunctionsPl   DatabaseServicePropertiesPgTrackFunctions = "pl"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseServicePropertiesPgTrackFunctions enum.
 func (e DatabaseServicePropertiesPgTrackFunctions) Valid() bool {
 	switch e {
-	case All:
+	case DatabaseServicePropertiesPgTrackFunctionsAll:
 		return true
-	case None:
+	case DatabaseServicePropertiesPgTrackFunctionsNone:
 		return true
-	case Pl:
+	case DatabaseServicePropertiesPgTrackFunctionsPl:
 		return true
 	default:
 		return false
@@ -937,16 +937,16 @@ func (e DatabaseServicePropertiesPgTrackIoTiming) Valid() bool {
 
 // Defines values for DatabaseServicePropertiesPgVariant.
 const (
-	Aiven     DatabaseServicePropertiesPgVariant = "aiven"
-	Timescale DatabaseServicePropertiesPgVariant = "timescale"
+	DatabaseServicePropertiesPgVariantAiven     DatabaseServicePropertiesPgVariant = "aiven"
+	DatabaseServicePropertiesPgVariantTimescale DatabaseServicePropertiesPgVariant = "timescale"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseServicePropertiesPgVariant enum.
 func (e DatabaseServicePropertiesPgVariant) Valid() bool {
 	switch e {
-	case Aiven:
+	case DatabaseServicePropertiesPgVariantAiven:
 		return true
-	case Timescale:
+	case DatabaseServicePropertiesPgVariantTimescale:
 		return true
 	default:
 		return false
@@ -955,22 +955,22 @@ func (e DatabaseServicePropertiesPgVariant) Valid() bool {
 
 // Defines values for DatabaseServicePropertiesPgVersion.
 const (
-	N15 DatabaseServicePropertiesPgVersion = "15"
-	N16 DatabaseServicePropertiesPgVersion = "16"
-	N17 DatabaseServicePropertiesPgVersion = "17"
-	N18 DatabaseServicePropertiesPgVersion = "18"
+	DatabaseServicePropertiesPgVersionN15 DatabaseServicePropertiesPgVersion = "15"
+	DatabaseServicePropertiesPgVersionN16 DatabaseServicePropertiesPgVersion = "16"
+	DatabaseServicePropertiesPgVersionN17 DatabaseServicePropertiesPgVersion = "17"
+	DatabaseServicePropertiesPgVersionN18 DatabaseServicePropertiesPgVersion = "18"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseServicePropertiesPgVersion enum.
 func (e DatabaseServicePropertiesPgVersion) Valid() bool {
 	switch e {
-	case N15:
+	case DatabaseServicePropertiesPgVersionN15:
 		return true
-	case N16:
+	case DatabaseServicePropertiesPgVersionN16:
 		return true
-	case N17:
+	case DatabaseServicePropertiesPgVersionN17:
 		return true
-	case N18:
+	case DatabaseServicePropertiesPgVersionN18:
 		return true
 	default:
 		return false
@@ -1069,13 +1069,13 @@ func (e DatabaseServicePropertiesRedisRedisPersistence) Valid() bool {
 
 // Defines values for DatabaseServicePropertiesRedisRedisVersion.
 const (
-	N70 DatabaseServicePropertiesRedisRedisVersion = "7.0"
+	DatabaseServicePropertiesRedisRedisVersionN70 DatabaseServicePropertiesRedisRedisVersion = "7.0"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseServicePropertiesRedisRedisVersion enum.
 func (e DatabaseServicePropertiesRedisRedisVersion) Valid() bool {
 	switch e {
-	case N70:
+	case DatabaseServicePropertiesRedisRedisVersionN70:
 		return true
 	default:
 		return false
@@ -1174,16 +1174,16 @@ func (e DatabaseServicePropertiesValkeyValkeyPersistence) Valid() bool {
 
 // Defines values for DatabaseServicePropertiesValkeyValkeyVersion.
 const (
-	N81 DatabaseServicePropertiesValkeyValkeyVersion = "8.1"
-	N90 DatabaseServicePropertiesValkeyValkeyVersion = "9.0"
+	DatabaseServicePropertiesValkeyValkeyVersionN81 DatabaseServicePropertiesValkeyValkeyVersion = "8.1"
+	DatabaseServicePropertiesValkeyValkeyVersionN90 DatabaseServicePropertiesValkeyValkeyVersion = "9.0"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseServicePropertiesValkeyValkeyVersion enum.
 func (e DatabaseServicePropertiesValkeyValkeyVersion) Valid() bool {
 	switch e {
-	case N81:
+	case DatabaseServicePropertiesValkeyValkeyVersionN81:
 		return true
-	case N90:
+	case DatabaseServicePropertiesValkeyValkeyVersionN90:
 		return true
 	default:
 		return false
@@ -1240,16 +1240,16 @@ func (e DatabaseVersionsResponseServiceType) Valid() bool {
 
 // Defines values for DatabaseVersionsResponseState.
 const (
-	Available DatabaseVersionsResponseState = "available"
-	Preview   DatabaseVersionsResponseState = "preview"
+	DatabaseVersionsResponseStateAvailable DatabaseVersionsResponseState = "available"
+	DatabaseVersionsResponseStatePreview   DatabaseVersionsResponseState = "preview"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseVersionsResponseState enum.
 func (e DatabaseVersionsResponseState) Valid() bool {
 	switch e {
-	case Available:
+	case DatabaseVersionsResponseStateAvailable:
 		return true
-	case Preview:
+	case DatabaseVersionsResponseStatePreview:
 		return true
 	default:
 		return false

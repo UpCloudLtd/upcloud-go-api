@@ -50,16 +50,16 @@ func (e ObjectStorage2AccessKeyModifyStatus) Valid() bool {
 
 // Defines values for ObjectStorage2CreateAccessKeyResponseStatus.
 const (
-	Active   ObjectStorage2CreateAccessKeyResponseStatus = "Active"
-	Inactive ObjectStorage2CreateAccessKeyResponseStatus = "Inactive"
+	ObjectStorage2CreateAccessKeyResponseStatusActive   ObjectStorage2CreateAccessKeyResponseStatus = "Active"
+	ObjectStorage2CreateAccessKeyResponseStatusInactive ObjectStorage2CreateAccessKeyResponseStatus = "Inactive"
 )
 
 // Valid indicates whether the value is a known member of the ObjectStorage2CreateAccessKeyResponseStatus enum.
 func (e ObjectStorage2CreateAccessKeyResponseStatus) Valid() bool {
 	switch e {
-	case Active:
+	case ObjectStorage2CreateAccessKeyResponseStatusActive:
 		return true
-	case Inactive:
+	case ObjectStorage2CreateAccessKeyResponseStatusInactive:
 		return true
 	default:
 		return false
@@ -140,16 +140,16 @@ func (e ObjectStorage2CustomDomainModifyType) Valid() bool {
 
 // Defines values for ObjectStorage2EndpointResponseMode.
 const (
-	Api           ObjectStorage2EndpointResponseMode = "api"
-	StaticWebsite ObjectStorage2EndpointResponseMode = "static-website"
+	ObjectStorage2EndpointResponseModeApi           ObjectStorage2EndpointResponseMode = "api"
+	ObjectStorage2EndpointResponseModeStaticWebsite ObjectStorage2EndpointResponseMode = "static-website"
 )
 
 // Valid indicates whether the value is a known member of the ObjectStorage2EndpointResponseMode enum.
 func (e ObjectStorage2EndpointResponseMode) Valid() bool {
 	switch e {
-	case Api:
+	case ObjectStorage2EndpointResponseModeApi:
 		return true
-	case StaticWebsite:
+	case ObjectStorage2EndpointResponseModeStaticWebsite:
 		return true
 	default:
 		return false
@@ -176,22 +176,22 @@ func (e ObjectStorage2EndpointResponseType) Valid() bool {
 
 // Defines values for ObjectStorage2ErrorResponseType.
 const (
-	HttpsdevelopersUpcloudCom13errorsERRORGENERALFAILURE      ObjectStorage2ErrorResponseType = "https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"
-	HttpsdevelopersUpcloudCom13errorsERRORINSUFFICIENTCREDITS ObjectStorage2ErrorResponseType = "https://developers.upcloud.com/1.3/errors#ERROR_INSUFFICIENT_CREDITS"
-	HttpsdevelopersUpcloudCom13errorsERRORINVALIDREQUEST      ObjectStorage2ErrorResponseType = "https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"
-	HttpsdevelopersUpcloudCom13errorsERRORRESOURCENOTFOUND    ObjectStorage2ErrorResponseType = "https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"
+	ObjectStorage2ErrorResponseTypeHttpsdevelopersUpcloudCom13errorsERRORGENERALFAILURE      ObjectStorage2ErrorResponseType = "https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"
+	ObjectStorage2ErrorResponseTypeHttpsdevelopersUpcloudCom13errorsERRORINSUFFICIENTCREDITS ObjectStorage2ErrorResponseType = "https://developers.upcloud.com/1.3/errors#ERROR_INSUFFICIENT_CREDITS"
+	ObjectStorage2ErrorResponseTypeHttpsdevelopersUpcloudCom13errorsERRORINVALIDREQUEST      ObjectStorage2ErrorResponseType = "https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"
+	ObjectStorage2ErrorResponseTypeHttpsdevelopersUpcloudCom13errorsERRORRESOURCENOTFOUND    ObjectStorage2ErrorResponseType = "https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"
 )
 
 // Valid indicates whether the value is a known member of the ObjectStorage2ErrorResponseType enum.
 func (e ObjectStorage2ErrorResponseType) Valid() bool {
 	switch e {
-	case HttpsdevelopersUpcloudCom13errorsERRORGENERALFAILURE:
+	case ObjectStorage2ErrorResponseTypeHttpsdevelopersUpcloudCom13errorsERRORGENERALFAILURE:
 		return true
-	case HttpsdevelopersUpcloudCom13errorsERRORINSUFFICIENTCREDITS:
+	case ObjectStorage2ErrorResponseTypeHttpsdevelopersUpcloudCom13errorsERRORINSUFFICIENTCREDITS:
 		return true
-	case HttpsdevelopersUpcloudCom13errorsERRORINVALIDREQUEST:
+	case ObjectStorage2ErrorResponseTypeHttpsdevelopersUpcloudCom13errorsERRORINVALIDREQUEST:
 		return true
-	case HttpsdevelopersUpcloudCom13errorsERRORRESOURCENOTFOUND:
+	case ObjectStorage2ErrorResponseTypeHttpsdevelopersUpcloudCom13errorsERRORRESOURCENOTFOUND:
 		return true
 	default:
 		return false
@@ -200,16 +200,16 @@ func (e ObjectStorage2ErrorResponseType) Valid() bool {
 
 // Defines values for ObjectStorage2NetworkFamily.
 const (
-	IPv4 ObjectStorage2NetworkFamily = "IPv4"
-	IPv6 ObjectStorage2NetworkFamily = "IPv6"
+	ObjectStorage2NetworkFamilyIPv4 ObjectStorage2NetworkFamily = "IPv4"
+	ObjectStorage2NetworkFamilyIPv6 ObjectStorage2NetworkFamily = "IPv6"
 )
 
 // Valid indicates whether the value is a known member of the ObjectStorage2NetworkFamily enum.
 func (e ObjectStorage2NetworkFamily) Valid() bool {
 	switch e {
-	case IPv4:
+	case ObjectStorage2NetworkFamilyIPv4:
 		return true
-	case IPv6:
+	case ObjectStorage2NetworkFamilyIPv6:
 		return true
 	default:
 		return false
@@ -254,34 +254,34 @@ func (e ObjectStorage2PropertyConfiguredStatus) Valid() bool {
 
 // Defines values for ObjectStorage2QueryParamSort.
 const (
-	CreatedAt             ObjectStorage2QueryParamSort = "created_at"
-	MinusCreatedAt        ObjectStorage2QueryParamSort = "-created_at"
-	MinusOperationalState ObjectStorage2QueryParamSort = "-operational_state"
-	MinusRegionName       ObjectStorage2QueryParamSort = "-region_name"
-	MinusServiceName      ObjectStorage2QueryParamSort = "-service_name"
-	OperationalState      ObjectStorage2QueryParamSort = "operational_state"
-	RegionName            ObjectStorage2QueryParamSort = "region_name"
-	ServiceName           ObjectStorage2QueryParamSort = "service_name"
+	ObjectStorage2QueryParamSortCreatedAt             ObjectStorage2QueryParamSort = "created_at"
+	ObjectStorage2QueryParamSortMinusCreatedAt        ObjectStorage2QueryParamSort = "-created_at"
+	ObjectStorage2QueryParamSortMinusOperationalState ObjectStorage2QueryParamSort = "-operational_state"
+	ObjectStorage2QueryParamSortMinusRegionName       ObjectStorage2QueryParamSort = "-region_name"
+	ObjectStorage2QueryParamSortMinusServiceName      ObjectStorage2QueryParamSort = "-service_name"
+	ObjectStorage2QueryParamSortOperationalState      ObjectStorage2QueryParamSort = "operational_state"
+	ObjectStorage2QueryParamSortRegionName            ObjectStorage2QueryParamSort = "region_name"
+	ObjectStorage2QueryParamSortServiceName           ObjectStorage2QueryParamSort = "service_name"
 )
 
 // Valid indicates whether the value is a known member of the ObjectStorage2QueryParamSort enum.
 func (e ObjectStorage2QueryParamSort) Valid() bool {
 	switch e {
-	case CreatedAt:
+	case ObjectStorage2QueryParamSortCreatedAt:
 		return true
-	case MinusCreatedAt:
+	case ObjectStorage2QueryParamSortMinusCreatedAt:
 		return true
-	case MinusOperationalState:
+	case ObjectStorage2QueryParamSortMinusOperationalState:
 		return true
-	case MinusRegionName:
+	case ObjectStorage2QueryParamSortMinusRegionName:
 		return true
-	case MinusServiceName:
+	case ObjectStorage2QueryParamSortMinusServiceName:
 		return true
-	case OperationalState:
+	case ObjectStorage2QueryParamSortOperationalState:
 		return true
-	case RegionName:
+	case ObjectStorage2QueryParamSortRegionName:
 		return true
-	case ServiceName:
+	case ObjectStorage2QueryParamSortServiceName:
 		return true
 	default:
 		return false
@@ -308,73 +308,73 @@ func (e ObjectStorage2ServiceDetailResponseConfiguredStatus) Valid() bool {
 
 // Defines values for ObjectStorage2ServiceDetailResponseOperationalState.
 const (
-	CleanupDeletedBuckets ObjectStorage2ServiceDetailResponseOperationalState = "cleanup-deleted-buckets"
-	DeleteBuckets         ObjectStorage2ServiceDetailResponseOperationalState = "delete-buckets"
-	DeleteDns             ObjectStorage2ServiceDetailResponseOperationalState = "delete-dns"
-	DeleteIam             ObjectStorage2ServiceDetailResponseOperationalState = "delete-iam"
-	DeleteNamespace       ObjectStorage2ServiceDetailResponseOperationalState = "delete-namespace"
-	DeleteNetwork         ObjectStorage2ServiceDetailResponseOperationalState = "delete-network"
-	DeletePrivateEndpoint ObjectStorage2ServiceDetailResponseOperationalState = "delete-private-endpoint"
-	DeletePublicEndpoint  ObjectStorage2ServiceDetailResponseOperationalState = "delete-public-endpoint"
-	DeleteService         ObjectStorage2ServiceDetailResponseOperationalState = "delete-service"
-	DeleteTls             ObjectStorage2ServiceDetailResponseOperationalState = "delete-tls"
-	Pending               ObjectStorage2ServiceDetailResponseOperationalState = "pending"
-	Running               ObjectStorage2ServiceDetailResponseOperationalState = "running"
-	SetupCheckup          ObjectStorage2ServiceDetailResponseOperationalState = "setup-checkup"
-	SetupDns              ObjectStorage2ServiceDetailResponseOperationalState = "setup-dns"
-	SetupIam              ObjectStorage2ServiceDetailResponseOperationalState = "setup-iam"
-	SetupNetwork          ObjectStorage2ServiceDetailResponseOperationalState = "setup-network"
-	SetupPrivateEndpoint  ObjectStorage2ServiceDetailResponseOperationalState = "setup-private-endpoint"
-	SetupPublicEndpoint   ObjectStorage2ServiceDetailResponseOperationalState = "setup-public-endpoint"
-	SetupService          ObjectStorage2ServiceDetailResponseOperationalState = "setup-service"
-	SetupTls              ObjectStorage2ServiceDetailResponseOperationalState = "setup-tls"
-	Stopped               ObjectStorage2ServiceDetailResponseOperationalState = "stopped"
+	ObjectStorage2ServiceDetailResponseOperationalStateCleanupDeletedBuckets ObjectStorage2ServiceDetailResponseOperationalState = "cleanup-deleted-buckets"
+	ObjectStorage2ServiceDetailResponseOperationalStateDeleteBuckets         ObjectStorage2ServiceDetailResponseOperationalState = "delete-buckets"
+	ObjectStorage2ServiceDetailResponseOperationalStateDeleteDns             ObjectStorage2ServiceDetailResponseOperationalState = "delete-dns"
+	ObjectStorage2ServiceDetailResponseOperationalStateDeleteIam             ObjectStorage2ServiceDetailResponseOperationalState = "delete-iam"
+	ObjectStorage2ServiceDetailResponseOperationalStateDeleteNamespace       ObjectStorage2ServiceDetailResponseOperationalState = "delete-namespace"
+	ObjectStorage2ServiceDetailResponseOperationalStateDeleteNetwork         ObjectStorage2ServiceDetailResponseOperationalState = "delete-network"
+	ObjectStorage2ServiceDetailResponseOperationalStateDeletePrivateEndpoint ObjectStorage2ServiceDetailResponseOperationalState = "delete-private-endpoint"
+	ObjectStorage2ServiceDetailResponseOperationalStateDeletePublicEndpoint  ObjectStorage2ServiceDetailResponseOperationalState = "delete-public-endpoint"
+	ObjectStorage2ServiceDetailResponseOperationalStateDeleteService         ObjectStorage2ServiceDetailResponseOperationalState = "delete-service"
+	ObjectStorage2ServiceDetailResponseOperationalStateDeleteTls             ObjectStorage2ServiceDetailResponseOperationalState = "delete-tls"
+	ObjectStorage2ServiceDetailResponseOperationalStatePending               ObjectStorage2ServiceDetailResponseOperationalState = "pending"
+	ObjectStorage2ServiceDetailResponseOperationalStateRunning               ObjectStorage2ServiceDetailResponseOperationalState = "running"
+	ObjectStorage2ServiceDetailResponseOperationalStateSetupCheckup          ObjectStorage2ServiceDetailResponseOperationalState = "setup-checkup"
+	ObjectStorage2ServiceDetailResponseOperationalStateSetupDns              ObjectStorage2ServiceDetailResponseOperationalState = "setup-dns"
+	ObjectStorage2ServiceDetailResponseOperationalStateSetupIam              ObjectStorage2ServiceDetailResponseOperationalState = "setup-iam"
+	ObjectStorage2ServiceDetailResponseOperationalStateSetupNetwork          ObjectStorage2ServiceDetailResponseOperationalState = "setup-network"
+	ObjectStorage2ServiceDetailResponseOperationalStateSetupPrivateEndpoint  ObjectStorage2ServiceDetailResponseOperationalState = "setup-private-endpoint"
+	ObjectStorage2ServiceDetailResponseOperationalStateSetupPublicEndpoint   ObjectStorage2ServiceDetailResponseOperationalState = "setup-public-endpoint"
+	ObjectStorage2ServiceDetailResponseOperationalStateSetupService          ObjectStorage2ServiceDetailResponseOperationalState = "setup-service"
+	ObjectStorage2ServiceDetailResponseOperationalStateSetupTls              ObjectStorage2ServiceDetailResponseOperationalState = "setup-tls"
+	ObjectStorage2ServiceDetailResponseOperationalStateStopped               ObjectStorage2ServiceDetailResponseOperationalState = "stopped"
 )
 
 // Valid indicates whether the value is a known member of the ObjectStorage2ServiceDetailResponseOperationalState enum.
 func (e ObjectStorage2ServiceDetailResponseOperationalState) Valid() bool {
 	switch e {
-	case CleanupDeletedBuckets:
+	case ObjectStorage2ServiceDetailResponseOperationalStateCleanupDeletedBuckets:
 		return true
-	case DeleteBuckets:
+	case ObjectStorage2ServiceDetailResponseOperationalStateDeleteBuckets:
 		return true
-	case DeleteDns:
+	case ObjectStorage2ServiceDetailResponseOperationalStateDeleteDns:
 		return true
-	case DeleteIam:
+	case ObjectStorage2ServiceDetailResponseOperationalStateDeleteIam:
 		return true
-	case DeleteNamespace:
+	case ObjectStorage2ServiceDetailResponseOperationalStateDeleteNamespace:
 		return true
-	case DeleteNetwork:
+	case ObjectStorage2ServiceDetailResponseOperationalStateDeleteNetwork:
 		return true
-	case DeletePrivateEndpoint:
+	case ObjectStorage2ServiceDetailResponseOperationalStateDeletePrivateEndpoint:
 		return true
-	case DeletePublicEndpoint:
+	case ObjectStorage2ServiceDetailResponseOperationalStateDeletePublicEndpoint:
 		return true
-	case DeleteService:
+	case ObjectStorage2ServiceDetailResponseOperationalStateDeleteService:
 		return true
-	case DeleteTls:
+	case ObjectStorage2ServiceDetailResponseOperationalStateDeleteTls:
 		return true
-	case Pending:
+	case ObjectStorage2ServiceDetailResponseOperationalStatePending:
 		return true
-	case Running:
+	case ObjectStorage2ServiceDetailResponseOperationalStateRunning:
 		return true
-	case SetupCheckup:
+	case ObjectStorage2ServiceDetailResponseOperationalStateSetupCheckup:
 		return true
-	case SetupDns:
+	case ObjectStorage2ServiceDetailResponseOperationalStateSetupDns:
 		return true
-	case SetupIam:
+	case ObjectStorage2ServiceDetailResponseOperationalStateSetupIam:
 		return true
-	case SetupNetwork:
+	case ObjectStorage2ServiceDetailResponseOperationalStateSetupNetwork:
 		return true
-	case SetupPrivateEndpoint:
+	case ObjectStorage2ServiceDetailResponseOperationalStateSetupPrivateEndpoint:
 		return true
-	case SetupPublicEndpoint:
+	case ObjectStorage2ServiceDetailResponseOperationalStateSetupPublicEndpoint:
 		return true
-	case SetupService:
+	case ObjectStorage2ServiceDetailResponseOperationalStateSetupService:
 		return true
-	case SetupTls:
+	case ObjectStorage2ServiceDetailResponseOperationalStateSetupTls:
 		return true
-	case Stopped:
+	case ObjectStorage2ServiceDetailResponseOperationalStateStopped:
 		return true
 	default:
 		return false
@@ -383,25 +383,25 @@ func (e ObjectStorage2ServiceDetailResponseOperationalState) Valid() bool {
 
 // Defines values for ObjectStorage2ServiceDetailResponseStateMessagesCode.
 const (
-	BucketsStuckInDeletion         ObjectStorage2ServiceDetailResponseStateMessagesCode = "buckets_stuck_in_deletion"
-	FailedCustomDomainVerification ObjectStorage2ServiceDetailResponseStateMessagesCode = "failed_custom_domain_verification"
-	FailedDomainVerification       ObjectStorage2ServiceDetailResponseStateMessagesCode = "failed_domain_verification"
-	NamespaceStuckInDeletion       ObjectStorage2ServiceDetailResponseStateMessagesCode = "namespace_stuck_in_deletion"
-	WaitingCertificateIssuing      ObjectStorage2ServiceDetailResponseStateMessagesCode = "waiting_certificate_issuing"
+	ObjectStorage2ServiceDetailResponseStateMessagesCodeBucketsStuckInDeletion         ObjectStorage2ServiceDetailResponseStateMessagesCode = "buckets_stuck_in_deletion"
+	ObjectStorage2ServiceDetailResponseStateMessagesCodeFailedCustomDomainVerification ObjectStorage2ServiceDetailResponseStateMessagesCode = "failed_custom_domain_verification"
+	ObjectStorage2ServiceDetailResponseStateMessagesCodeFailedDomainVerification       ObjectStorage2ServiceDetailResponseStateMessagesCode = "failed_domain_verification"
+	ObjectStorage2ServiceDetailResponseStateMessagesCodeNamespaceStuckInDeletion       ObjectStorage2ServiceDetailResponseStateMessagesCode = "namespace_stuck_in_deletion"
+	ObjectStorage2ServiceDetailResponseStateMessagesCodeWaitingCertificateIssuing      ObjectStorage2ServiceDetailResponseStateMessagesCode = "waiting_certificate_issuing"
 )
 
 // Valid indicates whether the value is a known member of the ObjectStorage2ServiceDetailResponseStateMessagesCode enum.
 func (e ObjectStorage2ServiceDetailResponseStateMessagesCode) Valid() bool {
 	switch e {
-	case BucketsStuckInDeletion:
+	case ObjectStorage2ServiceDetailResponseStateMessagesCodeBucketsStuckInDeletion:
 		return true
-	case FailedCustomDomainVerification:
+	case ObjectStorage2ServiceDetailResponseStateMessagesCodeFailedCustomDomainVerification:
 		return true
-	case FailedDomainVerification:
+	case ObjectStorage2ServiceDetailResponseStateMessagesCodeFailedDomainVerification:
 		return true
-	case NamespaceStuckInDeletion:
+	case ObjectStorage2ServiceDetailResponseStateMessagesCodeNamespaceStuckInDeletion:
 		return true
-	case WaitingCertificateIssuing:
+	case ObjectStorage2ServiceDetailResponseStateMessagesCodeWaitingCertificateIssuing:
 		return true
 	default:
 		return false
@@ -410,19 +410,19 @@ func (e ObjectStorage2ServiceDetailResponseStateMessagesCode) Valid() bool {
 
 // Defines values for ObjectStorage2ServiceDomainsDomainsType.
 const (
-	Custom  ObjectStorage2ServiceDomainsDomainsType = "custom"
-	Private ObjectStorage2ServiceDomainsDomainsType = "private"
-	Public  ObjectStorage2ServiceDomainsDomainsType = "public"
+	ObjectStorage2ServiceDomainsDomainsTypeCustom  ObjectStorage2ServiceDomainsDomainsType = "custom"
+	ObjectStorage2ServiceDomainsDomainsTypePrivate ObjectStorage2ServiceDomainsDomainsType = "private"
+	ObjectStorage2ServiceDomainsDomainsTypePublic  ObjectStorage2ServiceDomainsDomainsType = "public"
 )
 
 // Valid indicates whether the value is a known member of the ObjectStorage2ServiceDomainsDomainsType enum.
 func (e ObjectStorage2ServiceDomainsDomainsType) Valid() bool {
 	switch e {
-	case Custom:
+	case ObjectStorage2ServiceDomainsDomainsTypeCustom:
 		return true
-	case Private:
+	case ObjectStorage2ServiceDomainsDomainsTypePrivate:
 		return true
-	case Public:
+	case ObjectStorage2ServiceDomainsDomainsTypePublic:
 		return true
 	default:
 		return false

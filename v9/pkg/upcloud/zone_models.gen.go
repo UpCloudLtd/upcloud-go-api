@@ -5,16 +5,16 @@ package upcloud
 
 // Defines values for ZoneBoolean01.
 const (
-	N0 ZoneBoolean01 = 0
-	N1 ZoneBoolean01 = 1
+	ZoneBoolean01N0 ZoneBoolean01 = 0
+	ZoneBoolean01N1 ZoneBoolean01 = 1
 )
 
 // Valid indicates whether the value is a known member of the ZoneBoolean01 enum.
 func (e ZoneBoolean01) Valid() bool {
 	switch e {
-	case N0:
+	case ZoneBoolean01N0:
 		return true
-	case N1:
+	case ZoneBoolean01N1:
 		return true
 	default:
 		return false
@@ -23,16 +23,16 @@ func (e ZoneBoolean01) Valid() bool {
 
 // Defines values for ZoneBooleanYesno.
 const (
-	No  ZoneBooleanYesno = "no"
-	Yes ZoneBooleanYesno = "yes"
+	ZoneBooleanYesnoNo  ZoneBooleanYesno = "no"
+	ZoneBooleanYesnoYes ZoneBooleanYesno = "yes"
 )
 
 // Valid indicates whether the value is a known member of the ZoneBooleanYesno enum.
 func (e ZoneBooleanYesno) Valid() bool {
 	switch e {
-	case No:
+	case ZoneBooleanYesnoNo:
 		return true
-	case Yes:
+	case ZoneBooleanYesnoYes:
 		return true
 	default:
 		return false

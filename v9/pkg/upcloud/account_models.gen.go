@@ -11,16 +11,16 @@ import (
 
 // Defines values for AccountBoolean01.
 const (
-	N0 AccountBoolean01 = 0
-	N1 AccountBoolean01 = 1
+	AccountBoolean01N0 AccountBoolean01 = 0
+	AccountBoolean01N1 AccountBoolean01 = 1
 )
 
 // Valid indicates whether the value is a known member of the AccountBoolean01 enum.
 func (e AccountBoolean01) Valid() bool {
 	switch e {
-	case N0:
+	case AccountBoolean01N0:
 		return true
-	case N1:
+	case AccountBoolean01N1:
 		return true
 	default:
 		return false
@@ -29,22 +29,22 @@ func (e AccountBoolean01) Valid() bool {
 
 // Defines values for AccountCreateMsLmaSigningLinkResponseSigningStatusState.
 const (
-	Canceled  AccountCreateMsLmaSigningLinkResponseSigningStatusState = "canceled"
-	Completed AccountCreateMsLmaSigningLinkResponseSigningStatusState = "completed"
-	Initiated AccountCreateMsLmaSigningLinkResponseSigningStatusState = "initiated"
-	Waiting   AccountCreateMsLmaSigningLinkResponseSigningStatusState = "waiting"
+	AccountCreateMsLmaSigningLinkResponseSigningStatusStateCanceled  AccountCreateMsLmaSigningLinkResponseSigningStatusState = "canceled"
+	AccountCreateMsLmaSigningLinkResponseSigningStatusStateCompleted AccountCreateMsLmaSigningLinkResponseSigningStatusState = "completed"
+	AccountCreateMsLmaSigningLinkResponseSigningStatusStateInitiated AccountCreateMsLmaSigningLinkResponseSigningStatusState = "initiated"
+	AccountCreateMsLmaSigningLinkResponseSigningStatusStateWaiting   AccountCreateMsLmaSigningLinkResponseSigningStatusState = "waiting"
 )
 
 // Valid indicates whether the value is a known member of the AccountCreateMsLmaSigningLinkResponseSigningStatusState enum.
 func (e AccountCreateMsLmaSigningLinkResponseSigningStatusState) Valid() bool {
 	switch e {
-	case Canceled:
+	case AccountCreateMsLmaSigningLinkResponseSigningStatusStateCanceled:
 		return true
-	case Completed:
+	case AccountCreateMsLmaSigningLinkResponseSigningStatusStateCompleted:
 		return true
-	case Initiated:
+	case AccountCreateMsLmaSigningLinkResponseSigningStatusStateInitiated:
 		return true
-	case Waiting:
+	case AccountCreateMsLmaSigningLinkResponseSigningStatusStateWaiting:
 		return true
 	default:
 		return false

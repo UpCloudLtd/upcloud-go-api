@@ -12,16 +12,16 @@ import (
 
 // Defines values for NetworkBoolean01.
 const (
-	N0 NetworkBoolean01 = 0
-	N1 NetworkBoolean01 = 1
+	NetworkBoolean01N0 NetworkBoolean01 = 0
+	NetworkBoolean01N1 NetworkBoolean01 = 1
 )
 
 // Valid indicates whether the value is a known member of the NetworkBoolean01 enum.
 func (e NetworkBoolean01) Valid() bool {
 	switch e {
-	case N0:
+	case NetworkBoolean01N0:
 		return true
-	case N1:
+	case NetworkBoolean01N1:
 		return true
 	default:
 		return false
@@ -30,16 +30,16 @@ func (e NetworkBoolean01) Valid() bool {
 
 // Defines values for NetworkBooleanYesno.
 const (
-	No  NetworkBooleanYesno = "no"
-	Yes NetworkBooleanYesno = "yes"
+	NetworkBooleanYesnoNo  NetworkBooleanYesno = "no"
+	NetworkBooleanYesnoYes NetworkBooleanYesno = "yes"
 )
 
 // Valid indicates whether the value is a known member of the NetworkBooleanYesno enum.
 func (e NetworkBooleanYesno) Valid() bool {
 	switch e {
-	case No:
+	case NetworkBooleanYesnoNo:
 		return true
-	case Yes:
+	case NetworkBooleanYesnoYes:
 		return true
 	default:
 		return false
@@ -48,22 +48,22 @@ func (e NetworkBooleanYesno) Valid() bool {
 
 // Defines values for NetworkFeatures.
 const (
-	AllowCgnatAddress         NetworkFeatures = "allow-cgnat-address"
-	AllowLinklocalAddress     NetworkFeatures = "allow-linklocal-address"
-	AllowOverlappingIpNetwork NetworkFeatures = "allow-overlapping-ip-network"
-	ManagedByService          NetworkFeatures = "managed-by-service"
+	NetworkFeaturesAllowCgnatAddress         NetworkFeatures = "allow-cgnat-address"
+	NetworkFeaturesAllowLinklocalAddress     NetworkFeatures = "allow-linklocal-address"
+	NetworkFeaturesAllowOverlappingIpNetwork NetworkFeatures = "allow-overlapping-ip-network"
+	NetworkFeaturesManagedByService          NetworkFeatures = "managed-by-service"
 )
 
 // Valid indicates whether the value is a known member of the NetworkFeatures enum.
 func (e NetworkFeatures) Valid() bool {
 	switch e {
-	case AllowCgnatAddress:
+	case NetworkFeaturesAllowCgnatAddress:
 		return true
-	case AllowLinklocalAddress:
+	case NetworkFeaturesAllowLinklocalAddress:
 		return true
-	case AllowOverlappingIpNetwork:
+	case NetworkFeaturesAllowOverlappingIpNetwork:
 		return true
-	case ManagedByService:
+	case NetworkFeaturesManagedByService:
 		return true
 	default:
 		return false
@@ -72,16 +72,16 @@ func (e NetworkFeatures) Valid() bool {
 
 // Defines values for NetworkIpFamily.
 const (
-	IPv4 NetworkIpFamily = "IPv4"
-	IPv6 NetworkIpFamily = "IPv6"
+	NetworkIpFamilyIPv4 NetworkIpFamily = "IPv4"
+	NetworkIpFamilyIPv6 NetworkIpFamily = "IPv6"
 )
 
 // Valid indicates whether the value is a known member of the NetworkIpFamily enum.
 func (e NetworkIpFamily) Valid() bool {
 	switch e {
-	case IPv4:
+	case NetworkIpFamilyIPv4:
 		return true
-	case IPv6:
+	case NetworkIpFamilyIPv6:
 		return true
 	default:
 		return false
@@ -89,62 +89,24 @@ func (e NetworkIpFamily) Valid() bool {
 }
 
 // Defines values for NetworkPeeringState.
-const (
-	Active             NetworkPeeringState = "active"
-	ConflictSubnet     NetworkPeeringState = "conflict-subnet"
-	DeletedPeerNetwork NetworkPeeringState = "deleted-peer-network"
-	Disabled           NetworkPeeringState = "disabled"
-	Error              NetworkPeeringState = "error"
-	MissingLocalRouter NetworkPeeringState = "missing-local-router"
-	MissingPeerRouter  NetworkPeeringState = "missing-peer-router"
-	PeerDisabled       NetworkPeeringState = "peer-disabled"
-	PendingPeer        NetworkPeeringState = "pending-peer"
-	Provisioning       NetworkPeeringState = "provisioning"
-)
 
 // Valid indicates whether the value is a known member of the NetworkPeeringState enum.
-func (e NetworkPeeringState) Valid() bool {
-	switch e {
-	case Active:
-		return true
-	case ConflictSubnet:
-		return true
-	case DeletedPeerNetwork:
-		return true
-	case Disabled:
-		return true
-	case Error:
-		return true
-	case MissingLocalRouter:
-		return true
-	case MissingPeerRouter:
-		return true
-	case PeerDisabled:
-		return true
-	case PendingPeer:
-		return true
-	case Provisioning:
-		return true
-	default:
-		return false
-	}
-}
 
 // Defines values for NetworkType.
 const (
-	Private NetworkType = "private"
-	Public  NetworkType = "public"
-	Utility NetworkType = "utility"
+	NetworkTypePrivate NetworkType = "private"
+	NetworkTypePublic  NetworkType = "public"
+	NetworkTypeUtility NetworkType = "utility"
 )
 
 // Valid indicates whether the value is a known member of the NetworkType enum.
 func (e NetworkType) Valid() bool {
 	switch e {
-	case Private:
+	case NetworkTypePrivate:
 		return true
-	case Public:
+	case NetworkTypePublic:
 		return true
-	case Utility:
+	case NetworkTypeUtility:
 		return true
 	default:
 		return false
@@ -427,10 +389,8 @@ type NetworkLabels struct {
 type NetworkName = string
 
 // NetworkPeeringName defines model for networkPeeringName.
-type NetworkPeeringName = string
 
 // NetworkPeeringState defines model for networkPeeringState.
-type NetworkPeeringState string
 
 // NetworkServers List of servers associated with the tag.
 type NetworkServers struct {

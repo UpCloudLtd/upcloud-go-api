@@ -11,13 +11,13 @@ import (
 
 // Defines values for GatewayConnectionRouteType.
 const (
-	Static GatewayConnectionRouteType = "static"
+	GatewayConnectionRouteTypeStatic GatewayConnectionRouteType = "static"
 )
 
 // Valid indicates whether the value is a known member of the GatewayConnectionRouteType enum.
 func (e GatewayConnectionRouteType) Valid() bool {
 	switch e {
-	case Static:
+	case GatewayConnectionRouteTypeStatic:
 		return true
 	default:
 		return false
@@ -26,13 +26,13 @@ func (e GatewayConnectionRouteType) Valid() bool {
 
 // Defines values for GatewayConnectionType.
 const (
-	Ipsec GatewayConnectionType = "ipsec"
+	GatewayConnectionTypeIpsec GatewayConnectionType = "ipsec"
 )
 
 // Valid indicates whether the value is a known member of the GatewayConnectionType enum.
 func (e GatewayConnectionType) Valid() bool {
 	switch e {
-	case Ipsec:
+	case GatewayConnectionTypeIpsec:
 		return true
 	default:
 		return false
@@ -41,40 +41,40 @@ func (e GatewayConnectionType) Valid() bool {
 
 // Defines values for GatewayDiffieHellmanGroupNumber.
 const (
-	N14 GatewayDiffieHellmanGroupNumber = 14
-	N15 GatewayDiffieHellmanGroupNumber = 15
-	N16 GatewayDiffieHellmanGroupNumber = 16
-	N18 GatewayDiffieHellmanGroupNumber = 18
-	N19 GatewayDiffieHellmanGroupNumber = 19
-	N2  GatewayDiffieHellmanGroupNumber = 2
-	N20 GatewayDiffieHellmanGroupNumber = 20
-	N21 GatewayDiffieHellmanGroupNumber = 21
-	N24 GatewayDiffieHellmanGroupNumber = 24
-	N5  GatewayDiffieHellmanGroupNumber = 5
+	GatewayDiffieHellmanGroupNumberN14 GatewayDiffieHellmanGroupNumber = 14
+	GatewayDiffieHellmanGroupNumberN15 GatewayDiffieHellmanGroupNumber = 15
+	GatewayDiffieHellmanGroupNumberN16 GatewayDiffieHellmanGroupNumber = 16
+	GatewayDiffieHellmanGroupNumberN18 GatewayDiffieHellmanGroupNumber = 18
+	GatewayDiffieHellmanGroupNumberN19 GatewayDiffieHellmanGroupNumber = 19
+	GatewayDiffieHellmanGroupNumberN2  GatewayDiffieHellmanGroupNumber = 2
+	GatewayDiffieHellmanGroupNumberN20 GatewayDiffieHellmanGroupNumber = 20
+	GatewayDiffieHellmanGroupNumberN21 GatewayDiffieHellmanGroupNumber = 21
+	GatewayDiffieHellmanGroupNumberN24 GatewayDiffieHellmanGroupNumber = 24
+	GatewayDiffieHellmanGroupNumberN5  GatewayDiffieHellmanGroupNumber = 5
 )
 
 // Valid indicates whether the value is a known member of the GatewayDiffieHellmanGroupNumber enum.
 func (e GatewayDiffieHellmanGroupNumber) Valid() bool {
 	switch e {
-	case N14:
+	case GatewayDiffieHellmanGroupNumberN14:
 		return true
-	case N15:
+	case GatewayDiffieHellmanGroupNumberN15:
 		return true
-	case N16:
+	case GatewayDiffieHellmanGroupNumberN16:
 		return true
-	case N18:
+	case GatewayDiffieHellmanGroupNumberN18:
 		return true
-	case N19:
+	case GatewayDiffieHellmanGroupNumberN19:
 		return true
-	case N2:
+	case GatewayDiffieHellmanGroupNumberN2:
 		return true
-	case N20:
+	case GatewayDiffieHellmanGroupNumberN20:
 		return true
-	case N21:
+	case GatewayDiffieHellmanGroupNumberN21:
 		return true
-	case N24:
+	case GatewayDiffieHellmanGroupNumberN24:
 		return true
-	case N5:
+	case GatewayDiffieHellmanGroupNumberN5:
 		return true
 	default:
 		return false
@@ -83,13 +83,13 @@ func (e GatewayDiffieHellmanGroupNumber) Valid() bool {
 
 // Defines values for GatewayIpsecAuthenticationType.
 const (
-	Psk GatewayIpsecAuthenticationType = "psk"
+	GatewayIpsecAuthenticationTypePsk GatewayIpsecAuthenticationType = "psk"
 )
 
 // Valid indicates whether the value is a known member of the GatewayIpsecAuthenticationType enum.
 func (e GatewayIpsecAuthenticationType) Valid() bool {
 	switch e {
-	case Psk:
+	case GatewayIpsecAuthenticationTypePsk:
 		return true
 	default:
 		return false
@@ -221,28 +221,28 @@ func (e GatewayIpsecIkeSaMetricsDetailsResponseOperationalState) Valid() bool {
 
 // Defines values for GatewayQueryParamSortServices.
 const (
-	CreatedAt      GatewayQueryParamSortServices = "created_at"
-	MinusCreatedAt GatewayQueryParamSortServices = "-created_at"
-	MinusName      GatewayQueryParamSortServices = "-name"
-	MinusUuid      GatewayQueryParamSortServices = "-uuid"
-	Name           GatewayQueryParamSortServices = "name"
-	Uuid           GatewayQueryParamSortServices = "uuid"
+	GatewayQueryParamSortServicesCreatedAt      GatewayQueryParamSortServices = "created_at"
+	GatewayQueryParamSortServicesMinusCreatedAt GatewayQueryParamSortServices = "-created_at"
+	GatewayQueryParamSortServicesMinusName      GatewayQueryParamSortServices = "-name"
+	GatewayQueryParamSortServicesMinusUuid      GatewayQueryParamSortServices = "-uuid"
+	GatewayQueryParamSortServicesName           GatewayQueryParamSortServices = "name"
+	GatewayQueryParamSortServicesUuid           GatewayQueryParamSortServices = "uuid"
 )
 
 // Valid indicates whether the value is a known member of the GatewayQueryParamSortServices enum.
 func (e GatewayQueryParamSortServices) Valid() bool {
 	switch e {
-	case CreatedAt:
+	case GatewayQueryParamSortServicesCreatedAt:
 		return true
-	case MinusCreatedAt:
+	case GatewayQueryParamSortServicesMinusCreatedAt:
 		return true
-	case MinusName:
+	case GatewayQueryParamSortServicesMinusName:
 		return true
-	case MinusUuid:
+	case GatewayQueryParamSortServicesMinusUuid:
 		return true
-	case Name:
+	case GatewayQueryParamSortServicesName:
 		return true
-	case Uuid:
+	case GatewayQueryParamSortServicesUuid:
 		return true
 	default:
 		return false
@@ -365,28 +365,28 @@ func (e GatewayServiceOperationalState) Valid() bool {
 
 // Defines values for GatewaySupportedIntegrityAlgorithms.
 const (
-	Aes128gmac GatewaySupportedIntegrityAlgorithms = "aes128gmac"
-	Aes256gmac GatewaySupportedIntegrityAlgorithms = "aes256gmac"
-	Sha1       GatewaySupportedIntegrityAlgorithms = "sha1"
-	Sha256     GatewaySupportedIntegrityAlgorithms = "sha256"
-	Sha384     GatewaySupportedIntegrityAlgorithms = "sha384"
-	Sha512     GatewaySupportedIntegrityAlgorithms = "sha512"
+	GatewaySupportedIntegrityAlgorithmsAes128gmac GatewaySupportedIntegrityAlgorithms = "aes128gmac"
+	GatewaySupportedIntegrityAlgorithmsAes256gmac GatewaySupportedIntegrityAlgorithms = "aes256gmac"
+	GatewaySupportedIntegrityAlgorithmsSha1       GatewaySupportedIntegrityAlgorithms = "sha1"
+	GatewaySupportedIntegrityAlgorithmsSha256     GatewaySupportedIntegrityAlgorithms = "sha256"
+	GatewaySupportedIntegrityAlgorithmsSha384     GatewaySupportedIntegrityAlgorithms = "sha384"
+	GatewaySupportedIntegrityAlgorithmsSha512     GatewaySupportedIntegrityAlgorithms = "sha512"
 )
 
 // Valid indicates whether the value is a known member of the GatewaySupportedIntegrityAlgorithms enum.
 func (e GatewaySupportedIntegrityAlgorithms) Valid() bool {
 	switch e {
-	case Aes128gmac:
+	case GatewaySupportedIntegrityAlgorithmsAes128gmac:
 		return true
-	case Aes256gmac:
+	case GatewaySupportedIntegrityAlgorithmsAes256gmac:
 		return true
-	case Sha1:
+	case GatewaySupportedIntegrityAlgorithmsSha1:
 		return true
-	case Sha256:
+	case GatewaySupportedIntegrityAlgorithmsSha256:
 		return true
-	case Sha384:
+	case GatewaySupportedIntegrityAlgorithmsSha384:
 		return true
-	case Sha512:
+	case GatewaySupportedIntegrityAlgorithmsSha512:
 		return true
 	default:
 		return false
@@ -395,37 +395,37 @@ func (e GatewaySupportedIntegrityAlgorithms) Valid() bool {
 
 // Defines values for GatewaySupportedProposalAlgorithms.
 const (
-	Aes128       GatewaySupportedProposalAlgorithms = "aes128"
-	Aes128gcm128 GatewaySupportedProposalAlgorithms = "aes128gcm128"
-	Aes128gcm16  GatewaySupportedProposalAlgorithms = "aes128gcm16"
-	Aes192       GatewaySupportedProposalAlgorithms = "aes192"
-	Aes192gcm128 GatewaySupportedProposalAlgorithms = "aes192gcm128"
-	Aes192gcm16  GatewaySupportedProposalAlgorithms = "aes192gcm16"
-	Aes256       GatewaySupportedProposalAlgorithms = "aes256"
-	Aes256gcm128 GatewaySupportedProposalAlgorithms = "aes256gcm128"
-	Aes256gcm16  GatewaySupportedProposalAlgorithms = "aes256gcm16"
+	GatewaySupportedProposalAlgorithmsAes128       GatewaySupportedProposalAlgorithms = "aes128"
+	GatewaySupportedProposalAlgorithmsAes128gcm128 GatewaySupportedProposalAlgorithms = "aes128gcm128"
+	GatewaySupportedProposalAlgorithmsAes128gcm16  GatewaySupportedProposalAlgorithms = "aes128gcm16"
+	GatewaySupportedProposalAlgorithmsAes192       GatewaySupportedProposalAlgorithms = "aes192"
+	GatewaySupportedProposalAlgorithmsAes192gcm128 GatewaySupportedProposalAlgorithms = "aes192gcm128"
+	GatewaySupportedProposalAlgorithmsAes192gcm16  GatewaySupportedProposalAlgorithms = "aes192gcm16"
+	GatewaySupportedProposalAlgorithmsAes256       GatewaySupportedProposalAlgorithms = "aes256"
+	GatewaySupportedProposalAlgorithmsAes256gcm128 GatewaySupportedProposalAlgorithms = "aes256gcm128"
+	GatewaySupportedProposalAlgorithmsAes256gcm16  GatewaySupportedProposalAlgorithms = "aes256gcm16"
 )
 
 // Valid indicates whether the value is a known member of the GatewaySupportedProposalAlgorithms enum.
 func (e GatewaySupportedProposalAlgorithms) Valid() bool {
 	switch e {
-	case Aes128:
+	case GatewaySupportedProposalAlgorithmsAes128:
 		return true
-	case Aes128gcm128:
+	case GatewaySupportedProposalAlgorithmsAes128gcm128:
 		return true
-	case Aes128gcm16:
+	case GatewaySupportedProposalAlgorithmsAes128gcm16:
 		return true
-	case Aes192:
+	case GatewaySupportedProposalAlgorithmsAes192:
 		return true
-	case Aes192gcm128:
+	case GatewaySupportedProposalAlgorithmsAes192gcm128:
 		return true
-	case Aes192gcm16:
+	case GatewaySupportedProposalAlgorithmsAes192gcm16:
 		return true
-	case Aes256:
+	case GatewaySupportedProposalAlgorithmsAes256:
 		return true
-	case Aes256gcm128:
+	case GatewaySupportedProposalAlgorithmsAes256gcm128:
 		return true
-	case Aes256gcm16:
+	case GatewaySupportedProposalAlgorithmsAes256gcm16:
 		return true
 	default:
 		return false

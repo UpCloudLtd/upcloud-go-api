@@ -159,16 +159,16 @@ func (e StorageMetadata) Valid() bool {
 
 // Defines values for StorageOrderBy.
 const (
-	Asc  StorageOrderBy = "asc"
-	Desc StorageOrderBy = "desc"
+	StorageOrderByAsc  StorageOrderBy = "asc"
+	StorageOrderByDesc StorageOrderBy = "desc"
 )
 
 // Valid indicates whether the value is a known member of the StorageOrderBy enum.
 func (e StorageOrderBy) Valid() bool {
 	switch e {
-	case Asc:
+	case StorageOrderByAsc:
 		return true
-	case Desc:
+	case StorageOrderByDesc:
 		return true
 	default:
 		return false
@@ -201,22 +201,22 @@ func (e StorageServers) Valid() bool {
 
 // Defines values for StorageSortBy.
 const (
-	Created StorageSortBy = "created"
-	Size    StorageSortBy = "size"
-	Title   StorageSortBy = "title"
-	Type    StorageSortBy = "type"
+	StorageSortByCreated StorageSortBy = "created"
+	StorageSortBySize    StorageSortBy = "size"
+	StorageSortByTitle   StorageSortBy = "title"
+	StorageSortByType    StorageSortBy = "type"
 )
 
 // Valid indicates whether the value is a known member of the StorageSortBy enum.
 func (e StorageSortBy) Valid() bool {
 	switch e {
-	case Created:
+	case StorageSortByCreated:
 		return true
-	case Size:
+	case StorageSortBySize:
 		return true
-	case Title:
+	case StorageSortByTitle:
 		return true
-	case Type:
+	case StorageSortByType:
 		return true
 	default:
 		return false
@@ -225,40 +225,40 @@ func (e StorageSortBy) Valid() bool {
 
 // Defines values for StorageState.
 const (
-	Attaching     StorageState = "attaching"
-	Backuping     StorageState = "backuping"
-	Cloning       StorageState = "cloning"
-	Detaching     StorageState = "detaching"
-	Error         StorageState = "error"
-	Hidden        StorageState = "hidden"
-	Maintenance   StorageState = "maintenance"
-	Online        StorageState = "online"
-	PendingDelete StorageState = "pending_delete"
-	Syncing       StorageState = "syncing"
+	StorageStateAttaching     StorageState = "attaching"
+	StorageStateBackuping     StorageState = "backuping"
+	StorageStateCloning       StorageState = "cloning"
+	StorageStateDetaching     StorageState = "detaching"
+	StorageStateError         StorageState = "error"
+	StorageStateHidden        StorageState = "hidden"
+	StorageStateMaintenance   StorageState = "maintenance"
+	StorageStateOnline        StorageState = "online"
+	StorageStatePendingDelete StorageState = "pending_delete"
+	StorageStateSyncing       StorageState = "syncing"
 )
 
 // Valid indicates whether the value is a known member of the StorageState enum.
 func (e StorageState) Valid() bool {
 	switch e {
-	case Attaching:
+	case StorageStateAttaching:
 		return true
-	case Backuping:
+	case StorageStateBackuping:
 		return true
-	case Cloning:
+	case StorageStateCloning:
 		return true
-	case Detaching:
+	case StorageStateDetaching:
 		return true
-	case Error:
+	case StorageStateError:
 		return true
-	case Hidden:
+	case StorageStateHidden:
 		return true
-	case Maintenance:
+	case StorageStateMaintenance:
 		return true
-	case Online:
+	case StorageStateOnline:
 		return true
-	case PendingDelete:
+	case StorageStatePendingDelete:
 		return true
-	case Syncing:
+	case StorageStateSyncing:
 		return true
 	default:
 		return false
@@ -267,22 +267,22 @@ func (e StorageState) Valid() bool {
 
 // Defines values for StorageType.
 const (
-	Backup   StorageType = "backup"
-	Cdrom    StorageType = "cdrom"
-	Normal   StorageType = "normal"
-	Template StorageType = "template"
+	StorageTypeBackup   StorageType = "backup"
+	StorageTypeCdrom    StorageType = "cdrom"
+	StorageTypeNormal   StorageType = "normal"
+	StorageTypeTemplate StorageType = "template"
 )
 
 // Valid indicates whether the value is a known member of the StorageType enum.
 func (e StorageType) Valid() bool {
 	switch e {
-	case Backup:
+	case StorageTypeBackup:
 		return true
-	case Cdrom:
+	case StorageTypeCdrom:
 		return true
-	case Normal:
+	case StorageTypeNormal:
 		return true
-	case Template:
+	case StorageTypeTemplate:
 		return true
 	default:
 		return false

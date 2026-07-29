@@ -13,16 +13,16 @@ import (
 
 // Defines values for RouterType.
 const (
-	Normal  RouterType = "normal"
-	Service RouterType = "service"
+	RouterTypeNormal  RouterType = "normal"
+	RouterTypeService RouterType = "service"
 )
 
 // Valid indicates whether the value is a known member of the RouterType enum.
 func (e RouterType) Valid() bool {
 	switch e {
-	case Normal:
+	case RouterTypeNormal:
 		return true
-	case Service:
+	case RouterTypeService:
 		return true
 	default:
 		return false

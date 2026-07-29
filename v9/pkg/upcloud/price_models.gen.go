@@ -5,13 +5,13 @@ package upcloud
 
 // Defines values for PriceError400ErrorCode.
 const (
-	PRICEINVALID PriceError400ErrorCode = "PRICE_INVALID"
+	PriceError400ErrorCodePRICEINVALID PriceError400ErrorCode = "PRICE_INVALID"
 )
 
 // Valid indicates whether the value is a known member of the PriceError400ErrorCode enum.
 func (e PriceError400ErrorCode) Valid() bool {
 	switch e {
-	case PRICEINVALID:
+	case PriceError400ErrorCodePRICEINVALID:
 		return true
 	default:
 		return false

@@ -1,5 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/refs/tags/v2.6.0/configuration-schema.json
 package: upcloud
+compatibility:
+  always-prefix-enum-values: true
 generate:
   client: true
   models: false
@@ -17,6 +19,5 @@ output-options:
     strict: false
   user-templates:
     # https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/refs/tags/v2.6.0/pkg/codegen/templates/constants.tmpl
-    constants.tmpl: ./generator/config/constants.tmpl
     client.tmpl: ./generator/config/client.tmpl
     client-with-responses.tmpl: ./generator/config/client-with-responses.tmpl
