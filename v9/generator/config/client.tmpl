@@ -1,6 +1,6 @@
 {{$clientTypeName := opts.OutputOptions.ClientTypeName -}}
 {{- $interfacePrefix := "Tag" -}}
-{{- if .}}{{ $interfacePrefix = camelCase (index (index . 0).Spec.Tags 0) }}{{end}}
+{{- if .}}{{ $interfacePrefix = camelCase (index (index . 0).Spec.Tags 0) }}{{else if opts.OutputOptions.IncludeTags}}{{ $interfacePrefix = camelCase (index opts.OutputOptions.IncludeTags 0) }}{{end}}
 
 // The interface specification for the client above.
 type {{$interfacePrefix}}ClientInterface interface {

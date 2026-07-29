@@ -4,9 +4,9 @@
 package upcloud
 
 // The interface specification for the client above.
-type TagClientInterface interface {
+type UpcloudClientInterface interface {
 }
 
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
-type TagClientWithResponsesInterface interface {
+type UpcloudClientWithResponsesInterface interface {
 }
