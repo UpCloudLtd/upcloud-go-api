@@ -18,3 +18,5 @@ output-options:
   user-templates:
     # https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/refs/tags/v2.6.0/pkg/codegen/templates/constants.tmpl
     constants.tmpl: ./generator/config/constants.tmpl
+    client.tmpl: ./generator/config/client.tmpl
+    client-with-responses.tmpl: ./generator/config/client-with-responses.tmpl
