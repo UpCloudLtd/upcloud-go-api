@@ -12,10 +12,6 @@ import (
 	openapi_types "github.com/oapi-codegen/runtime/types"
 )
 
-const (
-	ApiTokenScopes = "apiToken.Scopes"
-)
-
 // Defines values for AccountTokensProblem400Status.
 const (
 	AccountTokensProblem400StatusN400 AccountTokensProblem400Status = 400
