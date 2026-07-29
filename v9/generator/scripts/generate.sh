@@ -3,6 +3,11 @@ set -euo pipefail
 
 echo "== Go SDK GENERATION =="
 
+# Remove existing generated files
+rm ./pkg/upcloud/server_urls.gen.go || true
+rm ./pkg/upcloud/*_models.gen.go || true
+rm ./pkg/upcloud/*_client.gen.go || true
+
 # Preprocess spec to fix enum null values
 ./generator/scripts/preprocess-spec.sh ./generator/spec.json ./generator/spec.processed.json
 
