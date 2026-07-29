@@ -592,6 +592,48 @@ func (e DatabaseNetworkType) Valid() bool {
 	}
 }
 
+// Defines values for DatabasePlanComponentsResponseBackupsName.
+const (
+	Extended DatabasePlanComponentsResponseBackupsName = "extended"
+	Mini     DatabasePlanComponentsResponseBackupsName = "mini"
+	Regular  DatabasePlanComponentsResponseBackupsName = "regular"
+)
+
+// Valid indicates whether the value is a known member of the DatabasePlanComponentsResponseBackupsName enum.
+func (e DatabasePlanComponentsResponseBackupsName) Valid() bool {
+	switch e {
+	case Extended:
+		return true
+	case Mini:
+		return true
+	case Regular:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DatabasePlanComponentsResponseComputeFamily.
+const (
+	DatabasePlanComponentsResponseComputeFamilyDevelopment DatabasePlanComponentsResponseComputeFamily = "development"
+	DatabasePlanComponentsResponseComputeFamilyMemory      DatabasePlanComponentsResponseComputeFamily = "memory"
+	DatabasePlanComponentsResponseComputeFamilyStandard    DatabasePlanComponentsResponseComputeFamily = "standard"
+)
+
+// Valid indicates whether the value is a known member of the DatabasePlanComponentsResponseComputeFamily enum.
+func (e DatabasePlanComponentsResponseComputeFamily) Valid() bool {
+	switch e {
+	case DatabasePlanComponentsResponseComputeFamilyDevelopment:
+		return true
+	case DatabasePlanComponentsResponseComputeFamilyMemory:
+		return true
+	case DatabasePlanComponentsResponseComputeFamilyStandard:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for DatabaseQueryParamSort.
 const (
 	DatabaseQueryParamSortCreatedAt             DatabaseQueryParamSort = "created_at"
@@ -2322,25 +2364,25 @@ func (e IpAddressNetworkType) Valid() bool {
 
 // Defines values for KubernetesClusterPlan.
 const (
-	DevMd           KubernetesClusterPlan = "dev-md"
-	Development     KubernetesClusterPlan = "development"
-	ProdMd          KubernetesClusterPlan = "prod-md"
-	ProdMdHa        KubernetesClusterPlan = "prod-md-ha"
-	ProductionSmall KubernetesClusterPlan = "production-small"
+	KubernetesClusterPlanDevMd           KubernetesClusterPlan = "dev-md"
+	KubernetesClusterPlanDevelopment     KubernetesClusterPlan = "development"
+	KubernetesClusterPlanProdMd          KubernetesClusterPlan = "prod-md"
+	KubernetesClusterPlanProdMdHa        KubernetesClusterPlan = "prod-md-ha"
+	KubernetesClusterPlanProductionSmall KubernetesClusterPlan = "production-small"
 )
 
 // Valid indicates whether the value is a known member of the KubernetesClusterPlan enum.
 func (e KubernetesClusterPlan) Valid() bool {
 	switch e {
-	case DevMd:
+	case KubernetesClusterPlanDevMd:
 		return true
-	case Development:
+	case KubernetesClusterPlanDevelopment:
 		return true
-	case ProdMd:
+	case KubernetesClusterPlanProdMd:
 		return true
-	case ProdMdHa:
+	case KubernetesClusterPlanProdMdHa:
 		return true
-	case ProductionSmall:
+	case KubernetesClusterPlanProductionSmall:
 		return true
 	default:
 		return false
@@ -4958,8 +5000,8 @@ type AccountResourceLimits struct {
 	// DetachedInterfaces The maximum number of detached network interfaces allowed.
 	DetachedInterfaces *int `json:"detached_interfaces,omitempty"`
 
-	// FileStorage The maximum number of file storage instances allowed.
-	FileStorage *int `json:"file_storage,omitempty"`
+	// FileStorages The maximum number of file storage instances allowed.
+	FileStorages *int `json:"file_storages,omitempty"`
 
 	// Gpus The maximum number of GPUs allowed.
 	Gpus *int `json:"gpus,omitempty"`
@@ -5447,9 +5489,6 @@ type CreateFirewallRuleset struct {
 	// ServerUuid The unique identifier for the resource.
 	ServerUuid *FirewallRulesetUuid `json:"server_uuid,omitempty"`
 	Stateful   *bool                `json:"stateful,omitempty"`
-
-	// Uuid The unique identifier for the resource.
-	Uuid *FirewallRulesetUuid `json:"uuid,omitempty"`
 }
 
 // CreateNetworkRequest Request schema for creating a network
@@ -5603,9 +5642,7 @@ type CreateServerResponse struct {
 		IpAddresses *struct {
 			IpAddress []struct {
 				// Access Network access level
-				Access ServerAccess `json:"access"`
-
-				// Family IP address family
+				Access ServerAccess   `json:"access"`
 				Family ServerIpFamily `json:"family"`
 				VlanId *string        `json:"vlan_id,omitempty"`
 			} `json:"ip_address"`
@@ -6404,6 +6441,69 @@ type DatabasePgCurrentSessionResponse struct {
 	XactStart *time.Time `json:"xact_start,omitempty"`
 }
 
+// DatabasePlanComponentsResponse Structured breakdown of a service plan into compute, storage and backups components. Sizes are expressed in GB to match plan naming; the classic MB/MiB fields on the plan object are unchanged.
+type DatabasePlanComponentsResponse struct {
+	// Backups Backup characteristics of the plan
+	Backups *struct {
+		// Frequent Frequent backup window, OpenSearch only
+		Frequent *struct {
+			IntervalMinutes *int32 `json:"interval_minutes,omitempty"`
+			RetentionDays   *int32 `json:"retention_days,omitempty"`
+		} `json:"frequent,omitempty"`
+
+		// Infrequent Infrequent backup window, OpenSearch only
+		Infrequent *struct {
+			IntervalMinutes *int32 `json:"interval_minutes,omitempty"`
+			RetentionDays   *int32 `json:"retention_days,omitempty"`
+		} `json:"infrequent,omitempty"`
+
+		// Name Backup tier name for tiered plans. Omitted when the plan retention does not map to a named tier.
+		Name *DatabasePlanComponentsResponseBackupsName `json:"name,omitempty"`
+
+		// RetentionDays Backup retention in days
+		RetentionDays *int32 `json:"retention_days,omitempty"`
+	} `json:"backups,omitempty"`
+
+	// Compute Compute resources per service
+	Compute *struct {
+		// Cpu CPU cores per node
+		Cpu *int32 `json:"cpu,omitempty"`
+
+		// Family Compute family for tiered plans. Omitted for classic plans.
+		Family *DatabasePlanComponentsResponseComputeFamily `json:"family,omitempty"`
+
+		// MemoryGb Memory per node in GB
+		MemoryGb *int32 `json:"memory_gb,omitempty"`
+
+		// Name Compute shape name usable as plan_compute in requests.
+		Name *string `json:"name,omitempty"`
+
+		// NodeCount Number of nodes
+		NodeCount *int32 `json:"node_count,omitempty"`
+	} `json:"compute,omitempty"`
+
+	// Storage Storage included in the plan. Omitted for service types without persistent storage.
+	Storage *struct {
+		// AdditionalGib Extra dynamic storage configured on the service, in GB. Only present on legacy (non-tiered) service responses; tiered plans present total_gib instead.
+		AdditionalGib *int32 `json:"additional_gib,omitempty"`
+
+		// DynamicStorageSupported Whether the storage total can be adjusted on top of the plan's included storage.
+		DynamicStorageSupported *bool `json:"dynamic_storage_supported,omitempty"`
+
+		// IncludedGib Storage included in the plan per node, in GB. Omitted for tiered (rdb.*) plans, which present storage as a single total_gib.
+		IncludedGib *int32 `json:"included_gib,omitempty"`
+
+		// TotalGib Total storage, in GB. For tiered (rdb.*) plans this is the single storage number: the plan's base storage in the catalog, or the chosen total (included plus dynamic) on a service response. Omitted for legacy catalog plans.
+		TotalGib *int32 `json:"total_gib,omitempty"`
+	} `json:"storage,omitempty"`
+}
+
+// DatabasePlanComponentsResponseBackupsName Backup tier name for tiered plans. Omitted when the plan retention does not map to a named tier.
+type DatabasePlanComponentsResponseBackupsName string
+
+// DatabasePlanComponentsResponseComputeFamily Compute family for tiered plans. Omitted for classic plans.
+type DatabasePlanComponentsResponseComputeFamily string
+
 // DatabaseProjectAlertResponse Schema for a project alert response
 type DatabaseProjectAlertResponse struct {
 	// CreateTime Timestamp when the alert was created
@@ -6785,238 +6885,25 @@ type DatabaseServiceAlertResponse struct {
 // DatabaseServiceAlertsResponse Schema for service alerts response
 type DatabaseServiceAlertsResponse = []DatabaseServiceAlertResponse
 
-// DatabaseServiceCloneMysql Schema for cloning a MySQL service
-type DatabaseServiceCloneMysql struct {
-	// AdditionalDiskSpaceGib Additional disk space in GiB
-	AdditionalDiskSpaceGib *int32 `json:"additional_disk_space_gib,omitempty"`
-
-	// BackupName Backup name
-	BackupName *string `json:"backup_name,omitempty"`
-
-	// CloneTime Clone time
-	CloneTime *time.Time `json:"clone_time,omitempty"`
-
-	// HostnamePrefix Hostname prefix
-	HostnamePrefix string `json:"hostname_prefix"`
-
-	// Labels Labels
-	Labels *[]DatabaseLabelCreate `json:"labels,omitempty"`
-
-	// Maintenance Maintenance
-	Maintenance *struct {
-		// Dow Day of the week for maintenance window
-		Dow DatabaseMaintenanceDow `json:"dow"`
-
-		// Time Time of day for maintenance window in HH:MM format
-		Time DatabaseMaintenanceTime `json:"time"`
-	} `json:"maintenance,omitempty"`
-
-	// Networks Networks
-	Networks *[]DatabaseNetworkCreate `json:"networks,omitempty"`
-
-	// Plan Plan
-	Plan *string `json:"plan,omitempty"`
-
-	// Properties mysql properties
-	Properties *DatabaseServicePropertiesMysql `json:"properties,omitempty"`
-
-	// SetServiceUuid Title
-	SetServiceUuid *openapi_types.UUID `json:"set_service_uuid,omitempty"`
-
-	// TerminationProtection Termination protection
-	TerminationProtection *bool `json:"termination_protection,omitempty"`
-
-	// Title The title of an entity.
-	Title *DatabaseTitle `json:"title,omitempty"`
-
-	// Zone Zone
-	Zone *string `json:"zone,omitempty"`
-}
+// DatabaseServiceCloneMysql defines model for databaseServiceCloneMysql.
+type DatabaseServiceCloneMysql = interface{}
 
 // DatabaseServiceCloneOpenAPI Schema for cloning a service — OpenAPI version.
 type DatabaseServiceCloneOpenAPI struct {
 	union json.RawMessage
 }
 
-// DatabaseServiceCloneOpensearch Schema for cloning an OpenSearch service
-type DatabaseServiceCloneOpensearch struct {
-	// AdditionalDiskSpaceGib Additional disk space in GiB
-	AdditionalDiskSpaceGib *int32 `json:"additional_disk_space_gib,omitempty"`
+// DatabaseServiceCloneOpensearch defines model for databaseServiceCloneOpensearch.
+type DatabaseServiceCloneOpensearch = interface{}
 
-	// BackupName Backup name
-	BackupName *string `json:"backup_name,omitempty"`
+// DatabaseServiceClonePg defines model for databaseServiceClonePg.
+type DatabaseServiceClonePg = interface{}
 
-	// CloneTime Clone time
-	CloneTime *time.Time `json:"clone_time,omitempty"`
+// DatabaseServiceCloneRedis defines model for databaseServiceCloneRedis.
+type DatabaseServiceCloneRedis = interface{}
 
-	// HostnamePrefix Hostname prefix
-	HostnamePrefix string `json:"hostname_prefix"`
-
-	// Labels Labels
-	Labels *[]DatabaseLabelCreate `json:"labels,omitempty"`
-
-	// Maintenance Maintenance
-	Maintenance *struct {
-		// Dow Day of the week for maintenance window
-		Dow DatabaseMaintenanceDow `json:"dow"`
-
-		// Time Time of day for maintenance window in HH:MM format
-		Time DatabaseMaintenanceTime `json:"time"`
-	} `json:"maintenance,omitempty"`
-
-	// Networks Networks
-	Networks *[]DatabaseNetworkCreate `json:"networks,omitempty"`
-
-	// Plan Plan
-	Plan *string `json:"plan,omitempty"`
-
-	// Properties opensearch properties
-	Properties *DatabaseServicePropertiesOpensearch `json:"properties,omitempty"`
-
-	// SetServiceUuid Title
-	SetServiceUuid *openapi_types.UUID `json:"set_service_uuid,omitempty"`
-
-	// TerminationProtection Termination protection
-	TerminationProtection *bool `json:"termination_protection,omitempty"`
-
-	// Title The title of an entity.
-	Title *DatabaseTitle `json:"title,omitempty"`
-
-	// Zone Zone
-	Zone *string `json:"zone,omitempty"`
-}
-
-// DatabaseServiceClonePg Schema for cloning a PostgreSQL service.
-type DatabaseServiceClonePg struct {
-	// AdditionalDiskSpaceGib Additional disk space in GiB
-	AdditionalDiskSpaceGib *int32 `json:"additional_disk_space_gib,omitempty"`
-
-	// BackupName Backup name
-	BackupName *string `json:"backup_name,omitempty"`
-
-	// CloneTime Clone time
-	CloneTime *time.Time `json:"clone_time,omitempty"`
-
-	// HostnamePrefix Hostname prefix
-	HostnamePrefix string `json:"hostname_prefix"`
-
-	// Labels Labels
-	Labels *[]DatabaseLabelCreate `json:"labels,omitempty"`
-
-	// Maintenance Maintenance
-	Maintenance *struct {
-		// Dow Day of the week for maintenance window
-		Dow DatabaseMaintenanceDow `json:"dow"`
-
-		// Time Time of day for maintenance window in HH:MM format
-		Time DatabaseMaintenanceTime `json:"time"`
-	} `json:"maintenance,omitempty"`
-	Networks *[]DatabaseNetworkCreate `json:"networks,omitempty"`
-
-	// Plan Plan
-	Plan *string `json:"plan,omitempty"`
-
-	// Properties pg properties
-	Properties *DatabaseServicePropertiesPg `json:"properties,omitempty"`
-
-	// SetServiceUuid Title
-	SetServiceUuid *openapi_types.UUID `json:"set_service_uuid,omitempty"`
-
-	// TerminationProtection Termination protection
-	TerminationProtection *bool `json:"termination_protection,omitempty"`
-
-	// Title The title of an entity.
-	Title *DatabaseTitle `json:"title,omitempty"`
-
-	// Zone Zone
-	Zone *string `json:"zone,omitempty"`
-}
-
-// DatabaseServiceCloneRedis Schema for cloning a Redis service.
-type DatabaseServiceCloneRedis struct {
-	// BackupName Backup name
-	BackupName *string `json:"backup_name,omitempty"`
-
-	// CloneTime Clone time
-	CloneTime *time.Time `json:"clone_time,omitempty"`
-
-	// HostnamePrefix Hostname prefix
-	HostnamePrefix string `json:"hostname_prefix"`
-
-	// Labels Labels
-	Labels *[]DatabaseLabelCreate `json:"labels,omitempty"`
-
-	// Maintenance Maintenance
-	Maintenance *struct {
-		// Dow Day of the week for maintenance window
-		Dow DatabaseMaintenanceDow `json:"dow"`
-
-		// Time Time of day for maintenance window in HH:MM format
-		Time DatabaseMaintenanceTime `json:"time"`
-	} `json:"maintenance,omitempty"`
-	Networks *[]DatabaseNetworkCreate `json:"networks,omitempty"`
-
-	// Plan Plan
-	Plan *string `json:"plan,omitempty"`
-
-	// Properties redis properties
-	Properties *DatabaseServicePropertiesRedis `json:"properties,omitempty"`
-
-	// SetServiceUuid Title
-	SetServiceUuid *openapi_types.UUID `json:"set_service_uuid,omitempty"`
-
-	// TerminationProtection Termination protection
-	TerminationProtection *bool `json:"termination_protection,omitempty"`
-
-	// Title The title of an entity.
-	Title *DatabaseTitle `json:"title,omitempty"`
-
-	// Zone Zone
-	Zone *string `json:"zone,omitempty"`
-}
-
-// DatabaseServiceCloneValkey Schema for cloning a service with valkey.
-type DatabaseServiceCloneValkey struct {
-	// BackupName Backup name
-	BackupName *string `json:"backup_name,omitempty"`
-
-	// CloneTime Clone time
-	CloneTime *time.Time `json:"clone_time,omitempty"`
-
-	// HostnamePrefix Hostname prefix
-	HostnamePrefix string `json:"hostname_prefix"`
-
-	// Labels Labels
-	Labels *[]DatabaseLabelCreate `json:"labels,omitempty"`
-
-	// Maintenance Maintenance
-	Maintenance *struct {
-		// Dow Day of the week for maintenance window
-		Dow DatabaseMaintenanceDow `json:"dow"`
-
-		// Time Time of day for maintenance window in HH:MM format
-		Time DatabaseMaintenanceTime `json:"time"`
-	} `json:"maintenance,omitempty"`
-	Networks *[]DatabaseNetworkCreate `json:"networks,omitempty"`
-
-	// Plan Plan
-	Plan *string `json:"plan,omitempty"`
-
-	// Properties valkey properties
-	Properties *DatabaseServicePropertiesValkey `json:"properties,omitempty"`
-
-	// SetServiceUuid Title
-	SetServiceUuid *openapi_types.UUID `json:"set_service_uuid,omitempty"`
-
-	// TerminationProtection Termination protection
-	TerminationProtection *bool `json:"termination_protection,omitempty"`
-
-	// Title The title of an entity.
-	Title *DatabaseTitle `json:"title,omitempty"`
-
-	// Zone Zone
-	Zone *string `json:"zone,omitempty"`
-}
+// DatabaseServiceCloneValkey defines model for databaseServiceCloneValkey.
+type DatabaseServiceCloneValkey = interface{}
 
 // DatabaseServiceComponentResponse Schema for a service component response.
 type DatabaseServiceComponentResponse struct {
@@ -7093,6 +6980,9 @@ type DatabaseServiceInformationResponse struct {
 
 	// Plan The plan of the service.
 	Plan *string `json:"plan,omitempty"`
+
+	// PlanComponents Structured breakdown of a service plan into compute, storage and backups components. Sizes are expressed in GB to match plan naming; the classic MB/MiB fields on the plan object are unchanged.
+	PlanComponents *DatabasePlanComponentsResponse `json:"plan_components,omitempty"`
 
 	// Powered Indicates whether the service is powered on.
 	Powered *bool `json:"powered,omitempty"`
@@ -7249,6 +7139,9 @@ type DatabaseServicePlanResponse struct {
 	// BackupConfigValkey General backup configuration schema
 	BackupConfigValkey *DatabaseBackupConfigResponse `json:"backup_config_valkey,omitempty"`
 
+	// Components Structured breakdown of a service plan into compute, storage and backups components. Sizes are expressed in GB to match plan naming; the classic MB/MiB fields on the plan object are unchanged.
+	Components *DatabasePlanComponentsResponse `json:"components,omitempty"`
+
 	// CoreNumber Number of CPU cores per node
 	CoreNumber *int32 `json:"core_number,omitempty"`
 
@@ -7291,6 +7184,9 @@ type DatabaseServicePropertiesMysql struct {
 	// InformationSchemaStatsExpiry The time, in seconds, before cached statistics expire
 	InformationSchemaStatsExpiry *int `json:"information_schema_stats_expiry,omitempty"`
 
+	// InnodbAdaptiveHashIndex Whether InnoDB adaptive hash indexing is enabled. The optimal setting is workload-dependent: it speeds up lookups for some workloads but its internal latch can become a contention point under high concurrency, in which case disabling it can improve throughput.
+	InnodbAdaptiveHashIndex *bool `json:"innodb_adaptive_hash_index,omitempty"`
+
 	// InnodbChangeBufferMaxSize Maximum size for the InnoDB change buffer, as a percentage of the total size of the buffer pool. Default is 25
 	InnodbChangeBufferMaxSize *int `json:"innodb_change_buffer_max_size,omitempty"`
 
@@ -7302,6 +7198,12 @@ type DatabaseServicePropertiesMysql struct {
 
 	// InnodbFtServerStopwordTable This option is used to specify your own InnoDB FULLTEXT index stopword list for all InnoDB tables.
 	InnodbFtServerStopwordTable *string `json:"innodb_ft_server_stopword_table,omitempty"`
+
+	// InnodbIoCapacity The number of I/O operations per second (IOPS) available to InnoDB background tasks, such as flushing pages from the buffer pool and merging data from the change buffer. Set this to a value appropriate for the underlying storage; it must not exceed innodb_io_capacity_max.
+	InnodbIoCapacity *int `json:"innodb_io_capacity,omitempty"`
+
+	// InnodbIoCapacityMax The maximum number of I/O operations per second (IOPS) that InnoDB background tasks may perform when flushing falls behind. Defaults to twice innodb_io_capacity (minimum 2000). This must be greater than or equal to innodb_io_capacity.
+	InnodbIoCapacityMax *int `json:"innodb_io_capacity_max,omitempty"`
 
 	// InnodbLockWaitTimeout The length of time in seconds an InnoDB transaction waits for a row lock before giving up. Default is 120.
 	InnodbLockWaitTimeout *int `json:"innodb_lock_wait_timeout,omitempty"`
@@ -7682,7 +7584,7 @@ type DatabaseServicePropertiesOpensearch struct {
 		// JwtHeader The HTTP header that stores the token. Typically the Authorization header with the Bearer schema: Authorization: Bearer <token>. Optional. Default is Authorization.
 		JwtHeader *string `json:"jwt_header,omitempty"`
 
-		// JwtUrlParameter If the token is not transmitted in the HTTP header, but as an URL parameter, define the name of the parameter here. Optional.
+		// JwtUrlParameter If the token is not transmitted in the HTTP header, but as a URL parameter, define the name of the parameter here. Optional.
 		JwtUrlParameter *string `json:"jwt_url_parameter,omitempty"`
 
 		// RefreshRateLimitCount The maximum number of unknown key IDs in the time frame. Default is 10. Optional.
@@ -8044,8 +7946,14 @@ type DatabaseServicePropertiesOpensearchCustomReposSettings0 struct {
 	EndpointSuffix *string `json:"endpoint_suffix,omitempty"`
 
 	// Key Azure account secret key. One of key or sas_token should be specified
-	Key      *string `json:"key,omitempty"`
-	Readonly *bool   `json:"readonly,omitempty"`
+	Key *string `json:"key,omitempty"`
+
+	// MaxRestoreBytesPerSec Throttles the restore rate per node. Defaults to unlimited. Note that if the recovery settings for managed services are set, this value is overridden by the recovery settings. Value should be a byte size with unit, e.g. 40mb, 100kb, 1gb
+	MaxRestoreBytesPerSec *string `json:"max_restore_bytes_per_sec,omitempty"`
+
+	// MaxSnapshotBytesPerSec Throttles the snapshot rate per node. Defaults to 40mb. Note that if the recovery settings for managed services are set, this value is overridden by the recovery settings. Value should be a byte size with unit, e.g. 40mb, 100kb, 1gb
+	MaxSnapshotBytesPerSec *string `json:"max_snapshot_bytes_per_sec,omitempty"`
+	Readonly               *bool   `json:"readonly,omitempty"`
 
 	// SasToken A shared access signatures (SAS) token. One of key or sas_token should be specified
 	SasToken *string `json:"sas_token,omitempty"`
@@ -8087,7 +7995,13 @@ type DatabaseServicePropertiesOpensearchCustomReposSettings1 struct {
 		// UniverseDomain The universe domain. The default universe domain is googleapis.com.
 		UniverseDomain *string `json:"universe_domain,omitempty"`
 	} `json:"credentials"`
-	Readonly *bool `json:"readonly,omitempty"`
+
+	// MaxRestoreBytesPerSec Throttles the restore rate per node. Defaults to unlimited. Note that if the recovery settings for managed services are set, this value is overridden by the recovery settings. Value should be a byte size with unit, e.g. 40mb, 100kb, 1gb
+	MaxRestoreBytesPerSec *string `json:"max_restore_bytes_per_sec,omitempty"`
+
+	// MaxSnapshotBytesPerSec Throttles the snapshot rate per node. Defaults to 40mb. Note that if the recovery settings for managed services are set, this value is overridden by the recovery settings. Value should be a byte size with unit, e.g. 40mb, 100kb, 1gb
+	MaxSnapshotBytesPerSec *string `json:"max_snapshot_bytes_per_sec,omitempty"`
+	Readonly               *bool   `json:"readonly,omitempty"`
 }
 
 // DatabaseServicePropertiesOpensearchCustomReposSettings2 defines model for .
@@ -8106,8 +8020,14 @@ type DatabaseServicePropertiesOpensearchCustomReposSettings2 struct {
 
 	// Endpoint The S3 service endpoint to connect to. If you are using an S3-compatible service then you should set this to the service’s endpoint
 	Endpoint *string `json:"endpoint,omitempty"`
-	Readonly *bool   `json:"readonly,omitempty"`
-	Region   string  `json:"region"`
+
+	// MaxRestoreBytesPerSec Throttles the restore rate per node. Defaults to unlimited. Note that if the recovery settings for managed services are set, this value is overridden by the recovery settings. Value should be a byte size with unit, e.g. 40mb, 100kb, 1gb
+	MaxRestoreBytesPerSec *string `json:"max_restore_bytes_per_sec,omitempty"`
+
+	// MaxSnapshotBytesPerSec Throttles the snapshot rate per node. Defaults to 40mb. Note that if the recovery settings for managed services are set, this value is overridden by the recovery settings. Value should be a byte size with unit, e.g. 40mb, 100kb, 1gb
+	MaxSnapshotBytesPerSec *string `json:"max_snapshot_bytes_per_sec,omitempty"`
+	Readonly               *bool   `json:"readonly,omitempty"`
+	Region                 string  `json:"region"`
 
 	// SecretKey AWS secret key
 	SecretKey string `json:"secret_key"`
@@ -9483,9 +9403,6 @@ type FirewallRulesetFirewallRuleCreate struct {
 	SourceAddressStart *string     `json:"source_address_start,omitempty"`
 	SourcePortEnd      *int64      `json:"source_port_end,omitempty"`
 	SourcePortStart    *int64      `json:"source_port_start,omitempty"`
-
-	// Uuid The unique identifier for the resource.
-	Uuid *FirewallRulesetUuid `json:"uuid,omitempty"`
 }
 
 // FirewallRulesetFirewallRuleListResponse Response schema for a list of firewall ruleset rules.
@@ -15635,9 +15552,7 @@ type ServerInterfaceIpAddress struct {
 
 	// DhcpProvided Boolean value represented as yes/no
 	DhcpProvided *ServerBooleanYesno `json:"dhcp_provided,omitempty"`
-
-	// Family IP address family
-	Family ServerIpFamily `json:"family"`
+	Family       ServerIpFamily      `json:"family"`
 
 	// Floating Boolean value represented as yes/no
 	Floating ServerBooleanYesno `json:"floating"`
@@ -15662,14 +15577,12 @@ type ServerIpAddresses struct {
 	IpAddress []struct {
 		// Access Network access type
 		Access ServerNetworkType `json:"access"`
-
-		// Family IP address family
-		Family ServerIpFamily `json:"family"`
-		VlanId *string        `json:"vlan_id,omitempty"`
+		Family ServerIpFamily    `json:"family"`
+		VlanId *string           `json:"vlan_id,omitempty"`
 	} `json:"ip_address"`
 }
 
-// ServerIpFamily IP address family
+// ServerIpFamily defines model for serverIpFamily.
 type ServerIpFamily string
 
 // ServerIpReleasePolicy IP Release policy defines what happens to the address when the referencing resource is deleted
