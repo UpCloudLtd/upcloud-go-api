@@ -329,87 +329,6 @@ type AccountTokensToken struct {
 // AccountTokensUuidOfTheToken UUID of the token
 type AccountTokensUuidOfTheToken = openapi_types.UUID
 
-// DatabaseDependencyResponse a dependency definition
-type DatabaseDependencyResponse struct {
-	// Required List of required properties when this dependency is present
-	Required *[]string `json:"required,omitempty"`
-}
-
-// DatabasePropertySchemaResponse Schema definition for a single property
-type DatabasePropertySchemaResponse struct {
-	// Id Schema identifier
-	Id *string `json:"$id,omitempty"`
-
-	// Schema JSON Schema URI
-	Schema *string `json:"$schema,omitempty"`
-
-	// AdditionalProperties Whether additional properties are allowed
-	AdditionalProperties *bool `json:"additionalProperties,omitempty"`
-
-	// CreateOnly Whether the property can only be set during creation
-	CreateOnly *bool `json:"createOnly,omitempty"`
-
-	// Default Any valid JSON value is allowed here
-	Default *map[string]interface{} `json:"default,omitempty"`
-
-	// Dependencies Property dependency collection
-	Dependencies *map[string]DatabaseDependencyResponse `json:"dependencies,omitempty"`
-
-	// Description Description of the property
-	Description *string `json:"description,omitempty"`
-
-	// Enum Enumeration of allowed values
-	Enum *[]interface{} `json:"enum,omitempty"`
-
-	// Example Any valid JSON value is allowed here
-	Example *map[string]interface{} `json:"example,omitempty"`
-
-	// Items Schema definition for a single property
-	Items *DatabasePropertySchemaResponse `json:"items,omitempty"`
-
-	// MaxItems Maximum number of items for arrays
-	MaxItems *int32 `json:"maxItems,omitempty"`
-
-	// MaxLength Maximum length for the property schema
-	MaxLength *int32 `json:"maxLength,omitempty"`
-
-	// Maximum Maximum values for numeric properties
-	Maximum *[]map[string]interface{} `json:"maximum,omitempty"`
-
-	// MinLength Minimum length for the property schema
-	MinLength *int32 `json:"minLength,omitempty"`
-
-	// Minimum Minimum values for numeric properties
-	Minimum *[]map[string]interface{} `json:"minimum,omitempty"`
-
-	// Pattern Allowed patterns for the property
-	Pattern *string `json:"pattern,omitempty"`
-
-	// Properties Properties for object type
-	Properties *map[string]DatabasePropertySchemaResponse `json:"properties,omitempty"`
-
-	// Required List of required properties
-	Required *[]string `json:"required,omitempty"`
-
-	// Title Human-readable title for the property
-	Title *string `json:"title,omitempty"`
-
-	// Type Data type of the property
-	Type *string `json:"type,omitempty"`
-
-	// UserError User-friendly error message
-	UserError *string `json:"user_error,omitempty"`
-}
-
-// KubernetesName Name
-type KubernetesName = string
-
-// KubernetesNodeName Node name
-type KubernetesNodeName = string
-
-// KubernetesUuid UUID
-type KubernetesUuid = openapi_types.UUID
-
 // AccountTokensGetTokenTokenUuid defines model for accountTokensGetTokenTokenUuid.
 type AccountTokensGetTokenTokenUuid = openapi_types.UUID
 
@@ -427,15 +346,6 @@ type AccountTokensListTokensSort = string
 
 // AccountTokensRevokeTokenTokenUuid defines model for accountTokensRevokeTokenTokenUuid.
 type AccountTokensRevokeTokenTokenUuid = openapi_types.UUID
-
-// KubernetesNameParameter Name
-type KubernetesNameParameter = KubernetesName
-
-// KubernetesNodeNameParameter Node name
-type KubernetesNodeNameParameter = KubernetesNodeName
-
-// KubernetesUuidParameter UUID
-type KubernetesUuidParameter = KubernetesUuid
 
 // AccountTokensCreateToken201 A token.
 type AccountTokensCreateToken201 = AccountTokensToken

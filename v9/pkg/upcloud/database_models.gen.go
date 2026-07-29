@@ -4496,15 +4496,6 @@ type DatabaseZoneInfoResponse struct {
 	Name *string `json:"name,omitempty"`
 }
 
-// KubernetesName Name
-type KubernetesName = string
-
-// KubernetesNodeName Node name
-type KubernetesNodeName = string
-
-// KubernetesUuid UUID
-type KubernetesUuid = openapi_types.UUID
-
 // CloneDatabaseUuid The unique identifier for the integration.
 type CloneDatabaseUuid = DatabaseUuid
 
@@ -4690,15 +4681,6 @@ type GetDatabaseUuid = DatabaseUuid
 
 // GetDatabaseVersionsUuid The unique identifier for the integration.
 type GetDatabaseVersionsUuid = DatabaseUuid
-
-// KubernetesNameParameter Name
-type KubernetesNameParameter = KubernetesName
-
-// KubernetesNodeNameParameter Node name
-type KubernetesNodeNameParameter = KubernetesNodeName
-
-// KubernetesUuidParameter UUID
-type KubernetesUuidParameter = KubernetesUuid
 
 // ListDatabaseConnectionPoolsSort Schema for a query parameter specifying the order.
 type ListDatabaseConnectionPoolsSort = DatabaseQueryParamOrder

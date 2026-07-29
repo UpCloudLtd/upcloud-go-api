@@ -14,6 +14,8 @@ rm ./pkg/upcloud/*_client.gen.go || true
 # Run oapi-codegen with processed spec
 # Note: go generate runs from generator/ directory, so path should be relative to that
 SPEC_FILE=./generator/spec.processed.json
+TAG_SPEC=
+trap 'rm -f "$SPEC_FILE" "${TAG_SPEC:-}"' EXIT
 
 # Generate common server URL file
 go tool oapi-codegen -config ./generator/config/server-urls.yaml -o ./pkg/upcloud/server_urls.gen.go "$SPEC_FILE"
@@ -21,11 +23,17 @@ go tool oapi-codegen -config ./generator/config/server-urls.yaml -o ./pkg/upclou
 # Loop through all tags in the spec and generate models and client for each tag
 for tag in $(jq -r '.tags[]?.name' "$SPEC_FILE"); do
   echo "Generating $tag"
-  go tool oapi-codegen -config ./generator/config/models.yaml -include-tags "$tag" -o ./pkg/upcloud/"$tag"_models.gen.go "$SPEC_FILE"
-  go tool oapi-codegen -config ./generator/config/client.yaml -include-tags "$tag" -o ./pkg/upcloud/"$tag"_client.gen.go "$SPEC_FILE"
+  TAG_SPEC=$(mktemp)
+  jq --arg tag "$tag" -f ./generator/scripts/filter-spec-by-tag.jq "$SPEC_FILE" > "$TAG_SPEC"
+
+  go tool oapi-codegen -config ./generator/config/models.yaml -include-tags "$tag" -o ./pkg/upcloud/"$tag"_models.gen.go "$TAG_SPEC"
+  go tool oapi-codegen -config ./generator/config/client.yaml -include-tags "$tag" -o ./pkg/upcloud/"$tag"_client.gen.go "$TAG_SPEC"
+
+  rm -f "$TAG_SPEC"
+  TAG_SPEC=
 done
 
 # Clean up processed spec
-rm $SPEC_FILE
+rm -f "$SPEC_FILE"
 
 echo "Generation complete."
