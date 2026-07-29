@@ -326,20 +326,6 @@ func NewModifyRouterRequestWithBody(server string, router ModifyRouterRouter, co
 	return req, nil
 }
 
-func (c *Client) applyEditors(ctx context.Context, req *http.Request, additionalEditors []RequestEditorFn) error {
-	for _, r := range c.RequestEditors {
-		if err := r(ctx, req); err != nil {
-			return err
-		}
-	}
-	for _, r := range additionalEditors {
-		if err := r(ctx, req); err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type RouterClientWithResponsesInterface interface {
 	// ListRoutersWithResponse request

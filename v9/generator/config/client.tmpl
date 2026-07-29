@@ -227,17 +227,3 @@ func New{{$opid}}Request{{if .HasBody}}WithBody{{end}}(server string{{genParamAr
 }
 
 {{end}}{{/* Range */}}
-
-func (c *{{ $clientTypeName }}) applyEditors(ctx context.Context, req *http.Request, additionalEditors []RequestEditorFn) error {
-    for _, r := range c.RequestEditors {
-        if err := r(ctx, req); err != nil {
-            return err
-        }
-    }
-    for _, r := range additionalEditors {
-        if err := r(ctx, req); err != nil {
-            return err
-        }
-    }
-    return nil
-}
