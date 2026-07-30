@@ -8,14 +8,9 @@ rm ./pkg/upcloud/server_urls.gen.go || true
 rm ./pkg/upcloud/*_models.gen.go || true
 rm ./pkg/upcloud/*_client.gen.go || true
 
-# Preprocess spec to fix enum null values
-./generator/scripts/preprocess-spec.sh ./generator/spec.json ./generator/spec.processed.json
-
-# Run oapi-codegen with processed spec
-# Note: go generate runs from generator/ directory, so path should be relative to that
-SPEC_FILE=./generator/spec.processed.json
+SPEC_FILE=./generator/spec.json
 TAG_SPEC=
-trap 'rm -f "$SPEC_FILE" "${TAG_SPEC:-}"' EXIT
+trap 'rm -f "${TAG_SPEC:-}"' EXIT
 
 # Generate common server URL file
 go tool oapi-codegen -config ./generator/config/server-urls.yaml -o ./pkg/upcloud/server_urls.gen.go "$SPEC_FILE"
@@ -32,9 +27,6 @@ for tag in $(jq -r '.tags[]?.name' "$SPEC_FILE"); do
   rm -f "$TAG_SPEC"
   TAG_SPEC=
 done
-
-# Clean up processed spec
-rm -f "$SPEC_FILE"
 
 # De-duplicate any duplicate types/constants across tag-filtered model files
 echo "De-duplicating generated types and constants"
