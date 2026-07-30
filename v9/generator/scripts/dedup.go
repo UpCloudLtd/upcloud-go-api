@@ -35,7 +35,7 @@ func main() {
 }
 
 // seen tracks package-level names already emitted across files. Package-level
-// identifiers share one namespace in Go, so one map covers types, consts, and methods.
+// identifiers share one namespace, so one map covers types, consts, and methods.
 type seen map[string]seenEntry
 
 type seenEntry struct {
@@ -108,7 +108,7 @@ func (s seen) keepUnique(file string, decls []ast.Decl) ([]ast.Decl, bool) {
 func (s seen) keepGenDecl(file string, decl *ast.GenDecl) (bool, bool) {
 	originalSpecCount := len(decl.Specs)
 
-	// A single type/const block can contain multiple names; keep the block if any name survives.
+	// A single type/const block can contain multiple names. So we keep the block if any name survives.
 	switch decl.Tok {
 	case token.TYPE:
 		decl.Specs = slices.DeleteFunc(decl.Specs, func(spec ast.Spec) bool {
