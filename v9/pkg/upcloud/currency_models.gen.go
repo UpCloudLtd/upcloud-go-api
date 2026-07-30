@@ -10,7 +10,7 @@ import (
 // CurrencyCode ISO 4217 code
 type CurrencyCode = string
 
-// CurrencyCurrencies Example: {"currencies":{"currency":[{"code":"EUR","rate":"0.00846077","updated":"2017-12-14T10:00:00Z"},{"code":"GBP","rate":"0.00743236","updated":"2017-12-14T10:00:00Z"},{"code":"SGD","rate":"0.01347685","updated":"2017-12-14T10:00:00Z"},{"code":"USD","rate":"0.01","updated":"2017-12-15T06:44:47Z"}]}}
+// CurrencyCurrencies defines model for currencyCurrencies.
 type CurrencyCurrencies struct {
 	Currencies struct {
 		Currency []struct {
@@ -25,12 +25,15 @@ type CurrencyCurrencies struct {
 // CurrencyError A general error response indicating that the request could not be fulfilled due to a technical issue.
 type CurrencyError struct {
 	Error struct {
-		ErrorCode    string `json:"error_code"`
+		// ErrorCode Examples: GENERAL_FAILURE
+		ErrorCode string `json:"error_code"`
+
+		// ErrorMessage Examples: Your request could not be fulfilled due to a technical issue.
 		ErrorMessage string `json:"error_message"`
 	} `json:"error"`
 }
 
-// CurrencyListCurrencies200 Example: {"currencies":{"currency":[{"code":"EUR","rate":"0.00846077","updated":"2017-12-14T10:00:00Z"},{"code":"GBP","rate":"0.00743236","updated":"2017-12-14T10:00:00Z"},{"code":"SGD","rate":"0.01347685","updated":"2017-12-14T10:00:00Z"},{"code":"USD","rate":"0.01","updated":"2017-12-15T06:44:47Z"}]}}
+// CurrencyListCurrencies200 defines model for currencyListCurrencies200.
 type CurrencyListCurrencies200 = CurrencyCurrencies
 
 // CurrencyListCurrenciesDefault A general error response indicating that the request could not be fulfilled due to a technical issue.

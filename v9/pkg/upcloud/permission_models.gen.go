@@ -6,14 +6,10 @@ package upcloud
 // Permission A single permission object.
 type Permission struct {
 	// Permission Permission document defining access rights for a sub-account to a specific resource.
-	//
-	// Example: {"options":{"storage":"yes"},"target_identifier":"00e1d79f-d2d8-40ca-a68d-812655b34766","target_type":"server","user":"test"}
 	Permission *PermissionDocument `json:"permission,omitempty"`
 }
 
 // PermissionDocument Permission document defining access rights for a sub-account to a specific resource.
-//
-// Example: {"options":{"storage":"yes"},"target_identifier":"00e1d79f-d2d8-40ca-a68d-812655b34766","target_type":"server","user":"test"}
 type PermissionDocument struct {
 	// Options Target specific options.
 	Options *map[string]interface{} `json:"options,omitempty"`
@@ -32,7 +28,10 @@ type PermissionDocument struct {
 // PermissionError A general error response indicating that the request could not be fulfilled due to a technical issue.
 type PermissionError struct {
 	Error struct {
-		ErrorCode    string `json:"error_code"`
+		// ErrorCode Examples: GENERAL_FAILURE
+		ErrorCode string `json:"error_code"`
+
+		// ErrorMessage Examples: Your request could not be fulfilled due to a technical issue.
 		ErrorMessage string `json:"error_message"`
 	} `json:"error"`
 }
@@ -48,8 +47,6 @@ type PermissionTargetType = interface{}
 type PermissionUserName = string
 
 // Permissions List of permissions.
-//
-// Example: {"permissions":{"permission":[{"options":{"storage":"yes"},"target_identifier":"00e1d79f-d2d8-40ca-a68d-812655b34766","target_type":"server","user":"subaccount1"},{"target_identifier":"01f6d5e3-c3b2-41ba-912a-723ab2c12345","target_type":"storage","user":"subaccount2"}]}}
 type Permissions struct {
 	Permissions struct {
 		Permission []PermissionDocument `json:"permission"`
@@ -78,16 +75,12 @@ type GrantPermission200 = Permission
 type GrantPermissionDefault = PermissionError
 
 // ListPermissions200 List of permissions.
-//
-// Example: {"permissions":{"permission":[{"options":{"storage":"yes"},"target_identifier":"00e1d79f-d2d8-40ca-a68d-812655b34766","target_type":"server","user":"subaccount1"},{"target_identifier":"01f6d5e3-c3b2-41ba-912a-723ab2c12345","target_type":"storage","user":"subaccount2"}]}}
 type ListPermissions200 = Permissions
 
 // ListPermissionsDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ListPermissionsDefault = PermissionError
 
 // ReplacePermissions200 List of permissions.
-//
-// Example: {"permissions":{"permission":[{"options":{"storage":"yes"},"target_identifier":"00e1d79f-d2d8-40ca-a68d-812655b34766","target_type":"server","user":"subaccount1"},{"target_identifier":"01f6d5e3-c3b2-41ba-912a-723ab2c12345","target_type":"storage","user":"subaccount2"}]}}
 type ReplacePermissions200 = Permissions
 
 // ReplacePermissionsDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
