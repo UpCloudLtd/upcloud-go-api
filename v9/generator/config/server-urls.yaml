@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/refs/tags/v2.6.0/configuration-schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/refs/tags/v2.8.0/configuration-schema.json
 package: upcloud
 compatibility:
   always-prefix-enum-values: true
@@ -17,3 +17,9 @@ output-options:
   overlay:
     path: ./generator/config/overlay.yaml
     strict: true
+  user-templates:
+    # https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/refs/tags/v2.8.0/pkg/codegen/templates/client.tmpl
+    client.tmpl: ./generator/config/client.tmpl
+    # https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/refs/tags/v2.8.0/pkg/codegen/templates/client-with-responses.tmpl
+    client-with-responses.tmpl: ./generator/config/client-with-responses.tmpl
+
