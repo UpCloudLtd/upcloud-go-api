@@ -59,23 +59,27 @@ type Plan struct {
 			CoreNumber PlanCoreNumber `json:"core_number"`
 
 			// CurrentOffering Boolean value represented as yes/no
-			//
-			// Example: yes
 			CurrentOffering PlanBooleanYesno `json:"current_offering"`
 
 			// Family The plan family identifier. Plan families group plans by their intended use case.
+			//
+			// Examples: general_purpose, cloud_native
 			Family PlanFamily `json:"family"`
 
 			// GpuAmount The number of GPUs included in the plan.
 			GpuAmount *PlanGpuAmount `json:"gpu_amount,omitempty"`
 
 			// GpuModel The GPU model included in the plan.
+			//
+			// Examples: NVIDIA L40S
 			GpuModel *PlanGpuModel `json:"gpu_model,omitempty"`
 
 			// MemoryAmount The amount of memory included in the plan, measured in mebibytes (MiB).
 			MemoryAmount PlanMemoryAmount `json:"memory_amount"`
 
 			// Name Server plan identifier
+			//
+			// Examples: 1xCPU-1GB, DEV-1xCPU-4GB, CLOUDNATIVE-1xCPU-8GB, GPU-12xCPU-128GB-2xL40S
 			Name PlanName `json:"name"`
 
 			// PublicTrafficOut The amount of public traffic out included in the plan, measured in gigabytes (GB).
@@ -85,14 +89,14 @@ type Plan struct {
 			StorageSize *PlanStorageSize `json:"storage_size,omitempty"`
 
 			// StorageTier The storage tier for the plan. Is null if the plan does not include storage.
+			//
+			// Examples: standard, maxiops, null
 			StorageTier *PlanStorageTier `json:"storage_tier,omitempty"`
 		} `json:"plan"`
 	} `json:"plans"`
 }
 
 // PlanBooleanYesno Boolean value represented as yes/no
-//
-// Example: yes
 type PlanBooleanYesno string
 
 // PlanCoreNumber The number of CPU cores included in the plan, represented as a positive integer. This value must be greater than zero.
@@ -101,24 +105,33 @@ type PlanCoreNumber = int
 // PlanError A general error response indicating that the request could not be fulfilled due to a technical issue.
 type PlanError struct {
 	Error struct {
-		ErrorCode    string `json:"error_code"`
+		// ErrorCode Examples: GENERAL_FAILURE
+		ErrorCode string `json:"error_code"`
+
+		// ErrorMessage Examples: Your request could not be fulfilled due to a technical issue.
 		ErrorMessage string `json:"error_message"`
 	} `json:"error"`
 }
 
 // PlanFamily The plan family identifier. Plan families group plans by their intended use case.
+//
+// Examples: general_purpose, cloud_native
 type PlanFamily string
 
 // PlanGpuAmount The number of GPUs included in the plan.
 type PlanGpuAmount = int
 
 // PlanGpuModel The GPU model included in the plan.
+//
+// Examples: NVIDIA L40S
 type PlanGpuModel = string
 
 // PlanMemoryAmount The amount of memory included in the plan, measured in mebibytes (MiB).
 type PlanMemoryAmount = int
 
 // PlanName Server plan identifier
+//
+// Examples: 1xCPU-1GB, DEV-1xCPU-4GB, CLOUDNATIVE-1xCPU-8GB, GPU-12xCPU-128GB-2xL40S
 type PlanName = string
 
 // PlanPublicTrafficOut The amount of public traffic out included in the plan, measured in gigabytes (GB).
@@ -128,6 +141,8 @@ type PlanPublicTrafficOut = int
 type PlanStorageSize = int
 
 // PlanStorageTier The storage tier for the plan. Is null if the plan does not include storage.
+//
+// Examples: standard, maxiops, null
 type PlanStorageTier = string
 
 // ListPlans200 defines model for listPlans200.

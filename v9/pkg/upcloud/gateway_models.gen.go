@@ -459,218 +459,359 @@ func (e GatewayTunnelOperationalState) Valid() bool {
 	}
 }
 
-// GatewayAddress defines model for gatewayAddress.
+// GatewayAddress Examples: {"addr":0}
 type GatewayAddress struct {
 	// Addr Address
+	//
+	// Examples: 0
 	Addr *int64 `json:"addr,omitempty"`
 }
 
 // GatewayAddressCreateRequest Gateway address
+//
+// Examples: {"name":"gateway-service"}
 type GatewayAddressCreateRequest struct {
 	// Address Floating IP address
+	//
+	// Examples: 203.0.113.10
 	Address *string `json:"address,omitempty"`
 
 	// Name Name of the address
+	//
+	// Examples: gateway-service, vpn-tunnel-1
 	Name string `json:"name"`
 }
 
 // GatewayAddressDetailsResponse Response schema for gateway address details.
+//
+// Examples: {"address":"203.0.113.10","name":"gateway-service","provisioned_by":"service"}
 type GatewayAddressDetailsResponse struct {
 	// Address VPN address
+	//
+	// Examples: 203.0.113.10
 	Address *string `json:"address,omitempty"`
 
 	// Name Name of the address
+	//
+	// Examples: gateway-service, vpn-tunnel-1
 	Name *string `json:"name,omitempty"`
 
 	// ProvisionedBy Provisioner of the address
+	//
+	// Examples: service, user
 	ProvisionedBy *string `json:"provisioned_by,omitempty"`
 }
 
 // GatewayAddressListResponse Response schema for a list of gateway addresses.
+//
+// Examples: []
 type GatewayAddressListResponse = []GatewayAddressDetailsResponse
 
 // GatewayAddressModifyRequest Gateway service address modify request
+//
+// Examples: {"address":"203.0.113.10"}
 type GatewayAddressModifyRequest struct {
 	// Address Floating IP address
+	//
+	// Examples: 203.0.113.10
 	Address string `json:"address"`
 }
 
 // GatewayAuthenticationDetailsResponse Response schema for authentication details.
+//
+// Examples: {"authentication":"psk"}
 type GatewayAuthenticationDetailsResponse struct {
 	// Authentication IPsec authentication type
+	//
+	// Examples: psk
 	Authentication *GatewayIpsecAuthenticationType `json:"authentication,omitempty"`
 }
 
 // GatewayConnectionCreateRequest Network gateway VPN connection
+//
+// Examples: {"local_routes":[],"name":"gateway-service","remote_routes":[],"tunnels":[],"type":"ipsec"}
 type GatewayConnectionCreateRequest struct {
 	// LocalRoutes Connection local routes
+	//
+	// Examples: [{"name":"upcloud-example-route","static_network":"10.0.0.0/24","type":"static"}]
 	LocalRoutes *[]GatewayConnectionRouteRequest `json:"local_routes,omitempty"`
 
 	// Name Name of the connection
+	//
+	// Examples: gateway-service, vpn-tunnel-1
 	Name string `json:"name"`
 
 	// RemoteRoutes Connection remote routes
+	//
+	// Examples: [{"name":"remote-example-route","static_network":"10.0.1.0/24","type":"static"}]
 	RemoteRoutes *[]GatewayConnectionRouteRequest `json:"remote_routes,omitempty"`
 
 	// Tunnels Connection tunnels
+	//
+	// Examples: [{"internal_peer_ping_interval":0,"ipsec":{"authentication":{"authentication":"psk","psk":"{your PSK}"}},"local_address":{"name":"public-ip-1"},"name":"example-tunnel-1","remote_address":{"address":"100.10.0.111"},"tunnel_internal_ip":"169.254.17.1"}]
 	Tunnels *[]GatewayTunnelCreateRequest `json:"tunnels,omitempty"`
 
 	// Type Connection type
+	//
+	// Examples: ipsec
 	Type GatewayConnectionType `json:"type"`
 
 	// Uuid The unique identifier for the resource.
+	//
+	// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 	Uuid *GatewayUuid `json:"uuid,omitempty"`
 }
 
 // GatewayConnectionDetailsResponse Response schema for gateway connection details.
+//
+// Examples: {"created_at":"2025-03-26T12:34:56Z","local_routes":[],"name":"gateway-service","remote_routes":[],"tunnels":[],"type":"ipsec","updated_at":"2025-03-26T12:34:56Z","uuid":"01234567-89ab-cdef-0123-456789abcdef"}
 type GatewayConnectionDetailsResponse struct {
 	// CreatedAt Timestamp of when the connection was created.
+	//
+	// Examples: 2025-03-26T12:34:56Z
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 
 	// LocalRoutes Local routes for the connection
+	//
+	// Examples: []
 	LocalRoutes *[]GatewayConnectionRouteDetailsResponse `json:"local_routes,omitempty"`
 
 	// Name Name of the connection
+	//
+	// Examples: gateway-service, vpn-tunnel-1
 	Name *string `json:"name,omitempty"`
 
 	// RemoteRoutes Remote routes for the connection
+	//
+	// Examples: []
 	RemoteRoutes *[]GatewayConnectionRouteDetailsResponse `json:"remote_routes,omitempty"`
-	Tunnels      *[]GatewayTunnelDetailsResponse          `json:"tunnels,omitempty"`
+
+	// Tunnels Examples: []
+	Tunnels *[]GatewayTunnelDetailsResponse `json:"tunnels,omitempty"`
 
 	// Type Connection type
+	//
+	// Examples: ipsec
 	Type *GatewayConnectionType `json:"type,omitempty"`
 
 	// UpdatedAt Timestamp of when the connection was last updated.
+	//
+	// Examples: 2025-03-26T12:34:56Z
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 
 	// Uuid The unique identifier for the resource.
+	//
+	// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 	Uuid *GatewayUuid `json:"uuid,omitempty"`
 }
 
 // GatewayConnectionListResponse Response schema for a list of gateway connections.
+//
+// Examples: []
 type GatewayConnectionListResponse = []GatewayConnectionDetailsResponse
 
 // GatewayConnectionModifyRequest Network gateway VPN connection
+//
+// Examples: {"local_routes":[{"name":"modified-routes","static_network":"10.0.22.0/24","type":"static"}],"name":"gateway-service","type":"ipsec","uuid":"01234567-89ab-cdef-0123-456789abcdef"}
 type GatewayConnectionModifyRequest struct {
 	// LocalRoutes Connection local routes
+	//
+	// Examples: []
 	LocalRoutes *[]GatewayConnectionRouteRequest `json:"local_routes,omitempty"`
 
 	// Name Name of the connection
+	//
+	// Examples: gateway-service, vpn-tunnel-1
 	Name *string `json:"name,omitempty"`
 
 	// RemoteRoutes Connection remote routes
+	//
+	// Examples: []
 	RemoteRoutes *[]GatewayConnectionRouteRequest `json:"remote_routes,omitempty"`
 
 	// Tunnels Tunnels
+	//
+	// Examples: []
 	Tunnels *[]GatewayTunnelModifyRequest `json:"tunnels,omitempty"`
 
 	// Type Connection type
+	//
+	// Examples: ipsec
 	Type *GatewayConnectionType `json:"type,omitempty"`
 
 	// Uuid The unique identifier for the resource.
+	//
+	// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 	Uuid *GatewayUuid `json:"uuid,omitempty"`
 }
 
 // GatewayConnectionRouteDetailsResponse Response schema for gateway connection route details.
+//
+// Examples: {"name":"gateway-service","static_network":"10.0.0.0/24","type":"static"}
 type GatewayConnectionRouteDetailsResponse struct {
 	// Name Name of the connection
+	//
+	// Examples: gateway-service, vpn-tunnel-1
 	Name *string `json:"name,omitempty"`
 
 	// StaticNetwork Static network for the connection route
+	//
+	// Examples: 10.0.0.0/24
 	StaticNetwork *string `json:"static_network,omitempty"`
 
 	// Type Connection route type
+	//
+	// Examples: static
 	Type *GatewayConnectionRouteType `json:"type,omitempty"`
 }
 
 // GatewayConnectionRouteRequest Network gateway VPN connection route
+//
+// Examples: {"name":"gateway-service","static_network":"10.0.0.0/24","type":"static"}
 type GatewayConnectionRouteRequest struct {
 	// Name Route name
+	//
+	// Examples: gateway-service, vpn-tunnel-1
 	Name string `json:"name"`
 
 	// StaticNetwork Static network subnet
+	//
+	// Examples: 10.0.0.0/24
 	StaticNetwork string `json:"static_network"`
 
 	// Type Connection route type
+	//
+	// Examples: static
 	Type GatewayConnectionRouteType `json:"type"`
 }
 
 // GatewayConnectionRouteType Connection route type
+//
+// Examples: static
 type GatewayConnectionRouteType string
 
 // GatewayConnectionType Connection type
+//
+// Examples: ipsec
 type GatewayConnectionType string
 
 // GatewayDiffieHellmanGroupNumber Diffie-Hellman group number
+//
+// Examples: 2, 5, 14
 type GatewayDiffieHellmanGroupNumber int64
 
 // GatewayErrorResponse Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type GatewayErrorResponse struct {
 	// CorrelationId Unique identifier for the request, useful for debugging.
+	//
+	// Examples: 01K1K2TKEASWRJ6VFP9ZV5P2H4
 	CorrelationId string `json:"correlation_id"`
 
 	// InvalidParams List of invalid parameters in the request.
+	//
+	// Examples: []
 	InvalidParams *[]interface{} `json:"invalid_params,omitempty"`
 
 	// Status HTTP status code associated with the error.
+	//
+	// Examples: 400, 404, 402, 500
 	Status int32 `json:"status"`
 
 	// Title Short description of the error.
+	//
+	// Examples: Validation error., The resource you requested does not exist., Your request could not be fulfilled due to a technical issue.
 	Title string `json:"title"`
 
 	// Type Error code string.
+	//
+	// Examples: example
 	Type string `json:"type"`
 }
 
 // GatewayIpsecAuthenticationType IPsec authentication type
+//
+// Examples: psk
 type GatewayIpsecAuthenticationType string
 
 // GatewayIpsecDetailsResponse Response schema for IPsec configuration details.
+//
+// Examples: {"authentication":{"authentication":"psk","psk":"{your PSK}"},"child_rekey_time":60,"dpd_delay":40,"dpd_timeout":20,"ike_lifetime":30,"rekey_time":30}
 type GatewayIpsecDetailsResponse struct {
 	// Authentication Response schema for authentication details.
+	//
+	// Examples: {"authentication":"psk"}
 	Authentication *GatewayAuthenticationDetailsResponse `json:"authentication,omitempty"`
 
 	// ChildRekeyTime IKE child SA rekey time in seconds
+	//
+	// Examples: 1440
 	ChildRekeyTime *int32 `json:"child_rekey_time,omitempty"`
 
 	// DpdDelay Delay before sending Dead Peer Detection packets if no traffic is detected, in seconds
+	//
+	// Examples: 30
 	DpdDelay *int32 `json:"dpd_delay,omitempty"`
 
 	// DpdTimeout Timeout period for DPD reply before considering the peer to be dead, in seconds
+	//
+	// Examples: 120
 	DpdTimeout *int32 `json:"dpd_timeout,omitempty"`
 
 	// IkeLifetime Maximum IKE SA lifetime in seconds
+	//
+	// Examples: 86400
 	IkeLifetime *int32 `json:"ike_lifetime,omitempty"`
 
 	// Phase1Algorithms Phase 1 proposal algorithms
+	//
+	// Examples: ["aes128","aes256","aes128gcm128","aes256gcm128"]
 	Phase1Algorithms *[]GatewaySupportedProposalAlgorithms `json:"phase1_algorithms,omitempty"`
 
 	// Phase1DhGroupNumbers Phase 1 Diffie-Hellman group numbers
+	//
+	// Examples: [16,18,19]
 	Phase1DhGroupNumbers *[]GatewayDiffieHellmanGroupNumber `json:"phase1_dh_group_numbers,omitempty"`
 
 	// Phase1IntegrityAlgorithms Phase 1 integrity algorithms
+	//
+	// Examples: ["sha256","sha384","sha512"]
 	Phase1IntegrityAlgorithms *[]GatewaySupportedIntegrityAlgorithms `json:"phase1_integrity_algorithms,omitempty"`
 
 	// Phase2Algorithms Phase 2 security association algorithms
+	//
+	// Examples: ["aes128","aes256","aes128gcm128","aes256gcm128"]
 	Phase2Algorithms *[]GatewaySupportedProposalAlgorithms `json:"phase2_algorithms,omitempty"`
 
 	// Phase2DhGroupNumbers Phase 2 Diffie-Hellman group numbers
+	//
+	// Examples: [14,16,18,19]
 	Phase2DhGroupNumbers *[]GatewayDiffieHellmanGroupNumber `json:"phase2_dh_group_numbers,omitempty"`
 
 	// Phase2IntegrityAlgorithms Phase 2 integrity algorithms
+	//
+	// Examples: ["sha256","sha384","sha512"]
 	Phase2IntegrityAlgorithms *[]GatewaySupportedIntegrityAlgorithms `json:"phase2_integrity_algorithms,omitempty"`
 
 	// RekeyTime IKE SA rekey time in seconds
+	//
+	// Examples: 14400
 	RekeyTime *int32 `json:"rekey_time,omitempty"`
 }
 
 // GatewayIpsecIkeSaMetricsDetailsResponse Response schema for IPsec IKE SA metrics details.
+//
+// Examples: {"child_sas":[],"created_at":"2025-03-26T12:34:56Z","established":0,"heuristic_state":"none","initator":true,"internal_state":"uninitialized","local_host":"203.0.113.10","local_id":"203.0.113.10","name":"gateway-service","operational_state":"idle","reauth_time":0,"rekey_time":0,"remote_host":"203.0.113.10","remote_id":"203.0.113.10","tunnel_id":0,"unique_id":"gateway-service","updated_at":"2025-03-26T12:34:56Z","version":0}
 type GatewayIpsecIkeSaMetricsDetailsResponse struct {
+	// ChildSas Examples: []
 	ChildSas *[]struct {
 		BytesIn  *int64 `json:"bytes_in,omitempty"`
 		BytesOut *int64 `json:"bytes_out,omitempty"`
 
 		// CreatedAt Timestamp of when the child SA was created.
+		//
+		// Examples: 2025-03-26T12:34:56Z
 		CreatedAt            *time.Time `json:"created_at,omitempty"`
 		InstallTime          *int64     `json:"install_time,omitempty"`
 		LifeTime             *int64     `json:"life_time,omitempty"`
@@ -693,70 +834,120 @@ type GatewayIpsecIkeSaMetricsDetailsResponse struct {
 		UniqueId *string `json:"unique_id,omitempty"`
 
 		// UpdatedAt Timestamp of when the child SA was last updated.
+		//
+		// Examples: 2025-03-26T12:34:56Z
 		UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	} `json:"child_sas,omitempty"`
 
 	// CreatedAt Timestamp of when the IKE SA was created.
-	CreatedAt   *time.Time `json:"created_at,omitempty"`
-	Established *int64     `json:"established,omitempty"`
+	//
+	// Examples: 2025-03-26T12:34:56Z
+	CreatedAt *time.Time `json:"created_at,omitempty"`
+
+	// Established Examples: 0
+	Established *int64 `json:"established,omitempty"`
 
 	// HeuristicState Heuristic state of the IKE SA
 	HeuristicState *struct {
 		// DownEvents Number of times the IKE SA has transitioned to down state
-		DownEvents      *int64  `json:"down_events,omitempty"`
+		//
+		// Examples: 0
+		DownEvents *int64 `json:"down_events,omitempty"`
+
+		// LastDownMessage Examples: IKE SA is down due to network issues
 		LastDownMessage *string `json:"last_down_message,omitempty"`
 
 		// LastDownMessageUpdatedAt Timestamp of when the last down message was updated.
+		//
+		// Examples: 2025-03-26T12:34:56Z
 		LastDownMessageUpdatedAt *time.Time `json:"last_down_message_updated_at,omitempty"`
 
 		// LogMessageBadEvents Number of times the IKE SA has logged a bad message
+		//
+		// Examples: 0
 		LogMessageBadEvents *int64 `json:"log_message_bad_events,omitempty"`
-		TunnelHealthy       *bool  `json:"tunnel_healthy,omitempty"`
-		TunnelUp            *bool  `json:"tunnel_up,omitempty"`
+
+		// TunnelHealthy Examples: true, false
+		TunnelHealthy *bool `json:"tunnel_healthy,omitempty"`
+
+		// TunnelUp Examples: true, false
+		TunnelUp *bool `json:"tunnel_up,omitempty"`
 
 		// UpEvents Number of times the IKE SA has transitioned to up state
+		//
+		// Examples: 0
 		UpEvents *int64 `json:"up_events,omitempty"`
 
 		// UpdatedAt Timestamp of when the heuristic state was last updated.
+		//
+		// Examples: 2025-03-26T12:34:56Z
 		UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	} `json:"heuristic_state,omitempty"`
 
 	// Initator Whether the local gateway is the initiator of the IKE SA
+	//
+	// Examples: true, false
 	Initator *bool `json:"initator,omitempty"`
 
 	// InternalState Internal state of the IKE SA
+	//
+	// Examples: uninitialized
 	InternalState *GatewayIpsecIkeSaMetricsDetailsResponseInternalState `json:"internal_state,omitempty"`
 
 	// LocalHost Local host IP address
+	//
+	// Examples: 203.0.113.10
 	LocalHost *string `json:"local_host,omitempty"`
 
 	// LocalId Local IKE identity
+	//
+	// Examples: 203.0.113.10
 	LocalId *string `json:"local_id,omitempty"`
 
 	// Name Name of the gateway
+	//
+	// Examples: gateway-service, vpn-tunnel-1
 	Name *string `json:"name,omitempty"`
 
 	// OperationalState Operational state of the IKE SA
+	//
+	// Examples: idle
 	OperationalState *GatewayIpsecIkeSaMetricsDetailsResponseOperationalState `json:"operational_state,omitempty"`
-	ReauthTime       *int64                                                   `json:"reauth_time,omitempty"`
-	RekeyTime        *int64                                                   `json:"rekey_time,omitempty"`
+
+	// ReauthTime Examples: 0
+	ReauthTime *int64 `json:"reauth_time,omitempty"`
+
+	// RekeyTime Examples: 0
+	RekeyTime *int64 `json:"rekey_time,omitempty"`
 
 	// RemoteHost Remote host IP address
+	//
+	// Examples: 203.0.113.10
 	RemoteHost *string `json:"remote_host,omitempty"`
 
 	// RemoteId Remote IKE identity
+	//
+	// Examples: 203.0.113.10
 	RemoteId *string `json:"remote_id,omitempty"`
 
 	// TunnelId ID of the tunnel
+	//
+	// Examples: 0
 	TunnelId *int64 `json:"tunnel_id,omitempty"`
 
 	// UniqueId Unique ID of the IKE SA
+	//
+	// Examples: gateway-service, vpn-tunnel-1
 	UniqueId *string `json:"unique_id,omitempty"`
 
 	// UpdatedAt Timestamp of when the IKE SA was last updated.
+	//
+	// Examples: 2025-03-26T12:34:56Z
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 
 	// Version Version of the IKE SA
+	//
+	// Examples: 0
 	Version *int64 `json:"version,omitempty"`
 }
 
@@ -764,314 +955,520 @@ type GatewayIpsecIkeSaMetricsDetailsResponse struct {
 type GatewayIpsecIkeSaMetricsDetailsResponseChildSasState string
 
 // GatewayIpsecIkeSaMetricsDetailsResponseInternalState Internal state of the IKE SA
+//
+// Examples: uninitialized
 type GatewayIpsecIkeSaMetricsDetailsResponseInternalState string
 
 // GatewayIpsecIkeSaMetricsDetailsResponseOperationalState Operational state of the IKE SA
+//
+// Examples: idle
 type GatewayIpsecIkeSaMetricsDetailsResponseOperationalState string
 
 // GatewayIpsecMetricsDetailsResponse Response schema for IPsec IKE SA metrics details.
+//
+// Examples: {"ike_sas":[]}
 type GatewayIpsecMetricsDetailsResponse struct {
 	// IkeSas List of IKE SAs
+	//
+	// Examples: []
 	IkeSas *[]GatewayIpsecIkeSaMetricsDetailsResponse `json:"ike_sas,omitempty"`
 }
 
 // GatewayLabelCreateRequest Gateway label
+//
+// Examples: {"key":"environment","value":"production"}
 type GatewayLabelCreateRequest struct {
 	// Key The key of a label.
+	//
+	// Examples: environment, team, project, purpose, cost-center
 	Key GatewayLabelKey `json:"key"`
 
 	// Value The value of a label.
-	Value *GatewayLabelValue `json:"value"`
+	//
+	// Examples: production, backend, web-app, backup, engineering
+	Value GatewayLabelValue `json:"value"`
 }
 
 // GatewayLabelDetailsResponse Gateway label
+//
+// Examples: {"key":"environment","value":"production"}
 type GatewayLabelDetailsResponse struct {
 	// Key Key
+	//
+	// Examples: environment, team
 	Key string `json:"key"`
 
 	// Value Value
+	//
+	// Examples: production, dev-1
 	Value string `json:"value"`
 }
 
 // GatewayLabelKey The key of a label.
+//
+// Examples: environment, team, project, purpose, cost-center
 type GatewayLabelKey = string
 
 // GatewayLabelModifyRequest Gateway label
+//
+// Examples: {"key":"environment","value":"production"}
 type GatewayLabelModifyRequest struct {
 	// Key The key of a label.
+	//
+	// Examples: environment, team, project, purpose, cost-center
 	Key *GatewayLabelKey `json:"key,omitempty"`
 
 	// Value The value of a label.
+	//
+	// Examples: production, backend, web-app, backup, engineering
 	Value *GatewayLabelValue `json:"value,omitempty"`
 }
 
 // GatewayLabelValue The value of a label.
+//
+// Examples: production, backend, web-app, backup, engineering
 type GatewayLabelValue = string
 
 // GatewayLocalPeerAddressDetailsResponse Response schema for local peer address details.
+//
+// Examples: {"name":"gateway-service"}
 type GatewayLocalPeerAddressDetailsResponse struct {
 	// Name Name of the local peer
+	//
+	// Examples: gateway-service, vpn-tunnel-1
 	Name *string `json:"name,omitempty"`
 }
 
 // GatewayMetricsDetailsResponse Response schema for gateway metrics details.
+//
+// Examples: {"active_connections":0,"created_at":"2025-03-26T12:34:56Z","name":"gateway-service","total_accepted_connections":0,"total_rejected_sessions":0,"updated_at":"2025-03-26T12:34:56Z"}
 type GatewayMetricsDetailsResponse struct {
 	// ActiveConnections Number of active connections
+	//
+	// Examples: 0
 	ActiveConnections *int64 `json:"active_connections,omitempty"`
 
 	// CreatedAt Timestamp of when the metrics was created.
+	//
+	// Examples: 2025-03-26T12:34:56Z
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 
 	// Name Name of the gateway
+	//
+	// Examples: gateway-service, vpn-tunnel-1
 	Name *string `json:"name,omitempty"`
 
 	// TotalAcceptedConnections Number of accepted connections
+	//
+	// Examples: 0
 	TotalAcceptedConnections *int64 `json:"total_accepted_connections,omitempty"`
 
 	// TotalRejectedSessions Number of rejected sessions
+	//
+	// Examples: 0
 	TotalRejectedSessions *int64 `json:"total_rejected_sessions,omitempty"`
 
 	// UpdatedAt Timestamp of when the metrics was last updated.
+	//
+	// Examples: 2025-03-26T12:34:56Z
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 }
 
 // GatewayName The name for the resource.
+//
+// Examples: advanced, development
 type GatewayName = string
 
 // GatewayPlanDetailsResponse Response schema for gateway plan details.
+//
+// Examples: {"name":"gateway-service","per_gateway_bandwidth_mbps":5005,"per_gateway_max_connections":5005000,"per_gateway_maximum_vpn_bandwidth_mbps":5005,"server_number":4,"supported_features":[],"vpn_tunnel_amount":50}
 type GatewayPlanDetailsResponse struct {
 	// Name Name of the plan
+	//
+	// Examples: gateway-service, vpn-tunnel-1
 	Name *string `json:"name,omitempty"`
 
 	// PerGatewayBandwidthMbps Per gateway (agent node server) bandwidth in megabits per second.
+	//
+	// Examples: 5005
 	PerGatewayBandwidthMbps *int64 `json:"per_gateway_bandwidth_mbps,omitempty"`
 
 	// PerGatewayMaxConnections Per gateway (agent node server) maximum conntrack connections
+	//
+	// Examples: 5005000
 	PerGatewayMaxConnections *int64 `json:"per_gateway_max_connections,omitempty"`
 
 	// PerGatewayMaximumVpnBandwidthMbps Per gateway (agent node server) maximum vpn bandwidth in megabits per second.
+	//
+	// Examples: 5005
 	PerGatewayMaximumVpnBandwidthMbps *int64 `json:"per_gateway_maximum_vpn_bandwidth_mbps,omitempty"`
 
 	// ServerNumber Number of nodes
-	ServerNumber      *int64                    `json:"server_number,omitempty"`
+	//
+	// Examples: 4
+	ServerNumber *int64 `json:"server_number,omitempty"`
+
+	// SupportedFeatures Examples: ["vpn"]
 	SupportedFeatures *[]GatewayServiceFeatures `json:"supported_features,omitempty"`
 
 	// VpnTunnelAmount Number of VPN tunnels this plan allows.
+	//
+	// Examples: 50
 	VpnTunnelAmount *int64 `json:"vpn_tunnel_amount,omitempty"`
 }
 
 // GatewayPlanListResponse Response schema for a list of gateway plans.
+//
+// Examples: []
 type GatewayPlanListResponse = []GatewayPlanDetailsResponse
 
 // GatewayQueryParamLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
+//
+// Examples: 10, 25, 50, 100
 type GatewayQueryParamLimit = int64
 
 // GatewayQueryParamOffset Schema for a query parameter specifying the offset for pagination.
+//
+// Examples: 0, 10, 20, 50
 type GatewayQueryParamOffset = int64
 
 // GatewayQueryParamSortServices Sort services by field. Prefix with '-' for descending order.
+//
+// Examples: -created_at, name, -uuid
 type GatewayQueryParamSortServices string
 
 // GatewayRemotePeerAddressDetailsResponse Response schema for remote peer address details.
+//
+// Examples: {"address":"203.0.113.10"}
 type GatewayRemotePeerAddressDetailsResponse struct {
 	// Address Remote peer address
+	//
+	// Examples: 203.0.113.10
 	Address *string `json:"address,omitempty"`
 }
 
 // GatewayRouterCreateRequest Network gateway router
+//
+// Examples: {"uuid":"01234567-89ab-cdef-0123-456789abcdef"}
 type GatewayRouterCreateRequest struct {
 	// Uuid The unique identifier for the resource.
+	//
+	// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 	Uuid GatewayUuid `json:"uuid"`
 }
 
 // GatewayRouterDetailsResponse Response schema for gateway router details.
+//
+// Examples: {"created_at":"2025-03-26T12:34:56Z","updated_at":"2025-03-26T12:34:56Z","uuid":"01234567-89ab-cdef-0123-456789abcdef"}
 type GatewayRouterDetailsResponse struct {
 	// CreatedAt Timestamp of when the router was created.
+	//
+	// Examples: 2025-03-26T12:34:56Z
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 
 	// UpdatedAt Timestamp of when the router was last updated.
+	//
+	// Examples: 2025-03-26T12:34:56Z
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 
 	// Uuid Router UUID
+	//
+	// Examples: 01234567-89ab-cdef-0123-456789abcdef
 	Uuid *openapi_types.UUID `json:"uuid,omitempty"`
 }
 
 // GatewayServiceConfiguredStatus Service configured status
+//
+// Examples: started
 type GatewayServiceConfiguredStatus string
 
 // GatewayServiceCreateRequest Gateway service
+//
+// Examples: {"addresses":[],"automatic_tunnel_internal_ip_allocation":true,"configured_status":"started","connections":[],"features":[],"labels":[],"name":"gateway-service","plan":"development-gwaas-1c2g","routers":[],"zone":"fi-hel1"}
 type GatewayServiceCreateRequest struct {
 	// Addresses Service addresses
+	//
+	// Examples: []
 	Addresses *[]GatewayAddressCreateRequest `json:"addresses,omitempty"`
 
 	// AutomaticTunnelInternalIpAllocation Allocate and use tunnel internal IPs automatically
+	//
+	// Examples: true, false
 	AutomaticTunnelInternalIpAllocation *bool `json:"automatic_tunnel_internal_ip_allocation,omitempty"`
 
 	// ConfiguredStatus Service configured status
+	//
+	// Examples: started
 	ConfiguredStatus GatewayServiceConfiguredStatus `json:"configured_status"`
 
 	// Connections Service connections
+	//
+	// Examples: []
 	Connections *[]GatewayConnectionCreateRequest `json:"connections,omitempty"`
 
 	// Features Active features
+	//
+	// Examples: ["nat"]
 	Features []GatewayServiceFeatures `json:"features"`
 
 	// Labels Labels
+	//
+	// Examples: []
 	Labels *[]GatewayLabelCreateRequest `json:"labels,omitempty"`
 
 	// Name Name of the service
+	//
+	// Examples: gateway-service, vpn-tunnel-1
 	Name string `json:"name"`
 
 	// Plan Plan
+	//
+	// Examples: development-gwaas-1c2g
 	Plan string `json:"plan"`
 
 	// Routers Service routers
+	//
+	// Examples: [{"uuid":"fedcba98-7654-3210-fedc-ba9876543210"}]
 	Routers []GatewayRouterCreateRequest `json:"routers"`
 
 	// Zone Zone
+	//
+	// Examples: fi-hel1
 	Zone string `json:"zone"`
 }
 
 // GatewayServiceDetailsResponse Gateway service
+//
+// Examples: {"addresses":[],"automatic_tunnel_internal_ip_allocation":true,"configured_status":"started","connections":[],"created_at":"2025-03-26T12:34:56Z","features":[],"labels":[],"name":"gateway-service","plan":"development-gwaas-1c2g","updated_at":"2025-03-26T12:34:56Z","uuid":"01234567-89ab-cdef-0123-456789abcdef","zone":"fi-hel1"}
 type GatewayServiceDetailsResponse struct {
+	// Addresses Examples: []
 	Addresses *[]GatewayAddressDetailsResponse `json:"addresses,omitempty"`
 
 	// AutomaticTunnelInternalIpAllocation Allocate and use tunnel internal IPs automatically
+	//
+	// Examples: true, false
 	AutomaticTunnelInternalIpAllocation *bool `json:"automatic_tunnel_internal_ip_allocation,omitempty"`
 
 	// ConfiguredStatus Service configured status
-	ConfiguredStatus *GatewayServiceConfiguredStatus     `json:"configured_status,omitempty"`
-	Connections      *[]GatewayConnectionDetailsResponse `json:"connections,omitempty"`
+	//
+	// Examples: started
+	ConfiguredStatus *GatewayServiceConfiguredStatus `json:"configured_status,omitempty"`
+
+	// Connections Examples: []
+	Connections *[]GatewayConnectionDetailsResponse `json:"connections,omitempty"`
 
 	// CreatedAt Timestamp of when the service was created.
+	//
+	// Examples: 2025-03-26T12:34:56Z
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 
 	// Features Active features
+	//
+	// Examples: ["vpn"]
 	Features *[]GatewayServiceFeatures `json:"features,omitempty"`
 
 	// Labels Labels
+	//
+	// Examples: []
 	Labels *[]GatewayLabelDetailsResponse `json:"labels,omitempty"`
 
 	// Name Name of the service
+	//
+	// Examples: gateway-service, vpn-tunnel-1
 	Name *string `json:"name,omitempty"`
 
 	// OperationalState Service operational state
+	//
+	// Examples: pending
 	OperationalState *GatewayServiceOperationalState `json:"operational_state,omitempty"`
 
 	// Plan Plan
+	//
+	// Examples: development-gwaas-1c2g
 	Plan *string `json:"plan,omitempty"`
 
 	// Routers Response schema for gateway router details.
+	//
+	// Examples: {"created_at":"2025-03-26T12:34:56Z","updated_at":"2025-03-26T12:34:56Z","uuid":"01234567-89ab-cdef-0123-456789abcdef"}
 	Routers *GatewayRouterDetailsResponse `json:"routers,omitempty"`
 
 	// UpdatedAt Timestamp of when the service was last updated.
+	//
+	// Examples: 2025-03-26T12:34:56Z
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 
 	// Uuid The unique identifier for the resource.
+	//
+	// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 	Uuid *GatewayUuid `json:"uuid,omitempty"`
 
 	// Zone Zone of the service
+	//
+	// Examples: fi-hel1
 	Zone *string `json:"zone,omitempty"`
 }
 
 // GatewayServiceFeatures Service features
+//
+// Examples: nat
 type GatewayServiceFeatures string
 
 // GatewayServiceLabelListResponse Response schema for a list of service labels.
+//
+// Examples: []
 type GatewayServiceLabelListResponse = []GatewayLabelDetailsResponse
 
 // GatewayServiceListResponse Response schema for a list of gateway services.
+//
+// Examples: []
 type GatewayServiceListResponse = []GatewayServiceDetailsResponse
 
 // GatewayServiceLogSessionCreateRequest Request to create a new log session for a service.
+//
+// Examples: {"session_type":"vpn"}
 type GatewayServiceLogSessionCreateRequest struct {
 	// SessionType Service log session types
+	//
+	// Examples: vpn
 	SessionType GatewayServiceLogSessionTypes `json:"session_type"`
 }
 
 // GatewayServiceLogSessionCreateResponse Response schema for service log session creation.
+//
+// Examples: {"sessions":["vpn"]}
 type GatewayServiceLogSessionCreateResponse struct {
 	// Sessions List of service sessions created.
 	Sessions []GatewayServiceLogSessionDetailsResponse `json:"sessions"`
 }
 
 // GatewayServiceLogSessionDetailsResponse Response schema for details of a service log session.
+//
+// Examples: {"sessions":[{"session_id":"01234567-89ab-cdef-0123-456789abcdef","token":"01234567-89ab-cdef-0123-456789abcdef"}]}
 type GatewayServiceLogSessionDetailsResponse struct {
 	// SessionId The unique identifier for the resource.
+	//
+	// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 	SessionId GatewayUuid `json:"session_id"`
 
 	// Token The unique identifier for the resource.
+	//
+	// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 	Token GatewayUuid `json:"token"`
 }
 
 // GatewayServiceLogSessionTypes Service log session types
+//
+// Examples: vpn
 type GatewayServiceLogSessionTypes string
 
 // GatewayServiceMetricsResponse Response schema for service metrics.
+//
+// Examples: {"gateways":[]}
 type GatewayServiceMetricsResponse struct {
+	// Gateways Examples: []
 	Gateways *[]GatewayMetricsDetailsResponse `json:"gateways,omitempty"`
 
 	// IpsecMetrics Response schema for IPsec IKE SA metrics details.
+	//
+	// Examples: {"ike_sas":[]}
 	IpsecMetrics *GatewayIpsecMetricsDetailsResponse `json:"ipsec_metrics,omitempty"`
 }
 
 // GatewayServiceModifyRequest Request to modify a gateway service
+//
+// Examples: {"automatic_tunnel_internal_ip_allocation":true,"configured_status":"started","connections":[],"features":[],"labels":[],"name":"gateway-service","plan":"development-gwaas-1c2g"}
 type GatewayServiceModifyRequest struct {
 	// AutomaticTunnelInternalIpAllocation Allocate and use tunnel internal IPs automatically
+	//
+	// Examples: true, false
 	AutomaticTunnelInternalIpAllocation *bool `json:"automatic_tunnel_internal_ip_allocation,omitempty"`
 
 	// ConfiguredStatus Service configured status
+	//
+	// Examples: started
 	ConfiguredStatus *GatewayServiceConfiguredStatus `json:"configured_status,omitempty"`
 
 	// Connections Service connections
+	//
+	// Examples: []
 	Connections *[]GatewayConnectionModifyRequest `json:"connections,omitempty"`
 
 	// Features Active features
+	//
+	// Examples: []
 	Features *[]GatewayServiceFeatures `json:"features,omitempty"`
 
 	// Labels Labels
+	//
+	// Examples: []
 	Labels *[]GatewayLabelCreateRequest `json:"labels,omitempty"`
 
 	// Name Name of the service
+	//
+	// Examples: gateway-service, vpn-tunnel-1
 	Name *string `json:"name,omitempty"`
 
 	// Plan Plan
+	//
+	// Examples: development-gwaas-1c2g
 	Plan *string `json:"plan,omitempty"`
 }
 
 // GatewayServiceOperationalState Service operational state
+//
+// Examples: pending
 type GatewayServiceOperationalState string
 
 // GatewayServiceReplaceRequest Request to replace a gateway service
+//
+// Examples: {"automatic_tunnel_internal_ip_allocation":true,"configured_status":"started","labels":[],"name":"gateway-service","plan":"development-gwaas-1c2g"}
 type GatewayServiceReplaceRequest struct {
 	// AutomaticTunnelInternalIpAllocation Allocate and use tunnel internal IPs automatically
+	//
+	// Examples: true, false
 	AutomaticTunnelInternalIpAllocation *bool `json:"automatic_tunnel_internal_ip_allocation,omitempty"`
 
 	// ConfiguredStatus Service configured status
+	//
+	// Examples: started
 	ConfiguredStatus GatewayServiceConfiguredStatus `json:"configured_status"`
 
 	// Connections Service connections
 	Connections interface{} `json:"connections,omitempty"`
 
 	// Labels Labels
+	//
+	// Examples: []
 	Labels *[]GatewayLabelCreateRequest `json:"labels,omitempty"`
 
 	// Name Name of the service
+	//
+	// Examples: gateway-service, vpn-tunnel-1
 	Name string `json:"name"`
 
 	// Plan Plan
+	//
+	// Examples: development-gwaas-1c2g
 	Plan *string `json:"plan,omitempty"`
 }
 
 // GatewaySupportedIntegrityAlgorithms List of supported IPsec integrity algorithms
+//
+// Examples: sha1
 type GatewaySupportedIntegrityAlgorithms string
 
 // GatewaySupportedProposalAlgorithms List of supported IPsec proposal algorithms
+//
+// Examples: aes128gcm16
 type GatewaySupportedProposalAlgorithms string
 
 // GatewayTunnelCreateRequest Network gateway VPN connection tunnel
+//
+// Examples: {"internal_peer_ping_interval":0,"ipsec":{"authentication":{"psk":"MySecretPsk123","type":"psk"},"phase1_algorithms":[],"phase1_dh_group_numbers":[],"phase1_integrity_algorithms":[],"phase2_algorithms":[],"phase2_dh_group_numbers":[],"phase2_integrity_algorithms":[]},"local_address":{"name":"gateway-service"},"name":"gateway-service","remote_address":{"address":"203.0.113.10"},"tunnel_internal_ip":"10.0.0.1"}
 type GatewayTunnelCreateRequest struct {
 	// InternalPeerPingInterval Internal peer ping interval in seconds, or zero if disabled
+	//
+	// Examples: 0
 	InternalPeerPingInterval *int64 `json:"internal_peer_ping_interval,omitempty"`
 
 	// Ipsec IPsec configuration
@@ -1079,120 +1476,194 @@ type GatewayTunnelCreateRequest struct {
 		// Authentication IPsec authentication configuration
 		Authentication struct {
 			// Authentication IPsec authentication type
+			//
+			// Examples: psk
 			Authentication GatewayIpsecAuthenticationType `json:"authentication"`
 
 			// Psk IPsec PSK
+			//
+			// Examples: MySecretPsk123
 			Psk string `json:"psk"`
 		} `json:"authentication"`
 
 		// ChildRekeyTime IKE child SA rekey time in seconds
+		//
+		// Examples: 1440
 		ChildRekeyTime *int32 `json:"child_rekey_time,omitempty"`
 
 		// DpdDelay Delay before sending Dead Peer Detection packets if no traffic is detected, in seconds
+		//
+		// Examples: 30
 		DpdDelay *int32 `json:"dpd_delay,omitempty"`
 
 		// DpdTimeout Timeout period for DPD reply before considering the peer to be dead, in seconds
+		//
+		// Examples: 120
 		DpdTimeout *int32 `json:"dpd_timeout,omitempty"`
 
 		// IkeLifetime Maximum IKE SA lifetime in seconds
+		//
+		// Examples: 86400
 		IkeLifetime *int32 `json:"ike_lifetime,omitempty"`
 
 		// Phase1Algorithms Phase 1 proposal algorithms
+		//
+		// Examples: ["aes128","aes256","aes128gcm128","aes256gcm128"]
 		Phase1Algorithms *[]GatewaySupportedProposalAlgorithms `json:"phase1_algorithms,omitempty"`
 
 		// Phase1DhGroupNumbers Phase 1 Diffie-Hellman group numbers
+		//
+		// Examples: [16,18,19]
 		Phase1DhGroupNumbers *[]GatewayDiffieHellmanGroupNumber `json:"phase1_dh_group_numbers,omitempty"`
 
 		// Phase1IntegrityAlgorithms Phase 1 integrity algorithms
+		//
+		// Examples: ["sha256","sha384","sha512"]
 		Phase1IntegrityAlgorithms *[]GatewaySupportedIntegrityAlgorithms `json:"phase1_integrity_algorithms,omitempty"`
 
 		// Phase2Algorithms Phase 2 security association algorithms
+		//
+		// Examples: ["aes128","aes256","aes128gcm128","aes256gcm128"]
 		Phase2Algorithms *[]GatewaySupportedProposalAlgorithms `json:"phase2_algorithms,omitempty"`
 
 		// Phase2DhGroupNumbers Phase 2 Diffie-Hellman group numbers
+		//
+		// Examples: [14,16,18,19]
 		Phase2DhGroupNumbers *[]GatewayDiffieHellmanGroupNumber `json:"phase2_dh_group_numbers,omitempty"`
 
 		// Phase2IntegrityAlgorithms Phase 2 integrity algorithms
+		//
+		// Examples: ["sha256","sha384","sha512"]
 		Phase2IntegrityAlgorithms *[]GatewaySupportedIntegrityAlgorithms `json:"phase2_integrity_algorithms,omitempty"`
 
 		// RekeyTime IKE SA rekey time in seconds
+		//
+		// Examples: 14400
 		RekeyTime *int32 `json:"rekey_time,omitempty"`
 	} `json:"ipsec"`
 
 	// LocalAddress Local peer address
 	LocalAddress struct {
 		// Name Name of the local peer address
+		//
+		// Examples: gateway-service, vpn-tunnel-1
 		Name *string `json:"name,omitempty"`
 	} `json:"local_address"`
 
 	// Name Name of the tunnel
+	//
+	// Examples: gateway-service, vpn-tunnel-1
 	Name string `json:"name"`
 
 	// RemoteAddress Remote peer address
 	RemoteAddress struct {
 		// Address Remote peer address
+		//
+		// Examples: 203.0.113.10
 		Address *string `json:"address,omitempty"`
 	} `json:"remote_address"`
 
 	// TunnelInternalIp Tunnel internal IP address, "" if disabled
+	//
+	// Examples: 169.254.17.1,
 	TunnelInternalIp *string `json:"tunnel_internal_ip,omitempty"`
 
 	// Uuid The unique identifier for the resource.
+	//
+	// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 	Uuid *GatewayUuid `json:"uuid,omitempty"`
 }
 
 // GatewayTunnelDetailsResponse Response schema for gateway tunnel details.
+//
+// Examples: {"created_at":"2025-03-26T12:34:56Z","internal_peer_ping_interval":0,"name":"gateway-service","operational_state":"established","tunnel_healthy":true,"tunnel_up":true,"updated_at":"2025-03-26T12:34:56Z","uuid":"01234567-89ab-cdef-0123-456789abcdef"}
 type GatewayTunnelDetailsResponse struct {
 	// CreatedAt Timestamp of when the tunnel was created.
+	//
+	// Examples: 2025-03-26T12:34:56Z
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 
 	// InternalPeerPingInterval Internal peer ping interval in seconds
+	//
+	// Examples: 0
 	InternalPeerPingInterval *int64 `json:"internal_peer_ping_interval,omitempty"`
 
 	// Ipsec Response schema for IPsec configuration details.
+	//
+	// Examples: {"authentication":{"authentication":"psk","psk":"{your PSK}"},"child_rekey_time":60,"dpd_delay":40,"dpd_timeout":20,"ike_lifetime":30,"rekey_time":30}
 	Ipsec *GatewayIpsecDetailsResponse `json:"ipsec,omitempty"`
 
 	// LocalAddress Response schema for local peer address details.
+	//
+	// Examples: {"name":"gateway-service"}
 	LocalAddress *GatewayLocalPeerAddressDetailsResponse `json:"local_address,omitempty"`
 
 	// Name Name of the tunnel
+	//
+	// Examples: gateway-service, vpn-tunnel-1
 	Name *string `json:"name,omitempty"`
 
 	// OperationalState Tunnel operational state
+	//
+	// Examples: idle
 	OperationalState *GatewayTunnelOperationalState `json:"operational_state,omitempty"`
 
 	// RemoteAddress Response schema for remote peer address details.
+	//
+	// Examples: {"address":"203.0.113.10"}
 	RemoteAddress *GatewayRemotePeerAddressDetailsResponse `json:"remote_address,omitempty"`
 
 	// TunnelHealthy Indicates whether the tunnel is healthy
+	//
+	// Examples: true, false
 	TunnelHealthy *bool `json:"tunnel_healthy,omitempty"`
 
 	// TunnelInternalIp Response schema for gateway tunnel internal IP details.
+	//
+	// Examples: {"hasParseError":true}
 	TunnelInternalIp *GatewayTunnelInternalIpDetailsResponse `json:"tunnel_internal_ip,omitempty"`
 
 	// TunnelUp Indicates whether the tunnel is up
+	//
+	// Examples: true, false
 	TunnelUp *bool `json:"tunnel_up,omitempty"`
 
 	// UpdatedAt Timestamp of when the tunnel was last updated.
+	//
+	// Examples: 2025-03-26T12:34:56Z
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 
 	// Uuid The unique identifier for the resource.
+	//
+	// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 	Uuid *GatewayUuid `json:"uuid,omitempty"`
 }
 
 // GatewayTunnelInternalIpDetailsResponse Response schema for gateway tunnel internal IP details.
+//
+// Examples: {"hasParseError":true}
 type GatewayTunnelInternalIpDetailsResponse struct {
 	// HasParseError Indicates if there is a parse error with the tunnel internal IP
-	HasParseError *bool           `json:"hasParseError,omitempty"`
-	Ip            *GatewayAddress `json:"ip,omitempty"`
+	//
+	// Examples: true, false
+	HasParseError *bool `json:"hasParseError,omitempty"`
+
+	// Ip Examples: {"addr":0}
+	Ip *GatewayAddress `json:"ip,omitempty"`
 }
 
 // GatewayTunnelListResponse Response schema for a list of gateway tunnels.
+//
+// Examples: []
 type GatewayTunnelListResponse = []GatewayTunnelDetailsResponse
 
 // GatewayTunnelModifyRequest Request to modify a VPN tunnel
+//
+// Examples: {"internal_peer_ping_interval":0,"ipsec":{"authentication":{"psk":"MySecretPsk123","type":"psk"},"phase1_algorithms":[],"phase1_dh_group_numbers":[],"phase1_integrity_algorithms":[],"phase2_algorithms":[],"phase2_dh_group_numbers":[],"phase2_integrity_algorithms":[]},"local_address":{"name":"gateway-service"},"name":"gateway-service","remote_address":{"address":"203.0.113.10"},"tunnel_internal_ip":"10.0.0.1","uuid":"01234567-89ab-cdef-0123-456789abcdef"}
 type GatewayTunnelModifyRequest struct {
 	// InternalPeerPingInterval Internal peer ping interval in seconds, or zero if disabled
+	//
+	// Examples: 0
 	InternalPeerPingInterval *int64 `json:"internal_peer_ping_interval,omitempty"`
 
 	// Ipsec IPsec configuration
@@ -1200,420 +1671,692 @@ type GatewayTunnelModifyRequest struct {
 		// Authentication IPsec authentication configuration
 		Authentication struct {
 			// Authentication IPsec authentication type
+			//
+			// Examples: psk
 			Authentication GatewayIpsecAuthenticationType `json:"authentication"`
 
 			// Psk IPsec PSK
+			//
+			// Examples: MySecretPsk123
 			Psk *string `json:"psk,omitempty"`
 		} `json:"authentication"`
 
 		// ChildRekeyTime IKE child SA rekey time in seconds
+		//
+		// Examples: 1440
 		ChildRekeyTime *int32 `json:"child_rekey_time,omitempty"`
 
 		// DpdDelay Delay before sending Dead Peer Detection packets if no traffic is detected, in seconds
+		//
+		// Examples: 30
 		DpdDelay *int32 `json:"dpd_delay,omitempty"`
 
 		// DpdTimeout Timeout period for DPD reply before considering the peer to be dead, in seconds
+		//
+		// Examples: 120
 		DpdTimeout *int32 `json:"dpd_timeout,omitempty"`
 
 		// IkeLifetime Maximum IKE SA lifetime in seconds
+		//
+		// Examples: 86400
 		IkeLifetime *int32 `json:"ike_lifetime,omitempty"`
 
 		// Phase1Algorithms Phase 1 algorithms
+		//
+		// Examples: []
 		Phase1Algorithms *[]GatewaySupportedProposalAlgorithms `json:"phase1_algorithms,omitempty"`
 
 		// Phase1DhGroupNumbers Phase 1 Diffie-Hellman group numbers
+		//
+		// Examples: [16,18,19]
 		Phase1DhGroupNumbers *[]GatewayDiffieHellmanGroupNumber `json:"phase1_dh_group_numbers,omitempty"`
 
 		// Phase1IntegrityAlgorithms Phase 1 integrity algorithms
+		//
+		// Examples: ["sha256","sha384","sha512"]
 		Phase1IntegrityAlgorithms *[]GatewaySupportedIntegrityAlgorithms `json:"phase1_integrity_algorithms,omitempty"`
 
 		// Phase2Algorithms Phase 2 algorithms
+		//
+		// Examples: []
 		Phase2Algorithms *[]GatewaySupportedProposalAlgorithms `json:"phase2_algorithms,omitempty"`
 
 		// Phase2DhGroupNumbers Phase 2 Diffie-Hellman group numbers
+		//
+		// Examples: [14,16,18,19]
 		Phase2DhGroupNumbers *[]GatewayDiffieHellmanGroupNumber `json:"phase2_dh_group_numbers,omitempty"`
 
 		// Phase2IntegrityAlgorithms Phase 2 integrity algorithms
+		//
+		// Examples: ["sha256","sha384","sha512"]
 		Phase2IntegrityAlgorithms *[]GatewaySupportedIntegrityAlgorithms `json:"phase2_integrity_algorithms,omitempty"`
 
 		// RekeyTime IKE SA rekey time in seconds
+		//
+		// Examples: 14400
 		RekeyTime *int32 `json:"rekey_time,omitempty"`
 	} `json:"ipsec,omitempty"`
 
 	// LocalAddress Local peer address
 	LocalAddress *struct {
 		// Name Name of the local peer address
+		//
+		// Examples: gateway-service, vpn-tunnel-1
 		Name *string `json:"name,omitempty"`
 	} `json:"local_address,omitempty"`
 
 	// Name Name of the tunnel
+	//
+	// Examples: gateway-service, vpn-tunnel-1
 	Name *string `json:"name,omitempty"`
 
 	// RemoteAddress Remote peer address
 	RemoteAddress *struct {
 		// Address Remote peer address
+		//
+		// Examples: 203.0.113.10
 		Address *string `json:"address,omitempty"`
 	} `json:"remote_address,omitempty"`
 
 	// TunnelInternalIp Tunnel internal IP address, "" if disabled
+	//
+	// Examples: 10.0.0.1,
 	TunnelInternalIp *string `json:"tunnel_internal_ip,omitempty"`
 
 	// Uuid The unique identifier for the resource.
+	//
+	// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 	Uuid *GatewayUuid `json:"uuid,omitempty"`
 }
 
 // GatewayTunnelOperationalState Tunnel operational state
+//
+// Examples: idle
 type GatewayTunnelOperationalState string
 
 // GatewayUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GatewayUuid = openapi_types.UUID
 
 // CreateGatewayAddressServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateGatewayAddressServiceUuid = GatewayUuid
 
 // CreateGatewayConnectionServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateGatewayConnectionServiceUuid = GatewayUuid
 
 // CreateGatewayServiceLabelServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateGatewayServiceLabelServiceUuid = GatewayUuid
 
 // CreateGatewayServiceLogSessionServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateGatewayServiceLogSessionServiceUuid = GatewayUuid
 
 // CreateGatewayTunnelConnectionUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateGatewayTunnelConnectionUuid = GatewayUuid
 
 // CreateGatewayTunnelServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateGatewayTunnelServiceUuid = GatewayUuid
 
 // DeleteGatewayAddressAddressName The name for the resource.
+//
+// Examples: advanced, development
 type DeleteGatewayAddressAddressName = GatewayName
 
 // DeleteGatewayAddressServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteGatewayAddressServiceUuid = GatewayUuid
 
 // DeleteGatewayConnectionConnectionUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteGatewayConnectionConnectionUuid = GatewayUuid
 
 // DeleteGatewayConnectionServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteGatewayConnectionServiceUuid = GatewayUuid
 
 // DeleteGatewayServiceLabelLabelKey The key of a label.
+//
+// Examples: environment, team, project, purpose, cost-center
 type DeleteGatewayServiceLabelLabelKey = GatewayLabelKey
 
 // DeleteGatewayServiceLabelServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteGatewayServiceLabelServiceUuid = GatewayUuid
 
 // DeleteGatewayServiceServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteGatewayServiceServiceUuid = GatewayUuid
 
 // DeleteGatewayTunnelConnectionUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteGatewayTunnelConnectionUuid = GatewayUuid
 
 // DeleteGatewayTunnelServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteGatewayTunnelServiceUuid = GatewayUuid
 
 // DeleteGatewayTunnelTunnelUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteGatewayTunnelTunnelUuid = GatewayUuid
 
 // FlushGatewayNatServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type FlushGatewayNatServiceUuid = GatewayUuid
 
 // GetGatewayAddressAddressName The name for the resource.
+//
+// Examples: advanced, development
 type GetGatewayAddressAddressName = GatewayName
 
 // GetGatewayAddressServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetGatewayAddressServiceUuid = GatewayUuid
 
 // GetGatewayConnectionConnectionUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetGatewayConnectionConnectionUuid = GatewayUuid
 
 // GetGatewayConnectionServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetGatewayConnectionServiceUuid = GatewayUuid
 
 // GetGatewayMetricsServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetGatewayMetricsServiceUuid = GatewayUuid
 
 // GetGatewayPlanPlanName The name for the resource.
+//
+// Examples: advanced, development
 type GetGatewayPlanPlanName = GatewayName
 
 // GetGatewayServiceLabelLabelKey The key of a label.
+//
+// Examples: environment, team, project, purpose, cost-center
 type GetGatewayServiceLabelLabelKey = GatewayLabelKey
 
 // GetGatewayServiceLabelServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetGatewayServiceLabelServiceUuid = GatewayUuid
 
 // GetGatewayServiceServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetGatewayServiceServiceUuid = GatewayUuid
 
 // GetGatewayTunnelConnectionUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetGatewayTunnelConnectionUuid = GatewayUuid
 
 // GetGatewayTunnelServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetGatewayTunnelServiceUuid = GatewayUuid
 
 // GetGatewayTunnelTunnelUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetGatewayTunnelTunnelUuid = GatewayUuid
 
 // ListGatewayAddressesServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ListGatewayAddressesServiceUuid = GatewayUuid
 
 // ListGatewayConnectionsServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ListGatewayConnectionsServiceUuid = GatewayUuid
 
 // ListGatewayPlansLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
+//
+// Examples: 10, 25, 50, 100
 type ListGatewayPlansLimit = GatewayQueryParamLimit
 
 // ListGatewayPlansOffset Schema for a query parameter specifying the offset for pagination.
+//
+// Examples: 0, 10, 20, 50
 type ListGatewayPlansOffset = GatewayQueryParamOffset
 
 // ListGatewayServiceLabelsServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ListGatewayServiceLabelsServiceUuid = GatewayUuid
 
 // ListGatewayServicesLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
+//
+// Examples: 10, 25, 50, 100
 type ListGatewayServicesLimit = GatewayQueryParamLimit
 
 // ListGatewayServicesOffset Schema for a query parameter specifying the offset for pagination.
+//
+// Examples: 0, 10, 20, 50
 type ListGatewayServicesOffset = GatewayQueryParamOffset
 
 // ListGatewayServicesSort Sort services by field. Prefix with '-' for descending order.
+//
+// Examples: -created_at, name, -uuid
 type ListGatewayServicesSort = GatewayQueryParamSortServices
 
 // ListGatewayTunnelsConnectionUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ListGatewayTunnelsConnectionUuid = GatewayUuid
 
 // ListGatewayTunnelsServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ListGatewayTunnelsServiceUuid = GatewayUuid
 
 // ModifyGatewayAddressAddressName The name for the resource.
+//
+// Examples: advanced, development
 type ModifyGatewayAddressAddressName = GatewayName
 
 // ModifyGatewayAddressServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyGatewayAddressServiceUuid = GatewayUuid
 
 // ModifyGatewayConnectionConnectionUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyGatewayConnectionConnectionUuid = GatewayUuid
 
 // ModifyGatewayConnectionServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyGatewayConnectionServiceUuid = GatewayUuid
 
 // ModifyGatewayServiceLabelLabelKey The key of a label.
+//
+// Examples: environment, team, project, purpose, cost-center
 type ModifyGatewayServiceLabelLabelKey = GatewayLabelKey
 
 // ModifyGatewayServiceLabelServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyGatewayServiceLabelServiceUuid = GatewayUuid
 
 // ModifyGatewayServiceServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyGatewayServiceServiceUuid = GatewayUuid
 
 // ModifyGatewayTunnelConnectionUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyGatewayTunnelConnectionUuid = GatewayUuid
 
 // ModifyGatewayTunnelServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyGatewayTunnelServiceUuid = GatewayUuid
 
 // ModifyGatewayTunnelTunnelUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyGatewayTunnelTunnelUuid = GatewayUuid
 
 // ReplaceGatewayServiceServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ReplaceGatewayServiceServiceUuid = GatewayUuid
 
 // CreateGatewayAddress201 Response schema for gateway address details.
+//
+// Examples: {"address":"203.0.113.10","name":"gateway-service","provisioned_by":"service"}
 type CreateGatewayAddress201 = GatewayAddressDetailsResponse
 
 // CreateGatewayAddressDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type CreateGatewayAddressDefault = GatewayErrorResponse
 
 // CreateGatewayConnection200 Response schema for gateway connection details.
+//
+// Examples: {"created_at":"2025-03-26T12:34:56Z","local_routes":[],"name":"gateway-service","remote_routes":[],"tunnels":[],"type":"ipsec","updated_at":"2025-03-26T12:34:56Z","uuid":"01234567-89ab-cdef-0123-456789abcdef"}
 type CreateGatewayConnection200 = GatewayConnectionDetailsResponse
 
 // CreateGatewayConnectionDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type CreateGatewayConnectionDefault = GatewayErrorResponse
 
 // CreateGatewayService200 Gateway service
+//
+// Examples: {"addresses":[],"automatic_tunnel_internal_ip_allocation":true,"configured_status":"started","connections":[],"created_at":"2025-03-26T12:34:56Z","features":[],"labels":[],"name":"gateway-service","plan":"development-gwaas-1c2g","updated_at":"2025-03-26T12:34:56Z","uuid":"01234567-89ab-cdef-0123-456789abcdef","zone":"fi-hel1"}
 type CreateGatewayService200 = GatewayServiceDetailsResponse
 
 // CreateGatewayServiceDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type CreateGatewayServiceDefault = GatewayErrorResponse
 
 // CreateGatewayServiceLabelDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type CreateGatewayServiceLabelDefault = GatewayErrorResponse
 
 // CreateGatewayServiceLogSession200 Response schema for service log session creation.
+//
+// Examples: {"sessions":["vpn"]}
 type CreateGatewayServiceLogSession200 = GatewayServiceLogSessionCreateResponse
 
 // CreateGatewayServiceLogSessionDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type CreateGatewayServiceLogSessionDefault = GatewayErrorResponse
 
 // CreateGatewayTunnel200 Response schema for gateway tunnel details.
+//
+// Examples: {"created_at":"2025-03-26T12:34:56Z","internal_peer_ping_interval":0,"name":"gateway-service","operational_state":"established","tunnel_healthy":true,"tunnel_up":true,"updated_at":"2025-03-26T12:34:56Z","uuid":"01234567-89ab-cdef-0123-456789abcdef"}
 type CreateGatewayTunnel200 = GatewayTunnelDetailsResponse
 
 // CreateGatewayTunnelDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type CreateGatewayTunnelDefault = GatewayErrorResponse
 
 // DeleteGatewayAddressDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type DeleteGatewayAddressDefault = GatewayErrorResponse
 
 // DeleteGatewayConnectionDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type DeleteGatewayConnectionDefault = GatewayErrorResponse
 
 // DeleteGatewayServiceDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type DeleteGatewayServiceDefault = GatewayErrorResponse
 
 // DeleteGatewayServiceLabelDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type DeleteGatewayServiceLabelDefault = GatewayErrorResponse
 
 // DeleteGatewayTunnelDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type DeleteGatewayTunnelDefault = GatewayErrorResponse
 
 // FlushGatewayNatDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type FlushGatewayNatDefault = GatewayErrorResponse
 
 // GetGatewayAddress200 Response schema for gateway address details.
+//
+// Examples: {"address":"203.0.113.10","name":"gateway-service","provisioned_by":"service"}
 type GetGatewayAddress200 = GatewayAddressDetailsResponse
 
 // GetGatewayAddressDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type GetGatewayAddressDefault = GatewayErrorResponse
 
 // GetGatewayConnection200 Response schema for gateway connection details.
+//
+// Examples: {"created_at":"2025-03-26T12:34:56Z","local_routes":[],"name":"gateway-service","remote_routes":[],"tunnels":[],"type":"ipsec","updated_at":"2025-03-26T12:34:56Z","uuid":"01234567-89ab-cdef-0123-456789abcdef"}
 type GetGatewayConnection200 = GatewayConnectionDetailsResponse
 
 // GetGatewayConnectionDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type GetGatewayConnectionDefault = GatewayErrorResponse
 
 // GetGatewayMetrics200 Response schema for service metrics.
+//
+// Examples: {"gateways":[]}
 type GetGatewayMetrics200 = GatewayServiceMetricsResponse
 
 // GetGatewayMetricsDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type GetGatewayMetricsDefault = GatewayErrorResponse
 
 // GetGatewayPlan200 Response schema for gateway plan details.
+//
+// Examples: {"name":"gateway-service","per_gateway_bandwidth_mbps":5005,"per_gateway_max_connections":5005000,"per_gateway_maximum_vpn_bandwidth_mbps":5005,"server_number":4,"supported_features":[],"vpn_tunnel_amount":50}
 type GetGatewayPlan200 = GatewayPlanDetailsResponse
 
 // GetGatewayPlanDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type GetGatewayPlanDefault = GatewayErrorResponse
 
 // GetGatewayService200 Gateway service
+//
+// Examples: {"addresses":[],"automatic_tunnel_internal_ip_allocation":true,"configured_status":"started","connections":[],"created_at":"2025-03-26T12:34:56Z","features":[],"labels":[],"name":"gateway-service","plan":"development-gwaas-1c2g","updated_at":"2025-03-26T12:34:56Z","uuid":"01234567-89ab-cdef-0123-456789abcdef","zone":"fi-hel1"}
 type GetGatewayService200 = GatewayServiceDetailsResponse
 
 // GetGatewayServiceDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type GetGatewayServiceDefault = GatewayErrorResponse
 
 // GetGatewayServiceLabel200 Gateway label
+//
+// Examples: {"key":"environment","value":"production"}
 type GetGatewayServiceLabel200 = GatewayLabelDetailsResponse
 
 // GetGatewayServiceLabelDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type GetGatewayServiceLabelDefault = GatewayErrorResponse
 
 // GetGatewayTunnel200 Response schema for gateway tunnel details.
+//
+// Examples: {"created_at":"2025-03-26T12:34:56Z","internal_peer_ping_interval":0,"name":"gateway-service","operational_state":"established","tunnel_healthy":true,"tunnel_up":true,"updated_at":"2025-03-26T12:34:56Z","uuid":"01234567-89ab-cdef-0123-456789abcdef"}
 type GetGatewayTunnel200 = GatewayTunnelDetailsResponse
 
 // GetGatewayTunnelDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type GetGatewayTunnelDefault = GatewayErrorResponse
 
 // ListGatewayAddresses200 Response schema for a list of gateway addresses.
+//
+// Examples: []
 type ListGatewayAddresses200 = GatewayAddressListResponse
 
 // ListGatewayAddressesDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type ListGatewayAddressesDefault = GatewayErrorResponse
 
 // ListGatewayConnections200 Response schema for a list of gateway connections.
+//
+// Examples: []
 type ListGatewayConnections200 = GatewayConnectionListResponse
 
 // ListGatewayConnectionsDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type ListGatewayConnectionsDefault = GatewayErrorResponse
 
 // ListGatewayPlans200 Response schema for a list of gateway plans.
+//
+// Examples: []
 type ListGatewayPlans200 = GatewayPlanListResponse
 
 // ListGatewayPlansDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type ListGatewayPlansDefault = GatewayErrorResponse
 
 // ListGatewayServiceLabels200 Response schema for a list of service labels.
+//
+// Examples: []
 type ListGatewayServiceLabels200 = GatewayServiceLabelListResponse
 
 // ListGatewayServiceLabelsDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type ListGatewayServiceLabelsDefault = GatewayErrorResponse
 
 // ListGatewayServices200 Response schema for a list of gateway services.
+//
+// Examples: []
 type ListGatewayServices200 = GatewayServiceListResponse
 
 // ListGatewayServicesDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type ListGatewayServicesDefault = GatewayErrorResponse
 
 // ListGatewayTunnels200 Response schema for a list of gateway tunnels.
+//
+// Examples: []
 type ListGatewayTunnels200 = GatewayTunnelListResponse
 
 // ListGatewayTunnelsDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type ListGatewayTunnelsDefault = GatewayErrorResponse
 
 // ModifyGatewayAddress200 Response schema for gateway address details.
+//
+// Examples: {"address":"203.0.113.10","name":"gateway-service","provisioned_by":"service"}
 type ModifyGatewayAddress200 = GatewayAddressDetailsResponse
 
 // ModifyGatewayAddressDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type ModifyGatewayAddressDefault = GatewayErrorResponse
 
 // ModifyGatewayConnection200 Response schema for gateway connection details.
+//
+// Examples: {"created_at":"2025-03-26T12:34:56Z","local_routes":[],"name":"gateway-service","remote_routes":[],"tunnels":[],"type":"ipsec","updated_at":"2025-03-26T12:34:56Z","uuid":"01234567-89ab-cdef-0123-456789abcdef"}
 type ModifyGatewayConnection200 = GatewayConnectionDetailsResponse
 
 // ModifyGatewayConnectionDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type ModifyGatewayConnectionDefault = GatewayErrorResponse
 
 // ModifyGatewayService200 Gateway service
+//
+// Examples: {"addresses":[],"automatic_tunnel_internal_ip_allocation":true,"configured_status":"started","connections":[],"created_at":"2025-03-26T12:34:56Z","features":[],"labels":[],"name":"gateway-service","plan":"development-gwaas-1c2g","updated_at":"2025-03-26T12:34:56Z","uuid":"01234567-89ab-cdef-0123-456789abcdef","zone":"fi-hel1"}
 type ModifyGatewayService200 = GatewayServiceDetailsResponse
 
 // ModifyGatewayServiceDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type ModifyGatewayServiceDefault = GatewayErrorResponse
 
 // ModifyGatewayServiceLabelDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type ModifyGatewayServiceLabelDefault = GatewayErrorResponse
 
 // ModifyGatewayTunnel200 Response schema for gateway tunnel details.
+//
+// Examples: {"created_at":"2025-03-26T12:34:56Z","internal_peer_ping_interval":0,"name":"gateway-service","operational_state":"established","tunnel_healthy":true,"tunnel_up":true,"updated_at":"2025-03-26T12:34:56Z","uuid":"01234567-89ab-cdef-0123-456789abcdef"}
 type ModifyGatewayTunnel200 = GatewayTunnelDetailsResponse
 
 // ModifyGatewayTunnelDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type ModifyGatewayTunnelDefault = GatewayErrorResponse
 
 // ReplaceGatewayService200 Gateway service
+//
+// Examples: {"addresses":[],"automatic_tunnel_internal_ip_allocation":true,"configured_status":"started","connections":[],"created_at":"2025-03-26T12:34:56Z","features":[],"labels":[],"name":"gateway-service","plan":"development-gwaas-1c2g","updated_at":"2025-03-26T12:34:56Z","uuid":"01234567-89ab-cdef-0123-456789abcdef","zone":"fi-hel1"}
 type ReplaceGatewayService200 = GatewayServiceDetailsResponse
 
 // ReplaceGatewayServiceDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type ReplaceGatewayServiceDefault = GatewayErrorResponse
 
 // CreateGatewayAddress Gateway address
+//
+// Examples: {"name":"gateway-service"}
 type CreateGatewayAddress = GatewayAddressCreateRequest
 
 // CreateGatewayConnection Network gateway VPN connection
+//
+// Examples: {"local_routes":[],"name":"gateway-service","remote_routes":[],"tunnels":[],"type":"ipsec"}
 type CreateGatewayConnection = GatewayConnectionCreateRequest
 
 // CreateGatewayService Gateway service
+//
+// Examples: {"addresses":[],"automatic_tunnel_internal_ip_allocation":true,"configured_status":"started","connections":[],"features":[],"labels":[],"name":"gateway-service","plan":"development-gwaas-1c2g","routers":[],"zone":"fi-hel1"}
 type CreateGatewayService = GatewayServiceCreateRequest
 
 // CreateGatewayServiceLabel Gateway label
+//
+// Examples: {"key":"environment","value":"production"}
 type CreateGatewayServiceLabel = GatewayLabelCreateRequest
 
 // CreateGatewayServiceLogSession Request to create a new log session for a service.
+//
+// Examples: {"session_type":"vpn"}
 type CreateGatewayServiceLogSession = GatewayServiceLogSessionCreateRequest
 
 // CreateGatewayTunnel Network gateway VPN connection tunnel
+//
+// Examples: {"internal_peer_ping_interval":0,"ipsec":{"authentication":{"psk":"MySecretPsk123","type":"psk"},"phase1_algorithms":[],"phase1_dh_group_numbers":[],"phase1_integrity_algorithms":[],"phase2_algorithms":[],"phase2_dh_group_numbers":[],"phase2_integrity_algorithms":[]},"local_address":{"name":"gateway-service"},"name":"gateway-service","remote_address":{"address":"203.0.113.10"},"tunnel_internal_ip":"10.0.0.1"}
 type CreateGatewayTunnel = GatewayTunnelCreateRequest
 
 // ModifyGatewayAddress Gateway service address modify request
+//
+// Examples: {"address":"203.0.113.10"}
 type ModifyGatewayAddress = GatewayAddressModifyRequest
 
 // ModifyGatewayConnection Network gateway VPN connection
+//
+// Examples: {"local_routes":[{"name":"modified-routes","static_network":"10.0.22.0/24","type":"static"}],"name":"gateway-service","type":"ipsec","uuid":"01234567-89ab-cdef-0123-456789abcdef"}
 type ModifyGatewayConnection = GatewayConnectionModifyRequest
 
 // ModifyGatewayService Request to modify a gateway service
+//
+// Examples: {"automatic_tunnel_internal_ip_allocation":true,"configured_status":"started","connections":[],"features":[],"labels":[],"name":"gateway-service","plan":"development-gwaas-1c2g"}
 type ModifyGatewayService = GatewayServiceModifyRequest
 
 // ModifyGatewayServiceLabel Gateway label
+//
+// Examples: {"key":"environment","value":"production"}
 type ModifyGatewayServiceLabel = GatewayLabelModifyRequest
 
 // ModifyGatewayTunnel Request to modify a VPN tunnel
+//
+// Examples: {"internal_peer_ping_interval":0,"ipsec":{"authentication":{"psk":"MySecretPsk123","type":"psk"},"phase1_algorithms":[],"phase1_dh_group_numbers":[],"phase1_integrity_algorithms":[],"phase2_algorithms":[],"phase2_dh_group_numbers":[],"phase2_integrity_algorithms":[]},"local_address":{"name":"gateway-service"},"name":"gateway-service","remote_address":{"address":"203.0.113.10"},"tunnel_internal_ip":"10.0.0.1","uuid":"01234567-89ab-cdef-0123-456789abcdef"}
 type ModifyGatewayTunnel = GatewayTunnelModifyRequest
 
 // ReplaceGatewayService Request to replace a gateway service
+//
+// Examples: {"automatic_tunnel_internal_ip_allocation":true,"configured_status":"started","labels":[],"name":"gateway-service","plan":"development-gwaas-1c2g"}
 type ReplaceGatewayService = GatewayServiceReplaceRequest
 
 // ListGatewayServicesParams defines parameters for ListGatewayServices.

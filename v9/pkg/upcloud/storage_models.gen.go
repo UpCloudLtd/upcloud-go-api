@@ -355,6 +355,8 @@ type CloneStorageRequest struct {
 		Title      StorageTitle       `json:"title"`
 
 		// Zone Zone identifier
+		//
+		// Examples: fi-hel1, de-fra1, us-nyc1
 		Zone StorageZone `json:"zone"`
 	} `json:"storage"`
 }
@@ -382,11 +384,11 @@ type CreateStorageRequest struct {
 		Title        *string `json:"title,omitempty"`
 
 		// Uuid Universally unique identifier
-		//
-		// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 		Uuid *StorageUuid `json:"uuid,omitempty"`
 
 		// Zone Zone identifier
+		//
+		// Examples: fi-hel1, de-fra1, us-nyc1
 		Zone *StorageZone `json:"zone,omitempty"`
 	} `json:"storage"`
 }
@@ -397,8 +399,6 @@ type CreateStorageResponse struct {
 }
 
 // CreateStorageTemplateRequest Request schema for creating a storage template
-//
-// Example: {"storage":{"title":"My Template"}}
 type CreateStorageTemplateRequest struct {
 	Storage struct {
 		Title string `json:"title"`
@@ -420,14 +420,14 @@ type Storage struct {
 }
 
 // StorageAccess Network access level
-//
-// Example: public
 type StorageAccess string
 
 // StorageAccessFilter Storage access level filter
 type StorageAccessFilter string
 
 // StorageAllowHidden Whether to include hidden storages in the response
+//
+// Examples: yes, no
 type StorageAllowHidden string
 
 // StorageComponents defines model for storageComponents.
@@ -450,11 +450,11 @@ type StorageCreateCdromRequest struct {
 		Url               *string `json:"url,omitempty"`
 
 		// Uuid Universally unique identifier
-		//
-		// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 		Uuid *StorageUuid `json:"uuid,omitempty"`
 
 		// Zone Zone identifier
+		//
+		// Examples: fi-hel1, de-fra1, us-nyc1
 		Zone *StorageZone `json:"zone,omitempty"`
 	} `json:"create_cdrom"`
 }
@@ -462,9 +462,9 @@ type StorageCreateCdromRequest struct {
 // StorageDetails defines model for storageDetails.
 type StorageDetails struct {
 	// Access Network access level
-	//
-	// Example: public
-	Access    StorageAccess    `json:"access"`
+	Access StorageAccess `json:"access"`
+
+	// Encrypted Examples: yes, no
 	Encrypted StorageEncrypted `json:"encrypted"`
 	Labels    *[]StorageLabel  `json:"labels,omitempty"`
 	License   float64          `json:"license"`
@@ -481,11 +481,11 @@ type StorageDetails struct {
 	Type StorageType `json:"type"`
 
 	// Uuid Universally unique identifier
-	//
-	// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 	Uuid StorageUuid `json:"uuid"`
 
 	// Zone Zone identifier
+	//
+	// Examples: fi-hel1, de-fra1, us-nyc1
 	Zone                 *StorageZone           `json:"zone,omitempty"`
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
@@ -493,44 +493,57 @@ type StorageDetails struct {
 // StorageDetailsPartOfPlan defines model for StorageDetails.PartOfPlan.
 type StorageDetailsPartOfPlan string
 
-// StorageEncrypted defines model for storageEncrypted.
+// StorageEncrypted Examples: yes, no
 type StorageEncrypted string
 
 // StorageError A general error response indicating that the request could not be fulfilled due to a technical issue.
 type StorageError struct {
 	Error struct {
-		ErrorCode    string `json:"error_code"`
+		// ErrorCode Examples: GENERAL_FAILURE
+		ErrorCode string `json:"error_code"`
+
+		// ErrorMessage Examples: Your request could not be fulfilled due to a technical issue.
 		ErrorMessage string `json:"error_message"`
 	} `json:"error"`
 }
 
 // StorageFavorite Filter storages by favorite status
+//
+// Examples: yes, no
 type StorageFavorite string
 
 // StorageLabel A key/value pair to label and categorize resources
-//
-// Example: {"key":"env","value":"production"}
 type StorageLabel struct {
 	Key   string `json:"key"`
 	Value string `json:"value"`
 }
 
 // StorageLabelFilter Label filter in format key=value or !key=value for negation
+//
+// Examples: environment=production, !temporary=true
 type StorageLabelFilter = string
 
 // StorageLimit Maximum number of items to return. Default is 25.
+//
+// Examples: 25, 50, 100
 type StorageLimit = int
 
 // StorageMetadata Whether to include metadata in the response
+//
+// Examples: yes, no
 type StorageMetadata string
 
 // StorageOffset Number of items to skip before starting to return results. Default is 0.
+//
+// Examples: 0, 25, 50, 100
 type StorageOffset = int
 
 // StorageOrderBy Sort order for storage results
 type StorageOrderBy string
 
 // StorageServers Whether to include server information in the response
+//
+// Examples: yes, no
 type StorageServers string
 
 // StorageSortBy Field to sort storage results by
@@ -556,11 +569,11 @@ type StorageUpdateTemplateRequest struct {
 }
 
 // StorageUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type StorageUuid = openapi_types.UUID
 
 // StorageZone Zone identifier
+//
+// Examples: fi-hel1, de-fra1, us-nyc1
 type StorageZone = string
 
 // Storages defines model for storages.
@@ -571,78 +584,74 @@ type Storages struct {
 }
 
 // AddStorageComponentUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type AddStorageComponentUuid = StorageUuid
 
 // AddStorageToFavoritesUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type AddStorageToFavoritesUuid = StorageUuid
 
 // AttachStorageToServerUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type AttachStorageToServerUuid = StorageUuid
 
 // CancelStorageOperationUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type CancelStorageOperationUuid = StorageUuid
 
 // CloneStorageUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type CloneStorageUuid = StorageUuid
 
 // CreateTemplateFromStorageUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type CreateTemplateFromStorageUuid = StorageUuid
 
 // DeleteStorageBackups defines model for deleteStorageBackups.
 type DeleteStorageBackups string
 
 // DeleteStorageUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type DeleteStorageUuid = StorageUuid
 
 // DetachStorageFromServerUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type DetachStorageFromServerUuid = StorageUuid
 
 // GetStorageInfoUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type GetStorageInfoUuid = StorageUuid
 
 // GetStorageListAccess Storage access level filter
 type GetStorageListAccess = StorageAccessFilter
 
 // GetStorageListAllowHidden Whether to include hidden storages in the response
+//
+// Examples: yes, no
 type GetStorageListAllowHidden = StorageAllowHidden
 
 // GetStorageListFavorite Filter storages by favorite status
+//
+// Examples: yes, no
 type GetStorageListFavorite = StorageFavorite
 
 // GetStorageListLabel Label filter in format key=value or !key=value for negation
+//
+// Examples: environment=production, !temporary=true
 type GetStorageListLabel = StorageLabelFilter
 
 // GetStorageListLimit Maximum number of items to return. Default is 25.
+//
+// Examples: 25, 50, 100
 type GetStorageListLimit = StorageLimit
 
 // GetStorageListMetadata Whether to include metadata in the response
+//
+// Examples: yes, no
 type GetStorageListMetadata = StorageMetadata
 
 // GetStorageListOffset Number of items to skip before starting to return results. Default is 0.
+//
+// Examples: 0, 25, 50, 100
 type GetStorageListOffset = StorageOffset
 
 // GetStorageListOrderBy Sort order for storage results
 type GetStorageListOrderBy = StorageOrderBy
 
 // GetStorageListServers Whether to include server information in the response
+//
+// Examples: yes, no
 type GetStorageListServers = StorageServers
 
 // GetStorageListSortBy Field to sort storage results by
@@ -652,33 +661,21 @@ type GetStorageListSortBy = StorageSortBy
 type GetStorageListType = StorageType
 
 // ModifyStorageUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type ModifyStorageUuid = StorageUuid
 
 // RemoveStorageFromFavoritesUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type RemoveStorageFromFavoritesUuid = StorageUuid
 
 // ResizeStorageUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type ResizeStorageUuid = StorageUuid
 
 // RestoreStorageFromBackupUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type RestoreStorageFromBackupUuid = StorageUuid
 
 // StorageCreateOnDemandBackupUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type StorageCreateOnDemandBackupUuid = StorageUuid
 
 // StorageUpdatePublicTemplateFromSourceUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type StorageUpdatePublicTemplateFromSourceUuid = StorageUuid
 
 // AddStorageComponentDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
@@ -787,8 +784,6 @@ type CreateCDROMStorage = StorageCreateCdromRequest
 type CreateStorage = CreateStorageRequest
 
 // CreateTemplateFromStorage Request schema for creating a storage template
-//
-// Example: {"storage":{"title":"My Template"}}
 type CreateTemplateFromStorage = CreateStorageTemplateRequest
 
 // ModifyStorage TODO

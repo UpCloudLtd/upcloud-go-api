@@ -88,10 +88,6 @@ func (e NetworkIpFamily) Valid() bool {
 	}
 }
 
-// Defines values for NetworkPeeringState.
-
-// Valid indicates whether the value is a known member of the NetworkPeeringState enum.
-
 // Defines values for NetworkType.
 const (
 	NetworkTypePrivate NetworkType = "private"
@@ -122,22 +118,16 @@ type CreateNetworkRequest struct {
 				Address NetworkIpCidr `json:"address"`
 
 				// Dhcp Boolean value represented as yes/no
-				//
-				// Example: yes
 				Dhcp            NetworkBooleanYesno `json:"dhcp"`
 				DhcpBootfileUrl *NetworkBootfileUrl `json:"dhcp_bootfile_url,omitempty"`
 
 				// DhcpDefaultRoute Boolean value represented as yes/no
-				//
-				// Example: yes
 				DhcpDefaultRoute        *NetworkBooleanYesno `json:"dhcp_default_route,omitempty"`
 				DhcpDns                 *[]NetworkIpAddress  `json:"dhcp_dns,omitempty"`
 				DhcpRoutes              *[]string            `json:"dhcp_routes,omitempty"`
 				DhcpRoutesConfiguration *struct {
 					EffectiveRoutesAutoPopulation *struct {
 						// Enabled Boolean value represented as yes/no
-						//
-						// Example: yes
 						Enabled             *NetworkBooleanYesno `json:"enabled,omitempty"`
 						ExcludeBySource     *[]string            `json:"exclude_by_source,omitempty"`
 						FilterByDestination *[]NetworkIpCidr     `json:"filter_by_destination,omitempty"`
@@ -156,16 +146,14 @@ type CreateNetworkRequest struct {
 		Name   string         `json:"name"`
 
 		// Router Universally unique identifier
-		//
-		// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 		Router *NetworkUuid `json:"router,omitempty"`
 
 		// Type Network access type
-		//
-		// Example: public
 		Type NetworkType `json:"type"`
 
 		// Zone Zone identifier
+		//
+		// Examples: fi-hel1, de-fra1, us-nyc1
 		Zone NetworkZone `json:"zone"`
 	} `json:"network"`
 }
@@ -200,24 +188,21 @@ type ModifyNetworkRequest struct {
 		ParentNetwork   string          `json:"parent_network"`
 
 		// Router Universally unique identifier
-		//
-		// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 		Router NetworkUuid `json:"router"`
 		Tags   NetworkTags `json:"tags"`
 
 		// Type Network access type
-		//
-		// Example: public
 		Type NetworkType `json:"type"`
 
 		// Zone Zone identifier
+		//
+		// Examples: fi-hel1, de-fra1, us-nyc1
 		Zone NetworkZone `json:"zone"`
 	} `json:"network"`
 }
 
 // Network defines model for network.
 type Network struct {
-	// Network Example: {"evi":"1234","grt_export":"no","ip_networks":{"ip_network":[{"address":"192.168.150.0/24","dhcp":"yes","dhcp_dns":["192.168.150.1","192.168.150.254"],"gateway":"192.168.150.1"}]},"name":"Example network","network_features":["allow-linklocal-address","allow-overlapping-ip-network","managed-by-service"],"parent_network":"037b0e4b-2734-4d5d-89ba-1737fc4593bf","peerings":{"peering":[{"name":"Peering A-\u003eB","state":"pending-peer","uuid":"0fc82c18-1e5e-4076-afcd-3b85869800e7"}]},"router":"0414e0d7-4436-4037-9dd8-6eaf47dce599","services":{"service":[{"name":"OBJECT-STORAGE","service_routes":["10.10.10.0/24"]}]},"type":"private","uuid":"039a8811-e279-46c2-8e45-1962767f5a4c","zone":"fi-hel1"}
 	Network NetworkDetails `json:"network"`
 }
 
@@ -228,8 +213,6 @@ type NetworkAccountId = int
 type NetworkBoolean01 int
 
 // NetworkBooleanYesno Boolean value represented as yes/no
-//
-// Example: yes
 type NetworkBooleanYesno string
 
 // NetworkBootfileUrl defines model for networkBootfileUrl.
@@ -239,41 +222,31 @@ type NetworkBootfileUrl = string
 type NetworkCreateInterfaceRequest struct {
 	Interface *struct {
 		// Bootable Boolean value represented as yes/no
-		//
-		// Example: yes
 		Bootable NetworkBooleanYesno `json:"bootable"`
 		Labels   *[]struct {
 			Key   string `json:"key"`
 			Value string `json:"value"`
 
 			// Visible Boolean value represented as yes/no
-			//
-			// Example: yes
 			Visible NetworkBooleanYesno `json:"visible"`
 		} `json:"labels,omitempty"`
 		Network string `json:"network"`
 
 		// SourceIpFiltering Boolean value represented as yes/no
-		//
-		// Example: yes
 		SourceIpFiltering NetworkBooleanYesno `json:"source_ip_filtering"`
 
 		// Type Network access type
-		//
-		// Example: public
 		Type NetworkType `json:"type"`
 	} `json:"interface,omitempty"`
 	MainAccountId *NetworkAccountId `json:"main_account_id,omitempty"`
 }
 
-// NetworkDescription defines model for networkDescription.
+// NetworkDescription Examples: Development servers, Production servers, Private environment, Quality Assurance environment, Web servers, Database servers
 type NetworkDescription = string
 
-// NetworkDetails Example: {"evi":"1234","grt_export":"no","ip_networks":{"ip_network":[{"address":"192.168.150.0/24","dhcp":"yes","dhcp_dns":["192.168.150.1","192.168.150.254"],"gateway":"192.168.150.1"}]},"name":"Example network","network_features":["allow-linklocal-address","allow-overlapping-ip-network","managed-by-service"],"parent_network":"037b0e4b-2734-4d5d-89ba-1737fc4593bf","peerings":{"peering":[{"name":"Peering A-\u003eB","state":"pending-peer","uuid":"0fc82c18-1e5e-4076-afcd-3b85869800e7"}]},"router":"0414e0d7-4436-4037-9dd8-6eaf47dce599","services":{"service":[{"name":"OBJECT-STORAGE","service_routes":["10.10.10.0/24"]}]},"type":"private","uuid":"039a8811-e279-46c2-8e45-1962767f5a4c","zone":"fi-hel1"}
+// NetworkDetails defines model for networkDetails.
 type NetworkDetails struct {
 	// GrtExport Boolean value represented as yes/no
-	//
-	// Example: yes
 	GrtExport  *NetworkBooleanYesno `json:"grt_export,omitempty"`
 	IpNetworks *struct {
 		IpNetwork []struct {
@@ -281,14 +254,10 @@ type NetworkDetails struct {
 			Address NetworkIpCidr `json:"address"`
 
 			// Dhcp Boolean value represented as yes/no
-			//
-			// Example: yes
 			Dhcp            *NetworkBooleanYesno `json:"dhcp,omitempty"`
 			DhcpBootfileUrl *NetworkBootfileUrl  `json:"dhcp_bootfile_url,omitempty"`
 
 			// DhcpDefaultRoute Boolean value represented as yes/no
-			//
-			// Example: yes
 			DhcpDefaultRoute *NetworkBooleanYesno `json:"dhcp_default_route,omitempty"`
 			DhcpDns          *[]NetworkIpAddress  `json:"dhcp_dns,omitempty"`
 			DhcpRoutes       *[]NetworkIpCidr     `json:"dhcp_routes,omitempty"`
@@ -304,8 +273,6 @@ type NetworkDetails struct {
 	NetworkFeatures *[]string `json:"network_features,omitempty"`
 
 	// ParentNetwork Universally unique identifier
-	//
-	// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 	ParentNetwork *NetworkUuid `json:"parent_network,omitempty"`
 
 	// Peerings List of network peerings the network is part of
@@ -315,23 +282,17 @@ type NetworkDetails struct {
 			State *NetworkPeeringState `json:"state,omitempty"`
 
 			// Uuid Universally unique identifier
-			//
-			// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 			Uuid *NetworkUuid `json:"uuid,omitempty"`
 		} `json:"peering,omitempty"`
 	} `json:"peerings,omitempty"`
 
 	// Router Universally unique identifier
-	//
-	// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 	Router  *NetworkUuid `json:"router,omitempty"`
 	Servers *struct {
 		Server []struct {
 			Title string `json:"title"`
 
 			// Uuid Universally unique identifier
-			//
-			// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 			Uuid NetworkUuid `json:"uuid"`
 		} `json:"server"`
 	} `json:"servers,omitempty"`
@@ -346,19 +307,22 @@ type NetworkDetails struct {
 	Tags *[]string `json:"tags,omitempty"`
 
 	// Type Network access type
-	//
-	// Example: public
 	Type *NetworkType        `json:"type,omitempty"`
 	Uuid *openapi_types.UUID `json:"uuid,omitempty"`
 
 	// Zone Zone identifier
+	//
+	// Examples: fi-hel1, de-fra1, us-nyc1
 	Zone NetworkZone `json:"zone"`
 }
 
 // NetworkError A general error response indicating that the request could not be fulfilled due to a technical issue.
 type NetworkError struct {
 	Error struct {
-		ErrorCode    string `json:"error_code"`
+		// ErrorCode Examples: GENERAL_FAILURE
+		ErrorCode string `json:"error_code"`
+
+		// ErrorMessage Examples: Your request could not be fulfilled due to a technical issue.
 		ErrorMessage string `json:"error_message"`
 	} `json:"error"`
 }
@@ -369,31 +333,21 @@ type NetworkFeatures string
 // NetworkInterface Response schema for listing network interfaces
 type NetworkInterface struct {
 	// Bootable Boolean value represented as yes/no
-	//
-	// Example: yes
 	Bootable    NetworkBooleanYesno      `json:"bootable"`
 	IpAddresses []map[string]interface{} `json:"ip_addresses"`
 	Mac         string                   `json:"mac"`
 	Network     string                   `json:"network"`
 
 	// Server Universally unique identifier
-	//
-	// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 	Server *NetworkUuid `json:"server,omitempty"`
 
 	// SourceIpFiltering Boolean value represented as yes/no
-	//
-	// Example: yes
 	SourceIpFiltering NetworkBooleanYesno `json:"source_ip_filtering"`
 
 	// Type Network access type
-	//
-	// Example: public
 	Type NetworkType `json:"type"`
 
 	// Uuid Universally unique identifier
-	//
-	// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 	Uuid NetworkUuid `json:"uuid"`
 }
 
@@ -426,8 +380,6 @@ type NetworkIpCidr = string
 type NetworkIpFamily string
 
 // NetworkLabel A key/value pair to label and categorize resources
-//
-// Example: {"key":"env","value":"production"}
 type NetworkLabel struct {
 	Key   string `json:"key"`
 	Value string `json:"value"`
@@ -438,12 +390,8 @@ type NetworkLabels struct {
 	Label *[]NetworkLabel `json:"label,omitempty"`
 }
 
-// NetworkName defines model for networkName.
+// NetworkName Examples: DEV, PROD, private, QA, webserver, database
 type NetworkName = string
-
-// NetworkPeeringName defines model for networkPeeringName.
-
-// NetworkPeeringState defines model for networkPeeringState.
 
 // NetworkServers List of servers associated with the tag.
 type NetworkServers struct {
@@ -454,8 +402,11 @@ type NetworkServers struct {
 type NetworkTags struct {
 	Tags struct {
 		Tag []struct {
+			// Description Examples: Development servers, Production servers, Private environment, Quality Assurance environment, Web servers, Database servers
 			Description *NetworkDescription `json:"description,omitempty"`
-			Name        NetworkName         `json:"name"`
+
+			// Name Examples: DEV, PROD, private, QA, webserver, database
+			Name NetworkName `json:"name"`
 
 			// Servers List of servers associated with the tag.
 			Servers NetworkServers `json:"servers"`
@@ -464,16 +415,14 @@ type NetworkTags struct {
 }
 
 // NetworkType Network access type
-//
-// Example: public
 type NetworkType string
 
 // NetworkUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type NetworkUuid = openapi_types.UUID
 
 // NetworkZone Zone identifier
+//
+// Examples: fi-hel1, de-fra1, us-nyc1
 type NetworkZone = string
 
 // Networks defines model for networks.
@@ -486,33 +435,21 @@ type Networks struct {
 }
 
 // DeleteNetworkInterfaceUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type DeleteNetworkInterfaceUuid = NetworkUuid
 
 // DeleteNetworkUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type DeleteNetworkUuid = NetworkUuid
 
 // GetNetworkDetailsUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type GetNetworkDetailsUuid = NetworkUuid
 
 // GetNetworkInterfaceDetailsUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type GetNetworkInterfaceDetailsUuid = NetworkUuid
 
 // ListNetworksLabel A key/value pair to label and categorize resources
-//
-// Example: {"key":"env","value":"production"}
 type ListNetworksLabel = NetworkLabel
 
 // ModifyNetworkUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type ModifyNetworkUuid = NetworkUuid
 
 // CreateNetwork201 defines model for createNetwork201.

@@ -442,13 +442,16 @@ func (e DatabaseServicePropertiesMysqlLowerCaseTableNames) Valid() bool {
 
 // Defines values for DatabaseServicePropertiesMysqlMigrationDumpTool.
 const (
-	DatabaseServicePropertiesMysqlMigrationDumpToolMydumper  DatabaseServicePropertiesMysqlMigrationDumpTool = "mydumper"
-	DatabaseServicePropertiesMysqlMigrationDumpToolMysqldump DatabaseServicePropertiesMysqlMigrationDumpTool = "mysqldump"
+	DatabaseServicePropertiesMysqlMigrationDumpToolLessThannil DatabaseServicePropertiesMysqlMigrationDumpTool = "<nil>"
+	DatabaseServicePropertiesMysqlMigrationDumpToolMydumper    DatabaseServicePropertiesMysqlMigrationDumpTool = "mydumper"
+	DatabaseServicePropertiesMysqlMigrationDumpToolMysqldump   DatabaseServicePropertiesMysqlMigrationDumpTool = "mysqldump"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseServicePropertiesMysqlMigrationDumpTool enum.
 func (e DatabaseServicePropertiesMysqlMigrationDumpTool) Valid() bool {
 	switch e {
+	case DatabaseServicePropertiesMysqlMigrationDumpToolLessThannil:
+		return true
 	case DatabaseServicePropertiesMysqlMigrationDumpToolMydumper:
 		return true
 	case DatabaseServicePropertiesMysqlMigrationDumpToolMysqldump:
@@ -1362,176 +1365,147 @@ func (e DatabaseVersionsResponseState) Valid() bool {
 }
 
 // LogicalDatabaseCreate Schema for creating a logical database.
+//
+// Examples: {"lc_collate":"en_US.UTF-8","lc_ctype":"en_US.UTF-8","name":"my_database"}
 type LogicalDatabaseCreate struct {
 	// LcCollate Collation order
+	//
+	// Examples: en_US.UTF-8
 	LcCollate *string `json:"lc_collate,omitempty"`
 
 	// LcCtype Category of a locale definition source file
+	//
+	// Examples: en_US.UTF-8
 	LcCtype *string `json:"lc_ctype,omitempty"`
 
 	// Name logical database name
+	//
+	// Examples: my_database
 	Name string `json:"name"`
 }
 
 // LogicalDatabaseResponse Schema for a logical database response.
+//
+// Examples: {"lc_collate":"en_US.UTF-8","lc_ctype":"en_US.UTF-8","name":"postgres"}
 type LogicalDatabaseResponse struct {
 	// LcCollate The LC_COLLATE setting of the logical database.
-	//
-	// Example: en_US.UTF-8
 	LcCollate *string `json:"lc_collate,omitempty"`
 
 	// LcCtype The LC_CTYPE setting of the logical database.
-	//
-	// Example: en_US.UTF-8
 	LcCtype *string `json:"lc_ctype,omitempty"`
 
 	// Name The name of the logical database.
-	//
-	// Example: postgres
 	Name *string `json:"name,omitempty"`
 }
 
 // LogicalDatabasesResponse A list of logical databases.
+//
+// Examples: [{"lc_collate":"en_US.UTF-8","lc_ctype":"en_US.UTF-8","name":"postgres"}], [{"lc_collate":"en_US.UTF-8","lc_ctype":"en_US.UTF-8","name":"mydb"},{"lc_collate":"en_US.UTF-8","lc_ctype":"en_US.UTF-8","name":"testdb"}]
 type LogicalDatabasesResponse = []LogicalDatabaseResponse
 
 // DatabaseAccessControlSettingsResponse Response schema for access control settings of a cluster.
+//
+// Examples: {"access_control":false,"extended_access_control":true}
 type DatabaseAccessControlSettingsResponse struct {
 	// AccessControl If true, access control is enabled for the cluster.
-	//
-	// Example: false
 	AccessControl *bool `json:"access_control,omitempty"`
 
 	// ExtendedAccessControl If true, extended access control features are enabled.
-	//
-	// Example: true
 	ExtendedAccessControl *bool `json:"extended_access_control,omitempty"`
 }
 
 // DatabaseAccountCaResponse Response schema for account CA
+//
+// Examples: {"certificate":"-----BEGIN CERTIFICATE-----\naxxxxxxxxxxxxx+tkP9Uh9+PxxxxxcNAQEM\nBQAwOjE4MDYGA1UEAwwvZWYzMTc1xxxxxxxxxx0YjM2OWIz\nM2RkIFByb2plY3QgQ0EwHhcNMjEwMzMwMDgxNDU0WhcNMzEwMzI4MDgxNDU0WjA6\nMTgwNgYDVQQDDC9lZjMxNzU1NC1lNzYzLTQ5ZjUtODI4Ni1lZDRiMzY5YjMzZGQg\nUHJvamVjdCBDQTCCAaIwDQYJKoZIhvcNAQEBBQxxxxggGBAK1Vh4GR\nlfxPZ3Icw8E1WlS5+9rADOdrstYtL3oiHBqzljmjvKf1Vuu0LLHtszWrCElOvoZ4\nzhg6+yVIB9YcvTZJNU0BNlIilF0rafn/40pFjeKrtxxxxxxxxxxy48Hnk\nMAiqoRyJ6hGRpYmKVip2sbMEtI+X9xQahlhlTMLo9082gS2hI5nvmhDqRiOlly28\ntwr2I/nbsIao8pIE19bdptKVqrv9x+O51O2JK7NlyjxnJVaHS9Tv6z1gG0GZgzYW\nkram1U8oTu72cjvGhMIBhgz7AlQ74PMtAub/eH4hipGU4LDZQiZ+9kCT+FCD9uAq\nIq+ALiLPHTCaGiKTJYoerutgrmrz1HZp6RmxRc8Wk7MdPp8OHqSXUnewKSGlzEl3\nhlJ5UMOVQ+tSDffAuvA6phUS0mmm1xxxxxxxxxxxxxxxMcrVE8AjbF5nkieOV0r6hIwIDAQAB\noz8wPTAdBgNVHQ4EFxxxxgQUHTUNeVDpSFx8fjq9xxxxxxxxFDnqn8xY0iAwDwYDVR0TBAgwBgEB\n/wIBADALBgNxxxxxxxxxxLtt8qOjsbvS\nYZtePpqZjx7NkmFdScc0LOBj6oXFetcJlhLQKzrguQDi/trt29sxjZZ5zLnQufnE\ns8IYtbclhDbF0qGG15oP8tYVRXfzKLHF4HfuMrdiyqzF/q6Qy0fVIiFWD7t1it8V\nPLqlk9oFDL7xUnsZOfYcqv8Ct+aWE7L73gJVgUkDHP+gkdGTWKYm4zzYTLfqh1Iu\nyivOjn+KSyjjtsJsOGUDZBkh215OMKPp4JpWQpgQeK6kjTnwuMwEYYFyhfu/z5wU\nwN7z7Ad39fyGmQzkGbFXtP0te4MFElOVSkiHaB4T4lTM6690st6+uIhFI1Qo/oAY\n30ybOpOTLF7FZxwY5Z+BTW27hytyECLkG3b4iKIqKsRIvlFkwKP8cfKjq7ImSbBG\nOJ8JBcraffygrLznbJ2979Y9yN+n+8wW0xxxxxxxxxxov24snxDmm6fAMoO1\nxBM7c2KZA5ZoZDefcz9e28r7xxxx==\n-----END CERTIFICATE-----\n"}
 type DatabaseAccountCaResponse struct {
 	// Certificate Name of the CA
-	//
-	// Example: -----BEGIN CERTIFICATE-----
-	// axxxxxxxxxxxxx+tkP9Uh9+PxxxxxcNAQEM
-	// BQAwOjE4MDYGA1UEAwwvZWYzMTc1xxxxxxxxxx0YjM2OWIz
-	// M2RkIFByb2plY3QgQ0EwHhcNMjEwMzMwMDgxNDU0WhcNMzEwMzI4MDgxNDU0WjA6
-	// MTgwNgYDVQQDDC9lZjMxNzU1NC1lNzYzLTQ5ZjUtODI4Ni1lZDRiMzY5YjMzZGQg
-	// UHJvamVjdCBDQTCCAaIwDQYJKoZIhvcNAQEBBQxxxxggGBAK1Vh4GR
-	// lfxPZ3Icw8E1WlS5+9rADOdrstYtL3oiHBqzljmjvKf1Vuu0LLHtszWrCElOvoZ4
-	// zhg6+yVIB9YcvTZJNU0BNlIilF0rafn/40pFjeKrtxxxxxxxxxxy48Hnk
-	// MAiqoRyJ6hGRpYmKVip2sbMEtI+X9xQahlhlTMLo9082gS2hI5nvmhDqRiOlly28
-	// twr2I/nbsIao8pIE19bdptKVqrv9x+O51O2JK7NlyjxnJVaHS9Tv6z1gG0GZgzYW
-	// kram1U8oTu72cjvGhMIBhgz7AlQ74PMtAub/eH4hipGU4LDZQiZ+9kCT+FCD9uAq
-	// Iq+ALiLPHTCaGiKTJYoerutgrmrz1HZp6RmxRc8Wk7MdPp8OHqSXUnewKSGlzEl3
-	// hlJ5UMOVQ+tSDffAuvA6phUS0mmm1xxxxxxxxxxxxxxxMcrVE8AjbF5nkieOV0r6hIwIDAQAB
-	// oz8wPTAdBgNVHQ4EFxxxxgQUHTUNeVDpSFx8fjq9xxxxxxxxFDnqn8xY0iAwDwYDVR0TBAgwBgEB
-	// /wIBADALBgNxxxxxxxxxxLtt8qOjsbvS
-	// YZtePpqZjx7NkmFdScc0LOBj6oXFetcJlhLQKzrguQDi/trt29sxjZZ5zLnQufnE
-	// s8IYtbclhDbF0qGG15oP8tYVRXfzKLHF4HfuMrdiyqzF/q6Qy0fVIiFWD7t1it8V
-	// PLqlk9oFDL7xUnsZOfYcqv8Ct+aWE7L73gJVgUkDHP+gkdGTWKYm4zzYTLfqh1Iu
-	// yivOjn+KSyjjtsJsOGUDZBkh215OMKPp4JpWQpgQeK6kjTnwuMwEYYFyhfu/z5wU
-	// wN7z7Ad39fyGmQzkGbFXtP0te4MFElOVSkiHaB4T4lTM6690st6+uIhFI1Qo/oAY
-	// 30ybOpOTLF7FZxwY5Z+BTW27hytyECLkG3b4iKIqKsRIvlFkwKP8cfKjq7ImSbBG
-	// OJ8JBcraffygrLznbJ2979Y9yN+n+8wW0xxxxxxxxxxov24snxDmm6fAMoO1
-	// xBM7c2KZA5ZoZDefcz9e28r7xxxx==
-	// -----END CERTIFICATE-----
 	Certificate *string `json:"certificate,omitempty"`
 }
 
 // DatabaseAclResponse Response schema for an Access Control List (ACL) entry.
+//
+// Examples: {"id":"123e4567-e89b-12d3-a456-426614174000","permission":"read-write","topic":"sensors/temperature","username":"user123"}
 type DatabaseAclResponse struct {
 	// Id Unique identifier for the ACL entry.
-	//
-	// Example: 123e4567-e89b-12d3-a456-426614174000
 	Id *openapi_types.UUID `json:"id,omitempty"`
 
 	// Permission The permission level for the ACL entry.
-	//
-	// Example: read-write
 	Permission *string `json:"permission,omitempty"`
 
 	// Topic The topic associated with the ACL entry.
-	//
-	// Example: sensors/temperature
 	Topic *string `json:"topic,omitempty"`
 
 	// Username The username associated with the ACL entry.
-	//
-	// Example: user123
 	Username *string `json:"username,omitempty"`
 }
 
 // DatabaseAvailableExtensionsResponse Response schema for listing available PostgreSQL extensions
+//
+// Examples: [{"default_version":"1.12","name":"pg_stat_statements","versions":["1.10","1.11","1.12"]},{"default_version":"3.4.0","name":"postgis","versions":["3.3.0","3.4.0"]},{"default_version":"0.8.1","name":"vector","versions":["0.8.1"]},{"default_version":"1.1","name":"uuid-ossp","versions":["1.1"]}]
 type DatabaseAvailableExtensionsResponse = []struct {
 	// DefaultVersion The default version of the extension
-	//
-	// Example: 1.12
 	DefaultVersion string `json:"default_version"`
 
 	// Name The name of the PostgreSQL extension
-	//
-	// Example: pg_stat_statements
 	Name string `json:"name"`
 
 	// Versions List of available versions for this extension
-	//
-	// Example: ["1.10","1.11","1.12"]
 	Versions []string `json:"versions"`
 }
 
 // DatabaseAvailableServiceTypesResponse Response map schema for available service types
+//
+// Examples: {"postgres":{"dependencies":{},"description":"PostgreSQL - Object-Relational Database Management System","latest_available_version":"18.1","name":"postgresql","properties":{"automatic_utility_network_ip_filter":false,"ip_filter":["0.0.0.0/0"],"public_access":true,"version":"13"},"service_plans":[{"backup_config":{"interval":24,"max_count":7,"recovery_mode":"point_in_time"},"backup_retention":7,"core_number":2,"max_memory_percent":90,"memory_amount":8192,"node_count":3,"plan":"2x2xCPU-4GB-50G","storage_size":51200,"zones":{"zone":[{"description":"Primary zone","name":"zone1"},{"description":"Secondary zone","name":"zone2"}]}}]}}
 type DatabaseAvailableServiceTypesResponse map[string]DatabaseServiceTypeResponse
 
 // DatabaseBackupConfigOpenSearchResponse OpenSearch specific backup configuration response
+//
+// Examples: {"frequent_interval_minutes":15,"frequent_oldest_age_minutes":60,"infrequent_interval_minutes":240,"infrequent_oldest_age_minutes":1440,"recovery_mode":"point_in_time"}
 type DatabaseBackupConfigOpenSearchResponse struct {
 	// FrequentIntervalMinutes Frequent backup interval in minutes
-	//
-	// Example: 15
 	FrequentIntervalMinutes *int32 `json:"frequent_interval_minutes,omitempty"`
 
 	// FrequentOldestAgeMinutes Oldest age for frequent backups in minutes
-	//
-	// Example: 60
 	FrequentOldestAgeMinutes *int32 `json:"frequent_oldest_age_minutes,omitempty"`
 
 	// InfrequentIntervalMinutes Infrequent backup interval in minutes
-	//
-	// Example: 240
 	InfrequentIntervalMinutes *int32 `json:"infrequent_interval_minutes,omitempty"`
 
 	// InfrequentOldestAgeMinutes Oldest age for infrequent backups in minutes
-	//
-	// Example: 1440
 	InfrequentOldestAgeMinutes *int32 `json:"infrequent_oldest_age_minutes,omitempty"`
 
 	// RecoveryMode Recovery mode for backups
-	//
-	// Example: point_in_time
 	RecoveryMode *string `json:"recovery_mode,omitempty"`
 }
 
 // DatabaseBackupConfigResponse General backup configuration schema
+//
+// Examples: {"interval":24,"max_count":7,"recovery_mode":"point_in_time"}
 type DatabaseBackupConfigResponse struct {
 	// Interval Backup interval
+	//
+	// Examples: 24
 	Interval *int32 `json:"interval,omitempty"`
 
 	// MaxCount Maximum number of backups to keep
+	//
+	// Examples: 7
 	MaxCount *int32 `json:"max_count,omitempty"`
 
 	// RecoveryMode Recovery mode for backups
+	//
+	// Examples: point_in_time
 	RecoveryMode *string `json:"recovery_mode,omitempty"`
 }
 
 // DatabaseBackupResponse Schema for a backup response.
+//
+// Examples: {"backup_name":"pg-backup-2024-01-01","backup_time":"2024-01-01T12:00:00Z","data_size":36413440}
 type DatabaseBackupResponse struct {
 	// BackupName The name of the backup.
-	//
-	// Example: pg-backup-2024-01-01
 	BackupName *string `json:"backup_name,omitempty"`
 
 	// BackupTime The time the backup was created.
-	//
-	// Example: 2024-01-01T12:00:00Z
 	BackupTime *time.Time `json:"backup_time,omitempty"`
 
 	// DataSize The size of the backup data in bytes.
@@ -1539,72 +1513,90 @@ type DatabaseBackupResponse struct {
 }
 
 // DatabaseConnectionPoolCreate Schema for creating a connection pool.
+//
+// Examples: {"database":"defaultdb","pool_mode":"statement","pool_name":"readonly-pool","pool_size":10,"username":"readonly"}
 type DatabaseConnectionPoolCreate struct {
 	// Database Database
+	//
+	// Examples: defaultdb
 	Database string `json:"database"`
 
 	// PoolMode Connection Pool mode
+	//
+	// Examples: session, transaction, statement
 	PoolMode DatabaseConnectionPoolCreatePoolMode `json:"pool_mode"`
 
 	// PoolName Connection Pool name
+	//
+	// Examples: pool-1
 	PoolName string `json:"pool_name"`
 
 	// PoolSize Connection Pool size
+	//
+	// Examples: 20
 	PoolSize int32 `json:"pool_size"`
 
 	// Username Connection Pool username
+	//
+	// Examples: app-user
 	Username *string `json:"username,omitempty"`
 }
 
 // DatabaseConnectionPoolCreatePoolMode Connection Pool mode
+//
+// Examples: session, transaction, statement
 type DatabaseConnectionPoolCreatePoolMode string
 
 // DatabaseConnectionPoolModify Schema for modifying a connection pool.
+//
+// Examples: {"database":"defaultdb","pool_mode":"session","pool_size":20,"username":"app-user"}
 type DatabaseConnectionPoolModify struct {
 	// Database Database
+	//
+	// Examples: defaultdb
 	Database *string `json:"database,omitempty"`
 
 	// PoolMode Connection Pool mode
+	//
+	// Examples: session, transaction, statement
 	PoolMode *DatabaseConnectionPoolModifyPoolMode `json:"pool_mode,omitempty"`
 
 	// PoolSize Connection Pool size
+	//
+	// Examples: 20
 	PoolSize *int32 `json:"pool_size,omitempty"`
 
 	// Username Connection Pool username
+	//
+	// Examples: app-user, null
 	Username *string `json:"username,omitempty"`
 }
 
 // DatabaseConnectionPoolModifyPoolMode Connection Pool mode
+//
+// Examples: session, transaction, statement
 type DatabaseConnectionPoolModifyPoolMode string
 
 // DatabaseConnectionPoolResponse Schema for a connection pool response.
 type DatabaseConnectionPoolResponse struct {
 	// ConnectionUri The connection URI of the connection pool.
-	//
-	// Example: postgresql://user:password@hostname:5432/dbname
 	ConnectionUri *string `json:"connection_uri,omitempty"`
 
 	// Database The database name associated with the connection pool.
-	//
-	// Example: defaultdb
 	Database *string `json:"database,omitempty"`
 
 	// PoolMode The mode of the connection pool.
-	//
-	// Example: session
 	PoolMode *string `json:"pool_mode,omitempty"`
 
 	// PoolName The name of the connection pool.
+	//
+	// Examples: pool-2
 	PoolName *string `json:"pool_name,omitempty"`
 
 	// PoolSize The size of the connection pool.
-	//
-	// Example: 10
 	PoolSize *int32 `json:"pool_size,omitempty"`
 
 	// Username The username for the connection pool
-	//
-	// Example: updamin
 	Username *string `json:"username,omitempty"`
 }
 
@@ -1620,15 +1612,16 @@ type DatabaseCurrentSessionsResponse struct {
 }
 
 // DatabaseDependencyResponse a dependency definition
+//
+// Examples: {"required":["host","port"]}
 type DatabaseDependencyResponse struct {
 	// Required List of required properties when this dependency is present
-	//
-	// Example: ["host","port"]
 	Required *[]string `json:"required,omitempty"`
 }
 
 // DatabaseErrorResponse Schema for error responses from the API.
 type DatabaseErrorResponse struct {
+	// Error Examples: {"error_code":"401","error_message":"Authentication credentials wrong"}
 	Error *struct {
 		// ErrorCode Error code associated with the error.
 		ErrorCode string `json:"error_code"`
@@ -1639,460 +1632,456 @@ type DatabaseErrorResponse struct {
 }
 
 // DatabaseId The unique identifier for the integration.
+//
+// Examples: 1001, 1002
 type DatabaseId = int32
 
 // DatabaseIndexResponse Schema representing the details of an index.
+//
+// Examples: {"create_time":"2023-05-11T13:24:10.623Z","docs":1,"health":"green","index_name":".kibana_1","number_of_replicas":0,"number_of_shards":1,"read_only_allow_delete":false,"size":5313,"status":"open"}
 type DatabaseIndexResponse struct {
 	// CreateTime Creation time of the index.
-	//
-	// Example: 2023-05-11T13:24:10.623Z
 	CreateTime *time.Time `json:"create_time,omitempty"`
 
 	// Docs Number of documents in the index.
-	//
-	// Example: 1
 	Docs *int32 `json:"docs,omitempty"`
 
 	// Health Health status of the index.
-	//
-	// Example: green
 	Health *string `json:"health,omitempty"`
 
 	// IndexName Name of the index.
-	//
-	// Example: .kibana_1
 	IndexName *string `json:"index_name,omitempty"`
 
 	// NumberOfReplicas Number of replicas for the index.
-	//
-	// Example: 1
 	NumberOfReplicas *int32 `json:"number_of_replicas,omitempty"`
 
 	// NumberOfShards Number of shards for the index.
-	//
-	// Example: 1
 	NumberOfShards *int32 `json:"number_of_shards,omitempty"`
 
 	// ReadOnlyAllowDelete Indicates if the index is read-only and allows deletion.
-	//
-	// Example: false
 	ReadOnlyAllowDelete *bool `json:"read_only_allow_delete,omitempty"`
 
 	// Size Size of the index in bytes.
-	//
-	// Example: 5313
 	Size *int32 `json:"size,omitempty"`
 
 	// Status Status of the index.
-	//
-	// Example: open
 	Status *string `json:"status,omitempty"`
 }
 
 // DatabaseIndexesResponse Response schema for indexes
+//
+// Examples: [{"create_time":"2023-05-11T13:24:10.623Z","docs":1,"health":"green","index_name":".kibana_1","number_of_replicas":0,"number_of_shards":1,"read_only_allow_delete":false,"size":5313,"status":"open"}], [{"create_time":"2023-05-11T13:24:10.623Z","docs":1,"health":"green","index_name":".kibana_1","number_of_replicas":0,"number_of_shards":1,"read_only_allow_delete":false,"size":5313,"status":"open"},{"create_time":"2023-05-11T13:24:10.623Z","docs":42,"health":"yellow","index_name":"logs-2023.05.11","number_of_replicas":1,"number_of_shards":3,"read_only_allow_delete":false,"size":1048576,"status":"open"}]
 type DatabaseIndexesResponse = []DatabaseIndexResponse
 
 // DatabaseIntegrationEndpoint The type of integration endpoint.
+//
+// Examples: rsyslog
 type DatabaseIntegrationEndpoint string
 
 // DatabaseIntegrationEndpointCreate Schema for creating an integration endpoint.
 type DatabaseIntegrationEndpointCreate struct {
 	// Name The name of the integration endpoint.
+	//
+	// Examples: webhook-endpoint
 	Name string `json:"name"`
 
 	// Properties A key-value map of properties specific to the integration endpoint type.
+	//
+	// Examples: {"format":"rfc5424","max_message_size":8192,"port":514,"server":"1.1.1.1","tls":false}
 	Properties *map[string]interface{} `json:"properties,omitempty"`
 
 	// Type The type of integration endpoint.
+	//
+	// Examples: rsyslog
 	Type DatabaseIntegrationEndpoint `json:"type"`
 }
 
 // DatabaseIntegrationEndpointModify Schema for modifying an integration endpoint.
 type DatabaseIntegrationEndpointModify struct {
-	// Properties Example: {"port":514,"server":"3.3.3.3","tls":true}
 	Properties *map[string]interface{} `json:"properties,omitempty"`
 }
 
 // DatabaseIntegrationEndpointResponse Schema for an integration endpoint response.
+//
+// Examples: {"name":"rsyslog","properties":{"format":"rfc5424","max_message_size":8192,"port":514,"sd":"","server":"94.237.95.164","tls":false},"type":"rsyslog","uuid":"20e86f48-2dcd-4a43-843d-3532ab112c1d"}
 type DatabaseIntegrationEndpointResponse struct {
 	// Name The name of the integration endpoint.
-	//
-	// Example: rsyslog
 	Name *string `json:"name,omitempty"`
 
 	// Properties A key-value map of properties specific to the integration endpoint type.
+	//
+	// Examples: {"format":"rfc5424","max_message_size":8192,"port":514,"sd":"","server":"94.237.95.164","tls":false}
 	Properties *map[string]interface{} `json:"properties,omitempty"`
 
 	// Type The type of the integration endpoint.
-	//
-	// Example: rsyslog
 	Type *string `json:"type,omitempty"`
 
 	// Uuid The universally unique identifier (UUID) of the integration endpoint.
-	//
-	// Example: 123e4567-e89b-12d3-a456-426614174000
 	Uuid *openapi_types.UUID `json:"uuid,omitempty"`
 }
 
 // DatabaseIntegrationEndpointsResponse Schema for a list of integration endpoints.
+//
+// Examples: [{"name":"rsyslog","properties":{"format":"rfc5424","max_message_size":8192,"port":514,"sd":"","server":"94.237.95.164","tls":false},"type":"rsyslog","uuid":"20e86f48-2dcd-4a43-843d-3532ab112c1d"}]
 type DatabaseIntegrationEndpointsResponse = []DatabaseIntegrationEndpointResponse
 
 // DatabaseIntegrationNodeStateResponse Schema for representing the state of an integration node
+//
+// Examples: {"errors":["some error"],"likely_error_cause":null,"name":"node-1","status":"running"}
 type DatabaseIntegrationNodeStateResponse struct {
 	// Errors A list of errors encountered by the node
 	Errors *[]interface{} `json:"errors,omitempty"`
 
 	// LikelyErrorCause The likely cause of the error
+	//
+	// Examples: some error
 	LikelyErrorCause *string `json:"likely_error_cause,omitempty"`
 
 	// Name The name of the integration node
-	//
-	// Example: node-1
 	Name *string `json:"name,omitempty"`
 
 	// Status The current status of the node
-	//
-	// Example: running
 	Status *string `json:"status,omitempty"`
 }
 
 // DatabaseIntegrationUUID The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DatabaseIntegrationUUID = openapi_types.UUID
 
 // DatabaseLabelCreate Schema for creating a label with a key and value.
+//
+// Examples: {"key":"environment","value":"production"}
 type DatabaseLabelCreate struct {
 	// Key The key of a label.
+	//
+	// Examples: foo
 	Key DatabaseLabelKey `json:"key"`
 
 	// Value The value of a label.
+	//
+	// Examples: bar
 	Value DatabaseLabelValue `json:"value"`
 }
 
 // DatabaseLabelInformationResponse Schema representing a label with a key and value.
+//
+// Examples: {"key":"environment","value":"production"}
 type DatabaseLabelInformationResponse struct {
 	// Key The key of the label.
-	//
-	// Example: environment
 	Key *string `json:"key,omitempty"`
 
 	// Value The value of the label.
-	//
-	// Example: production
 	Value *string `json:"value,omitempty"`
 }
 
 // DatabaseLabelKey The key of a label.
+//
+// Examples: foo
 type DatabaseLabelKey = string
 
 // DatabaseLabelModify Schema for modifying a label with a key and/or value.
+//
+// Examples: {"key":"environment","value":"production"}
 type DatabaseLabelModify struct {
 	// Key The key of a label.
+	//
+	// Examples: foo
 	Key *DatabaseLabelKey `json:"key,omitempty"`
 
 	// Value The value of a label.
+	//
+	// Examples: bar
 	Value *DatabaseLabelValue `json:"value,omitempty"`
 }
 
 // DatabaseLabelResponse Schema for deleting a label with a key and value.
+//
+// Examples: {"key":"environment","value":"production"}
 type DatabaseLabelResponse struct {
 	// Key The key of the label to delete.
-	//
-	// Example: environment
 	Key *string `json:"key,omitempty"`
 
 	// Value The value of the label to delete.
-	//
-	// Example: production
 	Value *string `json:"value,omitempty"`
 }
 
 // DatabaseLabelValue The value of a label.
+//
+// Examples: bar
 type DatabaseLabelValue = string
 
 // DatabaseLabelsResponse Schema for a list of labels.
+//
+// Examples: [{"key":"environment","value":"production"}]
 type DatabaseLabelsResponse = []DatabaseLabelResponse
 
 // DatabaseLogEntryResponse Schema representing a log entry from an UpCloud service.
+//
+// Examples: {"hostname":"api-doc-hostname","msg":"[10-1] pid=3328089,user=postgres,db=defaultdb,app=[unknown],client=[local] LOG:  connection authorized: user=postgres database=defaultdb","service":"postgresql-13.service","time":"2022-01-21T13:07:23.687241Z"}
 type DatabaseLogEntryResponse struct {
 	// Hostname The name of the UpCloud service host where the log entry originated.
-	//
-	// Example: api-doc-hostname
 	Hostname *string `json:"hostname,omitempty"`
 
 	// Msg The log message content.
-	//
-	// Example: [10-1] pid=3328089,user=postgres,db=defaultdb,app=[unknown],client=[local] LOG:  connection authorized: user=postgres database=defaultdb
 	Msg *string `json:"msg,omitempty"`
 
 	// Service Name of the UpCloud service that generated the log entry.
-	//
-	// Example: postgresql-13.service
 	Service *string `json:"service,omitempty"`
 
 	// Time Timestamp of the log entry.
-	//
-	// Example: 2022-01-21T13:07:23.687241Z
 	Time *time.Time `json:"time,omitempty"`
 }
 
 // DatabaseLogListResponse Schema representing a paginated list of log entries from UpCloud services.
+//
+// Examples: {"first_log_offset":"123456","logs":[{"hostname":"upcloud-doc-hostname","msg":"[10-1] pid=3328089,user=postgres,db=defaultdb,app=[unknown],client=[local] LOG:  connection authorized: user=postgres database=defaultdb","service":"postgresql-13.service","time":"2022-01-21T13:07:23.687241Z"}],"offset":"123460"}
 type DatabaseLogListResponse struct {
 	// FirstLogOffset Offset of the first log entry in the list.
-	//
-	// Example: 123456
 	FirstLogOffset *string `json:"first_log_offset,omitempty"`
 
 	// Logs Array of log entries from UpCloud services.
-	//
-	// Example: [{"hostname":"upc-pg-1a2b3c4d5e","msg":"UpCloud PostgreSQL backup completed successfully","service":"upcloud-pg","time":"2024-06-12T14:23:00Z"}]
 	Logs *[]DatabaseLogEntryResponse `json:"logs,omitempty"`
 
 	// Offset Current offset for pagination.
-	//
-	// Example: 123460
 	Offset *string `json:"offset,omitempty"`
 }
 
 // DatabaseMaintenanceDow Day of the week for maintenance window
+//
+// Examples: sunday, monday, tuesday, wednesday, thursday, friday, saturday
 type DatabaseMaintenanceDow string
 
 // DatabaseMaintenancePendingUpdatesResponse Response schema for pending maintenance updates.
+//
+// Examples: {"deadline":"2022-01-21T12:21:00Z","description":"description related to the update","start_after":"2022-01-21T12:21:00Z","start_at":"2022-10-21T12:21:00Z"}
 type DatabaseMaintenancePendingUpdatesResponse struct {
 	// Deadline The deadline by which the update must be applied
-	//
-	// Example: 2022-01-21T12:21:00Z
 	Deadline *time.Time `json:"deadline,omitempty"`
 
 	// Description A description of the pending update
-	//
-	// Example: description related to the update
 	Description *string `json:"description,omitempty"`
 
 	// StartAfter The earliest time after which the update can start
-	//
-	// Example: 2022-01-21T12:21:00Z
 	StartAfter *time.Time `json:"start_after,omitempty"`
 
 	// StartAt The exact scheduled start time for the update
-	//
-	// Example: 2022-10-21T12:21:00Z
 	StartAt *time.Time `json:"start_at,omitempty"`
 }
 
 // DatabaseMaintenanceTime Time of day for maintenance window in HH:MM format
+//
+// Examples: 02:00, 14:30, 23:45
 type DatabaseMaintenanceTime = string
 
 // DatabaseMaintenanceWindowResponse Schema for a maintenance window response.
+//
+// Examples: {"dow":"Monday","pending_updates":[{"deadline":"2022-01-21T12:21:00Z","description":"description related to the update","start_after":"2022-01-21T12:21:00Z","start_at":"2022-10-21T12:21:00Z"}],"time":"2023-05-07T15:55:24.655776Z"}
 type DatabaseMaintenanceWindowResponse struct {
 	// Dow Day of the week when maintenance occurs (e.g., Monday, Tuesday).
-	//
-	// Example: Monday
 	Dow *string `json:"dow,omitempty"`
 
 	// PendingUpdates List of updates pending during this maintenance window.
 	PendingUpdates *[]DatabaseMaintenancePendingUpdatesResponse `json:"pending_updates,omitempty"`
 
 	// Time Time of day when maintenance should start (e.g., HH:MM format).
-	//
-	// Example: 2023-05-07T15:55:24.655776Z
 	Time *time.Time `json:"time,omitempty"`
 }
 
 // DatabaseMetricsColumnHeaderResponse Schema for a metrics column header response.
+//
+// Examples: {"label":"cpu_usage","type":"gauge"}
 type DatabaseMetricsColumnHeaderResponse struct {
 	// Label The label for the column header.
-	//
-	// Example: cpu_usage
 	Label *string `json:"label,omitempty"`
 
 	// Type The label for the column header.
-	//
-	// Example: gauge
 	Type *string `json:"type,omitempty"`
 }
 
 // DatabaseMetricsDataResponse Schema for metrics data response.
+//
+// Examples: {"cols":[{"label":"time","type":"date"},{"format":"float","label":"test-1 (master)","type":"number"},{"format":"float","label":"test-2 (standby)","type":"number"}],"rows":[["2022-01-21T13:10:30Z",2.744682398273781,3.054323473090861],["2022-01-21T13:11:00Z",3.0735645433218366,2.972423595745795],["2022-01-21T13:11:30Z",2.61619694060839,3.1358378052207883],["2022-01-21T13:12:00Z",3.275132296130991,4.196249043309251]]}
 type DatabaseMetricsDataResponse struct {
+	// Cols Examples: [{"label":"time","type":"date"},{"format":"float","label":"test-1 (master)","type":"number"},{"format":"float","label":"test-2 (standby)","type":"number"}]
 	Cols *[]DatabaseMetricsColumnHeaderResponse `json:"cols,omitempty"`
-	Rows *[]DatabaseMetricsRowDataResponse      `json:"rows,omitempty"`
+
+	// Rows Examples: ["2022-01-21T13:10:30Z",2.744682398273781,3.054323473090861], ["2022-01-21T13:11:00Z",3.0735645433218366,2.972423595745795], ["2022-01-21T13:11:30Z",2.61619694060839,3.1358378052207883], ["2022-01-21T13:12:00Z",3.275132296130991,4.196249043309251]
+	Rows *[]DatabaseMetricsRowDataResponse `json:"rows,omitempty"`
 }
 
 // DatabaseMetricsItemResponse Schema for a single metrics item response.
+//
+// Examples: {"cpu_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"test-1 (master)","type":"number"},{"label":"test-2 (standby)","type":"number"}],"rows":[["2022-01-21T13:10:30Z",2.744682398273781,3.054323473090861],["2022-01-21T13:11:00Z",3.0735645433218366,2.972423595745795],["2022-01-21T13:11:30Z",2.61619694060839,3.1358378052207883],["2022-01-21T13:12:00Z",3.275132296130991,4.196249043309251]]},"hints":{"title":"CPU usage %"}},"disk_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"test-1 (master)","type":"number"},{"label":"test-2 (standby)","type":"number"}],"rows":[["2022-01-21T13:10:30Z",5.654416415900109,5.58959125727556],["2022-01-21T13:11:00Z",5.654416415900109,5.58959125727556],["2022-01-21T13:11:30Z",5.654416415900109,5.58959125727556]]},"hints":{"title":"Disk space usage %"}},"diskio_reads":{"data":{"cols":[{"label":"time","type":"date"},{"label":"test-1 (master)","type":"number"},{"label":"test-2 (standby)","type":"number"}],"rows":[["2022-01-21T13:10:30Z",0,0],["2022-01-21T13:11:00Z",0,0],["2022-01-21T13:11:30Z",0,0]]},"hints":{"title":"Disk iops (reads)"}},"diskio_writes":{"data":{"cols":[{"label":"time","type":"date"},{"label":"test-1 (master)","type":"number"},{"label":"test-2 (standby)","type":"number"}],"rows":[["2022-01-21T13:10:30Z",3,2],["2022-01-21T13:11:00Z",2,3],["2022-01-21T13:11:30Z",4,3]]},"hints":{"title":"Disk iops (writes)"}},"load_average":{"data":{"cols":[{"label":"time","type":"date"},{"label":"test-1 (master)","type":"number"},{"label":"test-2 (standby)","type":"number"}],"rows":[["2022-01-21T13:10:30Z",0.11,0.11],["2022-01-21T13:11:00Z",0.14,0.1],["2022-01-21T13:11:30Z",0.14,0.09]]},"hints":{"title":"Load average (5 min)"}},"mem_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"test-1 (master)","type":"number"},{"label":"test-2 (standby)","type":"number"}],"rows":[["2022-01-21T13:10:30Z",11.491766148261078,12.318932883261219],["2022-01-21T13:11:00Z",11.511967645759277,12.304403727425075],["2022-01-21T13:11:30Z",11.488581675749048,12.272260458006759]]},"hints":{"title":"Memory usage %"}},"net_receive":{"data":{"cols":[{"label":"time","type":"date"},{"label":"test-1 (master)","type":"number"},{"label":"test-2 (standby)","type":"number"}],"rows":[["2022-01-21T13:10:30Z",442,470],["2022-01-21T13:11:00Z",439,384],["2022-01-21T13:11:30Z",466,458]]},"hints":{"title":"Network receive (bytes/s)"}},"net_send":{"data":{"cols":[{"label":"time","type":"date"},{"label":"test-1 (master)","type":"number"},{"label":"test-2 (standby)","type":"number"}],"rows":[["2022-01-21T13:10:30Z",672,581],["2022-01-21T13:11:00Z",660,555],["2022-01-21T13:11:30Z",694,573]]},"hints":{"title":"Network transmit (bytes/s)"}}}
 type DatabaseMetricsItemResponse struct {
 	// Data Schema for metrics data response.
+	//
+	// Examples: {"cols":[{"label":"time","type":"date"},{"format":"float","label":"test-1 (master)","type":"number"},{"format":"float","label":"test-2 (standby)","type":"number"}],"rows":[["2022-01-21T13:10:30Z",2.744682398273781,3.054323473090861],["2022-01-21T13:11:00Z",3.0735645433218366,2.972423595745795],["2022-01-21T13:11:30Z",2.61619694060839,3.1358378052207883],["2022-01-21T13:12:00Z",3.275132296130991,4.196249043309251]]}
 	Data *DatabaseMetricsDataResponse `json:"data,omitempty"`
 
 	// Hints Additional hints or metadata about the metric data.
 	Hints *struct {
 		// Title A human-readable title for the metric data.
+		//
+		// Examples: CPU Usage Over Time
 		Title *string `json:"title,omitempty"`
 	} `json:"hints,omitempty"`
 }
 
 // DatabaseMetricsResponse Schema for metrics response.
+//
+// Examples: {"cpu_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"test-1 (master)","type":"number"},{"label":"test-2 (standby)","type":"number"}],"rows":[["2022-01-21T13:10:30Z",2.744682398273781,3.054323473090861],["2022-01-21T13:11:00Z",3.0735645433218366,2.972423595745795],["2022-01-21T13:11:30Z",2.61619694060839,3.1358378052207883],["2022-01-21T13:12:00Z",3.275132296130991,4.196249043309251]]},"hints":{"title":"CPU usage %"}},"disk_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"test-1 (master)","type":"number"},{"label":"test-2 (standby)","type":"number"}],"rows":[["2022-01-21T13:10:30Z",5.654416415900109,5.58959125727556],["2022-01-21T13:11:00Z",5.654416415900109,5.58959125727556],["2022-01-21T13:11:30Z",5.654416415900109,5.58959125727556]]},"hints":{"title":"Disk space usage %"}},"diskio_reads":{"data":{"cols":[{"label":"time","type":"date"},{"label":"test-1 (master)","type":"number"},{"label":"test-2 (standby)","type":"number"}],"rows":[["2022-01-21T13:10:30Z",0,0],["2022-01-21T13:11:00Z",0,0],["2022-01-21T13:11:30Z",0,0]]},"hints":{"title":"Disk iops (reads)"}},"diskio_writes":{"data":{"cols":[{"label":"time","type":"date"},{"label":"test-1 (master)","type":"number"},{"label":"test-2 (standby)","type":"number"}],"rows":[["2022-01-21T13:10:30Z",3,2],["2022-01-21T13:11:00Z",2,3],["2022-01-21T13:11:30Z",4,3]]},"hints":{"title":"Disk iops (writes)"}},"load_average":{"data":{"cols":[{"label":"time","type":"date"},{"label":"test-1 (master)","type":"number"},{"label":"test-2 (standby)","type":"number"}],"rows":[["2022-01-21T13:10:30Z",0.11,0.11],["2022-01-21T13:11:00Z",0.14,0.1],["2022-01-21T13:11:30Z",0.14,0.09]]},"hints":{"title":"Load average (5 min)"}},"mem_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"test-1 (master)","type":"number"},{"label":"test-2 (standby)","type":"number"}],"rows":[["2022-01-21T13:10:30Z",11.491766148261078,12.318932883261219],["2022-01-21T13:11:00Z",11.511967645759277,12.304403727425075],["2022-01-21T13:11:30Z",11.488581675749048,12.272260458006759]]},"hints":{"title":"Memory usage %"}},"net_receive":{"data":{"cols":[{"label":"time","type":"date"},{"label":"test-1 (master)","type":"number"},{"label":"test-2 (standby)","type":"number"}],"rows":[["2022-01-21T13:10:30Z",442,470],["2022-01-21T13:11:00Z",439,384],["2022-01-21T13:11:30Z",466,458]]},"hints":{"title":"Network receive (bytes/s)"}},"net_send":{"data":{"cols":[{"label":"time","type":"date"},{"label":"test-1 (master)","type":"number"},{"label":"test-2 (standby)","type":"number"}],"rows":[["2022-01-21T13:10:30Z",672,581],["2022-01-21T13:11:00Z",660,555],["2022-01-21T13:11:30Z",694,573]]},"hints":{"title":"Network transmit (bytes/s)"}}}
 type DatabaseMetricsResponse map[string]DatabaseMetricsItemResponse
 
 // DatabaseMetricsRowDataResponse Array of objects representing a row of metrics data - can be any format.
 type DatabaseMetricsRowDataResponse = []interface{}
 
 // DatabaseMigrationStatusDetailsResponse Schema for migration status details response.
+//
+// Examples: {"dbname":"defaultdb","error":"some error occurred","method":"replication","status":"syncing"}
 type DatabaseMigrationStatusDetailsResponse struct {
 	// Dbname Name of the database
-	//
-	// Example: defaultdb
 	Dbname *string `json:"dbname,omitempty"`
 
 	// Error Error message if any
-	//
-	// Example: some error occurred
 	Error *string `json:"error,omitempty"`
 
 	// Method Migration method used
-	//
-	// Example: replication
 	Method *string `json:"method,omitempty"`
 
 	// Status Current status of the migration
-	//
-	// Example: syncing
 	Status *string `json:"status,omitempty"`
 }
 
 // DatabaseMysqlCurrentSessionResponse Schema for the current session of a MySQL service.
+//
+// Examples: {"application_name":"my-app","client_addr":"198.51.100.23","datname":"defaultdb","id":"3159","query":"SELECT 1","query_duration":125000000,"state":"active","usename":"appuser"}
 type DatabaseMysqlCurrentSessionResponse struct {
 	// ApplicationName Name of the application that is connected to this service.
-	//
-	// Example: my-app
 	ApplicationName *string `json:"application_name,omitempty"`
 
 	// ClientAddr IP address of the client connected to this service.
-	//
-	// Example: 198.51.100.23
 	ClientAddr *string `json:"client_addr,omitempty"`
 
 	// Datname Name of the database this service is connected to.
-	//
-	// Example: defaultdb
 	Datname *string `json:"datname,omitempty"`
 
 	// Id Process ID of this service.
-	//
-	// Example: 3159
 	Id *string `json:"id,omitempty"`
 
 	// Query Text of this service's most recent query. If state is active this shows the currently executing query; otherwise an empty string.
-	//
-	// Example: SELECT 1
 	Query *string `json:"query,omitempty"`
 
 	// QueryDuration The active query’s current duration, serialized as nanoseconds.
-	//
-	// Example: 125000000
 	QueryDuration *int64 `json:"query_duration,omitempty"`
 
 	// State Current overall state of this service. Allowed values include: active (executing a query) and idle (waiting for a new client command).
-	//
-	// Example: active
 	State *string `json:"state,omitempty"`
 
 	// Usename Name of the user logged into this service.
-	//
-	// Example: appuser
 	Usename *string `json:"usename,omitempty"`
 }
 
 // DatabaseNetworkCreate Schema for creating a network.
+//
+// Examples: {"family":"IPv4","name":"my-network","type":"public"}, {"family":"IPv4","name":"my-network","type":"public","uuid":"123e4567-e89b-12d3-a456-426614174000"}
 type DatabaseNetworkCreate struct {
 	// Family The network protocol family.
+	//
+	// Examples: IPv4, IPv6
 	Family DatabaseNetworkFamily `json:"family"`
 
 	// Name The name of the network.
+	//
+	// Examples: private-network, public-network
 	Name DatabaseNetworkName `json:"name"`
 
 	// Type The type of network.
+	//
+	// Examples: private
 	Type DatabaseNetworkType `json:"type"`
 
 	// Uuid Optional UUID for the network. If not provided, a new UUID will be generated.
+	//
+	// Examples: 123e4567-e89b-12d3-a456-426614174000
 	Uuid *openapi_types.UUID `json:"uuid,omitempty"`
 }
 
 // DatabaseNetworkFamily The network protocol family.
+//
+// Examples: IPv4, IPv6
 type DatabaseNetworkFamily string
 
 // DatabaseNetworkInformationDetailsResponse Schema for network information response details
+//
+// Examples: {"create_time":"2025-08-01T10:40:04.140473Z","family":"IPv4","name":"example-private-network","type":"private","update_time":"2025-08-01T10:40:04.140473Z","uuid":"123e4567-e89b-12d3-a456-426614174000"}
 type DatabaseNetworkInformationDetailsResponse struct {
 	// CreateTime Timestamp when the network was created
-	//
-	// Example: 2025-08-01T10:40:04.140473Z
 	CreateTime *time.Time `json:"create_time,omitempty"`
 
 	// Family Address family (e.g., IPv4, IPv6)
+	//
+	// Examples: IPv4, IPv6
 	Family *DatabaseNetworkInformationDetailsResponseFamily `json:"family,omitempty"`
 
 	// Name Name of the network
-	//
-	// Example: example-private-network
 	Name *string `json:"name,omitempty"`
 
 	// Type Type of network (e.g., private, public)
+	//
+	// Examples: private, public
 	Type *DatabaseNetworkInformationDetailsResponseType `json:"type,omitempty"`
 
 	// UpdateTime Timestamp when the network was last updated
-	//
-	// Example: 2025-08-01T10:40:04.140473Z
 	UpdateTime *time.Time `json:"update_time,omitempty"`
 
 	// Uuid Unique identifier for the network
-	//
-	// Example: 123e4567-e89b-12d3-a456-426614174000
 	Uuid *openapi_types.UUID `json:"uuid,omitempty"`
 }
 
 // DatabaseNetworkInformationDetailsResponseFamily Address family (e.g., IPv4, IPv6)
+//
+// Examples: IPv4, IPv6
 type DatabaseNetworkInformationDetailsResponseFamily string
 
 // DatabaseNetworkInformationDetailsResponseType Type of network (e.g., private, public)
+//
+// Examples: private, public
 type DatabaseNetworkInformationDetailsResponseType string
 
 // DatabaseNetworkName The name of the network.
+//
+// Examples: private-network, public-network
 type DatabaseNetworkName = string
 
 // DatabaseNetworkType The type of network.
+//
+// Examples: private
 type DatabaseNetworkType string
 
 // DatabaseNetworksInformationResponse Schema for networks information response
 type DatabaseNetworksInformationResponse = []DatabaseNetworkInformationDetailsResponse
 
 // DatabaseNodeProgressUpdateResponse Schema for node progress update response.
+//
+// Examples: {"completed":false,"current":45,"max":100,"min":0,"phase":"prepare","unit":"bytes_uncompressed"}
 type DatabaseNodeProgressUpdateResponse struct {
 	// Completed Indicates whether the progress is fully completed.
-	//
-	// Example: false
 	Completed *bool `json:"completed,omitempty"`
 
 	// Current The current progress value.
-	//
-	// Example: 45
 	Current *int32 `json:"current,omitempty"`
 
 	// Max The maximum value for the progress range.
-	//
-	// Example: 100
 	Max *int32 `json:"max,omitempty"`
 
 	// Min The minimum value for the progress range.
-	//
-	// Example: 0
 	Min *int32 `json:"min,omitempty"`
 
 	// Phase The current node progress.
-	//
-	// Example: prepare
 	Phase *string `json:"phase,omitempty"`
 
 	// Unit The unit of measurement for the progress values (e.g., percent, MB).
-	//
-	// Example: bytes_uncompressed
 	Unit *string `json:"unit,omitempty"`
 }
 
@@ -2100,355 +2089,257 @@ type DatabaseNodeProgressUpdateResponse struct {
 type DatabaseNodeProgressUpdatesResponse = []DatabaseNodeProgressUpdateResponse
 
 // DatabaseNodeStateResponse Schema for the state of a node in a service.
+//
+// Examples: {"name":"node-1","progress_updates":[{"completed":false,"current":45,"max":100,"min":0,"phase":"prepare","unit":"bytes_uncompressed"}],"role":"master","state":"running"}
 type DatabaseNodeStateResponse struct {
 	// Name Name of the node.
-	//
-	// Example: node-1
 	Name *string `json:"name,omitempty"`
 
 	// ProgressUpdates Response schema for node progress updates
 	ProgressUpdates *DatabaseNodeProgressUpdatesResponse `json:"progress_updates,omitempty"`
 
 	// Role Role of the node in the service.
-	//
-	// Example: master
 	Role *string `json:"role,omitempty"`
 
 	// State Current state of the node.
-	//
-	// Example: running
 	State *string `json:"state,omitempty"`
 }
 
 // DatabaseOpenSearchAccessControlResponse Schema for OpenSearch access control response.
+//
+// Examples: {"rules":[{"index":"log-*","permission":"read"}]}
 type DatabaseOpenSearchAccessControlResponse struct {
 	Rules *[]DatabaseOpenSearchAccessControlRuleResponse `json:"rules,omitempty"`
 }
 
 // DatabaseOpenSearchAccessControlRuleResponse Schema for OpenSearch access control rule response.
+//
+// Examples: {"index":"log-*","permission":"read"}
 type DatabaseOpenSearchAccessControlRuleResponse struct {
 	// Index Index name or pattern (e.g., 'log-*' for all indices starting with 'log-')
-	//
-	// Example: log-*
 	Index *string `json:"index,omitempty"`
 
 	// Permission Permission level for the specified index
-	//
-	// Example: read
 	Permission *string `json:"permission,omitempty"`
 }
 
 // DatabaseOpenSearchSecurityPluginStatusResponse OpenSearch security plugin status response
+//
+// Examples: {"security_plugin_admin_enabled":true,"security_plugin_available":true,"security_plugin_enabled":true}
 type DatabaseOpenSearchSecurityPluginStatusResponse struct {
 	// SecurityPluginAdminEnabled Indicates if the security plugin admin is enabled
-	//
-	// Example: true
 	SecurityPluginAdminEnabled *bool `json:"security_plugin_admin_enabled,omitempty"`
 
 	// SecurityPluginAvailable Indicates if the security plugin is available
-	//
-	// Example: true
 	SecurityPluginAvailable *bool `json:"security_plugin_available,omitempty"`
 
 	// SecurityPluginEnabled Indicates if the security plugin is enabled
-	//
-	// Example: true
 	SecurityPluginEnabled *bool `json:"security_plugin_enabled,omitempty"`
 }
 
 // DatabasePGAvailableExtensionsResponse Response schema for listing available PostgreSQL extensions grouped by version
+//
+// Examples: [{"extensions":[{"default_version":"1.12","name":"pg_stat_statements","versions":["1.10","1.11","1.12"]},{"default_version":"3.4.0","name":"postgis","versions":["3.3.0","3.4.0"]}],"version":"16"},{"extensions":[{"default_version":"1.10","name":"pg_stat_statements","versions":["1.9","1.10"]},{"default_version":"3.3.0","name":"postgis","versions":["3.2.0","3.3.0"]}],"version":"15"}]
 type DatabasePGAvailableExtensionsResponse = []struct {
 	// Extensions List of available extensions for this PostgreSQL version
 	Extensions []struct {
 		// DefaultVersion The default version of the extension
-		//
-		// Example: 1.12
 		DefaultVersion string `json:"default_version"`
 
 		// Name The name of the PostgreSQL extension
-		//
-		// Example: pg_stat_statements
 		Name string `json:"name"`
 
 		// Versions List of available versions for this extension
-		//
-		// Example: ["1.10","1.11","1.12"]
 		Versions []string `json:"versions"`
 	} `json:"extensions"`
 
 	// Version The PostgreSQL major version
-	//
-	// Example: 16
 	Version string `json:"version"`
 }
 
 // DatabasePeeringStatusResponse Schema for peering status response.
+//
+// Examples: {"create_time":"2023-10-05T14:48:00.000Z","network_peer":"03196597-b972-4815-ba3a-85bb18365ced","state":"active","state_info":"The peering is in active state.","update_time":"2023-10-05T14:48:00.000Z"}
 type DatabasePeeringStatusResponse struct {
 	// CreateTime The time when the peering status was created.
-	//
-	// Example: 2023-10-05T14:48:00.000Z
 	CreateTime *time.Time `json:"create_time,omitempty"`
 
 	// NetworkPeer The UUID of the network peer.
-	//
-	// Example: 03196597-b972-4815-ba3a-85bb18365ced
 	NetworkPeer *openapi_types.UUID `json:"network_peer,omitempty"`
 
 	// State The current state of the peering connection.
-	//
-	// Example: active
 	State *string `json:"state,omitempty"`
 
 	// StateInfo Additional information about the current state of the peering connection.
-	//
-	// Example: The peering is in active state.
 	StateInfo *string `json:"state_info,omitempty"`
 
 	// UpdateTime The time when the peering status was last updated.
-	//
-	// Example: 2023-10-05T14:48:00.000Z
 	UpdateTime *time.Time `json:"update_time,omitempty"`
 }
 
 // DatabasePgAccessControlResponse Schema for PostgreSQL access control response.
+//
+// Examples: {"allow_replication":true}
 type DatabasePgAccessControlResponse struct {
 	// AllowReplication If true, allows replication connections.
-	//
-	// Example: false
 	AllowReplication *bool `json:"allow_replication,omitempty"`
 }
 
 // DatabasePgCurrentSessionResponse Schema for PostgreSQL current session response.
+//
+// Examples: {"application_name":"client 1.5.14","backend_start":"2025-09-21T12:34:56Z","backend_type":"client backend","backend_xid":742,"backend_xmin":731,"client_addr":"198.51.100.42","client_hostname":"app-host.example.internal","client_port":52344,"datid":16384,"datname":"defaultdb","id":"3328089","query":"SELECT name, setting FROM pg_settings WHERE source = $1","query_duration":"00:00:01.234","query_start":"2025-09-21T12:35:10Z","state":"active","state_change":"2025-09-21T12:35:10Z","usename":"upadmin","usesysid":10,"wait_event":"ClientRead","wait_event_type":"Client","xact_start":"2025-09-21T12:35:05Z"}
 type DatabasePgCurrentSessionResponse struct {
 	// ApplicationName Name of the application that is connected to this service.
-	//
-	// Example: client 1.5.14
 	ApplicationName *string `json:"application_name,omitempty"`
 
 	// BackendStart Time when this process was started (when the client connected).
-	//
-	// Example: 2025-09-21T12:34:56Z
 	BackendStart *time.Time `json:"backend_start,omitempty"`
 
 	// BackendType Type of current service (e.g., client backend).
-	//
-	// Example: client backend
 	BackendType *string `json:"backend_type,omitempty"`
 
 	// BackendXid Top-level transaction identifier of this service, if any.
-	//
-	// Example: 742
 	BackendXid *int32 `json:"backend_xid,omitempty"`
 
 	// BackendXmin The current service's xmin horizon.
-	//
-	// Example: 731
 	BackendXmin *int32 `json:"backend_xmin,omitempty"`
 
 	// ClientAddr IP address of the connected client.
-	//
-	// Example: 198.51.100.42
 	ClientAddr *string `json:"client_addr,omitempty"`
 
 	// ClientHostname Hostname of the connected client (reverse DNS of client_addr).
-	//
-	// Example: app-host.example.internal
 	ClientHostname *string `json:"client_hostname,omitempty"`
 
 	// ClientPort TCP port number used by the client, or -1 if a Unix socket is used.
-	//
-	// Example: 52344
 	ClientPort *int32 `json:"client_port,omitempty"`
 
 	// Datid OID of the database this service is connected to.
-	//
-	// Example: 16384
 	Datid *int32 `json:"datid,omitempty"`
 
 	// Datname Name of the database this service is connected to.
-	//
-	// Example: defaultdb
 	Datname *string `json:"datname,omitempty"`
 
 	// Id Process ID of this service.
-	//
-	// Example: 3328089
 	Id *string `json:"id,omitempty"`
 
 	// Query Most recent query. If state is active, this is the currently executing query.
-	//
-	// Example: SELECT name, setting FROM pg_settings WHERE source = $1
 	Query *string `json:"query,omitempty"`
 
 	// QueryDuration The active query's current duration (as a string).
-	//
-	// Example: 00:00:01.234
 	QueryDuration *string `json:"query_duration,omitempty"`
 
 	// QueryStart Time when the currently active (or last) query started.
-	//
-	// Example: 2025-09-21T12:35:10Z
 	QueryStart *time.Time `json:"query_start,omitempty"`
 
 	// State Overall state of this service (e.g., 'active' or 'idle').
-	//
-	// Example: active
 	State *string `json:"state,omitempty"`
 
 	// StateChange Time when the state was last changed.
-	//
-	// Example: 2025-09-21T12:35:10Z
 	StateChange *time.Time `json:"state_change,omitempty"`
 
 	// Usename Name of the user logged into this service.
-	//
-	// Example: upadmin
 	Usename *string `json:"usename,omitempty"`
 
 	// Usesysid OID of the user logged into this service.
-	//
-	// Example: 10
 	Usesysid *int32 `json:"usesysid,omitempty"`
 
 	// WaitEvent Wait event name if the service is currently waiting.
-	//
-	// Example: ClientRead
 	WaitEvent *string `json:"wait_event,omitempty"`
 
 	// WaitEventType Type of event for which the service is waiting (if any).
-	//
-	// Example: Client
 	WaitEventType *string `json:"wait_event_type,omitempty"`
 
 	// XactStart Time when the current transaction started.
-	//
-	// Example: 2025-09-21T12:35:05Z
 	XactStart *time.Time `json:"xact_start,omitempty"`
 }
 
 // DatabasePlanComponentsResponse Structured breakdown of a service plan into compute, storage and backups components. Sizes are expressed in GB to match plan naming; the classic MB/MiB fields on the plan object are unchanged.
+//
+// Examples: {"backups":{"name":"regular","retention_days":15},"compute":{"cpu":4,"family":"standard","memory_gb":8,"node_count":2},"storage":{"dynamic_storage_supported":true,"included_gib":100}}
 type DatabasePlanComponentsResponse struct {
 	// Backups Backup characteristics of the plan
 	Backups *struct {
 		// Frequent Frequent backup window, OpenSearch only
 		Frequent *struct {
-			// IntervalMinutes Example: 60
 			IntervalMinutes *int32 `json:"interval_minutes,omitempty"`
-
-			// RetentionDays Example: 1
-			RetentionDays *int32 `json:"retention_days,omitempty"`
+			RetentionDays   *int32 `json:"retention_days,omitempty"`
 		} `json:"frequent,omitempty"`
 
 		// Infrequent Infrequent backup window, OpenSearch only
 		Infrequent *struct {
-			// IntervalMinutes Example: 1440
 			IntervalMinutes *int32 `json:"interval_minutes,omitempty"`
-
-			// RetentionDays Example: 14
-			RetentionDays *int32 `json:"retention_days,omitempty"`
+			RetentionDays   *int32 `json:"retention_days,omitempty"`
 		} `json:"infrequent,omitempty"`
 
 		// Name Backup tier name for tiered plans. Omitted when the plan retention does not map to a named tier.
-		//
-		// Example: standard
 		Name *DatabasePlanComponentsResponseBackupsName `json:"name,omitempty"`
 
 		// RetentionDays Backup retention in days
-		//
-		// Example: 15
 		RetentionDays *int32 `json:"retention_days,omitempty"`
 	} `json:"backups,omitempty"`
 
 	// Compute Compute resources per service
 	Compute *struct {
 		// Cpu CPU cores per node
-		//
-		// Example: 4
 		Cpu *int32 `json:"cpu,omitempty"`
 
 		// Family Compute family for tiered plans. Omitted for classic plans.
-		//
-		// Example: standard
 		Family *DatabasePlanComponentsResponseComputeFamily `json:"family,omitempty"`
 
 		// MemoryGb Memory per node in GB
-		//
-		// Example: 8
 		MemoryGb *int32 `json:"memory_gb,omitempty"`
 
 		// Name Compute shape name usable as plan_compute in requests.
+		//
+		// Examples: rdb.standard.2CPU-8GB
 		Name *string `json:"name,omitempty"`
 
 		// NodeCount Number of nodes
-		//
-		// Example: 2
 		NodeCount *int32 `json:"node_count,omitempty"`
 	} `json:"compute,omitempty"`
 
 	// Storage Storage included in the plan. Omitted for service types without persistent storage.
 	Storage *struct {
 		// AdditionalGib Extra dynamic storage configured on the service, in GB. Only present on legacy (non-tiered) service responses; tiered plans present total_gib instead.
-		//
-		// Example: 40
 		AdditionalGib *int32 `json:"additional_gib,omitempty"`
 
 		// DynamicStorageSupported Whether the storage total can be adjusted on top of the plan's included storage.
-		//
-		// Example: true
 		DynamicStorageSupported *bool `json:"dynamic_storage_supported,omitempty"`
 
 		// IncludedGib Storage included in the plan per node, in GB. Omitted for tiered (rdb.*) plans, which present storage as a single total_gib.
-		//
-		// Example: 100
 		IncludedGib *int32 `json:"included_gib,omitempty"`
 
 		// TotalGib Total storage, in GB. For tiered (rdb.*) plans this is the single storage number: the plan's base storage in the catalog, or the chosen total (included plus dynamic) on a service response. Omitted for legacy catalog plans.
-		//
-		// Example: 140
 		TotalGib *int32 `json:"total_gib,omitempty"`
 	} `json:"storage,omitempty"`
 }
 
 // DatabasePlanComponentsResponseBackupsName Backup tier name for tiered plans. Omitted when the plan retention does not map to a named tier.
-//
-// Example: standard
 type DatabasePlanComponentsResponseBackupsName string
 
 // DatabasePlanComponentsResponseComputeFamily Compute family for tiered plans. Omitted for classic plans.
-//
-// Example: standard
 type DatabasePlanComponentsResponseComputeFamily string
 
 // DatabaseProjectAlertResponse Schema for a project alert response
+//
+// Examples: {"create_time":"2025-08-01T10:40:04.140473Z","event":"pg-disk-full","service_type":"pg","severity":"critical","title":"pg-1x2xcpu-2","uuid":"123e4567-e89b-12d3-a456-426614174000"}
 type DatabaseProjectAlertResponse struct {
 	// CreateTime Timestamp when the alert was created
-	//
-	// Example: 2025-08-01T10:40:04.140473Z
 	CreateTime *time.Time `json:"create_time,omitempty"`
 
 	// Event Event type for the alert
-	//
-	// Example: pg-disk-full
 	Event *string `json:"event,omitempty"`
 
 	// ServiceType Service type related to the alert
-	//
-	// Example: pg
 	ServiceType *string `json:"service_type,omitempty"`
 
 	// Severity Severity of the alert
-	//
-	// Example: critical
 	Severity *string `json:"severity,omitempty"`
 
 	// Title Optional title of the alert
-	//
-	// Example: pg-1x2xcpu-2
 	Title *string `json:"title,omitempty"`
 
 	// Uuid Unique identifier for the alert
-	//
-	// Example: 123e4567-e89b-12d3-a456-426614174000
 	Uuid *openapi_types.UUID `json:"uuid,omitempty"`
 }
 
@@ -2458,550 +2349,385 @@ type DatabaseProjectAlertsResponse = []DatabaseProjectAlertResponse
 // DatabasePropertySchemaResponse Schema definition for a single property
 type DatabasePropertySchemaResponse struct {
 	// Id Schema identifier
-	//
-	// Example: sample-id
 	Id *string `json:"$id,omitempty"`
 
 	// Schema JSON Schema URI
-	//
-	// Example: https://json-schema.org/draft/2020-12/schema
 	Schema *string `json:"$schema,omitempty"`
 
 	// AdditionalProperties Whether additional properties are allowed
+	//
+	// Examples: true, false
 	AdditionalProperties *bool `json:"additionalProperties,omitempty"`
 
 	// CreateOnly Whether the property can only be set during creation
-	//
-	// Example: false
 	CreateOnly *bool `json:"createOnly,omitempty"`
 
 	// Default Any valid JSON value is allowed here
-	//
-	// Example: {"foo":"bar"}
 	Default *map[string]interface{} `json:"default,omitempty"`
 
 	// Dependencies Property dependency collection
-	//
-	// Example: {"required":["host","port"]}
 	Dependencies *map[string]DatabaseDependencyResponse `json:"dependencies,omitempty"`
 
 	// Description Description of the property
-	//
-	// Example: This is a sample property used for demonstration purposes.
 	Description *string `json:"description,omitempty"`
 
 	// Enum Enumeration of allowed values
 	Enum *[]interface{} `json:"enum,omitempty"`
 
 	// Example Any valid JSON value is allowed here
-	//
-	// Example: {"foo":"bar"}
 	Example *map[string]interface{} `json:"example,omitempty"`
 
 	// Items Schema definition for a single property
 	Items *DatabasePropertySchemaResponse `json:"items,omitempty"`
 
 	// MaxItems Maximum number of items for arrays
-	//
-	// Example: 10
 	MaxItems *int32 `json:"maxItems,omitempty"`
 
 	// MaxLength Maximum length for the property schema
-	//
-	// Example: 255
 	MaxLength *int32 `json:"maxLength,omitempty"`
 
 	// Maximum Maximum values for numeric properties
-	//
-	// Example: [1,0]
 	Maximum *[]map[string]interface{} `json:"maximum,omitempty"`
 
 	// MinLength Minimum length for the property schema
-	//
-	// Example: 255
 	MinLength *int32 `json:"minLength,omitempty"`
 
 	// Minimum Minimum values for numeric properties
 	Minimum *[]map[string]interface{} `json:"minimum,omitempty"`
 
 	// Pattern Allowed patterns for the property
-	//
-	// Example: ^[a-zA-Z0-9_./:-]+(\[[^\]]+\])?$
 	Pattern *string `json:"pattern,omitempty"`
 
 	// Properties Properties for object type
+	//
+	// Examples: {"foobar":[{"title":"property schema title"}]}
 	Properties *map[string]DatabasePropertySchemaResponse `json:"properties,omitempty"`
 
 	// Required List of required properties
-	//
-	// Example: ["host","port"]
 	Required *[]string `json:"required,omitempty"`
 
 	// Title Human-readable title for the property
-	//
-	// Example: Sample Property
 	Title *string `json:"title,omitempty"`
 
 	// Type Data type of the property
-	//
-	// Example: any string
 	Type *string `json:"type,omitempty"`
 
 	// UserError User-friendly error message
-	//
-	// Example: Invalid input provided
 	UserError *string `json:"user_error,omitempty"`
 }
 
 // DatabaseQueryParamLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
+//
+// Examples: 10, 25, 50, 100
 type DatabaseQueryParamLimit = int
 
 // DatabaseQueryParamOffset Schema for a query parameter specifying the offset for pagination.
+//
+// Examples: 0, 10, 20, 50
 type DatabaseQueryParamOffset = int
 
 // DatabaseQueryParamOrder Schema for a query parameter specifying the order.
+//
+// Examples: asc, desc
 type DatabaseQueryParamOrder = string
 
 // DatabaseQueryParamSort Schema for a query parameter specifying the sort field and direction. Prefix with '-' for descending order.
+//
+// Examples: -created_at, name, -zone
 type DatabaseQueryParamSort string
 
 // DatabaseQueryStatisticsMysqlResponse Schema for MySQL query statistics response.
+//
+// Examples: {"avg_timer_wait":12345,"count_star":100,"digest":"abc123def456","digest_text":"SELECT * FROM users WHERE id = ?","first_seen":"2024-06-01T12:00:00Z","last_seen":"2024-06-10T15:30:00Z","max_timer_wait":54321,"min_timer_wait":100,"quantile_95":20000,"quantile_99":30000,"quantile_999":40000,"query_sample_seen":"2024-06-05T10:00:00Z","query_sample_text":"SELECT * FROM users WHERE id = 1","query_sample_timer_wait":15000,"schema_name":"my_database","sum_created_tmp_disk_tables":2,"sum_created_tmp_tables":5,"sum_errors":0,"sum_lock_time":1000,"sum_no_good_index_used":1,"sum_no_index_used":3,"sum_rows_affected":10,"sum_rows_examined":1000,"sum_rows_sent":500,"sum_select_full_join":0,"sum_select_full_range_join":0,"sum_select_range":2,"sum_select_range_check":0,"sum_select_scan":4,"sum_sort_merge_passes":1,"sum_sort_range":2,"sum_sort_rows":100,"sum_sort_scan":3,"sum_timer_wait":20000,"sum_warnings":0}
 type DatabaseQueryStatisticsMysqlResponse struct {
 	// AvgTimerWait Average wait time for the query.
-	//
-	// Example: 12345
 	AvgTimerWait *int32 `json:"avg_timer_wait,omitempty"`
 
 	// CountStar Total number of times the query was executed.
-	//
-	// Example: 100
 	CountStar *int32 `json:"count_star,omitempty"`
 
 	// Digest Query digest hash.
-	//
-	// Example: abc123def456
 	Digest *string `json:"digest,omitempty"`
 
 	// DigestText Normalized query text.
-	//
-	// Example: SELECT * FROM users WHERE id = ?
 	DigestText *string `json:"digest_text,omitempty"`
 
 	// FirstSeen Timestamp when the query was first seen.
-	//
-	// Example: 2024-06-01T12:00:00Z
 	FirstSeen *time.Time `json:"first_seen,omitempty"`
 
 	// LastSeen Timestamp when the query was last seen.
-	//
-	// Example: 2024-06-10T15:30:00Z
 	LastSeen *time.Time `json:"last_seen,omitempty"`
 
 	// MaxTimerWait Maximum wait time for the query.
-	//
-	// Example: 54321
 	MaxTimerWait *int32 `json:"max_timer_wait,omitempty"`
 
 	// MinTimerWait Minimum wait time for the query.
-	//
-	// Example: 100
 	MinTimerWait *int32 `json:"min_timer_wait,omitempty"`
 
 	// Quantile95 95th percentile wait time.
-	//
-	// Example: 20000
 	Quantile95 *int32 `json:"quantile_95,omitempty"`
 
 	// Quantile99 99th percentile wait time.
-	//
-	// Example: 30000
 	Quantile99 *int32 `json:"quantile_99,omitempty"`
 
 	// Quantile999 99.9th percentile wait time.
-	//
-	// Example: 40000
 	Quantile999 *int32 `json:"quantile_999,omitempty"`
 
 	// QuerySampleSeen Timestamp when the sample query was seen.
-	//
-	// Example: 2024-06-05T10:00:00Z
 	QuerySampleSeen *time.Time `json:"query_sample_seen,omitempty"`
 
 	// QuerySampleText Sample query text.
-	//
-	// Example: SELECT * FROM users WHERE id = 1
 	QuerySampleText *string `json:"query_sample_text,omitempty"`
 
 	// QuerySampleTimerWait Wait time for the sample query.
-	//
-	// Example: 15000
 	QuerySampleTimerWait *int32 `json:"query_sample_timer_wait,omitempty"`
 
 	// SchemaName Name of the database schema.
-	//
-	// Example: my_database
 	SchemaName *string `json:"schema_name,omitempty"`
 
 	// SumCreatedTmpDiskTables Total number of temporary disk tables created.
-	//
-	// Example: 2
 	SumCreatedTmpDiskTables *int32 `json:"sum_created_tmp_disk_tables,omitempty"`
 
 	// SumCreatedTmpTables Total number of temporary tables created.
-	//
-	// Example: 5
 	SumCreatedTmpTables *int32 `json:"sum_created_tmp_tables,omitempty"`
 
 	// SumErrors Total number of errors encountered.
-	//
-	// Example: 0
 	SumErrors *int32 `json:"sum_errors,omitempty"`
 
 	// SumLockTime Total lock time for the query.
-	//
-	// Example: 1000
 	SumLockTime *int32 `json:"sum_lock_time,omitempty"`
 
 	// SumNoGoodIndexUsed Total number of times no good index was used.
-	//
-	// Example: 1
 	SumNoGoodIndexUsed *int32 `json:"sum_no_good_index_used,omitempty"`
 
 	// SumNoIndexUsed Total number of times no index was used.
-	//
-	// Example: 3
 	SumNoIndexUsed *int32 `json:"sum_no_index_used,omitempty"`
 
 	// SumRowsAffected Total number of rows affected.
-	//
-	// Example: 10
 	SumRowsAffected *int32 `json:"sum_rows_affected,omitempty"`
 
 	// SumRowsExamined Total number of rows examined.
-	//
-	// Example: 1000
 	SumRowsExamined *int32 `json:"sum_rows_examined,omitempty"`
 
 	// SumRowsSent Total number of rows sent.
-	//
-	// Example: 500
 	SumRowsSent *int32 `json:"sum_rows_sent,omitempty"`
 
 	// SumSelectFullJoin Total number of full joins performed.
-	//
-	// Example: 0
 	SumSelectFullJoin *int32 `json:"sum_select_full_join,omitempty"`
 
 	// SumSelectFullRangeJoin Total number of full range joins performed.
-	//
-	// Example: 0
 	SumSelectFullRangeJoin *int32 `json:"sum_select_full_range_join,omitempty"`
 
 	// SumSelectRange Total number of range selects performed.
-	//
-	// Example: 2
 	SumSelectRange *int32 `json:"sum_select_range,omitempty"`
 
 	// SumSelectRangeCheck Total number of range checks performed.
-	//
-	// Example: 0
 	SumSelectRangeCheck *int32 `json:"sum_select_range_check,omitempty"`
 
 	// SumSelectScan Total number of select scans performed.
-	//
-	// Example: 4
 	SumSelectScan *int32 `json:"sum_select_scan,omitempty"`
 
 	// SumSortMergePasses Total number of sort merge passes.
-	//
-	// Example: 1
 	SumSortMergePasses *int32 `json:"sum_sort_merge_passes,omitempty"`
 
 	// SumSortRange Total number of sort range operations.
-	//
-	// Example: 2
 	SumSortRange *int32 `json:"sum_sort_range,omitempty"`
 
 	// SumSortRows Total number of rows sorted.
-	//
-	// Example: 100
 	SumSortRows *int32 `json:"sum_sort_rows,omitempty"`
 
 	// SumSortScan Total number of sort scans performed.
-	//
-	// Example: 3
 	SumSortScan *int32 `json:"sum_sort_scan,omitempty"`
 
 	// SumTimerWait Total wait time for the query.
-	//
-	// Example: 20000
 	SumTimerWait *int32 `json:"sum_timer_wait,omitempty"`
 
 	// SumWarnings Total number of warnings generated.
-	//
-	// Example: 0
 	SumWarnings *int32 `json:"sum_warnings,omitempty"`
 }
 
 // DatabaseQueryStatisticsPgResponse Schema for PostgreSQL query statistics response.
+//
+// Examples: {"blk_read_time":120,"blk_write_time":45,"calls":10,"database_name":"mydb","local_blks_dirtied":2,"local_blks_hit":100,"local_blks_read":5,"local_blks_written":3,"max_time":300,"mean_time":150,"min_time":100,"query":"SELECT * FROM users WHERE id = 1","rows":20,"shared_blks_dirtied":4,"shared_blks_hit":200,"shared_blks_read":8,"shared_blks_written":6,"stddev_time":20,"temp_blks_read":1,"temp_blks_written":1,"total_time":1500,"user_name":"postgres"}
 type DatabaseQueryStatisticsPgResponse struct {
 	// BlkReadTime Time spent reading data blocks, in milliseconds.
-	//
-	// Example: 120
 	BlkReadTime *int32 `json:"blk_read_time,omitempty"`
 
 	// BlkWriteTime Time spent writing data blocks, in milliseconds.
-	//
-	// Example: 45
 	BlkWriteTime *int32 `json:"blk_write_time,omitempty"`
 
 	// Calls Number of times the query was executed.
-	//
-	// Example: 10
 	Calls *int32 `json:"calls,omitempty"`
 
 	// DatabaseName Name of the database.
-	//
-	// Example: mydb
 	DatabaseName *string `json:"database_name,omitempty"`
 
 	// LocalBlksDirtied Number of local blocks dirtied.
-	//
-	// Example: 2
 	LocalBlksDirtied *int32 `json:"local_blks_dirtied,omitempty"`
 
 	// LocalBlksHit Number of local block cache hits.
-	//
-	// Example: 100
 	LocalBlksHit *int32 `json:"local_blks_hit,omitempty"`
 
 	// LocalBlksRead Number of local blocks read.
-	//
-	// Example: 5
 	LocalBlksRead *int32 `json:"local_blks_read,omitempty"`
 
 	// LocalBlksWritten Number of local blocks written.
-	//
-	// Example: 3
 	LocalBlksWritten *int32 `json:"local_blks_written,omitempty"`
 
 	// MaxTime Maximum execution time, in milliseconds.
-	//
-	// Example: 300
 	MaxTime *int32 `json:"max_time,omitempty"`
 
 	// MeanTime Mean execution time, in milliseconds.
-	//
-	// Example: 150
 	MeanTime *int32 `json:"mean_time,omitempty"`
 
 	// MinTime Minimum execution time, in milliseconds.
-	//
-	// Example: 100
 	MinTime *int32 `json:"min_time,omitempty"`
 
 	// Query The SQL query text.
-	//
-	// Example: SELECT * FROM users WHERE id = 1
 	Query *string `json:"query,omitempty"`
 
 	// Rows Total number of rows returned or affected.
-	//
-	// Example: 20
 	Rows *int32 `json:"rows,omitempty"`
 
 	// SharedBlksDirtied Number of shared blocks dirtied.
-	//
-	// Example: 4
 	SharedBlksDirtied *int32 `json:"shared_blks_dirtied,omitempty"`
 
 	// SharedBlksHit Number of shared block cache hits.
-	//
-	// Example: 200
 	SharedBlksHit *int32 `json:"shared_blks_hit,omitempty"`
 
 	// SharedBlksRead Number of shared blocks read.
-	//
-	// Example: 8
 	SharedBlksRead *int32 `json:"shared_blks_read,omitempty"`
 
 	// SharedBlksWritten Number of shared blocks written.
-	//
-	// Example: 6
 	SharedBlksWritten *int32 `json:"shared_blks_written,omitempty"`
 
 	// StddevTime Standard deviation of execution time, in milliseconds.
-	//
-	// Example: 20
 	StddevTime *int32 `json:"stddev_time,omitempty"`
 
 	// TempBlksRead Number of temporary blocks read.
-	//
-	// Example: 1
 	TempBlksRead *int32 `json:"temp_blks_read,omitempty"`
 
 	// TempBlksWritten Number of temporary blocks written.
-	//
-	// Example: 1
 	TempBlksWritten *int32 `json:"temp_blks_written,omitempty"`
 
 	// TotalTime Total execution time, in milliseconds.
-	//
-	// Example: 1500
 	TotalTime *int32 `json:"total_time,omitempty"`
 
 	// UserName Name of the user who executed the query.
-	//
-	// Example: postgres
 	UserName *string `json:"user_name,omitempty"`
 }
 
 // DatabaseQueryStatisticsResponse Schema for query statistics response.
 type DatabaseQueryStatisticsResponse struct {
+	// Mysql Examples: [{"avg_timer_wait":12345,"count_star":100,"digest":"abc123def456","digest_text":"SELECT * FROM users WHERE id = ?","first_seen":"2024-06-01T12:00:00Z","last_seen":"2024-06-10T15:30:00Z"}]
 	Mysql *[]DatabaseQueryStatisticsMysqlResponse `json:"mysql,omitempty"`
-	Pg    *[]DatabaseQueryStatisticsPgResponse    `json:"pg,omitempty"`
+
+	// Pg Examples: [{"blk_read_time":0,"blk_write_time":0,"calls":57425,"database_name":"defaultdb","local_blks_dirtied":0,"local_blks_hit":0,"local_blks_read":0,"local_blks_written":0,"max_time":133387,"mean_time":1060,"min_time":151,"query":"COMMIT","rows":0,"shared_blks_dirtied":0,"shared_blks_hit":0,"shared_blks_read":0,"shared_blks_written":0,"stddev_time":0,"temp_blks_read":0,"temp_blks_written":0,"total_time":60879904,"user_name":"upadmin"}]
+	Pg *[]DatabaseQueryStatisticsPgResponse `json:"pg,omitempty"`
 }
 
 // DatabaseRedisAccessControlResponse Schema for Redis access control response.
+//
+// Examples: {"categories":["@all","@fast"],"channels":["news","updates"],"commands":["GET","SET","DEL"],"keys":["user:*","session:*"]}
 type DatabaseRedisAccessControlResponse struct {
 	// Categories List of command categories the user has access to.
-	//
-	// Example: ["@all","@fast"]
 	Categories *[]string `json:"categories,omitempty"`
 
 	// Channels List of Pub/Sub channels the user has access to.
-	//
-	// Example: ["news","updates"]
 	Channels *[]string `json:"channels,omitempty"`
 
 	// Commands List of specific commands the user has access to.
-	//
-	// Example: ["GET","SET","DEL"]
 	Commands *[]string `json:"commands,omitempty"`
 
 	// Keys List of key patterns the user has access to.
-	//
-	// Example: ["user:*","session:*"]
 	Keys *[]string `json:"keys,omitempty"`
 }
 
 // DatabaseRedisValkeyCurrentSessionResponse Schema for Redis Valkey current session response.
+//
+// Examples: {"active_channel_subscriptions":2,"active_database":0,"active_pattern_matching_channel_subscriptions":1,"application_name":"my-app","client_addr":"[fff0:fff0:fff0:fff0:0:fff0:fff0:fff0]:39956","connection_age":2079483000000000,"connection_idle":3000000000,"flags":["N","U"],"flags_raw":"NU","id":15,"multi_exec_commands":-1,"output_buffer":0,"output_buffer_memory":0,"output_list_length":0,"query":"info","query_buffer":0,"query_buffer_free":0}
 type DatabaseRedisValkeyCurrentSessionResponse struct {
 	// ActiveChannelSubscriptions Number of active channel subscriptions.
-	//
-	// Example: 2
 	ActiveChannelSubscriptions *int32 `json:"active_channel_subscriptions,omitempty"`
 
 	// ActiveDatabase Current database ID.
-	//
-	// Example: 0
 	ActiveDatabase *int32 `json:"active_database,omitempty"`
 
 	// ActivePatternMatchingChannelSubscriptions Number of pattern matching subscriptions.
-	//
-	// Example: 1
 	ActivePatternMatchingChannelSubscriptions *int32 `json:"active_pattern_matching_channel_subscriptions,omitempty"`
 
 	// ApplicationName Name of the application that is connected to this service.
-	//
-	// Example: my-app
 	ApplicationName *string `json:"application_name,omitempty"`
 
 	// ClientAddr IP address of the client connected to this service.
-	//
-	// Example: [fff0:fff0:fff0:fff0:0:fff0:fff0:fff0]:39956
 	ClientAddr *string `json:"client_addr,omitempty"`
 
 	// ConnectionAge Total duration of the connection in nanoseconds.
-	//
-	// Example: 2079483000000000
 	ConnectionAge *int32 `json:"connection_age,omitempty"`
 
 	// ConnectionIdle Idle time of the connection in nanoseconds.
-	//
-	// Example: 3000000000
 	ConnectionIdle *int32 `json:"connection_idle,omitempty"`
 
 	// Flags List of flags describing the client connection.
-	//
-	// Example: ["N","U"]
 	Flags *[]string `json:"flags,omitempty"`
 
 	// FlagsRaw Client connection flags (raw string).
-	//
-	// Example: NU
 	FlagsRaw *string `json:"flags_raw,omitempty"`
 
 	// Id Process ID of this session.
-	//
-	// Example: 15
 	Id *int32 `json:"id,omitempty"`
 
 	// MultiExecCommands Number of commands in a MULTI/EXEC context.
-	//
-	// Example: -1
 	MultiExecCommands *int32 `json:"multi_exec_commands,omitempty"`
 
 	// OutputBuffer Output buffer length.
-	//
-	// Example: 0
 	OutputBuffer *int32 `json:"output_buffer,omitempty"`
 
 	// OutputBufferMemory Output buffer memory usage.
-	//
-	// Example: 0
 	OutputBufferMemory *int32 `json:"output_buffer_memory,omitempty"`
 
 	// OutputListLength Output list length (replies queued when buffer is full).
-	//
-	// Example: 0
 	OutputListLength *int32 `json:"output_list_length,omitempty"`
 
 	// Query The last executed command.
-	//
-	// Example: info
 	Query *string `json:"query,omitempty"`
 
 	// QueryBuffer Query buffer length (0 means no query pending).
-	//
-	// Example: 0
 	QueryBuffer *int32 `json:"query_buffer,omitempty"`
 
 	// QueryBufferFree Free space of the query buffer (0 means the buffer is full).
-	//
-	// Example: 0
 	QueryBufferFree *int32 `json:"query_buffer_free,omitempty"`
 }
 
 // DatabaseServiceAclModify Schema for modifying service access control settings.
+//
+// Examples: {"access_control":true}, {"extended_access_control":true}, {"access_control":false,"extended_access_control":true}, {"access_control":true,"extended_access_control":false}
 type DatabaseServiceAclModify struct {
 	// AccessControl Enables OpenSearch access control
+	//
+	// Examples: true, false
 	AccessControl *bool `json:"access_control,omitempty"`
 
 	// ExtendedAccessControl Enables OpenSearch extended access control
+	//
+	// Examples: true, false
 	ExtendedAccessControl *bool `json:"extended_access_control,omitempty"`
 }
 
 // DatabaseServiceAlertResponse Schema for a service alert
+//
+// Examples: {"create_time":"2023-10-05T14:48:00Z","event":"user_alert_os_too_many_shards.","service_type":"opensearch","severity":"warning"}
 type DatabaseServiceAlertResponse struct {
 	// CreateTime The time when the alert was created.
-	//
-	// Example: 2023-10-05T14:48:00Z
 	CreateTime *time.Time `json:"create_time,omitempty"`
 
 	// Event A brief description of the alert event.
-	//
-	// Example: user_alert_os_too_many_shards.
 	Event *string `json:"event,omitempty"`
 
 	// ServiceType The type of service associated with the alert.
-	//
-	// Example: opensearch
 	ServiceType *string `json:"service_type,omitempty"`
 
 	// Severity The severity level of the alert.
-	//
-	// Example: warning
 	Severity *string `json:"severity,omitempty"`
 }
 
@@ -3011,12 +2737,18 @@ type DatabaseServiceAlertsResponse = []DatabaseServiceAlertResponse
 // DatabaseServiceCloneMysql Schema for cloning a MySQL service
 type DatabaseServiceCloneMysql struct {
 	// AdditionalDiskSpaceGib Additional disk space in GiB
+	//
+	// Examples: 10, 20
 	AdditionalDiskSpaceGib *int32 `json:"additional_disk_space_gib,omitempty"`
 
 	// BackupName Backup name
+	//
+	// Examples: daily-backup-2024-01-30
 	BackupName *string `json:"backup_name,omitempty"`
 
 	// CloneTime Clone time
+	//
+	// Examples: 2024-01-30T15:04:05Z
 	CloneTime *time.Time `json:"clone_time,omitempty"`
 
 	// HostnamePrefix Hostname prefix
@@ -3028,9 +2760,13 @@ type DatabaseServiceCloneMysql struct {
 	// Maintenance Maintenance
 	Maintenance *struct {
 		// Dow Day of the week for maintenance window
+		//
+		// Examples: sunday, monday, tuesday, wednesday, thursday, friday, saturday
 		Dow DatabaseMaintenanceDow `json:"dow"`
 
 		// Time Time of day for maintenance window in HH:MM format
+		//
+		// Examples: 02:00, 14:30, 23:45
 		Time DatabaseMaintenanceTime `json:"time"`
 	} `json:"maintenance,omitempty"`
 
@@ -3041,37 +2777,57 @@ type DatabaseServiceCloneMysql struct {
 	Plan *string `json:"plan,omitempty"`
 
 	// PlanBackups Plan selection: backup tier. PostgreSQL and MySQL tiered plans only.
+	//
+	// Examples: regular
 	PlanBackups *DatabaseServiceCloneMysqlPlanBackups `json:"plan_backups,omitempty"`
 
 	// PlanCompute Plan selection: compute shape combining family, CPU and memory as one token, as listed in the plan catalog components. PostgreSQL and MySQL only.
+	//
+	// Examples: rdb.standard.2CPU-8GB
 	PlanCompute *string `json:"plan_compute,omitempty"`
 
 	// PlanNodeCount Plan selection: number of nodes.
+	//
+	// Examples: 1
 	PlanNodeCount *int32 `json:"plan_node_count,omitempty"`
 
 	// PlanStorageGib Plan selection: desired TOTAL storage per node in GiB. Resolution picks the plan whose included storage matches, or tops the closest plan up with dynamic additional storage within the allowed limits. Mutually exclusive with additional_disk_space_gib.
+	//
+	// Examples: 50
 	PlanStorageGib *int32 `json:"plan_storage_gib,omitempty"`
 
 	// Properties mysql properties
 	Properties *DatabaseServicePropertiesMysql `json:"properties,omitempty"`
 
 	// SetServiceUuid Title
+	//
+	// Examples: 123e4567-e89b-12d3-a456-426614174000
 	SetServiceUuid *openapi_types.UUID `json:"set_service_uuid,omitempty"`
 
 	// TerminationProtection Termination protection
+	//
+	// Examples: true, false
 	TerminationProtection *bool `json:"termination_protection,omitempty"`
 
 	// Title The title of an entity.
+	//
+	// Examples: my-service
 	Title *DatabaseTitle `json:"title,omitempty"`
 
 	// Zone Zone
+	//
+	// Examples: fi-hel1
 	Zone *string `json:"zone,omitempty"`
 }
 
 // DatabaseServiceCloneMysqlPlanBackups Plan selection: backup tier. PostgreSQL and MySQL tiered plans only.
+//
+// Examples: regular
 type DatabaseServiceCloneMysqlPlanBackups string
 
 // DatabaseServiceCloneOpenAPI Schema for cloning a service — OpenAPI version.
+//
+// Examples: {"clone_time":"2022-01-21T12:21:00Z","hostname_prefix":"new-hostname-prefix","maintenance":{"dow":"sunday","time":"12:00:00"},"plan":"1x1xCPU-2GB-25GB","properties":{"automatic_utility_network_ip_filter":false,"ip_filter":["0.0.0.0/0"],"public_access":true,"version":"13"},"title":"new-title","zone":"fi-hel1"}
 type DatabaseServiceCloneOpenAPI struct {
 	union json.RawMessage
 }
@@ -3079,17 +2835,23 @@ type DatabaseServiceCloneOpenAPI struct {
 // DatabaseServiceCloneOpensearch Schema for cloning an OpenSearch service
 type DatabaseServiceCloneOpensearch struct {
 	// AdditionalDiskSpaceGib Additional disk space in GiB
+	//
+	// Examples: 10, 20
 	AdditionalDiskSpaceGib *int32 `json:"additional_disk_space_gib,omitempty"`
 
 	// BackupName Backup name
+	//
+	// Examples: daily-backup-2024-01-30
 	BackupName *string `json:"backup_name,omitempty"`
 
 	// CloneTime Clone time
 	//
-	// Example: 2024-01-30T15:04:05Z
+	// Examples: 2024-01-30T15:04:05Z
 	CloneTime *time.Time `json:"clone_time,omitempty"`
 
 	// HostnamePrefix Hostname prefix
+	//
+	// Examples: my-opensearch
 	HostnamePrefix string `json:"hostname_prefix"`
 
 	// Labels Labels
@@ -3098,9 +2860,13 @@ type DatabaseServiceCloneOpensearch struct {
 	// Maintenance Maintenance
 	Maintenance *struct {
 		// Dow Day of the week for maintenance window
+		//
+		// Examples: sunday, monday, tuesday, wednesday, thursday, friday, saturday
 		Dow DatabaseMaintenanceDow `json:"dow"`
 
 		// Time Time of day for maintenance window in HH:MM format
+		//
+		// Examples: 02:00, 14:30, 23:45
 		Time DatabaseMaintenanceTime `json:"time"`
 	} `json:"maintenance,omitempty"`
 
@@ -3108,37 +2874,57 @@ type DatabaseServiceCloneOpensearch struct {
 	Networks *[]DatabaseNetworkCreate `json:"networks,omitempty"`
 
 	// Plan Plan
+	//
+	// Examples: my-plan
 	Plan *string `json:"plan,omitempty"`
 
 	// PlanBackups Plan selection: backup tier. PostgreSQL and MySQL tiered plans only.
+	//
+	// Examples: regular
 	PlanBackups *DatabaseServiceCloneOpensearchPlanBackups `json:"plan_backups,omitempty"`
 
 	// PlanCompute Plan selection: compute shape combining family, CPU and memory as one token, as listed in the plan catalog components. PostgreSQL and MySQL only.
+	//
+	// Examples: rdb.standard.2CPU-8GB
 	PlanCompute *string `json:"plan_compute,omitempty"`
 
 	// PlanNodeCount Plan selection: number of nodes.
+	//
+	// Examples: 1
 	PlanNodeCount *int32 `json:"plan_node_count,omitempty"`
 
 	// PlanStorageGib Plan selection: desired TOTAL storage per node in GiB. Resolution picks the plan whose included storage matches, or tops the closest plan up with dynamic additional storage within the allowed limits. Mutually exclusive with additional_disk_space_gib.
+	//
+	// Examples: 50
 	PlanStorageGib *int32 `json:"plan_storage_gib,omitempty"`
 
 	// Properties opensearch properties
 	Properties *DatabaseServicePropertiesOpensearch `json:"properties,omitempty"`
 
 	// SetServiceUuid Title
+	//
+	// Examples: 123e4567-e89b-12d3-a456-426614174000
 	SetServiceUuid *openapi_types.UUID `json:"set_service_uuid,omitempty"`
 
 	// TerminationProtection Termination protection
+	//
+	// Examples: true, false
 	TerminationProtection *bool `json:"termination_protection,omitempty"`
 
 	// Title The title of an entity.
+	//
+	// Examples: my-service
 	Title *DatabaseTitle `json:"title,omitempty"`
 
 	// Zone Zone
+	//
+	// Examples: fi-hel1
 	Zone *string `json:"zone,omitempty"`
 }
 
 // DatabaseServiceCloneOpensearchPlanBackups Plan selection: backup tier. PostgreSQL and MySQL tiered plans only.
+//
+// Examples: regular
 type DatabaseServiceCloneOpensearchPlanBackups string
 
 // DatabaseServiceClonePg Schema for cloning a PostgreSQL service.
@@ -3147,14 +2933,18 @@ type DatabaseServiceClonePg struct {
 	AdditionalDiskSpaceGib *int32 `json:"additional_disk_space_gib,omitempty"`
 
 	// BackupName Backup name
+	//
+	// Examples: daily-backup-2024-01-30
 	BackupName *string `json:"backup_name,omitempty"`
 
 	// CloneTime Clone time
 	//
-	// Example: 2024-01-30T15:04:05Z
+	// Examples: 2024-01-30T15:04:05Z
 	CloneTime *time.Time `json:"clone_time,omitempty"`
 
 	// HostnamePrefix Hostname prefix
+	//
+	// Examples: my-pg-service
 	HostnamePrefix string `json:"hostname_prefix"`
 
 	// Labels Labels
@@ -3163,58 +2953,86 @@ type DatabaseServiceClonePg struct {
 	// Maintenance Maintenance
 	Maintenance *struct {
 		// Dow Day of the week for maintenance window
+		//
+		// Examples: sunday, monday, tuesday, wednesday, thursday, friday, saturday
 		Dow DatabaseMaintenanceDow `json:"dow"`
 
 		// Time Time of day for maintenance window in HH:MM format
+		//
+		// Examples: 02:00, 14:30, 23:45
 		Time DatabaseMaintenanceTime `json:"time"`
 	} `json:"maintenance,omitempty"`
 	Networks *[]DatabaseNetworkCreate `json:"networks,omitempty"`
 
 	// Plan Plan
+	//
+	// Examples: basic-pg-plan
 	Plan *string `json:"plan,omitempty"`
 
 	// PlanBackups Plan selection: backup tier. PostgreSQL and MySQL tiered plans only.
+	//
+	// Examples: regular
 	PlanBackups *DatabaseServiceClonePgPlanBackups `json:"plan_backups,omitempty"`
 
 	// PlanCompute Plan selection: compute shape combining family, CPU and memory as one token, as listed in the plan catalog components. PostgreSQL and MySQL only.
+	//
+	// Examples: rdb.standard.2CPU-8GB
 	PlanCompute *string `json:"plan_compute,omitempty"`
 
 	// PlanNodeCount Plan selection: number of nodes.
+	//
+	// Examples: 1
 	PlanNodeCount *int32 `json:"plan_node_count,omitempty"`
 
 	// PlanStorageGib Plan selection: desired TOTAL storage per node in GiB. Resolution picks the plan whose included storage matches, or tops the closest plan up with dynamic additional storage within the allowed limits. Mutually exclusive with additional_disk_space_gib.
+	//
+	// Examples: 50
 	PlanStorageGib *int32 `json:"plan_storage_gib,omitempty"`
 
 	// Properties pg properties
 	Properties *DatabaseServicePropertiesPg `json:"properties,omitempty"`
 
 	// SetServiceUuid Title
+	//
+	// Examples: 123e4567-e89b-12d3-a456-426614174000
 	SetServiceUuid *openapi_types.UUID `json:"set_service_uuid,omitempty"`
 
 	// TerminationProtection Termination protection
+	//
+	// Examples: true, false
 	TerminationProtection *bool `json:"termination_protection,omitempty"`
 
 	// Title The title of an entity.
+	//
+	// Examples: my-service
 	Title *DatabaseTitle `json:"title,omitempty"`
 
 	// Zone Zone
+	//
+	// Examples: fi-hel1
 	Zone *string `json:"zone,omitempty"`
 }
 
 // DatabaseServiceClonePgPlanBackups Plan selection: backup tier. PostgreSQL and MySQL tiered plans only.
+//
+// Examples: regular
 type DatabaseServiceClonePgPlanBackups string
 
 // DatabaseServiceCloneRedis Schema for cloning a Redis service.
 type DatabaseServiceCloneRedis struct {
 	// BackupName Backup name
+	//
+	// Examples: daily-backup-2024-01-30
 	BackupName *string `json:"backup_name,omitempty"`
 
 	// CloneTime Clone time
 	//
-	// Example: 2024-01-30T15:04:05Z
+	// Examples: 2024-01-30T15:04:05Z
 	CloneTime *time.Time `json:"clone_time,omitempty"`
 
 	// HostnamePrefix Hostname prefix
+	//
+	// Examples: my-redis
 	HostnamePrefix string `json:"hostname_prefix"`
 
 	// Labels Labels
@@ -3223,58 +3041,86 @@ type DatabaseServiceCloneRedis struct {
 	// Maintenance Maintenance
 	Maintenance *struct {
 		// Dow Day of the week for maintenance window
+		//
+		// Examples: sunday, monday, tuesday, wednesday, thursday, friday, saturday
 		Dow DatabaseMaintenanceDow `json:"dow"`
 
 		// Time Time of day for maintenance window in HH:MM format
+		//
+		// Examples: 02:00, 14:30, 23:45
 		Time DatabaseMaintenanceTime `json:"time"`
 	} `json:"maintenance,omitempty"`
 	Networks *[]DatabaseNetworkCreate `json:"networks,omitempty"`
 
 	// Plan Plan
+	//
+	// Examples: basic-redis-plan
 	Plan *string `json:"plan,omitempty"`
 
 	// PlanBackups Plan selection: backup tier. PostgreSQL and MySQL tiered plans only.
+	//
+	// Examples: regular
 	PlanBackups *DatabaseServiceCloneRedisPlanBackups `json:"plan_backups,omitempty"`
 
 	// PlanCompute Plan selection: compute shape combining family, CPU and memory as one token, as listed in the plan catalog components. PostgreSQL and MySQL only.
+	//
+	// Examples: rdb.standard.2CPU-8GB
 	PlanCompute *string `json:"plan_compute,omitempty"`
 
 	// PlanNodeCount Plan selection: number of nodes.
+	//
+	// Examples: 1
 	PlanNodeCount *int32 `json:"plan_node_count,omitempty"`
 
 	// PlanStorageGib Plan selection: desired TOTAL storage per node in GiB. Resolution picks the plan whose included storage matches, or tops the closest plan up with dynamic additional storage within the allowed limits. Mutually exclusive with additional_disk_space_gib.
+	//
+	// Examples: 50
 	PlanStorageGib *int32 `json:"plan_storage_gib,omitempty"`
 
 	// Properties redis properties
 	Properties *DatabaseServicePropertiesRedis `json:"properties,omitempty"`
 
 	// SetServiceUuid Title
+	//
+	// Examples: 123e4567-e89b-12d3-a456-426614174000
 	SetServiceUuid *openapi_types.UUID `json:"set_service_uuid,omitempty"`
 
 	// TerminationProtection Termination protection
+	//
+	// Examples: true, false
 	TerminationProtection *bool `json:"termination_protection,omitempty"`
 
 	// Title The title of an entity.
+	//
+	// Examples: my-service
 	Title *DatabaseTitle `json:"title,omitempty"`
 
 	// Zone Zone
+	//
+	// Examples: fi-hel1
 	Zone *string `json:"zone,omitempty"`
 }
 
 // DatabaseServiceCloneRedisPlanBackups Plan selection: backup tier. PostgreSQL and MySQL tiered plans only.
+//
+// Examples: regular
 type DatabaseServiceCloneRedisPlanBackups string
 
 // DatabaseServiceCloneValkey Schema for cloning a service with valkey.
 type DatabaseServiceCloneValkey struct {
 	// BackupName Backup name
+	//
+	// Examples: daily-backup-2024-01-30
 	BackupName *string `json:"backup_name,omitempty"`
 
 	// CloneTime Clone time
 	//
-	// Example: 2024-01-30T15:04:05Z
+	// Examples: 2024-01-30T15:04:05Z
 	CloneTime *time.Time `json:"clone_time,omitempty"`
 
 	// HostnamePrefix Hostname prefix
+	//
+	// Examples: my-service
 	HostnamePrefix string `json:"hostname_prefix"`
 
 	// Labels Labels
@@ -3283,209 +3129,296 @@ type DatabaseServiceCloneValkey struct {
 	// Maintenance Maintenance
 	Maintenance *struct {
 		// Dow Day of the week for maintenance window
+		//
+		// Examples: sunday, monday, tuesday, wednesday, thursday, friday, saturday
 		Dow DatabaseMaintenanceDow `json:"dow"`
 
 		// Time Time of day for maintenance window in HH:MM format
+		//
+		// Examples: 02:00, 14:30, 23:45
 		Time DatabaseMaintenanceTime `json:"time"`
 	} `json:"maintenance,omitempty"`
 	Networks *[]DatabaseNetworkCreate `json:"networks,omitempty"`
 
 	// Plan Plan
+	//
+	// Examples: basic-plan
 	Plan *string `json:"plan,omitempty"`
 
 	// PlanBackups Plan selection: backup tier. PostgreSQL and MySQL tiered plans only.
+	//
+	// Examples: regular
 	PlanBackups *DatabaseServiceCloneValkeyPlanBackups `json:"plan_backups,omitempty"`
 
 	// PlanCompute Plan selection: compute shape combining family, CPU and memory as one token, as listed in the plan catalog components. PostgreSQL and MySQL only.
+	//
+	// Examples: rdb.standard.2CPU-8GB
 	PlanCompute *string `json:"plan_compute,omitempty"`
 
 	// PlanNodeCount Plan selection: number of nodes.
+	//
+	// Examples: 1
 	PlanNodeCount *int32 `json:"plan_node_count,omitempty"`
 
 	// PlanStorageGib Plan selection: desired TOTAL storage per node in GiB. Resolution picks the plan whose included storage matches, or tops the closest plan up with dynamic additional storage within the allowed limits. Mutually exclusive with additional_disk_space_gib.
+	//
+	// Examples: 50
 	PlanStorageGib *int32 `json:"plan_storage_gib,omitempty"`
 
 	// Properties valkey properties
 	Properties *DatabaseServicePropertiesValkey `json:"properties,omitempty"`
 
 	// SetServiceUuid Title
+	//
+	// Examples: 123e4567-e89b-12d3-a456-426614174000
 	SetServiceUuid *openapi_types.UUID `json:"set_service_uuid,omitempty"`
 
 	// TerminationProtection Termination protection
+	//
+	// Examples: true, false
 	TerminationProtection *bool `json:"termination_protection,omitempty"`
 
 	// Title The title of an entity.
+	//
+	// Examples: my-service
 	Title *DatabaseTitle `json:"title,omitempty"`
 
 	// Zone Zone
+	//
+	// Examples: fi-hel1
 	Zone *string `json:"zone,omitempty"`
 }
 
 // DatabaseServiceCloneValkeyPlanBackups Plan selection: backup tier. PostgreSQL and MySQL tiered plans only.
+//
+// Examples: regular
 type DatabaseServiceCloneValkeyPlanBackups string
 
 // DatabaseServiceComponentResponse Schema for a service component response.
+//
+// Examples: {"component":"pg","host":"pg-2x2xcpu-4gb-50gb-de-fra1-example-prefix-project.db.upclouddatabases.com","port":1150,"route":"dynamic","ssl":true,"usage":"replica"}
 type DatabaseServiceComponentResponse struct {
 	// Component The name of the service component.
-	//
-	// Example: pg
 	Component *string `json:"component,omitempty"`
 
 	// Host The hostname or IP address of the service component.
-	//
-	// Example: pg-2x2xcpu-4gb-50gb-de-fra1-example-prefix-project.db.upclouddatabases.com
 	Host *string `json:"host,omitempty"`
 
 	// Port The port number of the service component.
-	//
-	// Example: 1150
 	Port *int32 `json:"port,omitempty"`
 
 	// Route The route to access the service component.
-	//
-	// Example: dynamic
 	Route *string `json:"route,omitempty"`
 
 	// Ssl Indicates if SSL is enabled for the service component.
-	//
-	// Example: true
 	Ssl *bool `json:"ssl,omitempty"`
 
 	// Usage The usage of the service component.
-	//
-	// Example: replica
 	Usage *string `json:"usage,omitempty"`
 }
 
 // DatabaseServiceCreateOpenAPI Schema for creating a service — OpenAPI version.
+//
+// Examples: {"additional_disk_space_gib":10,"hostname_prefix":"doc-api-unique-prefix","labels":[{"key":"env","value":"staging"},{"key":"foo","value":"bar"}],"maintenance":{"dow":"sunday","time":"05:00:00"},"networks":[{"family":"IPv4","name":"example-network-1","type":"private","uuid":"03631160-d57a-4926-ad48-a2f828229dcb"},{"family":"IPv4","name":"example-network-2","type":"private","uuid":"03631160-d57a-4926-ad48-a2f828229dcb"}],"plan":"1x1xCPU-2GB-25GB","properties":{"automatic_utility_network_ip_filter":true,"ip_filter":[],"version":"8"},"termination_protection":false,"title":"my-managed-database","type":"mysql","zone":"de-fra1"}
 type DatabaseServiceCreateOpenAPI struct {
 	union json.RawMessage
 }
 
 // DatabaseServiceInformationListResponse Schema for a list of service information
+//
+// Examples: [{"name":"my-db","type":"pg","uuid":"123e4567-e89b-12d3-a456-426614174000","zone":"fi-hel1"}]
 type DatabaseServiceInformationListResponse = []DatabaseServiceInformationResponse
 
 // DatabaseServiceInformationResponse Schema for service information response.
 type DatabaseServiceInformationResponse struct {
 	// Acls List of ACLs associated with the service.
+	//
+	// Examples: [{"id":"123e4567-e89b-12d3-a456-426614174000","permission":"read-write","topic":"sensors/temperature","username":"user123"}]
 	Acls *[]DatabaseAclResponse `json:"acls,omitempty"`
 
 	// AdditionalDiskSpaceGib The additional disk space allocated to the service in GiB.
+	//
+	// Examples: 10
 	AdditionalDiskSpaceGib *int32 `json:"additional_disk_space_gib,omitempty"`
 
 	// Backups List of backups associated with the service.
+	//
+	// Examples: [{"backup_name":"pg-backup-2024-01-01","backup_time":"2024-01-01T12:00:00Z","data_size":36413440}]
 	Backups *[]DatabaseBackupResponse `json:"backups,omitempty"`
 
 	// Components List of service components associated with the service.
+	//
+	// Examples: [{"component":"pg","host":"pg-2x2xcpu-4gb-50gb-de-fra1-example-prefix-project.db.upclouddatabases.com","port":1150,"route":"dynamic","ssl":true,"usage":"replica"}]
 	Components *[]DatabaseServiceComponentResponse `json:"components,omitempty"`
 
 	// ConnectionPools List of connection pools associated with the service.
+	//
+	// Examples: [{"connection_uri":"postgresql://user:password@hostname:5432/dbname","database":"pg-db-1","pool_mode":"session","pool_name":"pool-2","pool_size":10,"username":"updamin"}]
 	ConnectionPools *[]DatabaseConnectionPoolResponse `json:"connection_pools,omitempty"`
 
 	// CreateTime The time when the service was created.
+	//
+	// Examples: 2023-10-01T12:00:00Z
 	CreateTime *time.Time `json:"create_time,omitempty"`
 
 	// Databases A list of logical databases.
+	//
+	// Examples: [{"lc_collate":"en_US.UTF-8","lc_ctype":"en_US.UTF-8","name":"postgres"}], [{"lc_collate":"en_US.UTF-8","lc_ctype":"en_US.UTF-8","name":"mydb"},{"lc_collate":"en_US.UTF-8","lc_ctype":"en_US.UTF-8","name":"testdb"}]
 	Databases *LogicalDatabasesResponse `json:"databases,omitempty"`
 
 	// Labels List of label information associated with the service.
+	//
+	// Examples: [{"key":"environment","value":"production"}]
 	Labels *[]DatabaseLabelInformationResponse `json:"labels,omitempty"`
 
 	// Maintenance Schema for a maintenance window response.
+	//
+	// Examples: {"dow":"Monday","pending_updates":[{"deadline":"2022-01-21T12:21:00Z","description":"description related to the update","start_after":"2022-01-21T12:21:00Z","start_at":"2022-10-21T12:21:00Z"}],"time":"2023-05-07T15:55:24.655776Z"}
 	Maintenance *DatabaseMaintenanceWindowResponse `json:"maintenance,omitempty"`
 
 	// Metadata A map of metadata key-value pairs for the service.
+	//
+	// Examples: {"owner":"team-databases"}
 	Metadata *map[string]interface{} `json:"metadata,omitempty"`
 
 	// Name The name of the service.
+	//
+	// Examples: my-db
 	Name *string `json:"name,omitempty"`
 
 	// Networks List of network information details associated with the service.
+	//
+	// Examples: [{"create_time":"2025-08-01T10:40:04.140473Z","family":"IPv4","name":"example-private-network","type":"private","update_time":"2025-08-01T10:40:04.140473Z","uuid":"123e4567-e89b-12d3-a456-426614174000"}]
 	Networks *[]DatabaseNetworkInformationDetailsResponse `json:"networks,omitempty"`
 
 	// NodeCount The number of nodes in the service.
+	//
+	// Examples: 1
 	NodeCount *int32 `json:"node_count,omitempty"`
 
 	// NodeStates The states of individual nodes in the service.
+	//
+	// Examples: [{"name":"node-1","progress_updates":[{"completed":false,"current":45,"max":100,"min":0,"phase":"prepare","unit":"bytes_uncompressed"}],"role":"master","state":"running"}]
 	NodeStates *[]DatabaseNodeStateResponse `json:"node_states,omitempty"`
 
 	// Plan The plan of the service.
+	//
+	// Examples: 1x1xCPU-2GB-25GB
 	Plan *string `json:"plan,omitempty"`
 
 	// PlanComponents Structured breakdown of a service plan into compute, storage and backups components. Sizes are expressed in GB to match plan naming; the classic MB/MiB fields on the plan object are unchanged.
+	//
+	// Examples: {"backups":{"name":"regular","retention_days":15},"compute":{"cpu":4,"family":"standard","memory_gb":8,"node_count":2},"storage":{"dynamic_storage_supported":true,"included_gib":100}}
 	PlanComponents *DatabasePlanComponentsResponse `json:"plan_components,omitempty"`
 
 	// Powered Indicates whether the service is powered on.
+	//
+	// Examples: true
 	Powered *bool `json:"powered,omitempty"`
 
 	// Properties A map of additional properties for the service.
+	//
+	// Examples: {"public_access":false}
 	Properties *map[string]interface{} `json:"properties,omitempty"`
 
 	// ServiceIntegrations List of service integrations associated with the service.
+	//
+	// Examples: [{"destination_name":"my-rsyslog-server","destination_uuid":"123e4567-e89b-12d3-a456-426614174000","node_states":[{"errors":["some error"],"likely_error_cause":null,"name":"node-1","status":"running"}],"properties":{"key1":"value1","key2":2,"key3":true},"source_name":"my-database","source_uuid":"123e4567-e89b-12d3-a456-426614174000","state":"active","state_error":[],"type":"rsyslog","uuid":"123e4567-e89b-12d3-a456-426614174000"}]
 	ServiceIntegrations *[]DatabaseServiceIntegrationResponse `json:"service_integrations,omitempty"`
 
 	// ServiceUri The URI for accessing the service.
+	//
+	// Examples: postgres://upadmin:example-prefix-project@pg-2x2xcpu-4gb-50gb-de-fra1-example-prefix-project.db.upclouddatabases.com:11550/defaultdb?sslmode=require
 	ServiceUri *string `json:"service_uri,omitempty"`
 
 	// ServiceUriParams A map of connection parameters for the service.
+	//
+	// Examples: {"dbname":"defaultdb","host":"pg-2x2xcpu-4gb-50gb-de-fra1-example-prefix-project.db.upclouddatabases.com","password":"example-prefix-project","port":"11550","ssl_mode":"require","user":"upadmin"}
 	ServiceUriParams *map[string]interface{} `json:"service_uri_params,omitempty"`
 
 	// State The current state of the service.
+	//
+	// Examples: running
 	State *string `json:"state,omitempty"`
 
 	// StateError A map of errors related to the service state.
+	//
+	// Examples: {"init":"failed"}
 	StateError *map[string]string `json:"state_error,omitempty"`
 
 	// TerminationProtection Indicates whether termination protection is enabled for the service.
+	//
+	// Examples: false
 	TerminationProtection *bool `json:"termination_protection,omitempty"`
 
 	// Title The title of the service.
+	//
+	// Examples: My Database Service
 	Title *string `json:"title,omitempty"`
 
 	// Type The type of the service.
+	//
+	// Examples: pg
 	Type *string `json:"type,omitempty"`
 
 	// UpdateTime The time when the service was last updated.
+	//
+	// Examples: 2023-10-10T12:00:00Z
 	UpdateTime *time.Time `json:"update_time,omitempty"`
 
 	// Users List of users associated with the service.
+	//
+	// Examples: [{"authentication":"caching_sha2_password","password":"my-password","type":"admin","username":"admin"}]
 	Users *[]DatabaseUserResponse `json:"users,omitempty"`
 
 	// Uuid The unique identifier for the service.
+	//
+	// Examples: 123e4567-e89b-12d3-a456-426614174000
 	Uuid *openapi_types.UUID `json:"uuid,omitempty"`
 
 	// Zone The zone where the service is hosted.
+	//
+	// Examples: fi-hel1
 	Zone *string `json:"zone,omitempty"`
 }
 
 // DatabaseServiceIntegration The type of service integration.
+//
+// Examples: logs, rsyslog, prometheus
 type DatabaseServiceIntegration string
 
 // DatabaseServiceIntegrationCreate Schema for creating a service integration.
+//
+// Examples: {"destination_uuid":"09e86f48-2dcd-4a43-843d-3532ab112c1d","properties":{"opensearch_index_days_max":30,"opensearch_index_prefix":"mysql_logs"},"type":"logs"}
 type DatabaseServiceIntegrationCreate struct {
 	// DestinationUuid The UUID of the destination where the service integration will send data.
+	//
+	// Examples: 123e4567-e89b-12d3-a456-426614174000
 	DestinationUuid *openapi_types.UUID     `json:"destination_uuid,omitempty"`
 	Properties      *map[string]interface{} `json:"properties,omitempty"`
 
 	// Type The type of service integration.
+	//
+	// Examples: logs, rsyslog, prometheus
 	Type DatabaseServiceIntegration `json:"type"`
 }
 
 // DatabaseServiceIntegrationModify Schema for modifying a service integration.
+//
+// Examples: {"properties":{"key1":"value1"}}
 type DatabaseServiceIntegrationModify struct {
+	// Properties Examples: {"key1":"value1"}
 	Properties *map[string]interface{} `json:"properties,omitempty"`
 }
 
 // DatabaseServiceIntegrationResponse Schema for a service integration response.
+//
+// Examples: {"destination_name":"my-rsyslog-server","destination_uuid":"123e4567-e89b-12d3-a456-426614174000","node_states":[{"errors":["some error"],"likely_error_cause":null,"name":"node-1","status":"running"}],"properties":{"key1":"value1","key2":2,"key3":true},"source_name":"my-database","source_uuid":"123e4567-e89b-12d3-a456-426614174000","state":"active","state_error":[],"type":"rsyslog","uuid":"123e4567-e89b-12d3-a456-426614174000"}
 type DatabaseServiceIntegrationResponse struct {
 	// DestinationName The name of the destination service.
-	//
-	// Example: my-rsyslog-server
 	DestinationName *string `json:"destination_name,omitempty"`
 
 	// DestinationUuid The UUID of the destination service.
-	//
-	// Example: 123e4567-e89b-12d3-a456-426614174000
 	DestinationUuid *openapi_types.UUID `json:"destination_uuid,omitempty"`
 
 	// NodeStates The states of individual nodes in the service integration.
@@ -3495,31 +3428,21 @@ type DatabaseServiceIntegrationResponse struct {
 	Properties *map[string]interface{} `json:"properties,omitempty"`
 
 	// SourceName The name of the source service.
-	//
-	// Example: my-database
 	SourceName *string `json:"source_name,omitempty"`
 
 	// SourceUuid The UUID of the source service.
-	//
-	// Example: 123e4567-e89b-12d3-a456-426614174000
 	SourceUuid *openapi_types.UUID `json:"source_uuid,omitempty"`
 
 	// State The current state of the service integration.
-	//
-	// Example: active
 	State *string `json:"state,omitempty"`
 
 	// StateError A list of errors related to the service integration state.
 	StateError *[]interface{} `json:"state_error,omitempty"`
 
 	// Type The type of service integration.
-	//
-	// Example: rsyslog
 	Type *string `json:"type,omitempty"`
 
 	// Uuid The UUID of the service integration.
-	//
-	// Example: 123e4567-e89b-12d3-a456-426614174000
 	Uuid *openapi_types.UUID `json:"uuid,omitempty"`
 }
 
@@ -3527,99 +3450,107 @@ type DatabaseServiceIntegrationResponse struct {
 type DatabaseServiceIntegrationsResponse = []DatabaseServiceIntegrationResponse
 
 // DatabaseServiceMigrationStatusResponse Response schema for service migration status
+//
+// Examples: {"databases":[{"dbname":"defaultdb","method":"replication","status":"syncing"}],"method":"replication","seconds_behind_master":0,"source_active":true,"status":"done"}
 type DatabaseServiceMigrationStatusResponse struct {
 	Databases *[]DatabaseMigrationStatusDetailsResponse `json:"databases,omitempty"`
 
 	// Error Error message if any
-	//
-	// Example: some error occurred
 	Error *string `json:"error,omitempty"`
 
 	// Method Migration method used
-	//
-	// Example: replication
 	Method *string `json:"method,omitempty"`
 
 	// SecondsBehindMaster Seconds behind master
-	//
-	// Example: 10
 	SecondsBehindMaster *int32 `json:"seconds_behind_master,omitempty"`
 
 	// SourceActive Is source active
-	//
-	// Example: true
 	SourceActive *bool `json:"source_active,omitempty"`
 
 	// Status Current status of the migration
-	//
-	// Example: syncing
 	Status *string `json:"status,omitempty"`
 }
 
 // DatabaseServiceModifyOpenAPI Schema for modifying a service — OpenAPI version.
+//
+// Examples: {"additional_disk_space_gib":100,"maintenance":{"dow":"sunday","time":"12:00:00"},"networks":[{"family":"IPv4","name":"example-network-1","type":"private","uuid":"03631160-d57a-4926-ad48-a2f828229dcb"}],"plan":"1x1xCPU-2GB-25GB","powered":true,"properties":{"automatic_utility_network_ip_filter":true,"ip_filter":[],"version":"8"},"termination_protection":false,"title":"my-managed-database","zone":"de-fra1"}
 type DatabaseServiceModifyOpenAPI struct {
 	union json.RawMessage
 }
 
 // DatabaseServiceNetworkDetailsResponse Schema for service network details response
+//
+// Examples: {"create_time":"2023-10-05T14:48:00.000Z","network_peerings":[{"create_time":"2023-10-05T14:48:00.000Z","network_peer":"03196597-b972-4815-ba3a-85bb18365ced","state":"active","state_info":"The peering is in active state.","update_time":"2023-10-05T14:48:00.000Z"}],"state":"active","update_time":"2023-10-05T14:48:00.000Z"}
 type DatabaseServiceNetworkDetailsResponse struct {
 	// CreateTime The creation time of the service network.
+	//
+	// Examples: 2023-10-05T14:48:00.000Z
 	CreateTime      *time.Time                       `json:"create_time,omitempty"`
 	NetworkPeerings *[]DatabasePeeringStatusResponse `json:"network_peerings,omitempty"`
 
 	// State The current state of the service network.
+	//
+	// Examples: active
 	State *string `json:"state,omitempty"`
 
 	// UpdateTime The last update time of the service network.
+	//
+	// Examples: 2023-10-05T14:48:00.000Z
 	UpdateTime *time.Time `json:"update_time,omitempty"`
 }
 
 // DatabaseServicePlanResponse Schema definition for a service plan
+//
+// Examples: {"backup_config":{"interval":24,"max_count":7,"recovery_mode":"point_in_time"},"core_number":2,"memory_amount":8192,"node_count":3,"plan":"2x2xCPU-4GB-50G","storage_size":51200,"zones":{"zone":[{"description":"Primary zone","name":"zone1"},{"description":"Secondary zone","name":"zone2"}]}}
 type DatabaseServicePlanResponse struct {
 	// BackupConfig General backup configuration schema
+	//
+	// Examples: {"interval":24,"max_count":7,"recovery_mode":"point_in_time"}
 	BackupConfig *DatabaseBackupConfigResponse `json:"backup_config,omitempty"`
 
 	// BackupConfigMysql General backup configuration schema
+	//
+	// Examples: {"interval":24,"max_count":7,"recovery_mode":"point_in_time"}
 	BackupConfigMysql *DatabaseBackupConfigResponse `json:"backup_config_mysql,omitempty"`
 
 	// BackupConfigOpensearch OpenSearch specific backup configuration response
+	//
+	// Examples: {"frequent_interval_minutes":15,"frequent_oldest_age_minutes":60,"infrequent_interval_minutes":240,"infrequent_oldest_age_minutes":1440,"recovery_mode":"point_in_time"}
 	BackupConfigOpensearch *DatabaseBackupConfigOpenSearchResponse `json:"backup_config_opensearch,omitempty"`
 
 	// BackupConfigPg General backup configuration schema
+	//
+	// Examples: {"interval":24,"max_count":7,"recovery_mode":"point_in_time"}
 	BackupConfigPg *DatabaseBackupConfigResponse `json:"backup_config_pg,omitempty"`
 
 	// BackupConfigRedis General backup configuration schema
+	//
+	// Examples: {"interval":24,"max_count":7,"recovery_mode":"point_in_time"}
 	BackupConfigRedis *DatabaseBackupConfigResponse `json:"backup_config_redis,omitempty"`
 
 	// BackupConfigValkey General backup configuration schema
+	//
+	// Examples: {"interval":24,"max_count":7,"recovery_mode":"point_in_time"}
 	BackupConfigValkey *DatabaseBackupConfigResponse `json:"backup_config_valkey,omitempty"`
 
 	// Components Structured breakdown of a service plan into compute, storage and backups components. Sizes are expressed in GB to match plan naming; the classic MB/MiB fields on the plan object are unchanged.
+	//
+	// Examples: {"backups":{"name":"regular","retention_days":15},"compute":{"cpu":4,"family":"standard","memory_gb":8,"node_count":2},"storage":{"dynamic_storage_supported":true,"included_gib":100}}
 	Components *DatabasePlanComponentsResponse `json:"components,omitempty"`
 
 	// CoreNumber Number of CPU cores per node
-	//
-	// Example: 2
 	CoreNumber *int32 `json:"core_number,omitempty"`
 
 	// MemoryAmount Memory amount in MB per node
-	//
-	// Example: 4096
 	MemoryAmount *int32 `json:"memory_amount,omitempty"`
 
 	// NodeCount Number of nodes in the service plan
-	//
-	// Example: 10
 	NodeCount *int32 `json:"node_count,omitempty"`
 
 	// Plan Name of the service plan
-	//
-	// Example: 2x2xCPU-4GB-50G
 	Plan *string `json:"plan,omitempty"`
 
 	// StorageSize Storage size in MiB per node
-	//
-	// Example: 25600
 	StorageSize *int32 `json:"storage_size,omitempty"`
 	Zones       *struct {
 		Zone *[]DatabaseZoneInfoResponse `json:"zone,omitempty"`
@@ -3810,38 +3741,24 @@ type DatabaseServicePropertiesOpensearch struct {
 	AuthFailureListeners          *struct {
 		InternalAuthenticationBackendLimiting *struct {
 			// AllowedTries The number of login attempts allowed before login is blocked
-			//
-			// Example: 10
 			AllowedTries *int `json:"allowed_tries,omitempty"`
 
 			// AuthenticationBackend The internal backend. Enter `internal`
-			//
-			// Example: internal
 			AuthenticationBackend *DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingAuthenticationBackend `json:"authentication_backend,omitempty"`
 
 			// BlockExpirySeconds The duration of time that login remains blocked after a failed login
-			//
-			// Example: 600
 			BlockExpirySeconds *int `json:"block_expiry_seconds,omitempty"`
 
 			// MaxBlockedClients The maximum number of blocked IP addresses
-			//
-			// Example: 100000
 			MaxBlockedClients *int `json:"max_blocked_clients,omitempty"`
 
 			// MaxTrackedClients The maximum number of tracked IP addresses that have failed login
-			//
-			// Example: 100000
 			MaxTrackedClients *int `json:"max_tracked_clients,omitempty"`
 
 			// TimeWindowSeconds The window of time in which the value for `allowed_tries` is enforced
-			//
-			// Example: 3600
 			TimeWindowSeconds *int `json:"time_window_seconds,omitempty"`
 
 			// Type The type of rate limiting
-			//
-			// Example: username
 			Type *DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingType `json:"type,omitempty"`
 		} `json:"internal_authentication_backend_limiting,omitempty"`
 	} `json:"auth_failure_listeners,omitempty"`
@@ -3932,10 +3849,7 @@ type DatabaseServicePropertiesOpensearch struct {
 	// HttpMaxInitialLineLength The max length of an HTTP URL, in bytes
 	HttpMaxInitialLineLength *int `json:"http_max_initial_line_length,omitempty"`
 	IndexPatterns            *[]struct {
-		// MaxIndexCount Example: 3
-		MaxIndexCount int `json:"max_index_count"`
-
-		// Pattern Example: logs_*_foo_*
+		MaxIndexCount    int                                                               `json:"max_index_count"`
 		Pattern          string                                                            `json:"pattern"`
 		SortingAlgorithm *DatabaseServicePropertiesOpensearchIndexPatternsSortingAlgorithm `json:"sorting_algorithm,omitempty"`
 	} `json:"index_patterns,omitempty"`
@@ -4346,13 +4260,9 @@ type DatabaseServicePropertiesOpensearch struct {
 }
 
 // DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingAuthenticationBackend The internal backend. Enter `internal`
-//
-// Example: internal
 type DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingAuthenticationBackend string
 
 // DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingType The type of rate limiting
-//
-// Example: username
 type DatabaseServicePropertiesOpensearchAuthFailureListenersInternalAuthenticationBackendLimitingType string
 
 // DatabaseServicePropertiesOpensearchClusterSearchRequestSlowlogLevel defines model for DatabaseServicePropertiesOpensearch.ClusterSearchRequestSlowlog.Level.
@@ -4372,49 +4282,26 @@ type DatabaseServicePropertiesOpensearchCustomKeystoresSettings0 struct {
 // DatabaseServicePropertiesOpensearchCustomKeystoresSettings1 defines model for DatabaseServicePropertiesOpensearch.CustomKeystores.Settings.1.
 type DatabaseServicePropertiesOpensearchCustomKeystoresSettings1 struct {
 	Credentials struct {
-		// AuthProviderX509CertUrl Example: https://www.googleapis.com/oauth2/v1/certs
 		AuthProviderX509CertUrl *string `json:"auth_provider_x509_cert_url,omitempty"`
-
-		// AuthUri Example: https://accounts.google.com/o/oauth2/auth
-		AuthUri *string `json:"auth_uri,omitempty"`
-
-		// ClientEmail Example: my-service-account@some-my-project.iam.gserviceaccount.com
-		ClientEmail string `json:"client_email"`
-
-		// ClientId Example: 103654484443722885992
-		ClientId string `json:"client_id"`
-
-		// ClientX509CertUrl Example: https://www.googleapis.com/robot/v1/metadata/x509/my-service-account%40some-my-project.iam.gserviceaccount.com
-		ClientX509CertUrl *string `json:"client_x509_cert_url,omitempty"`
+		AuthUri                 *string `json:"auth_uri,omitempty"`
+		ClientEmail             string  `json:"client_email"`
+		ClientId                string  `json:"client_id"`
+		ClientX509CertUrl       *string `json:"client_x509_cert_url,omitempty"`
 
 		// HmacAccessId The access ID for HMAC authentication with Google Cloud Storage
 		HmacAccessId *string `json:"hmac_access_id,omitempty"`
 
 		// HmacSecret The secret key for HMAC authentication with Google Cloud Storage
-		HmacSecret *string `json:"hmac_secret,omitempty"`
-
-		// PrivateKey Example: -----BEGIN PRIVATE KEY-----
-		// ...
-		// -----END PRIVATE KEY-----
-		PrivateKey string `json:"private_key"`
-
-		// PrivateKeyId Example: 5fdeb02a11ddf081930ac3ac60bf376a0aef8fad
-		PrivateKeyId string `json:"private_key_id"`
-
-		// ProjectId Example: some-my-project
-		ProjectId *string `json:"project_id,omitempty"`
-
-		// TokenUri Example: https://accounts.google.com/o/oauth2/token
-		TokenUri *string `json:"token_uri,omitempty"`
+		HmacSecret   *string `json:"hmac_secret,omitempty"`
+		PrivateKey   string  `json:"private_key"`
+		PrivateKeyId string  `json:"private_key_id"`
+		ProjectId    *string `json:"project_id,omitempty"`
+		TokenUri     *string `json:"token_uri,omitempty"`
 
 		// Type Always service_account for credentials created in Gcloud console or CLI
-		//
-		// Example: service_account
 		Type string `json:"type"`
 
 		// UniverseDomain The universe domain. The default universe domain is googleapis.com.
-		//
-		// Example: {"universe_domain": "googleapis.com", ...
 		UniverseDomain *string `json:"universe_domain,omitempty"`
 	} `json:"credentials"`
 }
@@ -4458,13 +4345,9 @@ type DatabaseServicePropertiesOpensearchCustomReposSettings0 struct {
 	Key *string `json:"key,omitempty"`
 
 	// MaxRestoreBytesPerSec Throttles the restore rate per node. Defaults to unlimited. Note that if the recovery settings for managed services are set, this value is overridden by the recovery settings. Value should be a byte size with unit, e.g. 40mb, 100kb, 1gb
-	//
-	// Example: 40mb
 	MaxRestoreBytesPerSec *string `json:"max_restore_bytes_per_sec,omitempty"`
 
 	// MaxSnapshotBytesPerSec Throttles the snapshot rate per node. Defaults to 40mb. Note that if the recovery settings for managed services are set, this value is overridden by the recovery settings. Value should be a byte size with unit, e.g. 40mb, 100kb, 1gb
-	//
-	// Example: 40mb
 	MaxSnapshotBytesPerSec *string `json:"max_snapshot_bytes_per_sec,omitempty"`
 	Readonly               *bool   `json:"readonly,omitempty"`
 
@@ -4486,60 +4369,33 @@ type DatabaseServicePropertiesOpensearchCustomReposSettings1 struct {
 	// Compress when set to true metadata files are stored in compressed format
 	Compress    *bool `json:"compress,omitempty"`
 	Credentials struct {
-		// AuthProviderX509CertUrl Example: https://www.googleapis.com/oauth2/v1/certs
 		AuthProviderX509CertUrl *string `json:"auth_provider_x509_cert_url,omitempty"`
-
-		// AuthUri Example: https://accounts.google.com/o/oauth2/auth
-		AuthUri *string `json:"auth_uri,omitempty"`
-
-		// ClientEmail Example: my-service-account@some-my-project.iam.gserviceaccount.com
-		ClientEmail string `json:"client_email"`
-
-		// ClientId Example: 103654484443722885992
-		ClientId string `json:"client_id"`
-
-		// ClientX509CertUrl Example: https://www.googleapis.com/robot/v1/metadata/x509/my-service-account%40some-my-project.iam.gserviceaccount.com
-		ClientX509CertUrl *string `json:"client_x509_cert_url,omitempty"`
+		AuthUri                 *string `json:"auth_uri,omitempty"`
+		ClientEmail             string  `json:"client_email"`
+		ClientId                string  `json:"client_id"`
+		ClientX509CertUrl       *string `json:"client_x509_cert_url,omitempty"`
 
 		// HmacAccessId The access ID for HMAC authentication with Google Cloud Storage
 		HmacAccessId *string `json:"hmac_access_id,omitempty"`
 
 		// HmacSecret The secret key for HMAC authentication with Google Cloud Storage
-		HmacSecret *string `json:"hmac_secret,omitempty"`
-
-		// PrivateKey Example: -----BEGIN PRIVATE KEY-----
-		// ...
-		// -----END PRIVATE KEY-----
-		PrivateKey string `json:"private_key"`
-
-		// PrivateKeyId Example: 5fdeb02a11ddf081930ac3ac60bf376a0aef8fad
-		PrivateKeyId string `json:"private_key_id"`
-
-		// ProjectId Example: some-my-project
-		ProjectId *string `json:"project_id,omitempty"`
-
-		// TokenUri Example: https://accounts.google.com/o/oauth2/token
-		TokenUri *string `json:"token_uri,omitempty"`
+		HmacSecret   *string `json:"hmac_secret,omitempty"`
+		PrivateKey   string  `json:"private_key"`
+		PrivateKeyId string  `json:"private_key_id"`
+		ProjectId    *string `json:"project_id,omitempty"`
+		TokenUri     *string `json:"token_uri,omitempty"`
 
 		// Type Always service_account for credentials created in Gcloud console or CLI
-		//
-		// Example: service_account
 		Type string `json:"type"`
 
 		// UniverseDomain The universe domain. The default universe domain is googleapis.com.
-		//
-		// Example: {"universe_domain": "googleapis.com", ...
 		UniverseDomain *string `json:"universe_domain,omitempty"`
 	} `json:"credentials"`
 
 	// MaxRestoreBytesPerSec Throttles the restore rate per node. Defaults to unlimited. Note that if the recovery settings for managed services are set, this value is overridden by the recovery settings. Value should be a byte size with unit, e.g. 40mb, 100kb, 1gb
-	//
-	// Example: 40mb
 	MaxRestoreBytesPerSec *string `json:"max_restore_bytes_per_sec,omitempty"`
 
 	// MaxSnapshotBytesPerSec Throttles the snapshot rate per node. Defaults to 40mb. Note that if the recovery settings for managed services are set, this value is overridden by the recovery settings. Value should be a byte size with unit, e.g. 40mb, 100kb, 1gb
-	//
-	// Example: 40mb
 	MaxSnapshotBytesPerSec *string `json:"max_snapshot_bytes_per_sec,omitempty"`
 	Readonly               *bool   `json:"readonly,omitempty"`
 }
@@ -4562,13 +4418,9 @@ type DatabaseServicePropertiesOpensearchCustomReposSettings2 struct {
 	Endpoint *string `json:"endpoint,omitempty"`
 
 	// MaxRestoreBytesPerSec Throttles the restore rate per node. Defaults to unlimited. Note that if the recovery settings for managed services are set, this value is overridden by the recovery settings. Value should be a byte size with unit, e.g. 40mb, 100kb, 1gb
-	//
-	// Example: 40mb
 	MaxRestoreBytesPerSec *string `json:"max_restore_bytes_per_sec,omitempty"`
 
 	// MaxSnapshotBytesPerSec Throttles the snapshot rate per node. Defaults to 40mb. Note that if the recovery settings for managed services are set, this value is overridden by the recovery settings. Value should be a byte size with unit, e.g. 40mb, 100kb, 1gb
-	//
-	// Example: 40mb
 	MaxSnapshotBytesPerSec *string `json:"max_snapshot_bytes_per_sec,omitempty"`
 	Readonly               *bool   `json:"readonly,omitempty"`
 	Region                 string  `json:"region"`
@@ -5104,102 +4956,116 @@ type DatabaseServicePropertiesValkeyValkeyPersistence string
 type DatabaseServicePropertiesValkeyValkeyVersion string
 
 // DatabaseServiceSecurityEnable Schema for enabling security on a service instance
+//
+// Examples: {"admin_password":"Str0ngP@ssw0rd!"}, {"admin_password":"Adm1n#2025$Secure"}, {"admin_password":"S3rv!ce_Access-Key"}, {"admin_password":"Sup3r$Admin!Token"}, {"admin_password":"P@55w0rd_R0t@tion#1"}
 type DatabaseServiceSecurityEnable struct {
 	// AdminPassword Security admin password
+	//
+	// Examples: Str0ngP@ssw0rd!
 	AdminPassword string `json:"admin_password"`
 }
 
 // DatabaseServiceSecurityModify Schema for modifying service security settings
+//
+// Examples: {"admin_password":"Curr3nt@Passw0rd!","new_password":"N3w@Str0ngPassw0rd!"}, {"admin_password":"Adm1nPrev#2025","new_password":"Rotated#Adm1n2025!"}, {"admin_password":"Old$SecureP@ss99","new_password":"Fresh$SecureKey88"}
 type DatabaseServiceSecurityModify struct {
 	// AdminPassword Current admin password
+	//
+	// Examples: current_password_123
 	AdminPassword string `json:"admin_password"`
 
 	// NewPassword New admin password
+	//
+	// Examples: new_secure_password_456
 	NewPassword string `json:"new_password"`
 }
 
 // DatabaseServiceStatusResponse Schema for representing the status of a service instance.
+//
+// Examples: {"state":"running"}
 type DatabaseServiceStatusResponse struct {
 	// State The service status indicates the service's current operational status.
-	//
-	// Example: running
 	State *string `json:"state,omitempty"`
 }
 
 // DatabaseServiceTaskBaseResponse Schema for representing a service task response
+//
+// Examples: {"create_time":"2022-10-04T12:21:42Z","id":"9b39f10d-e356-437b-b907-d6d5574721b2","operation":"mysql_migration_check","result":"All pre-checks passed successfully, preferred migration method will be [Replication]","result_codes":[],"success":true}
 type DatabaseServiceTaskBaseResponse struct {
 	// CreateTime The time when the service task was created
-	//
-	// Example: 2022-10-04T12:21:42Z
 	CreateTime *time.Time `json:"create_time,omitempty"`
 
 	// Id Optional identifier for the task
-	//
-	// Example: 9b39f10d-e356-437b-b907-d6d5574721b2
 	Id *openapi_types.UUID `json:"id,omitempty"`
 
 	// IgnoreDbs Optional list of databases to ignore
+	//
+	// Examples: defaultdb
 	IgnoreDbs *string `json:"ignore_dbs,omitempty"`
 
 	// Method Optional method used for the operation
-	//
-	// Example: Replication
 	Method *string `json:"method,omitempty"`
 
 	// Operation The operation being performed
-	//
-	// Example: mysql_migration_check
 	Operation *string `json:"operation,omitempty"`
 
 	// Result Optional result message
-	//
-	// Example: All pre-checks passed successfully, preferred migration method will be [Replication]
 	Result *string `json:"result,omitempty"`
 
 	// ResultCodes Optional list of result codes as key-value maps
 	ResultCodes *[]map[string]string `json:"result_codes,omitempty"`
 
 	// SourcePgVersion Optional source PostgreSQL version
-	//
-	// Example: 13
 	SourcePgVersion *string `json:"source_pg_version,omitempty"`
 
 	// Success Indicates if the operation was successful
-	//
-	// Example: true
 	Success *bool `json:"success,omitempty"`
 
 	// TargetPgVersion Optional target PostgreSQL version
-	//
-	// Example: 14
 	TargetPgVersion *string `json:"target_pg_version,omitempty"`
 }
 
 // DatabaseServiceTaskCreate Schema for creating a service task with various operations such as dataset import and migration checks.
+//
+// Examples: {"dataset_import":{"dataset_name":"customer-events"},"operation":"dataset_import"}, {"migration_check":{"source_service_uri":"postgresql://user:password@hostname:5432/dbname"},"operation":"migration_check"}, {"migration_check":{"ignore_dbs":"postgres,template1","method":"Replication","source_service_uri":"postgresql://replica:secret@10.0.0.12:5432/source"},"operation":"migration_check"}, {"operation":"upgrade","target_version":"15"}, {"operation":"upgrade_check","upgrade_check":{"target_version":"18"}}
 type DatabaseServiceTaskCreate struct {
 	DatasetImport *struct {
 		// DatasetName The name of the dataset to be imported.
+		//
+		// Examples: example-dataset
 		DatasetName string `json:"dataset_name"`
 	} `json:"dataset_import,omitempty"`
 	MigrationCheck *struct {
 		// IgnoreDbs Databases to ignore during the migration check, separated by commas.
+		//
+		// Examples: defaultdb
 		IgnoreDbs   *string `json:"ignore_dbs,omitempty"`
 		IgnoreRoles *string `json:"ignore_roles,omitempty"`
 
 		// Method The migration method to be used.
+		//
+		// Examples: Replication
 		Method *string `json:"method,omitempty"`
 
 		// SourceServiceUri The URI of the source service for migration.
+		//
+		// Examples: postgresql://user:password@hostname:port/dbname
 		SourceServiceUri string `json:"source_service_uri"`
 	} `json:"migration_check,omitempty"`
 
 	// Operation The operation to be performed.
+	//
+	// Examples: upgrade
 	Operation string `json:"operation"`
 
 	// TargetVersion The target version for upgrade operations.
+	//
+	// Examples: 14
 	TargetVersion *string `json:"target_version,omitempty"`
 	UpgradeCheck  *struct {
 		// TargetVersion The target major version for the upgrade check.
+		//
+		// Examples: 18
 		TargetVersion string `json:"target_version"`
 	} `json:"upgrade_check,omitempty"`
 }
@@ -5207,144 +5073,116 @@ type DatabaseServiceTaskCreate struct {
 // DatabaseServiceTaskDetailsResponse Response schema for retrieving detailed information about a specific service task, including result codes and success status.
 type DatabaseServiceTaskDetailsResponse struct {
 	// CreateTime The time when the service task was created
-	//
-	// Example: 2022-10-04T12:21:42Z
 	CreateTime *time.Time `json:"create_time,omitempty"`
 
 	// Id Optional identifier for the task
-	//
-	// Example: 9b39f10d-e356-437b-b907-d6d5574721b2
 	Id *openapi_types.UUID `json:"id,omitempty"`
 
 	// IgnoreDbs Optional list of databases to ignore
+	//
+	// Examples: defaultdb
 	IgnoreDbs *string `json:"ignore_dbs,omitempty"`
 
 	// Method Optional method used for the operation
-	//
-	// Example: Replication
 	Method *string `json:"method,omitempty"`
 
 	// Operation The operation being performed
-	//
-	// Example: mysql_migration_check
 	Operation *string `json:"operation,omitempty"`
 
 	// Result A human-readable summary of the task result.
-	//
-	// Example: ok *Clusters are compatible*
 	Result      *string              `json:"result,omitempty"`
 	ResultCodes *[]map[string]string `json:"result_codes,omitempty"`
 
 	// SourcePgVersion Optional source PostgreSQL version
-	//
-	// Example: 13
 	SourcePgVersion *string `json:"source_pg_version,omitempty"`
 
 	// Success Indicates whether the task completed successfully.
-	//
-	// Example: true
 	Success *bool `json:"success,omitempty"`
 
 	// TargetPgVersion Optional target PostgreSQL version
-	//
-	// Example: 14
 	TargetPgVersion *string `json:"target_pg_version,omitempty"`
 }
 
 // DatabaseServiceTaskResponse Response schema for retrieving information about a service task, including the operation type.
 type DatabaseServiceTaskResponse struct {
 	// CreateTime The time when the service task was created
-	//
-	// Example: 2022-10-04T12:21:42Z
 	CreateTime *time.Time `json:"create_time,omitempty"`
 
 	// Id Optional identifier for the task
-	//
-	// Example: 9b39f10d-e356-437b-b907-d6d5574721b2
 	Id *openapi_types.UUID `json:"id,omitempty"`
 
 	// IgnoreDbs Optional list of databases to ignore
+	//
+	// Examples: defaultdb
 	IgnoreDbs *string `json:"ignore_dbs,omitempty"`
 
 	// Method Optional method used for the operation
-	//
-	// Example: Replication
 	Method *string `json:"method,omitempty"`
 
 	// Operation The operation being performed
-	//
-	// Example: mysql_migration_check
 	Operation *string `json:"operation,omitempty"`
 
 	// OperationType The type of operation being performed.
-	//
-	// Example: async
 	OperationType *string `json:"operation_type,omitempty"`
 
 	// Result Optional result message
-	//
-	// Example: All pre-checks passed successfully, preferred migration method will be [Replication]
 	Result *string `json:"result,omitempty"`
 
 	// ResultCodes Optional list of result codes as key-value maps
 	ResultCodes *[]map[string]string `json:"result_codes,omitempty"`
 
 	// SourcePgVersion Optional source PostgreSQL version
-	//
-	// Example: 13
 	SourcePgVersion *string `json:"source_pg_version,omitempty"`
 
 	// Success Indicates if the operation was successful
-	//
-	// Example: true
 	Success *bool `json:"success,omitempty"`
 
 	// TargetPgVersion Optional target PostgreSQL version
-	//
-	// Example: 14
 	TargetPgVersion *string `json:"target_pg_version,omitempty"`
 }
 
 // DatabaseServiceType The type of service.
+//
+// Examples: mysql, pg, opensearch, valkey
 type DatabaseServiceType string
 
 // DatabaseServiceTypeModify Schema for modifying the service type
+//
+// Examples: {"target_type":"primary"}, {"target_type":"readonly"}, {"target_type":"analytics"}, {"target_type":"hot"}, {"target_type":"cold"}
 type DatabaseServiceTypeModify struct {
 	// TargetType Service type
 	TargetType string `json:"target_type"`
 }
 
 // DatabaseServiceTypeResponse Response schema for available service types
+//
+// Examples: {"dependencies":{},"description":"PostgreSQL - Object-Relational Database Management System","latest_available_version":"18.1","name":"postgresql","properties":{"automatic_utility_network_ip_filter":false,"ip_filter":["0.0.0.0/0"],"public_access":true,"version":"13"},"service_plans":[{"backup_config":{"interval":24,"max_count":3,"recovery_mode":"pitr"},"backup_config_pg":{"interval":24,"max_count":3,"recovery_mode":"pitr"},"core_number":1,"memory_amount":1024,"node_count":1,"plan":"1x1xCPU-1GB-10GB","storage_size":10240,"zones":{"zone":[{"name":"au-syd1"},{"name":"de-fra1"},{"name":"es-mad1"},{"name":"fi-hel1"},{"name":"fi-hel2"},{"name":"nl-ams1"},{"name":"pl-waw1"},{"name":"se-sto1"},{"name":"sg-sin1"},{"name":"uk-lon1"},{"name":"us-chi1"},{"name":"us-nyc1"},{"name":"us-sjo1"}]}}]}
 type DatabaseServiceTypeResponse struct {
 	Dependencies *map[string]DatabaseDependencyResponse `json:"dependencies,omitempty"`
 
 	// Description The  description of the service type
-	//
-	// Example: PostgreSQL - Object-Relational Database Management System
 	Description *string `json:"description,omitempty"`
 
 	// LatestAvailableVersion The latest available version of the service type
-	//
-	// Example: 18.1
 	LatestAvailableVersion *string `json:"latest_available_version,omitempty"`
 
 	// Name The name of the service type
-	//
-	// Example: postgresql
 	Name         *string                                    `json:"name,omitempty"`
 	Properties   *map[string]DatabasePropertySchemaResponse `json:"properties,omitempty"`
 	ServicePlans *[]DatabaseServicePlanResponse             `json:"service_plans,omitempty"`
 }
 
 // DatabaseServiceUpgrade Schema for upgrading the service version
+//
+// Examples: {"target_version":"12"}, {"target_version":"13"}, {"target_version":"14"}, {"target_version":"15"}, {"target_version":"16"}
 type DatabaseServiceUpgrade struct {
 	// TargetVersion Version to upgrade the service
-	//
-	// Example: 12
 	TargetVersion string `json:"target_version"`
 }
 
 // DatabaseServiceUserAclModify Schema for modifying user access control lists (ACL) for various services
+//
+// Examples: {"opensearch_access_control":{"rules":[{"index":"logs-*","permission":"read"}]},"pg_access_control":{"allow_replication":true},"redis_access_control":{"categories":["@admin","@read"],"channels":["news","alerts"],"commands":["GET","SET"],"keys":["user:*","session:*"]},"valkey_access_control":{"categories":["@write"],"channels":["updates"],"commands":["DEL"],"keys":["cache:*"]}}
 type DatabaseServiceUserAclModify struct {
 	// OpensearchAccessControl OpenSearch index permission modification schema
 	OpensearchAccessControl *struct {
@@ -5358,6 +5196,8 @@ type DatabaseServiceUserAclModify struct {
 	// PgAccessControl PostgreSQL replication permission modification schema
 	PgAccessControl *struct {
 		// AllowReplication Flag to allow or disallow replication
+		//
+		// Examples: true, false
 		AllowReplication bool `json:"allow_replication"`
 	} `json:"pg_access_control,omitempty"`
 
@@ -5393,8 +5233,12 @@ type DatabaseServiceUserAclModify struct {
 }
 
 // DatabaseServiceUserCreate Schema for creating a service user with access control settings
+//
+// Examples: {"authentication":"caching_sha2_password","password":"new-password","username":"api-doc-user"}
 type DatabaseServiceUserCreate struct {
 	// Authentication The authentication method for the service user
+	//
+	// Examples: caching_sha2_password
 	Authentication *string `json:"authentication,omitempty"`
 
 	// OpensearchAccessControl OpenSearch access control settings
@@ -5402,19 +5246,27 @@ type DatabaseServiceUserCreate struct {
 		// Rules List of index permission rules
 		Rules []struct {
 			// Index The index pattern for the rule
+			//
+			// Examples: logs-*
 			Index string `json:"index"`
 
 			// Permission The permission level for the index
+			//
+			// Examples: read, write, admin
 			Permission string `json:"permission"`
 		} `json:"rules"`
 	} `json:"opensearch_access_control,omitempty"`
 
 	// Password The password of the service user
+	//
+	// Examples: strongpassword123
 	Password *string `json:"password,omitempty"`
 
 	// PgAccessControl PostgreSQL access control settings
 	PgAccessControl *struct {
 		// AllowReplication Flag to allow or disallow replication
+		//
+		// Examples: true, false
 		AllowReplication bool `json:"allow_replication"`
 	} `json:"pg_access_control,omitempty"`
 
@@ -5434,6 +5286,8 @@ type DatabaseServiceUserCreate struct {
 	} `json:"redis_access_control,omitempty"`
 
 	// Username The username of the service user
+	//
+	// Examples: defaultdb
 	Username string `json:"username"`
 
 	// ValkeyAccessControl Valkey access control settings
@@ -5453,33 +5307,43 @@ type DatabaseServiceUserCreate struct {
 }
 
 // DatabaseServiceUserModify Schema for modifying a service user
+//
+// Examples: {"authentication":"caching_sha2_password","password":"new_secure_password_123!"}
 type DatabaseServiceUserModify struct {
 	// Authentication Authentication method for the service user
+	//
+	// Examples: caching_sha2_password, mysql_native_password
 	Authentication *string `json:"authentication,omitempty"`
 
 	// Password New password for the service user
+	//
+	// Examples: new_secure_password_123!
 	Password *string `json:"password,omitempty"`
 }
 
 // DatabaseServiceVersionsResponse Schema for representing available service versions
+//
+// Examples: ["12","13","14","15","16"]
 type DatabaseServiceVersionsResponse = []string
 
 // DatabaseTerminateSessionResponse Schema for the response received after terminating a session
+//
+// Examples: {"success":true}
 type DatabaseTerminateSessionResponse struct {
 	// Success Indicates whether the session termination was successful.
-	//
-	// Example: true
 	Success *bool `json:"success,omitempty"`
 }
 
 // DatabaseTitle The title of an entity.
+//
+// Examples: my-service
 type DatabaseTitle = string
 
 // DatabaseUpCloudApiResponse Schema for UpCloud API error responses.
+//
+// Examples: {"errors":[{"message":"Invalid request","more_info":"https://developers.upcloud.com/errors","status":400}],"message":"An error occurred while processing your request."}
 type DatabaseUpCloudApiResponse struct {
 	// Errors A list of error messages returned by UpCloud's API.
-	//
-	// Example: [{"message":"Invalid request","more_info":"https://developers.upcloud.com/errors","status":400}]
 	Errors *[]struct {
 		// Message A descriptive error message.
 		Message *string `json:"message,omitempty"`
@@ -5492,420 +5356,580 @@ type DatabaseUpCloudApiResponse struct {
 	} `json:"errors,omitempty"`
 
 	// Message The time the backup was created.
-	//
-	// Example: An error occurred while processing your request.
 	Message *string `json:"message,omitempty"`
 }
 
 // DatabaseUserResponse Schema for a user response.
+//
+// Examples: {"authentication":"caching_sha2_password","password":"my-password","type":"admin","username":"admin"}
 type DatabaseUserResponse struct {
 	// Authentication The authentication method used by the user.
-	//
-	// Example: caching_sha2_password
 	Authentication *string `json:"authentication,omitempty"`
 
 	// OpensearchAccessControl Schema for OpenSearch access control response.
+	//
+	// Examples: {"rules":[{"index":"log-*","permission":"read"}]}
 	OpensearchAccessControl *DatabaseOpenSearchAccessControlResponse `json:"opensearch_access_control,omitempty"`
 
 	// Password The password of the user.
-	//
-	// Example: my-password
 	Password *string `json:"password,omitempty"`
 
 	// PgAccessControl Schema for PostgreSQL access control response.
+	//
+	// Examples: {"allow_replication":true}
 	PgAccessControl *DatabasePgAccessControlResponse `json:"pg_access_control,omitempty"`
 
 	// RedisAccessControl Schema for Redis access control response.
+	//
+	// Examples: {"categories":["@all","@fast"],"channels":["news","updates"],"commands":["GET","SET","DEL"],"keys":["user:*","session:*"]}
 	RedisAccessControl *DatabaseRedisAccessControlResponse `json:"redis_access_control,omitempty"`
 
 	// Type The type of the user.
-	//
-	// Example: admin
 	Type *string `json:"type,omitempty"`
 
 	// Username The username of the user.
-	//
-	// Example: admin
 	Username *string `json:"username,omitempty"`
 
 	// ValkeyAccessControl Schema for Valkey user access control response
+	//
+	// Examples: {"categories":["@all","@fast"],"channels":["news","updates"],"commands":["GET","SET","DEL"],"keys":["user:*","session:*"]}
 	ValkeyAccessControl *DatabaseValkeyAccessControlResponse `json:"valkey_access_control,omitempty"`
 }
 
 // DatabaseUsersResponse Schema for the response containing a list of users
+//
+// Examples: [{"authentication":"caching_sha2_password","password":"my-password","type":"admin","username":"admin"}]
 type DatabaseUsersResponse = []DatabaseUserResponse
 
 // DatabaseUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DatabaseUuid = openapi_types.UUID
 
 // DatabaseValkeyAccessControlResponse Schema for Valkey user access control response
+//
+// Examples: {"categories":["@all","@fast"],"channels":["news","updates"],"commands":["GET","SET","DEL"],"keys":["user:*","session:*"]}
 type DatabaseValkeyAccessControlResponse struct {
 	// Categories List of command categories the user has access to.
-	//
-	// Example: ["@all","@fast"]
 	Categories *[]string `json:"categories,omitempty"`
 
 	// Channels List of Pub/Sub channels the user has access to.
-	//
-	// Example: ["news","updates"]
 	Channels *[]string `json:"channels,omitempty"`
 
 	// Commands List of specific commands the user has access to.
-	//
-	// Example: ["GET","SET","DEL"]
 	Commands *[]string `json:"commands,omitempty"`
 
 	// Keys List of key patterns the user has access to.
-	//
-	// Example: ["user:*","session:*"]
 	Keys *[]string `json:"keys,omitempty"`
 }
 
 // DatabaseVersionsResponse Response schema for listing available service versions across all service types
+//
+// Examples: [{"availability_end_time":null,"availability_start_time":"2019-05-10T00:00:00Z","end_of_life_time":null,"major_version":"8","service_type":"mysql","state":"available","termination_time":null,"upgrade_to_service_type":null,"upgrade_to_version":null,"upstream_end_of_life_time":null},{"availability_end_time":"2028-05-09T00:00:00Z","availability_start_time":"2024-01-08T00:00:00Z","end_of_life_time":"2028-11-09T00:00:00Z","major_version":"16","service_type":"pg","state":"available","termination_time":null,"upgrade_to_service_type":null,"upgrade_to_version":null,"upstream_end_of_life_time":"2028-11-09T00:00:00Z"},{"availability_end_time":null,"availability_start_time":"2022-07-12T00:00:00Z","end_of_life_time":null,"major_version":"2","service_type":"opensearch","state":"available","termination_time":null,"upgrade_to_service_type":null,"upgrade_to_version":null,"upstream_end_of_life_time":null}]
 type DatabaseVersionsResponse = []struct {
 	// AvailabilityEndTime The date when this version will no longer be available for new services
-	//
-	// Example: 2028-05-09T00:00:00Z
 	AvailabilityEndTime *time.Time `json:"availability_end_time,omitempty"`
 
 	// AvailabilityStartTime The date when this version became available
-	//
-	// Example: 2024-01-08T00:00:00Z
 	AvailabilityStartTime *time.Time `json:"availability_start_time,omitempty"`
 
 	// EndOfLifeTime The date when this version reaches end of life
-	//
-	// Example: 2028-11-09T00:00:00Z
 	EndOfLifeTime *time.Time `json:"end_of_life_time,omitempty"`
 
 	// MajorVersion The major version of the service
-	//
-	// Example: 16
 	MajorVersion string `json:"major_version"`
 
 	// ServiceType The type of service (e.g., mysql, pg, opensearch, valkey)
-	//
-	// Example: pg
 	ServiceType DatabaseVersionsResponseServiceType `json:"service_type"`
 
 	// State The availability state of the version
-	//
-	// Example: available
 	State DatabaseVersionsResponseState `json:"state"`
 
 	// TerminationTime The date when services running this version will be terminated
-	//
-	// Example: 2028-11-09T00:00:00Z
 	TerminationTime *time.Time `json:"termination_time,omitempty"`
 
 	// UpgradeToServiceType The service type to upgrade to when this version reaches end of life
-	//
-	// Example: 2028-11-09T00:00:00Z
 	UpgradeToServiceType *time.Time `json:"upgrade_to_service_type,omitempty"`
 
 	// UpgradeToVersion The version to upgrade to when this version reaches end of life
-	//
-	// Example: 2
 	UpgradeToVersion *string `json:"upgrade_to_version,omitempty"`
 
 	// UpstreamEndOfLifeTime The upstream end of life date for this version
-	//
-	// Example: 2028-11-09T00:00:00Z
 	UpstreamEndOfLifeTime *time.Time `json:"upstream_end_of_life_time,omitempty"`
 }
 
 // DatabaseVersionsResponseServiceType The type of service (e.g., mysql, pg, opensearch, valkey)
-//
-// Example: pg
 type DatabaseVersionsResponseServiceType string
 
 // DatabaseVersionsResponseState The availability state of the version
-//
-// Example: available
 type DatabaseVersionsResponseState string
 
 // DatabaseZoneInfoResponse Schema for representing a Zone
+//
+// Examples: {"name":"fi-hel-1"}
 type DatabaseZoneInfoResponse struct {
 	// Name Zone identifier
-	//
-	// Example: fi-hel-1
 	Name *string `json:"name,omitempty"`
 }
 
 // CloneDatabaseUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CloneDatabaseUuid = DatabaseUuid
 
 // CreateDatabaseConnectionPoolUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateDatabaseConnectionPoolUuid = DatabaseUuid
 
 // CreateDatabaseIntegrationUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateDatabaseIntegrationUuid = DatabaseUuid
 
 // CreateDatabaseLabelUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateDatabaseLabelUuid = DatabaseUuid
 
 // CreateDatabaseLogicalDatabaseUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateDatabaseLogicalDatabaseUuid = DatabaseUuid
 
 // CreateDatabaseNetworkUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateDatabaseNetworkUuid = DatabaseUuid
 
 // CreateDatabaseTaskUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateDatabaseTaskUuid = DatabaseUuid
 
 // CreateDatabaseUserUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateDatabaseUserUuid = DatabaseUuid
 
 // DeleteDatabaseConnectionPoolPoolName The title of an entity.
+//
+// Examples: my-service
 type DeleteDatabaseConnectionPoolPoolName = DatabaseTitle
 
 // DeleteDatabaseConnectionPoolUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteDatabaseConnectionPoolUuid = DatabaseUuid
 
 // DeleteDatabaseIndexIndexName The title of an entity.
+//
+// Examples: my-service
 type DeleteDatabaseIndexIndexName = DatabaseTitle
 
 // DeleteDatabaseIndexUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteDatabaseIndexUuid = DatabaseUuid
 
 // DeleteDatabaseIntegrationEndpointIntegrationUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteDatabaseIntegrationEndpointIntegrationUuid = DatabaseIntegrationUUID
 
 // DeleteDatabaseIntegrationIntegrationUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteDatabaseIntegrationIntegrationUuid = DatabaseIntegrationUUID
 
 // DeleteDatabaseIntegrationUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteDatabaseIntegrationUuid = DatabaseUuid
 
 // DeleteDatabaseLabelLabelKey The key of a label.
+//
+// Examples: foo
 type DeleteDatabaseLabelLabelKey = DatabaseLabelKey
 
 // DeleteDatabaseLabelUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteDatabaseLabelUuid = DatabaseUuid
 
 // DeleteDatabaseLogicalDatabaseDatabaseName The title of an entity.
+//
+// Examples: my-service
 type DeleteDatabaseLogicalDatabaseDatabaseName = DatabaseTitle
 
 // DeleteDatabaseLogicalDatabaseUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteDatabaseLogicalDatabaseUuid = DatabaseUuid
 
 // DeleteDatabaseNetworkNetworkName The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteDatabaseNetworkNetworkName = DatabaseUuid
 
 // DeleteDatabaseNetworkUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteDatabaseNetworkUuid = DatabaseUuid
 
 // DeleteDatabaseUserUsername The title of an entity.
+//
+// Examples: my-service
 type DeleteDatabaseUserUsername = DatabaseTitle
 
 // DeleteDatabaseUserUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteDatabaseUserUuid = DatabaseUuid
 
 // DeleteDatabaseUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteDatabaseUuid = DatabaseUuid
 
 // EnableDatabaseSecurityAdminUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type EnableDatabaseSecurityAdminUuid = DatabaseUuid
 
 // EnableDatabaseTemporaryWritesUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type EnableDatabaseTemporaryWritesUuid = DatabaseUuid
 
 // GetDatabaseAccessControlUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetDatabaseAccessControlUuid = DatabaseUuid
 
 // GetDatabaseAlertsUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetDatabaseAlertsUuid = DatabaseUuid
 
 // GetDatabaseAvailableExtensionsUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetDatabaseAvailableExtensionsUuid = DatabaseUuid
 
 // GetDatabaseConnectionPoolPoolName The title of an entity.
+//
+// Examples: my-service
 type GetDatabaseConnectionPoolPoolName = DatabaseTitle
 
 // GetDatabaseConnectionPoolUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetDatabaseConnectionPoolUuid = DatabaseUuid
 
 // GetDatabaseIntegrationEndpointIntegrationUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetDatabaseIntegrationEndpointIntegrationUuid = DatabaseIntegrationUUID
 
 // GetDatabaseIntegrationIntegrationUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetDatabaseIntegrationIntegrationUuid = DatabaseIntegrationUUID
 
 // GetDatabaseIntegrationUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetDatabaseIntegrationUuid = DatabaseUuid
 
 // GetDatabaseLabelLabelKey The key of a label.
+//
+// Examples: foo
 type GetDatabaseLabelLabelKey = DatabaseLabelKey
 
 // GetDatabaseLabelUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetDatabaseLabelUuid = DatabaseUuid
 
 // GetDatabaseLogsLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
+//
+// Examples: 10, 25, 50, 100
 type GetDatabaseLogsLimit = DatabaseQueryParamLimit
 
 // GetDatabaseLogsOffset Schema for a query parameter specifying the offset for pagination.
+//
+// Examples: 0, 10, 20, 50
 type GetDatabaseLogsOffset = DatabaseQueryParamOffset
 
 // GetDatabaseLogsOrder Schema for a query parameter specifying the order.
+//
+// Examples: asc, desc
 type GetDatabaseLogsOrder = DatabaseQueryParamOrder
 
 // GetDatabaseLogsUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetDatabaseLogsUuid = DatabaseUuid
 
 // GetDatabaseMetricsUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetDatabaseMetricsUuid = DatabaseUuid
 
 // GetDatabaseMigrationStatusUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetDatabaseMigrationStatusUuid = DatabaseUuid
 
 // GetDatabaseNetworkNetworkName The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetDatabaseNetworkNetworkName = DatabaseUuid
 
 // GetDatabaseNetworkUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetDatabaseNetworkUuid = DatabaseUuid
 
 // GetDatabasePeeringsStatusUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetDatabasePeeringsStatusUuid = DatabaseUuid
 
 // GetDatabaseQueryStatisticsLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
+//
+// Examples: 10, 25, 50, 100
 type GetDatabaseQueryStatisticsLimit = DatabaseQueryParamLimit
 
 // GetDatabaseQueryStatisticsOffset Schema for a query parameter specifying the offset for pagination.
+//
+// Examples: 0, 10, 20, 50
 type GetDatabaseQueryStatisticsOffset = DatabaseQueryParamOffset
 
 // GetDatabaseQueryStatisticsOrder Schema for a query parameter specifying the order.
+//
+// Examples: asc, desc
 type GetDatabaseQueryStatisticsOrder = DatabaseQueryParamOrder
 
 // GetDatabaseQueryStatisticsUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetDatabaseQueryStatisticsUuid = DatabaseUuid
 
 // GetDatabaseSecurityUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetDatabaseSecurityUuid = DatabaseUuid
 
 // GetDatabaseSessionsLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
+//
+// Examples: 10, 25, 50, 100
 type GetDatabaseSessionsLimit = DatabaseQueryParamLimit
 
 // GetDatabaseSessionsOffset Schema for a query parameter specifying the offset for pagination.
+//
+// Examples: 0, 10, 20, 50
 type GetDatabaseSessionsOffset = DatabaseQueryParamOffset
 
 // GetDatabaseSessionsOrder Schema for a query parameter specifying the order.
+//
+// Examples: asc, desc
 type GetDatabaseSessionsOrder = DatabaseQueryParamOrder
 
 // GetDatabaseSessionsUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetDatabaseSessionsUuid = DatabaseUuid
 
 // GetDatabaseStatusUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetDatabaseStatusUuid = DatabaseUuid
 
 // GetDatabaseTaskTaskId The unique identifier for the integration.
+//
+// Examples: 1001, 1002
 type GetDatabaseTaskTaskId = DatabaseId
 
 // GetDatabaseTaskUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetDatabaseTaskUuid = DatabaseUuid
 
 // GetDatabaseTypeServiceTypeName The type of service.
+//
+// Examples: mysql, pg, opensearch, valkey
 type GetDatabaseTypeServiceTypeName = DatabaseServiceType
 
 // GetDatabaseUserUsername The title of an entity.
+//
+// Examples: my-service
 type GetDatabaseUserUsername = DatabaseTitle
 
 // GetDatabaseUserUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetDatabaseUserUuid = DatabaseUuid
 
 // GetDatabaseUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetDatabaseUuid = DatabaseUuid
 
 // GetDatabaseVersionsUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetDatabaseVersionsUuid = DatabaseUuid
 
 // ListDatabaseConnectionPoolsSort Schema for a query parameter specifying the order.
+//
+// Examples: asc, desc
 type ListDatabaseConnectionPoolsSort = DatabaseQueryParamOrder
 
 // ListDatabaseConnectionPoolsUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ListDatabaseConnectionPoolsUuid = DatabaseUuid
 
 // ListDatabaseIndicesUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ListDatabaseIndicesUuid = DatabaseUuid
 
 // ListDatabaseIntegrationsUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ListDatabaseIntegrationsUuid = DatabaseUuid
 
 // ListDatabaseLabelsUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ListDatabaseLabelsUuid = DatabaseUuid
 
 // ListDatabaseLogicalDatabasesUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ListDatabaseLogicalDatabasesUuid = DatabaseUuid
 
 // ListDatabaseNetworksUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ListDatabaseNetworksUuid = DatabaseUuid
 
 // ListDatabaseUsersUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ListDatabaseUsersUuid = DatabaseUuid
 
 // ListDatabasesLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
+//
+// Examples: 10, 25, 50, 100
 type ListDatabasesLimit = DatabaseQueryParamLimit
 
 // ListDatabasesOffset Schema for a query parameter specifying the offset for pagination.
+//
+// Examples: 0, 10, 20, 50
 type ListDatabasesOffset = DatabaseQueryParamOffset
 
 // ListDatabasesSort Schema for a query parameter specifying the sort field and direction. Prefix with '-' for descending order.
+//
+// Examples: -created_at, name, -zone
 type ListDatabasesSort = DatabaseQueryParamSort
 
 // ModifyDatabaseAccessControlUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyDatabaseAccessControlUuid = DatabaseUuid
 
 // ModifyDatabaseConnectionPoolPoolName The title of an entity.
+//
+// Examples: my-service
 type ModifyDatabaseConnectionPoolPoolName = DatabaseTitle
 
 // ModifyDatabaseConnectionPoolUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyDatabaseConnectionPoolUuid = DatabaseUuid
 
 // ModifyDatabaseIntegrationEndpointIntegrationUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyDatabaseIntegrationEndpointIntegrationUuid = DatabaseIntegrationUUID
 
 // ModifyDatabaseIntegrationIntegrationUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyDatabaseIntegrationIntegrationUuid = DatabaseIntegrationUUID
 
 // ModifyDatabaseIntegrationUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyDatabaseIntegrationUuid = DatabaseUuid
 
 // ModifyDatabaseLabelLabelKey The key of a label.
+//
+// Examples: foo
 type ModifyDatabaseLabelLabelKey = DatabaseLabelKey
 
 // ModifyDatabaseLabelUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyDatabaseLabelUuid = DatabaseUuid
 
 // ModifyDatabaseSecurityAdminUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyDatabaseSecurityAdminUuid = DatabaseUuid
 
 // ModifyDatabaseTypeUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyDatabaseTypeUuid = DatabaseUuid
 
 // ModifyDatabaseUserAccessControlUsername The title of an entity.
+//
+// Examples: my-service
 type ModifyDatabaseUserAccessControlUsername = DatabaseTitle
 
 // ModifyDatabaseUserAccessControlUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyDatabaseUserAccessControlUuid = DatabaseUuid
 
 // ModifyDatabaseUserUsername The title of an entity.
+//
+// Examples: my-service
 type ModifyDatabaseUserUsername = DatabaseTitle
 
 // ModifyDatabaseUserUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyDatabaseUserUuid = DatabaseUuid
 
 // ModifyDatabaseUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyDatabaseUuid = DatabaseUuid
 
 // StartDatabaseManualMaintenanceUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type StartDatabaseManualMaintenanceUuid = DatabaseUuid
 
 // TerminateDatabaseSessionPid The unique identifier for the integration.
+//
+// Examples: 1001, 1002
 type TerminateDatabaseSessionPid = DatabaseId
 
 // TerminateDatabaseSessionUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type TerminateDatabaseSessionUuid = DatabaseUuid
 
 // UpgradeDatabaseUuid The unique identifier for the integration.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type UpgradeDatabaseUuid = DatabaseUuid
 
 // CloneDatabase201 Schema for service information response.
@@ -5927,48 +5951,64 @@ type CreateDatabaseConnectionPoolDefault = DatabaseErrorResponse
 type CreateDatabaseDefault = DatabaseErrorResponse
 
 // CreateDatabaseIntegration201 Schema for a service integration response.
+//
+// Examples: {"destination_name":"my-rsyslog-server","destination_uuid":"123e4567-e89b-12d3-a456-426614174000","node_states":[{"errors":["some error"],"likely_error_cause":null,"name":"node-1","status":"running"}],"properties":{"key1":"value1","key2":2,"key3":true},"source_name":"my-database","source_uuid":"123e4567-e89b-12d3-a456-426614174000","state":"active","state_error":[],"type":"rsyslog","uuid":"123e4567-e89b-12d3-a456-426614174000"}
 type CreateDatabaseIntegration201 = DatabaseServiceIntegrationResponse
 
 // CreateDatabaseIntegrationDefault Schema for error responses from the API.
 type CreateDatabaseIntegrationDefault = DatabaseErrorResponse
 
 // CreateDatabaseIntegrationEndpoint201 Schema for an integration endpoint response.
+//
+// Examples: {"name":"rsyslog","properties":{"format":"rfc5424","max_message_size":8192,"port":514,"sd":"","server":"94.237.95.164","tls":false},"type":"rsyslog","uuid":"20e86f48-2dcd-4a43-843d-3532ab112c1d"}
 type CreateDatabaseIntegrationEndpoint201 = DatabaseIntegrationEndpointResponse
 
 // CreateDatabaseIntegrationEndpointDefault Schema for error responses from the API.
 type CreateDatabaseIntegrationEndpointDefault = DatabaseErrorResponse
 
 // CreateDatabaseLabel201 Schema for deleting a label with a key and value.
+//
+// Examples: {"key":"environment","value":"production"}
 type CreateDatabaseLabel201 = DatabaseLabelResponse
 
 // CreateDatabaseLabelDefault Schema for error responses from the API.
 type CreateDatabaseLabelDefault = DatabaseErrorResponse
 
 // CreateDatabaseLogicalDatabase201 Schema for a logical database response.
+//
+// Examples: {"lc_collate":"en_US.UTF-8","lc_ctype":"en_US.UTF-8","name":"postgres"}
 type CreateDatabaseLogicalDatabase201 = LogicalDatabaseResponse
 
 // CreateDatabaseLogicalDatabaseDefault Schema for error responses from the API.
 type CreateDatabaseLogicalDatabaseDefault = DatabaseErrorResponse
 
 // CreateDatabaseNetwork201 Schema for network information response details
+//
+// Examples: {"create_time":"2025-08-01T10:40:04.140473Z","family":"IPv4","name":"example-private-network","type":"private","update_time":"2025-08-01T10:40:04.140473Z","uuid":"123e4567-e89b-12d3-a456-426614174000"}
 type CreateDatabaseNetwork201 = DatabaseNetworkInformationDetailsResponse
 
 // CreateDatabaseNetworkDefault Schema for error responses from the API.
 type CreateDatabaseNetworkDefault = DatabaseErrorResponse
 
 // CreateDatabaseTask201 Response schema for retrieving information about a service task, including the operation type.
+//
+// Examples: {"create_time":"2022-10-04T12:21:42Z","id":"9b39f10d-e356-437b-b907-d6d5574721b2","operation":"mysql_migration_check","operation_type":"async","result":"All pre-checks passed successfully, preferred migration method will be [Replication]","result_codes":[],"success":true}
 type CreateDatabaseTask201 = DatabaseServiceTaskResponse
 
 // CreateDatabaseTaskDefault Schema for error responses from the API.
 type CreateDatabaseTaskDefault = DatabaseErrorResponse
 
 // CreateDatabaseUser201 Schema for a user response.
+//
+// Examples: {"authentication":"caching_sha2_password","password":"my-password","type":"admin","username":"admin"}
 type CreateDatabaseUser201 = DatabaseUserResponse
 
 // CreateDatabaseUserDefault Schema for error responses from the API.
 type CreateDatabaseUserDefault = DatabaseErrorResponse
 
 // DatabaseGetPGAvailableExtensions200 Response schema for listing available PostgreSQL extensions grouped by version
+//
+// Examples: [{"extensions":[{"default_version":"1.12","name":"pg_stat_statements","versions":["1.10","1.11","1.12"]},{"default_version":"3.4.0","name":"postgis","versions":["3.3.0","3.4.0"]}],"version":"16"},{"extensions":[{"default_version":"1.10","name":"pg_stat_statements","versions":["1.9","1.10"]},{"default_version":"3.3.0","name":"postgis","versions":["3.2.0","3.3.0"]}],"version":"15"}]
 type DatabaseGetPGAvailableExtensions200 = DatabasePGAvailableExtensionsResponse
 
 // DatabaseGetPGAvailableExtensionsDefault Schema for error responses from the API.
@@ -6002,12 +6042,16 @@ type DeleteDatabaseNetworkDefault = DatabaseErrorResponse
 type DeleteDatabaseUserDefault = DatabaseErrorResponse
 
 // EnableDatabaseSecurityAdmin201 OpenSearch security plugin status response
+//
+// Examples: {"security_plugin_admin_enabled":true,"security_plugin_available":true,"security_plugin_enabled":true}
 type EnableDatabaseSecurityAdmin201 = DatabaseOpenSearchSecurityPluginStatusResponse
 
 // EnableDatabaseSecurityAdminDefault Schema for error responses from the API.
 type EnableDatabaseSecurityAdminDefault = DatabaseErrorResponse
 
 // EnableDatabaseTemporaryWrites201 Schema for UpCloud API error responses.
+//
+// Examples: {"errors":[{"message":"Invalid request","more_info":"https://developers.upcloud.com/errors","status":400}],"message":"An error occurred while processing your request."}
 type EnableDatabaseTemporaryWrites201 = DatabaseUpCloudApiResponse
 
 // EnableDatabaseTemporaryWritesDefault Schema for error responses from the API.
@@ -6017,12 +6061,16 @@ type EnableDatabaseTemporaryWritesDefault = DatabaseErrorResponse
 type GetDatabase200 = DatabaseServiceInformationResponse
 
 // GetDatabaseAccessControl200 Response schema for access control settings of a cluster.
+//
+// Examples: {"access_control":false,"extended_access_control":true}
 type GetDatabaseAccessControl200 = DatabaseAccessControlSettingsResponse
 
 // GetDatabaseAccessControlDefault Schema for error responses from the API.
 type GetDatabaseAccessControlDefault = DatabaseErrorResponse
 
 // GetDatabaseAccountCA200 Response schema for account CA
+//
+// Examples: {"certificate":"-----BEGIN CERTIFICATE-----\naxxxxxxxxxxxxx+tkP9Uh9+PxxxxxcNAQEM\nBQAwOjE4MDYGA1UEAwwvZWYzMTc1xxxxxxxxxx0YjM2OWIz\nM2RkIFByb2plY3QgQ0EwHhcNMjEwMzMwMDgxNDU0WhcNMzEwMzI4MDgxNDU0WjA6\nMTgwNgYDVQQDDC9lZjMxNzU1NC1lNzYzLTQ5ZjUtODI4Ni1lZDRiMzY5YjMzZGQg\nUHJvamVjdCBDQTCCAaIwDQYJKoZIhvcNAQEBBQxxxxggGBAK1Vh4GR\nlfxPZ3Icw8E1WlS5+9rADOdrstYtL3oiHBqzljmjvKf1Vuu0LLHtszWrCElOvoZ4\nzhg6+yVIB9YcvTZJNU0BNlIilF0rafn/40pFjeKrtxxxxxxxxxxy48Hnk\nMAiqoRyJ6hGRpYmKVip2sbMEtI+X9xQahlhlTMLo9082gS2hI5nvmhDqRiOlly28\ntwr2I/nbsIao8pIE19bdptKVqrv9x+O51O2JK7NlyjxnJVaHS9Tv6z1gG0GZgzYW\nkram1U8oTu72cjvGhMIBhgz7AlQ74PMtAub/eH4hipGU4LDZQiZ+9kCT+FCD9uAq\nIq+ALiLPHTCaGiKTJYoerutgrmrz1HZp6RmxRc8Wk7MdPp8OHqSXUnewKSGlzEl3\nhlJ5UMOVQ+tSDffAuvA6phUS0mmm1xxxxxxxxxxxxxxxMcrVE8AjbF5nkieOV0r6hIwIDAQAB\noz8wPTAdBgNVHQ4EFxxxxgQUHTUNeVDpSFx8fjq9xxxxxxxxFDnqn8xY0iAwDwYDVR0TBAgwBgEB\n/wIBADALBgNxxxxxxxxxxLtt8qOjsbvS\nYZtePpqZjx7NkmFdScc0LOBj6oXFetcJlhLQKzrguQDi/trt29sxjZZ5zLnQufnE\ns8IYtbclhDbF0qGG15oP8tYVRXfzKLHF4HfuMrdiyqzF/q6Qy0fVIiFWD7t1it8V\nPLqlk9oFDL7xUnsZOfYcqv8Ct+aWE7L73gJVgUkDHP+gkdGTWKYm4zzYTLfqh1Iu\nyivOjn+KSyjjtsJsOGUDZBkh215OMKPp4JpWQpgQeK6kjTnwuMwEYYFyhfu/z5wU\nwN7z7Ad39fyGmQzkGbFXtP0te4MFElOVSkiHaB4T4lTM6690st6+uIhFI1Qo/oAY\n30ybOpOTLF7FZxwY5Z+BTW27hytyECLkG3b4iKIqKsRIvlFkwKP8cfKjq7ImSbBG\nOJ8JBcraffygrLznbJ2979Y9yN+n+8wW0xxxxxxxxxxov24snxDmm6fAMoO1\nxBM7c2KZA5ZoZDefcz9e28r7xxxx==\n-----END CERTIFICATE-----\n"}
 type GetDatabaseAccountCA200 = DatabaseAccountCaResponse
 
 // GetDatabaseAccountCADefault Schema for error responses from the API.
@@ -6035,6 +6083,8 @@ type GetDatabaseAlerts200 = DatabaseServiceAlertsResponse
 type GetDatabaseAlertsDefault = DatabaseErrorResponse
 
 // GetDatabaseAvailableExtensions200 Response schema for listing available PostgreSQL extensions
+//
+// Examples: [{"default_version":"1.12","name":"pg_stat_statements","versions":["1.10","1.11","1.12"]},{"default_version":"3.4.0","name":"postgis","versions":["3.3.0","3.4.0"]},{"default_version":"0.8.1","name":"vector","versions":["0.8.1"]},{"default_version":"1.1","name":"uuid-ossp","versions":["1.1"]}]
 type GetDatabaseAvailableExtensions200 = DatabaseAvailableExtensionsResponse
 
 // GetDatabaseAvailableExtensionsDefault Schema for error responses from the API.
@@ -6050,48 +6100,64 @@ type GetDatabaseConnectionPoolDefault = DatabaseErrorResponse
 type GetDatabaseDefault = DatabaseErrorResponse
 
 // GetDatabaseIntegration200 Schema for a service integration response.
+//
+// Examples: {"destination_name":"my-rsyslog-server","destination_uuid":"123e4567-e89b-12d3-a456-426614174000","node_states":[{"errors":["some error"],"likely_error_cause":null,"name":"node-1","status":"running"}],"properties":{"key1":"value1","key2":2,"key3":true},"source_name":"my-database","source_uuid":"123e4567-e89b-12d3-a456-426614174000","state":"active","state_error":[],"type":"rsyslog","uuid":"123e4567-e89b-12d3-a456-426614174000"}
 type GetDatabaseIntegration200 = DatabaseServiceIntegrationResponse
 
 // GetDatabaseIntegrationDefault Schema for error responses from the API.
 type GetDatabaseIntegrationDefault = DatabaseErrorResponse
 
 // GetDatabaseIntegrationEndpoint200 Schema for an integration endpoint response.
+//
+// Examples: {"name":"rsyslog","properties":{"format":"rfc5424","max_message_size":8192,"port":514,"sd":"","server":"94.237.95.164","tls":false},"type":"rsyslog","uuid":"20e86f48-2dcd-4a43-843d-3532ab112c1d"}
 type GetDatabaseIntegrationEndpoint200 = DatabaseIntegrationEndpointResponse
 
 // GetDatabaseIntegrationEndpointDefault Schema for error responses from the API.
 type GetDatabaseIntegrationEndpointDefault = DatabaseErrorResponse
 
 // GetDatabaseLabel200 Schema for deleting a label with a key and value.
+//
+// Examples: {"key":"environment","value":"production"}
 type GetDatabaseLabel200 = DatabaseLabelResponse
 
 // GetDatabaseLabelDefault Schema for error responses from the API.
 type GetDatabaseLabelDefault = DatabaseErrorResponse
 
 // GetDatabaseLogs200 Schema representing a paginated list of log entries from UpCloud services.
+//
+// Examples: {"first_log_offset":"123456","logs":[{"hostname":"upcloud-doc-hostname","msg":"[10-1] pid=3328089,user=postgres,db=defaultdb,app=[unknown],client=[local] LOG:  connection authorized: user=postgres database=defaultdb","service":"postgresql-13.service","time":"2022-01-21T13:07:23.687241Z"}],"offset":"123460"}
 type GetDatabaseLogs200 = DatabaseLogListResponse
 
 // GetDatabaseLogsDefault Schema for error responses from the API.
 type GetDatabaseLogsDefault = DatabaseErrorResponse
 
 // GetDatabaseMetrics200 Schema for metrics response.
+//
+// Examples: {"cpu_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"test-1 (master)","type":"number"},{"label":"test-2 (standby)","type":"number"}],"rows":[["2022-01-21T13:10:30Z",2.744682398273781,3.054323473090861],["2022-01-21T13:11:00Z",3.0735645433218366,2.972423595745795],["2022-01-21T13:11:30Z",2.61619694060839,3.1358378052207883],["2022-01-21T13:12:00Z",3.275132296130991,4.196249043309251]]},"hints":{"title":"CPU usage %"}},"disk_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"test-1 (master)","type":"number"},{"label":"test-2 (standby)","type":"number"}],"rows":[["2022-01-21T13:10:30Z",5.654416415900109,5.58959125727556],["2022-01-21T13:11:00Z",5.654416415900109,5.58959125727556],["2022-01-21T13:11:30Z",5.654416415900109,5.58959125727556]]},"hints":{"title":"Disk space usage %"}},"diskio_reads":{"data":{"cols":[{"label":"time","type":"date"},{"label":"test-1 (master)","type":"number"},{"label":"test-2 (standby)","type":"number"}],"rows":[["2022-01-21T13:10:30Z",0,0],["2022-01-21T13:11:00Z",0,0],["2022-01-21T13:11:30Z",0,0]]},"hints":{"title":"Disk iops (reads)"}},"diskio_writes":{"data":{"cols":[{"label":"time","type":"date"},{"label":"test-1 (master)","type":"number"},{"label":"test-2 (standby)","type":"number"}],"rows":[["2022-01-21T13:10:30Z",3,2],["2022-01-21T13:11:00Z",2,3],["2022-01-21T13:11:30Z",4,3]]},"hints":{"title":"Disk iops (writes)"}},"load_average":{"data":{"cols":[{"label":"time","type":"date"},{"label":"test-1 (master)","type":"number"},{"label":"test-2 (standby)","type":"number"}],"rows":[["2022-01-21T13:10:30Z",0.11,0.11],["2022-01-21T13:11:00Z",0.14,0.1],["2022-01-21T13:11:30Z",0.14,0.09]]},"hints":{"title":"Load average (5 min)"}},"mem_usage":{"data":{"cols":[{"label":"time","type":"date"},{"label":"test-1 (master)","type":"number"},{"label":"test-2 (standby)","type":"number"}],"rows":[["2022-01-21T13:10:30Z",11.491766148261078,12.318932883261219],["2022-01-21T13:11:00Z",11.511967645759277,12.304403727425075],["2022-01-21T13:11:30Z",11.488581675749048,12.272260458006759]]},"hints":{"title":"Memory usage %"}},"net_receive":{"data":{"cols":[{"label":"time","type":"date"},{"label":"test-1 (master)","type":"number"},{"label":"test-2 (standby)","type":"number"}],"rows":[["2022-01-21T13:10:30Z",442,470],["2022-01-21T13:11:00Z",439,384],["2022-01-21T13:11:30Z",466,458]]},"hints":{"title":"Network receive (bytes/s)"}},"net_send":{"data":{"cols":[{"label":"time","type":"date"},{"label":"test-1 (master)","type":"number"},{"label":"test-2 (standby)","type":"number"}],"rows":[["2022-01-21T13:10:30Z",672,581],["2022-01-21T13:11:00Z",660,555],["2022-01-21T13:11:30Z",694,573]]},"hints":{"title":"Network transmit (bytes/s)"}}}
 type GetDatabaseMetrics200 = DatabaseMetricsResponse
 
 // GetDatabaseMetricsDefault Schema for error responses from the API.
 type GetDatabaseMetricsDefault = DatabaseErrorResponse
 
 // GetDatabaseMigrationStatus200 Response schema for service migration status
+//
+// Examples: {"databases":[{"dbname":"defaultdb","method":"replication","status":"syncing"}],"method":"replication","seconds_behind_master":0,"source_active":true,"status":"done"}
 type GetDatabaseMigrationStatus200 = DatabaseServiceMigrationStatusResponse
 
 // GetDatabaseMigrationStatusDefault Schema for error responses from the API.
 type GetDatabaseMigrationStatusDefault = DatabaseErrorResponse
 
 // GetDatabaseNetwork200 Schema for network information response details
+//
+// Examples: {"create_time":"2025-08-01T10:40:04.140473Z","family":"IPv4","name":"example-private-network","type":"private","update_time":"2025-08-01T10:40:04.140473Z","uuid":"123e4567-e89b-12d3-a456-426614174000"}
 type GetDatabaseNetwork200 = DatabaseNetworkInformationDetailsResponse
 
 // GetDatabaseNetworkDefault Schema for error responses from the API.
 type GetDatabaseNetworkDefault = DatabaseErrorResponse
 
 // GetDatabasePeeringsStatus200 Schema for service network details response
+//
+// Examples: {"create_time":"2023-10-05T14:48:00.000Z","network_peerings":[{"create_time":"2023-10-05T14:48:00.000Z","network_peer":"03196597-b972-4815-ba3a-85bb18365ced","state":"active","state_info":"The peering is in active state.","update_time":"2023-10-05T14:48:00.000Z"}],"state":"active","update_time":"2023-10-05T14:48:00.000Z"}
 type GetDatabasePeeringsStatus200 = DatabaseServiceNetworkDetailsResponse
 
 // GetDatabasePeeringsStatusDefault Schema for error responses from the API.
@@ -6104,6 +6170,8 @@ type GetDatabaseQueryStatistics200 = DatabaseQueryStatisticsResponse
 type GetDatabaseQueryStatisticsDefault = DatabaseErrorResponse
 
 // GetDatabaseSecurity200 OpenSearch security plugin status response
+//
+// Examples: {"security_plugin_admin_enabled":true,"security_plugin_available":true,"security_plugin_enabled":true}
 type GetDatabaseSecurity200 = DatabaseOpenSearchSecurityPluginStatusResponse
 
 // GetDatabaseSecurityDefault Schema for error responses from the API.
@@ -6116,6 +6184,8 @@ type GetDatabaseSessions200 = DatabaseCurrentSessionsResponse
 type GetDatabaseSessionsDefault = DatabaseErrorResponse
 
 // GetDatabaseStatus200 Schema for representing the status of a service instance.
+//
+// Examples: {"state":"running"}
 type GetDatabaseStatus200 = DatabaseServiceStatusResponse
 
 // GetDatabaseStatusDefault Schema for error responses from the API.
@@ -6128,24 +6198,32 @@ type GetDatabaseTask200 = DatabaseServiceTaskDetailsResponse
 type GetDatabaseTaskDefault = DatabaseErrorResponse
 
 // GetDatabaseType200 Response schema for available service types
+//
+// Examples: {"dependencies":{},"description":"PostgreSQL - Object-Relational Database Management System","latest_available_version":"18.1","name":"postgresql","properties":{"automatic_utility_network_ip_filter":false,"ip_filter":["0.0.0.0/0"],"public_access":true,"version":"13"},"service_plans":[{"backup_config":{"interval":24,"max_count":3,"recovery_mode":"pitr"},"backup_config_pg":{"interval":24,"max_count":3,"recovery_mode":"pitr"},"core_number":1,"memory_amount":1024,"node_count":1,"plan":"1x1xCPU-1GB-10GB","storage_size":10240,"zones":{"zone":[{"name":"au-syd1"},{"name":"de-fra1"},{"name":"es-mad1"},{"name":"fi-hel1"},{"name":"fi-hel2"},{"name":"nl-ams1"},{"name":"pl-waw1"},{"name":"se-sto1"},{"name":"sg-sin1"},{"name":"uk-lon1"},{"name":"us-chi1"},{"name":"us-nyc1"},{"name":"us-sjo1"}]}}]}
 type GetDatabaseType200 = DatabaseServiceTypeResponse
 
 // GetDatabaseTypeDefault Schema for error responses from the API.
 type GetDatabaseTypeDefault = DatabaseErrorResponse
 
 // GetDatabaseTypeVersions200 Response schema for listing available service versions across all service types
+//
+// Examples: [{"availability_end_time":null,"availability_start_time":"2019-05-10T00:00:00Z","end_of_life_time":null,"major_version":"8","service_type":"mysql","state":"available","termination_time":null,"upgrade_to_service_type":null,"upgrade_to_version":null,"upstream_end_of_life_time":null},{"availability_end_time":"2028-05-09T00:00:00Z","availability_start_time":"2024-01-08T00:00:00Z","end_of_life_time":"2028-11-09T00:00:00Z","major_version":"16","service_type":"pg","state":"available","termination_time":null,"upgrade_to_service_type":null,"upgrade_to_version":null,"upstream_end_of_life_time":"2028-11-09T00:00:00Z"},{"availability_end_time":null,"availability_start_time":"2022-07-12T00:00:00Z","end_of_life_time":null,"major_version":"2","service_type":"opensearch","state":"available","termination_time":null,"upgrade_to_service_type":null,"upgrade_to_version":null,"upstream_end_of_life_time":null}]
 type GetDatabaseTypeVersions200 = DatabaseVersionsResponse
 
 // GetDatabaseTypeVersionsDefault Schema for error responses from the API.
 type GetDatabaseTypeVersionsDefault = DatabaseErrorResponse
 
 // GetDatabaseUser200 Schema for a user response.
+//
+// Examples: {"authentication":"caching_sha2_password","password":"my-password","type":"admin","username":"admin"}
 type GetDatabaseUser200 = DatabaseUserResponse
 
 // GetDatabaseUserDefault Schema for error responses from the API.
 type GetDatabaseUserDefault = DatabaseErrorResponse
 
 // GetDatabaseVersions200 Schema for representing available service versions
+//
+// Examples: ["12","13","14","15","16"]
 type GetDatabaseVersions200 = DatabaseServiceVersionsResponse
 
 // GetDatabaseVersionsDefault Schema for error responses from the API.
@@ -6164,12 +6242,16 @@ type ListDatabaseConnectionPools200 = DatabaseConnectionPoolsResponse
 type ListDatabaseConnectionPoolsDefault = DatabaseErrorResponse
 
 // ListDatabaseIndices200 Response schema for indexes
+//
+// Examples: [{"create_time":"2023-05-11T13:24:10.623Z","docs":1,"health":"green","index_name":".kibana_1","number_of_replicas":0,"number_of_shards":1,"read_only_allow_delete":false,"size":5313,"status":"open"}], [{"create_time":"2023-05-11T13:24:10.623Z","docs":1,"health":"green","index_name":".kibana_1","number_of_replicas":0,"number_of_shards":1,"read_only_allow_delete":false,"size":5313,"status":"open"},{"create_time":"2023-05-11T13:24:10.623Z","docs":42,"health":"yellow","index_name":"logs-2023.05.11","number_of_replicas":1,"number_of_shards":3,"read_only_allow_delete":false,"size":1048576,"status":"open"}]
 type ListDatabaseIndices200 = DatabaseIndexesResponse
 
 // ListDatabaseIndicesDefault Schema for error responses from the API.
 type ListDatabaseIndicesDefault = DatabaseErrorResponse
 
 // ListDatabaseIntegrationEndpoints200 Schema for a list of integration endpoints.
+//
+// Examples: [{"name":"rsyslog","properties":{"format":"rfc5424","max_message_size":8192,"port":514,"sd":"","server":"94.237.95.164","tls":false},"type":"rsyslog","uuid":"20e86f48-2dcd-4a43-843d-3532ab112c1d"}]
 type ListDatabaseIntegrationEndpoints200 = DatabaseIntegrationEndpointsResponse
 
 // ListDatabaseIntegrationEndpointsDefault Schema for error responses from the API.
@@ -6182,12 +6264,16 @@ type ListDatabaseIntegrations200 = DatabaseServiceIntegrationsResponse
 type ListDatabaseIntegrationsDefault = DatabaseErrorResponse
 
 // ListDatabaseLabels200 Schema for a list of labels.
+//
+// Examples: [{"key":"environment","value":"production"}]
 type ListDatabaseLabels200 = DatabaseLabelsResponse
 
 // ListDatabaseLabelsDefault Schema for error responses from the API.
 type ListDatabaseLabelsDefault = DatabaseErrorResponse
 
 // ListDatabaseLogicalDatabases200 A list of logical databases.
+//
+// Examples: [{"lc_collate":"en_US.UTF-8","lc_ctype":"en_US.UTF-8","name":"postgres"}], [{"lc_collate":"en_US.UTF-8","lc_ctype":"en_US.UTF-8","name":"mydb"},{"lc_collate":"en_US.UTF-8","lc_ctype":"en_US.UTF-8","name":"testdb"}]
 type ListDatabaseLogicalDatabases200 = LogicalDatabasesResponse
 
 // ListDatabaseLogicalDatabasesDefault Schema for error responses from the API.
@@ -6200,18 +6286,24 @@ type ListDatabaseNetworks200 = DatabaseNetworksInformationResponse
 type ListDatabaseNetworksDefault = DatabaseErrorResponse
 
 // ListDatabaseTypes200 Response map schema for available service types
+//
+// Examples: {"postgres":{"dependencies":{},"description":"PostgreSQL - Object-Relational Database Management System","latest_available_version":"18.1","name":"postgresql","properties":{"automatic_utility_network_ip_filter":false,"ip_filter":["0.0.0.0/0"],"public_access":true,"version":"13"},"service_plans":[{"backup_config":{"interval":24,"max_count":7,"recovery_mode":"point_in_time"},"backup_retention":7,"core_number":2,"max_memory_percent":90,"memory_amount":8192,"node_count":3,"plan":"2x2xCPU-4GB-50G","storage_size":51200,"zones":{"zone":[{"description":"Primary zone","name":"zone1"},{"description":"Secondary zone","name":"zone2"}]}}]}}
 type ListDatabaseTypes200 = DatabaseAvailableServiceTypesResponse
 
 // ListDatabaseTypesDefault Schema for error responses from the API.
 type ListDatabaseTypesDefault = DatabaseErrorResponse
 
 // ListDatabaseUsers200 Schema for the response containing a list of users
+//
+// Examples: [{"authentication":"caching_sha2_password","password":"my-password","type":"admin","username":"admin"}]
 type ListDatabaseUsers200 = DatabaseUsersResponse
 
 // ListDatabaseUsersDefault Schema for error responses from the API.
 type ListDatabaseUsersDefault = DatabaseErrorResponse
 
 // ListDatabases200 Schema for a list of service information
+//
+// Examples: [{"name":"my-db","type":"pg","uuid":"123e4567-e89b-12d3-a456-426614174000","zone":"fi-hel1"}]
 type ListDatabases200 = DatabaseServiceInformationListResponse
 
 // ListDatabasesDefault Schema for error responses from the API.
@@ -6221,6 +6313,8 @@ type ListDatabasesDefault = DatabaseErrorResponse
 type ModifyDatabase200 = DatabaseServiceInformationResponse
 
 // ModifyDatabaseAccessControl200 Response schema for access control settings of a cluster.
+//
+// Examples: {"access_control":false,"extended_access_control":true}
 type ModifyDatabaseAccessControl200 = DatabaseAccessControlSettingsResponse
 
 // ModifyDatabaseAccessControlDefault Schema for error responses from the API.
@@ -6236,24 +6330,32 @@ type ModifyDatabaseConnectionPoolDefault = DatabaseErrorResponse
 type ModifyDatabaseDefault = DatabaseErrorResponse
 
 // ModifyDatabaseIntegration200 Schema for a service integration response.
+//
+// Examples: {"destination_name":"my-rsyslog-server","destination_uuid":"123e4567-e89b-12d3-a456-426614174000","node_states":[{"errors":["some error"],"likely_error_cause":null,"name":"node-1","status":"running"}],"properties":{"key1":"value1","key2":2,"key3":true},"source_name":"my-database","source_uuid":"123e4567-e89b-12d3-a456-426614174000","state":"active","state_error":[],"type":"rsyslog","uuid":"123e4567-e89b-12d3-a456-426614174000"}
 type ModifyDatabaseIntegration200 = DatabaseServiceIntegrationResponse
 
 // ModifyDatabaseIntegrationDefault Schema for error responses from the API.
 type ModifyDatabaseIntegrationDefault = DatabaseErrorResponse
 
 // ModifyDatabaseIntegrationEndpoint200 Schema for an integration endpoint response.
+//
+// Examples: {"name":"rsyslog","properties":{"format":"rfc5424","max_message_size":8192,"port":514,"sd":"","server":"94.237.95.164","tls":false},"type":"rsyslog","uuid":"20e86f48-2dcd-4a43-843d-3532ab112c1d"}
 type ModifyDatabaseIntegrationEndpoint200 = DatabaseIntegrationEndpointResponse
 
 // ModifyDatabaseIntegrationEndpointDefault Schema for error responses from the API.
 type ModifyDatabaseIntegrationEndpointDefault = DatabaseErrorResponse
 
 // ModifyDatabaseLabel200 Schema for deleting a label with a key and value.
+//
+// Examples: {"key":"environment","value":"production"}
 type ModifyDatabaseLabel200 = DatabaseLabelResponse
 
 // ModifyDatabaseLabelDefault Schema for error responses from the API.
 type ModifyDatabaseLabelDefault = DatabaseErrorResponse
 
 // ModifyDatabaseSecurityAdmin200 OpenSearch security plugin status response
+//
+// Examples: {"security_plugin_admin_enabled":true,"security_plugin_available":true,"security_plugin_enabled":true}
 type ModifyDatabaseSecurityAdmin200 = DatabaseOpenSearchSecurityPluginStatusResponse
 
 // ModifyDatabaseSecurityAdminDefault Schema for error responses from the API.
@@ -6266,9 +6368,13 @@ type ModifyDatabaseType200 = DatabaseServiceInformationResponse
 type ModifyDatabaseTypeDefault = DatabaseErrorResponse
 
 // ModifyDatabaseUser200 Schema for a user response.
+//
+// Examples: {"authentication":"caching_sha2_password","password":"my-password","type":"admin","username":"admin"}
 type ModifyDatabaseUser200 = DatabaseUserResponse
 
 // ModifyDatabaseUserAccessControl200 Schema for a user response.
+//
+// Examples: {"authentication":"caching_sha2_password","password":"my-password","type":"admin","username":"admin"}
 type ModifyDatabaseUserAccessControl200 = DatabaseUserResponse
 
 // ModifyDatabaseUserAccessControlDefault Schema for error responses from the API.
@@ -6278,12 +6384,16 @@ type ModifyDatabaseUserAccessControlDefault = DatabaseErrorResponse
 type ModifyDatabaseUserDefault = DatabaseErrorResponse
 
 // StartDatabaseManualMaintenance200 Schema for UpCloud API error responses.
+//
+// Examples: {"errors":[{"message":"Invalid request","more_info":"https://developers.upcloud.com/errors","status":400}],"message":"An error occurred while processing your request."}
 type StartDatabaseManualMaintenance200 = DatabaseUpCloudApiResponse
 
 // StartDatabaseManualMaintenanceDefault Schema for error responses from the API.
 type StartDatabaseManualMaintenanceDefault = DatabaseErrorResponse
 
 // TerminateDatabaseSession204 Schema for the response received after terminating a session
+//
+// Examples: {"success":true}
 type TerminateDatabaseSession204 = DatabaseTerminateSessionResponse
 
 // TerminateDatabaseSessionDefault Schema for error responses from the API.
@@ -6296,69 +6406,109 @@ type UpgradeDatabase201 = DatabaseServiceInformationResponse
 type UpgradeDatabaseDefault = DatabaseErrorResponse
 
 // CloneDatabase Schema for cloning a service — OpenAPI version.
+//
+// Examples: {"clone_time":"2022-01-21T12:21:00Z","hostname_prefix":"new-hostname-prefix","maintenance":{"dow":"sunday","time":"12:00:00"},"plan":"1x1xCPU-2GB-25GB","properties":{"automatic_utility_network_ip_filter":false,"ip_filter":["0.0.0.0/0"],"public_access":true,"version":"13"},"title":"new-title","zone":"fi-hel1"}
 type CloneDatabase = DatabaseServiceCloneOpenAPI
 
 // CreateDatabase Schema for creating a service — OpenAPI version.
+//
+// Examples: {"additional_disk_space_gib":10,"hostname_prefix":"doc-api-unique-prefix","labels":[{"key":"env","value":"staging"},{"key":"foo","value":"bar"}],"maintenance":{"dow":"sunday","time":"05:00:00"},"networks":[{"family":"IPv4","name":"example-network-1","type":"private","uuid":"03631160-d57a-4926-ad48-a2f828229dcb"},{"family":"IPv4","name":"example-network-2","type":"private","uuid":"03631160-d57a-4926-ad48-a2f828229dcb"}],"plan":"1x1xCPU-2GB-25GB","properties":{"automatic_utility_network_ip_filter":true,"ip_filter":[],"version":"8"},"termination_protection":false,"title":"my-managed-database","type":"mysql","zone":"de-fra1"}
 type CreateDatabase = DatabaseServiceCreateOpenAPI
 
 // CreateDatabaseConnectionPool Schema for creating a connection pool.
+//
+// Examples: {"database":"defaultdb","pool_mode":"statement","pool_name":"readonly-pool","pool_size":10,"username":"readonly"}
 type CreateDatabaseConnectionPool = DatabaseConnectionPoolCreate
 
 // CreateDatabaseIntegration Schema for creating a service integration.
+//
+// Examples: {"destination_uuid":"09e86f48-2dcd-4a43-843d-3532ab112c1d","properties":{"opensearch_index_days_max":30,"opensearch_index_prefix":"mysql_logs"},"type":"logs"}
 type CreateDatabaseIntegration = DatabaseServiceIntegrationCreate
 
 // CreateDatabaseIntegrationEndpoint Schema for creating an integration endpoint.
 type CreateDatabaseIntegrationEndpoint = DatabaseIntegrationEndpointCreate
 
 // CreateDatabaseLabel Schema for creating a label with a key and value.
+//
+// Examples: {"key":"environment","value":"production"}
 type CreateDatabaseLabel = DatabaseLabelCreate
 
 // CreateDatabaseLogicalDatabase Schema for creating a logical database.
+//
+// Examples: {"lc_collate":"en_US.UTF-8","lc_ctype":"en_US.UTF-8","name":"my_database"}
 type CreateDatabaseLogicalDatabase = LogicalDatabaseCreate
 
 // CreateDatabaseNetwork Schema for creating a network.
+//
+// Examples: {"family":"IPv4","name":"my-network","type":"public"}, {"family":"IPv4","name":"my-network","type":"public","uuid":"123e4567-e89b-12d3-a456-426614174000"}
 type CreateDatabaseNetwork = DatabaseNetworkCreate
 
 // CreateDatabaseTask Schema for creating a service task with various operations such as dataset import and migration checks.
+//
+// Examples: {"dataset_import":{"dataset_name":"customer-events"},"operation":"dataset_import"}, {"migration_check":{"source_service_uri":"postgresql://user:password@hostname:5432/dbname"},"operation":"migration_check"}, {"migration_check":{"ignore_dbs":"postgres,template1","method":"Replication","source_service_uri":"postgresql://replica:secret@10.0.0.12:5432/source"},"operation":"migration_check"}, {"operation":"upgrade","target_version":"15"}, {"operation":"upgrade_check","upgrade_check":{"target_version":"18"}}
 type CreateDatabaseTask = DatabaseServiceTaskCreate
 
 // CreateDatabaseUser Schema for creating a service user with access control settings
+//
+// Examples: {"authentication":"caching_sha2_password","password":"new-password","username":"api-doc-user"}
 type CreateDatabaseUser = DatabaseServiceUserCreate
 
 // EnableDatabaseSecurityAdmin Schema for enabling security on a service instance
+//
+// Examples: {"admin_password":"Str0ngP@ssw0rd!"}, {"admin_password":"Adm1n#2025$Secure"}, {"admin_password":"S3rv!ce_Access-Key"}, {"admin_password":"Sup3r$Admin!Token"}, {"admin_password":"P@55w0rd_R0t@tion#1"}
 type EnableDatabaseSecurityAdmin = DatabaseServiceSecurityEnable
 
 // ModifyDatabase Schema for modifying a service — OpenAPI version.
+//
+// Examples: {"additional_disk_space_gib":100,"maintenance":{"dow":"sunday","time":"12:00:00"},"networks":[{"family":"IPv4","name":"example-network-1","type":"private","uuid":"03631160-d57a-4926-ad48-a2f828229dcb"}],"plan":"1x1xCPU-2GB-25GB","powered":true,"properties":{"automatic_utility_network_ip_filter":true,"ip_filter":[],"version":"8"},"termination_protection":false,"title":"my-managed-database","zone":"de-fra1"}
 type ModifyDatabase = DatabaseServiceModifyOpenAPI
 
 // ModifyDatabaseAccessControl Schema for modifying service access control settings.
+//
+// Examples: {"access_control":true}, {"extended_access_control":true}, {"access_control":false,"extended_access_control":true}, {"access_control":true,"extended_access_control":false}
 type ModifyDatabaseAccessControl = DatabaseServiceAclModify
 
 // ModifyDatabaseConnectionPool Schema for modifying a connection pool.
+//
+// Examples: {"database":"defaultdb","pool_mode":"session","pool_size":20,"username":"app-user"}
 type ModifyDatabaseConnectionPool = DatabaseConnectionPoolModify
 
 // ModifyDatabaseIntegration Schema for modifying a service integration.
+//
+// Examples: {"properties":{"key1":"value1"}}
 type ModifyDatabaseIntegration = DatabaseServiceIntegrationModify
 
 // ModifyDatabaseIntegrationEndpoint Schema for modifying an integration endpoint.
 type ModifyDatabaseIntegrationEndpoint = DatabaseIntegrationEndpointModify
 
 // ModifyDatabaseLabel Schema for modifying a label with a key and/or value.
+//
+// Examples: {"key":"environment","value":"production"}
 type ModifyDatabaseLabel = DatabaseLabelModify
 
 // ModifyDatabaseSecurityAdmin Schema for modifying service security settings
+//
+// Examples: {"admin_password":"Curr3nt@Passw0rd!","new_password":"N3w@Str0ngPassw0rd!"}, {"admin_password":"Adm1nPrev#2025","new_password":"Rotated#Adm1n2025!"}, {"admin_password":"Old$SecureP@ss99","new_password":"Fresh$SecureKey88"}
 type ModifyDatabaseSecurityAdmin = DatabaseServiceSecurityModify
 
 // ModifyDatabaseType Schema for modifying the service type
+//
+// Examples: {"target_type":"primary"}, {"target_type":"readonly"}, {"target_type":"analytics"}, {"target_type":"hot"}, {"target_type":"cold"}
 type ModifyDatabaseType = DatabaseServiceTypeModify
 
 // ModifyDatabaseUser Schema for modifying a service user
+//
+// Examples: {"authentication":"caching_sha2_password","password":"new_secure_password_123!"}
 type ModifyDatabaseUser = DatabaseServiceUserModify
 
 // ModifyDatabaseUserAccessControl Schema for modifying user access control lists (ACL) for various services
+//
+// Examples: {"opensearch_access_control":{"rules":[{"index":"logs-*","permission":"read"}]},"pg_access_control":{"allow_replication":true},"redis_access_control":{"categories":["@admin","@read"],"channels":["news","alerts"],"commands":["GET","SET"],"keys":["user:*","session:*"]},"valkey_access_control":{"categories":["@write"],"channels":["updates"],"commands":["DEL"],"keys":["cache:*"]}}
 type ModifyDatabaseUserAccessControl = DatabaseServiceUserAclModify
 
 // UpgradeDatabase Schema for upgrading the service version
+//
+// Examples: {"target_version":"12"}, {"target_version":"13"}, {"target_version":"14"}, {"target_version":"15"}, {"target_version":"16"}
 type UpgradeDatabase = DatabaseServiceUpgrade
 
 // ListDatabasesParams defines parameters for ListDatabases.

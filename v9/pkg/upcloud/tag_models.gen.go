@@ -7,24 +7,90 @@ import (
 	openapi_types "github.com/oapi-codegen/runtime/types"
 )
 
+// Defines values for TagError400ErrorErrorCode.
+const (
+	TagError400ErrorErrorCodeTAGINVALID TagError400ErrorErrorCode = "TAG_INVALID"
+)
+
+// Valid indicates whether the value is a known member of the TagError400ErrorErrorCode enum.
+func (e TagError400ErrorErrorCode) Valid() bool {
+	switch e {
+	case TagError400ErrorErrorCodeTAGINVALID:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for TagError403ErrorErrorCode.
+const (
+	TagError403ErrorErrorCodeTAGFORBIDDEN TagError403ErrorErrorCode = "TAG_FORBIDDEN"
+)
+
+// Valid indicates whether the value is a known member of the TagError403ErrorErrorCode enum.
+func (e TagError403ErrorErrorCode) Valid() bool {
+	switch e {
+	case TagError403ErrorErrorCodeTAGFORBIDDEN:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for TagError404ErrorErrorCode.
+const (
+	TagError404ErrorErrorCodeTAGNOTFOUND TagError404ErrorErrorCode = "TAG_NOT_FOUND"
+)
+
+// Valid indicates whether the value is a known member of the TagError404ErrorErrorCode enum.
+func (e TagError404ErrorErrorCode) Valid() bool {
+	switch e {
+	case TagError404ErrorErrorCodeTAGNOTFOUND:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for TagError409ErrorErrorCode.
+const (
+	TagError409ErrorErrorCodeTAGEXISTS TagError409ErrorErrorCode = "TAG_EXISTS"
+)
+
+// Valid indicates whether the value is a known member of the TagError409ErrorErrorCode enum.
+func (e TagError409ErrorErrorCode) Valid() bool {
+	switch e {
+	case TagError409ErrorErrorCodeTAGEXISTS:
+		return true
+	default:
+		return false
+	}
+}
+
 // Tag defines model for tag.
 type Tag struct {
 	Tag struct {
+		// Description Examples: Development servers, Production servers, Private environment, Quality Assurance environment, Web servers, Database servers
 		Description *TagDescription `json:"description,omitempty"`
-		Name        TagName         `json:"name"`
+
+		// Name Examples: DEV, PROD, private, QA, webserver, database
+		Name TagName `json:"name"`
 
 		// Servers List of servers associated with the tag.
 		Servers TagServers `json:"servers"`
 	} `json:"tag"`
 }
 
-// TagDescription defines model for tagDescription.
+// TagDescription Examples: Development servers, Production servers, Private environment, Quality Assurance environment, Web servers, Database servers
 type TagDescription = string
 
 // TagError A general error response indicating that the request could not be fulfilled due to a technical issue.
 type TagError struct {
 	Error struct {
-		ErrorCode    string `json:"error_code"`
+		// ErrorCode Examples: GENERAL_FAILURE
+		ErrorCode string `json:"error_code"`
+
+		// ErrorMessage Examples: Your request could not be fulfilled due to a technical issue.
 		ErrorMessage string `json:"error_message"`
 	} `json:"error"`
 }
@@ -32,36 +98,56 @@ type TagError struct {
 // TagError400 400 Bad Request errors for tag operations.
 type TagError400 struct {
 	Error struct {
-		ErrorCode    string `json:"error_code"`
+		ErrorCode TagError400ErrorErrorCode `json:"error_code"`
+
+		// ErrorMessage Examples: The tag name is invalid
 		ErrorMessage string `json:"error_message"`
 	} `json:"error"`
 }
+
+// TagError400ErrorErrorCode defines model for TagError400.Error.ErrorCode.
+type TagError400ErrorErrorCode string
 
 // TagError403 400 Forbidden errors for tag operations.
 type TagError403 struct {
 	Error struct {
-		ErrorCode    string `json:"error_code"`
+		ErrorCode TagError403ErrorErrorCode `json:"error_code"`
+
+		// ErrorMessage Examples: Username does not have access to this tag
 		ErrorMessage string `json:"error_message"`
 	} `json:"error"`
 }
+
+// TagError403ErrorErrorCode defines model for TagError403.Error.ErrorCode.
+type TagError403ErrorErrorCode string
 
 // TagError404 404 Not Found errors for tag operations.
 type TagError404 struct {
 	Error struct {
-		ErrorCode    string `json:"error_code"`
+		ErrorCode TagError404ErrorErrorCode `json:"error_code"`
+
+		// ErrorMessage Examples: Tag does not exist
 		ErrorMessage string `json:"error_message"`
 	} `json:"error"`
 }
+
+// TagError404ErrorErrorCode defines model for TagError404.Error.ErrorCode.
+type TagError404ErrorErrorCode string
 
 // TagError409 409 Conflict errors for tag operations.
 type TagError409 struct {
 	Error struct {
-		ErrorCode    string `json:"error_code"`
+		ErrorCode TagError409ErrorErrorCode `json:"error_code"`
+
+		// ErrorMessage Examples: Tag already exists
 		ErrorMessage string `json:"error_message"`
 	} `json:"error"`
 }
 
-// TagName defines model for tagName.
+// TagError409ErrorErrorCode defines model for TagError409.Error.ErrorCode.
+type TagError409ErrorErrorCode string
+
+// TagName Examples: DEV, PROD, private, QA, webserver, database
 type TagName = string
 
 // TagServers List of servers associated with the tag.
@@ -73,8 +159,11 @@ type TagServers struct {
 type Tags struct {
 	Tags struct {
 		Tag []struct {
+			// Description Examples: Development servers, Production servers, Private environment, Quality Assurance environment, Web servers, Database servers
 			Description *TagDescription `json:"description,omitempty"`
-			Name        TagName         `json:"name"`
+
+			// Name Examples: DEV, PROD, private, QA, webserver, database
+			Name TagName `json:"name"`
 
 			// Servers List of servers associated with the tag.
 			Servers TagServers `json:"servers"`
@@ -82,13 +171,13 @@ type Tags struct {
 	} `json:"tags"`
 }
 
-// DeleteTagName defines model for deleteTagName.
+// DeleteTagName Examples: DEV, PROD, private, QA, webserver, database
 type DeleteTagName = TagName
 
-// GetTagName defines model for getTagName.
+// GetTagName Examples: DEV, PROD, private, QA, webserver, database
 type GetTagName = TagName
 
-// ModifyTagName defines model for modifyTagName.
+// ModifyTagName Examples: DEV, PROD, private, QA, webserver, database
 type ModifyTagName = TagName
 
 // CreateTag200 defines model for createTag200.
