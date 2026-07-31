@@ -5,7 +5,9 @@ import (
 	"crypto/tls"
 	"errors"
 	"net/http"
+	"net/url"
 	"os"
+	"strings"
 
 	"github.com/UpCloudLtd/httplog"
 	"github.com/UpCloudLtd/upcloud-go-api/credentials"
@@ -17,6 +19,111 @@ const (
 	EnvDebugSkipCertificateVerify = "UPCLOUD_DEBUG_SKIP_CERTIFICATE_VERIFY"
 	defaultUserAgentProduct       = "upcloud-go-api/v9"
 )
+
+// RequestEditorFn is the function signature for the RequestEditor callback function.
+type RequestEditorFn func(ctx context.Context, req *http.Request) error
+
+// HttpRequestDoer performs HTTP requests.
+//
+// The standard http.Client implements this interface.
+type HttpRequestDoer interface {
+	Do(req *http.Request) (*http.Response, error)
+}
+
+// Client conforms to the OpenAPI3 specification for this service.
+type Client struct {
+	// The endpoint of the server conforming to this interface, with scheme.
+	Server string
+
+	// Doer for performing requests, typically a *http.Client with customized settings.
+	Client HttpRequestDoer
+
+	// A list of callbacks for modifying requests before sending over the network.
+	RequestEditors []RequestEditorFn
+}
+
+// ClientOption allows setting custom parameters during construction.
+type ClientOption func(*Client) error
+
+// NewClient creates a new Client with reasonable defaults.
+func NewClient(server string, opts ...ClientOption) (*Client, error) {
+	client := Client{
+		Server: server,
+	}
+
+	for _, o := range opts {
+		if err := o(&client); err != nil {
+			return nil, err
+		}
+	}
+
+	if !strings.HasSuffix(client.Server, "/") {
+		client.Server += "/"
+	}
+
+	if client.Client == nil {
+		client.Client = &http.Client{}
+	}
+
+	return &client, nil
+}
+
+// WithHTTPClient allows overriding the default Doer.
+func WithHTTPClient(doer HttpRequestDoer) ClientOption {
+	return func(c *Client) error {
+		c.Client = doer
+		return nil
+	}
+}
+
+// WithRequestEditorFn sets up a callback function called before sending requests.
+func WithRequestEditorFn(fn RequestEditorFn) ClientOption {
+	return func(c *Client) error {
+		c.RequestEditors = append(c.RequestEditors, fn)
+		return nil
+	}
+}
+
+// ClientWithResponses builds on Client to offer response payloads.
+type ClientWithResponses struct {
+	*Client
+}
+
+// NewClientWithResponses creates a new ClientWithResponses.
+func NewClientWithResponses(server string, opts ...ClientOption) (*ClientWithResponses, error) {
+	client, err := NewClient(server, opts...)
+	if err != nil {
+		return nil, err
+	}
+
+	return &ClientWithResponses{Client: client}, nil
+}
+
+// WithBaseURL overrides the baseURL.
+func WithBaseURL(baseURL string) ClientOption {
+	return func(c *Client) error {
+		newBaseURL, err := url.Parse(baseURL)
+		if err != nil {
+			return err
+		}
+		c.Server = newBaseURL.String()
+		return nil
+	}
+}
+
+func (c *Client) applyEditors(ctx context.Context, req *http.Request, additionalEditors []RequestEditorFn) error {
+	for _, r := range c.RequestEditors {
+		if err := r(ctx, req); err != nil {
+			return err
+		}
+	}
+	for _, r := range additionalEditors {
+		if err := r(ctx, req); err != nil {
+			return err
+		}
+	}
+	return nil
+}
 
 // New creates a client with an API token.
 func New(token string, opts ...ClientOption) (*ClientWithResponses, error) {

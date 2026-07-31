@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/refs/tags/v2.6.0/configuration-schema.json
+package: upcloud
+compatibility:
+  always-prefix-enum-values: true
+generate:
+  client: false
+  models: false
+  embedded-spec: false
+  server-urls: true
+output-options:
+  resolve-type-name-collisions: true
+  # response-type-suffix changes the suffix for operation response wrapper types
+  # from "Response" (default) to "Resp" to avoid collisions with schema types.
+  # Example: createServer operation generates CreateServerResp instead of
+  # CreateServerResponse, which would collide with the createServerResponse schema.
+  response-type-suffix: "Resp"
+  overlay:
+    path: ./generator/config/overlay.yaml
+    strict: true
