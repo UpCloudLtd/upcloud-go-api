@@ -56,3 +56,17 @@ actions:
   # but the API will still reject invalid combinations with 400 errors.
   - target: "$..oneOf[*].properties[?(@.type == 'null')]"
     remove: true
+  - target: "$.components.schemas.loadBalancerFrontend.properties.mode.type"
+    remove: true
+  - target: "$.components.schemas.loadBalancerFrontend.properties.mode.enum"
+    remove: true
+  - target: "$.components.schemas.loadBalancerFrontend.properties.mode"
+    update:
+      $ref: "#/components/schemas/loadBalancerFrontendMode"
+  - target: "$.components.schemas.loadBalancerMember.properties.type.type"
+    remove: true
+  - target: "$.components.schemas.loadBalancerMember.properties.type.enum"
+    remove: true
+  - target: "$.components.schemas.loadBalancerMember.properties.type"
+    update:
+      $ref: "#/components/schemas/loadBalancerMemberType"
