@@ -686,15 +686,18 @@ func (e LoadBalancerNetworkType) Valid() bool {
 
 // Defines values for LoadBalancerProxyProtocolVersionOrDisabled.
 const (
-	LoadBalancerProxyProtocolVersionOrDisabledEmpty LoadBalancerProxyProtocolVersionOrDisabled = ""
-	LoadBalancerProxyProtocolVersionOrDisabledV1    LoadBalancerProxyProtocolVersionOrDisabled = "v1"
-	LoadBalancerProxyProtocolVersionOrDisabledV2    LoadBalancerProxyProtocolVersionOrDisabled = "v2"
+	LoadBalancerProxyProtocolVersionOrDisabledEmpty       LoadBalancerProxyProtocolVersionOrDisabled = ""
+	LoadBalancerProxyProtocolVersionOrDisabledLessThannil LoadBalancerProxyProtocolVersionOrDisabled = "<nil>"
+	LoadBalancerProxyProtocolVersionOrDisabledV1          LoadBalancerProxyProtocolVersionOrDisabled = "v1"
+	LoadBalancerProxyProtocolVersionOrDisabledV2          LoadBalancerProxyProtocolVersionOrDisabled = "v2"
 )
 
 // Valid indicates whether the value is a known member of the LoadBalancerProxyProtocolVersionOrDisabled enum.
 func (e LoadBalancerProxyProtocolVersionOrDisabled) Valid() bool {
 	switch e {
 	case LoadBalancerProxyProtocolVersionOrDisabledEmpty:
+		return true
+	case LoadBalancerProxyProtocolVersionOrDisabledLessThannil:
 		return true
 	case LoadBalancerProxyProtocolVersionOrDisabledV1:
 		return true
@@ -918,7 +921,7 @@ type LoadBalancerActionCreate struct {
 type LoadBalancerActionCreate0 struct {
 	// ActionUseBackend Forwarding rule use backend action
 	//
-	// Example: {"backend":"backend-1"}
+	// Examples: {"backend":"backend-1"}
 	ActionUseBackend LoadBalancerActionUseBackendCreate `json:"action_use_backend"`
 	Type             interface{}                        `json:"type"`
 }
@@ -926,6 +929,8 @@ type LoadBalancerActionCreate0 struct {
 // LoadBalancerActionCreate1 defines model for LoadBalancerActionCreate.1.
 type LoadBalancerActionCreate1 struct {
 	// ActionHttpReturn Forwarding rule HTTP Return action
+	//
+	// Examples: {"content_type":"text/plain","payload":"SGVsbG8gV29ybGQ=","status":200}
 	ActionHttpReturn LoadBalancerActionHttpReturnCreate `json:"action_http_return"`
 	Type             interface{}                        `json:"type"`
 }
@@ -933,6 +938,8 @@ type LoadBalancerActionCreate1 struct {
 // LoadBalancerActionCreate2 defines model for LoadBalancerActionCreate.2.
 type LoadBalancerActionCreate2 struct {
 	// ActionHttpRedirect Forwarding rule HTTP Redirect action
+	//
+	// Examples: {"location":"https://example.com/new-path","status":302}, {"scheme":"https","status":301}
 	ActionHttpRedirect LoadBalancerActionHttpRedirectCreate `json:"action_http_redirect"`
 	Type               interface{}                          `json:"type"`
 }
@@ -940,8 +947,6 @@ type LoadBalancerActionCreate2 struct {
 // LoadBalancerActionCreate3 defines model for LoadBalancerActionCreate.3.
 type LoadBalancerActionCreate3 struct {
 	// ActionTcpReject Forwarding rule TCP reject action
-	//
-	// Example: {}
 	ActionTcpReject LoadBalancerActionTcpRejectCreate `json:"action_tcp_reject"`
 	Type            interface{}                       `json:"type"`
 }
@@ -949,8 +954,6 @@ type LoadBalancerActionCreate3 struct {
 // LoadBalancerActionCreate4 defines model for LoadBalancerActionCreate.4.
 type LoadBalancerActionCreate4 struct {
 	// ActionSetForwardedHeaders Forwarding rule Set forwarded headers
-	//
-	// Example: {}
 	ActionSetForwardedHeaders LoadBalancerActionSetForwardedHeaders `json:"action_set_forwarded_headers"`
 	Type                      interface{}                           `json:"type"`
 }
@@ -958,8 +961,6 @@ type LoadBalancerActionCreate4 struct {
 // LoadBalancerActionCreate5 defines model for LoadBalancerActionCreate.5.
 type LoadBalancerActionCreate5 struct {
 	// ActionSetRequestHeader Forwarding rule HTTP set header action
-	//
-	// Example: {"header":"X-Custom-Header","value":"CustomValue"}
 	ActionSetRequestHeader LoadBalancerActionSetHeaderCreate `json:"action_set_request_header"`
 	Type                   interface{}                       `json:"type"`
 }
@@ -967,8 +968,6 @@ type LoadBalancerActionCreate5 struct {
 // LoadBalancerActionCreate6 defines model for LoadBalancerActionCreate.6.
 type LoadBalancerActionCreate6 struct {
 	// ActionSetResponseHeader Forwarding rule HTTP set header action
-	//
-	// Example: {"header":"X-Custom-Header","value":"CustomValue"}
 	ActionSetResponseHeader LoadBalancerActionSetHeaderCreate `json:"action_set_response_header"`
 	Type                    interface{}                       `json:"type"`
 }
@@ -988,6 +987,8 @@ type LoadBalancerActionCreate8 struct {
 }
 
 // LoadBalancerActionHttpRedirectCreate Forwarding rule HTTP Redirect action
+//
+// Examples: {"location":"https://example.com/new-path","status":302}, {"scheme":"https","status":301}
 type LoadBalancerActionHttpRedirectCreate struct {
 	union json.RawMessage
 }
@@ -1020,21 +1021,17 @@ type LoadBalancerActionHttpRedirectCreate1Scheme string
 type LoadBalancerActionHttpRedirectCreate1Status int32
 
 // LoadBalancerActionHttpRedirectResponse Defines an HTTP redirection action used to redirect incoming requests to a specified URL with a given HTTP status code. Used when the action type is 'http_redirect'.
-//
-// Example: {"location":"https://example.com","status":301}
 type LoadBalancerActionHttpRedirectResponse struct {
 	// Location Absolute or relative URL to which requests are redirected.
-	//
-	// Example: https://example.com
 	Location string `json:"location"`
 
 	// Status HTTP status code for the redirection. Common values are 301 (permanent) or 302 (temporary).
-	//
-	// Example: 301
 	Status int32 `json:"status"`
 }
 
 // LoadBalancerActionHttpReturnCreate Forwarding rule HTTP Return action
+//
+// Examples: {"content_type":"text/plain","payload":"SGVsbG8gV29ybGQ=","status":200}
 type LoadBalancerActionHttpReturnCreate struct {
 	// ContentType Content types
 	ContentType LoadBalancerContentTypes `json:"content_type"`
@@ -1043,43 +1040,35 @@ type LoadBalancerActionHttpReturnCreate struct {
 	Payload string `json:"payload"`
 
 	// Status HTTP Status code
-	//
-	// Example: 200
 	Status int32 `json:"status"`
 }
 
 // LoadBalancerActionHttpReturnResponse Defines a custom HTTP response returned to the client when a rule matches. Used when the action type is 'http_return'.
-//
-// Example: {"content_type":"text/plain","payload":"QWNjZXNzIERlbmllZAo=","status":403}
 type LoadBalancerActionHttpReturnResponse struct {
 	// ContentType MIME type of the response body.
-	//
-	// Example: text/plain
 	ContentType string `json:"content_type"`
 
 	// Payload Base64-encoded payload returned as the response body.
-	//
-	// Example: QWNjZXNzIERlbmllZAo=
-	Payload string `json:"payload"`
+	Payload []byte `json:"payload"`
 
 	// Status HTTP status code to return.
-	//
-	// Example: 403
 	Status int32 `json:"status"`
 }
 
 // LoadBalancerActionHttpRewritePathCreate Rewrite HTTP request path using regex pattern
 type LoadBalancerActionHttpRewritePathCreate struct {
 	// MatchPattern Regex pattern to match against the path. Use empty string "" to match the entire path (defaults to ^(.*)$)
+	//
+	// Examples: ^(.*/)$, ^/api/(.*)$, ^(.*)$,
 	MatchPattern string `json:"match_pattern"`
 
 	// RewriteTo Replacement pattern (can use capture groups like \1 if match_pattern is provided)
+	//
+	// Examples: \1index.html, /new-path/\1, /static/content.html
 	RewriteTo string `json:"rewrite_to"`
 }
 
 // LoadBalancerActionHttpRewritePathResponse Defines an action that rewrites the HTTP request path using a regex pattern.
-//
-// Example: {"match_pattern":"^/api/(.*)$","rewrite_to":"/v2/\\1"}
 type LoadBalancerActionHttpRewritePathResponse struct {
 	// MatchPattern Regex pattern to match against the path.
 	MatchPattern string `json:"match_pattern"`
@@ -1091,15 +1080,17 @@ type LoadBalancerActionHttpRewritePathResponse struct {
 // LoadBalancerActionHttpRewriteUriCreate Rewrite HTTP request URI using regex pattern
 type LoadBalancerActionHttpRewriteUriCreate struct {
 	// MatchPattern Regex pattern to match against the full URI. Use empty string "" to match the entire URI (defaults to ^(.*)$)
+	//
+	// Examples: ^(.*)\?(.*)$, ^/api/(.*)$, ^(.*)$,
 	MatchPattern string `json:"match_pattern"`
 
 	// RewriteTo Replacement pattern (can use capture groups like \1 if match_pattern is provided)
+	//
+	// Examples: /v2/\1, /new-path/\1?\2, /static/resource
 	RewriteTo string `json:"rewrite_to"`
 }
 
 // LoadBalancerActionHttpRewriteUriResponse Defines an action that rewrites the HTTP request URI using a regex pattern.
-//
-// Example: {"match_pattern":"^/api/(.*)$","rewrite_to":"/v2/\\1"}
 type LoadBalancerActionHttpRewriteUriResponse struct {
 	// MatchPattern Regex pattern to match against the full URI.
 	MatchPattern string `json:"match_pattern"`
@@ -1109,200 +1100,138 @@ type LoadBalancerActionHttpRewriteUriResponse struct {
 }
 
 // LoadBalancerActionResponse Represents a rule action that defines how matched traffic should be processed or modified within the load balancer. Each action type includes a corresponding configuration object.
-//
-// Example: {"action_use_backend":{"backend":"api-backend"},"type":"use_backend"}
 type LoadBalancerActionResponse struct {
 	// ActionHttpRedirect Defines an HTTP redirection action used to redirect incoming requests to a specified URL with a given HTTP status code. Used when the action type is 'http_redirect'.
-	//
-	// Example: {"location":"https://example.com","status":301}
 	ActionHttpRedirect *LoadBalancerActionHttpRedirectResponse `json:"action_http_redirect,omitempty"`
 
 	// ActionHttpReturn Defines a custom HTTP response returned to the client when a rule matches. Used when the action type is 'http_return'.
-	//
-	// Example: {"content_type":"text/plain","payload":"QWNjZXNzIERlbmllZAo=","status":403}
 	ActionHttpReturn *LoadBalancerActionHttpReturnResponse `json:"action_http_return,omitempty"`
 
 	// ActionHttpRewritePath Defines an action that rewrites the HTTP request path using a regex pattern.
-	//
-	// Example: {"match_pattern":"^/api/(.*)$","rewrite_to":"/v2/\\1"}
 	ActionHttpRewritePath *LoadBalancerActionHttpRewritePathResponse `json:"action_http_rewrite_path,omitempty"`
 
 	// ActionHttpRewriteUri Defines an action that rewrites the HTTP request URI using a regex pattern.
-	//
-	// Example: {"match_pattern":"^/api/(.*)$","rewrite_to":"/v2/\\1"}
 	ActionHttpRewriteUri *LoadBalancerActionHttpRewriteUriResponse `json:"action_http_rewrite_uri,omitempty"`
 
 	// ActionSetForwardedHeaders Defines an action that automatically adds standard X-Forwarded-* headers (such as X-Forwarded-For and X-Forwarded-Proto) to requests before forwarding them to the backend. Used when the action type is 'set_forwarded_headers'.
-	//
-	// Example: {}
 	ActionSetForwardedHeaders *LoadBalancerActionSetForwardedHeadersResponse `json:"action_set_forwarded_headers,omitempty"`
 
 	// ActionSetRequestHeader Defines an action that adds or modifies an HTTP header in a request or response. Used when the action type is 'set_request_header' or 'set_response_header'.
-	//
-	// Example: {"header":"X-Custom-Header","value":"Processed-By-UpCloud-LB"}
 	ActionSetRequestHeader *LoadBalancerActionSetHeaderResponse `json:"action_set_request_header,omitempty"`
 
 	// ActionSetResponseHeader Defines an action that adds or modifies an HTTP header in a request or response. Used when the action type is 'set_request_header' or 'set_response_header'.
-	//
-	// Example: {"header":"X-Custom-Header","value":"Processed-By-UpCloud-LB"}
 	ActionSetResponseHeader *LoadBalancerActionSetHeaderResponse `json:"action_set_response_header,omitempty"`
 
 	// ActionTcpReject Defines a TCP rejection action that immediately closes incoming connections when a rule matches. Used when the action type is 'tcp_reject'.
-	//
-	// Example: {}
 	ActionTcpReject *LoadBalancerActionTcpRejectResponse `json:"action_tcp_reject,omitempty"`
 
 	// ActionUseBackend Defines the backend target to which the request should be routed when the rule matches. Used when the action type is 'use_backend'.
-	//
-	// Example: {"backend":"api-backend"}
 	ActionUseBackend *LoadBalancerActionUseBackendResponse `json:"action_use_backend,omitempty"`
 
 	// Type Type of action defining how matched requests should be processed or modified.
-	//
-	// Example: use_backend
 	Type LoadBalancerActionResponseType `json:"type"`
 }
 
 // LoadBalancerActionResponseType Type of action defining how matched requests should be processed or modified.
-//
-// Example: use_backend
 type LoadBalancerActionResponseType string
 
 // LoadBalancerActionSetForwardedHeaders Forwarding rule Set forwarded headers
-//
-// Example: {}
 type LoadBalancerActionSetForwardedHeaders = map[string]interface{}
 
 // LoadBalancerActionSetForwardedHeadersResponse Defines an action that automatically adds standard X-Forwarded-* headers (such as X-Forwarded-For and X-Forwarded-Proto) to requests before forwarding them to the backend. Used when the action type is 'set_forwarded_headers'.
-//
-// Example: {}
 type LoadBalancerActionSetForwardedHeadersResponse = map[string]interface{}
 
 // LoadBalancerActionSetHeaderCreate Forwarding rule HTTP set header action
-//
-// Example: {"header":"X-Custom-Header","value":"CustomValue"}
 type LoadBalancerActionSetHeaderCreate struct {
 	// Header Name of the HTTP header to set or modify in the request or response.
-	//
-	// Example: X-Custom-Header
 	Header string `json:"header"`
 
 	// Value Value to assign to the specified HTTP header.
-	//
-	// Example: CustomValue
 	Value *string `json:"value,omitempty"`
 }
 
 // LoadBalancerActionSetHeaderResponse Defines an action that adds or modifies an HTTP header in a request or response. Used when the action type is 'set_request_header' or 'set_response_header'.
-//
-// Example: {"header":"X-Custom-Header","value":"Processed-By-UpCloud-LB"}
 type LoadBalancerActionSetHeaderResponse struct {
 	// Header Name of the HTTP header to add or modify.
-	//
-	// Example: X-Custom-Header
 	Header string `json:"header"`
 
 	// Value Value to assign to the specified header.
-	//
-	// Example: Processed-By-UpCloud-LB
 	Value string `json:"value"`
 }
 
 // LoadBalancerActionTcpRejectCreate Forwarding rule TCP reject action
-//
-// Example: {}
 type LoadBalancerActionTcpRejectCreate = map[string]interface{}
 
 // LoadBalancerActionTcpRejectResponse Defines a TCP rejection action that immediately closes incoming connections when a rule matches. Used when the action type is 'tcp_reject'.
-//
-// Example: {}
 type LoadBalancerActionTcpRejectResponse = map[string]interface{}
 
 // LoadBalancerActionUseBackendCreate Forwarding rule use backend action
 //
-// Example: {"backend":"backend-1"}
+// Examples: {"backend":"backend-1"}
 type LoadBalancerActionUseBackendCreate struct {
 	// Backend Name of the backend
-	//
-	// Example: backend-1
 	Backend string `json:"backend"`
 }
 
 // LoadBalancerActionUseBackendResponse Defines the backend target to which the request should be routed when the rule matches. Used when the action type is 'use_backend'.
-//
-// Example: {"backend":"api-backend"}
 type LoadBalancerActionUseBackendResponse struct {
 	// Backend Name of the backend to which the request should be routed when this action executes.
-	//
-	// Example: api-backend
 	Backend string `json:"backend"`
 }
 
 // LoadBalancerAvgTimeMetricsResponse Represents average timing statistics for backend performance, including connection establishment, queuing, server response, and total transaction times, all measured in milliseconds.
 type LoadBalancerAvgTimeMetricsResponse struct {
 	// AvgConnectionTimeMs Average time taken to establish a connection in milliseconds.
-	//
-	// Example: 12
 	AvgConnectionTimeMs int32 `json:"avg_connection_time_ms"`
 
 	// AvgQueueTimeMs Average time spent in queue before being processed, in milliseconds.
-	//
-	// Example: 5
 	AvgQueueTimeMs int32 `json:"avg_queue_time_ms"`
 
 	// AvgServerResponseTimeMs Average server response time in milliseconds.
-	//
-	// Example: 28
 	AvgServerResponseTimeMs int32 `json:"avg_server_response_time_ms"`
 
 	// AvgTotalTimeMs Average total time from connection start to response completion, in milliseconds.
-	//
-	// Example: 45
 	AvgTotalTimeMs int32 `json:"avg_total_time_ms"`
 }
 
 // LoadBalancerBackend Represents a backend configuration in the load balancer service, containing backend members, resolver settings, TLS configurations, and backend-specific properties such as timeouts and health checks.
+//
+// Examples: {"created_at":"2025-11-06T09:00:00.000Z","members":[{"backup":false,"created_at":"2025-11-05T12:30:00.000Z","enabled":true,"ip":"192.168.1.10","max_sessions":100,"name":"member-1","port":8080,"type":"static","updated_at":"2025-11-05T13:45:00.000Z","weight":10}],"name":"api-backend","properties":{"backend_id":401,"health_check_expected_status":200,"health_check_fall":3,"health_check_interval":10,"health_check_on_down":"shutdown-sessions","health_check_rise":2,"health_check_tls_verify":true,"health_check_type":"http","health_check_url":"/status","http2_enabled":true,"timeout_server":5000,"timeout_tunnel":15000,"tls_enabled":true,"tls_use_system_ca":false,"tls_verify":true},"resolver":"resolver-default","tls_configs":[{"certificate_bundle_uuid":"a4b9f1a3-9b7c-4f21-8b33-fd68efb7c001","created_at":"2025-11-06T10:15:00.000Z","name":"backend-tls-config","updated_at":"2025-11-06T11:00:00.000Z"}],"updated_at":"2025-11-06T11:30:00.000Z"}
 type LoadBalancerBackend struct {
 	// CreatedAt Timestamp when the backend was created (RFC 3339 format).
+	//
+	// Examples: 2025-11-06T09:00:00.000Z
 	CreatedAt time.Time `json:"created_at"`
 
 	// Members List of backend member servers (nodes) participating in this backend configuration.
-	//
-	// Example: [{"backup":false,"created_at":"2025-11-05T12:30:00.000Z","enabled":true,"ip":"192.168.1.10","max_sessions":100,"name":"member-1","port":8080,"type":"static","updated_at":"2025-11-05T13:45:00.000Z","weight":10},{"backup":false,"created_at":"2025-11-05T12:35:00.000Z","enabled":true,"ip":"192.168.1.11","max_sessions":120,"name":"member-2","port":8080,"type":"static","updated_at":"2025-11-05T13:50:00.000Z","weight":8}]
 	Members []LoadBalancerMember `json:"members"`
 
 	// Name Human-readable name of the backend
-	//
-	// Example: api-backend
 	Name string `json:"name"`
 
 	// Properties Properties of a backend configuration.
-	//
-	// Example: {"backend_id":401,"health_check_expected_status":200,"health_check_fall":3,"health_check_interval":10,"health_check_on_down":"shutdown-sessions","health_check_rise":2,"health_check_tls_verify":true,"health_check_type":"http","health_check_url":"/status","http2_enabled":true,"outbound_proxy_protocol":"v2","sticky_session_cookie_attributes":"SameSite=Strict; Secure; HttpOnly","sticky_session_cookie_name":"SESSIONID","timeout_server":30000,"timeout_tunnel":30000,"tls_enabled":true,"tls_use_system_ca":true,"tls_verify":false}
 	Properties LoadBalancerBackendPropertiesResponse `json:"properties"`
 
 	// Resolver Optional outbound DNS resolver reference used by this backend. Null when not set.
-	//
-	// Example: resolver-default
 	Resolver *string `json:"resolver,omitempty"`
 
 	// TlsConfigs TLS configurations associated with this backend, specifying certificate bundles and identifiers.
-	//
-	// Example: [{"certificate_bundle_uuid":"a4b9f1a3-9b7c-4f21-8b33-fd68efb7c001","created_at":"2025-11-06T10:15:00.000Z","name":"backend-tls-config","updated_at":"2025-11-06T11:00:00.000Z"}]
 	TlsConfigs []LoadBalancerTlsConfig `json:"tls_configs"`
 
 	// UpdatedAt Timestamp when the backend was last updated (RFC 3339 format).
+	//
+	// Examples: 2025-11-06T11:30:00.000Z
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
 // LoadBalancerBackendCreate Load Balancer Backend
+//
+// Examples: {"members":[],"name":"my-backend"}
 type LoadBalancerBackendCreate struct {
 	// Members Backend members
 	Members *[]LoadBalancerMemberCreate `json:"members"`
 
 	// Name Name of the backend
-	//
-	// Example: my-backend
 	Name string `json:"name"`
 
 	// Properties Backend Properties
@@ -1321,9 +1250,6 @@ type LoadBalancerBackendCreateResolver0 = string
 // LoadBalancerBackendCreateResolver1 defines model for LoadBalancerBackendCreate.Resolver.1.
 type LoadBalancerBackendCreateResolver1 = string
 
-// LoadBalancerBackendCreateResolver2 defines model for LoadBalancerBackendCreate.Resolver.2.
-type LoadBalancerBackendCreateResolver2 = string
-
 // LoadBalancerBackendCreate_Resolver Resolver reference
 type LoadBalancerBackendCreate_Resolver struct {
 	union json.RawMessage
@@ -1332,278 +1258,192 @@ type LoadBalancerBackendCreate_Resolver struct {
 // LoadBalancerBackendMetricsResponse Represents collected performance, availability, and traffic statistics for a load balancer backend, including member activity, response times, and aggregated server metrics.
 type LoadBalancerBackendMetricsResponse struct {
 	// ActiveServers Number of currently active servers in the backend.
-	//
-	// Example: 3
 	ActiveServers int32 `json:"active_servers"`
 
 	// AvgConnectionTimeMs Average time taken to establish a connection in milliseconds.
-	//
-	// Example: 12
 	AvgConnectionTimeMs int32 `json:"avg_connection_time_ms"`
 
 	// AvgQueueTimeMs Average time spent in queue before being processed, in milliseconds.
-	//
-	// Example: 5
 	AvgQueueTimeMs int32 `json:"avg_queue_time_ms"`
 
 	// AvgServerResponseTimeMs Average server response time in milliseconds.
-	//
-	// Example: 28
 	AvgServerResponseTimeMs int32 `json:"avg_server_response_time_ms"`
 
 	// AvgTotalTimeMs Average total time from connection start to response completion, in milliseconds.
-	//
-	// Example: 45
 	AvgTotalTimeMs int32 `json:"avg_total_time_ms"`
 
 	// BackendId Unique identifier for the backend.
-	//
-	// Example: 401
 	BackendId int32 `json:"backend_id"`
 
 	// BackupServers Number of backup servers available for failover.
-	//
-	// Example: 1
 	BackupServers int32 `json:"backup_servers"`
 
 	// ConnectionsWaiting Current number of connections waiting for a server slot.
-	//
-	// Example: 1
 	ConnectionsWaiting int32 `json:"connections_waiting"`
 
 	// CreatedAt Timestamp when the backend metrics record was created.
+	//
+	// Examples: 2025-11-06T09:00:00.000Z
 	CreatedAt time.Time `json:"created_at"`
 
 	// CurrentSessions Current number of active sessions.
-	//
-	// Example: 4
 	CurrentSessions int32 `json:"current_sessions"`
 
 	// DowntimeS Total downtime duration in seconds.
-	//
-	// Example: 45
 	DowntimeS int32 `json:"downtime_s"`
 
 	// Members List of metrics for individual backend members (servers).
+	//
+	// Examples: []
 	Members []LoadBalancerMemberMetricsResponse `json:"members"`
 
 	// Name Human-readable name of the backend.
-	//
-	// Example: backend-api
 	Name string `json:"name"`
 
 	// SessionRate Average rate of sessions per second.
-	//
-	// Example: 25
 	SessionRate int32 `json:"session_rate"`
 
 	// TotalClientAborted Total number of sessions aborted by clients before completion.
-	//
-	// Example: 12
 	TotalClientAborted int32 `json:"total_client_aborted"`
 
 	// TotalDeniedResponses Total number of denied responses.
-	//
-	// Example: 2
 	TotalDeniedResponses int32 `json:"total_denied_responses"`
 
 	// TotalFailedChecksTransitions Total number of times the server transitioned from healthy to failed state due to failed health checks.
-	//
-	// Example: 3
 	TotalFailedChecksTransitions int32 `json:"total_failed_checks_transitions"`
 
 	// TotalFailedConnections Total number of failed connection attempts to the server.
-	//
-	// Example: 5
 	TotalFailedConnections int32 `json:"total_failed_connections"`
 
 	// TotalHttpResponses1xx Total number of HTTP 1xx informational responses.
-	//
-	// Example: 5
 	TotalHttpResponses1xx int32 `json:"total_http_responses_1xx"`
 
 	// TotalHttpResponses2xx Total number of HTTP 2xx successful responses.
-	//
-	// Example: 984
 	TotalHttpResponses2xx int32 `json:"total_http_responses_2xx"`
 
 	// TotalHttpResponses3xx Total number of HTTP 3xx redirection responses.
-	//
-	// Example: 45
 	TotalHttpResponses3xx int32 `json:"total_http_responses_3xx"`
 
 	// TotalHttpResponses4xx Total number of HTTP 4xx client error responses.
-	//
-	// Example: 22
 	TotalHttpResponses4xx int32 `json:"total_http_responses_4xx"`
 
 	// TotalHttpResponses5xx Total number of HTTP 5xx server error responses.
-	//
-	// Example: 8
 	TotalHttpResponses5xx int32 `json:"total_http_responses_5xx"`
 
 	// TotalHttpResponsesOther Total number of HTTP responses outside the standard 1xx–5xx range.
-	//
-	// Example: 0
 	TotalHttpResponsesOther int32 `json:"total_http_responses_other"`
 
 	// TotalInvalidResponses Total number of invalid responses received from the server.
-	//
-	// Example: 2
 	TotalInvalidResponses int32 `json:"total_invalid_responses"`
 
 	// TotalRequestBytes Total number of request bytes processed.
-	//
-	// Example: 12543000
 	TotalRequestBytes int64 `json:"total_request_bytes"`
 
 	// TotalResponseBytes Total number of response bytes processed.
-	//
-	// Example: 11789000
 	TotalResponseBytes int64 `json:"total_response_bytes"`
 
 	// TotalRoutedRequests Total number of requests successfully routed to the server.
-	//
-	// Example: 14892
 	TotalRoutedRequests int32 `json:"total_routed_requests"`
 
 	// TotalServerAborted Total number of sessions aborted by the server before completion.
-	//
-	// Example: 4
 	TotalServerAborted int32 `json:"total_server_aborted"`
 
 	// TotalServerConnectionRetries Total number of retries attempted for failed server connections.
-	//
-	// Example: 9
 	TotalServerConnectionRetries int32 `json:"total_server_connection_retries"`
 
 	// TotalServerRedispatches Total number of requests that were redispatched to another server after failure.
-	//
-	// Example: 7
 	TotalServerRedispatches int32 `json:"total_server_redispatches"`
 
 	// TotalSessions Total number of sessions handled.
-	//
-	// Example: 1100
 	TotalSessions int32 `json:"total_sessions"`
 
 	// UpdatedAt Timestamp when the backend metrics record was last updated.
+	//
+	// Examples: 2025-11-06T09:30:00.000Z
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
 // LoadBalancerBackendMetricsSeries Aggregated performance, availability, and traffic statistics for a load balancer backend, including member metrics and average timing metrics.
 type LoadBalancerBackendMetricsSeries struct {
 	// Backends List of backend identifiers included in the metrics series.
-	//
-	// Example: ["backend-api","backend-web"]
 	Backends []string `json:"backends"`
 
 	// ClientAborted Number of client-aborted connections.
-	//
-	// Example: 5
 	ClientAborted *int32 `json:"client_aborted,omitempty"`
 
 	// DeniedResponses Total number of denied responses.
-	//
-	// Example: 12
 	DeniedResponses *int32 `json:"denied_responses,omitempty"`
 
 	// Downtime Total downtime in seconds.
-	//
-	// Example: 45
 	Downtime *int32 `json:"downtime,omitempty"`
 
 	// EndAt Timestamp marking the end of the metrics collection period.
+	//
+	// Examples: 2025-11-06T10:00:00.000Z
 	EndAt time.Time `json:"end_at"`
 
 	// FailedChecksTransitions Number of transitions from healthy to failed health checks.
-	//
-	// Example: 3
 	FailedChecksTransitions *int32 `json:"failed_checks_transitions,omitempty"`
 
 	// FailedConnections Number of failed connections.
-	//
-	// Example: 2
 	FailedConnections *int32 `json:"failed_connections,omitempty"`
 
 	// HttpResponses1xx Count of HTTP 1xx informational responses.
-	//
-	// Example: 2
 	HttpResponses1xx *int32 `json:"http_responses_1xx,omitempty"`
 
 	// HttpResponses2xx Count of HTTP 2xx successful responses.
-	//
-	// Example: 9500
 	HttpResponses2xx *int32 `json:"http_responses_2xx,omitempty"`
 
 	// HttpResponses3xx Count of HTTP 3xx redirection responses.
-	//
-	// Example: 35
 	HttpResponses3xx *int32 `json:"http_responses_3xx,omitempty"`
 
 	// HttpResponses4xx Count of HTTP 4xx client error responses.
-	//
-	// Example: 18
 	HttpResponses4xx *int32 `json:"http_responses_4xx,omitempty"`
 
 	// HttpResponses5xx Count of HTTP 5xx server error responses.
-	//
-	// Example: 6
 	HttpResponses5xx *int32 `json:"http_responses_5xx,omitempty"`
 
 	// HttpResponsesOther Count of HTTP responses outside the 1xx–5xx range.
-	//
-	// Example: 0
 	HttpResponsesOther *int32 `json:"http_responses_other,omitempty"`
 
 	// InvalidResponses Number of invalid responses.
-	//
-	// Example: 1
 	InvalidResponses *int32 `json:"invalid_responses,omitempty"`
 
 	// RequestBytes Total number of request bytes processed.
-	//
-	// Example: 12345678
 	RequestBytes *int64 `json:"request_bytes,omitempty"`
 
 	// ResponseBytes Total number of response bytes sent.
-	//
-	// Example: 11876543
 	ResponseBytes *int64 `json:"response_bytes,omitempty"`
 
 	// RoutedRequests Number of routed requests.
-	//
-	// Example: 15200
 	RoutedRequests *int32 `json:"routed_requests,omitempty"`
 
 	// ServerAborted Number of server-aborted connections.
-	//
-	// Example: 2
 	ServerAborted *int32 `json:"server_aborted,omitempty"`
 
 	// ServerConnectionRetries Number of server connection retries.
-	//
-	// Example: 4
 	ServerConnectionRetries *int32 `json:"server_connection_retries,omitempty"`
 
 	// ServerRedispatches Number of server redispatches.
-	//
-	// Example: 3
 	ServerRedispatches *int32 `json:"server_redispatches,omitempty"`
 
 	// Sessions Total number of sessions.
-	//
-	// Example: 220
 	Sessions *int32 `json:"sessions,omitempty"`
 
 	// StartAt Timestamp marking the start of the metrics collection period.
+	//
+	// Examples: 2025-11-06T09:00:00.000Z
 	StartAt time.Time `json:"start_at"`
 }
 
 // LoadBalancerBackendMetricsSeriesResponse Response schema for a list of backend metrics series.
+//
+// Examples: []
 type LoadBalancerBackendMetricsSeriesResponse = []LoadBalancerBackendMetricsSeries
 
 // LoadBalancerBackendModify Load Balancer Backend
+//
+// Examples: {"name":"updated-backend"}
 type LoadBalancerBackendModify struct {
 	// Members Backend members
 	Members *[]LoadBalancerMemberModify `json:"members,omitempty"`
@@ -1627,22 +1467,19 @@ type LoadBalancerBackendModifyResolver0 = string
 // LoadBalancerBackendModifyResolver1 defines model for LoadBalancerBackendModify.Resolver.1.
 type LoadBalancerBackendModifyResolver1 = string
 
-// LoadBalancerBackendModifyResolver2 defines model for LoadBalancerBackendModify.Resolver.2.
-type LoadBalancerBackendModifyResolver2 = string
-
 // LoadBalancerBackendModify_Resolver Resolver reference
 type LoadBalancerBackendModify_Resolver struct {
 	union json.RawMessage
 }
 
 // LoadBalancerBackendParameter The name of the backend.
+//
+// Examples: backend-infra, backend-customer-1
 type LoadBalancerBackendParameter = string
 
 // LoadBalancerBackendPropertiesCreate Backend Properties
 type LoadBalancerBackendPropertiesCreate struct {
 	// HealthCheckExpectedStatus Expected HTTP status code returned by the customer application to mark server as healthy
-	//
-	// Example: 200
 	HealthCheckExpectedStatus *int32 `json:"health_check_expected_status,omitempty"`
 
 	// HealthCheckFall Sets how many failed health checks are allowed
@@ -1673,7 +1510,7 @@ type LoadBalancerBackendPropertiesCreate struct {
 	OutboundProxyProtocol *LoadBalancerProxyProtocolVersionOrDisabled `json:"outbound_proxy_protocol,omitempty"`
 
 	// StickySessionCookieAttributes Controls additional cookie attributes appended to sticky session cookies. Supports combinations of: SameSite=Strict|Lax|None, Secure, HttpOnly, Partitioned (semicolon-separated). Note: SameSite=None and Partitioned require Secure.
-	StickySessionCookieAttributes *LoadBalancerBackendPropertiesCreate_StickySessionCookieAttributes `json:"sticky_session_cookie_attributes,omitempty"`
+	StickySessionCookieAttributes *string `json:"sticky_session_cookie_attributes,omitempty"`
 
 	// StickySessionCookieName Sets sticky session cookie name. Empty string disables sticky session.
 	StickySessionCookieName *string `json:"sticky_session_cookie_name,omitempty"`
@@ -1694,107 +1531,60 @@ type LoadBalancerBackendPropertiesCreate struct {
 	TlsVerify *bool `json:"tls_verify,omitempty"`
 }
 
-// LoadBalancerBackendPropertiesCreateStickySessionCookieAttributes0 defines model for LoadBalancerBackendPropertiesCreate.StickySessionCookieAttributes.0.
-type LoadBalancerBackendPropertiesCreateStickySessionCookieAttributes0 = string
-
-// LoadBalancerBackendPropertiesCreateStickySessionCookieAttributes1 defines model for LoadBalancerBackendPropertiesCreate.StickySessionCookieAttributes.1.
-type LoadBalancerBackendPropertiesCreateStickySessionCookieAttributes1 = string
-
-// LoadBalancerBackendPropertiesCreate_StickySessionCookieAttributes Controls additional cookie attributes appended to sticky session cookies. Supports combinations of: SameSite=Strict|Lax|None, Secure, HttpOnly, Partitioned (semicolon-separated). Note: SameSite=None and Partitioned require Secure.
-type LoadBalancerBackendPropertiesCreate_StickySessionCookieAttributes struct {
-	union json.RawMessage
-}
-
 // LoadBalancerBackendPropertiesResponse Properties of a backend configuration.
-//
-// Example: {"backend_id":401,"health_check_expected_status":200,"health_check_fall":3,"health_check_interval":10,"health_check_on_down":"shutdown-sessions","health_check_rise":2,"health_check_tls_verify":true,"health_check_type":"http","health_check_url":"/status","http2_enabled":true,"outbound_proxy_protocol":"v2","sticky_session_cookie_attributes":"SameSite=Strict; Secure; HttpOnly","sticky_session_cookie_name":"SESSIONID","timeout_server":30000,"timeout_tunnel":30000,"tls_enabled":true,"tls_use_system_ca":true,"tls_verify":false}
 type LoadBalancerBackendPropertiesResponse struct {
 	// BackendId Identifier of the backend.
-	//
-	// Example: 401
 	BackendId int32 `json:"backend_id"`
 
 	// HealthCheckExpectedStatus Expected HTTP status code from health check.
-	//
-	// Example: 200
 	HealthCheckExpectedStatus int32 `json:"health_check_expected_status"`
 
 	// HealthCheckFall Number of failed checks before marking as unhealthy.
-	//
-	// Example: 3
 	HealthCheckFall int32 `json:"health_check_fall"`
 
 	// HealthCheckInterval Interval between health checks in seconds.
-	//
-	// Example: 10
 	HealthCheckInterval int32 `json:"health_check_interval"`
 
 	// HealthCheckOnDown Action to take when backend is down.
-	//
-	// Example: shutdown-sessions
 	HealthCheckOnDown string `json:"health_check_on_down"`
 
 	// HealthCheckRise Number of successful checks before marking as healthy.
-	//
-	// Example: 2
 	HealthCheckRise int32 `json:"health_check_rise"`
 
 	// HealthCheckTlsVerify Whether to verify TLS in health check.
-	//
-	// Example: true
 	HealthCheckTlsVerify bool `json:"health_check_tls_verify"`
 
 	// HealthCheckType Type of health check.
-	//
-	// Example: http
 	HealthCheckType string `json:"health_check_type"`
 
 	// HealthCheckUrl URL for HTTP health checks.
-	//
-	// Example: /status
 	HealthCheckUrl string `json:"health_check_url"`
 
 	// Http2Enabled Whether HTTP/2 is enabled for the backend.
-	//
-	// Example: true
 	Http2Enabled bool `json:"http2_enabled"`
 
 	// OutboundProxyProtocol Empty string means disabled
 	OutboundProxyProtocol *LoadBalancerProxyProtocolVersionOrDisabled `json:"outbound_proxy_protocol,omitempty"`
 
 	// StickySessionCookieAttributes Additional cookie attributes appended to sticky session cookies. Supports combinations of: SameSite=Strict|Lax|None, Secure, HttpOnly, Partitioned (semicolon-separated).
-	//
-	// Example: SameSite=Strict; Secure; HttpOnly
 	StickySessionCookieAttributes *string `json:"sticky_session_cookie_attributes,omitempty"`
 
 	// StickySessionCookieName Name of the sticky session cookie.
-	//
-	// Example: SESSIONID
 	StickySessionCookieName *string `json:"sticky_session_cookie_name,omitempty"`
 
 	// TimeoutServer Server timeout in milliseconds.
-	//
-	// Example: 30000
 	TimeoutServer int32 `json:"timeout_server"`
 
 	// TimeoutTunnel Tunnel timeout in milliseconds.
-	//
-	// Example: 30000
 	TimeoutTunnel int32 `json:"timeout_tunnel"`
 
 	// TlsEnabled Whether TLS is enabled.
-	//
-	// Example: true
 	TlsEnabled bool `json:"tls_enabled"`
 
 	// TlsUseSystemCa Whether to use system CA for backend TLS.
-	//
-	// Example: true
 	TlsUseSystemCa bool `json:"tls_use_system_ca"`
 
 	// TlsVerify Whether to verify backend TLS certificate.
-	//
-	// Example: false
 	TlsVerify bool `json:"tls_verify"`
 }
 
@@ -1802,85 +1592,75 @@ type LoadBalancerBackendPropertiesResponse struct {
 type LoadBalancerBackendsResponse = []LoadBalancerBackend
 
 // LoadBalancerCertificateBundle Represents a certificate bundle used in a load balancer TLS configuration. A bundle may be manually uploaded, dynamically issued via ACME, or represent an authority certificate. It includes certificate data, challenge details, and metadata about its lifecycle.
+//
+// Examples: {"created_at":"2025-11-06T09:00:00.000Z","hostnames":["example.com","www.example.com"],"key_type":"rsa","labels":[],"name":"mydomain-cert-bundle","not_after":"2026-11-06T09:00:00.000Z","not_before":"2025-11-06T09:00:00.000Z","operational_state":"setup-challenge","tls_type":"dynamic","updated_at":"2025-11-06T11:00:00.000Z","uuid":"8d2f4a1e-0e3f-44a9-a0f5-9b8c84e9c701"}
 type LoadBalancerCertificateBundle struct {
 	// CertificateRaw PEM-encoded certificate data (base64).
-	//
-	// Example: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0t...
 	CertificateRaw *[]byte `json:"certificate_raw,omitempty"`
 
 	// ChallengeProblems Problems reported during ACME challenge validation.
 	ChallengeProblems *[]LoadBalancerChallengeProblemResponse `json:"challenge_problems,omitempty"`
 
 	// CreatedAt Timestamp when this certificate bundle was created.
+	//
+	// Examples: 2025-11-06T09:00:00.000Z
 	CreatedAt time.Time `json:"created_at"`
 
 	// Hostnames List of hostnames covered by this certificate bundle.
-	//
-	// Example: ["example.com","www.example.com"]
 	Hostnames *[]string `json:"hostnames,omitempty"`
 
 	// IntermediatesRaw PEM-encoded intermediate certificates (base64).
-	//
-	// Example: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0t...
 	IntermediatesRaw *[]byte `json:"intermediates_raw,omitempty"`
 
 	// KeyType Type of private key used for this certificate bundle.
-	//
-	// Example: rsa
 	KeyType *LoadBalancerCertificateBundleKeyType `json:"key_type,omitempty"`
 
 	// Labels List of labels attached to this certificate bundle.
 	Labels *[]LoadBalancerLabelResponse `json:"labels,omitempty"`
 
 	// Name Human-readable name assigned to the certificate bundle.
-	//
-	// Example: mydomain-cert-bundle
 	Name string `json:"name"`
 
 	// NotAfter The expiration date and time of certificate validity.
+	//
+	// Examples: 2026-11-06T09:00:00.000Z
 	NotAfter *time.Time `json:"not_after,omitempty"`
 
 	// NotBefore The start date and time of certificate validity.
+	//
+	// Examples: 2025-11-06T09:00:00.000Z
 	NotBefore *time.Time `json:"not_before,omitempty"`
 
 	// OperationalState Current operational state of the certificate bundle.
-	//
-	// Example: pending
 	OperationalState LoadBalancerCertificateBundleOperationalState `json:"operational_state"`
 
 	// Services List of load balancer services that use this certificate bundle.
 	Services *[]LoadBalancerEmbeddedServiceResponse `json:"services,omitempty"`
 
 	// TlsType The certificate bundle type. Determines how the certificate is provisioned and managed.
-	//
-	// Example: dynamic
 	TlsType LoadBalancerCertificateBundleTlsType `json:"tls_type"`
 
 	// UpdatedAt Timestamp when this certificate bundle was last updated.
+	//
+	// Examples: 2025-11-06T11:00:00.000Z
 	UpdatedAt time.Time `json:"updated_at"`
 
 	// Uuid Unique identifier for the certificate bundle.
-	//
-	// Example: 8d2f4a1e-0e3f-44a9-a0f5-9b8c84e9c701
 	Uuid openapi_types.UUID `json:"uuid"`
 }
 
 // LoadBalancerCertificateBundleKeyType Type of private key used for this certificate bundle.
-//
-// Example: rsa
 type LoadBalancerCertificateBundleKeyType string
 
 // LoadBalancerCertificateBundleOperationalState Current operational state of the certificate bundle.
-//
-// Example: pending
 type LoadBalancerCertificateBundleOperationalState string
 
 // LoadBalancerCertificateBundleTlsType The certificate bundle type. Determines how the certificate is provisioned and managed.
-//
-// Example: dynamic
 type LoadBalancerCertificateBundleTlsType string
 
 // LoadBalancerCertificateBundleAuthorityModify Load Balancer certificate bundle dynamic type
+//
+// Examples: {"name":"updated-cert-bundle"}
 type LoadBalancerCertificateBundleAuthorityModify struct {
 	// Certificate Certificate
 	Certificate *string `json:"certificate,omitempty"`
@@ -1893,6 +1673,8 @@ type LoadBalancerCertificateBundleAuthorityModify struct {
 }
 
 // LoadBalancerCertificateBundleCreate Load Balancer certificate bundle
+//
+// Examples: {"certificate":"LS0tLS1CRUdJTi...==","name":"my-certificate","private_key":"LS0tLS1CRUdJTi...==","type":"manual"}
 type LoadBalancerCertificateBundleCreate struct {
 	// Certificate Certificate
 	Certificate *string `json:"certificate,omitempty"`
@@ -1913,16 +1695,12 @@ type LoadBalancerCertificateBundleCreate struct {
 	Labels *[]LoadBalancerLabelCreate `json:"labels,omitempty"`
 
 	// Name Name of the bundle
-	//
-	// Example: my-certificate-bundle
 	Name string `json:"name"`
 
 	// PrivateKey Private key
 	PrivateKey *string `json:"private_key,omitempty"`
 
 	// Type Certificate bundle type
-	//
-	// Example: manual
 	Type  LoadBalancerCertificateBundleCreateType `json:"type"`
 	union json.RawMessage
 }
@@ -1931,26 +1709,35 @@ type LoadBalancerCertificateBundleCreate struct {
 type LoadBalancerCertificateBundleCreateKeyType string
 
 // LoadBalancerCertificateBundleCreateType Certificate bundle type
-//
-// Example: manual
 type LoadBalancerCertificateBundleCreateType string
 
 // LoadBalancerCertificateBundleCreate0 defines model for LoadBalancerCertificateBundleCreate.0.
 type LoadBalancerCertificateBundleCreate0 struct {
-	Type interface{} `json:"type"`
+	Hostnames any         `json:"hostnames,omitempty"`
+	KeyType   any         `json:"key_type,omitempty"`
+	Type      interface{} `json:"type"`
 }
 
 // LoadBalancerCertificateBundleCreate1 defines model for LoadBalancerCertificateBundleCreate.1.
 type LoadBalancerCertificateBundleCreate1 struct {
-	Type interface{} `json:"type"`
+	Certificate   any         `json:"certificate,omitempty"`
+	Intermediates any         `json:"intermediates,omitempty"`
+	PrivateKey    any         `json:"private_key,omitempty"`
+	Type          interface{} `json:"type"`
 }
 
 // LoadBalancerCertificateBundleCreate2 defines model for LoadBalancerCertificateBundleCreate.2.
 type LoadBalancerCertificateBundleCreate2 struct {
-	Type interface{} `json:"type"`
+	Hostnames     any         `json:"hostnames,omitempty"`
+	Intermediates any         `json:"intermediates,omitempty"`
+	KeyType       any         `json:"key_type,omitempty"`
+	PrivateKey    any         `json:"private_key,omitempty"`
+	Type          interface{} `json:"type"`
 }
 
 // LoadBalancerCertificateBundleDynamicModify Load Balancer certificate bundle dynamic type
+//
+// Examples: {"name":"updated-dynamic-cert"}
 type LoadBalancerCertificateBundleDynamicModify struct {
 	// ChallengeKey Unique key used for ACME DNS challenge validation when obtaining certificates dynamically.
 	ChallengeKey *string `json:"challenge_key,omitempty"`
@@ -1969,6 +1756,8 @@ type LoadBalancerCertificateBundleDynamicModify struct {
 type LoadBalancerCertificateBundleLabelsResponse = []LoadBalancerLabelResponse
 
 // LoadBalancerCertificateBundleManualModify Load Balancer certificate bundle manual type
+//
+// Examples: {"name":"updated-manual-cert"}
 type LoadBalancerCertificateBundleManualModify struct {
 	// Certificate Certificate
 	Certificate *string `json:"certificate,omitempty"`
@@ -1987,28 +1776,26 @@ type LoadBalancerCertificateBundleManualModify struct {
 }
 
 // LoadBalancerCertificateBundleModify Modify a load balancer certificate bundle (manual, dynamic, or authority type)
+//
+// Examples: {"certificate":"LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0t...","name":"updated-cert-bundle","private_key":"LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQo="}
 type LoadBalancerCertificateBundleModify struct {
 	union json.RawMessage
 }
 
 // LoadBalancerCertificateBundleParameter The UUID of the certificate bundle.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type LoadBalancerCertificateBundleParameter = openapi_types.UUID
 
 // LoadBalancerCertificatesBundleResponse Response schema for a list of certificate bundles.
 type LoadBalancerCertificatesBundleResponse = []LoadBalancerCertificateBundle
 
 // LoadBalancerChallengeProblemResponse Represents a problem encountered during ACME challenge validation for a specific hostname. Includes detailed error information following the Problem Details (RFC7807) format.
-//
-// Example: {"hostname":"example.com","problem":{"correlation_id":"req-7b39a1c9b6a14e07b9d4c2a4c5d8b7f2","detail":"The DNS resolver could not resolve the domain name 'example.com'.","status":400,"title":"DNS lookup failed","type":"https://api.example.com/problems/dns-lookup-failed"}}
 type LoadBalancerChallengeProblemResponse struct {
 	// Hostname The hostname for which the ACME challenge validation failed or encountered an error.
-	//
-	// Example: example.com
 	Hostname string `json:"hostname"`
 
 	// Problem Represents an error object following the Problem Details specification (RFC7807). Provides machine-readable and human-readable information about an error that occurred while processing a request.
-	//
-	// Example: {"correlation_id":"req-8b29d3a6a4cf4d22a17e2b8e31cd4a12","detail":"The provided domain name is not valid.","invalid_params":[{"name":"hostnames[0]","reason":"Invalid domain name format"}],"status":400,"title":"Invalid request","type":"https://api.example.com/problems/invalid-request"}
 	Problem LoadBalancerProblemResponse `json:"problem"`
 }
 
@@ -2018,63 +1805,39 @@ type LoadBalancerChecksOnDown string
 // LoadBalancerCommonMetricsResponse Represents general traffic and session statistics collected for a load balancer frontend or backend, including request and response byte counts, HTTP status distribution, and session activity metrics.
 type LoadBalancerCommonMetricsResponse struct {
 	// CurrentSessions Current number of active sessions.
-	//
-	// Example: 4
 	CurrentSessions int32 `json:"current_sessions"`
 
 	// SessionRate Average rate of sessions per second.
-	//
-	// Example: 25
 	SessionRate int32 `json:"session_rate"`
 
 	// TotalDeniedResponses Total number of denied responses.
-	//
-	// Example: 2
 	TotalDeniedResponses int32 `json:"total_denied_responses"`
 
 	// TotalHttpResponses1xx Total number of HTTP 1xx informational responses.
-	//
-	// Example: 5
 	TotalHttpResponses1xx int32 `json:"total_http_responses_1xx"`
 
 	// TotalHttpResponses2xx Total number of HTTP 2xx successful responses.
-	//
-	// Example: 984
 	TotalHttpResponses2xx int32 `json:"total_http_responses_2xx"`
 
 	// TotalHttpResponses3xx Total number of HTTP 3xx redirection responses.
-	//
-	// Example: 45
 	TotalHttpResponses3xx int32 `json:"total_http_responses_3xx"`
 
 	// TotalHttpResponses4xx Total number of HTTP 4xx client error responses.
-	//
-	// Example: 22
 	TotalHttpResponses4xx int32 `json:"total_http_responses_4xx"`
 
 	// TotalHttpResponses5xx Total number of HTTP 5xx server error responses.
-	//
-	// Example: 8
 	TotalHttpResponses5xx int32 `json:"total_http_responses_5xx"`
 
 	// TotalHttpResponsesOther Total number of HTTP responses outside the standard 1xx–5xx range.
-	//
-	// Example: 0
 	TotalHttpResponsesOther int32 `json:"total_http_responses_other"`
 
 	// TotalRequestBytes Total number of request bytes processed.
-	//
-	// Example: 12543000
 	TotalRequestBytes int64 `json:"total_request_bytes"`
 
 	// TotalResponseBytes Total number of response bytes processed.
-	//
-	// Example: 11789000
 	TotalResponseBytes int64 `json:"total_response_bytes"`
 
 	// TotalSessions Total number of sessions handled.
-	//
-	// Example: 1100
 	TotalSessions int32 `json:"total_sessions"`
 }
 
@@ -2084,74 +1847,50 @@ type LoadBalancerContentTypes string
 // LoadBalancerDnsChallengeDomainResponse Response schema for DNS challenge domain information.
 type LoadBalancerDnsChallengeDomainResponse struct {
 	// Domain The DNS challenge domain to use for ACME validation.
-	//
-	// Example: _acme-challenge.example.upcloudlb.com
 	Domain string `json:"domain"`
 }
 
 // LoadBalancerEmbeddedBackendResponse Represents a minimal embedded reference to a backend within the load balancer service, including its name and associated TLS configurations.
-//
-// Example: {"name":"backend-app","tls_configs":[{"backend_id":9,"certificate_bundle_uuid":"b1a5f3d8-2b3e-4b61-981f-d42cfb9a43e2","created_at":"2025-11-06T10:45:00.000Z","frontend_id":7,"id":56,"name":"backend-tls-config","updated_at":"2025-11-06T11:20:00.000Z"}]}
 type LoadBalancerEmbeddedBackendResponse struct {
 	// Name Human-readable name of the embedded backend within the load balancer service.
-	//
-	// Example: backend-app
 	Name string `json:"name"`
 
 	// TlsConfigs List of TLS configuration objects associated with this backend. Each entry defines a certificate bundle used for secure connections to backend servers.
-	//
-	// Example: [{"backend_id":9,"certificate_bundle_uuid":"b1a5f3d8-2b3e-4b61-981f-d42cfb9a43e2","created_at":"2025-11-06T10:45:00.000Z","frontend_id":7,"id":56,"name":"backend-tls-config","updated_at":"2025-11-06T11:20:00.000Z"}]
 	TlsConfigs *[]LoadBalancerTlsConfig `json:"tls_configs,omitempty"`
 }
 
 // LoadBalancerEmbeddedFrontendResponse Represents a minimal embedded reference to a frontend within a load balancer service, including its name and any associated TLS configurations.
-//
-// Example: {"name":"frontend-http","tls_configs":[{"backend_id":12,"certificate_bundle_uuid":"a4b9f1a3-9b7c-4f21-8b33-fd68efb7c001","created_at":"2025-11-06T10:15:00.000Z","frontend_id":7,"id":42,"name":"frontend-tls-config","updated_at":"2025-11-06T11:00:00.000Z"}]}
 type LoadBalancerEmbeddedFrontendResponse struct {
 	// Name Human-readable name of the embedded frontend within the load balancer service.
-	//
-	// Example: frontend-http
 	Name string `json:"name"`
 
 	// TlsConfigs List of TLS configuration objects associated with this frontend. Each entry references a certificate bundle used for secure connections.
-	//
-	// Example: [{"backend_id":12,"certificate_bundle_uuid":"a4b9f1a3-9b7c-4f21-8b33-fd68efb7c001","created_at":"2025-11-06T10:15:00.000Z","frontend_id":7,"id":42,"name":"frontend-tls-config","updated_at":"2025-11-06T11:00:00.000Z"}]
 	TlsConfigs *[]LoadBalancerTlsConfig `json:"tls_configs,omitempty"`
 }
 
 // LoadBalancerEmbeddedServiceResponse Represents a minimal embedded reference to a load balancer service, including its UUID, name, and lists of associated frontends and backends.
-//
-// Example: {"backends":[{"name":"backend-app","tls_configs":[{"backend_id":9,"certificate_bundle_uuid":"b1a5f3d8-2b3e-4b61-981f-d42cfb9a43e2","created_at":"2025-11-06T10:45:00.000Z","frontend_id":7,"id":56,"name":"backend-tls-config","updated_at":"2025-11-06T11:20:00.000Z"}]}],"deleted":false,"frontends":[{"name":"frontend-http","tls_configs":[{"backend_id":12,"certificate_bundle_uuid":"a4b9f1a3-9b7c-4f21-8b33-fd68efb7c001","created_at":"2025-11-06T10:15:00.000Z","frontend_id":7,"id":42,"name":"frontend-tls-config","updated_at":"2025-11-06T11:00:00.000Z"}]}],"name":"customer-service-lb","uuid":"d9f1b2a4-5c8d-4b73-91e0-8d5a0dc2e734"}
 type LoadBalancerEmbeddedServiceResponse struct {
 	// Backends List of backends associated with the service. Each backend defines how traffic is distributed to target servers.
-	//
-	// Example: [{"name":"backend-app","tls_configs":[{"backend_id":9,"certificate_bundle_uuid":"b1a5f3d8-2b3e-4b61-981f-d42cfb9a43e2","created_at":"2025-11-06T10:45:00.000Z","frontend_id":7,"id":56,"name":"backend-tls-config","updated_at":"2025-11-06T11:20:00.000Z"}]}]
 	Backends *[]LoadBalancerEmbeddedBackendResponse `json:"backends,omitempty"`
 
 	// Deleted Indicates whether the service has been marked as deleted.
-	//
-	// Example: false
 	Deleted *bool `json:"deleted,omitempty"`
 
 	// Frontends List of frontends associated with the service. Each frontend defines how client connections are received.
-	//
-	// Example: [{"name":"frontend-http","tls_configs":[{"backend_id":12,"certificate_bundle_uuid":"a4b9f1a3-9b7c-4f21-8b33-fd68efb7c001","created_at":"2025-11-06T10:15:00.000Z","frontend_id":7,"id":42,"name":"frontend-tls-config","updated_at":"2025-11-06T11:00:00.000Z"}]}]
 	Frontends *[]LoadBalancerEmbeddedFrontendResponse `json:"frontends,omitempty"`
 
 	// Name Human-readable name of the embedded service.
-	//
-	// Example: customer-service-lb
 	Name string `json:"name"`
 
 	// Uuid Unique identifier for the load balancer service.
-	//
-	// Example: d9f1b2a4-5c8d-4b73-91e0-8d5a0dc2e734
 	Uuid openapi_types.UUID `json:"uuid"`
 }
 
 // LoadBalancerErrorResponse Schema for error responses from the API.
 type LoadBalancerErrorResponse struct {
 	// Error Error details containing the error message and code.
+	//
+	// Examples: {"error_code":"401","error_message":"Authentication credentials wrong"}
 	Error *struct {
 		// ErrorCode Error code associated with the error.
 		ErrorCode string `json:"error_code"`
@@ -2162,36 +1901,30 @@ type LoadBalancerErrorResponse struct {
 }
 
 // LoadBalancerFrontend Represents a frontend configuration in the load balancer service, defining how client connections are received, the listening port and protocol, TLS settings, routing rules, and default backend association.
+//
+// Examples: {"created_at":"2025-11-06T09:00:00.000Z","default_backend":"backend-1","mode":"http","name":"frontend-1","networks":[{"name":"public-network"},{"name":"private-network"}],"port":80,"properties":{"frontend_id":301,"http2_enabled":true,"inbound_proxy_protocol":false,"timeout_client":50000},"rules":[{"actions":[{"action_set_forwarded_headers":{},"type":"set_forwarded_headers"},{"action_set_request_header":{"header":"X-Forwarded-Proto","value":"https"},"type":"set_request_header"},{"action_http_redirect":{"location":"https://example.com","status":301},"type":"http_redirect"}],"created_at":"2025-11-06T09:00:00.000Z","matchers":[{"inverse":false,"match_path":{"ignore_case":true,"method":"starts_with","value":"/api"},"type":"path"}],"matching_condition":"and","name":"redirect-to-https","priority":1,"updated_at":"2025-11-06T09:30:00.000Z"}],"tls_configs":[{"certificate_bundle_uuid":"a4b9f1a3-9b7c-4f21-8b33-fd68efb7c001","created_at":"2025-11-06T10:15:00.000Z","name":"frontend-tls-config","updated_at":"2025-11-06T11:00:00.000Z"}],"updated_at":"2025-12-06T09:00:00.000Z"}
 type LoadBalancerFrontend struct {
 	// CreatedAt Timestamp when the frontend was created (RFC 3339 format).
+	//
+	// Examples: 2025-11-06T09:00:00.000Z
 	CreatedAt time.Time `json:"created_at"`
 
 	// DefaultBackend Name of the backend used when no routing rules match the incoming request.
-	//
-	// Example: backend-1
 	DefaultBackend string `json:"default_backend"`
 
-	// Mode Mode
+	// Mode Operating mode defining the protocol layer at which the frontend operates.
 	Mode LoadBalancerFrontendMode `json:"mode"`
 
 	// Name Human-readable name assigned to the frontend.
-	//
-	// Example: frontend-1
-	Name string `json:"name"`
-
-	// Networks Example: [{"name":"public-network"},{"name":"private-network"}]
+	Name     string `json:"name"`
 	Networks []struct {
 		Name string `json:"name"`
 	} `json:"networks"`
 
 	// Port Port number on which the frontend listens for incoming connections.
-	//
-	// Example: 80
 	Port int32 `json:"port"`
 
 	// Properties Defines configurable properties for a frontend, such as client timeout settings, protocol options, and linkage to its parent frontend resource.
-	//
-	// Example: {"frontend_id":301,"http2_enabled":true,"inbound_proxy_protocol":false,"timeout_client":50000}
 	Properties LoadBalancerFrontendPropertiesResponse `json:"properties"`
 
 	// Rules Represents a list of load balancer rules that define how incoming requests are matched and processed, including conditions, actions, and backend target associations.
@@ -2201,10 +1934,14 @@ type LoadBalancerFrontend struct {
 	TlsConfigs LoadBalancerTlsConfigsResponse `json:"tls_configs"`
 
 	// UpdatedAt Timestamp when the frontend was last updated (RFC 3339 format).
+	//
+	// Examples: 2025-12-06T09:00:00.000Z
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
 // LoadBalancerFrontendCreate Load Balancer Frontend
+//
+// Examples: {"default_backend":"my-backend","mode":"http","name":"my-frontend","port":80}
 type LoadBalancerFrontendCreate struct {
 	// DefaultBackend Default backend
 	DefaultBackend string `json:"default_backend"`
@@ -2213,8 +1950,6 @@ type LoadBalancerFrontendCreate struct {
 	Mode LoadBalancerFrontendMode `json:"mode"`
 
 	// Name Name of the frontend
-	//
-	// Example: my-frontend
 	Name string `json:"name"`
 
 	// Networks Network names
@@ -2224,8 +1959,6 @@ type LoadBalancerFrontendCreate struct {
 	Port int32 `json:"port"`
 
 	// Properties Frontend Properties
-	//
-	// Example: {"http2_enabled":true,"inbound_proxy_protocol":false,"timeout_client":60}
 	Properties *LoadBalancerFrontendPropertiesCreate `json:"properties,omitempty"`
 
 	// Rules Rules
@@ -2238,208 +1971,142 @@ type LoadBalancerFrontendCreate struct {
 // LoadBalancerFrontendMetricsResponse Represents aggregated performance and traffic metrics for a load balancer frontend, including connection statistics, HTTP response counts, and per-second request rates. Combines general metrics, request-specific metrics, and creation timestamps for observability and monitoring purposes.
 type LoadBalancerFrontendMetricsResponse struct {
 	// CreatedAt Timestamp indicating when the frontend metrics entry was created.
+	//
+	// Examples: 2025-11-06T09:00:00.000Z
 	CreatedAt time.Time `json:"created_at"`
 
 	// CurrentSessions Current number of active sessions.
-	//
-	// Example: 4
 	CurrentSessions int32 `json:"current_sessions"`
 
 	// FrontendId Unique identifier for the frontend.
-	//
-	// Example: 301
 	FrontendId int32 `json:"frontend_id"`
 
 	// Name Human-readable name of the frontend.
-	//
-	// Example: frontend-http
 	Name string `json:"name"`
 
 	// RequestRate Rate of incoming requests per second.
-	//
-	// Example: 120
 	RequestRate int32 `json:"request_rate"`
 
 	// SessionRate Average rate of sessions per second.
-	//
-	// Example: 25
 	SessionRate int32 `json:"session_rate"`
 
 	// TotalDeniedConnections Total number of denied client connections.
-	//
-	// Example: 5
 	TotalDeniedConnections int32 `json:"total_denied_connections"`
 
 	// TotalDeniedRequests Total number of denied HTTP requests.
-	//
-	// Example: 35
 	TotalDeniedRequests int32 `json:"total_denied_requests"`
 
 	// TotalDeniedResponses Total number of denied responses.
-	//
-	// Example: 2
 	TotalDeniedResponses int32 `json:"total_denied_responses"`
 
 	// TotalDeniedSessions Total number of denied sessions due to connection or rule constraints.
-	//
-	// Example: 3
 	TotalDeniedSessions int32 `json:"total_denied_sessions"`
 
 	// TotalHttpRequests Total number of HTTP requests processed.
-	//
-	// Example: 12500
 	TotalHttpRequests int32 `json:"total_http_requests"`
 
 	// TotalHttpResponses1xx Total number of HTTP 1xx informational responses.
-	//
-	// Example: 5
 	TotalHttpResponses1xx int32 `json:"total_http_responses_1xx"`
 
 	// TotalHttpResponses2xx Total number of HTTP 2xx successful responses.
-	//
-	// Example: 984
 	TotalHttpResponses2xx int32 `json:"total_http_responses_2xx"`
 
 	// TotalHttpResponses3xx Total number of HTTP 3xx redirection responses.
-	//
-	// Example: 45
 	TotalHttpResponses3xx int32 `json:"total_http_responses_3xx"`
 
 	// TotalHttpResponses4xx Total number of HTTP 4xx client error responses.
-	//
-	// Example: 22
 	TotalHttpResponses4xx int32 `json:"total_http_responses_4xx"`
 
 	// TotalHttpResponses5xx Total number of HTTP 5xx server error responses.
-	//
-	// Example: 8
 	TotalHttpResponses5xx int32 `json:"total_http_responses_5xx"`
 
 	// TotalHttpResponsesOther Total number of HTTP responses outside the standard 1xx–5xx range.
-	//
-	// Example: 0
 	TotalHttpResponsesOther int32 `json:"total_http_responses_other"`
 
 	// TotalInterceptedRequests Total number of intercepted HTTP requests by internal rules or actions.
-	//
-	// Example: 12
 	TotalInterceptedRequests int32 `json:"total_intercepted_requests"`
 
 	// TotalInvalidRequests Total number of malformed or invalid HTTP requests received.
-	//
-	// Example: 7
 	TotalInvalidRequests int32 `json:"total_invalid_requests"`
 
 	// TotalRequestBytes Total number of request bytes processed.
-	//
-	// Example: 12543000
 	TotalRequestBytes int64 `json:"total_request_bytes"`
 
 	// TotalResponseBytes Total number of response bytes processed.
-	//
-	// Example: 11789000
 	TotalResponseBytes int64 `json:"total_response_bytes"`
 
 	// TotalSessions Total number of sessions handled.
-	//
-	// Example: 1100
 	TotalSessions int32 `json:"total_sessions"`
 
 	// UpdatedAt Timestamp indicating when the frontend metrics entry was last updated.
+	//
+	// Examples: 2025-11-06T09:30:00.000Z
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
 // LoadBalancerFrontendMetricsSeries Aggregated time-series metrics for load balancer frontends, representing cumulative statistics between a start and end timestamp across one or more frontend instances.
+//
+// Examples: {"denied_connections":15,"denied_requests":28,"denied_responses":6,"denied_sessions":8,"end_at":"2025-11-06T09:05:00.000Z","frontends":["frontend-http","frontend-https"],"http_requests":15000,"http_responses_1xx":2,"http_responses_2xx":940,"http_responses_3xx":47,"http_responses_4xx":33,"http_responses_5xx":12,"http_responses_other":0,"intercepted_requests":9,"invalid_requests":12,"request_bytes":15432000,"response_bytes":14321000,"sessions":1040,"start_at":"2025-11-06T09:00:00.000Z"}
 type LoadBalancerFrontendMetricsSeries struct {
 	// DeniedConnections Total number of denied frontend connections within the time range.
-	//
-	// Example: 15
 	DeniedConnections *int32 `json:"denied_connections,omitempty"`
 
 	// DeniedRequests Total number of HTTP requests denied.
-	//
-	// Example: 28
 	DeniedRequests *int32 `json:"denied_requests,omitempty"`
 
 	// DeniedResponses Number of HTTP responses that were denied or rejected.
-	//
-	// Example: 6
 	DeniedResponses *int32 `json:"denied_responses,omitempty"`
 
 	// DeniedSessions Total number of denied sessions during the period.
-	//
-	// Example: 8
 	DeniedSessions *int32 `json:"denied_sessions,omitempty"`
 
 	// EndAt Timestamp marking the end of the metrics aggregation period.
+	//
+	// Examples: 2025-11-06T09:05:00.000Z
 	EndAt time.Time `json:"end_at"`
 
 	// Frontends List of frontend names or identifiers included in the aggregated data.
-	//
-	// Example: ["frontend-http","frontend-https"]
 	Frontends []string `json:"frontends"`
 
 	// HttpRequests Total number of HTTP requests processed during the aggregation period.
-	//
-	// Example: 15000
 	HttpRequests *int32 `json:"http_requests,omitempty"`
 
 	// HttpResponses1xx Count of informational (1xx) HTTP responses.
-	//
-	// Example: 2
 	HttpResponses1xx *int32 `json:"http_responses_1xx,omitempty"`
 
 	// HttpResponses2xx Count of successful (2xx) HTTP responses.
-	//
-	// Example: 940
 	HttpResponses2xx *int32 `json:"http_responses_2xx,omitempty"`
 
 	// HttpResponses3xx Count of redirection (3xx) HTTP responses.
-	//
-	// Example: 47
 	HttpResponses3xx *int32 `json:"http_responses_3xx,omitempty"`
 
 	// HttpResponses4xx Count of client error (4xx) HTTP responses.
-	//
-	// Example: 33
 	HttpResponses4xx *int32 `json:"http_responses_4xx,omitempty"`
 
 	// HttpResponses5xx Count of server error (5xx) HTTP responses.
-	//
-	// Example: 12
 	HttpResponses5xx *int32 `json:"http_responses_5xx,omitempty"`
 
 	// HttpResponsesOther Count of HTTP responses with codes outside the 1xx–5xx range.
-	//
-	// Example: 0
 	HttpResponsesOther *int32 `json:"http_responses_other,omitempty"`
 
 	// InterceptedRequests Number of requests intercepted before reaching the backend.
-	//
-	// Example: 9
 	InterceptedRequests *int32 `json:"intercepted_requests,omitempty"`
 
 	// InvalidRequests Number of malformed or invalid HTTP requests received.
-	//
-	// Example: 12
 	InvalidRequests *int32 `json:"invalid_requests,omitempty"`
 
 	// RequestBytes Total size of incoming request payloads, in bytes.
-	//
-	// Example: 15432000
 	RequestBytes *int32 `json:"request_bytes,omitempty"`
 
 	// ResponseBytes Total size of outgoing response payloads, in bytes.
-	//
-	// Example: 14321000
 	ResponseBytes *int32 `json:"response_bytes,omitempty"`
 
 	// Sessions Total number of frontend sessions handled.
-	//
-	// Example: 1040
 	Sessions *int32 `json:"sessions,omitempty"`
 
 	// StartAt Timestamp marking the beginning of the metrics aggregation period.
+	//
+	// Examples: 2025-11-06T09:00:00.000Z
 	StartAt time.Time `json:"start_at"`
 }
 
@@ -2450,6 +2117,8 @@ type LoadBalancerFrontendMetricsSeriesResponse = []LoadBalancerFrontendMetricsSe
 type LoadBalancerFrontendMode string
 
 // LoadBalancerFrontendModify Load Balancer Frontend
+//
+// Examples: {"name":"updated-frontend","port":443}
 type LoadBalancerFrontendModify struct {
 	// DefaultBackend Default backend
 	DefaultBackend *string `json:"default_backend,omitempty"`
@@ -2467,8 +2136,6 @@ type LoadBalancerFrontendModify struct {
 	Port *int32 `json:"port,omitempty"`
 
 	// Properties Frontend Properties
-	//
-	// Example: {"http2_enabled":true,"inbound_proxy_protocol":false,"timeout_client":60}
 	Properties *LoadBalancerFrontendPropertiesCreate `json:"properties,omitempty"`
 
 	// Rules Rules
@@ -2479,58 +2146,40 @@ type LoadBalancerFrontendModify struct {
 }
 
 // LoadBalancerFrontendNetworkCreate Load Balancer Network
-//
-// Example: {"name":"public-network-1"}
 type LoadBalancerFrontendNetworkCreate struct {
 	// Name Name of the Network
-	//
-	// Example: public-network-1
 	Name string `json:"name"`
 }
 
 // LoadBalancerFrontendParameter The name of the frontend.
+//
+// Examples: example-frontend-1, example-frontend-2
 type LoadBalancerFrontendParameter = string
 
 // LoadBalancerFrontendPropertiesCreate Frontend Properties
-//
-// Example: {"http2_enabled":true,"inbound_proxy_protocol":false,"timeout_client":60}
 type LoadBalancerFrontendPropertiesCreate struct {
 	// Http2Enabled Allows for HTTP2 connection via ALPN
 	Http2Enabled *bool `json:"http2_enabled,omitempty"`
 
 	// InboundProxyProtocol Enable or disable inbound proxy protocol support
-	//
-	// Example: false
 	InboundProxyProtocol *bool `json:"inbound_proxy_protocol,omitempty"`
 
 	// TimeoutClient Client timeout
-	//
-	// Example: 60
 	TimeoutClient *int32 `json:"timeout_client,omitempty"`
 }
 
 // LoadBalancerFrontendPropertiesResponse Defines configurable properties for a frontend, such as client timeout settings, protocol options, and linkage to its parent frontend resource.
-//
-// Example: {"frontend_id":301,"http2_enabled":true,"inbound_proxy_protocol":false,"timeout_client":50000}
 type LoadBalancerFrontendPropertiesResponse struct {
 	// FrontendId Identifier linking these properties to the parent frontend configuration.
-	//
-	// Example: 301
 	FrontendId int32 `json:"frontend_id"`
 
 	// Http2Enabled Indicates whether HTTP/2 protocol support is enabled for this frontend.
-	//
-	// Example: true
 	Http2Enabled *bool `json:"http2_enabled,omitempty"`
 
 	// InboundProxyProtocol Enables or disables support for the Proxy Protocol on inbound connections, allowing client IP addresses to be forwarded to the backend.
-	//
-	// Example: false
 	InboundProxyProtocol *bool `json:"inbound_proxy_protocol,omitempty"`
 
 	// TimeoutClient Maximum inactivity timeout for a client connection, in milliseconds. Determines how long a client connection can remain idle before being closed.
-	//
-	// Example: 50000
 	TimeoutClient int32 `json:"timeout_client"`
 }
 
@@ -2547,48 +2196,44 @@ type LoadBalancerHealthCheckType string
 type LoadBalancerHttpMethods string
 
 // LoadBalancerIpAddress Represents an IP address associated with a network interface of the load balancer service, including addressing details and provisioning information.
+//
+// Examples: {"address":"192.168.1.10","created_at":"2025-11-06T09:00:00.000Z","network_name":"public-network","updated_at":"2025-11-06T11:15:00.000Z"}
 type LoadBalancerIpAddress struct {
 	// Address IP address assigned to the load balancer service on this network.
-	//
-	// Example: 192.168.1.10
 	Address string `json:"address"`
 
 	// CreatedAt Timestamp when the IP address was created (RFC 3339 format).
+	//
+	// Examples: 2025-11-06T09:00:00.000Z
 	CreatedAt time.Time `json:"created_at"`
 
 	// NetworkName Name of the network to which this IP address belongs.
-	//
-	// Example: public-network
 	NetworkName string `json:"network_name"`
 
 	// UpdatedAt Timestamp when the IP address was last updated (RFC 3339 format).
+	//
+	// Examples: 2025-11-06T11:15:00.000Z
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
 // LoadBalancerIpAddressCreate IP address object
-//
-// Example: {"address":"192.168.1.10","network_name":"private-net-1"}
 type LoadBalancerIpAddressCreate struct {
 	// Address IP address
-	//
-	// Example: 192.168.1.10
 	Address string `json:"address"`
 
 	// NetworkName Name of the target network
-	//
-	// Example: private-net-1
 	NetworkName *string `json:"network_name,omitempty"`
 }
 
 // LoadBalancerIpAddressParameter The IP address parameter.
+//
+// Examples: 192.168.1.1, 2001:db8::1
 type LoadBalancerIpAddressParameter = string
 
 // LoadBalancerIpAddressesResponse A list of floating public IPv4 addresses attached to the load balancer service, each including its network interface metadata.
 type LoadBalancerIpAddressesResponse = []LoadBalancerIpAddress
 
 // LoadBalancerLabelCreate Load Balancer Label
-//
-// Example: {"key":"environment","value":"production"}
 type LoadBalancerLabelCreate struct {
 	// Key Key
 	Key string `json:"key"`
@@ -2598,11 +2243,13 @@ type LoadBalancerLabelCreate struct {
 }
 
 // LoadBalancerLabelFilterParameter Filter resources by label. Can be provided multiple times for multiple labels. Format: 'key=value' for exact match or 'key' for existence check.
+//
+// Examples: ["env=staging"], ["env"], ["env=staging","region=us"]
 type LoadBalancerLabelFilterParameter = []string
 
 // LoadBalancerLabelModify Load Balancer Label
 //
-// Example: {"key":"environment","value":"production"}
+// Examples: {"key":"updated-key","value":"updated-value"}
 type LoadBalancerLabelModify struct {
 	// Key Key
 	Key *string `json:"key,omitempty"`
@@ -2612,52 +2259,43 @@ type LoadBalancerLabelModify struct {
 }
 
 // LoadBalancerLabelParameter The label key parameter.
+//
+// Examples: example-key-1, example-key-2
 type LoadBalancerLabelParameter = string
 
 // LoadBalancerLabelResponse Represents a key-value label associated with the load balancer service
+//
+// Examples: {"key":"environment","value":"production"}
 type LoadBalancerLabelResponse struct {
 	// Key Label key used for identification and filtering.
-	//
-	// Example: environment
 	Key string `json:"key"`
 
 	// Value The value of the label (optional).
-	//
-	// Example: production
 	Value *string `json:"value,omitempty"`
 }
 
 // LoadBalancerLimitParameter Number of entries to receive at most.
+//
+// Examples: 10, 50, 100
 type LoadBalancerLimitParameter = int32
 
 // LoadBalancerMaintenanceDayOfWeek Day of week
-//
-// Example: monday
 type LoadBalancerMaintenanceDayOfWeek string
 
 // LoadBalancerMaintenanceTime Maintenance time
-//
-// Example: 03:15:00Z
 type LoadBalancerMaintenanceTime = string
 
 // LoadBalancerMatchBackendResponse Defines a backend health matcher used to compare the number of healthy (up) members in a specific backend against a threshold value. Used when the matcher type is 'num_members_up'.
 type LoadBalancerMatchBackendResponse struct {
-	// Backend Example: backend-1
 	Backend string `json:"backend"`
 
 	// Method Comparison method used to evaluate the integer value.
-	//
-	// Example: greater_or_equal
 	Method LoadBalancerMatchBackendResponseMethod `json:"method"`
 
 	// RangeEnd Ending value of the range for range-based integer matching.
-	//
-	// Example: 1024
 	RangeEnd *int32 `json:"range_end,omitempty"`
 
 	// RangeStart Starting value of the range for range-based integer matching.
-	//
-	// Example: 0
 	RangeStart *int32 `json:"range_start,omitempty"`
 
 	// Value Integer value to compare against using the specified comparison method.
@@ -2666,27 +2304,17 @@ type LoadBalancerMatchBackendResponse struct {
 }
 
 // LoadBalancerMatchBackendResponseMethod Comparison method used to evaluate the integer value.
-//
-// Example: greater_or_equal
 type LoadBalancerMatchBackendResponseMethod string
 
 // LoadBalancerMatchIntResponse Defines integer matching criteria for requests or responses.
-//
-// Example: {"method":"greater_or_equal","range_end":1024,"range_start":0,"value":100}
 type LoadBalancerMatchIntResponse struct {
 	// Method Comparison method used to evaluate the integer value.
-	//
-	// Example: greater_or_equal
 	Method LoadBalancerMatchIntResponseMethod `json:"method"`
 
 	// RangeEnd Ending value of the range for range-based integer matching.
-	//
-	// Example: 1024
 	RangeEnd *int32 `json:"range_end,omitempty"`
 
 	// RangeStart Starting value of the range for range-based integer matching.
-	//
-	// Example: 0
 	RangeStart *int32 `json:"range_start,omitempty"`
 
 	// Value Integer value to compare against using the specified comparison method.
@@ -2695,69 +2323,45 @@ type LoadBalancerMatchIntResponse struct {
 }
 
 // LoadBalancerMatchIntResponseMethod Comparison method used to evaluate the integer value.
-//
-// Example: greater_or_equal
 type LoadBalancerMatchIntResponseMethod string
 
 // LoadBalancerMatchIpResponse Defines a match condition based on the source IP address or subnet. Used when the matcher type is 'src_ip'.
-//
-// Example: {"value":"192.168.1.0/24"}
 type LoadBalancerMatchIpResponse struct {
 	// Value IP address or CIDR subnet to match against the source IP. Accepts IPv4, IPv6, or CIDR notation.
 	Value string `json:"value"`
 }
 
 // LoadBalancerMatchStringResponse Defines a string-based match condition, used for matching values such as paths, headers, URLs, or hostnames.
-//
-// Example: {"ignore_case":true,"method":"contains","value":"/api"}
 type LoadBalancerMatchStringResponse struct {
 	// IgnoreCase Indicates whether the string comparison should be case-insensitive.
-	//
-	// Example: true
 	IgnoreCase *bool `json:"ignore_case,omitempty"`
 
 	// Method String comparison method used to evaluate the match condition.
-	//
-	// Example: contains
 	Method *LoadBalancerMatchStringResponseMethod `json:"method,omitempty"`
 
 	// Value String value or pattern to match against using the specified comparison method.
-	//
-	// Example: /api
 	Value                *string                `json:"value,omitempty"`
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // LoadBalancerMatchStringResponseMethod String comparison method used to evaluate the match condition.
-//
-// Example: contains
 type LoadBalancerMatchStringResponseMethod string
 
 // LoadBalancerMatchStringWithArgResponse Extends MatchString with an additional 'name' parameter, used for matchers that require a key-value pair (e.g., matching headers, cookies, or URL parameters).
 type LoadBalancerMatchStringWithArgResponse struct {
 	// IgnoreCase Indicates whether the string comparison should be case-insensitive.
-	//
-	// Example: true
 	IgnoreCase *bool `json:"ignore_case,omitempty"`
 
 	// Method String comparison method used to evaluate the match condition.
-	//
-	// Example: contains
 	Method *LoadBalancerMatchStringWithArgResponseMethod `json:"method,omitempty"`
-
-	// Name Example: Authorization
-	Name string `json:"name"`
+	Name   string                                        `json:"name"`
 
 	// Value String value or pattern to match against using the specified comparison method.
-	//
-	// Example: /api
 	Value                *string                `json:"value,omitempty"`
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
 // LoadBalancerMatchStringWithArgResponseMethod String comparison method used to evaluate the match condition.
-//
-// Example: contains
 type LoadBalancerMatchStringWithArgResponseMethod string
 
 // LoadBalancerMatcherBackendCreate Forwarding rule backend matcher
@@ -2780,10 +2384,15 @@ type LoadBalancerMatcherBackendCreate struct {
 }
 
 // LoadBalancerMatcherBackendCreate0 defines model for LoadBalancerMatcherBackendCreate.0.
-type LoadBalancerMatcherBackendCreate0 = interface{}
+type LoadBalancerMatcherBackendCreate0 struct {
+	Value any `json:"value,omitempty"`
+}
 
 // LoadBalancerMatcherBackendCreate1 defines model for LoadBalancerMatcherBackendCreate.1.
-type LoadBalancerMatcherBackendCreate1 = interface{}
+type LoadBalancerMatcherBackendCreate1 struct {
+	RangeEnd   any `json:"range_end,omitempty"`
+	RangeStart any `json:"range_start,omitempty"`
+}
 
 // LoadBalancerMatcherCreate Load Balancer Forwarding Rule Matcher
 type LoadBalancerMatcherCreate struct {
@@ -2796,8 +2405,6 @@ type LoadBalancerMatcherCreate0 struct {
 	Inverse *bool `json:"inverse,omitempty"`
 
 	// MatchSrcIp Forwarding rule IP matcher for matching source IP addresses. Accepts IPv4, IPv6 addresses or CIDR notation.
-	//
-	// Example: {"value":"192.168.1.1"}
 	MatchSrcIp LoadBalancerMatcherIpCreate `json:"match_src_ip"`
 	Type       interface{}                 `json:"type"`
 }
@@ -2888,8 +2495,6 @@ type LoadBalancerMatcherCreate9 struct {
 	Inverse *bool `json:"inverse,omitempty"`
 
 	// MatchHost Forwarding rule host matcher
-	//
-	// Example: {"value":"example.com"}
 	MatchHost LoadBalancerMatcherHostCreate `json:"match_host"`
 	Type      interface{}                   `json:"type"`
 }
@@ -2945,8 +2550,6 @@ type LoadBalancerMatcherCreate14 struct {
 }
 
 // LoadBalancerMatcherHostCreate Forwarding rule host matcher
-//
-// Example: {"value":"example.com"}
 type LoadBalancerMatcherHostCreate struct {
 	// Value Value
 	Value string `json:"value"`
@@ -2975,101 +2578,70 @@ type LoadBalancerMatcherIntCreate struct {
 }
 
 // LoadBalancerMatcherIntCreate0 defines model for LoadBalancerMatcherIntCreate.0.
-type LoadBalancerMatcherIntCreate0 = interface{}
+type LoadBalancerMatcherIntCreate0 struct {
+	Value any `json:"value,omitempty"`
+}
 
 // LoadBalancerMatcherIntCreate1 defines model for LoadBalancerMatcherIntCreate.1.
-type LoadBalancerMatcherIntCreate1 = interface{}
+type LoadBalancerMatcherIntCreate1 struct {
+	RangeEnd   any `json:"range_end,omitempty"`
+	RangeStart any `json:"range_start,omitempty"`
+}
 
 // LoadBalancerMatcherIpCreate Forwarding rule IP matcher for matching source IP addresses. Accepts IPv4, IPv6 addresses or CIDR notation.
-//
-// Example: {"value":"192.168.1.1"}
 type LoadBalancerMatcherIpCreate struct {
 	// Value IP address or CIDR to match against. Accepts IPv4 (e.g., 192.168.1.1), IPv6 (e.g., 2001:db8::1), or CIDR notation (e.g., 192.168.1.0/24).
-	//
-	// Example: 192.168.1.1
 	Value string `json:"value"`
 }
 
 // LoadBalancerMatcherResponse Defines a matcher used to evaluate specific conditions in requests or responses.
-//
-// Example: {"inverse":false,"match_src_ip":{"value":"192.168.1.0/24"},"type":"src_ip"}
 type LoadBalancerMatcherResponse struct {
 	// Inverse Indicates whether to invert the match result (true) or use it as-is (false).
 	Inverse bool `json:"inverse"`
 
 	// MatchBodySize Defines integer matching criteria for requests or responses.
-	//
-	// Example: {"method":"greater_or_equal","range_end":1024,"range_start":0,"value":100}
 	MatchBodySize *LoadBalancerMatchIntResponse `json:"match_body_size,omitempty"`
 
 	// MatchCookie Extends MatchString with an additional 'name' parameter, used for matchers that require a key-value pair (e.g., matching headers, cookies, or URL parameters).
-	//
-	// Example: {"ignore_case":true,"method":"contains","name":"Authorization","value":"/api"}
 	MatchCookie *LoadBalancerMatchStringWithArgResponse `json:"match_cookie,omitempty"`
 
 	// MatchHeader Extends MatchString with an additional 'name' parameter, used for matchers that require a key-value pair (e.g., matching headers, cookies, or URL parameters).
-	//
-	// Example: {"ignore_case":true,"method":"contains","name":"Authorization","value":"/api"}
 	MatchHeader *LoadBalancerMatchStringWithArgResponse `json:"match_header,omitempty"`
 
 	// MatchHost Defines a string-based match condition, used for matching values such as paths, headers, URLs, or hostnames.
-	//
-	// Example: {"ignore_case":true,"method":"contains","value":"/api"}
 	MatchHost *LoadBalancerMatchStringResponse `json:"match_host,omitempty"`
 
 	// MatchHttpMethod Defines a string-based match condition, used for matching values such as paths, headers, URLs, or hostnames.
-	//
-	// Example: {"ignore_case":true,"method":"contains","value":"/api"}
 	MatchHttpMethod *LoadBalancerMatchStringResponse `json:"match_http_method,omitempty"`
 
 	// MatchHttpStatus Defines integer matching criteria for requests or responses.
-	//
-	// Example: {"method":"greater_or_equal","range_end":1024,"range_start":0,"value":100}
 	MatchHttpStatus *LoadBalancerMatchIntResponse `json:"match_http_status,omitempty"`
 
 	// MatchNumMembersUp Defines a backend health matcher used to compare the number of healthy (up) members in a specific backend against a threshold value. Used when the matcher type is 'num_members_up'.
-	//
-	// Example: {"backend":"backend-1","method":"greater_or_equal","range_end":10,"range_start":0,"value":2}
 	MatchNumMembersUp *LoadBalancerMatchBackendResponse `json:"match_num_members_up,omitempty"`
 
 	// MatchPath Defines a string-based match condition, used for matching values such as paths, headers, URLs, or hostnames.
-	//
-	// Example: {"ignore_case":true,"method":"contains","value":"/api"}
 	MatchPath *LoadBalancerMatchStringResponse `json:"match_path,omitempty"`
 
 	// MatchRequestHeader Extends MatchString with an additional 'name' parameter, used for matchers that require a key-value pair (e.g., matching headers, cookies, or URL parameters).
-	//
-	// Example: {"ignore_case":true,"method":"contains","name":"Authorization","value":"/api"}
 	MatchRequestHeader *LoadBalancerMatchStringWithArgResponse `json:"match_request_header,omitempty"`
 
 	// MatchResponseHeader Extends MatchString with an additional 'name' parameter, used for matchers that require a key-value pair (e.g., matching headers, cookies, or URL parameters).
-	//
-	// Example: {"ignore_case":true,"method":"contains","name":"Authorization","value":"/api"}
 	MatchResponseHeader *LoadBalancerMatchStringWithArgResponse `json:"match_response_header,omitempty"`
 
 	// MatchSrcIp Defines a match condition based on the source IP address or subnet. Used when the matcher type is 'src_ip'.
-	//
-	// Example: {"value":"192.168.1.0/24"}
 	MatchSrcIp *LoadBalancerMatchIpResponse `json:"match_src_ip,omitempty"`
 
 	// MatchSrcPort Defines integer matching criteria for requests or responses.
-	//
-	// Example: {"method":"greater_or_equal","range_end":1024,"range_start":0,"value":100}
 	MatchSrcPort *LoadBalancerMatchIntResponse `json:"match_src_port,omitempty"`
 
 	// MatchUrl Defines a string-based match condition, used for matching values such as paths, headers, URLs, or hostnames.
-	//
-	// Example: {"ignore_case":true,"method":"contains","value":"/api"}
 	MatchUrl *LoadBalancerMatchStringResponse `json:"match_url,omitempty"`
 
 	// MatchUrlParam Extends MatchString with an additional 'name' parameter, used for matchers that require a key-value pair (e.g., matching headers, cookies, or URL parameters).
-	//
-	// Example: {"ignore_case":true,"method":"contains","name":"Authorization","value":"/api"}
 	MatchUrlParam *LoadBalancerMatchStringWithArgResponse `json:"match_url_param,omitempty"`
 
 	// MatchUrlQuery Defines a string-based match condition, used for matching values such as paths, headers, URLs, or hostnames.
-	//
-	// Example: {"ignore_case":true,"method":"contains","value":"/api"}
 	MatchUrlQuery *LoadBalancerMatchStringResponse `json:"match_url_query,omitempty"`
 
 	// Type Type of matcher defining which aspect of the request or response to evaluate.
@@ -3091,7 +2663,7 @@ type LoadBalancerMatcherStringArgCreate0 struct {
 
 	// Method String matcher methods
 	//
-	// Example: substring
+	// Examples: exact, substring, starts
 	Method LoadBalancerStringMatcherMethods `json:"method"`
 
 	// Name Name of the parameter
@@ -3105,7 +2677,7 @@ type LoadBalancerMatcherStringArgCreate0 struct {
 type LoadBalancerMatcherStringArgCreate1 struct {
 	// Method String matcher methods (no value)
 	//
-	// Example: exists
+	// Examples: exists, ip
 	Method LoadBalancerStringMatcherMethodsNoValue `json:"method"`
 
 	// Name Name of the parameter
@@ -3124,7 +2696,7 @@ type LoadBalancerMatcherStringCreate0 struct {
 
 	// Method String matcher methods
 	//
-	// Example: substring
+	// Examples: exact, substring, starts
 	Method LoadBalancerStringMatcherMethods `json:"method"`
 
 	// Value Value
@@ -3135,61 +2707,59 @@ type LoadBalancerMatcherStringCreate0 struct {
 type LoadBalancerMatcherStringCreate1 struct {
 	// Method String matcher methods (no value)
 	//
-	// Example: exists
+	// Examples: exists, ip
 	Method LoadBalancerStringMatcherMethodsNoValue `json:"method"`
 }
 
 // LoadBalancerMatchingCondition Defines how multiple matching criteria are combined to evaluate a condition.
+//
+// Examples: and
 type LoadBalancerMatchingCondition string
 
 // LoadBalancerMember Represents a single backend member (server node) participating in a load balancer backend configuration.
+//
+// Examples: {"backup":false,"created_at":"2025-11-05T12:30:00.000Z","enabled":true,"ip":"192.168.1.10","max_sessions":100,"name":"member-1","port":8080,"type":"static","updated_at":"2025-11-05T13:45:00.000Z","weight":10}
 type LoadBalancerMember struct {
 	// Backup Indicates whether this member serves as a backup, only receiving traffic when all primary members are unavailable.
-	//
-	// Example: false
 	Backup bool `json:"backup"`
 
 	// CreatedAt Timestamp when the backend member was created (RFC 3339 format).
+	//
+	// Examples: 2023-01-01T00:00:00.000Z
 	CreatedAt time.Time `json:"created_at"`
 
 	// Enabled Indicates whether the backend member is actively participating in load balancing.
-	//
-	// Example: true
 	Enabled bool `json:"enabled"`
 
 	// Ip IP address of the backend member server.
-	//
-	// Example: 192.168.1.1
 	Ip string `json:"ip"`
 
 	// MaxSessions Maximum number of concurrent connections allowed to this backend member.
-	//
-	// Example: 1000
 	MaxSessions int32 `json:"max_sessions"`
 
 	// Name Human-readable name assigned to the backend member.
-	//
-	// Example: member-1
 	Name string `json:"name"`
 
 	// Port Port number on which the backend member server listens.
-	//
-	// Example: 80
 	Port int32 `json:"port"`
 
-	// Type Member type
+	// Type Type of backend configuration. Allowed values are 'static' and 'dynamic'.
+	//
+	// Examples: dynamic
 	Type LoadBalancerMemberType `json:"type"`
 
 	// UpdatedAt Timestamp when the backend member was last updated (RFC 3339 format).
+	//
+	// Examples: 2023-01-02T00:00:00.000Z
 	UpdatedAt time.Time `json:"updated_at"`
 
 	// Weight Relative weight for load balancing, determining the proportion of requests sent to this member.
-	//
-	// Example: 100
 	Weight int32 `json:"weight"`
 }
 
 // LoadBalancerMemberCreate Load Balancer backend member
+//
+// Examples: {"enabled":true,"max_sessions":1000,"name":"member-1","type":"dynamic","weight":100}
 type LoadBalancerMemberCreate struct {
 	// Backup Is backup member
 	Backup *bool `json:"backup,omitempty"`
@@ -3201,25 +2771,27 @@ type LoadBalancerMemberCreate struct {
 	Ip *string `json:"ip,omitempty"`
 
 	// MaxSessions Maximum number of sessions before queueing
+	//
+	// Examples: 1000
 	MaxSessions *int32 `json:"max_sessions,omitempty"`
 
 	// Name Name of the member
-	//
-	// Example: member-1
 	Name *string `json:"name,omitempty"`
 
 	// Port Port number on which the backend member server listens.
 	Port *int `json:"port,omitempty"`
 
 	// ServerUuid Target server UUID
-	//
-	// Example: 01234567-89ab-cdef-0123-456789abcdef
 	ServerUuid *openapi_types.UUID `json:"server_uuid,omitempty"`
 
 	// Type Member type
+	//
+	// Examples: dynamic
 	Type *LoadBalancerMemberType `json:"type,omitempty"`
 
 	// Weight Target weight
+	//
+	// Examples: 100
 	Weight *int32 `json:"weight,omitempty"`
 	union  json.RawMessage
 }
@@ -3237,339 +2809,215 @@ type LoadBalancerMemberCreate0 struct {
 // LoadBalancerMemberCreate1 defines model for LoadBalancerMemberCreate.1.
 type LoadBalancerMemberCreate1 struct {
 	// Ip Fallback IP address (IPv4 or IPv6)
-	Ip *LoadBalancerMemberCreate_1_Ip `json:"ip,omitempty"`
+	Ip *string `json:"ip,omitempty"`
 
 	// Port Target Port
-	Port *LoadBalancerMemberCreate_1_Port `json:"port,omitempty"`
-	Type interface{}                      `json:"type"`
-}
-
-// LoadBalancerMemberCreate1Ip0 defines model for LoadBalancerMemberCreate.1.Ip.0.
-type LoadBalancerMemberCreate1Ip0 = string
-
-// LoadBalancerMemberCreate1Ip1 defines model for LoadBalancerMemberCreate.1.Ip.1.
-type LoadBalancerMemberCreate1Ip1 = string
-
-// LoadBalancerMemberCreate_1_Ip Fallback IP address (IPv4 or IPv6)
-type LoadBalancerMemberCreate_1_Ip struct {
-	union json.RawMessage
-}
-
-// LoadBalancerMemberCreate1Port0 defines model for LoadBalancerMemberCreate.1.Port.0.
-type LoadBalancerMemberCreate1Port0 = int32
-
-// LoadBalancerMemberCreate1Port1 defines model for LoadBalancerMemberCreate.1.Port.1.
-type LoadBalancerMemberCreate1Port1 = string
-
-// LoadBalancerMemberCreate_1_Port Target Port
-type LoadBalancerMemberCreate_1_Port struct {
-	union json.RawMessage
+	Port *int32      `json:"port,omitempty"`
+	Type interface{} `json:"type"`
 }
 
 // LoadBalancerMemberMetricsResponse Represents detailed performance and health metrics for an individual backend member (server) within a load balancer. Includes operational status, health check results, and aggregated traffic and timing statistics.
 type LoadBalancerMemberMetricsResponse struct {
 	// AvgConnectionTimeMs Average time taken to establish a connection in milliseconds.
-	//
-	// Example: 12
 	AvgConnectionTimeMs int32 `json:"avg_connection_time_ms"`
 
 	// AvgQueueTimeMs Average time spent in queue before being processed, in milliseconds.
-	//
-	// Example: 5
 	AvgQueueTimeMs int32 `json:"avg_queue_time_ms"`
 
 	// AvgServerResponseTimeMs Average server response time in milliseconds.
-	//
-	// Example: 28
 	AvgServerResponseTimeMs int32 `json:"avg_server_response_time_ms"`
 
 	// AvgTotalTimeMs Average total time from connection start to response completion, in milliseconds.
-	//
-	// Example: 45
 	AvgTotalTimeMs int32 `json:"avg_total_time_ms"`
 
 	// BackendId Identifier of the backend this member belongs to.
-	//
-	// Example: 401
 	BackendId int32 `json:"backend_id"`
 
 	// CheckHttpCode HTTP status code returned by the last health check (if applicable).
-	//
-	// Example: 200
 	CheckHttpCode int32 `json:"check_http_code"`
 
 	// CheckStatus Result of the latest health check for the member.
-	//
-	// Example: passing
 	CheckStatus LoadBalancerMemberMetricsResponseCheckStatus `json:"check_status"`
 
 	// ConnectionsWaiting Current number of connections waiting for a server slot.
-	//
-	// Example: 1
 	ConnectionsWaiting int32 `json:"connections_waiting"`
 
 	// CreatedAt Timestamp of when the member was created.
+	//
+	// Examples: 2025-11-06T09:00:00.000Z
 	CreatedAt time.Time `json:"created_at"`
 
 	// CurrentSessions Current number of active sessions.
-	//
-	// Example: 4
 	CurrentSessions int32 `json:"current_sessions"`
 
 	// LastCheckContent Response content returned by the last health check.
-	//
-	// Example: OK
 	LastCheckContent *string `json:"last_check_content,omitempty"`
 
 	// LastCheckDesc Description or additional diagnostic information from the last health check.
-	//
-	// Example: Health check passed successfully.
 	LastCheckDesc *string `json:"last_check_desc,omitempty"`
 
 	// MemberId Unique identifier of the backend member.
-	//
-	// Example: 101
 	MemberId int32 `json:"member_id"`
 
 	// Name Human-readable name of the backend member.
-	//
-	// Example: backend-member-1
 	Name string `json:"name"`
 
 	// SessionRate Average rate of sessions per second.
-	//
-	// Example: 25
 	SessionRate int32 `json:"session_rate"`
 
 	// Status Current operational status of the member.
-	//
-	// Example: up
 	Status LoadBalancerMemberMetricsResponseStatus `json:"status"`
 
 	// TotalClientAborted Total number of sessions aborted by clients before completion.
-	//
-	// Example: 12
 	TotalClientAborted int32 `json:"total_client_aborted"`
 
 	// TotalDeniedResponses Total number of denied responses.
-	//
-	// Example: 2
 	TotalDeniedResponses int32 `json:"total_denied_responses"`
 
 	// TotalFailedChecks Total number of failed health checks recorded for this member.
-	//
-	// Example: 2
 	TotalFailedChecks int32 `json:"total_failed_checks"`
 
 	// TotalFailedChecksTransitions Total number of times the server transitioned from healthy to failed state due to failed health checks.
-	//
-	// Example: 3
 	TotalFailedChecksTransitions int32 `json:"total_failed_checks_transitions"`
 
 	// TotalFailedConnections Total number of failed connection attempts to the server.
-	//
-	// Example: 5
 	TotalFailedConnections int32 `json:"total_failed_connections"`
 
 	// TotalHttpResponses1xx Total number of HTTP 1xx informational responses.
-	//
-	// Example: 5
 	TotalHttpResponses1xx int32 `json:"total_http_responses_1xx"`
 
 	// TotalHttpResponses2xx Total number of HTTP 2xx successful responses.
-	//
-	// Example: 984
 	TotalHttpResponses2xx int32 `json:"total_http_responses_2xx"`
 
 	// TotalHttpResponses3xx Total number of HTTP 3xx redirection responses.
-	//
-	// Example: 45
 	TotalHttpResponses3xx int32 `json:"total_http_responses_3xx"`
 
 	// TotalHttpResponses4xx Total number of HTTP 4xx client error responses.
-	//
-	// Example: 22
 	TotalHttpResponses4xx int32 `json:"total_http_responses_4xx"`
 
 	// TotalHttpResponses5xx Total number of HTTP 5xx server error responses.
-	//
-	// Example: 8
 	TotalHttpResponses5xx int32 `json:"total_http_responses_5xx"`
 
 	// TotalHttpResponsesOther Total number of HTTP responses outside the standard 1xx–5xx range.
-	//
-	// Example: 0
 	TotalHttpResponsesOther int32 `json:"total_http_responses_other"`
 
 	// TotalInvalidResponses Total number of invalid responses received from the server.
-	//
-	// Example: 2
 	TotalInvalidResponses int32 `json:"total_invalid_responses"`
 
 	// TotalRequestBytes Total number of request bytes processed.
-	//
-	// Example: 12543000
 	TotalRequestBytes int64 `json:"total_request_bytes"`
 
 	// TotalResponseBytes Total number of response bytes processed.
-	//
-	// Example: 11789000
 	TotalResponseBytes int64 `json:"total_response_bytes"`
 
 	// TotalRoutedRequests Total number of requests successfully routed to the server.
-	//
-	// Example: 14892
 	TotalRoutedRequests int32 `json:"total_routed_requests"`
 
 	// TotalServerAborted Total number of sessions aborted by the server before completion.
-	//
-	// Example: 4
 	TotalServerAborted int32 `json:"total_server_aborted"`
 
 	// TotalServerConnectionRetries Total number of retries attempted for failed server connections.
-	//
-	// Example: 9
 	TotalServerConnectionRetries int32 `json:"total_server_connection_retries"`
 
 	// TotalServerRedispatches Total number of requests that were redispatched to another server after failure.
-	//
-	// Example: 7
 	TotalServerRedispatches int32 `json:"total_server_redispatches"`
 
 	// TotalSessions Total number of sessions handled.
-	//
-	// Example: 1100
 	TotalSessions int32 `json:"total_sessions"`
 
 	// UpdatedAt Timestamp of when the member metrics were last updated.
+	//
+	// Examples: 2025-11-06T09:30:00.000Z
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
 // LoadBalancerMemberMetricsResponseCheckStatus Result of the latest health check for the member.
-//
-// Example: passing
 type LoadBalancerMemberMetricsResponseCheckStatus string
 
 // LoadBalancerMemberMetricsResponseStatus Current operational status of the member.
-//
-// Example: up
 type LoadBalancerMemberMetricsResponseStatus string
 
 // LoadBalancerMemberMetricsSeriesResponse Aggregated time-series metrics for backend members, showing request and response statistics, connection health, and server performance during a given time window.
+//
+// Examples: {"client_aborted":7,"denied_responses":12,"downtime":45,"end_at":"2025-11-06T10:00:00.000Z","failed_checks":15,"failed_checks_transitions":3,"failed_connections":2,"http_responses_1xx":2,"http_responses_2xx":9500,"http_responses_3xx":35,"http_responses_4xx":18,"http_responses_5xx":6,"http_responses_other":0,"invalid_responses":1,"members":["backend-member-1","backend-member-2"],"request_bytes":12345678,"response_bytes":11876543,"routed_requests":10234,"server_aborted":4,"server_connection_retries":9,"server_redispatches":5,"sessions":220,"start_at":"2025-11-06T09:00:00.000Z"}
 type LoadBalancerMemberMetricsSeriesResponse struct {
 	// ClientAborted Number of connections aborted by the client.
-	//
-	// Example: 7
 	ClientAborted *int32 `json:"client_aborted,omitempty"`
 
 	// DeniedResponses Total number of denied responses returned during the period.
-	//
-	// Example: 12
 	DeniedResponses *int32 `json:"denied_responses,omitempty"`
 
 	// Downtime Total downtime duration in seconds.
-	//
-	// Example: 45
 	Downtime *int32 `json:"downtime,omitempty"`
 
 	// EndAt Timestamp marking the end of the metrics collection period.
+	//
+	// Examples: 2025-11-06T10:00:00.000Z
 	EndAt time.Time `json:"end_at"`
 
 	// FailedChecks Total number of failed health checks for all members combined.
-	//
-	// Example: 15
 	FailedChecks *int32 `json:"failed_checks,omitempty"`
 
 	// FailedChecksTransitions Number of transitions from healthy to failed health checks detected during the period.
-	//
-	// Example: 3
 	FailedChecksTransitions *int32 `json:"failed_checks_transitions,omitempty"`
 
 	// FailedConnections Number of backend connection attempts that failed.
-	//
-	// Example: 2
 	FailedConnections *int32 `json:"failed_connections,omitempty"`
 
 	// HttpResponses1xx Count of HTTP 1xx informational responses.
-	//
-	// Example: 2
 	HttpResponses1xx *int32 `json:"http_responses_1xx,omitempty"`
 
 	// HttpResponses2xx Count of HTTP 2xx successful responses.
-	//
-	// Example: 9500
 	HttpResponses2xx *int32 `json:"http_responses_2xx,omitempty"`
 
 	// HttpResponses3xx Count of HTTP 3xx redirection responses.
-	//
-	// Example: 35
 	HttpResponses3xx *int32 `json:"http_responses_3xx,omitempty"`
 
 	// HttpResponses4xx Count of HTTP 4xx client error responses.
-	//
-	// Example: 18
 	HttpResponses4xx *int32 `json:"http_responses_4xx,omitempty"`
 
 	// HttpResponses5xx Count of HTTP 5xx server error responses.
-	//
-	// Example: 6
 	HttpResponses5xx *int32 `json:"http_responses_5xx,omitempty"`
 
 	// HttpResponsesOther Count of HTTP responses outside the 1xx–5xx range.
-	//
-	// Example: 0
 	HttpResponsesOther *int32 `json:"http_responses_other,omitempty"`
 
 	// InvalidResponses Number of invalid or malformed responses detected.
-	//
-	// Example: 1
 	InvalidResponses *int32 `json:"invalid_responses,omitempty"`
 
 	// Members List of backend member identifiers included in the metrics series.
-	//
-	// Example: ["backend-member-1","backend-member-2"]
 	Members []string `json:"members"`
 
 	// RequestBytes Total number of request bytes processed by all members in the series.
-	//
-	// Example: 12345678
 	RequestBytes *int64 `json:"request_bytes,omitempty"`
 
 	// ResponseBytes Total number of response bytes sent by all members.
-	//
-	// Example: 11876543
 	ResponseBytes *int64 `json:"response_bytes,omitempty"`
 
 	// RoutedRequests Total number of requests successfully routed to the backend members.
-	//
-	// Example: 10234
 	RoutedRequests *int32 `json:"routed_requests,omitempty"`
 
 	// ServerAborted Number of connections aborted by the backend server.
-	//
-	// Example: 4
 	ServerAborted *int32 `json:"server_aborted,omitempty"`
 
 	// ServerConnectionRetries Number of backend connection retry attempts.
-	//
-	// Example: 9
 	ServerConnectionRetries *int32 `json:"server_connection_retries,omitempty"`
 
 	// ServerRedispatches Number of requests redispatched to another backend member after an initial failure.
-	//
-	// Example: 5
 	ServerRedispatches *int32 `json:"server_redispatches,omitempty"`
 
 	// Sessions Total number of active or completed sessions during the metrics window.
-	//
-	// Example: 220
 	Sessions *int32 `json:"sessions,omitempty"`
 
 	// StartAt Timestamp marking the start of the metrics collection period.
+	//
+	// Examples: 2025-11-06T09:00:00.000Z
 	StartAt time.Time `json:"start_at"`
 }
 
 // LoadBalancerMemberModify Load Balancer backend member
+//
+// Examples: {"enabled":true,"name":"updated-member"}
 type LoadBalancerMemberModify struct {
 	// Backup Is backup member
 	Backup *bool `json:"backup,omitempty"`
@@ -3593,6 +3041,8 @@ type LoadBalancerMemberModify struct {
 	ServerUuid *openapi_types.UUID `json:"server_uuid,omitempty"`
 
 	// Type Member type
+	//
+	// Examples: dynamic
 	Type *LoadBalancerMemberType `json:"type,omitempty"`
 
 	// Weight Target weight
@@ -3613,50 +3063,38 @@ type LoadBalancerMemberModify0 struct {
 // LoadBalancerMemberModify1 defines model for LoadBalancerMemberModify.1.
 type LoadBalancerMemberModify1 struct {
 	// Ip Fallback IP address (IPv4 or IPv6)
-	Ip *LoadBalancerMemberModify_1_Ip `json:"ip,omitempty"`
+	Ip *string `json:"ip,omitempty"`
 
 	// Port Target Port
-	Port *LoadBalancerMemberModify_1_Port `json:"port,omitempty"`
-	Type interface{}                      `json:"type"`
-}
-
-// LoadBalancerMemberModify1Ip0 defines model for LoadBalancerMemberModify.1.Ip.0.
-type LoadBalancerMemberModify1Ip0 = string
-
-// LoadBalancerMemberModify1Ip1 defines model for LoadBalancerMemberModify.1.Ip.1.
-type LoadBalancerMemberModify1Ip1 = string
-
-// LoadBalancerMemberModify_1_Ip Fallback IP address (IPv4 or IPv6)
-type LoadBalancerMemberModify_1_Ip struct {
-	union json.RawMessage
-}
-
-// LoadBalancerMemberModify1Port0 defines model for LoadBalancerMemberModify.1.Port.0.
-type LoadBalancerMemberModify1Port0 = int32
-
-// LoadBalancerMemberModify1Port1 defines model for LoadBalancerMemberModify.1.Port.1.
-type LoadBalancerMemberModify1Port1 = string
-
-// LoadBalancerMemberModify_1_Port Target Port
-type LoadBalancerMemberModify_1_Port struct {
-	union json.RawMessage
+	Port *int32      `json:"port,omitempty"`
+	Type interface{} `json:"type"`
 }
 
 // LoadBalancerMemberParameter The name of the member.
+//
+// Examples: dev-member, qa-member
 type LoadBalancerMemberParameter = string
 
 // LoadBalancerMemberType Member type
+//
+// Examples: dynamic
 type LoadBalancerMemberType string
 
 // LoadBalancerMembersResponse Response schema for a list of members.
 type LoadBalancerMembersResponse = []LoadBalancerMember
 
 // LoadBalancerMetrics Represents a snapshot of load balancer metrics collected by the monitoring agent, including frontend and backend statistics for a given service at a specific timestamp.
+//
+// Examples: {"backends":[],"frontends":[]}
 type LoadBalancerMetrics struct {
 	// Backends List of backend metrics.
+	//
+	// Examples: []
 	Backends []LoadBalancerBackendMetricsResponse `json:"backends"`
 
 	// Frontends List of frontend metrics.
+	//
+	// Examples: []
 	Frontends []LoadBalancerFrontendMetricsResponse `json:"frontends"`
 }
 
@@ -3664,43 +3102,43 @@ type LoadBalancerMetrics struct {
 type LoadBalancerMetricsSeriesResponse = []LoadBalancerMetrics
 
 // LoadBalancerMetricsSortParameter Sort metrics by field. Prefix with '-' for descending order.
+//
+// Examples: start_at, -start_at
 type LoadBalancerMetricsSortParameter string
 
 // LoadBalancerNetwork Represent a network from where traffic is consumed and routed.
+//
+// Examples: {"created_at":"2025-11-06T09:00:00.000Z","dns_name":"lb-network.local","family":"IPv4","name":"public-network","type":"private","updated_at":"2025-11-06T11:15:00.000Z","uuid":"1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d"}
 type LoadBalancerNetwork struct {
 	// CreatedAt Timestamp when the network was created (RFC 3339 format).
+	//
+	// Examples: 2025-11-06T09:00:00.000Z
 	CreatedAt time.Time `json:"created_at"`
 
 	// DnsName Fully qualified domain name (FQDN) for accessing the load balancer through this network.
-	//
-	// Example: lb-0a498284629e4629a55d0415a6e89dda-1.upcloudlb.com
 	DnsName *string `json:"dns_name,omitempty"`
 
 	// Family IP address family used by this network (IPv4 or IPv6).
-	//
-	// Example: IPv4
 	Family string `json:"family"`
 
 	// Name Human-readable name assigned to the network.
-	//
-	// Example: public-network
 	Name string `json:"name"`
 
 	// Type Network type indicating the visibility scope (public or private).
-	//
-	// Example: public
 	Type string `json:"type"`
 
 	// UpdatedAt Timestamp when the network was last updated (RFC 3339 format).
+	//
+	// Examples: 2025-11-06T09:30:00.000Z
 	UpdatedAt time.Time `json:"updated_at"`
 
 	// Uuid UUID represented as a string
-	//
-	// Example: 1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d
 	Uuid string `json:"uuid"`
 }
 
 // LoadBalancerNetworkCreate Load Balancer Network.
+//
+// Examples: {"family":"IPv4","name":"my-network","type":"private"}
 type LoadBalancerNetworkCreate struct {
 	// Family Network family
 	Family LoadBalancerNetworkFamily `json:"family"`
@@ -3719,91 +3157,73 @@ type LoadBalancerNetworkCreate struct {
 type LoadBalancerNetworkFamily string
 
 // LoadBalancerNetworkModify Load Balancer Network
+//
+// Examples: {"name":"updated-network"}
 type LoadBalancerNetworkModify struct {
 	// Name Name of the network
 	Name *string `json:"name,omitempty"`
 }
 
 // LoadBalancerNetworkParameter The name of the network.
+//
+// Examples: example-network-1, example-network-2
 type LoadBalancerNetworkParameter = string
 
 // LoadBalancerNetworkType Network type
 type LoadBalancerNetworkType string
 
 // LoadBalancerOffsetParameter Offset for retrieved results.
+//
+// Examples: 0, 10, 20
 type LoadBalancerOffsetParameter = int32
 
 // LoadBalancerPlan Represents a load balancer plan, defining the node size, performance characteristics, and associated pricing options.
 type LoadBalancerPlan struct {
 	// Name Name of the plan.
-	//
-	// Example: development
 	Name *string `json:"name,omitempty"`
 
 	// PerServerMaxSessions Maximum number of sessions allowed per server.
-	//
-	// Example: 100
 	PerServerMaxSessions *int32 `json:"per_server_max_sessions,omitempty"`
 
 	// ServerNumber Number of servers included in the plan.
-	//
-	// Example: 2
 	ServerNumber *int32 `json:"server_number,omitempty"`
 }
 
 // LoadBalancerPlanParameter The name of the plan.
+//
+// Examples: example-plan-1, example-plan-2
 type LoadBalancerPlanParameter = string
 
 // LoadBalancerPlansResponse List of available load balancer plans, each defining the node size, performance characteristics, and associated pricing options.
 type LoadBalancerPlansResponse = []LoadBalancerPlan
 
 // LoadBalancerProblemInvalidParamResponse Provides detailed information about a specific invalid parameter that caused a request to fail validation, as an extension of RFC7807 Problem Details.
-//
-// Example: {"name":"hostnames[0]","reason":"Invalid domain name format"}
 type LoadBalancerProblemInvalidParamResponse struct {
 	// Name The name of the parameter or form field that caused the validation error. It can include structural delimiters to indicate nested fields (e.g., 'data.attributes.email').
-	//
-	// Example: hostnames[0]
 	Name string `json:"name"`
 
 	// Reason A human-readable message explaining why the parameter value was invalid, either syntactically or semantically.
-	//
-	// Example: Invalid domain name format
 	Reason string `json:"reason"`
 }
 
 // LoadBalancerProblemResponse Represents an error object following the Problem Details specification (RFC7807). Provides machine-readable and human-readable information about an error that occurred while processing a request.
-//
-// Example: {"correlation_id":"req-8b29d3a6a4cf4d22a17e2b8e31cd4a12","detail":"The provided domain name is not valid.","invalid_params":[{"name":"hostnames[0]","reason":"Invalid domain name format"}],"status":400,"title":"Invalid request","type":"https://api.example.com/problems/invalid-request"}
 type LoadBalancerProblemResponse struct {
 	// CorrelationId A unique identifier for this error instance, useful for tracing or debugging requests.
-	//
-	// Example: req-8b29d3a6a4cf4d22a17e2b8e31cd4a12
 	CorrelationId *openapi_types.UUID `json:"correlation_id,omitempty"`
 
 	// Detail A human-readable explanation specific to this occurrence of the problem.
-	//
-	// Example: The provided domain name is not valid.
 	Detail *string `json:"detail,omitempty"`
 
 	// InvalidParams A list of invalid parameters that caused the problem. Used to provide detailed feedback for validation errors.
-	//
-	// Example: [{"name":"hostnames[0]","reason":"Invalid domain name format"}]
 	InvalidParams *[]LoadBalancerProblemInvalidParamResponse `json:"invalid_params,omitempty"`
 
 	// Status The HTTP status code generated by the origin server for this occurrence of the problem.
-	//
-	// Example: 400
 	Status int64 `json:"status"`
 
 	// Title A short, human-readable summary of the problem type. This value should not vary between occurrences of the same error type.
-	//
-	// Example: Invalid request
 	Title string `json:"title"`
 
 	// Type A URI reference identifying the problem type. When dereferenced, it typically provides human-readable documentation for the error.
-	//
-	// Example: https://api.example.com/problems/invalid-request
 	Type string `json:"type"`
 }
 
@@ -3813,209 +3233,165 @@ type LoadBalancerProxyProtocolVersionOrDisabled string
 // LoadBalancerRequestMetricsResponse Represents basic HTTP request statistics collected by the load balancer, including the total number of processed, denied, and intercepted requests.
 type LoadBalancerRequestMetricsResponse struct {
 	// TotalDeniedRequests Total number of denied HTTP requests.
-	//
-	// Example: 35
 	TotalDeniedRequests int32 `json:"total_denied_requests"`
 
 	// TotalHttpRequests Total number of HTTP requests processed.
-	//
-	// Example: 12500
 	TotalHttpRequests int32 `json:"total_http_requests"`
 
 	// TotalInterceptedRequests Total number of intercepted HTTP requests by internal rules or actions.
-	//
-	// Example: 12
 	TotalInterceptedRequests int32 `json:"total_intercepted_requests"`
 }
 
 // LoadBalancerResolver Represents a DNS resolver configuration for a load balancer service, defining the nameservers, retry behavior, and caching rules used to resolve backend hostnames.
+//
+// Examples: {"cache_invalid":60,"cache_valid":86400,"created_at":"2025-11-06T09:00:00.000Z","name":"default-resolver","nameservers":["94.237.127.9","94.237.40.9"],"retries":3,"timeout":1000,"timeout_retry":1500,"updated_at":"2025-11-06T09:30:00.000Z"}
 type LoadBalancerResolver struct {
 	// CacheInvalid Time in seconds to cache invalid (failed) DNS responses.
-	//
-	// Example: 5
 	CacheInvalid int32 `json:"cache_invalid"`
 
 	// CacheValid Time in seconds to cache valid (successful) DNS responses.
-	//
-	// Example: 60
 	CacheValid int32 `json:"cache_valid"`
 
 	// CreatedAt Timestamp when the DNS resolver was created (RFC 3339 format).
+	//
+	// Examples: 2025-11-06T09:00:00.000Z
 	CreatedAt time.Time `json:"created_at"`
 
 	// Name Human-readable name assigned to the DNS resolver.
-	//
-	// Example: default-resolver
 	Name string `json:"name"`
 
 	// Nameservers List of DNS nameserver addresses (with optional port) used to resolve backend member hostnames.
-	//
-	// Example: ["1.1.1.1:53","8.8.8.8:53"]
 	Nameservers []string `json:"nameservers"`
 
 	// Retries Number of retry attempts for failed DNS queries.
-	//
-	// Example: 3
 	Retries int32 `json:"retries"`
 
 	// Timeout Initial timeout in milliseconds for DNS query responses.
-	//
-	// Example: 30
 	Timeout int32 `json:"timeout"`
 
 	// TimeoutRetry Timeout in milliseconds for DNS query retry attempts.
-	//
-	// Example: 5
 	TimeoutRetry int32 `json:"timeout_retry"`
 
 	// UpdatedAt Timestamp when the DNS resolver was last updated (RFC 3339 format).
+	//
+	// Examples: 2025-12-06T09:00:00.000Z
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
 // LoadBalancerResolverCreate Load Balancer Resolver
-//
-// Example: {"cache_invalid":60,"cache_valid":300,"name":"default-resolver","nameservers":["1.1.1.1:53","8.8.8.8:53"],"retries":3,"timeout":5,"timeout_retry":3}
 type LoadBalancerResolverCreate struct {
 	// CacheInvalid Time in seconds to cache invalid results
-	//
-	// Example: 60
 	CacheInvalid int32 `json:"cache_invalid"`
 
 	// CacheValid Time in seconds to cache valid results
-	//
-	// Example: 300
 	CacheValid int32 `json:"cache_valid"`
 
 	// Name Name of the resolver
-	//
-	// Example: default-resolver
 	Name string `json:"name"`
 
 	// Nameservers Nameservers
-	//
-	// Example: ["1.1.1.1:53","8.8.8.8:53"]
 	Nameservers []string `json:"nameservers"`
 
 	// Retries Number of retries on failure
-	//
-	// Example: 3
 	Retries int32 `json:"retries"`
 
 	// Timeout Timeout for the query in seconds
-	//
-	// Example: 5
 	Timeout int32 `json:"timeout"`
 
 	// TimeoutRetry Timeout for the query retries in seconds
-	//
-	// Example: 3
 	TimeoutRetry int32 `json:"timeout_retry"`
 }
 
 // LoadBalancerResolverModify Load Balancer Resolver
 //
-// Example: {"cache_invalid":60,"cache_valid":300,"name":"default-resolver","nameservers":["1.1.1.1:53","8.8.8.8:53"],"retries":3,"timeout":5,"timeout_retry":3}
+// Examples: {"name":"updated-resolver"}
 type LoadBalancerResolverModify struct {
 	// CacheInvalid Time in seconds to cache invalid results
-	//
-	// Example: 60
 	CacheInvalid *int32 `json:"cache_invalid,omitempty"`
 
 	// CacheValid Time in seconds to cache valid results
-	//
-	// Example: 300
 	CacheValid *int32 `json:"cache_valid,omitempty"`
 
 	// Name Name of the resolver
-	//
-	// Example: custom-resolver
 	Name *string `json:"name,omitempty"`
 
 	// Nameservers Nameservers
-	//
-	// Example: ["1.1.1.1:53","8.8.8.8:53"]
 	Nameservers *[]string `json:"nameservers,omitempty"`
 
 	// Retries Number of retries on failure
-	//
-	// Example: 3
 	Retries *int32 `json:"retries,omitempty"`
 
 	// Timeout Timeout for the query in seconds
-	//
-	// Example: 5
 	Timeout *int32 `json:"timeout,omitempty"`
 
 	// TimeoutRetry Timeout for the query retries in seconds
-	//
-	// Example: 3
 	TimeoutRetry *int32 `json:"timeout_retry,omitempty"`
 }
 
 // LoadBalancerResolverParameter The name of the resolver.
+//
+// Examples: example-resolver-1, example-resolver-2
 type LoadBalancerResolverParameter = string
 
 // LoadBalancerResolversResponse Represents a list of DNS resolver configurations for a load balancer service.
 type LoadBalancerResolversResponse = []LoadBalancerResolver
 
 // LoadBalancerRule Represents a load balancer rule that defines how incoming traffic is matched and processed by a frontend, including priority, matching conditions, and actions to perform.
+//
+// Examples: {"actions":[{"action_set_forwarded_headers":{},"type":"set_forwarded_headers"},{"action_set_request_header":{"header":"X-Forwarded-Proto","value":"https"},"type":"set_request_header"},{"action_http_redirect":{"location":"https://example.com","status":301},"type":"http_redirect"}],"created_at":"2025-11-06T09:00:00.000Z","matchers":[{"inverse":false,"match_path":{"ignore_case":true,"method":"starts_with","value":"/api"},"type":"path"}],"matching_condition":"and","name":"redirect-to-https","priority":1,"updated_at":"2025-11-06T09:30:00.000Z"}
 type LoadBalancerRule struct {
 	// Actions List of actions to execute when the rule matches an incoming request.
-	//
-	// Example: [{"action_set_forwarded_headers":{},"type":"set_forwarded_headers"},{"action_set_request_header":{"header":"X-Forwarded-Proto","value":"https"},"type":"set_request_header"},{"action_http_redirect":{"location":"https://example.com","status":301},"type":"http_redirect"}]
 	Actions []LoadBalancerActionResponse `json:"actions"`
 
 	// CreatedAt Timestamp when the rule was created (RFC 3339 format).
+	//
+	// Examples: 2025-11-06T09:00:00.000Z
 	CreatedAt time.Time `json:"created_at"`
 
 	// Matchers List of conditions that incoming requests must satisfy for this rule to apply.
-	//
-	// Example: [{"inverse":false,"match_path":{"ignore_case":true,"method":"starts_with","value":"/api"},"type":"path"}]
 	Matchers []LoadBalancerMatcherResponse `json:"matchers"`
 
 	// MatchingCondition Logical operator determining how multiple matchers are combined (and/or).
-	//
-	// Example: and
 	MatchingCondition LoadBalancerRuleMatchingCondition `json:"matching_condition"`
 
 	// Name Human-readable name assigned to the routing rule.
-	//
-	// Example: redirect-to-https
 	Name string `json:"name"`
 
 	// Priority Priority order for rule evaluation, where lower values indicate higher priority.
-	//
-	// Example: 100
 	Priority int32 `json:"priority"`
 
 	// UpdatedAt Timestamp when the rule was last updated (RFC 3339 format).
+	//
+	// Examples: 2025-12-06T09:00:00.000Z
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
 // LoadBalancerRuleMatchingCondition Logical operator determining how multiple matchers are combined (and/or).
-//
-// Example: and
 type LoadBalancerRuleMatchingCondition string
 
 // LoadBalancerRuleCreate Load Balancer Forwarding Rule
+//
+// Examples: {"actions":[{"action_use_backend":{"backend":"backend-1"},"type":"use_backend"}],"matchers":[],"matching_condition":"and","name":"my-rule","priority":10}
 type LoadBalancerRuleCreate struct {
 	// Actions Rule actions
+	//
+	// Examples: [{"action_use_backend":{"backend":"backend-1"},"type":"use_backend"}]
 	Actions []LoadBalancerActionCreate `json:"actions"`
 
 	// Matchers Rule matchers
+	//
+	// Examples: []
 	Matchers *[]LoadBalancerMatcherCreate `json:"matchers"`
 
 	// MatchingCondition Defines how multiple matching criteria are combined to evaluate a condition.
+	//
+	// Examples: and
 	MatchingCondition *LoadBalancerMatchingCondition `json:"matching_condition,omitempty"`
 
 	// Name Name of the rule
-	//
-	// Example: my-rule
 	Name string `json:"name"`
 
 	// Priority Priority
-	//
-	// Example: 10
 	Priority int32 `json:"priority"`
 }
 
@@ -4023,6 +3399,8 @@ type LoadBalancerRuleCreate struct {
 type LoadBalancerRuleMatcherIntMethod string
 
 // LoadBalancerRuleModify Load Balancer Forwarding Rule
+//
+// Examples: {"name":"updated-rule","priority":10}
 type LoadBalancerRuleModify struct {
 	// Actions Rule actions
 	Actions *[]LoadBalancerActionCreate `json:"actions,omitempty"`
@@ -4031,6 +3409,8 @@ type LoadBalancerRuleModify struct {
 	Matchers *[]LoadBalancerMatcherCreate `json:"matchers,omitempty"`
 
 	// MatchingCondition Defines how multiple matching criteria are combined to evaluate a condition.
+	//
+	// Examples: and
 	MatchingCondition *LoadBalancerMatchingCondition `json:"matching_condition,omitempty"`
 
 	// Name Name of the rule
@@ -4041,6 +3421,8 @@ type LoadBalancerRuleModify struct {
 }
 
 // LoadBalancerRuleParameter The name of the rule.
+//
+// Examples: example-rule-1, example-rule-2
 type LoadBalancerRuleParameter = string
 
 // LoadBalancerRulesResponse Represents a list of load balancer rules that define how incoming requests are matched and processed, including conditions, actions, and backend target associations.
@@ -4049,190 +3431,172 @@ type LoadBalancerRulesResponse = []LoadBalancerRule
 // LoadBalancerServerMetricsResponse Represents detailed server-level performance and reliability metrics, including connection errors, aborted sessions, and routing statistics for a load balancer backend member.
 type LoadBalancerServerMetricsResponse struct {
 	// ConnectionsWaiting Current number of connections waiting for a server slot.
-	//
-	// Example: 1
 	ConnectionsWaiting int32 `json:"connections_waiting"`
 
 	// TotalClientAborted Total number of sessions aborted by clients before completion.
-	//
-	// Example: 12
 	TotalClientAborted int32 `json:"total_client_aborted"`
 
 	// TotalFailedChecksTransitions Total number of times the server transitioned from healthy to failed state due to failed health checks.
-	//
-	// Example: 3
 	TotalFailedChecksTransitions int32 `json:"total_failed_checks_transitions"`
 
 	// TotalFailedConnections Total number of failed connection attempts to the server.
-	//
-	// Example: 5
 	TotalFailedConnections int32 `json:"total_failed_connections"`
 
 	// TotalInvalidResponses Total number of invalid responses received from the server.
-	//
-	// Example: 2
 	TotalInvalidResponses int32 `json:"total_invalid_responses"`
 
 	// TotalRoutedRequests Total number of requests successfully routed to the server.
-	//
-	// Example: 14892
 	TotalRoutedRequests int32 `json:"total_routed_requests"`
 
 	// TotalServerAborted Total number of sessions aborted by the server before completion.
-	//
-	// Example: 4
 	TotalServerAborted int32 `json:"total_server_aborted"`
 
 	// TotalServerConnectionRetries Total number of retries attempted for failed server connections.
-	//
-	// Example: 9
 	TotalServerConnectionRetries int32 `json:"total_server_connection_retries"`
 
 	// TotalServerRedispatches Total number of requests that were redispatched to another server after failure.
-	//
-	// Example: 7
 	TotalServerRedispatches int32 `json:"total_server_redispatches"`
 }
 
 // LoadBalancerService Represents a load balancer service instance that groups together frontends, backends, and related agents. It defines the service plan, network configuration, and operational state across all nodes.
+//
+// Examples: {"backends":[],"configured_status":"configured","created_at":"2025-11-06T08:00:00.000Z","frontends":[],"ip_addresses":[],"labels":[],"maintenance_dow":"tuesday","maintenance_time":"02:00:00.000Z","name":"loadbalancer-prod-eu","networks":[],"operational_state":"running","plan":"medium","resolvers":[],"updated_at":"2025-11-06T09:15:00.000Z","uuid":"b7a3f6a4-4a8f-4a5c-b7a5-9c9a1e5a6d3e","zone":"de-fra1"}
 type LoadBalancerService struct {
 	// Backends List of backend configurations linked to this service.
+	//
+	// Examples: []
 	Backends *[]LoadBalancerBackend `json:"backends,omitempty"`
 
 	// ConfiguredStatus Configuration status of the service (e.g., whether all components are correctly provisioned).
-	//
-	// Example: configured
 	ConfiguredStatus string `json:"configured_status"`
 
 	// CreatedAt Timestamp when the service was created.
+	//
+	// Examples: 2025-11-06T08:00:00.000Z
 	CreatedAt time.Time `json:"created_at"`
 
 	// DnsName Deprecated: legacy DNS field replaced by service-level IP addressing.
 	DnsName *string `json:"dns_name,omitempty"`
 
 	// Frontends List of frontend configurations associated with the service.
+	//
+	// Examples: []
 	Frontends *[]LoadBalancerFrontend `json:"frontends,omitempty"`
 
 	// IpAddresses IP addresses assigned to this service.
+	//
+	// Examples: []
 	IpAddresses *[]LoadBalancerIpAddress `json:"ip_addresses,omitempty"`
 
 	// Labels Labels associated with the service for metadata tagging and identification.
+	//
+	// Examples: []
 	Labels *[]LoadBalancerLabelResponse `json:"labels,omitempty"`
 
 	// MaintenanceDow Day of week scheduled for maintenance operations.
-	//
-	// Example: tuesday
 	MaintenanceDow *LoadBalancerServiceMaintenanceDow `json:"maintenance_dow,omitempty"`
 
 	// MaintenanceTime Time of day (in UTC) scheduled for maintenance operations.
+	//
+	// Examples: 2025-11-06T08:00:00.000Z
 	MaintenanceTime *string `json:"maintenance_time,omitempty"`
 
 	// Name Human-readable name assigned to the service.
-	//
-	// Example: loadbalancer-prod-eu
 	Name string `json:"name"`
 
 	// NetworkUuid Deprecated: old field replaced by the networks array.
 	NetworkUuid *string `json:"network_uuid,omitempty"`
 
 	// Networks Networks attached to this service.
+	//
+	// Examples: []
 	Networks *[]LoadBalancerNetwork `json:"networks,omitempty"`
 
 	// OperationalState Current operational state of the service, describing its runtime behavior and availability.
-	//
-	// Example: running
 	OperationalState *LoadBalancerServiceOperationalState `json:"operational_state,omitempty"`
 
 	// Plan Selected load balancer plan defining node size, performance, and pricing tier.
-	//
-	// Example: medium
 	Plan string `json:"plan"`
 
 	// Resolvers DNS resolvers available for this service.
+	//
+	// Examples: []
 	Resolvers *[]LoadBalancerResolver `json:"resolvers,omitempty"`
 
 	// UpdatedAt Timestamp when the service was last updated.
+	//
+	// Examples: 2025-11-06T09:15:00.000Z
 	UpdatedAt time.Time `json:"updated_at"`
 
 	// Uuid Unique identifier of the service.
-	//
-	// Example: b7a3f6a4-4a8f-4a5c-b7a5-9c9a1e5a6d3e
 	Uuid openapi_types.UUID `json:"uuid"`
 
 	// Zone UpCloud zone where the service is deployed.
-	//
-	// Example: de-fra1
 	Zone string `json:"zone"`
 }
 
 // LoadBalancerServiceMaintenanceDow Day of week scheduled for maintenance operations.
-//
-// Example: tuesday
 type LoadBalancerServiceMaintenanceDow string
 
 // LoadBalancerServiceOperationalState Current operational state of the service, describing its runtime behavior and availability.
-//
-// Example: running
 type LoadBalancerServiceOperationalState string
 
 // LoadBalancerServiceConfiguredStatus Service configured status
-//
-// Example: started
 type LoadBalancerServiceConfiguredStatus string
 
 // LoadBalancerServiceCreate Load Balancer Service
+//
+// Examples: {"configured_status":"started","frontends":[],"name":"my-loadbalancer","plan":"production-small","zone":"fi-hel1"}
 type LoadBalancerServiceCreate struct {
 	// Backends Service backends
+	//
+	// Examples: []
 	Backends *[]LoadBalancerBackendCreate `json:"backends,omitempty"`
 
 	// ConfiguredStatus Service configured status
-	//
-	// Example: started
 	ConfiguredStatus LoadBalancerServiceConfiguredStatus `json:"configured_status"`
 
 	// Frontends Service frontends
+	//
+	// Examples: []
 	Frontends []LoadBalancerFrontendCreate `json:"frontends"`
 
 	// IpAddresses List of IP addresses for the network
+	//
+	// Examples: []
 	IpAddresses *[]LoadBalancerIpAddressCreate `json:"ip_addresses,omitempty"`
 
 	// Labels Labels
+	//
+	// Examples: []
 	Labels *[]LoadBalancerLabelCreate `json:"labels,omitempty"`
 
 	// MaintenanceDow Day of week
-	//
-	// Example: monday
 	MaintenanceDow *LoadBalancerMaintenanceDayOfWeek `json:"maintenance_dow,omitempty"`
 
 	// MaintenanceTime Maintenance time
-	//
-	// Example: 03:15:00Z
 	MaintenanceTime *LoadBalancerMaintenanceTime `json:"maintenance_time,omitempty"`
 
 	// Name Name of the service
-	//
-	// Example: my-loadbalancer
 	Name string `json:"name"`
 
 	// NetworkUuid Private Network UUID
-	//
-	// Example: 01234567-89ab-cdef-0123-456789abcdef
 	NetworkUuid *openapi_types.UUID `json:"network_uuid,omitempty"`
 
 	// Networks Service networks
+	//
+	// Examples: []
 	Networks *[]LoadBalancerNetworkCreate `json:"networks,omitempty"`
 
 	// Plan Plan
-	//
-	// Example: production
 	Plan string `json:"plan"`
 
 	// Resolvers Service resolvers
+	//
+	// Examples: []
 	Resolvers *[]LoadBalancerResolverCreate `json:"resolvers,omitempty"`
 
 	// Zone Zone
-	//
-	// Example: fi-hel1
 	Zone string `json:"zone"`
 }
 
@@ -4240,13 +3604,13 @@ type LoadBalancerServiceCreate struct {
 type LoadBalancerServiceLabelsResponse = []LoadBalancerLabelResponse
 
 // LoadBalancerServiceModify Load Balancer Service
+//
+// Examples: {"name":"updated-loadbalancer"}
 type LoadBalancerServiceModify struct {
 	// Backends Service backends
 	Backends *[]LoadBalancerBackendCreate `json:"backends,omitempty"`
 
 	// ConfiguredStatus Service configured status
-	//
-	// Example: started
 	ConfiguredStatus *LoadBalancerServiceConfiguredStatus `json:"configured_status,omitempty"`
 
 	// Frontends Service frontends
@@ -4259,23 +3623,15 @@ type LoadBalancerServiceModify struct {
 	Labels *[]LoadBalancerLabelCreate `json:"labels,omitempty"`
 
 	// MaintenanceDow Day of week
-	//
-	// Example: monday
 	MaintenanceDow *LoadBalancerMaintenanceDayOfWeek `json:"maintenance_dow,omitempty"`
 
 	// MaintenanceTime Maintenance time
-	//
-	// Example: 03:15:00Z
 	MaintenanceTime *LoadBalancerMaintenanceTime `json:"maintenance_time,omitempty"`
 
 	// Name Name of the service
-	//
-	// Example: updated-loadbalancer
 	Name *string `json:"name,omitempty"`
 
 	// Plan Plan
-	//
-	// Example: production
 	Plan *string `json:"plan,omitempty"`
 
 	// Resolvers Service resolvers
@@ -4283,16 +3639,18 @@ type LoadBalancerServiceModify struct {
 }
 
 // LoadBalancerServiceParameter The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type LoadBalancerServiceParameter = openapi_types.UUID
 
 // LoadBalancerServiceReplace Load Balancer Service.
+//
+// Examples: {"configured_status":"started","name":"my-loadbalancer","plan":"production"}
 type LoadBalancerServiceReplace struct {
 	// Backends Service backends
 	Backends *[]LoadBalancerBackendCreate `json:"backends,omitempty"`
 
 	// ConfiguredStatus Service configured status
-	//
-	// Example: started
 	ConfiguredStatus LoadBalancerServiceConfiguredStatus `json:"configured_status"`
 
 	// Frontends Service frontends
@@ -4305,19 +3663,19 @@ type LoadBalancerServiceReplace struct {
 	Labels *[]LoadBalancerLabelCreate `json:"labels,omitempty"`
 
 	// MaintenanceDow Day of week
-	//
-	// Example: monday
 	MaintenanceDow *LoadBalancerMaintenanceDayOfWeek `json:"maintenance_dow,omitempty"`
 
 	// MaintenanceTime Maintenance time
-	//
-	// Example: 03:15:00Z
 	MaintenanceTime *LoadBalancerMaintenanceTime `json:"maintenance_time,omitempty"`
 
 	// Name Name of the service
+	//
+	// Examples: my-loadbalancer
 	Name string `json:"name"`
 
 	// Plan Plan
+	//
+	// Examples: production
 	Plan string `json:"plan"`
 
 	// Resolvers Service resolvers
@@ -4328,55 +3686,53 @@ type LoadBalancerServiceReplace struct {
 type LoadBalancerServicesResponse = []LoadBalancerService
 
 // LoadBalancerSortServicesParameter Sort services by field. Prefix with '-' for descending order.
+//
+// Examples: -created_at, name, -uuid
 type LoadBalancerSortServicesParameter string
 
 // LoadBalancerStringMatcherMethods String matcher methods
 //
-// Example: substring
+// Examples: exact, substring, starts
 type LoadBalancerStringMatcherMethods string
 
 // LoadBalancerStringMatcherMethodsNoValue String matcher methods (no value)
 //
-// Example: exists
+// Examples: exists, ip
 type LoadBalancerStringMatcherMethodsNoValue string
 
 // LoadBalancerTlsConfig Represents a TLS configuration for a frontend or backend, defining the certificate bundle and associated identifiers within the load balancer service.
+//
+// Examples: {"certificate_bundle_uuid":"a4b9f1a3-9b7c-4f21-8b33-fd68efb7c001","created_at":"2025-11-06T10:15:00.000Z","name":"frontend-tls-config","updated_at":"2025-11-06T11:00:00.000Z"}
 type LoadBalancerTlsConfig struct {
 	// CertificateBundleUuid UUID of the certificate bundle used for TLS encryption.
-	//
-	// Example: a4b9f1a3-9b7c-4f21-8b33-fd68efb7c001
 	CertificateBundleUuid openapi_types.UUID `json:"certificate_bundle_uuid"`
 
 	// CreatedAt Timestamp when the TLS configuration was created (RFC 3339 format).
+	//
+	// Examples: 2025-11-06T10:15:00.000Z
 	CreatedAt time.Time `json:"created_at"`
 
 	// Name Human-readable name assigned to the TLS configuration.
-	//
-	// Example: frontend-tls-config
 	Name string `json:"name"`
 
 	// UpdatedAt Timestamp when the TLS configuration was last updated (RFC 3339 format).
+	//
+	// Examples: 2025-11-06T11:00:00.000Z
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
 // LoadBalancerTlsConfigCreate Load Balancer TLS Config
-//
-// Example: {"certificate_bundle_uuid":"123e4567-e89b-12d3-a456-426614174000","name":"tls-config-1"}
 type LoadBalancerTlsConfigCreate struct {
 	// CertificateBundleUuid Certificate Bundle UUID
-	//
-	// Example: 123e4567-e89b-12d3-a456-426614174000
 	CertificateBundleUuid openapi_types.UUID `json:"certificate_bundle_uuid"`
 
 	// Name Name of the config
-	//
-	// Example: tls-config-1
 	Name string `json:"name"`
 }
 
 // LoadBalancerTlsConfigModify Load Balancer TLS Config
 //
-// Example: {"certificate_bundle_uuid":"123e4567-e89b-12d3-a456-426614174000","name":"tls-config-1"}
+// Examples: {"name":"updated-tls-config"}
 type LoadBalancerTlsConfigModify struct {
 	// CertificateBundleUuid Certificate Bundle UUID
 	CertificateBundleUuid *openapi_types.UUID `json:"certificate_bundle_uuid,omitempty"`
@@ -4386,450 +3742,740 @@ type LoadBalancerTlsConfigModify struct {
 }
 
 // LoadBalancerTlsConfigParameter The name of the TLS configuration.
+//
+// Examples: example-tls-config-1, example-tls-config-2
 type LoadBalancerTlsConfigParameter = string
 
 // LoadBalancerTlsConfigsResponse Represents a list of TLS configuration for a frontend or backend, defining the certificate bundle and associated identifiers within the load balancer service.
 type LoadBalancerTlsConfigsResponse = []LoadBalancerTlsConfig
 
 // CreateLoadBalancerBackendServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateLoadBalancerBackendServiceUuid = LoadBalancerServiceParameter
 
 // CreateLoadBalancerBackendTlsConfigBackendName The name of the backend.
+//
+// Examples: backend-infra, backend-customer-1
 type CreateLoadBalancerBackendTlsConfigBackendName = LoadBalancerBackendParameter
 
 // CreateLoadBalancerBackendTlsConfigServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateLoadBalancerBackendTlsConfigServiceUuid = LoadBalancerServiceParameter
 
 // CreateLoadBalancerCertificateBundleLabelBundleUuid The UUID of the certificate bundle.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateLoadBalancerCertificateBundleLabelBundleUuid = LoadBalancerCertificateBundleParameter
 
 // CreateLoadBalancerFrontendServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateLoadBalancerFrontendServiceUuid = LoadBalancerServiceParameter
 
 // CreateLoadBalancerFrontendTlsConfigFrontendName The name of the frontend.
+//
+// Examples: example-frontend-1, example-frontend-2
 type CreateLoadBalancerFrontendTlsConfigFrontendName = LoadBalancerFrontendParameter
 
 // CreateLoadBalancerFrontendTlsConfigServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateLoadBalancerFrontendTlsConfigServiceUuid = LoadBalancerServiceParameter
 
 // CreateLoadBalancerIpAddressServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateLoadBalancerIpAddressServiceUuid = LoadBalancerServiceParameter
 
 // CreateLoadBalancerLabelServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateLoadBalancerLabelServiceUuid = LoadBalancerServiceParameter
 
 // CreateLoadBalancerMemberBackendName The name of the backend.
+//
+// Examples: backend-infra, backend-customer-1
 type CreateLoadBalancerMemberBackendName = LoadBalancerBackendParameter
 
 // CreateLoadBalancerMemberServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateLoadBalancerMemberServiceUuid = LoadBalancerServiceParameter
 
 // CreateLoadBalancerResolverServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateLoadBalancerResolverServiceUuid = LoadBalancerServiceParameter
 
 // CreateLoadBalancerRuleFrontendName The name of the frontend.
+//
+// Examples: example-frontend-1, example-frontend-2
 type CreateLoadBalancerRuleFrontendName = LoadBalancerFrontendParameter
 
 // CreateLoadBalancerRuleServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateLoadBalancerRuleServiceUuid = LoadBalancerServiceParameter
 
 // DeleteLoadBalancerBackendBackendName The name of the backend.
+//
+// Examples: backend-infra, backend-customer-1
 type DeleteLoadBalancerBackendBackendName = LoadBalancerBackendParameter
 
 // DeleteLoadBalancerBackendServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteLoadBalancerBackendServiceUuid = LoadBalancerServiceParameter
 
 // DeleteLoadBalancerBackendTlsConfigBackendName The name of the backend.
+//
+// Examples: backend-infra, backend-customer-1
 type DeleteLoadBalancerBackendTlsConfigBackendName = LoadBalancerBackendParameter
 
 // DeleteLoadBalancerBackendTlsConfigServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteLoadBalancerBackendTlsConfigServiceUuid = LoadBalancerServiceParameter
 
 // DeleteLoadBalancerBackendTlsConfigTlsConfigName The name of the TLS configuration.
+//
+// Examples: example-tls-config-1, example-tls-config-2
 type DeleteLoadBalancerBackendTlsConfigTlsConfigName = LoadBalancerTlsConfigParameter
 
 // DeleteLoadBalancerCertificateBundleBundleUuid The UUID of the certificate bundle.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteLoadBalancerCertificateBundleBundleUuid = LoadBalancerCertificateBundleParameter
 
 // DeleteLoadBalancerCertificateBundleLabelBundleUuid The UUID of the certificate bundle.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteLoadBalancerCertificateBundleLabelBundleUuid = LoadBalancerCertificateBundleParameter
 
 // DeleteLoadBalancerCertificateBundleLabelLabelKey The label key parameter.
+//
+// Examples: example-key-1, example-key-2
 type DeleteLoadBalancerCertificateBundleLabelLabelKey = LoadBalancerLabelParameter
 
 // DeleteLoadBalancerFrontendFrontendName The name of the frontend.
+//
+// Examples: example-frontend-1, example-frontend-2
 type DeleteLoadBalancerFrontendFrontendName = LoadBalancerFrontendParameter
 
 // DeleteLoadBalancerFrontendServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteLoadBalancerFrontendServiceUuid = LoadBalancerServiceParameter
 
 // DeleteLoadBalancerFrontendTlsConfigFrontendName The name of the frontend.
+//
+// Examples: example-frontend-1, example-frontend-2
 type DeleteLoadBalancerFrontendTlsConfigFrontendName = LoadBalancerFrontendParameter
 
 // DeleteLoadBalancerFrontendTlsConfigServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteLoadBalancerFrontendTlsConfigServiceUuid = LoadBalancerServiceParameter
 
 // DeleteLoadBalancerFrontendTlsConfigTlsConfigName The name of the TLS configuration.
+//
+// Examples: example-tls-config-1, example-tls-config-2
 type DeleteLoadBalancerFrontendTlsConfigTlsConfigName = LoadBalancerTlsConfigParameter
 
 // DeleteLoadBalancerIpAddressIpAddress The IP address parameter.
+//
+// Examples: 192.168.1.1, 2001:db8::1
 type DeleteLoadBalancerIpAddressIpAddress = LoadBalancerIpAddressParameter
 
 // DeleteLoadBalancerIpAddressServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteLoadBalancerIpAddressServiceUuid = LoadBalancerServiceParameter
 
 // DeleteLoadBalancerLabelLabelKey The label key parameter.
+//
+// Examples: example-key-1, example-key-2
 type DeleteLoadBalancerLabelLabelKey = LoadBalancerLabelParameter
 
 // DeleteLoadBalancerLabelServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteLoadBalancerLabelServiceUuid = LoadBalancerServiceParameter
 
 // DeleteLoadBalancerMemberBackendName The name of the backend.
+//
+// Examples: backend-infra, backend-customer-1
 type DeleteLoadBalancerMemberBackendName = LoadBalancerBackendParameter
 
 // DeleteLoadBalancerMemberMemberName The name of the member.
+//
+// Examples: dev-member, qa-member
 type DeleteLoadBalancerMemberMemberName = LoadBalancerMemberParameter
 
 // DeleteLoadBalancerMemberServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteLoadBalancerMemberServiceUuid = LoadBalancerServiceParameter
 
 // DeleteLoadBalancerResolverResolverName The name of the resolver.
+//
+// Examples: example-resolver-1, example-resolver-2
 type DeleteLoadBalancerResolverResolverName = LoadBalancerResolverParameter
 
 // DeleteLoadBalancerResolverServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteLoadBalancerResolverServiceUuid = LoadBalancerServiceParameter
 
 // DeleteLoadBalancerRuleFrontendName The name of the frontend.
+//
+// Examples: example-frontend-1, example-frontend-2
 type DeleteLoadBalancerRuleFrontendName = LoadBalancerFrontendParameter
 
 // DeleteLoadBalancerRuleRuleName The name of the rule.
+//
+// Examples: example-rule-1, example-rule-2
 type DeleteLoadBalancerRuleRuleName = LoadBalancerRuleParameter
 
 // DeleteLoadBalancerRuleServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteLoadBalancerRuleServiceUuid = LoadBalancerServiceParameter
 
 // DeleteLoadBalancerServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteLoadBalancerServiceUuid = LoadBalancerServiceParameter
 
 // GetLoadBalancerBackendBackendName The name of the backend.
+//
+// Examples: backend-infra, backend-customer-1
 type GetLoadBalancerBackendBackendName = LoadBalancerBackendParameter
 
 // GetLoadBalancerBackendCombinedMetricsSeriesServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetLoadBalancerBackendCombinedMetricsSeriesServiceUuid = LoadBalancerServiceParameter
 
 // GetLoadBalancerBackendCombinedMetricsSeriesSort Sort metrics by field. Prefix with '-' for descending order.
+//
+// Examples: start_at, -start_at
 type GetLoadBalancerBackendCombinedMetricsSeriesSort = LoadBalancerMetricsSortParameter
 
 // GetLoadBalancerBackendMetricsSeriesBackendName The name of the backend.
+//
+// Examples: backend-infra, backend-customer-1
 type GetLoadBalancerBackendMetricsSeriesBackendName = LoadBalancerBackendParameter
 
 // GetLoadBalancerBackendMetricsSeriesServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetLoadBalancerBackendMetricsSeriesServiceUuid = LoadBalancerServiceParameter
 
 // GetLoadBalancerBackendMetricsSeriesSort Sort metrics by field. Prefix with '-' for descending order.
+//
+// Examples: start_at, -start_at
 type GetLoadBalancerBackendMetricsSeriesSort = LoadBalancerMetricsSortParameter
 
 // GetLoadBalancerBackendServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetLoadBalancerBackendServiceUuid = LoadBalancerServiceParameter
 
 // GetLoadBalancerBackendTlsConfigBackendName The name of the backend.
+//
+// Examples: backend-infra, backend-customer-1
 type GetLoadBalancerBackendTlsConfigBackendName = LoadBalancerBackendParameter
 
 // GetLoadBalancerBackendTlsConfigServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetLoadBalancerBackendTlsConfigServiceUuid = LoadBalancerServiceParameter
 
 // GetLoadBalancerBackendTlsConfigTlsConfigName The name of the TLS configuration.
+//
+// Examples: example-tls-config-1, example-tls-config-2
 type GetLoadBalancerBackendTlsConfigTlsConfigName = LoadBalancerTlsConfigParameter
 
 // GetLoadBalancerCertificateBundleBundleUuid The UUID of the certificate bundle.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetLoadBalancerCertificateBundleBundleUuid = LoadBalancerCertificateBundleParameter
 
 // GetLoadBalancerCertificateBundleLabelBundleUuid The UUID of the certificate bundle.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetLoadBalancerCertificateBundleLabelBundleUuid = LoadBalancerCertificateBundleParameter
 
 // GetLoadBalancerCertificateBundleLabelLabelKey The label key parameter.
+//
+// Examples: example-key-1, example-key-2
 type GetLoadBalancerCertificateBundleLabelLabelKey = LoadBalancerLabelParameter
 
 // GetLoadBalancerFrontendCombinedMetricsSeriesServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetLoadBalancerFrontendCombinedMetricsSeriesServiceUuid = LoadBalancerServiceParameter
 
 // GetLoadBalancerFrontendCombinedMetricsSeriesSort Sort metrics by field. Prefix with '-' for descending order.
+//
+// Examples: start_at, -start_at
 type GetLoadBalancerFrontendCombinedMetricsSeriesSort = LoadBalancerMetricsSortParameter
 
 // GetLoadBalancerFrontendFrontendName The name of the frontend.
+//
+// Examples: example-frontend-1, example-frontend-2
 type GetLoadBalancerFrontendFrontendName = LoadBalancerFrontendParameter
 
 // GetLoadBalancerFrontendMetricsSeriesFrontendName The name of the frontend.
+//
+// Examples: example-frontend-1, example-frontend-2
 type GetLoadBalancerFrontendMetricsSeriesFrontendName = LoadBalancerFrontendParameter
 
 // GetLoadBalancerFrontendMetricsSeriesServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetLoadBalancerFrontendMetricsSeriesServiceUuid = LoadBalancerServiceParameter
 
 // GetLoadBalancerFrontendMetricsSeriesSort Sort metrics by field. Prefix with '-' for descending order.
+//
+// Examples: start_at, -start_at
 type GetLoadBalancerFrontendMetricsSeriesSort = LoadBalancerMetricsSortParameter
 
 // GetLoadBalancerFrontendServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetLoadBalancerFrontendServiceUuid = LoadBalancerServiceParameter
 
 // GetLoadBalancerFrontendTlsConfigFrontendName The name of the frontend.
+//
+// Examples: example-frontend-1, example-frontend-2
 type GetLoadBalancerFrontendTlsConfigFrontendName = LoadBalancerFrontendParameter
 
 // GetLoadBalancerFrontendTlsConfigServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetLoadBalancerFrontendTlsConfigServiceUuid = LoadBalancerServiceParameter
 
 // GetLoadBalancerFrontendTlsConfigTlsConfigName The name of the TLS configuration.
+//
+// Examples: example-tls-config-1, example-tls-config-2
 type GetLoadBalancerFrontendTlsConfigTlsConfigName = LoadBalancerTlsConfigParameter
 
 // GetLoadBalancerIpAddressIpAddress The IP address parameter.
+//
+// Examples: 192.168.1.1, 2001:db8::1
 type GetLoadBalancerIpAddressIpAddress = LoadBalancerIpAddressParameter
 
 // GetLoadBalancerIpAddressServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetLoadBalancerIpAddressServiceUuid = LoadBalancerServiceParameter
 
 // GetLoadBalancerLabelLabelKey The label key parameter.
+//
+// Examples: example-key-1, example-key-2
 type GetLoadBalancerLabelLabelKey = LoadBalancerLabelParameter
 
 // GetLoadBalancerLabelServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetLoadBalancerLabelServiceUuid = LoadBalancerServiceParameter
 
 // GetLoadBalancerMemberBackendName The name of the backend.
+//
+// Examples: backend-infra, backend-customer-1
 type GetLoadBalancerMemberBackendName = LoadBalancerBackendParameter
 
 // GetLoadBalancerMemberCombinedMetricsSeriesBackendName The name of the backend.
+//
+// Examples: backend-infra, backend-customer-1
 type GetLoadBalancerMemberCombinedMetricsSeriesBackendName = LoadBalancerBackendParameter
 
 // GetLoadBalancerMemberCombinedMetricsSeriesServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetLoadBalancerMemberCombinedMetricsSeriesServiceUuid = LoadBalancerServiceParameter
 
 // GetLoadBalancerMemberCombinedMetricsSeriesSort Sort metrics by field. Prefix with '-' for descending order.
+//
+// Examples: start_at, -start_at
 type GetLoadBalancerMemberCombinedMetricsSeriesSort = LoadBalancerMetricsSortParameter
 
 // GetLoadBalancerMemberMemberName The name of the member.
+//
+// Examples: dev-member, qa-member
 type GetLoadBalancerMemberMemberName = LoadBalancerMemberParameter
 
 // GetLoadBalancerMemberMetricsSeriesBackendName The name of the backend.
+//
+// Examples: backend-infra, backend-customer-1
 type GetLoadBalancerMemberMetricsSeriesBackendName = LoadBalancerBackendParameter
 
 // GetLoadBalancerMemberMetricsSeriesMemberName The name of the member.
+//
+// Examples: dev-member, qa-member
 type GetLoadBalancerMemberMetricsSeriesMemberName = LoadBalancerMemberParameter
 
 // GetLoadBalancerMemberMetricsSeriesServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetLoadBalancerMemberMetricsSeriesServiceUuid = LoadBalancerServiceParameter
 
 // GetLoadBalancerMemberMetricsSeriesSort Sort metrics by field. Prefix with '-' for descending order.
+//
+// Examples: start_at, -start_at
 type GetLoadBalancerMemberMetricsSeriesSort = LoadBalancerMetricsSortParameter
 
 // GetLoadBalancerMemberServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetLoadBalancerMemberServiceUuid = LoadBalancerServiceParameter
 
 // GetLoadBalancerMetricsSeriesServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetLoadBalancerMetricsSeriesServiceUuid = LoadBalancerServiceParameter
 
 // GetLoadBalancerMetricsServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetLoadBalancerMetricsServiceUuid = LoadBalancerServiceParameter
 
 // GetLoadBalancerPlanPlanName The name of the plan.
+//
+// Examples: example-plan-1, example-plan-2
 type GetLoadBalancerPlanPlanName = LoadBalancerPlanParameter
 
 // GetLoadBalancerResolverResolverName The name of the resolver.
+//
+// Examples: example-resolver-1, example-resolver-2
 type GetLoadBalancerResolverResolverName = LoadBalancerResolverParameter
 
 // GetLoadBalancerResolverServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetLoadBalancerResolverServiceUuid = LoadBalancerServiceParameter
 
 // GetLoadBalancerRuleFrontendName The name of the frontend.
+//
+// Examples: example-frontend-1, example-frontend-2
 type GetLoadBalancerRuleFrontendName = LoadBalancerFrontendParameter
 
 // GetLoadBalancerRuleRuleName The name of the rule.
+//
+// Examples: example-rule-1, example-rule-2
 type GetLoadBalancerRuleRuleName = LoadBalancerRuleParameter
 
 // GetLoadBalancerRuleServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetLoadBalancerRuleServiceUuid = LoadBalancerServiceParameter
 
 // GetLoadBalancerServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetLoadBalancerServiceUuid = LoadBalancerServiceParameter
 
 // ListLoadBalancerBackendTlsConfigsBackendName The name of the backend.
+//
+// Examples: backend-infra, backend-customer-1
 type ListLoadBalancerBackendTlsConfigsBackendName = LoadBalancerBackendParameter
 
 // ListLoadBalancerBackendTlsConfigsServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ListLoadBalancerBackendTlsConfigsServiceUuid = LoadBalancerServiceParameter
 
 // ListLoadBalancerBackendsServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ListLoadBalancerBackendsServiceUuid = LoadBalancerServiceParameter
 
 // ListLoadBalancerCertificateBundleLabelsBundleUuid The UUID of the certificate bundle.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ListLoadBalancerCertificateBundleLabelsBundleUuid = LoadBalancerCertificateBundleParameter
 
 // ListLoadBalancerCertificateBundlesLabel Filter resources by label. Can be provided multiple times for multiple labels. Format: 'key=value' for exact match or 'key' for existence check.
+//
+// Examples: ["env=staging"], ["env"], ["env=staging","region=us"]
 type ListLoadBalancerCertificateBundlesLabel = LoadBalancerLabelFilterParameter
 
 // ListLoadBalancerCertificateBundlesLimit Number of entries to receive at most.
+//
+// Examples: 10, 50, 100
 type ListLoadBalancerCertificateBundlesLimit = LoadBalancerLimitParameter
 
 // ListLoadBalancerCertificateBundlesOffset Offset for retrieved results.
+//
+// Examples: 0, 10, 20
 type ListLoadBalancerCertificateBundlesOffset = LoadBalancerOffsetParameter
 
 // ListLoadBalancerFrontendTlsConfigsFrontendName The name of the frontend.
+//
+// Examples: example-frontend-1, example-frontend-2
 type ListLoadBalancerFrontendTlsConfigsFrontendName = LoadBalancerFrontendParameter
 
 // ListLoadBalancerFrontendTlsConfigsServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ListLoadBalancerFrontendTlsConfigsServiceUuid = LoadBalancerServiceParameter
 
 // ListLoadBalancerFrontendsServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ListLoadBalancerFrontendsServiceUuid = LoadBalancerServiceParameter
 
 // ListLoadBalancerIpAddressesServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ListLoadBalancerIpAddressesServiceUuid = LoadBalancerServiceParameter
 
 // ListLoadBalancerLabelsServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ListLoadBalancerLabelsServiceUuid = LoadBalancerServiceParameter
 
 // ListLoadBalancerMembersBackendName The name of the backend.
+//
+// Examples: backend-infra, backend-customer-1
 type ListLoadBalancerMembersBackendName = LoadBalancerBackendParameter
 
 // ListLoadBalancerMembersServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ListLoadBalancerMembersServiceUuid = LoadBalancerServiceParameter
 
 // ListLoadBalancerPlansLimit Number of entries to receive at most.
+//
+// Examples: 10, 50, 100
 type ListLoadBalancerPlansLimit = LoadBalancerLimitParameter
 
 // ListLoadBalancerPlansOffset Offset for retrieved results.
+//
+// Examples: 0, 10, 20
 type ListLoadBalancerPlansOffset = LoadBalancerOffsetParameter
 
 // ListLoadBalancerResolversServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ListLoadBalancerResolversServiceUuid = LoadBalancerServiceParameter
 
 // ListLoadBalancerRulesFrontendName The name of the frontend.
+//
+// Examples: example-frontend-1, example-frontend-2
 type ListLoadBalancerRulesFrontendName = LoadBalancerFrontendParameter
 
 // ListLoadBalancerRulesServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ListLoadBalancerRulesServiceUuid = LoadBalancerServiceParameter
 
 // ListLoadBalancersLabel Filter resources by label. Can be provided multiple times for multiple labels. Format: 'key=value' for exact match or 'key' for existence check.
+//
+// Examples: ["env=staging"], ["env"], ["env=staging","region=us"]
 type ListLoadBalancersLabel = LoadBalancerLabelFilterParameter
 
 // ListLoadBalancersLimit Number of entries to receive at most.
+//
+// Examples: 10, 50, 100
 type ListLoadBalancersLimit = LoadBalancerLimitParameter
 
 // ListLoadBalancersOffset Offset for retrieved results.
+//
+// Examples: 0, 10, 20
 type ListLoadBalancersOffset = LoadBalancerOffsetParameter
 
 // ListLoadBalancersSort Sort services by field. Prefix with '-' for descending order.
+//
+// Examples: -created_at, name, -uuid
 type ListLoadBalancersSort = LoadBalancerSortServicesParameter
 
 // ModifyLoadBalancerBackendBackendName The name of the backend.
+//
+// Examples: backend-infra, backend-customer-1
 type ModifyLoadBalancerBackendBackendName = LoadBalancerBackendParameter
 
 // ModifyLoadBalancerBackendServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyLoadBalancerBackendServiceUuid = LoadBalancerServiceParameter
 
 // ModifyLoadBalancerBackendTlsConfigBackendName The name of the backend.
+//
+// Examples: backend-infra, backend-customer-1
 type ModifyLoadBalancerBackendTlsConfigBackendName = LoadBalancerBackendParameter
 
 // ModifyLoadBalancerBackendTlsConfigServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyLoadBalancerBackendTlsConfigServiceUuid = LoadBalancerServiceParameter
 
 // ModifyLoadBalancerBackendTlsConfigTlsConfigName The name of the TLS configuration.
+//
+// Examples: example-tls-config-1, example-tls-config-2
 type ModifyLoadBalancerBackendTlsConfigTlsConfigName = LoadBalancerTlsConfigParameter
 
 // ModifyLoadBalancerCertificateBundleBundleUuid The UUID of the certificate bundle.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyLoadBalancerCertificateBundleBundleUuid = LoadBalancerCertificateBundleParameter
 
 // ModifyLoadBalancerCertificateBundleLabelBundleUuid The UUID of the certificate bundle.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyLoadBalancerCertificateBundleLabelBundleUuid = LoadBalancerCertificateBundleParameter
 
 // ModifyLoadBalancerCertificateBundleLabelLabelKey The label key parameter.
+//
+// Examples: example-key-1, example-key-2
 type ModifyLoadBalancerCertificateBundleLabelLabelKey = LoadBalancerLabelParameter
 
 // ModifyLoadBalancerFrontendFrontendName The name of the frontend.
+//
+// Examples: example-frontend-1, example-frontend-2
 type ModifyLoadBalancerFrontendFrontendName = LoadBalancerFrontendParameter
 
 // ModifyLoadBalancerFrontendServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyLoadBalancerFrontendServiceUuid = LoadBalancerServiceParameter
 
 // ModifyLoadBalancerFrontendTlsConfigFrontendName The name of the frontend.
+//
+// Examples: example-frontend-1, example-frontend-2
 type ModifyLoadBalancerFrontendTlsConfigFrontendName = LoadBalancerFrontendParameter
 
 // ModifyLoadBalancerFrontendTlsConfigServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyLoadBalancerFrontendTlsConfigServiceUuid = LoadBalancerServiceParameter
 
 // ModifyLoadBalancerFrontendTlsConfigTlsConfigName The name of the TLS configuration.
+//
+// Examples: example-tls-config-1, example-tls-config-2
 type ModifyLoadBalancerFrontendTlsConfigTlsConfigName = LoadBalancerTlsConfigParameter
 
 // ModifyLoadBalancerLabelLabelKey The label key parameter.
+//
+// Examples: example-key-1, example-key-2
 type ModifyLoadBalancerLabelLabelKey = LoadBalancerLabelParameter
 
 // ModifyLoadBalancerLabelServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyLoadBalancerLabelServiceUuid = LoadBalancerServiceParameter
 
 // ModifyLoadBalancerMemberBackendName The name of the backend.
+//
+// Examples: backend-infra, backend-customer-1
 type ModifyLoadBalancerMemberBackendName = LoadBalancerBackendParameter
 
 // ModifyLoadBalancerMemberMemberName The name of the member.
+//
+// Examples: dev-member, qa-member
 type ModifyLoadBalancerMemberMemberName = LoadBalancerMemberParameter
 
 // ModifyLoadBalancerMemberServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyLoadBalancerMemberServiceUuid = LoadBalancerServiceParameter
 
 // ModifyLoadBalancerNetworkNetworkName The name of the network.
+//
+// Examples: example-network-1, example-network-2
 type ModifyLoadBalancerNetworkNetworkName = LoadBalancerNetworkParameter
 
 // ModifyLoadBalancerNetworkServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyLoadBalancerNetworkServiceUuid = LoadBalancerServiceParameter
 
 // ModifyLoadBalancerResolverResolverName The name of the resolver.
+//
+// Examples: example-resolver-1, example-resolver-2
 type ModifyLoadBalancerResolverResolverName = LoadBalancerResolverParameter
 
 // ModifyLoadBalancerResolverServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyLoadBalancerResolverServiceUuid = LoadBalancerServiceParameter
 
 // ModifyLoadBalancerRuleFrontendName The name of the frontend.
+//
+// Examples: example-frontend-1, example-frontend-2
 type ModifyLoadBalancerRuleFrontendName = LoadBalancerFrontendParameter
 
 // ModifyLoadBalancerRuleRuleName The name of the rule.
+//
+// Examples: example-rule-1, example-rule-2
 type ModifyLoadBalancerRuleRuleName = LoadBalancerRuleParameter
 
 // ModifyLoadBalancerRuleServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyLoadBalancerRuleServiceUuid = LoadBalancerServiceParameter
 
 // ModifyLoadBalancerServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyLoadBalancerServiceUuid = LoadBalancerServiceParameter
 
 // ReplaceLoadBalancerRuleFrontendName The name of the frontend.
+//
+// Examples: example-frontend-1, example-frontend-2
 type ReplaceLoadBalancerRuleFrontendName = LoadBalancerFrontendParameter
 
 // ReplaceLoadBalancerRuleRuleName The name of the rule.
+//
+// Examples: example-rule-1, example-rule-2
 type ReplaceLoadBalancerRuleRuleName = LoadBalancerRuleParameter
 
 // ReplaceLoadBalancerRuleServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ReplaceLoadBalancerRuleServiceUuid = LoadBalancerServiceParameter
 
 // ReplaceLoadBalancerServiceUuid The UUID of the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ReplaceLoadBalancerServiceUuid = LoadBalancerServiceParameter
 
 // CreateLoadBalancer201 Represents a load balancer service instance that groups together frontends, backends, and related agents. It defines the service plan, network configuration, and operational state across all nodes.
+//
+// Examples: {"backends":[],"configured_status":"configured","created_at":"2025-11-06T08:00:00.000Z","frontends":[],"ip_addresses":[],"labels":[],"maintenance_dow":"tuesday","maintenance_time":"02:00:00.000Z","name":"loadbalancer-prod-eu","networks":[],"operational_state":"running","plan":"medium","resolvers":[],"updated_at":"2025-11-06T09:15:00.000Z","uuid":"b7a3f6a4-4a8f-4a5c-b7a5-9c9a1e5a6d3e","zone":"de-fra1"}
 type CreateLoadBalancer201 = LoadBalancerService
 
 // CreateLoadBalancerBackend201 Represents a backend configuration in the load balancer service, containing backend members, resolver settings, TLS configurations, and backend-specific properties such as timeouts and health checks.
+//
+// Examples: {"created_at":"2025-11-06T09:00:00.000Z","members":[{"backup":false,"created_at":"2025-11-05T12:30:00.000Z","enabled":true,"ip":"192.168.1.10","max_sessions":100,"name":"member-1","port":8080,"type":"static","updated_at":"2025-11-05T13:45:00.000Z","weight":10}],"name":"api-backend","properties":{"backend_id":401,"health_check_expected_status":200,"health_check_fall":3,"health_check_interval":10,"health_check_on_down":"shutdown-sessions","health_check_rise":2,"health_check_tls_verify":true,"health_check_type":"http","health_check_url":"/status","http2_enabled":true,"timeout_server":5000,"timeout_tunnel":15000,"tls_enabled":true,"tls_use_system_ca":false,"tls_verify":true},"resolver":"resolver-default","tls_configs":[{"certificate_bundle_uuid":"a4b9f1a3-9b7c-4f21-8b33-fd68efb7c001","created_at":"2025-11-06T10:15:00.000Z","name":"backend-tls-config","updated_at":"2025-11-06T11:00:00.000Z"}],"updated_at":"2025-11-06T11:30:00.000Z"}
 type CreateLoadBalancerBackend201 = LoadBalancerBackend
 
 // CreateLoadBalancerBackendDefault Schema for error responses from the API.
 type CreateLoadBalancerBackendDefault = LoadBalancerErrorResponse
 
 // CreateLoadBalancerBackendTlsConfig201 Represents a TLS configuration for a frontend or backend, defining the certificate bundle and associated identifiers within the load balancer service.
+//
+// Examples: {"certificate_bundle_uuid":"a4b9f1a3-9b7c-4f21-8b33-fd68efb7c001","created_at":"2025-11-06T10:15:00.000Z","name":"frontend-tls-config","updated_at":"2025-11-06T11:00:00.000Z"}
 type CreateLoadBalancerBackendTlsConfig201 = LoadBalancerTlsConfig
 
 // CreateLoadBalancerBackendTlsConfigDefault Schema for error responses from the API.
 type CreateLoadBalancerBackendTlsConfigDefault = LoadBalancerErrorResponse
 
 // CreateLoadBalancerCertificateBundle201 Represents a certificate bundle used in a load balancer TLS configuration. A bundle may be manually uploaded, dynamically issued via ACME, or represent an authority certificate. It includes certificate data, challenge details, and metadata about its lifecycle.
+//
+// Examples: {"created_at":"2025-11-06T09:00:00.000Z","hostnames":["example.com","www.example.com"],"key_type":"rsa","labels":[],"name":"mydomain-cert-bundle","not_after":"2026-11-06T09:00:00.000Z","not_before":"2025-11-06T09:00:00.000Z","operational_state":"setup-challenge","tls_type":"dynamic","updated_at":"2025-11-06T11:00:00.000Z","uuid":"8d2f4a1e-0e3f-44a9-a0f5-9b8c84e9c701"}
 type CreateLoadBalancerCertificateBundle201 = LoadBalancerCertificateBundle
 
 // CreateLoadBalancerCertificateBundleDefault Schema for error responses from the API.
 type CreateLoadBalancerCertificateBundleDefault = LoadBalancerErrorResponse
 
 // CreateLoadBalancerCertificateBundleLabel201 Represents a key-value label associated with the load balancer service
+//
+// Examples: {"key":"environment","value":"production"}
 type CreateLoadBalancerCertificateBundleLabel201 = LoadBalancerLabelResponse
 
 // CreateLoadBalancerCertificateBundleLabelDefault Schema for error responses from the API.
@@ -4839,42 +4485,56 @@ type CreateLoadBalancerCertificateBundleLabelDefault = LoadBalancerErrorResponse
 type CreateLoadBalancerDefault = LoadBalancerErrorResponse
 
 // CreateLoadBalancerFrontend201 Represents a frontend configuration in the load balancer service, defining how client connections are received, the listening port and protocol, TLS settings, routing rules, and default backend association.
+//
+// Examples: {"created_at":"2025-11-06T09:00:00.000Z","default_backend":"backend-1","mode":"http","name":"frontend-1","networks":[{"name":"public-network"},{"name":"private-network"}],"port":80,"properties":{"frontend_id":301,"http2_enabled":true,"inbound_proxy_protocol":false,"timeout_client":50000},"rules":[{"actions":[{"action_set_forwarded_headers":{},"type":"set_forwarded_headers"},{"action_set_request_header":{"header":"X-Forwarded-Proto","value":"https"},"type":"set_request_header"},{"action_http_redirect":{"location":"https://example.com","status":301},"type":"http_redirect"}],"created_at":"2025-11-06T09:00:00.000Z","matchers":[{"inverse":false,"match_path":{"ignore_case":true,"method":"starts_with","value":"/api"},"type":"path"}],"matching_condition":"and","name":"redirect-to-https","priority":1,"updated_at":"2025-11-06T09:30:00.000Z"}],"tls_configs":[{"certificate_bundle_uuid":"a4b9f1a3-9b7c-4f21-8b33-fd68efb7c001","created_at":"2025-11-06T10:15:00.000Z","name":"frontend-tls-config","updated_at":"2025-11-06T11:00:00.000Z"}],"updated_at":"2025-12-06T09:00:00.000Z"}
 type CreateLoadBalancerFrontend201 = LoadBalancerFrontend
 
 // CreateLoadBalancerFrontendDefault Schema for error responses from the API.
 type CreateLoadBalancerFrontendDefault = LoadBalancerErrorResponse
 
 // CreateLoadBalancerFrontendTlsConfig201 Represents a TLS configuration for a frontend or backend, defining the certificate bundle and associated identifiers within the load balancer service.
+//
+// Examples: {"certificate_bundle_uuid":"a4b9f1a3-9b7c-4f21-8b33-fd68efb7c001","created_at":"2025-11-06T10:15:00.000Z","name":"frontend-tls-config","updated_at":"2025-11-06T11:00:00.000Z"}
 type CreateLoadBalancerFrontendTlsConfig201 = LoadBalancerTlsConfig
 
 // CreateLoadBalancerFrontendTlsConfigDefault Schema for error responses from the API.
 type CreateLoadBalancerFrontendTlsConfigDefault = LoadBalancerErrorResponse
 
 // CreateLoadBalancerIpAddress201 Represents an IP address associated with a network interface of the load balancer service, including addressing details and provisioning information.
+//
+// Examples: {"address":"192.168.1.10","created_at":"2025-11-06T09:00:00.000Z","network_name":"public-network","updated_at":"2025-11-06T11:15:00.000Z"}
 type CreateLoadBalancerIpAddress201 = LoadBalancerIpAddress
 
 // CreateLoadBalancerIpAddressDefault Schema for error responses from the API.
 type CreateLoadBalancerIpAddressDefault = LoadBalancerErrorResponse
 
 // CreateLoadBalancerLabel201 Represents a key-value label associated with the load balancer service
+//
+// Examples: {"key":"environment","value":"production"}
 type CreateLoadBalancerLabel201 = LoadBalancerLabelResponse
 
 // CreateLoadBalancerLabelDefault Schema for error responses from the API.
 type CreateLoadBalancerLabelDefault = LoadBalancerErrorResponse
 
 // CreateLoadBalancerMember201 Represents a single backend member (server node) participating in a load balancer backend configuration.
+//
+// Examples: {"backup":false,"created_at":"2025-11-05T12:30:00.000Z","enabled":true,"ip":"192.168.1.10","max_sessions":100,"name":"member-1","port":8080,"type":"static","updated_at":"2025-11-05T13:45:00.000Z","weight":10}
 type CreateLoadBalancerMember201 = LoadBalancerMember
 
 // CreateLoadBalancerMemberDefault Schema for error responses from the API.
 type CreateLoadBalancerMemberDefault = LoadBalancerErrorResponse
 
 // CreateLoadBalancerResolver201 Represents a DNS resolver configuration for a load balancer service, defining the nameservers, retry behavior, and caching rules used to resolve backend hostnames.
+//
+// Examples: {"cache_invalid":60,"cache_valid":86400,"created_at":"2025-11-06T09:00:00.000Z","name":"default-resolver","nameservers":["94.237.127.9","94.237.40.9"],"retries":3,"timeout":1000,"timeout_retry":1500,"updated_at":"2025-11-06T09:30:00.000Z"}
 type CreateLoadBalancerResolver201 = LoadBalancerResolver
 
 // CreateLoadBalancerResolverDefault Schema for error responses from the API.
 type CreateLoadBalancerResolverDefault = LoadBalancerErrorResponse
 
 // CreateLoadBalancerRule201 Represents a load balancer rule that defines how incoming traffic is matched and processed by a frontend, including priority, matching conditions, and actions to perform.
+//
+// Examples: {"actions":[{"action_set_forwarded_headers":{},"type":"set_forwarded_headers"},{"action_set_request_header":{"header":"X-Forwarded-Proto","value":"https"},"type":"set_request_header"},{"action_http_redirect":{"location":"https://example.com","status":301},"type":"http_redirect"}],"created_at":"2025-11-06T09:00:00.000Z","matchers":[{"inverse":false,"match_path":{"ignore_case":true,"method":"starts_with","value":"/api"},"type":"path"}],"matching_condition":"and","name":"redirect-to-https","priority":1,"updated_at":"2025-11-06T09:30:00.000Z"}
 type CreateLoadBalancerRule201 = LoadBalancerRule
 
 // CreateLoadBalancerRuleDefault Schema for error responses from the API.
@@ -4917,12 +4577,18 @@ type DeleteLoadBalancerResolverDefault = LoadBalancerErrorResponse
 type DeleteLoadBalancerRuleDefault = LoadBalancerErrorResponse
 
 // GetLoadBalancer200 Represents a load balancer service instance that groups together frontends, backends, and related agents. It defines the service plan, network configuration, and operational state across all nodes.
+//
+// Examples: {"backends":[],"configured_status":"configured","created_at":"2025-11-06T08:00:00.000Z","frontends":[],"ip_addresses":[],"labels":[],"maintenance_dow":"tuesday","maintenance_time":"02:00:00.000Z","name":"loadbalancer-prod-eu","networks":[],"operational_state":"running","plan":"medium","resolvers":[],"updated_at":"2025-11-06T09:15:00.000Z","uuid":"b7a3f6a4-4a8f-4a5c-b7a5-9c9a1e5a6d3e","zone":"de-fra1"}
 type GetLoadBalancer200 = LoadBalancerService
 
 // GetLoadBalancerBackend200 Represents a backend configuration in the load balancer service, containing backend members, resolver settings, TLS configurations, and backend-specific properties such as timeouts and health checks.
+//
+// Examples: {"created_at":"2025-11-06T09:00:00.000Z","members":[{"backup":false,"created_at":"2025-11-05T12:30:00.000Z","enabled":true,"ip":"192.168.1.10","max_sessions":100,"name":"member-1","port":8080,"type":"static","updated_at":"2025-11-05T13:45:00.000Z","weight":10}],"name":"api-backend","properties":{"backend_id":401,"health_check_expected_status":200,"health_check_fall":3,"health_check_interval":10,"health_check_on_down":"shutdown-sessions","health_check_rise":2,"health_check_tls_verify":true,"health_check_type":"http","health_check_url":"/status","http2_enabled":true,"timeout_server":5000,"timeout_tunnel":15000,"tls_enabled":true,"tls_use_system_ca":false,"tls_verify":true},"resolver":"resolver-default","tls_configs":[{"certificate_bundle_uuid":"a4b9f1a3-9b7c-4f21-8b33-fd68efb7c001","created_at":"2025-11-06T10:15:00.000Z","name":"backend-tls-config","updated_at":"2025-11-06T11:00:00.000Z"}],"updated_at":"2025-11-06T11:30:00.000Z"}
 type GetLoadBalancerBackend200 = LoadBalancerBackend
 
 // GetLoadBalancerBackendCombinedMetricsSeries200 Response schema for a list of backend metrics series.
+//
+// Examples: []
 type GetLoadBalancerBackendCombinedMetricsSeries200 = LoadBalancerBackendMetricsSeriesResponse
 
 // GetLoadBalancerBackendCombinedMetricsSeriesDefault Schema for error responses from the API.
@@ -4932,24 +4598,32 @@ type GetLoadBalancerBackendCombinedMetricsSeriesDefault = LoadBalancerErrorRespo
 type GetLoadBalancerBackendDefault = LoadBalancerErrorResponse
 
 // GetLoadBalancerBackendMetricsSeries200 Response schema for a list of backend metrics series.
+//
+// Examples: []
 type GetLoadBalancerBackendMetricsSeries200 = LoadBalancerBackendMetricsSeriesResponse
 
 // GetLoadBalancerBackendMetricsSeriesDefault Schema for error responses from the API.
 type GetLoadBalancerBackendMetricsSeriesDefault = LoadBalancerErrorResponse
 
 // GetLoadBalancerBackendTlsConfig200 Represents a TLS configuration for a frontend or backend, defining the certificate bundle and associated identifiers within the load balancer service.
+//
+// Examples: {"certificate_bundle_uuid":"a4b9f1a3-9b7c-4f21-8b33-fd68efb7c001","created_at":"2025-11-06T10:15:00.000Z","name":"frontend-tls-config","updated_at":"2025-11-06T11:00:00.000Z"}
 type GetLoadBalancerBackendTlsConfig200 = LoadBalancerTlsConfig
 
 // GetLoadBalancerBackendTlsConfigDefault Schema for error responses from the API.
 type GetLoadBalancerBackendTlsConfigDefault = LoadBalancerErrorResponse
 
 // GetLoadBalancerCertificateBundle200 Represents a certificate bundle used in a load balancer TLS configuration. A bundle may be manually uploaded, dynamically issued via ACME, or represent an authority certificate. It includes certificate data, challenge details, and metadata about its lifecycle.
+//
+// Examples: {"created_at":"2025-11-06T09:00:00.000Z","hostnames":["example.com","www.example.com"],"key_type":"rsa","labels":[],"name":"mydomain-cert-bundle","not_after":"2026-11-06T09:00:00.000Z","not_before":"2025-11-06T09:00:00.000Z","operational_state":"setup-challenge","tls_type":"dynamic","updated_at":"2025-11-06T11:00:00.000Z","uuid":"8d2f4a1e-0e3f-44a9-a0f5-9b8c84e9c701"}
 type GetLoadBalancerCertificateBundle200 = LoadBalancerCertificateBundle
 
 // GetLoadBalancerCertificateBundleDefault Schema for error responses from the API.
 type GetLoadBalancerCertificateBundleDefault = LoadBalancerErrorResponse
 
 // GetLoadBalancerCertificateBundleLabel200 Represents a key-value label associated with the load balancer service
+//
+// Examples: {"key":"environment","value":"production"}
 type GetLoadBalancerCertificateBundleLabel200 = LoadBalancerLabelResponse
 
 // GetLoadBalancerCertificateBundleLabelDefault Schema for error responses from the API.
@@ -4965,6 +4639,8 @@ type GetLoadBalancerDnsChallengeDomain200 = LoadBalancerDnsChallengeDomainRespon
 type GetLoadBalancerDnsChallengeDomainDefault = LoadBalancerErrorResponse
 
 // GetLoadBalancerFrontend200 Represents a frontend configuration in the load balancer service, defining how client connections are received, the listening port and protocol, TLS settings, routing rules, and default backend association.
+//
+// Examples: {"created_at":"2025-11-06T09:00:00.000Z","default_backend":"backend-1","mode":"http","name":"frontend-1","networks":[{"name":"public-network"},{"name":"private-network"}],"port":80,"properties":{"frontend_id":301,"http2_enabled":true,"inbound_proxy_protocol":false,"timeout_client":50000},"rules":[{"actions":[{"action_set_forwarded_headers":{},"type":"set_forwarded_headers"},{"action_set_request_header":{"header":"X-Forwarded-Proto","value":"https"},"type":"set_request_header"},{"action_http_redirect":{"location":"https://example.com","status":301},"type":"http_redirect"}],"created_at":"2025-11-06T09:00:00.000Z","matchers":[{"inverse":false,"match_path":{"ignore_case":true,"method":"starts_with","value":"/api"},"type":"path"}],"matching_condition":"and","name":"redirect-to-https","priority":1,"updated_at":"2025-11-06T09:30:00.000Z"}],"tls_configs":[{"certificate_bundle_uuid":"a4b9f1a3-9b7c-4f21-8b33-fd68efb7c001","created_at":"2025-11-06T10:15:00.000Z","name":"frontend-tls-config","updated_at":"2025-11-06T11:00:00.000Z"}],"updated_at":"2025-12-06T09:00:00.000Z"}
 type GetLoadBalancerFrontend200 = LoadBalancerFrontend
 
 // GetLoadBalancerFrontendCombinedMetricsSeries200 Response schema for a list of frontend metrics series.
@@ -4983,6 +4659,8 @@ type GetLoadBalancerFrontendMetricsSeries200 = LoadBalancerFrontendMetricsSeries
 type GetLoadBalancerFrontendMetricsSeriesDefault = LoadBalancerErrorResponse
 
 // GetLoadBalancerFrontendTlsConfig200 Represents a TLS configuration for a frontend or backend, defining the certificate bundle and associated identifiers within the load balancer service.
+//
+// Examples: {"certificate_bundle_uuid":"a4b9f1a3-9b7c-4f21-8b33-fd68efb7c001","created_at":"2025-11-06T10:15:00.000Z","name":"frontend-tls-config","updated_at":"2025-11-06T11:00:00.000Z"}
 type GetLoadBalancerFrontendTlsConfig200 = LoadBalancerTlsConfig
 
 // GetLoadBalancerFrontendTlsConfigDefault Schema for error responses from the API.
@@ -4995,15 +4673,21 @@ type GetLoadBalancerIpAddress200 = LoadBalancerIpAddressesResponse
 type GetLoadBalancerIpAddressDefault = LoadBalancerErrorResponse
 
 // GetLoadBalancerLabel200 Represents a key-value label associated with the load balancer service
+//
+// Examples: {"key":"environment","value":"production"}
 type GetLoadBalancerLabel200 = LoadBalancerLabelResponse
 
 // GetLoadBalancerLabelDefault Schema for error responses from the API.
 type GetLoadBalancerLabelDefault = LoadBalancerErrorResponse
 
 // GetLoadBalancerMember200 Represents a single backend member (server node) participating in a load balancer backend configuration.
+//
+// Examples: {"backup":false,"created_at":"2025-11-05T12:30:00.000Z","enabled":true,"ip":"192.168.1.10","max_sessions":100,"name":"member-1","port":8080,"type":"static","updated_at":"2025-11-05T13:45:00.000Z","weight":10}
 type GetLoadBalancerMember200 = LoadBalancerMember
 
 // GetLoadBalancerMemberCombinedMetricsSeries200 Aggregated time-series metrics for backend members, showing request and response statistics, connection health, and server performance during a given time window.
+//
+// Examples: {"client_aborted":7,"denied_responses":12,"downtime":45,"end_at":"2025-11-06T10:00:00.000Z","failed_checks":15,"failed_checks_transitions":3,"failed_connections":2,"http_responses_1xx":2,"http_responses_2xx":9500,"http_responses_3xx":35,"http_responses_4xx":18,"http_responses_5xx":6,"http_responses_other":0,"invalid_responses":1,"members":["backend-member-1","backend-member-2"],"request_bytes":12345678,"response_bytes":11876543,"routed_requests":10234,"server_aborted":4,"server_connection_retries":9,"server_redispatches":5,"sessions":220,"start_at":"2025-11-06T09:00:00.000Z"}
 type GetLoadBalancerMemberCombinedMetricsSeries200 = LoadBalancerMemberMetricsSeriesResponse
 
 // GetLoadBalancerMemberCombinedMetricsSeriesDefault Schema for error responses from the API.
@@ -5013,12 +4697,16 @@ type GetLoadBalancerMemberCombinedMetricsSeriesDefault = LoadBalancerErrorRespon
 type GetLoadBalancerMemberDefault = LoadBalancerErrorResponse
 
 // GetLoadBalancerMemberMetricsSeries200 Aggregated time-series metrics for backend members, showing request and response statistics, connection health, and server performance during a given time window.
+//
+// Examples: {"client_aborted":7,"denied_responses":12,"downtime":45,"end_at":"2025-11-06T10:00:00.000Z","failed_checks":15,"failed_checks_transitions":3,"failed_connections":2,"http_responses_1xx":2,"http_responses_2xx":9500,"http_responses_3xx":35,"http_responses_4xx":18,"http_responses_5xx":6,"http_responses_other":0,"invalid_responses":1,"members":["backend-member-1","backend-member-2"],"request_bytes":12345678,"response_bytes":11876543,"routed_requests":10234,"server_aborted":4,"server_connection_retries":9,"server_redispatches":5,"sessions":220,"start_at":"2025-11-06T09:00:00.000Z"}
 type GetLoadBalancerMemberMetricsSeries200 = LoadBalancerMemberMetricsSeriesResponse
 
 // GetLoadBalancerMemberMetricsSeriesDefault Schema for error responses from the API.
 type GetLoadBalancerMemberMetricsSeriesDefault = LoadBalancerErrorResponse
 
 // GetLoadBalancerMetrics200 Represents a snapshot of load balancer metrics collected by the monitoring agent, including frontend and backend statistics for a given service at a specific timestamp.
+//
+// Examples: {"backends":[],"frontends":[]}
 type GetLoadBalancerMetrics200 = LoadBalancerMetrics
 
 // GetLoadBalancerMetricsDefault Schema for error responses from the API.
@@ -5037,12 +4725,16 @@ type GetLoadBalancerPlan200 = LoadBalancerPlan
 type GetLoadBalancerPlanDefault = LoadBalancerErrorResponse
 
 // GetLoadBalancerResolver200 Represents a DNS resolver configuration for a load balancer service, defining the nameservers, retry behavior, and caching rules used to resolve backend hostnames.
+//
+// Examples: {"cache_invalid":60,"cache_valid":86400,"created_at":"2025-11-06T09:00:00.000Z","name":"default-resolver","nameservers":["94.237.127.9","94.237.40.9"],"retries":3,"timeout":1000,"timeout_retry":1500,"updated_at":"2025-11-06T09:30:00.000Z"}
 type GetLoadBalancerResolver200 = LoadBalancerResolver
 
 // GetLoadBalancerResolverDefault Schema for error responses from the API.
 type GetLoadBalancerResolverDefault = LoadBalancerErrorResponse
 
 // GetLoadBalancerRule200 Represents a load balancer rule that defines how incoming traffic is matched and processed by a frontend, including priority, matching conditions, and actions to perform.
+//
+// Examples: {"actions":[{"action_set_forwarded_headers":{},"type":"set_forwarded_headers"},{"action_set_request_header":{"header":"X-Forwarded-Proto","value":"https"},"type":"set_request_header"},{"action_http_redirect":{"location":"https://example.com","status":301},"type":"http_redirect"}],"created_at":"2025-11-06T09:00:00.000Z","matchers":[{"inverse":false,"match_path":{"ignore_case":true,"method":"starts_with","value":"/api"},"type":"path"}],"matching_condition":"and","name":"redirect-to-https","priority":1,"updated_at":"2025-11-06T09:30:00.000Z"}
 type GetLoadBalancerRule200 = LoadBalancerRule
 
 // GetLoadBalancerRuleDefault Schema for error responses from the API.
@@ -5127,27 +4819,37 @@ type ListLoadBalancers200 = LoadBalancerServicesResponse
 type ListLoadBalancersDefault = LoadBalancerErrorResponse
 
 // ModifyLoadBalancer200 Represents a load balancer service instance that groups together frontends, backends, and related agents. It defines the service plan, network configuration, and operational state across all nodes.
+//
+// Examples: {"backends":[],"configured_status":"configured","created_at":"2025-11-06T08:00:00.000Z","frontends":[],"ip_addresses":[],"labels":[],"maintenance_dow":"tuesday","maintenance_time":"02:00:00.000Z","name":"loadbalancer-prod-eu","networks":[],"operational_state":"running","plan":"medium","resolvers":[],"updated_at":"2025-11-06T09:15:00.000Z","uuid":"b7a3f6a4-4a8f-4a5c-b7a5-9c9a1e5a6d3e","zone":"de-fra1"}
 type ModifyLoadBalancer200 = LoadBalancerService
 
 // ModifyLoadBalancerBackend200 Represents a backend configuration in the load balancer service, containing backend members, resolver settings, TLS configurations, and backend-specific properties such as timeouts and health checks.
+//
+// Examples: {"created_at":"2025-11-06T09:00:00.000Z","members":[{"backup":false,"created_at":"2025-11-05T12:30:00.000Z","enabled":true,"ip":"192.168.1.10","max_sessions":100,"name":"member-1","port":8080,"type":"static","updated_at":"2025-11-05T13:45:00.000Z","weight":10}],"name":"api-backend","properties":{"backend_id":401,"health_check_expected_status":200,"health_check_fall":3,"health_check_interval":10,"health_check_on_down":"shutdown-sessions","health_check_rise":2,"health_check_tls_verify":true,"health_check_type":"http","health_check_url":"/status","http2_enabled":true,"timeout_server":5000,"timeout_tunnel":15000,"tls_enabled":true,"tls_use_system_ca":false,"tls_verify":true},"resolver":"resolver-default","tls_configs":[{"certificate_bundle_uuid":"a4b9f1a3-9b7c-4f21-8b33-fd68efb7c001","created_at":"2025-11-06T10:15:00.000Z","name":"backend-tls-config","updated_at":"2025-11-06T11:00:00.000Z"}],"updated_at":"2025-11-06T11:30:00.000Z"}
 type ModifyLoadBalancerBackend200 = LoadBalancerBackend
 
 // ModifyLoadBalancerBackendDefault Schema for error responses from the API.
 type ModifyLoadBalancerBackendDefault = LoadBalancerErrorResponse
 
 // ModifyLoadBalancerBackendTlsConfig200 Represents a TLS configuration for a frontend or backend, defining the certificate bundle and associated identifiers within the load balancer service.
+//
+// Examples: {"certificate_bundle_uuid":"a4b9f1a3-9b7c-4f21-8b33-fd68efb7c001","created_at":"2025-11-06T10:15:00.000Z","name":"frontend-tls-config","updated_at":"2025-11-06T11:00:00.000Z"}
 type ModifyLoadBalancerBackendTlsConfig200 = LoadBalancerTlsConfig
 
 // ModifyLoadBalancerBackendTlsConfigDefault Schema for error responses from the API.
 type ModifyLoadBalancerBackendTlsConfigDefault = LoadBalancerErrorResponse
 
 // ModifyLoadBalancerCertificateBundle200 Represents a certificate bundle used in a load balancer TLS configuration. A bundle may be manually uploaded, dynamically issued via ACME, or represent an authority certificate. It includes certificate data, challenge details, and metadata about its lifecycle.
+//
+// Examples: {"created_at":"2025-11-06T09:00:00.000Z","hostnames":["example.com","www.example.com"],"key_type":"rsa","labels":[],"name":"mydomain-cert-bundle","not_after":"2026-11-06T09:00:00.000Z","not_before":"2025-11-06T09:00:00.000Z","operational_state":"setup-challenge","tls_type":"dynamic","updated_at":"2025-11-06T11:00:00.000Z","uuid":"8d2f4a1e-0e3f-44a9-a0f5-9b8c84e9c701"}
 type ModifyLoadBalancerCertificateBundle200 = LoadBalancerCertificateBundle
 
 // ModifyLoadBalancerCertificateBundleDefault Schema for error responses from the API.
 type ModifyLoadBalancerCertificateBundleDefault = LoadBalancerErrorResponse
 
 // ModifyLoadBalancerCertificateBundleLabel200 Represents a key-value label associated with the load balancer service
+//
+// Examples: {"key":"environment","value":"production"}
 type ModifyLoadBalancerCertificateBundleLabel200 = LoadBalancerLabelResponse
 
 // ModifyLoadBalancerCertificateBundleLabelDefault Schema for error responses from the API.
@@ -5157,157 +4859,193 @@ type ModifyLoadBalancerCertificateBundleLabelDefault = LoadBalancerErrorResponse
 type ModifyLoadBalancerDefault = LoadBalancerErrorResponse
 
 // ModifyLoadBalancerFrontend200 Represents a frontend configuration in the load balancer service, defining how client connections are received, the listening port and protocol, TLS settings, routing rules, and default backend association.
+//
+// Examples: {"created_at":"2025-11-06T09:00:00.000Z","default_backend":"backend-1","mode":"http","name":"frontend-1","networks":[{"name":"public-network"},{"name":"private-network"}],"port":80,"properties":{"frontend_id":301,"http2_enabled":true,"inbound_proxy_protocol":false,"timeout_client":50000},"rules":[{"actions":[{"action_set_forwarded_headers":{},"type":"set_forwarded_headers"},{"action_set_request_header":{"header":"X-Forwarded-Proto","value":"https"},"type":"set_request_header"},{"action_http_redirect":{"location":"https://example.com","status":301},"type":"http_redirect"}],"created_at":"2025-11-06T09:00:00.000Z","matchers":[{"inverse":false,"match_path":{"ignore_case":true,"method":"starts_with","value":"/api"},"type":"path"}],"matching_condition":"and","name":"redirect-to-https","priority":1,"updated_at":"2025-11-06T09:30:00.000Z"}],"tls_configs":[{"certificate_bundle_uuid":"a4b9f1a3-9b7c-4f21-8b33-fd68efb7c001","created_at":"2025-11-06T10:15:00.000Z","name":"frontend-tls-config","updated_at":"2025-11-06T11:00:00.000Z"}],"updated_at":"2025-12-06T09:00:00.000Z"}
 type ModifyLoadBalancerFrontend200 = LoadBalancerFrontend
 
 // ModifyLoadBalancerFrontendDefault Schema for error responses from the API.
 type ModifyLoadBalancerFrontendDefault = LoadBalancerErrorResponse
 
 // ModifyLoadBalancerFrontendTlsConfig200 Represents a TLS configuration for a frontend or backend, defining the certificate bundle and associated identifiers within the load balancer service.
+//
+// Examples: {"certificate_bundle_uuid":"a4b9f1a3-9b7c-4f21-8b33-fd68efb7c001","created_at":"2025-11-06T10:15:00.000Z","name":"frontend-tls-config","updated_at":"2025-11-06T11:00:00.000Z"}
 type ModifyLoadBalancerFrontendTlsConfig200 = LoadBalancerTlsConfig
 
 // ModifyLoadBalancerFrontendTlsConfigDefault Schema for error responses from the API.
 type ModifyLoadBalancerFrontendTlsConfigDefault = LoadBalancerErrorResponse
 
 // ModifyLoadBalancerLabel200 Represents a key-value label associated with the load balancer service
+//
+// Examples: {"key":"environment","value":"production"}
 type ModifyLoadBalancerLabel200 = LoadBalancerLabelResponse
 
 // ModifyLoadBalancerLabelDefault Schema for error responses from the API.
 type ModifyLoadBalancerLabelDefault = LoadBalancerErrorResponse
 
 // ModifyLoadBalancerMember200 Represents a single backend member (server node) participating in a load balancer backend configuration.
+//
+// Examples: {"backup":false,"created_at":"2025-11-05T12:30:00.000Z","enabled":true,"ip":"192.168.1.10","max_sessions":100,"name":"member-1","port":8080,"type":"static","updated_at":"2025-11-05T13:45:00.000Z","weight":10}
 type ModifyLoadBalancerMember200 = LoadBalancerMember
 
 // ModifyLoadBalancerMemberDefault Schema for error responses from the API.
 type ModifyLoadBalancerMemberDefault = LoadBalancerErrorResponse
 
 // ModifyLoadBalancerNetwork200 Represent a network from where traffic is consumed and routed.
+//
+// Examples: {"created_at":"2025-11-06T09:00:00.000Z","dns_name":"lb-network.local","family":"IPv4","name":"public-network","type":"private","updated_at":"2025-11-06T11:15:00.000Z","uuid":"1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d"}
 type ModifyLoadBalancerNetwork200 = LoadBalancerNetwork
 
 // ModifyLoadBalancerNetworkDefault Schema for error responses from the API.
 type ModifyLoadBalancerNetworkDefault = LoadBalancerErrorResponse
 
 // ModifyLoadBalancerResolver200 Represents a DNS resolver configuration for a load balancer service, defining the nameservers, retry behavior, and caching rules used to resolve backend hostnames.
+//
+// Examples: {"cache_invalid":60,"cache_valid":86400,"created_at":"2025-11-06T09:00:00.000Z","name":"default-resolver","nameservers":["94.237.127.9","94.237.40.9"],"retries":3,"timeout":1000,"timeout_retry":1500,"updated_at":"2025-11-06T09:30:00.000Z"}
 type ModifyLoadBalancerResolver200 = LoadBalancerResolver
 
 // ModifyLoadBalancerResolverDefault Schema for error responses from the API.
 type ModifyLoadBalancerResolverDefault = LoadBalancerErrorResponse
 
 // ModifyLoadBalancerRule200 Represents a load balancer rule that defines how incoming traffic is matched and processed by a frontend, including priority, matching conditions, and actions to perform.
+//
+// Examples: {"actions":[{"action_set_forwarded_headers":{},"type":"set_forwarded_headers"},{"action_set_request_header":{"header":"X-Forwarded-Proto","value":"https"},"type":"set_request_header"},{"action_http_redirect":{"location":"https://example.com","status":301},"type":"http_redirect"}],"created_at":"2025-11-06T09:00:00.000Z","matchers":[{"inverse":false,"match_path":{"ignore_case":true,"method":"starts_with","value":"/api"},"type":"path"}],"matching_condition":"and","name":"redirect-to-https","priority":1,"updated_at":"2025-11-06T09:30:00.000Z"}
 type ModifyLoadBalancerRule200 = LoadBalancerRule
 
 // ModifyLoadBalancerRuleDefault Schema for error responses from the API.
 type ModifyLoadBalancerRuleDefault = LoadBalancerErrorResponse
 
 // ReplaceLoadBalancer200 Represents a load balancer service instance that groups together frontends, backends, and related agents. It defines the service plan, network configuration, and operational state across all nodes.
+//
+// Examples: {"backends":[],"configured_status":"configured","created_at":"2025-11-06T08:00:00.000Z","frontends":[],"ip_addresses":[],"labels":[],"maintenance_dow":"tuesday","maintenance_time":"02:00:00.000Z","name":"loadbalancer-prod-eu","networks":[],"operational_state":"running","plan":"medium","resolvers":[],"updated_at":"2025-11-06T09:15:00.000Z","uuid":"b7a3f6a4-4a8f-4a5c-b7a5-9c9a1e5a6d3e","zone":"de-fra1"}
 type ReplaceLoadBalancer200 = LoadBalancerService
 
 // ReplaceLoadBalancerDefault Schema for error responses from the API.
 type ReplaceLoadBalancerDefault = LoadBalancerErrorResponse
 
 // ReplaceLoadBalancerRule200 Represents a load balancer rule that defines how incoming traffic is matched and processed by a frontend, including priority, matching conditions, and actions to perform.
+//
+// Examples: {"actions":[{"action_set_forwarded_headers":{},"type":"set_forwarded_headers"},{"action_set_request_header":{"header":"X-Forwarded-Proto","value":"https"},"type":"set_request_header"},{"action_http_redirect":{"location":"https://example.com","status":301},"type":"http_redirect"}],"created_at":"2025-11-06T09:00:00.000Z","matchers":[{"inverse":false,"match_path":{"ignore_case":true,"method":"starts_with","value":"/api"},"type":"path"}],"matching_condition":"and","name":"redirect-to-https","priority":1,"updated_at":"2025-11-06T09:30:00.000Z"}
 type ReplaceLoadBalancerRule200 = LoadBalancerRule
 
 // ReplaceLoadBalancerRuleDefault Schema for error responses from the API.
 type ReplaceLoadBalancerRuleDefault = LoadBalancerErrorResponse
 
 // CreateLoadBalancer Load Balancer Service
+//
+// Examples: {"configured_status":"started","frontends":[],"name":"my-loadbalancer","plan":"production-small","zone":"fi-hel1"}
 type CreateLoadBalancer = LoadBalancerServiceCreate
 
 // CreateLoadBalancerBackend Load Balancer Backend
+//
+// Examples: {"members":[],"name":"my-backend"}
 type CreateLoadBalancerBackend = LoadBalancerBackendCreate
 
 // CreateLoadBalancerBackendTlsConfig Load Balancer TLS Config
-//
-// Example: {"certificate_bundle_uuid":"123e4567-e89b-12d3-a456-426614174000","name":"tls-config-1"}
 type CreateLoadBalancerBackendTlsConfig = LoadBalancerTlsConfigCreate
 
 // CreateLoadBalancerCertificateBundle Load Balancer certificate bundle
+//
+// Examples: {"certificate":"LS0tLS1CRUdJTi...==","name":"my-certificate","private_key":"LS0tLS1CRUdJTi...==","type":"manual"}
 type CreateLoadBalancerCertificateBundle = LoadBalancerCertificateBundleCreate
 
 // CreateLoadBalancerCertificateBundleLabel Load Balancer Label
-//
-// Example: {"key":"environment","value":"production"}
 type CreateLoadBalancerCertificateBundleLabel = LoadBalancerLabelCreate
 
 // CreateLoadBalancerFrontend Load Balancer Frontend
+//
+// Examples: {"default_backend":"my-backend","mode":"http","name":"my-frontend","port":80}
 type CreateLoadBalancerFrontend = LoadBalancerFrontendCreate
 
 // CreateLoadBalancerFrontendTlsConfig Load Balancer TLS Config
-//
-// Example: {"certificate_bundle_uuid":"123e4567-e89b-12d3-a456-426614174000","name":"tls-config-1"}
 type CreateLoadBalancerFrontendTlsConfig = LoadBalancerTlsConfigCreate
 
 // CreateLoadBalancerIpAddress IP address object
-//
-// Example: {"address":"192.168.1.10","network_name":"private-net-1"}
 type CreateLoadBalancerIpAddress = LoadBalancerIpAddressCreate
 
 // CreateLoadBalancerLabel Load Balancer Label
-//
-// Example: {"key":"environment","value":"production"}
 type CreateLoadBalancerLabel = LoadBalancerLabelCreate
 
 // CreateLoadBalancerMember Load Balancer backend member
+//
+// Examples: {"enabled":true,"max_sessions":1000,"name":"member-1","type":"dynamic","weight":100}
 type CreateLoadBalancerMember = LoadBalancerMemberCreate
 
 // CreateLoadBalancerResolver Load Balancer Resolver
-//
-// Example: {"cache_invalid":60,"cache_valid":300,"name":"default-resolver","nameservers":["1.1.1.1:53","8.8.8.8:53"],"retries":3,"timeout":5,"timeout_retry":3}
 type CreateLoadBalancerResolver = LoadBalancerResolverCreate
 
 // CreateLoadBalancerRule Load Balancer Forwarding Rule
+//
+// Examples: {"actions":[{"action_use_backend":{"backend":"backend-1"},"type":"use_backend"}],"matchers":[],"matching_condition":"and","name":"my-rule","priority":10}
 type CreateLoadBalancerRule = LoadBalancerRuleCreate
 
 // ModifyLoadBalancer Load Balancer Service
+//
+// Examples: {"name":"updated-loadbalancer"}
 type ModifyLoadBalancer = LoadBalancerServiceModify
 
 // ModifyLoadBalancerBackend Load Balancer Backend
+//
+// Examples: {"name":"updated-backend"}
 type ModifyLoadBalancerBackend = LoadBalancerBackendModify
 
 // ModifyLoadBalancerBackendTlsConfig Load Balancer TLS Config
 //
-// Example: {"certificate_bundle_uuid":"123e4567-e89b-12d3-a456-426614174000","name":"tls-config-1"}
+// Examples: {"name":"updated-tls-config"}
 type ModifyLoadBalancerBackendTlsConfig = LoadBalancerTlsConfigModify
 
 // ModifyLoadBalancerCertificateBundle Modify a load balancer certificate bundle (manual, dynamic, or authority type)
+//
+// Examples: {"certificate":"LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0t...","name":"updated-cert-bundle","private_key":"LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQo="}
 type ModifyLoadBalancerCertificateBundle = LoadBalancerCertificateBundleModify
 
 // ModifyLoadBalancerCertificateBundleLabel Load Balancer Label
 //
-// Example: {"key":"environment","value":"production"}
+// Examples: {"key":"updated-key","value":"updated-value"}
 type ModifyLoadBalancerCertificateBundleLabel = LoadBalancerLabelModify
 
 // ModifyLoadBalancerFrontend Load Balancer Frontend
+//
+// Examples: {"name":"updated-frontend","port":443}
 type ModifyLoadBalancerFrontend = LoadBalancerFrontendModify
 
 // ModifyLoadBalancerFrontendTlsConfig Load Balancer TLS Config
 //
-// Example: {"certificate_bundle_uuid":"123e4567-e89b-12d3-a456-426614174000","name":"tls-config-1"}
+// Examples: {"name":"updated-tls-config"}
 type ModifyLoadBalancerFrontendTlsConfig = LoadBalancerTlsConfigModify
 
 // ModifyLoadBalancerLabel Load Balancer Label
 //
-// Example: {"key":"environment","value":"production"}
+// Examples: {"key":"updated-key","value":"updated-value"}
 type ModifyLoadBalancerLabel = LoadBalancerLabelModify
 
 // ModifyLoadBalancerMember Load Balancer backend member
+//
+// Examples: {"enabled":true,"name":"updated-member"}
 type ModifyLoadBalancerMember = LoadBalancerMemberModify
 
 // ModifyLoadBalancerNetwork Load Balancer Network
+//
+// Examples: {"name":"updated-network"}
 type ModifyLoadBalancerNetwork = LoadBalancerNetworkModify
 
 // ModifyLoadBalancerResolver Load Balancer Resolver
 //
-// Example: {"cache_invalid":60,"cache_valid":300,"name":"default-resolver","nameservers":["1.1.1.1:53","8.8.8.8:53"],"retries":3,"timeout":5,"timeout_retry":3}
+// Examples: {"name":"updated-resolver"}
 type ModifyLoadBalancerResolver = LoadBalancerResolverModify
 
 // ModifyLoadBalancerRule Load Balancer Forwarding Rule
+//
+// Examples: {"name":"updated-rule","priority":10}
 type ModifyLoadBalancerRule = LoadBalancerRuleModify
 
 // ReplaceLoadBalancer Load Balancer Service.
+//
+// Examples: {"configured_status":"started","name":"my-loadbalancer","plan":"production"}
 type ReplaceLoadBalancer = LoadBalancerServiceReplace
 
 // ReplaceLoadBalancerRule Load Balancer Forwarding Rule
+//
+// Examples: {"actions":[{"action_use_backend":{"backend":"backend-1"},"type":"use_backend"}],"matchers":[],"matching_condition":"and","name":"my-rule","priority":10}
 type ReplaceLoadBalancerRule = LoadBalancerRuleCreate
 
 // ListLoadBalancersParams defines parameters for ListLoadBalancers.
@@ -6258,32 +5996,6 @@ func (t *LoadBalancerBackendCreate_Resolver) MergeLoadBalancerBackendCreateResol
 	return err
 }
 
-// AsLoadBalancerBackendCreateResolver2 returns the union data inside the LoadBalancerBackendCreate_Resolver as a LoadBalancerBackendCreateResolver2
-func (t LoadBalancerBackendCreate_Resolver) AsLoadBalancerBackendCreateResolver2() (LoadBalancerBackendCreateResolver2, error) {
-	var body LoadBalancerBackendCreateResolver2
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromLoadBalancerBackendCreateResolver2 overwrites any union data inside the LoadBalancerBackendCreate_Resolver as the provided LoadBalancerBackendCreateResolver2
-func (t *LoadBalancerBackendCreate_Resolver) FromLoadBalancerBackendCreateResolver2(v LoadBalancerBackendCreateResolver2) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeLoadBalancerBackendCreateResolver2 performs a merge with any union data inside the LoadBalancerBackendCreate_Resolver, using the provided LoadBalancerBackendCreateResolver2
-func (t *LoadBalancerBackendCreate_Resolver) MergeLoadBalancerBackendCreateResolver2(v LoadBalancerBackendCreateResolver2) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
 func (t LoadBalancerBackendCreate_Resolver) MarshalJSON() ([]byte, error) {
 	b, err := t.union.MarshalJSON()
 	return b, err
@@ -6346,100 +6058,12 @@ func (t *LoadBalancerBackendModify_Resolver) MergeLoadBalancerBackendModifyResol
 	return err
 }
 
-// AsLoadBalancerBackendModifyResolver2 returns the union data inside the LoadBalancerBackendModify_Resolver as a LoadBalancerBackendModifyResolver2
-func (t LoadBalancerBackendModify_Resolver) AsLoadBalancerBackendModifyResolver2() (LoadBalancerBackendModifyResolver2, error) {
-	var body LoadBalancerBackendModifyResolver2
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromLoadBalancerBackendModifyResolver2 overwrites any union data inside the LoadBalancerBackendModify_Resolver as the provided LoadBalancerBackendModifyResolver2
-func (t *LoadBalancerBackendModify_Resolver) FromLoadBalancerBackendModifyResolver2(v LoadBalancerBackendModifyResolver2) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeLoadBalancerBackendModifyResolver2 performs a merge with any union data inside the LoadBalancerBackendModify_Resolver, using the provided LoadBalancerBackendModifyResolver2
-func (t *LoadBalancerBackendModify_Resolver) MergeLoadBalancerBackendModifyResolver2(v LoadBalancerBackendModifyResolver2) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
 func (t LoadBalancerBackendModify_Resolver) MarshalJSON() ([]byte, error) {
 	b, err := t.union.MarshalJSON()
 	return b, err
 }
 
 func (t *LoadBalancerBackendModify_Resolver) UnmarshalJSON(b []byte) error {
-	err := t.union.UnmarshalJSON(b)
-	return err
-}
-
-// AsLoadBalancerBackendPropertiesCreateStickySessionCookieAttributes0 returns the union data inside the LoadBalancerBackendPropertiesCreate_StickySessionCookieAttributes as a LoadBalancerBackendPropertiesCreateStickySessionCookieAttributes0
-func (t LoadBalancerBackendPropertiesCreate_StickySessionCookieAttributes) AsLoadBalancerBackendPropertiesCreateStickySessionCookieAttributes0() (LoadBalancerBackendPropertiesCreateStickySessionCookieAttributes0, error) {
-	var body LoadBalancerBackendPropertiesCreateStickySessionCookieAttributes0
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromLoadBalancerBackendPropertiesCreateStickySessionCookieAttributes0 overwrites any union data inside the LoadBalancerBackendPropertiesCreate_StickySessionCookieAttributes as the provided LoadBalancerBackendPropertiesCreateStickySessionCookieAttributes0
-func (t *LoadBalancerBackendPropertiesCreate_StickySessionCookieAttributes) FromLoadBalancerBackendPropertiesCreateStickySessionCookieAttributes0(v LoadBalancerBackendPropertiesCreateStickySessionCookieAttributes0) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeLoadBalancerBackendPropertiesCreateStickySessionCookieAttributes0 performs a merge with any union data inside the LoadBalancerBackendPropertiesCreate_StickySessionCookieAttributes, using the provided LoadBalancerBackendPropertiesCreateStickySessionCookieAttributes0
-func (t *LoadBalancerBackendPropertiesCreate_StickySessionCookieAttributes) MergeLoadBalancerBackendPropertiesCreateStickySessionCookieAttributes0(v LoadBalancerBackendPropertiesCreateStickySessionCookieAttributes0) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsLoadBalancerBackendPropertiesCreateStickySessionCookieAttributes1 returns the union data inside the LoadBalancerBackendPropertiesCreate_StickySessionCookieAttributes as a LoadBalancerBackendPropertiesCreateStickySessionCookieAttributes1
-func (t LoadBalancerBackendPropertiesCreate_StickySessionCookieAttributes) AsLoadBalancerBackendPropertiesCreateStickySessionCookieAttributes1() (LoadBalancerBackendPropertiesCreateStickySessionCookieAttributes1, error) {
-	var body LoadBalancerBackendPropertiesCreateStickySessionCookieAttributes1
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromLoadBalancerBackendPropertiesCreateStickySessionCookieAttributes1 overwrites any union data inside the LoadBalancerBackendPropertiesCreate_StickySessionCookieAttributes as the provided LoadBalancerBackendPropertiesCreateStickySessionCookieAttributes1
-func (t *LoadBalancerBackendPropertiesCreate_StickySessionCookieAttributes) FromLoadBalancerBackendPropertiesCreateStickySessionCookieAttributes1(v LoadBalancerBackendPropertiesCreateStickySessionCookieAttributes1) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeLoadBalancerBackendPropertiesCreateStickySessionCookieAttributes1 performs a merge with any union data inside the LoadBalancerBackendPropertiesCreate_StickySessionCookieAttributes, using the provided LoadBalancerBackendPropertiesCreateStickySessionCookieAttributes1
-func (t *LoadBalancerBackendPropertiesCreate_StickySessionCookieAttributes) MergeLoadBalancerBackendPropertiesCreateStickySessionCookieAttributes1(v LoadBalancerBackendPropertiesCreateStickySessionCookieAttributes1) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-func (t LoadBalancerBackendPropertiesCreate_StickySessionCookieAttributes) MarshalJSON() ([]byte, error) {
-	b, err := t.union.MarshalJSON()
-	return b, err
-}
-
-func (t *LoadBalancerBackendPropertiesCreate_StickySessionCookieAttributes) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
 	return err
 }
@@ -7783,130 +7407,6 @@ func (t *LoadBalancerMemberCreate) UnmarshalJSON(b []byte) error {
 	return err
 }
 
-// AsLoadBalancerMemberCreate1Ip0 returns the union data inside the LoadBalancerMemberCreate_1_Ip as a LoadBalancerMemberCreate1Ip0
-func (t LoadBalancerMemberCreate_1_Ip) AsLoadBalancerMemberCreate1Ip0() (LoadBalancerMemberCreate1Ip0, error) {
-	var body LoadBalancerMemberCreate1Ip0
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromLoadBalancerMemberCreate1Ip0 overwrites any union data inside the LoadBalancerMemberCreate_1_Ip as the provided LoadBalancerMemberCreate1Ip0
-func (t *LoadBalancerMemberCreate_1_Ip) FromLoadBalancerMemberCreate1Ip0(v LoadBalancerMemberCreate1Ip0) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeLoadBalancerMemberCreate1Ip0 performs a merge with any union data inside the LoadBalancerMemberCreate_1_Ip, using the provided LoadBalancerMemberCreate1Ip0
-func (t *LoadBalancerMemberCreate_1_Ip) MergeLoadBalancerMemberCreate1Ip0(v LoadBalancerMemberCreate1Ip0) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsLoadBalancerMemberCreate1Ip1 returns the union data inside the LoadBalancerMemberCreate_1_Ip as a LoadBalancerMemberCreate1Ip1
-func (t LoadBalancerMemberCreate_1_Ip) AsLoadBalancerMemberCreate1Ip1() (LoadBalancerMemberCreate1Ip1, error) {
-	var body LoadBalancerMemberCreate1Ip1
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromLoadBalancerMemberCreate1Ip1 overwrites any union data inside the LoadBalancerMemberCreate_1_Ip as the provided LoadBalancerMemberCreate1Ip1
-func (t *LoadBalancerMemberCreate_1_Ip) FromLoadBalancerMemberCreate1Ip1(v LoadBalancerMemberCreate1Ip1) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeLoadBalancerMemberCreate1Ip1 performs a merge with any union data inside the LoadBalancerMemberCreate_1_Ip, using the provided LoadBalancerMemberCreate1Ip1
-func (t *LoadBalancerMemberCreate_1_Ip) MergeLoadBalancerMemberCreate1Ip1(v LoadBalancerMemberCreate1Ip1) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-func (t LoadBalancerMemberCreate_1_Ip) MarshalJSON() ([]byte, error) {
-	b, err := t.union.MarshalJSON()
-	return b, err
-}
-
-func (t *LoadBalancerMemberCreate_1_Ip) UnmarshalJSON(b []byte) error {
-	err := t.union.UnmarshalJSON(b)
-	return err
-}
-
-// AsLoadBalancerMemberCreate1Port0 returns the union data inside the LoadBalancerMemberCreate_1_Port as a LoadBalancerMemberCreate1Port0
-func (t LoadBalancerMemberCreate_1_Port) AsLoadBalancerMemberCreate1Port0() (LoadBalancerMemberCreate1Port0, error) {
-	var body LoadBalancerMemberCreate1Port0
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromLoadBalancerMemberCreate1Port0 overwrites any union data inside the LoadBalancerMemberCreate_1_Port as the provided LoadBalancerMemberCreate1Port0
-func (t *LoadBalancerMemberCreate_1_Port) FromLoadBalancerMemberCreate1Port0(v LoadBalancerMemberCreate1Port0) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeLoadBalancerMemberCreate1Port0 performs a merge with any union data inside the LoadBalancerMemberCreate_1_Port, using the provided LoadBalancerMemberCreate1Port0
-func (t *LoadBalancerMemberCreate_1_Port) MergeLoadBalancerMemberCreate1Port0(v LoadBalancerMemberCreate1Port0) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsLoadBalancerMemberCreate1Port1 returns the union data inside the LoadBalancerMemberCreate_1_Port as a LoadBalancerMemberCreate1Port1
-func (t LoadBalancerMemberCreate_1_Port) AsLoadBalancerMemberCreate1Port1() (LoadBalancerMemberCreate1Port1, error) {
-	var body LoadBalancerMemberCreate1Port1
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromLoadBalancerMemberCreate1Port1 overwrites any union data inside the LoadBalancerMemberCreate_1_Port as the provided LoadBalancerMemberCreate1Port1
-func (t *LoadBalancerMemberCreate_1_Port) FromLoadBalancerMemberCreate1Port1(v LoadBalancerMemberCreate1Port1) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeLoadBalancerMemberCreate1Port1 performs a merge with any union data inside the LoadBalancerMemberCreate_1_Port, using the provided LoadBalancerMemberCreate1Port1
-func (t *LoadBalancerMemberCreate_1_Port) MergeLoadBalancerMemberCreate1Port1(v LoadBalancerMemberCreate1Port1) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-func (t LoadBalancerMemberCreate_1_Port) MarshalJSON() ([]byte, error) {
-	b, err := t.union.MarshalJSON()
-	return b, err
-}
-
-func (t *LoadBalancerMemberCreate_1_Port) UnmarshalJSON(b []byte) error {
-	err := t.union.UnmarshalJSON(b)
-	return err
-}
-
 // AsLoadBalancerMemberModify0 returns the union data inside the LoadBalancerMemberModify as a LoadBalancerMemberModify0
 func (t LoadBalancerMemberModify) AsLoadBalancerMemberModify0() (LoadBalancerMemberModify0, error) {
 	var body LoadBalancerMemberModify0
@@ -8112,129 +7612,5 @@ func (t *LoadBalancerMemberModify) UnmarshalJSON(b []byte) error {
 		}
 	}
 
-	return err
-}
-
-// AsLoadBalancerMemberModify1Ip0 returns the union data inside the LoadBalancerMemberModify_1_Ip as a LoadBalancerMemberModify1Ip0
-func (t LoadBalancerMemberModify_1_Ip) AsLoadBalancerMemberModify1Ip0() (LoadBalancerMemberModify1Ip0, error) {
-	var body LoadBalancerMemberModify1Ip0
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromLoadBalancerMemberModify1Ip0 overwrites any union data inside the LoadBalancerMemberModify_1_Ip as the provided LoadBalancerMemberModify1Ip0
-func (t *LoadBalancerMemberModify_1_Ip) FromLoadBalancerMemberModify1Ip0(v LoadBalancerMemberModify1Ip0) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeLoadBalancerMemberModify1Ip0 performs a merge with any union data inside the LoadBalancerMemberModify_1_Ip, using the provided LoadBalancerMemberModify1Ip0
-func (t *LoadBalancerMemberModify_1_Ip) MergeLoadBalancerMemberModify1Ip0(v LoadBalancerMemberModify1Ip0) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsLoadBalancerMemberModify1Ip1 returns the union data inside the LoadBalancerMemberModify_1_Ip as a LoadBalancerMemberModify1Ip1
-func (t LoadBalancerMemberModify_1_Ip) AsLoadBalancerMemberModify1Ip1() (LoadBalancerMemberModify1Ip1, error) {
-	var body LoadBalancerMemberModify1Ip1
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromLoadBalancerMemberModify1Ip1 overwrites any union data inside the LoadBalancerMemberModify_1_Ip as the provided LoadBalancerMemberModify1Ip1
-func (t *LoadBalancerMemberModify_1_Ip) FromLoadBalancerMemberModify1Ip1(v LoadBalancerMemberModify1Ip1) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeLoadBalancerMemberModify1Ip1 performs a merge with any union data inside the LoadBalancerMemberModify_1_Ip, using the provided LoadBalancerMemberModify1Ip1
-func (t *LoadBalancerMemberModify_1_Ip) MergeLoadBalancerMemberModify1Ip1(v LoadBalancerMemberModify1Ip1) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-func (t LoadBalancerMemberModify_1_Ip) MarshalJSON() ([]byte, error) {
-	b, err := t.union.MarshalJSON()
-	return b, err
-}
-
-func (t *LoadBalancerMemberModify_1_Ip) UnmarshalJSON(b []byte) error {
-	err := t.union.UnmarshalJSON(b)
-	return err
-}
-
-// AsLoadBalancerMemberModify1Port0 returns the union data inside the LoadBalancerMemberModify_1_Port as a LoadBalancerMemberModify1Port0
-func (t LoadBalancerMemberModify_1_Port) AsLoadBalancerMemberModify1Port0() (LoadBalancerMemberModify1Port0, error) {
-	var body LoadBalancerMemberModify1Port0
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromLoadBalancerMemberModify1Port0 overwrites any union data inside the LoadBalancerMemberModify_1_Port as the provided LoadBalancerMemberModify1Port0
-func (t *LoadBalancerMemberModify_1_Port) FromLoadBalancerMemberModify1Port0(v LoadBalancerMemberModify1Port0) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeLoadBalancerMemberModify1Port0 performs a merge with any union data inside the LoadBalancerMemberModify_1_Port, using the provided LoadBalancerMemberModify1Port0
-func (t *LoadBalancerMemberModify_1_Port) MergeLoadBalancerMemberModify1Port0(v LoadBalancerMemberModify1Port0) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsLoadBalancerMemberModify1Port1 returns the union data inside the LoadBalancerMemberModify_1_Port as a LoadBalancerMemberModify1Port1
-func (t LoadBalancerMemberModify_1_Port) AsLoadBalancerMemberModify1Port1() (LoadBalancerMemberModify1Port1, error) {
-	var body LoadBalancerMemberModify1Port1
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromLoadBalancerMemberModify1Port1 overwrites any union data inside the LoadBalancerMemberModify_1_Port as the provided LoadBalancerMemberModify1Port1
-func (t *LoadBalancerMemberModify_1_Port) FromLoadBalancerMemberModify1Port1(v LoadBalancerMemberModify1Port1) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeLoadBalancerMemberModify1Port1 performs a merge with any union data inside the LoadBalancerMemberModify_1_Port, using the provided LoadBalancerMemberModify1Port1
-func (t *LoadBalancerMemberModify_1_Port) MergeLoadBalancerMemberModify1Port1(v LoadBalancerMemberModify1Port1) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-func (t LoadBalancerMemberModify_1_Port) MarshalJSON() ([]byte, error) {
-	b, err := t.union.MarshalJSON()
-	return b, err
-}
-
-func (t *LoadBalancerMemberModify_1_Port) UnmarshalJSON(b []byte) error {
-	err := t.union.UnmarshalJSON(b)
 	return err
 }

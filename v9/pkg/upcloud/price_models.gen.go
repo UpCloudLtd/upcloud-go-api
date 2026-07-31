@@ -24,7 +24,10 @@ type PriceCurrency = string
 // PriceError A general error response indicating that the request could not be fulfilled due to a technical issue.
 type PriceError struct {
 	Error struct {
-		ErrorCode    string `json:"error_code"`
+		// ErrorCode Examples: GENERAL_FAILURE
+		ErrorCode string `json:"error_code"`
+
+		// ErrorMessage Examples: Your request could not be fulfilled due to a technical issue.
 		ErrorMessage string `json:"error_message"`
 	} `json:"error"`
 }
@@ -32,19 +35,19 @@ type PriceError struct {
 // PriceError400 Invalid price request error.
 type PriceError400 struct {
 	Error struct {
-		Code    PriceError400ErrorCode `json:"code"`
-		Message string                 `json:"message"`
+		// Code Examples: PRICE_INVALID
+		Code PriceError400ErrorCode `json:"code"`
+
+		// Message Examples: The price ID is invalid
+		Message string `json:"message"`
 	} `json:"error"`
 }
 
-// PriceError400ErrorCode defines model for PriceError400.Error.Code.
+// PriceError400ErrorCode Examples: PRICE_INVALID
 type PriceError400ErrorCode string
 
 // Prices Price list for UpCloud resources and services.
-//
-// Example: {"prices":{"currency":"USD","zone":[{"server_cores":{"amount":1,"price":2.4},"server_memory":{"amount":1024,"price":3.84},"storage":{"amount":1,"price":0.04}}]}}
 type Prices struct {
-	// Prices Example: {"currency":"USD","zone":[{"server_cores":{"amount":1,"price":2.4},"server_memory":{"amount":1024,"price":3.84}}]}
 	Prices struct {
 		// Currency ISO 4217 code
 		Currency PriceCurrency `json:"currency"`
@@ -62,8 +65,6 @@ type ZonePrices struct {
 }
 
 // GetPrice200 Price list for UpCloud resources and services.
-//
-// Example: {"prices":{"currency":"USD","zone":[{"server_cores":{"amount":1,"price":2.4},"server_memory":{"amount":1024,"price":3.84},"storage":{"amount":1,"price":0.04}}]}}
 type GetPrice200 = Prices
 
 // GetPrice400 Invalid price request error.

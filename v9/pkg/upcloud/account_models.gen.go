@@ -91,7 +91,10 @@ type AccountDetails struct {
 // AccountError A general error response indicating that the request could not be fulfilled due to a technical issue.
 type AccountError struct {
 	Error struct {
-		ErrorCode    string `json:"error_code"`
+		// ErrorCode Examples: GENERAL_FAILURE
+		ErrorCode string `json:"error_code"`
+
+		// ErrorMessage Examples: Your request could not be fulfilled due to a technical issue.
 		ErrorMessage string `json:"error_message"`
 	} `json:"error"`
 }

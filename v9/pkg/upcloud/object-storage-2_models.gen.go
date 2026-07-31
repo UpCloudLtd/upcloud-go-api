@@ -430,143 +430,158 @@ func (e ObjectStorage2ServiceDomainsDomainsType) Valid() bool {
 }
 
 // ObjectStorage2AccessKeyDetailResponse Response schema for access key details.
+//
+// Examples: {"access_key_id":"UCK1234567890ABCDEF","created_at":"2024-01-15T10:30:00Z","last_used_at":"2024-01-20T14:22:15Z","secret_access_key":"","status":"Active"}
 type ObjectStorage2AccessKeyDetailResponse struct {
-	AccessKeyId *string    `json:"access_key_id,omitempty"`
-	CreatedAt   *time.Time `json:"created_at,omitempty"`
-	LastUsedAt  *time.Time `json:"last_used_at,omitempty"`
+	// AccessKeyId Examples: UCK1234567890ABCDEF
+	AccessKeyId *string `json:"access_key_id,omitempty"`
+
+	// CreatedAt Examples: 2024-01-15T10:30:00Z
+	CreatedAt *time.Time `json:"created_at,omitempty"`
+
+	// LastUsedAt Examples: 2024-01-20T14:22:15Z
+	LastUsedAt *time.Time `json:"last_used_at,omitempty"`
 
 	// SecretAccessKey Only returned upon creation, empty otherwise.
-	SecretAccessKey *string                                      `json:"secret_access_key,omitempty"`
-	Status          *ObjectStorage2AccessKeyDetailResponseStatus `json:"status,omitempty"`
+	//
+	// Examples: uCkS3cr3tK3y1234567890abcdefghijklmnopqrstuvwxyz
+	SecretAccessKey *string `json:"secret_access_key,omitempty"`
+
+	// Status Examples: Active
+	Status *ObjectStorage2AccessKeyDetailResponseStatus `json:"status,omitempty"`
 }
 
-// ObjectStorage2AccessKeyDetailResponseStatus defines model for ObjectStorage2AccessKeyDetailResponse.Status.
+// ObjectStorage2AccessKeyDetailResponseStatus Examples: Active
 type ObjectStorage2AccessKeyDetailResponseStatus string
 
 // ObjectStorage2AccessKeyID The public identifier for an access key.
+//
+// Examples: UCK1234567890ABCDEF, UCK9876543210FEDCBA
 type ObjectStorage2AccessKeyID = string
 
 // ObjectStorage2AccessKeyListResponse Response schema for listing access keys.
+//
+// Examples: [{"access_key_id":"UCK1234567890ABCDEF","created_at":"2024-01-15T10:30:00Z","last_used_at":"2024-01-20T14:22:15Z","status":"Active"}]
 type ObjectStorage2AccessKeyListResponse = []ObjectStorage2AccessKeyDetailResponse
 
 // ObjectStorage2AccessKeyModify Schema for modifying an access key.
+//
+// Examples: {"status":"Inactive"}
 type ObjectStorage2AccessKeyModify struct {
 	// Status Indicates if the key is active or inactive.
-	//
-	// Example: Inactive
 	Status *ObjectStorage2AccessKeyModifyStatus `json:"status,omitempty"`
 }
 
 // ObjectStorage2AccessKeyModifyStatus Indicates if the key is active or inactive.
-//
-// Example: Inactive
 type ObjectStorage2AccessKeyModifyStatus string
 
 // ObjectStorage2AssumeRolePolicyRequest Schema for the request to assume a role with a policy document.
+//
+// Examples: {"document":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"backup.upcloud.com\"},\"Action\":\"sts:AssumeRole\"}]}"}
 type ObjectStorage2AssumeRolePolicyRequest struct {
 	// Document The assume role policy document that grants an entity permission to assume the role.
-	//
-	// Example: {"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"backup.upcloud.com"},"Action":"sts:AssumeRole"}]}
 	Document string `json:"document"`
 }
 
 // ObjectStorage2AssumeRolePolicyResponse Response schema for assuming a role with a policy document.
+//
+// Examples: {"document":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"backup.upcloud.com\"},\"Action\":\"sts:AssumeRole\"}]}"}
 type ObjectStorage2AssumeRolePolicyResponse struct {
-	// Document Example: {"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"backup.upcloud.com"},"Action":"sts:AssumeRole"}]}
 	Document *string `json:"document,omitempty"`
 }
 
 // ObjectStorage2BucketCreate Schema for creating a new bucket.
+//
+// Examples: {"name":"my-bucket-1"}
 type ObjectStorage2BucketCreate struct {
 	// Name Must be unique within the service, and should contain only alphanumeric, .,- and _.
-	//
-	// Example: my-bucket-1
 	Name string `json:"name"`
 }
 
 // ObjectStorage2BucketDetailResponse Response schema for bucket details.
+//
+// Examples: {"deleted":false,"name":"my-bucket-1","total_objects":1000,"total_size_bytes":1073741824}
 type ObjectStorage2BucketDetailResponse struct {
-	// Deleted Example: false
-	Deleted *bool `json:"deleted,omitempty"`
-
-	// Name Example: my-bucket-1
+	Deleted        *bool   `json:"deleted,omitempty"`
 	Name           *string `json:"name,omitempty"`
 	TotalObjects   *int32  `json:"total_objects,omitempty"`
 	TotalSizeBytes *int64  `json:"total_size_bytes,omitempty"`
 }
 
 // ObjectStorage2BucketListResponse Response schema for listing buckets.
+//
+// Examples: [{"name":"my-bucket-1","total_objects":1000,"total_size_bytes":1073741824}]
 type ObjectStorage2BucketListResponse = []ObjectStorage2BucketDetailResponse
 
 // ObjectStorage2CreateAccessKeyResponse Response schema for creating an access key.
+//
+// Examples: {"access_key_id":"UCK1234567890ABCDEF","created_at":"2024-01-15T10:30:00Z","secret_access_key":"uCkS3cr3tK3y1234567890abcdefghijklmnopqrstuvwxyz","status":"Active"}
 type ObjectStorage2CreateAccessKeyResponse struct {
-	AccessKeyId *string    `json:"access_key_id,omitempty"`
-	CreatedAt   *time.Time `json:"created_at,omitempty"`
-	LastUsedAt  *time.Time `json:"last_used_at,omitempty"`
+	AccessKeyId *string `json:"access_key_id,omitempty"`
+
+	// CreatedAt Examples: 2024-01-15T10:30:00Z
+	CreatedAt *time.Time `json:"created_at,omitempty"`
+
+	// LastUsedAt Examples: 2024-01-15T10:30:00Z
+	LastUsedAt *time.Time `json:"last_used_at,omitempty"`
 
 	// SecretAccessKey This is only returned upon creation.
-	SecretAccessKey *string                                      `json:"secret_access_key,omitempty"`
-	Status          *ObjectStorage2CreateAccessKeyResponseStatus `json:"status,omitempty"`
+	//
+	// Examples: uCkS3cr3tK3y1234567890abcdefghijklmnopqrstuvwxyz
+	SecretAccessKey *string `json:"secret_access_key,omitempty"`
+
+	// Status Examples: Active
+	Status *ObjectStorage2CreateAccessKeyResponseStatus `json:"status,omitempty"`
 }
 
-// ObjectStorage2CreateAccessKeyResponseStatus defines model for ObjectStorage2CreateAccessKeyResponse.Status.
+// ObjectStorage2CreateAccessKeyResponseStatus Examples: Active
 type ObjectStorage2CreateAccessKeyResponseStatus string
 
 // ObjectStorage2CustomDomainCreate Schema for creating a custom domain.
+//
+// Examples: {"domain_name":"example.com","type":"public"}, {"domain_name":"objects.example.com","type":"public"}, {"domain_name":"static.example.com","mode":"static-website","type":"public"}
 type ObjectStorage2CustomDomainCreate struct {
 	// DomainName Custom domain to be added. Supports both apex domains (example.com) and subdomains (objects.example.com).
-	//
-	// Example: example.com
 	DomainName string `json:"domain_name"`
 
 	// Mode Purpose of the domain. 'api' for S3 API access (creates base URL), 'static-website' for static website hosting (no base URL). Cannot be changed after creation.
-	//
-	// Example: api
 	Mode *ObjectStorage2CustomDomainCreateMode `json:"mode,omitempty"`
 
 	// Type Type of the custom domain. At the moment only public is accepted.
-	//
-	// Example: public
 	Type ObjectStorage2CustomDomainCreateType `json:"type"`
 }
 
 // ObjectStorage2CustomDomainCreateMode Purpose of the domain. 'api' for S3 API access (creates base URL), 'static-website' for static website hosting (no base URL). Cannot be changed after creation.
-//
-// Example: api
 type ObjectStorage2CustomDomainCreateMode string
 
 // ObjectStorage2CustomDomainCreateType Type of the custom domain. At the moment only public is accepted.
-//
-// Example: public
 type ObjectStorage2CustomDomainCreateType string
 
 // ObjectStorage2CustomDomainDetailResponse Response schema for custom domain details.
+//
+// Examples: {"domain_name":"example.com","mode":"api","type":"public"}, {"domain_name":"objects.example.com","mode":"api","type":"public"}, {"domain_name":"static.example.com","mode":"static-website","type":"public"}
 type ObjectStorage2CustomDomainDetailResponse struct {
 	// DomainName Custom domain name. Supports both apex domains and subdomains.
-	//
-	// Example: example.com
 	DomainName *string `json:"domain_name,omitempty"`
 
 	// Mode Purpose of the domain. 'api' for S3 API access, 'static-website' for static website hosting.
-	//
-	// Example: api
 	Mode *ObjectStorage2CustomDomainDetailResponseMode `json:"mode,omitempty"`
 
 	// Type Endpoint type for the custom domain.
-	//
-	// Example: public
 	Type *string `json:"type,omitempty"`
 }
 
 // ObjectStorage2CustomDomainDetailResponseMode Purpose of the domain. 'api' for S3 API access, 'static-website' for static website hosting.
-//
-// Example: api
 type ObjectStorage2CustomDomainDetailResponseMode string
 
 // ObjectStorage2CustomDomainListResponse Response schema for listing custom domains.
+//
+// Examples: [{"domain_name":"example.com","mode":"api","type":"public"},{"domain_name":"objects.example.com","mode":"api","type":"public"},{"domain_name":"static.example.com","mode":"static-website","type":"public"}]
 type ObjectStorage2CustomDomainListResponse = []ObjectStorage2CustomDomainDetailResponse
 
 // ObjectStorage2CustomDomainModify Schema for modifying a custom domain.
+//
+// Examples: {"domain_name":"example.com","type":"public"}
 type ObjectStorage2CustomDomainModify struct {
 	// DomainName New modified custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
 	DomainName *string `json:"domain_name,omitempty"`
@@ -579,292 +594,349 @@ type ObjectStorage2CustomDomainModify struct {
 type ObjectStorage2CustomDomainModifyType string
 
 // ObjectStorage2CustomDomainName A valid hostname for the custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
+//
+// Examples: example.com, objects.example.com
 type ObjectStorage2CustomDomainName = string
 
 // ObjectStorage2EndpointResponse Response schema for endpoint details.
+//
+// Examples: {"domain_name":"objects.example.com","iam_url":"https://7mf5k.upbucket.com:4443/iam","mode":"api","sts_url":"https://7mf5k.upbucket.com:4443/sts","type":"public"}, {"domain_name":"abc123-static.upbucket.com","mode":"static-website","type":"public"}
 type ObjectStorage2EndpointResponse struct {
-	// DomainName Example: objects.example.com
 	DomainName *string `json:"domain_name,omitempty"`
-
-	// IamUrl Example: https://7mf5k.upbucket.com:4443/iam
-	IamUrl *string `json:"iam_url,omitempty"`
+	IamUrl     *string `json:"iam_url,omitempty"`
 
 	// Mode The operational mode of the endpoint: 'api' for S3/IAM/STS access, 'static-website' for static website hosting
-	//
-	// Example: api
-	Mode *ObjectStorage2EndpointResponseMode `json:"mode,omitempty"`
-
-	// StsUrl Example: https://7mf5k.upbucket.com:4443/sts
-	StsUrl *string `json:"sts_url,omitempty"`
+	Mode   *ObjectStorage2EndpointResponseMode `json:"mode,omitempty"`
+	StsUrl *string                             `json:"sts_url,omitempty"`
 
 	// Type The network access type of the endpoint
-	//
-	// Example: public
 	Type *ObjectStorage2EndpointResponseType `json:"type,omitempty"`
 }
 
 // ObjectStorage2EndpointResponseMode The operational mode of the endpoint: 'api' for S3/IAM/STS access, 'static-website' for static website hosting
-//
-// Example: api
 type ObjectStorage2EndpointResponseMode string
 
 // ObjectStorage2EndpointResponseType The network access type of the endpoint
-//
-// Example: public
 type ObjectStorage2EndpointResponseType string
 
 // ObjectStorage2ErrorResponse Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ErrorResponse struct {
 	// CorrelationId Unique identifier for the request, useful for debugging.
+	//
+	// Examples: 01K1K2TKEASWRJ6VFP9ZV5P2H4
 	CorrelationId string `json:"correlation_id"`
 
 	// InvalidParams List of invalid parameters in the request.
 	InvalidParams *[]struct {
 		// Name Path to the field with invalid parameter.
+		//
+		// Examples: zone, networks.0.ip_address
 		Name string `json:"name"`
 
 		// Reason Human-readable error message.
+		//
+		// Examples: Zone is not valid.
 		Reason string `json:"reason"`
 	} `json:"invalid_params,omitempty"`
 
 	// Status HTTP status code associated with the error.
+	//
+	// Examples: 400, 404, 402, 500
 	Status int32 `json:"status"`
 
 	// Title Short description of the error.
+	//
+	// Examples: Validation error., The resource you requested does not exist., Your request could not be fulfilled due to a technical issue.
 	Title string `json:"title"`
 
 	// Type Error code string.
-	//
-	// Example: https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST
 	Type ObjectStorage2ErrorResponseType `json:"type"`
 }
 
 // ObjectStorage2ErrorResponseType Error code string.
-//
-// Example: https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST
 type ObjectStorage2ErrorResponseType string
 
 // ObjectStorage2GroupCreate Schema for creating a new IAM group.
+//
+// Examples: {"name":"new-group"}
 type ObjectStorage2GroupCreate struct {
 	// Name A valid string to represent the name of the IAM group.
-	//
-	// Example: new-group
 	Name string `json:"name"`
 }
 
 // ObjectStorage2GroupListResponse Response schema for listing groups.
+//
+// Examples: [{"arn":"urn:ecs:iam::1263b59181cc4841969358b08ed70026:group/test-group","created_at":"2024-04-15T16:28:45Z","name":"test-group"}]
 type ObjectStorage2GroupListResponse = []ObjectStorage2GroupResponse
 
 // ObjectStorage2GroupResponse Response schema for group details.
+//
+// Examples: {"arn":"urn:ecs:iam::1263b59181cc4841969358b08ed70026:group/test-group","created_at":"2024-04-15T16:28:45Z","name":"test-group"}
 type ObjectStorage2GroupResponse struct {
-	Arn       *string    `json:"arn,omitempty"`
+	// Arn Examples: urn:ecs:iam::1263b59181cc4841969358b08ed70026:group/test-group
+	Arn *string `json:"arn,omitempty"`
+
+	// CreatedAt Examples: 2024-04-15T16:28:45Z
 	CreatedAt *time.Time `json:"created_at,omitempty"`
-	Name      *string    `json:"name,omitempty"`
+
+	// Name Examples: test-group
+	Name *string `json:"name,omitempty"`
 }
 
 // ObjectStorage2InlinePolicyCreate Schema for creating an inline policy.
+//
+// Examples: {"document":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Resource\":\"*\"}]}","name":"ECSS3FullAccess"}
 type ObjectStorage2InlinePolicyCreate struct {
 	// Document A valid policy document.
-	//
-	// Example: {"Version":"2012-10-17","Statement":[{"Action":"sts:AssumeRole","Effect":"Allow","Resource":"*"}]}
 	Document string `json:"document"`
 
 	// Name Name of the inline policy.
-	//
-	// Example: ECSS3FullAccess
 	Name string `json:"name"`
 }
 
 // ObjectStorage2InlinePolicyListResponse Response schema for listing inline policies.
+//
+// Examples: [{"document":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Resource\":\"*\"}]}","name":"ECSS3FullAccess"}]
 type ObjectStorage2InlinePolicyListResponse = []ObjectStorage2InlinePolicyResponse
 
 // ObjectStorage2InlinePolicyResponse Schema representing an inline policy response.
+//
+// Examples: {"document":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Resource\":\"*\"}]}","name":"ECSS3FullAccess"}
 type ObjectStorage2InlinePolicyResponse struct {
-	// Document Example: ECSS3FullAccess
 	Document *string `json:"document,omitempty"`
-
-	// Name Example: {"Version":"2012-10-17","Statement":[{"Action":"sts:AssumeRole","Effect":"Allow","Resource":"*"}]}
-	Name *string `json:"name,omitempty"`
+	Name     *string `json:"name,omitempty"`
 }
 
 // ObjectStorage2LabelCreate Schema for creating a label with a key-value pair.
+//
+// Examples: {"key":"foo","value":"bar"}
 type ObjectStorage2LabelCreate struct {
 	// Key The key of a label.
+	//
+	// Examples: environment, team, project, purpose, cost-center
 	Key ObjectStorage2LabelKey `json:"key"`
 
 	// Value Schema for a label value property, allowing a string or null with specific character constraints.
+	//
+	// Examples: production, backend, web-app, backup, engineering
 	Value *ObjectStorage2LabelValue `json:"value"`
 }
 
 // ObjectStorage2LabelDetailResponse Schema for label details including key-value pairs.
+//
+// Examples: {"key":"foo","value":"bar"}
 type ObjectStorage2LabelDetailResponse struct {
-	// Key Example: foo
-	Key *string `json:"key,omitempty"`
-
-	// Value Example: bar
+	Key   *string `json:"key,omitempty"`
 	Value *string `json:"value,omitempty"`
 }
 
 // ObjectStorage2LabelKey The key of a label.
+//
+// Examples: environment, team, project, purpose, cost-center
 type ObjectStorage2LabelKey = string
 
 // ObjectStorage2LabelListResponse Response schema for listing labels.
+//
+// Examples: [{"key":"foo","value":"bar"}]
 type ObjectStorage2LabelListResponse = []ObjectStorage2LabelDetailResponse
 
 // ObjectStorage2LabelModify Schema for modifying a label with a key-value pair.
+//
+// Examples: {"key":"foo","value":"bar"}
 type ObjectStorage2LabelModify struct {
 	// Key The key of a label.
+	//
+	// Examples: environment, team, project, purpose, cost-center
 	Key *ObjectStorage2LabelKey `json:"key,omitempty"`
 
 	// Value Schema for a label value property, allowing a string or null with specific character constraints.
+	//
+	// Examples: production, backend, web-app, backup, engineering
 	Value *ObjectStorage2LabelValue `json:"value,omitempty"`
 }
 
 // ObjectStorage2LabelValue Schema for a label value property, allowing a string or null with specific character constraints.
+//
+// Examples: production, backend, web-app, backup, engineering
 type ObjectStorage2LabelValue = string
 
 // ObjectStorage2MetricsSeriesListResponse Response schema for listing metrics series.
+//
+// Examples: [{"bytes_created":530000,"bytes_deleted":244000,"bytes_received":530000,"bytes_total":7502000,"bytes_transmitted":0,"end_at":"2023-10-31T12:00:00Z","objects_created":79,"objects_deleted":40,"objects_total":1237,"start_at":"2023-10-31T11:00:00Z"}]
 type ObjectStorage2MetricsSeriesListResponse = []struct {
-	BytesCreated     *int64     `json:"bytes_created,omitempty"`
-	BytesDeleted     *int64     `json:"bytes_deleted,omitempty"`
-	BytesReceived    *int64     `json:"bytes_received,omitempty"`
-	BytesTotal       *int64     `json:"bytes_total,omitempty"`
-	BytesTransmitted *int64     `json:"bytes_transmitted,omitempty"`
-	EndAt            *time.Time `json:"end_at,omitempty"`
-	ObjectsCreated   *int32     `json:"objects_created,omitempty"`
-	ObjectsDeleted   *int32     `json:"objects_deleted,omitempty"`
-	ObjectsTotal     *int32     `json:"objects_total,omitempty"`
-	StartAt          *time.Time `json:"start_at,omitempty"`
+	BytesCreated     *int64 `json:"bytes_created,omitempty"`
+	BytesDeleted     *int64 `json:"bytes_deleted,omitempty"`
+	BytesReceived    *int64 `json:"bytes_received,omitempty"`
+	BytesTotal       *int64 `json:"bytes_total,omitempty"`
+	BytesTransmitted *int64 `json:"bytes_transmitted,omitempty"`
+
+	// EndAt Examples: 2023-10-31T12:00:00Z
+	EndAt          *time.Time `json:"end_at,omitempty"`
+	ObjectsCreated *int32     `json:"objects_created,omitempty"`
+	ObjectsDeleted *int32     `json:"objects_deleted,omitempty"`
+	ObjectsTotal   *int32     `json:"objects_total,omitempty"`
+
+	// StartAt Examples: 2023-10-31T11:00:00Z
+	StartAt *time.Time `json:"start_at,omitempty"`
 }
 
 // ObjectStorage2MetricsUsageResponse Response schema for service usage metrics.
+//
+// Examples: {"total_objects":1000,"total_size_bytes":1073741824}
 type ObjectStorage2MetricsUsageResponse struct {
 	TotalObjects   *int32 `json:"total_objects,omitempty"`
 	TotalSizeBytes *int64 `json:"total_size_bytes,omitempty"`
 }
 
 // ObjectStorage2Name A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2Name = string
 
 // ObjectStorage2NetworkCreate Schema for creating a network with optional private UUID, name, type, and family.
+//
+// Examples: {"family":"IPv4","name":"example-public-network","type":"public"}, {"family":"IPv4","name":"example-private-network","type":"private","uuid":"03bec0ad-85c3-459e-824d-710f8f24f740"}
 type ObjectStorage2NetworkCreate struct {
 	// Family Enum for the network family, indicating the type of IP address used.
+	//
+	// Examples: IPv4, IPv6
 	Family ObjectStorage2NetworkFamily `json:"family"`
 
 	// Name A resource name.
+	//
+	// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 	Name ObjectStorage2Name `json:"name"`
 
 	// Type Enum for the network type, indicating whether the network is public or private.
+	//
+	// Examples: public, private
 	Type ObjectStorage2NetworkType `json:"type"`
 
 	// Uuid Private network uuid. Omit for public networks.
-	//
-	// Example: 03bec0ad-85c3-459e-824d-710f8f24f740
 	Uuid *openapi_types.UUID `json:"uuid,omitempty"`
 }
 
 // ObjectStorage2NetworkDetailResponse Schema for network details including family, name, type, and UUID.
+//
+// Examples: {"family":"IPv4","name":"example-private-network","type":"private","uuid":"03bec0ad-85c3-459e-824d-710f8f24f740"}
 type ObjectStorage2NetworkDetailResponse struct {
-	// Family Example: IPv4
-	Family *string `json:"family,omitempty"`
-
-	// Name Example: example-private-network
-	Name *string `json:"name,omitempty"`
-
-	// Type Example: private
-	Type *string `json:"type,omitempty"`
-
-	// Uuid Example: 03bec0ad-85c3-459e-824d-710f8f24f740
-	Uuid *openapi_types.UUID `json:"uuid,omitempty"`
+	Family *string             `json:"family,omitempty"`
+	Name   *string             `json:"name,omitempty"`
+	Type   *string             `json:"type,omitempty"`
+	Uuid   *openapi_types.UUID `json:"uuid,omitempty"`
 }
 
 // ObjectStorage2NetworkFamily Enum for the network family, indicating the type of IP address used.
+//
+// Examples: IPv4, IPv6
 type ObjectStorage2NetworkFamily string
 
 // ObjectStorage2NetworkListResponse Response schema for a list of network details.
+//
+// Examples: [{"family":"IPv4","name":"example-public-network","type":"public"},{"family":"IPv4","name":"example-private-network","type":"private","uuid":"03aa7245-2ff9-49c8-9f0e-7ca0270d71a4"}]
 type ObjectStorage2NetworkListResponse = []ObjectStorage2NetworkDetailResponse
 
 // ObjectStorage2NetworkType Enum for the network type, indicating whether the network is public or private.
+//
+// Examples: public, private
 type ObjectStorage2NetworkType string
 
 // ObjectStorage2PermissionsBoundaryCreate Schema for creating a permissions boundary with a specified policy name.
+//
+// Examples: {"policy_name":"sample-policy"}
 type ObjectStorage2PermissionsBoundaryCreate struct {
 	// PolicyName Name of the policy to use as the permissions boundary.
-	//
-	// Example: sample-policy
 	PolicyName string `json:"policy_name"`
 }
 
 // ObjectStorage2PermissionsBoundaryResponse Schema representing a permissions boundary response.
+//
+// Examples: sample-policy
 type ObjectStorage2PermissionsBoundaryResponse = string
 
 // ObjectStorage2PolicyAttachmentCreate Schema for creating a policy attachment.
+//
+// Examples: {"name":"test-policy"}
 type ObjectStorage2PolicyAttachmentCreate struct {
 	// Name Name of the policy to attach.
-	//
-	// Example: test-policy
 	Name string `json:"name"`
 }
 
 // ObjectStorage2PolicyAttachmentListResponse Response schema for listing policy attachments.
+//
+// Examples: [{"arn":"arn:upcloud:iam::01234567-89ab-cdef-0123-456789abcdef:policy/ECSReadOnlyAccess","name":"ECSReadOnlyAccess"}]
 type ObjectStorage2PolicyAttachmentListResponse = []ObjectStorage2PolicyAttachmentResponse
 
 // ObjectStorage2PolicyAttachmentResponse Schema representing a policy attachment response.
+//
+// Examples: {"arn":"arn:upcloud:iam::01234567-89ab-cdef-0123-456789abcdef:policy/ECSReadOnlyAccess","name":"ECSReadOnlyAccess"}
 type ObjectStorage2PolicyAttachmentResponse struct {
-	// Arn Example: arn:upcloud:iam::01234567-89ab-cdef-0123-456789abcdef:policy/ECSReadOnlyAccess
-	Arn *string `json:"arn,omitempty"`
-
-	// Name Example: ECSReadOnlyAccess
+	Arn  *string `json:"arn,omitempty"`
 	Name *string `json:"name,omitempty"`
 }
 
 // ObjectStorage2PolicyCreate Schema for creating a policy with a name, description, and document.
+//
+// Examples: {"description":"example-description","document":"%7B%22Version%22%3A%20%222012-10-17%22%2C%20%20%22Statement%22%3A%20%5B%7B%22Action%22%3A%20%5B%22iam%3AGetUser%22%5D%2C%20%22Resource%22%3A%20%22%2A%22%2C%20%22Effect%22%3A%20%22Allow%22%2C%20%22Sid%22%3A%20%22editor%22%7D%5D%7D","name":"example-policy"}
 type ObjectStorage2PolicyCreate struct {
 	// Description The policy description.
-	//
-	// Example: example-description
 	Description *string `json:"description,omitempty"`
 
 	// Document A valid, URL-encoded policy document.
-	//
-	// Example: %7B%22Version%22%3A%20%222012-10-17%22%2C%20%20%22Statement%22%3A%20%5B%7B%22Action%22%3A%20%5B%22iam%3AGetUser%22%5D%2C%20%22Resource%22%3A%20%22%2A%22%2C%20%22Effect%22%3A%20%22Allow%22%2C%20%22Sid%22%3A%20%22editor%22%7D%5D%7D
 	Document string `json:"document"`
 
 	// Name Unique name of the policy.
-	//
-	// Example: example-policy
 	Name string `json:"name"`
 }
 
 // ObjectStorage2PolicyDetailResponse Schema for policy details including ARN, attachment count, creation date, default version ID, description, document, name, system status, and last updated date.
+//
+// Examples: {"arn":"urn:ecs:iam:::policy/ECSS3FullAccess","attachment_count":0,"created_at":"2024-02-05T11:06:16Z","default_version_id":"v1","description":"Provides full access to all buckets.","document":"%7B%0A++++%22Version%22%3A+%222012-10-17%22%2C%0A++++%22Statement%22%3A+%5B%0A++++++++%7B%0A++++++++++++%22Effect%22%3A+%22Allow%22%2C%0A++++++++++++%22Action%22%3A+%22s3%3A*%22%2C%0A++++++++++++%22Resource%22%3A+%22*%22%0A++++++++%7D%0A++++%5D%0A%7D","name":"ECSS3FullAccess","system":true,"updated_at":"2024-02-05T11:06:16Z"}
 type ObjectStorage2PolicyDetailResponse struct {
-	Arn              *string    `json:"arn,omitempty"`
-	AttachmentCount  *int32     `json:"attachment_count,omitempty"`
-	CreatedAt        *time.Time `json:"created_at,omitempty"`
-	DefaultVersionId *string    `json:"default_version_id,omitempty"`
-	Description      *string    `json:"description,omitempty"`
-	Document         *string    `json:"document,omitempty"`
-	Name             *string    `json:"name,omitempty"`
-	System           *bool      `json:"system,omitempty"`
-	UpdatedAt        *time.Time `json:"updated_at,omitempty"`
+	// Arn Examples: urn:ecs:iam:::policy/ECSS3FullAccess
+	Arn             *string `json:"arn,omitempty"`
+	AttachmentCount *int32  `json:"attachment_count,omitempty"`
+
+	// CreatedAt Examples: 2024-02-05T11:06:16Z
+	CreatedAt *time.Time `json:"created_at,omitempty"`
+
+	// DefaultVersionId Examples: v1
+	DefaultVersionId *string `json:"default_version_id,omitempty"`
+
+	// Description Examples: Provides full access to all buckets.
+	Description *string `json:"description,omitempty"`
+
+	// Document Examples: %7B%0A++++%22Version%22%3A+%222012-10-17%22%2C%0A++++%22Statement%22%3A+%5B%0A++++++++%7B%0A++++++++++++%22Effect%22%3A+%22Allow%22%2C%0A++++++++++++%22Action%22%3A+%22s3%3A*%22%2C%0A++++++++++++%22Resource%22%3A+%22*%22%0A++++++++%7D%0A++++%5D%0A%7D
+	Document *string `json:"document,omitempty"`
+
+	// Name Examples: ECSS3FullAccess
+	Name   *string `json:"name,omitempty"`
+	System *bool   `json:"system,omitempty"`
+
+	// UpdatedAt Examples: 2024-02-05T11:06:16Z
+	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 }
 
 // ObjectStorage2PolicyListResponse Response schema for listing policies.
+//
+// Examples: [{"arn":"urn:ecs:iam:::policy/ECSDenyAll","attachment_count":0,"created_at":"2024-02-05T11:06:17Z","default_version_id":"v1","description":"Deny all access.","name":"ECSDenyAll","system":true,"updated_at":"2024-02-05T11:06:17Z"},{"arn":"urn:ecs:iam:::policy/ECSS3FullAccess","attachment_count":1,"created_at":"2024-02-05T11:06:16Z","default_version_id":"v1","description":"Provides full access to all buckets.","name":"ECSS3FullAccess","system":true,"updated_at":"2024-02-05T11:06:16Z"},{"arn":"urn:ecs:iam:::policy/ECSS3ReadOnlyAccess","attachment_count":0,"created_at":"2024-02-05T11:06:16Z","default_version_id":"v1","description":"Provides read only access to all buckets.","name":"ECSS3ReadOnlyAccess","system":true,"updated_at":"2024-02-05T11:06:16Z"},{"arn":"urn:ecs:iam:::policy/IAMFullAccess","attachment_count":1,"created_at":"2024-02-05T11:06:16Z","default_version_id":"v1","description":"Provides full access to IAM.","name":"IAMFullAccess","system":true,"updated_at":"2024-02-05T11:06:16Z"},{"arn":"urn:ecs:iam:::policy/IAMReadOnlyAccess","attachment_count":0,"created_at":"2024-02-05T11:06:16Z","default_version_id":"v1","description":"Provides read only access to IAM.","name":"IAMReadOnlyAccess","system":true,"updated_at":"2024-02-05T11:06:16Z"}]
 type ObjectStorage2PolicyListResponse = []ObjectStorage2PolicyDetailResponse
 
 // ObjectStorage2PolicySetDefaultVersion Schema for setting a default version of a policy.
+//
+// Examples: {"version_id":"v2"}
 type ObjectStorage2PolicySetDefaultVersion struct {
 	// VersionId The policy version ID to set as default.
-	//
-	// Example: v2
 	VersionId string `json:"version_id"`
 }
 
 // ObjectStorage2PolicyVersionCreate Schema for creating a new version of a policy.
+//
+// Examples: {"document":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"*\"],\"Effect\":\"Deny\",\"Resource\":\"*\"}]}","is_default":true}
 type ObjectStorage2PolicyVersionCreate struct {
 	// Document A valid, URL-encoded policy document.
-	//
-	// Example: {"Version":"2012-10-17","Statement":[{"Action":["*"],"Effect":"Deny","Resource":"*"}]}
 	Document string `json:"document"`
 
 	// IsDefault Set this version as the default.
@@ -872,85 +944,103 @@ type ObjectStorage2PolicyVersionCreate struct {
 }
 
 // ObjectStorage2PolicyVersionID The version identifier of a policy (e.g., v1, v2).
+//
+// Examples: v1, v2, v3, v4
 type ObjectStorage2PolicyVersionID = string
 
 // ObjectStorage2PolicyVersionListResponse Response schema for a list of policy versions.
+//
+// Examples: [{"create_date":"2024-03-25T12:47:40Z","document":"%7B%22Version%22%3A%222012-10-17%22%2C%22Statement%22%3A%5B%7B%22Action%22%3A%5B%22*%22%5D%2C%22Resource%22%3A%22*%22%2C%22Effect%22%3A%22Deny%22%7D%5D%7D","is_default":false,"version_id":"v4"},{"create_date":"2024-03-25T12:47:38Z","document":"%7B%22Version%22%3A%222012-10-17%22%2C%22Statement%22%3A%5B%7B%22Action%22%3A%5B%22*%22%5D%2C%22Resource%22%3A%22*%22%2C%22Effect%22%3A%22Deny%22%7D%5D%7D","is_default":false,"version_id":"v3"}]
 type ObjectStorage2PolicyVersionListResponse = []ObjectStorage2PolicyVersionResponse
 
 // ObjectStorage2PolicyVersionResponse Schema for a policy version response, including creation date, document content, default status, and version ID.
+//
+// Examples: {"create_date":"2024-02-05T11:06:16Z","document":"%7B%22Version%22%3A%222012-10-17%22%2C%22Statement%22%3A%5B%7B%22Action%22%3A%5B%22%2A%22%5D%2C%22Effect%22%3A%22Deny%22%2C%22Resource%22%3A%22%2A%22%7D%5D%7D","is_default":true,"version_id":"v2"}
 type ObjectStorage2PolicyVersionResponse struct {
+	// CreateDate Examples: 2024-02-05T11:06:16Z
 	CreateDate *time.Time `json:"create_date,omitempty"`
-	Document   *string    `json:"document,omitempty"`
-	IsDefault  *bool      `json:"is_default,omitempty"`
-	VersionId  *string    `json:"version_id,omitempty"`
+
+	// Document Examples: %7B%22Version%22%3A%222012-10-17%22%2C%22Statement%22%3A%5B%7B%22Action%22%3A%5B%22%2A%22%5D%2C%22Effect%22%3A%22Deny%22%2C%22Resource%22%3A%22%2A%22%7D%5D%7D
+	Document  *string `json:"document,omitempty"`
+	IsDefault *bool   `json:"is_default,omitempty"`
+
+	// VersionId Examples: v2
+	VersionId *string `json:"version_id,omitempty"`
 }
 
 // ObjectStorage2PropertiesCreate Schema for creating properties with an optional access control origin override.
+//
+// Examples: {"access_control_origin_override":"https://mycompany.com"}
 type ObjectStorage2PropertiesCreate struct {
-	// AccessControlOriginOverride Example: https://mycompany.com
 	AccessControlOriginOverride *string `json:"access_control_origin_override,omitempty"`
 }
 
 // ObjectStorage2PropertyConfiguredStatus Schema for the configured status of a property.
+//
+// Examples: started, stopped
 type ObjectStorage2PropertyConfiguredStatus string
 
 // ObjectStorage2QueryParamForce Schema for a query parameter specifying whether to force an operation.
+//
+// Examples: true, false
 type ObjectStorage2QueryParamForce = bool
 
 // ObjectStorage2QueryParamInterval Schema for a query parameter specifying the time interval.
+//
+// Examples: 1h, 1d, 1w, 1m
 type ObjectStorage2QueryParamInterval = string
 
 // ObjectStorage2QueryParamLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
+//
+// Examples: 10, 25, 50, 100
 type ObjectStorage2QueryParamLimit = int
 
 // ObjectStorage2QueryParamOffset Schema for a query parameter specifying the offset for pagination.
+//
+// Examples: 0, 10, 20, 50
 type ObjectStorage2QueryParamOffset = int
 
 // ObjectStorage2QueryParamSort Schema for a query parameter specifying the sort field and direction. Prefix with '-' for descending order.
+//
+// Examples: -created_at, service_name, -region_name
 type ObjectStorage2QueryParamSort string
 
 // ObjectStorage2QueryParamTimestamp Schema for a query parameter specifying a timestamp.
 //
-// Example: 2024-01-01T00:00:00Z
+// Examples: 2024-01-01T00:00:00Z, 2024-12-31T23:59:59Z
 type ObjectStorage2QueryParamTimestamp = time.Time
 
 // ObjectStorage2RegionDetailResponse Response schema for detailed information about a specific region.
+//
+// Examples: {"name":"europe-1","primary_zone":"fi-hel1","zones":[{"name":"fi-hel1"},{"name":"de-fra1"}]}
 type ObjectStorage2RegionDetailResponse struct {
-	// Name Example: europe-1
-	Name *string `json:"name,omitempty"`
-
-	// PrimaryZone Example: fi-hel1
+	Name        *string `json:"name,omitempty"`
 	PrimaryZone *string `json:"primary_zone,omitempty"`
 	Zones       *[]struct {
-		// Name Example: fi-hel1
 		Name *string `json:"name,omitempty"`
 	} `json:"zones,omitempty"`
 }
 
 // ObjectStorage2RegionListResponse Response schema for listing regions.
+//
+// Examples: [{"name":"europe-1","primary_zone":"fi-hel1","zones":[{"name":"fi-hel1"},{"name":"de-fra1"}]}]
 type ObjectStorage2RegionListResponse = []ObjectStorage2RegionDetailResponse
 
 // ObjectStorage2RoleCreate Schema for creating a new role.
+//
+// Examples: {"assume_role_policy_document":"{\"Version\": \"2012-10-17\",\"Statement\": [{\"Action\": \"sts:AssumeRole\",\"Principal\": {\"AWS\": [\"urn:ecs:iam::ns1:user/Demby\"]},\"Effect\": \"Allow\",\"Resource\": \"*\"}]}","description":"A test role.","max_session_duration":3600,"name":"test-role","permissions_boundary":"test-policy","tags":[{"key":"department","value":"Finance"},{"key":"school","value":"University of Helsinki"}]}
 type ObjectStorage2RoleCreate struct {
 	// AssumeRolePolicyDocument The policy document that grants an entity permission to assume the role.
-	//
-	// Example: {"Version": "2012-10-17","Statement": [{"Action": "sts:AssumeRole","Principal": {"AWS": ["urn:ecs:iam::ns1:user/Demby"]},"Effect": "Allow","Resource": "*"}]}
 	AssumeRolePolicyDocument string `json:"assume_role_policy_document"`
 
 	// Description Description of the role.
-	//
-	// Example: A test role.
 	Description *string `json:"description,omitempty"`
 
 	// MaxSessionDuration Maximum session duration in seconds.
 	MaxSessionDuration *int32 `json:"max_session_duration,omitempty"`
-
-	// Name Example: test-role
-	Name string `json:"name"`
+	Name               string `json:"name"`
 
 	// PermissionsBoundary Policy name to set as the permissions boundary.
-	//
-	// Example: test-policy
 	PermissionsBoundary *string `json:"permissions_boundary,omitempty"`
 
 	// Tags Tags to attach to the role (max 50).
@@ -958,38 +1048,60 @@ type ObjectStorage2RoleCreate struct {
 }
 
 // ObjectStorage2RoleListResponse Response schema for listing roles.
+//
+// Examples: [{"arn":"urn:ecs:iam::12e8c7066c0445c284c1381f899bcee7:role/example","assume_role_policy_document":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Principal\":{\"AWS\":[\"urn:ecs:iam::12442a2fbc06434889edb631be2d0968:user/user1\"]},\"Effect\":\"Allow\",\"Resource\":\"*\"}]}","created_at":"2024-09-19T12:43:24Z","description":"An example role","inline_policies":[{"name":"InlinePolicy"}],"max_session_duration":36000,"name":"example","permissions_boundary":"SamplePolicy","policies":[{"arn":"urn:ecs:iam::12e8c7066c0445c284c1381f899bcee7:policy/SamplePolicy","name":"SamplePolicy"}]}]
 type ObjectStorage2RoleListResponse = []ObjectStorage2RoleResponse
 
 // ObjectStorage2RoleResponse Response schema for detailed information about a specific role.
+//
+// Examples: {"arn":"urn:ecs:iam::12e8c7066c0445c284c1381f899bcee7:role/example","assume_role_policy_document":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Principal\":{\"AWS\":[\"urn:ecs:iam::12442a2fbc06434889edb631be2d0968:user/user1\"]},\"Effect\":\"Allow\",\"Resource\":\"*\"}]}","created_at":"2024-09-19T12:43:24Z","description":"An example role","inline_policies":[{"name":"InlinePolicy"}],"max_session_duration":36000,"name":"example","permissions_boundary":"SamplePolicy","policies":[{"arn":"urn:ecs:iam::12e8c7066c0445c284c1381f899bcee7:policy/SamplePolicy","name":"SamplePolicy"}],"tags":[{"key":"tag1","value":"key1"},{"key":"tag2","value":"key2"}]}
 type ObjectStorage2RoleResponse struct {
-	Arn                      *string    `json:"arn,omitempty"`
-	AssumeRolePolicyDocument *string    `json:"assume_role_policy_document,omitempty"`
-	CreatedAt                *time.Time `json:"created_at,omitempty"`
-	Description              *string    `json:"description,omitempty"`
-	InlinePolicies           *[]struct {
+	// Arn Examples: urn:ecs:iam::12e8c7066c0445c284c1381f899bcee7:role/example
+	Arn *string `json:"arn,omitempty"`
+
+	// AssumeRolePolicyDocument Examples: {"Version":"2012-10-17","Statement":[{"Action":"sts:AssumeRole","Principal":{"AWS":["urn:ecs:iam::12442a2fbc06434889edb631be2d0968:user/user1"]},"Effect":"Allow","Resource":"*"}]}
+	AssumeRolePolicyDocument *string `json:"assume_role_policy_document,omitempty"`
+
+	// CreatedAt Examples: 2024-09-19T12:43:24Z
+	CreatedAt *time.Time `json:"created_at,omitempty"`
+
+	// Description Examples: An example role
+	Description    *string `json:"description,omitempty"`
+	InlinePolicies *[]struct {
+		// Name Examples: InlinePolicy
 		Name *string `json:"name,omitempty"`
 	} `json:"inline_policies,omitempty"`
-	MaxSessionDuration  *int32                                    `json:"max_session_duration,omitempty"`
-	Name                *string                                   `json:"name,omitempty"`
+	MaxSessionDuration *int32 `json:"max_session_duration,omitempty"`
+
+	// Name Examples: example
+	Name *string `json:"name,omitempty"`
+
+	// PermissionsBoundary Examples: SamplePolicy
 	PermissionsBoundary *string                                   `json:"permissions_boundary,omitempty"`
 	Policies            *[]ObjectStorage2PolicyAttachmentResponse `json:"policies,omitempty"`
 	Tags                *[]ObjectStorage2TagResponse              `json:"tags,omitempty"`
 }
 
 // ObjectStorage2RoleTag Schema for tagging roles with key-value pairs.
+//
+// Examples: {"key":"foo","value":"bar"}
 type ObjectStorage2RoleTag struct {
 	// Key The key of a tag.
+	//
+	// Examples: environment, team, project, purpose, cost-center, data-classification
 	Key ObjectStorage2TagKey `json:"key"`
 
 	// Value The value of a tag.
+	//
+	// Examples: production, backend, web-app, backup, engineering, public
 	Value *ObjectStorage2TagValue `json:"value,omitempty"`
 }
 
 // ObjectStorage2RoleUpdate Schema for updating an existing role.
+//
+// Examples: {"description":"New description","max_session_duration":3900}
 type ObjectStorage2RoleUpdate struct {
 	// Description New description for the role.
-	//
-	// Example: New description
 	Description *string `json:"description,omitempty"`
 
 	// MaxSessionDuration New maximum session duration in seconds.
@@ -997,97 +1109,86 @@ type ObjectStorage2RoleUpdate struct {
 }
 
 // ObjectStorage2ServiceCreate Schema for creating a service, including name, region, status, networks, domains, labels, and properties.
+//
+// Examples: {"configured_status":"started","name":"example-service","networks":[{"family":"IPv4","name":"example-public-network","type":"public"},{"family":"IPv4","name":"example-private-network","type":"private","uuid":"03aa7245-2ff9-49c8-9f0e-7ca0270d71a4"}],"region":"example"}
 type ObjectStorage2ServiceCreate struct {
 	// ConfiguredStatus Schema for the configured status of a property.
+	//
+	// Examples: started, stopped
 	ConfiguredStatus ObjectStorage2PropertyConfiguredStatus `json:"configured_status"`
 
 	// CustomDomains Custom domains to attach to the service.
+	//
+	// Examples: []
 	CustomDomains *[]ObjectStorage2CustomDomainCreate `json:"custom_domains,omitempty"`
 
 	// Labels Labels for classifying the service.
+	//
+	// Examples: [{"key":"environment","value":"production"}]
 	Labels *[]ObjectStorage2LabelCreate `json:"labels,omitempty"`
-	Name   string                       `json:"name"`
+
+	// Name Examples: example-service
+	Name string `json:"name"`
 
 	// Networks Networks to attach to the service. Private networks must reside in the same region as the object storage.
+	//
+	// Examples: [{"family":"IPv4","name":"example-public-network","type":"public"}]
 	Networks *[]ObjectStorage2NetworkCreate `json:"networks,omitempty"`
 
 	// Properties Schema for creating properties with an optional access control origin override.
+	//
+	// Examples: {"access_control_origin_override":"https://mycompany.com"}
 	Properties *ObjectStorage2PropertiesCreate `json:"properties,omitempty"`
 
 	// Region A resource name.
+	//
+	// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 	Region ObjectStorage2Name `json:"region"`
 
 	// TerminationProtection Enables or disables termination protection for the service. When enabled, the service cannot be deleted or powered down unless this is disabled first.
-	//
-	// Example: false
 	TerminationProtection *bool `json:"termination_protection,omitempty"`
 }
 
 // ObjectStorage2ServiceDetailResponse Response schema for service details, including UUID, name, and endpoints.
+//
+// Examples: {"configured_status":"started","created_at":"2023-05-07T15:55:24.655776Z","custom_domains":[],"endpoints":[{"domain_name":"7mf5k.upbucket.com","iam_url":"https://7mf5k.upbucket.com:4443/iam","mode":"api","sts_url":"https://7mf5k.upbucket.com:4443/sts","type":"public"},{"domain_name":"7mf5k-private.upbucket.com","iam_url":"https://7mf5k-private.upbucket.com:4443/iam","mode":"api","sts_url":"https://7mf5k-private.upbucket.com:4443/sts","type":"private"},{"domain_name":"7mf5k-static.upbucket.com","mode":"static-website","type":"public"}],"labels":[{"key":"example-key","value":"example-value"}],"name":"example-service","networks":[{"family":"IPv4","name":"example-public-network","type":"public"},{"family":"IPv4","name":"example-private-network","type":"private","uuid":"03aa7245-2ff9-49c8-9f0e-7ca0270d71a4"}],"operational_state":"setup-checkup","region":"europe-1","state_messages":[{"code":"waiting_certificate_issuing","created_at":"2025-01-16T11:20:40.372611Z","message":"Certificate issuing is in progress for domains: 7mf5k-private.upbucket.com, *.7mf5k-private.upbucket.com.","operational_state":"setup-checkup","updated_at":"2025-01-16T11:20:40.372611Z"}],"static_websites":[{"bucket_name":"my-website","bucket_prefix":"","created_at":"2023-05-07T15:55:24.655776Z","domain_name":"7mf5k-static.upbucket.com","enabled":true,"error_pages":[{"error_document":"404.html","status_code":404}],"index_document":"index.html","updated_at":"2023-05-07T15:55:24.655776Z"}],"updated_at":"2023-05-07T21:38:15.757405Z","usage":{"total_objects":310499,"total_size_bytes":32414921734},"users":[{"access_keys":[{"access_key_id":"AKIA63F41D01345BB477","created_at":"2023-05-07T20:52:19.705405Z","last_used_at":"2023-05-07T20:52:17Z","status":"Active"}],"arn":"urn:ecs:iam::123bbb5c6a4240409e07f7d89fe28891:user/example_user","created_at":"2023-05-07T15:55:24.655776Z","policies":[{"arn":"urn:ecs:iam:::policy/ECSS3FullAccess","name":"ECSS3FullAccess"},{"arn":"urn:ecs:iam:::policy/IAMFullAccess","name":"IAMFullAccess"}],"username":"example_user"}],"uuid":"1200ecde-db95-4d1c-9133-6508f3232567"}
 type ObjectStorage2ServiceDetailResponse struct {
-	// ConfiguredStatus Example: started
 	ConfiguredStatus *ObjectStorage2ServiceDetailResponseConfiguredStatus `json:"configured_status,omitempty"`
-
-	// CreatedAt Example: 2023-05-07T15:55:24.655776Z
-	CreatedAt     *time.Time                                  `json:"created_at,omitempty"`
-	CustomDomains *[]ObjectStorage2CustomDomainDetailResponse `json:"custom_domains,omitempty"`
-	Endpoints     *[]ObjectStorage2EndpointResponse           `json:"endpoints,omitempty"`
-	Labels        *[]ObjectStorage2LabelDetailResponse        `json:"labels,omitempty"`
-
-	// Name Example: example-service
-	Name     *string                                `json:"name,omitempty"`
-	Networks *[]ObjectStorage2NetworkDetailResponse `json:"networks,omitempty"`
-
-	// OperationalState Example: running
+	CreatedAt        *time.Time                                           `json:"created_at,omitempty"`
+	CustomDomains    *[]ObjectStorage2CustomDomainDetailResponse          `json:"custom_domains,omitempty"`
+	Endpoints        *[]ObjectStorage2EndpointResponse                    `json:"endpoints,omitempty"`
+	Labels           *[]ObjectStorage2LabelDetailResponse                 `json:"labels,omitempty"`
+	Name             *string                                              `json:"name,omitempty"`
+	Networks         *[]ObjectStorage2NetworkDetailResponse               `json:"networks,omitempty"`
 	OperationalState *ObjectStorage2ServiceDetailResponseOperationalState `json:"operational_state,omitempty"`
-
-	// Region Example: europe-1
-	Region        *string `json:"region,omitempty"`
-	StateMessages *[]struct {
-		// Code Example: waiting_certificate_issuing
-		Code *ObjectStorage2ServiceDetailResponseStateMessagesCode `json:"code,omitempty"`
-
-		// CreatedAt Example: 2025-01-16T11:20:40.372611Z
-		CreatedAt *time.Time `json:"created_at,omitempty"`
-
-		// Message Example: Certificate issuing is in progress for domains: example.com.
-		Message *string `json:"message,omitempty"`
-
-		// OperationalState Example: setup-checkup
-		OperationalState *string `json:"operational_state,omitempty"`
-
-		// UpdatedAt Example: 2025-01-16T11:20:40.372611Z
-		UpdatedAt *time.Time `json:"updated_at,omitempty"`
+	Region           *string                                              `json:"region,omitempty"`
+	StateMessages    *[]struct {
+		Code             *ObjectStorage2ServiceDetailResponseStateMessagesCode `json:"code,omitempty"`
+		CreatedAt        *time.Time                                            `json:"created_at,omitempty"`
+		Message          *string                                               `json:"message,omitempty"`
+		OperationalState *string                                               `json:"operational_state,omitempty"`
+		UpdatedAt        *time.Time                                            `json:"updated_at,omitempty"`
 	} `json:"state_messages,omitempty"`
 
 	// StaticWebsites Static website configurations for this service
-	StaticWebsites *[]ObjectStorage2StaticWebsiteConfig `json:"static_websites,omitempty"`
-
-	// TerminationProtection Example: false
-	TerminationProtection *bool `json:"termination_protection,omitempty"`
-
-	// UpdatedAt Example: 2023-05-07T21:38:15.757405Z
-	UpdatedAt *time.Time `json:"updated_at,omitempty"`
-	Usage     *struct {
-		// TotalObjects Example: 310499
-		TotalObjects *int `json:"total_objects,omitempty"`
-
-		// TotalSizeBytes Example: 32414921734
+	StaticWebsites        *[]ObjectStorage2StaticWebsiteConfig `json:"static_websites,omitempty"`
+	TerminationProtection *bool                                `json:"termination_protection,omitempty"`
+	UpdatedAt             *time.Time                           `json:"updated_at,omitempty"`
+	Usage                 *struct {
+		TotalObjects   *int `json:"total_objects,omitempty"`
 		TotalSizeBytes *int `json:"total_size_bytes,omitempty"`
 	} `json:"usage,omitempty"`
 	Users *[]ObjectStorage2UserDetailResponse `json:"users,omitempty"`
-
-	// Uuid Example: 1200ecde-db95-4d1c-9133-6508f3232567
-	Uuid *string `json:"uuid,omitempty"`
+	Uuid  *string                             `json:"uuid,omitempty"`
 }
 
-// ObjectStorage2ServiceDetailResponseConfiguredStatus Example: started
+// ObjectStorage2ServiceDetailResponseConfiguredStatus defines model for ObjectStorage2ServiceDetailResponse.ConfiguredStatus.
 type ObjectStorage2ServiceDetailResponseConfiguredStatus string
 
-// ObjectStorage2ServiceDetailResponseOperationalState Example: running
+// ObjectStorage2ServiceDetailResponseOperationalState defines model for ObjectStorage2ServiceDetailResponse.OperationalState.
 type ObjectStorage2ServiceDetailResponseOperationalState string
 
-// ObjectStorage2ServiceDetailResponseStateMessagesCode Example: waiting_certificate_issuing
+// ObjectStorage2ServiceDetailResponseStateMessagesCode defines model for ObjectStorage2ServiceDetailResponse.StateMessages.Code.
 type ObjectStorage2ServiceDetailResponseStateMessagesCode string
 
 // ObjectStorage2ServiceDomains Service domains with their static website hosting status
@@ -1095,216 +1196,172 @@ type ObjectStorage2ServiceDomains struct {
 	// Domains List of all service domains (public, private, custom) with their static website hosting availability and configuration status
 	Domains []struct {
 		// Active Whether this domain is active and ready to use (always true for enabled public/private endpoints, true for custom domains only if certificate is ready)
-		//
-		// Example: true
 		Active bool `json:"active"`
 
 		// Domain Domain name (e.g., unc38.local.upbucket.com)
-		//
-		// Example: unc38.local.upbucket.com
 		Domain string `json:"domain"`
 
 		// StaticWebsiteConfigured Whether static website hosting is configured for this domain
-		//
-		// Example: false
 		StaticWebsiteConfigured bool `json:"static_website_configured"`
 
 		// Type Type of domain (public endpoint, private endpoint, or custom domain)
-		//
-		// Example: public
 		Type ObjectStorage2ServiceDomainsDomainsType `json:"type"`
 	} `json:"domains"`
 }
 
 // ObjectStorage2ServiceDomainsDomainsType Type of domain (public endpoint, private endpoint, or custom domain)
-//
-// Example: public
 type ObjectStorage2ServiceDomainsDomainsType string
 
 // ObjectStorage2ServiceListResponse Response schema for a list of services.
+//
+// Examples: [{"configured_status":"started","created_at":"2023-05-07T15:55:24.655776Z","custom_domains":[{"domain_name":"objects.example-company.com","type":"public"}],"endpoints":[{"domain_name":"7mf5k.upbucket.com","iam_url":"https://7mf5k.upbucket.com:4443/iam","sts_url":"https://7mf5k.upbucket.com:4443/sts","type":"public"},{"domain_name":"7mf5k-private.upbucket.com","iam_url":"https://7mf5k-private.upbucket.com:4443/iam","sts_url":"https://7mf5k-private.upbucket.com:4443/sts","type":"private"},{"domain_name":"static.7mf5k.upbucket.com","type":"static"}],"labels":[{"key":"example-key","value":"example-value"}],"name":"example-service","networks":[{"family":"IPv4","name":"example-public-network","type":"public"},{"family":"IPv4","name":"example-private-network","type":"private","uuid":"03aa7245-2ff9-49c8-9f0e-7ca0270d71a4"}],"operational_state":"running","region":"europe-1","state_messages":[],"static_website":[{"bucket_name":"website-prod","bucket_prefix":"public/","created_at":"2023-05-07T16:10:30.123456Z","custom_domain_id":1,"domain":"objects.example-company.com","error_pages":[{"error_document":"404.html","status_code":404},{"error_document":"500.html","status_range":{"end":599,"start":500}},{"error_document":"500.html","status_range":{"end":510,"start":500}}],"index_document":"index.html","status":"active","updated_at":"2023-05-07T16:10:30.123456Z"}],"updated_at":"2023-05-07T21:38:15.757405Z","usage":{"total_objects":310499,"total_size_bytes":32414921734},"uuid":"1200ecde-db95-4d1c-9133-6508f3232567"}]
 type ObjectStorage2ServiceListResponse = []ObjectStorage2ServiceDetailResponse
 
 // ObjectStorage2ServiceModify Schema for modifying a service, including name, status, networks, domains, labels, and properties.
+//
+// Examples: {"configured_status":"started","labels":null,"name":"example-service","networks":[{"family":"IPv4","name":"example-private-network","type":"private","uuid":"03aa7245-2ff9-49c8-9f0e-7ca0270d71a4"}]}
 type ObjectStorage2ServiceModify struct {
 	// ConfiguredStatus Schema for the configured status of a property.
+	//
+	// Examples: started, stopped
 	ConfiguredStatus *ObjectStorage2PropertyConfiguredStatus `json:"configured_status,omitempty"`
 	CustomDomains    *[]ObjectStorage2CustomDomainCreate     `json:"custom_domains,omitempty"`
 	Labels           *[]ObjectStorage2LabelCreate            `json:"labels,omitempty"`
-
-	// Name Example: example-service
-	Name     *string                        `json:"name,omitempty"`
-	Networks *[]ObjectStorage2NetworkCreate `json:"networks,omitempty"`
+	Name             *string                                 `json:"name,omitempty"`
+	Networks         *[]ObjectStorage2NetworkCreate          `json:"networks,omitempty"`
 
 	// Properties Schema for creating properties with an optional access control origin override.
+	//
+	// Examples: {"access_control_origin_override":"https://mycompany.com"}
 	Properties *ObjectStorage2PropertiesCreate `json:"properties,omitempty"`
 
 	// StaticWebsites Static website configurations for this service. Array replaces all existing configurations.
 	StaticWebsites *[]ObjectStorage2StaticWebsiteConfigCreate `json:"static_websites,omitempty"`
 
 	// TerminationProtection Enables or disables termination protection for the service. When enabled, the service cannot be deleted or powered down unless this is disabled first.
-	//
-	// Example: false
 	TerminationProtection *bool `json:"termination_protection,omitempty"`
 }
 
 // ObjectStorage2ServiceReplace Schema for replacing a service, including name, status, networks, domains, labels, and properties.
+//
+// Examples: {"configured_status":"started","labels":[{"key":"example-label-key","value":"example-label-value"}],"name":"example-service","networks":[{"family":"IPv4","name":"example-public-network","type":"public"},{"family":"IPv4","name":"example-private-network","type":"private","uuid":"03aa7245-2ff9-49c8-9f0e-7ca0270d71a4"}]}
 type ObjectStorage2ServiceReplace struct {
 	// ConfiguredStatus Schema for the configured status of a property.
+	//
+	// Examples: started, stopped
 	ConfiguredStatus ObjectStorage2PropertyConfiguredStatus `json:"configured_status"`
 	CustomDomains    *[]ObjectStorage2CustomDomainCreate    `json:"custom_domains,omitempty"`
 	Labels           *[]ObjectStorage2LabelCreate           `json:"labels,omitempty"`
 
 	// Name The name of the service.
-	//
-	// Example: example-service
 	Name     string                         `json:"name"`
 	Networks *[]ObjectStorage2NetworkCreate `json:"networks,omitempty"`
 
 	// Properties Schema for creating properties with an optional access control origin override.
+	//
+	// Examples: {"access_control_origin_override":"https://mycompany.com"}
 	Properties *ObjectStorage2PropertiesCreate `json:"properties,omitempty"`
 
 	// StaticWebsites Static website configurations for this service. Array replaces all existing configurations.
 	StaticWebsites *[]ObjectStorage2StaticWebsiteConfigCreate `json:"static_websites,omitempty"`
 
 	// TerminationProtection Enables or disables termination protection for the service. When enabled, the service cannot be deleted or powered down unless this is disabled first.
-	//
-	// Example: false
 	TerminationProtection *bool `json:"termination_protection,omitempty"`
 }
 
 // ObjectStorage2ServiceUUID The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ServiceUUID = openapi_types.UUID
 
 // ObjectStorage2StaticWebsiteConfig Static website hosting configuration for a specific domain.
 type ObjectStorage2StaticWebsiteConfig struct {
 	// BucketName Name of the S3/ECS bucket containing the website content. Only alphanumerics, dots, hyphens, and underscores are allowed.
-	//
-	// Example: my-website
 	BucketName string `json:"bucket_name"`
 
 	// BucketPrefix Optional prefix/subfolder within the bucket. Only alphanumerics, slashes, dots, hyphens, and underscores are allowed.
-	//
-	// Example: v2/
 	BucketPrefix string `json:"bucket_prefix"`
 
 	// CreatedAt Timestamp when this configuration was created
-	//
-	// Example: 2025-10-28T10:00:00Z
 	CreatedAt time.Time `json:"created_at"`
 
 	// DomainName The domain this configuration applies to
-	//
-	// Example: abc123-static.upbucket.example.com
 	DomainName string `json:"domain_name"`
 
 	// Enabled Whether the static website configuration is currently active
-	//
-	// Example: true
 	Enabled bool `json:"enabled"`
 
 	// ErrorPages Custom error page configurations for specific HTTP status codes or ranges
-	//
-	// Example: [{"error_document":"errors/403.html","status_code":403},{"error_document":"errors/404.html","status_code":404},{"error_document":"errors/4xx.html","status_range":{"end":499,"start":400}}]
 	ErrorPages []ObjectStorage2StaticWebsiteErrorPage `json:"error_pages"`
 
 	// IndexDocument Default document for directories. Only alphanumerics, slashes, dots, hyphens, and underscores are allowed.
-	//
-	// Example: index.html
 	IndexDocument string `json:"index_document"`
 
 	// SpaMode Enable Single Page Application (SPA) mode. When enabled, all non-file routes serve the index document, allowing client-side routing to handle the URL. Essential for React, Vue, Next.js, and similar frameworks.
-	//
-	// Example: true
 	SpaMode *bool `json:"spa_mode,omitempty"`
 
 	// UpdatedAt Timestamp when this configuration was last updated
-	//
-	// Example: 2025-10-28T12:00:00Z
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
 // ObjectStorage2StaticWebsiteConfigCreate Request body for creating a static website configuration. If domain is omitted, the primary static website domain is used.
 type ObjectStorage2StaticWebsiteConfigCreate struct {
 	// BucketName Name of the S3/ECS bucket containing the website content. Only alphanumerics, dots, hyphens, and underscores are allowed.
-	//
-	// Example: my-website
 	BucketName string `json:"bucket_name"`
 
 	// BucketPrefix Optional prefix/subfolder within the bucket. Only alphanumerics, slashes, dots, hyphens, and underscores are allowed.
-	//
-	// Example: v2/
 	BucketPrefix *string `json:"bucket_prefix,omitempty"`
 
 	// DomainName Custom domain to use for static website hosting. Must be a custom domain attached to the service. If omitted, the primary static website domain is used.
-	//
-	// Example: www.example.com
 	DomainName *string `json:"domain_name,omitempty"`
 
 	// Enabled Whether the static website configuration should be active. Defaults to true if not specified.
-	//
-	// Example: true
 	Enabled *bool `json:"enabled,omitempty"`
 
 	// ErrorPages Custom error page configurations for specific HTTP status codes or ranges
-	//
-	// Example: [{"error_document":"errors/404.html","status_code":404},{"error_document":"errors/5xx.html","status_range":{"end":599,"start":500}}]
 	ErrorPages *[]ObjectStorage2StaticWebsiteErrorPage `json:"error_pages,omitempty"`
 
 	// IndexDocument Default document for directories. Only alphanumerics, slashes, dots, hyphens, and underscores are allowed.
-	//
-	// Example: index.html
 	IndexDocument *string `json:"index_document,omitempty"`
 
 	// SpaMode Enable Single Page Application (SPA) mode. When enabled, all non-file routes serve the index document, allowing client-side routing to handle the URL. Essential for React, Vue, Next.js, and similar frameworks.
-	//
-	// Example: false
 	SpaMode *bool `json:"spa_mode,omitempty"`
 }
 
 // ObjectStorage2StaticWebsiteConfigModify Request body for updating a static website configuration
 type ObjectStorage2StaticWebsiteConfigModify struct {
 	// BucketName Name of the S3/ECS bucket containing the website content. Only alphanumerics, dots, hyphens, and underscores are allowed.
-	//
-	// Example: my-website
 	BucketName *string `json:"bucket_name,omitempty"`
 
 	// BucketPrefix Optional prefix/subfolder within the bucket. Only alphanumerics, slashes, dots, hyphens, and underscores are allowed.
-	//
-	// Example: v2/
 	BucketPrefix *string `json:"bucket_prefix,omitempty"`
 
 	// Enabled Whether the static website configuration should be active
-	//
-	// Example: false
 	Enabled *bool `json:"enabled,omitempty"`
 
 	// ErrorPages Custom error page configurations for specific HTTP status codes or ranges. Replaces the entire set when provided.
-	//
-	// Example: [{"error_document":"errors/404.html","status_code":404},{"error_document":"errors/5xx.html","status_range":{"end":599,"start":500}}]
 	ErrorPages *[]ObjectStorage2StaticWebsiteErrorPage `json:"error_pages,omitempty"`
 
 	// IndexDocument Default document for directories. Only alphanumerics, slashes, dots, hyphens, and underscores are allowed.
-	//
-	// Example: index.html
 	IndexDocument *string `json:"index_document,omitempty"`
 
 	// SpaMode Enable Single Page Application (SPA) mode. When enabled, all non-file routes serve the index document, allowing client-side routing to handle the URL. Essential for React, Vue, Next.js, and similar frameworks.
-	//
-	// Example: true
 	SpaMode *bool `json:"spa_mode,omitempty"`
 }
 
 // ObjectStorage2StaticWebsiteErrorPage Custom error page configuration for specific HTTP status codes or ranges
 type ObjectStorage2StaticWebsiteErrorPage struct {
 	// ErrorDocument Path to the custom error page document relative to the bucket root (e.g., '404.html', 'errors/404.html'). Must not start with '/'.
-	//
-	// Example: 404.html
 	ErrorDocument string `json:"error_document"`
 
 	// StatusCode Single HTTP status code to match (must be within 4xx or 5xx).
+	//
+	// Examples: 403, 404, 500
 	StatusCode *int `json:"status_code,omitempty"`
 
 	// StatusRange Inclusive HTTP status code range to match (for example 4xx or 5xx blocks).
+	//
+	// Examples: {"end":499,"start":400}, {"end":599,"start":500}
 	StatusRange *struct {
 		// End Inclusive upper bound of the HTTP status range (must be within 4xx or 5xx).
 		End int `json:"end"`
@@ -1322,1192 +1379,1941 @@ type ObjectStorage2StaticWebsiteErrorPage0 = interface{}
 type ObjectStorage2StaticWebsiteErrorPage1 = interface{}
 
 // ObjectStorage2TagKey The key of a tag.
+//
+// Examples: environment, team, project, purpose, cost-center, data-classification
 type ObjectStorage2TagKey = string
 
 // ObjectStorage2TagListRequest Schema for a list of tags to apply to a resource.
+//
+// Examples: [{"key":"environment","value":"production"},{"key":"team","value":"backend"}]
 type ObjectStorage2TagListRequest = []struct {
-	// Key Example: environment
-	Key string `json:"key"`
-
-	// Value Example: production
+	Key   string `json:"key"`
 	Value string `json:"value"`
 }
 
 // ObjectStorage2TagListResponse Response schema for listing tags associated with a resource.
+//
+// Examples: [{"key":"environment","value":"production"},{"key":"team","value":"backend"}]
 type ObjectStorage2TagListResponse = []struct {
-	// Key Example: environment
-	Key string `json:"key"`
-
-	// Value Example: production
+	Key   string  `json:"key"`
 	Value *string `json:"value,omitempty"`
 }
 
 // ObjectStorage2TagResponse Schema for a key-value pair tag.
+//
+// Examples: {"key":"foo","value":"bar"}
 type ObjectStorage2TagResponse struct {
-	// Key Example: foo
-	Key *string `json:"key,omitempty"`
-
-	// Value Example: bar
+	Key   *string `json:"key,omitempty"`
 	Value *string `json:"value,omitempty"`
 }
 
 // ObjectStorage2TagValue The value of a tag.
+//
+// Examples: production, backend, web-app, backup, engineering, public
 type ObjectStorage2TagValue = string
 
 // ObjectStorage2UserCreate Schema for creating a new user.
+//
+// Examples: {"username":"example_user"}
 type ObjectStorage2UserCreate struct {
 	// Username The name of the user to create.
-	//
-	// Example: example_user
 	Username string `json:"username"`
 }
 
 // ObjectStorage2UserDetailResponse Response schema for user details.
+//
+// Examples: {"access_keys":[{"access_key_id":"AKIA63F41D01345BB477","created_at":"2023-05-07T20:52:19.705405Z","last_used_at":"2023-05-07T20:52:17Z","status":"Active"}],"arn":"urn:ecs:iam::123bbb5c6a4240409e07f7d89fe28891:user/example_user","created_at":"2023-05-07T15:55:24.655776Z","policies":[{"arn":"urn:ecs:iam:::policy/ECSS3FullAccess","name":"ECSS3FullAccess"},{"arn":"urn:ecs:iam:::policy/IAMFullAccess","name":"IAMFullAccess"}],"username":"example_user"}
 type ObjectStorage2UserDetailResponse struct {
 	AccessKeys *[]ObjectStorage2AccessKeyDetailResponse `json:"access_keys,omitempty"`
-	Arn        *string                                  `json:"arn,omitempty"`
-	CreatedAt  *time.Time                               `json:"created_at,omitempty"`
+
+	// Arn Examples: urn:ecs:iam::123bbb5c6a4240409e07f7d89fe28891:user/example_user
+	Arn *string `json:"arn,omitempty"`
+
+	// CreatedAt Examples: 2023-05-07T15:55:24.655776Z
+	CreatedAt *time.Time `json:"created_at,omitempty"`
 
 	// PermissionsBoundary Schema representing a permissions boundary response.
+	//
+	// Examples: sample-policy
 	PermissionsBoundary *ObjectStorage2PermissionsBoundaryResponse `json:"permissions_boundary,omitempty"`
 	Policies            *[]ObjectStorage2PolicyAttachmentResponse  `json:"policies,omitempty"`
 	Tags                *[]ObjectStorage2TagResponse               `json:"tags,omitempty"`
-	Username            *string                                    `json:"username,omitempty"`
+
+	// Username Examples: example_user
+	Username *string `json:"username,omitempty"`
 }
 
 // ObjectStorage2UserListResponse Response schema for listing users.
+//
+// Examples: [{"access_keys":[{"access_key_id":"AKIA63F41D01345BB477","created_at":"2023-05-07T20:52:19.705405Z","last_used_at":"2023-05-07T20:52:17Z","status":"Active"}],"arn":"urn:ecs:iam::123bbb5c6a4240409e07f7d89fe28891:user/example_user","created_at":"2023-05-07T15:55:24.655776Z","policies":[{"arn":"urn:ecs:iam:::policy/ECSS3FullAccess","name":"ECSS3FullAccess"},{"arn":"urn:ecs:iam:::policy/IAMFullAccess","name":"IAMFullAccess"}],"username":"example_user"}]
 type ObjectStorage2UserListResponse = []ObjectStorage2UserDetailResponse
 
 // ObjectStorage2AssumeObjectStorageRolePolicyRoleName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2AssumeObjectStorageRolePolicyRoleName = ObjectStorage2Name
 
 // ObjectStorage2AssumeObjectStorageRolePolicyServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2AssumeObjectStorageRolePolicyServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2AttachObjectStorageCustomDomainServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2AttachObjectStorageCustomDomainServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2AttachObjectStorageIAMGroupPolicyGroupName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2AttachObjectStorageIAMGroupPolicyGroupName = ObjectStorage2Name
 
 // ObjectStorage2AttachObjectStorageIAMGroupPolicyServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2AttachObjectStorageIAMGroupPolicyServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2AttachObjectStoragePolicyToRoleRoleName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2AttachObjectStoragePolicyToRoleRoleName = ObjectStorage2Name
 
 // ObjectStorage2AttachObjectStoragePolicyToRoleServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2AttachObjectStoragePolicyToRoleServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2AttachObjectStorageUserPolicyServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2AttachObjectStorageUserPolicyServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2AttachObjectStorageUserPolicyUsername A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2AttachObjectStorageUserPolicyUsername = ObjectStorage2Name
 
 // ObjectStorage2AttachObjectStorageUserToGroupGroupName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2AttachObjectStorageUserToGroupGroupName = ObjectStorage2Name
 
 // ObjectStorage2AttachObjectStorageUserToGroupServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2AttachObjectStorageUserToGroupServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2AttachObjectStorageUserToGroupUsername A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2AttachObjectStorageUserToGroupUsername = ObjectStorage2Name
 
 // ObjectStorage2CreateObjectStorageAccessKeyServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2CreateObjectStorageAccessKeyServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2CreateObjectStorageAccessKeyUsername A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2CreateObjectStorageAccessKeyUsername = ObjectStorage2Name
 
 // ObjectStorage2CreateObjectStorageBucketServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2CreateObjectStorageBucketServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2CreateObjectStorageGroupInlinePolicyGroupName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2CreateObjectStorageGroupInlinePolicyGroupName = ObjectStorage2Name
 
 // ObjectStorage2CreateObjectStorageGroupInlinePolicyServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2CreateObjectStorageGroupInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2CreateObjectStorageGroupServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2CreateObjectStorageGroupServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2CreateObjectStorageLabelServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2CreateObjectStorageLabelServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2CreateObjectStorageNetworkServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2CreateObjectStorageNetworkServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2CreateObjectStoragePolicyServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2CreateObjectStoragePolicyServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2CreateObjectStoragePolicyVersionPolicyName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2CreateObjectStoragePolicyVersionPolicyName = ObjectStorage2Name
 
 // ObjectStorage2CreateObjectStoragePolicyVersionServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2CreateObjectStoragePolicyVersionServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2CreateObjectStorageRoleInlinePolicyRoleName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2CreateObjectStorageRoleInlinePolicyRoleName = ObjectStorage2Name
 
 // ObjectStorage2CreateObjectStorageRoleInlinePolicyServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2CreateObjectStorageRoleInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2CreateObjectStorageRolePermissionsBoundaryRoleName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2CreateObjectStorageRolePermissionsBoundaryRoleName = ObjectStorage2Name
 
 // ObjectStorage2CreateObjectStorageRolePermissionsBoundaryServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2CreateObjectStorageRolePermissionsBoundaryServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2CreateObjectStorageRoleServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2CreateObjectStorageRoleServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2CreateObjectStorageStaticWebsiteServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2CreateObjectStorageStaticWebsiteServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2CreateObjectStorageUserInlinePolicyServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2CreateObjectStorageUserInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2CreateObjectStorageUserInlinePolicyUsername A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2CreateObjectStorageUserInlinePolicyUsername = ObjectStorage2Name
 
 // ObjectStorage2CreateObjectStorageUserPermissionsBoundaryServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2CreateObjectStorageUserPermissionsBoundaryServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2CreateObjectStorageUserPermissionsBoundaryUsername A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2CreateObjectStorageUserPermissionsBoundaryUsername = ObjectStorage2Name
 
 // ObjectStorage2CreateObjectStorageUserServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2CreateObjectStorageUserServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2DeleteObjectStorageAccessKeyAccessKeyId The public identifier for an access key.
+//
+// Examples: UCK1234567890ABCDEF, UCK9876543210FEDCBA
 type ObjectStorage2DeleteObjectStorageAccessKeyAccessKeyId = ObjectStorage2AccessKeyID
 
 // ObjectStorage2DeleteObjectStorageAccessKeyServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2DeleteObjectStorageAccessKeyServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2DeleteObjectStorageAccessKeyUsername A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2DeleteObjectStorageAccessKeyUsername = ObjectStorage2Name
 
 // ObjectStorage2DeleteObjectStorageBucketBucketName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2DeleteObjectStorageBucketBucketName = ObjectStorage2Name
 
 // ObjectStorage2DeleteObjectStorageBucketServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2DeleteObjectStorageBucketServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2DeleteObjectStorageCustomDomainCustomDomainName A valid hostname for the custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
+//
+// Examples: example.com, objects.example.com
 type ObjectStorage2DeleteObjectStorageCustomDomainCustomDomainName = ObjectStorage2CustomDomainName
 
 // ObjectStorage2DeleteObjectStorageCustomDomainServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2DeleteObjectStorageCustomDomainServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2DeleteObjectStorageForce Schema for a query parameter specifying whether to force an operation.
+//
+// Examples: true, false
 type ObjectStorage2DeleteObjectStorageForce = ObjectStorage2QueryParamForce
 
 // ObjectStorage2DeleteObjectStorageGroupGroupName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2DeleteObjectStorageGroupGroupName = ObjectStorage2Name
 
 // ObjectStorage2DeleteObjectStorageGroupInlinePolicyGroupName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2DeleteObjectStorageGroupInlinePolicyGroupName = ObjectStorage2Name
 
 // ObjectStorage2DeleteObjectStorageGroupInlinePolicyGroupPolicyName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2DeleteObjectStorageGroupInlinePolicyGroupPolicyName = ObjectStorage2Name
 
 // ObjectStorage2DeleteObjectStorageGroupInlinePolicyServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2DeleteObjectStorageGroupInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2DeleteObjectStorageGroupServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2DeleteObjectStorageGroupServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2DeleteObjectStorageLabelLabelKey The key of a label.
+//
+// Examples: environment, team, project, purpose, cost-center
 type ObjectStorage2DeleteObjectStorageLabelLabelKey = ObjectStorage2LabelKey
 
 // ObjectStorage2DeleteObjectStorageLabelServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2DeleteObjectStorageLabelServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2DeleteObjectStorageNetworkNetworkName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2DeleteObjectStorageNetworkNetworkName = ObjectStorage2Name
 
 // ObjectStorage2DeleteObjectStorageNetworkServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2DeleteObjectStorageNetworkServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2DeleteObjectStoragePolicyPolicyName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2DeleteObjectStoragePolicyPolicyName = ObjectStorage2Name
 
 // ObjectStorage2DeleteObjectStoragePolicyServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2DeleteObjectStoragePolicyServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2DeleteObjectStoragePolicyVersionPolicyName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2DeleteObjectStoragePolicyVersionPolicyName = ObjectStorage2Name
 
 // ObjectStorage2DeleteObjectStoragePolicyVersionPolicyVersion The version identifier of a policy (e.g., v1, v2).
+//
+// Examples: v1, v2, v3, v4
 type ObjectStorage2DeleteObjectStoragePolicyVersionPolicyVersion = ObjectStorage2PolicyVersionID
 
 // ObjectStorage2DeleteObjectStoragePolicyVersionServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2DeleteObjectStoragePolicyVersionServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2DeleteObjectStorageRoleInlinePolicyRoleName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2DeleteObjectStorageRoleInlinePolicyRoleName = ObjectStorage2Name
 
 // ObjectStorage2DeleteObjectStorageRoleInlinePolicyRolePolicyName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2DeleteObjectStorageRoleInlinePolicyRolePolicyName = ObjectStorage2Name
 
 // ObjectStorage2DeleteObjectStorageRoleInlinePolicyServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2DeleteObjectStorageRoleInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2DeleteObjectStorageRolePermissionsBoundaryRoleName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2DeleteObjectStorageRolePermissionsBoundaryRoleName = ObjectStorage2Name
 
 // ObjectStorage2DeleteObjectStorageRolePermissionsBoundaryServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2DeleteObjectStorageRolePermissionsBoundaryServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2DeleteObjectStorageRoleRoleName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2DeleteObjectStorageRoleRoleName = ObjectStorage2Name
 
 // ObjectStorage2DeleteObjectStorageRoleServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2DeleteObjectStorageRoleServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2DeleteObjectStorageRoleTagRoleName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2DeleteObjectStorageRoleTagRoleName = ObjectStorage2Name
 
 // ObjectStorage2DeleteObjectStorageRoleTagRoleTagKey The key of a tag.
+//
+// Examples: environment, team, project, purpose, cost-center, data-classification
 type ObjectStorage2DeleteObjectStorageRoleTagRoleTagKey = ObjectStorage2TagKey
 
 // ObjectStorage2DeleteObjectStorageRoleTagServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2DeleteObjectStorageRoleTagServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2DeleteObjectStorageServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2DeleteObjectStorageServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2DeleteObjectStorageStaticWebsiteCustomDomainName A valid hostname for the custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
+//
+// Examples: example.com, objects.example.com
 type ObjectStorage2DeleteObjectStorageStaticWebsiteCustomDomainName = ObjectStorage2CustomDomainName
 
 // ObjectStorage2DeleteObjectStorageStaticWebsiteServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2DeleteObjectStorageStaticWebsiteServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2DeleteObjectStorageUserInlinePolicyServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2DeleteObjectStorageUserInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2DeleteObjectStorageUserInlinePolicyUserPolicyName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2DeleteObjectStorageUserInlinePolicyUserPolicyName = ObjectStorage2Name
 
 // ObjectStorage2DeleteObjectStorageUserInlinePolicyUsername A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2DeleteObjectStorageUserInlinePolicyUsername = ObjectStorage2Name
 
 // ObjectStorage2DeleteObjectStorageUserPermissionsBoundaryServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2DeleteObjectStorageUserPermissionsBoundaryServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2DeleteObjectStorageUserPermissionsBoundaryUsername A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2DeleteObjectStorageUserPermissionsBoundaryUsername = ObjectStorage2Name
 
 // ObjectStorage2DeleteObjectStorageUserServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2DeleteObjectStorageUserServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2DeleteObjectStorageUserTagServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2DeleteObjectStorageUserTagServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2DeleteObjectStorageUserTagUserTagKey The key of a tag.
+//
+// Examples: environment, team, project, purpose, cost-center, data-classification
 type ObjectStorage2DeleteObjectStorageUserTagUserTagKey = ObjectStorage2TagKey
 
 // ObjectStorage2DeleteObjectStorageUserTagUsername A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2DeleteObjectStorageUserTagUsername = ObjectStorage2Name
 
 // ObjectStorage2DeleteObjectStorageUserUsername A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2DeleteObjectStorageUserUsername = ObjectStorage2Name
 
 // ObjectStorage2DetachObjectStorageIAMGroupPolicyGroupName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2DetachObjectStorageIAMGroupPolicyGroupName = ObjectStorage2Name
 
 // ObjectStorage2DetachObjectStorageIAMGroupPolicyPolicyName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2DetachObjectStorageIAMGroupPolicyPolicyName = ObjectStorage2Name
 
 // ObjectStorage2DetachObjectStorageIAMGroupPolicyServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2DetachObjectStorageIAMGroupPolicyServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2DetachObjectStoragePolicyFromRoleRoleName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2DetachObjectStoragePolicyFromRoleRoleName = ObjectStorage2Name
 
 // ObjectStorage2DetachObjectStoragePolicyFromRoleRolePolicyName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2DetachObjectStoragePolicyFromRoleRolePolicyName = ObjectStorage2Name
 
 // ObjectStorage2DetachObjectStoragePolicyFromRoleServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2DetachObjectStoragePolicyFromRoleServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2DetachObjectStorageUserPolicyNestedName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2DetachObjectStorageUserPolicyNestedName = ObjectStorage2Name
 
 // ObjectStorage2DetachObjectStorageUserPolicyServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2DetachObjectStorageUserPolicyServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2DetachObjectStorageUserPolicyUsername A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2DetachObjectStorageUserPolicyUsername = ObjectStorage2Name
 
 // ObjectStorage2GetObjectStorageAccessKeyDetailsAccessKeyId The public identifier for an access key.
+//
+// Examples: UCK1234567890ABCDEF, UCK9876543210FEDCBA
 type ObjectStorage2GetObjectStorageAccessKeyDetailsAccessKeyId = ObjectStorage2AccessKeyID
 
 // ObjectStorage2GetObjectStorageAccessKeyDetailsServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2GetObjectStorageAccessKeyDetailsServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2GetObjectStorageAccessKeyDetailsUsername A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2GetObjectStorageAccessKeyDetailsUsername = ObjectStorage2Name
 
 // ObjectStorage2GetObjectStorageCustomDomainCustomDomainName A valid hostname for the custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
+//
+// Examples: example.com, objects.example.com
 type ObjectStorage2GetObjectStorageCustomDomainCustomDomainName = ObjectStorage2CustomDomainName
 
 // ObjectStorage2GetObjectStorageCustomDomainServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2GetObjectStorageCustomDomainServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2GetObjectStorageGroupGroupName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2GetObjectStorageGroupGroupName = ObjectStorage2Name
 
 // ObjectStorage2GetObjectStorageGroupInlinePolicyGroupName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2GetObjectStorageGroupInlinePolicyGroupName = ObjectStorage2Name
 
 // ObjectStorage2GetObjectStorageGroupInlinePolicyGroupPolicyName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2GetObjectStorageGroupInlinePolicyGroupPolicyName = ObjectStorage2Name
 
 // ObjectStorage2GetObjectStorageGroupInlinePolicyServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2GetObjectStorageGroupInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2GetObjectStorageGroupServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2GetObjectStorageGroupServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2GetObjectStorageLabelLabelKey The key of a label.
+//
+// Examples: environment, team, project, purpose, cost-center
 type ObjectStorage2GetObjectStorageLabelLabelKey = ObjectStorage2LabelKey
 
 // ObjectStorage2GetObjectStorageLabelServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2GetObjectStorageLabelServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2GetObjectStorageMetricsServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2GetObjectStorageMetricsServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2GetObjectStorageNetworkNetworkName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2GetObjectStorageNetworkNetworkName = ObjectStorage2Name
 
 // ObjectStorage2GetObjectStorageNetworkServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2GetObjectStorageNetworkServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2GetObjectStoragePolicyPolicyName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2GetObjectStoragePolicyPolicyName = ObjectStorage2Name
 
 // ObjectStorage2GetObjectStoragePolicyServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2GetObjectStoragePolicyServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2GetObjectStoragePolicyVersionPolicyName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2GetObjectStoragePolicyVersionPolicyName = ObjectStorage2Name
 
 // ObjectStorage2GetObjectStoragePolicyVersionPolicyVersion The version identifier of a policy (e.g., v1, v2).
+//
+// Examples: v1, v2, v3, v4
 type ObjectStorage2GetObjectStoragePolicyVersionPolicyVersion = ObjectStorage2PolicyVersionID
 
 // ObjectStorage2GetObjectStoragePolicyVersionServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2GetObjectStoragePolicyVersionServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2GetObjectStorageRegionRegionName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2GetObjectStorageRegionRegionName = ObjectStorage2Name
 
 // ObjectStorage2GetObjectStorageRoleInlinePolicyRoleName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2GetObjectStorageRoleInlinePolicyRoleName = ObjectStorage2Name
 
 // ObjectStorage2GetObjectStorageRoleInlinePolicyRolePolicyName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2GetObjectStorageRoleInlinePolicyRolePolicyName = ObjectStorage2Name
 
 // ObjectStorage2GetObjectStorageRoleInlinePolicyServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2GetObjectStorageRoleInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2GetObjectStorageRoleRoleName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2GetObjectStorageRoleRoleName = ObjectStorage2Name
 
 // ObjectStorage2GetObjectStorageRoleServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2GetObjectStorageRoleServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2GetObjectStorageRoleTagsRoleName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2GetObjectStorageRoleTagsRoleName = ObjectStorage2Name
 
 // ObjectStorage2GetObjectStorageRoleTagsServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2GetObjectStorageRoleTagsServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2GetObjectStorageServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2GetObjectStorageServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2GetObjectStorageStaticWebsiteCustomDomainName A valid hostname for the custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
+//
+// Examples: example.com, objects.example.com
 type ObjectStorage2GetObjectStorageStaticWebsiteCustomDomainName = ObjectStorage2CustomDomainName
 
 // ObjectStorage2GetObjectStorageStaticWebsiteServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2GetObjectStorageStaticWebsiteServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2GetObjectStorageUserInlinePolicyServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2GetObjectStorageUserInlinePolicyServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2GetObjectStorageUserInlinePolicyUserPolicyName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2GetObjectStorageUserInlinePolicyUserPolicyName = ObjectStorage2Name
 
 // ObjectStorage2GetObjectStorageUserInlinePolicyUsername A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2GetObjectStorageUserInlinePolicyUsername = ObjectStorage2Name
 
 // ObjectStorage2GetObjectStorageUserServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2GetObjectStorageUserServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2GetObjectStorageUserTagsServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2GetObjectStorageUserTagsServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2GetObjectStorageUserTagsUsername A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2GetObjectStorageUserTagsUsername = ObjectStorage2Name
 
 // ObjectStorage2GetObjectStorageUserUsername A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2GetObjectStorageUserUsername = ObjectStorage2Name
 
 // ObjectStorage2ListObjectStorageAccessKeysServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ListObjectStorageAccessKeysServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2ListObjectStorageAccessKeysUsername A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2ListObjectStorageAccessKeysUsername = ObjectStorage2Name
 
 // ObjectStorage2ListObjectStorageAttachedRolePoliciesRoleName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2ListObjectStorageAttachedRolePoliciesRoleName = ObjectStorage2Name
 
 // ObjectStorage2ListObjectStorageAttachedRolePoliciesServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ListObjectStorageAttachedRolePoliciesServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2ListObjectStorageAttachedUserPoliciesServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ListObjectStorageAttachedUserPoliciesServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2ListObjectStorageAttachedUserPoliciesUsername A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2ListObjectStorageAttachedUserPoliciesUsername = ObjectStorage2Name
 
 // ObjectStorage2ListObjectStorageBucketMetricsLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
+//
+// Examples: 10, 25, 50, 100
 type ObjectStorage2ListObjectStorageBucketMetricsLimit = ObjectStorage2QueryParamLimit
 
 // ObjectStorage2ListObjectStorageBucketMetricsOffset Schema for a query parameter specifying the offset for pagination.
+//
+// Examples: 0, 10, 20, 50
 type ObjectStorage2ListObjectStorageBucketMetricsOffset = ObjectStorage2QueryParamOffset
 
 // ObjectStorage2ListObjectStorageBucketMetricsServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ListObjectStorageBucketMetricsServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2ListObjectStorageCustomDomainsServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ListObjectStorageCustomDomainsServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2ListObjectStorageDomainsServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ListObjectStorageDomainsServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2ListObjectStorageGroupInlinePoliciesGroupName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2ListObjectStorageGroupInlinePoliciesGroupName = ObjectStorage2Name
 
 // ObjectStorage2ListObjectStorageGroupInlinePoliciesServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ListObjectStorageGroupInlinePoliciesServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2ListObjectStorageGroupsServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ListObjectStorageGroupsServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2ListObjectStorageIAMGroupPoliciesGroupName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2ListObjectStorageIAMGroupPoliciesGroupName = ObjectStorage2Name
 
 // ObjectStorage2ListObjectStorageIAMGroupPoliciesServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ListObjectStorageIAMGroupPoliciesServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2ListObjectStorageLabelsServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ListObjectStorageLabelsServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2ListObjectStorageMetricsSeriesFrom Schema for a query parameter specifying a timestamp.
 //
-// Example: 2024-01-01T00:00:00Z
+// Examples: 2024-01-01T00:00:00Z, 2024-12-31T23:59:59Z
 type ObjectStorage2ListObjectStorageMetricsSeriesFrom = ObjectStorage2QueryParamTimestamp
 
 // ObjectStorage2ListObjectStorageMetricsSeriesInterval Schema for a query parameter specifying the time interval.
+//
+// Examples: 1h, 1d, 1w, 1m
 type ObjectStorage2ListObjectStorageMetricsSeriesInterval = ObjectStorage2QueryParamInterval
 
 // ObjectStorage2ListObjectStorageMetricsSeriesLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
+//
+// Examples: 10, 25, 50, 100
 type ObjectStorage2ListObjectStorageMetricsSeriesLimit = ObjectStorage2QueryParamLimit
 
 // ObjectStorage2ListObjectStorageMetricsSeriesOffset Schema for a query parameter specifying the offset for pagination.
+//
+// Examples: 0, 10, 20, 50
 type ObjectStorage2ListObjectStorageMetricsSeriesOffset = ObjectStorage2QueryParamOffset
 
 // ObjectStorage2ListObjectStorageMetricsSeriesServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ListObjectStorageMetricsSeriesServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2ListObjectStorageMetricsSeriesSort Schema for a query parameter specifying the sort field and direction. Prefix with '-' for descending order.
+//
+// Examples: -created_at, service_name, -region_name
 type ObjectStorage2ListObjectStorageMetricsSeriesSort = ObjectStorage2QueryParamSort
 
 // ObjectStorage2ListObjectStorageMetricsSeriesTo Schema for a query parameter specifying a timestamp.
 //
-// Example: 2024-01-01T00:00:00Z
+// Examples: 2024-01-01T00:00:00Z, 2024-12-31T23:59:59Z
 type ObjectStorage2ListObjectStorageMetricsSeriesTo = ObjectStorage2QueryParamTimestamp
 
 // ObjectStorage2ListObjectStorageNetworksServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ListObjectStorageNetworksServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2ListObjectStoragePoliciesServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ListObjectStoragePoliciesServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2ListObjectStoragePolicyVersionsPolicyName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2ListObjectStoragePolicyVersionsPolicyName = ObjectStorage2Name
 
 // ObjectStorage2ListObjectStoragePolicyVersionsServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ListObjectStoragePolicyVersionsServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2ListObjectStorageRoleInlinePoliciesRoleName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2ListObjectStorageRoleInlinePoliciesRoleName = ObjectStorage2Name
 
 // ObjectStorage2ListObjectStorageRoleInlinePoliciesServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ListObjectStorageRoleInlinePoliciesServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2ListObjectStorageRolesServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ListObjectStorageRolesServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2ListObjectStorageStaticWebsitesServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ListObjectStorageStaticWebsitesServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2ListObjectStorageUserInlinePoliciesServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ListObjectStorageUserInlinePoliciesServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2ListObjectStorageUserInlinePoliciesUsername A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2ListObjectStorageUserInlinePoliciesUsername = ObjectStorage2Name
 
 // ObjectStorage2ListObjectStorageUsersServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ListObjectStorageUsersServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2ListObjectStoragesLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
+//
+// Examples: 10, 25, 50, 100
 type ObjectStorage2ListObjectStoragesLimit = ObjectStorage2QueryParamLimit
 
 // ObjectStorage2ListObjectStoragesOffset Schema for a query parameter specifying the offset for pagination.
+//
+// Examples: 0, 10, 20, 50
 type ObjectStorage2ListObjectStoragesOffset = ObjectStorage2QueryParamOffset
 
 // ObjectStorage2ListObjectStoragesSort Schema for a query parameter specifying the sort field and direction. Prefix with '-' for descending order.
+//
+// Examples: -created_at, service_name, -region_name
 type ObjectStorage2ListObjectStoragesSort = ObjectStorage2QueryParamSort
 
 // ObjectStorage2ModifyObjectStorageAccessKeyDetailsAccessKeyId The public identifier for an access key.
+//
+// Examples: UCK1234567890ABCDEF, UCK9876543210FEDCBA
 type ObjectStorage2ModifyObjectStorageAccessKeyDetailsAccessKeyId = ObjectStorage2AccessKeyID
 
 // ObjectStorage2ModifyObjectStorageAccessKeyDetailsServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ModifyObjectStorageAccessKeyDetailsServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2ModifyObjectStorageAccessKeyDetailsUsername A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2ModifyObjectStorageAccessKeyDetailsUsername = ObjectStorage2Name
 
 // ObjectStorage2ModifyObjectStorageCustomDomainCustomDomainName A valid hostname for the custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
+//
+// Examples: example.com, objects.example.com
 type ObjectStorage2ModifyObjectStorageCustomDomainCustomDomainName = ObjectStorage2CustomDomainName
 
 // ObjectStorage2ModifyObjectStorageCustomDomainServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ModifyObjectStorageCustomDomainServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2ModifyObjectStorageLabelLabelKey The key of a label.
+//
+// Examples: environment, team, project, purpose, cost-center
 type ObjectStorage2ModifyObjectStorageLabelLabelKey = ObjectStorage2LabelKey
 
 // ObjectStorage2ModifyObjectStorageLabelServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ModifyObjectStorageLabelServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2ModifyObjectStorageServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ModifyObjectStorageServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2ModifyObjectStorageStaticWebsiteCustomDomainName A valid hostname for the custom domain. Supports both apex domains (example.com) and subdomains (objects.example.com).
+//
+// Examples: example.com, objects.example.com
 type ObjectStorage2ModifyObjectStorageStaticWebsiteCustomDomainName = ObjectStorage2CustomDomainName
 
 // ObjectStorage2ModifyObjectStorageStaticWebsiteServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ModifyObjectStorageStaticWebsiteServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2RemoveObjectStorageUserFromGroupGroupName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2RemoveObjectStorageUserFromGroupGroupName = ObjectStorage2Name
 
 // ObjectStorage2RemoveObjectStorageUserFromGroupServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2RemoveObjectStorageUserFromGroupServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2RemoveObjectStorageUserFromGroupUsername A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2RemoveObjectStorageUserFromGroupUsername = ObjectStorage2Name
 
 // ObjectStorage2ReplaceObjectStorageRoleTagsRoleName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2ReplaceObjectStorageRoleTagsRoleName = ObjectStorage2Name
 
 // ObjectStorage2ReplaceObjectStorageRoleTagsServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ReplaceObjectStorageRoleTagsServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2ReplaceObjectStorageServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ReplaceObjectStorageServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2ReplaceObjectStorageUserTagsServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2ReplaceObjectStorageUserTagsServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2ReplaceObjectStorageUserTagsUsername A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2ReplaceObjectStorageUserTagsUsername = ObjectStorage2Name
 
 // ObjectStorage2SetObjectStorageDefaultPolicyVersionPolicyName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2SetObjectStorageDefaultPolicyVersionPolicyName = ObjectStorage2Name
 
 // ObjectStorage2SetObjectStorageDefaultPolicyVersionServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2SetObjectStorageDefaultPolicyVersionServiceUuid = ObjectStorage2ServiceUUID
 
 // ObjectStorage2UpdateObjectStorageRoleRoleName A resource name.
+//
+// Examples: my-object-storage, fi-hel1, example-service, test-bucket, backup-storage
 type ObjectStorage2UpdateObjectStorageRoleRoleName = ObjectStorage2Name
 
 // ObjectStorage2UpdateObjectStorageRoleServiceUuid The unique identifier for the service.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ObjectStorage2UpdateObjectStorageRoleServiceUuid = ObjectStorage2ServiceUUID
 
 // CreateObjectStorage201 Response schema for service details, including UUID, name, and endpoints.
+//
+// Examples: {"configured_status":"started","created_at":"2023-05-07T15:55:24.655776Z","custom_domains":[],"endpoints":[{"domain_name":"7mf5k.upbucket.com","iam_url":"https://7mf5k.upbucket.com:4443/iam","mode":"api","sts_url":"https://7mf5k.upbucket.com:4443/sts","type":"public"},{"domain_name":"7mf5k-private.upbucket.com","iam_url":"https://7mf5k-private.upbucket.com:4443/iam","mode":"api","sts_url":"https://7mf5k-private.upbucket.com:4443/sts","type":"private"},{"domain_name":"7mf5k-static.upbucket.com","mode":"static-website","type":"public"}],"labels":[{"key":"example-key","value":"example-value"}],"name":"example-service","networks":[{"family":"IPv4","name":"example-public-network","type":"public"},{"family":"IPv4","name":"example-private-network","type":"private","uuid":"03aa7245-2ff9-49c8-9f0e-7ca0270d71a4"}],"operational_state":"setup-checkup","region":"europe-1","state_messages":[{"code":"waiting_certificate_issuing","created_at":"2025-01-16T11:20:40.372611Z","message":"Certificate issuing is in progress for domains: 7mf5k-private.upbucket.com, *.7mf5k-private.upbucket.com.","operational_state":"setup-checkup","updated_at":"2025-01-16T11:20:40.372611Z"}],"static_websites":[{"bucket_name":"my-website","bucket_prefix":"","created_at":"2023-05-07T15:55:24.655776Z","domain_name":"7mf5k-static.upbucket.com","enabled":true,"error_pages":[{"error_document":"404.html","status_code":404}],"index_document":"index.html","updated_at":"2023-05-07T15:55:24.655776Z"}],"updated_at":"2023-05-07T21:38:15.757405Z","usage":{"total_objects":310499,"total_size_bytes":32414921734},"users":[{"access_keys":[{"access_key_id":"AKIA63F41D01345BB477","created_at":"2023-05-07T20:52:19.705405Z","last_used_at":"2023-05-07T20:52:17Z","status":"Active"}],"arn":"urn:ecs:iam::123bbb5c6a4240409e07f7d89fe28891:user/example_user","created_at":"2023-05-07T15:55:24.655776Z","policies":[{"arn":"urn:ecs:iam:::policy/ECSS3FullAccess","name":"ECSS3FullAccess"},{"arn":"urn:ecs:iam:::policy/IAMFullAccess","name":"IAMFullAccess"}],"username":"example_user"}],"uuid":"1200ecde-db95-4d1c-9133-6508f3232567"}
 type CreateObjectStorage201 = ObjectStorage2ServiceDetailResponse
 
 // GetObjectStorage200 Response schema for service details, including UUID, name, and endpoints.
+//
+// Examples: {"configured_status":"started","created_at":"2023-05-07T15:55:24.655776Z","custom_domains":[],"endpoints":[{"domain_name":"7mf5k.upbucket.com","iam_url":"https://7mf5k.upbucket.com:4443/iam","mode":"api","sts_url":"https://7mf5k.upbucket.com:4443/sts","type":"public"},{"domain_name":"7mf5k-private.upbucket.com","iam_url":"https://7mf5k-private.upbucket.com:4443/iam","mode":"api","sts_url":"https://7mf5k-private.upbucket.com:4443/sts","type":"private"},{"domain_name":"7mf5k-static.upbucket.com","mode":"static-website","type":"public"}],"labels":[{"key":"example-key","value":"example-value"}],"name":"example-service","networks":[{"family":"IPv4","name":"example-public-network","type":"public"},{"family":"IPv4","name":"example-private-network","type":"private","uuid":"03aa7245-2ff9-49c8-9f0e-7ca0270d71a4"}],"operational_state":"setup-checkup","region":"europe-1","state_messages":[{"code":"waiting_certificate_issuing","created_at":"2025-01-16T11:20:40.372611Z","message":"Certificate issuing is in progress for domains: 7mf5k-private.upbucket.com, *.7mf5k-private.upbucket.com.","operational_state":"setup-checkup","updated_at":"2025-01-16T11:20:40.372611Z"}],"static_websites":[{"bucket_name":"my-website","bucket_prefix":"","created_at":"2023-05-07T15:55:24.655776Z","domain_name":"7mf5k-static.upbucket.com","enabled":true,"error_pages":[{"error_document":"404.html","status_code":404}],"index_document":"index.html","updated_at":"2023-05-07T15:55:24.655776Z"}],"updated_at":"2023-05-07T21:38:15.757405Z","usage":{"total_objects":310499,"total_size_bytes":32414921734},"users":[{"access_keys":[{"access_key_id":"AKIA63F41D01345BB477","created_at":"2023-05-07T20:52:19.705405Z","last_used_at":"2023-05-07T20:52:17Z","status":"Active"}],"arn":"urn:ecs:iam::123bbb5c6a4240409e07f7d89fe28891:user/example_user","created_at":"2023-05-07T15:55:24.655776Z","policies":[{"arn":"urn:ecs:iam:::policy/ECSS3FullAccess","name":"ECSS3FullAccess"},{"arn":"urn:ecs:iam:::policy/IAMFullAccess","name":"IAMFullAccess"}],"username":"example_user"}],"uuid":"1200ecde-db95-4d1c-9133-6508f3232567"}
 type GetObjectStorage200 = ObjectStorage2ServiceDetailResponse
 
 // ModifyObjectStorage200 Response schema for service details, including UUID, name, and endpoints.
+//
+// Examples: {"configured_status":"started","created_at":"2023-05-07T15:55:24.655776Z","custom_domains":[],"endpoints":[{"domain_name":"7mf5k.upbucket.com","iam_url":"https://7mf5k.upbucket.com:4443/iam","mode":"api","sts_url":"https://7mf5k.upbucket.com:4443/sts","type":"public"},{"domain_name":"7mf5k-private.upbucket.com","iam_url":"https://7mf5k-private.upbucket.com:4443/iam","mode":"api","sts_url":"https://7mf5k-private.upbucket.com:4443/sts","type":"private"},{"domain_name":"7mf5k-static.upbucket.com","mode":"static-website","type":"public"}],"labels":[{"key":"example-key","value":"example-value"}],"name":"example-service","networks":[{"family":"IPv4","name":"example-public-network","type":"public"},{"family":"IPv4","name":"example-private-network","type":"private","uuid":"03aa7245-2ff9-49c8-9f0e-7ca0270d71a4"}],"operational_state":"setup-checkup","region":"europe-1","state_messages":[{"code":"waiting_certificate_issuing","created_at":"2025-01-16T11:20:40.372611Z","message":"Certificate issuing is in progress for domains: 7mf5k-private.upbucket.com, *.7mf5k-private.upbucket.com.","operational_state":"setup-checkup","updated_at":"2025-01-16T11:20:40.372611Z"}],"static_websites":[{"bucket_name":"my-website","bucket_prefix":"","created_at":"2023-05-07T15:55:24.655776Z","domain_name":"7mf5k-static.upbucket.com","enabled":true,"error_pages":[{"error_document":"404.html","status_code":404}],"index_document":"index.html","updated_at":"2023-05-07T15:55:24.655776Z"}],"updated_at":"2023-05-07T21:38:15.757405Z","usage":{"total_objects":310499,"total_size_bytes":32414921734},"users":[{"access_keys":[{"access_key_id":"AKIA63F41D01345BB477","created_at":"2023-05-07T20:52:19.705405Z","last_used_at":"2023-05-07T20:52:17Z","status":"Active"}],"arn":"urn:ecs:iam::123bbb5c6a4240409e07f7d89fe28891:user/example_user","created_at":"2023-05-07T15:55:24.655776Z","policies":[{"arn":"urn:ecs:iam:::policy/ECSS3FullAccess","name":"ECSS3FullAccess"},{"arn":"urn:ecs:iam:::policy/IAMFullAccess","name":"IAMFullAccess"}],"username":"example_user"}],"uuid":"1200ecde-db95-4d1c-9133-6508f3232567"}
 type ModifyObjectStorage200 = ObjectStorage2ServiceDetailResponse
 
 // ObjectStorage2AssumeObjectStorageRolePolicy200 Response schema for assuming a role with a policy document.
+//
+// Examples: {"document":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"backup.upcloud.com\"},\"Action\":\"sts:AssumeRole\"}]}"}
 type ObjectStorage2AssumeObjectStorageRolePolicy200 = ObjectStorage2AssumeRolePolicyResponse
 
 // ObjectStorage2AssumeObjectStorageRolePolicyDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2AssumeObjectStorageRolePolicyDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2AttachObjectStorageCustomDomain201 Response schema for custom domain details.
+//
+// Examples: {"domain_name":"example.com","mode":"api","type":"public"}, {"domain_name":"objects.example.com","mode":"api","type":"public"}, {"domain_name":"static.example.com","mode":"static-website","type":"public"}
 type ObjectStorage2AttachObjectStorageCustomDomain201 = ObjectStorage2CustomDomainDetailResponse
 
 // ObjectStorage2AttachObjectStorageCustomDomainDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2AttachObjectStorageCustomDomainDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2AttachObjectStorageIAMGroupPolicyDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2AttachObjectStorageIAMGroupPolicyDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2AttachObjectStoragePolicyToRoleDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2AttachObjectStoragePolicyToRoleDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2AttachObjectStorageUserPolicyDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2AttachObjectStorageUserPolicyDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2AttachObjectStorageUserToGroupDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2AttachObjectStorageUserToGroupDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2CreateObjectStorageAccessKey201 Response schema for creating an access key.
+//
+// Examples: {"access_key_id":"UCK1234567890ABCDEF","created_at":"2024-01-15T10:30:00Z","secret_access_key":"uCkS3cr3tK3y1234567890abcdefghijklmnopqrstuvwxyz","status":"Active"}
 type ObjectStorage2CreateObjectStorageAccessKey201 = ObjectStorage2CreateAccessKeyResponse
 
 // ObjectStorage2CreateObjectStorageAccessKeyDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2CreateObjectStorageAccessKeyDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2CreateObjectStorageBucket201 Response schema for bucket details.
+//
+// Examples: {"deleted":false,"name":"my-bucket-1","total_objects":1000,"total_size_bytes":1073741824}
 type ObjectStorage2CreateObjectStorageBucket201 = ObjectStorage2BucketDetailResponse
 
 // ObjectStorage2CreateObjectStorageBucketDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2CreateObjectStorageBucketDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2CreateObjectStorageDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2CreateObjectStorageDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2CreateObjectStorageGroup201 Response schema for group details.
+//
+// Examples: {"arn":"urn:ecs:iam::1263b59181cc4841969358b08ed70026:group/test-group","created_at":"2024-04-15T16:28:45Z","name":"test-group"}
 type ObjectStorage2CreateObjectStorageGroup201 = ObjectStorage2GroupResponse
 
 // ObjectStorage2CreateObjectStorageGroupDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2CreateObjectStorageGroupDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2CreateObjectStorageGroupInlinePolicy201 Schema representing an inline policy response.
+//
+// Examples: {"document":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Resource\":\"*\"}]}","name":"ECSS3FullAccess"}
 type ObjectStorage2CreateObjectStorageGroupInlinePolicy201 = ObjectStorage2InlinePolicyResponse
 
 // ObjectStorage2CreateObjectStorageGroupInlinePolicyDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2CreateObjectStorageGroupInlinePolicyDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2CreateObjectStorageLabel201 Schema for label details including key-value pairs.
+//
+// Examples: {"key":"foo","value":"bar"}
 type ObjectStorage2CreateObjectStorageLabel201 = ObjectStorage2LabelDetailResponse
 
 // ObjectStorage2CreateObjectStorageLabelDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2CreateObjectStorageLabelDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2CreateObjectStorageNetwork201 Schema for network details including family, name, type, and UUID.
+//
+// Examples: {"family":"IPv4","name":"example-private-network","type":"private","uuid":"03bec0ad-85c3-459e-824d-710f8f24f740"}
 type ObjectStorage2CreateObjectStorageNetwork201 = ObjectStorage2NetworkDetailResponse
 
 // ObjectStorage2CreateObjectStorageNetworkDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2CreateObjectStorageNetworkDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2CreateObjectStoragePolicy201 Schema for policy details including ARN, attachment count, creation date, default version ID, description, document, name, system status, and last updated date.
+//
+// Examples: {"arn":"urn:ecs:iam:::policy/ECSS3FullAccess","attachment_count":0,"created_at":"2024-02-05T11:06:16Z","default_version_id":"v1","description":"Provides full access to all buckets.","document":"%7B%0A++++%22Version%22%3A+%222012-10-17%22%2C%0A++++%22Statement%22%3A+%5B%0A++++++++%7B%0A++++++++++++%22Effect%22%3A+%22Allow%22%2C%0A++++++++++++%22Action%22%3A+%22s3%3A*%22%2C%0A++++++++++++%22Resource%22%3A+%22*%22%0A++++++++%7D%0A++++%5D%0A%7D","name":"ECSS3FullAccess","system":true,"updated_at":"2024-02-05T11:06:16Z"}
 type ObjectStorage2CreateObjectStoragePolicy201 = ObjectStorage2PolicyDetailResponse
 
 // ObjectStorage2CreateObjectStoragePolicyDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2CreateObjectStoragePolicyDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2CreateObjectStoragePolicyVersion201 Schema for a policy version response, including creation date, document content, default status, and version ID.
+//
+// Examples: {"create_date":"2024-02-05T11:06:16Z","document":"%7B%22Version%22%3A%222012-10-17%22%2C%22Statement%22%3A%5B%7B%22Action%22%3A%5B%22%2A%22%5D%2C%22Effect%22%3A%22Deny%22%2C%22Resource%22%3A%22%2A%22%7D%5D%7D","is_default":true,"version_id":"v2"}
 type ObjectStorage2CreateObjectStoragePolicyVersion201 = ObjectStorage2PolicyVersionResponse
 
 // ObjectStorage2CreateObjectStoragePolicyVersionDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2CreateObjectStoragePolicyVersionDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2CreateObjectStorageRole201 Response schema for detailed information about a specific role.
+//
+// Examples: {"arn":"urn:ecs:iam::12e8c7066c0445c284c1381f899bcee7:role/example","assume_role_policy_document":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Principal\":{\"AWS\":[\"urn:ecs:iam::12442a2fbc06434889edb631be2d0968:user/user1\"]},\"Effect\":\"Allow\",\"Resource\":\"*\"}]}","created_at":"2024-09-19T12:43:24Z","description":"An example role","inline_policies":[{"name":"InlinePolicy"}],"max_session_duration":36000,"name":"example","permissions_boundary":"SamplePolicy","policies":[{"arn":"urn:ecs:iam::12e8c7066c0445c284c1381f899bcee7:policy/SamplePolicy","name":"SamplePolicy"}],"tags":[{"key":"tag1","value":"key1"},{"key":"tag2","value":"key2"}]}
 type ObjectStorage2CreateObjectStorageRole201 = ObjectStorage2RoleResponse
 
 // ObjectStorage2CreateObjectStorageRoleDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2CreateObjectStorageRoleDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2CreateObjectStorageRoleInlinePolicy201 Schema representing an inline policy response.
+//
+// Examples: {"document":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Resource\":\"*\"}]}","name":"ECSS3FullAccess"}
 type ObjectStorage2CreateObjectStorageRoleInlinePolicy201 = ObjectStorage2InlinePolicyResponse
 
 // ObjectStorage2CreateObjectStorageRoleInlinePolicyDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2CreateObjectStorageRoleInlinePolicyDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2CreateObjectStorageRolePermissionsBoundary200 Schema representing a permissions boundary response.
+//
+// Examples: sample-policy
 type ObjectStorage2CreateObjectStorageRolePermissionsBoundary200 = ObjectStorage2PermissionsBoundaryResponse
 
 // ObjectStorage2CreateObjectStorageRolePermissionsBoundaryDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2CreateObjectStorageRolePermissionsBoundaryDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2CreateObjectStorageStaticWebsite201 Static website hosting configuration for a specific domain.
 type ObjectStorage2CreateObjectStorageStaticWebsite201 = ObjectStorage2StaticWebsiteConfig
 
 // ObjectStorage2CreateObjectStorageStaticWebsiteDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2CreateObjectStorageStaticWebsiteDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2CreateObjectStorageUser201 Response schema for user details.
+//
+// Examples: {"access_keys":[{"access_key_id":"AKIA63F41D01345BB477","created_at":"2023-05-07T20:52:19.705405Z","last_used_at":"2023-05-07T20:52:17Z","status":"Active"}],"arn":"urn:ecs:iam::123bbb5c6a4240409e07f7d89fe28891:user/example_user","created_at":"2023-05-07T15:55:24.655776Z","policies":[{"arn":"urn:ecs:iam:::policy/ECSS3FullAccess","name":"ECSS3FullAccess"},{"arn":"urn:ecs:iam:::policy/IAMFullAccess","name":"IAMFullAccess"}],"username":"example_user"}
 type ObjectStorage2CreateObjectStorageUser201 = ObjectStorage2UserDetailResponse
 
 // ObjectStorage2CreateObjectStorageUserDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2CreateObjectStorageUserDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2CreateObjectStorageUserInlinePolicy201 Schema representing an inline policy response.
+//
+// Examples: {"document":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Resource\":\"*\"}]}","name":"ECSS3FullAccess"}
 type ObjectStorage2CreateObjectStorageUserInlinePolicy201 = ObjectStorage2InlinePolicyResponse
 
 // ObjectStorage2CreateObjectStorageUserInlinePolicyDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2CreateObjectStorageUserInlinePolicyDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2CreateObjectStorageUserPermissionsBoundary200 Schema representing a permissions boundary response.
+//
+// Examples: sample-policy
 type ObjectStorage2CreateObjectStorageUserPermissionsBoundary200 = ObjectStorage2PermissionsBoundaryResponse
 
 // ObjectStorage2CreateObjectStorageUserPermissionsBoundaryDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2CreateObjectStorageUserPermissionsBoundaryDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2DeleteObjectStorageAccessKeyDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2DeleteObjectStorageAccessKeyDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2DeleteObjectStorageBucketDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2DeleteObjectStorageBucketDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2DeleteObjectStorageCustomDomainDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2DeleteObjectStorageCustomDomainDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2DeleteObjectStorageDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2DeleteObjectStorageDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2DeleteObjectStorageGroupDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2DeleteObjectStorageGroupDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2DeleteObjectStorageGroupInlinePolicyDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2DeleteObjectStorageGroupInlinePolicyDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2DeleteObjectStorageLabelDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2DeleteObjectStorageLabelDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2DeleteObjectStorageNetworkDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2DeleteObjectStorageNetworkDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2DeleteObjectStoragePolicyDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2DeleteObjectStoragePolicyDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2DeleteObjectStoragePolicyVersionDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2DeleteObjectStoragePolicyVersionDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2DeleteObjectStorageRoleDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2DeleteObjectStorageRoleDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2DeleteObjectStorageRoleInlinePolicyDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2DeleteObjectStorageRoleInlinePolicyDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2DeleteObjectStorageRolePermissionsBoundaryDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2DeleteObjectStorageRolePermissionsBoundaryDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2DeleteObjectStorageRoleTagDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2DeleteObjectStorageRoleTagDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2DeleteObjectStorageStaticWebsiteDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2DeleteObjectStorageStaticWebsiteDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2DeleteObjectStorageUserDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2DeleteObjectStorageUserDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2DeleteObjectStorageUserInlinePolicyDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2DeleteObjectStorageUserInlinePolicyDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2DeleteObjectStorageUserPermissionsBoundaryDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2DeleteObjectStorageUserPermissionsBoundaryDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2DeleteObjectStorageUserTagDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2DeleteObjectStorageUserTagDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2DetachObjectStorageIAMGroupPolicyDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2DetachObjectStorageIAMGroupPolicyDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2DetachObjectStoragePolicyFromRoleDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2DetachObjectStoragePolicyFromRoleDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2DetachObjectStorageUserPolicyDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2DetachObjectStorageUserPolicyDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2GetObjectStorageAccessKeyDetails200 Response schema for access key details.
+//
+// Examples: {"access_key_id":"UCK1234567890ABCDEF","created_at":"2024-01-15T10:30:00Z","last_used_at":"2024-01-20T14:22:15Z","secret_access_key":"","status":"Active"}
 type ObjectStorage2GetObjectStorageAccessKeyDetails200 = ObjectStorage2AccessKeyDetailResponse
 
 // ObjectStorage2GetObjectStorageAccessKeyDetailsDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2GetObjectStorageAccessKeyDetailsDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2GetObjectStorageCustomDomain200 Response schema for custom domain details.
+//
+// Examples: {"domain_name":"example.com","mode":"api","type":"public"}, {"domain_name":"objects.example.com","mode":"api","type":"public"}, {"domain_name":"static.example.com","mode":"static-website","type":"public"}
 type ObjectStorage2GetObjectStorageCustomDomain200 = ObjectStorage2CustomDomainDetailResponse
 
 // ObjectStorage2GetObjectStorageCustomDomainDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2GetObjectStorageCustomDomainDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2GetObjectStorageDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2GetObjectStorageDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2GetObjectStorageGroup200 Response schema for group details.
+//
+// Examples: {"arn":"urn:ecs:iam::1263b59181cc4841969358b08ed70026:group/test-group","created_at":"2024-04-15T16:28:45Z","name":"test-group"}
 type ObjectStorage2GetObjectStorageGroup200 = ObjectStorage2GroupResponse
 
 // ObjectStorage2GetObjectStorageGroupDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2GetObjectStorageGroupDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2GetObjectStorageGroupInlinePolicy200 Schema representing an inline policy response.
+//
+// Examples: {"document":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Resource\":\"*\"}]}","name":"ECSS3FullAccess"}
 type ObjectStorage2GetObjectStorageGroupInlinePolicy200 = ObjectStorage2InlinePolicyResponse
 
 // ObjectStorage2GetObjectStorageGroupInlinePolicyDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2GetObjectStorageGroupInlinePolicyDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2GetObjectStorageLabel200 Schema for label details including key-value pairs.
+//
+// Examples: {"key":"foo","value":"bar"}
 type ObjectStorage2GetObjectStorageLabel200 = ObjectStorage2LabelDetailResponse
 
 // ObjectStorage2GetObjectStorageLabelDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2GetObjectStorageLabelDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2GetObjectStorageMetrics200 Response schema for service usage metrics.
+//
+// Examples: {"total_objects":1000,"total_size_bytes":1073741824}
 type ObjectStorage2GetObjectStorageMetrics200 = ObjectStorage2MetricsUsageResponse
 
 // ObjectStorage2GetObjectStorageMetricsDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2GetObjectStorageMetricsDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2GetObjectStorageNetwork200 Schema for network details including family, name, type, and UUID.
+//
+// Examples: {"family":"IPv4","name":"example-private-network","type":"private","uuid":"03bec0ad-85c3-459e-824d-710f8f24f740"}
 type ObjectStorage2GetObjectStorageNetwork200 = ObjectStorage2NetworkDetailResponse
 
 // ObjectStorage2GetObjectStorageNetworkDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2GetObjectStorageNetworkDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2GetObjectStoragePolicy200 Schema for policy details including ARN, attachment count, creation date, default version ID, description, document, name, system status, and last updated date.
+//
+// Examples: {"arn":"urn:ecs:iam:::policy/ECSS3FullAccess","attachment_count":0,"created_at":"2024-02-05T11:06:16Z","default_version_id":"v1","description":"Provides full access to all buckets.","document":"%7B%0A++++%22Version%22%3A+%222012-10-17%22%2C%0A++++%22Statement%22%3A+%5B%0A++++++++%7B%0A++++++++++++%22Effect%22%3A+%22Allow%22%2C%0A++++++++++++%22Action%22%3A+%22s3%3A*%22%2C%0A++++++++++++%22Resource%22%3A+%22*%22%0A++++++++%7D%0A++++%5D%0A%7D","name":"ECSS3FullAccess","system":true,"updated_at":"2024-02-05T11:06:16Z"}
 type ObjectStorage2GetObjectStoragePolicy200 = ObjectStorage2PolicyDetailResponse
 
 // ObjectStorage2GetObjectStoragePolicyDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2GetObjectStoragePolicyDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2GetObjectStoragePolicyVersion200 Schema for a policy version response, including creation date, document content, default status, and version ID.
+//
+// Examples: {"create_date":"2024-02-05T11:06:16Z","document":"%7B%22Version%22%3A%222012-10-17%22%2C%22Statement%22%3A%5B%7B%22Action%22%3A%5B%22%2A%22%5D%2C%22Effect%22%3A%22Deny%22%2C%22Resource%22%3A%22%2A%22%7D%5D%7D","is_default":true,"version_id":"v2"}
 type ObjectStorage2GetObjectStoragePolicyVersion200 = ObjectStorage2PolicyVersionResponse
 
 // ObjectStorage2GetObjectStoragePolicyVersionDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2GetObjectStoragePolicyVersionDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2GetObjectStorageRegion200 Response schema for detailed information about a specific region.
+//
+// Examples: {"name":"europe-1","primary_zone":"fi-hel1","zones":[{"name":"fi-hel1"},{"name":"de-fra1"}]}
 type ObjectStorage2GetObjectStorageRegion200 = ObjectStorage2RegionDetailResponse
 
 // ObjectStorage2GetObjectStorageRegionDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2GetObjectStorageRegionDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2GetObjectStorageRole200 Response schema for detailed information about a specific role.
+//
+// Examples: {"arn":"urn:ecs:iam::12e8c7066c0445c284c1381f899bcee7:role/example","assume_role_policy_document":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Principal\":{\"AWS\":[\"urn:ecs:iam::12442a2fbc06434889edb631be2d0968:user/user1\"]},\"Effect\":\"Allow\",\"Resource\":\"*\"}]}","created_at":"2024-09-19T12:43:24Z","description":"An example role","inline_policies":[{"name":"InlinePolicy"}],"max_session_duration":36000,"name":"example","permissions_boundary":"SamplePolicy","policies":[{"arn":"urn:ecs:iam::12e8c7066c0445c284c1381f899bcee7:policy/SamplePolicy","name":"SamplePolicy"}],"tags":[{"key":"tag1","value":"key1"},{"key":"tag2","value":"key2"}]}
 type ObjectStorage2GetObjectStorageRole200 = ObjectStorage2RoleResponse
 
 // ObjectStorage2GetObjectStorageRoleDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2GetObjectStorageRoleDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2GetObjectStorageRoleInlinePolicy200 Schema representing an inline policy response.
+//
+// Examples: {"document":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Resource\":\"*\"}]}","name":"ECSS3FullAccess"}
 type ObjectStorage2GetObjectStorageRoleInlinePolicy200 = ObjectStorage2InlinePolicyResponse
 
 // ObjectStorage2GetObjectStorageRoleInlinePolicyDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2GetObjectStorageRoleInlinePolicyDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2GetObjectStorageRoleTags200 Response schema for listing tags associated with a resource.
+//
+// Examples: [{"key":"environment","value":"production"},{"key":"team","value":"backend"}]
 type ObjectStorage2GetObjectStorageRoleTags200 = ObjectStorage2TagListResponse
 
 // ObjectStorage2GetObjectStorageRoleTagsDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2GetObjectStorageRoleTagsDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2GetObjectStorageStaticWebsite200 Static website hosting configuration for a specific domain.
 type ObjectStorage2GetObjectStorageStaticWebsite200 = ObjectStorage2StaticWebsiteConfig
 
 // ObjectStorage2GetObjectStorageStaticWebsiteDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2GetObjectStorageStaticWebsiteDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2GetObjectStorageUser200 Response schema for user details.
+//
+// Examples: {"access_keys":[{"access_key_id":"AKIA63F41D01345BB477","created_at":"2023-05-07T20:52:19.705405Z","last_used_at":"2023-05-07T20:52:17Z","status":"Active"}],"arn":"urn:ecs:iam::123bbb5c6a4240409e07f7d89fe28891:user/example_user","created_at":"2023-05-07T15:55:24.655776Z","policies":[{"arn":"urn:ecs:iam:::policy/ECSS3FullAccess","name":"ECSS3FullAccess"},{"arn":"urn:ecs:iam:::policy/IAMFullAccess","name":"IAMFullAccess"}],"username":"example_user"}
 type ObjectStorage2GetObjectStorageUser200 = ObjectStorage2UserDetailResponse
 
 // ObjectStorage2GetObjectStorageUserDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2GetObjectStorageUserDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2GetObjectStorageUserInlinePolicy200 Schema representing an inline policy response.
+//
+// Examples: {"document":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Resource\":\"*\"}]}","name":"ECSS3FullAccess"}
 type ObjectStorage2GetObjectStorageUserInlinePolicy200 = ObjectStorage2InlinePolicyResponse
 
 // ObjectStorage2GetObjectStorageUserInlinePolicyDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2GetObjectStorageUserInlinePolicyDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2GetObjectStorageUserTags200 Response schema for listing tags associated with a resource.
+//
+// Examples: [{"key":"environment","value":"production"},{"key":"team","value":"backend"}]
 type ObjectStorage2GetObjectStorageUserTags200 = ObjectStorage2TagListResponse
 
 // ObjectStorage2GetObjectStorageUserTagsDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2GetObjectStorageUserTagsDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ListObjectStorageAccessKeys200 Response schema for listing access keys.
+//
+// Examples: [{"access_key_id":"UCK1234567890ABCDEF","created_at":"2024-01-15T10:30:00Z","last_used_at":"2024-01-20T14:22:15Z","status":"Active"}]
 type ObjectStorage2ListObjectStorageAccessKeys200 = ObjectStorage2AccessKeyListResponse
 
 // ObjectStorage2ListObjectStorageAccessKeysDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ListObjectStorageAccessKeysDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ListObjectStorageAttachedRolePolicies200 Response schema for listing policy attachments.
+//
+// Examples: [{"arn":"arn:upcloud:iam::01234567-89ab-cdef-0123-456789abcdef:policy/ECSReadOnlyAccess","name":"ECSReadOnlyAccess"}]
 type ObjectStorage2ListObjectStorageAttachedRolePolicies200 = ObjectStorage2PolicyAttachmentListResponse
 
 // ObjectStorage2ListObjectStorageAttachedRolePoliciesDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ListObjectStorageAttachedRolePoliciesDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ListObjectStorageAttachedUserPolicies200 Response schema for listing policy attachments.
+//
+// Examples: [{"arn":"arn:upcloud:iam::01234567-89ab-cdef-0123-456789abcdef:policy/ECSReadOnlyAccess","name":"ECSReadOnlyAccess"}]
 type ObjectStorage2ListObjectStorageAttachedUserPolicies200 = ObjectStorage2PolicyAttachmentListResponse
 
 // ObjectStorage2ListObjectStorageAttachedUserPoliciesDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ListObjectStorageAttachedUserPoliciesDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ListObjectStorageBucketMetrics200 Response schema for listing buckets.
+//
+// Examples: [{"name":"my-bucket-1","total_objects":1000,"total_size_bytes":1073741824}]
 type ObjectStorage2ListObjectStorageBucketMetrics200 = ObjectStorage2BucketListResponse
 
 // ObjectStorage2ListObjectStorageBucketMetricsDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ListObjectStorageBucketMetricsDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ListObjectStorageCustomDomains200 Response schema for listing custom domains.
+//
+// Examples: [{"domain_name":"example.com","mode":"api","type":"public"},{"domain_name":"objects.example.com","mode":"api","type":"public"},{"domain_name":"static.example.com","mode":"static-website","type":"public"}]
 type ObjectStorage2ListObjectStorageCustomDomains200 = ObjectStorage2CustomDomainListResponse
 
 // ObjectStorage2ListObjectStorageCustomDomainsDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ListObjectStorageCustomDomainsDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ListObjectStorageDomains200 Service domains with their static website hosting status
 type ObjectStorage2ListObjectStorageDomains200 = ObjectStorage2ServiceDomains
 
 // ObjectStorage2ListObjectStorageDomainsDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ListObjectStorageDomainsDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ListObjectStorageGroupInlinePolicies200 Response schema for listing inline policies.
+//
+// Examples: [{"document":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Resource\":\"*\"}]}","name":"ECSS3FullAccess"}]
 type ObjectStorage2ListObjectStorageGroupInlinePolicies200 = ObjectStorage2InlinePolicyListResponse
 
 // ObjectStorage2ListObjectStorageGroupInlinePoliciesDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ListObjectStorageGroupInlinePoliciesDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ListObjectStorageGroups200 Response schema for listing groups.
+//
+// Examples: [{"arn":"urn:ecs:iam::1263b59181cc4841969358b08ed70026:group/test-group","created_at":"2024-04-15T16:28:45Z","name":"test-group"}]
 type ObjectStorage2ListObjectStorageGroups200 = ObjectStorage2GroupListResponse
 
 // ObjectStorage2ListObjectStorageGroupsDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ListObjectStorageGroupsDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ListObjectStorageIAMGroupPolicies200 Response schema for listing policy attachments.
+//
+// Examples: [{"arn":"arn:upcloud:iam::01234567-89ab-cdef-0123-456789abcdef:policy/ECSReadOnlyAccess","name":"ECSReadOnlyAccess"}]
 type ObjectStorage2ListObjectStorageIAMGroupPolicies200 = ObjectStorage2PolicyAttachmentListResponse
 
 // ObjectStorage2ListObjectStorageIAMGroupPoliciesDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ListObjectStorageIAMGroupPoliciesDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ListObjectStorageLabels200 Response schema for listing labels.
+//
+// Examples: [{"key":"foo","value":"bar"}]
 type ObjectStorage2ListObjectStorageLabels200 = ObjectStorage2LabelListResponse
 
 // ObjectStorage2ListObjectStorageLabelsDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ListObjectStorageLabelsDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ListObjectStorageMetricsSeries200 Response schema for listing metrics series.
+//
+// Examples: [{"bytes_created":530000,"bytes_deleted":244000,"bytes_received":530000,"bytes_total":7502000,"bytes_transmitted":0,"end_at":"2023-10-31T12:00:00Z","objects_created":79,"objects_deleted":40,"objects_total":1237,"start_at":"2023-10-31T11:00:00Z"}]
 type ObjectStorage2ListObjectStorageMetricsSeries200 = ObjectStorage2MetricsSeriesListResponse
 
 // ObjectStorage2ListObjectStorageMetricsSeriesDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ListObjectStorageMetricsSeriesDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ListObjectStorageNetworks200 Response schema for a list of network details.
+//
+// Examples: [{"family":"IPv4","name":"example-public-network","type":"public"},{"family":"IPv4","name":"example-private-network","type":"private","uuid":"03aa7245-2ff9-49c8-9f0e-7ca0270d71a4"}]
 type ObjectStorage2ListObjectStorageNetworks200 = ObjectStorage2NetworkListResponse
 
 // ObjectStorage2ListObjectStorageNetworksDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ListObjectStorageNetworksDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ListObjectStoragePolicies200 Response schema for listing policies.
+//
+// Examples: [{"arn":"urn:ecs:iam:::policy/ECSDenyAll","attachment_count":0,"created_at":"2024-02-05T11:06:17Z","default_version_id":"v1","description":"Deny all access.","name":"ECSDenyAll","system":true,"updated_at":"2024-02-05T11:06:17Z"},{"arn":"urn:ecs:iam:::policy/ECSS3FullAccess","attachment_count":1,"created_at":"2024-02-05T11:06:16Z","default_version_id":"v1","description":"Provides full access to all buckets.","name":"ECSS3FullAccess","system":true,"updated_at":"2024-02-05T11:06:16Z"},{"arn":"urn:ecs:iam:::policy/ECSS3ReadOnlyAccess","attachment_count":0,"created_at":"2024-02-05T11:06:16Z","default_version_id":"v1","description":"Provides read only access to all buckets.","name":"ECSS3ReadOnlyAccess","system":true,"updated_at":"2024-02-05T11:06:16Z"},{"arn":"urn:ecs:iam:::policy/IAMFullAccess","attachment_count":1,"created_at":"2024-02-05T11:06:16Z","default_version_id":"v1","description":"Provides full access to IAM.","name":"IAMFullAccess","system":true,"updated_at":"2024-02-05T11:06:16Z"},{"arn":"urn:ecs:iam:::policy/IAMReadOnlyAccess","attachment_count":0,"created_at":"2024-02-05T11:06:16Z","default_version_id":"v1","description":"Provides read only access to IAM.","name":"IAMReadOnlyAccess","system":true,"updated_at":"2024-02-05T11:06:16Z"}]
 type ObjectStorage2ListObjectStoragePolicies200 = ObjectStorage2PolicyListResponse
 
 // ObjectStorage2ListObjectStoragePoliciesDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ListObjectStoragePoliciesDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ListObjectStoragePolicyVersions200 Response schema for a list of policy versions.
+//
+// Examples: [{"create_date":"2024-03-25T12:47:40Z","document":"%7B%22Version%22%3A%222012-10-17%22%2C%22Statement%22%3A%5B%7B%22Action%22%3A%5B%22*%22%5D%2C%22Resource%22%3A%22*%22%2C%22Effect%22%3A%22Deny%22%7D%5D%7D","is_default":false,"version_id":"v4"},{"create_date":"2024-03-25T12:47:38Z","document":"%7B%22Version%22%3A%222012-10-17%22%2C%22Statement%22%3A%5B%7B%22Action%22%3A%5B%22*%22%5D%2C%22Resource%22%3A%22*%22%2C%22Effect%22%3A%22Deny%22%7D%5D%7D","is_default":false,"version_id":"v3"}]
 type ObjectStorage2ListObjectStoragePolicyVersions200 = ObjectStorage2PolicyVersionListResponse
 
 // ObjectStorage2ListObjectStoragePolicyVersionsDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ListObjectStoragePolicyVersionsDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ListObjectStorageRegions200 Response schema for listing regions.
+//
+// Examples: [{"name":"europe-1","primary_zone":"fi-hel1","zones":[{"name":"fi-hel1"},{"name":"de-fra1"}]}]
 type ObjectStorage2ListObjectStorageRegions200 = ObjectStorage2RegionListResponse
 
 // ObjectStorage2ListObjectStorageRegionsDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ListObjectStorageRegionsDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ListObjectStorageRoleInlinePolicies200 Response schema for listing inline policies.
+//
+// Examples: [{"document":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Resource\":\"*\"}]}","name":"ECSS3FullAccess"}]
 type ObjectStorage2ListObjectStorageRoleInlinePolicies200 = ObjectStorage2InlinePolicyListResponse
 
 // ObjectStorage2ListObjectStorageRoleInlinePoliciesDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ListObjectStorageRoleInlinePoliciesDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ListObjectStorageRoles200 Response schema for listing roles.
+//
+// Examples: [{"arn":"urn:ecs:iam::12e8c7066c0445c284c1381f899bcee7:role/example","assume_role_policy_document":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Principal\":{\"AWS\":[\"urn:ecs:iam::12442a2fbc06434889edb631be2d0968:user/user1\"]},\"Effect\":\"Allow\",\"Resource\":\"*\"}]}","created_at":"2024-09-19T12:43:24Z","description":"An example role","inline_policies":[{"name":"InlinePolicy"}],"max_session_duration":36000,"name":"example","permissions_boundary":"SamplePolicy","policies":[{"arn":"urn:ecs:iam::12e8c7066c0445c284c1381f899bcee7:policy/SamplePolicy","name":"SamplePolicy"}]}]
 type ObjectStorage2ListObjectStorageRoles200 = ObjectStorage2RoleListResponse
 
 // ObjectStorage2ListObjectStorageRolesDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ListObjectStorageRolesDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ListObjectStorageStaticWebsitesDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ListObjectStorageStaticWebsitesDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ListObjectStorageUserInlinePolicies200 Response schema for listing inline policies.
+//
+// Examples: [{"document":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Resource\":\"*\"}]}","name":"ECSS3FullAccess"}]
 type ObjectStorage2ListObjectStorageUserInlinePolicies200 = ObjectStorage2InlinePolicyListResponse
 
 // ObjectStorage2ListObjectStorageUserInlinePoliciesDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ListObjectStorageUserInlinePoliciesDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ListObjectStorageUsers200 Response schema for listing users.
+//
+// Examples: [{"access_keys":[{"access_key_id":"AKIA63F41D01345BB477","created_at":"2023-05-07T20:52:19.705405Z","last_used_at":"2023-05-07T20:52:17Z","status":"Active"}],"arn":"urn:ecs:iam::123bbb5c6a4240409e07f7d89fe28891:user/example_user","created_at":"2023-05-07T15:55:24.655776Z","policies":[{"arn":"urn:ecs:iam:::policy/ECSS3FullAccess","name":"ECSS3FullAccess"},{"arn":"urn:ecs:iam:::policy/IAMFullAccess","name":"IAMFullAccess"}],"username":"example_user"}]
 type ObjectStorage2ListObjectStorageUsers200 = ObjectStorage2UserListResponse
 
 // ObjectStorage2ListObjectStorageUsersDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ListObjectStorageUsersDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ListObjectStorages200 Response schema for a list of services.
+//
+// Examples: [{"configured_status":"started","created_at":"2023-05-07T15:55:24.655776Z","custom_domains":[{"domain_name":"objects.example-company.com","type":"public"}],"endpoints":[{"domain_name":"7mf5k.upbucket.com","iam_url":"https://7mf5k.upbucket.com:4443/iam","sts_url":"https://7mf5k.upbucket.com:4443/sts","type":"public"},{"domain_name":"7mf5k-private.upbucket.com","iam_url":"https://7mf5k-private.upbucket.com:4443/iam","sts_url":"https://7mf5k-private.upbucket.com:4443/sts","type":"private"},{"domain_name":"static.7mf5k.upbucket.com","type":"static"}],"labels":[{"key":"example-key","value":"example-value"}],"name":"example-service","networks":[{"family":"IPv4","name":"example-public-network","type":"public"},{"family":"IPv4","name":"example-private-network","type":"private","uuid":"03aa7245-2ff9-49c8-9f0e-7ca0270d71a4"}],"operational_state":"running","region":"europe-1","state_messages":[],"static_website":[{"bucket_name":"website-prod","bucket_prefix":"public/","created_at":"2023-05-07T16:10:30.123456Z","custom_domain_id":1,"domain":"objects.example-company.com","error_pages":[{"error_document":"404.html","status_code":404},{"error_document":"500.html","status_range":{"end":599,"start":500}},{"error_document":"500.html","status_range":{"end":510,"start":500}}],"index_document":"index.html","status":"active","updated_at":"2023-05-07T16:10:30.123456Z"}],"updated_at":"2023-05-07T21:38:15.757405Z","usage":{"total_objects":310499,"total_size_bytes":32414921734},"uuid":"1200ecde-db95-4d1c-9133-6508f3232567"}]
 type ObjectStorage2ListObjectStorages200 = ObjectStorage2ServiceListResponse
 
 // ObjectStorage2ListObjectStoragesDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ListObjectStoragesDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ModifyObjectStorageAccessKeyDetails200 Response schema for access key details.
+//
+// Examples: {"access_key_id":"UCK1234567890ABCDEF","created_at":"2024-01-15T10:30:00Z","last_used_at":"2024-01-20T14:22:15Z","secret_access_key":"","status":"Active"}
 type ObjectStorage2ModifyObjectStorageAccessKeyDetails200 = ObjectStorage2AccessKeyDetailResponse
 
 // ObjectStorage2ModifyObjectStorageAccessKeyDetailsDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ModifyObjectStorageAccessKeyDetailsDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ModifyObjectStorageCustomDomain200 Response schema for custom domain details.
+//
+// Examples: {"domain_name":"example.com","mode":"api","type":"public"}, {"domain_name":"objects.example.com","mode":"api","type":"public"}, {"domain_name":"static.example.com","mode":"static-website","type":"public"}
 type ObjectStorage2ModifyObjectStorageCustomDomain200 = ObjectStorage2CustomDomainDetailResponse
 
 // ObjectStorage2ModifyObjectStorageCustomDomainDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ModifyObjectStorageCustomDomainDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ModifyObjectStorageDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ModifyObjectStorageDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ModifyObjectStorageLabel200 Schema for label details including key-value pairs.
+//
+// Examples: {"key":"foo","value":"bar"}
 type ObjectStorage2ModifyObjectStorageLabel200 = ObjectStorage2LabelDetailResponse
 
 // ObjectStorage2ModifyObjectStorageLabelDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ModifyObjectStorageLabelDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ModifyObjectStorageStaticWebsite200 Static website hosting configuration for a specific domain.
 type ObjectStorage2ModifyObjectStorageStaticWebsite200 = ObjectStorage2StaticWebsiteConfig
 
 // ObjectStorage2ModifyObjectStorageStaticWebsiteDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ModifyObjectStorageStaticWebsiteDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2RemoveObjectStorageUserFromGroupDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2RemoveObjectStorageUserFromGroupDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ReplaceObjectStorageDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ReplaceObjectStorageDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ReplaceObjectStorageRoleTags200 Response schema for listing tags associated with a resource.
+//
+// Examples: [{"key":"environment","value":"production"},{"key":"team","value":"backend"}]
 type ObjectStorage2ReplaceObjectStorageRoleTags200 = ObjectStorage2TagListResponse
 
 // ObjectStorage2ReplaceObjectStorageRoleTagsDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ReplaceObjectStorageRoleTagsDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2ReplaceObjectStorageUserTags200 Response schema for listing tags associated with a resource.
+//
+// Examples: [{"key":"environment","value":"production"},{"key":"team","value":"backend"}]
 type ObjectStorage2ReplaceObjectStorageUserTags200 = ObjectStorage2TagListResponse
 
 // ObjectStorage2ReplaceObjectStorageUserTagsDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2ReplaceObjectStorageUserTagsDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2SetObjectStorageDefaultPolicyVersion200 Schema for policy details including ARN, attachment count, creation date, default version ID, description, document, name, system status, and last updated date.
+//
+// Examples: {"arn":"urn:ecs:iam:::policy/ECSS3FullAccess","attachment_count":0,"created_at":"2024-02-05T11:06:16Z","default_version_id":"v1","description":"Provides full access to all buckets.","document":"%7B%0A++++%22Version%22%3A+%222012-10-17%22%2C%0A++++%22Statement%22%3A+%5B%0A++++++++%7B%0A++++++++++++%22Effect%22%3A+%22Allow%22%2C%0A++++++++++++%22Action%22%3A+%22s3%3A*%22%2C%0A++++++++++++%22Resource%22%3A+%22*%22%0A++++++++%7D%0A++++%5D%0A%7D","name":"ECSS3FullAccess","system":true,"updated_at":"2024-02-05T11:06:16Z"}
 type ObjectStorage2SetObjectStorageDefaultPolicyVersion200 = ObjectStorage2PolicyDetailResponse
 
 // ObjectStorage2SetObjectStorageDefaultPolicyVersionDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2SetObjectStorageDefaultPolicyVersionDefault = ObjectStorage2ErrorResponse
 
 // ObjectStorage2UpdateObjectStorageRole200 Response schema for detailed information about a specific role.
+//
+// Examples: {"arn":"urn:ecs:iam::12e8c7066c0445c284c1381f899bcee7:role/example","assume_role_policy_document":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Principal\":{\"AWS\":[\"urn:ecs:iam::12442a2fbc06434889edb631be2d0968:user/user1\"]},\"Effect\":\"Allow\",\"Resource\":\"*\"}]}","created_at":"2024-09-19T12:43:24Z","description":"An example role","inline_policies":[{"name":"InlinePolicy"}],"max_session_duration":36000,"name":"example","permissions_boundary":"SamplePolicy","policies":[{"arn":"urn:ecs:iam::12e8c7066c0445c284c1381f899bcee7:policy/SamplePolicy","name":"SamplePolicy"}],"tags":[{"key":"tag1","value":"key1"},{"key":"tag2","value":"key2"}]}
 type ObjectStorage2UpdateObjectStorageRole200 = ObjectStorage2RoleResponse
 
 // ObjectStorage2UpdateObjectStorageRoleDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ObjectStorage2UpdateObjectStorageRoleDefault = ObjectStorage2ErrorResponse
 
 // ReplaceObjectStorage200 Response schema for service details, including UUID, name, and endpoints.
+//
+// Examples: {"configured_status":"started","created_at":"2023-05-07T15:55:24.655776Z","custom_domains":[],"endpoints":[{"domain_name":"7mf5k.upbucket.com","iam_url":"https://7mf5k.upbucket.com:4443/iam","mode":"api","sts_url":"https://7mf5k.upbucket.com:4443/sts","type":"public"},{"domain_name":"7mf5k-private.upbucket.com","iam_url":"https://7mf5k-private.upbucket.com:4443/iam","mode":"api","sts_url":"https://7mf5k-private.upbucket.com:4443/sts","type":"private"},{"domain_name":"7mf5k-static.upbucket.com","mode":"static-website","type":"public"}],"labels":[{"key":"example-key","value":"example-value"}],"name":"example-service","networks":[{"family":"IPv4","name":"example-public-network","type":"public"},{"family":"IPv4","name":"example-private-network","type":"private","uuid":"03aa7245-2ff9-49c8-9f0e-7ca0270d71a4"}],"operational_state":"setup-checkup","region":"europe-1","state_messages":[{"code":"waiting_certificate_issuing","created_at":"2025-01-16T11:20:40.372611Z","message":"Certificate issuing is in progress for domains: 7mf5k-private.upbucket.com, *.7mf5k-private.upbucket.com.","operational_state":"setup-checkup","updated_at":"2025-01-16T11:20:40.372611Z"}],"static_websites":[{"bucket_name":"my-website","bucket_prefix":"","created_at":"2023-05-07T15:55:24.655776Z","domain_name":"7mf5k-static.upbucket.com","enabled":true,"error_pages":[{"error_document":"404.html","status_code":404}],"index_document":"index.html","updated_at":"2023-05-07T15:55:24.655776Z"}],"updated_at":"2023-05-07T21:38:15.757405Z","usage":{"total_objects":310499,"total_size_bytes":32414921734},"users":[{"access_keys":[{"access_key_id":"AKIA63F41D01345BB477","created_at":"2023-05-07T20:52:19.705405Z","last_used_at":"2023-05-07T20:52:17Z","status":"Active"}],"arn":"urn:ecs:iam::123bbb5c6a4240409e07f7d89fe28891:user/example_user","created_at":"2023-05-07T15:55:24.655776Z","policies":[{"arn":"urn:ecs:iam:::policy/ECSS3FullAccess","name":"ECSS3FullAccess"},{"arn":"urn:ecs:iam:::policy/IAMFullAccess","name":"IAMFullAccess"}],"username":"example_user"}],"uuid":"1200ecde-db95-4d1c-9133-6508f3232567"}
 type ReplaceObjectStorage200 = ObjectStorage2ServiceDetailResponse
 
 // ObjectStorage2AssumeObjectStorageRolePolicy Schema for the request to assume a role with a policy document.
+//
+// Examples: {"document":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"backup.upcloud.com\"},\"Action\":\"sts:AssumeRole\"}]}"}
 type ObjectStorage2AssumeObjectStorageRolePolicy = ObjectStorage2AssumeRolePolicyRequest
 
 // ObjectStorage2AttachObjectStorageCustomDomain Schema for creating a custom domain.
+//
+// Examples: {"domain_name":"example.com","type":"public"}, {"domain_name":"objects.example.com","type":"public"}, {"domain_name":"static.example.com","mode":"static-website","type":"public"}
 type ObjectStorage2AttachObjectStorageCustomDomain = ObjectStorage2CustomDomainCreate
 
 // ObjectStorage2AttachObjectStorageIAMGroupPolicy Schema for creating a policy attachment.
+//
+// Examples: {"name":"test-policy"}
 type ObjectStorage2AttachObjectStorageIAMGroupPolicy = ObjectStorage2PolicyAttachmentCreate
 
 // ObjectStorage2AttachObjectStoragePolicyToRole Schema for creating a policy attachment.
+//
+// Examples: {"name":"test-policy"}
 type ObjectStorage2AttachObjectStoragePolicyToRole = ObjectStorage2PolicyAttachmentCreate
 
 // ObjectStorage2AttachObjectStorageUserPolicy Schema for creating a policy attachment.
+//
+// Examples: {"name":"test-policy"}
 type ObjectStorage2AttachObjectStorageUserPolicy = ObjectStorage2PolicyAttachmentCreate
 
 // ObjectStorage2CreateObjectStorage Schema for creating a service, including name, region, status, networks, domains, labels, and properties.
+//
+// Examples: {"configured_status":"started","name":"example-service","networks":[{"family":"IPv4","name":"example-public-network","type":"public"},{"family":"IPv4","name":"example-private-network","type":"private","uuid":"03aa7245-2ff9-49c8-9f0e-7ca0270d71a4"}],"region":"example"}
 type ObjectStorage2CreateObjectStorage = ObjectStorage2ServiceCreate
 
 // ObjectStorage2CreateObjectStorageBucket Schema for creating a new bucket.
+//
+// Examples: {"name":"my-bucket-1"}
 type ObjectStorage2CreateObjectStorageBucket = ObjectStorage2BucketCreate
 
 // ObjectStorage2CreateObjectStorageGroup Schema for creating a new IAM group.
+//
+// Examples: {"name":"new-group"}
 type ObjectStorage2CreateObjectStorageGroup = ObjectStorage2GroupCreate
 
 // ObjectStorage2CreateObjectStorageGroupInlinePolicy Schema for creating an inline policy.
+//
+// Examples: {"document":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Resource\":\"*\"}]}","name":"ECSS3FullAccess"}
 type ObjectStorage2CreateObjectStorageGroupInlinePolicy = ObjectStorage2InlinePolicyCreate
 
 // ObjectStorage2CreateObjectStorageLabel Schema for creating a label with a key-value pair.
+//
+// Examples: {"key":"foo","value":"bar"}
 type ObjectStorage2CreateObjectStorageLabel = ObjectStorage2LabelCreate
 
 // ObjectStorage2CreateObjectStorageNetwork Schema for creating a network with optional private UUID, name, type, and family.
+//
+// Examples: {"family":"IPv4","name":"example-public-network","type":"public"}, {"family":"IPv4","name":"example-private-network","type":"private","uuid":"03bec0ad-85c3-459e-824d-710f8f24f740"}
 type ObjectStorage2CreateObjectStorageNetwork = ObjectStorage2NetworkCreate
 
 // ObjectStorage2CreateObjectStoragePolicy Schema for creating a policy with a name, description, and document.
+//
+// Examples: {"description":"example-description","document":"%7B%22Version%22%3A%20%222012-10-17%22%2C%20%20%22Statement%22%3A%20%5B%7B%22Action%22%3A%20%5B%22iam%3AGetUser%22%5D%2C%20%22Resource%22%3A%20%22%2A%22%2C%20%22Effect%22%3A%20%22Allow%22%2C%20%22Sid%22%3A%20%22editor%22%7D%5D%7D","name":"example-policy"}
 type ObjectStorage2CreateObjectStoragePolicy = ObjectStorage2PolicyCreate
 
 // ObjectStorage2CreateObjectStoragePolicyVersion Schema for creating a new version of a policy.
+//
+// Examples: {"document":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"*\"],\"Effect\":\"Deny\",\"Resource\":\"*\"}]}","is_default":true}
 type ObjectStorage2CreateObjectStoragePolicyVersion = ObjectStorage2PolicyVersionCreate
 
 // ObjectStorage2CreateObjectStorageRole Schema for creating a new role.
+//
+// Examples: {"assume_role_policy_document":"{\"Version\": \"2012-10-17\",\"Statement\": [{\"Action\": \"sts:AssumeRole\",\"Principal\": {\"AWS\": [\"urn:ecs:iam::ns1:user/Demby\"]},\"Effect\": \"Allow\",\"Resource\": \"*\"}]}","description":"A test role.","max_session_duration":3600,"name":"test-role","permissions_boundary":"test-policy","tags":[{"key":"department","value":"Finance"},{"key":"school","value":"University of Helsinki"}]}
 type ObjectStorage2CreateObjectStorageRole = ObjectStorage2RoleCreate
 
 // ObjectStorage2CreateObjectStorageRoleInlinePolicy Schema for creating an inline policy.
+//
+// Examples: {"document":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Resource\":\"*\"}]}","name":"ECSS3FullAccess"}
 type ObjectStorage2CreateObjectStorageRoleInlinePolicy = ObjectStorage2InlinePolicyCreate
 
 // ObjectStorage2CreateObjectStorageRolePermissionsBoundary Schema for creating a permissions boundary with a specified policy name.
+//
+// Examples: {"policy_name":"sample-policy"}
 type ObjectStorage2CreateObjectStorageRolePermissionsBoundary = ObjectStorage2PermissionsBoundaryCreate
 
 // ObjectStorage2CreateObjectStorageStaticWebsite Request body for creating a static website configuration. If domain is omitted, the primary static website domain is used.
 type ObjectStorage2CreateObjectStorageStaticWebsite = ObjectStorage2StaticWebsiteConfigCreate
 
 // ObjectStorage2CreateObjectStorageUser Schema for creating a new user.
+//
+// Examples: {"username":"example_user"}
 type ObjectStorage2CreateObjectStorageUser = ObjectStorage2UserCreate
 
 // ObjectStorage2CreateObjectStorageUserInlinePolicy Schema for creating an inline policy.
+//
+// Examples: {"document":"{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Resource\":\"*\"}]}","name":"ECSS3FullAccess"}
 type ObjectStorage2CreateObjectStorageUserInlinePolicy = ObjectStorage2InlinePolicyCreate
 
 // ObjectStorage2CreateObjectStorageUserPermissionsBoundary Schema for creating a permissions boundary with a specified policy name.
+//
+// Examples: {"policy_name":"sample-policy"}
 type ObjectStorage2CreateObjectStorageUserPermissionsBoundary = ObjectStorage2PermissionsBoundaryCreate
 
 // ObjectStorage2ModifyObjectStorage Schema for modifying a service, including name, status, networks, domains, labels, and properties.
+//
+// Examples: {"configured_status":"started","labels":null,"name":"example-service","networks":[{"family":"IPv4","name":"example-private-network","type":"private","uuid":"03aa7245-2ff9-49c8-9f0e-7ca0270d71a4"}]}
 type ObjectStorage2ModifyObjectStorage = ObjectStorage2ServiceModify
 
 // ObjectStorage2ModifyObjectStorageAccessKeyDetails Schema for modifying an access key.
+//
+// Examples: {"status":"Inactive"}
 type ObjectStorage2ModifyObjectStorageAccessKeyDetails = ObjectStorage2AccessKeyModify
 
 // ObjectStorage2ModifyObjectStorageCustomDomain Schema for modifying a custom domain.
+//
+// Examples: {"domain_name":"example.com","type":"public"}
 type ObjectStorage2ModifyObjectStorageCustomDomain = ObjectStorage2CustomDomainModify
 
 // ObjectStorage2ModifyObjectStorageLabel Schema for modifying a label with a key-value pair.
+//
+// Examples: {"key":"foo","value":"bar"}
 type ObjectStorage2ModifyObjectStorageLabel = ObjectStorage2LabelModify
 
 // ObjectStorage2ModifyObjectStorageStaticWebsite Request body for updating a static website configuration
 type ObjectStorage2ModifyObjectStorageStaticWebsite = ObjectStorage2StaticWebsiteConfigModify
 
 // ObjectStorage2ReplaceObjectStorage Schema for replacing a service, including name, status, networks, domains, labels, and properties.
+//
+// Examples: {"configured_status":"started","labels":[{"key":"example-label-key","value":"example-label-value"}],"name":"example-service","networks":[{"family":"IPv4","name":"example-public-network","type":"public"},{"family":"IPv4","name":"example-private-network","type":"private","uuid":"03aa7245-2ff9-49c8-9f0e-7ca0270d71a4"}]}
 type ObjectStorage2ReplaceObjectStorage = ObjectStorage2ServiceReplace
 
 // ObjectStorage2ReplaceObjectStorageRoleTags Schema for a list of tags to apply to a resource.
+//
+// Examples: [{"key":"environment","value":"production"},{"key":"team","value":"backend"}]
 type ObjectStorage2ReplaceObjectStorageRoleTags = ObjectStorage2TagListRequest
 
 // ObjectStorage2ReplaceObjectStorageUserTags Schema for a list of tags to apply to a resource.
+//
+// Examples: [{"key":"environment","value":"production"},{"key":"team","value":"backend"}]
 type ObjectStorage2ReplaceObjectStorageUserTags = ObjectStorage2TagListRequest
 
 // ObjectStorage2SetObjectStorageDefaultPolicyVersion Schema for setting a default version of a policy.
+//
+// Examples: {"version_id":"v2"}
 type ObjectStorage2SetObjectStorageDefaultPolicyVersion = ObjectStorage2PolicySetDefaultVersion
 
 // ObjectStorage2UpdateObjectStorageRole Schema for updating an existing role.
+//
+// Examples: {"description":"New description","max_session_duration":3900}
 type ObjectStorage2UpdateObjectStorageRole = ObjectStorage2RoleUpdate
 
 // ListObjectStoragesParams defines parameters for ListObjectStorages.
