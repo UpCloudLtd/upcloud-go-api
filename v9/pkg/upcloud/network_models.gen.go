@@ -88,10 +88,6 @@ func (e NetworkIpFamily) Valid() bool {
 	}
 }
 
-// Defines values for NetworkPeeringState.
-
-// Valid indicates whether the value is a known member of the NetworkPeeringState enum.
-
 // Defines values for NetworkType.
 const (
 	NetworkTypePrivate NetworkType = "private"
@@ -396,10 +392,6 @@ type NetworkLabels struct {
 
 // NetworkName Examples: DEV, PROD, private, QA, webserver, database
 type NetworkName = string
-
-// NetworkPeeringName defines model for networkPeeringName.
-
-// NetworkPeeringState defines model for networkPeeringState.
 
 // NetworkServers List of servers associated with the tag.
 type NetworkServers struct {
