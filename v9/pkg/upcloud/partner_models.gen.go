@@ -11,20 +11,328 @@ import (
 	openapi_types "github.com/oapi-codegen/runtime/types"
 )
 
+// Defines values for PartnerError400AddressInvalidErrorCode.
+const (
+	PartnerError400AddressInvalidErrorCodeADDRESSINVALID PartnerError400AddressInvalidErrorCode = "ADDRESS_INVALID"
+)
+
+// Valid indicates whether the value is a known member of the PartnerError400AddressInvalidErrorCode enum.
+func (e PartnerError400AddressInvalidErrorCode) Valid() bool {
+	switch e {
+	case PartnerError400AddressInvalidErrorCodeADDRESSINVALID:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PartnerError400CityInvalidErrorCode.
+const (
+	PartnerError400CityInvalidErrorCodeCITYINVALID PartnerError400CityInvalidErrorCode = "CITY_INVALID"
+)
+
+// Valid indicates whether the value is a known member of the PartnerError400CityInvalidErrorCode enum.
+func (e PartnerError400CityInvalidErrorCode) Valid() bool {
+	switch e {
+	case PartnerError400CityInvalidErrorCodeCITYINVALID:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PartnerError400CompanyInvalidErrorCode.
+const (
+	PartnerError400CompanyInvalidErrorCodeCOMPANYINVALID PartnerError400CompanyInvalidErrorCode = "COMPANY_INVALID"
+)
+
+// Valid indicates whether the value is a known member of the PartnerError400CompanyInvalidErrorCode enum.
+func (e PartnerError400CompanyInvalidErrorCode) Valid() bool {
+	switch e {
+	case PartnerError400CompanyInvalidErrorCodeCOMPANYINVALID:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PartnerError400CountryInvalidErrorCode.
+const (
+	PartnerError400CountryInvalidErrorCodeCOUNTRYINVALID PartnerError400CountryInvalidErrorCode = "COUNTRY_INVALID"
+)
+
+// Valid indicates whether the value is a known member of the PartnerError400CountryInvalidErrorCode enum.
+func (e PartnerError400CountryInvalidErrorCode) Valid() bool {
+	switch e {
+	case PartnerError400CountryInvalidErrorCodeCOUNTRYINVALID:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PartnerError400CountryMissingErrorCode.
+const (
+	PartnerError400CountryMissingErrorCodeCOUNTRYMISSING PartnerError400CountryMissingErrorCode = "COUNTRY_MISSING"
+)
+
+// Valid indicates whether the value is a known member of the PartnerError400CountryMissingErrorCode enum.
+func (e PartnerError400CountryMissingErrorCode) Valid() bool {
+	switch e {
+	case PartnerError400CountryMissingErrorCodeCOUNTRYMISSING:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PartnerError400EmailInvalidErrorCode.
+const (
+	PartnerError400EmailInvalidErrorCodeEMAILINVALID PartnerError400EmailInvalidErrorCode = "EMAIL_INVALID"
+)
+
+// Valid indicates whether the value is a known member of the PartnerError400EmailInvalidErrorCode enum.
+func (e PartnerError400EmailInvalidErrorCode) Valid() bool {
+	switch e {
+	case PartnerError400EmailInvalidErrorCodeEMAILINVALID:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PartnerError400EmailMissingErrorCode.
+const (
+	PartnerError400EmailMissingErrorCodeEMAILMISSING PartnerError400EmailMissingErrorCode = "EMAIL_MISSING"
+)
+
+// Valid indicates whether the value is a known member of the PartnerError400EmailMissingErrorCode enum.
+func (e PartnerError400EmailMissingErrorCode) Valid() bool {
+	switch e {
+	case PartnerError400EmailMissingErrorCodeEMAILMISSING:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PartnerError400FirstNameInvalidErrorCode.
+const (
+	PartnerError400FirstNameInvalidErrorCodeFIRSTNAMEINVALID PartnerError400FirstNameInvalidErrorCode = "FIRST_NAME_INVALID"
+)
+
+// Valid indicates whether the value is a known member of the PartnerError400FirstNameInvalidErrorCode enum.
+func (e PartnerError400FirstNameInvalidErrorCode) Valid() bool {
+	switch e {
+	case PartnerError400FirstNameInvalidErrorCodeFIRSTNAMEINVALID:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PartnerError400FirstNameMissingErrorCode.
+const (
+	PartnerError400FirstNameMissingErrorCodeFIRSTNAMEMISSING PartnerError400FirstNameMissingErrorCode = "FIRST_NAME_MISSING"
+)
+
+// Valid indicates whether the value is a known member of the PartnerError400FirstNameMissingErrorCode enum.
+func (e PartnerError400FirstNameMissingErrorCode) Valid() bool {
+	switch e {
+	case PartnerError400FirstNameMissingErrorCodeFIRSTNAMEMISSING:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PartnerError400LastNameInvalidErrorCode.
+const (
+	PartnerError400LastNameInvalidErrorCodeLASTNAMEINVALID PartnerError400LastNameInvalidErrorCode = "LAST_NAME_INVALID"
+)
+
+// Valid indicates whether the value is a known member of the PartnerError400LastNameInvalidErrorCode enum.
+func (e PartnerError400LastNameInvalidErrorCode) Valid() bool {
+	switch e {
+	case PartnerError400LastNameInvalidErrorCodeLASTNAMEINVALID:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PartnerError400LastNameMissingErrorCode.
+const (
+	PartnerError400LastNameMissingErrorCodeLASTNAMEMISSING PartnerError400LastNameMissingErrorCode = "LAST_NAME_MISSING"
+)
+
+// Valid indicates whether the value is a known member of the PartnerError400LastNameMissingErrorCode enum.
+func (e PartnerError400LastNameMissingErrorCode) Valid() bool {
+	switch e {
+	case PartnerError400LastNameMissingErrorCodeLASTNAMEMISSING:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PartnerError400PasswordInvalidErrorCode.
+const (
+	PartnerError400PasswordInvalidErrorCodePASSWORDINVALID PartnerError400PasswordInvalidErrorCode = "PASSWORD_INVALID"
+)
+
+// Valid indicates whether the value is a known member of the PartnerError400PasswordInvalidErrorCode enum.
+func (e PartnerError400PasswordInvalidErrorCode) Valid() bool {
+	switch e {
+	case PartnerError400PasswordInvalidErrorCodePASSWORDINVALID:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PartnerError400PasswordMissingErrorCode.
+const (
+	PartnerError400PasswordMissingErrorCodePASSWORDMISSING PartnerError400PasswordMissingErrorCode = "PASSWORD_MISSING"
+)
+
+// Valid indicates whether the value is a known member of the PartnerError400PasswordMissingErrorCode enum.
+func (e PartnerError400PasswordMissingErrorCode) Valid() bool {
+	switch e {
+	case PartnerError400PasswordMissingErrorCodePASSWORDMISSING:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PartnerError400PhoneInvalidErrorCode.
+const (
+	PartnerError400PhoneInvalidErrorCodePHONEINVALID PartnerError400PhoneInvalidErrorCode = "PHONE_INVALID"
+)
+
+// Valid indicates whether the value is a known member of the PartnerError400PhoneInvalidErrorCode enum.
+func (e PartnerError400PhoneInvalidErrorCode) Valid() bool {
+	switch e {
+	case PartnerError400PhoneInvalidErrorCodePHONEINVALID:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PartnerError400PhoneMissingErrorCode.
+const (
+	PartnerError400PhoneMissingErrorCodePHONEMISSING PartnerError400PhoneMissingErrorCode = "PHONE_MISSING"
+)
+
+// Valid indicates whether the value is a known member of the PartnerError400PhoneMissingErrorCode enum.
+func (e PartnerError400PhoneMissingErrorCode) Valid() bool {
+	switch e {
+	case PartnerError400PhoneMissingErrorCodePHONEMISSING:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PartnerError400PostalCodeInvalidErrorCode.
+const (
+	PartnerError400PostalCodeInvalidErrorCodePOSTALCODEINVALID PartnerError400PostalCodeInvalidErrorCode = "POSTAL_CODE_INVALID"
+)
+
+// Valid indicates whether the value is a known member of the PartnerError400PostalCodeInvalidErrorCode enum.
+func (e PartnerError400PostalCodeInvalidErrorCode) Valid() bool {
+	switch e {
+	case PartnerError400PostalCodeInvalidErrorCodePOSTALCODEINVALID:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PartnerError400PostalCodeMissingErrorCode.
+const (
+	PartnerError400PostalCodeMissingErrorCodePOSTALCODEMISSING PartnerError400PostalCodeMissingErrorCode = "POSTAL_CODE_MISSING"
+)
+
+// Valid indicates whether the value is a known member of the PartnerError400PostalCodeMissingErrorCode enum.
+func (e PartnerError400PostalCodeMissingErrorCode) Valid() bool {
+	switch e {
+	case PartnerError400PostalCodeMissingErrorCodePOSTALCODEMISSING:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PartnerError403ErrorErrorCode.
+const (
+	PartnerError403ErrorErrorCodeACCOUNTCREATIONLIMITREACHED PartnerError403ErrorErrorCode = "ACCOUNT_CREATION_LIMIT_REACHED"
+)
+
+// Valid indicates whether the value is a known member of the PartnerError403ErrorErrorCode enum.
+func (e PartnerError403ErrorErrorCode) Valid() bool {
+	switch e {
+	case PartnerError403ErrorErrorCodeACCOUNTCREATIONLIMITREACHED:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PartnerError409ErrorErrorCode.
+const (
+	PartnerError409ErrorErrorCodeACCOUNTEXISTS PartnerError409ErrorErrorCode = "ACCOUNT_EXISTS"
+)
+
+// Valid indicates whether the value is a known member of the PartnerError409ErrorErrorCode enum.
+func (e PartnerError409ErrorErrorCode) Valid() bool {
+	switch e {
+	case PartnerError409ErrorErrorCodeACCOUNTEXISTS:
+		return true
+	default:
+		return false
+	}
+}
+
 // PartnerAccount defines model for partnerAccount.
 type PartnerAccount struct {
-	Address    *string              `json:"address,omitempty"`
-	City       *string              `json:"city,omitempty"`
-	Company    *string              `json:"company,omitempty"`
-	Country    *string              `json:"country,omitempty"`
-	Email      *openapi_types.Email `json:"email,omitempty"`
-	FirstName  *string              `json:"first_name,omitempty"`
-	LastName   *string              `json:"last_name,omitempty"`
-	Phone      *string              `json:"phone,omitempty"`
-	PostalCode *string              `json:"postal_code,omitempty"`
-	State      *string              `json:"state,omitempty"`
-	Username   string               `json:"username"`
-	VatNumber  *string              `json:"vat_number,omitempty"`
+	// Address Examples: Some street
+	Address *string `json:"address,omitempty"`
+
+	// City Examples: Some city
+	City *string `json:"city,omitempty"`
+
+	// Company Examples: Some company
+	Company *string `json:"company,omitempty"`
+
+	// Country Examples: FIN
+	Country *string `json:"country,omitempty"`
+
+	// Email Examples: some.user@example.com
+	Email *openapi_types.Email `json:"email,omitempty"`
+
+	// FirstName Examples: Some
+	FirstName *string `json:"first_name,omitempty"`
+
+	// LastName Examples: User
+	LastName *string `json:"last_name,omitempty"`
+
+	// Phone Examples: +358.91234567
+	Phone *string `json:"phone,omitempty"`
+
+	// PostalCode Examples: 00100
+	PostalCode *string `json:"postal_code,omitempty"`
+
+	// State Examples:
+	State *string `json:"state,omitempty"`
+
+	// Username Examples: somename
+	Username string `json:"username"`
+
+	// VatNumber Examples: FI24315605
+	VatNumber *string `json:"vat_number,omitempty"`
 }
 
 // PartnerAccounts defines model for partnerAccounts.
@@ -33,28 +341,56 @@ type PartnerAccounts = []PartnerAccount
 // PartnerCreateAccount defines model for partnerCreateAccount.
 type PartnerCreateAccount struct {
 	ContactDetails *struct {
-		Address    *string             `json:"address,omitempty"`
-		City       *string             `json:"city,omitempty"`
-		Company    *string             `json:"company,omitempty"`
-		Country    string              `json:"country"`
-		Email      openapi_types.Email `json:"email"`
-		FirstName  string              `json:"first_name"`
-		LastName   string              `json:"last_name"`
-		Phone      string              `json:"phone"`
-		PostalCode *string             `json:"postal_code,omitempty"`
+		// Address Examples: Some street
+		Address *string `json:"address,omitempty"`
+
+		// City Examples: Some city
+		City *string `json:"city,omitempty"`
+
+		// Company Examples: Some company
+		Company *string `json:"company,omitempty"`
+
+		// Country Examples: FIN
+		Country string `json:"country"`
+
+		// Email Examples: some.user@example.com
+		Email openapi_types.Email `json:"email"`
+
+		// FirstName Examples: Some
+		FirstName string `json:"first_name"`
+
+		// LastName Examples: User
+		LastName string `json:"last_name"`
+
+		// Phone Examples: +358.91234567
+		Phone string `json:"phone"`
+
+		// PostalCode Examples: 00100
+		PostalCode *string `json:"postal_code,omitempty"`
 
 		// State State or province, if applicable. Required for some countries.
-		State     *string `json:"state,omitempty"`
+		//
+		// Examples:
+		State *string `json:"state,omitempty"`
+
+		// VatNumber Examples: FI24315605
 		VatNumber *string `json:"vat_number,omitempty"`
 	} `json:"contact_details,omitempty"`
+
+	// Password Examples: superSecret123
 	Password string `json:"password"`
+
+	// Username Examples: newuser
 	Username string `json:"username"`
 }
 
 // PartnerError A general error response indicating that the request could not be fulfilled due to a technical issue.
 type PartnerError struct {
 	Error struct {
-		ErrorCode    string `json:"error_code"`
+		// ErrorCode Examples: GENERAL_FAILURE
+		ErrorCode string `json:"error_code"`
+
+		// ErrorMessage Examples: Your request could not be fulfilled due to a technical issue.
 		ErrorMessage string `json:"error_message"`
 	} `json:"error"`
 }
@@ -71,121 +407,216 @@ type PartnerError400_Error struct {
 
 // PartnerError400AddressInvalid The attribute address has an invalid value.
 type PartnerError400AddressInvalid struct {
-	ErrorCode    string `json:"error_code"`
+	ErrorCode PartnerError400AddressInvalidErrorCode `json:"error_code"`
+
+	// ErrorMessage Examples: The attribute address has an invalid value.
 	ErrorMessage string `json:"error_message"`
 }
+
+// PartnerError400AddressInvalidErrorCode defines model for PartnerError400AddressInvalid.ErrorCode.
+type PartnerError400AddressInvalidErrorCode string
 
 // PartnerError400CityInvalid The attribute city has an invalid value.
 type PartnerError400CityInvalid struct {
-	ErrorCode    string `json:"error_code"`
+	ErrorCode PartnerError400CityInvalidErrorCode `json:"error_code"`
+
+	// ErrorMessage Examples: The attribute city has an invalid value.
 	ErrorMessage string `json:"error_message"`
 }
+
+// PartnerError400CityInvalidErrorCode defines model for PartnerError400CityInvalid.ErrorCode.
+type PartnerError400CityInvalidErrorCode string
 
 // PartnerError400CompanyInvalid The attribute company has an invalid value.
 type PartnerError400CompanyInvalid struct {
-	ErrorCode    string `json:"error_code"`
+	ErrorCode PartnerError400CompanyInvalidErrorCode `json:"error_code"`
+
+	// ErrorMessage Examples: The attribute company has an invalid value.
 	ErrorMessage string `json:"error_message"`
 }
+
+// PartnerError400CompanyInvalidErrorCode defines model for PartnerError400CompanyInvalid.ErrorCode.
+type PartnerError400CompanyInvalidErrorCode string
 
 // PartnerError400CountryInvalid The attribute country has an invalid value.
 type PartnerError400CountryInvalid struct {
-	ErrorCode    string `json:"error_code"`
+	ErrorCode PartnerError400CountryInvalidErrorCode `json:"error_code"`
+
+	// ErrorMessage Examples: The attribute country has an invalid value.
 	ErrorMessage string `json:"error_message"`
 }
+
+// PartnerError400CountryInvalidErrorCode defines model for PartnerError400CountryInvalid.ErrorCode.
+type PartnerError400CountryInvalidErrorCode string
 
 // PartnerError400CountryMissing The attribute country is missing from the request.
 type PartnerError400CountryMissing struct {
-	ErrorCode    string `json:"error_code"`
+	ErrorCode PartnerError400CountryMissingErrorCode `json:"error_code"`
+
+	// ErrorMessage Examples: The attribute country is missing.
 	ErrorMessage string `json:"error_message"`
 }
+
+// PartnerError400CountryMissingErrorCode defines model for PartnerError400CountryMissing.ErrorCode.
+type PartnerError400CountryMissingErrorCode string
 
 // PartnerError400EmailInvalid The attribute email has an invalid value.
 type PartnerError400EmailInvalid struct {
-	ErrorCode    string `json:"error_code"`
+	ErrorCode PartnerError400EmailInvalidErrorCode `json:"error_code"`
+
+	// ErrorMessage Examples: The attribute email has an invalid value.
 	ErrorMessage string `json:"error_message"`
 }
+
+// PartnerError400EmailInvalidErrorCode defines model for PartnerError400EmailInvalid.ErrorCode.
+type PartnerError400EmailInvalidErrorCode string
 
 // PartnerError400EmailMissing The attribute email is missing from the request.
 type PartnerError400EmailMissing struct {
-	ErrorCode    string `json:"error_code"`
+	ErrorCode PartnerError400EmailMissingErrorCode `json:"error_code"`
+
+	// ErrorMessage Examples: The attribute email is missing.
 	ErrorMessage string `json:"error_message"`
 }
+
+// PartnerError400EmailMissingErrorCode defines model for PartnerError400EmailMissing.ErrorCode.
+type PartnerError400EmailMissingErrorCode string
 
 // PartnerError400FirstNameInvalid The attribute first_name has an invalid value.
 type PartnerError400FirstNameInvalid struct {
-	ErrorCode    string `json:"error_code"`
+	ErrorCode PartnerError400FirstNameInvalidErrorCode `json:"error_code"`
+
+	// ErrorMessage Examples: The attribute first_name has an invalid value.
 	ErrorMessage string `json:"error_message"`
 }
+
+// PartnerError400FirstNameInvalidErrorCode defines model for PartnerError400FirstNameInvalid.ErrorCode.
+type PartnerError400FirstNameInvalidErrorCode string
 
 // PartnerError400FirstNameMissing The attribute first_name is missing from the request.
 type PartnerError400FirstNameMissing struct {
-	ErrorCode    string `json:"error_code"`
+	ErrorCode PartnerError400FirstNameMissingErrorCode `json:"error_code"`
+
+	// ErrorMessage Examples: The attribute first_name is missing.
 	ErrorMessage string `json:"error_message"`
 }
+
+// PartnerError400FirstNameMissingErrorCode defines model for PartnerError400FirstNameMissing.ErrorCode.
+type PartnerError400FirstNameMissingErrorCode string
 
 // PartnerError400LastNameInvalid The attribute last_name has an invalid value.
 type PartnerError400LastNameInvalid struct {
-	ErrorCode    string `json:"error_code"`
+	ErrorCode PartnerError400LastNameInvalidErrorCode `json:"error_code"`
+
+	// ErrorMessage Examples: The attribute last_name has an invalid value.
 	ErrorMessage string `json:"error_message"`
 }
+
+// PartnerError400LastNameInvalidErrorCode defines model for PartnerError400LastNameInvalid.ErrorCode.
+type PartnerError400LastNameInvalidErrorCode string
 
 // PartnerError400LastNameMissing The attribute last_name is missing from the request.
 type PartnerError400LastNameMissing struct {
-	ErrorCode    string `json:"error_code"`
+	ErrorCode PartnerError400LastNameMissingErrorCode `json:"error_code"`
+
+	// ErrorMessage Examples: The attribute last_name is missing.
 	ErrorMessage string `json:"error_message"`
 }
+
+// PartnerError400LastNameMissingErrorCode defines model for PartnerError400LastNameMissing.ErrorCode.
+type PartnerError400LastNameMissingErrorCode string
 
 // PartnerError400PasswordInvalid The attribute password has an invalid value.
 type PartnerError400PasswordInvalid struct {
-	ErrorCode    string `json:"error_code"`
+	ErrorCode PartnerError400PasswordInvalidErrorCode `json:"error_code"`
+
+	// ErrorMessage Examples: The attribute password has an invalid value.
 	ErrorMessage string `json:"error_message"`
 }
+
+// PartnerError400PasswordInvalidErrorCode defines model for PartnerError400PasswordInvalid.ErrorCode.
+type PartnerError400PasswordInvalidErrorCode string
 
 // PartnerError400PasswordMissing The attribute password is missing from the request.
 type PartnerError400PasswordMissing struct {
-	ErrorCode    string `json:"error_code"`
+	ErrorCode PartnerError400PasswordMissingErrorCode `json:"error_code"`
+
+	// ErrorMessage Examples: The attribute password is missing.
 	ErrorMessage string `json:"error_message"`
 }
+
+// PartnerError400PasswordMissingErrorCode defines model for PartnerError400PasswordMissing.ErrorCode.
+type PartnerError400PasswordMissingErrorCode string
 
 // PartnerError400PhoneInvalid The attribute phone has an invalid value.
 type PartnerError400PhoneInvalid struct {
-	ErrorCode    string `json:"error_code"`
+	ErrorCode PartnerError400PhoneInvalidErrorCode `json:"error_code"`
+
+	// ErrorMessage Examples: The attribute phone has an invalid value.
 	ErrorMessage string `json:"error_message"`
 }
+
+// PartnerError400PhoneInvalidErrorCode defines model for PartnerError400PhoneInvalid.ErrorCode.
+type PartnerError400PhoneInvalidErrorCode string
 
 // PartnerError400PhoneMissing The attribute phone is missing from the request.
 type PartnerError400PhoneMissing struct {
-	ErrorCode    string `json:"error_code"`
+	ErrorCode PartnerError400PhoneMissingErrorCode `json:"error_code"`
+
+	// ErrorMessage Examples: The attribute phone is missing.
 	ErrorMessage string `json:"error_message"`
 }
+
+// PartnerError400PhoneMissingErrorCode defines model for PartnerError400PhoneMissing.ErrorCode.
+type PartnerError400PhoneMissingErrorCode string
 
 // PartnerError400PostalCodeInvalid The attribute postal_code has an invalid value.
 type PartnerError400PostalCodeInvalid struct {
-	ErrorCode    string `json:"error_code"`
+	ErrorCode PartnerError400PostalCodeInvalidErrorCode `json:"error_code"`
+
+	// ErrorMessage Examples: The attribute postal_code has an invalid value.
 	ErrorMessage string `json:"error_message"`
 }
 
+// PartnerError400PostalCodeInvalidErrorCode defines model for PartnerError400PostalCodeInvalid.ErrorCode.
+type PartnerError400PostalCodeInvalidErrorCode string
+
 // PartnerError400PostalCodeMissing The attribute postal_code is missing from the request.
 type PartnerError400PostalCodeMissing struct {
-	ErrorCode    string `json:"error_code"`
+	ErrorCode PartnerError400PostalCodeMissingErrorCode `json:"error_code"`
+
+	// ErrorMessage Examples: The attribute postal_code is missing.
 	ErrorMessage string `json:"error_message"`
 }
+
+// PartnerError400PostalCodeMissingErrorCode defines model for PartnerError400PostalCodeMissing.ErrorCode.
+type PartnerError400PostalCodeMissingErrorCode string
 
 // PartnerError403 403 Forbidden errors for partner account creation.
 type PartnerError403 struct {
 	Error struct {
-		ErrorCode    string `json:"error_code"`
+		ErrorCode PartnerError403ErrorErrorCode `json:"error_code"`
+
+		// ErrorMessage Examples: Partner account creation limit has been reached.
 		ErrorMessage string `json:"error_message"`
 	} `json:"error"`
 }
 
+// PartnerError403ErrorErrorCode defines model for PartnerError403.Error.ErrorCode.
+type PartnerError403ErrorErrorCode string
+
 // PartnerError409 409 Conflict errors for partner account creation.
 type PartnerError409 struct {
 	Error struct {
-		ErrorCode    string `json:"error_code"`
+		ErrorCode PartnerError409ErrorErrorCode `json:"error_code"`
+
+		// ErrorMessage Examples: An account using the given username already exists.
 		ErrorMessage string `json:"error_message"`
 	} `json:"error"`
 }
+
+// PartnerError409ErrorErrorCode defines model for PartnerError409.Error.ErrorCode.
+type PartnerError409ErrorErrorCode string
 
 // CreatePartnerAccount201 defines model for createPartnerAccount201.
 type CreatePartnerAccount201 = PartnerAccount

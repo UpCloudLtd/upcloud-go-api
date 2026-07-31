@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/OAI/spec.openapis.org/refs/heads/main/overlay/1.0/schema/2024-10-22
+overlay: 1.0.0
+x-speakeasy-jsonpath: rfc9535
+info:
+  title: Overlay for oapi-codegen compatibility. Using specific schema references to keep the generated code as consistent as possible.
+  version: 0.0.2
+actions:
+  # Replace loadBalancerFrontend.mode with a $ref for deduplication.
+  # loadBalancerFrontend.mode has an inline enum that collides with the loadBalancerFrontendMode schema
+  - target: "$.components.schemas.loadBalancerFrontend.properties.mode"
+    update:
+      $ref: "#/components/schemas/loadBalancerFrontendMode"
+  # Replace loadBalancerMember.type with a $ref for deduplication.
+  # loadBalancerMember.type has an inline enum that collides with the loadBalancerMemberType schema
+  - target: "$.components.schemas.loadBalancerMember.properties.type"
+    update:
+      $ref: "#/components/schemas/loadBalancerMemberType"
+  # Remove integer and null types from databaseServicePropertiesOpensearch.cluster_filecache_remote_data_ratio.
+  # Using a number type with nullable true allows for float values and null.
+  - target: "$.components.schemas.databaseServicePropertiesOpensearch.properties.cluster_filecache_remote_data_ratio"
+    update:
+      type: number
+      nullable: true
+  # Remove null from databaseServicePropertiesPg.backup_interval_hours enum array.
+  - target: "$.components.schemas.databaseServicePropertiesPg.properties.backup_interval_hours.enum[?(@ == null)]"
+    remove: true
+  # Update databaseServicePropertiesPg.backup_interval_hours to be nullable.
+  - target: "$.components.schemas.databaseServicePropertiesPg.properties.backup_interval_hours"
+    update:
+      nullable: true

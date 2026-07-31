@@ -334,37 +334,26 @@ func (e ServerState) Valid() bool {
 
 // CreateServer Server creation parameters
 type CreateServer struct {
-	// Server Example: {"hostname":"my-server.example.com","storage_devices":{"storage_device":[{"action":"clone","storage":"01234567-89ab-cdef-0123-456789abcdef","title":"Operating System"}]},"title":"My Server","zone":"fi-hel1"}
 	Server struct {
 		// AvoidHost Encoded host id
 		AvoidHost *ServerEncodedHostId `json:"avoid_host,omitempty"`
 
 		// BootOrder Boot device order (comma-separated list)
-		//
-		// Example: cdrom,disk
 		BootOrder *ServerBootOrder `json:"boot_order,omitempty"`
 
 		// CloneSource UUID of server or storage to clone from
-		//
-		// Example: 01234567-89ab-cdef-0123-456789abcdef
 		CloneSource *ServerCloneSource `json:"clone_source,omitempty"`
 
 		// CoreNumber Number of CPU cores
-		//
-		// Example: 2
 		CoreNumber *ServerCoreNumber `json:"core_number,omitempty"`
 
 		// Firewall Boolean value represented as on/off
-		//
-		// Example: on
 		Firewall *ServerBooleanOnoff `json:"firewall,omitempty"`
 
 		// Host Encoded host id
 		Host *ServerEncodedHostId `json:"host,omitempty"`
 
 		// Hostname Server hostname
-		//
-		// Example: example.upcloud.com
 		Hostname ServerHostname `json:"hostname"`
 
 		// IpAddresses IP addresses assigned to the server
@@ -377,26 +366,18 @@ type CreateServer struct {
 		LoginUser *ServerLoginUser `json:"login_user,omitempty"`
 
 		// MemoryAmount Amount of memory in MB
-		//
-		// Example: 2048
 		MemoryAmount *ServerMemoryAmount `json:"memory_amount,omitempty"`
 
 		// Networking Network configuration for the server
 		Networking *ServerNetworking `json:"networking,omitempty"`
 
 		// NicModel Network interface card model
-		//
-		// Example: virtio
 		NicModel *ServerNicModel `json:"nic_model,omitempty"`
 
 		// PasswordDelivery Password delivery method
-		//
-		// Example: email
 		PasswordDelivery *ServerPasswordDelivery `json:"password_delivery,omitempty"`
 
 		// Plan Server plan name
-		//
-		// Example: 2xCPU-2GB
 		Plan *ServerPlan `json:"plan,omitempty"`
 
 		// ServerGroup UUID string or null
@@ -409,49 +390,38 @@ type CreateServer struct {
 		StorageDevices ServerStorageDevices `json:"storage_devices"`
 
 		// StorageSizeFactor Storage size multiplication factor
-		//
-		// Example: 1.0
 		StorageSizeFactor *ServerStorageSizeFactor `json:"storage_size_factor,omitempty"`
 
 		// Timezone Server timezone
-		//
-		// Example: UTC
 		Timezone *ServerTimezone `json:"timezone,omitempty"`
 
 		// Title Server title
-		//
-		// Example: My Server
 		Title ServerTitle `json:"title"`
 
 		// UserData User data (cloud-init script) to run on server creation
 		UserData *ServerUserData `json:"user_data,omitempty"`
 
 		// VideoModel Video adapter model
-		//
-		// Example: vga
 		VideoModel *ServerVideoModel `json:"video_model,omitempty"`
 
 		// Vnc VNC enabled status (yes/no)
-		//
-		// Example: yes
 		Vnc *ServerVnc `json:"vnc,omitempty"`
 
 		// VncKeymap VNC keyboard layout
-		//
-		// Example: en-us
 		VncKeymap *ServerVncKeymap `json:"vnc_keymap,omitempty"`
 
 		// VncPassword VNC password
 		VncPassword *ServerVncPassword `json:"vnc_password,omitempty"`
 
 		// Zone Zone identifier
+		//
+		// Examples: fi-hel1, de-fra1, us-nyc1
 		Zone ServerZone `json:"zone"`
 	} `json:"server"`
 }
 
 // CreateServerResponse Response schema for creating a server
 type CreateServerResponse struct {
-	// Server Example: {"hostname":"my-server.example.com","state":"maintenance","storage_devices":{"storage_device":[{"storage":"01234567-89ab-cdef-0123-456789abcdef","title":"Operating System"}]},"title":"My Server","uuid":"00798b85-efdc-41ca-8021-f6ef457b8531","zone":"fi-hel1"}
 	Server struct {
 		// AvoidHost Encoded host id
 		AvoidHost   *ServerEncodedHostId `json:"avoid_host,omitempty"`
@@ -460,8 +430,6 @@ type CreateServerResponse struct {
 		CoreNumber  *string              `json:"core_number,omitempty"`
 
 		// Firewall Boolean value represented as on/off
-		//
-		// Example: on
 		Firewall *ServerBooleanOnoff `json:"firewall,omitempty"`
 
 		// Host Encoded host id
@@ -470,8 +438,6 @@ type CreateServerResponse struct {
 		IpAddresses *struct {
 			IpAddress []struct {
 				// Access Network access level
-				//
-				// Example: public
 				Access ServerAccess   `json:"access"`
 				Family ServerIpFamily `json:"family"`
 				VlanId *string        `json:"vlan_id,omitempty"`
@@ -482,8 +448,6 @@ type CreateServerResponse struct {
 		} `json:"labels,omitempty"`
 		LoginUser *struct {
 			// CreatePassword Boolean value represented as yes/no
-			//
-			// Example: yes
 			CreatePassword *ServerBooleanYesno `json:"create_password,omitempty"`
 			SshKeys        *struct {
 				SshKey *[]string `json:"ssh_key,omitempty"`
@@ -496,13 +460,13 @@ type CreateServerResponse struct {
 		Networking *ServerNetworking `json:"networking,omitempty"`
 
 		// NicModel Network interface card model
-		//
-		// Example: virtio
 		NicModel         *ServerNicModel `json:"nic_model,omitempty"`
 		Password         *string         `json:"password,omitempty"`
 		PasswordDelivery *string         `json:"password_delivery,omitempty"`
 
 		// Plan Server plan identifier
+		//
+		// Examples: 1xCPU-1GB, DEV-1xCPU-4GB, CLOUDNATIVE-1xCPU-8GB, GPU-12xCPU-128GB-2xL40S
 		Plan *ServerPlanName `json:"plan,omitempty"`
 
 		// ServerGroup UUID string or null
@@ -532,73 +496,51 @@ type CreateServerResponse struct {
 		VncPassword       *string `json:"vnc_password,omitempty"`
 
 		// Zone Zone identifier
+		//
+		// Examples: fi-hel1, de-fra1, us-nyc1
 		Zone ServerZone `json:"zone"`
 	} `json:"server"`
 }
 
 // Server Server object returned in responses
-//
-// Example: {"server":{"boot_order":"cdrom,disk","core_number":2,"created":1705320000,"hostname":"example1","license":0,"memory_amount":2048,"os_type":"ubuntu","plan":"2xCPU-2GB","plan_ipv4_bytes":0,"plan_ipv6_bytes":0,"state":"started","tags":{"tag":[]},"timezone":"UTC","title":"First example server","uuid":"007bf7bd-e3cf-4a10-bf01-4251dc7f3b65","zone":"fi-hel1"}}
 type Server struct {
 	// Server Detailed information about a server
-	//
-	// Example: {"boot_order":"cdrom,disk","core_number":2,"created":1705320000,"hostname":"example1","license":0,"memory_amount":2048,"os_type":"ubuntu","plan":"2xCPU-2GB","plan_ipv4_bytes":0,"plan_ipv6_bytes":0,"state":"started","tags":{"tag":[]},"timezone":"UTC","title":"First example server","uuid":"007bf7bd-e3cf-4a10-bf01-4251dc7f3b65","zone":"fi-hel1"}
 	Server ServerDetails `json:"server"`
 }
 
 // ServerAccess Network access level
-//
-// Example: public
 type ServerAccess string
 
 // ServerBooleanOnoff Boolean value represented as on/off
-//
-// Example: on
 type ServerBooleanOnoff string
 
 // ServerBooleanYesno Boolean value represented as yes/no
-//
-// Example: yes
 type ServerBooleanYesno string
 
 // ServerBootOrder Boot device order (comma-separated list)
-//
-// Example: cdrom,disk
 type ServerBootOrder = string
 
 // ServerCloneSource UUID of server or storage to clone from
-//
-// Example: 01234567-89ab-cdef-0123-456789abcdef
 type ServerCloneSource = string
 
 // ServerCoreNumber Number of CPU cores
-//
-// Example: 2
 type ServerCoreNumber = int32
 
 // ServerCreated Creation timestamp (Unix epoch time)
 type ServerCreated = int64
 
 // ServerDetails Detailed information about a server
-//
-// Example: {"boot_order":"cdrom,disk","core_number":2,"created":1705320000,"hostname":"example1","license":0,"memory_amount":2048,"os_type":"ubuntu","plan":"2xCPU-2GB","plan_ipv4_bytes":0,"plan_ipv6_bytes":0,"state":"started","tags":{"tag":[]},"timezone":"UTC","title":"First example server","uuid":"007bf7bd-e3cf-4a10-bf01-4251dc7f3b65","zone":"fi-hel1"}
 type ServerDetails struct {
 	// BootOrder Boot device order (comma-separated list)
-	//
-	// Example: cdrom,disk
 	BootOrder *ServerBootOrder `json:"boot_order,omitempty"`
 
 	// CoreNumber Number of CPU cores
-	//
-	// Example: 2
 	CoreNumber ServerCoreNumber `json:"core_number"`
 
 	// Created Creation timestamp (Unix epoch time)
 	Created ServerCreated `json:"created"`
 
 	// Firewall Boolean value represented as on/off
-	//
-	// Example: on
 	Firewall *ServerBooleanOnoff `json:"firewall,omitempty"`
 
 	// Host Encoded host id
@@ -612,24 +554,20 @@ type ServerDetails struct {
 	License int64 `json:"license"`
 
 	// MemoryAmount Amount of memory in MB
-	//
-	// Example: 2048
 	MemoryAmount ServerMemoryAmount `json:"memory_amount"`
 
 	// NicModel Network interface card model
-	//
-	// Example: virtio
 	NicModel *ServerNicModel `json:"nic_model,omitempty"`
 
 	// OsType Operating system type
-	//
-	// Example: ubuntu
 	OsType *ServerOsType `json:"os_type,omitempty"`
 
 	// Password Only present on server create
 	Password *string `json:"password,omitempty"`
 
 	// Plan Server plan identifier
+	//
+	// Examples: 1xCPU-1GB, DEV-1xCPU-4GB, CLOUDNATIVE-1xCPU-8GB, GPU-12xCPU-128GB-2xL40S
 	Plan *ServerPlanName `json:"plan,omitempty"`
 
 	// PlanIpv4Bytes Plan IPv4 traffic limit in bytes
@@ -648,8 +586,6 @@ type ServerDetails struct {
 	SimpleBackup *ServerSimpleBackup `json:"simple_backup,omitempty"`
 
 	// State Current state of the server
-	//
-	// Example: started
 	State ServerState `json:"state"`
 
 	// Tags tags can be an empty array or an object with a tag array
@@ -663,11 +599,11 @@ type ServerDetails struct {
 	Username *ServerUserName `json:"username,omitempty"`
 
 	// Uuid Universally unique identifier
-	//
-	// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 	Uuid ServerUuid `json:"uuid"`
 
 	// Zone Zone identifier
+	//
+	// Examples: fi-hel1, de-fra1, us-nyc1
 	Zone                 ServerZone             `json:"zone"`
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
@@ -678,49 +614,58 @@ type ServerEncodedHostId = int64
 // ServerError A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ServerError struct {
 	Error struct {
-		ErrorCode    string `json:"error_code"`
+		// ErrorCode Examples: GENERAL_FAILURE
+		ErrorCode string `json:"error_code"`
+
+		// ErrorMessage Examples: Your request could not be fulfilled due to a technical issue.
 		ErrorMessage string `json:"error_message"`
 	} `json:"error"`
 }
 
 // ServerError400 Bad request error
 type ServerError400 struct {
-	// Error Example: {"code":"REQUEST_INVALID","message":"Invalid request parameters or malformed request body"}
 	Error struct {
-		Code    ServerError400ErrorCode `json:"code"`
-		Message string                  `json:"message"`
+		// Code Examples: SERVER_INVALID
+		Code ServerError400ErrorCode `json:"code"`
+
+		// Message Examples: The server UUID is invalid
+		Message string `json:"message"`
 	} `json:"error"`
 }
 
-// ServerError400ErrorCode defines model for ServerError400.Error.Code.
+// ServerError400ErrorCode Examples: SERVER_INVALID
 type ServerError400ErrorCode string
 
 // ServerError403 Forbidden error
 type ServerError403 struct {
-	// Error Example: {"code":"SERVER_FORBIDDEN","message":"Access denied or insufficient permissions"}
 	Error struct {
-		Code    ServerError403ErrorCode `json:"code"`
-		Message string                  `json:"message"`
+		// Code Examples: SERVER_FORBIDDEN
+		Code ServerError403ErrorCode `json:"code"`
+
+		// Message Examples: Access denied or insufficient permissions
+		Message string `json:"message"`
 	} `json:"error"`
 }
 
-// ServerError403ErrorCode defines model for ServerError403.Error.Code.
+// ServerError403ErrorCode Examples: SERVER_FORBIDDEN
 type ServerError403ErrorCode string
 
 // ServerError404 defines model for serverError404.
 type ServerError404 struct {
 	Error struct {
-		Code    ServerError404ErrorCode `json:"code"`
-		Message string                  `json:"message"`
+		// Code Examples: SERVER_NOT_FOUND
+		Code ServerError404ErrorCode `json:"code"`
+
+		// Message Examples: The server UUID does not exist
+		Message string `json:"message"`
 	} `json:"error"`
 }
 
-// ServerError404ErrorCode defines model for ServerError404.Error.Code.
+// ServerError404ErrorCode Examples: SERVER_NOT_FOUND
 type ServerError404ErrorCode string
 
 // ServerError409 Conflict error
 type ServerError409 struct {
-	// Error Example: {"code":"INVALID_UUID","message":"Invalid UUID provided"}
 	Error struct {
 		Code    ServerError409ErrorCode `json:"code"`
 		Message string                  `json:"message"`
@@ -731,15 +676,11 @@ type ServerError409 struct {
 type ServerError409ErrorCode string
 
 // ServerHostname Server hostname
-//
-// Example: example.upcloud.com
 type ServerHostname = string
 
 // ServerInterface Network interface
 type ServerInterface struct {
 	// Bootable Boolean value represented as yes/no
-	//
-	// Example: yes
 	Bootable    *ServerBooleanYesno `json:"bootable,omitempty"`
 	Index       *int32              `json:"index,omitempty"`
 	IpAddresses *struct {
@@ -750,18 +691,12 @@ type ServerInterface struct {
 	Mac *ServerMacAddress `json:"mac,omitempty"`
 
 	// Network Universally unique identifier
-	//
-	// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 	Network ServerUuid `json:"network"`
 
 	// SourceIpFiltering Boolean value represented as yes/no
-	//
-	// Example: yes
 	SourceIpFiltering *ServerBooleanYesno `json:"source_ip_filtering,omitempty"`
 
 	// Type Network access type
-	//
-	// Example: public
 	Type *ServerNetworkType `json:"type,omitempty"`
 }
 
@@ -771,14 +706,10 @@ type ServerInterfaceIpAddress struct {
 	Address ServerIpAddress `json:"address"`
 
 	// DhcpProvided Boolean value represented as yes/no
-	//
-	// Example: yes
 	DhcpProvided *ServerBooleanYesno `json:"dhcp_provided,omitempty"`
 	Family       ServerIpFamily      `json:"family"`
 
 	// Floating Boolean value represented as yes/no
-	//
-	// Example: yes
 	Floating ServerBooleanYesno `json:"floating"`
 
 	// ReleasePolicy IP Release policy defines what happens to the address when the referencing resource is deleted
@@ -800,8 +731,6 @@ type ServerIpAddress1 = string
 type ServerIpAddresses struct {
 	IpAddress []struct {
 		// Access Network access type
-		//
-		// Example: public
 		Access ServerNetworkType `json:"access"`
 		Family ServerIpFamily    `json:"family"`
 		VlanId *string           `json:"vlan_id,omitempty"`
@@ -815,8 +744,6 @@ type ServerIpFamily string
 type ServerIpReleasePolicy string
 
 // ServerLabel A key/value pair to label and categorize resources
-//
-// Example: {"key":"env","value":"production"}
 type ServerLabel struct {
 	Key   string `json:"key"`
 	Value string `json:"value"`
@@ -830,8 +757,6 @@ type ServerLabels struct {
 // ServerLoginUser Login user configuration for server creation
 type ServerLoginUser struct {
 	// CreatePassword Boolean value represented as yes/no
-	//
-	// Example: yes
 	CreatePassword *ServerBooleanYesno `json:"create_password,omitempty"`
 	SshKeys        *struct {
 		SshKey *[]string `json:"ssh_key,omitempty"`
@@ -843,13 +768,9 @@ type ServerLoginUser struct {
 type ServerMacAddress = string
 
 // ServerMemoryAmount Amount of memory in MB
-//
-// Example: 2048
 type ServerMemoryAmount = int32
 
 // ServerNetworkType Network access type
-//
-// Example: public
 type ServerNetworkType string
 
 // ServerNetworking Network configuration for the server
@@ -860,26 +781,20 @@ type ServerNetworking struct {
 }
 
 // ServerNicModel Network interface card model
-//
-// Example: virtio
 type ServerNicModel string
 
 // ServerOsType Operating system type
-//
-// Example: ubuntu
 type ServerOsType string
 
 // ServerPasswordDelivery Password delivery method
-//
-// Example: email
 type ServerPasswordDelivery = string
 
 // ServerPlan Server plan name
-//
-// Example: 2xCPU-2GB
 type ServerPlan = string
 
 // ServerPlanName Server plan identifier
+//
+// Examples: 1xCPU-1GB, DEV-1xCPU-4GB, CLOUDNATIVE-1xCPU-8GB, GPU-12xCPU-128GB-2xL40S
 type ServerPlanName = string
 
 // ServerServerGroup UUID string or null
@@ -889,8 +804,6 @@ type ServerServerGroup = string
 type ServerSimpleBackup = string
 
 // ServerState Current state of the server
-//
-// Example: started
 type ServerState string
 
 // ServerStorageDevices Storage devices attached to the server
@@ -908,8 +821,6 @@ type ServerStorageDevices struct {
 }
 
 // ServerStorageSizeFactor Storage size multiplication factor
-//
-// Example: 1.0
 type ServerStorageSizeFactor = string
 
 // ServerTags tags can be an empty array or an object with a tag array
@@ -926,13 +837,9 @@ type ServerTags1 struct {
 }
 
 // ServerTimezone Server timezone
-//
-// Example: UTC
 type ServerTimezone = string
 
 // ServerTitle Server title
-//
-// Example: My Server
 type ServerTitle = string
 
 // ServerUserData User data (cloud-init script) to run on server creation
@@ -942,29 +849,23 @@ type ServerUserData = string
 type ServerUserName = string
 
 // ServerUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type ServerUuid = openapi_types.UUID
 
 // ServerVideoModel Video adapter model
-//
-// Example: vga
 type ServerVideoModel = string
 
 // ServerVnc VNC enabled status (yes/no)
-//
-// Example: yes
 type ServerVnc = string
 
 // ServerVncKeymap VNC keyboard layout
-//
-// Example: en-us
 type ServerVncKeymap = string
 
 // ServerVncPassword VNC password
 type ServerVncPassword = string
 
 // ServerZone Zone identifier
+//
+// Examples: fi-hel1, de-fra1, us-nyc1
 type ServerZone = string
 
 // CreateServer202 Response schema for creating a server
@@ -986,8 +887,6 @@ type CreateServer409 = ServerError409
 type CreateServerDefault = ServerError
 
 // ModifyServer202 Server object returned in responses
-//
-// Example: {"server":{"boot_order":"cdrom,disk","core_number":2,"created":1705320000,"hostname":"example1","license":0,"memory_amount":2048,"os_type":"ubuntu","plan":"2xCPU-2GB","plan_ipv4_bytes":0,"plan_ipv6_bytes":0,"state":"started","tags":{"tag":[]},"timezone":"UTC","title":"First example server","uuid":"007bf7bd-e3cf-4a10-bf01-4251dc7f3b65","zone":"fi-hel1"}}
 type ModifyServer202 = Server
 
 // ModifyServer400 Bad request error
@@ -1006,8 +905,6 @@ type ModifyServerDefault = ServerError
 type CreateServerRequestBody = CreateServer
 
 // ModifyServer Server object returned in responses
-//
-// Example: {"server":{"boot_order":"cdrom,disk","core_number":2,"created":1705320000,"hostname":"example1","license":0,"memory_amount":2048,"os_type":"ubuntu","plan":"2xCPU-2GB","plan_ipv4_bytes":0,"plan_ipv6_bytes":0,"state":"started","tags":{"tag":[]},"timezone":"UTC","title":"First example server","uuid":"007bf7bd-e3cf-4a10-bf01-4251dc7f3b65","zone":"fi-hel1"}}
 type ModifyServer = Server
 
 // CreateServerJSONRequestBody defines body for CreateServer for application/json ContentType.

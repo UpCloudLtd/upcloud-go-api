@@ -40,20 +40,23 @@ func (e ZoneBooleanYesno) Valid() bool {
 }
 
 // Zone Zone identifier
+//
+// Examples: fi-hel1, de-fra1, us-nyc1
 type Zone = string
 
 // ZoneBoolean01 defines model for zoneBoolean01.
 type ZoneBoolean01 int
 
 // ZoneBooleanYesno Boolean value represented as yes/no
-//
-// Example: yes
 type ZoneBooleanYesno string
 
 // ZoneError A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ZoneError struct {
 	Error struct {
-		ErrorCode    string `json:"error_code"`
+		// ErrorCode Examples: GENERAL_FAILURE
+		ErrorCode string `json:"error_code"`
+
+		// ErrorMessage Examples: Your request could not be fulfilled due to a technical issue.
 		ErrorMessage string `json:"error_message"`
 	} `json:"error"`
 }
@@ -80,17 +83,19 @@ type Zones struct {
 			Description string `json:"description"`
 
 			// Id Zone identifier
+			//
+			// Examples: fi-hel1, de-fra1, us-nyc1
 			Id Zone `json:"id"`
 
 			// Public Boolean value represented as yes/no
-			//
-			// Example: yes
 			Public ZoneBooleanYesno `json:"public"`
 		} `json:"zone"`
 	} `json:"zones"`
 }
 
 // ListZoneVLANsZone Zone identifier
+//
+// Examples: fi-hel1, de-fra1, us-nyc1
 type ListZoneVLANsZone = Zone
 
 // ListZoneVLANs200 Schema for zone VLANs

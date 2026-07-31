@@ -100,8 +100,6 @@ type IpAddress1 = string
 type IpAddressAccountId = int
 
 // IpAddressBooleanYesno Boolean value represented as yes/no
-//
-// Example: yes
 type IpAddressBooleanYesno string
 
 // IpAddressDelegatedToAccountId Attached to a resource that is delegated to another account. Null means not delegated.
@@ -110,8 +108,6 @@ type IpAddressDelegatedToAccountId = int
 // IpAddressDetails Details of an IP address
 type IpAddressDetails struct {
 	// Access Network access type
-	//
-	// Example: public
 	Access    IpAddressNetworkType `json:"access"`
 	AccountId *IpAddressAccountId  `json:"account_id,omitempty"`
 
@@ -125,16 +121,12 @@ type IpAddressDetails struct {
 	Family *IpAddressIpFamily `json:"family,omitempty"`
 
 	// Floating Boolean value represented as yes/no
-	//
-	// Example: yes
 	Floating *IpAddressBooleanYesno `json:"floating,omitempty"`
 
 	// Mac MAC address
 	Mac *IpAddressMacAddress `json:"mac,omitempty"`
 
 	// PartOfPlan Boolean value represented as yes/no
-	//
-	// Example: yes
 	PartOfPlan *IpAddressBooleanYesno `json:"part_of_plan,omitempty"`
 	PtrRecord  *string                `json:"ptr_record,omitempty"`
 
@@ -142,18 +134,21 @@ type IpAddressDetails struct {
 	ReleasePolicy *IpAddressIpReleasePolicy `json:"release_policy,omitempty"`
 
 	// Server Universally unique identifier
-	//
-	// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 	Server *IpAddressUuid `json:"server,omitempty"`
 
 	// Zone Zone identifier
+	//
+	// Examples: fi-hel1, de-fra1, us-nyc1
 	Zone *IpAddressZone `json:"zone,omitempty"`
 }
 
 // IpAddressError A general error response indicating that the request could not be fulfilled due to a technical issue.
 type IpAddressError struct {
 	Error struct {
-		ErrorCode    string `json:"error_code"`
+		// ErrorCode Examples: GENERAL_FAILURE
+		ErrorCode string `json:"error_code"`
+
+		// ErrorMessage Examples: Your request could not be fulfilled due to a technical issue.
 		ErrorMessage string `json:"error_message"`
 	} `json:"error"`
 }
@@ -168,8 +163,6 @@ type IpAddressIpReleasePolicy string
 type IpAddressMacAddress = string
 
 // IpAddressNetworkType Network access type
-//
-// Example: public
 type IpAddressNetworkType string
 
 // IpAddressRequest Request schema for IP address operations
@@ -185,11 +178,11 @@ type IpAddressResponse struct {
 }
 
 // IpAddressUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type IpAddressUuid = openapi_types.UUID
 
 // IpAddressZone Zone identifier
+//
+// Examples: fi-hel1, de-fra1, us-nyc1
 type IpAddressZone = string
 
 // IpAddressesResponse Request schema for IP address operations
@@ -204,8 +197,6 @@ type IpAddressesResponse struct {
 type ModifyIpAddressRequestV10 struct {
 	IpAddress struct {
 		// Floating Boolean value represented as yes/no
-		//
-		// Example: yes
 		Floating  *IpAddressBooleanYesno `json:"floating,omitempty"`
 		PtrRecord string                 `json:"ptr_record"`
 		VlanId    *string                `json:"vlan_id,omitempty"`

@@ -27,6 +27,21 @@ func (e AccountTokensProblem400Status) Valid() bool {
 	}
 }
 
+// Defines values for AccountTokensProblem400Type.
+const (
+	AccountTokensProblem400TypeHttpsdevelopersUpcloudCom13errorsERRORBADREQUEST AccountTokensProblem400Type = "https://developers.upcloud.com/1.3/errors#ERROR_BAD_REQUEST"
+)
+
+// Valid indicates whether the value is a known member of the AccountTokensProblem400Type enum.
+func (e AccountTokensProblem400Type) Valid() bool {
+	switch e {
+	case AccountTokensProblem400TypeHttpsdevelopersUpcloudCom13errorsERRORBADREQUEST:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for AccountTokensProblem401Status.
 const (
 	AccountTokensProblem401StatusN401 AccountTokensProblem401Status = 401
@@ -36,6 +51,21 @@ const (
 func (e AccountTokensProblem401Status) Valid() bool {
 	switch e {
 	case AccountTokensProblem401StatusN401:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AccountTokensProblem401Type.
+const (
+	AccountTokensProblem401TypeHttpsdevelopersUpcloudCom13errorsERRORUNAUTHORIZED AccountTokensProblem401Type = "https://developers.upcloud.com/1.3/errors#ERROR_UNAUTHORIZED"
+)
+
+// Valid indicates whether the value is a known member of the AccountTokensProblem401Type enum.
+func (e AccountTokensProblem401Type) Valid() bool {
+	switch e {
+	case AccountTokensProblem401TypeHttpsdevelopersUpcloudCom13errorsERRORUNAUTHORIZED:
 		return true
 	default:
 		return false
@@ -57,6 +87,21 @@ func (e AccountTokensProblem403Status) Valid() bool {
 	}
 }
 
+// Defines values for AccountTokensProblem403Type.
+const (
+	AccountTokensProblem403TypeHttpsdevelopersUpcloudCom13errorsERRORFORBIDDEN AccountTokensProblem403Type = "https://developers.upcloud.com/1.3/errors#ERROR_FORBIDDEN"
+)
+
+// Valid indicates whether the value is a known member of the AccountTokensProblem403Type enum.
+func (e AccountTokensProblem403Type) Valid() bool {
+	switch e {
+	case AccountTokensProblem403TypeHttpsdevelopersUpcloudCom13errorsERRORFORBIDDEN:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for AccountTokensProblem404Status.
 const (
 	AccountTokensProblem404StatusN404 AccountTokensProblem404Status = 404
@@ -66,6 +111,21 @@ const (
 func (e AccountTokensProblem404Status) Valid() bool {
 	switch e {
 	case AccountTokensProblem404StatusN404:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AccountTokensProblem404Type.
+const (
+	AccountTokensProblem404TypeHttpsdevelopersUpcloudCom13errorsERRORNOTFOUND AccountTokensProblem404Type = "https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"
+)
+
+// Valid indicates whether the value is a known member of the AccountTokensProblem404Type enum.
+func (e AccountTokensProblem404Type) Valid() bool {
+	switch e {
+	case AccountTokensProblem404TypeHttpsdevelopersUpcloudCom13errorsERRORNOTFOUND:
 		return true
 	default:
 		return false
@@ -87,9 +147,26 @@ func (e AccountTokensProblem409Status) Valid() bool {
 	}
 }
 
-// AccountTokensCreateTokenRequest defines model for accountTokensCreateTokenRequest.
+// Defines values for AccountTokensProblem409Type.
+const (
+	AccountTokensProblem409TypeHttpsdevelopersUpcloudCom13errorsERRORSERVICEUNAVAILABLE AccountTokensProblem409Type = "https://developers.upcloud.com/1.3/errors#ERROR_SERVICE_UNAVAILABLE"
+)
+
+// Valid indicates whether the value is a known member of the AccountTokensProblem409Type enum.
+func (e AccountTokensProblem409Type) Valid() bool {
+	switch e {
+	case AccountTokensProblem409TypeHttpsdevelopersUpcloudCom13errorsERRORSERVICEUNAVAILABLE:
+		return true
+	default:
+		return false
+	}
+}
+
+// AccountTokensCreateTokenRequest Examples: {"allowed_ip_ranges":["0.0.0.0/0","::/0"],"can_create_tokens":true,"expires_at":"2025-11-30T08:03:15.944Z","gui":false,"name":"token"}, {"allowed_ip_ranges":["0.0.0.0/0","::/0"],"can_create_tokens":true,"expires_in":"1h30min","gui":false,"name":"token"}
 type AccountTokensCreateTokenRequest struct {
 	// AllowedIpRanges List of IP ranges that are allowed to authenticate with the token. Empty list denies access from everywhere. If unset, the default list will be the IP filters of the account. If no IP filters are defined for the account either, the default will be ["0.0.0.0/0", "::/0"], i.e. allow from any address.
+	//
+	// Examples: ["0.0.0.0/0","::/0"]
 	AllowedIpRanges *[]AccountTokensIpRange `json:"allowed_ip_ranges,omitempty"`
 
 	// CanCreateTokens Whether the token can create other tokens.
@@ -99,12 +176,16 @@ type AccountTokensCreateTokenRequest struct {
 	ExpiresAt *time.Time `json:"expires_at,omitempty"`
 
 	// ExpiresIn The requested duration until expiry of the token, e.g. '1h30min'. Needs to be a positive duration and maximum of 1 year. Can be used instead of `expires_at`. Supported units are 'h' for hours, 'm' for minutes and 's' for seconds.
+	//
+	// Examples: 8760h, 720h, 24h, 1h30m, 15m
 	ExpiresIn *string `json:"expires_in,omitempty"`
 
 	// Gui Token is for internal GUI use. Can not be used externally.
 	Gui *bool `json:"gui,omitempty"`
 
 	// Name The name of the token. Does not need to be unique.
+	//
+	// Examples: my first token
 	Name  string `json:"name"`
 	union json.RawMessage
 }
@@ -120,61 +201,59 @@ type AccountTokensCreateTokenRequest1 struct {
 }
 
 // AccountTokensGetTokenResponse A token.
-//
-// Example: {"allowed_ip_ranges":["1.2.3.4"],"can_create_tokens":true,"created_at":"2025-03-25T13:46:19.502878Z","expires_at":"2025-03-25T14:16:19.502644Z","gui":false,"id":"0c848138-2559-4562-9520-b1f22c4ae751","name":"token","token_type":"workspace"}
 type AccountTokensGetTokenResponse struct {
 	// AllowedIpRanges List of IP ranges that are allowed to authenticate with the token. Empty list denies access from everywhere. If unset, the default list will be the IP filters of the account. If no IP filters are defined for the account either, the default will be ["0.0.0.0/0", "::/0"], i.e. allow from any address.
-	//
-	// Example: ["0.0.0.0/0","::/0"]
 	AllowedIpRanges *[]AccountTokensIpRange `json:"allowed_ip_ranges,omitempty"`
 
 	// CanCreateTokens Whether the token can create other tokens.
-	//
-	// Example: false
 	CanCreateTokens *bool `json:"can_create_tokens,omitempty"`
 
 	// CreatedAt Token creation time.
-	//
-	// Example: 2025-11-30T08:03:15.944Z
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 
 	// ExpiresAt The requested expiry time of the token, in RFC3339 format (2025-10-12T07:20:50.52Z). Needs to be in the future and maximum of 1 year in the future.
-	//
-	// Example: 2025-11-30T08:03:15.944Z
 	ExpiresAt *time.Time `json:"expires_at,omitempty"`
 
 	// Gui Token is for internal GUI use. Can not be used externally.
-	//
-	// Example: false
 	Gui *bool `json:"gui,omitempty"`
 
 	// Id UUID of the token
+	//
+	// Examples: e7b3f8a0-4c2d-11ec-bf63-0242ac130002, e7b3f8a0-4c2d-11ec-bf63-0242ac130003, e7b3f8a0-4c2d-11ec-bf63-0242ac130004
 	Id *AccountTokensUuidOfTheToken `json:"id,omitempty"`
 
 	// LastUsedAt The last time the token was used.
-	//
-	// Example: 2025-11-30T08:03:15.944Z
 	LastUsedAt *time.Time `json:"last_used_at,omitempty"`
 
 	// Name The name of the token. Does not need to be unique.
+	//
+	// Examples: my first token
 	Name *string `json:"name,omitempty"`
 }
 
 // AccountTokensIpRange IP range from where to accept the token
+//
+// Examples: 1.2.3.4, 2001:db8::1, 0.0.0.0/0, ::/0, 0.0.0.0-0.0.0.255, 2001:db8::1-2001:db8::ff
 type AccountTokensIpRange = string
 
 // AccountTokensListTokensResponse Paged list of tokens.
-//
-// Example: [{"allowed_ip_ranges":["1.2.3.4"],"can_create_tokens":true,"created_at":"2025-03-25T13:46:19.502878Z","expires_at":"2025-03-25T14:16:19.502644Z","gui":false,"id":"0c848138-2559-4562-9520-b1f22c4ae751","name":"token"},{"allowed_ip_ranges":["1.2.3.4"],"can_create_tokens":true,"created_at":"2025-03-25T14:12:06.534789Z","expires_at":"2025-03-25T14:42:06.534342Z","gui":false,"id":"0cc50c9d-6a81-494b-af8c-f7271cfd4d22","last_used_at":"2025-03-25T14:12:33.000692Z","name":"token"}]
 type AccountTokensListTokensResponse = []AccountTokensToken
 
 // AccountTokensProblem JSON Problem Details for HTTP APIs
+//
+// Examples: {"correlation_id":"01JQV2ETY2K6HHE1KZFY9E1CYC","detail":"Internal server error.","invalid_params":[{"name":"expires_at","reason":"Token expiration time must be in the future."}],"status":500,"title":"Internal server error.","type":"https://developers.upcloud.com/1.3/errors#INTERNAL_SERVER_ERROR"}
 type AccountTokensProblem struct {
 	// CorrelationId A unique identifier for the request. This identifier is generated by the server and can be used to track the request in the server logs. It is useful for debugging and support purposes.
+	//
+	// Examples: 01JQV2ETY2K6HHE1KZFY9E1CYC
 	CorrelationId *string `json:"correlation_id,omitempty"`
 
 	// Detail A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
-	Detail        *string `json:"detail,omitempty"`
+	//
+	// Examples: Invalid parameters.
+	Detail *string `json:"detail,omitempty"`
+
+	// InvalidParams Examples: [{"name":"expires_at","reason":"Token expiration time must be in the future."}]
 	InvalidParams *[]struct {
 		Name   string `json:"name"`
 		Reason string `json:"reason"`
@@ -184,19 +263,31 @@ type AccountTokensProblem struct {
 	Status int32 `json:"status"`
 
 	// Title A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+	//
+	// Examples: Internal server error.
 	Title string `json:"title"`
 
 	// Type A URI reference that uniquely identifies the problem type only in the context of the provided API. It is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+	//
+	// Examples: https://developers.upcloud.com/1.3/errors#INTERNAL_SERVER_ERROR
 	Type string `json:"type"`
 }
 
 // AccountTokensProblem400 JSON Problem Details for HTTP APIs
+//
+// Examples: {"correlation_id":"01JQV2ETY2K6HHE1KZFY9E1CYC","detail":"Invalid parameters.","invalid_params":[{"name":"expires_at","reason":"Token expiration time must be in the future."}],"status":400,"title":"Bad request.","type":"https://developers.upcloud.com/1.3/errors#ERROR_BAD_REQUEST"}
 type AccountTokensProblem400 struct {
 	// CorrelationId A unique identifier for the request. This identifier is generated by the server and can be used to track the request in the server logs. It is useful for debugging and support purposes.
+	//
+	// Examples: 01JQV2ETY2K6HHE1KZFY9E1CYC
 	CorrelationId *string `json:"correlation_id,omitempty"`
 
 	// Detail A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
-	Detail        *string `json:"detail,omitempty"`
+	//
+	// Examples: Invalid parameters.
+	Detail *string `json:"detail,omitempty"`
+
+	// InvalidParams Examples: [{"name":"expires_at","reason":"Token expiration time must be in the future."}]
 	InvalidParams *[]struct {
 		Name   string `json:"name"`
 		Reason string `json:"reason"`
@@ -206,22 +297,35 @@ type AccountTokensProblem400 struct {
 	Status AccountTokensProblem400Status `json:"status"`
 
 	// Title A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+	//
+	// Examples: Bad request.
 	Title string `json:"title"`
 
 	// Type A URI reference that uniquely identifies the problem type only in the context of the provided API. It is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
-	Type string `json:"type"`
+	Type AccountTokensProblem400Type `json:"type"`
 }
 
 // AccountTokensProblem400Status The HTTP status code generated by the origin server for this occurrence of the problem.
 type AccountTokensProblem400Status int32
 
+// AccountTokensProblem400Type A URI reference that uniquely identifies the problem type only in the context of the provided API. It is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+type AccountTokensProblem400Type string
+
 // AccountTokensProblem401 JSON Problem Details for HTTP APIs
+//
+// Examples: {"correlation_id":"01JQV2ETY2K6HHE1KZFY9E1CYC","detail":"Access denied.","status":401,"title":"Unauthorized.","type":"https://developers.upcloud.com/1.3/errors#ERROR_UNAUTHORIZED"}
 type AccountTokensProblem401 struct {
 	// CorrelationId A unique identifier for the request. This identifier is generated by the server and can be used to track the request in the server logs. It is useful for debugging and support purposes.
+	//
+	// Examples: 01JQV2ETY2K6HHE1KZFY9E1CYC
 	CorrelationId *string `json:"correlation_id,omitempty"`
 
 	// Detail A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
-	Detail        *string `json:"detail,omitempty"`
+	//
+	// Examples: Invalid parameters.
+	Detail *string `json:"detail,omitempty"`
+
+	// InvalidParams Examples: [{"name":"expires_at","reason":"Token expiration time must be in the future."}]
 	InvalidParams *[]struct {
 		Name   string `json:"name"`
 		Reason string `json:"reason"`
@@ -231,22 +335,35 @@ type AccountTokensProblem401 struct {
 	Status AccountTokensProblem401Status `json:"status"`
 
 	// Title A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+	//
+	// Examples: Unauthorized.
 	Title string `json:"title"`
 
 	// Type A URI reference that uniquely identifies the problem type only in the context of the provided API. It is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
-	Type string `json:"type"`
+	Type AccountTokensProblem401Type `json:"type"`
 }
 
 // AccountTokensProblem401Status The HTTP status code generated by the origin server for this occurrence of the problem.
 type AccountTokensProblem401Status int32
 
+// AccountTokensProblem401Type A URI reference that uniquely identifies the problem type only in the context of the provided API. It is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+type AccountTokensProblem401Type string
+
 // AccountTokensProblem403 JSON Problem Details for HTTP APIs
+//
+// Examples: {"correlation_id":"01JQV2ETY2K6HHE1KZFY9E1CYC","detail":"Invalid parameters.","status":403,"title":"Bad request.","type":"https://developers.upcloud.com/1.3/errors#ERROR_FORBIDDEN"}
 type AccountTokensProblem403 struct {
 	// CorrelationId A unique identifier for the request. This identifier is generated by the server and can be used to track the request in the server logs. It is useful for debugging and support purposes.
+	//
+	// Examples: 01JQV2ETY2K6HHE1KZFY9E1CYC
 	CorrelationId *string `json:"correlation_id,omitempty"`
 
 	// Detail A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
-	Detail        *string `json:"detail,omitempty"`
+	//
+	// Examples: Invalid parameters.
+	Detail *string `json:"detail,omitempty"`
+
+	// InvalidParams Examples: [{"name":"expires_at","reason":"Token expiration time must be in the future."}]
 	InvalidParams *[]struct {
 		Name   string `json:"name"`
 		Reason string `json:"reason"`
@@ -256,22 +373,35 @@ type AccountTokensProblem403 struct {
 	Status AccountTokensProblem403Status `json:"status"`
 
 	// Title A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+	//
+	// Examples: Bad request.
 	Title string `json:"title"`
 
 	// Type A URI reference that uniquely identifies the problem type only in the context of the provided API. It is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
-	Type string `json:"type"`
+	Type AccountTokensProblem403Type `json:"type"`
 }
 
 // AccountTokensProblem403Status The HTTP status code generated by the origin server for this occurrence of the problem.
 type AccountTokensProblem403Status int32
 
+// AccountTokensProblem403Type A URI reference that uniquely identifies the problem type only in the context of the provided API. It is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+type AccountTokensProblem403Type string
+
 // AccountTokensProblem404 JSON Problem Details for HTTP APIs
+//
+// Examples: {"correlation_id":"01JQV2ETY2K6HHE1KZFY9E1CYC","detail":"User not found.","status":404,"title":"Not found.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}
 type AccountTokensProblem404 struct {
 	// CorrelationId A unique identifier for the request. This identifier is generated by the server and can be used to track the request in the server logs. It is useful for debugging and support purposes.
+	//
+	// Examples: 01JQV2ETY2K6HHE1KZFY9E1CYC
 	CorrelationId *string `json:"correlation_id,omitempty"`
 
 	// Detail A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
-	Detail        *string `json:"detail,omitempty"`
+	//
+	// Examples: Invalid parameters.
+	Detail *string `json:"detail,omitempty"`
+
+	// InvalidParams Examples: [{"name":"expires_at","reason":"Token expiration time must be in the future."}]
 	InvalidParams *[]struct {
 		Name   string `json:"name"`
 		Reason string `json:"reason"`
@@ -281,22 +411,35 @@ type AccountTokensProblem404 struct {
 	Status AccountTokensProblem404Status `json:"status"`
 
 	// Title A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+	//
+	// Examples: Not found.
 	Title string `json:"title"`
 
 	// Type A URI reference that uniquely identifies the problem type only in the context of the provided API. It is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
-	Type string `json:"type"`
+	Type AccountTokensProblem404Type `json:"type"`
 }
 
 // AccountTokensProblem404Status The HTTP status code generated by the origin server for this occurrence of the problem.
 type AccountTokensProblem404Status int32
 
+// AccountTokensProblem404Type A URI reference that uniquely identifies the problem type only in the context of the provided API. It is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+type AccountTokensProblem404Type string
+
 // AccountTokensProblem409 JSON Problem Details for HTTP APIs
+//
+// Examples: {"correlation_id":"01JQV2ETY2K6HHE1KZFY9E1CYC","detail":"Try again later.","status":409,"title":"Service unavailable.","type":"https://developers.upcloud.com/1.3/errors#ERROR_SERVICE_UNAVAILABLE"}
 type AccountTokensProblem409 struct {
 	// CorrelationId A unique identifier for the request. This identifier is generated by the server and can be used to track the request in the server logs. It is useful for debugging and support purposes.
+	//
+	// Examples: 01JQV2ETY2K6HHE1KZFY9E1CYC
 	CorrelationId *string `json:"correlation_id,omitempty"`
 
 	// Detail A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
-	Detail        *string `json:"detail,omitempty"`
+	//
+	// Examples: Invalid parameters.
+	Detail *string `json:"detail,omitempty"`
+
+	// InvalidParams Examples: [{"name":"expires_at","reason":"Token expiration time must be in the future."}]
 	InvalidParams *[]struct {
 		Name   string `json:"name"`
 		Reason string `json:"reason"`
@@ -306,61 +449,60 @@ type AccountTokensProblem409 struct {
 	Status AccountTokensProblem409Status `json:"status"`
 
 	// Title A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+	//
+	// Examples: Service unavailable.
 	Title string `json:"title"`
 
 	// Type A URI reference that uniquely identifies the problem type only in the context of the provided API. It is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
-	Type string `json:"type"`
+	Type AccountTokensProblem409Type `json:"type"`
 }
 
 // AccountTokensProblem409Status The HTTP status code generated by the origin server for this occurrence of the problem.
 type AccountTokensProblem409Status int32
 
+// AccountTokensProblem409Type A URI reference that uniquely identifies the problem type only in the context of the provided API. It is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+type AccountTokensProblem409Type string
+
 // AccountTokensToken A token.
 type AccountTokensToken struct {
 	// AllowedIpRanges List of IP ranges that are allowed to authenticate with the token. Empty list denies access from everywhere. If unset, the default list will be the IP filters of the account. If no IP filters are defined for the account either, the default will be ["0.0.0.0/0", "::/0"], i.e. allow from any address.
-	//
-	// Example: ["0.0.0.0/0","::/0"]
 	AllowedIpRanges *[]AccountTokensIpRange `json:"allowed_ip_ranges,omitempty"`
 
 	// CanCreateTokens Whether the token can create other tokens.
-	//
-	// Example: false
 	CanCreateTokens *bool `json:"can_create_tokens,omitempty"`
 
 	// CreatedAt Token creation time.
-	//
-	// Example: 2025-11-30T08:03:15.944Z
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 
 	// ExpiresAt The requested expiry time of the token, in RFC3339 format (2025-10-12T07:20:50.52Z). Needs to be in the future and maximum of 1 year in the future.
-	//
-	// Example: 2025-11-30T08:03:15.944Z
 	ExpiresAt *time.Time `json:"expires_at,omitempty"`
 
 	// Gui Token is for internal GUI use. Can not be used externally.
-	//
-	// Example: false
 	Gui *bool `json:"gui,omitempty"`
 
 	// Id UUID of the token
+	//
+	// Examples: e7b3f8a0-4c2d-11ec-bf63-0242ac130002, e7b3f8a0-4c2d-11ec-bf63-0242ac130003, e7b3f8a0-4c2d-11ec-bf63-0242ac130004
 	Id *AccountTokensUuidOfTheToken `json:"id,omitempty"`
 
 	// LastUsedAt The last time the token was used.
-	//
-	// Example: 2025-11-30T08:03:15.944Z
 	LastUsedAt *time.Time `json:"last_used_at,omitempty"`
 
 	// Name The name of the token. Does not need to be unique.
+	//
+	// Examples: my first token
 	Name *string `json:"name,omitempty"`
 }
 
 // AccountTokensUuidOfTheToken UUID of the token
+//
+// Examples: e7b3f8a0-4c2d-11ec-bf63-0242ac130002, e7b3f8a0-4c2d-11ec-bf63-0242ac130003, e7b3f8a0-4c2d-11ec-bf63-0242ac130004
 type AccountTokensUuidOfTheToken = openapi_types.UUID
 
 // AccountTokensGetTokenTokenUuid defines model for accountTokensGetTokenTokenUuid.
 type AccountTokensGetTokenTokenUuid = openapi_types.UUID
 
-// AccountTokensListTokensGui Example: true
+// AccountTokensListTokensGui defines model for accountTokensListTokensGui.
 type AccountTokensListTokensGui = bool
 
 // AccountTokensListTokensLimit defines model for accountTokensListTokensLimit.
@@ -369,7 +511,7 @@ type AccountTokensListTokensLimit = int32
 // AccountTokensListTokensOffset defines model for accountTokensListTokensOffset.
 type AccountTokensListTokensOffset = int32
 
-// AccountTokensListTokensSort Example: +name,-created_at
+// AccountTokensListTokensSort defines model for accountTokensListTokensSort.
 type AccountTokensListTokensSort = string
 
 // AccountTokensRevokeTokenTokenUuid defines model for accountTokensRevokeTokenTokenUuid.
@@ -379,55 +521,77 @@ type AccountTokensRevokeTokenTokenUuid = openapi_types.UUID
 type AccountTokensCreateToken201 = AccountTokensToken
 
 // AccountTokensCreateToken400 JSON Problem Details for HTTP APIs
+//
+// Examples: {"correlation_id":"01JQV2ETY2K6HHE1KZFY9E1CYC","detail":"Invalid parameters.","invalid_params":[{"name":"expires_at","reason":"Token expiration time must be in the future."}],"status":400,"title":"Bad request.","type":"https://developers.upcloud.com/1.3/errors#ERROR_BAD_REQUEST"}
 type AccountTokensCreateToken400 = AccountTokensProblem400
 
 // AccountTokensCreateToken401 JSON Problem Details for HTTP APIs
+//
+// Examples: {"correlation_id":"01JQV2ETY2K6HHE1KZFY9E1CYC","detail":"Access denied.","status":401,"title":"Unauthorized.","type":"https://developers.upcloud.com/1.3/errors#ERROR_UNAUTHORIZED"}
 type AccountTokensCreateToken401 = AccountTokensProblem401
 
 // AccountTokensCreateToken403 JSON Problem Details for HTTP APIs
+//
+// Examples: {"correlation_id":"01JQV2ETY2K6HHE1KZFY9E1CYC","detail":"Invalid parameters.","status":403,"title":"Bad request.","type":"https://developers.upcloud.com/1.3/errors#ERROR_FORBIDDEN"}
 type AccountTokensCreateToken403 = AccountTokensProblem403
 
 // AccountTokensCreateToken409 JSON Problem Details for HTTP APIs
+//
+// Examples: {"correlation_id":"01JQV2ETY2K6HHE1KZFY9E1CYC","detail":"Try again later.","status":409,"title":"Service unavailable.","type":"https://developers.upcloud.com/1.3/errors#ERROR_SERVICE_UNAVAILABLE"}
 type AccountTokensCreateToken409 = AccountTokensProblem409
 
 // AccountTokensCreateTokenDefault JSON Problem Details for HTTP APIs
+//
+// Examples: {"correlation_id":"01JQV2ETY2K6HHE1KZFY9E1CYC","detail":"Internal server error.","invalid_params":[{"name":"expires_at","reason":"Token expiration time must be in the future."}],"status":500,"title":"Internal server error.","type":"https://developers.upcloud.com/1.3/errors#INTERNAL_SERVER_ERROR"}
 type AccountTokensCreateTokenDefault = AccountTokensProblem
 
 // AccountTokensGetToken200 A token.
-//
-// Example: {"allowed_ip_ranges":["1.2.3.4"],"can_create_tokens":true,"created_at":"2025-03-25T13:46:19.502878Z","expires_at":"2025-03-25T14:16:19.502644Z","gui":false,"id":"0c848138-2559-4562-9520-b1f22c4ae751","name":"token","token_type":"workspace"}
 type AccountTokensGetToken200 = AccountTokensGetTokenResponse
 
 // AccountTokensGetToken401 JSON Problem Details for HTTP APIs
+//
+// Examples: {"correlation_id":"01JQV2ETY2K6HHE1KZFY9E1CYC","detail":"Access denied.","status":401,"title":"Unauthorized.","type":"https://developers.upcloud.com/1.3/errors#ERROR_UNAUTHORIZED"}
 type AccountTokensGetToken401 = AccountTokensProblem401
 
 // AccountTokensGetToken404 JSON Problem Details for HTTP APIs
+//
+// Examples: {"correlation_id":"01JQV2ETY2K6HHE1KZFY9E1CYC","detail":"User not found.","status":404,"title":"Not found.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}
 type AccountTokensGetToken404 = AccountTokensProblem404
 
 // AccountTokensGetTokenDefault JSON Problem Details for HTTP APIs
+//
+// Examples: {"correlation_id":"01JQV2ETY2K6HHE1KZFY9E1CYC","detail":"Internal server error.","invalid_params":[{"name":"expires_at","reason":"Token expiration time must be in the future."}],"status":500,"title":"Internal server error.","type":"https://developers.upcloud.com/1.3/errors#INTERNAL_SERVER_ERROR"}
 type AccountTokensGetTokenDefault = AccountTokensProblem
 
 // AccountTokensListTokens200 Paged list of tokens.
-//
-// Example: [{"allowed_ip_ranges":["1.2.3.4"],"can_create_tokens":true,"created_at":"2025-03-25T13:46:19.502878Z","expires_at":"2025-03-25T14:16:19.502644Z","gui":false,"id":"0c848138-2559-4562-9520-b1f22c4ae751","name":"token"},{"allowed_ip_ranges":["1.2.3.4"],"can_create_tokens":true,"created_at":"2025-03-25T14:12:06.534789Z","expires_at":"2025-03-25T14:42:06.534342Z","gui":false,"id":"0cc50c9d-6a81-494b-af8c-f7271cfd4d22","last_used_at":"2025-03-25T14:12:33.000692Z","name":"token"}]
 type AccountTokensListTokens200 = AccountTokensListTokensResponse
 
 // AccountTokensListTokens401 JSON Problem Details for HTTP APIs
+//
+// Examples: {"correlation_id":"01JQV2ETY2K6HHE1KZFY9E1CYC","detail":"Access denied.","status":401,"title":"Unauthorized.","type":"https://developers.upcloud.com/1.3/errors#ERROR_UNAUTHORIZED"}
 type AccountTokensListTokens401 = AccountTokensProblem401
 
 // AccountTokensListTokensDefault JSON Problem Details for HTTP APIs
+//
+// Examples: {"correlation_id":"01JQV2ETY2K6HHE1KZFY9E1CYC","detail":"Internal server error.","invalid_params":[{"name":"expires_at","reason":"Token expiration time must be in the future."}],"status":500,"title":"Internal server error.","type":"https://developers.upcloud.com/1.3/errors#INTERNAL_SERVER_ERROR"}
 type AccountTokensListTokensDefault = AccountTokensProblem
 
 // AccountTokensRevokeToken401 JSON Problem Details for HTTP APIs
+//
+// Examples: {"correlation_id":"01JQV2ETY2K6HHE1KZFY9E1CYC","detail":"Access denied.","status":401,"title":"Unauthorized.","type":"https://developers.upcloud.com/1.3/errors#ERROR_UNAUTHORIZED"}
 type AccountTokensRevokeToken401 = AccountTokensProblem401
 
 // AccountTokensRevokeToken404 JSON Problem Details for HTTP APIs
+//
+// Examples: {"correlation_id":"01JQV2ETY2K6HHE1KZFY9E1CYC","detail":"User not found.","status":404,"title":"Not found.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}
 type AccountTokensRevokeToken404 = AccountTokensProblem404
 
 // AccountTokensRevokeTokenDefault JSON Problem Details for HTTP APIs
+//
+// Examples: {"correlation_id":"01JQV2ETY2K6HHE1KZFY9E1CYC","detail":"Internal server error.","invalid_params":[{"name":"expires_at","reason":"Token expiration time must be in the future."}],"status":500,"title":"Internal server error.","type":"https://developers.upcloud.com/1.3/errors#INTERNAL_SERVER_ERROR"}
 type AccountTokensRevokeTokenDefault = AccountTokensProblem
 
-// AccountTokensCreateToken defines model for accountTokensCreateToken.
+// AccountTokensCreateToken Examples: {"allowed_ip_ranges":["0.0.0.0/0","::/0"],"can_create_tokens":true,"expires_at":"2025-11-30T08:03:15.944Z","gui":false,"name":"token"}, {"allowed_ip_ranges":["0.0.0.0/0","::/0"],"can_create_tokens":true,"expires_in":"1h30min","gui":false,"name":"token"}
 type AccountTokensCreateToken = AccountTokensCreateTokenRequest
 
 // ListTokensParams defines parameters for ListTokens.

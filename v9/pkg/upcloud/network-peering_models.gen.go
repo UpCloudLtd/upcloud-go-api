@@ -104,8 +104,6 @@ func (e NetworkPeeringState) Valid() bool {
 }
 
 // NetworkPeering Network peering object describes a peering relationship between two networks
-//
-// Example: {"configured_status":"active","name":"Peering A-\u003eB","network":{"ip_networks":{"ip_network":[{"address":"192.168.0.0/24","family":"IPv4"},{"address":"fc02:c4f3::/64","family":"IPv6"}]},"uuid":"03126dc1-a69f-4bc2-8b24-e31c22d64712"},"peer_network":{"ip_networks":{"ip_network":[{"address":"192.168.99.0/24","family":"IPv4"},{"address":"fc02:c4f3:99::/64","family":"IPv6"}]},"uuid":"03585987-bf7d-4544-8e9b-5a1b4d74a333"},"state":"active","uuid":"0f7984bc-5d72-4aaf-b587-90e6a8f32efc"}
 type NetworkPeering struct {
 	ConfiguredStatus *NetworkPeeringConfiguredStatus `json:"configured_status,omitempty"`
 	Name             *NetworkPeeringName             `json:"name,omitempty"`
@@ -123,8 +121,6 @@ type NetworkPeering struct {
 		} `json:"ip_networks,omitempty"`
 
 		// Uuid Universally unique identifier
-		//
-		// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 		Uuid *NetworkPeeringUuid `json:"uuid,omitempty"`
 	} `json:"network,omitempty"`
 
@@ -142,15 +138,11 @@ type NetworkPeering struct {
 		} `json:"ip_networks,omitempty"`
 
 		// Uuid Universally unique identifier
-		//
-		// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 		Uuid *NetworkPeeringUuid `json:"uuid,omitempty"`
 	} `json:"peer_network,omitempty"`
 	State *NetworkPeeringState `json:"state,omitempty"`
 
 	// Uuid Universally unique identifier
-	//
-	// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 	Uuid *NetworkPeeringUuid `json:"uuid,omitempty"`
 }
 
@@ -158,8 +150,6 @@ type NetworkPeering struct {
 type NetworkPeeringConfiguredStatus string
 
 // NetworkPeeringCreate Describes the mutable properties when creating a network-peering between two networks
-//
-// Example: {"configured_status":"active","name":"Peering A-\u003eB","network":{"uuid":"03126dc1-a69f-4bc2-8b24-e31c22d64712"},"peer_network":{"uuid":"03585987-bf7d-4544-8e9b-5a1b4d74a333"}}
 type NetworkPeeringCreate struct {
 	ConfiguredStatus *NetworkPeeringCreateConfiguredStatus `json:"configured_status,omitempty"`
 	Name             string                                `json:"name"`
@@ -167,16 +157,12 @@ type NetworkPeeringCreate struct {
 	// Network Describes the local side of the peering
 	Network struct {
 		// Uuid Universally unique identifier
-		//
-		// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 		Uuid NetworkPeeringUuid `json:"uuid"`
 	} `json:"network"`
 
 	// PeerNetwork Describes the peer side of the peering
 	PeerNetwork struct {
 		// Uuid Universally unique identifier
-		//
-		// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 		Uuid NetworkPeeringUuid `json:"uuid"`
 	} `json:"peer_network"`
 }
@@ -187,7 +173,10 @@ type NetworkPeeringCreateConfiguredStatus string
 // NetworkPeeringError A general error response indicating that the request could not be fulfilled due to a technical issue.
 type NetworkPeeringError struct {
 	Error struct {
-		ErrorCode    string `json:"error_code"`
+		// ErrorCode Examples: GENERAL_FAILURE
+		ErrorCode string `json:"error_code"`
+
+		// ErrorMessage Examples: Your request could not be fulfilled due to a technical issue.
 		ErrorMessage string `json:"error_message"`
 	} `json:"error"`
 }
@@ -199,8 +188,6 @@ type NetworkPeeringIpCidr = string
 type NetworkPeeringIpFamily string
 
 // NetworkPeeringModify Describes the mutable properties when modifying a network-peering
-//
-// Example: {"configured_status":"disabled","name":"Peering A-\u003eB modified"}
 type NetworkPeeringModify struct {
 	ConfiguredStatus interface{} `json:"configured_status,omitempty"`
 	Name             *string     `json:"name,omitempty"`
@@ -213,8 +200,6 @@ type NetworkPeeringName = string
 type NetworkPeeringState string
 
 // NetworkPeeringUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type NetworkPeeringUuid = openapi_types.UUID
 
 // NetworkPeerings Network peerings
@@ -234,26 +219,18 @@ type GetNetworkPeeringPeeringUuid = openapi_types.UUID
 type ListNetworkPeeringsLabel = string
 
 // ListNetworkPeeringsNetworkUuidLocal Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type ListNetworkPeeringsNetworkUuidLocal = NetworkPeeringUuid
 
 // ListNetworkPeeringsNetworkUuidPeer Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type ListNetworkPeeringsNetworkUuidPeer = NetworkPeeringUuid
 
 // ListNetworkPeeringsUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type ListNetworkPeeringsUuid = NetworkPeeringUuid
 
 // ModifyNetworkPeeringPeeringUuid defines model for modifyNetworkPeeringPeeringUuid.
 type ModifyNetworkPeeringPeeringUuid = openapi_types.UUID
 
 // CreateNetworkPeering201 Network peering object describes a peering relationship between two networks
-//
-// Example: {"configured_status":"active","name":"Peering A-\u003eB","network":{"ip_networks":{"ip_network":[{"address":"192.168.0.0/24","family":"IPv4"},{"address":"fc02:c4f3::/64","family":"IPv6"}]},"uuid":"03126dc1-a69f-4bc2-8b24-e31c22d64712"},"peer_network":{"ip_networks":{"ip_network":[{"address":"192.168.99.0/24","family":"IPv4"},{"address":"fc02:c4f3:99::/64","family":"IPv6"}]},"uuid":"03585987-bf7d-4544-8e9b-5a1b4d74a333"},"state":"active","uuid":"0f7984bc-5d72-4aaf-b587-90e6a8f32efc"}
 type CreateNetworkPeering201 = NetworkPeering
 
 // CreateNetworkPeering400 A general error response indicating that the request could not be fulfilled due to a technical issue.
@@ -275,8 +252,6 @@ type DeleteNetworkPeering404 = NetworkPeeringError
 type DeleteNetworkPeeringDefault = NetworkPeeringError
 
 // GetNetworkPeering200 Network peering object describes a peering relationship between two networks
-//
-// Example: {"configured_status":"active","name":"Peering A-\u003eB","network":{"ip_networks":{"ip_network":[{"address":"192.168.0.0/24","family":"IPv4"},{"address":"fc02:c4f3::/64","family":"IPv6"}]},"uuid":"03126dc1-a69f-4bc2-8b24-e31c22d64712"},"peer_network":{"ip_networks":{"ip_network":[{"address":"192.168.99.0/24","family":"IPv4"},{"address":"fc02:c4f3:99::/64","family":"IPv6"}]},"uuid":"03585987-bf7d-4544-8e9b-5a1b4d74a333"},"state":"active","uuid":"0f7984bc-5d72-4aaf-b587-90e6a8f32efc"}
 type GetNetworkPeering200 = NetworkPeering
 
 // GetNetworkPeering404 A general error response indicating that the request could not be fulfilled due to a technical issue.
@@ -292,8 +267,6 @@ type ListNetworkPeerings200 = NetworkPeerings
 type ListNetworkPeeringsDefault = NetworkPeeringError
 
 // ModifyNetworkPeering200 Network peering object describes a peering relationship between two networks
-//
-// Example: {"configured_status":"active","name":"Peering A-\u003eB","network":{"ip_networks":{"ip_network":[{"address":"192.168.0.0/24","family":"IPv4"},{"address":"fc02:c4f3::/64","family":"IPv6"}]},"uuid":"03126dc1-a69f-4bc2-8b24-e31c22d64712"},"peer_network":{"ip_networks":{"ip_network":[{"address":"192.168.99.0/24","family":"IPv4"},{"address":"fc02:c4f3:99::/64","family":"IPv6"}]},"uuid":"03585987-bf7d-4544-8e9b-5a1b4d74a333"},"state":"active","uuid":"0f7984bc-5d72-4aaf-b587-90e6a8f32efc"}
 type ModifyNetworkPeering200 = NetworkPeering
 
 // ModifyNetworkPeering400 A general error response indicating that the request could not be fulfilled due to a technical issue.
@@ -306,13 +279,9 @@ type ModifyNetworkPeering404 = NetworkPeeringError
 type ModifyNetworkPeeringDefault = NetworkPeeringError
 
 // CreateNetworkPeering Describes the mutable properties when creating a network-peering between two networks
-//
-// Example: {"configured_status":"active","name":"Peering A-\u003eB","network":{"uuid":"03126dc1-a69f-4bc2-8b24-e31c22d64712"},"peer_network":{"uuid":"03585987-bf7d-4544-8e9b-5a1b4d74a333"}}
 type CreateNetworkPeering = NetworkPeeringCreate
 
 // ModifyNetworkPeering Describes the mutable properties when modifying a network-peering
-//
-// Example: {"configured_status":"disabled","name":"Peering A-\u003eB modified"}
 type ModifyNetworkPeering = NetworkPeeringModify
 
 // ListNetworkPeeringsParams defines parameters for ListNetworkPeerings.

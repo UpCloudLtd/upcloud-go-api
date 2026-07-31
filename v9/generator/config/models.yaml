@@ -15,10 +15,5 @@ output-options:
   # CreateServerResponse, which would collide with the createServerResponse schema.
   response-type-suffix: "Resp"
   overlay:
-    path: ./generator/config/overlay.yaml
+    path: ./generator/config/overlay/oapi-codegen.yaml
     strict: false
-  user-templates:
-    # https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/refs/tags/v2.8.0/pkg/codegen/templates/client.tmpl
-    client.tmpl: ./generator/config/client.tmpl
-    # https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/refs/tags/v2.8.0/pkg/codegen/templates/client-with-responses.tmpl
-    client-with-responses.tmpl: ./generator/config/client-with-responses.tmpl

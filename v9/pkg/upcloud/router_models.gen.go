@@ -32,44 +32,28 @@ func (e RouterType) Valid() bool {
 // Router Schema for a single router
 type Router struct {
 	// Router Router describes a virtual router that can route between SDN networks
-	//
-	// Example: {"attached_networks":{"network":[{"uuid":"03804f7f-828a-4610-867f-9d62cf9fc14f"}]},"name":"Example router","static_routes":[{"name":"static-route-0","nexthop":"192.168.1.1","route":"0.0.0.0/0"}],"type":"normal","uuid":"0414e0d7-4436-4037-9dd8-6eaf47dce599"}
 	Router RouterDetails `json:"router"`
 }
 
 // RouterDetails Router describes a virtual router that can route between SDN networks
-//
-// Example: {"attached_networks":{"network":[{"uuid":"03804f7f-828a-4610-867f-9d62cf9fc14f"}]},"name":"Example router","static_routes":[{"name":"static-route-0","nexthop":"192.168.1.1","route":"0.0.0.0/0"}],"type":"normal","uuid":"0414e0d7-4436-4037-9dd8-6eaf47dce599"}
 type RouterDetails struct {
 	// AttachedNetworks Networks attached to the router.
-	//
-	// Example: {"network":[{"uuid":"03804f7f-828a-4610-867f-9d62cf9fc14f"}]}
 	AttachedNetworks *struct {
 		Network []struct {
 			// Uuid Universally unique identifier
-			//
-			// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 			Uuid RouterUuid `json:"uuid"`
 		} `json:"network"`
 	} `json:"attached_networks,omitempty"`
 	Labels *RouterLabels `json:"labels,omitempty"`
-
-	// Name Example: Example router
-	Name string `json:"name"`
+	Name   string        `json:"name"`
 
 	// StaticRoutes Static routes that will be added to the routing table of the SDN router
-	//
-	// Example: [{"name":"static-route-0","nexthop":"192.168.1.1","route":"0.0.0.0/0"}]
 	StaticRoutes *[]RouterRouteNexthop `json:"static_routes,omitempty"`
 
 	// Type Type of the router.
-	//
-	// Example: normal
 	Type *RouterType `json:"type,omitempty"`
 
 	// Uuid Universally unique identifier
-	//
-	// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 	Uuid                 *RouterUuid            `json:"uuid,omitempty"`
 	AdditionalProperties map[string]interface{} `json:"-"`
 }
@@ -77,7 +61,10 @@ type RouterDetails struct {
 // RouterError A general error response indicating that the request could not be fulfilled due to a technical issue.
 type RouterError struct {
 	Error struct {
-		ErrorCode    string `json:"error_code"`
+		// ErrorCode Examples: GENERAL_FAILURE
+		ErrorCode string `json:"error_code"`
+
+		// ErrorMessage Examples: Your request could not be fulfilled due to a technical issue.
 		ErrorMessage string `json:"error_message"`
 	} `json:"error"`
 }
@@ -97,8 +84,6 @@ type RouterIpAddress1 = string
 type RouterIpCidr = string
 
 // RouterLabel A key/value pair to label and categorize resources
-//
-// Example: {"key":"env","value":"production"}
 type RouterLabel struct {
 	Key   string `json:"key"`
 	Value string `json:"value"`
@@ -121,43 +106,28 @@ type RouterRouteNexthop struct {
 }
 
 // RouterType Type of the router.
-//
-// Example: normal
 type RouterType string
 
 // RouterUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type RouterUuid = openapi_types.UUID
 
 // Routers A list of routers
-//
-// Example: {"routers":{"router":[{"name":"Example router","type":"normal","uuid":"0414e0d7-4436-4037-9dd8-6eaf47dce599"}]}}
 type Routers struct {
-	// Routers Example: {"router":[{"name":"Example router","type":"normal","uuid":"0414e0d7-4436-4037-9dd8-6eaf47dce599"}]}
 	Routers struct {
 		Router []RouterDetails `json:"router"`
 	} `json:"routers"`
 }
 
 // DeleteRouterRouter Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type DeleteRouterRouter = RouterUuid
 
 // GetRouterRouter Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type GetRouterRouter = RouterUuid
 
 // ListRoutersLabel A key/value pair to label and categorize resources
-//
-// Example: {"key":"env","value":"production"}
 type ListRoutersLabel = RouterLabel
 
 // ModifyRouterRouter Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type ModifyRouterRouter = RouterUuid
 
 // CreateRouter201 Schema for a single router
@@ -191,8 +161,6 @@ type GetRouter404 = RouterError
 type GetRouterDefault = RouterError
 
 // ListRouters200 A list of routers
-//
-// Example: {"routers":{"router":[{"name":"Example router","type":"normal","uuid":"0414e0d7-4436-4037-9dd8-6eaf47dce599"}]}}
 type ListRouters200 = Routers
 
 // ListRoutersDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
@@ -214,13 +182,9 @@ type ModifyRouter409 = RouterError
 type ModifyRouterDefault = RouterError
 
 // CreateRouter Router describes a virtual router that can route between SDN networks
-//
-// Example: {"attached_networks":{"network":[{"uuid":"03804f7f-828a-4610-867f-9d62cf9fc14f"}]},"name":"Example router","static_routes":[{"name":"static-route-0","nexthop":"192.168.1.1","route":"0.0.0.0/0"}],"type":"normal","uuid":"0414e0d7-4436-4037-9dd8-6eaf47dce599"}
 type CreateRouter = RouterDetails
 
 // ModifyRouter Router describes a virtual router that can route between SDN networks
-//
-// Example: {"attached_networks":{"network":[{"uuid":"03804f7f-828a-4610-867f-9d62cf9fc14f"}]},"name":"Example router","static_routes":[{"name":"static-route-0","nexthop":"192.168.1.1","route":"0.0.0.0/0"}],"type":"normal","uuid":"0414e0d7-4436-4037-9dd8-6eaf47dce599"}
 type ModifyRouter = RouterDetails
 
 // ListRoutersParams defines parameters for ListRouters.

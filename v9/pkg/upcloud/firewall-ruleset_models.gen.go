@@ -49,6 +49,8 @@ func (e FirewallRulesetRuleDirection) Valid() bool {
 }
 
 // CreateFirewallRuleset Create firewall ruleset
+//
+// Examples: {"default_dns_rules_enabled":false,"enabled":false,"name":"example_firewall_ruleset","stateful":true}
 type CreateFirewallRuleset struct {
 	DefaultDnsRulesEnabled *bool `json:"default_dns_rules_enabled,omitempty"`
 
@@ -63,11 +65,15 @@ type CreateFirewallRuleset struct {
 	Name string `json:"name"`
 
 	// ServerUuid The unique identifier for the resource.
+	//
+	// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 	ServerUuid *FirewallRulesetUuid `json:"server_uuid,omitempty"`
 	Stateful   *bool                `json:"stateful,omitempty"`
 }
 
 // FirewallRulesetCreateLabel UpCloud firewall ruleset Label
+//
+// Examples: {"key":"dev","value":"dev-1"}, {"key":"staging","value":"stg-1"}
 type FirewallRulesetCreateLabel struct {
 	// Key Key
 	Key string `json:"key"`
@@ -77,6 +83,8 @@ type FirewallRulesetCreateLabel struct {
 }
 
 // FirewallRulesetDetailResponse Response schema for firewall ruleset details, including UUID, name, description, stateful, enabled, labels and serverUUID.
+//
+// Examples: {"default_dns_rules_enabled":false,"description":"Example stateless firewall ruleset","enabled":true,"labels":[{"key":"example-key","value":"example-value"}],"name":"example_firewall_ruleset","server_uuid":"03aa7245-2ff9-49c8-9f0e-7ca0270d71a4","stateful":false,"uuid":"1200ecde-db95-4d1c-9133-6508f3232567"}
 type FirewallRulesetDetailResponse struct {
 	CreatedAt              *time.Time `json:"created_at,omitempty"`
 	DefaultDnsRulesEnabled *bool      `json:"default_dns_rules_enabled,omitempty"`
@@ -92,50 +100,69 @@ type FirewallRulesetDetailResponse struct {
 	Name *string `json:"name,omitempty"`
 
 	// ServerUuid The unique identifier for the server.
+	//
+	// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 	ServerUuid *FirewallRulesetServerUuid `json:"server_uuid,omitempty"`
 	Stateful   *bool                      `json:"stateful,omitempty"`
 	UpdatedAt  *time.Time                 `json:"updated_at,omitempty"`
 
 	// Uuid The unique identifier for the server.
+	//
+	// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 	Uuid *FirewallRulesetServerUuid `json:"uuid,omitempty"`
 
 	// Version The firewall ruleset version.
+	//
+	// Examples: 1, 678
 	Version *FirewallRulesetVersion `json:"version,omitempty"`
 }
 
 // FirewallRulesetErrorLegacyResponse Schema for legacy error responses from API.
+//
+// Examples: {"error":{"error_code":"SERVER_INVALID","error_message":"The server UUID is invalid."}}
 type FirewallRulesetErrorLegacyResponse struct {
 	// Error Schema for legacy error response.
 	Error struct {
-		ErrorCode    *string `json:"error_code,omitempty"`
+		// ErrorCode Examples: SERVER_INVALID
+		ErrorCode *string `json:"error_code,omitempty"`
+
+		// ErrorMessage Examples: The server UUID is invalid.
 		ErrorMessage *string `json:"error_message,omitempty"`
 	} `json:"error"`
 }
 
 // FirewallRulesetErrorResponse Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type FirewallRulesetErrorResponse struct {
 	// CorrelationId Unique identifier for the request, useful for debugging.
+	//
+	// Examples: 01K1K2TKEASWRJ6VFP9ZV5P2H4
 	CorrelationId string `json:"correlation_id"`
 
 	// InvalidParams List of invalid parameters in the request.
 	InvalidParams *[]interface{} `json:"invalid_params,omitempty"`
 
 	// Status HTTP status code associated with the error.
+	//
+	// Examples: 400, 404, 402, 500
 	Status int32 `json:"status"`
 
 	// Title Short description of the error.
+	//
+	// Examples: Validation error., The resource you requested does not exist., Your request could not be fulfilled due to a technical issue.
 	Title string `json:"title"`
 
 	// Type Error code string.
 	Type string `json:"type"`
 }
 
-// FirewallRulesetFirewallMultipleRuleCreate defines model for firewallRulesetFirewallMultipleRuleCreate.
+// FirewallRulesetFirewallMultipleRuleCreate Examples: [{"action":"accept","direction":"in","enabled":false,"family":"IPv4","protocol":"tcp"},{"action":"drop","direction":"out","family":"IPv6"}]
 type FirewallRulesetFirewallMultipleRuleCreate struct {
 	Rules []FirewallRulesetFirewallRuleCreate `json:"rules"`
 }
 
-// FirewallRulesetFirewallRuleCreate defines model for firewallRulesetFirewallRuleCreate.
+// FirewallRulesetFirewallRuleCreate Examples: {"action":"accept","direction":"in","enabled":false,"family":"IPv4","protocol":"tcp"}, {"action":"drop","direction":"out","family":"IPv6"}
 type FirewallRulesetFirewallRuleCreate struct {
 	Action interface{} `json:"action"`
 
@@ -162,11 +189,13 @@ type FirewallRulesetFirewallRuleCreate struct {
 }
 
 // FirewallRulesetFirewallRuleListResponse Response schema for a list of firewall ruleset rules.
+//
+// Examples: {"rules":[{"action":"accept","direction":"in","enabled":false,"family":"IPv4","protocol":"tcp","uuid":"16e7d7fc-9a90-4f42-83f5-ea0396f1592b"}]}
 type FirewallRulesetFirewallRuleListResponse struct {
 	Rules []FirewallRulesetRuleDetailResponse `json:"rules"`
 }
 
-// FirewallRulesetFirewallRuleModify defines model for firewallRulesetFirewallRuleModify.
+// FirewallRulesetFirewallRuleModify Examples: {"action":"accept","direction":"in","enabled":false,"family":"IPv4","protocol":"tcp"}, {"action":"drop","direction":"out","family":"IPv6"}
 type FirewallRulesetFirewallRuleModify struct {
 	Action interface{} `json:"action,omitempty"`
 
@@ -194,33 +223,51 @@ type FirewallRulesetFirewallRuleModify struct {
 }
 
 // FirewallRulesetLabelDetailResponse Schema for label details including key-value pairs.
+//
+// Examples: {"key":"foo","value":"bar"}
 type FirewallRulesetLabelDetailResponse struct {
 	Key   *string `json:"key,omitempty"`
 	Value *string `json:"value,omitempty"`
 }
 
 // FirewallRulesetLabelKey The key of a label.
+//
+// Examples: environment, team, project, purpose, cost-center
 type FirewallRulesetLabelKey = string
 
 // FirewallRulesetLabelListResponse Response schema for listing labels.
+//
+// Examples: [{"key":"foo","value":"bar"}]
 type FirewallRulesetLabelListResponse = []FirewallRulesetLabelDetailResponse
 
 // FirewallRulesetLabelModify Schema for modifying a label with a key-value pair.
+//
+// Examples: {"key":"foo","value":"bar"}
 type FirewallRulesetLabelModify struct {
 	// Key The key of a label.
+	//
+	// Examples: environment, team, project, purpose, cost-center
 	Key *FirewallRulesetLabelKey `json:"key,omitempty"`
 
 	// Value Schema for a label value property, allowing a string or null with specific character constraints.
+	//
+	// Examples: production, backend, web-app, backup, engineering
 	Value *FirewallRulesetLabelValue `json:"value,omitempty"`
 }
 
 // FirewallRulesetLabelValue Schema for a label value property, allowing a string or null with specific character constraints.
+//
+// Examples: production, backend, web-app, backup, engineering
 type FirewallRulesetLabelValue = string
 
 // FirewallRulesetListResponse Response schema for a list of firewall rulesets.
+//
+// Examples: [{"default_dns_rules_enabled":false,"description":"Example stateless firewall ruleset","enabled":true,"labels":[{"key":"example-key","value":"example-value"}],"name":"example_stateless_firewall_ruleset","server_uuid":"03aa7245-2ff9-49c8-9f0e-7ca0270d71a4","stateful":false,"uuid":"1200ecde-db95-4d1c-9133-6508f3232567"},{"default_dns_rules_enabled":false,"description":"Example stateful firewall ruleset","enabled":true,"labels":[{"key":"example-key","value":"example-value"}],"name":"example_stateful_firewall_ruleset","stateful":true,"uuid":"1200ecde-db95-4d1c-9133-6508f3232445"}]
 type FirewallRulesetListResponse = []FirewallRulesetDetailResponse
 
 // FirewallRulesetModify Modify firewall ruleset
+//
+// Examples: {"description":"Modified example stateless firewall ruleset","enabled":false,"labels":[],"name":"modified_example_firewall_ruleset"}
 type FirewallRulesetModify struct {
 	DefaultDnsRulesEnabled *bool `json:"default_dns_rules_enabled,omitempty"`
 
@@ -238,18 +285,26 @@ type FirewallRulesetModify struct {
 }
 
 // FirewallRulesetQueryParamLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
+//
+// Examples: 10, 25, 50, 100
 type FirewallRulesetQueryParamLimit = int64
 
 // FirewallRulesetQueryParamOffset Schema for a query parameter specifying the offset for pagination.
+//
+// Examples: 0, 10, 20, 50
 type FirewallRulesetQueryParamOffset = int64
 
 // FirewallRulesetQueryParamSort Schema for a query parameter specifying the sort field.
+//
+// Examples: name, created_at, updated_at
 type FirewallRulesetQueryParamSort = string
 
 // FirewallRulesetRuleAction Rule action.
 type FirewallRulesetRuleAction string
 
 // FirewallRulesetRuleDetailResponse Response schema for firewall ruleset rule details.
+//
+// Examples: {"action":"accept","direction":"in","enabled":false,"family":"IPv4","protocol":"tcp","uuid":"16e7d7fc-9a90-4f42-83f5-ea0396f1592b"}
 type FirewallRulesetRuleDetailResponse struct {
 	Action interface{} `json:"action"`
 
@@ -275,6 +330,8 @@ type FirewallRulesetRuleDetailResponse struct {
 	SourcePortStart    *int64      `json:"source_port_start,omitempty"`
 
 	// Uuid The unique identifier for the server.
+	//
+	// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 	Uuid *FirewallRulesetServerUuid `json:"uuid,omitempty"`
 }
 
@@ -282,12 +339,18 @@ type FirewallRulesetRuleDetailResponse struct {
 type FirewallRulesetRuleDirection string
 
 // FirewallRulesetServerFirewallDetailResponse Server firewall detail response.
+//
+// Examples: {"firewall_rules":{"firewall_rule":[{"action":"accept","direction":"in","family":"IPv4","protocol":"tcp"},{"action":"drop","direction":"out","family":"IPv4"}]}}
 type FirewallRulesetServerFirewallDetailResponse struct {
 	// FirewallRules Server firewall rules.
+	//
+	// Examples: {"firewall_rule":[{"action":"accept","direction":"in","family":"IPv4","protocol":"tcp"},{"action":"drop","direction":"out","family":"IPv4"}]}
 	FirewallRules FirewallRulesetServerFirewallRules `json:"firewall_rules"`
 }
 
 // FirewallRulesetServerFirewallRule Server firewall rule
+//
+// Examples: {"action":"accept","direction":"in","family":"IPv4","protocol":"tcp"}, {"action":"drop","direction":"out","family":"IPv4"}
 type FirewallRulesetServerFirewallRule struct {
 	// Action Rule action.
 	Action FirewallRulesetRuleAction `json:"action"`
@@ -345,9 +408,6 @@ type FirewallRulesetServerFirewallRuleDestinationAddressEnd1 = string
 // FirewallRulesetServerFirewallRuleDestinationAddressEnd2 defines model for FirewallRulesetServerFirewallRule.DestinationAddressEnd.2.
 type FirewallRulesetServerFirewallRuleDestinationAddressEnd2 = string
 
-// FirewallRulesetServerFirewallRuleDestinationAddressEnd3 defines model for FirewallRulesetServerFirewallRule.DestinationAddressEnd.3.
-type FirewallRulesetServerFirewallRuleDestinationAddressEnd3 = string
-
 // FirewallRulesetServerFirewallRule_DestinationAddressEnd Destination address range ends from to this address
 type FirewallRulesetServerFirewallRule_DestinationAddressEnd struct {
 	union json.RawMessage
@@ -362,16 +422,10 @@ type FirewallRulesetServerFirewallRuleDestinationAddressStart1 = string
 // FirewallRulesetServerFirewallRuleDestinationAddressStart2 defines model for FirewallRulesetServerFirewallRule.DestinationAddressStart.2.
 type FirewallRulesetServerFirewallRuleDestinationAddressStart2 = string
 
-// FirewallRulesetServerFirewallRuleDestinationAddressStart3 defines model for FirewallRulesetServerFirewallRule.DestinationAddressStart.3.
-type FirewallRulesetServerFirewallRuleDestinationAddressStart3 = string
-
 // FirewallRulesetServerFirewallRule_DestinationAddressStart Destination address range starts from this address
 type FirewallRulesetServerFirewallRule_DestinationAddressStart struct {
 	union json.RawMessage
 }
-
-// FirewallRulesetServerFirewallRuleDestinationPortEnd0 defines model for FirewallRulesetServerFirewallRule.DestinationPortEnd.0.
-type FirewallRulesetServerFirewallRuleDestinationPortEnd0 = string
 
 // FirewallRulesetServerFirewallRuleDestinationPortEnd1 defines model for FirewallRulesetServerFirewallRule.DestinationPortEnd.1.
 type FirewallRulesetServerFirewallRuleDestinationPortEnd1 = int64
@@ -384,9 +438,6 @@ type FirewallRulesetServerFirewallRule_DestinationPortEnd struct {
 	union json.RawMessage
 }
 
-// FirewallRulesetServerFirewallRuleDestinationPortStart0 defines model for FirewallRulesetServerFirewallRule.DestinationPortStart.0.
-type FirewallRulesetServerFirewallRuleDestinationPortStart0 = string
-
 // FirewallRulesetServerFirewallRuleDestinationPortStart1 defines model for FirewallRulesetServerFirewallRule.DestinationPortStart.1.
 type FirewallRulesetServerFirewallRuleDestinationPortStart1 = int64
 
@@ -398,9 +449,6 @@ type FirewallRulesetServerFirewallRule_DestinationPortStart struct {
 	union json.RawMessage
 }
 
-// FirewallRulesetServerFirewallRuleFamily0 defines model for FirewallRulesetServerFirewallRule.Family.0.
-type FirewallRulesetServerFirewallRuleFamily0 = string
-
 // FirewallRulesetServerFirewallRuleFamily1 defines model for FirewallRulesetServerFirewallRule.Family.1.
 type FirewallRulesetServerFirewallRuleFamily1 = string
 
@@ -411,9 +459,6 @@ type FirewallRulesetServerFirewallRuleFamily2 = string
 type FirewallRulesetServerFirewallRule_Family struct {
 	union json.RawMessage
 }
-
-// FirewallRulesetServerFirewallRuleIcmpType0 defines model for FirewallRulesetServerFirewallRule.IcmpType.0.
-type FirewallRulesetServerFirewallRuleIcmpType0 = string
 
 // FirewallRulesetServerFirewallRuleIcmpType1 defines model for FirewallRulesetServerFirewallRule.IcmpType.1.
 type FirewallRulesetServerFirewallRuleIcmpType1 = int64
@@ -437,9 +482,6 @@ type FirewallRulesetServerFirewallRule_Position struct {
 	union json.RawMessage
 }
 
-// FirewallRulesetServerFirewallRuleProtocol0 defines model for FirewallRulesetServerFirewallRule.Protocol.0.
-type FirewallRulesetServerFirewallRuleProtocol0 = string
-
 // FirewallRulesetServerFirewallRuleProtocol1 defines model for FirewallRulesetServerFirewallRule.Protocol.1.
 type FirewallRulesetServerFirewallRuleProtocol1 = string
 
@@ -460,9 +502,6 @@ type FirewallRulesetServerFirewallRuleSourceAddressEnd1 = string
 // FirewallRulesetServerFirewallRuleSourceAddressEnd2 defines model for FirewallRulesetServerFirewallRule.SourceAddressEnd.2.
 type FirewallRulesetServerFirewallRuleSourceAddressEnd2 = string
 
-// FirewallRulesetServerFirewallRuleSourceAddressEnd3 defines model for FirewallRulesetServerFirewallRule.SourceAddressEnd.3.
-type FirewallRulesetServerFirewallRuleSourceAddressEnd3 = string
-
 // FirewallRulesetServerFirewallRule_SourceAddressEnd Source address range ends at this address
 type FirewallRulesetServerFirewallRule_SourceAddressEnd struct {
 	union json.RawMessage
@@ -477,16 +516,10 @@ type FirewallRulesetServerFirewallRuleSourceAddressStart1 = string
 // FirewallRulesetServerFirewallRuleSourceAddressStart2 defines model for FirewallRulesetServerFirewallRule.SourceAddressStart.2.
 type FirewallRulesetServerFirewallRuleSourceAddressStart2 = string
 
-// FirewallRulesetServerFirewallRuleSourceAddressStart3 defines model for FirewallRulesetServerFirewallRule.SourceAddressStart.3.
-type FirewallRulesetServerFirewallRuleSourceAddressStart3 = string
-
 // FirewallRulesetServerFirewallRule_SourceAddressStart Source address range starts from this address
 type FirewallRulesetServerFirewallRule_SourceAddressStart struct {
 	union json.RawMessage
 }
-
-// FirewallRulesetServerFirewallRuleSourcePortEnd0 defines model for FirewallRulesetServerFirewallRule.SourcePortEnd.0.
-type FirewallRulesetServerFirewallRuleSourcePortEnd0 = string
 
 // FirewallRulesetServerFirewallRuleSourcePortEnd1 defines model for FirewallRulesetServerFirewallRule.SourcePortEnd.1.
 type FirewallRulesetServerFirewallRuleSourcePortEnd1 = int64
@@ -499,9 +532,6 @@ type FirewallRulesetServerFirewallRule_SourcePortEnd struct {
 	union json.RawMessage
 }
 
-// FirewallRulesetServerFirewallRuleSourcePortStart0 defines model for FirewallRulesetServerFirewallRule.SourcePortStart.0.
-type FirewallRulesetServerFirewallRuleSourcePortStart0 = string
-
 // FirewallRulesetServerFirewallRuleSourcePortStart1 defines model for FirewallRulesetServerFirewallRule.SourcePortStart.1.
 type FirewallRulesetServerFirewallRuleSourcePortStart1 = int64
 
@@ -513,379 +543,560 @@ type FirewallRulesetServerFirewallRule_SourcePortStart struct {
 	union json.RawMessage
 }
 
-// FirewallRulesetServerFirewallRuleCreate defines model for firewallRulesetServerFirewallRuleCreate.
+// FirewallRulesetServerFirewallRuleCreate Examples: {"firewall_rule":{"action":"accept","comment":"Allow SSH from this network","destination_address_end":"","destination_address_start":"","destination_port_end":"22","destination_port_start":"22","direction":"in","family":"IPv4","icmp_type":"","position":"1","protocol":"tcp","source_address_end":"192.168.1.255","source_address_start":"192.168.1.1","source_port_end":"","source_port_start":""}}
 type FirewallRulesetServerFirewallRuleCreate struct {
 	// FirewallRule Server firewall rule
+	//
+	// Examples: {"action":"accept","direction":"in","family":"IPv4","protocol":"tcp"}, {"action":"drop","direction":"out","family":"IPv4"}
 	FirewallRule FirewallRulesetServerFirewallRule `json:"firewall_rule"`
 }
 
 // FirewallRulesetServerFirewallRuleDetail Server firewall rule detail
+//
+// Examples: {"firewall_rule":{"action":"accept","direction":"in","family":"IPv4","protocol":"tcp"}}
 type FirewallRulesetServerFirewallRuleDetail struct {
 	// FirewallRule Server firewall rule
+	//
+	// Examples: {"action":"accept","direction":"in","family":"IPv4","protocol":"tcp"}, {"action":"drop","direction":"out","family":"IPv4"}
 	FirewallRule FirewallRulesetServerFirewallRule `json:"firewall_rule"`
 }
 
 // FirewallRulesetServerFirewallRulePosition The server firewall rule position.
+//
+// Examples: 1, 678
 type FirewallRulesetServerFirewallRulePosition = string
 
 // FirewallRulesetServerFirewallRules Server firewall rules.
+//
+// Examples: {"firewall_rule":[{"action":"accept","direction":"in","family":"IPv4","protocol":"tcp"},{"action":"drop","direction":"out","family":"IPv4"}]}
 type FirewallRulesetServerFirewallRules struct {
-	FirewallRule FirewallRulesetServerFirewallRules_FirewallRule `json:"firewall_rule"`
-}
-
-// FirewallRulesetServerFirewallRulesFirewallRule0 defines model for FirewallRulesetServerFirewallRules.FirewallRule.0.
-type FirewallRulesetServerFirewallRulesFirewallRule0 = []FirewallRulesetServerFirewallRule
-
-// FirewallRulesetServerFirewallRulesFirewallRule1 defines model for FirewallRulesetServerFirewallRules.FirewallRule.1.
-type FirewallRulesetServerFirewallRulesFirewallRule1 = string
-
-// FirewallRulesetServerFirewallRules_FirewallRule defines model for FirewallRulesetServerFirewallRules.FirewallRule.
-type FirewallRulesetServerFirewallRules_FirewallRule struct {
-	union json.RawMessage
+	FirewallRule *[]FirewallRulesetServerFirewallRule `json:"firewall_rule"`
 }
 
 // FirewallRulesetServerMultipleFirewallRulesCreate Creates multiple server firewall rules.
+//
+// Examples: {"firewall_rules":{"firewall_rule":[{"action":"accept","comment":"Allow SSH from this network","destination_address_end":null,"destination_address_start":null,"destination_port_end":"22","destination_port_start":"22","direction":"in","family":"IPv4","icmp_type":null,"protocol":"tcp","source_address_end":"192.168.1.255","source_address_start":"192.168.1.1","source_port_end":null,"source_port_start":null},{"action":"accept","comment":"Allow DNS from this network","destination_address_end":null,"destination_address_start":null,"destination_port_end":"53","destination_port_start":"53","direction":"in","family":"IPv4","icmp_type":null,"protocol":"tcp","source_address_end":"1.1.1.1","source_address_start":"1.1.1.1","source_port_end":null,"source_port_start":null},{"action":"drop","comment":"dfg","destination_address_end":"100.100.128.2","destination_address_start":"100.100.128.2","destination_port_end":"89","destination_port_start":"89","direction":"out","family":"IPv4","icmp_type":null,"protocol":"tcp","source_address_end":null,"source_address_start":null,"source_port_end":null,"source_port_start":null},{"action":"accept","comment":"'w???”?p'2'?12??12?3?'231","destination_address_end":"2a04:3540:1001:1000:1411:4dff:fea5:1bab","destination_address_start":"2a04:3540:1001:1000:1411:4dff:fea5:1bab","destination_port_end":null,"destination_port_start":null,"direction":"out","family":"IPv6","icmp_type":"12","protocol":"icmp","source_address_end":null,"source_address_start":null,"source_port_end":null,"source_port_start":null}]}}, {"firewall_rules":null}
 type FirewallRulesetServerMultipleFirewallRulesCreate struct {
-	FirewallRules FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules `json:"firewall_rules"`
-}
-
-// FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0 defines model for FirewallRulesetServerMultipleFirewallRulesCreate.FirewallRules.0.
-type FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0 = string
-
-// FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1 defines model for FirewallRulesetServerMultipleFirewallRulesCreate.FirewallRules.1.
-type FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1 struct {
-	FirewallRule FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule `json:"firewall_rule"`
-}
-
-// FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0 defines model for FirewallRulesetServerMultipleFirewallRulesCreate.FirewallRules.1.FirewallRule.0.
-type FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0 = []FirewallRulesetServerFirewallRule
-
-// FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1 defines model for FirewallRulesetServerMultipleFirewallRulesCreate.FirewallRules.1.FirewallRule.1.
-type FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1 = string
-
-// FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule defines model for FirewallRulesetServerMultipleFirewallRulesCreate.FirewallRules.1.FirewallRule.
-type FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule struct {
-	union json.RawMessage
-}
-
-// FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules defines model for FirewallRulesetServerMultipleFirewallRulesCreate.FirewallRules.
-type FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules struct {
-	union json.RawMessage
+	FirewallRules *struct {
+		FirewallRule *[]FirewallRulesetServerFirewallRule `json:"firewall_rule"`
+	} `json:"firewall_rules"`
 }
 
 // FirewallRulesetServerUuid The unique identifier for the server.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type FirewallRulesetServerUuid = openapi_types.UUID
 
 // FirewallRulesetUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type FirewallRulesetUuid = openapi_types.UUID
 
 // FirewallRulesetVersion The firewall ruleset version.
+//
+// Examples: 1, 678
 type FirewallRulesetVersion = int64
 
 // CreateFirewallRulesetLabelRulesetUuid The unique identifier for the server.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateFirewallRulesetLabelRulesetUuid = FirewallRulesetServerUuid
 
 // CreateFirewallRulesetRuleRulesetUuid The unique identifier for the server.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateFirewallRulesetRuleRulesetUuid = FirewallRulesetServerUuid
 
 // CreateMultipleFirewallRulesetRuleRulesetUuid The unique identifier for the server.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateMultipleFirewallRulesetRuleRulesetUuid = FirewallRulesetServerUuid
 
 // DeleteFirewallRulesetLabelLabelKey The key of a label.
+//
+// Examples: environment, team, project, purpose, cost-center
 type DeleteFirewallRulesetLabelLabelKey = FirewallRulesetLabelKey
 
 // DeleteFirewallRulesetLabelRulesetUuid The unique identifier for the server.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteFirewallRulesetLabelRulesetUuid = FirewallRulesetServerUuid
 
 // DeleteFirewallRulesetRuleRuleId The unique identifier for the server.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteFirewallRulesetRuleRuleId = FirewallRulesetServerUuid
 
 // DeleteFirewallRulesetRuleRulesetUuid The unique identifier for the server.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteFirewallRulesetRuleRulesetUuid = FirewallRulesetServerUuid
 
 // DeleteFirewallRulesetRulesetUuid The unique identifier for the server.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteFirewallRulesetRulesetUuid = FirewallRulesetServerUuid
 
 // FirewallRulesetCreateMultipleServerFirewallRulesServerUuid The unique identifier for the server.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type FirewallRulesetCreateMultipleServerFirewallRulesServerUuid = FirewallRulesetServerUuid
 
 // FirewallRulesetCreateServerFirewallRuleServerUuid The unique identifier for the server.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type FirewallRulesetCreateServerFirewallRuleServerUuid = FirewallRulesetServerUuid
 
 // FirewallRulesetDeleteServerFirewallRulePosition The server firewall rule position.
+//
+// Examples: 1, 678
 type FirewallRulesetDeleteServerFirewallRulePosition = FirewallRulesetServerFirewallRulePosition
 
 // FirewallRulesetDeleteServerFirewallRuleServerUuid The unique identifier for the server.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type FirewallRulesetDeleteServerFirewallRuleServerUuid = FirewallRulesetServerUuid
 
 // FirewallRulesetGetServerFirewallRulePosition The server firewall rule position.
+//
+// Examples: 1, 678
 type FirewallRulesetGetServerFirewallRulePosition = FirewallRulesetServerFirewallRulePosition
 
 // FirewallRulesetGetServerFirewallRuleServerUuid The unique identifier for the server.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type FirewallRulesetGetServerFirewallRuleServerUuid = FirewallRulesetServerUuid
 
 // FirewallRulesetListServerFirewallRuleLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
+//
+// Examples: 10, 25, 50, 100
 type FirewallRulesetListServerFirewallRuleLimit = FirewallRulesetQueryParamLimit
 
 // FirewallRulesetListServerFirewallRuleOffset Schema for a query parameter specifying the offset for pagination.
+//
+// Examples: 0, 10, 20, 50
 type FirewallRulesetListServerFirewallRuleOffset = FirewallRulesetQueryParamOffset
 
 // FirewallRulesetListServerFirewallRuleServerUuid The unique identifier for the server.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type FirewallRulesetListServerFirewallRuleServerUuid = FirewallRulesetServerUuid
 
 // FirewallRulesetListServerFirewallRuleSort Schema for a query parameter specifying the sort field.
+//
+// Examples: name, created_at, updated_at
 type FirewallRulesetListServerFirewallRuleSort = FirewallRulesetQueryParamSort
 
 // GetFirewallRulesetLabelLabelKey The key of a label.
+//
+// Examples: environment, team, project, purpose, cost-center
 type GetFirewallRulesetLabelLabelKey = FirewallRulesetLabelKey
 
 // GetFirewallRulesetLabelRulesetUuid The unique identifier for the server.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetFirewallRulesetLabelRulesetUuid = FirewallRulesetServerUuid
 
 // GetFirewallRulesetRuleRuleId The unique identifier for the server.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetFirewallRulesetRuleRuleId = FirewallRulesetServerUuid
 
 // GetFirewallRulesetRuleRulesetUuid The unique identifier for the server.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetFirewallRulesetRuleRulesetUuid = FirewallRulesetServerUuid
 
 // GetFirewallRulesetRulesetUuid The unique identifier for the server.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetFirewallRulesetRulesetUuid = FirewallRulesetServerUuid
 
 // ListFirewallRulesetAttachedServersRulesetUuid The unique identifier for the server.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ListFirewallRulesetAttachedServersRulesetUuid = FirewallRulesetServerUuid
 
 // ListFirewallRulesetLabelsRulesetUuid The unique identifier for the server.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ListFirewallRulesetLabelsRulesetUuid = FirewallRulesetServerUuid
 
 // ListFirewallRulesetRulesLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
+//
+// Examples: 10, 25, 50, 100
 type ListFirewallRulesetRulesLimit = FirewallRulesetQueryParamLimit
 
 // ListFirewallRulesetRulesOffset Schema for a query parameter specifying the offset for pagination.
+//
+// Examples: 0, 10, 20, 50
 type ListFirewallRulesetRulesOffset = FirewallRulesetQueryParamOffset
 
 // ListFirewallRulesetRulesRulesetUuid The unique identifier for the server.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ListFirewallRulesetRulesRulesetUuid = FirewallRulesetServerUuid
 
 // ListFirewallRulesetRulesSort Schema for a query parameter specifying the sort field.
+//
+// Examples: name, created_at, updated_at
 type ListFirewallRulesetRulesSort = FirewallRulesetQueryParamSort
 
 // ListFirewallRulesetsLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
+//
+// Examples: 10, 25, 50, 100
 type ListFirewallRulesetsLimit = FirewallRulesetQueryParamLimit
 
 // ListFirewallRulesetsOffset Schema for a query parameter specifying the offset for pagination.
+//
+// Examples: 0, 10, 20, 50
 type ListFirewallRulesetsOffset = FirewallRulesetQueryParamOffset
 
 // ListFirewallRulesetsSort Schema for a query parameter specifying the sort field.
+//
+// Examples: name, created_at, updated_at
 type ListFirewallRulesetsSort = FirewallRulesetQueryParamSort
 
 // ModifyFirewallRulesetLabelLabelKey The key of a label.
+//
+// Examples: environment, team, project, purpose, cost-center
 type ModifyFirewallRulesetLabelLabelKey = FirewallRulesetLabelKey
 
 // ModifyFirewallRulesetLabelRulesetUuid The unique identifier for the server.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyFirewallRulesetLabelRulesetUuid = FirewallRulesetServerUuid
 
 // ModifyFirewallRulesetRuleRuleId The unique identifier for the server.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyFirewallRulesetRuleRuleId = FirewallRulesetServerUuid
 
 // ModifyFirewallRulesetRuleRulesetUuid The unique identifier for the server.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyFirewallRulesetRuleRulesetUuid = FirewallRulesetServerUuid
 
 // ModifyFirewallRulesetRulesetUuid The unique identifier for the server.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyFirewallRulesetRulesetUuid = FirewallRulesetServerUuid
 
 // RestoreFirewallRulesetRulesetUuid The unique identifier for the server.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type RestoreFirewallRulesetRulesetUuid = FirewallRulesetServerUuid
 
 // RestoreFirewallRulesetRulesetVersion The firewall ruleset version.
+//
+// Examples: 1, 678
 type RestoreFirewallRulesetRulesetVersion = FirewallRulesetVersion
 
 // CreateFirewallRuleset201 Response schema for firewall ruleset details, including UUID, name, description, stateful, enabled, labels and serverUUID.
+//
+// Examples: {"default_dns_rules_enabled":false,"description":"Example stateless firewall ruleset","enabled":true,"labels":[{"key":"example-key","value":"example-value"}],"name":"example_firewall_ruleset","server_uuid":"03aa7245-2ff9-49c8-9f0e-7ca0270d71a4","stateful":false,"uuid":"1200ecde-db95-4d1c-9133-6508f3232567"}
 type CreateFirewallRuleset201 = FirewallRulesetDetailResponse
 
 // CreateFirewallRulesetDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type CreateFirewallRulesetDefault = FirewallRulesetErrorResponse
 
 // CreateFirewallRulesetLabel201 Schema for label details including key-value pairs.
+//
+// Examples: {"key":"foo","value":"bar"}
 type CreateFirewallRulesetLabel201 = FirewallRulesetLabelDetailResponse
 
 // CreateFirewallRulesetLabelDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type CreateFirewallRulesetLabelDefault = FirewallRulesetErrorResponse
 
 // CreateFirewallRulesetRule201 Response schema for firewall ruleset rule details.
+//
+// Examples: {"action":"accept","direction":"in","enabled":false,"family":"IPv4","protocol":"tcp","uuid":"16e7d7fc-9a90-4f42-83f5-ea0396f1592b"}
 type CreateFirewallRulesetRule201 = FirewallRulesetRuleDetailResponse
 
 // CreateFirewallRulesetRuleDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type CreateFirewallRulesetRuleDefault = FirewallRulesetErrorResponse
 
 // CreateMultipleFirewallRulesetRule200 Response schema for a list of firewall ruleset rules.
+//
+// Examples: {"rules":[{"action":"accept","direction":"in","enabled":false,"family":"IPv4","protocol":"tcp","uuid":"16e7d7fc-9a90-4f42-83f5-ea0396f1592b"}]}
 type CreateMultipleFirewallRulesetRule200 = FirewallRulesetFirewallRuleListResponse
 
 // CreateMultipleFirewallRulesetRuleDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type CreateMultipleFirewallRulesetRuleDefault = FirewallRulesetErrorResponse
 
 // DeleteFirewallRulesetDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type DeleteFirewallRulesetDefault = FirewallRulesetErrorResponse
 
 // DeleteFirewallRulesetLabelDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type DeleteFirewallRulesetLabelDefault = FirewallRulesetErrorResponse
 
 // DeleteFirewallRulesetRuleDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type DeleteFirewallRulesetRuleDefault = FirewallRulesetErrorResponse
 
 // FirewallRulesetCreateMultipleServerFirewallRules200 Server firewall detail response.
+//
+// Examples: {"firewall_rules":{"firewall_rule":[{"action":"accept","direction":"in","family":"IPv4","protocol":"tcp"},{"action":"drop","direction":"out","family":"IPv4"}]}}
 type FirewallRulesetCreateMultipleServerFirewallRules200 = FirewallRulesetServerFirewallDetailResponse
 
 // FirewallRulesetCreateMultipleServerFirewallRules400 Schema for legacy error responses from API.
+//
+// Examples: {"error":{"error_code":"SERVER_INVALID","error_message":"The server UUID is invalid."}}
 type FirewallRulesetCreateMultipleServerFirewallRules400 = FirewallRulesetErrorLegacyResponse
 
 // FirewallRulesetCreateMultipleServerFirewallRules403 Schema for legacy error responses from API.
+//
+// Examples: {"error":{"error_code":"SERVER_INVALID","error_message":"The server UUID is invalid."}}
 type FirewallRulesetCreateMultipleServerFirewallRules403 = FirewallRulesetErrorLegacyResponse
 
 // FirewallRulesetCreateMultipleServerFirewallRules404 Schema for legacy error responses from API.
+//
+// Examples: {"error":{"error_code":"SERVER_INVALID","error_message":"The server UUID is invalid."}}
 type FirewallRulesetCreateMultipleServerFirewallRules404 = FirewallRulesetErrorLegacyResponse
 
 // FirewallRulesetCreateMultipleServerFirewallRules409 Schema for legacy error responses from API.
+//
+// Examples: {"error":{"error_code":"SERVER_INVALID","error_message":"The server UUID is invalid."}}
 type FirewallRulesetCreateMultipleServerFirewallRules409 = FirewallRulesetErrorLegacyResponse
 
 // FirewallRulesetCreateMultipleServerFirewallRulesDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type FirewallRulesetCreateMultipleServerFirewallRulesDefault = FirewallRulesetErrorResponse
 
 // FirewallRulesetCreateServerFirewallRule201 Server firewall rule detail
+//
+// Examples: {"firewall_rule":{"action":"accept","direction":"in","family":"IPv4","protocol":"tcp"}}
 type FirewallRulesetCreateServerFirewallRule201 = FirewallRulesetServerFirewallRuleDetail
 
 // FirewallRulesetCreateServerFirewallRule400 Schema for legacy error responses from API.
+//
+// Examples: {"error":{"error_code":"SERVER_INVALID","error_message":"The server UUID is invalid."}}
 type FirewallRulesetCreateServerFirewallRule400 = FirewallRulesetErrorLegacyResponse
 
 // FirewallRulesetCreateServerFirewallRule403 Schema for legacy error responses from API.
+//
+// Examples: {"error":{"error_code":"SERVER_INVALID","error_message":"The server UUID is invalid."}}
 type FirewallRulesetCreateServerFirewallRule403 = FirewallRulesetErrorLegacyResponse
 
 // FirewallRulesetCreateServerFirewallRule404 Schema for legacy error responses from API.
+//
+// Examples: {"error":{"error_code":"SERVER_INVALID","error_message":"The server UUID is invalid."}}
 type FirewallRulesetCreateServerFirewallRule404 = FirewallRulesetErrorLegacyResponse
 
 // FirewallRulesetCreateServerFirewallRule409 Schema for legacy error responses from API.
+//
+// Examples: {"error":{"error_code":"SERVER_INVALID","error_message":"The server UUID is invalid."}}
 type FirewallRulesetCreateServerFirewallRule409 = FirewallRulesetErrorLegacyResponse
 
 // FirewallRulesetCreateServerFirewallRuleDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type FirewallRulesetCreateServerFirewallRuleDefault = FirewallRulesetErrorResponse
 
 // FirewallRulesetDeleteServerFirewallRule400 Schema for legacy error responses from API.
+//
+// Examples: {"error":{"error_code":"SERVER_INVALID","error_message":"The server UUID is invalid."}}
 type FirewallRulesetDeleteServerFirewallRule400 = FirewallRulesetErrorLegacyResponse
 
 // FirewallRulesetDeleteServerFirewallRule403 Schema for legacy error responses from API.
+//
+// Examples: {"error":{"error_code":"SERVER_INVALID","error_message":"The server UUID is invalid."}}
 type FirewallRulesetDeleteServerFirewallRule403 = FirewallRulesetErrorLegacyResponse
 
 // FirewallRulesetDeleteServerFirewallRule404 Schema for legacy error responses from API.
+//
+// Examples: {"error":{"error_code":"SERVER_INVALID","error_message":"The server UUID is invalid."}}
 type FirewallRulesetDeleteServerFirewallRule404 = FirewallRulesetErrorLegacyResponse
 
 // FirewallRulesetDeleteServerFirewallRule409 Schema for legacy error responses from API.
+//
+// Examples: {"error":{"error_code":"SERVER_INVALID","error_message":"The server UUID is invalid."}}
 type FirewallRulesetDeleteServerFirewallRule409 = FirewallRulesetErrorLegacyResponse
 
 // FirewallRulesetDeleteServerFirewallRuleDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type FirewallRulesetDeleteServerFirewallRuleDefault = FirewallRulesetErrorResponse
 
 // FirewallRulesetGetServerFirewallRule200 Server firewall rule detail
+//
+// Examples: {"firewall_rule":{"action":"accept","direction":"in","family":"IPv4","protocol":"tcp"}}
 type FirewallRulesetGetServerFirewallRule200 = FirewallRulesetServerFirewallRuleDetail
 
 // FirewallRulesetGetServerFirewallRuleDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type FirewallRulesetGetServerFirewallRuleDefault = FirewallRulesetErrorResponse
 
 // FirewallRulesetListServerFirewallRule200 Server firewall detail response.
+//
+// Examples: {"firewall_rules":{"firewall_rule":[{"action":"accept","direction":"in","family":"IPv4","protocol":"tcp"},{"action":"drop","direction":"out","family":"IPv4"}]}}
 type FirewallRulesetListServerFirewallRule200 = FirewallRulesetServerFirewallDetailResponse
 
 // FirewallRulesetListServerFirewallRuleDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type FirewallRulesetListServerFirewallRuleDefault = FirewallRulesetErrorResponse
 
 // GetFirewallRuleset200 Response schema for firewall ruleset details, including UUID, name, description, stateful, enabled, labels and serverUUID.
+//
+// Examples: {"default_dns_rules_enabled":false,"description":"Example stateless firewall ruleset","enabled":true,"labels":[{"key":"example-key","value":"example-value"}],"name":"example_firewall_ruleset","server_uuid":"03aa7245-2ff9-49c8-9f0e-7ca0270d71a4","stateful":false,"uuid":"1200ecde-db95-4d1c-9133-6508f3232567"}
 type GetFirewallRuleset200 = FirewallRulesetDetailResponse
 
 // GetFirewallRulesetDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type GetFirewallRulesetDefault = FirewallRulesetErrorResponse
 
 // GetFirewallRulesetLabel200 Schema for label details including key-value pairs.
+//
+// Examples: {"key":"foo","value":"bar"}
 type GetFirewallRulesetLabel200 = FirewallRulesetLabelDetailResponse
 
 // GetFirewallRulesetLabelDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type GetFirewallRulesetLabelDefault = FirewallRulesetErrorResponse
 
 // GetFirewallRulesetRule200 Response schema for firewall ruleset rule details.
+//
+// Examples: {"action":"accept","direction":"in","enabled":false,"family":"IPv4","protocol":"tcp","uuid":"16e7d7fc-9a90-4f42-83f5-ea0396f1592b"}
 type GetFirewallRulesetRule200 = FirewallRulesetRuleDetailResponse
 
 // GetFirewallRulesetRuleDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type GetFirewallRulesetRuleDefault = FirewallRulesetErrorResponse
 
 // ListFirewallRulesetAttachedServers200 Response schema for listing labels.
+//
+// Examples: [{"key":"foo","value":"bar"}]
 type ListFirewallRulesetAttachedServers200 = FirewallRulesetLabelListResponse
 
 // ListFirewallRulesetAttachedServersDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ListFirewallRulesetAttachedServersDefault = FirewallRulesetErrorResponse
 
 // ListFirewallRulesetLabels200 Response schema for listing labels.
+//
+// Examples: [{"key":"foo","value":"bar"}]
 type ListFirewallRulesetLabels200 = FirewallRulesetLabelListResponse
 
 // ListFirewallRulesetLabelsDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ListFirewallRulesetLabelsDefault = FirewallRulesetErrorResponse
 
 // ListFirewallRulesetRules200 Response schema for a list of firewall ruleset rules.
+//
+// Examples: {"rules":[{"action":"accept","direction":"in","enabled":false,"family":"IPv4","protocol":"tcp","uuid":"16e7d7fc-9a90-4f42-83f5-ea0396f1592b"}]}
 type ListFirewallRulesetRules200 = FirewallRulesetFirewallRuleListResponse
 
 // ListFirewallRulesetRulesDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ListFirewallRulesetRulesDefault = FirewallRulesetErrorResponse
 
 // ListFirewallRulesets200 Response schema for a list of firewall rulesets.
+//
+// Examples: [{"default_dns_rules_enabled":false,"description":"Example stateless firewall ruleset","enabled":true,"labels":[{"key":"example-key","value":"example-value"}],"name":"example_stateless_firewall_ruleset","server_uuid":"03aa7245-2ff9-49c8-9f0e-7ca0270d71a4","stateful":false,"uuid":"1200ecde-db95-4d1c-9133-6508f3232567"},{"default_dns_rules_enabled":false,"description":"Example stateful firewall ruleset","enabled":true,"labels":[{"key":"example-key","value":"example-value"}],"name":"example_stateful_firewall_ruleset","stateful":true,"uuid":"1200ecde-db95-4d1c-9133-6508f3232445"}]
 type ListFirewallRulesets200 = FirewallRulesetListResponse
 
 // ListFirewallRulesetsDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ListFirewallRulesetsDefault = FirewallRulesetErrorResponse
 
 // ModifyFirewallRuleset200 Response schema for firewall ruleset details, including UUID, name, description, stateful, enabled, labels and serverUUID.
+//
+// Examples: {"default_dns_rules_enabled":false,"description":"Example stateless firewall ruleset","enabled":true,"labels":[{"key":"example-key","value":"example-value"}],"name":"example_firewall_ruleset","server_uuid":"03aa7245-2ff9-49c8-9f0e-7ca0270d71a4","stateful":false,"uuid":"1200ecde-db95-4d1c-9133-6508f3232567"}
 type ModifyFirewallRuleset200 = FirewallRulesetDetailResponse
 
 // ModifyFirewallRulesetDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ModifyFirewallRulesetDefault = FirewallRulesetErrorResponse
 
 // ModifyFirewallRulesetLabel200 Schema for label details including key-value pairs.
+//
+// Examples: {"key":"foo","value":"bar"}
 type ModifyFirewallRulesetLabel200 = FirewallRulesetLabelDetailResponse
 
 // ModifyFirewallRulesetLabelDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ModifyFirewallRulesetLabelDefault = FirewallRulesetErrorResponse
 
 // ModifyFirewallRulesetRule200 Response schema for firewall ruleset rule details.
+//
+// Examples: {"action":"accept","direction":"in","enabled":false,"family":"IPv4","protocol":"tcp","uuid":"16e7d7fc-9a90-4f42-83f5-ea0396f1592b"}
 type ModifyFirewallRulesetRule200 = FirewallRulesetRuleDetailResponse
 
 // ModifyFirewallRulesetRuleDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ModifyFirewallRulesetRuleDefault = FirewallRulesetErrorResponse
 
 // RestoreFirewallRuleset200 Response schema for firewall ruleset details, including UUID, name, description, stateful, enabled, labels and serverUUID.
+//
+// Examples: {"default_dns_rules_enabled":false,"description":"Example stateless firewall ruleset","enabled":true,"labels":[{"key":"example-key","value":"example-value"}],"name":"example_firewall_ruleset","server_uuid":"03aa7245-2ff9-49c8-9f0e-7ca0270d71a4","stateful":false,"uuid":"1200ecde-db95-4d1c-9133-6508f3232567"}
 type RestoreFirewallRuleset200 = FirewallRulesetDetailResponse
 
 // RestoreFirewallRulesetDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type RestoreFirewallRulesetDefault = FirewallRulesetErrorResponse
 
 // CreateFirewallRulesetRequestBody Create firewall ruleset
+//
+// Examples: {"default_dns_rules_enabled":false,"enabled":false,"name":"example_firewall_ruleset","stateful":true}
 type CreateFirewallRulesetRequestBody = CreateFirewallRuleset
 
 // CreateFirewallRulesetLabel UpCloud firewall ruleset Label
+//
+// Examples: {"key":"dev","value":"dev-1"}, {"key":"staging","value":"stg-1"}
 type CreateFirewallRulesetLabel = FirewallRulesetCreateLabel
 
-// CreateFirewallRulesetRule defines model for createFirewallRulesetRule.
+// CreateFirewallRulesetRule Examples: {"action":"accept","direction":"in","enabled":false,"family":"IPv4","protocol":"tcp"}, {"action":"drop","direction":"out","family":"IPv6"}
 type CreateFirewallRulesetRule = FirewallRulesetFirewallRuleCreate
 
-// CreateMultipleFirewallRulesetRule defines model for createMultipleFirewallRulesetRule.
+// CreateMultipleFirewallRulesetRule Examples: [{"action":"accept","direction":"in","enabled":false,"family":"IPv4","protocol":"tcp"},{"action":"drop","direction":"out","family":"IPv6"}]
 type CreateMultipleFirewallRulesetRule = FirewallRulesetFirewallMultipleRuleCreate
 
 // FirewallRulesetCreateMultipleServerFirewallRules Creates multiple server firewall rules.
+//
+// Examples: {"firewall_rules":{"firewall_rule":[{"action":"accept","comment":"Allow SSH from this network","destination_address_end":null,"destination_address_start":null,"destination_port_end":"22","destination_port_start":"22","direction":"in","family":"IPv4","icmp_type":null,"protocol":"tcp","source_address_end":"192.168.1.255","source_address_start":"192.168.1.1","source_port_end":null,"source_port_start":null},{"action":"accept","comment":"Allow DNS from this network","destination_address_end":null,"destination_address_start":null,"destination_port_end":"53","destination_port_start":"53","direction":"in","family":"IPv4","icmp_type":null,"protocol":"tcp","source_address_end":"1.1.1.1","source_address_start":"1.1.1.1","source_port_end":null,"source_port_start":null},{"action":"drop","comment":"dfg","destination_address_end":"100.100.128.2","destination_address_start":"100.100.128.2","destination_port_end":"89","destination_port_start":"89","direction":"out","family":"IPv4","icmp_type":null,"protocol":"tcp","source_address_end":null,"source_address_start":null,"source_port_end":null,"source_port_start":null},{"action":"accept","comment":"'w???”?p'2'?12??12?3?'231","destination_address_end":"2a04:3540:1001:1000:1411:4dff:fea5:1bab","destination_address_start":"2a04:3540:1001:1000:1411:4dff:fea5:1bab","destination_port_end":null,"destination_port_start":null,"direction":"out","family":"IPv6","icmp_type":"12","protocol":"icmp","source_address_end":null,"source_address_start":null,"source_port_end":null,"source_port_start":null}]}}, {"firewall_rules":null}
 type FirewallRulesetCreateMultipleServerFirewallRules = FirewallRulesetServerMultipleFirewallRulesCreate
 
-// FirewallRulesetCreateServerFirewallRule defines model for firewallRulesetCreateServerFirewallRule.
+// FirewallRulesetCreateServerFirewallRule Examples: {"firewall_rule":{"action":"accept","comment":"Allow SSH from this network","destination_address_end":"","destination_address_start":"","destination_port_end":"22","destination_port_start":"22","direction":"in","family":"IPv4","icmp_type":"","position":"1","protocol":"tcp","source_address_end":"192.168.1.255","source_address_start":"192.168.1.1","source_port_end":"","source_port_start":""}}
 type FirewallRulesetCreateServerFirewallRule = FirewallRulesetServerFirewallRuleCreate
 
 // ModifyFirewallRuleset Modify firewall ruleset
+//
+// Examples: {"description":"Modified example stateless firewall ruleset","enabled":false,"labels":[],"name":"modified_example_firewall_ruleset"}
 type ModifyFirewallRuleset = FirewallRulesetModify
 
 // ModifyFirewallRulesetLabel Schema for modifying a label with a key-value pair.
+//
+// Examples: {"key":"foo","value":"bar"}
 type ModifyFirewallRulesetLabel = FirewallRulesetLabelModify
 
-// ModifyFirewallRulesetRule defines model for modifyFirewallRulesetRule.
+// ModifyFirewallRulesetRule Examples: {"action":"accept","direction":"in","enabled":false,"family":"IPv4","protocol":"tcp"}, {"action":"drop","direction":"out","family":"IPv6"}
 type ModifyFirewallRulesetRule = FirewallRulesetFirewallRuleModify
 
 // ListFirewallRulesetsParams defines parameters for ListFirewallRulesets.
@@ -1344,32 +1555,6 @@ func (t *FirewallRulesetServerFirewallRule_DestinationAddressEnd) MergeFirewallR
 	return err
 }
 
-// AsFirewallRulesetServerFirewallRuleDestinationAddressEnd3 returns the union data inside the FirewallRulesetServerFirewallRule_DestinationAddressEnd as a FirewallRulesetServerFirewallRuleDestinationAddressEnd3
-func (t FirewallRulesetServerFirewallRule_DestinationAddressEnd) AsFirewallRulesetServerFirewallRuleDestinationAddressEnd3() (FirewallRulesetServerFirewallRuleDestinationAddressEnd3, error) {
-	var body FirewallRulesetServerFirewallRuleDestinationAddressEnd3
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromFirewallRulesetServerFirewallRuleDestinationAddressEnd3 overwrites any union data inside the FirewallRulesetServerFirewallRule_DestinationAddressEnd as the provided FirewallRulesetServerFirewallRuleDestinationAddressEnd3
-func (t *FirewallRulesetServerFirewallRule_DestinationAddressEnd) FromFirewallRulesetServerFirewallRuleDestinationAddressEnd3(v FirewallRulesetServerFirewallRuleDestinationAddressEnd3) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeFirewallRulesetServerFirewallRuleDestinationAddressEnd3 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_DestinationAddressEnd, using the provided FirewallRulesetServerFirewallRuleDestinationAddressEnd3
-func (t *FirewallRulesetServerFirewallRule_DestinationAddressEnd) MergeFirewallRulesetServerFirewallRuleDestinationAddressEnd3(v FirewallRulesetServerFirewallRuleDestinationAddressEnd3) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
 func (t FirewallRulesetServerFirewallRule_DestinationAddressEnd) MarshalJSON() ([]byte, error) {
 	b, err := t.union.MarshalJSON()
 	return b, err
@@ -1458,32 +1643,6 @@ func (t *FirewallRulesetServerFirewallRule_DestinationAddressStart) MergeFirewal
 	return err
 }
 
-// AsFirewallRulesetServerFirewallRuleDestinationAddressStart3 returns the union data inside the FirewallRulesetServerFirewallRule_DestinationAddressStart as a FirewallRulesetServerFirewallRuleDestinationAddressStart3
-func (t FirewallRulesetServerFirewallRule_DestinationAddressStart) AsFirewallRulesetServerFirewallRuleDestinationAddressStart3() (FirewallRulesetServerFirewallRuleDestinationAddressStart3, error) {
-	var body FirewallRulesetServerFirewallRuleDestinationAddressStart3
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromFirewallRulesetServerFirewallRuleDestinationAddressStart3 overwrites any union data inside the FirewallRulesetServerFirewallRule_DestinationAddressStart as the provided FirewallRulesetServerFirewallRuleDestinationAddressStart3
-func (t *FirewallRulesetServerFirewallRule_DestinationAddressStart) FromFirewallRulesetServerFirewallRuleDestinationAddressStart3(v FirewallRulesetServerFirewallRuleDestinationAddressStart3) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeFirewallRulesetServerFirewallRuleDestinationAddressStart3 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_DestinationAddressStart, using the provided FirewallRulesetServerFirewallRuleDestinationAddressStart3
-func (t *FirewallRulesetServerFirewallRule_DestinationAddressStart) MergeFirewallRulesetServerFirewallRuleDestinationAddressStart3(v FirewallRulesetServerFirewallRuleDestinationAddressStart3) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
 func (t FirewallRulesetServerFirewallRule_DestinationAddressStart) MarshalJSON() ([]byte, error) {
 	b, err := t.union.MarshalJSON()
 	return b, err
@@ -1491,32 +1650,6 @@ func (t FirewallRulesetServerFirewallRule_DestinationAddressStart) MarshalJSON()
 
 func (t *FirewallRulesetServerFirewallRule_DestinationAddressStart) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
-	return err
-}
-
-// AsFirewallRulesetServerFirewallRuleDestinationPortEnd0 returns the union data inside the FirewallRulesetServerFirewallRule_DestinationPortEnd as a FirewallRulesetServerFirewallRuleDestinationPortEnd0
-func (t FirewallRulesetServerFirewallRule_DestinationPortEnd) AsFirewallRulesetServerFirewallRuleDestinationPortEnd0() (FirewallRulesetServerFirewallRuleDestinationPortEnd0, error) {
-	var body FirewallRulesetServerFirewallRuleDestinationPortEnd0
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromFirewallRulesetServerFirewallRuleDestinationPortEnd0 overwrites any union data inside the FirewallRulesetServerFirewallRule_DestinationPortEnd as the provided FirewallRulesetServerFirewallRuleDestinationPortEnd0
-func (t *FirewallRulesetServerFirewallRule_DestinationPortEnd) FromFirewallRulesetServerFirewallRuleDestinationPortEnd0(v FirewallRulesetServerFirewallRuleDestinationPortEnd0) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeFirewallRulesetServerFirewallRuleDestinationPortEnd0 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_DestinationPortEnd, using the provided FirewallRulesetServerFirewallRuleDestinationPortEnd0
-func (t *FirewallRulesetServerFirewallRule_DestinationPortEnd) MergeFirewallRulesetServerFirewallRuleDestinationPortEnd0(v FirewallRulesetServerFirewallRuleDestinationPortEnd0) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
 	return err
 }
 
@@ -1582,32 +1715,6 @@ func (t *FirewallRulesetServerFirewallRule_DestinationPortEnd) UnmarshalJSON(b [
 	return err
 }
 
-// AsFirewallRulesetServerFirewallRuleDestinationPortStart0 returns the union data inside the FirewallRulesetServerFirewallRule_DestinationPortStart as a FirewallRulesetServerFirewallRuleDestinationPortStart0
-func (t FirewallRulesetServerFirewallRule_DestinationPortStart) AsFirewallRulesetServerFirewallRuleDestinationPortStart0() (FirewallRulesetServerFirewallRuleDestinationPortStart0, error) {
-	var body FirewallRulesetServerFirewallRuleDestinationPortStart0
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromFirewallRulesetServerFirewallRuleDestinationPortStart0 overwrites any union data inside the FirewallRulesetServerFirewallRule_DestinationPortStart as the provided FirewallRulesetServerFirewallRuleDestinationPortStart0
-func (t *FirewallRulesetServerFirewallRule_DestinationPortStart) FromFirewallRulesetServerFirewallRuleDestinationPortStart0(v FirewallRulesetServerFirewallRuleDestinationPortStart0) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeFirewallRulesetServerFirewallRuleDestinationPortStart0 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_DestinationPortStart, using the provided FirewallRulesetServerFirewallRuleDestinationPortStart0
-func (t *FirewallRulesetServerFirewallRule_DestinationPortStart) MergeFirewallRulesetServerFirewallRuleDestinationPortStart0(v FirewallRulesetServerFirewallRuleDestinationPortStart0) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
 // AsFirewallRulesetServerFirewallRuleDestinationPortStart1 returns the union data inside the FirewallRulesetServerFirewallRule_DestinationPortStart as a FirewallRulesetServerFirewallRuleDestinationPortStart1
 func (t FirewallRulesetServerFirewallRule_DestinationPortStart) AsFirewallRulesetServerFirewallRuleDestinationPortStart1() (FirewallRulesetServerFirewallRuleDestinationPortStart1, error) {
 	var body FirewallRulesetServerFirewallRuleDestinationPortStart1
@@ -1670,32 +1777,6 @@ func (t *FirewallRulesetServerFirewallRule_DestinationPortStart) UnmarshalJSON(b
 	return err
 }
 
-// AsFirewallRulesetServerFirewallRuleFamily0 returns the union data inside the FirewallRulesetServerFirewallRule_Family as a FirewallRulesetServerFirewallRuleFamily0
-func (t FirewallRulesetServerFirewallRule_Family) AsFirewallRulesetServerFirewallRuleFamily0() (FirewallRulesetServerFirewallRuleFamily0, error) {
-	var body FirewallRulesetServerFirewallRuleFamily0
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromFirewallRulesetServerFirewallRuleFamily0 overwrites any union data inside the FirewallRulesetServerFirewallRule_Family as the provided FirewallRulesetServerFirewallRuleFamily0
-func (t *FirewallRulesetServerFirewallRule_Family) FromFirewallRulesetServerFirewallRuleFamily0(v FirewallRulesetServerFirewallRuleFamily0) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeFirewallRulesetServerFirewallRuleFamily0 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_Family, using the provided FirewallRulesetServerFirewallRuleFamily0
-func (t *FirewallRulesetServerFirewallRule_Family) MergeFirewallRulesetServerFirewallRuleFamily0(v FirewallRulesetServerFirewallRuleFamily0) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
 // AsFirewallRulesetServerFirewallRuleFamily1 returns the union data inside the FirewallRulesetServerFirewallRule_Family as a FirewallRulesetServerFirewallRuleFamily1
 func (t FirewallRulesetServerFirewallRule_Family) AsFirewallRulesetServerFirewallRuleFamily1() (FirewallRulesetServerFirewallRuleFamily1, error) {
 	var body FirewallRulesetServerFirewallRuleFamily1
@@ -1755,32 +1836,6 @@ func (t FirewallRulesetServerFirewallRule_Family) MarshalJSON() ([]byte, error) 
 
 func (t *FirewallRulesetServerFirewallRule_Family) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
-	return err
-}
-
-// AsFirewallRulesetServerFirewallRuleIcmpType0 returns the union data inside the FirewallRulesetServerFirewallRule_IcmpType as a FirewallRulesetServerFirewallRuleIcmpType0
-func (t FirewallRulesetServerFirewallRule_IcmpType) AsFirewallRulesetServerFirewallRuleIcmpType0() (FirewallRulesetServerFirewallRuleIcmpType0, error) {
-	var body FirewallRulesetServerFirewallRuleIcmpType0
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromFirewallRulesetServerFirewallRuleIcmpType0 overwrites any union data inside the FirewallRulesetServerFirewallRule_IcmpType as the provided FirewallRulesetServerFirewallRuleIcmpType0
-func (t *FirewallRulesetServerFirewallRule_IcmpType) FromFirewallRulesetServerFirewallRuleIcmpType0(v FirewallRulesetServerFirewallRuleIcmpType0) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeFirewallRulesetServerFirewallRuleIcmpType0 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_IcmpType, using the provided FirewallRulesetServerFirewallRuleIcmpType0
-func (t *FirewallRulesetServerFirewallRule_IcmpType) MergeFirewallRulesetServerFirewallRuleIcmpType0(v FirewallRulesetServerFirewallRuleIcmpType0) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
 	return err
 }
 
@@ -1905,32 +1960,6 @@ func (t FirewallRulesetServerFirewallRule_Position) MarshalJSON() ([]byte, error
 
 func (t *FirewallRulesetServerFirewallRule_Position) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
-	return err
-}
-
-// AsFirewallRulesetServerFirewallRuleProtocol0 returns the union data inside the FirewallRulesetServerFirewallRule_Protocol as a FirewallRulesetServerFirewallRuleProtocol0
-func (t FirewallRulesetServerFirewallRule_Protocol) AsFirewallRulesetServerFirewallRuleProtocol0() (FirewallRulesetServerFirewallRuleProtocol0, error) {
-	var body FirewallRulesetServerFirewallRuleProtocol0
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromFirewallRulesetServerFirewallRuleProtocol0 overwrites any union data inside the FirewallRulesetServerFirewallRule_Protocol as the provided FirewallRulesetServerFirewallRuleProtocol0
-func (t *FirewallRulesetServerFirewallRule_Protocol) FromFirewallRulesetServerFirewallRuleProtocol0(v FirewallRulesetServerFirewallRuleProtocol0) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeFirewallRulesetServerFirewallRuleProtocol0 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_Protocol, using the provided FirewallRulesetServerFirewallRuleProtocol0
-func (t *FirewallRulesetServerFirewallRule_Protocol) MergeFirewallRulesetServerFirewallRuleProtocol0(v FirewallRulesetServerFirewallRuleProtocol0) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
 	return err
 }
 
@@ -2074,32 +2103,6 @@ func (t *FirewallRulesetServerFirewallRule_SourceAddressEnd) MergeFirewallRulese
 	return err
 }
 
-// AsFirewallRulesetServerFirewallRuleSourceAddressEnd3 returns the union data inside the FirewallRulesetServerFirewallRule_SourceAddressEnd as a FirewallRulesetServerFirewallRuleSourceAddressEnd3
-func (t FirewallRulesetServerFirewallRule_SourceAddressEnd) AsFirewallRulesetServerFirewallRuleSourceAddressEnd3() (FirewallRulesetServerFirewallRuleSourceAddressEnd3, error) {
-	var body FirewallRulesetServerFirewallRuleSourceAddressEnd3
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromFirewallRulesetServerFirewallRuleSourceAddressEnd3 overwrites any union data inside the FirewallRulesetServerFirewallRule_SourceAddressEnd as the provided FirewallRulesetServerFirewallRuleSourceAddressEnd3
-func (t *FirewallRulesetServerFirewallRule_SourceAddressEnd) FromFirewallRulesetServerFirewallRuleSourceAddressEnd3(v FirewallRulesetServerFirewallRuleSourceAddressEnd3) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeFirewallRulesetServerFirewallRuleSourceAddressEnd3 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_SourceAddressEnd, using the provided FirewallRulesetServerFirewallRuleSourceAddressEnd3
-func (t *FirewallRulesetServerFirewallRule_SourceAddressEnd) MergeFirewallRulesetServerFirewallRuleSourceAddressEnd3(v FirewallRulesetServerFirewallRuleSourceAddressEnd3) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
 func (t FirewallRulesetServerFirewallRule_SourceAddressEnd) MarshalJSON() ([]byte, error) {
 	b, err := t.union.MarshalJSON()
 	return b, err
@@ -2188,32 +2191,6 @@ func (t *FirewallRulesetServerFirewallRule_SourceAddressStart) MergeFirewallRule
 	return err
 }
 
-// AsFirewallRulesetServerFirewallRuleSourceAddressStart3 returns the union data inside the FirewallRulesetServerFirewallRule_SourceAddressStart as a FirewallRulesetServerFirewallRuleSourceAddressStart3
-func (t FirewallRulesetServerFirewallRule_SourceAddressStart) AsFirewallRulesetServerFirewallRuleSourceAddressStart3() (FirewallRulesetServerFirewallRuleSourceAddressStart3, error) {
-	var body FirewallRulesetServerFirewallRuleSourceAddressStart3
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromFirewallRulesetServerFirewallRuleSourceAddressStart3 overwrites any union data inside the FirewallRulesetServerFirewallRule_SourceAddressStart as the provided FirewallRulesetServerFirewallRuleSourceAddressStart3
-func (t *FirewallRulesetServerFirewallRule_SourceAddressStart) FromFirewallRulesetServerFirewallRuleSourceAddressStart3(v FirewallRulesetServerFirewallRuleSourceAddressStart3) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeFirewallRulesetServerFirewallRuleSourceAddressStart3 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_SourceAddressStart, using the provided FirewallRulesetServerFirewallRuleSourceAddressStart3
-func (t *FirewallRulesetServerFirewallRule_SourceAddressStart) MergeFirewallRulesetServerFirewallRuleSourceAddressStart3(v FirewallRulesetServerFirewallRuleSourceAddressStart3) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
 func (t FirewallRulesetServerFirewallRule_SourceAddressStart) MarshalJSON() ([]byte, error) {
 	b, err := t.union.MarshalJSON()
 	return b, err
@@ -2221,32 +2198,6 @@ func (t FirewallRulesetServerFirewallRule_SourceAddressStart) MarshalJSON() ([]b
 
 func (t *FirewallRulesetServerFirewallRule_SourceAddressStart) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
-	return err
-}
-
-// AsFirewallRulesetServerFirewallRuleSourcePortEnd0 returns the union data inside the FirewallRulesetServerFirewallRule_SourcePortEnd as a FirewallRulesetServerFirewallRuleSourcePortEnd0
-func (t FirewallRulesetServerFirewallRule_SourcePortEnd) AsFirewallRulesetServerFirewallRuleSourcePortEnd0() (FirewallRulesetServerFirewallRuleSourcePortEnd0, error) {
-	var body FirewallRulesetServerFirewallRuleSourcePortEnd0
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromFirewallRulesetServerFirewallRuleSourcePortEnd0 overwrites any union data inside the FirewallRulesetServerFirewallRule_SourcePortEnd as the provided FirewallRulesetServerFirewallRuleSourcePortEnd0
-func (t *FirewallRulesetServerFirewallRule_SourcePortEnd) FromFirewallRulesetServerFirewallRuleSourcePortEnd0(v FirewallRulesetServerFirewallRuleSourcePortEnd0) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeFirewallRulesetServerFirewallRuleSourcePortEnd0 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_SourcePortEnd, using the provided FirewallRulesetServerFirewallRuleSourcePortEnd0
-func (t *FirewallRulesetServerFirewallRule_SourcePortEnd) MergeFirewallRulesetServerFirewallRuleSourcePortEnd0(v FirewallRulesetServerFirewallRuleSourcePortEnd0) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
 	return err
 }
 
@@ -2312,32 +2263,6 @@ func (t *FirewallRulesetServerFirewallRule_SourcePortEnd) UnmarshalJSON(b []byte
 	return err
 }
 
-// AsFirewallRulesetServerFirewallRuleSourcePortStart0 returns the union data inside the FirewallRulesetServerFirewallRule_SourcePortStart as a FirewallRulesetServerFirewallRuleSourcePortStart0
-func (t FirewallRulesetServerFirewallRule_SourcePortStart) AsFirewallRulesetServerFirewallRuleSourcePortStart0() (FirewallRulesetServerFirewallRuleSourcePortStart0, error) {
-	var body FirewallRulesetServerFirewallRuleSourcePortStart0
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromFirewallRulesetServerFirewallRuleSourcePortStart0 overwrites any union data inside the FirewallRulesetServerFirewallRule_SourcePortStart as the provided FirewallRulesetServerFirewallRuleSourcePortStart0
-func (t *FirewallRulesetServerFirewallRule_SourcePortStart) FromFirewallRulesetServerFirewallRuleSourcePortStart0(v FirewallRulesetServerFirewallRuleSourcePortStart0) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeFirewallRulesetServerFirewallRuleSourcePortStart0 performs a merge with any union data inside the FirewallRulesetServerFirewallRule_SourcePortStart, using the provided FirewallRulesetServerFirewallRuleSourcePortStart0
-func (t *FirewallRulesetServerFirewallRule_SourcePortStart) MergeFirewallRulesetServerFirewallRuleSourcePortStart0(v FirewallRulesetServerFirewallRuleSourcePortStart0) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
 // AsFirewallRulesetServerFirewallRuleSourcePortStart1 returns the union data inside the FirewallRulesetServerFirewallRule_SourcePortStart as a FirewallRulesetServerFirewallRuleSourcePortStart1
 func (t FirewallRulesetServerFirewallRule_SourcePortStart) AsFirewallRulesetServerFirewallRuleSourcePortStart1() (FirewallRulesetServerFirewallRuleSourcePortStart1, error) {
 	var body FirewallRulesetServerFirewallRuleSourcePortStart1
@@ -2396,192 +2321,6 @@ func (t FirewallRulesetServerFirewallRule_SourcePortStart) MarshalJSON() ([]byte
 }
 
 func (t *FirewallRulesetServerFirewallRule_SourcePortStart) UnmarshalJSON(b []byte) error {
-	err := t.union.UnmarshalJSON(b)
-	return err
-}
-
-// AsFirewallRulesetServerFirewallRulesFirewallRule0 returns the union data inside the FirewallRulesetServerFirewallRules_FirewallRule as a FirewallRulesetServerFirewallRulesFirewallRule0
-func (t FirewallRulesetServerFirewallRules_FirewallRule) AsFirewallRulesetServerFirewallRulesFirewallRule0() (FirewallRulesetServerFirewallRulesFirewallRule0, error) {
-	var body FirewallRulesetServerFirewallRulesFirewallRule0
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromFirewallRulesetServerFirewallRulesFirewallRule0 overwrites any union data inside the FirewallRulesetServerFirewallRules_FirewallRule as the provided FirewallRulesetServerFirewallRulesFirewallRule0
-func (t *FirewallRulesetServerFirewallRules_FirewallRule) FromFirewallRulesetServerFirewallRulesFirewallRule0(v FirewallRulesetServerFirewallRulesFirewallRule0) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeFirewallRulesetServerFirewallRulesFirewallRule0 performs a merge with any union data inside the FirewallRulesetServerFirewallRules_FirewallRule, using the provided FirewallRulesetServerFirewallRulesFirewallRule0
-func (t *FirewallRulesetServerFirewallRules_FirewallRule) MergeFirewallRulesetServerFirewallRulesFirewallRule0(v FirewallRulesetServerFirewallRulesFirewallRule0) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsFirewallRulesetServerFirewallRulesFirewallRule1 returns the union data inside the FirewallRulesetServerFirewallRules_FirewallRule as a FirewallRulesetServerFirewallRulesFirewallRule1
-func (t FirewallRulesetServerFirewallRules_FirewallRule) AsFirewallRulesetServerFirewallRulesFirewallRule1() (FirewallRulesetServerFirewallRulesFirewallRule1, error) {
-	var body FirewallRulesetServerFirewallRulesFirewallRule1
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromFirewallRulesetServerFirewallRulesFirewallRule1 overwrites any union data inside the FirewallRulesetServerFirewallRules_FirewallRule as the provided FirewallRulesetServerFirewallRulesFirewallRule1
-func (t *FirewallRulesetServerFirewallRules_FirewallRule) FromFirewallRulesetServerFirewallRulesFirewallRule1(v FirewallRulesetServerFirewallRulesFirewallRule1) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeFirewallRulesetServerFirewallRulesFirewallRule1 performs a merge with any union data inside the FirewallRulesetServerFirewallRules_FirewallRule, using the provided FirewallRulesetServerFirewallRulesFirewallRule1
-func (t *FirewallRulesetServerFirewallRules_FirewallRule) MergeFirewallRulesetServerFirewallRulesFirewallRule1(v FirewallRulesetServerFirewallRulesFirewallRule1) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-func (t FirewallRulesetServerFirewallRules_FirewallRule) MarshalJSON() ([]byte, error) {
-	b, err := t.union.MarshalJSON()
-	return b, err
-}
-
-func (t *FirewallRulesetServerFirewallRules_FirewallRule) UnmarshalJSON(b []byte) error {
-	err := t.union.UnmarshalJSON(b)
-	return err
-}
-
-// AsFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0 returns the union data inside the FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule as a FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0
-func (t FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule) AsFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0() (FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0, error) {
-	var body FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0 overwrites any union data inside the FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule as the provided FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0
-func (t *FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule) FromFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0(v FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0 performs a merge with any union data inside the FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule, using the provided FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0
-func (t *FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule) MergeFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0(v FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule0) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1 returns the union data inside the FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule as a FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1
-func (t FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule) AsFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1() (FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1, error) {
-	var body FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1 overwrites any union data inside the FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule as the provided FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1
-func (t *FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule) FromFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1(v FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1 performs a merge with any union data inside the FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule, using the provided FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1
-func (t *FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule) MergeFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1(v FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1FirewallRule1) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-func (t FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule) MarshalJSON() ([]byte, error) {
-	b, err := t.union.MarshalJSON()
-	return b, err
-}
-
-func (t *FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules_1_FirewallRule) UnmarshalJSON(b []byte) error {
-	err := t.union.UnmarshalJSON(b)
-	return err
-}
-
-// AsFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0 returns the union data inside the FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules as a FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0
-func (t FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules) AsFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0() (FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0, error) {
-	var body FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0 overwrites any union data inside the FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules as the provided FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0
-func (t *FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules) FromFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0(v FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0 performs a merge with any union data inside the FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules, using the provided FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0
-func (t *FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules) MergeFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0(v FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules0) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1 returns the union data inside the FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules as a FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1
-func (t FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules) AsFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1() (FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1, error) {
-	var body FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1 overwrites any union data inside the FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules as the provided FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1
-func (t *FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules) FromFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1(v FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1 performs a merge with any union data inside the FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules, using the provided FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1
-func (t *FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules) MergeFirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1(v FirewallRulesetServerMultipleFirewallRulesCreateFirewallRules1) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-func (t FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules) MarshalJSON() ([]byte, error) {
-	b, err := t.union.MarshalJSON()
-	return b, err
-}
-
-func (t *FirewallRulesetServerMultipleFirewallRulesCreate_FirewallRules) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
 	return err
 }

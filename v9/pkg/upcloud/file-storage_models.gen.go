@@ -108,16 +108,24 @@ func (e FileStorageQueryParamSort) Valid() bool {
 // FileStorageAclCreate Schema for creating an ACL entry.
 type FileStorageAclCreate struct {
 	// Name A resource name.
+	//
+	// Examples: test-name
 	Name FileStorageName `json:"name"`
 
 	// Permission The permission level for the ACL target.
+	//
+	// Examples: rw
 	Permission FileStoragePermission `json:"permission"`
 
 	// Target The target of the ACL entry. It can be a IP Address, Network Prefix or a wildcard.
+	//
+	// Examples: 192.168.25.147, 192.168.25.0/24, *
 	Target string `json:"target"`
 }
 
 // FileStorageAclDetailResponse Schema for the detailed response of an ACL.
+//
+// Examples: {"name":"test-name","permission":"rw","target":"*"}
 type FileStorageAclDetailResponse struct {
 	Name       *string `json:"name,omitempty"`
 	Permission *string `json:"permission,omitempty"`
@@ -125,44 +133,70 @@ type FileStorageAclDetailResponse struct {
 }
 
 // FileStorageAclListResponse Schema for the response containing a list of ACLs.
+//
+// Examples: [{"name":"test-name-1","permission":"rw","target":"*"},{"name":"test-name-2","permission":"ro","target":"192.168.147.0/24"}]
 type FileStorageAclListResponse = []FileStorageAclDetailResponse
 
 // FileStorageAclModify Schema for modifying an existing ACL.
+//
+// Examples: {"name":"test-name","permission":"rw","target":"192.168.25.0/24"}
 type FileStorageAclModify struct {
 	// Name A resource name.
+	//
+	// Examples: test-name
 	Name *FileStorageName `json:"name,omitempty"`
 
 	// Permission The permission level for the ACL target.
+	//
+	// Examples: rw
 	Permission *FileStoragePermission `json:"permission,omitempty"`
 
 	// Target The target of the ACL entry. It can be a IP Address, Network Prefix or a wildcard.
+	//
+	// Examples: 192.168.25.147, 192.168.25.0/24, *
 	Target *string `json:"target,omitempty"`
 }
 
 // FileStorageConfiguredStatus The service configured status indicates the service's current intended status. Managed by the customer.
+//
+// Examples: started
 type FileStorageConfiguredStatus string
 
 // FileStorageEntityUUID The unique identifier.
+//
+// Examples: 17fd43a5-a97e-44f7-98a8-0a787da67069
 type FileStorageEntityUUID = openapi_types.UUID
 
 // FileStorageErrorResponse Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type FileStorageErrorResponse struct {
 	// CorrelationId Unique identifier for the request, useful for debugging.
+	//
+	// Examples: 01K1K2TKEASWRJ6VFP9ZV5P2H4
 	CorrelationId string `json:"correlation_id"`
 
 	// InvalidParams List of invalid parameters in the request.
 	InvalidParams *[]struct {
 		// Name Path to the field with invalid parameter.
+		//
+		// Examples: zone, networks.0.ip_address
 		Name string `json:"name"`
 
 		// Reason Human-readable error message.
+		//
+		// Examples: Zone is not valid.
 		Reason string `json:"reason"`
 	} `json:"invalid_params,omitempty"`
 
 	// Status HTTP status code associated with the error.
+	//
+	// Examples: 400, 404, 402, 500
 	Status int32 `json:"status"`
 
 	// Title Short description of the error.
+	//
+	// Examples: Validation error., The resource you requested does not exist., Your request could not be fulfilled due to a technical issue.
 	Title string `json:"title"`
 
 	// Type Error code string.
@@ -173,60 +207,96 @@ type FileStorageErrorResponse struct {
 type FileStorageErrorResponseType string
 
 // FileStorageIPAddress The desired IP address for the service. If not specified, the service will be assigned an IP address from the network's pool.
+//
+// Examples: 10.20.30.40
 type FileStorageIPAddress = string
 
 // FileStorageLabelCreate Schema for creating a new label.
+//
+// Examples: {"key":"environment","value":"production"}
 type FileStorageLabelCreate struct {
 	// Key Represents the label identifier. The key is unique within a service.
+	//
+	// Examples: environment
 	Key FileStorageLabelKey `json:"key"`
 
 	// Value Represents the label value.
+	//
+	// Examples: development
 	Value *FileStorageLabelValue `json:"value"`
 }
 
 // FileStorageLabelDetails Schema for label details including key-value pairs.
+//
+// Examples: {"key":"environment","value":"production"}
 type FileStorageLabelDetails struct {
 	Key   *string `json:"key,omitempty"`
 	Value *string `json:"value,omitempty"`
 }
 
 // FileStorageLabelKey Represents the label identifier. The key is unique within a service.
+//
+// Examples: environment
 type FileStorageLabelKey = string
 
 // FileStorageLabelModify Schema for modifying an existing label.
+//
+// Examples: {"key":"environment","value":"production"}
 type FileStorageLabelModify struct {
 	// Key Represents the label identifier. The key is unique within a service.
+	//
+	// Examples: environment
 	Key *FileStorageLabelKey `json:"key,omitempty"`
 
 	// Value Represents the label value.
+	//
+	// Examples: development
 	Value *FileStorageLabelValue `json:"value,omitempty"`
 }
 
 // FileStorageLabelValue Represents the label value.
+//
+// Examples: development
 type FileStorageLabelValue = string
 
 // FileStorageLabelsListResponse Response schema for listing labels.
+//
+// Examples: [{"key":"environment","value":"production"}]
 type FileStorageLabelsListResponse = []FileStorageLabelDetails
 
 // FileStorageName A resource name.
+//
+// Examples: test-name
 type FileStorageName = string
 
 // FileStorageNetworkCreate Schema for creating a network.
+//
+// Examples: {"family":"IPv4","ip_address":"10.20.30.40","name":"test-name","uuid":"03720d07-80a9-41ac-90b0-68a932109339"}
 type FileStorageNetworkCreate struct {
 	// Family Network family. IPv6 currently not supported.
+	//
+	// Examples: IPv4
 	Family FileStorageNetworkFamily `json:"family"`
 
 	// IpAddress The desired IP address for the service. If not specified, the service will be assigned an IP address from the network's pool.
+	//
+	// Examples: 10.20.30.40
 	IpAddress *FileStorageIPAddress `json:"ip_address,omitempty"`
 
 	// Name A resource name.
+	//
+	// Examples: test-name
 	Name FileStorageName `json:"name"`
 
 	// Uuid Unique identifier for the network.
+	//
+	// Examples: 03720d07-80a9-41ac-90b0-68a932109339
 	Uuid FileStorageNetworkUUID `json:"uuid"`
 }
 
 // FileStorageNetworkDetailResponse Schema for the detailed response of a network.
+//
+// Examples: {"family":"IPv4","ip_address":"192.168.147.250","name":"test-name","uuid":"03720d07-80a9-41ac-90b0-68a932109339"}
 type FileStorageNetworkDetailResponse struct {
 	Family    *string `json:"family,omitempty"`
 	IpAddress *string `json:"ip_address,omitempty"`
@@ -235,33 +305,53 @@ type FileStorageNetworkDetailResponse struct {
 }
 
 // FileStorageNetworkFamily Network family. IPv6 currently not supported.
+//
+// Examples: IPv4
 type FileStorageNetworkFamily string
 
 // FileStorageNetworkListResponse Schema for the response containing a list of networks.
+//
+// Examples: [{"family":"IPv4","ip_address":"192.168.147.250","name":"test-name","uuid":"03720d07-80a9-41ac-90b0-68a932109339"}]
 type FileStorageNetworkListResponse = []FileStorageNetworkDetailResponse
 
 // FileStorageNetworkModify Schema for modifying an existing network.
+//
+// Examples: {"family":"IPv4","ip_address":"10.20.30.40","name":"test-name","uuid":"03720d07-80a9-41ac-90b0-68a932109339"}
 type FileStorageNetworkModify struct {
 	// Family Network family. IPv6 currently not supported.
+	//
+	// Examples: IPv4
 	Family *FileStorageNetworkFamily `json:"family,omitempty"`
 
 	// IpAddress The desired IP address for the service. If not specified, the service will be assigned an IP address from the network's pool.
+	//
+	// Examples: 10.20.30.40
 	IpAddress *FileStorageIPAddress `json:"ip_address,omitempty"`
 
 	// Name A resource name.
+	//
+	// Examples: test-name
 	Name *FileStorageName `json:"name,omitempty"`
 
 	// Uuid Unique identifier for the network.
+	//
+	// Examples: 03720d07-80a9-41ac-90b0-68a932109339
 	Uuid *FileStorageNetworkUUID `json:"uuid,omitempty"`
 }
 
 // FileStorageNetworkUUID Unique identifier for the network.
+//
+// Examples: 03720d07-80a9-41ac-90b0-68a932109339
 type FileStorageNetworkUUID = openapi_types.UUID
 
 // FileStoragePath The absolute path of the share.
+//
+// Examples: /public, /projects/myproject
 type FileStoragePath = string
 
 // FileStoragePermission The permission level for the ACL target.
+//
+// Examples: rw
 type FileStoragePermission string
 
 // FileStorageQueryParamOffset Query parameter to specify the offset for pagination in API responses, allowing clients to retrieve results starting from a specific point.
@@ -274,31 +364,47 @@ type FileStorageQueryParamSort string
 type FileStorageQueryParameterLimit = int
 
 // FileStorageServiceCreate Schema for creating a new service.
+//
+// Examples: {"configured_status":"started","encrypted":false,"labels":[{"key":"environment","value":"production"}],"name":"test-name","networks":[{"family":"IPv4","ip_address":"192.168.147.120","name":"net","uuid":"03720d07-80a9-41ac-90b0-68a932109339"}],"shares":[{"acl":[{"name":"test-name","permission":"ro","target":"*"}],"name":"read","path":"/public"},{"acl":[{"name":"test-name","permission":"rw","target":"192.168.147.0/24"},{"name":"test-name","permission":"rw","target":"local.domain"}],"name":"write","path":"/project/data"}],"size_gib":250,"zone":"fi-hel2"}
 type FileStorageServiceCreate struct {
 	// ConfiguredStatus The service configured status indicates the service's current intended status. Managed by the customer.
+	//
+	// Examples: started
 	ConfiguredStatus FileStorageConfiguredStatus `json:"configured_status"`
 
 	// Encrypted Indicates whether encryption at rest is enabled for the service.
+	//
+	// Examples: true, false
 	Encrypted *bool `json:"encrypted,omitempty"`
 
 	// Labels Labels
 	Labels *[]FileStorageLabelCreate `json:"labels,omitempty"`
 
 	// Name A resource name.
+	//
+	// Examples: test-name
 	Name     FileStorageName             `json:"name"`
 	Networks *[]FileStorageNetworkCreate `json:"networks,omitempty"`
 	Shares   *[]FileStorageShareCreate   `json:"shares,omitempty"`
 
 	// SizeGib The size of the service in gibibytes (GiB)
+	//
+	// Examples: 250
 	SizeGib FileStorageSizeGiB `json:"size_gib"`
 
 	// Zone Indicates the zone where the service will be created.
+	//
+	// Examples: fi-hel2
 	Zone string `json:"zone"`
 }
 
 // FileStorageServiceDetailResponse Schema for the detailed response of a service.
+//
+// Examples: {"configured_status":"started","created_at":"2025-08-01T10:40:04.140473Z","encrypted":false,"labels":[{"key":"environment","value":"production"}],"name":"test2","networks":[{"family":"IPv4","ip_address":"10.10.10.50","name":"net","uuid":"0391f203-6eef-4a69-bfcc-fffffbdfdc32"}],"operational_state":"running","shares":[{"acl":[{"name":"test-name","permission":"ro","target":"*"}],"name":"read","path":"/public"},{"acl":[{"name":"test-name","permission":"rw","target":"10.10.10.0/24"},{"name":"test-name","permission":"rw","target":"local.domain"}],"name":"write","path":"/project/data"}],"size_gib":250,"state_messages":[],"updated_at":"2025-08-03T19:23:52.350216Z","uuid":"17871d62-6964-4336-b68d-4a85a8ee10fe","zone":"fi-dev2"}
 type FileStorageServiceDetailResponse struct {
-	ConfiguredStatus *string                             `json:"configured_status,omitempty"`
+	ConfiguredStatus *string `json:"configured_status,omitempty"`
+
+	// CreatedAt Examples: 2025-08-01T10:40:04.140473Z
 	CreatedAt        *time.Time                          `json:"created_at,omitempty"`
 	Encrypted        *bool                               `json:"encrypted,omitempty"`
 	Labels           *[]FileStorageLabelDetails          `json:"labels,omitempty"`
@@ -312,56 +418,84 @@ type FileStorageServiceDetailResponse struct {
 		Message          *string `json:"message,omitempty"`
 		OperationalState *string `json:"operational_state,omitempty"`
 	} `json:"state_messages,omitempty"`
+
+	// UpdatedAt Examples: 2025-08-01T10:40:04.140473Z
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	Uuid      *string    `json:"uuid,omitempty"`
 	Zone      *string    `json:"zone,omitempty"`
 }
 
 // FileStorageServiceListResponse Schema for the response containing a list of services.
+//
+// Examples: [{"configured_status":"started","created_at":"2025-08-01T10:40:04.140473Z","encrypted":false,"labels":[{"key":"environment","value":"production"}],"name":"test2","networks":[{"family":"IPv4","ip_address":"10.10.10.50","name":"net","uuid":"0391f203-6eef-4a69-bfcc-fffffbdfdc32"}],"operational_state":"running","shares":[{"acl":[{"name":"test-name","permission":"ro","target":"*"}],"name":"read","path":"/public"},{"acl":[{"name":"test-name","permission":"rw","target":"10.10.10.0/24"},{"name":"test-name","permission":"rw","target":"local.domain"}],"name":"write","path":"/project/data"}],"size_gib":250,"state_messages":[],"updated_at":"2025-08-03T19:23:52.350216Z","uuid":"17871d62-6964-4336-b68d-4a85a8ee10fe","zone":"fi-dev2"}]
 type FileStorageServiceListResponse = []FileStorageServiceDetailResponse
 
 // FileStorageServiceModify Schema for modifying an existing service.
+//
+// Examples: {"configured_status":"started","labels":[{"key":"environment","value":"production"}],"name":"test-name","networks":[{"family":"IPv4","ip_address":"192.168.147.120","name":"net","uuid":"03720d07-80a9-41ac-90b0-68a932109339"}],"size_gib":250}
 type FileStorageServiceModify struct {
 	// ConfiguredStatus The service configured status indicates the service's current intended status. Managed by the customer.
+	//
+	// Examples: started
 	ConfiguredStatus *FileStorageConfiguredStatus `json:"configured_status,omitempty"`
 	Labels           *[]FileStorageLabelCreate    `json:"labels,omitempty"`
 
 	// Name A resource name.
+	//
+	// Examples: test-name
 	Name     *FileStorageName            `json:"name,omitempty"`
 	Networks *[]FileStorageNetworkCreate `json:"networks,omitempty"`
 
 	// SizeGib The size of the service in gibibytes (GiB)
+	//
+	// Examples: 250
 	SizeGib *FileStorageSizeGiB `json:"size_gib,omitempty"`
 }
 
 // FileStorageServiceReplace Schema for replacing an existing service with a new configuration.
+//
+// Examples: {"configured_status":"started","labels":[{"key":"environment","value":"production"}],"name":"test-name","networks":[{"family":"IPv4","ip_address":"192.168.147.120","name":"net","uuid":"03720d07-80a9-41ac-90b0-68a932109339"}],"size_gib":250}
 type FileStorageServiceReplace struct {
 	// ConfiguredStatus The service configured status indicates the service's current intended status. Managed by the customer.
+	//
+	// Examples: started
 	ConfiguredStatus FileStorageConfiguredStatus `json:"configured_status"`
 
 	// Labels Labels
 	Labels *[]FileStorageLabelCreate `json:"labels,omitempty"`
 
 	// Name A resource name.
+	//
+	// Examples: test-name
 	Name     FileStorageName             `json:"name"`
 	Networks *[]FileStorageNetworkCreate `json:"networks,omitempty"`
 
 	// SizeGib The size of the service in gibibytes (GiB)
+	//
+	// Examples: 250
 	SizeGib FileStorageSizeGiB `json:"size_gib"`
 }
 
 // FileStorageShareCreate Schema for creating a new share with access control lists (ACLs).
+//
+// Examples: {"acl":[{"name":"test-name","permission":"ro","target":"192.168.147.0/24"}],"name":"read","path":"/public"}
 type FileStorageShareCreate struct {
 	Acl []FileStorageAclCreate `json:"acl"`
 
 	// Name A resource name.
+	//
+	// Examples: test-name
 	Name string `json:"name"`
 
 	// Path The absolute path of the share.
+	//
+	// Examples: /public, /projects/myproject
 	Path FileStoragePath `json:"path"`
 }
 
 // FileStorageShareDetailResponse Schema for the detailed response of a share.
+//
+// Examples: {"acl":[{"name":"test-name","permission":"rw","target":"*"}],"name":"write","path":"/project/data"}
 type FileStorageShareDetailResponse struct {
 	Acl *[]struct {
 		Name       *string `json:"name,omitempty"`
@@ -373,110 +507,180 @@ type FileStorageShareDetailResponse struct {
 }
 
 // FileStorageShareListResponse Schema for the response containing a list of shares.
+//
+// Examples: [{"acl":[{"name":"test-name","permission":"rw","target":"*"}],"name":"write","path":"/project/data"},{"acl":[{"name":"test-name","permission":"ro","target":"192.168.147.0/24"}],"name":"read","path":"/project/logs"}]
 type FileStorageShareListResponse = []FileStorageShareDetailResponse
 
 // FileStorageShareModify Schema for modifying an existing share.
+//
+// Examples: {"acl":[{"name":"test-name","permission":"ro","target":"192.168.25.0/24"}],"name":"test-name"}
 type FileStorageShareModify struct {
 	Acl *[]FileStorageAclCreate `json:"acl,omitempty"`
 
 	// Name A resource name.
+	//
+	// Examples: test-name
 	Name *string `json:"name,omitempty"`
 }
 
 // FileStorageSizeGiB The size of the service in gibibytes (GiB)
+//
+// Examples: 250
 type FileStorageSizeGiB = int32
 
 // CreateFileStorageAclServiceUuid The unique identifier.
+//
+// Examples: 17fd43a5-a97e-44f7-98a8-0a787da67069
 type CreateFileStorageAclServiceUuid = FileStorageEntityUUID
 
 // CreateFileStorageAclShareName A resource name.
+//
+// Examples: test-name
 type CreateFileStorageAclShareName = FileStorageName
 
 // CreateFileStorageLabelServiceUuid The unique identifier.
+//
+// Examples: 17fd43a5-a97e-44f7-98a8-0a787da67069
 type CreateFileStorageLabelServiceUuid = FileStorageEntityUUID
 
 // CreateFileStorageNetworkServiceUuid The unique identifier.
+//
+// Examples: 17fd43a5-a97e-44f7-98a8-0a787da67069
 type CreateFileStorageNetworkServiceUuid = FileStorageEntityUUID
 
 // CreateFileStorageShareServiceUuid The unique identifier.
+//
+// Examples: 17fd43a5-a97e-44f7-98a8-0a787da67069
 type CreateFileStorageShareServiceUuid = FileStorageEntityUUID
 
 // DeleteFileStorageAclAclName A resource name.
+//
+// Examples: test-name
 type DeleteFileStorageAclAclName = FileStorageName
 
 // DeleteFileStorageAclServiceUuid The unique identifier.
+//
+// Examples: 17fd43a5-a97e-44f7-98a8-0a787da67069
 type DeleteFileStorageAclServiceUuid = FileStorageEntityUUID
 
 // DeleteFileStorageAclShareName A resource name.
+//
+// Examples: test-name
 type DeleteFileStorageAclShareName = FileStorageName
 
 // DeleteFileStorageLabelLabelKey Represents the label identifier. The key is unique within a service.
+//
+// Examples: environment
 type DeleteFileStorageLabelLabelKey = FileStorageLabelKey
 
 // DeleteFileStorageLabelServiceUuid The unique identifier.
+//
+// Examples: 17fd43a5-a97e-44f7-98a8-0a787da67069
 type DeleteFileStorageLabelServiceUuid = FileStorageEntityUUID
 
 // DeleteFileStorageNetworkNetworkName A resource name.
+//
+// Examples: test-name
 type DeleteFileStorageNetworkNetworkName = FileStorageName
 
 // DeleteFileStorageNetworkServiceUuid The unique identifier.
+//
+// Examples: 17fd43a5-a97e-44f7-98a8-0a787da67069
 type DeleteFileStorageNetworkServiceUuid = FileStorageEntityUUID
 
 // DeleteFileStorageServiceUuid The unique identifier.
+//
+// Examples: 17fd43a5-a97e-44f7-98a8-0a787da67069
 type DeleteFileStorageServiceUuid = FileStorageEntityUUID
 
 // DeleteFileStorageShareServiceUuid The unique identifier.
+//
+// Examples: 17fd43a5-a97e-44f7-98a8-0a787da67069
 type DeleteFileStorageShareServiceUuid = FileStorageEntityUUID
 
 // DeleteFileStorageShareShareName A resource name.
+//
+// Examples: test-name
 type DeleteFileStorageShareShareName = FileStorageName
 
 // GetFileStorageAclAclName A resource name.
+//
+// Examples: test-name
 type GetFileStorageAclAclName = FileStorageName
 
 // GetFileStorageAclServiceUuid The unique identifier.
+//
+// Examples: 17fd43a5-a97e-44f7-98a8-0a787da67069
 type GetFileStorageAclServiceUuid = FileStorageEntityUUID
 
 // GetFileStorageAclShareName A resource name.
+//
+// Examples: test-name
 type GetFileStorageAclShareName = FileStorageName
 
 // GetFileStorageCurrentStateServiceUuid The unique identifier.
+//
+// Examples: 17fd43a5-a97e-44f7-98a8-0a787da67069
 type GetFileStorageCurrentStateServiceUuid = FileStorageEntityUUID
 
 // GetFileStorageLabelLabelKey Represents the label identifier. The key is unique within a service.
+//
+// Examples: environment
 type GetFileStorageLabelLabelKey = FileStorageLabelKey
 
 // GetFileStorageLabelServiceUuid The unique identifier.
+//
+// Examples: 17fd43a5-a97e-44f7-98a8-0a787da67069
 type GetFileStorageLabelServiceUuid = FileStorageEntityUUID
 
 // GetFileStorageNetworkNetworkName A resource name.
+//
+// Examples: test-name
 type GetFileStorageNetworkNetworkName = FileStorageName
 
 // GetFileStorageNetworkServiceUuid The unique identifier.
+//
+// Examples: 17fd43a5-a97e-44f7-98a8-0a787da67069
 type GetFileStorageNetworkServiceUuid = FileStorageEntityUUID
 
 // GetFileStorageServiceUuid The unique identifier.
+//
+// Examples: 17fd43a5-a97e-44f7-98a8-0a787da67069
 type GetFileStorageServiceUuid = FileStorageEntityUUID
 
 // GetFileStorageShareServiceUuid The unique identifier.
+//
+// Examples: 17fd43a5-a97e-44f7-98a8-0a787da67069
 type GetFileStorageShareServiceUuid = FileStorageEntityUUID
 
 // GetFileStorageShareShareName A resource name.
+//
+// Examples: test-name
 type GetFileStorageShareShareName = FileStorageName
 
 // ListFileStorageAclsServiceUuid The unique identifier.
+//
+// Examples: 17fd43a5-a97e-44f7-98a8-0a787da67069
 type ListFileStorageAclsServiceUuid = FileStorageEntityUUID
 
 // ListFileStorageAclsShareName A resource name.
+//
+// Examples: test-name
 type ListFileStorageAclsShareName = FileStorageName
 
 // ListFileStorageLabelsServiceUuid The unique identifier.
+//
+// Examples: 17fd43a5-a97e-44f7-98a8-0a787da67069
 type ListFileStorageLabelsServiceUuid = FileStorageEntityUUID
 
 // ListFileStorageNetworksServiceUuid The unique identifier.
+//
+// Examples: 17fd43a5-a97e-44f7-98a8-0a787da67069
 type ListFileStorageNetworksServiceUuid = FileStorageEntityUUID
 
 // ListFileStorageSharesServiceUuid The unique identifier.
+//
+// Examples: 17fd43a5-a97e-44f7-98a8-0a787da67069
 type ListFileStorageSharesServiceUuid = FileStorageEntityUUID
 
 // ListFileStoragesLimit Schema for the limit query parameter, used to specify the maximum number of items to return in a paginated response.
@@ -489,216 +693,356 @@ type ListFileStoragesOffset = FileStorageQueryParamOffset
 type ListFileStoragesSort = FileStorageQueryParamSort
 
 // ModifyFileStorageAclAclName A resource name.
+//
+// Examples: test-name
 type ModifyFileStorageAclAclName = FileStorageName
 
 // ModifyFileStorageAclServiceUuid The unique identifier.
+//
+// Examples: 17fd43a5-a97e-44f7-98a8-0a787da67069
 type ModifyFileStorageAclServiceUuid = FileStorageEntityUUID
 
 // ModifyFileStorageAclShareName A resource name.
+//
+// Examples: test-name
 type ModifyFileStorageAclShareName = FileStorageName
 
 // ModifyFileStorageLabelLabelKey Represents the label identifier. The key is unique within a service.
+//
+// Examples: environment
 type ModifyFileStorageLabelLabelKey = FileStorageLabelKey
 
 // ModifyFileStorageLabelServiceUuid The unique identifier.
+//
+// Examples: 17fd43a5-a97e-44f7-98a8-0a787da67069
 type ModifyFileStorageLabelServiceUuid = FileStorageEntityUUID
 
 // ModifyFileStorageNetworkNetworkName A resource name.
+//
+// Examples: test-name
 type ModifyFileStorageNetworkNetworkName = FileStorageName
 
 // ModifyFileStorageNetworkServiceUuid The unique identifier.
+//
+// Examples: 17fd43a5-a97e-44f7-98a8-0a787da67069
 type ModifyFileStorageNetworkServiceUuid = FileStorageEntityUUID
 
 // ModifyFileStorageServiceUuid The unique identifier.
+//
+// Examples: 17fd43a5-a97e-44f7-98a8-0a787da67069
 type ModifyFileStorageServiceUuid = FileStorageEntityUUID
 
 // ModifyFileStorageShareServiceUuid The unique identifier.
+//
+// Examples: 17fd43a5-a97e-44f7-98a8-0a787da67069
 type ModifyFileStorageShareServiceUuid = FileStorageEntityUUID
 
 // ModifyFileStorageShareShareName A resource name.
+//
+// Examples: test-name
 type ModifyFileStorageShareShareName = FileStorageName
 
 // ReplaceFileStorageServiceUuid The unique identifier.
+//
+// Examples: 17fd43a5-a97e-44f7-98a8-0a787da67069
 type ReplaceFileStorageServiceUuid = FileStorageEntityUUID
 
 // CreateFileStorage201 Schema for the detailed response of a service.
+//
+// Examples: {"configured_status":"started","created_at":"2025-08-01T10:40:04.140473Z","encrypted":false,"labels":[{"key":"environment","value":"production"}],"name":"test2","networks":[{"family":"IPv4","ip_address":"10.10.10.50","name":"net","uuid":"0391f203-6eef-4a69-bfcc-fffffbdfdc32"}],"operational_state":"running","shares":[{"acl":[{"name":"test-name","permission":"ro","target":"*"}],"name":"read","path":"/public"},{"acl":[{"name":"test-name","permission":"rw","target":"10.10.10.0/24"},{"name":"test-name","permission":"rw","target":"local.domain"}],"name":"write","path":"/project/data"}],"size_gib":250,"state_messages":[],"updated_at":"2025-08-03T19:23:52.350216Z","uuid":"17871d62-6964-4336-b68d-4a85a8ee10fe","zone":"fi-dev2"}
 type CreateFileStorage201 = FileStorageServiceDetailResponse
 
 // CreateFileStorageAcl201 Schema for the detailed response of an ACL.
+//
+// Examples: {"name":"test-name","permission":"rw","target":"*"}
 type CreateFileStorageAcl201 = FileStorageAclDetailResponse
 
 // CreateFileStorageAclDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type CreateFileStorageAclDefault = FileStorageErrorResponse
 
 // CreateFileStorageDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type CreateFileStorageDefault = FileStorageErrorResponse
 
 // CreateFileStorageLabel201 Schema for label details including key-value pairs.
+//
+// Examples: {"key":"environment","value":"production"}
 type CreateFileStorageLabel201 = FileStorageLabelDetails
 
 // CreateFileStorageLabelDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type CreateFileStorageLabelDefault = FileStorageErrorResponse
 
 // CreateFileStorageNetwork201 Schema for the detailed response of a network.
+//
+// Examples: {"family":"IPv4","ip_address":"192.168.147.250","name":"test-name","uuid":"03720d07-80a9-41ac-90b0-68a932109339"}
 type CreateFileStorageNetwork201 = FileStorageNetworkDetailResponse
 
 // CreateFileStorageNetworkDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type CreateFileStorageNetworkDefault = FileStorageErrorResponse
 
 // CreateFileStorageShare201 Schema for the detailed response of a share.
+//
+// Examples: {"acl":[{"name":"test-name","permission":"rw","target":"*"}],"name":"write","path":"/project/data"}
 type CreateFileStorageShare201 = FileStorageShareDetailResponse
 
 // CreateFileStorageShareDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type CreateFileStorageShareDefault = FileStorageErrorResponse
 
 // DeleteFileStorageAclDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type DeleteFileStorageAclDefault = FileStorageErrorResponse
 
 // DeleteFileStorageDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type DeleteFileStorageDefault = FileStorageErrorResponse
 
 // DeleteFileStorageLabelDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type DeleteFileStorageLabelDefault = FileStorageErrorResponse
 
 // DeleteFileStorageNetworkDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type DeleteFileStorageNetworkDefault = FileStorageErrorResponse
 
 // DeleteFileStorageShareDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type DeleteFileStorageShareDefault = FileStorageErrorResponse
 
 // GetFileStorage200 Schema for the detailed response of a service.
+//
+// Examples: {"configured_status":"started","created_at":"2025-08-01T10:40:04.140473Z","encrypted":false,"labels":[{"key":"environment","value":"production"}],"name":"test2","networks":[{"family":"IPv4","ip_address":"10.10.10.50","name":"net","uuid":"0391f203-6eef-4a69-bfcc-fffffbdfdc32"}],"operational_state":"running","shares":[{"acl":[{"name":"test-name","permission":"ro","target":"*"}],"name":"read","path":"/public"},{"acl":[{"name":"test-name","permission":"rw","target":"10.10.10.0/24"},{"name":"test-name","permission":"rw","target":"local.domain"}],"name":"write","path":"/project/data"}],"size_gib":250,"state_messages":[],"updated_at":"2025-08-03T19:23:52.350216Z","uuid":"17871d62-6964-4336-b68d-4a85a8ee10fe","zone":"fi-dev2"}
 type GetFileStorage200 = FileStorageServiceDetailResponse
 
 // GetFileStorageAcl200 Schema for the detailed response of an ACL.
+//
+// Examples: {"name":"test-name","permission":"rw","target":"*"}
 type GetFileStorageAcl200 = FileStorageAclDetailResponse
 
 // GetFileStorageAclDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type GetFileStorageAclDefault = FileStorageErrorResponse
 
 // GetFileStorageCurrentState200 Schema for the detailed response of a service.
+//
+// Examples: {"configured_status":"started","created_at":"2025-08-01T10:40:04.140473Z","encrypted":false,"labels":[{"key":"environment","value":"production"}],"name":"test2","networks":[{"family":"IPv4","ip_address":"10.10.10.50","name":"net","uuid":"0391f203-6eef-4a69-bfcc-fffffbdfdc32"}],"operational_state":"running","shares":[{"acl":[{"name":"test-name","permission":"ro","target":"*"}],"name":"read","path":"/public"},{"acl":[{"name":"test-name","permission":"rw","target":"10.10.10.0/24"},{"name":"test-name","permission":"rw","target":"local.domain"}],"name":"write","path":"/project/data"}],"size_gib":250,"state_messages":[],"updated_at":"2025-08-03T19:23:52.350216Z","uuid":"17871d62-6964-4336-b68d-4a85a8ee10fe","zone":"fi-dev2"}
 type GetFileStorageCurrentState200 = FileStorageServiceDetailResponse
 
 // GetFileStorageCurrentStateDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type GetFileStorageCurrentStateDefault = FileStorageErrorResponse
 
 // GetFileStorageDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type GetFileStorageDefault = FileStorageErrorResponse
 
 // GetFileStorageLabel200 Schema for label details including key-value pairs.
+//
+// Examples: {"key":"environment","value":"production"}
 type GetFileStorageLabel200 = FileStorageLabelDetails
 
 // GetFileStorageLabelDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type GetFileStorageLabelDefault = FileStorageErrorResponse
 
 // GetFileStorageNetwork200 Schema for the detailed response of a network.
+//
+// Examples: {"family":"IPv4","ip_address":"192.168.147.250","name":"test-name","uuid":"03720d07-80a9-41ac-90b0-68a932109339"}
 type GetFileStorageNetwork200 = FileStorageNetworkDetailResponse
 
 // GetFileStorageNetworkDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type GetFileStorageNetworkDefault = FileStorageErrorResponse
 
 // GetFileStorageShare200 Schema for the detailed response of a share.
+//
+// Examples: {"acl":[{"name":"test-name","permission":"rw","target":"*"}],"name":"write","path":"/project/data"}
 type GetFileStorageShare200 = FileStorageShareDetailResponse
 
 // GetFileStorageShareDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type GetFileStorageShareDefault = FileStorageErrorResponse
 
 // ListFileStorageAcls200 Schema for the response containing a list of ACLs.
+//
+// Examples: [{"name":"test-name-1","permission":"rw","target":"*"},{"name":"test-name-2","permission":"ro","target":"192.168.147.0/24"}]
 type ListFileStorageAcls200 = FileStorageAclListResponse
 
 // ListFileStorageAclsDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ListFileStorageAclsDefault = FileStorageErrorResponse
 
 // ListFileStorageLabels200 Response schema for listing labels.
+//
+// Examples: [{"key":"environment","value":"production"}]
 type ListFileStorageLabels200 = FileStorageLabelsListResponse
 
 // ListFileStorageLabelsDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ListFileStorageLabelsDefault = FileStorageErrorResponse
 
 // ListFileStorageNetworks200 Schema for the response containing a list of networks.
+//
+// Examples: [{"family":"IPv4","ip_address":"192.168.147.250","name":"test-name","uuid":"03720d07-80a9-41ac-90b0-68a932109339"}]
 type ListFileStorageNetworks200 = FileStorageNetworkListResponse
 
 // ListFileStorageNetworksDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ListFileStorageNetworksDefault = FileStorageErrorResponse
 
 // ListFileStorageShares200 Schema for the response containing a list of shares.
+//
+// Examples: [{"acl":[{"name":"test-name","permission":"rw","target":"*"}],"name":"write","path":"/project/data"},{"acl":[{"name":"test-name","permission":"ro","target":"192.168.147.0/24"}],"name":"read","path":"/project/logs"}]
 type ListFileStorageShares200 = FileStorageShareListResponse
 
 // ListFileStorageSharesDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ListFileStorageSharesDefault = FileStorageErrorResponse
 
 // ListFileStorages200 Schema for the response containing a list of services.
+//
+// Examples: [{"configured_status":"started","created_at":"2025-08-01T10:40:04.140473Z","encrypted":false,"labels":[{"key":"environment","value":"production"}],"name":"test2","networks":[{"family":"IPv4","ip_address":"10.10.10.50","name":"net","uuid":"0391f203-6eef-4a69-bfcc-fffffbdfdc32"}],"operational_state":"running","shares":[{"acl":[{"name":"test-name","permission":"ro","target":"*"}],"name":"read","path":"/public"},{"acl":[{"name":"test-name","permission":"rw","target":"10.10.10.0/24"},{"name":"test-name","permission":"rw","target":"local.domain"}],"name":"write","path":"/project/data"}],"size_gib":250,"state_messages":[],"updated_at":"2025-08-03T19:23:52.350216Z","uuid":"17871d62-6964-4336-b68d-4a85a8ee10fe","zone":"fi-dev2"}]
 type ListFileStorages200 = FileStorageServiceListResponse
 
 // ListFileStoragesDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ListFileStoragesDefault = FileStorageErrorResponse
 
 // ModifyFileStorage200 Schema for the detailed response of a service.
+//
+// Examples: {"configured_status":"started","created_at":"2025-08-01T10:40:04.140473Z","encrypted":false,"labels":[{"key":"environment","value":"production"}],"name":"test2","networks":[{"family":"IPv4","ip_address":"10.10.10.50","name":"net","uuid":"0391f203-6eef-4a69-bfcc-fffffbdfdc32"}],"operational_state":"running","shares":[{"acl":[{"name":"test-name","permission":"ro","target":"*"}],"name":"read","path":"/public"},{"acl":[{"name":"test-name","permission":"rw","target":"10.10.10.0/24"},{"name":"test-name","permission":"rw","target":"local.domain"}],"name":"write","path":"/project/data"}],"size_gib":250,"state_messages":[],"updated_at":"2025-08-03T19:23:52.350216Z","uuid":"17871d62-6964-4336-b68d-4a85a8ee10fe","zone":"fi-dev2"}
 type ModifyFileStorage200 = FileStorageServiceDetailResponse
 
 // ModifyFileStorageAcl200 Schema for the detailed response of an ACL.
+//
+// Examples: {"name":"test-name","permission":"rw","target":"*"}
 type ModifyFileStorageAcl200 = FileStorageAclDetailResponse
 
 // ModifyFileStorageAclDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ModifyFileStorageAclDefault = FileStorageErrorResponse
 
 // ModifyFileStorageDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ModifyFileStorageDefault = FileStorageErrorResponse
 
 // ModifyFileStorageLabel200 Schema for label details including key-value pairs.
+//
+// Examples: {"key":"environment","value":"production"}
 type ModifyFileStorageLabel200 = FileStorageLabelDetails
 
 // ModifyFileStorageLabelDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ModifyFileStorageLabelDefault = FileStorageErrorResponse
 
 // ModifyFileStorageNetwork200 Schema for the detailed response of a network.
+//
+// Examples: {"family":"IPv4","ip_address":"192.168.147.250","name":"test-name","uuid":"03720d07-80a9-41ac-90b0-68a932109339"}
 type ModifyFileStorageNetwork200 = FileStorageNetworkDetailResponse
 
 // ModifyFileStorageNetworkDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ModifyFileStorageNetworkDefault = FileStorageErrorResponse
 
 // ModifyFileStorageShare200 Schema for the detailed response of a share.
+//
+// Examples: {"acl":[{"name":"test-name","permission":"rw","target":"*"}],"name":"write","path":"/project/data"}
 type ModifyFileStorageShare200 = FileStorageShareDetailResponse
 
 // ModifyFileStorageShareDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ModifyFileStorageShareDefault = FileStorageErrorResponse
 
 // ReplaceFileStorage200 Schema for the detailed response of a service.
+//
+// Examples: {"configured_status":"started","created_at":"2025-08-01T10:40:04.140473Z","encrypted":false,"labels":[{"key":"environment","value":"production"}],"name":"test2","networks":[{"family":"IPv4","ip_address":"10.10.10.50","name":"net","uuid":"0391f203-6eef-4a69-bfcc-fffffbdfdc32"}],"operational_state":"running","shares":[{"acl":[{"name":"test-name","permission":"ro","target":"*"}],"name":"read","path":"/public"},{"acl":[{"name":"test-name","permission":"rw","target":"10.10.10.0/24"},{"name":"test-name","permission":"rw","target":"local.domain"}],"name":"write","path":"/project/data"}],"size_gib":250,"state_messages":[],"updated_at":"2025-08-03T19:23:52.350216Z","uuid":"17871d62-6964-4336-b68d-4a85a8ee10fe","zone":"fi-dev2"}
 type ReplaceFileStorage200 = FileStorageServiceDetailResponse
 
 // ReplaceFileStorageDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1RPB4Z1EXJSBFHTVGJD00CV","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_RESOURCE_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type ReplaceFileStorageDefault = FileStorageErrorResponse
 
 // CreateFileStorage Schema for creating a new service.
+//
+// Examples: {"configured_status":"started","encrypted":false,"labels":[{"key":"environment","value":"production"}],"name":"test-name","networks":[{"family":"IPv4","ip_address":"192.168.147.120","name":"net","uuid":"03720d07-80a9-41ac-90b0-68a932109339"}],"shares":[{"acl":[{"name":"test-name","permission":"ro","target":"*"}],"name":"read","path":"/public"},{"acl":[{"name":"test-name","permission":"rw","target":"192.168.147.0/24"},{"name":"test-name","permission":"rw","target":"local.domain"}],"name":"write","path":"/project/data"}],"size_gib":250,"zone":"fi-hel2"}
 type CreateFileStorage = FileStorageServiceCreate
 
 // CreateFileStorageAcl Schema for creating an ACL entry.
 type CreateFileStorageAcl = FileStorageAclCreate
 
 // CreateFileStorageLabel Schema for creating a new label.
+//
+// Examples: {"key":"environment","value":"production"}
 type CreateFileStorageLabel = FileStorageLabelCreate
 
 // CreateFileStorageNetwork Schema for creating a network.
+//
+// Examples: {"family":"IPv4","ip_address":"10.20.30.40","name":"test-name","uuid":"03720d07-80a9-41ac-90b0-68a932109339"}
 type CreateFileStorageNetwork = FileStorageNetworkCreate
 
 // CreateFileStorageShare Schema for creating a new share with access control lists (ACLs).
+//
+// Examples: {"acl":[{"name":"test-name","permission":"ro","target":"192.168.147.0/24"}],"name":"read","path":"/public"}
 type CreateFileStorageShare = FileStorageShareCreate
 
 // ModifyFileStorage Schema for modifying an existing service.
+//
+// Examples: {"configured_status":"started","labels":[{"key":"environment","value":"production"}],"name":"test-name","networks":[{"family":"IPv4","ip_address":"192.168.147.120","name":"net","uuid":"03720d07-80a9-41ac-90b0-68a932109339"}],"size_gib":250}
 type ModifyFileStorage = FileStorageServiceModify
 
 // ModifyFileStorageAcl Schema for modifying an existing ACL.
+//
+// Examples: {"name":"test-name","permission":"rw","target":"192.168.25.0/24"}
 type ModifyFileStorageAcl = FileStorageAclModify
 
 // ModifyFileStorageLabel Schema for modifying an existing label.
+//
+// Examples: {"key":"environment","value":"production"}
 type ModifyFileStorageLabel = FileStorageLabelModify
 
 // ModifyFileStorageNetwork Schema for modifying an existing network.
+//
+// Examples: {"family":"IPv4","ip_address":"10.20.30.40","name":"test-name","uuid":"03720d07-80a9-41ac-90b0-68a932109339"}
 type ModifyFileStorageNetwork = FileStorageNetworkModify
 
 // ModifyFileStorageShare Schema for modifying an existing share.
+//
+// Examples: {"acl":[{"name":"test-name","permission":"ro","target":"192.168.25.0/24"}],"name":"test-name"}
 type ModifyFileStorageShare = FileStorageShareModify
 
 // ReplaceFileStorage Schema for replacing an existing service with a new configuration.
+//
+// Examples: {"configured_status":"started","labels":[{"key":"environment","value":"production"}],"name":"test-name","networks":[{"family":"IPv4","ip_address":"192.168.147.120","name":"net","uuid":"03720d07-80a9-41ac-90b0-68a932109339"}],"size_gib":250}
 type ReplaceFileStorage = FileStorageServiceReplace
 
 // ListFileStoragesParams defines parameters for ListFileStorages.

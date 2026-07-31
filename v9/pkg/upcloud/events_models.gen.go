@@ -44,6 +44,7 @@ func (e EventsEventType) Valid() bool {
 
 // Events Server event type
 type Events struct {
+	// Events Examples: {"event":[{"email":"user@example.com","first_name":"John","last_name":"Doe","server":"00798b85-efdc-41ca-8021-f6ef457b8531","time":"2024-02-23T12:34:56Z","type":"server_start"}]}
 	Events *struct {
 		// Event List of events associated with servers
 		Event []struct {
@@ -52,11 +53,11 @@ type Events struct {
 			LastName  *string              `json:"last_name,omitempty"`
 
 			// Server Universally unique identifier
-			//
-			// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 			Server EventsUuid `json:"server"`
 
 			// Time Timestamp of when the event occurred
+			//
+			// Examples: 2024-02-23T12:34:56Z
 			Time time.Time `json:"time"`
 
 			// Type Server event type
@@ -68,7 +69,10 @@ type Events struct {
 // EventsError A general error response indicating that the request could not be fulfilled due to a technical issue.
 type EventsError struct {
 	Error struct {
-		ErrorCode    string `json:"error_code"`
+		// ErrorCode Examples: GENERAL_FAILURE
+		ErrorCode string `json:"error_code"`
+
+		// ErrorMessage Examples: Your request could not be fulfilled due to a technical issue.
 		ErrorMessage string `json:"error_message"`
 	} `json:"error"`
 }
@@ -77,8 +81,6 @@ type EventsError struct {
 type EventsEventType string
 
 // EventsUuid Universally unique identifier
-//
-// Example: 0414e0d7-4436-4037-9dd8-6eaf47dce599
 type EventsUuid = openapi_types.UUID
 
 // ListEventsCount defines model for listEventsCount.

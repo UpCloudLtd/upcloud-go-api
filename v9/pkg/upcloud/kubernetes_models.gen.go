@@ -642,8 +642,6 @@ type KubernetesNodeUpdates struct {
 	ScheduleDow KubernetesNodeUpdatesScheduleDow `json:"schedule_dow"`
 
 	// ScheduleTime The time at which the updates will be applied in UTC (HH:MM).
-	//
-	// Example: 06:00
 	ScheduleTime string `json:"schedule_time"`
 }
 
