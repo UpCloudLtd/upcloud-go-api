@@ -63,7 +63,7 @@ func (s *Service) AttachStorage(ctx context.Context, r *request.AttachStorageReq
 	return &serverDetails, s.create(ctx, r, &serverDetails)
 }
 
-// DetachStorage detaches the specified storage from the specified server
+// DetachStorage detaches the specified storage device from the specified server
 func (s *Service) DetachStorage(ctx context.Context, r *request.DetachStorageRequest) (*upcloud.ServerDetails, error) {
 	serverDetails := upcloud.ServerDetails{}
 	return &serverDetails, s.create(ctx, r, &serverDetails)
@@ -74,13 +74,13 @@ func (s *Service) DeleteStorage(ctx context.Context, r *request.DeleteStorageReq
 	return s.delete(ctx, r)
 }
 
-// CloneStorage detaches the specified storage from the specified server
+// CloneStorage clones the specified storage device
 func (s *Service) CloneStorage(ctx context.Context, r *request.CloneStorageRequest) (*upcloud.StorageDetails, error) {
 	storageDetails := upcloud.StorageDetails{}
 	return &storageDetails, s.create(ctx, r, &storageDetails)
 }
 
-// TemplatizeStorage detaches the specified storage from the specified server
+// TemplatizeStorage creates a new template storage device from the specified storage device
 func (s *Service) TemplatizeStorage(ctx context.Context, r *request.TemplatizeStorageRequest) (*upcloud.StorageDetails, error) {
 	storageDetails := upcloud.StorageDetails{}
 	return &storageDetails, s.create(ctx, r, &storageDetails)
