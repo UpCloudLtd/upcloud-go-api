@@ -21,7 +21,7 @@ type StorageClientInterface interface {
 
 	// GetStorageList List storages
 	//
-	// Returns a list of storage devices. Supports filtering by type, access level, and labels, as well as sorting and pagination
+	// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
 	//
 	// Corresponds with GET /1.3/storage (the `GetStorageList` operationId).
 	GetStorageList(ctx context.Context, params *GetStorageListParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -39,6 +39,20 @@ type StorageClientInterface interface {
 	//
 	// Corresponds with POST /1.3/storage (the `CreateStorage` operationId).
 	CreateStorage(ctx context.Context, body CreateStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetStorageListByBackup List storages
+	//
+	// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+	//
+	// Corresponds with GET /1.3/storage/backup (the `GetStorageListByBackup` operationId).
+	GetStorageListByBackup(ctx context.Context, params *GetStorageListByBackupParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetStorageListByCdrom List storages
+	//
+	// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+	//
+	// Corresponds with GET /1.3/storage/cdrom (the `GetStorageListByCdrom` operationId).
+	GetStorageListByCdrom(ctx context.Context, params *GetStorageListByCdromParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateCDROMStorageWithBody Create new CD-ROM storage
 	//
@@ -58,6 +72,27 @@ type StorageClientInterface interface {
 	//
 	// Corresponds with GET /1.3/storage/favorite (the `GetFavoriteStorageList` operationId).
 	GetFavoriteStorageList(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetStorageListByNormal List storages
+	//
+	// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+	//
+	// Corresponds with GET /1.3/storage/normal (the `GetStorageListByNormal` operationId).
+	GetStorageListByNormal(ctx context.Context, params *GetStorageListByNormalParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetStorageListByTemplate List storages
+	//
+	// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+	//
+	// Corresponds with GET /1.3/storage/template (the `GetStorageListByTemplate` operationId).
+	GetStorageListByTemplate(ctx context.Context, params *GetStorageListByTemplateParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetStorageListByTypeAndAccess List storages
+	//
+	// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+	//
+	// Corresponds with GET /1.3/storage/{type}/{access} (the `GetStorageListByTypeAndAccess` operationId).
+	GetStorageListByTypeAndAccess(ctx context.Context, pType GetStorageListByTypeAndAccessType, access GetStorageListByTypeAndAccessAccess, params *GetStorageListByTypeAndAccessParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteStorage Delete storage
 	//
@@ -200,7 +235,7 @@ type StorageClientInterface interface {
 
 // GetStorageList List storages
 //
-// Returns a list of storage devices. Supports filtering by type, access level, and labels, as well as sorting and pagination
+// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
 //
 // Corresponds with GET /1.3/storage (the `GetStorageList` operationId).
 func (c *Client) GetStorageList(ctx context.Context, params *GetStorageListParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -239,6 +274,40 @@ func (c *Client) CreateStorageWithBody(ctx context.Context, contentType string, 
 // Corresponds with POST /1.3/storage (the `CreateStorage` operationId).
 func (c *Client) CreateStorage(ctx context.Context, body CreateStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateStorageRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetStorageListByBackup List storages
+//
+// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+//
+// Corresponds with GET /1.3/storage/backup (the `GetStorageListByBackup` operationId).
+func (c *Client) GetStorageListByBackup(ctx context.Context, params *GetStorageListByBackupParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetStorageListByBackupRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetStorageListByCdrom List storages
+//
+// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+//
+// Corresponds with GET /1.3/storage/cdrom (the `GetStorageListByCdrom` operationId).
+func (c *Client) GetStorageListByCdrom(ctx context.Context, params *GetStorageListByCdromParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetStorageListByCdromRequest(c.Server, params)
 	if err != nil {
 		return nil, err
 	}
@@ -288,6 +357,57 @@ func (c *Client) CreateCDROMStorage(ctx context.Context, body CreateCDROMStorage
 // Corresponds with GET /1.3/storage/favorite (the `GetFavoriteStorageList` operationId).
 func (c *Client) GetFavoriteStorageList(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetFavoriteStorageListRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetStorageListByNormal List storages
+//
+// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+//
+// Corresponds with GET /1.3/storage/normal (the `GetStorageListByNormal` operationId).
+func (c *Client) GetStorageListByNormal(ctx context.Context, params *GetStorageListByNormalParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetStorageListByNormalRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetStorageListByTemplate List storages
+//
+// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+//
+// Corresponds with GET /1.3/storage/template (the `GetStorageListByTemplate` operationId).
+func (c *Client) GetStorageListByTemplate(ctx context.Context, params *GetStorageListByTemplateParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetStorageListByTemplateRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetStorageListByTypeAndAccess List storages
+//
+// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+//
+// Corresponds with GET /1.3/storage/{type}/{access} (the `GetStorageListByTypeAndAccess` operationId).
+func (c *Client) GetStorageListByTypeAndAccess(ctx context.Context, pType GetStorageListByTypeAndAccessType, access GetStorageListByTypeAndAccessAccess, params *GetStorageListByTypeAndAccessParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetStorageListByTypeAndAccessRequest(c.Server, pType, access, params)
 	if err != nil {
 		return nil, err
 	}
@@ -684,33 +804,21 @@ func NewGetStorageListRequest(server string, params *GetStorageListParams) (*htt
 		// per the OpenAPI spec (e.g. "color=blue,black,brown").
 		var rawQueryFragments []string
 
-		if params.Type != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "type", *params.Type, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if params.Access != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "access", *params.Access, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
 		if params.Label != nil {
 
 			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "label", *params.Label, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Search != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "search", *params.Search, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
 				return nil, err
 			} else {
 				for _, qp := range strings.Split(queryFrag, "&") {
@@ -870,6 +978,330 @@ func NewCreateStorageRequestWithBody(server string, contentType string, body io.
 	return req, nil
 }
 
+// NewGetStorageListByBackupRequest constructs an http.Request for the GetStorageListByBackup method
+func NewGetStorageListByBackupRequest(server string, params *GetStorageListByBackupParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/storage/backup")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Label != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "label", *params.Label, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Search != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "search", *params.Search, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.SortBy != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort_by", *params.SortBy, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.OrderBy != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "order_by", *params.OrderBy, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Offset != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "offset", *params.Offset, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.AllowHidden != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "allow_hidden", *params.AllowHidden, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Favorite != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "favorite", *params.Favorite, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Metadata != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "metadata", *params.Metadata, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Servers != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "servers", *params.Servers, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetStorageListByCdromRequest constructs an http.Request for the GetStorageListByCdrom method
+func NewGetStorageListByCdromRequest(server string, params *GetStorageListByCdromParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/storage/cdrom")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Label != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "label", *params.Label, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Search != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "search", *params.Search, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.SortBy != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort_by", *params.SortBy, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.OrderBy != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "order_by", *params.OrderBy, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Offset != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "offset", *params.Offset, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.AllowHidden != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "allow_hidden", *params.AllowHidden, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Favorite != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "favorite", *params.Favorite, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Metadata != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "metadata", *params.Metadata, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Servers != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "servers", *params.Servers, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewCreateCDROMStorageRequest calls the generic CreateCDROMStorage builder with application/json body
 func NewCreateCDROMStorageRequest(server string, body CreateCDROMStorageJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -927,6 +1359,506 @@ func NewGetFavoriteStorageListRequest(server string) (*http.Request, error) {
 	queryURL, err := serverURL.Parse(operationPath)
 	if err != nil {
 		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetStorageListByNormalRequest constructs an http.Request for the GetStorageListByNormal method
+func NewGetStorageListByNormalRequest(server string, params *GetStorageListByNormalParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/storage/normal")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Label != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "label", *params.Label, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Search != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "search", *params.Search, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.SortBy != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort_by", *params.SortBy, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.OrderBy != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "order_by", *params.OrderBy, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Offset != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "offset", *params.Offset, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.AllowHidden != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "allow_hidden", *params.AllowHidden, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Favorite != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "favorite", *params.Favorite, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Metadata != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "metadata", *params.Metadata, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Servers != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "servers", *params.Servers, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetStorageListByTemplateRequest constructs an http.Request for the GetStorageListByTemplate method
+func NewGetStorageListByTemplateRequest(server string, params *GetStorageListByTemplateParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/storage/template")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Label != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "label", *params.Label, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Search != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "search", *params.Search, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.SortBy != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort_by", *params.SortBy, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.OrderBy != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "order_by", *params.OrderBy, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Offset != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "offset", *params.Offset, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.AllowHidden != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "allow_hidden", *params.AllowHidden, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Favorite != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "favorite", *params.Favorite, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Metadata != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "metadata", *params.Metadata, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Servers != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "servers", *params.Servers, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetStorageListByTypeAndAccessRequest constructs an http.Request for the GetStorageListByTypeAndAccess method
+func NewGetStorageListByTypeAndAccessRequest(server string, pType GetStorageListByTypeAndAccessType, access GetStorageListByTypeAndAccessAccess, params *GetStorageListByTypeAndAccessParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "type", pType, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "access", access, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/storage/%s/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Label != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "label", *params.Label, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Search != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "search", *params.Search, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.SortBy != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort_by", *params.SortBy, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.OrderBy != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "order_by", *params.OrderBy, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Offset != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "offset", *params.Offset, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.AllowHidden != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "allow_hidden", *params.AllowHidden, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Favorite != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "favorite", *params.Favorite, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Metadata != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "metadata", *params.Metadata, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Servers != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "servers", *params.Servers, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
 	}
 
 	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
@@ -1570,7 +2502,7 @@ type StorageClientWithResponsesInterface interface {
 
 	// GetStorageListWithResponse List storages
 	//
-	// Returns a list of storage devices. Supports filtering by type, access level, and labels, as well as sorting and pagination
+	// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -1590,6 +2522,24 @@ type StorageClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /1.3/storage (the `CreateStorage` operationId).
 	CreateStorageWithResponse(ctx context.Context, body CreateStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateStorageResp, error)
+
+	// GetStorageListByBackupWithResponse List storages
+	//
+	// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/storage/backup (the `GetStorageListByBackup` operationId).
+	GetStorageListByBackupWithResponse(ctx context.Context, params *GetStorageListByBackupParams, reqEditors ...RequestEditorFn) (*GetStorageListByBackupResp, error)
+
+	// GetStorageListByCdromWithResponse List storages
+	//
+	// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/storage/cdrom (the `GetStorageListByCdrom` operationId).
+	GetStorageListByCdromWithResponse(ctx context.Context, params *GetStorageListByCdromParams, reqEditors ...RequestEditorFn) (*GetStorageListByCdromResp, error)
 
 	// CreateCDROMStorageWithBodyWithResponse Create new CD-ROM storage
 	//
@@ -1611,6 +2561,33 @@ type StorageClientWithResponsesInterface interface {
 	//
 	// Corresponds with GET /1.3/storage/favorite (the `GetFavoriteStorageList` operationId).
 	GetFavoriteStorageListWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetFavoriteStorageListResp, error)
+
+	// GetStorageListByNormalWithResponse List storages
+	//
+	// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/storage/normal (the `GetStorageListByNormal` operationId).
+	GetStorageListByNormalWithResponse(ctx context.Context, params *GetStorageListByNormalParams, reqEditors ...RequestEditorFn) (*GetStorageListByNormalResp, error)
+
+	// GetStorageListByTemplateWithResponse List storages
+	//
+	// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/storage/template (the `GetStorageListByTemplate` operationId).
+	GetStorageListByTemplateWithResponse(ctx context.Context, params *GetStorageListByTemplateParams, reqEditors ...RequestEditorFn) (*GetStorageListByTemplateResp, error)
+
+	// GetStorageListByTypeAndAccessWithResponse List storages
+	//
+	// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/storage/{type}/{access} (the `GetStorageListByTypeAndAccess` operationId).
+	GetStorageListByTypeAndAccessWithResponse(ctx context.Context, pType GetStorageListByTypeAndAccessType, access GetStorageListByTypeAndAccessAccess, params *GetStorageListByTypeAndAccessParams, reqEditors ...RequestEditorFn) (*GetStorageListByTypeAndAccessResp, error)
 
 	// DeleteStorageWithResponse Delete storage
 	//
@@ -1774,8 +2751,8 @@ type GetStorageListResp struct {
 	JSON200 *GetStorageList200
 	// JSON400 the response for an HTTP 400 `application/json` response
 	JSON400 *GetStorageList400
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *GetStorageListDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *GetStorageListDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -1788,9 +2765,9 @@ func (r GetStorageListResp) GetJSON400() *GetStorageList400 {
 	return r.JSON400
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r GetStorageListResp) GetJSONDefault() *GetStorageListDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetStorageListResp) GetApplicationproblemJSONDefault() *GetStorageListDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -1827,8 +2804,8 @@ type CreateStorageResp struct {
 	HTTPResponse *http.Response
 	// JSON201 the response for an HTTP 201 `application/json` response
 	JSON201 *CreateStorage201
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *CreateStorageDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *CreateStorageDefault
 }
 
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
@@ -1836,9 +2813,9 @@ func (r CreateStorageResp) GetJSON201() *CreateStorage201 {
 	return r.JSON201
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r CreateStorageResp) GetJSONDefault() *CreateStorageDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r CreateStorageResp) GetApplicationproblemJSONDefault() *CreateStorageDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -1870,13 +2847,123 @@ func (r CreateStorageResp) ContentType() string {
 	return ""
 }
 
+type GetStorageListByBackupResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *GetStorageListByBackup200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *GetStorageListByBackup400
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *GetStorageListByBackupDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetStorageListByBackupResp) GetJSON200() *GetStorageListByBackup200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r GetStorageListByBackupResp) GetJSON400() *GetStorageListByBackup400 {
+	return r.JSON400
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetStorageListByBackupResp) GetApplicationproblemJSONDefault() *GetStorageListByBackupDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetStorageListByBackupResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetStorageListByBackupResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetStorageListByBackupResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetStorageListByBackupResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetStorageListByCdromResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *GetStorageListByCdrom200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *GetStorageListByCdrom400
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *GetStorageListByCdromDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetStorageListByCdromResp) GetJSON200() *GetStorageListByCdrom200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r GetStorageListByCdromResp) GetJSON400() *GetStorageListByCdrom400 {
+	return r.JSON400
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetStorageListByCdromResp) GetApplicationproblemJSONDefault() *GetStorageListByCdromDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetStorageListByCdromResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetStorageListByCdromResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetStorageListByCdromResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetStorageListByCdromResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type CreateCDROMStorageResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON201 the response for an HTTP 201 `application/json` response
 	JSON201 *CreateCDROMStorage201
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *CreateCDROMStorageDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *CreateCDROMStorageDefault
 }
 
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
@@ -1884,9 +2971,9 @@ func (r CreateCDROMStorageResp) GetJSON201() *CreateCDROMStorage201 {
 	return r.JSON201
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r CreateCDROMStorageResp) GetJSONDefault() *CreateCDROMStorageDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r CreateCDROMStorageResp) GetApplicationproblemJSONDefault() *CreateCDROMStorageDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -1923,8 +3010,8 @@ type GetFavoriteStorageListResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *GetFavoriteStorageList200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *GetFavoriteStorageListDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *GetFavoriteStorageListDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -1932,9 +3019,9 @@ func (r GetFavoriteStorageListResp) GetJSON200() *GetFavoriteStorageList200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r GetFavoriteStorageListResp) GetJSONDefault() *GetFavoriteStorageListDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetFavoriteStorageListResp) GetApplicationproblemJSONDefault() *GetFavoriteStorageListDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -1966,16 +3053,181 @@ func (r GetFavoriteStorageListResp) ContentType() string {
 	return ""
 }
 
+type GetStorageListByNormalResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *GetStorageListByNormal200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *GetStorageListByNormal400
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *GetStorageListByNormalDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetStorageListByNormalResp) GetJSON200() *GetStorageListByNormal200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r GetStorageListByNormalResp) GetJSON400() *GetStorageListByNormal400 {
+	return r.JSON400
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetStorageListByNormalResp) GetApplicationproblemJSONDefault() *GetStorageListByNormalDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetStorageListByNormalResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetStorageListByNormalResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetStorageListByNormalResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetStorageListByNormalResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetStorageListByTemplateResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *GetStorageListByTemplate200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *GetStorageListByTemplate400
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *GetStorageListByTemplateDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetStorageListByTemplateResp) GetJSON200() *GetStorageListByTemplate200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r GetStorageListByTemplateResp) GetJSON400() *GetStorageListByTemplate400 {
+	return r.JSON400
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetStorageListByTemplateResp) GetApplicationproblemJSONDefault() *GetStorageListByTemplateDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetStorageListByTemplateResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetStorageListByTemplateResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetStorageListByTemplateResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetStorageListByTemplateResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetStorageListByTypeAndAccessResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *GetStorageListByTypeAndAccess200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *GetStorageListByTypeAndAccess400
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *GetStorageListByTypeAndAccessDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetStorageListByTypeAndAccessResp) GetJSON200() *GetStorageListByTypeAndAccess200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r GetStorageListByTypeAndAccessResp) GetJSON400() *GetStorageListByTypeAndAccess400 {
+	return r.JSON400
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetStorageListByTypeAndAccessResp) GetApplicationproblemJSONDefault() *GetStorageListByTypeAndAccessDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetStorageListByTypeAndAccessResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetStorageListByTypeAndAccessResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetStorageListByTypeAndAccessResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetStorageListByTypeAndAccessResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type DeleteStorageResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *DeleteStorageDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *DeleteStorageDefault
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r DeleteStorageResp) GetJSONDefault() *DeleteStorageDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r DeleteStorageResp) GetApplicationproblemJSONDefault() *DeleteStorageDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -2012,8 +3264,8 @@ type GetStorageInfoResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *GetStorageInfo200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *GetStorageInfoDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *GetStorageInfoDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -2021,9 +3273,9 @@ func (r GetStorageInfoResp) GetJSON200() *GetStorageInfo200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r GetStorageInfoResp) GetJSONDefault() *GetStorageInfoDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetStorageInfoResp) GetApplicationproblemJSONDefault() *GetStorageInfoDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -2060,8 +3312,8 @@ type ModifyStorageResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ModifyStorage200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ModifyStorageDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ModifyStorageDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -2069,9 +3321,9 @@ func (r ModifyStorageResp) GetJSON200() *ModifyStorage200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r ModifyStorageResp) GetJSONDefault() *ModifyStorageDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ModifyStorageResp) GetApplicationproblemJSONDefault() *ModifyStorageDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -2106,13 +3358,13 @@ func (r ModifyStorageResp) ContentType() string {
 type AddStorageComponentResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *AddStorageComponentDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *AddStorageComponentDefault
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r AddStorageComponentResp) GetJSONDefault() *AddStorageComponentDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r AddStorageComponentResp) GetApplicationproblemJSONDefault() *AddStorageComponentDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -2147,13 +3399,13 @@ func (r AddStorageComponentResp) ContentType() string {
 type AttachStorageToServerResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *AttachStorageToServerDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *AttachStorageToServerDefault
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r AttachStorageToServerResp) GetJSONDefault() *AttachStorageToServerDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r AttachStorageToServerResp) GetApplicationproblemJSONDefault() *AttachStorageToServerDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -2190,8 +3442,8 @@ type CreateOnDemandBackupResp struct {
 	HTTPResponse *http.Response
 	// JSON201 the response for an HTTP 201 `application/json` response
 	JSON201 *StorageCreateOnDemandBackup201
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *StorageCreateOnDemandBackupDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *StorageCreateOnDemandBackupDefault
 }
 
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
@@ -2199,9 +3451,9 @@ func (r CreateOnDemandBackupResp) GetJSON201() *StorageCreateOnDemandBackup201 {
 	return r.JSON201
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r CreateOnDemandBackupResp) GetJSONDefault() *StorageCreateOnDemandBackupDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r CreateOnDemandBackupResp) GetApplicationproblemJSONDefault() *StorageCreateOnDemandBackupDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -2236,13 +3488,13 @@ func (r CreateOnDemandBackupResp) ContentType() string {
 type CancelStorageOperationResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *CancelStorageOperationDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *CancelStorageOperationDefault
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r CancelStorageOperationResp) GetJSONDefault() *CancelStorageOperationDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r CancelStorageOperationResp) GetApplicationproblemJSONDefault() *CancelStorageOperationDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -2279,8 +3531,8 @@ type CloneStorageResp struct {
 	HTTPResponse *http.Response
 	// JSON201 the response for an HTTP 201 `application/json` response
 	JSON201 *CloneStorage201
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *CloneStorageDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *CloneStorageDefault
 }
 
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
@@ -2288,9 +3540,9 @@ func (r CloneStorageResp) GetJSON201() *CloneStorage201 {
 	return r.JSON201
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r CloneStorageResp) GetJSONDefault() *CloneStorageDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r CloneStorageResp) GetApplicationproblemJSONDefault() *CloneStorageDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -2325,13 +3577,13 @@ func (r CloneStorageResp) ContentType() string {
 type DetachStorageFromServerResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *DetachStorageFromServerDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *DetachStorageFromServerDefault
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r DetachStorageFromServerResp) GetJSONDefault() *DetachStorageFromServerDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r DetachStorageFromServerResp) GetApplicationproblemJSONDefault() *DetachStorageFromServerDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -2366,13 +3618,13 @@ func (r DetachStorageFromServerResp) ContentType() string {
 type RemoveStorageFromFavoritesResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *RemoveStorageFromFavoritesDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *RemoveStorageFromFavoritesDefault
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r RemoveStorageFromFavoritesResp) GetJSONDefault() *RemoveStorageFromFavoritesDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r RemoveStorageFromFavoritesResp) GetApplicationproblemJSONDefault() *RemoveStorageFromFavoritesDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -2407,13 +3659,13 @@ func (r RemoveStorageFromFavoritesResp) ContentType() string {
 type AddStorageToFavoritesResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *AddStorageToFavoritesDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *AddStorageToFavoritesDefault
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r AddStorageToFavoritesResp) GetJSONDefault() *AddStorageToFavoritesDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r AddStorageToFavoritesResp) GetApplicationproblemJSONDefault() *AddStorageToFavoritesDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -2450,8 +3702,8 @@ type ResizeStorageResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ResizeStorage200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ResizeStorageDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ResizeStorageDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -2459,9 +3711,9 @@ func (r ResizeStorageResp) GetJSON200() *ResizeStorage200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r ResizeStorageResp) GetJSONDefault() *ResizeStorageDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ResizeStorageResp) GetApplicationproblemJSONDefault() *ResizeStorageDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -2496,13 +3748,13 @@ func (r ResizeStorageResp) ContentType() string {
 type RestoreStorageFromBackupResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *RestoreStorageFromBackupDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *RestoreStorageFromBackupDefault
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r RestoreStorageFromBackupResp) GetJSONDefault() *RestoreStorageFromBackupDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r RestoreStorageFromBackupResp) GetApplicationproblemJSONDefault() *RestoreStorageFromBackupDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -2539,8 +3791,8 @@ type CreateTemplateFromStorageResp struct {
 	HTTPResponse *http.Response
 	// JSON201 the response for an HTTP 201 `application/json` response
 	JSON201 *CreateTemplateFromStorage201
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *CreateTemplateFromStorageDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *CreateTemplateFromStorageDefault
 }
 
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
@@ -2548,9 +3800,9 @@ func (r CreateTemplateFromStorageResp) GetJSON201() *CreateTemplateFromStorage20
 	return r.JSON201
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r CreateTemplateFromStorageResp) GetJSONDefault() *CreateTemplateFromStorageDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r CreateTemplateFromStorageResp) GetApplicationproblemJSONDefault() *CreateTemplateFromStorageDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -2585,13 +3837,13 @@ func (r CreateTemplateFromStorageResp) ContentType() string {
 type UpdatePublicTemplateFromSourceResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *StorageUpdatePublicTemplateFromSourceDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *StorageUpdatePublicTemplateFromSourceDefault
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r UpdatePublicTemplateFromSourceResp) GetJSONDefault() *StorageUpdatePublicTemplateFromSourceDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r UpdatePublicTemplateFromSourceResp) GetApplicationproblemJSONDefault() *StorageUpdatePublicTemplateFromSourceDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -2625,7 +3877,7 @@ func (r UpdatePublicTemplateFromSourceResp) ContentType() string {
 
 // GetStorageListWithResponse List storages
 //
-// Returns a list of storage devices. Supports filtering by type, access level, and labels, as well as sorting and pagination
+// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -2662,6 +3914,36 @@ func (c *ClientWithResponses) CreateStorageWithResponse(ctx context.Context, bod
 		return nil, err
 	}
 	return ParseCreateStorageResp(rsp)
+}
+
+// GetStorageListByBackupWithResponse List storages
+//
+// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/storage/backup (the `GetStorageListByBackup` operationId).
+func (c *ClientWithResponses) GetStorageListByBackupWithResponse(ctx context.Context, params *GetStorageListByBackupParams, reqEditors ...RequestEditorFn) (*GetStorageListByBackupResp, error) {
+	rsp, err := c.GetStorageListByBackup(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetStorageListByBackupResp(rsp)
+}
+
+// GetStorageListByCdromWithResponse List storages
+//
+// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/storage/cdrom (the `GetStorageListByCdrom` operationId).
+func (c *ClientWithResponses) GetStorageListByCdromWithResponse(ctx context.Context, params *GetStorageListByCdromParams, reqEditors ...RequestEditorFn) (*GetStorageListByCdromResp, error) {
+	rsp, err := c.GetStorageListByCdrom(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetStorageListByCdromResp(rsp)
 }
 
 // CreateCDROMStorageWithBodyWithResponse Create new CD-ROM storage
@@ -2701,6 +3983,51 @@ func (c *ClientWithResponses) GetFavoriteStorageListWithResponse(ctx context.Con
 		return nil, err
 	}
 	return ParseGetFavoriteStorageListResp(rsp)
+}
+
+// GetStorageListByNormalWithResponse List storages
+//
+// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/storage/normal (the `GetStorageListByNormal` operationId).
+func (c *ClientWithResponses) GetStorageListByNormalWithResponse(ctx context.Context, params *GetStorageListByNormalParams, reqEditors ...RequestEditorFn) (*GetStorageListByNormalResp, error) {
+	rsp, err := c.GetStorageListByNormal(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetStorageListByNormalResp(rsp)
+}
+
+// GetStorageListByTemplateWithResponse List storages
+//
+// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/storage/template (the `GetStorageListByTemplate` operationId).
+func (c *ClientWithResponses) GetStorageListByTemplateWithResponse(ctx context.Context, params *GetStorageListByTemplateParams, reqEditors ...RequestEditorFn) (*GetStorageListByTemplateResp, error) {
+	rsp, err := c.GetStorageListByTemplate(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetStorageListByTemplateResp(rsp)
+}
+
+// GetStorageListByTypeAndAccessWithResponse List storages
+//
+// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/storage/{type}/{access} (the `GetStorageListByTypeAndAccess` operationId).
+func (c *ClientWithResponses) GetStorageListByTypeAndAccessWithResponse(ctx context.Context, pType GetStorageListByTypeAndAccessType, access GetStorageListByTypeAndAccessAccess, params *GetStorageListByTypeAndAccessParams, reqEditors ...RequestEditorFn) (*GetStorageListByTypeAndAccessResp, error) {
+	rsp, err := c.GetStorageListByTypeAndAccess(ctx, pType, access, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetStorageListByTypeAndAccessResp(rsp)
 }
 
 // DeleteStorageWithResponse Delete storage
@@ -3022,7 +4349,7 @@ func ParseGetStorageListResp(rsp *http.Response) (*GetStorageListResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -3055,7 +4382,87 @@ func ParseCreateStorageResp(rsp *http.Response) (*CreateStorageResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetStorageListByBackupResp parses an HTTP response from a GetStorageListByBackupWithResponse call
+func ParseGetStorageListByBackupResp(rsp *http.Response) (*GetStorageListByBackupResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetStorageListByBackupResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest GetStorageListByBackup200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest GetStorageListByBackup400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest GetStorageListByBackupDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetStorageListByCdromResp parses an HTTP response from a GetStorageListByCdromWithResponse call
+func ParseGetStorageListByCdromResp(rsp *http.Response) (*GetStorageListByCdromResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetStorageListByCdromResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest GetStorageListByCdrom200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest GetStorageListByCdrom400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest GetStorageListByCdromDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -3088,7 +4495,7 @@ func ParseCreateCDROMStorageResp(rsp *http.Response) (*CreateCDROMStorageResp, e
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -3121,7 +4528,127 @@ func ParseGetFavoriteStorageListResp(rsp *http.Response) (*GetFavoriteStorageLis
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetStorageListByNormalResp parses an HTTP response from a GetStorageListByNormalWithResponse call
+func ParseGetStorageListByNormalResp(rsp *http.Response) (*GetStorageListByNormalResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetStorageListByNormalResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest GetStorageListByNormal200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest GetStorageListByNormal400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest GetStorageListByNormalDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetStorageListByTemplateResp parses an HTTP response from a GetStorageListByTemplateWithResponse call
+func ParseGetStorageListByTemplateResp(rsp *http.Response) (*GetStorageListByTemplateResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetStorageListByTemplateResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest GetStorageListByTemplate200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest GetStorageListByTemplate400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest GetStorageListByTemplateDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetStorageListByTypeAndAccessResp parses an HTTP response from a GetStorageListByTypeAndAccessWithResponse call
+func ParseGetStorageListByTypeAndAccessResp(rsp *http.Response) (*GetStorageListByTypeAndAccessResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetStorageListByTypeAndAccessResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest GetStorageListByTypeAndAccess200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest GetStorageListByTypeAndAccess400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest GetStorageListByTypeAndAccessDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -3150,7 +4677,7 @@ func ParseDeleteStorageResp(rsp *http.Response) (*DeleteStorageResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -3186,7 +4713,7 @@ func ParseGetStorageInfoResp(rsp *http.Response) (*GetStorageInfoResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -3219,7 +4746,7 @@ func ParseModifyStorageResp(rsp *http.Response) (*ModifyStorageResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -3248,7 +4775,7 @@ func ParseAddStorageComponentResp(rsp *http.Response) (*AddStorageComponentResp,
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -3277,7 +4804,7 @@ func ParseAttachStorageToServerResp(rsp *http.Response) (*AttachStorageToServerR
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -3310,7 +4837,7 @@ func ParseCreateOnDemandBackupResp(rsp *http.Response) (*CreateOnDemandBackupRes
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -3339,7 +4866,7 @@ func ParseCancelStorageOperationResp(rsp *http.Response) (*CancelStorageOperatio
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -3375,7 +4902,7 @@ func ParseCloneStorageResp(rsp *http.Response) (*CloneStorageResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -3404,7 +4931,7 @@ func ParseDetachStorageFromServerResp(rsp *http.Response) (*DetachStorageFromSer
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -3433,7 +4960,7 @@ func ParseRemoveStorageFromFavoritesResp(rsp *http.Response) (*RemoveStorageFrom
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -3462,7 +4989,7 @@ func ParseAddStorageToFavoritesResp(rsp *http.Response) (*AddStorageToFavoritesR
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -3495,7 +5022,7 @@ func ParseResizeStorageResp(rsp *http.Response) (*ResizeStorageResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -3524,7 +5051,7 @@ func ParseRestoreStorageFromBackupResp(rsp *http.Response) (*RestoreStorageFromB
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -3557,7 +5084,7 @@ func ParseCreateTemplateFromStorageResp(rsp *http.Response) (*CreateTemplateFrom
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -3586,7 +5113,7 @@ func ParseUpdatePublicTemplateFromSourceResp(rsp *http.Response) (*UpdatePublicT
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 

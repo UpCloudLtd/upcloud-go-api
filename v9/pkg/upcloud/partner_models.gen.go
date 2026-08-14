@@ -296,7 +296,7 @@ func (e PartnerError409ErrorErrorCode) Valid() bool {
 	}
 }
 
-// PartnerAccount defines model for partnerAccount.
+// PartnerAccount Partner-managed account details.
 type PartnerAccount struct {
 	// Address Examples: Some street
 	Address *string `json:"address,omitempty"`
@@ -335,10 +335,10 @@ type PartnerAccount struct {
 	VatNumber *string `json:"vat_number,omitempty"`
 }
 
-// PartnerAccounts defines model for partnerAccounts.
+// PartnerAccounts Collection of partner-managed accounts.
 type PartnerAccounts = []PartnerAccount
 
-// PartnerCreateAccount defines model for partnerCreateAccount.
+// PartnerCreateAccount Request payload for creating a partner-managed account.
 type PartnerCreateAccount struct {
 	ContactDetails *struct {
 		// Address Examples: Some street
@@ -618,7 +618,7 @@ type PartnerError409 struct {
 // PartnerError409ErrorErrorCode defines model for PartnerError409.Error.ErrorCode.
 type PartnerError409ErrorErrorCode string
 
-// CreatePartnerAccount201 defines model for createPartnerAccount201.
+// CreatePartnerAccount201 Partner-managed account details.
 type CreatePartnerAccount201 = PartnerAccount
 
 // CreatePartnerAccount400 400 Bad Request errors for partner account creation.
@@ -633,13 +633,13 @@ type CreatePartnerAccount409 = PartnerError409
 // CreatePartnerAccountDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type CreatePartnerAccountDefault = PartnerError
 
-// ListPartnerAccounts200 defines model for listPartnerAccounts200.
+// ListPartnerAccounts200 Collection of partner-managed accounts.
 type ListPartnerAccounts200 = PartnerAccounts
 
 // ListPartnerAccountsDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ListPartnerAccountsDefault = PartnerError
 
-// CreatePartnerAccount defines model for createPartnerAccount.
+// CreatePartnerAccount Request payload for creating a partner-managed account.
 type CreatePartnerAccount = PartnerCreateAccount
 
 // CreatePartnerAccountJSONRequestBody defines body for CreatePartnerAccount for application/json ContentType.

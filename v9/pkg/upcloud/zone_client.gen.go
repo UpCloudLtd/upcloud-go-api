@@ -155,8 +155,8 @@ type ListZonesResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ListZones200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ListZonesDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ListZonesDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -164,9 +164,9 @@ func (r ListZonesResp) GetJSON200() *ListZones200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r ListZonesResp) GetJSONDefault() *ListZonesDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ListZonesResp) GetApplicationproblemJSONDefault() *ListZonesDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -203,8 +203,8 @@ type ListZoneVLANsResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ListZoneVLANs200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ListZoneVLANsDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ListZoneVLANsDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -212,9 +212,9 @@ func (r ListZoneVLANsResp) GetJSON200() *ListZoneVLANs200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r ListZoneVLANsResp) GetJSONDefault() *ListZoneVLANsDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ListZoneVLANsResp) GetApplicationproblemJSONDefault() *ListZoneVLANsDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -302,7 +302,7 @@ func ParseListZonesResp(rsp *http.Response) (*ListZonesResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -335,7 +335,7 @@ func ParseListZoneVLANsResp(rsp *http.Response) (*ListZoneVLANsResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
