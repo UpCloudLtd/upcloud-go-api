@@ -793,8 +793,8 @@ type ListNetworksResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ListNetworks200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ListNetworksDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ListNetworksDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -802,9 +802,9 @@ func (r ListNetworksResp) GetJSON200() *ListNetworks200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r ListNetworksResp) GetJSONDefault() *ListNetworksDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ListNetworksResp) GetApplicationproblemJSONDefault() *ListNetworksDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -841,8 +841,8 @@ type CreateNetworkResp struct {
 	HTTPResponse *http.Response
 	// JSON201 the response for an HTTP 201 `application/json` response
 	JSON201 *CreateNetwork201
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *CreateNetworkDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *CreateNetworkDefault
 }
 
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
@@ -850,9 +850,9 @@ func (r CreateNetworkResp) GetJSON201() *CreateNetwork201 {
 	return r.JSON201
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r CreateNetworkResp) GetJSONDefault() *CreateNetworkDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r CreateNetworkResp) GetApplicationproblemJSONDefault() *CreateNetworkDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -889,8 +889,8 @@ type ListNetworkInterfacesResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ListNetworkInterfaces200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ListNetworkInterfacesDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ListNetworkInterfacesDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -898,9 +898,9 @@ func (r ListNetworkInterfacesResp) GetJSON200() *ListNetworkInterfaces200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r ListNetworkInterfacesResp) GetJSONDefault() *ListNetworkInterfacesDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ListNetworkInterfacesResp) GetApplicationproblemJSONDefault() *ListNetworkInterfacesDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -937,8 +937,8 @@ type CreateNetworkInterfaceResp struct {
 	HTTPResponse *http.Response
 	// JSON201 the response for an HTTP 201 `application/json` response
 	JSON201 *CreateNetworkInterface201
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *CreateNetworkInterfaceDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *CreateNetworkInterfaceDefault
 }
 
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
@@ -946,9 +946,9 @@ func (r CreateNetworkInterfaceResp) GetJSON201() *CreateNetworkInterface201 {
 	return r.JSON201
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r CreateNetworkInterfaceResp) GetJSONDefault() *CreateNetworkInterfaceDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r CreateNetworkInterfaceResp) GetApplicationproblemJSONDefault() *CreateNetworkInterfaceDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -983,13 +983,13 @@ func (r CreateNetworkInterfaceResp) ContentType() string {
 type DeleteNetworkInterfaceResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *DeleteNetworkInterfaceDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *DeleteNetworkInterfaceDefault
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r DeleteNetworkInterfaceResp) GetJSONDefault() *DeleteNetworkInterfaceDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r DeleteNetworkInterfaceResp) GetApplicationproblemJSONDefault() *DeleteNetworkInterfaceDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -1026,8 +1026,8 @@ type GetNetworkInterfaceDetailsResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *GetNetworkInterfaceDetails200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *GetNetworkInterfaceDetailsDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *GetNetworkInterfaceDetailsDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -1035,9 +1035,9 @@ func (r GetNetworkInterfaceDetailsResp) GetJSON200() *GetNetworkInterfaceDetails
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r GetNetworkInterfaceDetailsResp) GetJSONDefault() *GetNetworkInterfaceDetailsDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetNetworkInterfaceDetailsResp) GetApplicationproblemJSONDefault() *GetNetworkInterfaceDetailsDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -1072,13 +1072,13 @@ func (r GetNetworkInterfaceDetailsResp) ContentType() string {
 type DeleteNetworkResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *DeleteNetworkDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *DeleteNetworkDefault
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r DeleteNetworkResp) GetJSONDefault() *DeleteNetworkDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r DeleteNetworkResp) GetApplicationproblemJSONDefault() *DeleteNetworkDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -1115,8 +1115,8 @@ type GetNetworkDetailsResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *GetNetworkDetails200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *GetNetworkDetailsDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *GetNetworkDetailsDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -1124,9 +1124,9 @@ func (r GetNetworkDetailsResp) GetJSON200() *GetNetworkDetails200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r GetNetworkDetailsResp) GetJSONDefault() *GetNetworkDetailsDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetNetworkDetailsResp) GetApplicationproblemJSONDefault() *GetNetworkDetailsDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -1163,8 +1163,8 @@ type ModifyNetworkResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ModifyNetwork200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ModifyNetworkDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ModifyNetworkDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -1172,9 +1172,9 @@ func (r ModifyNetworkResp) GetJSON200() *ModifyNetwork200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r ModifyNetworkResp) GetJSONDefault() *ModifyNetworkDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ModifyNetworkResp) GetApplicationproblemJSONDefault() *ModifyNetworkDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -1412,7 +1412,7 @@ func ParseListNetworksResp(rsp *http.Response) (*ListNetworksResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1445,7 +1445,7 @@ func ParseCreateNetworkResp(rsp *http.Response) (*CreateNetworkResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1478,7 +1478,7 @@ func ParseListNetworkInterfacesResp(rsp *http.Response) (*ListNetworkInterfacesR
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1511,7 +1511,7 @@ func ParseCreateNetworkInterfaceResp(rsp *http.Response) (*CreateNetworkInterfac
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1540,7 +1540,7 @@ func ParseDeleteNetworkInterfaceResp(rsp *http.Response) (*DeleteNetworkInterfac
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1573,7 +1573,7 @@ func ParseGetNetworkInterfaceDetailsResp(rsp *http.Response) (*GetNetworkInterfa
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1602,7 +1602,7 @@ func ParseDeleteNetworkResp(rsp *http.Response) (*DeleteNetworkResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1635,7 +1635,7 @@ func ParseGetNetworkDetailsResp(rsp *http.Response) (*GetNetworkDetailsResp, err
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1668,7 +1668,7 @@ func ParseModifyNetworkResp(rsp *http.Response) (*ModifyNetworkResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 

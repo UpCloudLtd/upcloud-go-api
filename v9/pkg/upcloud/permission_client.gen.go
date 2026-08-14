@@ -626,8 +626,8 @@ type ListPermissionsResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ListPermissions200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ListPermissionsDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ListPermissionsDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -635,9 +635,9 @@ func (r ListPermissionsResp) GetJSON200() *ListPermissions200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r ListPermissionsResp) GetJSONDefault() *ListPermissionsDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ListPermissionsResp) GetApplicationproblemJSONDefault() *ListPermissionsDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -674,8 +674,8 @@ type ReplacePermissionsResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ReplacePermissions200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ReplacePermissionsDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ReplacePermissionsDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -683,9 +683,9 @@ func (r ReplacePermissionsResp) GetJSON200() *ReplacePermissions200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r ReplacePermissionsResp) GetJSONDefault() *ReplacePermissionsDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ReplacePermissionsResp) GetApplicationproblemJSONDefault() *ReplacePermissionsDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -722,8 +722,8 @@ type GrantPermissionResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *GrantPermission200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *GrantPermissionDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *GrantPermissionDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -731,9 +731,9 @@ func (r GrantPermissionResp) GetJSON200() *GrantPermission200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r GrantPermissionResp) GetJSONDefault() *GrantPermissionDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GrantPermissionResp) GetApplicationproblemJSONDefault() *GrantPermissionDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -768,13 +768,13 @@ func (r GrantPermissionResp) ContentType() string {
 type RevokePermissionResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *RevokePermissionDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *RevokePermissionDefault
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r RevokePermissionResp) GetJSONDefault() *RevokePermissionDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r RevokePermissionResp) GetApplicationproblemJSONDefault() *RevokePermissionDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -809,13 +809,13 @@ func (r RevokePermissionResp) ContentType() string {
 type RevokeAllPermissionsByTargetResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *RevokeAllPermissionsByTargetDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *RevokeAllPermissionsByTargetDefault
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r RevokeAllPermissionsByTargetResp) GetJSONDefault() *RevokeAllPermissionsByTargetDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r RevokeAllPermissionsByTargetResp) GetApplicationproblemJSONDefault() *RevokeAllPermissionsByTargetDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -850,13 +850,13 @@ func (r RevokeAllPermissionsByTargetResp) ContentType() string {
 type RevokeAllPermissionsByUserResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *RevokeAllPermissionsByUserDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *RevokeAllPermissionsByUserDefault
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r RevokeAllPermissionsByUserResp) GetJSONDefault() *RevokeAllPermissionsByUserDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r RevokeAllPermissionsByUserResp) GetApplicationproblemJSONDefault() *RevokeAllPermissionsByUserDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -1049,7 +1049,7 @@ func ParseListPermissionsResp(rsp *http.Response) (*ListPermissionsResp, error) 
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1082,7 +1082,7 @@ func ParseReplacePermissionsResp(rsp *http.Response) (*ReplacePermissionsResp, e
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1115,7 +1115,7 @@ func ParseGrantPermissionResp(rsp *http.Response) (*GrantPermissionResp, error) 
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1144,7 +1144,7 @@ func ParseRevokePermissionResp(rsp *http.Response) (*RevokePermissionResp, error
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1173,7 +1173,7 @@ func ParseRevokeAllPermissionsByTargetResp(rsp *http.Response) (*RevokeAllPermis
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1202,7 +1202,7 @@ func ParseRevokeAllPermissionsByUserResp(rsp *http.Response) (*RevokeAllPermissi
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 

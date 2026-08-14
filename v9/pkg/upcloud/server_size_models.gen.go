@@ -18,19 +18,19 @@ type ServerSizeError struct {
 type ServerSizeLimits struct {
 	ServerSizeLimits struct {
 		// CoreNumberMax Maximum number of CPU cores
-		CoreNumberMax int `json:"core_number_max"`
+		CoreNumberMax int64 `json:"core_number_max"`
 
 		// CoreNumberMin Minimum number of CPU cores
-		CoreNumberMin int `json:"core_number_min"`
+		CoreNumberMin int64 `json:"core_number_min"`
 
 		// MemoryAmountMax Maximum amount of memory in MB
-		MemoryAmountMax int `json:"memory_amount_max"`
+		MemoryAmountMax int64 `json:"memory_amount_max"`
 
 		// MemoryAmountMin Minimum amount of memory in MB
-		MemoryAmountMin int `json:"memory_amount_min"`
+		MemoryAmountMin int64 `json:"memory_amount_min"`
 
 		// MemoryAmountStep Step size for memory allocation in MB
-		MemoryAmountStep int `json:"memory_amount_step"`
+		MemoryAmountStep int64 `json:"memory_amount_step"`
 	} `json:"server_size_limits"`
 }
 

@@ -51,37 +51,46 @@ func (e AccountCreateMsLmaSigningLinkResponseSigningStatusState) Valid() bool {
 	}
 }
 
-// Account defines model for account.
+// Account Response schema containing account details.
 type Account struct {
+	// Account Detailed account information and limits.
 	Account AccountDetails `json:"account"`
 }
 
-// AccountBoolean01 defines model for accountBoolean01.
-type AccountBoolean01 int
+// AccountBoolean01 Schema for boolean-like values encoded as 0 or 1.
+type AccountBoolean01 int64
 
-// AccountCreateMsLmaSigningLinkResponse defines model for accountCreateMsLmaSigningLinkResponse.
+// AccountCreateMsLmaSigningLinkResponse Response schema for Microsoft LMA signing link creation.
 type AccountCreateMsLmaSigningLinkResponse struct {
 	SigningStatus *struct {
-		Id          string                                                  `json:"id"`
-		Initiated   time.Time                                               `json:"initiated"`
+		Id string `json:"id"`
+
+		// Initiated Examples: 2026-07-29T11:00:00Z
+		Initiated time.Time `json:"initiated"`
+
+		// SignedAt Examples: 2026-07-29T11:05:00Z
 		SignedAt    time.Time                                               `json:"signed_at"`
 		SigningLink string                                                  `json:"signing_link"`
 		State       AccountCreateMsLmaSigningLinkResponseSigningStatusState `json:"state"`
 	} `json:"signing_status,omitempty"`
-	Type interface{} `json:"type,omitempty"`
 }
 
 // AccountCreateMsLmaSigningLinkResponseSigningStatusState defines model for AccountCreateMsLmaSigningLinkResponse.SigningStatus.State.
 type AccountCreateMsLmaSigningLinkResponseSigningStatusState string
 
-// AccountCredits defines model for accountCredits.
-type AccountCredits = float32
+// AccountCredits Current account credit balance.
+type AccountCredits = float64
 
-// AccountDetails defines model for accountDetails.
+// AccountDetails Detailed account information and limits.
 type AccountDetails struct {
-	Credits        *AccountCredits       `json:"credits,omitempty"`
+	// Credits Current account credit balance.
+	Credits *AccountCredits `json:"credits,omitempty"`
+
+	// ResourceLimits Per-resource quota limits for an account.
 	ResourceLimits AccountResourceLimits `json:"resource_limits"`
-	TrialMode      *AccountBoolean01     `json:"trial_mode,omitempty"`
+
+	// TrialMode Schema for boolean-like values encoded as 0 or 1.
+	TrialMode *AccountBoolean01 `json:"trial_mode,omitempty"`
 
 	// Username Username for an account.
 	Username             AccountUserName        `json:"username"`
@@ -99,104 +108,104 @@ type AccountError struct {
 	} `json:"error"`
 }
 
-// AccountResourceLimits defines model for accountResourceLimits.
+// AccountResourceLimits Per-resource quota limits for an account.
 type AccountResourceLimits struct {
 	AdditionalProperties interface{} `json:"additionalProperties,omitempty"`
 
 	// CloudServerDev1xcpu1gb10gbPlans The maximum number of cloud server dev 1xCPU 1GB 10GB plans allowed.
-	CloudServerDev1xcpu1gb10gbPlans *int `json:"cloud_server_dev_1xcpu_1gb_10gb_plans,omitempty"`
+	CloudServerDev1xcpu1gb10gbPlans *int64 `json:"cloud_server_dev_1xcpu_1gb_10gb_plans,omitempty"`
 
 	// CloudServerDev1xcpu1gbPlans The maximum number of cloud server dev 1xCPU 1GB 10GB plans allowed.
-	CloudServerDev1xcpu1gbPlans *int `json:"cloud_server_dev_1xcpu_1gb_plans,omitempty"`
+	CloudServerDev1xcpu1gbPlans *int64 `json:"cloud_server_dev_1xcpu_1gb_plans,omitempty"`
 
 	// Cores The maximum number of CPU cores allowed.
-	Cores *int `json:"cores,omitempty"`
+	Cores *int64 `json:"cores,omitempty"`
 
 	// DetachedFloatingIps The maximum number of detached floating IPs allowed.
-	DetachedFloatingIps *int `json:"detached_floating_ips,omitempty"`
+	DetachedFloatingIps *int64 `json:"detached_floating_ips,omitempty"`
 
 	// DetachedInterfaces The maximum number of detached network interfaces allowed.
-	DetachedInterfaces *int `json:"detached_interfaces,omitempty"`
+	DetachedInterfaces *int64 `json:"detached_interfaces,omitempty"`
 
 	// FileStorages The maximum number of file storage instances allowed.
-	FileStorages *int `json:"file_storages,omitempty"`
+	FileStorages *int64 `json:"file_storages,omitempty"`
 
 	// Gpus The maximum number of GPUs allowed.
-	Gpus *int `json:"gpus,omitempty"`
+	Gpus *int64 `json:"gpus,omitempty"`
 
 	// LoadBalancers The maximum number of load balancers allowed.
-	LoadBalancers *int `json:"load_balancers,omitempty"`
+	LoadBalancers *int64 `json:"load_balancers,omitempty"`
 
 	// LoadBalancersEssentials The maximum number of essential load balancers allowed.
-	LoadBalancersEssentials *int `json:"load_balancers_essentials,omitempty"`
+	LoadBalancersEssentials *int64 `json:"load_balancers_essentials,omitempty"`
 
 	// ManagedDatabases The maximum number of managed databases allowed.
-	ManagedDatabases *int `json:"managed_databases,omitempty"`
+	ManagedDatabases *int64 `json:"managed_databases,omitempty"`
 
 	// ManagedKubernetes The maximum number of managed Kubernetes clusters allowed.
-	ManagedKubernetes *int `json:"managed_kubernetes,omitempty"`
+	ManagedKubernetes *int64 `json:"managed_kubernetes,omitempty"`
 
 	// ManagedObjectStorages The maximum number of managed object storage instances allowed.
-	ManagedObjectStorages *int `json:"managed_object_storages,omitempty"`
+	ManagedObjectStorages *int64 `json:"managed_object_storages,omitempty"`
 
 	// Memory The maximum amount of memory (in MiB) allowed.
-	Memory *int `json:"memory,omitempty"`
+	Memory *int64 `json:"memory,omitempty"`
 
 	// NetworkGateways The maximum number of network gateways allowed.
-	NetworkGateways *int `json:"network_gateways,omitempty"`
+	NetworkGateways *int64 `json:"network_gateways,omitempty"`
 
 	// NetworkGatewaysEssentials The maximum number of essential network gateways allowed.
-	NetworkGatewaysEssentials *int `json:"network_gateways_essentials,omitempty"`
+	NetworkGatewaysEssentials *int64 `json:"network_gateways_essentials,omitempty"`
 
 	// NetworkPeerings The maximum number of network peerings allowed.
-	NetworkPeerings *int `json:"network_peerings,omitempty"`
+	NetworkPeerings *int64 `json:"network_peerings,omitempty"`
 
 	// Networks The maximum number of networks allowed.
-	Networks *int `json:"networks,omitempty"`
+	Networks *int64 `json:"networks,omitempty"`
 
 	// NtpExcessGib The maximum amount of excess NTP data (in GiB) allowed.
-	NtpExcessGib *int `json:"ntp_excess_gib,omitempty"`
+	NtpExcessGib *int64 `json:"ntp_excess_gib,omitempty"`
 
 	// PublicIpv4 The maximum number of public IPv4 addresses allowed.
-	PublicIpv4 *int `json:"public_ipv4,omitempty"`
+	PublicIpv4 *int64 `json:"public_ipv4,omitempty"`
 
 	// PublicIpv6 The maximum number of public IPv6 addresses allowed.
-	PublicIpv6 *int        `json:"public_ipv6,omitempty"`
+	PublicIpv6 *int64      `json:"public_ipv6,omitempty"`
 	Required   interface{} `json:"required,omitempty"`
 
 	// Routers The maximum number of routers allowed.
-	Routers *int `json:"routers,omitempty"`
+	Routers *int64 `json:"routers,omitempty"`
 
 	// StorageHdd The maximum amount of HDD storage (in GiB) allowed.
-	StorageHdd *int `json:"storage_hdd,omitempty"`
+	StorageHdd *int64 `json:"storage_hdd,omitempty"`
 
 	// StorageMaxiops The maximum amount of MaxiOPS storage (in GiB) allowed.
-	StorageMaxiops *int `json:"storage_maxiops,omitempty"`
+	StorageMaxiops *int64 `json:"storage_maxiops,omitempty"`
 
 	// StorageSsd The maximum amount of SSD storage (in GiB) allowed.
-	StorageSsd *int `json:"storage_ssd,omitempty"`
+	StorageSsd *int64 `json:"storage_ssd,omitempty"`
 
 	// StorageStandard The maximum amount of standard storage (in GiB) allowed.
-	StorageStandard *int `json:"storage_standard,omitempty"`
+	StorageStandard *int64 `json:"storage_standard,omitempty"`
 
 	// StorageTotal The maximum total amount of storage (in GiB) allowed.
-	StorageTotal *int `json:"storage_total,omitempty"`
+	StorageTotal *int64 `json:"storage_total,omitempty"`
 
 	// Tags The maximum number of tags allowed.
-	Tags *int        `json:"tags,omitempty"`
+	Tags *int64      `json:"tags,omitempty"`
 	Type interface{} `json:"type,omitempty"`
 }
 
 // AccountUserName Username for an account.
 type AccountUserName = string
 
-// AccountCreateMSLMASigningLink201 defines model for accountCreateMSLMASigningLink201.
+// AccountCreateMSLMASigningLink201 Response schema for Microsoft LMA signing link creation.
 type AccountCreateMSLMASigningLink201 = AccountCreateMsLmaSigningLinkResponse
 
 // AccountCreateMSLMASigningLinkDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type AccountCreateMSLMASigningLinkDefault = AccountError
 
-// AccountDetails200 defines model for accountDetails200.
+// AccountDetails200 Response schema containing account details.
 type AccountDetails200 = Account
 
 // AccountDetailsDefault A general error response indicating that the request could not be fulfilled due to a technical issue.

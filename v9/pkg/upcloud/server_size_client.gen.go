@@ -146,8 +146,8 @@ type ListServerSizesResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ListServerSizes200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ListServerSizesDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ListServerSizesDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -155,9 +155,9 @@ func (r ListServerSizesResp) GetJSON200() *ListServerSizes200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r ListServerSizesResp) GetJSONDefault() *ListServerSizesDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ListServerSizesResp) GetApplicationproblemJSONDefault() *ListServerSizesDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -194,8 +194,8 @@ type GetServerSizeLimitsResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *GetServerSizeLimits200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *GetServerSizeLimitsDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *GetServerSizeLimitsDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -203,9 +203,9 @@ func (r GetServerSizeLimitsResp) GetJSON200() *GetServerSizeLimits200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r GetServerSizeLimitsResp) GetJSONDefault() *GetServerSizeLimitsDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetServerSizeLimitsResp) GetApplicationproblemJSONDefault() *GetServerSizeLimitsDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -293,7 +293,7 @@ func ParseListServerSizesResp(rsp *http.Response) (*ListServerSizesResp, error) 
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -326,7 +326,7 @@ func ParseGetServerSizeLimitsResp(rsp *http.Response) (*GetServerSizeLimitsResp,
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 

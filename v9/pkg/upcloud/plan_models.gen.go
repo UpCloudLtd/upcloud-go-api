@@ -51,7 +51,7 @@ func (e PlanFamily) Valid() bool {
 	}
 }
 
-// Plan defines model for plan.
+// Plan List response containing available server plans.
 type Plan struct {
 	Plans struct {
 		Plan []struct {
@@ -100,7 +100,7 @@ type Plan struct {
 type PlanBooleanYesno string
 
 // PlanCoreNumber The number of CPU cores included in the plan, represented as a positive integer. This value must be greater than zero.
-type PlanCoreNumber = int
+type PlanCoreNumber = int64
 
 // PlanError A general error response indicating that the request could not be fulfilled due to a technical issue.
 type PlanError struct {
@@ -119,7 +119,7 @@ type PlanError struct {
 type PlanFamily string
 
 // PlanGpuAmount The number of GPUs included in the plan.
-type PlanGpuAmount = int
+type PlanGpuAmount = int64
 
 // PlanGpuModel The GPU model included in the plan.
 //
@@ -127,7 +127,7 @@ type PlanGpuAmount = int
 type PlanGpuModel = string
 
 // PlanMemoryAmount The amount of memory included in the plan, measured in mebibytes (MiB).
-type PlanMemoryAmount = int
+type PlanMemoryAmount = int64
 
 // PlanName Server plan identifier
 //
@@ -135,17 +135,17 @@ type PlanMemoryAmount = int
 type PlanName = string
 
 // PlanPublicTrafficOut The amount of public traffic out included in the plan, measured in gigabytes (GB).
-type PlanPublicTrafficOut = int
+type PlanPublicTrafficOut = int64
 
 // PlanStorageSize The storage size for the plan in gibibytes (GiB). Is 0 if the plan does not include storage.
-type PlanStorageSize = int
+type PlanStorageSize = int64
 
 // PlanStorageTier The storage tier for the plan. Is null if the plan does not include storage.
 //
 // Examples: standard, maxiops, null
 type PlanStorageTier = string
 
-// ListPlans200 defines model for listPlans200.
+// ListPlans200 List response containing available server plans.
 type ListPlans200 = Plan
 
 // ListPlansDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
