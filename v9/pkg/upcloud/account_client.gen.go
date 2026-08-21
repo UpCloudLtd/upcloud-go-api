@@ -134,8 +134,8 @@ type AccountDetailsResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *AccountDetails200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *AccountDetailsDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *AccountDetailsDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -143,9 +143,9 @@ func (r AccountDetailsResp) GetJSON200() *AccountDetails200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r AccountDetailsResp) GetJSONDefault() *AccountDetailsDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r AccountDetailsResp) GetApplicationproblemJSONDefault() *AccountDetailsDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -182,8 +182,8 @@ type CreateMSLMASigningLinkResp struct {
 	HTTPResponse *http.Response
 	// JSON201 the response for an HTTP 201 `application/json` response
 	JSON201 *AccountCreateMSLMASigningLink201
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *AccountCreateMSLMASigningLinkDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *AccountCreateMSLMASigningLinkDefault
 }
 
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
@@ -191,9 +191,9 @@ func (r CreateMSLMASigningLinkResp) GetJSON201() *AccountCreateMSLMASigningLink2
 	return r.JSON201
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r CreateMSLMASigningLinkResp) GetJSONDefault() *AccountCreateMSLMASigningLinkDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r CreateMSLMASigningLinkResp) GetApplicationproblemJSONDefault() *AccountCreateMSLMASigningLinkDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -277,7 +277,7 @@ func ParseAccountDetailsResp(rsp *http.Response) (*AccountDetailsResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -310,7 +310,7 @@ func ParseCreateMSLMASigningLinkResp(rsp *http.Response) (*CreateMSLMASigningLin
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 

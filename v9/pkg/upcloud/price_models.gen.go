@@ -51,8 +51,7 @@ type Prices struct {
 	Prices struct {
 		// Currency ISO 4217 code
 		Currency PriceCurrency `json:"currency"`
-		Type     interface{}   `json:"type,omitempty"`
-		Zone     interface{}   `json:"zone"`
+		Zone     []ZonePrices  `json:"zone"`
 	} `json:"prices"`
 }
 

@@ -96,20 +96,22 @@ type IpAddress0 = string
 // IpAddress1 IPv6 address
 type IpAddress1 = string
 
-// IpAddressAccountId defines model for ipAddressAccountId.
-type IpAddressAccountId = int
+// IpAddressAccountId Unique numeric identifier of an account.
+type IpAddressAccountId = int64
 
 // IpAddressBooleanYesno Boolean value represented as yes/no
 type IpAddressBooleanYesno string
 
 // IpAddressDelegatedToAccountId Attached to a resource that is delegated to another account. Null means not delegated.
-type IpAddressDelegatedToAccountId = int
+type IpAddressDelegatedToAccountId = int64
 
 // IpAddressDetails Details of an IP address
 type IpAddressDetails struct {
 	// Access Network access type
-	Access    IpAddressNetworkType `json:"access"`
-	AccountId *IpAddressAccountId  `json:"account_id,omitempty"`
+	Access IpAddressNetworkType `json:"access"`
+
+	// AccountId Unique numeric identifier of an account.
+	AccountId *IpAddressAccountId `json:"account_id,omitempty"`
 
 	// Address IP address
 	Address IpAddress `json:"address"`

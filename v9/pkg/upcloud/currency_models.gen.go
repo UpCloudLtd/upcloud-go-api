@@ -10,14 +10,20 @@ import (
 // CurrencyCode ISO 4217 code
 type CurrencyCode = string
 
-// CurrencyCurrencies defines model for currencyCurrencies.
+// CurrencyCurrencies Response schema for listing supported currencies and exchange rates.
 type CurrencyCurrencies struct {
+	// Currencies Wrapped collection of currency rate entries.
 	Currencies struct {
+		// Currency List of supported currency rate entries.
 		Currency []struct {
 			// Code ISO 4217 code
-			Code    CurrencyCode `json:"code"`
-			Rate    float64      `json:"rate"`
-			Updated time.Time    `json:"updated"`
+			Code CurrencyCode `json:"code"`
+
+			// Rate Examples: 0.01
+			Rate float64 `json:"rate"`
+
+			// Updated Examples: 2017-12-15T06:44:47Z
+			Updated time.Time `json:"updated"`
 		} `json:"currency"`
 	} `json:"currencies"`
 }
@@ -33,7 +39,7 @@ type CurrencyError struct {
 	} `json:"error"`
 }
 
-// CurrencyListCurrencies200 defines model for currencyListCurrencies200.
+// CurrencyListCurrencies200 Response schema for listing supported currencies and exchange rates.
 type CurrencyListCurrencies200 = CurrencyCurrencies
 
 // CurrencyListCurrenciesDefault A general error response indicating that the request could not be fulfilled due to a technical issue.

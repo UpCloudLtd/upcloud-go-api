@@ -350,9 +350,14 @@ type AttachStorage struct {
 // CloneStorageRequest TODO
 type CloneStorageRequest struct {
 	Storage struct {
+		// Components Storage component filter or selector.
 		Components *StorageComponents `json:"components,omitempty"`
-		Tier       StorageTier        `json:"tier"`
-		Title      StorageTitle       `json:"title"`
+
+		// Tier Storage tier identifier.
+		Tier StorageTier `json:"tier"`
+
+		// Title Human-readable title for a resource.
+		Title StorageTitle `json:"title"`
 
 		// Zone Zone identifier
 		//
@@ -361,7 +366,7 @@ type CloneStorageRequest struct {
 	} `json:"storage"`
 }
 
-// CreateStorageBackupRequest defines model for createStorageBackupRequest.
+// CreateStorageBackupRequest Backup rule configuration for storage backups.
 type CreateStorageBackupRequest struct {
 	Interval  string `json:"interval"`
 	Retention string `json:"retention"`
@@ -378,7 +383,7 @@ type CreateStorageRequest struct {
 		} `json:"backup_rule,omitempty"`
 		Components   *string `json:"components,omitempty"`
 		ForceBackend *string `json:"force_backend,omitempty"`
-		Size         *int    `json:"size,omitempty"`
+		Size         *int64  `json:"size,omitempty"`
 		SizeFactor   *string `json:"size_factor,omitempty"`
 		Tier         *string `json:"tier,omitempty"`
 		Title        *string `json:"title,omitempty"`
@@ -395,6 +400,7 @@ type CreateStorageRequest struct {
 
 // CreateStorageResponse Created storage
 type CreateStorageResponse struct {
+	// Storage Detailed information about a storage resource.
 	Storage StorageDetails `json:"storage"`
 }
 
@@ -405,17 +411,37 @@ type CreateStorageTemplateRequest struct {
 	} `json:"storage"`
 }
 
-// ModifyStorageBody TODO
-type ModifyStorageBody = interface{}
+// ModifyStorageBody Request schema for modifying storage properties.
+type ModifyStorageBody struct {
+	Storage struct {
+		// BackupRule Backup rule configuration for storage backups.
+		BackupRule         *CreateStorageBackupRequest `json:"backup_rule,omitempty"`
+		FilesystemResize   *string                     `json:"filesystem_resize,omitempty"`
+		FlushNormalLabels  *string                     `json:"flush_normal_labels,omitempty"`
+		OsType             *string                     `json:"os_type,omitempty"`
+		PartitionTableType *string                     `json:"partition_table_type,omitempty"`
+		Size               *int64                      `json:"size,omitempty"`
+		SizeFactor         *int64                      `json:"size_factor,omitempty"`
+		TemplateType       *string                     `json:"template_type,omitempty"`
+		Title              *string                     `json:"title,omitempty"`
+	} `json:"storage"`
+}
 
-// ModifyStorageResponse TODO
-type ModifyStorageResponse = interface{}
+// ModifyStorageResponse Response schema for storage modification operations.
+type ModifyStorageResponse struct {
+	// Storage Detailed information about a storage resource.
+	Storage StorageDetails `json:"storage"`
+}
 
-// ResizeStorageResponse Response schema for resizing a storage volume TODO
-type ResizeStorageResponse = interface{}
+// ResizeStorageResponse Response schema for resizing a storage volume.
+type ResizeStorageResponse struct {
+	// Storage Detailed information about a storage resource.
+	Storage StorageDetails `json:"storage"`
+}
 
-// Storage defines model for storage.
+// Storage Response schema containing a single storage resource.
 type Storage struct {
+	// Storage Detailed information about a storage resource.
 	Storage StorageDetails `json:"storage"`
 }
 
@@ -430,7 +456,7 @@ type StorageAccessFilter string
 // Examples: yes, no
 type StorageAllowHidden string
 
-// StorageComponents defines model for storageComponents.
+// StorageComponents Storage component filter or selector.
 type StorageComponents = string
 
 // StorageCreateCdromRequest Schema for creating a new CD-ROM image
@@ -459,12 +485,14 @@ type StorageCreateCdromRequest struct {
 	} `json:"create_cdrom"`
 }
 
-// StorageDetails defines model for storageDetails.
+// StorageDetails Detailed information about a storage resource.
 type StorageDetails struct {
 	// Access Network access level
 	Access StorageAccess `json:"access"`
 
-	// Encrypted Examples: yes, no
+	// Encrypted Indicates whether the resource is encrypted.
+	//
+	// Examples: yes, no
 	Encrypted StorageEncrypted `json:"encrypted"`
 	Labels    *[]StorageLabel  `json:"labels,omitempty"`
 	License   float64          `json:"license"`
@@ -472,10 +500,14 @@ type StorageDetails struct {
 	// Metadata Only available with "metadata" in Options
 	Metadata   *map[string]string        `json:"metadata,omitempty"`
 	PartOfPlan *StorageDetailsPartOfPlan `json:"part_of_plan,omitempty"`
-	Size       int                       `json:"size"`
-	State      StorageState              `json:"state"`
-	Tier       *StorageTier              `json:"tier,omitempty"`
-	Title      string                    `json:"title"`
+	Size       int64                     `json:"size"`
+
+	// State Current lifecycle state of the storage resource.
+	State StorageState `json:"state"`
+
+	// Tier Storage tier identifier.
+	Tier  *StorageTier `json:"tier,omitempty"`
+	Title string       `json:"title"`
 
 	// Type Storage type filter
 	Type StorageType `json:"type"`
@@ -493,7 +525,9 @@ type StorageDetails struct {
 // StorageDetailsPartOfPlan defines model for StorageDetails.PartOfPlan.
 type StorageDetailsPartOfPlan string
 
-// StorageEncrypted Examples: yes, no
+// StorageEncrypted Indicates whether the resource is encrypted.
+//
+// Examples: yes, no
 type StorageEncrypted string
 
 // StorageError A general error response indicating that the request could not be fulfilled due to a technical issue.
@@ -541,6 +575,11 @@ type StorageOffset = int
 // StorageOrderBy Sort order for storage results
 type StorageOrderBy string
 
+// StorageSearch Search storages by title or UUID (partial match)
+//
+// Examples: my-storage
+type StorageSearch = string
+
 // StorageServers Whether to include server information in the response
 //
 // Examples: yes, no
@@ -549,13 +588,13 @@ type StorageServers string
 // StorageSortBy Field to sort storage results by
 type StorageSortBy string
 
-// StorageState defines model for storageState.
+// StorageState Current lifecycle state of the storage resource.
 type StorageState string
 
-// StorageTier defines model for storageTier.
+// StorageTier Storage tier identifier.
 type StorageTier = string
 
-// StorageTitle defines model for storageTitle.
+// StorageTitle Human-readable title for a resource.
 type StorageTitle = string
 
 // StorageType Storage type filter
@@ -576,7 +615,7 @@ type StorageUuid = openapi_types.UUID
 // Examples: fi-hel1, de-fra1, us-nyc1
 type StorageZone = string
 
-// Storages defines model for storages.
+// Storages Response schema containing a list of storage resources.
 type Storages struct {
 	Storages struct {
 		Storage []StorageDetails `json:"storage"`
@@ -613,13 +652,246 @@ type DetachStorageFromServerUuid = StorageUuid
 // GetStorageInfoUuid Universally unique identifier
 type GetStorageInfoUuid = StorageUuid
 
-// GetStorageListAccess Storage access level filter
-type GetStorageListAccess = StorageAccessFilter
-
 // GetStorageListAllowHidden Whether to include hidden storages in the response
 //
 // Examples: yes, no
 type GetStorageListAllowHidden = StorageAllowHidden
+
+// GetStorageListByBackupAllowHidden Whether to include hidden storages in the response
+//
+// Examples: yes, no
+type GetStorageListByBackupAllowHidden = StorageAllowHidden
+
+// GetStorageListByBackupFavorite Filter storages by favorite status
+//
+// Examples: yes, no
+type GetStorageListByBackupFavorite = StorageFavorite
+
+// GetStorageListByBackupLabel Label filter in format key=value or !key=value for negation
+//
+// Examples: environment=production, !temporary=true
+type GetStorageListByBackupLabel = StorageLabelFilter
+
+// GetStorageListByBackupLimit Maximum number of items to return. Default is 25.
+//
+// Examples: 25, 50, 100
+type GetStorageListByBackupLimit = StorageLimit
+
+// GetStorageListByBackupMetadata Whether to include metadata in the response
+//
+// Examples: yes, no
+type GetStorageListByBackupMetadata = StorageMetadata
+
+// GetStorageListByBackupOffset Number of items to skip before starting to return results. Default is 0.
+//
+// Examples: 0, 25, 50, 100
+type GetStorageListByBackupOffset = StorageOffset
+
+// GetStorageListByBackupOrderBy Sort order for storage results
+type GetStorageListByBackupOrderBy = StorageOrderBy
+
+// GetStorageListByBackupSearch Search storages by title or UUID (partial match)
+//
+// Examples: my-storage
+type GetStorageListByBackupSearch = StorageSearch
+
+// GetStorageListByBackupServers Whether to include server information in the response
+//
+// Examples: yes, no
+type GetStorageListByBackupServers = StorageServers
+
+// GetStorageListByBackupSortBy Field to sort storage results by
+type GetStorageListByBackupSortBy = StorageSortBy
+
+// GetStorageListByCdromAllowHidden Whether to include hidden storages in the response
+//
+// Examples: yes, no
+type GetStorageListByCdromAllowHidden = StorageAllowHidden
+
+// GetStorageListByCdromFavorite Filter storages by favorite status
+//
+// Examples: yes, no
+type GetStorageListByCdromFavorite = StorageFavorite
+
+// GetStorageListByCdromLabel Label filter in format key=value or !key=value for negation
+//
+// Examples: environment=production, !temporary=true
+type GetStorageListByCdromLabel = StorageLabelFilter
+
+// GetStorageListByCdromLimit Maximum number of items to return. Default is 25.
+//
+// Examples: 25, 50, 100
+type GetStorageListByCdromLimit = StorageLimit
+
+// GetStorageListByCdromMetadata Whether to include metadata in the response
+//
+// Examples: yes, no
+type GetStorageListByCdromMetadata = StorageMetadata
+
+// GetStorageListByCdromOffset Number of items to skip before starting to return results. Default is 0.
+//
+// Examples: 0, 25, 50, 100
+type GetStorageListByCdromOffset = StorageOffset
+
+// GetStorageListByCdromOrderBy Sort order for storage results
+type GetStorageListByCdromOrderBy = StorageOrderBy
+
+// GetStorageListByCdromSearch Search storages by title or UUID (partial match)
+//
+// Examples: my-storage
+type GetStorageListByCdromSearch = StorageSearch
+
+// GetStorageListByCdromServers Whether to include server information in the response
+//
+// Examples: yes, no
+type GetStorageListByCdromServers = StorageServers
+
+// GetStorageListByCdromSortBy Field to sort storage results by
+type GetStorageListByCdromSortBy = StorageSortBy
+
+// GetStorageListByNormalAllowHidden Whether to include hidden storages in the response
+//
+// Examples: yes, no
+type GetStorageListByNormalAllowHidden = StorageAllowHidden
+
+// GetStorageListByNormalFavorite Filter storages by favorite status
+//
+// Examples: yes, no
+type GetStorageListByNormalFavorite = StorageFavorite
+
+// GetStorageListByNormalLabel Label filter in format key=value or !key=value for negation
+//
+// Examples: environment=production, !temporary=true
+type GetStorageListByNormalLabel = StorageLabelFilter
+
+// GetStorageListByNormalLimit Maximum number of items to return. Default is 25.
+//
+// Examples: 25, 50, 100
+type GetStorageListByNormalLimit = StorageLimit
+
+// GetStorageListByNormalMetadata Whether to include metadata in the response
+//
+// Examples: yes, no
+type GetStorageListByNormalMetadata = StorageMetadata
+
+// GetStorageListByNormalOffset Number of items to skip before starting to return results. Default is 0.
+//
+// Examples: 0, 25, 50, 100
+type GetStorageListByNormalOffset = StorageOffset
+
+// GetStorageListByNormalOrderBy Sort order for storage results
+type GetStorageListByNormalOrderBy = StorageOrderBy
+
+// GetStorageListByNormalSearch Search storages by title or UUID (partial match)
+//
+// Examples: my-storage
+type GetStorageListByNormalSearch = StorageSearch
+
+// GetStorageListByNormalServers Whether to include server information in the response
+//
+// Examples: yes, no
+type GetStorageListByNormalServers = StorageServers
+
+// GetStorageListByNormalSortBy Field to sort storage results by
+type GetStorageListByNormalSortBy = StorageSortBy
+
+// GetStorageListByTemplateAllowHidden Whether to include hidden storages in the response
+//
+// Examples: yes, no
+type GetStorageListByTemplateAllowHidden = StorageAllowHidden
+
+// GetStorageListByTemplateFavorite Filter storages by favorite status
+//
+// Examples: yes, no
+type GetStorageListByTemplateFavorite = StorageFavorite
+
+// GetStorageListByTemplateLabel Label filter in format key=value or !key=value for negation
+//
+// Examples: environment=production, !temporary=true
+type GetStorageListByTemplateLabel = StorageLabelFilter
+
+// GetStorageListByTemplateLimit Maximum number of items to return. Default is 25.
+//
+// Examples: 25, 50, 100
+type GetStorageListByTemplateLimit = StorageLimit
+
+// GetStorageListByTemplateMetadata Whether to include metadata in the response
+//
+// Examples: yes, no
+type GetStorageListByTemplateMetadata = StorageMetadata
+
+// GetStorageListByTemplateOffset Number of items to skip before starting to return results. Default is 0.
+//
+// Examples: 0, 25, 50, 100
+type GetStorageListByTemplateOffset = StorageOffset
+
+// GetStorageListByTemplateOrderBy Sort order for storage results
+type GetStorageListByTemplateOrderBy = StorageOrderBy
+
+// GetStorageListByTemplateSearch Search storages by title or UUID (partial match)
+//
+// Examples: my-storage
+type GetStorageListByTemplateSearch = StorageSearch
+
+// GetStorageListByTemplateServers Whether to include server information in the response
+//
+// Examples: yes, no
+type GetStorageListByTemplateServers = StorageServers
+
+// GetStorageListByTemplateSortBy Field to sort storage results by
+type GetStorageListByTemplateSortBy = StorageSortBy
+
+// GetStorageListByTypeAndAccessAccess Storage access level filter
+type GetStorageListByTypeAndAccessAccess = StorageAccessFilter
+
+// GetStorageListByTypeAndAccessAllowHidden Whether to include hidden storages in the response
+//
+// Examples: yes, no
+type GetStorageListByTypeAndAccessAllowHidden = StorageAllowHidden
+
+// GetStorageListByTypeAndAccessFavorite Filter storages by favorite status
+//
+// Examples: yes, no
+type GetStorageListByTypeAndAccessFavorite = StorageFavorite
+
+// GetStorageListByTypeAndAccessLabel Label filter in format key=value or !key=value for negation
+//
+// Examples: environment=production, !temporary=true
+type GetStorageListByTypeAndAccessLabel = StorageLabelFilter
+
+// GetStorageListByTypeAndAccessLimit Maximum number of items to return. Default is 25.
+//
+// Examples: 25, 50, 100
+type GetStorageListByTypeAndAccessLimit = StorageLimit
+
+// GetStorageListByTypeAndAccessMetadata Whether to include metadata in the response
+//
+// Examples: yes, no
+type GetStorageListByTypeAndAccessMetadata = StorageMetadata
+
+// GetStorageListByTypeAndAccessOffset Number of items to skip before starting to return results. Default is 0.
+//
+// Examples: 0, 25, 50, 100
+type GetStorageListByTypeAndAccessOffset = StorageOffset
+
+// GetStorageListByTypeAndAccessOrderBy Sort order for storage results
+type GetStorageListByTypeAndAccessOrderBy = StorageOrderBy
+
+// GetStorageListByTypeAndAccessSearch Search storages by title or UUID (partial match)
+//
+// Examples: my-storage
+type GetStorageListByTypeAndAccessSearch = StorageSearch
+
+// GetStorageListByTypeAndAccessServers Whether to include server information in the response
+//
+// Examples: yes, no
+type GetStorageListByTypeAndAccessServers = StorageServers
+
+// GetStorageListByTypeAndAccessSortBy Field to sort storage results by
+type GetStorageListByTypeAndAccessSortBy = StorageSortBy
+
+// GetStorageListByTypeAndAccessType Storage type filter
+type GetStorageListByTypeAndAccessType = StorageType
 
 // GetStorageListFavorite Filter storages by favorite status
 //
@@ -649,6 +921,11 @@ type GetStorageListOffset = StorageOffset
 // GetStorageListOrderBy Sort order for storage results
 type GetStorageListOrderBy = StorageOrderBy
 
+// GetStorageListSearch Search storages by title or UUID (partial match)
+//
+// Examples: my-storage
+type GetStorageListSearch = StorageSearch
+
 // GetStorageListServers Whether to include server information in the response
 //
 // Examples: yes, no
@@ -656,9 +933,6 @@ type GetStorageListServers = StorageServers
 
 // GetStorageListSortBy Field to sort storage results by
 type GetStorageListSortBy = StorageSortBy
-
-// GetStorageListType Storage type filter
-type GetStorageListType = StorageType
 
 // ModifyStorageUuid Universally unique identifier
 type ModifyStorageUuid = StorageUuid
@@ -720,28 +994,73 @@ type DeleteStorageDefault = StorageError
 // DetachStorageFromServerDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type DetachStorageFromServerDefault = StorageError
 
-// GetFavoriteStorageList200 defines model for getFavoriteStorageList200.
+// GetFavoriteStorageList200 Response schema containing a list of storage resources.
 type GetFavoriteStorageList200 = Storages
 
 // GetFavoriteStorageListDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type GetFavoriteStorageListDefault = StorageError
 
-// GetStorageInfo200 defines model for getStorageInfo200.
+// GetStorageInfo200 Response schema containing a single storage resource.
 type GetStorageInfo200 = Storage
 
 // GetStorageInfoDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type GetStorageInfoDefault = StorageError
 
-// GetStorageList200 defines model for getStorageList200.
+// GetStorageList200 Response schema containing a list of storage resources.
 type GetStorageList200 = Storages
 
 // GetStorageList400 A general error response indicating that the request could not be fulfilled due to a technical issue.
 type GetStorageList400 = StorageError
 
+// GetStorageListByBackup200 Response schema containing a list of storage resources.
+type GetStorageListByBackup200 = Storages
+
+// GetStorageListByBackup400 A general error response indicating that the request could not be fulfilled due to a technical issue.
+type GetStorageListByBackup400 = StorageError
+
+// GetStorageListByBackupDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type GetStorageListByBackupDefault = StorageError
+
+// GetStorageListByCdrom200 Response schema containing a list of storage resources.
+type GetStorageListByCdrom200 = Storages
+
+// GetStorageListByCdrom400 A general error response indicating that the request could not be fulfilled due to a technical issue.
+type GetStorageListByCdrom400 = StorageError
+
+// GetStorageListByCdromDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type GetStorageListByCdromDefault = StorageError
+
+// GetStorageListByNormal200 Response schema containing a list of storage resources.
+type GetStorageListByNormal200 = Storages
+
+// GetStorageListByNormal400 A general error response indicating that the request could not be fulfilled due to a technical issue.
+type GetStorageListByNormal400 = StorageError
+
+// GetStorageListByNormalDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type GetStorageListByNormalDefault = StorageError
+
+// GetStorageListByTemplate200 Response schema containing a list of storage resources.
+type GetStorageListByTemplate200 = Storages
+
+// GetStorageListByTemplate400 A general error response indicating that the request could not be fulfilled due to a technical issue.
+type GetStorageListByTemplate400 = StorageError
+
+// GetStorageListByTemplateDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type GetStorageListByTemplateDefault = StorageError
+
+// GetStorageListByTypeAndAccess200 Response schema containing a list of storage resources.
+type GetStorageListByTypeAndAccess200 = Storages
+
+// GetStorageListByTypeAndAccess400 A general error response indicating that the request could not be fulfilled due to a technical issue.
+type GetStorageListByTypeAndAccess400 = StorageError
+
+// GetStorageListByTypeAndAccessDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type GetStorageListByTypeAndAccessDefault = StorageError
+
 // GetStorageListDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type GetStorageListDefault = StorageError
 
-// ModifyStorage200 TODO
+// ModifyStorage200 Response schema for storage modification operations.
 type ModifyStorage200 = ModifyStorageResponse
 
 // ModifyStorageDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
@@ -750,7 +1069,7 @@ type ModifyStorageDefault = StorageError
 // RemoveStorageFromFavoritesDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type RemoveStorageFromFavoritesDefault = StorageError
 
-// ResizeStorage200 Response schema for resizing a storage volume TODO
+// ResizeStorage200 Response schema for resizing a storage volume.
 type ResizeStorage200 = ResizeStorageResponse
 
 // ResizeStorageDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
@@ -786,10 +1105,10 @@ type CreateStorage = CreateStorageRequest
 // CreateTemplateFromStorage Request schema for creating a storage template
 type CreateTemplateFromStorage = CreateStorageTemplateRequest
 
-// ModifyStorage TODO
+// ModifyStorage Request schema for modifying storage properties.
 type ModifyStorage = ModifyStorageBody
 
-// StorageCreateOnDemandBackup defines model for storageCreateOnDemandBackup.
+// StorageCreateOnDemandBackup Backup rule configuration for storage backups.
 type StorageCreateOnDemandBackup = CreateStorageBackupRequest
 
 // StorageUpdatePublicTemplateFromSource Request schema for updating a storage template
@@ -797,14 +1116,11 @@ type StorageUpdatePublicTemplateFromSource = StorageUpdateTemplateRequest
 
 // GetStorageListParams defines parameters for GetStorageList.
 type GetStorageListParams struct {
-	// Type Filter by storage type
-	Type *GetStorageListType `form:"type,omitempty" json:"type,omitempty"`
-
-	// Access Filter by access level (public or private)
-	Access *GetStorageListAccess `form:"access,omitempty" json:"access,omitempty"`
-
 	// Label Filter by labels. Can be specified multiple times.
 	Label *GetStorageListLabel `form:"label,omitempty" json:"label,omitempty"`
+
+	// Search Search storages by title or UUID (partial match)
+	Search *GetStorageListSearch `form:"search,omitempty" json:"search,omitempty"`
 
 	// SortBy Sort results by the specified field
 	SortBy *GetStorageListSortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
@@ -829,6 +1145,171 @@ type GetStorageListParams struct {
 
 	// Servers Whether to include server information in the response
 	Servers *GetStorageListServers `form:"servers,omitempty" json:"servers,omitempty"`
+}
+
+// GetStorageListByBackupParams defines parameters for GetStorageListByBackup.
+type GetStorageListByBackupParams struct {
+	// Label Filter by labels. Can be specified multiple times.
+	Label *GetStorageListByBackupLabel `form:"label,omitempty" json:"label,omitempty"`
+
+	// Search Search storages by title or UUID (partial match)
+	Search *GetStorageListByBackupSearch `form:"search,omitempty" json:"search,omitempty"`
+
+	// SortBy Sort results by the specified field
+	SortBy *GetStorageListByBackupSortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
+
+	// OrderBy Sort order (ascending or descending). Only valid when sort_by is also specified.
+	OrderBy *GetStorageListByBackupOrderBy `form:"order_by,omitempty" json:"order_by,omitempty"`
+
+	// Limit Maximum number of storages to return per page
+	Limit *GetStorageListByBackupLimit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Offset Number of storages to skip before starting to return results
+	Offset *GetStorageListByBackupOffset `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// AllowHidden Include hidden storages in the response
+	AllowHidden *GetStorageListByBackupAllowHidden `form:"allow_hidden,omitempty" json:"allow_hidden,omitempty"`
+
+	// Favorite Filter storages by favorite status
+	Favorite *GetStorageListByBackupFavorite `form:"favorite,omitempty" json:"favorite,omitempty"`
+
+	// Metadata Whether to include metadata in the response
+	Metadata *GetStorageListByBackupMetadata `form:"metadata,omitempty" json:"metadata,omitempty"`
+
+	// Servers Whether to include server information in the response
+	Servers *GetStorageListByBackupServers `form:"servers,omitempty" json:"servers,omitempty"`
+}
+
+// GetStorageListByCdromParams defines parameters for GetStorageListByCdrom.
+type GetStorageListByCdromParams struct {
+	// Label Filter by labels. Can be specified multiple times.
+	Label *GetStorageListByCdromLabel `form:"label,omitempty" json:"label,omitempty"`
+
+	// Search Search storages by title or UUID (partial match)
+	Search *GetStorageListByCdromSearch `form:"search,omitempty" json:"search,omitempty"`
+
+	// SortBy Sort results by the specified field
+	SortBy *GetStorageListByCdromSortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
+
+	// OrderBy Sort order (ascending or descending). Only valid when sort_by is also specified.
+	OrderBy *GetStorageListByCdromOrderBy `form:"order_by,omitempty" json:"order_by,omitempty"`
+
+	// Limit Maximum number of storages to return per page
+	Limit *GetStorageListByCdromLimit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Offset Number of storages to skip before starting to return results
+	Offset *GetStorageListByCdromOffset `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// AllowHidden Include hidden storages in the response
+	AllowHidden *GetStorageListByCdromAllowHidden `form:"allow_hidden,omitempty" json:"allow_hidden,omitempty"`
+
+	// Favorite Filter storages by favorite status
+	Favorite *GetStorageListByCdromFavorite `form:"favorite,omitempty" json:"favorite,omitempty"`
+
+	// Metadata Whether to include metadata in the response
+	Metadata *GetStorageListByCdromMetadata `form:"metadata,omitempty" json:"metadata,omitempty"`
+
+	// Servers Whether to include server information in the response
+	Servers *GetStorageListByCdromServers `form:"servers,omitempty" json:"servers,omitempty"`
+}
+
+// GetStorageListByNormalParams defines parameters for GetStorageListByNormal.
+type GetStorageListByNormalParams struct {
+	// Label Filter by labels. Can be specified multiple times.
+	Label *GetStorageListByNormalLabel `form:"label,omitempty" json:"label,omitempty"`
+
+	// Search Search storages by title or UUID (partial match)
+	Search *GetStorageListByNormalSearch `form:"search,omitempty" json:"search,omitempty"`
+
+	// SortBy Sort results by the specified field
+	SortBy *GetStorageListByNormalSortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
+
+	// OrderBy Sort order (ascending or descending). Only valid when sort_by is also specified.
+	OrderBy *GetStorageListByNormalOrderBy `form:"order_by,omitempty" json:"order_by,omitempty"`
+
+	// Limit Maximum number of storages to return per page
+	Limit *GetStorageListByNormalLimit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Offset Number of storages to skip before starting to return results
+	Offset *GetStorageListByNormalOffset `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// AllowHidden Include hidden storages in the response
+	AllowHidden *GetStorageListByNormalAllowHidden `form:"allow_hidden,omitempty" json:"allow_hidden,omitempty"`
+
+	// Favorite Filter storages by favorite status
+	Favorite *GetStorageListByNormalFavorite `form:"favorite,omitempty" json:"favorite,omitempty"`
+
+	// Metadata Whether to include metadata in the response
+	Metadata *GetStorageListByNormalMetadata `form:"metadata,omitempty" json:"metadata,omitempty"`
+
+	// Servers Whether to include server information in the response
+	Servers *GetStorageListByNormalServers `form:"servers,omitempty" json:"servers,omitempty"`
+}
+
+// GetStorageListByTemplateParams defines parameters for GetStorageListByTemplate.
+type GetStorageListByTemplateParams struct {
+	// Label Filter by labels. Can be specified multiple times.
+	Label *GetStorageListByTemplateLabel `form:"label,omitempty" json:"label,omitempty"`
+
+	// Search Search storages by title or UUID (partial match)
+	Search *GetStorageListByTemplateSearch `form:"search,omitempty" json:"search,omitempty"`
+
+	// SortBy Sort results by the specified field
+	SortBy *GetStorageListByTemplateSortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
+
+	// OrderBy Sort order (ascending or descending). Only valid when sort_by is also specified.
+	OrderBy *GetStorageListByTemplateOrderBy `form:"order_by,omitempty" json:"order_by,omitempty"`
+
+	// Limit Maximum number of storages to return per page
+	Limit *GetStorageListByTemplateLimit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Offset Number of storages to skip before starting to return results
+	Offset *GetStorageListByTemplateOffset `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// AllowHidden Include hidden storages in the response
+	AllowHidden *GetStorageListByTemplateAllowHidden `form:"allow_hidden,omitempty" json:"allow_hidden,omitempty"`
+
+	// Favorite Filter storages by favorite status
+	Favorite *GetStorageListByTemplateFavorite `form:"favorite,omitempty" json:"favorite,omitempty"`
+
+	// Metadata Whether to include metadata in the response
+	Metadata *GetStorageListByTemplateMetadata `form:"metadata,omitempty" json:"metadata,omitempty"`
+
+	// Servers Whether to include server information in the response
+	Servers *GetStorageListByTemplateServers `form:"servers,omitempty" json:"servers,omitempty"`
+}
+
+// GetStorageListByTypeAndAccessParams defines parameters for GetStorageListByTypeAndAccess.
+type GetStorageListByTypeAndAccessParams struct {
+	// Label Filter by labels. Can be specified multiple times.
+	Label *GetStorageListByTypeAndAccessLabel `form:"label,omitempty" json:"label,omitempty"`
+
+	// Search Search storages by title or UUID (partial match)
+	Search *GetStorageListByTypeAndAccessSearch `form:"search,omitempty" json:"search,omitempty"`
+
+	// SortBy Sort results by the specified field
+	SortBy *GetStorageListByTypeAndAccessSortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
+
+	// OrderBy Sort order (ascending or descending). Only valid when sort_by is also specified.
+	OrderBy *GetStorageListByTypeAndAccessOrderBy `form:"order_by,omitempty" json:"order_by,omitempty"`
+
+	// Limit Maximum number of storages to return per page
+	Limit *GetStorageListByTypeAndAccessLimit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Offset Number of storages to skip before starting to return results
+	Offset *GetStorageListByTypeAndAccessOffset `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// AllowHidden Include hidden storages in the response
+	AllowHidden *GetStorageListByTypeAndAccessAllowHidden `form:"allow_hidden,omitempty" json:"allow_hidden,omitempty"`
+
+	// Favorite Filter storages by favorite status
+	Favorite *GetStorageListByTypeAndAccessFavorite `form:"favorite,omitempty" json:"favorite,omitempty"`
+
+	// Metadata Whether to include metadata in the response
+	Metadata *GetStorageListByTypeAndAccessMetadata `form:"metadata,omitempty" json:"metadata,omitempty"`
+
+	// Servers Whether to include server information in the response
+	Servers *GetStorageListByTypeAndAccessServers `form:"servers,omitempty" json:"servers,omitempty"`
 }
 
 // DeleteStorageParams defines parameters for DeleteStorage.

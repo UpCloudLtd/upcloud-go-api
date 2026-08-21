@@ -285,21 +285,6 @@ func (e GatewayServiceFeatures) Valid() bool {
 	}
 }
 
-// Defines values for GatewayServiceLogSessionTypes.
-const (
-	GatewayServiceLogSessionTypesVpn GatewayServiceLogSessionTypes = "vpn"
-)
-
-// Valid indicates whether the value is a known member of the GatewayServiceLogSessionTypes enum.
-func (e GatewayServiceLogSessionTypes) Valid() bool {
-	switch e {
-	case GatewayServiceLogSessionTypesVpn:
-		return true
-	default:
-		return false
-	}
-}
-
 // Defines values for GatewayServiceOperationalState.
 const (
 	GatewayServiceOperationalStateCheckup           GatewayServiceOperationalState = "checkup"
@@ -1323,44 +1308,6 @@ type GatewayServiceLabelListResponse = []GatewayLabelDetailsResponse
 // Examples: []
 type GatewayServiceListResponse = []GatewayServiceDetailsResponse
 
-// GatewayServiceLogSessionCreateRequest Request to create a new log session for a service.
-//
-// Examples: {"session_type":"vpn"}
-type GatewayServiceLogSessionCreateRequest struct {
-	// SessionType Service log session types
-	//
-	// Examples: vpn
-	SessionType GatewayServiceLogSessionTypes `json:"session_type"`
-}
-
-// GatewayServiceLogSessionCreateResponse Response schema for service log session creation.
-//
-// Examples: {"sessions":["vpn"]}
-type GatewayServiceLogSessionCreateResponse struct {
-	// Sessions List of service sessions created.
-	Sessions []GatewayServiceLogSessionDetailsResponse `json:"sessions"`
-}
-
-// GatewayServiceLogSessionDetailsResponse Response schema for details of a service log session.
-//
-// Examples: {"sessions":[{"session_id":"01234567-89ab-cdef-0123-456789abcdef","token":"01234567-89ab-cdef-0123-456789abcdef"}]}
-type GatewayServiceLogSessionDetailsResponse struct {
-	// SessionId The unique identifier for the resource.
-	//
-	// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
-	SessionId GatewayUuid `json:"session_id"`
-
-	// Token The unique identifier for the resource.
-	//
-	// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
-	Token GatewayUuid `json:"token"`
-}
-
-// GatewayServiceLogSessionTypes Service log session types
-//
-// Examples: vpn
-type GatewayServiceLogSessionTypes string
-
 // GatewayServiceMetricsResponse Response schema for service metrics.
 //
 // Examples: {"gateways":[]}
@@ -1794,11 +1741,6 @@ type CreateGatewayConnectionServiceUuid = GatewayUuid
 // Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateGatewayServiceLabelServiceUuid = GatewayUuid
 
-// CreateGatewayServiceLogSessionServiceUuid The unique identifier for the resource.
-//
-// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
-type CreateGatewayServiceLogSessionServiceUuid = GatewayUuid
-
 // CreateGatewayTunnelConnectionUuid The unique identifier for the resource.
 //
 // Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
@@ -1903,11 +1845,6 @@ type GetGatewayServiceLabelLabelKey = GatewayLabelKey
 //
 // Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GetGatewayServiceLabelServiceUuid = GatewayUuid
-
-// GetGatewayServiceServiceUuid The unique identifier for the resource.
-//
-// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
-type GetGatewayServiceServiceUuid = GatewayUuid
 
 // GetGatewayTunnelConnectionUuid The unique identifier for the resource.
 //
@@ -2064,16 +2001,6 @@ type CreateGatewayServiceDefault = GatewayErrorResponse
 // Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type CreateGatewayServiceLabelDefault = GatewayErrorResponse
 
-// CreateGatewayServiceLogSession200 Response schema for service log session creation.
-//
-// Examples: {"sessions":["vpn"]}
-type CreateGatewayServiceLogSession200 = GatewayServiceLogSessionCreateResponse
-
-// CreateGatewayServiceLogSessionDefault Schema for error responses from the API.
-//
-// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
-type CreateGatewayServiceLogSessionDefault = GatewayErrorResponse
-
 // CreateGatewayTunnel200 Response schema for gateway tunnel details.
 //
 // Examples: {"created_at":"2025-03-26T12:34:56Z","internal_peer_ping_interval":0,"name":"gateway-service","operational_state":"established","tunnel_healthy":true,"tunnel_up":true,"updated_at":"2025-03-26T12:34:56Z","uuid":"01234567-89ab-cdef-0123-456789abcdef"}
@@ -2153,16 +2080,6 @@ type GetGatewayPlan200 = GatewayPlanDetailsResponse
 //
 // Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type GetGatewayPlanDefault = GatewayErrorResponse
-
-// GetGatewayService200 Gateway service
-//
-// Examples: {"addresses":[],"automatic_tunnel_internal_ip_allocation":true,"configured_status":"started","connections":[],"created_at":"2025-03-26T12:34:56Z","features":[],"labels":[],"name":"gateway-service","plan":"development-gwaas-1c2g","updated_at":"2025-03-26T12:34:56Z","uuid":"01234567-89ab-cdef-0123-456789abcdef","zone":"fi-hel1"}
-type GetGatewayService200 = GatewayServiceDetailsResponse
-
-// GetGatewayServiceDefault Schema for error responses from the API.
-//
-// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
-type GetGatewayServiceDefault = GatewayErrorResponse
 
 // GetGatewayServiceLabel200 Gateway label
 //
@@ -2319,11 +2236,6 @@ type CreateGatewayService = GatewayServiceCreateRequest
 // Examples: {"key":"environment","value":"production"}
 type CreateGatewayServiceLabel = GatewayLabelCreateRequest
 
-// CreateGatewayServiceLogSession Request to create a new log session for a service.
-//
-// Examples: {"session_type":"vpn"}
-type CreateGatewayServiceLogSession = GatewayServiceLogSessionCreateRequest
-
 // CreateGatewayTunnel Network gateway VPN connection tunnel
 //
 // Examples: {"internal_peer_ping_interval":0,"ipsec":{"authentication":{"psk":"MySecretPsk123","type":"psk"},"phase1_algorithms":[],"phase1_dh_group_numbers":[],"phase1_integrity_algorithms":[],"phase2_algorithms":[],"phase2_dh_group_numbers":[],"phase2_integrity_algorithms":[]},"local_address":{"name":"gateway-service"},"name":"gateway-service","remote_address":{"address":"203.0.113.10"},"tunnel_internal_ip":"10.0.0.1"}
@@ -2412,6 +2324,3 @@ type CreateGatewayServiceLabelJSONRequestBody = GatewayLabelCreateRequest
 
 // ModifyGatewayServiceLabelJSONRequestBody defines body for ModifyGatewayServiceLabel for application/json ContentType.
 type ModifyGatewayServiceLabelJSONRequestBody = GatewayLabelModifyRequest
-
-// CreateGatewayServiceLogSessionJSONRequestBody defines body for CreateGatewayServiceLogSession for application/json ContentType.
-type CreateGatewayServiceLogSessionJSONRequestBody = GatewayServiceLogSessionCreateRequest

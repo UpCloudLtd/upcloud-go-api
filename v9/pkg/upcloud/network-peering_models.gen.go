@@ -106,7 +106,9 @@ func (e NetworkPeeringState) Valid() bool {
 // NetworkPeering Network peering object describes a peering relationship between two networks
 type NetworkPeering struct {
 	ConfiguredStatus *NetworkPeeringConfiguredStatus `json:"configured_status,omitempty"`
-	Name             *NetworkPeeringName             `json:"name,omitempty"`
+
+	// Name Name of a network peering relationship.
+	Name *NetworkPeeringName `json:"name,omitempty"`
 
 	// Network Describes the local side of the peering
 	Network *struct {
@@ -140,6 +142,8 @@ type NetworkPeering struct {
 		// Uuid Universally unique identifier
 		Uuid *NetworkPeeringUuid `json:"uuid,omitempty"`
 	} `json:"peer_network,omitempty"`
+
+	// State Current lifecycle state of a network peering.
 	State *NetworkPeeringState `json:"state,omitempty"`
 
 	// Uuid Universally unique identifier
@@ -193,10 +197,10 @@ type NetworkPeeringModify struct {
 	Name             *string     `json:"name,omitempty"`
 }
 
-// NetworkPeeringName defines model for networkPeeringName.
+// NetworkPeeringName Name of a network peering relationship.
 type NetworkPeeringName = string
 
-// NetworkPeeringState defines model for networkPeeringState.
+// NetworkPeeringState Current lifecycle state of a network peering.
 type NetworkPeeringState string
 
 // NetworkPeeringUuid Universally unique identifier
