@@ -747,8 +747,8 @@ type ListServerGroupsResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ListServerGroups200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ListServerGroupsDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ListServerGroupsDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -756,9 +756,9 @@ func (r ListServerGroupsResp) GetJSON200() *ListServerGroups200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r ListServerGroupsResp) GetJSONDefault() *ListServerGroupsDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ListServerGroupsResp) GetApplicationproblemJSONDefault() *ListServerGroupsDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -795,8 +795,8 @@ type CreateServerGroupResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *CreateServerGroup200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *CreateServerGroupDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *CreateServerGroupDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -804,9 +804,9 @@ func (r CreateServerGroupResp) GetJSON200() *CreateServerGroup200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r CreateServerGroupResp) GetJSONDefault() *CreateServerGroupDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r CreateServerGroupResp) GetApplicationproblemJSONDefault() *CreateServerGroupDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -841,13 +841,13 @@ func (r CreateServerGroupResp) ContentType() string {
 type DeleteServerGroupResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *DeleteServerGroupDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *DeleteServerGroupDefault
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r DeleteServerGroupResp) GetJSONDefault() *DeleteServerGroupDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r DeleteServerGroupResp) GetApplicationproblemJSONDefault() *DeleteServerGroupDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -884,8 +884,8 @@ type GetServerGroupResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *GetServerGroup200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *GetServerGroupDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *GetServerGroupDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -893,9 +893,9 @@ func (r GetServerGroupResp) GetJSON200() *GetServerGroup200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r GetServerGroupResp) GetJSONDefault() *GetServerGroupDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetServerGroupResp) GetApplicationproblemJSONDefault() *GetServerGroupDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -932,8 +932,8 @@ type ModifyServerGroupResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ModifyServerGroup200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ModifyServerGroupDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ModifyServerGroupDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -941,9 +941,9 @@ func (r ModifyServerGroupResp) GetJSON200() *ModifyServerGroup200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r ModifyServerGroupResp) GetJSONDefault() *ModifyServerGroupDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ModifyServerGroupResp) GetApplicationproblemJSONDefault() *ModifyServerGroupDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -980,8 +980,8 @@ type ListServerGroupMembersResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ListServerGroupMembers200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ListServerGroupMembersDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ListServerGroupMembersDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -989,9 +989,9 @@ func (r ListServerGroupMembersResp) GetJSON200() *ListServerGroupMembers200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r ListServerGroupMembersResp) GetJSONDefault() *ListServerGroupMembersDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ListServerGroupMembersResp) GetApplicationproblemJSONDefault() *ListServerGroupMembersDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -1026,13 +1026,13 @@ func (r ListServerGroupMembersResp) ContentType() string {
 type AddServerToGroupResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ServerGroupAddServerToGroupDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ServerGroupAddServerToGroupDefault
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r AddServerToGroupResp) GetJSONDefault() *ServerGroupAddServerToGroupDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r AddServerToGroupResp) GetApplicationproblemJSONDefault() *ServerGroupAddServerToGroupDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -1067,13 +1067,13 @@ func (r AddServerToGroupResp) ContentType() string {
 type RemoveServerFromGroupResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ServerGroupRemoveServerFromGroupDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ServerGroupRemoveServerFromGroupDefault
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r RemoveServerFromGroupResp) GetJSONDefault() *ServerGroupRemoveServerFromGroupDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r RemoveServerFromGroupResp) GetApplicationproblemJSONDefault() *ServerGroupRemoveServerFromGroupDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -1296,7 +1296,7 @@ func ParseListServerGroupsResp(rsp *http.Response) (*ListServerGroupsResp, error
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1329,7 +1329,7 @@ func ParseCreateServerGroupResp(rsp *http.Response) (*CreateServerGroupResp, err
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1358,7 +1358,7 @@ func ParseDeleteServerGroupResp(rsp *http.Response) (*DeleteServerGroupResp, err
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1391,7 +1391,7 @@ func ParseGetServerGroupResp(rsp *http.Response) (*GetServerGroupResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1424,7 +1424,7 @@ func ParseModifyServerGroupResp(rsp *http.Response) (*ModifyServerGroupResp, err
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1457,7 +1457,7 @@ func ParseListServerGroupMembersResp(rsp *http.Response) (*ListServerGroupMember
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1486,7 +1486,7 @@ func ParseAddServerToGroupResp(rsp *http.Response) (*AddServerToGroupResp, error
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1515,7 +1515,7 @@ func ParseRemoveServerFromGroupResp(rsp *http.Response) (*RemoveServerFromGroupR
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 

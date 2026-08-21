@@ -44,13 +44,6 @@ type FirewallRulesetClientInterface interface {
 	// Corresponds with POST /1.3/firewall-ruleset (the `CreateFirewallRuleset` operationId).
 	CreateFirewallRuleset(ctx context.Context, body CreateFirewallRulesetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ListServerFirewallRule List server firewall rules
-	//
-	// Returns a list of server firewall rules.
-	//
-	// Corresponds with GET /1.3/firewall-ruleset/server/{server-uuid}/firewall-rule (the `ListServerFirewallRule` operationId).
-	ListServerFirewallRule(ctx context.Context, serverUuid FirewallRulesetListServerFirewallRuleServerUuid, params *ListServerFirewallRuleParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// CreateServerFirewallRuleWithBody Create server firewall rule
 	//
 	// Creates a new server firewall rule.
@@ -68,24 +61,6 @@ type FirewallRulesetClientInterface interface {
 	//
 	// Corresponds with POST /1.3/firewall-ruleset/server/{server-uuid}/firewall-rule (the `CreateServerFirewallRule` operationId).
 	CreateServerFirewallRule(ctx context.Context, serverUuid FirewallRulesetCreateServerFirewallRuleServerUuid, body CreateServerFirewallRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateMultipleServerFirewallRulesWithBody Create multiple server firewall rules
-	//
-	// Creates multiple server firewall rules by given {server-uuid}.
-	//
-	// Takes any type of body and a specified content type.
-	//
-	// Corresponds with PUT /1.3/firewall-ruleset/server/{server-uuid}/firewall-rule (the `CreateMultipleServerFirewallRules` operationId).
-	CreateMultipleServerFirewallRulesWithBody(ctx context.Context, serverUuid FirewallRulesetCreateMultipleServerFirewallRulesServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateMultipleServerFirewallRules Create multiple server firewall rules
-	//
-	// Creates multiple server firewall rules by given {server-uuid}.
-	//
-	// Takes a body of the `application/json` content type.
-	//
-	// Corresponds with PUT /1.3/firewall-ruleset/server/{server-uuid}/firewall-rule (the `CreateMultipleServerFirewallRules` operationId).
-	CreateMultipleServerFirewallRules(ctx context.Context, serverUuid FirewallRulesetCreateMultipleServerFirewallRulesServerUuid, body CreateMultipleServerFirewallRulesJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteServerFirewallRule Delete server firewall rule
 	//
@@ -335,23 +310,6 @@ func (c *Client) CreateFirewallRuleset(ctx context.Context, body CreateFirewallR
 	return c.Client.Do(req)
 }
 
-// ListServerFirewallRule List server firewall rules
-//
-// Returns a list of server firewall rules.
-//
-// Corresponds with GET /1.3/firewall-ruleset/server/{server-uuid}/firewall-rule (the `ListServerFirewallRule` operationId).
-func (c *Client) ListServerFirewallRule(ctx context.Context, serverUuid FirewallRulesetListServerFirewallRuleServerUuid, params *ListServerFirewallRuleParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListServerFirewallRuleRequest(c.Server, serverUuid, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 // CreateServerFirewallRuleWithBody Create server firewall rule
 //
 // Creates a new server firewall rule.
@@ -380,44 +338,6 @@ func (c *Client) CreateServerFirewallRuleWithBody(ctx context.Context, serverUui
 // Corresponds with POST /1.3/firewall-ruleset/server/{server-uuid}/firewall-rule (the `CreateServerFirewallRule` operationId).
 func (c *Client) CreateServerFirewallRule(ctx context.Context, serverUuid FirewallRulesetCreateServerFirewallRuleServerUuid, body CreateServerFirewallRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateServerFirewallRuleRequest(c.Server, serverUuid, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// CreateMultipleServerFirewallRulesWithBody Create multiple server firewall rules
-//
-// Creates multiple server firewall rules by given {server-uuid}.
-//
-// Takes any type of body and a specified content type.
-//
-// Corresponds with PUT /1.3/firewall-ruleset/server/{server-uuid}/firewall-rule (the `CreateMultipleServerFirewallRules` operationId).
-func (c *Client) CreateMultipleServerFirewallRulesWithBody(ctx context.Context, serverUuid FirewallRulesetCreateMultipleServerFirewallRulesServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateMultipleServerFirewallRulesRequestWithBody(c.Server, serverUuid, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// CreateMultipleServerFirewallRules Create multiple server firewall rules
-//
-// Creates multiple server firewall rules by given {server-uuid}.
-//
-// Takes a body of the `application/json` content type.
-//
-// Corresponds with PUT /1.3/firewall-ruleset/server/{server-uuid}/firewall-rule (the `CreateMultipleServerFirewallRules` operationId).
-func (c *Client) CreateMultipleServerFirewallRules(ctx context.Context, serverUuid FirewallRulesetCreateMultipleServerFirewallRulesServerUuid, body CreateMultipleServerFirewallRulesJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateMultipleServerFirewallRulesRequest(c.Server, serverUuid, body)
 	if err != nil {
 		return nil, err
 	}
@@ -978,91 +898,6 @@ func NewCreateFirewallRulesetRequestWithBody(server string, contentType string, 
 	return req, nil
 }
 
-// NewListServerFirewallRuleRequest constructs an http.Request for the ListServerFirewallRule method
-func NewListServerFirewallRuleRequest(server string, serverUuid FirewallRulesetListServerFirewallRuleServerUuid, params *ListServerFirewallRuleParams) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "server-uuid", serverUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/server/%s/firewall-rule", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		// queryValues collects non-styled parameters (passthrough, JSON)
-		// that are safe to round-trip through url.Values.Encode().
-		queryValues := queryURL.Query()
-		// rawQueryFragments collects pre-encoded query fragments from
-		// styled parameters, preserving literal commas as delimiters
-		// per the OpenAPI spec (e.g. "color=blue,black,brown").
-		var rawQueryFragments []string
-
-		if params.Limit != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int64"}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if params.Offset != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "offset", *params.Offset, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int64"}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if params.Sort != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if encoded := queryValues.Encode(); encoded != "" {
-			rawQueryFragments = append(rawQueryFragments, encoded)
-		}
-		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
-	}
-
-	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
 // NewCreateServerFirewallRuleRequest calls the generic CreateServerFirewallRule builder with application/json body
 func NewCreateServerFirewallRuleRequest(server string, serverUuid FirewallRulesetCreateServerFirewallRuleServerUuid, body CreateServerFirewallRuleJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -1101,53 +936,6 @@ func NewCreateServerFirewallRuleRequestWithBody(server string, serverUuid Firewa
 	}
 
 	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
-// NewCreateMultipleServerFirewallRulesRequest calls the generic CreateMultipleServerFirewallRules builder with application/json body
-func NewCreateMultipleServerFirewallRulesRequest(server string, serverUuid FirewallRulesetCreateMultipleServerFirewallRulesServerUuid, body CreateMultipleServerFirewallRulesJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewCreateMultipleServerFirewallRulesRequestWithBody(server, serverUuid, "application/json", bodyReader)
-}
-
-// NewCreateMultipleServerFirewallRulesRequestWithBody constructs an http.Request for the CreateMultipleServerFirewallRules method, with any body, and a specified content type
-func NewCreateMultipleServerFirewallRulesRequestWithBody(server string, serverUuid FirewallRulesetCreateMultipleServerFirewallRulesServerUuid, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "server-uuid", serverUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/1.3/firewall-ruleset/server/%s/firewall-rule", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
@@ -1991,15 +1779,6 @@ type FirewallRulesetClientWithResponsesInterface interface {
 	// Corresponds with POST /1.3/firewall-ruleset (the `CreateFirewallRuleset` operationId).
 	CreateFirewallRulesetWithResponse(ctx context.Context, body CreateFirewallRulesetJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateFirewallRulesetResp, error)
 
-	// ListServerFirewallRuleWithResponse List server firewall rules
-	//
-	// Returns a list of server firewall rules.
-	//
-	// Returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with GET /1.3/firewall-ruleset/server/{server-uuid}/firewall-rule (the `ListServerFirewallRule` operationId).
-	ListServerFirewallRuleWithResponse(ctx context.Context, serverUuid FirewallRulesetListServerFirewallRuleServerUuid, params *ListServerFirewallRuleParams, reqEditors ...RequestEditorFn) (*ListServerFirewallRuleResp, error)
-
 	// CreateServerFirewallRuleWithBodyWithResponse Create server firewall rule
 	//
 	// Creates a new server firewall rule.
@@ -2017,24 +1796,6 @@ type FirewallRulesetClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /1.3/firewall-ruleset/server/{server-uuid}/firewall-rule (the `CreateServerFirewallRule` operationId).
 	CreateServerFirewallRuleWithResponse(ctx context.Context, serverUuid FirewallRulesetCreateServerFirewallRuleServerUuid, body CreateServerFirewallRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateServerFirewallRuleResp, error)
-
-	// CreateMultipleServerFirewallRulesWithBodyWithResponse Create multiple server firewall rules
-	//
-	// Creates multiple server firewall rules by given {server-uuid}.
-	//
-	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with PUT /1.3/firewall-ruleset/server/{server-uuid}/firewall-rule (the `CreateMultipleServerFirewallRules` operationId).
-	CreateMultipleServerFirewallRulesWithBodyWithResponse(ctx context.Context, serverUuid FirewallRulesetCreateMultipleServerFirewallRulesServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateMultipleServerFirewallRulesResp, error)
-
-	// CreateMultipleServerFirewallRulesWithResponse Create multiple server firewall rules
-	//
-	// Creates multiple server firewall rules by given {server-uuid}.
-	//
-	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with PUT /1.3/firewall-ruleset/server/{server-uuid}/firewall-rule (the `CreateMultipleServerFirewallRules` operationId).
-	CreateMultipleServerFirewallRulesWithResponse(ctx context.Context, serverUuid FirewallRulesetCreateMultipleServerFirewallRulesServerUuid, body CreateMultipleServerFirewallRulesJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateMultipleServerFirewallRulesResp, error)
 
 	// DeleteServerFirewallRuleWithResponse Delete server firewall rule
 	//
@@ -2349,54 +2110,6 @@ func (r CreateFirewallRulesetResp) ContentType() string {
 	return ""
 }
 
-type ListServerFirewallRuleResp struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *FirewallRulesetListServerFirewallRule200
-	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
-	ApplicationproblemJSONDefault *FirewallRulesetListServerFirewallRuleDefault
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListServerFirewallRuleResp) GetJSON200() *FirewallRulesetListServerFirewallRule200 {
-	return r.JSON200
-}
-
-// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
-func (r ListServerFirewallRuleResp) GetApplicationproblemJSONDefault() *FirewallRulesetListServerFirewallRuleDefault {
-	return r.ApplicationproblemJSONDefault
-}
-
-// GetBody returns the raw response body bytes
-func (r ListServerFirewallRuleResp) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r ListServerFirewallRuleResp) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r ListServerFirewallRuleResp) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r ListServerFirewallRuleResp) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
 type CreateServerFirewallRuleResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -2467,82 +2180,6 @@ func (r CreateServerFirewallRuleResp) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r CreateServerFirewallRuleResp) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type CreateMultipleServerFirewallRulesResp struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *FirewallRulesetCreateMultipleServerFirewallRules200
-	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
-	ApplicationproblemJSON400 *FirewallRulesetCreateMultipleServerFirewallRules400
-	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
-	ApplicationproblemJSON403 *FirewallRulesetCreateMultipleServerFirewallRules403
-	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
-	ApplicationproblemJSON404 *FirewallRulesetCreateMultipleServerFirewallRules404
-	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
-	ApplicationproblemJSON409 *FirewallRulesetCreateMultipleServerFirewallRules409
-	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
-	ApplicationproblemJSONDefault *FirewallRulesetCreateMultipleServerFirewallRulesDefault
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r CreateMultipleServerFirewallRulesResp) GetJSON200() *FirewallRulesetCreateMultipleServerFirewallRules200 {
-	return r.JSON200
-}
-
-// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
-func (r CreateMultipleServerFirewallRulesResp) GetApplicationproblemJSON400() *FirewallRulesetCreateMultipleServerFirewallRules400 {
-	return r.ApplicationproblemJSON400
-}
-
-// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
-func (r CreateMultipleServerFirewallRulesResp) GetApplicationproblemJSON403() *FirewallRulesetCreateMultipleServerFirewallRules403 {
-	return r.ApplicationproblemJSON403
-}
-
-// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
-func (r CreateMultipleServerFirewallRulesResp) GetApplicationproblemJSON404() *FirewallRulesetCreateMultipleServerFirewallRules404 {
-	return r.ApplicationproblemJSON404
-}
-
-// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
-func (r CreateMultipleServerFirewallRulesResp) GetApplicationproblemJSON409() *FirewallRulesetCreateMultipleServerFirewallRules409 {
-	return r.ApplicationproblemJSON409
-}
-
-// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
-func (r CreateMultipleServerFirewallRulesResp) GetApplicationproblemJSONDefault() *FirewallRulesetCreateMultipleServerFirewallRulesDefault {
-	return r.ApplicationproblemJSONDefault
-}
-
-// GetBody returns the raw response body bytes
-func (r CreateMultipleServerFirewallRulesResp) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r CreateMultipleServerFirewallRulesResp) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r CreateMultipleServerFirewallRulesResp) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r CreateMultipleServerFirewallRulesResp) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -3458,21 +3095,6 @@ func (c *ClientWithResponses) CreateFirewallRulesetWithResponse(ctx context.Cont
 	return ParseCreateFirewallRulesetResp(rsp)
 }
 
-// ListServerFirewallRuleWithResponse List server firewall rules
-//
-// Returns a list of server firewall rules.
-//
-// Returns a wrapper object for the known response body format(s).
-//
-// Corresponds with GET /1.3/firewall-ruleset/server/{server-uuid}/firewall-rule (the `ListServerFirewallRule` operationId).
-func (c *ClientWithResponses) ListServerFirewallRuleWithResponse(ctx context.Context, serverUuid FirewallRulesetListServerFirewallRuleServerUuid, params *ListServerFirewallRuleParams, reqEditors ...RequestEditorFn) (*ListServerFirewallRuleResp, error) {
-	rsp, err := c.ListServerFirewallRule(ctx, serverUuid, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseListServerFirewallRuleResp(rsp)
-}
-
 // CreateServerFirewallRuleWithBodyWithResponse Create server firewall rule
 //
 // Creates a new server firewall rule.
@@ -3501,36 +3123,6 @@ func (c *ClientWithResponses) CreateServerFirewallRuleWithResponse(ctx context.C
 		return nil, err
 	}
 	return ParseCreateServerFirewallRuleResp(rsp)
-}
-
-// CreateMultipleServerFirewallRulesWithBodyWithResponse Create multiple server firewall rules
-//
-// Creates multiple server firewall rules by given {server-uuid}.
-//
-// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with PUT /1.3/firewall-ruleset/server/{server-uuid}/firewall-rule (the `CreateMultipleServerFirewallRules` operationId).
-func (c *ClientWithResponses) CreateMultipleServerFirewallRulesWithBodyWithResponse(ctx context.Context, serverUuid FirewallRulesetCreateMultipleServerFirewallRulesServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateMultipleServerFirewallRulesResp, error) {
-	rsp, err := c.CreateMultipleServerFirewallRulesWithBody(ctx, serverUuid, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateMultipleServerFirewallRulesResp(rsp)
-}
-
-// CreateMultipleServerFirewallRulesWithResponse Create multiple server firewall rules
-//
-// Creates multiple server firewall rules by given {server-uuid}.
-//
-// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with PUT /1.3/firewall-ruleset/server/{server-uuid}/firewall-rule (the `CreateMultipleServerFirewallRules` operationId).
-func (c *ClientWithResponses) CreateMultipleServerFirewallRulesWithResponse(ctx context.Context, serverUuid FirewallRulesetCreateMultipleServerFirewallRulesServerUuid, body CreateMultipleServerFirewallRulesJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateMultipleServerFirewallRulesResp, error) {
-	rsp, err := c.CreateMultipleServerFirewallRules(ctx, serverUuid, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateMultipleServerFirewallRulesResp(rsp)
 }
 
 // DeleteServerFirewallRuleWithResponse Delete server firewall rule
@@ -3959,39 +3551,6 @@ func ParseCreateFirewallRulesetResp(rsp *http.Response) (*CreateFirewallRulesetR
 	return response, nil
 }
 
-// ParseListServerFirewallRuleResp parses an HTTP response from a ListServerFirewallRuleWithResponse call
-func ParseListServerFirewallRuleResp(rsp *http.Response) (*ListServerFirewallRuleResp, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &ListServerFirewallRuleResp{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest FirewallRulesetListServerFirewallRule200
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest FirewallRulesetListServerFirewallRuleDefault
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSONDefault = &dest
-
-	}
-
-	return response, nil
-}
-
 // ParseCreateServerFirewallRuleResp parses an HTTP response from a CreateServerFirewallRuleWithResponse call
 func ParseCreateServerFirewallRuleResp(rsp *http.Response) (*CreateServerFirewallRuleResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -4043,67 +3602,6 @@ func ParseCreateServerFirewallRuleResp(rsp *http.Response) (*CreateServerFirewal
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest FirewallRulesetCreateServerFirewallRuleDefault
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSONDefault = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseCreateMultipleServerFirewallRulesResp parses an HTTP response from a CreateMultipleServerFirewallRulesWithResponse call
-func ParseCreateMultipleServerFirewallRulesResp(rsp *http.Response) (*CreateMultipleServerFirewallRulesResp, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &CreateMultipleServerFirewallRulesResp{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest FirewallRulesetCreateMultipleServerFirewallRules200
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest FirewallRulesetCreateMultipleServerFirewallRules400
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON400 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest FirewallRulesetCreateMultipleServerFirewallRules403
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON403 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest FirewallRulesetCreateMultipleServerFirewallRules404
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON404 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest FirewallRulesetCreateMultipleServerFirewallRules409
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON409 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest FirewallRulesetCreateMultipleServerFirewallRulesDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}

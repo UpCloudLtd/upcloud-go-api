@@ -44,6 +44,8 @@ type RouterDetails struct {
 			Uuid RouterUuid `json:"uuid"`
 		} `json:"network"`
 	} `json:"attached_networks,omitempty"`
+
+	// Labels Collection of key/value labels for a resource.
 	Labels *RouterLabels `json:"labels,omitempty"`
 	Name   string        `json:"name"`
 
@@ -89,7 +91,7 @@ type RouterLabel struct {
 	Value string `json:"value"`
 }
 
-// RouterLabels defines model for routerLabels.
+// RouterLabels Collection of key/value labels for a resource.
 type RouterLabels struct {
 	Label *[]RouterLabel `json:"label,omitempty"`
 }

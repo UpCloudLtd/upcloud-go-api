@@ -117,7 +117,7 @@ type FileStorageAclCreate struct {
 	// Examples: rw
 	Permission FileStoragePermission `json:"permission"`
 
-	// Target The target of the ACL entry. It can be a IP Address, Network Prefix or a wildcard.
+	// Target The target of the ACL entry. It can be an IP Address, Network Prefix or a wildcard.
 	//
 	// Examples: 192.168.25.147, 192.168.25.0/24, *
 	Target string `json:"target"`
@@ -151,7 +151,7 @@ type FileStorageAclModify struct {
 	// Examples: rw
 	Permission *FileStoragePermission `json:"permission,omitempty"`
 
-	// Target The target of the ACL entry. It can be a IP Address, Network Prefix or a wildcard.
+	// Target The target of the ACL entry. It can be an IP Address, Network Prefix or a wildcard.
 	//
 	// Examples: 192.168.25.147, 192.168.25.0/24, *
 	Target *string `json:"target,omitempty"`

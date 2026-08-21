@@ -65,13 +65,6 @@ type GatewayClientInterface interface {
 	// Corresponds with DELETE /1.3/gateway/{service-uuid} (the `DeleteGatewayService` operationId).
 	DeleteGatewayService(ctx context.Context, serviceUuid DeleteGatewayServiceServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetGatewayService Get Service Details
-	//
-	// Get service details.
-	//
-	// Corresponds with GET /1.3/gateway/{service-uuid} (the `GetGatewayService` operationId).
-	GetGatewayService(ctx context.Context, serviceUuid GetGatewayServiceServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// ModifyGatewayServiceWithBody Modify Service
 	//
 	// Modify service configuration.
@@ -343,24 +336,6 @@ type GatewayClientInterface interface {
 	// Corresponds with PATCH /1.3/gateway/{service-uuid}/labels/{label-key} (the `ModifyGatewayServiceLabel` operationId).
 	ModifyGatewayServiceLabel(ctx context.Context, serviceUuid ModifyGatewayServiceLabelServiceUuid, labelKey ModifyGatewayServiceLabelLabelKey, body ModifyGatewayServiceLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateGatewayServiceLogSessionWithBody Create Service Log Session
-	//
-	// Create a new service log session.
-	//
-	// Takes any type of body and a specified content type.
-	//
-	// Corresponds with POST /1.3/gateway/{service-uuid}/logs (the `CreateGatewayServiceLogSession` operationId).
-	CreateGatewayServiceLogSessionWithBody(ctx context.Context, serviceUuid CreateGatewayServiceLogSessionServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateGatewayServiceLogSession Create Service Log Session
-	//
-	// Create a new service log session.
-	//
-	// Takes a body of the `application/json` content type.
-	//
-	// Corresponds with POST /1.3/gateway/{service-uuid}/logs (the `CreateGatewayServiceLogSession` operationId).
-	CreateGatewayServiceLogSession(ctx context.Context, serviceUuid CreateGatewayServiceLogSessionServiceUuid, body CreateGatewayServiceLogSessionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// GetGatewayMetrics Get Service Metrics
 	//
 	// List available service metrics for service.
@@ -465,23 +440,6 @@ func (c *Client) GetGatewayPlan(ctx context.Context, planName GetGatewayPlanPlan
 // Corresponds with DELETE /1.3/gateway/{service-uuid} (the `DeleteGatewayService` operationId).
 func (c *Client) DeleteGatewayService(ctx context.Context, serviceUuid DeleteGatewayServiceServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteGatewayServiceRequest(c.Server, serviceUuid)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// GetGatewayService Get Service Details
-//
-// Get service details.
-//
-// Corresponds with GET /1.3/gateway/{service-uuid} (the `GetGatewayService` operationId).
-func (c *Client) GetGatewayService(ctx context.Context, serviceUuid GetGatewayServiceServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetGatewayServiceRequest(c.Server, serviceUuid)
 	if err != nil {
 		return nil, err
 	}
@@ -1093,44 +1051,6 @@ func (c *Client) ModifyGatewayServiceLabel(ctx context.Context, serviceUuid Modi
 	return c.Client.Do(req)
 }
 
-// CreateGatewayServiceLogSessionWithBody Create Service Log Session
-//
-// Create a new service log session.
-//
-// Takes any type of body and a specified content type.
-//
-// Corresponds with POST /1.3/gateway/{service-uuid}/logs (the `CreateGatewayServiceLogSession` operationId).
-func (c *Client) CreateGatewayServiceLogSessionWithBody(ctx context.Context, serviceUuid CreateGatewayServiceLogSessionServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateGatewayServiceLogSessionRequestWithBody(c.Server, serviceUuid, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// CreateGatewayServiceLogSession Create Service Log Session
-//
-// Create a new service log session.
-//
-// Takes a body of the `application/json` content type.
-//
-// Corresponds with POST /1.3/gateway/{service-uuid}/logs (the `CreateGatewayServiceLogSession` operationId).
-func (c *Client) CreateGatewayServiceLogSession(ctx context.Context, serviceUuid CreateGatewayServiceLogSessionServiceUuid, body CreateGatewayServiceLogSessionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateGatewayServiceLogSessionRequest(c.Server, serviceUuid, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 // GetGatewayMetrics Get Service Metrics
 //
 // List available service metrics for service.
@@ -1393,40 +1313,6 @@ func NewDeleteGatewayServiceRequest(server string, serviceUuid DeleteGatewayServ
 	}
 
 	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewGetGatewayServiceRequest constructs an http.Request for the GetGatewayService method
-func NewGetGatewayServiceRequest(server string, serviceUuid GetGatewayServiceServiceUuid) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "service-uuid", serviceUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/1.3/gateway/%s", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2465,53 +2351,6 @@ func NewModifyGatewayServiceLabelRequestWithBody(server string, serviceUuid Modi
 	return req, nil
 }
 
-// NewCreateGatewayServiceLogSessionRequest calls the generic CreateGatewayServiceLogSession builder with application/json body
-func NewCreateGatewayServiceLogSessionRequest(server string, serviceUuid CreateGatewayServiceLogSessionServiceUuid, body CreateGatewayServiceLogSessionJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewCreateGatewayServiceLogSessionRequestWithBody(server, serviceUuid, "application/json", bodyReader)
-}
-
-// NewCreateGatewayServiceLogSessionRequestWithBody constructs an http.Request for the CreateGatewayServiceLogSession method, with any body, and a specified content type
-func NewCreateGatewayServiceLogSessionRequestWithBody(server string, serviceUuid CreateGatewayServiceLogSessionServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "service-uuid", serviceUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/1.3/gateway/%s/logs", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
 // NewGetGatewayMetricsRequest constructs an http.Request for the GetGatewayMetrics method
 func NewGetGatewayMetricsRequest(server string, serviceUuid GetGatewayMetricsServiceUuid) (*http.Request, error) {
 	var err error
@@ -2602,15 +2441,6 @@ type GatewayClientWithResponsesInterface interface {
 	//
 	// Corresponds with DELETE /1.3/gateway/{service-uuid} (the `DeleteGatewayService` operationId).
 	DeleteGatewayServiceWithResponse(ctx context.Context, serviceUuid DeleteGatewayServiceServiceUuid, reqEditors ...RequestEditorFn) (*DeleteGatewayServiceResp, error)
-
-	// GetGatewayServiceWithResponse Get Service Details
-	//
-	// Get service details.
-	//
-	// Returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with GET /1.3/gateway/{service-uuid} (the `GetGatewayService` operationId).
-	GetGatewayServiceWithResponse(ctx context.Context, serviceUuid GetGatewayServiceServiceUuid, reqEditors ...RequestEditorFn) (*GetGatewayServiceResp, error)
 
 	// ModifyGatewayServiceWithBodyWithResponse Modify Service
 	//
@@ -2909,24 +2739,6 @@ type GatewayClientWithResponsesInterface interface {
 	// Corresponds with PATCH /1.3/gateway/{service-uuid}/labels/{label-key} (the `ModifyGatewayServiceLabel` operationId).
 	ModifyGatewayServiceLabelWithResponse(ctx context.Context, serviceUuid ModifyGatewayServiceLabelServiceUuid, labelKey ModifyGatewayServiceLabelLabelKey, body ModifyGatewayServiceLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyGatewayServiceLabelResp, error)
 
-	// CreateGatewayServiceLogSessionWithBodyWithResponse Create Service Log Session
-	//
-	// Create a new service log session.
-	//
-	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /1.3/gateway/{service-uuid}/logs (the `CreateGatewayServiceLogSession` operationId).
-	CreateGatewayServiceLogSessionWithBodyWithResponse(ctx context.Context, serviceUuid CreateGatewayServiceLogSessionServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateGatewayServiceLogSessionResp, error)
-
-	// CreateGatewayServiceLogSessionWithResponse Create Service Log Session
-	//
-	// Create a new service log session.
-	//
-	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /1.3/gateway/{service-uuid}/logs (the `CreateGatewayServiceLogSession` operationId).
-	CreateGatewayServiceLogSessionWithResponse(ctx context.Context, serviceUuid CreateGatewayServiceLogSessionServiceUuid, body CreateGatewayServiceLogSessionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateGatewayServiceLogSessionResp, error)
-
 	// GetGatewayMetricsWithResponse Get Service Metrics
 	//
 	// List available service metrics for service.
@@ -3178,54 +2990,6 @@ func (r DeleteGatewayServiceResp) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r DeleteGatewayServiceResp) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type GetGatewayServiceResp struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *GetGatewayService200
-	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
-	ApplicationproblemJSONDefault *GetGatewayServiceDefault
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r GetGatewayServiceResp) GetJSON200() *GetGatewayService200 {
-	return r.JSON200
-}
-
-// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
-func (r GetGatewayServiceResp) GetApplicationproblemJSONDefault() *GetGatewayServiceDefault {
-	return r.ApplicationproblemJSONDefault
-}
-
-// GetBody returns the raw response body bytes
-func (r GetGatewayServiceResp) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r GetGatewayServiceResp) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetGatewayServiceResp) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r GetGatewayServiceResp) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -4315,54 +4079,6 @@ func (r ModifyGatewayServiceLabelResp) ContentType() string {
 	return ""
 }
 
-type CreateGatewayServiceLogSessionResp struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *CreateGatewayServiceLogSession200
-	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
-	ApplicationproblemJSONDefault *CreateGatewayServiceLogSessionDefault
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r CreateGatewayServiceLogSessionResp) GetJSON200() *CreateGatewayServiceLogSession200 {
-	return r.JSON200
-}
-
-// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
-func (r CreateGatewayServiceLogSessionResp) GetApplicationproblemJSONDefault() *CreateGatewayServiceLogSessionDefault {
-	return r.ApplicationproblemJSONDefault
-}
-
-// GetBody returns the raw response body bytes
-func (r CreateGatewayServiceLogSessionResp) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r CreateGatewayServiceLogSessionResp) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r CreateGatewayServiceLogSessionResp) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r CreateGatewayServiceLogSessionResp) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
 type GetGatewayMetricsResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -4499,21 +4215,6 @@ func (c *ClientWithResponses) DeleteGatewayServiceWithResponse(ctx context.Conte
 		return nil, err
 	}
 	return ParseDeleteGatewayServiceResp(rsp)
-}
-
-// GetGatewayServiceWithResponse Get Service Details
-//
-// Get service details.
-//
-// Returns a wrapper object for the known response body format(s).
-//
-// Corresponds with GET /1.3/gateway/{service-uuid} (the `GetGatewayService` operationId).
-func (c *ClientWithResponses) GetGatewayServiceWithResponse(ctx context.Context, serviceUuid GetGatewayServiceServiceUuid, reqEditors ...RequestEditorFn) (*GetGatewayServiceResp, error) {
-	rsp, err := c.GetGatewayService(ctx, serviceUuid, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetGatewayServiceResp(rsp)
 }
 
 // ModifyGatewayServiceWithBodyWithResponse Modify Service
@@ -5011,36 +4712,6 @@ func (c *ClientWithResponses) ModifyGatewayServiceLabelWithResponse(ctx context.
 	return ParseModifyGatewayServiceLabelResp(rsp)
 }
 
-// CreateGatewayServiceLogSessionWithBodyWithResponse Create Service Log Session
-//
-// Create a new service log session.
-//
-// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /1.3/gateway/{service-uuid}/logs (the `CreateGatewayServiceLogSession` operationId).
-func (c *ClientWithResponses) CreateGatewayServiceLogSessionWithBodyWithResponse(ctx context.Context, serviceUuid CreateGatewayServiceLogSessionServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateGatewayServiceLogSessionResp, error) {
-	rsp, err := c.CreateGatewayServiceLogSessionWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateGatewayServiceLogSessionResp(rsp)
-}
-
-// CreateGatewayServiceLogSessionWithResponse Create Service Log Session
-//
-// Create a new service log session.
-//
-// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /1.3/gateway/{service-uuid}/logs (the `CreateGatewayServiceLogSession` operationId).
-func (c *ClientWithResponses) CreateGatewayServiceLogSessionWithResponse(ctx context.Context, serviceUuid CreateGatewayServiceLogSessionServiceUuid, body CreateGatewayServiceLogSessionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateGatewayServiceLogSessionResp, error) {
-	rsp, err := c.CreateGatewayServiceLogSession(ctx, serviceUuid, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateGatewayServiceLogSessionResp(rsp)
-}
-
 // GetGatewayMetricsWithResponse Get Service Metrics
 //
 // List available service metrics for service.
@@ -5233,39 +4904,6 @@ func ParseDeleteGatewayServiceResp(rsp *http.Response) (*DeleteGatewayServiceRes
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest DeleteGatewayServiceDefault
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSONDefault = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseGetGatewayServiceResp parses an HTTP response from a GetGatewayServiceWithResponse call
-func ParseGetGatewayServiceResp(rsp *http.Response) (*GetGatewayServiceResp, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetGatewayServiceResp{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest GetGatewayService200
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest GetGatewayServiceDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -6049,39 +5687,6 @@ func ParseModifyGatewayServiceLabelResp(rsp *http.Response) (*ModifyGatewayServi
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest ModifyGatewayServiceLabelDefault
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSONDefault = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseCreateGatewayServiceLogSessionResp parses an HTTP response from a CreateGatewayServiceLogSessionWithResponse call
-func ParseCreateGatewayServiceLogSessionResp(rsp *http.Response) (*CreateGatewayServiceLogSessionResp, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &CreateGatewayServiceLogSessionResp{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest CreateGatewayServiceLogSession200
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest CreateGatewayServiceLogSessionDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}

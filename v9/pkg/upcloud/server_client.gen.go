@@ -12,10 +12,17 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/oapi-codegen/runtime"
 )
 
 // The interface specification for the client above.
 type ServerClientInterface interface {
+
+	// ListServers Returns a list of servers
+	//
+	// Corresponds with GET /1.3/server (the `ListServers` operationId).
+	ListServers(ctx context.Context, params *ListServersParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateServerWithBody Create a new server
 	//
@@ -52,6 +59,408 @@ type ServerClientInterface interface {
 	//
 	// Corresponds with PUT /1.3/server (the `ModifyServer` operationId).
 	ModifyServer(ctx context.Context, body ModifyServerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListFirewallRulesetRelationships List servers related to a private firewall ruleset
+	//
+	// Returns servers related to a specific private firewall ruleset.
+	//
+	// Corresponds with GET /1.3/server/firewall_ruleset_relationships/private/{ruleset_uuid} (the `ListFirewallRulesetRelationships` operationId).
+	ListFirewallRulesetRelationships(ctx context.Context, rulesetUuid ServerListFirewallRulesetRelationshipsRulesetUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetLabels Returns a list of server labels
+	//
+	// Corresponds with GET /1.3/server/labels (the `GetLabels` operationId).
+	GetLabels(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteServer Delete a server
+	//
+	// Deletes a server. With query option ?storages=1, one can delete server's storages as well
+	//
+	// Corresponds with DELETE /1.3/server/{uuid} (the `DeleteServer` operationId).
+	DeleteServer(ctx context.Context, uuid DeleteServerUuid, params *DeleteServerParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetServer Get server details
+	//
+	// Returns details for a specific server.
+	//
+	// Corresponds with GET /1.3/server/{uuid} (the `GetServer` operationId).
+	GetServer(ctx context.Context, uuid GetServerUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// AttachPrivateFirewallRulesetWithBody Attach a private firewall ruleset
+	//
+	// Attach a private firewall ruleset to a specific server.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /1.3/server/{uuid}/attach_firewall_ruleset/private (the `AttachPrivateFirewallRuleset` operationId).
+	AttachPrivateFirewallRulesetWithBody(ctx context.Context, uuid ServerAttachPrivateFirewallRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// AttachPrivateFirewallRuleset Attach a private firewall ruleset
+	//
+	// Attach a private firewall ruleset to a specific server.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /1.3/server/{uuid}/attach_firewall_ruleset/private (the `AttachPrivateFirewallRuleset` operationId).
+	AttachPrivateFirewallRuleset(ctx context.Context, uuid ServerAttachPrivateFirewallRulesetUuid, body AttachPrivateFirewallRulesetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CancelServerOperation Cancel an ongoing operation for a specific server
+	//
+	// Corresponds with POST /1.3/server/{uuid}/cancel (the `CancelServerOperation` operationId).
+	CancelServerOperation(ctx context.Context, uuid CancelServerOperationUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// EjectCDROM Eject the CD-ROM image from a server
+	//
+	// Corresponds with POST /1.3/server/{uuid}/cdrom/eject (the `EjectCDROM` operationId).
+	EjectCDROM(ctx context.Context, uuid ServerEjectCDROMUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// LoadCDROMWithBody Load a CD-ROM image into a server
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /1.3/server/{uuid}/cdrom/load (the `LoadCDROM` operationId).
+	LoadCDROMWithBody(ctx context.Context, uuid ServerLoadCDROMUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// LoadCDROM Load a CD-ROM image into a server
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /1.3/server/{uuid}/cdrom/load (the `LoadCDROM` operationId).
+	LoadCDROM(ctx context.Context, uuid ServerLoadCDROMUuid, body LoadCDROMJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DetachPrivateFirewallRulesetWithBody Detach a private firewall ruleset
+	//
+	// Detach a private firewall ruleset from a specific server.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /1.3/server/{uuid}/detach_firewall_ruleset/private (the `DetachPrivateFirewallRuleset` operationId).
+	DetachPrivateFirewallRulesetWithBody(ctx context.Context, uuid ServerDetachPrivateFirewallRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DetachPrivateFirewallRuleset Detach a private firewall ruleset
+	//
+	// Detach a private firewall ruleset from a specific server.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /1.3/server/{uuid}/detach_firewall_ruleset/private (the `DetachPrivateFirewallRuleset` operationId).
+	DetachPrivateFirewallRuleset(ctx context.Context, uuid ServerDetachPrivateFirewallRulesetUuid, body DetachPrivateFirewallRulesetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListFirewallRules Returns a list of firewall rules for a specific server
+	//
+	// Corresponds with GET /1.3/server/{uuid}/firewall_rule (the `ListFirewallRules` operationId).
+	ListFirewallRules(ctx context.Context, uuid ServerListFirewallRulesUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateFirewallRuleWithBody Create a new firewall rule for a specific server
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /1.3/server/{uuid}/firewall_rule (the `CreateFirewallRule` operationId).
+	CreateFirewallRuleWithBody(ctx context.Context, uuid ServerCreateFirewallRuleUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateFirewallRule Create a new firewall rule for a specific server
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /1.3/server/{uuid}/firewall_rule (the `CreateFirewallRule` operationId).
+	CreateFirewallRule(ctx context.Context, uuid ServerCreateFirewallRuleUuid, body CreateFirewallRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateFirewallRulesWithBody Update firewall rules for a specific server
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PUT /1.3/server/{uuid}/firewall_rule (the `UpdateFirewallRules` operationId).
+	UpdateFirewallRulesWithBody(ctx context.Context, uuid ServerUpdateFirewallRulesUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateFirewallRules Update firewall rules for a specific server
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PUT /1.3/server/{uuid}/firewall_rule (the `UpdateFirewallRules` operationId).
+	UpdateFirewallRules(ctx context.Context, uuid ServerUpdateFirewallRulesUuid, body UpdateFirewallRulesJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateFirewallRulesForceWithBody Update firewall rules for a specific server
+	//
+	// Update firewall rules for a specific server. Using /force applies rules even if another operation is in progress for the server
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PUT /1.3/server/{uuid}/firewall_rule/force (the `UpdateFirewallRulesForce` operationId).
+	UpdateFirewallRulesForceWithBody(ctx context.Context, uuid ServerUpdateFirewallRulesForceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateFirewallRulesForce Update firewall rules for a specific server
+	//
+	// Update firewall rules for a specific server. Using /force applies rules even if another operation is in progress for the server
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PUT /1.3/server/{uuid}/firewall_rule/force (the `UpdateFirewallRulesForce` operationId).
+	UpdateFirewallRulesForce(ctx context.Context, uuid ServerUpdateFirewallRulesForceUuid, body UpdateFirewallRulesForceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteFirewallRule Delete a specific firewall rule from a server
+	//
+	// Corresponds with DELETE /1.3/server/{uuid}/firewall_rule/{position} (the `DeleteFirewallRule` operationId).
+	DeleteFirewallRule(ctx context.Context, uuid ServerDeleteFirewallRuleUuid, position ServerDeleteFirewallRulePosition, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetFirewallRule Returns details for a specific firewall rule
+	//
+	// Corresponds with GET /1.3/server/{uuid}/firewall_rule/{position} (the `GetFirewallRule` operationId).
+	GetFirewallRule(ctx context.Context, uuid ServerGetFirewallRuleUuid, position ServerGetFirewallRulePosition, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListPrivateFirewallRulesetRelationships List private firewall ruleset relationships for a server
+	//
+	// Returns private firewall ruleset relationships for a specific server.
+	//
+	// Corresponds with GET /1.3/server/{uuid}/firewall_ruleset_relationships/private (the `ListPrivateFirewallRulesetRelationships` operationId).
+	ListPrivateFirewallRulesetRelationships(ctx context.Context, uuid ServerListPrivateFirewallRulesetRelationshipsUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListServerGPUs Returns a list of GPUs assigned to a specific server
+	//
+	// Corresponds with GET /1.3/server/{uuid}/gpus (the `ListServerGPUs` operationId).
+	ListServerGPUs(ctx context.Context, uuid ListServerGPUsUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetServerNetworking Get server networking details
+	//
+	// Returns networking details for a specific server.
+	//
+	// Corresponds with GET /1.3/server/{uuid}/networking (the `GetServerNetworking` operationId).
+	GetServerNetworking(ctx context.Context, uuid GetServerNetworkingUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// AddServerInterfaceWithBody Add a network interface
+	//
+	// Add a network interface to a specific server.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /1.3/server/{uuid}/networking/interface (the `AddServerInterface` operationId).
+	AddServerInterfaceWithBody(ctx context.Context, uuid AddServerInterfaceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// AddServerInterface Add a network interface
+	//
+	// Add a network interface to a specific server.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /1.3/server/{uuid}/networking/interface (the `AddServerInterface` operationId).
+	AddServerInterface(ctx context.Context, uuid AddServerInterfaceUuid, body AddServerInterfaceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteServerInterface Delete a network interface
+	//
+	// Delete a network interface from a specific server.
+	//
+	// Corresponds with DELETE /1.3/server/{uuid}/networking/interface/{index} (the `DeleteServerInterface` operationId).
+	DeleteServerInterface(ctx context.Context, uuid DeleteServerInterfaceUuid, index DeleteServerInterfaceIndex, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ModifyServerInterfaceWithBody Modify a network interface
+	//
+	// Modify a network interface of a specific server.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PUT /1.3/server/{uuid}/networking/interface/{index} (the `ModifyServerInterface` operationId).
+	ModifyServerInterfaceWithBody(ctx context.Context, uuid ModifyServerInterfaceUuid, index ModifyServerInterfaceIndex, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ModifyServerInterface Modify a network interface
+	//
+	// Modify a network interface of a specific server.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PUT /1.3/server/{uuid}/networking/interface/{index} (the `ModifyServerInterface` operationId).
+	ModifyServerInterface(ctx context.Context, uuid ModifyServerInterfaceUuid, index ModifyServerInterfaceIndex, body ModifyServerInterfaceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// AddServerInterfaceIpAddressWithBody Add an IP address to a network interface
+	//
+	// Add an IP address to a network interface of a specific server.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /1.3/server/{uuid}/networking/interface/{index}/ip_address (the `AddServerInterfaceIpAddress` operationId).
+	AddServerInterfaceIpAddressWithBody(ctx context.Context, uuid AddServerInterfaceIpAddressUuid, index AddServerInterfaceIpAddressIndex, params *AddServerInterfaceIpAddressParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// AddServerInterfaceIpAddress Add an IP address to a network interface
+	//
+	// Add an IP address to a network interface of a specific server.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /1.3/server/{uuid}/networking/interface/{index}/ip_address (the `AddServerInterfaceIpAddress` operationId).
+	AddServerInterfaceIpAddress(ctx context.Context, uuid AddServerInterfaceIpAddressUuid, index AddServerInterfaceIpAddressIndex, params *AddServerInterfaceIpAddressParams, body AddServerInterfaceIpAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteServerInterfaceIpAddress Delete an IP address from a network interface
+	//
+	// Delete an IP address from a network interface of a specific server.
+	//
+	// Corresponds with DELETE /1.3/server/{uuid}/networking/interface/{index}/ip_address/{ip} (the `DeleteServerInterfaceIpAddress` operationId).
+	DeleteServerInterfaceIpAddress(ctx context.Context, uuid DeleteServerInterfaceIpAddressUuid, index DeleteServerInterfaceIpAddressIndex, ip DeleteServerInterfaceIpAddressIp, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RebuildServerWithBody Rebuild a server from a specified storage device
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /1.3/server/{uuid}/rebuild (the `RebuildServer` operationId).
+	RebuildServerWithBody(ctx context.Context, uuid RebuildServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RebuildServer Rebuild a server from a specified storage device
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /1.3/server/{uuid}/rebuild (the `RebuildServer` operationId).
+	RebuildServer(ctx context.Context, uuid RebuildServerUuid, body RebuildServerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RelocateServerWithBody Relocate a server to another zone
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /1.3/server/{uuid}/relocate (the `RelocateServer` operationId).
+	RelocateServerWithBody(ctx context.Context, uuid RelocateServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RelocateServer Relocate a server to another zone
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /1.3/server/{uuid}/relocate (the `RelocateServer` operationId).
+	RelocateServer(ctx context.Context, uuid RelocateServerUuid, body RelocateServerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetRemoteAccessDetails Get remote access connection details
+	//
+	// Returns remote access connection details for a specific server.
+	//
+	// Corresponds with GET /1.3/server/{uuid}/remote_access_details (the `GetRemoteAccessDetails` operationId).
+	GetRemoteAccessDetails(ctx context.Context, uuid ServerGetRemoteAccessDetailsUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RestartServerWithBody Restart a server
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /1.3/server/{uuid}/restart (the `RestartServer` operationId).
+	RestartServerWithBody(ctx context.Context, uuid RestartServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RestartServer Restart a server
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /1.3/server/{uuid}/restart (the `RestartServer` operationId).
+	RestartServer(ctx context.Context, uuid RestartServerUuid, body RestartServerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// StartServerWithBody Start a server
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /1.3/server/{uuid}/start (the `StartServer` operationId).
+	StartServerWithBody(ctx context.Context, uuid StartServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// StartServer Start a server
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /1.3/server/{uuid}/start (the `StartServer` operationId).
+	StartServer(ctx context.Context, uuid StartServerUuid, body StartServerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetCPUStats Get CPU stats for a specific server
+	//
+	// Corresponds with GET /1.3/server/{uuid}/stats/cpu (the `GetCPUStats` operationId).
+	GetCPUStats(ctx context.Context, uuid ServerGetCPUStatsUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetCPUStatsByPeriod Get CPU stats for a specific server
+	//
+	// Corresponds with GET /1.3/server/{uuid}/stats/cpu/{period} (the `GetCPUStatsByPeriod` operationId).
+	GetCPUStatsByPeriod(ctx context.Context, uuid ServerGetCPUStatsByPeriodUuid, period ServerGetCPUStatsByPeriodPeriod, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetDiskStats Get disk stats for a specific server
+	//
+	// Corresponds with GET /1.3/server/{uuid}/stats/disk/{type} (the `GetDiskStats` operationId).
+	GetDiskStats(ctx context.Context, uuid ServerGetDiskStatsUuid, pType GetDiskStatsParamsType, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetDiskStatsByPeriod Get disk stats for a specific server
+	//
+	// Corresponds with GET /1.3/server/{uuid}/stats/disk/{type}/{period} (the `GetDiskStatsByPeriod` operationId).
+	GetDiskStatsByPeriod(ctx context.Context, uuid ServerGetDiskStatsByPeriodUuid, pType GetDiskStatsByPeriodParamsType, period ServerGetDiskStatsByPeriodPeriod, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetNetworkStats Get network stats for a specific server
+	//
+	// Get disk stats for a specific server.
+	//
+	// Corresponds with GET /1.3/server/{uuid}/stats/network/{type} (the `GetNetworkStats` operationId).
+	GetNetworkStats(ctx context.Context, uuid ServerGetNetworkStatsUuid, pType ServerGetNetworkStatsType, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetNetworkStatsByNetwork Get network stats for a specific server
+	//
+	// Get disk stats for a specific server.
+	//
+	// Corresponds with GET /1.3/server/{uuid}/stats/network/{type}/{network} (the `GetNetworkStatsByNetwork` operationId).
+	GetNetworkStatsByNetwork(ctx context.Context, uuid ServerGetNetworkStatsByNetworkUuid, pType ServerGetNetworkStatsByNetworkType, network ServerGetNetworkStatsByNetworkNetwork, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetNetworkStatsByNetworkAndPeriod Get network stats for a specific server
+	//
+	// Get disk stats for a specific server.
+	//
+	// Corresponds with GET /1.3/server/{uuid}/stats/network/{type}/{network}/{period} (the `GetNetworkStatsByNetworkAndPeriod` operationId).
+	GetNetworkStatsByNetworkAndPeriod(ctx context.Context, uuid ServerGetNetworkStatsByNetworkAndPeriodUuid, pType ServerGetNetworkStatsByNetworkAndPeriodType, network ServerGetNetworkStatsByNetworkAndPeriodNetwork, period ServerGetNetworkStatsByNetworkAndPeriodPeriod, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// StopServerWithBody Stop a server
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /1.3/server/{uuid}/stop (the `StopServer` operationId).
+	StopServerWithBody(ctx context.Context, uuid StopServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// StopServer Stop a server
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /1.3/server/{uuid}/stop (the `StopServer` operationId).
+	StopServer(ctx context.Context, uuid StopServerUuid, body StopServerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// AttachStorageDeviceWithBody Attach a storage device to a server
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /1.3/server/{uuid}/storage/attach (the `AttachStorageDevice` operationId).
+	AttachStorageDeviceWithBody(ctx context.Context, uuid ServerAttachStorageDeviceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// AttachStorageDevice Attach a storage device to a server
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /1.3/server/{uuid}/storage/attach (the `AttachStorageDevice` operationId).
+	AttachStorageDevice(ctx context.Context, uuid ServerAttachStorageDeviceUuid, body AttachStorageDeviceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DetachStorageDeviceWithBody Detach a storage device from a server
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /1.3/server/{uuid}/storage/detach (the `DetachStorageDevice` operationId).
+	DetachStorageDeviceWithBody(ctx context.Context, uuid ServerDetachStorageDeviceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DetachStorageDevice Detach a storage device from a server
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /1.3/server/{uuid}/storage/detach (the `DetachStorageDevice` operationId).
+	DetachStorageDevice(ctx context.Context, uuid ServerDetachStorageDeviceUuid, body DetachStorageDeviceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetVNCDetails Get VNC connection details
+	//
+	// Returns VNC connection details for a specific server.
+	//
+	// Corresponds with GET /1.3/server/{uuid}/vnc_details (the `GetVNCDetails` operationId).
+	GetVNCDetails(ctx context.Context, uuid ServerGetVNCDetailsUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+}
+
+// ListServers Returns a list of servers
+//
+// Corresponds with GET /1.3/server (the `ListServers` operationId).
+func (c *Client) ListServers(ctx context.Context, params *ListServersParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListServersRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
 }
 
 // CreateServerWithBody Create a new server
@@ -128,6 +537,1093 @@ func (c *Client) ModifyServer(ctx context.Context, body ModifyServerJSONRequestB
 		return nil, err
 	}
 	return c.Client.Do(req)
+}
+
+// ListFirewallRulesetRelationships List servers related to a private firewall ruleset
+//
+// Returns servers related to a specific private firewall ruleset.
+//
+// Corresponds with GET /1.3/server/firewall_ruleset_relationships/private/{ruleset_uuid} (the `ListFirewallRulesetRelationships` operationId).
+func (c *Client) ListFirewallRulesetRelationships(ctx context.Context, rulesetUuid ServerListFirewallRulesetRelationshipsRulesetUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListFirewallRulesetRelationshipsRequest(c.Server, rulesetUuid)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetLabels Returns a list of server labels
+//
+// Corresponds with GET /1.3/server/labels (the `GetLabels` operationId).
+func (c *Client) GetLabels(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetLabelsRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteServer Delete a server
+//
+// Deletes a server. With query option ?storages=1, one can delete server's storages as well
+//
+// Corresponds with DELETE /1.3/server/{uuid} (the `DeleteServer` operationId).
+func (c *Client) DeleteServer(ctx context.Context, uuid DeleteServerUuid, params *DeleteServerParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteServerRequest(c.Server, uuid, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetServer Get server details
+//
+// Returns details for a specific server.
+//
+// Corresponds with GET /1.3/server/{uuid} (the `GetServer` operationId).
+func (c *Client) GetServer(ctx context.Context, uuid GetServerUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetServerRequest(c.Server, uuid)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// AttachPrivateFirewallRulesetWithBody Attach a private firewall ruleset
+//
+// Attach a private firewall ruleset to a specific server.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /1.3/server/{uuid}/attach_firewall_ruleset/private (the `AttachPrivateFirewallRuleset` operationId).
+func (c *Client) AttachPrivateFirewallRulesetWithBody(ctx context.Context, uuid ServerAttachPrivateFirewallRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAttachPrivateFirewallRulesetRequestWithBody(c.Server, uuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// AttachPrivateFirewallRuleset Attach a private firewall ruleset
+//
+// Attach a private firewall ruleset to a specific server.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /1.3/server/{uuid}/attach_firewall_ruleset/private (the `AttachPrivateFirewallRuleset` operationId).
+func (c *Client) AttachPrivateFirewallRuleset(ctx context.Context, uuid ServerAttachPrivateFirewallRulesetUuid, body AttachPrivateFirewallRulesetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAttachPrivateFirewallRulesetRequest(c.Server, uuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CancelServerOperation Cancel an ongoing operation for a specific server
+//
+// Corresponds with POST /1.3/server/{uuid}/cancel (the `CancelServerOperation` operationId).
+func (c *Client) CancelServerOperation(ctx context.Context, uuid CancelServerOperationUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCancelServerOperationRequest(c.Server, uuid)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// EjectCDROM Eject the CD-ROM image from a server
+//
+// Corresponds with POST /1.3/server/{uuid}/cdrom/eject (the `EjectCDROM` operationId).
+func (c *Client) EjectCDROM(ctx context.Context, uuid ServerEjectCDROMUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewEjectCDROMRequest(c.Server, uuid)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// LoadCDROMWithBody Load a CD-ROM image into a server
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /1.3/server/{uuid}/cdrom/load (the `LoadCDROM` operationId).
+func (c *Client) LoadCDROMWithBody(ctx context.Context, uuid ServerLoadCDROMUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewLoadCDROMRequestWithBody(c.Server, uuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// LoadCDROM Load a CD-ROM image into a server
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /1.3/server/{uuid}/cdrom/load (the `LoadCDROM` operationId).
+func (c *Client) LoadCDROM(ctx context.Context, uuid ServerLoadCDROMUuid, body LoadCDROMJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewLoadCDROMRequest(c.Server, uuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DetachPrivateFirewallRulesetWithBody Detach a private firewall ruleset
+//
+// Detach a private firewall ruleset from a specific server.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /1.3/server/{uuid}/detach_firewall_ruleset/private (the `DetachPrivateFirewallRuleset` operationId).
+func (c *Client) DetachPrivateFirewallRulesetWithBody(ctx context.Context, uuid ServerDetachPrivateFirewallRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDetachPrivateFirewallRulesetRequestWithBody(c.Server, uuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DetachPrivateFirewallRuleset Detach a private firewall ruleset
+//
+// Detach a private firewall ruleset from a specific server.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /1.3/server/{uuid}/detach_firewall_ruleset/private (the `DetachPrivateFirewallRuleset` operationId).
+func (c *Client) DetachPrivateFirewallRuleset(ctx context.Context, uuid ServerDetachPrivateFirewallRulesetUuid, body DetachPrivateFirewallRulesetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDetachPrivateFirewallRulesetRequest(c.Server, uuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListFirewallRules Returns a list of firewall rules for a specific server
+//
+// Corresponds with GET /1.3/server/{uuid}/firewall_rule (the `ListFirewallRules` operationId).
+func (c *Client) ListFirewallRules(ctx context.Context, uuid ServerListFirewallRulesUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListFirewallRulesRequest(c.Server, uuid)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateFirewallRuleWithBody Create a new firewall rule for a specific server
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /1.3/server/{uuid}/firewall_rule (the `CreateFirewallRule` operationId).
+func (c *Client) CreateFirewallRuleWithBody(ctx context.Context, uuid ServerCreateFirewallRuleUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateFirewallRuleRequestWithBody(c.Server, uuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateFirewallRule Create a new firewall rule for a specific server
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /1.3/server/{uuid}/firewall_rule (the `CreateFirewallRule` operationId).
+func (c *Client) CreateFirewallRule(ctx context.Context, uuid ServerCreateFirewallRuleUuid, body CreateFirewallRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateFirewallRuleRequest(c.Server, uuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateFirewallRulesWithBody Update firewall rules for a specific server
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PUT /1.3/server/{uuid}/firewall_rule (the `UpdateFirewallRules` operationId).
+func (c *Client) UpdateFirewallRulesWithBody(ctx context.Context, uuid ServerUpdateFirewallRulesUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateFirewallRulesRequestWithBody(c.Server, uuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateFirewallRules Update firewall rules for a specific server
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PUT /1.3/server/{uuid}/firewall_rule (the `UpdateFirewallRules` operationId).
+func (c *Client) UpdateFirewallRules(ctx context.Context, uuid ServerUpdateFirewallRulesUuid, body UpdateFirewallRulesJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateFirewallRulesRequest(c.Server, uuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateFirewallRulesForceWithBody Update firewall rules for a specific server
+//
+// Update firewall rules for a specific server. Using /force applies rules even if another operation is in progress for the server
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PUT /1.3/server/{uuid}/firewall_rule/force (the `UpdateFirewallRulesForce` operationId).
+func (c *Client) UpdateFirewallRulesForceWithBody(ctx context.Context, uuid ServerUpdateFirewallRulesForceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateFirewallRulesForceRequestWithBody(c.Server, uuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateFirewallRulesForce Update firewall rules for a specific server
+//
+// Update firewall rules for a specific server. Using /force applies rules even if another operation is in progress for the server
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PUT /1.3/server/{uuid}/firewall_rule/force (the `UpdateFirewallRulesForce` operationId).
+func (c *Client) UpdateFirewallRulesForce(ctx context.Context, uuid ServerUpdateFirewallRulesForceUuid, body UpdateFirewallRulesForceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateFirewallRulesForceRequest(c.Server, uuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteFirewallRule Delete a specific firewall rule from a server
+//
+// Corresponds with DELETE /1.3/server/{uuid}/firewall_rule/{position} (the `DeleteFirewallRule` operationId).
+func (c *Client) DeleteFirewallRule(ctx context.Context, uuid ServerDeleteFirewallRuleUuid, position ServerDeleteFirewallRulePosition, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteFirewallRuleRequest(c.Server, uuid, position)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetFirewallRule Returns details for a specific firewall rule
+//
+// Corresponds with GET /1.3/server/{uuid}/firewall_rule/{position} (the `GetFirewallRule` operationId).
+func (c *Client) GetFirewallRule(ctx context.Context, uuid ServerGetFirewallRuleUuid, position ServerGetFirewallRulePosition, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetFirewallRuleRequest(c.Server, uuid, position)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListPrivateFirewallRulesetRelationships List private firewall ruleset relationships for a server
+//
+// Returns private firewall ruleset relationships for a specific server.
+//
+// Corresponds with GET /1.3/server/{uuid}/firewall_ruleset_relationships/private (the `ListPrivateFirewallRulesetRelationships` operationId).
+func (c *Client) ListPrivateFirewallRulesetRelationships(ctx context.Context, uuid ServerListPrivateFirewallRulesetRelationshipsUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListPrivateFirewallRulesetRelationshipsRequest(c.Server, uuid)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListServerGPUs Returns a list of GPUs assigned to a specific server
+//
+// Corresponds with GET /1.3/server/{uuid}/gpus (the `ListServerGPUs` operationId).
+func (c *Client) ListServerGPUs(ctx context.Context, uuid ListServerGPUsUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListServerGPUsRequest(c.Server, uuid)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetServerNetworking Get server networking details
+//
+// Returns networking details for a specific server.
+//
+// Corresponds with GET /1.3/server/{uuid}/networking (the `GetServerNetworking` operationId).
+func (c *Client) GetServerNetworking(ctx context.Context, uuid GetServerNetworkingUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetServerNetworkingRequest(c.Server, uuid)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// AddServerInterfaceWithBody Add a network interface
+//
+// Add a network interface to a specific server.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /1.3/server/{uuid}/networking/interface (the `AddServerInterface` operationId).
+func (c *Client) AddServerInterfaceWithBody(ctx context.Context, uuid AddServerInterfaceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAddServerInterfaceRequestWithBody(c.Server, uuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// AddServerInterface Add a network interface
+//
+// Add a network interface to a specific server.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /1.3/server/{uuid}/networking/interface (the `AddServerInterface` operationId).
+func (c *Client) AddServerInterface(ctx context.Context, uuid AddServerInterfaceUuid, body AddServerInterfaceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAddServerInterfaceRequest(c.Server, uuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteServerInterface Delete a network interface
+//
+// Delete a network interface from a specific server.
+//
+// Corresponds with DELETE /1.3/server/{uuid}/networking/interface/{index} (the `DeleteServerInterface` operationId).
+func (c *Client) DeleteServerInterface(ctx context.Context, uuid DeleteServerInterfaceUuid, index DeleteServerInterfaceIndex, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteServerInterfaceRequest(c.Server, uuid, index)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ModifyServerInterfaceWithBody Modify a network interface
+//
+// Modify a network interface of a specific server.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PUT /1.3/server/{uuid}/networking/interface/{index} (the `ModifyServerInterface` operationId).
+func (c *Client) ModifyServerInterfaceWithBody(ctx context.Context, uuid ModifyServerInterfaceUuid, index ModifyServerInterfaceIndex, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewModifyServerInterfaceRequestWithBody(c.Server, uuid, index, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ModifyServerInterface Modify a network interface
+//
+// Modify a network interface of a specific server.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PUT /1.3/server/{uuid}/networking/interface/{index} (the `ModifyServerInterface` operationId).
+func (c *Client) ModifyServerInterface(ctx context.Context, uuid ModifyServerInterfaceUuid, index ModifyServerInterfaceIndex, body ModifyServerInterfaceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewModifyServerInterfaceRequest(c.Server, uuid, index, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// AddServerInterfaceIpAddressWithBody Add an IP address to a network interface
+//
+// Add an IP address to a network interface of a specific server.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /1.3/server/{uuid}/networking/interface/{index}/ip_address (the `AddServerInterfaceIpAddress` operationId).
+func (c *Client) AddServerInterfaceIpAddressWithBody(ctx context.Context, uuid AddServerInterfaceIpAddressUuid, index AddServerInterfaceIpAddressIndex, params *AddServerInterfaceIpAddressParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAddServerInterfaceIpAddressRequestWithBody(c.Server, uuid, index, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// AddServerInterfaceIpAddress Add an IP address to a network interface
+//
+// Add an IP address to a network interface of a specific server.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /1.3/server/{uuid}/networking/interface/{index}/ip_address (the `AddServerInterfaceIpAddress` operationId).
+func (c *Client) AddServerInterfaceIpAddress(ctx context.Context, uuid AddServerInterfaceIpAddressUuid, index AddServerInterfaceIpAddressIndex, params *AddServerInterfaceIpAddressParams, body AddServerInterfaceIpAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAddServerInterfaceIpAddressRequest(c.Server, uuid, index, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteServerInterfaceIpAddress Delete an IP address from a network interface
+//
+// Delete an IP address from a network interface of a specific server.
+//
+// Corresponds with DELETE /1.3/server/{uuid}/networking/interface/{index}/ip_address/{ip} (the `DeleteServerInterfaceIpAddress` operationId).
+func (c *Client) DeleteServerInterfaceIpAddress(ctx context.Context, uuid DeleteServerInterfaceIpAddressUuid, index DeleteServerInterfaceIpAddressIndex, ip DeleteServerInterfaceIpAddressIp, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteServerInterfaceIpAddressRequest(c.Server, uuid, index, ip)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RebuildServerWithBody Rebuild a server from a specified storage device
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /1.3/server/{uuid}/rebuild (the `RebuildServer` operationId).
+func (c *Client) RebuildServerWithBody(ctx context.Context, uuid RebuildServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRebuildServerRequestWithBody(c.Server, uuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RebuildServer Rebuild a server from a specified storage device
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /1.3/server/{uuid}/rebuild (the `RebuildServer` operationId).
+func (c *Client) RebuildServer(ctx context.Context, uuid RebuildServerUuid, body RebuildServerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRebuildServerRequest(c.Server, uuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RelocateServerWithBody Relocate a server to another zone
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /1.3/server/{uuid}/relocate (the `RelocateServer` operationId).
+func (c *Client) RelocateServerWithBody(ctx context.Context, uuid RelocateServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRelocateServerRequestWithBody(c.Server, uuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RelocateServer Relocate a server to another zone
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /1.3/server/{uuid}/relocate (the `RelocateServer` operationId).
+func (c *Client) RelocateServer(ctx context.Context, uuid RelocateServerUuid, body RelocateServerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRelocateServerRequest(c.Server, uuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetRemoteAccessDetails Get remote access connection details
+//
+// Returns remote access connection details for a specific server.
+//
+// Corresponds with GET /1.3/server/{uuid}/remote_access_details (the `GetRemoteAccessDetails` operationId).
+func (c *Client) GetRemoteAccessDetails(ctx context.Context, uuid ServerGetRemoteAccessDetailsUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetRemoteAccessDetailsRequest(c.Server, uuid)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RestartServerWithBody Restart a server
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /1.3/server/{uuid}/restart (the `RestartServer` operationId).
+func (c *Client) RestartServerWithBody(ctx context.Context, uuid RestartServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRestartServerRequestWithBody(c.Server, uuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RestartServer Restart a server
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /1.3/server/{uuid}/restart (the `RestartServer` operationId).
+func (c *Client) RestartServer(ctx context.Context, uuid RestartServerUuid, body RestartServerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRestartServerRequest(c.Server, uuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// StartServerWithBody Start a server
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /1.3/server/{uuid}/start (the `StartServer` operationId).
+func (c *Client) StartServerWithBody(ctx context.Context, uuid StartServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewStartServerRequestWithBody(c.Server, uuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// StartServer Start a server
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /1.3/server/{uuid}/start (the `StartServer` operationId).
+func (c *Client) StartServer(ctx context.Context, uuid StartServerUuid, body StartServerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewStartServerRequest(c.Server, uuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetCPUStats Get CPU stats for a specific server
+//
+// Corresponds with GET /1.3/server/{uuid}/stats/cpu (the `GetCPUStats` operationId).
+func (c *Client) GetCPUStats(ctx context.Context, uuid ServerGetCPUStatsUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetCPUStatsRequest(c.Server, uuid)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetCPUStatsByPeriod Get CPU stats for a specific server
+//
+// Corresponds with GET /1.3/server/{uuid}/stats/cpu/{period} (the `GetCPUStatsByPeriod` operationId).
+func (c *Client) GetCPUStatsByPeriod(ctx context.Context, uuid ServerGetCPUStatsByPeriodUuid, period ServerGetCPUStatsByPeriodPeriod, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetCPUStatsByPeriodRequest(c.Server, uuid, period)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetDiskStats Get disk stats for a specific server
+//
+// Corresponds with GET /1.3/server/{uuid}/stats/disk/{type} (the `GetDiskStats` operationId).
+func (c *Client) GetDiskStats(ctx context.Context, uuid ServerGetDiskStatsUuid, pType GetDiskStatsParamsType, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetDiskStatsRequest(c.Server, uuid, pType)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetDiskStatsByPeriod Get disk stats for a specific server
+//
+// Corresponds with GET /1.3/server/{uuid}/stats/disk/{type}/{period} (the `GetDiskStatsByPeriod` operationId).
+func (c *Client) GetDiskStatsByPeriod(ctx context.Context, uuid ServerGetDiskStatsByPeriodUuid, pType GetDiskStatsByPeriodParamsType, period ServerGetDiskStatsByPeriodPeriod, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetDiskStatsByPeriodRequest(c.Server, uuid, pType, period)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetNetworkStats Get network stats for a specific server
+//
+// Get disk stats for a specific server.
+//
+// Corresponds with GET /1.3/server/{uuid}/stats/network/{type} (the `GetNetworkStats` operationId).
+func (c *Client) GetNetworkStats(ctx context.Context, uuid ServerGetNetworkStatsUuid, pType ServerGetNetworkStatsType, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetNetworkStatsRequest(c.Server, uuid, pType)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetNetworkStatsByNetwork Get network stats for a specific server
+//
+// Get disk stats for a specific server.
+//
+// Corresponds with GET /1.3/server/{uuid}/stats/network/{type}/{network} (the `GetNetworkStatsByNetwork` operationId).
+func (c *Client) GetNetworkStatsByNetwork(ctx context.Context, uuid ServerGetNetworkStatsByNetworkUuid, pType ServerGetNetworkStatsByNetworkType, network ServerGetNetworkStatsByNetworkNetwork, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetNetworkStatsByNetworkRequest(c.Server, uuid, pType, network)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetNetworkStatsByNetworkAndPeriod Get network stats for a specific server
+//
+// Get disk stats for a specific server.
+//
+// Corresponds with GET /1.3/server/{uuid}/stats/network/{type}/{network}/{period} (the `GetNetworkStatsByNetworkAndPeriod` operationId).
+func (c *Client) GetNetworkStatsByNetworkAndPeriod(ctx context.Context, uuid ServerGetNetworkStatsByNetworkAndPeriodUuid, pType ServerGetNetworkStatsByNetworkAndPeriodType, network ServerGetNetworkStatsByNetworkAndPeriodNetwork, period ServerGetNetworkStatsByNetworkAndPeriodPeriod, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetNetworkStatsByNetworkAndPeriodRequest(c.Server, uuid, pType, network, period)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// StopServerWithBody Stop a server
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /1.3/server/{uuid}/stop (the `StopServer` operationId).
+func (c *Client) StopServerWithBody(ctx context.Context, uuid StopServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewStopServerRequestWithBody(c.Server, uuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// StopServer Stop a server
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /1.3/server/{uuid}/stop (the `StopServer` operationId).
+func (c *Client) StopServer(ctx context.Context, uuid StopServerUuid, body StopServerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewStopServerRequest(c.Server, uuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// AttachStorageDeviceWithBody Attach a storage device to a server
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /1.3/server/{uuid}/storage/attach (the `AttachStorageDevice` operationId).
+func (c *Client) AttachStorageDeviceWithBody(ctx context.Context, uuid ServerAttachStorageDeviceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAttachStorageDeviceRequestWithBody(c.Server, uuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// AttachStorageDevice Attach a storage device to a server
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /1.3/server/{uuid}/storage/attach (the `AttachStorageDevice` operationId).
+func (c *Client) AttachStorageDevice(ctx context.Context, uuid ServerAttachStorageDeviceUuid, body AttachStorageDeviceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAttachStorageDeviceRequest(c.Server, uuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DetachStorageDeviceWithBody Detach a storage device from a server
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /1.3/server/{uuid}/storage/detach (the `DetachStorageDevice` operationId).
+func (c *Client) DetachStorageDeviceWithBody(ctx context.Context, uuid ServerDetachStorageDeviceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDetachStorageDeviceRequestWithBody(c.Server, uuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DetachStorageDevice Detach a storage device from a server
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /1.3/server/{uuid}/storage/detach (the `DetachStorageDevice` operationId).
+func (c *Client) DetachStorageDevice(ctx context.Context, uuid ServerDetachStorageDeviceUuid, body DetachStorageDeviceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDetachStorageDeviceRequest(c.Server, uuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetVNCDetails Get VNC connection details
+//
+// Returns VNC connection details for a specific server.
+//
+// Corresponds with GET /1.3/server/{uuid}/vnc_details (the `GetVNCDetails` operationId).
+func (c *Client) GetVNCDetails(ctx context.Context, uuid ServerGetVNCDetailsUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetVNCDetailsRequest(c.Server, uuid)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// NewListServersRequest constructs an http.Request for the ListServers method
+func NewListServersRequest(server string, params *ListServersParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Label != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "label", *params.Label, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Uuid != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "uuid", *params.Uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Host != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "host", *params.Host, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int64"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Device != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "device", *params.Device, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.State != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "state", *params.State, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Tag != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "tag", *params.Tag, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Search != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "search", *params.Search, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.SortBy != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort_by", *params.SortBy, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.OrderBy != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "order_by", *params.OrderBy, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
 }
 
 // NewCreateServerRequest calls the generic CreateServer builder with application/json body
@@ -210,8 +1706,1715 @@ func NewModifyServerRequestWithBody(server string, contentType string, body io.R
 	return req, nil
 }
 
+// NewListFirewallRulesetRelationshipsRequest constructs an http.Request for the ListFirewallRulesetRelationships method
+func NewListFirewallRulesetRelationshipsRequest(server string, rulesetUuid ServerListFirewallRulesetRelationshipsRulesetUuid) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "ruleset_uuid", rulesetUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/firewall_ruleset_relationships/private/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetLabelsRequest constructs an http.Request for the GetLabels method
+func NewGetLabelsRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/labels")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewDeleteServerRequest constructs an http.Request for the DeleteServer method
+func NewDeleteServerRequest(server string, uuid DeleteServerUuid, params *DeleteServerParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Storages != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "storages", *params.Storages, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int64"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetServerRequest constructs an http.Request for the GetServer method
+func NewGetServerRequest(server string, uuid GetServerUuid) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewAttachPrivateFirewallRulesetRequest calls the generic AttachPrivateFirewallRuleset builder with application/json body
+func NewAttachPrivateFirewallRulesetRequest(server string, uuid ServerAttachPrivateFirewallRulesetUuid, body AttachPrivateFirewallRulesetJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewAttachPrivateFirewallRulesetRequestWithBody(server, uuid, "application/json", bodyReader)
+}
+
+// NewAttachPrivateFirewallRulesetRequestWithBody constructs an http.Request for the AttachPrivateFirewallRuleset method, with any body, and a specified content type
+func NewAttachPrivateFirewallRulesetRequestWithBody(server string, uuid ServerAttachPrivateFirewallRulesetUuid, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/attach_firewall_ruleset/private", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewCancelServerOperationRequest constructs an http.Request for the CancelServerOperation method
+func NewCancelServerOperationRequest(server string, uuid CancelServerOperationUuid) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/cancel", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewEjectCDROMRequest constructs an http.Request for the EjectCDROM method
+func NewEjectCDROMRequest(server string, uuid ServerEjectCDROMUuid) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/cdrom/eject", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewLoadCDROMRequest calls the generic LoadCDROM builder with application/json body
+func NewLoadCDROMRequest(server string, uuid ServerLoadCDROMUuid, body LoadCDROMJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewLoadCDROMRequestWithBody(server, uuid, "application/json", bodyReader)
+}
+
+// NewLoadCDROMRequestWithBody constructs an http.Request for the LoadCDROM method, with any body, and a specified content type
+func NewLoadCDROMRequestWithBody(server string, uuid ServerLoadCDROMUuid, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/cdrom/load", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDetachPrivateFirewallRulesetRequest calls the generic DetachPrivateFirewallRuleset builder with application/json body
+func NewDetachPrivateFirewallRulesetRequest(server string, uuid ServerDetachPrivateFirewallRulesetUuid, body DetachPrivateFirewallRulesetJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewDetachPrivateFirewallRulesetRequestWithBody(server, uuid, "application/json", bodyReader)
+}
+
+// NewDetachPrivateFirewallRulesetRequestWithBody constructs an http.Request for the DetachPrivateFirewallRuleset method, with any body, and a specified content type
+func NewDetachPrivateFirewallRulesetRequestWithBody(server string, uuid ServerDetachPrivateFirewallRulesetUuid, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/detach_firewall_ruleset/private", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewListFirewallRulesRequest constructs an http.Request for the ListFirewallRules method
+func NewListFirewallRulesRequest(server string, uuid ServerListFirewallRulesUuid) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/firewall_rule", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateFirewallRuleRequest calls the generic CreateFirewallRule builder with application/json body
+func NewCreateFirewallRuleRequest(server string, uuid ServerCreateFirewallRuleUuid, body CreateFirewallRuleJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateFirewallRuleRequestWithBody(server, uuid, "application/json", bodyReader)
+}
+
+// NewCreateFirewallRuleRequestWithBody constructs an http.Request for the CreateFirewallRule method, with any body, and a specified content type
+func NewCreateFirewallRuleRequestWithBody(server string, uuid ServerCreateFirewallRuleUuid, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/firewall_rule", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewUpdateFirewallRulesRequest calls the generic UpdateFirewallRules builder with application/json body
+func NewUpdateFirewallRulesRequest(server string, uuid ServerUpdateFirewallRulesUuid, body UpdateFirewallRulesJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateFirewallRulesRequestWithBody(server, uuid, "application/json", bodyReader)
+}
+
+// NewUpdateFirewallRulesRequestWithBody constructs an http.Request for the UpdateFirewallRules method, with any body, and a specified content type
+func NewUpdateFirewallRulesRequestWithBody(server string, uuid ServerUpdateFirewallRulesUuid, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/firewall_rule", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewUpdateFirewallRulesForceRequest calls the generic UpdateFirewallRulesForce builder with application/json body
+func NewUpdateFirewallRulesForceRequest(server string, uuid ServerUpdateFirewallRulesForceUuid, body UpdateFirewallRulesForceJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateFirewallRulesForceRequestWithBody(server, uuid, "application/json", bodyReader)
+}
+
+// NewUpdateFirewallRulesForceRequestWithBody constructs an http.Request for the UpdateFirewallRulesForce method, with any body, and a specified content type
+func NewUpdateFirewallRulesForceRequestWithBody(server string, uuid ServerUpdateFirewallRulesForceUuid, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/firewall_rule/force", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeleteFirewallRuleRequest constructs an http.Request for the DeleteFirewallRule method
+func NewDeleteFirewallRuleRequest(server string, uuid ServerDeleteFirewallRuleUuid, position ServerDeleteFirewallRulePosition) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "position", position, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int32"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/firewall_rule/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetFirewallRuleRequest constructs an http.Request for the GetFirewallRule method
+func NewGetFirewallRuleRequest(server string, uuid ServerGetFirewallRuleUuid, position ServerGetFirewallRulePosition) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "position", position, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int32"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/firewall_rule/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewListPrivateFirewallRulesetRelationshipsRequest constructs an http.Request for the ListPrivateFirewallRulesetRelationships method
+func NewListPrivateFirewallRulesetRelationshipsRequest(server string, uuid ServerListPrivateFirewallRulesetRelationshipsUuid) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/firewall_ruleset_relationships/private", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewListServerGPUsRequest constructs an http.Request for the ListServerGPUs method
+func NewListServerGPUsRequest(server string, uuid ListServerGPUsUuid) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/gpus", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetServerNetworkingRequest constructs an http.Request for the GetServerNetworking method
+func NewGetServerNetworkingRequest(server string, uuid GetServerNetworkingUuid) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/networking", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewAddServerInterfaceRequest calls the generic AddServerInterface builder with application/json body
+func NewAddServerInterfaceRequest(server string, uuid AddServerInterfaceUuid, body AddServerInterfaceJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewAddServerInterfaceRequestWithBody(server, uuid, "application/json", bodyReader)
+}
+
+// NewAddServerInterfaceRequestWithBody constructs an http.Request for the AddServerInterface method, with any body, and a specified content type
+func NewAddServerInterfaceRequestWithBody(server string, uuid AddServerInterfaceUuid, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/networking/interface", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeleteServerInterfaceRequest constructs an http.Request for the DeleteServerInterface method
+func NewDeleteServerInterfaceRequest(server string, uuid DeleteServerInterfaceUuid, index DeleteServerInterfaceIndex) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "index", index, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int32"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/networking/interface/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewModifyServerInterfaceRequest calls the generic ModifyServerInterface builder with application/json body
+func NewModifyServerInterfaceRequest(server string, uuid ModifyServerInterfaceUuid, index ModifyServerInterfaceIndex, body ModifyServerInterfaceJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewModifyServerInterfaceRequestWithBody(server, uuid, index, "application/json", bodyReader)
+}
+
+// NewModifyServerInterfaceRequestWithBody constructs an http.Request for the ModifyServerInterface method, with any body, and a specified content type
+func NewModifyServerInterfaceRequestWithBody(server string, uuid ModifyServerInterfaceUuid, index ModifyServerInterfaceIndex, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "index", index, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int32"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/networking/interface/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewAddServerInterfaceIpAddressRequest calls the generic AddServerInterfaceIpAddress builder with application/json body
+func NewAddServerInterfaceIpAddressRequest(server string, uuid AddServerInterfaceIpAddressUuid, index AddServerInterfaceIpAddressIndex, params *AddServerInterfaceIpAddressParams, body AddServerInterfaceIpAddressJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewAddServerInterfaceIpAddressRequestWithBody(server, uuid, index, params, "application/json", bodyReader)
+}
+
+// NewAddServerInterfaceIpAddressRequestWithBody constructs an http.Request for the AddServerInterfaceIpAddress method, with any body, and a specified content type
+func NewAddServerInterfaceIpAddressRequestWithBody(server string, uuid AddServerInterfaceIpAddressUuid, index AddServerInterfaceIpAddressIndex, params *AddServerInterfaceIpAddressParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "index", index, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int32"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/networking/interface/%s/ip_address", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Force != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "force", *params.Force, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int64"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeleteServerInterfaceIpAddressRequest constructs an http.Request for the DeleteServerInterfaceIpAddress method
+func NewDeleteServerInterfaceIpAddressRequest(server string, uuid DeleteServerInterfaceIpAddressUuid, index DeleteServerInterfaceIpAddressIndex, ip DeleteServerInterfaceIpAddressIp) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "index", index, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int32"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithOptions("simple", false, "ip", ip, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/networking/interface/%s/ip_address/%s", pathParam0, pathParam1, pathParam2)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewRebuildServerRequest calls the generic RebuildServer builder with application/json body
+func NewRebuildServerRequest(server string, uuid RebuildServerUuid, body RebuildServerJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewRebuildServerRequestWithBody(server, uuid, "application/json", bodyReader)
+}
+
+// NewRebuildServerRequestWithBody constructs an http.Request for the RebuildServer method, with any body, and a specified content type
+func NewRebuildServerRequestWithBody(server string, uuid RebuildServerUuid, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/rebuild", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewRelocateServerRequest calls the generic RelocateServer builder with application/json body
+func NewRelocateServerRequest(server string, uuid RelocateServerUuid, body RelocateServerJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewRelocateServerRequestWithBody(server, uuid, "application/json", bodyReader)
+}
+
+// NewRelocateServerRequestWithBody constructs an http.Request for the RelocateServer method, with any body, and a specified content type
+func NewRelocateServerRequestWithBody(server string, uuid RelocateServerUuid, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/relocate", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewGetRemoteAccessDetailsRequest constructs an http.Request for the GetRemoteAccessDetails method
+func NewGetRemoteAccessDetailsRequest(server string, uuid ServerGetRemoteAccessDetailsUuid) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/remote_access_details", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewRestartServerRequest calls the generic RestartServer builder with application/json body
+func NewRestartServerRequest(server string, uuid RestartServerUuid, body RestartServerJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewRestartServerRequestWithBody(server, uuid, "application/json", bodyReader)
+}
+
+// NewRestartServerRequestWithBody constructs an http.Request for the RestartServer method, with any body, and a specified content type
+func NewRestartServerRequestWithBody(server string, uuid RestartServerUuid, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/restart", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewStartServerRequest calls the generic StartServer builder with application/json body
+func NewStartServerRequest(server string, uuid StartServerUuid, body StartServerJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewStartServerRequestWithBody(server, uuid, "application/json", bodyReader)
+}
+
+// NewStartServerRequestWithBody constructs an http.Request for the StartServer method, with any body, and a specified content type
+func NewStartServerRequestWithBody(server string, uuid StartServerUuid, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/start", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewGetCPUStatsRequest constructs an http.Request for the GetCPUStats method
+func NewGetCPUStatsRequest(server string, uuid ServerGetCPUStatsUuid) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/stats/cpu", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetCPUStatsByPeriodRequest constructs an http.Request for the GetCPUStatsByPeriod method
+func NewGetCPUStatsByPeriodRequest(server string, uuid ServerGetCPUStatsByPeriodUuid, period ServerGetCPUStatsByPeriodPeriod) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "period", period, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/stats/cpu/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetDiskStatsRequest constructs an http.Request for the GetDiskStats method
+func NewGetDiskStatsRequest(server string, uuid ServerGetDiskStatsUuid, pType GetDiskStatsParamsType) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "type", pType, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/stats/disk/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetDiskStatsByPeriodRequest constructs an http.Request for the GetDiskStatsByPeriod method
+func NewGetDiskStatsByPeriodRequest(server string, uuid ServerGetDiskStatsByPeriodUuid, pType GetDiskStatsByPeriodParamsType, period ServerGetDiskStatsByPeriodPeriod) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "type", pType, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithOptions("simple", false, "period", period, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/stats/disk/%s/%s", pathParam0, pathParam1, pathParam2)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetNetworkStatsRequest constructs an http.Request for the GetNetworkStats method
+func NewGetNetworkStatsRequest(server string, uuid ServerGetNetworkStatsUuid, pType ServerGetNetworkStatsType) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "type", pType, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/stats/network/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetNetworkStatsByNetworkRequest constructs an http.Request for the GetNetworkStatsByNetwork method
+func NewGetNetworkStatsByNetworkRequest(server string, uuid ServerGetNetworkStatsByNetworkUuid, pType ServerGetNetworkStatsByNetworkType, network ServerGetNetworkStatsByNetworkNetwork) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "type", pType, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithOptions("simple", false, "network", network, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/stats/network/%s/%s", pathParam0, pathParam1, pathParam2)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetNetworkStatsByNetworkAndPeriodRequest constructs an http.Request for the GetNetworkStatsByNetworkAndPeriod method
+func NewGetNetworkStatsByNetworkAndPeriodRequest(server string, uuid ServerGetNetworkStatsByNetworkAndPeriodUuid, pType ServerGetNetworkStatsByNetworkAndPeriodType, network ServerGetNetworkStatsByNetworkAndPeriodNetwork, period ServerGetNetworkStatsByNetworkAndPeriodPeriod) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "type", pType, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithOptions("simple", false, "network", network, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam3 string
+
+	pathParam3, err = runtime.StyleParamWithOptions("simple", false, "period", period, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/stats/network/%s/%s/%s", pathParam0, pathParam1, pathParam2, pathParam3)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewStopServerRequest calls the generic StopServer builder with application/json body
+func NewStopServerRequest(server string, uuid StopServerUuid, body StopServerJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewStopServerRequestWithBody(server, uuid, "application/json", bodyReader)
+}
+
+// NewStopServerRequestWithBody constructs an http.Request for the StopServer method, with any body, and a specified content type
+func NewStopServerRequestWithBody(server string, uuid StopServerUuid, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/stop", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewAttachStorageDeviceRequest calls the generic AttachStorageDevice builder with application/json body
+func NewAttachStorageDeviceRequest(server string, uuid ServerAttachStorageDeviceUuid, body AttachStorageDeviceJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewAttachStorageDeviceRequestWithBody(server, uuid, "application/json", bodyReader)
+}
+
+// NewAttachStorageDeviceRequestWithBody constructs an http.Request for the AttachStorageDevice method, with any body, and a specified content type
+func NewAttachStorageDeviceRequestWithBody(server string, uuid ServerAttachStorageDeviceUuid, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/storage/attach", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDetachStorageDeviceRequest calls the generic DetachStorageDevice builder with application/json body
+func NewDetachStorageDeviceRequest(server string, uuid ServerDetachStorageDeviceUuid, body DetachStorageDeviceJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewDetachStorageDeviceRequestWithBody(server, uuid, "application/json", bodyReader)
+}
+
+// NewDetachStorageDeviceRequestWithBody constructs an http.Request for the DetachStorageDevice method, with any body, and a specified content type
+func NewDetachStorageDeviceRequestWithBody(server string, uuid ServerDetachStorageDeviceUuid, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/storage/detach", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewGetVNCDetailsRequest constructs an http.Request for the GetVNCDetails method
+func NewGetVNCDetailsRequest(server string, uuid ServerGetVNCDetailsUuid) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s/vnc_details", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ServerClientWithResponsesInterface interface {
+
+	// ListServersWithResponse Returns a list of servers
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/server (the `ListServers` operationId).
+	ListServersWithResponse(ctx context.Context, params *ListServersParams, reqEditors ...RequestEditorFn) (*ListServersResp, error)
 
 	// CreateServerWithBodyWithResponse Create a new server
 	//
@@ -248,6 +3451,508 @@ type ServerClientWithResponsesInterface interface {
 	//
 	// Corresponds with PUT /1.3/server (the `ModifyServer` operationId).
 	ModifyServerWithResponse(ctx context.Context, body ModifyServerJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyServerResp, error)
+
+	// ListFirewallRulesetRelationshipsWithResponse List servers related to a private firewall ruleset
+	//
+	// Returns servers related to a specific private firewall ruleset.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/server/firewall_ruleset_relationships/private/{ruleset_uuid} (the `ListFirewallRulesetRelationships` operationId).
+	ListFirewallRulesetRelationshipsWithResponse(ctx context.Context, rulesetUuid ServerListFirewallRulesetRelationshipsRulesetUuid, reqEditors ...RequestEditorFn) (*ListFirewallRulesetRelationshipsResp, error)
+
+	// GetLabelsWithResponse Returns a list of server labels
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/server/labels (the `GetLabels` operationId).
+	GetLabelsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetLabelsResp, error)
+
+	// DeleteServerWithResponse Delete a server
+	//
+	// Deletes a server. With query option ?storages=1, one can delete server's storages as well
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /1.3/server/{uuid} (the `DeleteServer` operationId).
+	DeleteServerWithResponse(ctx context.Context, uuid DeleteServerUuid, params *DeleteServerParams, reqEditors ...RequestEditorFn) (*DeleteServerResp, error)
+
+	// GetServerWithResponse Get server details
+	//
+	// Returns details for a specific server.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/server/{uuid} (the `GetServer` operationId).
+	GetServerWithResponse(ctx context.Context, uuid GetServerUuid, reqEditors ...RequestEditorFn) (*GetServerResp, error)
+
+	// AttachPrivateFirewallRulesetWithBodyWithResponse Attach a private firewall ruleset
+	//
+	// Attach a private firewall ruleset to a specific server.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/attach_firewall_ruleset/private (the `AttachPrivateFirewallRuleset` operationId).
+	AttachPrivateFirewallRulesetWithBodyWithResponse(ctx context.Context, uuid ServerAttachPrivateFirewallRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AttachPrivateFirewallRulesetResp, error)
+
+	// AttachPrivateFirewallRulesetWithResponse Attach a private firewall ruleset
+	//
+	// Attach a private firewall ruleset to a specific server.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/attach_firewall_ruleset/private (the `AttachPrivateFirewallRuleset` operationId).
+	AttachPrivateFirewallRulesetWithResponse(ctx context.Context, uuid ServerAttachPrivateFirewallRulesetUuid, body AttachPrivateFirewallRulesetJSONRequestBody, reqEditors ...RequestEditorFn) (*AttachPrivateFirewallRulesetResp, error)
+
+	// CancelServerOperationWithResponse Cancel an ongoing operation for a specific server
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/cancel (the `CancelServerOperation` operationId).
+	CancelServerOperationWithResponse(ctx context.Context, uuid CancelServerOperationUuid, reqEditors ...RequestEditorFn) (*CancelServerOperationResp, error)
+
+	// EjectCDROMWithResponse Eject the CD-ROM image from a server
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/cdrom/eject (the `EjectCDROM` operationId).
+	EjectCDROMWithResponse(ctx context.Context, uuid ServerEjectCDROMUuid, reqEditors ...RequestEditorFn) (*EjectCDROMResp, error)
+
+	// LoadCDROMWithBodyWithResponse Load a CD-ROM image into a server
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/cdrom/load (the `LoadCDROM` operationId).
+	LoadCDROMWithBodyWithResponse(ctx context.Context, uuid ServerLoadCDROMUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*LoadCDROMResp, error)
+
+	// LoadCDROMWithResponse Load a CD-ROM image into a server
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/cdrom/load (the `LoadCDROM` operationId).
+	LoadCDROMWithResponse(ctx context.Context, uuid ServerLoadCDROMUuid, body LoadCDROMJSONRequestBody, reqEditors ...RequestEditorFn) (*LoadCDROMResp, error)
+
+	// DetachPrivateFirewallRulesetWithBodyWithResponse Detach a private firewall ruleset
+	//
+	// Detach a private firewall ruleset from a specific server.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/detach_firewall_ruleset/private (the `DetachPrivateFirewallRuleset` operationId).
+	DetachPrivateFirewallRulesetWithBodyWithResponse(ctx context.Context, uuid ServerDetachPrivateFirewallRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*DetachPrivateFirewallRulesetResp, error)
+
+	// DetachPrivateFirewallRulesetWithResponse Detach a private firewall ruleset
+	//
+	// Detach a private firewall ruleset from a specific server.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/detach_firewall_ruleset/private (the `DetachPrivateFirewallRuleset` operationId).
+	DetachPrivateFirewallRulesetWithResponse(ctx context.Context, uuid ServerDetachPrivateFirewallRulesetUuid, body DetachPrivateFirewallRulesetJSONRequestBody, reqEditors ...RequestEditorFn) (*DetachPrivateFirewallRulesetResp, error)
+
+	// ListFirewallRulesWithResponse Returns a list of firewall rules for a specific server
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/server/{uuid}/firewall_rule (the `ListFirewallRules` operationId).
+	ListFirewallRulesWithResponse(ctx context.Context, uuid ServerListFirewallRulesUuid, reqEditors ...RequestEditorFn) (*ListFirewallRulesResp, error)
+
+	// CreateFirewallRuleWithBodyWithResponse Create a new firewall rule for a specific server
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/firewall_rule (the `CreateFirewallRule` operationId).
+	CreateFirewallRuleWithBodyWithResponse(ctx context.Context, uuid ServerCreateFirewallRuleUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateFirewallRuleResp, error)
+
+	// CreateFirewallRuleWithResponse Create a new firewall rule for a specific server
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/firewall_rule (the `CreateFirewallRule` operationId).
+	CreateFirewallRuleWithResponse(ctx context.Context, uuid ServerCreateFirewallRuleUuid, body CreateFirewallRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateFirewallRuleResp, error)
+
+	// UpdateFirewallRulesWithBodyWithResponse Update firewall rules for a specific server
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /1.3/server/{uuid}/firewall_rule (the `UpdateFirewallRules` operationId).
+	UpdateFirewallRulesWithBodyWithResponse(ctx context.Context, uuid ServerUpdateFirewallRulesUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateFirewallRulesResp, error)
+
+	// UpdateFirewallRulesWithResponse Update firewall rules for a specific server
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /1.3/server/{uuid}/firewall_rule (the `UpdateFirewallRules` operationId).
+	UpdateFirewallRulesWithResponse(ctx context.Context, uuid ServerUpdateFirewallRulesUuid, body UpdateFirewallRulesJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateFirewallRulesResp, error)
+
+	// UpdateFirewallRulesForceWithBodyWithResponse Update firewall rules for a specific server
+	//
+	// Update firewall rules for a specific server. Using /force applies rules even if another operation is in progress for the server
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /1.3/server/{uuid}/firewall_rule/force (the `UpdateFirewallRulesForce` operationId).
+	UpdateFirewallRulesForceWithBodyWithResponse(ctx context.Context, uuid ServerUpdateFirewallRulesForceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateFirewallRulesForceResp, error)
+
+	// UpdateFirewallRulesForceWithResponse Update firewall rules for a specific server
+	//
+	// Update firewall rules for a specific server. Using /force applies rules even if another operation is in progress for the server
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /1.3/server/{uuid}/firewall_rule/force (the `UpdateFirewallRulesForce` operationId).
+	UpdateFirewallRulesForceWithResponse(ctx context.Context, uuid ServerUpdateFirewallRulesForceUuid, body UpdateFirewallRulesForceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateFirewallRulesForceResp, error)
+
+	// DeleteFirewallRuleWithResponse Delete a specific firewall rule from a server
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /1.3/server/{uuid}/firewall_rule/{position} (the `DeleteFirewallRule` operationId).
+	DeleteFirewallRuleWithResponse(ctx context.Context, uuid ServerDeleteFirewallRuleUuid, position ServerDeleteFirewallRulePosition, reqEditors ...RequestEditorFn) (*DeleteFirewallRuleResp, error)
+
+	// GetFirewallRuleWithResponse Returns details for a specific firewall rule
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/server/{uuid}/firewall_rule/{position} (the `GetFirewallRule` operationId).
+	GetFirewallRuleWithResponse(ctx context.Context, uuid ServerGetFirewallRuleUuid, position ServerGetFirewallRulePosition, reqEditors ...RequestEditorFn) (*GetFirewallRuleResp, error)
+
+	// ListPrivateFirewallRulesetRelationshipsWithResponse List private firewall ruleset relationships for a server
+	//
+	// Returns private firewall ruleset relationships for a specific server.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/server/{uuid}/firewall_ruleset_relationships/private (the `ListPrivateFirewallRulesetRelationships` operationId).
+	ListPrivateFirewallRulesetRelationshipsWithResponse(ctx context.Context, uuid ServerListPrivateFirewallRulesetRelationshipsUuid, reqEditors ...RequestEditorFn) (*ListPrivateFirewallRulesetRelationshipsResp, error)
+
+	// ListServerGPUsWithResponse Returns a list of GPUs assigned to a specific server
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/server/{uuid}/gpus (the `ListServerGPUs` operationId).
+	ListServerGPUsWithResponse(ctx context.Context, uuid ListServerGPUsUuid, reqEditors ...RequestEditorFn) (*ListServerGPUsResp, error)
+
+	// GetServerNetworkingWithResponse Get server networking details
+	//
+	// Returns networking details for a specific server.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/server/{uuid}/networking (the `GetServerNetworking` operationId).
+	GetServerNetworkingWithResponse(ctx context.Context, uuid GetServerNetworkingUuid, reqEditors ...RequestEditorFn) (*GetServerNetworkingResp, error)
+
+	// AddServerInterfaceWithBodyWithResponse Add a network interface
+	//
+	// Add a network interface to a specific server.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/networking/interface (the `AddServerInterface` operationId).
+	AddServerInterfaceWithBodyWithResponse(ctx context.Context, uuid AddServerInterfaceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddServerInterfaceResp, error)
+
+	// AddServerInterfaceWithResponse Add a network interface
+	//
+	// Add a network interface to a specific server.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/networking/interface (the `AddServerInterface` operationId).
+	AddServerInterfaceWithResponse(ctx context.Context, uuid AddServerInterfaceUuid, body AddServerInterfaceJSONRequestBody, reqEditors ...RequestEditorFn) (*AddServerInterfaceResp, error)
+
+	// DeleteServerInterfaceWithResponse Delete a network interface
+	//
+	// Delete a network interface from a specific server.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /1.3/server/{uuid}/networking/interface/{index} (the `DeleteServerInterface` operationId).
+	DeleteServerInterfaceWithResponse(ctx context.Context, uuid DeleteServerInterfaceUuid, index DeleteServerInterfaceIndex, reqEditors ...RequestEditorFn) (*DeleteServerInterfaceResp, error)
+
+	// ModifyServerInterfaceWithBodyWithResponse Modify a network interface
+	//
+	// Modify a network interface of a specific server.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /1.3/server/{uuid}/networking/interface/{index} (the `ModifyServerInterface` operationId).
+	ModifyServerInterfaceWithBodyWithResponse(ctx context.Context, uuid ModifyServerInterfaceUuid, index ModifyServerInterfaceIndex, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyServerInterfaceResp, error)
+
+	// ModifyServerInterfaceWithResponse Modify a network interface
+	//
+	// Modify a network interface of a specific server.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /1.3/server/{uuid}/networking/interface/{index} (the `ModifyServerInterface` operationId).
+	ModifyServerInterfaceWithResponse(ctx context.Context, uuid ModifyServerInterfaceUuid, index ModifyServerInterfaceIndex, body ModifyServerInterfaceJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyServerInterfaceResp, error)
+
+	// AddServerInterfaceIpAddressWithBodyWithResponse Add an IP address to a network interface
+	//
+	// Add an IP address to a network interface of a specific server.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/networking/interface/{index}/ip_address (the `AddServerInterfaceIpAddress` operationId).
+	AddServerInterfaceIpAddressWithBodyWithResponse(ctx context.Context, uuid AddServerInterfaceIpAddressUuid, index AddServerInterfaceIpAddressIndex, params *AddServerInterfaceIpAddressParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddServerInterfaceIpAddressResp, error)
+
+	// AddServerInterfaceIpAddressWithResponse Add an IP address to a network interface
+	//
+	// Add an IP address to a network interface of a specific server.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/networking/interface/{index}/ip_address (the `AddServerInterfaceIpAddress` operationId).
+	AddServerInterfaceIpAddressWithResponse(ctx context.Context, uuid AddServerInterfaceIpAddressUuid, index AddServerInterfaceIpAddressIndex, params *AddServerInterfaceIpAddressParams, body AddServerInterfaceIpAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*AddServerInterfaceIpAddressResp, error)
+
+	// DeleteServerInterfaceIpAddressWithResponse Delete an IP address from a network interface
+	//
+	// Delete an IP address from a network interface of a specific server.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /1.3/server/{uuid}/networking/interface/{index}/ip_address/{ip} (the `DeleteServerInterfaceIpAddress` operationId).
+	DeleteServerInterfaceIpAddressWithResponse(ctx context.Context, uuid DeleteServerInterfaceIpAddressUuid, index DeleteServerInterfaceIpAddressIndex, ip DeleteServerInterfaceIpAddressIp, reqEditors ...RequestEditorFn) (*DeleteServerInterfaceIpAddressResp, error)
+
+	// RebuildServerWithBodyWithResponse Rebuild a server from a specified storage device
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/rebuild (the `RebuildServer` operationId).
+	RebuildServerWithBodyWithResponse(ctx context.Context, uuid RebuildServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RebuildServerResp, error)
+
+	// RebuildServerWithResponse Rebuild a server from a specified storage device
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/rebuild (the `RebuildServer` operationId).
+	RebuildServerWithResponse(ctx context.Context, uuid RebuildServerUuid, body RebuildServerJSONRequestBody, reqEditors ...RequestEditorFn) (*RebuildServerResp, error)
+
+	// RelocateServerWithBodyWithResponse Relocate a server to another zone
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/relocate (the `RelocateServer` operationId).
+	RelocateServerWithBodyWithResponse(ctx context.Context, uuid RelocateServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RelocateServerResp, error)
+
+	// RelocateServerWithResponse Relocate a server to another zone
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/relocate (the `RelocateServer` operationId).
+	RelocateServerWithResponse(ctx context.Context, uuid RelocateServerUuid, body RelocateServerJSONRequestBody, reqEditors ...RequestEditorFn) (*RelocateServerResp, error)
+
+	// GetRemoteAccessDetailsWithResponse Get remote access connection details
+	//
+	// Returns remote access connection details for a specific server.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/server/{uuid}/remote_access_details (the `GetRemoteAccessDetails` operationId).
+	GetRemoteAccessDetailsWithResponse(ctx context.Context, uuid ServerGetRemoteAccessDetailsUuid, reqEditors ...RequestEditorFn) (*GetRemoteAccessDetailsResp, error)
+
+	// RestartServerWithBodyWithResponse Restart a server
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/restart (the `RestartServer` operationId).
+	RestartServerWithBodyWithResponse(ctx context.Context, uuid RestartServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RestartServerResp, error)
+
+	// RestartServerWithResponse Restart a server
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/restart (the `RestartServer` operationId).
+	RestartServerWithResponse(ctx context.Context, uuid RestartServerUuid, body RestartServerJSONRequestBody, reqEditors ...RequestEditorFn) (*RestartServerResp, error)
+
+	// StartServerWithBodyWithResponse Start a server
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/start (the `StartServer` operationId).
+	StartServerWithBodyWithResponse(ctx context.Context, uuid StartServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*StartServerResp, error)
+
+	// StartServerWithResponse Start a server
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/start (the `StartServer` operationId).
+	StartServerWithResponse(ctx context.Context, uuid StartServerUuid, body StartServerJSONRequestBody, reqEditors ...RequestEditorFn) (*StartServerResp, error)
+
+	// GetCPUStatsWithResponse Get CPU stats for a specific server
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/server/{uuid}/stats/cpu (the `GetCPUStats` operationId).
+	GetCPUStatsWithResponse(ctx context.Context, uuid ServerGetCPUStatsUuid, reqEditors ...RequestEditorFn) (*GetCPUStatsResp, error)
+
+	// GetCPUStatsByPeriodWithResponse Get CPU stats for a specific server
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/server/{uuid}/stats/cpu/{period} (the `GetCPUStatsByPeriod` operationId).
+	GetCPUStatsByPeriodWithResponse(ctx context.Context, uuid ServerGetCPUStatsByPeriodUuid, period ServerGetCPUStatsByPeriodPeriod, reqEditors ...RequestEditorFn) (*GetCPUStatsByPeriodResp, error)
+
+	// GetDiskStatsWithResponse Get disk stats for a specific server
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/server/{uuid}/stats/disk/{type} (the `GetDiskStats` operationId).
+	GetDiskStatsWithResponse(ctx context.Context, uuid ServerGetDiskStatsUuid, pType GetDiskStatsParamsType, reqEditors ...RequestEditorFn) (*GetDiskStatsResp, error)
+
+	// GetDiskStatsByPeriodWithResponse Get disk stats for a specific server
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/server/{uuid}/stats/disk/{type}/{period} (the `GetDiskStatsByPeriod` operationId).
+	GetDiskStatsByPeriodWithResponse(ctx context.Context, uuid ServerGetDiskStatsByPeriodUuid, pType GetDiskStatsByPeriodParamsType, period ServerGetDiskStatsByPeriodPeriod, reqEditors ...RequestEditorFn) (*GetDiskStatsByPeriodResp, error)
+
+	// GetNetworkStatsWithResponse Get network stats for a specific server
+	//
+	// Get disk stats for a specific server.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/server/{uuid}/stats/network/{type} (the `GetNetworkStats` operationId).
+	GetNetworkStatsWithResponse(ctx context.Context, uuid ServerGetNetworkStatsUuid, pType ServerGetNetworkStatsType, reqEditors ...RequestEditorFn) (*GetNetworkStatsResp, error)
+
+	// GetNetworkStatsByNetworkWithResponse Get network stats for a specific server
+	//
+	// Get disk stats for a specific server.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/server/{uuid}/stats/network/{type}/{network} (the `GetNetworkStatsByNetwork` operationId).
+	GetNetworkStatsByNetworkWithResponse(ctx context.Context, uuid ServerGetNetworkStatsByNetworkUuid, pType ServerGetNetworkStatsByNetworkType, network ServerGetNetworkStatsByNetworkNetwork, reqEditors ...RequestEditorFn) (*GetNetworkStatsByNetworkResp, error)
+
+	// GetNetworkStatsByNetworkAndPeriodWithResponse Get network stats for a specific server
+	//
+	// Get disk stats for a specific server.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/server/{uuid}/stats/network/{type}/{network}/{period} (the `GetNetworkStatsByNetworkAndPeriod` operationId).
+	GetNetworkStatsByNetworkAndPeriodWithResponse(ctx context.Context, uuid ServerGetNetworkStatsByNetworkAndPeriodUuid, pType ServerGetNetworkStatsByNetworkAndPeriodType, network ServerGetNetworkStatsByNetworkAndPeriodNetwork, period ServerGetNetworkStatsByNetworkAndPeriodPeriod, reqEditors ...RequestEditorFn) (*GetNetworkStatsByNetworkAndPeriodResp, error)
+
+	// StopServerWithBodyWithResponse Stop a server
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/stop (the `StopServer` operationId).
+	StopServerWithBodyWithResponse(ctx context.Context, uuid StopServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*StopServerResp, error)
+
+	// StopServerWithResponse Stop a server
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/stop (the `StopServer` operationId).
+	StopServerWithResponse(ctx context.Context, uuid StopServerUuid, body StopServerJSONRequestBody, reqEditors ...RequestEditorFn) (*StopServerResp, error)
+
+	// AttachStorageDeviceWithBodyWithResponse Attach a storage device to a server
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/storage/attach (the `AttachStorageDevice` operationId).
+	AttachStorageDeviceWithBodyWithResponse(ctx context.Context, uuid ServerAttachStorageDeviceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AttachStorageDeviceResp, error)
+
+	// AttachStorageDeviceWithResponse Attach a storage device to a server
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/storage/attach (the `AttachStorageDevice` operationId).
+	AttachStorageDeviceWithResponse(ctx context.Context, uuid ServerAttachStorageDeviceUuid, body AttachStorageDeviceJSONRequestBody, reqEditors ...RequestEditorFn) (*AttachStorageDeviceResp, error)
+
+	// DetachStorageDeviceWithBodyWithResponse Detach a storage device from a server
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/storage/detach (the `DetachStorageDevice` operationId).
+	DetachStorageDeviceWithBodyWithResponse(ctx context.Context, uuid ServerDetachStorageDeviceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*DetachStorageDeviceResp, error)
+
+	// DetachStorageDeviceWithResponse Detach a storage device from a server
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/server/{uuid}/storage/detach (the `DetachStorageDevice` operationId).
+	DetachStorageDeviceWithResponse(ctx context.Context, uuid ServerDetachStorageDeviceUuid, body DetachStorageDeviceJSONRequestBody, reqEditors ...RequestEditorFn) (*DetachStorageDeviceResp, error)
+
+	// GetVNCDetailsWithResponse Get VNC connection details
+	//
+	// Returns VNC connection details for a specific server.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/server/{uuid}/vnc_details (the `GetVNCDetails` operationId).
+	GetVNCDetailsWithResponse(ctx context.Context, uuid ServerGetVNCDetailsUuid, reqEditors ...RequestEditorFn) (*GetVNCDetailsResp, error)
+}
+
+type ListServersResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ListServers200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ListServers400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ListServers403
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *ListServers409
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ListServersDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListServersResp) GetJSON200() *ListServers200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r ListServersResp) GetJSON400() *ListServers400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListServersResp) GetJSON403() *ListServers403 {
+	return r.JSON403
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r ListServersResp) GetJSON409() *ListServers409 {
+	return r.JSON409
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ListServersResp) GetApplicationproblemJSONDefault() *ListServersDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r ListServersResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListServersResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListServersResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListServersResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
 }
 
 type CreateServerResp struct {
@@ -263,8 +3968,8 @@ type CreateServerResp struct {
 	JSON404 *CreateServer404
 	// JSON409 the response for an HTTP 409 `application/json` response
 	JSON409 *CreateServer409
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *CreateServerDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *CreateServerDefault
 }
 
 // GetJSON202 returns the response for an HTTP 202 `application/json` response
@@ -292,9 +3997,9 @@ func (r CreateServerResp) GetJSON409() *CreateServer409 {
 	return r.JSON409
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r CreateServerResp) GetJSONDefault() *CreateServerDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r CreateServerResp) GetApplicationproblemJSONDefault() *CreateServerDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -337,8 +4042,8 @@ type ModifyServerResp struct {
 	JSON403 *ModifyServer403
 	// JSON409 the response for an HTTP 409 `application/json` response
 	JSON409 *ModifyServer409
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ModifyServerDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ModifyServerDefault
 }
 
 // GetJSON202 returns the response for an HTTP 202 `application/json` response
@@ -361,9 +4066,9 @@ func (r ModifyServerResp) GetJSON409() *ModifyServer409 {
 	return r.JSON409
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r ModifyServerResp) GetJSONDefault() *ModifyServerDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ModifyServerResp) GetApplicationproblemJSONDefault() *ModifyServerDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -393,6 +4098,2598 @@ func (r ModifyServerResp) ContentType() string {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
 	return ""
+}
+
+type ListFirewallRulesetRelationshipsResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ServerListFirewallRulesetRelationships200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ServerListFirewallRulesetRelationships400
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ServerListFirewallRulesetRelationshipsDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListFirewallRulesetRelationshipsResp) GetJSON200() *ServerListFirewallRulesetRelationships200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r ListFirewallRulesetRelationshipsResp) GetJSON400() *ServerListFirewallRulesetRelationships400 {
+	return r.JSON400
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ListFirewallRulesetRelationshipsResp) GetApplicationproblemJSONDefault() *ServerListFirewallRulesetRelationshipsDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r ListFirewallRulesetRelationshipsResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListFirewallRulesetRelationshipsResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListFirewallRulesetRelationshipsResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListFirewallRulesetRelationshipsResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetLabelsResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ServerGetLabels200
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ServerGetLabelsDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetLabelsResp) GetJSON200() *ServerGetLabels200 {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetLabelsResp) GetApplicationproblemJSONDefault() *ServerGetLabelsDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetLabelsResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetLabelsResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetLabelsResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetLabelsResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteServerResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *DeleteServerDefault
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r DeleteServerResp) GetApplicationproblemJSONDefault() *DeleteServerDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteServerResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteServerResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteServerResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteServerResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetServerResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *GetServer200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *GetServer400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *GetServer403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *GetServer404
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *GetServerDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetServerResp) GetJSON200() *GetServer200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r GetServerResp) GetJSON400() *GetServer400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r GetServerResp) GetJSON403() *GetServer403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r GetServerResp) GetJSON404() *GetServer404 {
+	return r.JSON404
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetServerResp) GetApplicationproblemJSONDefault() *GetServerDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetServerResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetServerResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetServerResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetServerResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type AttachPrivateFirewallRulesetResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ServerAttachPrivateFirewallRuleset200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ServerAttachPrivateFirewallRuleset400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ServerAttachPrivateFirewallRuleset403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ServerAttachPrivateFirewallRuleset404
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ServerAttachPrivateFirewallRulesetDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r AttachPrivateFirewallRulesetResp) GetJSON200() *ServerAttachPrivateFirewallRuleset200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r AttachPrivateFirewallRulesetResp) GetJSON400() *ServerAttachPrivateFirewallRuleset400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r AttachPrivateFirewallRulesetResp) GetJSON403() *ServerAttachPrivateFirewallRuleset403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r AttachPrivateFirewallRulesetResp) GetJSON404() *ServerAttachPrivateFirewallRuleset404 {
+	return r.JSON404
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r AttachPrivateFirewallRulesetResp) GetApplicationproblemJSONDefault() *ServerAttachPrivateFirewallRulesetDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r AttachPrivateFirewallRulesetResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r AttachPrivateFirewallRulesetResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r AttachPrivateFirewallRulesetResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r AttachPrivateFirewallRulesetResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CancelServerOperationResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *CancelServerOperation400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *CancelServerOperation403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *CancelServerOperation404
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *CancelServerOperation409
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *CancelServerOperationDefault
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r CancelServerOperationResp) GetJSON400() *CancelServerOperation400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r CancelServerOperationResp) GetJSON403() *CancelServerOperation403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r CancelServerOperationResp) GetJSON404() *CancelServerOperation404 {
+	return r.JSON404
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r CancelServerOperationResp) GetJSON409() *CancelServerOperation409 {
+	return r.JSON409
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r CancelServerOperationResp) GetApplicationproblemJSONDefault() *CancelServerOperationDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r CancelServerOperationResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CancelServerOperationResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CancelServerOperationResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CancelServerOperationResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type EjectCDROMResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ServerEjectCDROM200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ServerEjectCDROM400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ServerEjectCDROM403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ServerEjectCDROM404
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *ServerEjectCDROM409
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ServerEjectCDROMDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r EjectCDROMResp) GetJSON200() *ServerEjectCDROM200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r EjectCDROMResp) GetJSON400() *ServerEjectCDROM400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r EjectCDROMResp) GetJSON403() *ServerEjectCDROM403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r EjectCDROMResp) GetJSON404() *ServerEjectCDROM404 {
+	return r.JSON404
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r EjectCDROMResp) GetJSON409() *ServerEjectCDROM409 {
+	return r.JSON409
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r EjectCDROMResp) GetApplicationproblemJSONDefault() *ServerEjectCDROMDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r EjectCDROMResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r EjectCDROMResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r EjectCDROMResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r EjectCDROMResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type LoadCDROMResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ServerLoadCDROM200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ServerLoadCDROM400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ServerLoadCDROM403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ServerLoadCDROM404
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *ServerLoadCDROM409
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ServerLoadCDROMDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r LoadCDROMResp) GetJSON200() *ServerLoadCDROM200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r LoadCDROMResp) GetJSON400() *ServerLoadCDROM400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r LoadCDROMResp) GetJSON403() *ServerLoadCDROM403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r LoadCDROMResp) GetJSON404() *ServerLoadCDROM404 {
+	return r.JSON404
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r LoadCDROMResp) GetJSON409() *ServerLoadCDROM409 {
+	return r.JSON409
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r LoadCDROMResp) GetApplicationproblemJSONDefault() *ServerLoadCDROMDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r LoadCDROMResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r LoadCDROMResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r LoadCDROMResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r LoadCDROMResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DetachPrivateFirewallRulesetResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ServerDetachPrivateFirewallRuleset200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ServerDetachPrivateFirewallRuleset400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ServerDetachPrivateFirewallRuleset403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ServerDetachPrivateFirewallRuleset404
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ServerDetachPrivateFirewallRulesetDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r DetachPrivateFirewallRulesetResp) GetJSON200() *ServerDetachPrivateFirewallRuleset200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r DetachPrivateFirewallRulesetResp) GetJSON400() *ServerDetachPrivateFirewallRuleset400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r DetachPrivateFirewallRulesetResp) GetJSON403() *ServerDetachPrivateFirewallRuleset403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r DetachPrivateFirewallRulesetResp) GetJSON404() *ServerDetachPrivateFirewallRuleset404 {
+	return r.JSON404
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r DetachPrivateFirewallRulesetResp) GetApplicationproblemJSONDefault() *ServerDetachPrivateFirewallRulesetDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r DetachPrivateFirewallRulesetResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DetachPrivateFirewallRulesetResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DetachPrivateFirewallRulesetResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DetachPrivateFirewallRulesetResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListFirewallRulesResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ServerListFirewallRules200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ServerListFirewallRules400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ServerListFirewallRules403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ServerListFirewallRules404
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ServerListFirewallRulesDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListFirewallRulesResp) GetJSON200() *ServerListFirewallRules200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r ListFirewallRulesResp) GetJSON400() *ServerListFirewallRules400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListFirewallRulesResp) GetJSON403() *ServerListFirewallRules403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r ListFirewallRulesResp) GetJSON404() *ServerListFirewallRules404 {
+	return r.JSON404
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ListFirewallRulesResp) GetApplicationproblemJSONDefault() *ServerListFirewallRulesDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r ListFirewallRulesResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListFirewallRulesResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListFirewallRulesResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListFirewallRulesResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateFirewallRuleResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ServerCreateFirewallRule200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ServerCreateFirewallRule400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ServerCreateFirewallRule403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ServerCreateFirewallRule404
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *ServerCreateFirewallRule409
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ServerCreateFirewallRuleDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CreateFirewallRuleResp) GetJSON200() *ServerCreateFirewallRule200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r CreateFirewallRuleResp) GetJSON400() *ServerCreateFirewallRule400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r CreateFirewallRuleResp) GetJSON403() *ServerCreateFirewallRule403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r CreateFirewallRuleResp) GetJSON404() *ServerCreateFirewallRule404 {
+	return r.JSON404
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r CreateFirewallRuleResp) GetJSON409() *ServerCreateFirewallRule409 {
+	return r.JSON409
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r CreateFirewallRuleResp) GetApplicationproblemJSONDefault() *ServerCreateFirewallRuleDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateFirewallRuleResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateFirewallRuleResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateFirewallRuleResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateFirewallRuleResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateFirewallRulesResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ServerUpdateFirewallRules200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ServerUpdateFirewallRules400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ServerUpdateFirewallRules403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ServerUpdateFirewallRules404
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *ServerUpdateFirewallRules409
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ServerUpdateFirewallRulesDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateFirewallRulesResp) GetJSON200() *ServerUpdateFirewallRules200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r UpdateFirewallRulesResp) GetJSON400() *ServerUpdateFirewallRules400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r UpdateFirewallRulesResp) GetJSON403() *ServerUpdateFirewallRules403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r UpdateFirewallRulesResp) GetJSON404() *ServerUpdateFirewallRules404 {
+	return r.JSON404
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r UpdateFirewallRulesResp) GetJSON409() *ServerUpdateFirewallRules409 {
+	return r.JSON409
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r UpdateFirewallRulesResp) GetApplicationproblemJSONDefault() *ServerUpdateFirewallRulesDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateFirewallRulesResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateFirewallRulesResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateFirewallRulesResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateFirewallRulesResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateFirewallRulesForceResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ServerUpdateFirewallRulesForce200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ServerUpdateFirewallRulesForce400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ServerUpdateFirewallRulesForce403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ServerUpdateFirewallRulesForce404
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *ServerUpdateFirewallRulesForce409
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ServerUpdateFirewallRulesForceDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateFirewallRulesForceResp) GetJSON200() *ServerUpdateFirewallRulesForce200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r UpdateFirewallRulesForceResp) GetJSON400() *ServerUpdateFirewallRulesForce400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r UpdateFirewallRulesForceResp) GetJSON403() *ServerUpdateFirewallRulesForce403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r UpdateFirewallRulesForceResp) GetJSON404() *ServerUpdateFirewallRulesForce404 {
+	return r.JSON404
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r UpdateFirewallRulesForceResp) GetJSON409() *ServerUpdateFirewallRulesForce409 {
+	return r.JSON409
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r UpdateFirewallRulesForceResp) GetApplicationproblemJSONDefault() *ServerUpdateFirewallRulesForceDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateFirewallRulesForceResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateFirewallRulesForceResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateFirewallRulesForceResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateFirewallRulesForceResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteFirewallRuleResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ServerDeleteFirewallRule400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ServerDeleteFirewallRule403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ServerDeleteFirewallRule404
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *ServerDeleteFirewallRule409
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ServerDeleteFirewallRuleDefault
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r DeleteFirewallRuleResp) GetJSON400() *ServerDeleteFirewallRule400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r DeleteFirewallRuleResp) GetJSON403() *ServerDeleteFirewallRule403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r DeleteFirewallRuleResp) GetJSON404() *ServerDeleteFirewallRule404 {
+	return r.JSON404
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r DeleteFirewallRuleResp) GetJSON409() *ServerDeleteFirewallRule409 {
+	return r.JSON409
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r DeleteFirewallRuleResp) GetApplicationproblemJSONDefault() *ServerDeleteFirewallRuleDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteFirewallRuleResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteFirewallRuleResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteFirewallRuleResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteFirewallRuleResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetFirewallRuleResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ServerGetFirewallRule200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ServerGetFirewallRule400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ServerGetFirewallRule403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ServerGetFirewallRule404
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ServerGetFirewallRuleDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetFirewallRuleResp) GetJSON200() *ServerGetFirewallRule200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r GetFirewallRuleResp) GetJSON400() *ServerGetFirewallRule400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r GetFirewallRuleResp) GetJSON403() *ServerGetFirewallRule403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r GetFirewallRuleResp) GetJSON404() *ServerGetFirewallRule404 {
+	return r.JSON404
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetFirewallRuleResp) GetApplicationproblemJSONDefault() *ServerGetFirewallRuleDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetFirewallRuleResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetFirewallRuleResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetFirewallRuleResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetFirewallRuleResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListPrivateFirewallRulesetRelationshipsResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ServerListPrivateFirewallRulesetRelationships200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ServerListPrivateFirewallRulesetRelationships400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ServerListPrivateFirewallRulesetRelationships403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ServerListPrivateFirewallRulesetRelationships404
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ServerListPrivateFirewallRulesetRelationshipsDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListPrivateFirewallRulesetRelationshipsResp) GetJSON200() *ServerListPrivateFirewallRulesetRelationships200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r ListPrivateFirewallRulesetRelationshipsResp) GetJSON400() *ServerListPrivateFirewallRulesetRelationships400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListPrivateFirewallRulesetRelationshipsResp) GetJSON403() *ServerListPrivateFirewallRulesetRelationships403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r ListPrivateFirewallRulesetRelationshipsResp) GetJSON404() *ServerListPrivateFirewallRulesetRelationships404 {
+	return r.JSON404
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ListPrivateFirewallRulesetRelationshipsResp) GetApplicationproblemJSONDefault() *ServerListPrivateFirewallRulesetRelationshipsDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r ListPrivateFirewallRulesetRelationshipsResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListPrivateFirewallRulesetRelationshipsResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListPrivateFirewallRulesetRelationshipsResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListPrivateFirewallRulesetRelationshipsResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListServerGPUsResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ListServerGPUs200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ListServerGPUs400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ListServerGPUs403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ListServerGPUs404
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ListServerGPUsDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListServerGPUsResp) GetJSON200() *ListServerGPUs200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r ListServerGPUsResp) GetJSON400() *ListServerGPUs400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListServerGPUsResp) GetJSON403() *ListServerGPUs403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r ListServerGPUsResp) GetJSON404() *ListServerGPUs404 {
+	return r.JSON404
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ListServerGPUsResp) GetApplicationproblemJSONDefault() *ListServerGPUsDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r ListServerGPUsResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListServerGPUsResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListServerGPUsResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListServerGPUsResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetServerNetworkingResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *GetServerNetworking200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *GetServerNetworking400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *GetServerNetworking403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *GetServerNetworking404
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *GetServerNetworkingDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetServerNetworkingResp) GetJSON200() *GetServerNetworking200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r GetServerNetworkingResp) GetJSON400() *GetServerNetworking400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r GetServerNetworkingResp) GetJSON403() *GetServerNetworking403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r GetServerNetworkingResp) GetJSON404() *GetServerNetworking404 {
+	return r.JSON404
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetServerNetworkingResp) GetApplicationproblemJSONDefault() *GetServerNetworkingDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetServerNetworkingResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetServerNetworkingResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetServerNetworkingResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetServerNetworkingResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type AddServerInterfaceResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *AddServerInterface201
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *AddServerInterface400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *AddServerInterface403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *AddServerInterface404
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *AddServerInterface409
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *AddServerInterfaceDefault
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r AddServerInterfaceResp) GetJSON201() *AddServerInterface201 {
+	return r.JSON201
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r AddServerInterfaceResp) GetJSON400() *AddServerInterface400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r AddServerInterfaceResp) GetJSON403() *AddServerInterface403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r AddServerInterfaceResp) GetJSON404() *AddServerInterface404 {
+	return r.JSON404
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r AddServerInterfaceResp) GetJSON409() *AddServerInterface409 {
+	return r.JSON409
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r AddServerInterfaceResp) GetApplicationproblemJSONDefault() *AddServerInterfaceDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r AddServerInterfaceResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r AddServerInterfaceResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r AddServerInterfaceResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r AddServerInterfaceResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteServerInterfaceResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *DeleteServerInterface400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *DeleteServerInterface403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *DeleteServerInterface404
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *DeleteServerInterfaceDefault
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r DeleteServerInterfaceResp) GetJSON400() *DeleteServerInterface400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r DeleteServerInterfaceResp) GetJSON403() *DeleteServerInterface403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r DeleteServerInterfaceResp) GetJSON404() *DeleteServerInterface404 {
+	return r.JSON404
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r DeleteServerInterfaceResp) GetApplicationproblemJSONDefault() *DeleteServerInterfaceDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteServerInterfaceResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteServerInterfaceResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteServerInterfaceResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteServerInterfaceResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ModifyServerInterfaceResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ModifyServerInterface200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ModifyServerInterface400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ModifyServerInterface403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ModifyServerInterface404
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *ModifyServerInterface409
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ModifyServerInterfaceDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ModifyServerInterfaceResp) GetJSON200() *ModifyServerInterface200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r ModifyServerInterfaceResp) GetJSON400() *ModifyServerInterface400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ModifyServerInterfaceResp) GetJSON403() *ModifyServerInterface403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r ModifyServerInterfaceResp) GetJSON404() *ModifyServerInterface404 {
+	return r.JSON404
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r ModifyServerInterfaceResp) GetJSON409() *ModifyServerInterface409 {
+	return r.JSON409
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ModifyServerInterfaceResp) GetApplicationproblemJSONDefault() *ModifyServerInterfaceDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r ModifyServerInterfaceResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ModifyServerInterfaceResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ModifyServerInterfaceResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ModifyServerInterfaceResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type AddServerInterfaceIpAddressResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *AddServerInterfaceIpAddress201
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *AddServerInterfaceIpAddress400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *AddServerInterfaceIpAddress403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *AddServerInterfaceIpAddress404
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *AddServerInterfaceIpAddress409
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *AddServerInterfaceIpAddressDefault
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r AddServerInterfaceIpAddressResp) GetJSON201() *AddServerInterfaceIpAddress201 {
+	return r.JSON201
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r AddServerInterfaceIpAddressResp) GetJSON400() *AddServerInterfaceIpAddress400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r AddServerInterfaceIpAddressResp) GetJSON403() *AddServerInterfaceIpAddress403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r AddServerInterfaceIpAddressResp) GetJSON404() *AddServerInterfaceIpAddress404 {
+	return r.JSON404
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r AddServerInterfaceIpAddressResp) GetJSON409() *AddServerInterfaceIpAddress409 {
+	return r.JSON409
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r AddServerInterfaceIpAddressResp) GetApplicationproblemJSONDefault() *AddServerInterfaceIpAddressDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r AddServerInterfaceIpAddressResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r AddServerInterfaceIpAddressResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r AddServerInterfaceIpAddressResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r AddServerInterfaceIpAddressResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteServerInterfaceIpAddressResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *DeleteServerInterfaceIpAddress400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *DeleteServerInterfaceIpAddress403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *DeleteServerInterfaceIpAddress404
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *DeleteServerInterfaceIpAddress409
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *DeleteServerInterfaceIpAddressDefault
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r DeleteServerInterfaceIpAddressResp) GetJSON400() *DeleteServerInterfaceIpAddress400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r DeleteServerInterfaceIpAddressResp) GetJSON403() *DeleteServerInterfaceIpAddress403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r DeleteServerInterfaceIpAddressResp) GetJSON404() *DeleteServerInterfaceIpAddress404 {
+	return r.JSON404
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r DeleteServerInterfaceIpAddressResp) GetJSON409() *DeleteServerInterfaceIpAddress409 {
+	return r.JSON409
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r DeleteServerInterfaceIpAddressResp) GetApplicationproblemJSONDefault() *DeleteServerInterfaceIpAddressDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteServerInterfaceIpAddressResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteServerInterfaceIpAddressResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteServerInterfaceIpAddressResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteServerInterfaceIpAddressResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type RebuildServerResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *RebuildServer200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *RebuildServer400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *RebuildServer403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *RebuildServer404
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *RebuildServer409
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *RebuildServerDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r RebuildServerResp) GetJSON200() *RebuildServer200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r RebuildServerResp) GetJSON400() *RebuildServer400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r RebuildServerResp) GetJSON403() *RebuildServer403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r RebuildServerResp) GetJSON404() *RebuildServer404 {
+	return r.JSON404
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r RebuildServerResp) GetJSON409() *RebuildServer409 {
+	return r.JSON409
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r RebuildServerResp) GetApplicationproblemJSONDefault() *RebuildServerDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r RebuildServerResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r RebuildServerResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r RebuildServerResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r RebuildServerResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type RelocateServerResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *RelocateServer200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *RelocateServer400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *RelocateServer403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *RelocateServer404
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *RelocateServer409
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *RelocateServerDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r RelocateServerResp) GetJSON200() *RelocateServer200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r RelocateServerResp) GetJSON400() *RelocateServer400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r RelocateServerResp) GetJSON403() *RelocateServer403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r RelocateServerResp) GetJSON404() *RelocateServer404 {
+	return r.JSON404
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r RelocateServerResp) GetJSON409() *RelocateServer409 {
+	return r.JSON409
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r RelocateServerResp) GetApplicationproblemJSONDefault() *RelocateServerDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r RelocateServerResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r RelocateServerResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r RelocateServerResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r RelocateServerResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetRemoteAccessDetailsResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ServerGetRemoteAccessDetails200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ServerGetRemoteAccessDetails400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ServerGetRemoteAccessDetails403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ServerGetRemoteAccessDetails404
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ServerGetRemoteAccessDetailsDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetRemoteAccessDetailsResp) GetJSON200() *ServerGetRemoteAccessDetails200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r GetRemoteAccessDetailsResp) GetJSON400() *ServerGetRemoteAccessDetails400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r GetRemoteAccessDetailsResp) GetJSON403() *ServerGetRemoteAccessDetails403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r GetRemoteAccessDetailsResp) GetJSON404() *ServerGetRemoteAccessDetails404 {
+	return r.JSON404
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetRemoteAccessDetailsResp) GetApplicationproblemJSONDefault() *ServerGetRemoteAccessDetailsDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetRemoteAccessDetailsResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetRemoteAccessDetailsResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetRemoteAccessDetailsResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetRemoteAccessDetailsResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type RestartServerResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *RestartServer200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *RestartServer400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *RestartServer403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *RestartServer404
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *RestartServer409
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *RestartServerDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r RestartServerResp) GetJSON200() *RestartServer200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r RestartServerResp) GetJSON400() *RestartServer400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r RestartServerResp) GetJSON403() *RestartServer403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r RestartServerResp) GetJSON404() *RestartServer404 {
+	return r.JSON404
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r RestartServerResp) GetJSON409() *RestartServer409 {
+	return r.JSON409
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r RestartServerResp) GetApplicationproblemJSONDefault() *RestartServerDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r RestartServerResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r RestartServerResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r RestartServerResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r RestartServerResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type StartServerResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *StartServer200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *StartServer400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *StartServer403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *StartServer404
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *StartServer409
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *StartServerDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r StartServerResp) GetJSON200() *StartServer200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r StartServerResp) GetJSON400() *StartServer400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r StartServerResp) GetJSON403() *StartServer403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r StartServerResp) GetJSON404() *StartServer404 {
+	return r.JSON404
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r StartServerResp) GetJSON409() *StartServer409 {
+	return r.JSON409
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r StartServerResp) GetApplicationproblemJSONDefault() *StartServerDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r StartServerResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r StartServerResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r StartServerResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r StartServerResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetCPUStatsResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ServerGetCPUStats200
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ServerGetCPUStatsDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetCPUStatsResp) GetJSON200() *ServerGetCPUStats200 {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetCPUStatsResp) GetApplicationproblemJSONDefault() *ServerGetCPUStatsDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetCPUStatsResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetCPUStatsResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetCPUStatsResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetCPUStatsResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetCPUStatsByPeriodResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ServerGetCPUStatsByPeriod200
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ServerGetCPUStatsByPeriodDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetCPUStatsByPeriodResp) GetJSON200() *ServerGetCPUStatsByPeriod200 {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetCPUStatsByPeriodResp) GetApplicationproblemJSONDefault() *ServerGetCPUStatsByPeriodDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetCPUStatsByPeriodResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetCPUStatsByPeriodResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetCPUStatsByPeriodResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetCPUStatsByPeriodResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetDiskStatsResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ServerGetDiskStats200
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ServerGetDiskStatsDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetDiskStatsResp) GetJSON200() *ServerGetDiskStats200 {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetDiskStatsResp) GetApplicationproblemJSONDefault() *ServerGetDiskStatsDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetDiskStatsResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetDiskStatsResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetDiskStatsResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetDiskStatsResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetDiskStatsByPeriodResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ServerGetDiskStatsByPeriod200
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ServerGetDiskStatsByPeriodDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetDiskStatsByPeriodResp) GetJSON200() *ServerGetDiskStatsByPeriod200 {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetDiskStatsByPeriodResp) GetApplicationproblemJSONDefault() *ServerGetDiskStatsByPeriodDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetDiskStatsByPeriodResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetDiskStatsByPeriodResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetDiskStatsByPeriodResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetDiskStatsByPeriodResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetNetworkStatsResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ServerGetNetworkStats200
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ServerGetNetworkStatsDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetNetworkStatsResp) GetJSON200() *ServerGetNetworkStats200 {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetNetworkStatsResp) GetApplicationproblemJSONDefault() *ServerGetNetworkStatsDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetNetworkStatsResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetNetworkStatsResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetNetworkStatsResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetNetworkStatsResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetNetworkStatsByNetworkResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ServerGetNetworkStatsByNetwork200
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ServerGetNetworkStatsByNetworkDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetNetworkStatsByNetworkResp) GetJSON200() *ServerGetNetworkStatsByNetwork200 {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetNetworkStatsByNetworkResp) GetApplicationproblemJSONDefault() *ServerGetNetworkStatsByNetworkDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetNetworkStatsByNetworkResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetNetworkStatsByNetworkResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetNetworkStatsByNetworkResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetNetworkStatsByNetworkResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetNetworkStatsByNetworkAndPeriodResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ServerGetNetworkStatsByNetworkAndPeriod200
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ServerGetNetworkStatsByNetworkAndPeriodDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetNetworkStatsByNetworkAndPeriodResp) GetJSON200() *ServerGetNetworkStatsByNetworkAndPeriod200 {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetNetworkStatsByNetworkAndPeriodResp) GetApplicationproblemJSONDefault() *ServerGetNetworkStatsByNetworkAndPeriodDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetNetworkStatsByNetworkAndPeriodResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetNetworkStatsByNetworkAndPeriodResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetNetworkStatsByNetworkAndPeriodResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetNetworkStatsByNetworkAndPeriodResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type StopServerResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *StopServer200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *StopServer400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *StopServer403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *StopServer404
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *StopServer409
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *StopServerDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r StopServerResp) GetJSON200() *StopServer200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r StopServerResp) GetJSON400() *StopServer400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r StopServerResp) GetJSON403() *StopServer403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r StopServerResp) GetJSON404() *StopServer404 {
+	return r.JSON404
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r StopServerResp) GetJSON409() *StopServer409 {
+	return r.JSON409
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r StopServerResp) GetApplicationproblemJSONDefault() *StopServerDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r StopServerResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r StopServerResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r StopServerResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r StopServerResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type AttachStorageDeviceResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ServerAttachStorageDevice200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ServerAttachStorageDevice400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ServerAttachStorageDevice403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ServerAttachStorageDevice404
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *ServerAttachStorageDevice409
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ServerAttachStorageDeviceDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r AttachStorageDeviceResp) GetJSON200() *ServerAttachStorageDevice200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r AttachStorageDeviceResp) GetJSON400() *ServerAttachStorageDevice400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r AttachStorageDeviceResp) GetJSON403() *ServerAttachStorageDevice403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r AttachStorageDeviceResp) GetJSON404() *ServerAttachStorageDevice404 {
+	return r.JSON404
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r AttachStorageDeviceResp) GetJSON409() *ServerAttachStorageDevice409 {
+	return r.JSON409
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r AttachStorageDeviceResp) GetApplicationproblemJSONDefault() *ServerAttachStorageDeviceDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r AttachStorageDeviceResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r AttachStorageDeviceResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r AttachStorageDeviceResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r AttachStorageDeviceResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DetachStorageDeviceResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ServerDetachStorageDevice200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ServerDetachStorageDevice400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ServerDetachStorageDevice403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ServerDetachStorageDevice404
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *ServerDetachStorageDevice409
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ServerDetachStorageDeviceDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r DetachStorageDeviceResp) GetJSON200() *ServerDetachStorageDevice200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r DetachStorageDeviceResp) GetJSON400() *ServerDetachStorageDevice400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r DetachStorageDeviceResp) GetJSON403() *ServerDetachStorageDevice403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r DetachStorageDeviceResp) GetJSON404() *ServerDetachStorageDevice404 {
+	return r.JSON404
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r DetachStorageDeviceResp) GetJSON409() *ServerDetachStorageDevice409 {
+	return r.JSON409
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r DetachStorageDeviceResp) GetApplicationproblemJSONDefault() *ServerDetachStorageDeviceDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r DetachStorageDeviceResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DetachStorageDeviceResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DetachStorageDeviceResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DetachStorageDeviceResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetVNCDetailsResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ServerGetVNCDetails200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ServerGetVNCDetails400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ServerGetVNCDetails403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ServerGetVNCDetails404
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ServerGetVNCDetailsDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetVNCDetailsResp) GetJSON200() *ServerGetVNCDetails200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r GetVNCDetailsResp) GetJSON400() *ServerGetVNCDetails400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r GetVNCDetailsResp) GetJSON403() *ServerGetVNCDetails403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r GetVNCDetailsResp) GetJSON404() *ServerGetVNCDetails404 {
+	return r.JSON404
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetVNCDetailsResp) GetApplicationproblemJSONDefault() *ServerGetVNCDetailsDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetVNCDetailsResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetVNCDetailsResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetVNCDetailsResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetVNCDetailsResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+// ListServersWithResponse Returns a list of servers
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/server (the `ListServers` operationId).
+func (c *ClientWithResponses) ListServersWithResponse(ctx context.Context, params *ListServersParams, reqEditors ...RequestEditorFn) (*ListServersResp, error) {
+	rsp, err := c.ListServers(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListServersResp(rsp)
 }
 
 // CreateServerWithBodyWithResponse Create a new server
@@ -455,6 +6752,823 @@ func (c *ClientWithResponses) ModifyServerWithResponse(ctx context.Context, body
 	return ParseModifyServerResp(rsp)
 }
 
+// ListFirewallRulesetRelationshipsWithResponse List servers related to a private firewall ruleset
+//
+// Returns servers related to a specific private firewall ruleset.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/server/firewall_ruleset_relationships/private/{ruleset_uuid} (the `ListFirewallRulesetRelationships` operationId).
+func (c *ClientWithResponses) ListFirewallRulesetRelationshipsWithResponse(ctx context.Context, rulesetUuid ServerListFirewallRulesetRelationshipsRulesetUuid, reqEditors ...RequestEditorFn) (*ListFirewallRulesetRelationshipsResp, error) {
+	rsp, err := c.ListFirewallRulesetRelationships(ctx, rulesetUuid, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListFirewallRulesetRelationshipsResp(rsp)
+}
+
+// GetLabelsWithResponse Returns a list of server labels
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/server/labels (the `GetLabels` operationId).
+func (c *ClientWithResponses) GetLabelsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetLabelsResp, error) {
+	rsp, err := c.GetLabels(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetLabelsResp(rsp)
+}
+
+// DeleteServerWithResponse Delete a server
+//
+// Deletes a server. With query option ?storages=1, one can delete server's storages as well
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /1.3/server/{uuid} (the `DeleteServer` operationId).
+func (c *ClientWithResponses) DeleteServerWithResponse(ctx context.Context, uuid DeleteServerUuid, params *DeleteServerParams, reqEditors ...RequestEditorFn) (*DeleteServerResp, error) {
+	rsp, err := c.DeleteServer(ctx, uuid, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteServerResp(rsp)
+}
+
+// GetServerWithResponse Get server details
+//
+// Returns details for a specific server.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/server/{uuid} (the `GetServer` operationId).
+func (c *ClientWithResponses) GetServerWithResponse(ctx context.Context, uuid GetServerUuid, reqEditors ...RequestEditorFn) (*GetServerResp, error) {
+	rsp, err := c.GetServer(ctx, uuid, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetServerResp(rsp)
+}
+
+// AttachPrivateFirewallRulesetWithBodyWithResponse Attach a private firewall ruleset
+//
+// Attach a private firewall ruleset to a specific server.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/attach_firewall_ruleset/private (the `AttachPrivateFirewallRuleset` operationId).
+func (c *ClientWithResponses) AttachPrivateFirewallRulesetWithBodyWithResponse(ctx context.Context, uuid ServerAttachPrivateFirewallRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AttachPrivateFirewallRulesetResp, error) {
+	rsp, err := c.AttachPrivateFirewallRulesetWithBody(ctx, uuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAttachPrivateFirewallRulesetResp(rsp)
+}
+
+// AttachPrivateFirewallRulesetWithResponse Attach a private firewall ruleset
+//
+// Attach a private firewall ruleset to a specific server.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/attach_firewall_ruleset/private (the `AttachPrivateFirewallRuleset` operationId).
+func (c *ClientWithResponses) AttachPrivateFirewallRulesetWithResponse(ctx context.Context, uuid ServerAttachPrivateFirewallRulesetUuid, body AttachPrivateFirewallRulesetJSONRequestBody, reqEditors ...RequestEditorFn) (*AttachPrivateFirewallRulesetResp, error) {
+	rsp, err := c.AttachPrivateFirewallRuleset(ctx, uuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAttachPrivateFirewallRulesetResp(rsp)
+}
+
+// CancelServerOperationWithResponse Cancel an ongoing operation for a specific server
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/cancel (the `CancelServerOperation` operationId).
+func (c *ClientWithResponses) CancelServerOperationWithResponse(ctx context.Context, uuid CancelServerOperationUuid, reqEditors ...RequestEditorFn) (*CancelServerOperationResp, error) {
+	rsp, err := c.CancelServerOperation(ctx, uuid, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCancelServerOperationResp(rsp)
+}
+
+// EjectCDROMWithResponse Eject the CD-ROM image from a server
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/cdrom/eject (the `EjectCDROM` operationId).
+func (c *ClientWithResponses) EjectCDROMWithResponse(ctx context.Context, uuid ServerEjectCDROMUuid, reqEditors ...RequestEditorFn) (*EjectCDROMResp, error) {
+	rsp, err := c.EjectCDROM(ctx, uuid, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseEjectCDROMResp(rsp)
+}
+
+// LoadCDROMWithBodyWithResponse Load a CD-ROM image into a server
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/cdrom/load (the `LoadCDROM` operationId).
+func (c *ClientWithResponses) LoadCDROMWithBodyWithResponse(ctx context.Context, uuid ServerLoadCDROMUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*LoadCDROMResp, error) {
+	rsp, err := c.LoadCDROMWithBody(ctx, uuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseLoadCDROMResp(rsp)
+}
+
+// LoadCDROMWithResponse Load a CD-ROM image into a server
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/cdrom/load (the `LoadCDROM` operationId).
+func (c *ClientWithResponses) LoadCDROMWithResponse(ctx context.Context, uuid ServerLoadCDROMUuid, body LoadCDROMJSONRequestBody, reqEditors ...RequestEditorFn) (*LoadCDROMResp, error) {
+	rsp, err := c.LoadCDROM(ctx, uuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseLoadCDROMResp(rsp)
+}
+
+// DetachPrivateFirewallRulesetWithBodyWithResponse Detach a private firewall ruleset
+//
+// Detach a private firewall ruleset from a specific server.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/detach_firewall_ruleset/private (the `DetachPrivateFirewallRuleset` operationId).
+func (c *ClientWithResponses) DetachPrivateFirewallRulesetWithBodyWithResponse(ctx context.Context, uuid ServerDetachPrivateFirewallRulesetUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*DetachPrivateFirewallRulesetResp, error) {
+	rsp, err := c.DetachPrivateFirewallRulesetWithBody(ctx, uuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDetachPrivateFirewallRulesetResp(rsp)
+}
+
+// DetachPrivateFirewallRulesetWithResponse Detach a private firewall ruleset
+//
+// Detach a private firewall ruleset from a specific server.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/detach_firewall_ruleset/private (the `DetachPrivateFirewallRuleset` operationId).
+func (c *ClientWithResponses) DetachPrivateFirewallRulesetWithResponse(ctx context.Context, uuid ServerDetachPrivateFirewallRulesetUuid, body DetachPrivateFirewallRulesetJSONRequestBody, reqEditors ...RequestEditorFn) (*DetachPrivateFirewallRulesetResp, error) {
+	rsp, err := c.DetachPrivateFirewallRuleset(ctx, uuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDetachPrivateFirewallRulesetResp(rsp)
+}
+
+// ListFirewallRulesWithResponse Returns a list of firewall rules for a specific server
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/server/{uuid}/firewall_rule (the `ListFirewallRules` operationId).
+func (c *ClientWithResponses) ListFirewallRulesWithResponse(ctx context.Context, uuid ServerListFirewallRulesUuid, reqEditors ...RequestEditorFn) (*ListFirewallRulesResp, error) {
+	rsp, err := c.ListFirewallRules(ctx, uuid, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListFirewallRulesResp(rsp)
+}
+
+// CreateFirewallRuleWithBodyWithResponse Create a new firewall rule for a specific server
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/firewall_rule (the `CreateFirewallRule` operationId).
+func (c *ClientWithResponses) CreateFirewallRuleWithBodyWithResponse(ctx context.Context, uuid ServerCreateFirewallRuleUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateFirewallRuleResp, error) {
+	rsp, err := c.CreateFirewallRuleWithBody(ctx, uuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateFirewallRuleResp(rsp)
+}
+
+// CreateFirewallRuleWithResponse Create a new firewall rule for a specific server
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/firewall_rule (the `CreateFirewallRule` operationId).
+func (c *ClientWithResponses) CreateFirewallRuleWithResponse(ctx context.Context, uuid ServerCreateFirewallRuleUuid, body CreateFirewallRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateFirewallRuleResp, error) {
+	rsp, err := c.CreateFirewallRule(ctx, uuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateFirewallRuleResp(rsp)
+}
+
+// UpdateFirewallRulesWithBodyWithResponse Update firewall rules for a specific server
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /1.3/server/{uuid}/firewall_rule (the `UpdateFirewallRules` operationId).
+func (c *ClientWithResponses) UpdateFirewallRulesWithBodyWithResponse(ctx context.Context, uuid ServerUpdateFirewallRulesUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateFirewallRulesResp, error) {
+	rsp, err := c.UpdateFirewallRulesWithBody(ctx, uuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateFirewallRulesResp(rsp)
+}
+
+// UpdateFirewallRulesWithResponse Update firewall rules for a specific server
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /1.3/server/{uuid}/firewall_rule (the `UpdateFirewallRules` operationId).
+func (c *ClientWithResponses) UpdateFirewallRulesWithResponse(ctx context.Context, uuid ServerUpdateFirewallRulesUuid, body UpdateFirewallRulesJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateFirewallRulesResp, error) {
+	rsp, err := c.UpdateFirewallRules(ctx, uuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateFirewallRulesResp(rsp)
+}
+
+// UpdateFirewallRulesForceWithBodyWithResponse Update firewall rules for a specific server
+//
+// Update firewall rules for a specific server. Using /force applies rules even if another operation is in progress for the server
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /1.3/server/{uuid}/firewall_rule/force (the `UpdateFirewallRulesForce` operationId).
+func (c *ClientWithResponses) UpdateFirewallRulesForceWithBodyWithResponse(ctx context.Context, uuid ServerUpdateFirewallRulesForceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateFirewallRulesForceResp, error) {
+	rsp, err := c.UpdateFirewallRulesForceWithBody(ctx, uuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateFirewallRulesForceResp(rsp)
+}
+
+// UpdateFirewallRulesForceWithResponse Update firewall rules for a specific server
+//
+// Update firewall rules for a specific server. Using /force applies rules even if another operation is in progress for the server
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /1.3/server/{uuid}/firewall_rule/force (the `UpdateFirewallRulesForce` operationId).
+func (c *ClientWithResponses) UpdateFirewallRulesForceWithResponse(ctx context.Context, uuid ServerUpdateFirewallRulesForceUuid, body UpdateFirewallRulesForceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateFirewallRulesForceResp, error) {
+	rsp, err := c.UpdateFirewallRulesForce(ctx, uuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateFirewallRulesForceResp(rsp)
+}
+
+// DeleteFirewallRuleWithResponse Delete a specific firewall rule from a server
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /1.3/server/{uuid}/firewall_rule/{position} (the `DeleteFirewallRule` operationId).
+func (c *ClientWithResponses) DeleteFirewallRuleWithResponse(ctx context.Context, uuid ServerDeleteFirewallRuleUuid, position ServerDeleteFirewallRulePosition, reqEditors ...RequestEditorFn) (*DeleteFirewallRuleResp, error) {
+	rsp, err := c.DeleteFirewallRule(ctx, uuid, position, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteFirewallRuleResp(rsp)
+}
+
+// GetFirewallRuleWithResponse Returns details for a specific firewall rule
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/server/{uuid}/firewall_rule/{position} (the `GetFirewallRule` operationId).
+func (c *ClientWithResponses) GetFirewallRuleWithResponse(ctx context.Context, uuid ServerGetFirewallRuleUuid, position ServerGetFirewallRulePosition, reqEditors ...RequestEditorFn) (*GetFirewallRuleResp, error) {
+	rsp, err := c.GetFirewallRule(ctx, uuid, position, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetFirewallRuleResp(rsp)
+}
+
+// ListPrivateFirewallRulesetRelationshipsWithResponse List private firewall ruleset relationships for a server
+//
+// Returns private firewall ruleset relationships for a specific server.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/server/{uuid}/firewall_ruleset_relationships/private (the `ListPrivateFirewallRulesetRelationships` operationId).
+func (c *ClientWithResponses) ListPrivateFirewallRulesetRelationshipsWithResponse(ctx context.Context, uuid ServerListPrivateFirewallRulesetRelationshipsUuid, reqEditors ...RequestEditorFn) (*ListPrivateFirewallRulesetRelationshipsResp, error) {
+	rsp, err := c.ListPrivateFirewallRulesetRelationships(ctx, uuid, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListPrivateFirewallRulesetRelationshipsResp(rsp)
+}
+
+// ListServerGPUsWithResponse Returns a list of GPUs assigned to a specific server
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/server/{uuid}/gpus (the `ListServerGPUs` operationId).
+func (c *ClientWithResponses) ListServerGPUsWithResponse(ctx context.Context, uuid ListServerGPUsUuid, reqEditors ...RequestEditorFn) (*ListServerGPUsResp, error) {
+	rsp, err := c.ListServerGPUs(ctx, uuid, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListServerGPUsResp(rsp)
+}
+
+// GetServerNetworkingWithResponse Get server networking details
+//
+// Returns networking details for a specific server.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/server/{uuid}/networking (the `GetServerNetworking` operationId).
+func (c *ClientWithResponses) GetServerNetworkingWithResponse(ctx context.Context, uuid GetServerNetworkingUuid, reqEditors ...RequestEditorFn) (*GetServerNetworkingResp, error) {
+	rsp, err := c.GetServerNetworking(ctx, uuid, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetServerNetworkingResp(rsp)
+}
+
+// AddServerInterfaceWithBodyWithResponse Add a network interface
+//
+// Add a network interface to a specific server.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/networking/interface (the `AddServerInterface` operationId).
+func (c *ClientWithResponses) AddServerInterfaceWithBodyWithResponse(ctx context.Context, uuid AddServerInterfaceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddServerInterfaceResp, error) {
+	rsp, err := c.AddServerInterfaceWithBody(ctx, uuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAddServerInterfaceResp(rsp)
+}
+
+// AddServerInterfaceWithResponse Add a network interface
+//
+// Add a network interface to a specific server.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/networking/interface (the `AddServerInterface` operationId).
+func (c *ClientWithResponses) AddServerInterfaceWithResponse(ctx context.Context, uuid AddServerInterfaceUuid, body AddServerInterfaceJSONRequestBody, reqEditors ...RequestEditorFn) (*AddServerInterfaceResp, error) {
+	rsp, err := c.AddServerInterface(ctx, uuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAddServerInterfaceResp(rsp)
+}
+
+// DeleteServerInterfaceWithResponse Delete a network interface
+//
+// Delete a network interface from a specific server.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /1.3/server/{uuid}/networking/interface/{index} (the `DeleteServerInterface` operationId).
+func (c *ClientWithResponses) DeleteServerInterfaceWithResponse(ctx context.Context, uuid DeleteServerInterfaceUuid, index DeleteServerInterfaceIndex, reqEditors ...RequestEditorFn) (*DeleteServerInterfaceResp, error) {
+	rsp, err := c.DeleteServerInterface(ctx, uuid, index, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteServerInterfaceResp(rsp)
+}
+
+// ModifyServerInterfaceWithBodyWithResponse Modify a network interface
+//
+// Modify a network interface of a specific server.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /1.3/server/{uuid}/networking/interface/{index} (the `ModifyServerInterface` operationId).
+func (c *ClientWithResponses) ModifyServerInterfaceWithBodyWithResponse(ctx context.Context, uuid ModifyServerInterfaceUuid, index ModifyServerInterfaceIndex, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyServerInterfaceResp, error) {
+	rsp, err := c.ModifyServerInterfaceWithBody(ctx, uuid, index, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseModifyServerInterfaceResp(rsp)
+}
+
+// ModifyServerInterfaceWithResponse Modify a network interface
+//
+// Modify a network interface of a specific server.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /1.3/server/{uuid}/networking/interface/{index} (the `ModifyServerInterface` operationId).
+func (c *ClientWithResponses) ModifyServerInterfaceWithResponse(ctx context.Context, uuid ModifyServerInterfaceUuid, index ModifyServerInterfaceIndex, body ModifyServerInterfaceJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyServerInterfaceResp, error) {
+	rsp, err := c.ModifyServerInterface(ctx, uuid, index, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseModifyServerInterfaceResp(rsp)
+}
+
+// AddServerInterfaceIpAddressWithBodyWithResponse Add an IP address to a network interface
+//
+// Add an IP address to a network interface of a specific server.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/networking/interface/{index}/ip_address (the `AddServerInterfaceIpAddress` operationId).
+func (c *ClientWithResponses) AddServerInterfaceIpAddressWithBodyWithResponse(ctx context.Context, uuid AddServerInterfaceIpAddressUuid, index AddServerInterfaceIpAddressIndex, params *AddServerInterfaceIpAddressParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddServerInterfaceIpAddressResp, error) {
+	rsp, err := c.AddServerInterfaceIpAddressWithBody(ctx, uuid, index, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAddServerInterfaceIpAddressResp(rsp)
+}
+
+// AddServerInterfaceIpAddressWithResponse Add an IP address to a network interface
+//
+// Add an IP address to a network interface of a specific server.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/networking/interface/{index}/ip_address (the `AddServerInterfaceIpAddress` operationId).
+func (c *ClientWithResponses) AddServerInterfaceIpAddressWithResponse(ctx context.Context, uuid AddServerInterfaceIpAddressUuid, index AddServerInterfaceIpAddressIndex, params *AddServerInterfaceIpAddressParams, body AddServerInterfaceIpAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*AddServerInterfaceIpAddressResp, error) {
+	rsp, err := c.AddServerInterfaceIpAddress(ctx, uuid, index, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAddServerInterfaceIpAddressResp(rsp)
+}
+
+// DeleteServerInterfaceIpAddressWithResponse Delete an IP address from a network interface
+//
+// Delete an IP address from a network interface of a specific server.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /1.3/server/{uuid}/networking/interface/{index}/ip_address/{ip} (the `DeleteServerInterfaceIpAddress` operationId).
+func (c *ClientWithResponses) DeleteServerInterfaceIpAddressWithResponse(ctx context.Context, uuid DeleteServerInterfaceIpAddressUuid, index DeleteServerInterfaceIpAddressIndex, ip DeleteServerInterfaceIpAddressIp, reqEditors ...RequestEditorFn) (*DeleteServerInterfaceIpAddressResp, error) {
+	rsp, err := c.DeleteServerInterfaceIpAddress(ctx, uuid, index, ip, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteServerInterfaceIpAddressResp(rsp)
+}
+
+// RebuildServerWithBodyWithResponse Rebuild a server from a specified storage device
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/rebuild (the `RebuildServer` operationId).
+func (c *ClientWithResponses) RebuildServerWithBodyWithResponse(ctx context.Context, uuid RebuildServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RebuildServerResp, error) {
+	rsp, err := c.RebuildServerWithBody(ctx, uuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRebuildServerResp(rsp)
+}
+
+// RebuildServerWithResponse Rebuild a server from a specified storage device
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/rebuild (the `RebuildServer` operationId).
+func (c *ClientWithResponses) RebuildServerWithResponse(ctx context.Context, uuid RebuildServerUuid, body RebuildServerJSONRequestBody, reqEditors ...RequestEditorFn) (*RebuildServerResp, error) {
+	rsp, err := c.RebuildServer(ctx, uuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRebuildServerResp(rsp)
+}
+
+// RelocateServerWithBodyWithResponse Relocate a server to another zone
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/relocate (the `RelocateServer` operationId).
+func (c *ClientWithResponses) RelocateServerWithBodyWithResponse(ctx context.Context, uuid RelocateServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RelocateServerResp, error) {
+	rsp, err := c.RelocateServerWithBody(ctx, uuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRelocateServerResp(rsp)
+}
+
+// RelocateServerWithResponse Relocate a server to another zone
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/relocate (the `RelocateServer` operationId).
+func (c *ClientWithResponses) RelocateServerWithResponse(ctx context.Context, uuid RelocateServerUuid, body RelocateServerJSONRequestBody, reqEditors ...RequestEditorFn) (*RelocateServerResp, error) {
+	rsp, err := c.RelocateServer(ctx, uuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRelocateServerResp(rsp)
+}
+
+// GetRemoteAccessDetailsWithResponse Get remote access connection details
+//
+// Returns remote access connection details for a specific server.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/server/{uuid}/remote_access_details (the `GetRemoteAccessDetails` operationId).
+func (c *ClientWithResponses) GetRemoteAccessDetailsWithResponse(ctx context.Context, uuid ServerGetRemoteAccessDetailsUuid, reqEditors ...RequestEditorFn) (*GetRemoteAccessDetailsResp, error) {
+	rsp, err := c.GetRemoteAccessDetails(ctx, uuid, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetRemoteAccessDetailsResp(rsp)
+}
+
+// RestartServerWithBodyWithResponse Restart a server
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/restart (the `RestartServer` operationId).
+func (c *ClientWithResponses) RestartServerWithBodyWithResponse(ctx context.Context, uuid RestartServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RestartServerResp, error) {
+	rsp, err := c.RestartServerWithBody(ctx, uuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRestartServerResp(rsp)
+}
+
+// RestartServerWithResponse Restart a server
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/restart (the `RestartServer` operationId).
+func (c *ClientWithResponses) RestartServerWithResponse(ctx context.Context, uuid RestartServerUuid, body RestartServerJSONRequestBody, reqEditors ...RequestEditorFn) (*RestartServerResp, error) {
+	rsp, err := c.RestartServer(ctx, uuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRestartServerResp(rsp)
+}
+
+// StartServerWithBodyWithResponse Start a server
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/start (the `StartServer` operationId).
+func (c *ClientWithResponses) StartServerWithBodyWithResponse(ctx context.Context, uuid StartServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*StartServerResp, error) {
+	rsp, err := c.StartServerWithBody(ctx, uuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseStartServerResp(rsp)
+}
+
+// StartServerWithResponse Start a server
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/start (the `StartServer` operationId).
+func (c *ClientWithResponses) StartServerWithResponse(ctx context.Context, uuid StartServerUuid, body StartServerJSONRequestBody, reqEditors ...RequestEditorFn) (*StartServerResp, error) {
+	rsp, err := c.StartServer(ctx, uuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseStartServerResp(rsp)
+}
+
+// GetCPUStatsWithResponse Get CPU stats for a specific server
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/server/{uuid}/stats/cpu (the `GetCPUStats` operationId).
+func (c *ClientWithResponses) GetCPUStatsWithResponse(ctx context.Context, uuid ServerGetCPUStatsUuid, reqEditors ...RequestEditorFn) (*GetCPUStatsResp, error) {
+	rsp, err := c.GetCPUStats(ctx, uuid, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetCPUStatsResp(rsp)
+}
+
+// GetCPUStatsByPeriodWithResponse Get CPU stats for a specific server
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/server/{uuid}/stats/cpu/{period} (the `GetCPUStatsByPeriod` operationId).
+func (c *ClientWithResponses) GetCPUStatsByPeriodWithResponse(ctx context.Context, uuid ServerGetCPUStatsByPeriodUuid, period ServerGetCPUStatsByPeriodPeriod, reqEditors ...RequestEditorFn) (*GetCPUStatsByPeriodResp, error) {
+	rsp, err := c.GetCPUStatsByPeriod(ctx, uuid, period, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetCPUStatsByPeriodResp(rsp)
+}
+
+// GetDiskStatsWithResponse Get disk stats for a specific server
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/server/{uuid}/stats/disk/{type} (the `GetDiskStats` operationId).
+func (c *ClientWithResponses) GetDiskStatsWithResponse(ctx context.Context, uuid ServerGetDiskStatsUuid, pType GetDiskStatsParamsType, reqEditors ...RequestEditorFn) (*GetDiskStatsResp, error) {
+	rsp, err := c.GetDiskStats(ctx, uuid, pType, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetDiskStatsResp(rsp)
+}
+
+// GetDiskStatsByPeriodWithResponse Get disk stats for a specific server
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/server/{uuid}/stats/disk/{type}/{period} (the `GetDiskStatsByPeriod` operationId).
+func (c *ClientWithResponses) GetDiskStatsByPeriodWithResponse(ctx context.Context, uuid ServerGetDiskStatsByPeriodUuid, pType GetDiskStatsByPeriodParamsType, period ServerGetDiskStatsByPeriodPeriod, reqEditors ...RequestEditorFn) (*GetDiskStatsByPeriodResp, error) {
+	rsp, err := c.GetDiskStatsByPeriod(ctx, uuid, pType, period, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetDiskStatsByPeriodResp(rsp)
+}
+
+// GetNetworkStatsWithResponse Get network stats for a specific server
+//
+// Get disk stats for a specific server.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/server/{uuid}/stats/network/{type} (the `GetNetworkStats` operationId).
+func (c *ClientWithResponses) GetNetworkStatsWithResponse(ctx context.Context, uuid ServerGetNetworkStatsUuid, pType ServerGetNetworkStatsType, reqEditors ...RequestEditorFn) (*GetNetworkStatsResp, error) {
+	rsp, err := c.GetNetworkStats(ctx, uuid, pType, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetNetworkStatsResp(rsp)
+}
+
+// GetNetworkStatsByNetworkWithResponse Get network stats for a specific server
+//
+// Get disk stats for a specific server.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/server/{uuid}/stats/network/{type}/{network} (the `GetNetworkStatsByNetwork` operationId).
+func (c *ClientWithResponses) GetNetworkStatsByNetworkWithResponse(ctx context.Context, uuid ServerGetNetworkStatsByNetworkUuid, pType ServerGetNetworkStatsByNetworkType, network ServerGetNetworkStatsByNetworkNetwork, reqEditors ...RequestEditorFn) (*GetNetworkStatsByNetworkResp, error) {
+	rsp, err := c.GetNetworkStatsByNetwork(ctx, uuid, pType, network, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetNetworkStatsByNetworkResp(rsp)
+}
+
+// GetNetworkStatsByNetworkAndPeriodWithResponse Get network stats for a specific server
+//
+// Get disk stats for a specific server.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/server/{uuid}/stats/network/{type}/{network}/{period} (the `GetNetworkStatsByNetworkAndPeriod` operationId).
+func (c *ClientWithResponses) GetNetworkStatsByNetworkAndPeriodWithResponse(ctx context.Context, uuid ServerGetNetworkStatsByNetworkAndPeriodUuid, pType ServerGetNetworkStatsByNetworkAndPeriodType, network ServerGetNetworkStatsByNetworkAndPeriodNetwork, period ServerGetNetworkStatsByNetworkAndPeriodPeriod, reqEditors ...RequestEditorFn) (*GetNetworkStatsByNetworkAndPeriodResp, error) {
+	rsp, err := c.GetNetworkStatsByNetworkAndPeriod(ctx, uuid, pType, network, period, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetNetworkStatsByNetworkAndPeriodResp(rsp)
+}
+
+// StopServerWithBodyWithResponse Stop a server
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/stop (the `StopServer` operationId).
+func (c *ClientWithResponses) StopServerWithBodyWithResponse(ctx context.Context, uuid StopServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*StopServerResp, error) {
+	rsp, err := c.StopServerWithBody(ctx, uuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseStopServerResp(rsp)
+}
+
+// StopServerWithResponse Stop a server
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/stop (the `StopServer` operationId).
+func (c *ClientWithResponses) StopServerWithResponse(ctx context.Context, uuid StopServerUuid, body StopServerJSONRequestBody, reqEditors ...RequestEditorFn) (*StopServerResp, error) {
+	rsp, err := c.StopServer(ctx, uuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseStopServerResp(rsp)
+}
+
+// AttachStorageDeviceWithBodyWithResponse Attach a storage device to a server
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/storage/attach (the `AttachStorageDevice` operationId).
+func (c *ClientWithResponses) AttachStorageDeviceWithBodyWithResponse(ctx context.Context, uuid ServerAttachStorageDeviceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AttachStorageDeviceResp, error) {
+	rsp, err := c.AttachStorageDeviceWithBody(ctx, uuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAttachStorageDeviceResp(rsp)
+}
+
+// AttachStorageDeviceWithResponse Attach a storage device to a server
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/storage/attach (the `AttachStorageDevice` operationId).
+func (c *ClientWithResponses) AttachStorageDeviceWithResponse(ctx context.Context, uuid ServerAttachStorageDeviceUuid, body AttachStorageDeviceJSONRequestBody, reqEditors ...RequestEditorFn) (*AttachStorageDeviceResp, error) {
+	rsp, err := c.AttachStorageDevice(ctx, uuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAttachStorageDeviceResp(rsp)
+}
+
+// DetachStorageDeviceWithBodyWithResponse Detach a storage device from a server
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/storage/detach (the `DetachStorageDevice` operationId).
+func (c *ClientWithResponses) DetachStorageDeviceWithBodyWithResponse(ctx context.Context, uuid ServerDetachStorageDeviceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*DetachStorageDeviceResp, error) {
+	rsp, err := c.DetachStorageDeviceWithBody(ctx, uuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDetachStorageDeviceResp(rsp)
+}
+
+// DetachStorageDeviceWithResponse Detach a storage device from a server
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/server/{uuid}/storage/detach (the `DetachStorageDevice` operationId).
+func (c *ClientWithResponses) DetachStorageDeviceWithResponse(ctx context.Context, uuid ServerDetachStorageDeviceUuid, body DetachStorageDeviceJSONRequestBody, reqEditors ...RequestEditorFn) (*DetachStorageDeviceResp, error) {
+	rsp, err := c.DetachStorageDevice(ctx, uuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDetachStorageDeviceResp(rsp)
+}
+
+// GetVNCDetailsWithResponse Get VNC connection details
+//
+// Returns VNC connection details for a specific server.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/server/{uuid}/vnc_details (the `GetVNCDetails` operationId).
+func (c *ClientWithResponses) GetVNCDetailsWithResponse(ctx context.Context, uuid ServerGetVNCDetailsUuid, reqEditors ...RequestEditorFn) (*GetVNCDetailsResp, error) {
+	rsp, err := c.GetVNCDetails(ctx, uuid, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetVNCDetailsResp(rsp)
+}
+
+// ParseListServersResp parses an HTTP response from a ListServersWithResponse call
+func ParseListServersResp(rsp *http.Response) (*ListServersResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListServersResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ListServers200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ListServers400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ListServers403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ListServers409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ListServersDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseCreateServerResp parses an HTTP response from a CreateServerWithResponse call
 func ParseCreateServerResp(rsp *http.Response) (*CreateServerResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -509,7 +7623,7 @@ func ParseCreateServerResp(rsp *http.Response) (*CreateServerResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -563,7 +7677,2016 @@ func ParseModifyServerResp(rsp *http.Response) (*ModifyServerResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListFirewallRulesetRelationshipsResp parses an HTTP response from a ListFirewallRulesetRelationshipsWithResponse call
+func ParseListFirewallRulesetRelationshipsResp(rsp *http.Response) (*ListFirewallRulesetRelationshipsResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListFirewallRulesetRelationshipsResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ServerListFirewallRulesetRelationships200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ServerListFirewallRulesetRelationships400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ServerListFirewallRulesetRelationshipsDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetLabelsResp parses an HTTP response from a GetLabelsWithResponse call
+func ParseGetLabelsResp(rsp *http.Response) (*GetLabelsResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetLabelsResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ServerGetLabels200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ServerGetLabelsDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteServerResp parses an HTTP response from a DeleteServerWithResponse call
+func ParseDeleteServerResp(rsp *http.Response) (*DeleteServerResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteServerResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest DeleteServerDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetServerResp parses an HTTP response from a GetServerWithResponse call
+func ParseGetServerResp(rsp *http.Response) (*GetServerResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetServerResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest GetServer200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest GetServer400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest GetServer403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest GetServer404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest GetServerDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseAttachPrivateFirewallRulesetResp parses an HTTP response from a AttachPrivateFirewallRulesetWithResponse call
+func ParseAttachPrivateFirewallRulesetResp(rsp *http.Response) (*AttachPrivateFirewallRulesetResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &AttachPrivateFirewallRulesetResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ServerAttachPrivateFirewallRuleset200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ServerAttachPrivateFirewallRuleset400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ServerAttachPrivateFirewallRuleset403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ServerAttachPrivateFirewallRuleset404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ServerAttachPrivateFirewallRulesetDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCancelServerOperationResp parses an HTTP response from a CancelServerOperationWithResponse call
+func ParseCancelServerOperationResp(rsp *http.Response) (*CancelServerOperationResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CancelServerOperationResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest CancelServerOperation400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest CancelServerOperation403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest CancelServerOperation404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest CancelServerOperation409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest CancelServerOperationDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseEjectCDROMResp parses an HTTP response from a EjectCDROMWithResponse call
+func ParseEjectCDROMResp(rsp *http.Response) (*EjectCDROMResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &EjectCDROMResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ServerEjectCDROM200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ServerEjectCDROM400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ServerEjectCDROM403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ServerEjectCDROM404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ServerEjectCDROM409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ServerEjectCDROMDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseLoadCDROMResp parses an HTTP response from a LoadCDROMWithResponse call
+func ParseLoadCDROMResp(rsp *http.Response) (*LoadCDROMResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &LoadCDROMResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ServerLoadCDROM200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ServerLoadCDROM400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ServerLoadCDROM403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ServerLoadCDROM404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ServerLoadCDROM409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ServerLoadCDROMDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDetachPrivateFirewallRulesetResp parses an HTTP response from a DetachPrivateFirewallRulesetWithResponse call
+func ParseDetachPrivateFirewallRulesetResp(rsp *http.Response) (*DetachPrivateFirewallRulesetResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DetachPrivateFirewallRulesetResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ServerDetachPrivateFirewallRuleset200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ServerDetachPrivateFirewallRuleset400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ServerDetachPrivateFirewallRuleset403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ServerDetachPrivateFirewallRuleset404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ServerDetachPrivateFirewallRulesetDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListFirewallRulesResp parses an HTTP response from a ListFirewallRulesWithResponse call
+func ParseListFirewallRulesResp(rsp *http.Response) (*ListFirewallRulesResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListFirewallRulesResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ServerListFirewallRules200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ServerListFirewallRules400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ServerListFirewallRules403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ServerListFirewallRules404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ServerListFirewallRulesDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateFirewallRuleResp parses an HTTP response from a CreateFirewallRuleWithResponse call
+func ParseCreateFirewallRuleResp(rsp *http.Response) (*CreateFirewallRuleResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateFirewallRuleResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ServerCreateFirewallRule200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ServerCreateFirewallRule400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ServerCreateFirewallRule403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ServerCreateFirewallRule404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ServerCreateFirewallRule409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ServerCreateFirewallRuleDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateFirewallRulesResp parses an HTTP response from a UpdateFirewallRulesWithResponse call
+func ParseUpdateFirewallRulesResp(rsp *http.Response) (*UpdateFirewallRulesResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateFirewallRulesResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ServerUpdateFirewallRules200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ServerUpdateFirewallRules400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ServerUpdateFirewallRules403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ServerUpdateFirewallRules404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ServerUpdateFirewallRules409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ServerUpdateFirewallRulesDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateFirewallRulesForceResp parses an HTTP response from a UpdateFirewallRulesForceWithResponse call
+func ParseUpdateFirewallRulesForceResp(rsp *http.Response) (*UpdateFirewallRulesForceResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateFirewallRulesForceResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ServerUpdateFirewallRulesForce200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ServerUpdateFirewallRulesForce400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ServerUpdateFirewallRulesForce403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ServerUpdateFirewallRulesForce404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ServerUpdateFirewallRulesForce409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ServerUpdateFirewallRulesForceDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteFirewallRuleResp parses an HTTP response from a DeleteFirewallRuleWithResponse call
+func ParseDeleteFirewallRuleResp(rsp *http.Response) (*DeleteFirewallRuleResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteFirewallRuleResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ServerDeleteFirewallRule400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ServerDeleteFirewallRule403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ServerDeleteFirewallRule404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ServerDeleteFirewallRule409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ServerDeleteFirewallRuleDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetFirewallRuleResp parses an HTTP response from a GetFirewallRuleWithResponse call
+func ParseGetFirewallRuleResp(rsp *http.Response) (*GetFirewallRuleResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetFirewallRuleResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ServerGetFirewallRule200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ServerGetFirewallRule400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ServerGetFirewallRule403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ServerGetFirewallRule404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ServerGetFirewallRuleDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListPrivateFirewallRulesetRelationshipsResp parses an HTTP response from a ListPrivateFirewallRulesetRelationshipsWithResponse call
+func ParseListPrivateFirewallRulesetRelationshipsResp(rsp *http.Response) (*ListPrivateFirewallRulesetRelationshipsResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListPrivateFirewallRulesetRelationshipsResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ServerListPrivateFirewallRulesetRelationships200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ServerListPrivateFirewallRulesetRelationships400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ServerListPrivateFirewallRulesetRelationships403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ServerListPrivateFirewallRulesetRelationships404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ServerListPrivateFirewallRulesetRelationshipsDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListServerGPUsResp parses an HTTP response from a ListServerGPUsWithResponse call
+func ParseListServerGPUsResp(rsp *http.Response) (*ListServerGPUsResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListServerGPUsResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ListServerGPUs200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ListServerGPUs400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ListServerGPUs403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ListServerGPUs404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ListServerGPUsDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetServerNetworkingResp parses an HTTP response from a GetServerNetworkingWithResponse call
+func ParseGetServerNetworkingResp(rsp *http.Response) (*GetServerNetworkingResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetServerNetworkingResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest GetServerNetworking200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest GetServerNetworking400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest GetServerNetworking403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest GetServerNetworking404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest GetServerNetworkingDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseAddServerInterfaceResp parses an HTTP response from a AddServerInterfaceWithResponse call
+func ParseAddServerInterfaceResp(rsp *http.Response) (*AddServerInterfaceResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &AddServerInterfaceResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest AddServerInterface201
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest AddServerInterface400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest AddServerInterface403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest AddServerInterface404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest AddServerInterface409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest AddServerInterfaceDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteServerInterfaceResp parses an HTTP response from a DeleteServerInterfaceWithResponse call
+func ParseDeleteServerInterfaceResp(rsp *http.Response) (*DeleteServerInterfaceResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteServerInterfaceResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest DeleteServerInterface400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest DeleteServerInterface403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest DeleteServerInterface404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest DeleteServerInterfaceDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseModifyServerInterfaceResp parses an HTTP response from a ModifyServerInterfaceWithResponse call
+func ParseModifyServerInterfaceResp(rsp *http.Response) (*ModifyServerInterfaceResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ModifyServerInterfaceResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ModifyServerInterface200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ModifyServerInterface400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ModifyServerInterface403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ModifyServerInterface404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ModifyServerInterface409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ModifyServerInterfaceDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseAddServerInterfaceIpAddressResp parses an HTTP response from a AddServerInterfaceIpAddressWithResponse call
+func ParseAddServerInterfaceIpAddressResp(rsp *http.Response) (*AddServerInterfaceIpAddressResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &AddServerInterfaceIpAddressResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest AddServerInterfaceIpAddress201
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest AddServerInterfaceIpAddress400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest AddServerInterfaceIpAddress403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest AddServerInterfaceIpAddress404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest AddServerInterfaceIpAddress409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest AddServerInterfaceIpAddressDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteServerInterfaceIpAddressResp parses an HTTP response from a DeleteServerInterfaceIpAddressWithResponse call
+func ParseDeleteServerInterfaceIpAddressResp(rsp *http.Response) (*DeleteServerInterfaceIpAddressResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteServerInterfaceIpAddressResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest DeleteServerInterfaceIpAddress400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest DeleteServerInterfaceIpAddress403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest DeleteServerInterfaceIpAddress404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest DeleteServerInterfaceIpAddress409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest DeleteServerInterfaceIpAddressDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseRebuildServerResp parses an HTTP response from a RebuildServerWithResponse call
+func ParseRebuildServerResp(rsp *http.Response) (*RebuildServerResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &RebuildServerResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest RebuildServer200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest RebuildServer400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest RebuildServer403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest RebuildServer404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest RebuildServer409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest RebuildServerDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseRelocateServerResp parses an HTTP response from a RelocateServerWithResponse call
+func ParseRelocateServerResp(rsp *http.Response) (*RelocateServerResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &RelocateServerResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest RelocateServer200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest RelocateServer400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest RelocateServer403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest RelocateServer404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest RelocateServer409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest RelocateServerDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetRemoteAccessDetailsResp parses an HTTP response from a GetRemoteAccessDetailsWithResponse call
+func ParseGetRemoteAccessDetailsResp(rsp *http.Response) (*GetRemoteAccessDetailsResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetRemoteAccessDetailsResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ServerGetRemoteAccessDetails200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ServerGetRemoteAccessDetails400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ServerGetRemoteAccessDetails403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ServerGetRemoteAccessDetails404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ServerGetRemoteAccessDetailsDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseRestartServerResp parses an HTTP response from a RestartServerWithResponse call
+func ParseRestartServerResp(rsp *http.Response) (*RestartServerResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &RestartServerResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest RestartServer200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest RestartServer400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest RestartServer403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest RestartServer404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest RestartServer409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest RestartServerDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseStartServerResp parses an HTTP response from a StartServerWithResponse call
+func ParseStartServerResp(rsp *http.Response) (*StartServerResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &StartServerResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest StartServer200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest StartServer400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest StartServer403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest StartServer404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest StartServer409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest StartServerDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetCPUStatsResp parses an HTTP response from a GetCPUStatsWithResponse call
+func ParseGetCPUStatsResp(rsp *http.Response) (*GetCPUStatsResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetCPUStatsResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ServerGetCPUStats200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ServerGetCPUStatsDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetCPUStatsByPeriodResp parses an HTTP response from a GetCPUStatsByPeriodWithResponse call
+func ParseGetCPUStatsByPeriodResp(rsp *http.Response) (*GetCPUStatsByPeriodResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetCPUStatsByPeriodResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ServerGetCPUStatsByPeriod200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ServerGetCPUStatsByPeriodDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetDiskStatsResp parses an HTTP response from a GetDiskStatsWithResponse call
+func ParseGetDiskStatsResp(rsp *http.Response) (*GetDiskStatsResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetDiskStatsResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ServerGetDiskStats200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ServerGetDiskStatsDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetDiskStatsByPeriodResp parses an HTTP response from a GetDiskStatsByPeriodWithResponse call
+func ParseGetDiskStatsByPeriodResp(rsp *http.Response) (*GetDiskStatsByPeriodResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetDiskStatsByPeriodResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ServerGetDiskStatsByPeriod200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ServerGetDiskStatsByPeriodDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetNetworkStatsResp parses an HTTP response from a GetNetworkStatsWithResponse call
+func ParseGetNetworkStatsResp(rsp *http.Response) (*GetNetworkStatsResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetNetworkStatsResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ServerGetNetworkStats200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ServerGetNetworkStatsDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetNetworkStatsByNetworkResp parses an HTTP response from a GetNetworkStatsByNetworkWithResponse call
+func ParseGetNetworkStatsByNetworkResp(rsp *http.Response) (*GetNetworkStatsByNetworkResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetNetworkStatsByNetworkResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ServerGetNetworkStatsByNetwork200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ServerGetNetworkStatsByNetworkDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetNetworkStatsByNetworkAndPeriodResp parses an HTTP response from a GetNetworkStatsByNetworkAndPeriodWithResponse call
+func ParseGetNetworkStatsByNetworkAndPeriodResp(rsp *http.Response) (*GetNetworkStatsByNetworkAndPeriodResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetNetworkStatsByNetworkAndPeriodResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ServerGetNetworkStatsByNetworkAndPeriod200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ServerGetNetworkStatsByNetworkAndPeriodDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseStopServerResp parses an HTTP response from a StopServerWithResponse call
+func ParseStopServerResp(rsp *http.Response) (*StopServerResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &StopServerResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest StopServer200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest StopServer400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest StopServer403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest StopServer404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest StopServer409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest StopServerDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseAttachStorageDeviceResp parses an HTTP response from a AttachStorageDeviceWithResponse call
+func ParseAttachStorageDeviceResp(rsp *http.Response) (*AttachStorageDeviceResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &AttachStorageDeviceResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ServerAttachStorageDevice200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ServerAttachStorageDevice400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ServerAttachStorageDevice403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ServerAttachStorageDevice404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ServerAttachStorageDevice409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ServerAttachStorageDeviceDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDetachStorageDeviceResp parses an HTTP response from a DetachStorageDeviceWithResponse call
+func ParseDetachStorageDeviceResp(rsp *http.Response) (*DetachStorageDeviceResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DetachStorageDeviceResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ServerDetachStorageDevice200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ServerDetachStorageDevice400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ServerDetachStorageDevice403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ServerDetachStorageDevice404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ServerDetachStorageDevice409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ServerDetachStorageDeviceDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetVNCDetailsResp parses an HTTP response from a GetVNCDetailsWithResponse call
+func ParseGetVNCDetailsResp(rsp *http.Response) (*GetVNCDetailsResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetVNCDetailsResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ServerGetVNCDetails200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ServerGetVNCDetails400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ServerGetVNCDetails403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ServerGetVNCDetails404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ServerGetVNCDetailsDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 

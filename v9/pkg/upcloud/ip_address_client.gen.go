@@ -344,8 +344,8 @@ type ListIPAddressesResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ListIPAddresses200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ListIPAddressesDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ListIPAddressesDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -353,9 +353,9 @@ func (r ListIPAddressesResp) GetJSON200() *ListIPAddresses200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r ListIPAddressesResp) GetJSONDefault() *ListIPAddressesDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ListIPAddressesResp) GetApplicationproblemJSONDefault() *ListIPAddressesDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -390,13 +390,13 @@ func (r ListIPAddressesResp) ContentType() string {
 type DeleteIPAddressResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *DeleteIPAddressDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *DeleteIPAddressDefault
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r DeleteIPAddressResp) GetJSONDefault() *DeleteIPAddressDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r DeleteIPAddressResp) GetApplicationproblemJSONDefault() *DeleteIPAddressDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -433,8 +433,8 @@ type GetIPAddressDetailsResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *GetIPAddressDetails200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *GetIPAddressDetailsDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *GetIPAddressDetailsDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -442,9 +442,9 @@ func (r GetIPAddressDetailsResp) GetJSON200() *GetIPAddressDetails200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r GetIPAddressDetailsResp) GetJSONDefault() *GetIPAddressDetailsDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetIPAddressDetailsResp) GetApplicationproblemJSONDefault() *GetIPAddressDetailsDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -481,8 +481,8 @@ type ModifyIPAddressResp struct {
 	HTTPResponse *http.Response
 	// JSON202 the response for an HTTP 202 `application/json` response
 	JSON202 *ModifyIPAddress202
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ModifyIPAddressDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ModifyIPAddressDefault
 }
 
 // GetJSON202 returns the response for an HTTP 202 `application/json` response
@@ -490,9 +490,9 @@ func (r ModifyIPAddressResp) GetJSON202() *ModifyIPAddress202 {
 	return r.JSON202
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r ModifyIPAddressResp) GetJSONDefault() *ModifyIPAddressDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ModifyIPAddressResp) GetApplicationproblemJSONDefault() *ModifyIPAddressDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -625,7 +625,7 @@ func ParseListIPAddressesResp(rsp *http.Response) (*ListIPAddressesResp, error) 
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -654,7 +654,7 @@ func ParseDeleteIPAddressResp(rsp *http.Response) (*DeleteIPAddressResp, error) 
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -687,7 +687,7 @@ func ParseGetIPAddressDetailsResp(rsp *http.Response) (*GetIPAddressDetailsResp,
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -720,7 +720,7 @@ func ParseModifyIPAddressResp(rsp *http.Response) (*ModifyIPAddressResp, error) 
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 

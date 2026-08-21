@@ -86,8 +86,8 @@ type ListVNCKeymapsResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ListVNCKeymaps200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ListVNCKeymapsDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ListVNCKeymapsDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -95,9 +95,9 @@ func (r ListVNCKeymapsResp) GetJSON200() *ListVNCKeymaps200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r ListVNCKeymapsResp) GetJSONDefault() *ListVNCKeymapsDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ListVNCKeymapsResp) GetApplicationproblemJSONDefault() *ListVNCKeymapsDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -170,7 +170,7 @@ func ParseListVNCKeymapsResp(rsp *http.Response) (*ListVNCKeymapsResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 

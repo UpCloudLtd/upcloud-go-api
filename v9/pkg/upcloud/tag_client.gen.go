@@ -458,8 +458,8 @@ type ListTagsResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ListTags200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ListTagsDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ListTagsDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -467,9 +467,9 @@ func (r ListTagsResp) GetJSON200() *ListTags200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r ListTagsResp) GetJSONDefault() *ListTagsDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ListTagsResp) GetApplicationproblemJSONDefault() *ListTagsDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -512,8 +512,8 @@ type CreateTagResp struct {
 	JSON403 *CreateTag403
 	// JSON409 the response for an HTTP 409 `application/json` response
 	JSON409 *CreateTag409
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *CreateTagDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *CreateTagDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -536,9 +536,9 @@ func (r CreateTagResp) GetJSON409() *CreateTag409 {
 	return r.JSON409
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r CreateTagResp) GetJSONDefault() *CreateTagDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r CreateTagResp) GetApplicationproblemJSONDefault() *CreateTagDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -579,8 +579,8 @@ type DeleteTagResp struct {
 	JSON403 *DeleteTag403
 	// JSON404 the response for an HTTP 404 `application/json` response
 	JSON404 *DeleteTag404
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *DeleteTagDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *DeleteTagDefault
 }
 
 // GetJSON400 returns the response for an HTTP 400 `application/json` response
@@ -598,9 +598,9 @@ func (r DeleteTagResp) GetJSON404() *DeleteTag404 {
 	return r.JSON404
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r DeleteTagResp) GetJSONDefault() *DeleteTagDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r DeleteTagResp) GetApplicationproblemJSONDefault() *DeleteTagDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -643,8 +643,8 @@ type GetTagResp struct {
 	JSON403 *GetTag403
 	// JSON404 the response for an HTTP 404 `application/json` response
 	JSON404 *GetTag404
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *GetTagDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *GetTagDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -667,9 +667,9 @@ func (r GetTagResp) GetJSON404() *GetTag404 {
 	return r.JSON404
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r GetTagResp) GetJSONDefault() *GetTagDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetTagResp) GetApplicationproblemJSONDefault() *GetTagDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -712,8 +712,8 @@ type ModifyTagResp struct {
 	JSON403 *ModifyTag403
 	// JSON404 the response for an HTTP 404 `application/json` response
 	JSON404 *ModifyTag404
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ModifyTagDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ModifyTagDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -736,9 +736,9 @@ func (r ModifyTagResp) GetJSON404() *ModifyTag404 {
 	return r.JSON404
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r ModifyTagResp) GetJSONDefault() *ModifyTagDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ModifyTagResp) GetApplicationproblemJSONDefault() *ModifyTagDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -901,7 +901,7 @@ func ParseListTagsResp(rsp *http.Response) (*ListTagsResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -955,7 +955,7 @@ func ParseCreateTagResp(rsp *http.Response) (*CreateTagResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1005,7 +1005,7 @@ func ParseDeleteTagResp(rsp *http.Response) (*DeleteTagResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1059,7 +1059,7 @@ func ParseGetTagResp(rsp *http.Response) (*GetTagResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1113,7 +1113,7 @@ func ParseModifyTagResp(rsp *http.Response) (*ModifyTagResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 

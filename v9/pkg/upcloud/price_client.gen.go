@@ -82,8 +82,8 @@ type GetPriceResp struct {
 	JSON200 *GetPrice200
 	// JSON400 the response for an HTTP 400 `application/json` response
 	JSON400 *GetPrice400
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *GetPriceDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *GetPriceDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -96,9 +96,9 @@ func (r GetPriceResp) GetJSON400() *GetPrice400 {
 	return r.JSON400
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r GetPriceResp) GetJSONDefault() *GetPriceDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetPriceResp) GetApplicationproblemJSONDefault() *GetPriceDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -176,7 +176,7 @@ func ParseGetPriceResp(rsp *http.Response) (*GetPriceResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 

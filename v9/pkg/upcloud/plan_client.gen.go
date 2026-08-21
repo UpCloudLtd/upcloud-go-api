@@ -92,8 +92,8 @@ type ListPlansResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ListPlans200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ListPlansDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ListPlansDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -101,9 +101,9 @@ func (r ListPlansResp) GetJSON200() *ListPlans200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r ListPlansResp) GetJSONDefault() *ListPlansDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ListPlansResp) GetApplicationproblemJSONDefault() *ListPlansDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -178,7 +178,7 @@ func ParseListPlansResp(rsp *http.Response) (*ListPlansResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 

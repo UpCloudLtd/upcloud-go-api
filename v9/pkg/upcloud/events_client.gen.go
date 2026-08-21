@@ -109,8 +109,8 @@ type ListEventsResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ListEvents200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ListEventsDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ListEventsDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -118,9 +118,9 @@ func (r ListEventsResp) GetJSON200() *ListEvents200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r ListEventsResp) GetJSONDefault() *ListEventsDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ListEventsResp) GetApplicationproblemJSONDefault() *ListEventsDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -193,7 +193,7 @@ func ParseListEventsResp(rsp *http.Response) (*ListEventsResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 

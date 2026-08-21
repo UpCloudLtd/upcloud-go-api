@@ -118,7 +118,9 @@ type CreateNetworkRequest struct {
 				Address NetworkIpCidr `json:"address"`
 
 				// Dhcp Boolean value represented as yes/no
-				Dhcp            NetworkBooleanYesno `json:"dhcp"`
+				Dhcp NetworkBooleanYesno `json:"dhcp"`
+
+				// DhcpBootfileUrl HTTP or HTTPS URL for DHCP bootfile delivery.
 				DhcpBootfileUrl *NetworkBootfileUrl `json:"dhcp_bootfile_url,omitempty"`
 
 				// DhcpDefaultRoute Boolean value represented as yes/no
@@ -142,6 +144,8 @@ type CreateNetworkRequest struct {
 				Gateway *NetworkIpAddress `json:"gateway,omitempty"`
 			} `json:"ip_network"`
 		} `json:"ip_networks"`
+
+		// Labels Collection of key/value labels for a resource.
 		Labels *NetworkLabels `json:"labels,omitempty"`
 		Name   string         `json:"name"`
 
@@ -161,6 +165,7 @@ type CreateNetworkRequest struct {
 // ModifyNetworkRequest Request schema for modifying a network
 type ModifyNetworkRequest struct {
 	Network struct {
+		// GrtExport Schema for boolean-like values encoded as 0 or 1.
 		GrtExport  NetworkBoolean01 `json:"grt_export"`
 		IpNetworks struct {
 			IpNetwork []struct {
@@ -179,7 +184,11 @@ type ModifyNetworkRequest struct {
 				Gateway *NetworkIpAddress `json:"gateway,omitempty"`
 			} `json:"ip_network"`
 		} `json:"ip_networks"`
-		Labels        NetworkLabels    `json:"labels"`
+
+		// Labels Collection of key/value labels for a resource.
+		Labels NetworkLabels `json:"labels"`
+
+		// MainAccountId Unique numeric identifier of an account.
 		MainAccountId NetworkAccountId `json:"main_account_id"`
 		Name          string           `json:"name"`
 
@@ -189,7 +198,9 @@ type ModifyNetworkRequest struct {
 
 		// Router Universally unique identifier
 		Router NetworkUuid `json:"router"`
-		Tags   NetworkTags `json:"tags"`
+
+		// Tags Container object for resource tags.
+		Tags NetworkTags `json:"tags"`
 
 		// Type Network access type
 		Type NetworkType `json:"type"`
@@ -201,21 +212,22 @@ type ModifyNetworkRequest struct {
 	} `json:"network"`
 }
 
-// Network defines model for network.
+// Network Response schema containing a single network.
 type Network struct {
+	// Network Detailed network resource attributes.
 	Network NetworkDetails `json:"network"`
 }
 
-// NetworkAccountId defines model for networkAccountId.
-type NetworkAccountId = int
+// NetworkAccountId Unique numeric identifier of an account.
+type NetworkAccountId = int64
 
-// NetworkBoolean01 defines model for networkBoolean01.
-type NetworkBoolean01 int
+// NetworkBoolean01 Schema for boolean-like values encoded as 0 or 1.
+type NetworkBoolean01 int64
 
 // NetworkBooleanYesno Boolean value represented as yes/no
 type NetworkBooleanYesno string
 
-// NetworkBootfileUrl defines model for networkBootfileUrl.
+// NetworkBootfileUrl HTTP or HTTPS URL for DHCP bootfile delivery.
 type NetworkBootfileUrl = string
 
 // NetworkCreateInterfaceRequest Request schema for creating a network interface
@@ -238,13 +250,17 @@ type NetworkCreateInterfaceRequest struct {
 		// Type Network access type
 		Type NetworkType `json:"type"`
 	} `json:"interface,omitempty"`
+
+	// MainAccountId Unique numeric identifier of an account.
 	MainAccountId *NetworkAccountId `json:"main_account_id,omitempty"`
 }
 
-// NetworkDescription Examples: Development servers, Production servers, Private environment, Quality Assurance environment, Web servers, Database servers
+// NetworkDescription Human-readable description for a tag.
+//
+// Examples: Development servers, Production servers, Private environment, Quality Assurance environment, Web servers, Database servers
 type NetworkDescription = string
 
-// NetworkDetails defines model for networkDetails.
+// NetworkDetails Detailed network resource attributes.
 type NetworkDetails struct {
 	// GrtExport Boolean value represented as yes/no
 	GrtExport  *NetworkBooleanYesno `json:"grt_export,omitempty"`
@@ -254,8 +270,10 @@ type NetworkDetails struct {
 			Address NetworkIpCidr `json:"address"`
 
 			// Dhcp Boolean value represented as yes/no
-			Dhcp            *NetworkBooleanYesno `json:"dhcp,omitempty"`
-			DhcpBootfileUrl *NetworkBootfileUrl  `json:"dhcp_bootfile_url,omitempty"`
+			Dhcp *NetworkBooleanYesno `json:"dhcp,omitempty"`
+
+			// DhcpBootfileUrl HTTP or HTTPS URL for DHCP bootfile delivery.
+			DhcpBootfileUrl *NetworkBootfileUrl `json:"dhcp_bootfile_url,omitempty"`
 
 			// DhcpDefaultRoute Boolean value represented as yes/no
 			DhcpDefaultRoute *NetworkBooleanYesno `json:"dhcp_default_route,omitempty"`
@@ -278,7 +296,10 @@ type NetworkDetails struct {
 	// Peerings List of network peerings the network is part of
 	Peerings *struct {
 		Peering *[]struct {
-			Name  *NetworkPeeringName  `json:"name,omitempty"`
+			// Name Name of a network peering relationship.
+			Name *NetworkPeeringName `json:"name,omitempty"`
+
+			// State Current lifecycle state of a network peering.
 			State *NetworkPeeringState `json:"state,omitempty"`
 
 			// Uuid Universally unique identifier
@@ -355,11 +376,8 @@ type NetworkInterface struct {
 type NetworkInterfaces struct {
 	Interfaces struct {
 		// Interface Response schema for listing network interfaces
-		Interface *NetworkInterface `json:"interface,omitempty"`
-		Type      interface{}       `json:"type,omitempty"`
+		Interface NetworkInterface `json:"interface"`
 	} `json:"interfaces"`
-	Required interface{} `json:"required,omitempty"`
-	Type     interface{} `json:"type,omitempty"`
 }
 
 // NetworkIpAddress IP address
@@ -385,12 +403,14 @@ type NetworkLabel struct {
 	Value string `json:"value"`
 }
 
-// NetworkLabels defines model for networkLabels.
+// NetworkLabels Collection of key/value labels for a resource.
 type NetworkLabels struct {
 	Label *[]NetworkLabel `json:"label,omitempty"`
 }
 
-// NetworkName Examples: DEV, PROD, private, QA, webserver, database
+// NetworkName Short name used to identify a tag.
+//
+// Examples: DEV, PROD, private, QA, webserver, database
 type NetworkName = string
 
 // NetworkServers List of servers associated with the tag.
@@ -398,14 +418,18 @@ type NetworkServers struct {
 	Server *[]openapi_types.UUID `json:"server,omitempty"`
 }
 
-// NetworkTags defines model for networkTags.
+// NetworkTags Container object for resource tags.
 type NetworkTags struct {
 	Tags struct {
 		Tag []struct {
-			// Description Examples: Development servers, Production servers, Private environment, Quality Assurance environment, Web servers, Database servers
+			// Description Human-readable description for a tag.
+			//
+			// Examples: Development servers, Production servers, Private environment, Quality Assurance environment, Web servers, Database servers
 			Description *NetworkDescription `json:"description,omitempty"`
 
-			// Name Examples: DEV, PROD, private, QA, webserver, database
+			// Name Short name used to identify a tag.
+			//
+			// Examples: DEV, PROD, private, QA, webserver, database
 			Name NetworkName `json:"name"`
 
 			// Servers List of servers associated with the tag.
@@ -425,13 +449,12 @@ type NetworkUuid = openapi_types.UUID
 // Examples: fi-hel1, de-fra1, us-nyc1
 type NetworkZone = string
 
-// Networks defines model for networks.
+// Networks Response schema containing a list of networks.
 type Networks struct {
-	AdditionalProperties interface{} `json:"additionalProperties,omitempty"`
-	Networks             struct {
-		Network *[]NetworkDetails `json:"network,omitempty"`
+	// Networks Container object for network items.
+	Networks struct {
+		Network []NetworkDetails `json:"network"`
 	} `json:"networks"`
-	Required interface{} `json:"required,omitempty"`
 }
 
 // DeleteNetworkInterfaceUuid Universally unique identifier
@@ -452,7 +475,7 @@ type ListNetworksLabel = NetworkLabel
 // ModifyNetworkUuid Universally unique identifier
 type ModifyNetworkUuid = NetworkUuid
 
-// CreateNetwork201 defines model for createNetwork201.
+// CreateNetwork201 Response schema containing a single network.
 type CreateNetwork201 = Network
 
 // CreateNetworkDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
@@ -470,13 +493,13 @@ type DeleteNetworkDefault = NetworkError
 // DeleteNetworkInterfaceDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type DeleteNetworkInterfaceDefault = NetworkError
 
-// GetNetworkDetails200 defines model for getNetworkDetails200.
+// GetNetworkDetails200 Response schema containing a single network.
 type GetNetworkDetails200 = Network
 
 // GetNetworkDetailsDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type GetNetworkDetailsDefault = NetworkError
 
-// GetNetworkInterfaceDetails200 defines model for getNetworkInterfaceDetails200.
+// GetNetworkInterfaceDetails200 Response schema containing a single network.
 type GetNetworkInterfaceDetails200 = Network
 
 // GetNetworkInterfaceDetailsDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
@@ -488,13 +511,13 @@ type ListNetworkInterfaces200 = NetworkInterfaces
 // ListNetworkInterfacesDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ListNetworkInterfacesDefault = NetworkError
 
-// ListNetworks200 defines model for listNetworks200.
+// ListNetworks200 Response schema containing a list of networks.
 type ListNetworks200 = Networks
 
 // ListNetworksDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ListNetworksDefault = NetworkError
 
-// ModifyNetwork200 defines model for modifyNetwork200.
+// ModifyNetwork200 Response schema containing a single network.
 type ModifyNetwork200 = Network
 
 // ModifyNetworkDefault A general error response indicating that the request could not be fulfilled due to a technical issue.

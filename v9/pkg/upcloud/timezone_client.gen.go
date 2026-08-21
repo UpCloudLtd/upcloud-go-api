@@ -86,8 +86,8 @@ type ListTimezonesResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ListTimezones200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ListTimezonesDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ListTimezonesDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -95,9 +95,9 @@ func (r ListTimezonesResp) GetJSON200() *ListTimezones200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r ListTimezonesResp) GetJSONDefault() *ListTimezonesDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ListTimezonesResp) GetApplicationproblemJSONDefault() *ListTimezonesDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -170,7 +170,7 @@ func ParseListTimezonesResp(rsp *http.Response) (*ListTimezonesResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 

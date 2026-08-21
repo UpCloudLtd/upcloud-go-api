@@ -201,8 +201,8 @@ type ListPartnerAccountsResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ListPartnerAccounts200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ListPartnerAccountsDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ListPartnerAccountsDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -210,9 +210,9 @@ func (r ListPartnerAccountsResp) GetJSON200() *ListPartnerAccounts200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r ListPartnerAccountsResp) GetJSONDefault() *ListPartnerAccountsDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ListPartnerAccountsResp) GetApplicationproblemJSONDefault() *ListPartnerAccountsDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -255,8 +255,8 @@ type CreatePartnerAccountResp struct {
 	JSON403 *CreatePartnerAccount403
 	// JSON409 the response for an HTTP 409 `application/json` response
 	JSON409 *CreatePartnerAccount409
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *CreatePartnerAccountDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *CreatePartnerAccountDefault
 }
 
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
@@ -279,9 +279,9 @@ func (r CreatePartnerAccountResp) GetJSON409() *CreatePartnerAccount409 {
 	return r.JSON409
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r CreatePartnerAccountResp) GetJSONDefault() *CreatePartnerAccountDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r CreatePartnerAccountResp) GetApplicationproblemJSONDefault() *CreatePartnerAccountDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -384,7 +384,7 @@ func ParseListPartnerAccountsResp(rsp *http.Response) (*ListPartnerAccountsResp,
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -438,7 +438,7 @@ func ParseCreatePartnerAccountResp(rsp *http.Response) (*CreatePartnerAccountRes
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 

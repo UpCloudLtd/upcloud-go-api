@@ -67,13 +67,17 @@ func (e TagError409ErrorErrorCode) Valid() bool {
 	}
 }
 
-// Tag defines model for tag.
+// Tag Container object for a single tag resource.
 type Tag struct {
 	Tag struct {
-		// Description Examples: Development servers, Production servers, Private environment, Quality Assurance environment, Web servers, Database servers
+		// Description Human-readable description for a tag.
+		//
+		// Examples: Development servers, Production servers, Private environment, Quality Assurance environment, Web servers, Database servers
 		Description *TagDescription `json:"description,omitempty"`
 
-		// Name Examples: DEV, PROD, private, QA, webserver, database
+		// Name Short name used to identify a tag.
+		//
+		// Examples: DEV, PROD, private, QA, webserver, database
 		Name TagName `json:"name"`
 
 		// Servers List of servers associated with the tag.
@@ -81,7 +85,9 @@ type Tag struct {
 	} `json:"tag"`
 }
 
-// TagDescription Examples: Development servers, Production servers, Private environment, Quality Assurance environment, Web servers, Database servers
+// TagDescription Human-readable description for a tag.
+//
+// Examples: Development servers, Production servers, Private environment, Quality Assurance environment, Web servers, Database servers
 type TagDescription = string
 
 // TagError A general error response indicating that the request could not be fulfilled due to a technical issue.
@@ -147,7 +153,9 @@ type TagError409 struct {
 // TagError409ErrorErrorCode defines model for TagError409.Error.ErrorCode.
 type TagError409ErrorErrorCode string
 
-// TagName Examples: DEV, PROD, private, QA, webserver, database
+// TagName Short name used to identify a tag.
+//
+// Examples: DEV, PROD, private, QA, webserver, database
 type TagName = string
 
 // TagServers List of servers associated with the tag.
@@ -155,14 +163,18 @@ type TagServers struct {
 	Server *[]openapi_types.UUID `json:"server,omitempty"`
 }
 
-// Tags defines model for tags.
+// Tags Container object for resource tags.
 type Tags struct {
 	Tags struct {
 		Tag []struct {
-			// Description Examples: Development servers, Production servers, Private environment, Quality Assurance environment, Web servers, Database servers
+			// Description Human-readable description for a tag.
+			//
+			// Examples: Development servers, Production servers, Private environment, Quality Assurance environment, Web servers, Database servers
 			Description *TagDescription `json:"description,omitempty"`
 
-			// Name Examples: DEV, PROD, private, QA, webserver, database
+			// Name Short name used to identify a tag.
+			//
+			// Examples: DEV, PROD, private, QA, webserver, database
 			Name TagName `json:"name"`
 
 			// Servers List of servers associated with the tag.
@@ -171,16 +183,22 @@ type Tags struct {
 	} `json:"tags"`
 }
 
-// DeleteTagName Examples: DEV, PROD, private, QA, webserver, database
+// DeleteTagName Short name used to identify a tag.
+//
+// Examples: DEV, PROD, private, QA, webserver, database
 type DeleteTagName = TagName
 
-// GetTagName Examples: DEV, PROD, private, QA, webserver, database
+// GetTagName Short name used to identify a tag.
+//
+// Examples: DEV, PROD, private, QA, webserver, database
 type GetTagName = TagName
 
-// ModifyTagName Examples: DEV, PROD, private, QA, webserver, database
+// ModifyTagName Short name used to identify a tag.
+//
+// Examples: DEV, PROD, private, QA, webserver, database
 type ModifyTagName = TagName
 
-// CreateTag200 defines model for createTag200.
+// CreateTag200 Container object for a single tag resource.
 type CreateTag200 = Tag
 
 // CreateTag400 400 Bad Request errors for tag operations.
@@ -207,7 +225,7 @@ type DeleteTag404 = TagError404
 // DeleteTagDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type DeleteTagDefault = TagError
 
-// GetTag200 defines model for getTag200.
+// GetTag200 Container object for a single tag resource.
 type GetTag200 = Tag
 
 // GetTag400 400 Bad Request errors for tag operations.
@@ -222,13 +240,13 @@ type GetTag404 = TagError404
 // GetTagDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type GetTagDefault = TagError
 
-// ListTags200 defines model for listTags200.
+// ListTags200 Container object for resource tags.
 type ListTags200 = Tags
 
 // ListTagsDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ListTagsDefault = TagError
 
-// ModifyTag200 defines model for modifyTag200.
+// ModifyTag200 Container object for a single tag resource.
 type ModifyTag200 = Tag
 
 // ModifyTag400 400 Bad Request errors for tag operations.
@@ -243,10 +261,10 @@ type ModifyTag404 = TagError404
 // ModifyTagDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ModifyTagDefault = TagError
 
-// CreateTag defines model for createTag.
+// CreateTag Container object for a single tag resource.
 type CreateTag = Tag
 
-// ModifyTag defines model for modifyTag.
+// ModifyTag Container object for a single tag resource.
 type ModifyTag = Tag
 
 // CreateTagJSONRequestBody defines body for CreateTag for application/json ContentType.
