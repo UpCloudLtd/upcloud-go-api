@@ -16,11 +16,13 @@ jobs:
         with:
           fetch-depth: 0
       - name: Get tag version
-        id: git
         run: echo "tag_version=$(make version)" >> "$GITHUB_OUTPUT"
-      - name: Get release notes
-        id: release_notes
+      - name: Get release notes for v8
+        if: ${{ startsWith(github.ref, 'refs/tags/v8.') }}
         run: make release-notes > .release_notes
+      - name: Get release notes for v9
+        if: ${{ startsWith(github.ref, 'refs/tags/v9.') }}
+        run: make release-notes CHANGELOG=v9/CHANGELOG.md > .release_notes
       - name: Run goreleaser-action
         uses: goreleaser/goreleaser-action@f06c13b6b1a9625abc9e6e439d9c05a8f2190e94 # v7.2.3
         with:

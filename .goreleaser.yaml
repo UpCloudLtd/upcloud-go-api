@@ -47,7 +47,7 @@ release:
   # in case there is an indicator for this in the tag e.g. v1.0.0-rc1
   # If set to true, will mark the release as not ready for production.
   # Default is false.
-  prerelease: false
+  prerelease: auto
 
   # What to do with the release notes in case there the release already exists.
   #
