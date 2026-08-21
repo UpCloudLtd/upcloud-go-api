@@ -485,8 +485,8 @@ type ListRoutersResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ListRouters200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ListRoutersDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ListRoutersDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -494,9 +494,9 @@ func (r ListRoutersResp) GetJSON200() *ListRouters200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r ListRoutersResp) GetJSONDefault() *ListRoutersDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ListRoutersResp) GetApplicationproblemJSONDefault() *ListRoutersDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -537,8 +537,8 @@ type CreateRouterResp struct {
 	JSON400 *CreateRouter400
 	// JSON409 the response for an HTTP 409 `application/json` response
 	JSON409 *CreateRouter409
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *CreateRouterDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *CreateRouterDefault
 }
 
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
@@ -556,9 +556,9 @@ func (r CreateRouterResp) GetJSON409() *CreateRouter409 {
 	return r.JSON409
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r CreateRouterResp) GetJSONDefault() *CreateRouterDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r CreateRouterResp) GetApplicationproblemJSONDefault() *CreateRouterDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -597,8 +597,8 @@ type DeleteRouterResp struct {
 	JSON404 *DeleteRouter404
 	// JSON409 the response for an HTTP 409 `application/json` response
 	JSON409 *DeleteRouter409
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *DeleteRouterDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *DeleteRouterDefault
 }
 
 // GetJSON404 returns the response for an HTTP 404 `application/json` response
@@ -611,9 +611,9 @@ func (r DeleteRouterResp) GetJSON409() *DeleteRouter409 {
 	return r.JSON409
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r DeleteRouterResp) GetJSONDefault() *DeleteRouterDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r DeleteRouterResp) GetApplicationproblemJSONDefault() *DeleteRouterDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -652,8 +652,8 @@ type GetRouterResp struct {
 	JSON200 *GetRouter200
 	// JSON404 the response for an HTTP 404 `application/json` response
 	JSON404 *GetRouter404
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *GetRouterDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *GetRouterDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -666,9 +666,9 @@ func (r GetRouterResp) GetJSON404() *GetRouter404 {
 	return r.JSON404
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r GetRouterResp) GetJSONDefault() *GetRouterDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetRouterResp) GetApplicationproblemJSONDefault() *GetRouterDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -711,8 +711,8 @@ type ModifyRouterResp struct {
 	JSON404 *ModifyRouter404
 	// JSON409 the response for an HTTP 409 `application/json` response
 	JSON409 *ModifyRouter409
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ModifyRouterDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ModifyRouterDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -735,9 +735,9 @@ func (r ModifyRouterResp) GetJSON409() *ModifyRouter409 {
 	return r.JSON409
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r ModifyRouterResp) GetJSONDefault() *ModifyRouterDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ModifyRouterResp) GetApplicationproblemJSONDefault() *ModifyRouterDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -900,7 +900,7 @@ func ParseListRoutersResp(rsp *http.Response) (*ListRoutersResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -947,7 +947,7 @@ func ParseCreateRouterResp(rsp *http.Response) (*CreateRouterResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -990,7 +990,7 @@ func ParseDeleteRouterResp(rsp *http.Response) (*DeleteRouterResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1030,7 +1030,7 @@ func ParseGetRouterResp(rsp *http.Response) (*GetRouterResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1084,7 +1084,7 @@ func ParseModifyRouterResp(rsp *http.Response) (*ModifyRouterResp, error) {
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 

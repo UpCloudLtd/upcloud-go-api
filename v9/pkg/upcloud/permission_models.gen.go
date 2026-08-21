@@ -14,7 +14,7 @@ type PermissionDocument struct {
 	// Options Target specific options.
 	Options *map[string]interface{} `json:"options,omitempty"`
 
-	// TargetIdentifier Target identifying string. This is type specific and in most cases is an UUID4. Wildcard value "*" can be used to
+	// TargetIdentifier Target identifying string. This is type specific and in most cases is a UUID4. Wildcard value "*" can be used to
 	// reference all target resources.
 	TargetIdentifier PermissionTargetIdentifier `json:"target_identifier"`
 
@@ -36,7 +36,7 @@ type PermissionError struct {
 	} `json:"error"`
 }
 
-// PermissionTargetIdentifier Target identifying string. This is type specific and in most cases is an UUID4. Wildcard value "*" can be used to
+// PermissionTargetIdentifier Target identifying string. This is type specific and in most cases is a UUID4. Wildcard value "*" can be used to
 // reference all target resources.
 type PermissionTargetIdentifier = string
 

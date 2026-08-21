@@ -46,8 +46,9 @@ type DeviceError struct {
 
 // Devices Zone device availability
 type Devices map[string]struct {
+	// GpuPlans Available GPU plans in the zone.
 	GpuPlans *map[string]struct {
-		Amount int `json:"amount"`
+		Amount int64 `json:"amount"`
 	} `json:"gpu_plans,omitempty"`
 }
 

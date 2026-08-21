@@ -44,8 +44,8 @@ func (e ZoneBooleanYesno) Valid() bool {
 // Examples: fi-hel1, de-fra1, us-nyc1
 type Zone = string
 
-// ZoneBoolean01 defines model for zoneBoolean01.
-type ZoneBoolean01 int
+// ZoneBoolean01 Schema for boolean-like values encoded as 0 or 1.
+type ZoneBoolean01 int64
 
 // ZoneBooleanYesno Boolean value represented as yes/no
 type ZoneBooleanYesno string
@@ -63,17 +63,16 @@ type ZoneError struct {
 
 // ZoneVlans Schema for zone VLANs
 type ZoneVlans struct {
-	AdditionalProperties interface{} `json:"additionalProperties,omitempty"`
-	Required             interface{} `json:"required,omitempty"`
-	ZoneVlans            *struct {
-		Required interface{} `json:"required,omitempty"`
-		Vlan     *[]struct {
-			Access      string        `json:"access"`
+	ZoneVlans struct {
+		Vlan []struct {
+			Access string `json:"access"`
+
+			// Default Schema for boolean-like values encoded as 0 or 1.
 			Default     ZoneBoolean01 `json:"default"`
 			Description string        `json:"description"`
-			Id          int           `json:"id"`
-		} `json:"vlan,omitempty"`
-	} `json:"zone_vlans,omitempty"`
+			Id          int64         `json:"id"`
+		} `json:"vlan"`
+	} `json:"zone_vlans"`
 }
 
 // Zones Zones schema

@@ -521,8 +521,8 @@ type ListNetworkPeeringsResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ListNetworkPeerings200
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ListNetworkPeeringsDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ListNetworkPeeringsDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -530,9 +530,9 @@ func (r ListNetworkPeeringsResp) GetJSON200() *ListNetworkPeerings200 {
 	return r.JSON200
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r ListNetworkPeeringsResp) GetJSONDefault() *ListNetworkPeeringsDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ListNetworkPeeringsResp) GetApplicationproblemJSONDefault() *ListNetworkPeeringsDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -575,8 +575,8 @@ type CreateNetworkPeeringResp struct {
 	JSON404 *CreateNetworkPeering404
 	// JSON409 the response for an HTTP 409 `application/json` response
 	JSON409 *CreateNetworkPeering409
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *CreateNetworkPeeringDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *CreateNetworkPeeringDefault
 }
 
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
@@ -599,9 +599,9 @@ func (r CreateNetworkPeeringResp) GetJSON409() *CreateNetworkPeering409 {
 	return r.JSON409
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r CreateNetworkPeeringResp) GetJSONDefault() *CreateNetworkPeeringDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r CreateNetworkPeeringResp) GetApplicationproblemJSONDefault() *CreateNetworkPeeringDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -638,8 +638,8 @@ type DeleteNetworkPeeringResp struct {
 	HTTPResponse *http.Response
 	// JSON404 the response for an HTTP 404 `application/json` response
 	JSON404 *DeleteNetworkPeering404
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *DeleteNetworkPeeringDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *DeleteNetworkPeeringDefault
 }
 
 // GetJSON404 returns the response for an HTTP 404 `application/json` response
@@ -647,9 +647,9 @@ func (r DeleteNetworkPeeringResp) GetJSON404() *DeleteNetworkPeering404 {
 	return r.JSON404
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r DeleteNetworkPeeringResp) GetJSONDefault() *DeleteNetworkPeeringDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r DeleteNetworkPeeringResp) GetApplicationproblemJSONDefault() *DeleteNetworkPeeringDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -688,8 +688,8 @@ type GetNetworkPeeringResp struct {
 	JSON200 *GetNetworkPeering200
 	// JSON404 the response for an HTTP 404 `application/json` response
 	JSON404 *GetNetworkPeering404
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *GetNetworkPeeringDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *GetNetworkPeeringDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -702,9 +702,9 @@ func (r GetNetworkPeeringResp) GetJSON404() *GetNetworkPeering404 {
 	return r.JSON404
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r GetNetworkPeeringResp) GetJSONDefault() *GetNetworkPeeringDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetNetworkPeeringResp) GetApplicationproblemJSONDefault() *GetNetworkPeeringDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -745,8 +745,8 @@ type ModifyNetworkPeeringResp struct {
 	JSON400 *ModifyNetworkPeering400
 	// JSON404 the response for an HTTP 404 `application/json` response
 	JSON404 *ModifyNetworkPeering404
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ModifyNetworkPeeringDefault
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ModifyNetworkPeeringDefault
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -764,9 +764,9 @@ func (r ModifyNetworkPeeringResp) GetJSON404() *ModifyNetworkPeering404 {
 	return r.JSON404
 }
 
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r ModifyNetworkPeeringResp) GetJSONDefault() *ModifyNetworkPeeringDefault {
-	return r.JSONDefault
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ModifyNetworkPeeringResp) GetApplicationproblemJSONDefault() *ModifyNetworkPeeringDefault {
+	return r.ApplicationproblemJSONDefault
 }
 
 // GetBody returns the raw response body bytes
@@ -929,7 +929,7 @@ func ParseListNetworkPeeringsResp(rsp *http.Response) (*ListNetworkPeeringsResp,
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -983,7 +983,7 @@ func ParseCreateNetworkPeeringResp(rsp *http.Response) (*CreateNetworkPeeringRes
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1019,7 +1019,7 @@ func ParseDeleteNetworkPeeringResp(rsp *http.Response) (*DeleteNetworkPeeringRes
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1059,7 +1059,7 @@ func ParseGetNetworkPeeringResp(rsp *http.Response) (*GetNetworkPeeringResp, err
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
@@ -1106,7 +1106,7 @@ func ParseModifyNetworkPeeringResp(rsp *http.Response) (*ModifyNetworkPeeringRes
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSONDefault = &dest
+		response.ApplicationproblemJSONDefault = &dest
 
 	}
 
