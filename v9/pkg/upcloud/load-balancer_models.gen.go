@@ -1595,8 +1595,8 @@ type LoadBalancerBackendsResponse = []LoadBalancerBackend
 //
 // Examples: {"created_at":"2025-11-06T09:00:00.000Z","hostnames":["example.com","www.example.com"],"key_type":"rsa","labels":[],"name":"mydomain-cert-bundle","not_after":"2026-11-06T09:00:00.000Z","not_before":"2025-11-06T09:00:00.000Z","operational_state":"setup-challenge","tls_type":"dynamic","updated_at":"2025-11-06T11:00:00.000Z","uuid":"8d2f4a1e-0e3f-44a9-a0f5-9b8c84e9c701"}
 type LoadBalancerCertificateBundle struct {
-	// CertificateRaw PEM-encoded certificate data (base64).
-	CertificateRaw *[]byte `json:"certificate_raw,omitempty"`
+	// Certificate PEM-encoded certificate data (base64).
+	Certificate *[]byte `json:"certificate,omitempty"`
 
 	// ChallengeProblems Problems reported during ACME challenge validation.
 	ChallengeProblems *[]LoadBalancerChallengeProblemResponse `json:"challenge_problems,omitempty"`
@@ -1609,8 +1609,8 @@ type LoadBalancerCertificateBundle struct {
 	// Hostnames List of hostnames covered by this certificate bundle.
 	Hostnames *[]string `json:"hostnames,omitempty"`
 
-	// IntermediatesRaw PEM-encoded intermediate certificates (base64).
-	IntermediatesRaw *[]byte `json:"intermediates_raw,omitempty"`
+	// Intermediates PEM-encoded intermediate certificates (base64).
+	Intermediates *[]byte `json:"intermediates,omitempty"`
 
 	// KeyType Type of private key used for this certificate bundle.
 	KeyType *LoadBalancerCertificateBundleKeyType `json:"key_type,omitempty"`
