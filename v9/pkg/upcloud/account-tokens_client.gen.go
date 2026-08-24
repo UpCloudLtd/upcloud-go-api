@@ -19,7 +19,7 @@ import (
 // The interface specification for the client above.
 type AccountTokensClientInterface interface {
 
-	// ListTokens List all tokens for the currently authorized account
+	// ListTokens List API tokens
 	//
 	// List all tokens for the currently authorized account.
 	// The tokens are returned in a paged format, with the default page size being 20.
@@ -28,7 +28,7 @@ type AccountTokensClientInterface interface {
 	// Corresponds with GET /1.3/account/tokens (the `ListTokens` operationId).
 	ListTokens(ctx context.Context, params *ListTokensParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateTokenWithBody Create a new API token
+	// CreateTokenWithBody Create an API token
 	//
 	// Create a new API token. Maximum token validity is 24*365h=8760h (~1 year).
 	// Attribute allowed_ip_prefixes allows defining a list of CIDR/IP addresses from where the token is accepted.
@@ -39,7 +39,7 @@ type AccountTokensClientInterface interface {
 	// Corresponds with POST /1.3/account/tokens (the `CreateToken` operationId).
 	CreateTokenWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateToken Create a new API token
+	// CreateToken Create an API token
 	//
 	// Create a new API token. Maximum token validity is 24*365h=8760h (~1 year).
 	// Attribute allowed_ip_prefixes allows defining a list of CIDR/IP addresses from where the token is accepted.
@@ -50,22 +50,22 @@ type AccountTokensClientInterface interface {
 	// Corresponds with POST /1.3/account/tokens (the `CreateToken` operationId).
 	CreateToken(ctx context.Context, body CreateTokenJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// RevokeToken Revoke a specific token
+	// RevokeToken Revoke a token
 	//
-	// Delete a specific token.
+	// Revoke a specific API token.
 	//
 	// Corresponds with DELETE /1.3/account/tokens/{token-uuid} (the `RevokeToken` operationId).
 	RevokeToken(ctx context.Context, tokenUuid AccountTokensRevokeTokenTokenUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetToken Get the details of a specific token
+	// GetToken Get token details
 	//
-	// Get the details of a specific token.
+	// Get the details of a specific API token.
 	//
 	// Corresponds with GET /1.3/account/tokens/{token-uuid} (the `GetToken` operationId).
 	GetToken(ctx context.Context, tokenUuid AccountTokensGetTokenTokenUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
-// ListTokens List all tokens for the currently authorized account
+// ListTokens List API tokens
 //
 // List all tokens for the currently authorized account.
 // The tokens are returned in a paged format, with the default page size being 20.
@@ -84,7 +84,7 @@ func (c *Client) ListTokens(ctx context.Context, params *ListTokensParams, reqEd
 	return c.Client.Do(req)
 }
 
-// CreateTokenWithBody Create a new API token
+// CreateTokenWithBody Create an API token
 //
 // Create a new API token. Maximum token validity is 24*365h=8760h (~1 year).
 // Attribute allowed_ip_prefixes allows defining a list of CIDR/IP addresses from where the token is accepted.
@@ -105,7 +105,7 @@ func (c *Client) CreateTokenWithBody(ctx context.Context, contentType string, bo
 	return c.Client.Do(req)
 }
 
-// CreateToken Create a new API token
+// CreateToken Create an API token
 //
 // Create a new API token. Maximum token validity is 24*365h=8760h (~1 year).
 // Attribute allowed_ip_prefixes allows defining a list of CIDR/IP addresses from where the token is accepted.
@@ -126,9 +126,9 @@ func (c *Client) CreateToken(ctx context.Context, body CreateTokenJSONRequestBod
 	return c.Client.Do(req)
 }
 
-// RevokeToken Revoke a specific token
+// RevokeToken Revoke a token
 //
-// Delete a specific token.
+// Revoke a specific API token.
 //
 // Corresponds with DELETE /1.3/account/tokens/{token-uuid} (the `RevokeToken` operationId).
 func (c *Client) RevokeToken(ctx context.Context, tokenUuid AccountTokensRevokeTokenTokenUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -143,9 +143,9 @@ func (c *Client) RevokeToken(ctx context.Context, tokenUuid AccountTokensRevokeT
 	return c.Client.Do(req)
 }
 
-// GetToken Get the details of a specific token
+// GetToken Get token details
 //
-// Get the details of a specific token.
+// Get the details of a specific API token.
 //
 // Corresponds with GET /1.3/account/tokens/{token-uuid} (the `GetToken` operationId).
 func (c *Client) GetToken(ctx context.Context, tokenUuid AccountTokensGetTokenTokenUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -361,7 +361,7 @@ func NewGetTokenRequest(server string, tokenUuid AccountTokensGetTokenTokenUuid)
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type AccountTokensClientWithResponsesInterface interface {
 
-	// ListTokensWithResponse List all tokens for the currently authorized account
+	// ListTokensWithResponse List API tokens
 	//
 	// List all tokens for the currently authorized account.
 	// The tokens are returned in a paged format, with the default page size being 20.
@@ -372,7 +372,7 @@ type AccountTokensClientWithResponsesInterface interface {
 	// Corresponds with GET /1.3/account/tokens (the `ListTokens` operationId).
 	ListTokensWithResponse(ctx context.Context, params *ListTokensParams, reqEditors ...RequestEditorFn) (*ListTokensResp, error)
 
-	// CreateTokenWithBodyWithResponse Create a new API token
+	// CreateTokenWithBodyWithResponse Create an API token
 	//
 	// Create a new API token. Maximum token validity is 24*365h=8760h (~1 year).
 	// Attribute allowed_ip_prefixes allows defining a list of CIDR/IP addresses from where the token is accepted.
@@ -383,7 +383,7 @@ type AccountTokensClientWithResponsesInterface interface {
 	// Corresponds with POST /1.3/account/tokens (the `CreateToken` operationId).
 	CreateTokenWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateTokenResp, error)
 
-	// CreateTokenWithResponse Create a new API token
+	// CreateTokenWithResponse Create an API token
 	//
 	// Create a new API token. Maximum token validity is 24*365h=8760h (~1 year).
 	// Attribute allowed_ip_prefixes allows defining a list of CIDR/IP addresses from where the token is accepted.
@@ -394,18 +394,18 @@ type AccountTokensClientWithResponsesInterface interface {
 	// Corresponds with POST /1.3/account/tokens (the `CreateToken` operationId).
 	CreateTokenWithResponse(ctx context.Context, body CreateTokenJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateTokenResp, error)
 
-	// RevokeTokenWithResponse Revoke a specific token
+	// RevokeTokenWithResponse Revoke a token
 	//
-	// Delete a specific token.
+	// Revoke a specific API token.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /1.3/account/tokens/{token-uuid} (the `RevokeToken` operationId).
 	RevokeTokenWithResponse(ctx context.Context, tokenUuid AccountTokensRevokeTokenTokenUuid, reqEditors ...RequestEditorFn) (*RevokeTokenResp, error)
 
-	// GetTokenWithResponse Get the details of a specific token
+	// GetTokenWithResponse Get token details
 	//
-	// Get the details of a specific token.
+	// Get the details of a specific API token.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -661,7 +661,7 @@ func (r GetTokenResp) ContentType() string {
 	return ""
 }
 
-// ListTokensWithResponse List all tokens for the currently authorized account
+// ListTokensWithResponse List API tokens
 //
 // List all tokens for the currently authorized account.
 // The tokens are returned in a paged format, with the default page size being 20.
@@ -678,7 +678,7 @@ func (c *ClientWithResponses) ListTokensWithResponse(ctx context.Context, params
 	return ParseListTokensResp(rsp)
 }
 
-// CreateTokenWithBodyWithResponse Create a new API token
+// CreateTokenWithBodyWithResponse Create an API token
 //
 // Create a new API token. Maximum token validity is 24*365h=8760h (~1 year).
 // Attribute allowed_ip_prefixes allows defining a list of CIDR/IP addresses from where the token is accepted.
@@ -695,7 +695,7 @@ func (c *ClientWithResponses) CreateTokenWithBodyWithResponse(ctx context.Contex
 	return ParseCreateTokenResp(rsp)
 }
 
-// CreateTokenWithResponse Create a new API token
+// CreateTokenWithResponse Create an API token
 //
 // Create a new API token. Maximum token validity is 24*365h=8760h (~1 year).
 // Attribute allowed_ip_prefixes allows defining a list of CIDR/IP addresses from where the token is accepted.
@@ -712,9 +712,9 @@ func (c *ClientWithResponses) CreateTokenWithResponse(ctx context.Context, body 
 	return ParseCreateTokenResp(rsp)
 }
 
-// RevokeTokenWithResponse Revoke a specific token
+// RevokeTokenWithResponse Revoke a token
 //
-// Delete a specific token.
+// Revoke a specific API token.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -727,9 +727,9 @@ func (c *ClientWithResponses) RevokeTokenWithResponse(ctx context.Context, token
 	return ParseRevokeTokenResp(rsp)
 }
 
-// GetTokenWithResponse Get the details of a specific token
+// GetTokenWithResponse Get token details
 //
-// Get the details of a specific token.
+// Get the details of a specific API token.
 //
 // Returns a wrapper object for the known response body format(s).
 //
