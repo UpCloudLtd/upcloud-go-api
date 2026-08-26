@@ -28,7 +28,7 @@ type DatabaseClientInterface interface {
 
 	// CreateDatabaseWithBody Create database
 	//
-	// Creates a new Managed Database instance. New databases are started by default. An initial backup is created automatically on startup and the API will be fully functional only after this backup has been created. The creation might take a while. Note that different databases have different properties that can be passed on creation.
+	// Creates a new Managed Database instance. New databases are started by default. An initial backup is created automatically on startup and the API will be fully functional only after this backup has been created. The creation might take a while. Note that different databases have different properties that can be passed on creation. For PostgreSQL and MySQL, select the plan with the plan_compute, plan_node_count, plan_storage_gib and plan_backups fields; the plan name field is deprecated for these engines.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -37,7 +37,7 @@ type DatabaseClientInterface interface {
 
 	// CreateDatabase Create database
 	//
-	// Creates a new Managed Database instance. New databases are started by default. An initial backup is created automatically on startup and the API will be fully functional only after this backup has been created. The creation might take a while. Note that different databases have different properties that can be passed on creation.
+	// Creates a new Managed Database instance. New databases are started by default. An initial backup is created automatically on startup and the API will be fully functional only after this backup has been created. The creation might take a while. Note that different databases have different properties that can be passed on creation. For PostgreSQL and MySQL, select the plan with the plan_compute, plan_node_count, plan_storage_gib and plan_backups fields; the plan name field is deprecated for these engines.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -124,14 +124,14 @@ type DatabaseClientInterface interface {
 
 	// ListDatabaseTypes List database types
 	//
-	// Returns a list of available database types. Contains available plans, zones, database versions supported and the configuration properties for each database.
+	// Returns a list of available database types. Contains available legacy plans, zones, database versions supported and the configuration properties for each database. PostgreSQL and MySQL componentised (rdb.*) plans are selected with the plan_* request fields instead of a listed plan name.
 	//
 	// Corresponds with GET /1.3/database/service-types (the `ListDatabaseTypes` operationId).
 	ListDatabaseTypes(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetDatabaseType Get database type
 	//
-	// Returns database type details by given {database_type}. Contains available plans, zones, database versions supported and configuration properties.
+	// Returns database type details by given {database_type}. Contains available legacy plans, zones, database versions supported and configuration properties. PostgreSQL and MySQL componentised (rdb.*) plans are selected with the plan_* request fields instead of a listed plan name.
 	//
 	// Corresponds with GET /1.3/database/service-types/{service-type-name} (the `GetDatabaseType` operationId).
 	GetDatabaseType(ctx context.Context, serviceTypeName GetDatabaseTypeServiceTypeName, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -159,7 +159,7 @@ type DatabaseClientInterface interface {
 
 	// ModifyDatabaseWithBody Modify database
 	//
-	// Modifies Managed Database service details by its {uuid} including upgrading plans, migration to other zones and database type-specific configurations.
+	// Modifies Managed Database service details by its {uuid} including upgrading plans, migration to other zones and database type-specific configurations. For PostgreSQL and MySQL, change the plan with the plan_compute, plan_node_count, plan_storage_gib and plan_backups fields; the plan name field is deprecated for these engines.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -168,7 +168,7 @@ type DatabaseClientInterface interface {
 
 	// ModifyDatabase Modify database
 	//
-	// Modifies Managed Database service details by its {uuid} including upgrading plans, migration to other zones and database type-specific configurations.
+	// Modifies Managed Database service details by its {uuid} including upgrading plans, migration to other zones and database type-specific configurations. For PostgreSQL and MySQL, change the plan with the plan_compute, plan_node_count, plan_storage_gib and plan_backups fields; the plan name field is deprecated for these engines.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -216,7 +216,7 @@ type DatabaseClientInterface interface {
 
 	// CloneDatabaseWithBody Clone database
 	//
-	// Creates a clone of a Managed Database service based on its {uuid}. It is possible to change location, plans and use the point in time feature to clone your service at a specific time using your backups.
+	// Creates a clone of a Managed Database service based on its {uuid}. It is possible to change location, plans and use the point in time feature to clone your service at a specific time using your backups. For PostgreSQL and MySQL, select the clone's plan with the plan_compute, plan_node_count, plan_storage_gib and plan_backups fields; the plan name field is deprecated for these engines.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -225,7 +225,7 @@ type DatabaseClientInterface interface {
 
 	// CloneDatabase Clone database
 	//
-	// Creates a clone of a Managed Database service based on its {uuid}. It is possible to change location, plans and use the point in time feature to clone your service at a specific time using your backups.
+	// Creates a clone of a Managed Database service based on its {uuid}. It is possible to change location, plans and use the point in time feature to clone your service at a specific time using your backups. For PostgreSQL and MySQL, select the clone's plan with the plan_compute, plan_node_count, plan_storage_gib and plan_backups fields; the plan name field is deprecated for these engines.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -764,7 +764,7 @@ func (c *Client) ListDatabases(ctx context.Context, params *ListDatabasesParams,
 
 // CreateDatabaseWithBody Create database
 //
-// Creates a new Managed Database instance. New databases are started by default. An initial backup is created automatically on startup and the API will be fully functional only after this backup has been created. The creation might take a while. Note that different databases have different properties that can be passed on creation.
+// Creates a new Managed Database instance. New databases are started by default. An initial backup is created automatically on startup and the API will be fully functional only after this backup has been created. The creation might take a while. Note that different databases have different properties that can be passed on creation. For PostgreSQL and MySQL, select the plan with the plan_compute, plan_node_count, plan_storage_gib and plan_backups fields; the plan name field is deprecated for these engines.
 //
 // Takes any type of body and a specified content type.
 //
@@ -783,7 +783,7 @@ func (c *Client) CreateDatabaseWithBody(ctx context.Context, contentType string,
 
 // CreateDatabase Create database
 //
-// Creates a new Managed Database instance. New databases are started by default. An initial backup is created automatically on startup and the API will be fully functional only after this backup has been created. The creation might take a while. Note that different databases have different properties that can be passed on creation.
+// Creates a new Managed Database instance. New databases are started by default. An initial backup is created automatically on startup and the API will be fully functional only after this backup has been created. The creation might take a while. Note that different databases have different properties that can be passed on creation. For PostgreSQL and MySQL, select the plan with the plan_compute, plan_node_count, plan_storage_gib and plan_backups fields; the plan name field is deprecated for these engines.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -980,7 +980,7 @@ func (c *Client) GetPGAvailableExtensions(ctx context.Context, reqEditors ...Req
 
 // ListDatabaseTypes List database types
 //
-// Returns a list of available database types. Contains available plans, zones, database versions supported and the configuration properties for each database.
+// Returns a list of available database types. Contains available legacy plans, zones, database versions supported and the configuration properties for each database. PostgreSQL and MySQL componentised (rdb.*) plans are selected with the plan_* request fields instead of a listed plan name.
 //
 // Corresponds with GET /1.3/database/service-types (the `ListDatabaseTypes` operationId).
 func (c *Client) ListDatabaseTypes(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -997,7 +997,7 @@ func (c *Client) ListDatabaseTypes(ctx context.Context, reqEditors ...RequestEdi
 
 // GetDatabaseType Get database type
 //
-// Returns database type details by given {database_type}. Contains available plans, zones, database versions supported and configuration properties.
+// Returns database type details by given {database_type}. Contains available legacy plans, zones, database versions supported and configuration properties. PostgreSQL and MySQL componentised (rdb.*) plans are selected with the plan_* request fields instead of a listed plan name.
 //
 // Corresponds with GET /1.3/database/service-types/{service-type-name} (the `GetDatabaseType` operationId).
 func (c *Client) GetDatabaseType(ctx context.Context, serviceTypeName GetDatabaseTypeServiceTypeName, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -1065,7 +1065,7 @@ func (c *Client) GetDatabase(ctx context.Context, uuid GetDatabaseUuid, reqEdito
 
 // ModifyDatabaseWithBody Modify database
 //
-// Modifies Managed Database service details by its {uuid} including upgrading plans, migration to other zones and database type-specific configurations.
+// Modifies Managed Database service details by its {uuid} including upgrading plans, migration to other zones and database type-specific configurations. For PostgreSQL and MySQL, change the plan with the plan_compute, plan_node_count, plan_storage_gib and plan_backups fields; the plan name field is deprecated for these engines.
 //
 // Takes any type of body and a specified content type.
 //
@@ -1084,7 +1084,7 @@ func (c *Client) ModifyDatabaseWithBody(ctx context.Context, uuid ModifyDatabase
 
 // ModifyDatabase Modify database
 //
-// Modifies Managed Database service details by its {uuid} including upgrading plans, migration to other zones and database type-specific configurations.
+// Modifies Managed Database service details by its {uuid} including upgrading plans, migration to other zones and database type-specific configurations. For PostgreSQL and MySQL, change the plan with the plan_compute, plan_node_count, plan_storage_gib and plan_backups fields; the plan name field is deprecated for these engines.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -1192,7 +1192,7 @@ func (c *Client) GetDatabaseAvailableExtensions(ctx context.Context, uuid GetDat
 
 // CloneDatabaseWithBody Clone database
 //
-// Creates a clone of a Managed Database service based on its {uuid}. It is possible to change location, plans and use the point in time feature to clone your service at a specific time using your backups.
+// Creates a clone of a Managed Database service based on its {uuid}. It is possible to change location, plans and use the point in time feature to clone your service at a specific time using your backups. For PostgreSQL and MySQL, select the clone's plan with the plan_compute, plan_node_count, plan_storage_gib and plan_backups fields; the plan name field is deprecated for these engines.
 //
 // Takes any type of body and a specified content type.
 //
@@ -1211,7 +1211,7 @@ func (c *Client) CloneDatabaseWithBody(ctx context.Context, uuid CloneDatabaseUu
 
 // CloneDatabase Clone database
 //
-// Creates a clone of a Managed Database service based on its {uuid}. It is possible to change location, plans and use the point in time feature to clone your service at a specific time using your backups.
+// Creates a clone of a Managed Database service based on its {uuid}. It is possible to change location, plans and use the point in time feature to clone your service at a specific time using your backups. For PostgreSQL and MySQL, select the clone's plan with the plan_compute, plan_node_count, plan_storage_gib and plan_backups fields; the plan name field is deprecated for these engines.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -5327,7 +5327,7 @@ type DatabaseClientWithResponsesInterface interface {
 
 	// CreateDatabaseWithBodyWithResponse Create database
 	//
-	// Creates a new Managed Database instance. New databases are started by default. An initial backup is created automatically on startup and the API will be fully functional only after this backup has been created. The creation might take a while. Note that different databases have different properties that can be passed on creation.
+	// Creates a new Managed Database instance. New databases are started by default. An initial backup is created automatically on startup and the API will be fully functional only after this backup has been created. The creation might take a while. Note that different databases have different properties that can be passed on creation. For PostgreSQL and MySQL, select the plan with the plan_compute, plan_node_count, plan_storage_gib and plan_backups fields; the plan name field is deprecated for these engines.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -5336,7 +5336,7 @@ type DatabaseClientWithResponsesInterface interface {
 
 	// CreateDatabaseWithResponse Create database
 	//
-	// Creates a new Managed Database instance. New databases are started by default. An initial backup is created automatically on startup and the API will be fully functional only after this backup has been created. The creation might take a while. Note that different databases have different properties that can be passed on creation.
+	// Creates a new Managed Database instance. New databases are started by default. An initial backup is created automatically on startup and the API will be fully functional only after this backup has been created. The creation might take a while. Note that different databases have different properties that can be passed on creation. For PostgreSQL and MySQL, select the plan with the plan_compute, plan_node_count, plan_storage_gib and plan_backups fields; the plan name field is deprecated for these engines.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -5435,7 +5435,7 @@ type DatabaseClientWithResponsesInterface interface {
 
 	// ListDatabaseTypesWithResponse List database types
 	//
-	// Returns a list of available database types. Contains available plans, zones, database versions supported and the configuration properties for each database.
+	// Returns a list of available database types. Contains available legacy plans, zones, database versions supported and the configuration properties for each database. PostgreSQL and MySQL componentised (rdb.*) plans are selected with the plan_* request fields instead of a listed plan name.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -5444,7 +5444,7 @@ type DatabaseClientWithResponsesInterface interface {
 
 	// GetDatabaseTypeWithResponse Get database type
 	//
-	// Returns database type details by given {database_type}. Contains available plans, zones, database versions supported and configuration properties.
+	// Returns database type details by given {database_type}. Contains available legacy plans, zones, database versions supported and configuration properties. PostgreSQL and MySQL componentised (rdb.*) plans are selected with the plan_* request fields instead of a listed plan name.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -5480,7 +5480,7 @@ type DatabaseClientWithResponsesInterface interface {
 
 	// ModifyDatabaseWithBodyWithResponse Modify database
 	//
-	// Modifies Managed Database service details by its {uuid} including upgrading plans, migration to other zones and database type-specific configurations.
+	// Modifies Managed Database service details by its {uuid} including upgrading plans, migration to other zones and database type-specific configurations. For PostgreSQL and MySQL, change the plan with the plan_compute, plan_node_count, plan_storage_gib and plan_backups fields; the plan name field is deprecated for these engines.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -5489,7 +5489,7 @@ type DatabaseClientWithResponsesInterface interface {
 
 	// ModifyDatabaseWithResponse Modify database
 	//
-	// Modifies Managed Database service details by its {uuid} including upgrading plans, migration to other zones and database type-specific configurations.
+	// Modifies Managed Database service details by its {uuid} including upgrading plans, migration to other zones and database type-specific configurations. For PostgreSQL and MySQL, change the plan with the plan_compute, plan_node_count, plan_storage_gib and plan_backups fields; the plan name field is deprecated for these engines.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -5543,7 +5543,7 @@ type DatabaseClientWithResponsesInterface interface {
 
 	// CloneDatabaseWithBodyWithResponse Clone database
 	//
-	// Creates a clone of a Managed Database service based on its {uuid}. It is possible to change location, plans and use the point in time feature to clone your service at a specific time using your backups.
+	// Creates a clone of a Managed Database service based on its {uuid}. It is possible to change location, plans and use the point in time feature to clone your service at a specific time using your backups. For PostgreSQL and MySQL, select the clone's plan with the plan_compute, plan_node_count, plan_storage_gib and plan_backups fields; the plan name field is deprecated for these engines.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -5552,7 +5552,7 @@ type DatabaseClientWithResponsesInterface interface {
 
 	// CloneDatabaseWithResponse Clone database
 	//
-	// Creates a clone of a Managed Database service based on its {uuid}. It is possible to change location, plans and use the point in time feature to clone your service at a specific time using your backups.
+	// Creates a clone of a Managed Database service based on its {uuid}. It is possible to change location, plans and use the point in time feature to clone your service at a specific time using your backups. For PostgreSQL and MySQL, select the clone's plan with the plan_compute, plan_node_count, plan_storage_gib and plan_backups fields; the plan name field is deprecated for these engines.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -9409,7 +9409,7 @@ func (c *ClientWithResponses) ListDatabasesWithResponse(ctx context.Context, par
 
 // CreateDatabaseWithBodyWithResponse Create database
 //
-// Creates a new Managed Database instance. New databases are started by default. An initial backup is created automatically on startup and the API will be fully functional only after this backup has been created. The creation might take a while. Note that different databases have different properties that can be passed on creation.
+// Creates a new Managed Database instance. New databases are started by default. An initial backup is created automatically on startup and the API will be fully functional only after this backup has been created. The creation might take a while. Note that different databases have different properties that can be passed on creation. For PostgreSQL and MySQL, select the plan with the plan_compute, plan_node_count, plan_storage_gib and plan_backups fields; the plan name field is deprecated for these engines.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -9424,7 +9424,7 @@ func (c *ClientWithResponses) CreateDatabaseWithBodyWithResponse(ctx context.Con
 
 // CreateDatabaseWithResponse Create database
 //
-// Creates a new Managed Database instance. New databases are started by default. An initial backup is created automatically on startup and the API will be fully functional only after this backup has been created. The creation might take a while. Note that different databases have different properties that can be passed on creation.
+// Creates a new Managed Database instance. New databases are started by default. An initial backup is created automatically on startup and the API will be fully functional only after this backup has been created. The creation might take a while. Note that different databases have different properties that can be passed on creation. For PostgreSQL and MySQL, select the plan with the plan_compute, plan_node_count, plan_storage_gib and plan_backups fields; the plan name field is deprecated for these engines.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -9589,7 +9589,7 @@ func (c *ClientWithResponses) GetPGAvailableExtensionsWithResponse(ctx context.C
 
 // ListDatabaseTypesWithResponse List database types
 //
-// Returns a list of available database types. Contains available plans, zones, database versions supported and the configuration properties for each database.
+// Returns a list of available database types. Contains available legacy plans, zones, database versions supported and the configuration properties for each database. PostgreSQL and MySQL componentised (rdb.*) plans are selected with the plan_* request fields instead of a listed plan name.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -9604,7 +9604,7 @@ func (c *ClientWithResponses) ListDatabaseTypesWithResponse(ctx context.Context,
 
 // GetDatabaseTypeWithResponse Get database type
 //
-// Returns database type details by given {database_type}. Contains available plans, zones, database versions supported and configuration properties.
+// Returns database type details by given {database_type}. Contains available legacy plans, zones, database versions supported and configuration properties. PostgreSQL and MySQL componentised (rdb.*) plans are selected with the plan_* request fields instead of a listed plan name.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -9664,7 +9664,7 @@ func (c *ClientWithResponses) GetDatabaseWithResponse(ctx context.Context, uuid 
 
 // ModifyDatabaseWithBodyWithResponse Modify database
 //
-// Modifies Managed Database service details by its {uuid} including upgrading plans, migration to other zones and database type-specific configurations.
+// Modifies Managed Database service details by its {uuid} including upgrading plans, migration to other zones and database type-specific configurations. For PostgreSQL and MySQL, change the plan with the plan_compute, plan_node_count, plan_storage_gib and plan_backups fields; the plan name field is deprecated for these engines.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -9679,7 +9679,7 @@ func (c *ClientWithResponses) ModifyDatabaseWithBodyWithResponse(ctx context.Con
 
 // ModifyDatabaseWithResponse Modify database
 //
-// Modifies Managed Database service details by its {uuid} including upgrading plans, migration to other zones and database type-specific configurations.
+// Modifies Managed Database service details by its {uuid} including upgrading plans, migration to other zones and database type-specific configurations. For PostgreSQL and MySQL, change the plan with the plan_compute, plan_node_count, plan_storage_gib and plan_backups fields; the plan name field is deprecated for these engines.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -9769,7 +9769,7 @@ func (c *ClientWithResponses) GetDatabaseAvailableExtensionsWithResponse(ctx con
 
 // CloneDatabaseWithBodyWithResponse Clone database
 //
-// Creates a clone of a Managed Database service based on its {uuid}. It is possible to change location, plans and use the point in time feature to clone your service at a specific time using your backups.
+// Creates a clone of a Managed Database service based on its {uuid}. It is possible to change location, plans and use the point in time feature to clone your service at a specific time using your backups. For PostgreSQL and MySQL, select the clone's plan with the plan_compute, plan_node_count, plan_storage_gib and plan_backups fields; the plan name field is deprecated for these engines.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -9784,7 +9784,7 @@ func (c *ClientWithResponses) CloneDatabaseWithBodyWithResponse(ctx context.Cont
 
 // CloneDatabaseWithResponse Clone database
 //
-// Creates a clone of a Managed Database service based on its {uuid}. It is possible to change location, plans and use the point in time feature to clone your service at a specific time using your backups.
+// Creates a clone of a Managed Database service based on its {uuid}. It is possible to change location, plans and use the point in time feature to clone your service at a specific time using your backups. For PostgreSQL and MySQL, select the clone's plan with the plan_compute, plan_node_count, plan_storage_gib and plan_backups fields; the plan name field is deprecated for these engines.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //

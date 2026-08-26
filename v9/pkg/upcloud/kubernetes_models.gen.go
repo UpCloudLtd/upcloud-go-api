@@ -7,6 +7,24 @@ import (
 	openapi_types "github.com/oapi-codegen/runtime/types"
 )
 
+// Defines values for KubernetesAuthenticationIssuerConfigAudienceMatchPolicy.
+const (
+	KubernetesAuthenticationIssuerConfigAudienceMatchPolicyEmpty    KubernetesAuthenticationIssuerConfigAudienceMatchPolicy = ""
+	KubernetesAuthenticationIssuerConfigAudienceMatchPolicyMatchAny KubernetesAuthenticationIssuerConfigAudienceMatchPolicy = "MatchAny"
+)
+
+// Valid indicates whether the value is a known member of the KubernetesAuthenticationIssuerConfigAudienceMatchPolicy enum.
+func (e KubernetesAuthenticationIssuerConfigAudienceMatchPolicy) Valid() bool {
+	switch e {
+	case KubernetesAuthenticationIssuerConfigAudienceMatchPolicyEmpty:
+		return true
+	case KubernetesAuthenticationIssuerConfigAudienceMatchPolicyMatchAny:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for KubernetesClusterPlan.
 const (
 	KubernetesClusterPlanDevMd           KubernetesClusterPlan = "dev-md"
@@ -277,8 +295,72 @@ type KubernetesAccepted struct {
 // KubernetesAntiAffinity Enable anti-affinity policies
 type KubernetesAntiAffinity = bool
 
+// KubernetesAuthenticationConfiguration List of OIDC issuers and their claim validation rules.
+type KubernetesAuthenticationConfiguration = []KubernetesAuthenticationIssuerConfig
+
+// KubernetesAuthenticationConfigurationYAML kube-apiserver v1 AuthenticationConfiguration YAML document
+type KubernetesAuthenticationConfigurationYAML = string
+
+// KubernetesAuthenticationIssuerConfig defines model for kubernetesAuthenticationIssuerConfig.
+type KubernetesAuthenticationIssuerConfig struct {
+	AudienceMatchPolicy *KubernetesAuthenticationIssuerConfigAudienceMatchPolicy `json:"audience_match_policy,omitempty"`
+
+	// Audiences Accepted audiences for tokens from this issuer. The first audience is used as the OIDC client id in generated kubeconfigs by default; the OIDC kubeconfig endpoint's `audience` query parameter can select a different one.
+	Audiences []string `json:"audiences"`
+
+	// CertificateAuthority Base64-encoded PEM certificate authority bundle.
+	CertificateAuthority *string `json:"certificate_authority,omitempty"`
+
+	// ClaimMappings Rules for mapping token claims to Kubernetes user attributes.
+	ClaimMappings        *KubernetesClaimMappings         `json:"claim_mappings,omitempty"`
+	ClaimValidationRules *[]KubernetesClaimValidationRule `json:"claim_validation_rules,omitempty"`
+	DiscoveryUrl         *string                          `json:"discovery_url,omitempty"`
+	IssuerUrl            string                           `json:"issuer_url"`
+
+	// Name Name
+	Name                KubernetesName                  `json:"name"`
+	UserValidationRules *[]KubernetesUserValidationRule `json:"user_validation_rules,omitempty"`
+}
+
+// KubernetesAuthenticationIssuerConfigAudienceMatchPolicy defines model for KubernetesAuthenticationIssuerConfig.AudienceMatchPolicy.
+type KubernetesAuthenticationIssuerConfigAudienceMatchPolicy string
+
+// KubernetesClaimMappings Rules for mapping token claims to Kubernetes user attributes.
+type KubernetesClaimMappings struct {
+	Extra *[]KubernetesExtraMapping `json:"extra,omitempty"`
+
+	// Groups Maps a user attribute from either a JWT claim (optionally prefixed) or a CEL expression. Claim and expression are mutually exclusive.
+	Groups *KubernetesPrefixedClaimOrExpression `json:"groups,omitempty"`
+
+	// Uid Maps a user attribute from either a JWT claim or a CEL expression. Claim and expression are mutually exclusive.
+	Uid *KubernetesClaimOrExpression `json:"uid,omitempty"`
+
+	// Username Maps a user attribute from either a JWT claim (optionally prefixed) or a CEL expression. Claim and expression are mutually exclusive.
+	Username *KubernetesPrefixedClaimOrExpression `json:"username,omitempty"`
+}
+
+// KubernetesClaimOrExpression Maps a user attribute from either a JWT claim or a CEL expression. Claim and expression are mutually exclusive.
+type KubernetesClaimOrExpression struct {
+	// Claim JWT claim to use. Mutually exclusive with expression.
+	Claim *string `json:"claim,omitempty"`
+
+	// Expression CEL expression producing the attribute value. Mutually exclusive with claim.
+	Expression *string `json:"expression,omitempty"`
+}
+
+// KubernetesClaimValidationRule CEL expression used to validate a token claim.
+type KubernetesClaimValidationRule struct {
+	Claim         *string `json:"claim,omitempty"`
+	Expression    *string `json:"expression,omitempty"`
+	Message       *string `json:"message,omitempty"`
+	RequiredValue *string `json:"required_value,omitempty"`
+}
+
 // KubernetesCluster Kubernetes cluster
 type KubernetesCluster struct {
+	// Authentication List of OIDC issuers and their claim validation rules.
+	Authentication *KubernetesAuthenticationConfiguration `json:"authentication,omitempty"`
+
 	// ControlPlaneIpFilter List of IP blocks
 	ControlPlaneIpFilter *KubernetesIPBlocks `json:"control_plane_ip_filter,omitempty"`
 	Labels               interface{}         `json:"labels"`
@@ -410,6 +492,15 @@ type KubernetesErrorTitle = string
 
 // KubernetesErrorType URI to a page describing the problem
 type KubernetesErrorType = string
+
+// KubernetesExtraMapping Maps a token claim to an extra user attribute using a CEL expression.
+type KubernetesExtraMapping struct {
+	// Key Domain-prefixed, lowercase key for the extra attribute, e.g. example.org/foo.
+	Key string `json:"key"`
+
+	// ValueExpression CEL expression producing the extra attribute value (string or string array).
+	ValueExpression string `json:"value_expression"`
+}
 
 // KubernetesIPBlock IP prefix of a single IPv4 address or a network CIDR
 type KubernetesIPBlock = string
@@ -660,6 +751,18 @@ type KubernetesPlan struct {
 // KubernetesPlans List of plans
 type KubernetesPlans = []KubernetesPlan
 
+// KubernetesPrefixedClaimOrExpression Maps a user attribute from either a JWT claim (optionally prefixed) or a CEL expression. Claim and expression are mutually exclusive.
+type KubernetesPrefixedClaimOrExpression struct {
+	// Claim JWT claim to use. Mutually exclusive with expression.
+	Claim *string `json:"claim,omitempty"`
+
+	// Expression CEL expression producing the attribute value. Mutually exclusive with claim and prefix.
+	Expression *string `json:"expression,omitempty"`
+
+	// Prefix Prefix prepended to the claim's value. Must be set (may be empty) when claim is set. Mutually exclusive with expression.
+	Prefix *string `json:"prefix,omitempty"`
+}
+
 // KubernetesPrivateNodeGroups Enable private node groups
 type KubernetesPrivateNodeGroups = bool
 
@@ -696,6 +799,12 @@ type KubernetesTaint struct {
 // KubernetesTaints List of taints
 type KubernetesTaints = []KubernetesTaint
 
+// KubernetesUserValidationRule CEL expression applied to the final authenticated user.
+type KubernetesUserValidationRule struct {
+	Expression string  `json:"expression"`
+	Message    *string `json:"message,omitempty"`
+}
+
 // KubernetesUtilityNetworkAccess Enable utility network access
 type KubernetesUtilityNetworkAccess = bool
 
@@ -720,6 +829,9 @@ type KubernetesVersions = []KubernetesVersion
 // KubernetesZone UpCloud zone to provision the Kubernetes cluster in
 type KubernetesZone = string
 
+// GetKubernetesClusterOIDCKubeconfigAudience defines model for getKubernetesClusterOIDCKubeconfigAudience.
+type GetKubernetesClusterOIDCKubeconfigAudience = string
+
 // KubernetesNameParameter Name
 type KubernetesNameParameter = KubernetesName
 
@@ -731,6 +843,12 @@ type KubernetesUuidParameter = KubernetesUuid
 
 // KubernetesBadRequest Response error
 type KubernetesBadRequest = KubernetesError
+
+// KubernetesConflict Response error
+type KubernetesConflict = KubernetesError
+
+// KubernetesCreateClusterAuthentication201 defines model for kubernetesCreateClusterAuthentication201.
+type KubernetesCreateClusterAuthentication201 = KubernetesAuthenticationIssuerConfig
 
 // KubernetesDeleteCluster Message
 type KubernetesDeleteCluster = KubernetesAccepted
@@ -746,6 +864,9 @@ type KubernetesGetAvailableUpgrades = KubernetesClusterAvailableUpgrades
 
 // KubernetesGetCluster Kubernetes cluster
 type KubernetesGetCluster = KubernetesCluster
+
+// KubernetesGetClusterAuthentication200 defines model for kubernetesGetClusterAuthentication200.
+type KubernetesGetClusterAuthentication200 = KubernetesAuthenticationIssuerConfig
 
 // KubernetesGetClusterKubeconfig Kubernetes cluster kubeconfig
 type KubernetesGetClusterKubeconfig = KubernetesClusterKubeconfig
@@ -765,8 +886,14 @@ type KubernetesGetPlan = KubernetesPlans
 // KubernetesGetVersion List of Kubernetes versions
 type KubernetesGetVersion = KubernetesVersions
 
+// KubernetesImportClusterAuthentication200 List of OIDC issuers and their claim validation rules.
+type KubernetesImportClusterAuthentication200 = KubernetesAuthenticationConfiguration
+
 // KubernetesInternalServerError Response error
 type KubernetesInternalServerError = KubernetesError
+
+// KubernetesListClusterAuthentication200 List of OIDC issuers and their claim validation rules.
+type KubernetesListClusterAuthentication200 = KubernetesAuthenticationConfiguration
 
 // KubernetesNotFound Response error
 type KubernetesNotFound = KubernetesError
@@ -786,11 +913,20 @@ type KubernetesPostNodeGroupResponse = KubernetesNodeGroup
 // KubernetesPostUpgradeResponse defines model for kubernetesPostUpgrade.
 type KubernetesPostUpgradeResponse = KubernetesClusterAvailableUpgradesPost
 
+// KubernetesSetClusterAuthentication200 List of OIDC issuers and their claim validation rules.
+type KubernetesSetClusterAuthentication200 = KubernetesAuthenticationConfiguration
+
 // KubernetesUnAuthorized Response error
 type KubernetesUnAuthorized = KubernetesError
 
 // KubernetesUnProcessableEntity Response error
 type KubernetesUnProcessableEntity = KubernetesError
+
+// KubernetesUpdateClusterAuthentication200 defines model for kubernetesUpdateClusterAuthentication200.
+type KubernetesUpdateClusterAuthentication200 = KubernetesAuthenticationIssuerConfig
+
+// KubernetesCreateClusterAuthentication defines model for kubernetesCreateClusterAuthentication.
+type KubernetesCreateClusterAuthentication = KubernetesAuthenticationIssuerConfig
 
 // KubernetesPatchClusterRequestBody defines model for kubernetesPatchCluster.
 type KubernetesPatchClusterRequestBody = KubernetesClusterPatch
@@ -807,11 +943,32 @@ type KubernetesPostNodeGroupRequestBody = KubernetesNodeGroup
 // KubernetesPostUpgradeRequestBody defines model for kubernetesPostUpgrade.
 type KubernetesPostUpgradeRequestBody = KubernetesClusterAvailableUpgradesPost
 
+// KubernetesSetClusterAuthentication List of OIDC issuers and their claim validation rules.
+type KubernetesSetClusterAuthentication = KubernetesAuthenticationConfiguration
+
+// KubernetesUpdateClusterAuthentication defines model for kubernetesUpdateClusterAuthentication.
+type KubernetesUpdateClusterAuthentication = KubernetesAuthenticationIssuerConfig
+
+// GetKubernetesClusterOIDCKubeconfigParams defines parameters for GetKubernetesClusterOIDCKubeconfig.
+type GetKubernetesClusterOIDCKubeconfigParams struct {
+	// Audience Which of the issuer's configured audiences to use as the OIDC client id in the generated kubeconfig. When omitted, the issuer's first audience is used. Must match one of the issuer's audiences.
+	Audience *GetKubernetesClusterOIDCKubeconfigAudience `form:"audience,omitempty" json:"audience,omitempty"`
+}
+
 // CreateKubernetesClusterJSONRequestBody defines body for CreateKubernetesCluster for application/json ContentType.
 type CreateKubernetesClusterJSONRequestBody = KubernetesCluster
 
 // ModifyKubernetesClusterJSONRequestBody defines body for ModifyKubernetesCluster for application/json ContentType.
 type ModifyKubernetesClusterJSONRequestBody = KubernetesClusterPatch
+
+// CreateClusterAuthenticationJSONRequestBody defines body for CreateClusterAuthentication for application/json ContentType.
+type CreateClusterAuthenticationJSONRequestBody = KubernetesAuthenticationIssuerConfig
+
+// SetClusterAuthenticationJSONRequestBody defines body for SetClusterAuthentication for application/json ContentType.
+type SetClusterAuthenticationJSONRequestBody = KubernetesAuthenticationConfiguration
+
+// UpdateClusterAuthenticationJSONRequestBody defines body for UpdateClusterAuthentication for application/json ContentType.
+type UpdateClusterAuthenticationJSONRequestBody = KubernetesAuthenticationIssuerConfig
 
 // UpgradeKubernetesClusterJSONRequestBody defines body for UpgradeKubernetesCluster for application/json ContentType.
 type UpgradeKubernetesClusterJSONRequestBody = KubernetesClusterAvailableUpgradesPost
