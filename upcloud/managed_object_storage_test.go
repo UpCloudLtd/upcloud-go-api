@@ -100,6 +100,7 @@ func TestManagedObjectStorage(t *testing.T) {
 			],
 			"operational_state": "running",
 			"region": "europe-1",
+			"termination_protection": false,
 			"updated_at": "2023-05-07T21:38:15.757405Z",
 			"uuid": "1200ecde-db95-4d1c-9133-6508f3232567"
 		}

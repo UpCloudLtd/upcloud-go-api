@@ -36,11 +36,12 @@ func (r *GetManagedObjectStorageRegionRequest) RequestURL() string {
 
 // CreateManagedObjectStorageRequest represents a request for creating a new Managed Object Storage service
 type CreateManagedObjectStorageRequest struct {
-	ConfiguredStatus upcloud.ManagedObjectStorageConfiguredStatus `json:"configured_status"`
-	Labels           []upcloud.Label                              `json:"labels,omitempty"`
-	Name             string                                       `json:"name,omitempty"`
-	Networks         []upcloud.ManagedObjectStorageNetwork        `json:"networks"`
-	Region           string                                       `json:"region"`
+	ConfiguredStatus      upcloud.ManagedObjectStorageConfiguredStatus `json:"configured_status"`
+	Labels                []upcloud.Label                              `json:"labels,omitempty"`
+	Name                  string                                       `json:"name,omitempty"`
+	Networks              []upcloud.ManagedObjectStorageNetwork        `json:"networks"`
+	Region                string                                       `json:"region"`
+	TerminationProtection bool                                         `json:"termination_protection"`
 }
 
 // RequestURL implements the Request interface
@@ -73,11 +74,12 @@ func (r *GetManagedObjectStorageRequest) RequestURL() string {
 
 // ReplaceManagedObjectStorageRequest represents a request to replace a Managed Object Storage service
 type ReplaceManagedObjectStorageRequest struct {
-	ConfiguredStatus upcloud.ManagedObjectStorageConfiguredStatus `json:"configured_status"`
-	Labels           []upcloud.Label                              `json:"labels,omitempty"`
-	Name             string                                       `json:"name,omitempty"`
-	Networks         []upcloud.ManagedObjectStorageNetwork        `json:"networks"`
-	UUID             string                                       `json:"-"`
+	ConfiguredStatus      upcloud.ManagedObjectStorageConfiguredStatus `json:"configured_status"`
+	Labels                []upcloud.Label                              `json:"labels,omitempty"`
+	Name                  string                                       `json:"name,omitempty"`
+	Networks              []upcloud.ManagedObjectStorageNetwork        `json:"networks"`
+	TerminationProtection bool                                         `json:"termination_protection"`
+	UUID                  string                                       `json:"-"`
 }
 
 func (r *ReplaceManagedObjectStorageRequest) RequestURL() string {
@@ -86,11 +88,12 @@ func (r *ReplaceManagedObjectStorageRequest) RequestURL() string {
 
 // ModifyManagedObjectStorageRequest represents a request to modify a Object Storage
 type ModifyManagedObjectStorageRequest struct {
-	ConfiguredStatus *upcloud.ManagedObjectStorageConfiguredStatus `json:"configured_status,omitempty"`
-	Labels           *[]upcloud.Label                              `json:"labels,omitempty"`
-	Name             *string                                       `json:"name,omitempty"`
-	Networks         *[]upcloud.ManagedObjectStorageNetwork        `json:"networks,omitempty"`
-	UUID             string                                        `json:"-"`
+	ConfiguredStatus      *upcloud.ManagedObjectStorageConfiguredStatus `json:"configured_status,omitempty"`
+	Labels                *[]upcloud.Label                              `json:"labels,omitempty"`
+	Name                  *string                                       `json:"name,omitempty"`
+	Networks              *[]upcloud.ManagedObjectStorageNetwork        `json:"networks,omitempty"`
+	TerminationProtection *bool                                         `json:"termination_protection,omitempty"`
+	UUID                  string                                        `json:"-"`
 }
 
 // RequestURL implements the Request interface

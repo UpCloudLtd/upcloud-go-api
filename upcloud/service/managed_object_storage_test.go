@@ -124,6 +124,7 @@ func TestReplaceManagedObjectStorage(t *testing.T) {
 
 func TestModifyManagedObjectStorage(t *testing.T) {
 	record(t, "modifymanagedobjectstorage", func(ctx context.Context, t *testing.T, rec *recorder.Recorder, svc *Service) {
+		// Create Managed Object Storage instance
 		storage, err := createManagedObjectStorage(ctx, svc)
 		require.NoError(t, err)
 
@@ -132,15 +133,42 @@ func TestModifyManagedObjectStorage(t *testing.T) {
 			require.NoError(t, err)
 		}(storage.UUID)
 
-		status := upcloud.ManagedObjectStorageConfiguredStatusStopped
+		// Try to stop the service with termination protection enabled, expecting an error
+		statusStopped := upcloud.ManagedObjectStorageConfiguredStatusStopped
+		_, err = svc.ModifyManagedObjectStorage(ctx, &request.ModifyManagedObjectStorageRequest{
+			ConfiguredStatus:      &statusStopped,
+			Labels:                &[]upcloud.Label{},
+			TerminationProtection: upcloud.BoolPtr(true),
+			UUID:                  storage.UUID,
+		})
+		require.ErrorContains(t, err, "invalid_params_termination_protection='Service cannot be powered down if termination protection is enabled.'")
+
+		// Enable termination protection
 		storage, err = svc.ModifyManagedObjectStorage(ctx, &request.ModifyManagedObjectStorageRequest{
-			ConfiguredStatus: &status,
-			Labels:           &[]upcloud.Label{},
+			TerminationProtection: upcloud.BoolPtr(true),
+			UUID:                  storage.UUID,
+		})
+		require.NoError(t, err)
+		require.True(t, storage.TerminationProtection)
+
+		// Try to stop the service again with termination protection enabled, expecting an error
+		_, err = svc.ModifyManagedObjectStorage(ctx, &request.ModifyManagedObjectStorageRequest{
+			ConfiguredStatus: &statusStopped,
 			UUID:             storage.UUID,
+		})
+		require.ErrorContains(t, err, "invalid_params_termination_protection='Service cannot be powered down if termination protection is enabled.'")
+
+		// Disable termination protection and stop the service while removing labels
+		storage, err = svc.ModifyManagedObjectStorage(ctx, &request.ModifyManagedObjectStorageRequest{
+			ConfiguredStatus:      &statusStopped,
+			Labels:                &[]upcloud.Label{},
+			TerminationProtection: upcloud.BoolPtr(false),
+			UUID:                  storage.UUID,
 		})
 		require.NoError(t, err)
 		require.Equal(t, upcloud.ManagedObjectStorageConfiguredStatusStopped, storage.ConfiguredStatus)
 		require.Len(t, storage.Labels, 0)
+		require.False(t, storage.TerminationProtection)
 	})
 }
 
