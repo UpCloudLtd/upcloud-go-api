@@ -52,17 +52,18 @@ type (
 
 // ManagedObjectStorage represents a Managed Object Storage service
 type ManagedObjectStorage struct {
-	ConfiguredStatus ManagedObjectStorageConfiguredStatus `json:"configured_status"`
-	CreatedAt        time.Time                            `json:"created_at"`
-	CustomDomains    []ManagedObjectStorageCustomDomain   `json:"custom_domains"`
-	Endpoints        []ManagedObjectStorageEndpoint       `json:"endpoints"`
-	Labels           []Label                              `json:"labels"`
-	Name             string                               `json:"name,omitempty"`
-	Networks         []ManagedObjectStorageNetwork        `json:"networks"`
-	OperationalState ManagedObjectStorageOperationalState `json:"operational_state"`
-	Region           string                               `json:"region"`
-	UpdatedAt        time.Time                            `json:"updated_at"`
-	UUID             string                               `json:"uuid"`
+	ConfiguredStatus      ManagedObjectStorageConfiguredStatus `json:"configured_status"`
+	CreatedAt             time.Time                            `json:"created_at"`
+	CustomDomains         []ManagedObjectStorageCustomDomain   `json:"custom_domains"`
+	Endpoints             []ManagedObjectStorageEndpoint       `json:"endpoints"`
+	Labels                []Label                              `json:"labels"`
+	Name                  string                               `json:"name,omitempty"`
+	Networks              []ManagedObjectStorageNetwork        `json:"networks"`
+	OperationalState      ManagedObjectStorageOperationalState `json:"operational_state"`
+	Region                string                               `json:"region"`
+	TerminationProtection bool                                 `json:"termination_protection"`
+	UpdatedAt             time.Time                            `json:"updated_at"`
+	UUID                  string                               `json:"uuid"`
 }
 
 // ManagedObjectStorageEndpoint represents an endpoint for accessing the Managed Object Storage service

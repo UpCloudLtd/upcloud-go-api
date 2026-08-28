@@ -5,6 +5,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+
+- managed object storage: add `TerminationProtection` field to `upcloud.ManagedObjectStorage` and `request.ModifyManagedObjectStorageRequest`
+
 ## [8.40.0]
 
 ### Added

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"testing"
 
+	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -35,7 +36,8 @@ func TestCreateManagedObjectStorageRequest_MarshalJSON(t *testing.T) {
 		const expected = `{
 			"configured_status":"",
 			"networks":null,
-			"region":"europe-1"
+			"region":"europe-1",
+			"termination_protection":false
 		}`
 		assert.JSONEq(t, expected, string(d))
 	})
@@ -52,7 +54,8 @@ func TestCreateManagedObjectStorageRequest_MarshalJSON(t *testing.T) {
 			"configured_status":"",
 			"name":"test-objsto-name",
 			"networks":null,
-			"region":"europe-1"
+			"region":"europe-1",
+			"termination_protection":false
 		}`
 		assert.JSONEq(t, expected, string(d))
 	})
@@ -75,6 +78,33 @@ func TestReplaceManagedObjectStorageRequest_RequestURL(t *testing.T) {
 		UUID: "service",
 	}
 	assert.Equal(t, "/object-storage-2/service", req.RequestURL())
+}
+
+func TestModifyManagedObjectStorageRequest_MarshalJSON(t *testing.T) {
+	t.Run("TestMinimal", func(t *testing.T) {
+		req := ModifyManagedObjectStorageRequest{
+			UUID: "service",
+		}
+		d, err := json.Marshal(&req)
+		assert.NoError(t, err)
+
+		const expected = `{}`
+		assert.JSONEq(t, expected, string(d))
+	})
+
+	t.Run("TestWithTerminationProtection", func(t *testing.T) {
+		req := ModifyManagedObjectStorageRequest{
+			UUID:                  "service",
+			TerminationProtection: upcloud.BoolPtr(false),
+		}
+		d, err := json.Marshal(&req)
+		assert.NoError(t, err)
+
+		const expected = `{
+			"termination_protection": false
+		}`
+		assert.JSONEq(t, expected, string(d))
+	})
 }
 
 func TestModifyManagedObjectStorageRequest_RequestURL(t *testing.T) {
