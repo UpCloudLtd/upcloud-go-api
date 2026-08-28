@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.41.0]
+
 ### Added
 
 - managed object storage: add `TerminationProtection` field to `upcloud.ManagedObjectStorage`, `request.CreateManagedObjectStorageRequest`, `request.ModifyManagedObjectStorageRequest` and `request.ReplaceManagedObjectStorageRequest`
@@ -801,7 +803,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.40.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.41.0...HEAD
+[8.41.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.40.0...v8.41.0
 [8.40.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.39.0...v8.40.0
 [8.39.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.38.0...v8.39.0
 [8.38.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.37.0...v8.38.0
