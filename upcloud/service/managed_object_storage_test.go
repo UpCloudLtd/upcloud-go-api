@@ -984,33 +984,6 @@ func createManagedObjectStorage(ctx context.Context, svc *Service) (*upcloud.Man
 	})
 }
 
-func createManagedObjectStorageWithTerminationProtection(ctx context.Context, svc *Service, terminationProtection bool) (*upcloud.ManagedObjectStorage, error) {
-	regions, err := svc.GetManagedObjectStorageRegions(ctx, &request.GetManagedObjectStorageRegionsRequest{})
-	if err != nil {
-		return nil, err
-	}
-
-	return svc.CreateManagedObjectStorage(ctx, &request.CreateManagedObjectStorageRequest{
-		Name:             "go-sdk-integration-test",
-		ConfiguredStatus: upcloud.ManagedObjectStorageConfiguredStatusStarted,
-		Labels: []upcloud.Label{
-			{
-				Key:   "example-key",
-				Value: "example-value",
-			},
-		},
-		Networks: []upcloud.ManagedObjectStorageNetwork{
-			{
-				Family: "IPv4",
-				Name:   "example-public-network",
-				Type:   "public",
-			},
-		},
-		Region:                regions[0].Name,
-		TerminationProtection: terminationProtection,
-	})
-}
-
 func deleteManagedObjectStorageAndUsers(ctx context.Context, svc *Service, uuid string) error {
 	users, err := svc.GetManagedObjectStorageUsers(ctx, &request.GetManagedObjectStorageUsersRequest{ServiceUUID: uuid})
 	if err != nil {
