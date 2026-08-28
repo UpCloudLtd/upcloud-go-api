@@ -100,7 +100,7 @@ func (r *ModifyNetworkRequest) RequestURL() string {
 func (r ModifyNetworkRequest) MarshalJSON() ([]byte, error) {
 	// Work-around for clearing IPNetwork fields. The modify request should use a struct that supports distinguishing empty values from undefined ones. Currently omitempty blocks user from clearing these fields.
 	type mnrType ModifyNetworkRequest
-	d, err := json.Marshal((mnrType)(r))
+	d, err := json.Marshal(mnrType(r))
 	if err != nil {
 		return nil, err
 	}
