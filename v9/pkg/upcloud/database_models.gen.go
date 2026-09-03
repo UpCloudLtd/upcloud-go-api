@@ -5,6 +5,7 @@ package upcloud
 
 import (
 	"encoding/json"
+	"fmt"
 	"time"
 
 	"github.com/oapi-codegen/runtime"
@@ -275,6 +276,27 @@ func (e DatabaseServiceCloneMysqlPlanBackups) Valid() bool {
 	}
 }
 
+// Defines values for DatabaseServiceCloneOpenAPIPlanBackups.
+const (
+	DatabaseServiceCloneOpenAPIPlanBackupsExtended DatabaseServiceCloneOpenAPIPlanBackups = "extended"
+	DatabaseServiceCloneOpenAPIPlanBackupsMini     DatabaseServiceCloneOpenAPIPlanBackups = "mini"
+	DatabaseServiceCloneOpenAPIPlanBackupsRegular  DatabaseServiceCloneOpenAPIPlanBackups = "regular"
+)
+
+// Valid indicates whether the value is a known member of the DatabaseServiceCloneOpenAPIPlanBackups enum.
+func (e DatabaseServiceCloneOpenAPIPlanBackups) Valid() bool {
+	switch e {
+	case DatabaseServiceCloneOpenAPIPlanBackupsExtended:
+		return true
+	case DatabaseServiceCloneOpenAPIPlanBackupsMini:
+		return true
+	case DatabaseServiceCloneOpenAPIPlanBackupsRegular:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for DatabaseServiceCloneOpensearchPlanBackups.
 const (
 	DatabaseServiceCloneOpensearchPlanBackupsExtended DatabaseServiceCloneOpensearchPlanBackups = "extended"
@@ -359,6 +381,27 @@ func (e DatabaseServiceCloneValkeyPlanBackups) Valid() bool {
 	}
 }
 
+// Defines values for DatabaseServiceCreateOpenAPIPlanBackups.
+const (
+	DatabaseServiceCreateOpenAPIPlanBackupsExtended DatabaseServiceCreateOpenAPIPlanBackups = "extended"
+	DatabaseServiceCreateOpenAPIPlanBackupsMini     DatabaseServiceCreateOpenAPIPlanBackups = "mini"
+	DatabaseServiceCreateOpenAPIPlanBackupsRegular  DatabaseServiceCreateOpenAPIPlanBackups = "regular"
+)
+
+// Valid indicates whether the value is a known member of the DatabaseServiceCreateOpenAPIPlanBackups enum.
+func (e DatabaseServiceCreateOpenAPIPlanBackups) Valid() bool {
+	switch e {
+	case DatabaseServiceCreateOpenAPIPlanBackupsExtended:
+		return true
+	case DatabaseServiceCreateOpenAPIPlanBackupsMini:
+		return true
+	case DatabaseServiceCreateOpenAPIPlanBackupsRegular:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for DatabaseServiceIntegration.
 const (
 	DatabaseServiceIntegrationLogs       DatabaseServiceIntegration = "logs"
@@ -374,6 +417,27 @@ func (e DatabaseServiceIntegration) Valid() bool {
 	case DatabaseServiceIntegrationPrometheus:
 		return true
 	case DatabaseServiceIntegrationRsyslog:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DatabaseServiceModifyOpenAPIPlanBackups.
+const (
+	DatabaseServiceModifyOpenAPIPlanBackupsExtended DatabaseServiceModifyOpenAPIPlanBackups = "extended"
+	DatabaseServiceModifyOpenAPIPlanBackupsMini     DatabaseServiceModifyOpenAPIPlanBackups = "mini"
+	DatabaseServiceModifyOpenAPIPlanBackupsRegular  DatabaseServiceModifyOpenAPIPlanBackups = "regular"
+)
+
+// Valid indicates whether the value is a known member of the DatabaseServiceModifyOpenAPIPlanBackups enum.
+func (e DatabaseServiceModifyOpenAPIPlanBackups) Valid() bool {
+	switch e {
+	case DatabaseServiceModifyOpenAPIPlanBackupsExtended:
+		return true
+	case DatabaseServiceModifyOpenAPIPlanBackupsMini:
+		return true
+	case DatabaseServiceModifyOpenAPIPlanBackupsRegular:
 		return true
 	default:
 		return false
@@ -593,6 +657,33 @@ func (e DatabaseServicePropertiesOpensearchCustomReposType) Valid() bool {
 	}
 }
 
+// Defines values for DatabaseServicePropertiesOpensearchElasticsearchVersion.
+const (
+	DatabaseServicePropertiesOpensearchElasticsearchVersionN1   DatabaseServicePropertiesOpensearchElasticsearchVersion = "1"
+	DatabaseServicePropertiesOpensearchElasticsearchVersionN2   DatabaseServicePropertiesOpensearchElasticsearchVersion = "2"
+	DatabaseServicePropertiesOpensearchElasticsearchVersionN219 DatabaseServicePropertiesOpensearchElasticsearchVersion = "2.19"
+	DatabaseServicePropertiesOpensearchElasticsearchVersionN33  DatabaseServicePropertiesOpensearchElasticsearchVersion = "3.3"
+	DatabaseServicePropertiesOpensearchElasticsearchVersionN36  DatabaseServicePropertiesOpensearchElasticsearchVersion = "3.6"
+)
+
+// Valid indicates whether the value is a known member of the DatabaseServicePropertiesOpensearchElasticsearchVersion enum.
+func (e DatabaseServicePropertiesOpensearchElasticsearchVersion) Valid() bool {
+	switch e {
+	case DatabaseServicePropertiesOpensearchElasticsearchVersionN1:
+		return true
+	case DatabaseServicePropertiesOpensearchElasticsearchVersionN2:
+		return true
+	case DatabaseServicePropertiesOpensearchElasticsearchVersionN219:
+		return true
+	case DatabaseServicePropertiesOpensearchElasticsearchVersionN33:
+		return true
+	case DatabaseServicePropertiesOpensearchElasticsearchVersionN36:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for DatabaseServicePropertiesOpensearchIndexPatternsSortingAlgorithm.
 const (
 	DatabaseServicePropertiesOpensearchIndexPatternsSortingAlgorithmAlphabetical DatabaseServicePropertiesOpensearchIndexPatternsSortingAlgorithm = "alphabetical"
@@ -634,22 +725,19 @@ func (e DatabaseServicePropertiesOpensearchSearchBackpressureMode) Valid() bool 
 
 // Defines values for DatabaseServicePropertiesOpensearchVersion.
 const (
-	DatabaseServicePropertiesOpensearchVersionN1   DatabaseServicePropertiesOpensearchVersion = "1"
-	DatabaseServicePropertiesOpensearchVersionN2   DatabaseServicePropertiesOpensearchVersion = "2"
 	DatabaseServicePropertiesOpensearchVersionN219 DatabaseServicePropertiesOpensearchVersion = "2.19"
 	DatabaseServicePropertiesOpensearchVersionN33  DatabaseServicePropertiesOpensearchVersion = "3.3"
+	DatabaseServicePropertiesOpensearchVersionN36  DatabaseServicePropertiesOpensearchVersion = "3.6"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseServicePropertiesOpensearchVersion enum.
 func (e DatabaseServicePropertiesOpensearchVersion) Valid() bool {
 	switch e {
-	case DatabaseServicePropertiesOpensearchVersionN1:
-		return true
-	case DatabaseServicePropertiesOpensearchVersionN2:
-		return true
 	case DatabaseServicePropertiesOpensearchVersionN219:
 		return true
 	case DatabaseServicePropertiesOpensearchVersionN33:
+		return true
+	case DatabaseServicePropertiesOpensearchVersionN36:
 		return true
 	default:
 		return false
@@ -1284,6 +1372,7 @@ func (e DatabaseServicePropertiesValkeyValkeyPersistence) Valid() bool {
 const (
 	DatabaseServicePropertiesValkeyValkeyVersionN81 DatabaseServicePropertiesValkeyValkeyVersion = "8.1"
 	DatabaseServicePropertiesValkeyValkeyVersionN90 DatabaseServicePropertiesValkeyValkeyVersion = "9.0"
+	DatabaseServicePropertiesValkeyValkeyVersionN91 DatabaseServicePropertiesValkeyValkeyVersion = "9.1"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseServicePropertiesValkeyValkeyVersion enum.
@@ -1292,6 +1381,8 @@ func (e DatabaseServicePropertiesValkeyValkeyVersion) Valid() bool {
 	case DatabaseServicePropertiesValkeyValkeyVersionN81:
 		return true
 	case DatabaseServicePropertiesValkeyValkeyVersionN90:
+		return true
+	case DatabaseServicePropertiesValkeyValkeyVersionN91:
 		return true
 	default:
 		return false
@@ -2735,10 +2826,13 @@ type DatabaseServiceAlertResponse struct {
 type DatabaseServiceAlertsResponse = []DatabaseServiceAlertResponse
 
 // DatabaseServiceCloneMysql Schema for cloning a MySQL service
+//
+// Examples: {"additional_disk_space_gib":10,"backup_name":"daily-backup-2024-01-30","clone_time":"2024-01-30T15:04:05Z","hostname_prefix":"dev","maintenance":{"dow":"monday","time":"03:00:00"},"plan":"starter-kit-plan","termination_protection":false,"zone":"fi-hel1"}
 type DatabaseServiceCloneMysql struct {
-	// AdditionalDiskSpaceGib Additional disk space in GiB
+	// AdditionalDiskSpaceGib Additional disk space in GiB. Legacy plans only: componentised (rdb.*) plans set storage as a total via plan_storage_gib or the plan name.
 	//
 	// Examples: 10, 20
+	// Deprecated: this property has been marked as deprecated upstream, but no `x-deprecated-reason` was set
 	AdditionalDiskSpaceGib *int32 `json:"additional_disk_space_gib,omitempty"`
 
 	// BackupName Backup name
@@ -2773,7 +2867,8 @@ type DatabaseServiceCloneMysql struct {
 	// Networks Networks
 	Networks *[]DatabaseNetworkCreate `json:"networks,omitempty"`
 
-	// Plan Plan
+	// Plan Deprecated: prefer the plan_* selection fields (plan_compute, plan_node_count, plan_storage_gib, plan_backups). The plan name form remains supported. For componentised (rdb.*) plans the storage segment is the desired TOTAL storage per node: any total reachable from a catalog plan's included storage in the plan's storage steps (within its cap) is a valid plan name, e.g. rdb.standard.2x-2CPU-8GB-120GB-regular selects the 80GB catalog plan with a 40GB dynamic top-up.
+	// Deprecated: this property has been marked as deprecated upstream, but no `x-deprecated-reason` was set
 	Plan *string `json:"plan,omitempty"`
 
 	// PlanBackups Plan selection: backup tier. PostgreSQL and MySQL tiered plans only.
@@ -2829,8 +2924,44 @@ type DatabaseServiceCloneMysqlPlanBackups string
 //
 // Examples: {"clone_time":"2022-01-21T12:21:00Z","hostname_prefix":"new-hostname-prefix","maintenance":{"dow":"sunday","time":"12:00:00"},"plan":"1x1xCPU-2GB-25GB","properties":{"automatic_utility_network_ip_filter":false,"ip_filter":["0.0.0.0/0"],"public_access":true,"version":"13"},"title":"new-title","zone":"fi-hel1"}
 type DatabaseServiceCloneOpenAPI struct {
-	union json.RawMessage
+	// AdditionalDiskSpaceGib Additional disk space in GiB. Legacy plans only: componentised (rdb.*) plans set storage as a total via plan_storage_gib or the plan name.
+	//
+	// Examples: 10
+	// Deprecated: this property has been marked as deprecated upstream, but no `x-deprecated-reason` was set
+	AdditionalDiskSpaceGib *int `json:"additional_disk_space_gib,omitempty"`
+
+	// Plan Deprecated: prefer the plan_* selection fields (plan_compute, plan_node_count, plan_storage_gib, plan_backups) for PostgreSQL and MySQL. The plan name remains supported, and required for engines without componentised plans. For componentised (rdb.*) plans the storage segment is the desired TOTAL storage per node: any total reachable from a catalog plan's included storage in the plan's storage steps (within its cap) is a valid plan name, e.g. rdb.standard.2x-2CPU-8GB-120GB-regular selects the 80GB catalog plan with a 40GB dynamic top-up.
+	//
+	// Examples: 1x1xCPU-2GB-25GB, rdb.standard.2x-2CPU-8GB-120GB-regular
+	// Deprecated: this property has been marked as deprecated upstream, but no `x-deprecated-reason` was set
+	Plan *string `json:"plan,omitempty"`
+
+	// PlanBackups Plan selection: backup tier. PostgreSQL and MySQL tiered plans only.
+	//
+	// Examples: regular
+	PlanBackups *DatabaseServiceCloneOpenAPIPlanBackups `json:"plan_backups,omitempty"`
+
+	// PlanCompute Plan selection: compute shape combining family, CPU and memory as one token, as listed in the plan catalog components. PostgreSQL and MySQL only.
+	//
+	// Examples: rdb.standard.2CPU-8GB
+	PlanCompute *string `json:"plan_compute,omitempty"`
+
+	// PlanNodeCount Plan selection: number of nodes.
+	//
+	// Examples: 1
+	PlanNodeCount *int `json:"plan_node_count,omitempty"`
+
+	// PlanStorageGib Plan selection: desired TOTAL storage per node in GiB. Resolution picks the plan whose included storage matches, or tops the closest plan up with dynamic additional storage within the allowed limits. Mutually exclusive with additional_disk_space_gib.
+	//
+	// Examples: 120
+	PlanStorageGib *int `json:"plan_storage_gib,omitempty"`
+	union          json.RawMessage
 }
+
+// DatabaseServiceCloneOpenAPIPlanBackups Plan selection: backup tier. PostgreSQL and MySQL tiered plans only.
+//
+// Examples: regular
+type DatabaseServiceCloneOpenAPIPlanBackups string
 
 // DatabaseServiceCloneOpensearch Schema for cloning an OpenSearch service
 type DatabaseServiceCloneOpensearch struct {
@@ -2928,8 +3059,11 @@ type DatabaseServiceCloneOpensearch struct {
 type DatabaseServiceCloneOpensearchPlanBackups string
 
 // DatabaseServiceClonePg Schema for cloning a PostgreSQL service.
+//
+// Examples: {"additional_disk_space_gib":10,"backup_name":"daily-backup-2024-01-30","clone_time":"2024-01-30T15:04:05Z","hostname_prefix":"my-pg-service","maintenance":{"dow":"monday","time":"03:00:00"},"plan":"basic-pg-plan","termination_protection":false,"zone":"fi-hel1"}, {"additional_disk_space_gib":20,"backup_name":"weekly-backup-2024-02-05","hostname_prefix":"prod-pg-clone","maintenance":{"dow":"wednesday","time":"22:30:00"},"plan":"enterprise-pg-plan","set_service_uuid":"123e4567-e89b-12d3-a456-426614174000","termination_protection":true,"zone":"us-nyc1"}
 type DatabaseServiceClonePg struct {
-	// AdditionalDiskSpaceGib Additional disk space in GiB
+	// AdditionalDiskSpaceGib Additional disk space in GiB. Legacy plans only: componentised (rdb.*) plans set storage as a total via plan_storage_gib or the plan name.
+	// Deprecated: this property has been marked as deprecated upstream, but no `x-deprecated-reason` was set
 	AdditionalDiskSpaceGib *int32 `json:"additional_disk_space_gib,omitempty"`
 
 	// BackupName Backup name
@@ -2964,9 +3098,10 @@ type DatabaseServiceClonePg struct {
 	} `json:"maintenance,omitempty"`
 	Networks *[]DatabaseNetworkCreate `json:"networks,omitempty"`
 
-	// Plan Plan
+	// Plan Deprecated: prefer the plan_* selection fields (plan_compute, plan_node_count, plan_storage_gib, plan_backups). The plan name form remains supported. For componentised (rdb.*) plans the storage segment is the desired TOTAL storage per node: any total reachable from a catalog plan's included storage in the plan's storage steps (within its cap) is a valid plan name, e.g. rdb.standard.2x-2CPU-8GB-120GB-regular selects the 80GB catalog plan with a 40GB dynamic top-up.
 	//
 	// Examples: basic-pg-plan
+	// Deprecated: this property has been marked as deprecated upstream, but no `x-deprecated-reason` was set
 	Plan *string `json:"plan,omitempty"`
 
 	// PlanBackups Plan selection: backup tier. PostgreSQL and MySQL tiered plans only.
@@ -3221,8 +3356,44 @@ type DatabaseServiceComponentResponse struct {
 //
 // Examples: {"additional_disk_space_gib":10,"hostname_prefix":"doc-api-unique-prefix","labels":[{"key":"env","value":"staging"},{"key":"foo","value":"bar"}],"maintenance":{"dow":"sunday","time":"05:00:00"},"networks":[{"family":"IPv4","name":"example-network-1","type":"private","uuid":"03631160-d57a-4926-ad48-a2f828229dcb"},{"family":"IPv4","name":"example-network-2","type":"private","uuid":"03631160-d57a-4926-ad48-a2f828229dcb"}],"plan":"1x1xCPU-2GB-25GB","properties":{"automatic_utility_network_ip_filter":true,"ip_filter":[],"version":"8"},"termination_protection":false,"title":"my-managed-database","type":"mysql","zone":"de-fra1"}
 type DatabaseServiceCreateOpenAPI struct {
-	union json.RawMessage
+	// AdditionalDiskSpaceGib Additional disk space in GiB. Legacy plans only: componentised (rdb.*) plans set storage as a total via plan_storage_gib or the plan name.
+	//
+	// Examples: 10
+	// Deprecated: this property has been marked as deprecated upstream, but no `x-deprecated-reason` was set
+	AdditionalDiskSpaceGib *int `json:"additional_disk_space_gib,omitempty"`
+
+	// Plan Deprecated: prefer the plan_* selection fields (plan_compute, plan_node_count, plan_storage_gib, plan_backups) for PostgreSQL and MySQL. The plan name remains supported, and required for engines without componentised plans. For componentised (rdb.*) plans the storage segment is the desired TOTAL storage per node: any total reachable from a catalog plan's included storage in the plan's storage steps (within its cap) is a valid plan name, e.g. rdb.standard.2x-2CPU-8GB-120GB-regular selects the 80GB catalog plan with a 40GB dynamic top-up.
+	//
+	// Examples: 1x1xCPU-2GB-25GB, rdb.standard.2x-2CPU-8GB-120GB-regular
+	// Deprecated: this property has been marked as deprecated upstream, but no `x-deprecated-reason` was set
+	Plan *string `json:"plan,omitempty"`
+
+	// PlanBackups Plan selection: backup tier. PostgreSQL and MySQL tiered plans only.
+	//
+	// Examples: regular
+	PlanBackups *DatabaseServiceCreateOpenAPIPlanBackups `json:"plan_backups,omitempty"`
+
+	// PlanCompute Plan selection: compute shape combining family, CPU and memory as one token, as listed in the plan catalog components. PostgreSQL and MySQL only.
+	//
+	// Examples: rdb.standard.2CPU-8GB
+	PlanCompute *string `json:"plan_compute,omitempty"`
+
+	// PlanNodeCount Plan selection: number of nodes.
+	//
+	// Examples: 1
+	PlanNodeCount *int `json:"plan_node_count,omitempty"`
+
+	// PlanStorageGib Plan selection: desired TOTAL storage per node in GiB. Resolution picks the plan whose included storage matches, or tops the closest plan up with dynamic additional storage within the allowed limits. Mutually exclusive with additional_disk_space_gib.
+	//
+	// Examples: 120
+	PlanStorageGib *int `json:"plan_storage_gib,omitempty"`
+	union          json.RawMessage
 }
+
+// DatabaseServiceCreateOpenAPIPlanBackups Plan selection: backup tier. PostgreSQL and MySQL tiered plans only.
+//
+// Examples: regular
+type DatabaseServiceCreateOpenAPIPlanBackups string
 
 // DatabaseServiceInformationListResponse Schema for a list of service information
 //
@@ -3236,7 +3407,7 @@ type DatabaseServiceInformationResponse struct {
 	// Examples: [{"id":"123e4567-e89b-12d3-a456-426614174000","permission":"read-write","topic":"sensors/temperature","username":"user123"}]
 	Acls *[]DatabaseAclResponse `json:"acls,omitempty"`
 
-	// AdditionalDiskSpaceGib The additional disk space allocated to the service in GiB.
+	// AdditionalDiskSpaceGib The additional disk space allocated to the service in GiB. Always 0 for componentised (rdb.*) plans, where storage is expressed only as the total in the plan name and in plan_components.
 	//
 	// Examples: 10
 	AdditionalDiskSpaceGib *int32 `json:"additional_disk_space_gib,omitempty"`
@@ -3301,7 +3472,7 @@ type DatabaseServiceInformationResponse struct {
 	// Examples: [{"name":"node-1","progress_updates":[{"completed":false,"current":45,"max":100,"min":0,"phase":"prepare","unit":"bytes_uncompressed"}],"role":"master","state":"running"}]
 	NodeStates *[]DatabaseNodeStateResponse `json:"node_states,omitempty"`
 
-	// Plan The plan of the service.
+	// Plan The plan of the service. For componentised (rdb.*) plans this is the effective plan name: the storage segment shows the total storage per node the service is configured with, and the same name is accepted back on create, modify and clone.
 	//
 	// Examples: 1x1xCPU-2GB-25GB
 	Plan *string `json:"plan,omitempty"`
@@ -3475,8 +3646,44 @@ type DatabaseServiceMigrationStatusResponse struct {
 //
 // Examples: {"additional_disk_space_gib":100,"maintenance":{"dow":"sunday","time":"12:00:00"},"networks":[{"family":"IPv4","name":"example-network-1","type":"private","uuid":"03631160-d57a-4926-ad48-a2f828229dcb"}],"plan":"1x1xCPU-2GB-25GB","powered":true,"properties":{"automatic_utility_network_ip_filter":true,"ip_filter":[],"version":"8"},"termination_protection":false,"title":"my-managed-database","zone":"de-fra1"}
 type DatabaseServiceModifyOpenAPI struct {
-	union json.RawMessage
+	// AdditionalDiskSpaceGib Additional disk space in GiB. Legacy plans only: componentised (rdb.*) plans set storage as a total via plan_storage_gib or the plan name.
+	//
+	// Examples: 10
+	// Deprecated: this property has been marked as deprecated upstream, but no `x-deprecated-reason` was set
+	AdditionalDiskSpaceGib *int `json:"additional_disk_space_gib,omitempty"`
+
+	// Plan Deprecated: prefer the plan_* selection fields (plan_compute, plan_node_count, plan_storage_gib, plan_backups) for PostgreSQL and MySQL. The plan name remains supported, and required for engines without componentised plans. For componentised (rdb.*) plans the storage segment is the desired TOTAL storage per node: any total reachable from a catalog plan's included storage in the plan's storage steps (within its cap) is a valid plan name, e.g. rdb.standard.2x-2CPU-8GB-120GB-regular selects the 80GB catalog plan with a 40GB dynamic top-up.
+	//
+	// Examples: 1x1xCPU-2GB-25GB, rdb.standard.2x-2CPU-8GB-120GB-regular
+	// Deprecated: this property has been marked as deprecated upstream, but no `x-deprecated-reason` was set
+	Plan *string `json:"plan,omitempty"`
+
+	// PlanBackups Plan selection: backup tier. PostgreSQL and MySQL tiered plans only.
+	//
+	// Examples: regular
+	PlanBackups *DatabaseServiceModifyOpenAPIPlanBackups `json:"plan_backups,omitempty"`
+
+	// PlanCompute Plan selection: compute shape combining family, CPU and memory as one token, as listed in the plan catalog components. PostgreSQL and MySQL only.
+	//
+	// Examples: rdb.standard.2CPU-8GB
+	PlanCompute *string `json:"plan_compute,omitempty"`
+
+	// PlanNodeCount Plan selection: number of nodes.
+	//
+	// Examples: 1
+	PlanNodeCount *int `json:"plan_node_count,omitempty"`
+
+	// PlanStorageGib Plan selection: desired TOTAL storage per node in GiB. Resolution picks the plan whose included storage matches, or tops the closest plan up with dynamic additional storage within the allowed limits. Mutually exclusive with additional_disk_space_gib.
+	//
+	// Examples: 120
+	PlanStorageGib *int `json:"plan_storage_gib,omitempty"`
+	union          json.RawMessage
 }
+
+// DatabaseServiceModifyOpenAPIPlanBackups Plan selection: backup tier. PostgreSQL and MySQL tiered plans only.
+//
+// Examples: regular
+type DatabaseServiceModifyOpenAPIPlanBackups string
 
 // DatabaseServiceNetworkDetailsResponse Schema for service network details response
 //
@@ -3562,17 +3769,31 @@ type DatabaseServicePropertiesMysql struct {
 	AdminPassword *string `json:"admin_password,omitempty"`
 	AdminUsername *string `json:"admin_username,omitempty"`
 
+	// AutomaticSpPrivileges When enabled, the server automatically grants the EXECUTE and ALTER ROUTINE privileges to the creator of a stored routine and drops them when the routine is dropped.
+	AutomaticSpPrivileges *bool `json:"automatic_sp_privileges,omitempty"`
+
 	// AutomaticUtilityNetworkIpFilter Automatically allow connections from servers in the utility network within the same zone
 	AutomaticUtilityNetworkIpFilter *bool `json:"automatic_utility_network_ip_filter,omitempty"`
 	BackupHour                      *int  `json:"backup_hour,omitempty"`
 	BackupMinute                    *int  `json:"backup_minute,omitempty"`
-	BinlogRetentionPeriod           *int  `json:"binlog_retention_period,omitempty"`
+
+	// BinlogRetentionPeriod Warning: reducing this value can make a large batch of binary logs eligible for purge at once. Depending on the volume, this can sometimes stall the MySQL commit path and block writes until the purge completes. To stay on the safe side, prefer lowering the value gradually in small decrements during a low-traffic window rather than dropping it drastically in one step.
+	BinlogRetentionPeriod *int `json:"binlog_retention_period,omitempty"`
 
 	// ConnectTimeout The number of seconds that the mysqld server waits for a connect packet before responding with Bad handshake
 	ConnectTimeout *int `json:"connect_timeout,omitempty"`
 
 	// DefaultTimeZone Default server time zone as an offset from UTC (from -12:00 to +12:00), a time zone name, or 'SYSTEM' to use the MySQL server default.
 	DefaultTimeZone *string `json:"default_time_zone,omitempty"`
+
+	// DivPrecisionIncrement Number of digits by which to increase the scale of the result of division operations performed with the / operator. Default is 4.
+	DivPrecisionIncrement *int `json:"div_precision_increment,omitempty"`
+
+	// EndMarkersInJson Whether optimizer JSON output such as EXPLAIN FORMAT=JSON adds end markers that repeat a structure's key near its closing bracket, making large JSON structures easier to read.
+	EndMarkersInJson *bool `json:"end_markers_in_json,omitempty"`
+
+	// EqRangeIndexDiveLimit The number of equality ranges in a query at or above which the optimizer switches from index dives to index statistics when estimating the number of qualifying rows. 0 means always use index dives. Default is 200.
+	EqRangeIndexDiveLimit *int `json:"eq_range_index_dive_limit,omitempty"`
 
 	// GroupConcatMaxLen The maximum permitted result length in bytes for the GROUP_CONCAT() function.
 	GroupConcatMaxLen *int `json:"group_concat_max_len,omitempty"`
@@ -3589,11 +3810,26 @@ type DatabaseServicePropertiesMysql struct {
 	// InnodbFlushNeighbors Specifies whether flushing a page from the InnoDB buffer pool also flushes other dirty pages in the same extent (default is 1): 0 - dirty pages in the same extent are not flushed, 1 - flush contiguous dirty pages in the same extent, 2 - flush dirty pages in the same extent
 	InnodbFlushNeighbors *int `json:"innodb_flush_neighbors,omitempty"`
 
+	// InnodbFtEnableStopword Whether stopword processing is applied when creating or rebuilding an InnoDB FULLTEXT index. Enabled by default.
+	InnodbFtEnableStopword *bool `json:"innodb_ft_enable_stopword,omitempty"`
+
+	// InnodbFtMaxTokenSize Maximum length of words that are stored in an InnoDB FULLTEXT index. Changing this parameter will lead to a restart of the MySQL service.
+	InnodbFtMaxTokenSize *int `json:"innodb_ft_max_token_size,omitempty"`
+
 	// InnodbFtMinTokenSize Minimum length of words that are stored in an InnoDB FULLTEXT index. Changing this parameter will lead to a restart of the MySQL service.
 	InnodbFtMinTokenSize *int `json:"innodb_ft_min_token_size,omitempty"`
 
+	// InnodbFtNumWordOptimize Number of words processed during each OPTIMIZE TABLE operation on an InnoDB FULLTEXT index. Default is 2000.
+	InnodbFtNumWordOptimize *int `json:"innodb_ft_num_word_optimize,omitempty"`
+
+	// InnodbFtResultCacheLimit Maximum memory in bytes used per query for the InnoDB FULLTEXT search query result cache. UpCloud sizes this automatically based on the service plan's memory; setting a value overrides the calculated default.
+	InnodbFtResultCacheLimit *int `json:"innodb_ft_result_cache_limit,omitempty"`
+
 	// InnodbFtServerStopwordTable This option is used to specify your own InnoDB FULLTEXT index stopword list for all InnoDB tables.
 	InnodbFtServerStopwordTable *string `json:"innodb_ft_server_stopword_table,omitempty"`
+
+	// InnodbFtUserStopwordTable This option is used to specify your own InnoDB FULLTEXT index stopword list for specific InnoDB tables.
+	InnodbFtUserStopwordTable *string `json:"innodb_ft_user_stopword_table,omitempty"`
 
 	// InnodbIoCapacity The number of I/O operations per second (IOPS) available to InnoDB background tasks, such as flushing pages from the buffer pool and merging data from the change buffer. Set this to a value appropriate for the underlying storage; it must not exceed innodb_io_capacity_max.
 	InnodbIoCapacity *int `json:"innodb_io_capacity,omitempty"`
@@ -3609,6 +3845,9 @@ type DatabaseServicePropertiesMysql struct {
 
 	// InnodbOnlineAlterLogMaxSize The upper limit in bytes on the size of the temporary log files used during online DDL operations for InnoDB tables.
 	InnodbOnlineAlterLogMaxSize *int `json:"innodb_online_alter_log_max_size,omitempty"`
+
+	// InnodbOptimizeFulltextOnly When enabled, OPTIMIZE TABLE on InnoDB tables only updates the FULLTEXT index instead of rebuilding the table. Intended to be enabled temporarily during FULLTEXT index maintenance and disabled afterwards; while enabled, OPTIMIZE TABLE does not reclaim table space.
+	InnodbOptimizeFulltextOnly *bool `json:"innodb_optimize_fulltext_only,omitempty"`
 
 	// InnodbPrintAllDeadlocks When enabled, information about all deadlocks in InnoDB user transactions is recorded in the error log. Disabled by default.
 	InnodbPrintAllDeadlocks *bool `json:"innodb_print_all_deadlocks,omitempty"`
@@ -3646,9 +3885,15 @@ type DatabaseServicePropertiesMysql struct {
 	// MaxAllowedPacket Size of the largest message in bytes that can be received by the server. Default is 67108864 (64M)
 	MaxAllowedPacket *int `json:"max_allowed_packet,omitempty"`
 
+	// MaxExecutionTime Execution timeout in milliseconds for read-only top-level SELECT statements. 0 (the default) means no timeout.
+	MaxExecutionTime *int `json:"max_execution_time,omitempty"`
+
 	// MaxHeapTableSize Limits the size of internal in-memory tables. Also set tmp_table_size. Default is 16777216 (16M)
 	MaxHeapTableSize *int `json:"max_heap_table_size,omitempty"`
-	Migration        *struct {
+
+	// MaxSeeksForKey Limit on the assumed maximum number of index seeks when looking up rows based on a key. Lowering this value causes the optimizer to prefer index lookups over table scans.
+	MaxSeeksForKey *int `json:"max_seeks_for_key,omitempty"`
+	Migration      *struct {
 		Dbname *string `json:"dbname,omitempty"`
 
 		// DumpTool Experimental! Tool to use for database dump and restore during migration. Default: mysqldump
@@ -3679,6 +3924,15 @@ type DatabaseServicePropertiesMysql struct {
 
 	// NetWriteTimeout The number of seconds to wait for a block to be written to a connection before aborting the write.
 	NetWriteTimeout *int `json:"net_write_timeout,omitempty"`
+
+	// OptimizerPruneLevel Controls the heuristics applied during query optimization to prune less-promising partial plans from the optimizer search space. 0 disables heuristics (exhaustive search); 1 prunes plans based on the number of rows retrieved.
+	OptimizerPruneLevel *int `json:"optimizer_prune_level,omitempty"`
+
+	// OptimizerSearchDepth Maximum depth of search performed by the query optimizer when choosing a join order. Larger values produce better plans for joins over many tables but take longer to compile; 0 lets the optimizer choose the depth automatically.
+	OptimizerSearchDepth *int `json:"optimizer_search_depth,omitempty"`
+
+	// OptimizerSwitch Comma-separated list of optimizer flag assignments in the form flag=on|off|default, or the single value 'default' to reset all flags. Flags not listed keep their current values. Controls query optimizer behaviors such as index merge, hash join and semijoin strategies.
+	OptimizerSwitch *string `json:"optimizer_switch,omitempty"`
 
 	// PerformanceSchemaEventsStatementsHistorySize The number of rows per thread in the events_statements_history table. Changing this parameter will lead to a restart of the MySQL service.
 	PerformanceSchemaEventsStatementsHistorySize *int `json:"performance_schema_events_statements_history_size,omitempty"`
@@ -3713,6 +3967,9 @@ type DatabaseServicePropertiesMysql struct {
 
 	// WaitTimeout The number of seconds the server waits for activity on a noninteractive connection before closing it.
 	WaitTimeout *int `json:"wait_timeout,omitempty"`
+
+	// WindowingUseHighPrecision Whether window functions are computed to high precision. Disabling this trades exactness for speed in window function evaluation.
+	WindowingUseHighPrecision *bool `json:"windowing_use_high_precision,omitempty"`
 }
 
 // DatabaseServicePropertiesMysqlInternalTmpMemStorageEngine The storage engine for in-memory internal temporary tables.
@@ -3826,6 +4083,7 @@ type DatabaseServicePropertiesOpensearch struct {
 		// Low The low watermark for disk usage.
 		Low int `json:"low"`
 	} `json:"disk_watermarks,omitempty"`
+	ElasticsearchVersion *DatabaseServicePropertiesOpensearchElasticsearchVersion `json:"elasticsearch_version,omitempty"`
 
 	// EmailSenderName This should be identical to the Sender name defined in Opensearch dashboards
 	EmailSenderName *string `json:"email_sender_name,omitempty"`
@@ -3980,7 +4238,7 @@ type DatabaseServicePropertiesOpensearch struct {
 		// JwtHeader The HTTP header that stores the token. Typically the Authorization header with the Bearer schema: Authorization: Bearer <token>. Optional. Default is Authorization.
 		JwtHeader *string `json:"jwt_header,omitempty"`
 
-		// JwtUrlParameter If the token is not transmitted in the HTTP header, but as a URL parameter, define the name of the parameter here. Optional.
+		// JwtUrlParameter If the token is not transmitted in the HTTP header, but as an URL parameter, define the name of the parameter here. Optional.
 		JwtUrlParameter *string `json:"jwt_url_parameter,omitempty"`
 
 		// RefreshRateLimitCount The maximum number of unknown key IDs in the time frame. Default is 10. Optional.
@@ -4440,6 +4698,9 @@ type DatabaseServicePropertiesOpensearch_CustomRepos_Settings struct {
 // DatabaseServicePropertiesOpensearchCustomReposType defines model for DatabaseServicePropertiesOpensearch.CustomRepos.Type.
 type DatabaseServicePropertiesOpensearchCustomReposType string
 
+// DatabaseServicePropertiesOpensearchElasticsearchVersion defines model for DatabaseServicePropertiesOpensearch.ElasticsearchVersion.
+type DatabaseServicePropertiesOpensearchElasticsearchVersion string
+
 // DatabaseServicePropertiesOpensearchIndexPatternsSortingAlgorithm defines model for DatabaseServicePropertiesOpensearch.IndexPatterns.SortingAlgorithm.
 type DatabaseServicePropertiesOpensearchIndexPatternsSortingAlgorithm string
 
@@ -4528,7 +4789,7 @@ type DatabaseServicePropertiesPg struct {
 	// IoMethod EXPERIMENTAL: Controls the maximum number of I/O operations that one process can execute simultaneously. Version 18 and up only. Changing this parameter causes a service restart.
 	IoMethod *DatabaseServicePropertiesPgIoMethod `json:"io_method,omitempty"`
 
-	// IoWorkers EXPERIMENTAL: Number of IO worker processes, for io_method=worker. Version 18 and up only. Changing this parameter causes a service restart.
+	// IoWorkers EXPERIMENTAL: Number of IO worker processes, for io_method=worker. Version 18 and up only.
 	IoWorkers *int `json:"io_workers,omitempty"`
 
 	// IpFilter Allow incoming connections from CIDR address block, e.g. '10.20.0.0/16'
@@ -4624,7 +4885,7 @@ type DatabaseServicePropertiesPg struct {
 	// PgStatMonitorEnable Enable the pg_stat_monitor extension. Changing this parameter causes a service restart. When this extension is enabled, pg_stat_statements results for utility commands are unreliable
 	PgStatMonitorEnable *bool `json:"pg_stat_monitor_enable,omitempty"`
 
-	// PgStatMonitorPgsmEnableQueryPlan Enables or disables query plan monitoring. Changing this parameter causes a service restart. Only available for PostgreSQL 13+.
+	// PgStatMonitorPgsmEnableQueryPlan Enables or disables query plan monitoring. Only available for PostgreSQL 13+.
 	PgStatMonitorPgsmEnableQueryPlan *bool `json:"pg_stat_monitor_pgsm_enable_query_plan,omitempty"`
 
 	// PgStatMonitorPgsmMaxBuckets Sets the maximum number of buckets. Changing this parameter causes a service restart. Only available for PostgreSQL 13+.
@@ -4919,6 +5180,9 @@ type DatabaseServicePropertiesValkey struct {
 
 	// ValkeyActiveExpireEffort Valkey reclaims expired keys both when accessed and in the background. The background process scans for expired keys to free memory. Increasing the active-expire-effort setting (default 1, max 10) uses more CPU to reclaim expired keys faster, reducing memory usage but potentially increasing latency.
 	ValkeyActiveExpireEffort *int `json:"valkey_active_expire_effort,omitempty"`
+
+	// ValkeyActivedefrag Enable active memory defragmentation. When enabled, Valkey relocates objects off sparsely-used memory pages to reduce fragmentation and return memory to the operating system. Defragmentation runs on the main thread and consumes CPU, so it may increase latency under load.
+	ValkeyActivedefrag *bool `json:"valkey_activedefrag,omitempty"`
 
 	// ValkeyIoThreads Set Valkey IO thread count. Changing this will cause a restart of the Valkey service.
 	ValkeyIoThreads            *int                                                  `json:"valkey_io_threads,omitempty"`
@@ -6763,11 +7027,115 @@ func (t *DatabaseServiceCloneOpenAPI) MergeDatabaseServiceCloneValkey(v Database
 
 func (t DatabaseServiceCloneOpenAPI) MarshalJSON() ([]byte, error) {
 	b, err := t.union.MarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	object := make(map[string]json.RawMessage)
+	if t.union != nil {
+		err = json.Unmarshal(b, &object)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	if t.AdditionalDiskSpaceGib != nil {
+		object["additional_disk_space_gib"], err = json.Marshal(t.AdditionalDiskSpaceGib)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'additional_disk_space_gib': %w", err)
+		}
+	}
+
+	if t.Plan != nil {
+		object["plan"], err = json.Marshal(t.Plan)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'plan': %w", err)
+		}
+	}
+
+	if t.PlanBackups != nil {
+		object["plan_backups"], err = json.Marshal(t.PlanBackups)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'plan_backups': %w", err)
+		}
+	}
+
+	if t.PlanCompute != nil {
+		object["plan_compute"], err = json.Marshal(t.PlanCompute)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'plan_compute': %w", err)
+		}
+	}
+
+	if t.PlanNodeCount != nil {
+		object["plan_node_count"], err = json.Marshal(t.PlanNodeCount)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'plan_node_count': %w", err)
+		}
+	}
+
+	if t.PlanStorageGib != nil {
+		object["plan_storage_gib"], err = json.Marshal(t.PlanStorageGib)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'plan_storage_gib': %w", err)
+		}
+	}
+	b, err = json.Marshal(object)
 	return b, err
 }
 
 func (t *DatabaseServiceCloneOpenAPI) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
+	if err != nil {
+		return err
+	}
+	object := make(map[string]json.RawMessage)
+	err = json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["additional_disk_space_gib"]; found {
+		err = json.Unmarshal(raw, &t.AdditionalDiskSpaceGib)
+		if err != nil {
+			return fmt.Errorf("error reading 'additional_disk_space_gib': %w", err)
+		}
+	}
+
+	if raw, found := object["plan"]; found {
+		err = json.Unmarshal(raw, &t.Plan)
+		if err != nil {
+			return fmt.Errorf("error reading 'plan': %w", err)
+		}
+	}
+
+	if raw, found := object["plan_backups"]; found {
+		err = json.Unmarshal(raw, &t.PlanBackups)
+		if err != nil {
+			return fmt.Errorf("error reading 'plan_backups': %w", err)
+		}
+	}
+
+	if raw, found := object["plan_compute"]; found {
+		err = json.Unmarshal(raw, &t.PlanCompute)
+		if err != nil {
+			return fmt.Errorf("error reading 'plan_compute': %w", err)
+		}
+	}
+
+	if raw, found := object["plan_node_count"]; found {
+		err = json.Unmarshal(raw, &t.PlanNodeCount)
+		if err != nil {
+			return fmt.Errorf("error reading 'plan_node_count': %w", err)
+		}
+	}
+
+	if raw, found := object["plan_storage_gib"]; found {
+		err = json.Unmarshal(raw, &t.PlanStorageGib)
+		if err != nil {
+			return fmt.Errorf("error reading 'plan_storage_gib': %w", err)
+		}
+	}
+
 	return err
 }
 
@@ -6903,11 +7271,115 @@ func (t *DatabaseServiceCreateOpenAPI) MergeDatabaseServicePropertiesValkey(v Da
 
 func (t DatabaseServiceCreateOpenAPI) MarshalJSON() ([]byte, error) {
 	b, err := t.union.MarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	object := make(map[string]json.RawMessage)
+	if t.union != nil {
+		err = json.Unmarshal(b, &object)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	if t.AdditionalDiskSpaceGib != nil {
+		object["additional_disk_space_gib"], err = json.Marshal(t.AdditionalDiskSpaceGib)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'additional_disk_space_gib': %w", err)
+		}
+	}
+
+	if t.Plan != nil {
+		object["plan"], err = json.Marshal(t.Plan)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'plan': %w", err)
+		}
+	}
+
+	if t.PlanBackups != nil {
+		object["plan_backups"], err = json.Marshal(t.PlanBackups)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'plan_backups': %w", err)
+		}
+	}
+
+	if t.PlanCompute != nil {
+		object["plan_compute"], err = json.Marshal(t.PlanCompute)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'plan_compute': %w", err)
+		}
+	}
+
+	if t.PlanNodeCount != nil {
+		object["plan_node_count"], err = json.Marshal(t.PlanNodeCount)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'plan_node_count': %w", err)
+		}
+	}
+
+	if t.PlanStorageGib != nil {
+		object["plan_storage_gib"], err = json.Marshal(t.PlanStorageGib)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'plan_storage_gib': %w", err)
+		}
+	}
+	b, err = json.Marshal(object)
 	return b, err
 }
 
 func (t *DatabaseServiceCreateOpenAPI) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
+	if err != nil {
+		return err
+	}
+	object := make(map[string]json.RawMessage)
+	err = json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["additional_disk_space_gib"]; found {
+		err = json.Unmarshal(raw, &t.AdditionalDiskSpaceGib)
+		if err != nil {
+			return fmt.Errorf("error reading 'additional_disk_space_gib': %w", err)
+		}
+	}
+
+	if raw, found := object["plan"]; found {
+		err = json.Unmarshal(raw, &t.Plan)
+		if err != nil {
+			return fmt.Errorf("error reading 'plan': %w", err)
+		}
+	}
+
+	if raw, found := object["plan_backups"]; found {
+		err = json.Unmarshal(raw, &t.PlanBackups)
+		if err != nil {
+			return fmt.Errorf("error reading 'plan_backups': %w", err)
+		}
+	}
+
+	if raw, found := object["plan_compute"]; found {
+		err = json.Unmarshal(raw, &t.PlanCompute)
+		if err != nil {
+			return fmt.Errorf("error reading 'plan_compute': %w", err)
+		}
+	}
+
+	if raw, found := object["plan_node_count"]; found {
+		err = json.Unmarshal(raw, &t.PlanNodeCount)
+		if err != nil {
+			return fmt.Errorf("error reading 'plan_node_count': %w", err)
+		}
+	}
+
+	if raw, found := object["plan_storage_gib"]; found {
+		err = json.Unmarshal(raw, &t.PlanStorageGib)
+		if err != nil {
+			return fmt.Errorf("error reading 'plan_storage_gib': %w", err)
+		}
+	}
+
 	return err
 }
 
@@ -7043,11 +7515,115 @@ func (t *DatabaseServiceModifyOpenAPI) MergeDatabaseServicePropertiesValkey(v Da
 
 func (t DatabaseServiceModifyOpenAPI) MarshalJSON() ([]byte, error) {
 	b, err := t.union.MarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	object := make(map[string]json.RawMessage)
+	if t.union != nil {
+		err = json.Unmarshal(b, &object)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	if t.AdditionalDiskSpaceGib != nil {
+		object["additional_disk_space_gib"], err = json.Marshal(t.AdditionalDiskSpaceGib)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'additional_disk_space_gib': %w", err)
+		}
+	}
+
+	if t.Plan != nil {
+		object["plan"], err = json.Marshal(t.Plan)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'plan': %w", err)
+		}
+	}
+
+	if t.PlanBackups != nil {
+		object["plan_backups"], err = json.Marshal(t.PlanBackups)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'plan_backups': %w", err)
+		}
+	}
+
+	if t.PlanCompute != nil {
+		object["plan_compute"], err = json.Marshal(t.PlanCompute)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'plan_compute': %w", err)
+		}
+	}
+
+	if t.PlanNodeCount != nil {
+		object["plan_node_count"], err = json.Marshal(t.PlanNodeCount)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'plan_node_count': %w", err)
+		}
+	}
+
+	if t.PlanStorageGib != nil {
+		object["plan_storage_gib"], err = json.Marshal(t.PlanStorageGib)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'plan_storage_gib': %w", err)
+		}
+	}
+	b, err = json.Marshal(object)
 	return b, err
 }
 
 func (t *DatabaseServiceModifyOpenAPI) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
+	if err != nil {
+		return err
+	}
+	object := make(map[string]json.RawMessage)
+	err = json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["additional_disk_space_gib"]; found {
+		err = json.Unmarshal(raw, &t.AdditionalDiskSpaceGib)
+		if err != nil {
+			return fmt.Errorf("error reading 'additional_disk_space_gib': %w", err)
+		}
+	}
+
+	if raw, found := object["plan"]; found {
+		err = json.Unmarshal(raw, &t.Plan)
+		if err != nil {
+			return fmt.Errorf("error reading 'plan': %w", err)
+		}
+	}
+
+	if raw, found := object["plan_backups"]; found {
+		err = json.Unmarshal(raw, &t.PlanBackups)
+		if err != nil {
+			return fmt.Errorf("error reading 'plan_backups': %w", err)
+		}
+	}
+
+	if raw, found := object["plan_compute"]; found {
+		err = json.Unmarshal(raw, &t.PlanCompute)
+		if err != nil {
+			return fmt.Errorf("error reading 'plan_compute': %w", err)
+		}
+	}
+
+	if raw, found := object["plan_node_count"]; found {
+		err = json.Unmarshal(raw, &t.PlanNodeCount)
+		if err != nil {
+			return fmt.Errorf("error reading 'plan_node_count': %w", err)
+		}
+	}
+
+	if raw, found := object["plan_storage_gib"]; found {
+		err = json.Unmarshal(raw, &t.PlanStorageGib)
+		if err != nil {
+			return fmt.Errorf("error reading 'plan_storage_gib': %w", err)
+		}
+	}
+
 	return err
 }
 

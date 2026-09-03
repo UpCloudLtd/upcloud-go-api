@@ -419,6 +419,16 @@ type FirewallRulesetRuleFamily string
 // FirewallRulesetRuleProtocol Rule protocol.
 type FirewallRulesetRuleProtocol string
 
+// FirewallRulesetServerFirewallDetailResponse Server firewall detail response.
+//
+// Examples: {"firewall_rules":{"firewall_rule":[{"action":"accept","direction":"in","family":"IPv4","protocol":"tcp"},{"action":"drop","direction":"out","family":"IPv4"}]}}
+type FirewallRulesetServerFirewallDetailResponse struct {
+	// FirewallRules Server firewall rules.
+	//
+	// Examples: {"firewall_rule":[{"action":"accept","direction":"in","family":"IPv4","protocol":"tcp"},{"action":"drop","direction":"out","family":"IPv4"}]}
+	FirewallRules FirewallRulesetServerFirewallRules `json:"firewall_rules"`
+}
+
 // FirewallRulesetServerFirewallRule Server firewall rule
 //
 // Examples: {"action":"accept","direction":"in","family":"IPv4","protocol":"tcp"}, {"action":"drop","direction":"out","family":"IPv4"}
@@ -637,6 +647,22 @@ type FirewallRulesetServerFirewallRuleDetail struct {
 // Examples: 1, 678
 type FirewallRulesetServerFirewallRulePosition = string
 
+// FirewallRulesetServerFirewallRules Server firewall rules.
+//
+// Examples: {"firewall_rule":[{"action":"accept","direction":"in","family":"IPv4","protocol":"tcp"},{"action":"drop","direction":"out","family":"IPv4"}]}
+type FirewallRulesetServerFirewallRules struct {
+	FirewallRule *[]FirewallRulesetServerFirewallRule `json:"firewall_rule"`
+}
+
+// FirewallRulesetServerMultipleFirewallRulesCreate Creates multiple server firewall rules.
+//
+// Examples: {"firewall_rules":{"firewall_rule":[{"action":"accept","comment":"Allow SSH from this network","destination_address_end":null,"destination_address_start":null,"destination_port_end":"22","destination_port_start":"22","direction":"in","family":"IPv4","icmp_type":null,"protocol":"tcp","source_address_end":"192.168.1.255","source_address_start":"192.168.1.1","source_port_end":null,"source_port_start":null},{"action":"accept","comment":"Allow DNS from this network","destination_address_end":null,"destination_address_start":null,"destination_port_end":"53","destination_port_start":"53","direction":"in","family":"IPv4","icmp_type":null,"protocol":"tcp","source_address_end":"1.1.1.1","source_address_start":"1.1.1.1","source_port_end":null,"source_port_start":null},{"action":"drop","comment":"dfg","destination_address_end":"100.100.128.2","destination_address_start":"100.100.128.2","destination_port_end":"89","destination_port_start":"89","direction":"out","family":"IPv4","icmp_type":null,"protocol":"tcp","source_address_end":null,"source_address_start":null,"source_port_end":null,"source_port_start":null},{"action":"accept","comment":"'w???”?p'2'?12??12?3?'231","destination_address_end":"2a04:3540:1001:1000:1411:4dff:fea5:1bab","destination_address_start":"2a04:3540:1001:1000:1411:4dff:fea5:1bab","destination_port_end":null,"destination_port_start":null,"direction":"out","family":"IPv6","icmp_type":"12","protocol":"icmp","source_address_end":null,"source_address_start":null,"source_port_end":null,"source_port_start":null}]}}, {"firewall_rules":null}
+type FirewallRulesetServerMultipleFirewallRulesCreate struct {
+	FirewallRules *struct {
+		FirewallRule *[]FirewallRulesetServerFirewallRule `json:"firewall_rule"`
+	} `json:"firewall_rules"`
+}
+
 // FirewallRulesetServerUuid The unique identifier for the server.
 //
 // Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
@@ -692,6 +718,11 @@ type DeleteFirewallRulesetRuleRulesetUuid = FirewallRulesetServerUuid
 // Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type DeleteFirewallRulesetRulesetUuid = FirewallRulesetServerUuid
 
+// FirewallRulesetCreateMultipleServerFirewallRulesServerUuid The unique identifier for the server.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
+type FirewallRulesetCreateMultipleServerFirewallRulesServerUuid = FirewallRulesetServerUuid
+
 // FirewallRulesetCreateServerFirewallRuleServerUuid The unique identifier for the server.
 //
 // Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
@@ -716,6 +747,26 @@ type FirewallRulesetGetServerFirewallRulePosition = FirewallRulesetServerFirewal
 //
 // Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type FirewallRulesetGetServerFirewallRuleServerUuid = FirewallRulesetServerUuid
+
+// FirewallRulesetListServerFirewallRuleLimit Schema for a query parameter specifying the maximum number of entries to return (limit).
+//
+// Examples: 10, 25, 50, 100
+type FirewallRulesetListServerFirewallRuleLimit = FirewallRulesetQueryParamLimit
+
+// FirewallRulesetListServerFirewallRuleOffset Schema for a query parameter specifying the offset for pagination.
+//
+// Examples: 0, 10, 20, 50
+type FirewallRulesetListServerFirewallRuleOffset = FirewallRulesetQueryParamOffset
+
+// FirewallRulesetListServerFirewallRuleServerUuid The unique identifier for the server.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
+type FirewallRulesetListServerFirewallRuleServerUuid = FirewallRulesetServerUuid
+
+// FirewallRulesetListServerFirewallRuleSort Schema for a query parameter specifying the sort field.
+//
+// Examples: name, created_at, updated_at
+type FirewallRulesetListServerFirewallRuleSort = FirewallRulesetQueryParamSort
 
 // GetFirewallRulesetLabelLabelKey The key of a label.
 //
@@ -877,6 +928,36 @@ type DeleteFirewallRulesetLabelDefault = FirewallRulesetErrorResponse
 // Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type DeleteFirewallRulesetRuleDefault = FirewallRulesetErrorResponse
 
+// FirewallRulesetCreateMultipleServerFirewallRules200 Server firewall detail response.
+//
+// Examples: {"firewall_rules":{"firewall_rule":[{"action":"accept","direction":"in","family":"IPv4","protocol":"tcp"},{"action":"drop","direction":"out","family":"IPv4"}]}}
+type FirewallRulesetCreateMultipleServerFirewallRules200 = FirewallRulesetServerFirewallDetailResponse
+
+// FirewallRulesetCreateMultipleServerFirewallRules400 Schema for legacy error responses from API.
+//
+// Examples: {"error":{"error_code":"SERVER_INVALID","error_message":"The server UUID is invalid."}}
+type FirewallRulesetCreateMultipleServerFirewallRules400 = FirewallRulesetErrorLegacyResponse
+
+// FirewallRulesetCreateMultipleServerFirewallRules403 Schema for legacy error responses from API.
+//
+// Examples: {"error":{"error_code":"SERVER_INVALID","error_message":"The server UUID is invalid."}}
+type FirewallRulesetCreateMultipleServerFirewallRules403 = FirewallRulesetErrorLegacyResponse
+
+// FirewallRulesetCreateMultipleServerFirewallRules404 Schema for legacy error responses from API.
+//
+// Examples: {"error":{"error_code":"SERVER_INVALID","error_message":"The server UUID is invalid."}}
+type FirewallRulesetCreateMultipleServerFirewallRules404 = FirewallRulesetErrorLegacyResponse
+
+// FirewallRulesetCreateMultipleServerFirewallRules409 Schema for legacy error responses from API.
+//
+// Examples: {"error":{"error_code":"SERVER_INVALID","error_message":"The server UUID is invalid."}}
+type FirewallRulesetCreateMultipleServerFirewallRules409 = FirewallRulesetErrorLegacyResponse
+
+// FirewallRulesetCreateMultipleServerFirewallRulesDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
+type FirewallRulesetCreateMultipleServerFirewallRulesDefault = FirewallRulesetErrorResponse
+
 // FirewallRulesetCreateServerFirewallRule201 Server firewall rule detail
 //
 // Examples: {"firewall_rule":{"action":"accept","direction":"in","family":"IPv4","protocol":"tcp"}}
@@ -941,6 +1022,16 @@ type FirewallRulesetGetServerFirewallRule200 = FirewallRulesetServerFirewallRule
 //
 // Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
 type FirewallRulesetGetServerFirewallRuleDefault = FirewallRulesetErrorResponse
+
+// FirewallRulesetListServerFirewallRule200 Server firewall detail response.
+//
+// Examples: {"firewall_rules":{"firewall_rule":[{"action":"accept","direction":"in","family":"IPv4","protocol":"tcp"},{"action":"drop","direction":"out","family":"IPv4"}]}}
+type FirewallRulesetListServerFirewallRule200 = FirewallRulesetServerFirewallDetailResponse
+
+// FirewallRulesetListServerFirewallRuleDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1ZM92JWR9YMWTCMV6JPSQ0J","invalid_params":[{"name":"configured_status","reason":"Value must be one of \"started\", \"stopped\"."}],"status":400,"title":"Validation error.","type":"https://developers.upcloud.com/1.3/errors#ERROR_INVALID_REQUEST"}, {"correlation_id":"01K1ZJC6MSN91RQS3JMEESGG92","status":404,"title":"The resource you requested does not exist.","type":"https://developers.upcloud.com/1.3/errors#ERROR_NOT_FOUND"}, {"correlation_id":"01HEPYJ027RF0H29CKHWHCH7RE","status":500,"title":"Your request could not be fulfilled due to a technical issue.","type":"https://developers.upcloud.com/1.3/errors#ERROR_GENERAL_FAILURE"}
+type FirewallRulesetListServerFirewallRuleDefault = FirewallRulesetErrorResponse
 
 // GetFirewallRuleset200 Response schema for firewall ruleset details, including UUID, name, description, stateful, enabled, labels and serverUUID.
 //
@@ -1068,6 +1159,11 @@ type CreateFirewallRulesetRule = FirewallRulesetFirewallRuleCreate
 // CreateMultipleFirewallRulesetRule Examples: [{"action":"accept","direction":"in","enabled":false,"family":"IPv4","protocol":"tcp"},{"action":"drop","direction":"out","family":"IPv6"}]
 type CreateMultipleFirewallRulesetRule = FirewallRulesetFirewallMultipleRuleCreate
 
+// FirewallRulesetCreateMultipleServerFirewallRules Creates multiple server firewall rules.
+//
+// Examples: {"firewall_rules":{"firewall_rule":[{"action":"accept","comment":"Allow SSH from this network","destination_address_end":null,"destination_address_start":null,"destination_port_end":"22","destination_port_start":"22","direction":"in","family":"IPv4","icmp_type":null,"protocol":"tcp","source_address_end":"192.168.1.255","source_address_start":"192.168.1.1","source_port_end":null,"source_port_start":null},{"action":"accept","comment":"Allow DNS from this network","destination_address_end":null,"destination_address_start":null,"destination_port_end":"53","destination_port_start":"53","direction":"in","family":"IPv4","icmp_type":null,"protocol":"tcp","source_address_end":"1.1.1.1","source_address_start":"1.1.1.1","source_port_end":null,"source_port_start":null},{"action":"drop","comment":"dfg","destination_address_end":"100.100.128.2","destination_address_start":"100.100.128.2","destination_port_end":"89","destination_port_start":"89","direction":"out","family":"IPv4","icmp_type":null,"protocol":"tcp","source_address_end":null,"source_address_start":null,"source_port_end":null,"source_port_start":null},{"action":"accept","comment":"'w???”?p'2'?12??12?3?'231","destination_address_end":"2a04:3540:1001:1000:1411:4dff:fea5:1bab","destination_address_start":"2a04:3540:1001:1000:1411:4dff:fea5:1bab","destination_port_end":null,"destination_port_start":null,"direction":"out","family":"IPv6","icmp_type":"12","protocol":"icmp","source_address_end":null,"source_address_start":null,"source_port_end":null,"source_port_start":null}]}}, {"firewall_rules":null}
+type FirewallRulesetCreateMultipleServerFirewallRules = FirewallRulesetServerMultipleFirewallRulesCreate
+
 // FirewallRulesetCreateServerFirewallRule Examples: {"firewall_rule":{"action":"accept","comment":"Allow SSH from this network","destination_address_end":"","destination_address_start":"","destination_port_end":"22","destination_port_start":"22","direction":"in","family":"IPv4","icmp_type":"","position":"1","protocol":"tcp","source_address_end":"192.168.1.255","source_address_start":"192.168.1.1","source_port_end":"","source_port_start":""}}
 type FirewallRulesetCreateServerFirewallRule = FirewallRulesetServerFirewallRuleCreate
 
@@ -1096,6 +1192,18 @@ type ListFirewallRulesetsParams struct {
 	Sort *ListFirewallRulesetsSort `form:"sort,omitempty" json:"sort,omitempty"`
 }
 
+// ListServerFirewallRuleParams defines parameters for ListServerFirewallRule.
+type ListServerFirewallRuleParams struct {
+	// Limit Number of entries to receive at most.
+	Limit *FirewallRulesetListServerFirewallRuleLimit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Offset Offset for retrieved results.
+	Offset *FirewallRulesetListServerFirewallRuleOffset `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// Sort Order of returned results.
+	Sort *FirewallRulesetListServerFirewallRuleSort `form:"sort,omitempty" json:"sort,omitempty"`
+}
+
 // ListFirewallRulesetRulesParams defines parameters for ListFirewallRulesetRules.
 type ListFirewallRulesetRulesParams struct {
 	// Limit Number of entries to receive at most.
@@ -1113,6 +1221,9 @@ type CreateFirewallRulesetJSONRequestBody = CreateFirewallRuleset
 
 // CreateServerFirewallRuleJSONRequestBody defines body for CreateServerFirewallRule for application/json ContentType.
 type CreateServerFirewallRuleJSONRequestBody = FirewallRulesetServerFirewallRuleCreate
+
+// CreateMultipleServerFirewallRulesJSONRequestBody defines body for CreateMultipleServerFirewallRules for application/json ContentType.
+type CreateMultipleServerFirewallRulesJSONRequestBody = FirewallRulesetServerMultipleFirewallRulesCreate
 
 // ModifyFirewallRulesetJSONRequestBody defines body for ModifyFirewallRuleset for application/json ContentType.
 type ModifyFirewallRulesetJSONRequestBody = FirewallRulesetModify
