@@ -90,6 +90,95 @@ type KubernetesClientInterface interface {
 	// Corresponds with PATCH /1.3/kubernetes/{uuid} (the `ModifyKubernetesCluster` operationId).
 	ModifyKubernetesCluster(ctx context.Context, uuid KubernetesUuidParameter, body ModifyKubernetesClusterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ListClusterAuthentication List cluster authentication entries
+	//
+	// Returns all OIDC authentication issuer configurations for a cluster.
+	//
+	// Corresponds with GET /1.3/kubernetes/{uuid}/authentication (the `ListClusterAuthentication` operationId).
+	ListClusterAuthentication(ctx context.Context, uuid KubernetesUuidParameter, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateClusterAuthenticationWithBody Create a cluster authentication entry
+	//
+	// Creates a new OIDC authentication issuer configuration. The new entry is validated together with the cluster's existing entries before being applied. Fails if an entry with the same name already exists.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /1.3/kubernetes/{uuid}/authentication (the `CreateClusterAuthentication` operationId).
+	CreateClusterAuthenticationWithBody(ctx context.Context, uuid KubernetesUuidParameter, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateClusterAuthentication Create a cluster authentication entry
+	//
+	// Creates a new OIDC authentication issuer configuration. The new entry is validated together with the cluster's existing entries before being applied. Fails if an entry with the same name already exists.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /1.3/kubernetes/{uuid}/authentication (the `CreateClusterAuthentication` operationId).
+	CreateClusterAuthentication(ctx context.Context, uuid KubernetesUuidParameter, body CreateClusterAuthenticationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// SetClusterAuthenticationWithBody Replace the full cluster authentication configuration
+	//
+	// Replaces the entire set of OIDC authentication issuer configurations for a cluster with the supplied JSON list of issuers. The full set is validated before being applied. An empty list clears all issuers.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PUT /1.3/kubernetes/{uuid}/authentication (the `SetClusterAuthentication` operationId).
+	SetClusterAuthenticationWithBody(ctx context.Context, uuid KubernetesUuidParameter, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// SetClusterAuthentication Replace the full cluster authentication configuration
+	//
+	// Replaces the entire set of OIDC authentication issuer configurations for a cluster with the supplied JSON list of issuers. The full set is validated before being applied. An empty list clears all issuers.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PUT /1.3/kubernetes/{uuid}/authentication (the `SetClusterAuthentication` operationId).
+	SetClusterAuthentication(ctx context.Context, uuid KubernetesUuidParameter, body SetClusterAuthenticationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ImportClusterAuthenticationWithBody Import a full cluster authentication configuration
+	//
+	// Replaces the entire set of OIDC authentication issuer configurations for a cluster with the supplied native kube-apiserver v1 AuthenticationConfiguration YAML document. Issuers are named deterministically from their issuer URL host. The top-level `anonymous` field is not supported and any configuration that would drop data is rejected.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PUT /1.3/kubernetes/{uuid}/authentication/import (the `ImportClusterAuthentication` operationId).
+	ImportClusterAuthenticationWithBody(ctx context.Context, uuid KubernetesUuidParameter, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteClusterAuthentication Delete a cluster authentication entry
+	//
+	// Removes an OIDC authentication issuer configuration by name.
+	//
+	// Corresponds with DELETE /1.3/kubernetes/{uuid}/authentication/{name} (the `DeleteClusterAuthentication` operationId).
+	DeleteClusterAuthentication(ctx context.Context, uuid KubernetesUuidParameter, name KubernetesNameParameter, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetClusterAuthentication Get a cluster authentication entry
+	//
+	// Corresponds with GET /1.3/kubernetes/{uuid}/authentication/{name} (the `GetClusterAuthentication` operationId).
+	GetClusterAuthentication(ctx context.Context, uuid KubernetesUuidParameter, name KubernetesNameParameter, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateClusterAuthenticationWithBody Update a cluster authentication entry
+	//
+	// Updates an existing OIDC authentication issuer configuration. The name in the path is authoritative. The updated entry is validated together with the cluster's other entries before being applied.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PUT /1.3/kubernetes/{uuid}/authentication/{name} (the `UpdateClusterAuthentication` operationId).
+	UpdateClusterAuthenticationWithBody(ctx context.Context, uuid KubernetesUuidParameter, name KubernetesNameParameter, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateClusterAuthentication Update a cluster authentication entry
+	//
+	// Updates an existing OIDC authentication issuer configuration. The name in the path is authoritative. The updated entry is validated together with the cluster's other entries before being applied.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PUT /1.3/kubernetes/{uuid}/authentication/{name} (the `UpdateClusterAuthentication` operationId).
+	UpdateClusterAuthentication(ctx context.Context, uuid KubernetesUuidParameter, name KubernetesNameParameter, body UpdateClusterAuthenticationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetKubernetesClusterOIDCKubeconfig Get OIDC kubeconfig
+	//
+	// Returns a kubeconfig for the cluster whose user authenticates via the kubelogin (`kubectl oidc-login`) exec credential plugin, using the cluster's configured OIDC issuer identified by the `name` path parameter. The plugin (kubelogin) must be installed on the client. No long-lived credential is embedded. The OIDC client secret and any provider-specific kubelogin flags are not injected by the server; the returned kubeconfig includes comments describing how to add them.
+	//
+	// Corresponds with GET /1.3/kubernetes/{uuid}/authentication/{name}/kubeconfig (the `GetKubernetesClusterOIDCKubeconfig` operationId).
+	GetKubernetesClusterOIDCKubeconfig(ctx context.Context, uuid KubernetesUuidParameter, name KubernetesNameParameter, params *GetKubernetesClusterOIDCKubeconfigParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// GetKubernetesClusterAvailableUpgrades Get available upgrades
 	//
 	// Returns a list of available versions that can be used to upgrade the cluster.
@@ -340,6 +429,205 @@ func (c *Client) ModifyKubernetesClusterWithBody(ctx context.Context, uuid Kuber
 // Corresponds with PATCH /1.3/kubernetes/{uuid} (the `ModifyKubernetesCluster` operationId).
 func (c *Client) ModifyKubernetesCluster(ctx context.Context, uuid KubernetesUuidParameter, body ModifyKubernetesClusterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewModifyKubernetesClusterRequest(c.Server, uuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListClusterAuthentication List cluster authentication entries
+//
+// Returns all OIDC authentication issuer configurations for a cluster.
+//
+// Corresponds with GET /1.3/kubernetes/{uuid}/authentication (the `ListClusterAuthentication` operationId).
+func (c *Client) ListClusterAuthentication(ctx context.Context, uuid KubernetesUuidParameter, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListClusterAuthenticationRequest(c.Server, uuid)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateClusterAuthenticationWithBody Create a cluster authentication entry
+//
+// Creates a new OIDC authentication issuer configuration. The new entry is validated together with the cluster's existing entries before being applied. Fails if an entry with the same name already exists.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /1.3/kubernetes/{uuid}/authentication (the `CreateClusterAuthentication` operationId).
+func (c *Client) CreateClusterAuthenticationWithBody(ctx context.Context, uuid KubernetesUuidParameter, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateClusterAuthenticationRequestWithBody(c.Server, uuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateClusterAuthentication Create a cluster authentication entry
+//
+// Creates a new OIDC authentication issuer configuration. The new entry is validated together with the cluster's existing entries before being applied. Fails if an entry with the same name already exists.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /1.3/kubernetes/{uuid}/authentication (the `CreateClusterAuthentication` operationId).
+func (c *Client) CreateClusterAuthentication(ctx context.Context, uuid KubernetesUuidParameter, body CreateClusterAuthenticationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateClusterAuthenticationRequest(c.Server, uuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// SetClusterAuthenticationWithBody Replace the full cluster authentication configuration
+//
+// Replaces the entire set of OIDC authentication issuer configurations for a cluster with the supplied JSON list of issuers. The full set is validated before being applied. An empty list clears all issuers.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PUT /1.3/kubernetes/{uuid}/authentication (the `SetClusterAuthentication` operationId).
+func (c *Client) SetClusterAuthenticationWithBody(ctx context.Context, uuid KubernetesUuidParameter, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewSetClusterAuthenticationRequestWithBody(c.Server, uuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// SetClusterAuthentication Replace the full cluster authentication configuration
+//
+// Replaces the entire set of OIDC authentication issuer configurations for a cluster with the supplied JSON list of issuers. The full set is validated before being applied. An empty list clears all issuers.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PUT /1.3/kubernetes/{uuid}/authentication (the `SetClusterAuthentication` operationId).
+func (c *Client) SetClusterAuthentication(ctx context.Context, uuid KubernetesUuidParameter, body SetClusterAuthenticationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewSetClusterAuthenticationRequest(c.Server, uuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ImportClusterAuthenticationWithBody Import a full cluster authentication configuration
+//
+// Replaces the entire set of OIDC authentication issuer configurations for a cluster with the supplied native kube-apiserver v1 AuthenticationConfiguration YAML document. Issuers are named deterministically from their issuer URL host. The top-level `anonymous` field is not supported and any configuration that would drop data is rejected.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PUT /1.3/kubernetes/{uuid}/authentication/import (the `ImportClusterAuthentication` operationId).
+func (c *Client) ImportClusterAuthenticationWithBody(ctx context.Context, uuid KubernetesUuidParameter, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewImportClusterAuthenticationRequestWithBody(c.Server, uuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteClusterAuthentication Delete a cluster authentication entry
+//
+// Removes an OIDC authentication issuer configuration by name.
+//
+// Corresponds with DELETE /1.3/kubernetes/{uuid}/authentication/{name} (the `DeleteClusterAuthentication` operationId).
+func (c *Client) DeleteClusterAuthentication(ctx context.Context, uuid KubernetesUuidParameter, name KubernetesNameParameter, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteClusterAuthenticationRequest(c.Server, uuid, name)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetClusterAuthentication Get a cluster authentication entry
+//
+// Corresponds with GET /1.3/kubernetes/{uuid}/authentication/{name} (the `GetClusterAuthentication` operationId).
+func (c *Client) GetClusterAuthentication(ctx context.Context, uuid KubernetesUuidParameter, name KubernetesNameParameter, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetClusterAuthenticationRequest(c.Server, uuid, name)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateClusterAuthenticationWithBody Update a cluster authentication entry
+//
+// Updates an existing OIDC authentication issuer configuration. The name in the path is authoritative. The updated entry is validated together with the cluster's other entries before being applied.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PUT /1.3/kubernetes/{uuid}/authentication/{name} (the `UpdateClusterAuthentication` operationId).
+func (c *Client) UpdateClusterAuthenticationWithBody(ctx context.Context, uuid KubernetesUuidParameter, name KubernetesNameParameter, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateClusterAuthenticationRequestWithBody(c.Server, uuid, name, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateClusterAuthentication Update a cluster authentication entry
+//
+// Updates an existing OIDC authentication issuer configuration. The name in the path is authoritative. The updated entry is validated together with the cluster's other entries before being applied.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PUT /1.3/kubernetes/{uuid}/authentication/{name} (the `UpdateClusterAuthentication` operationId).
+func (c *Client) UpdateClusterAuthentication(ctx context.Context, uuid KubernetesUuidParameter, name KubernetesNameParameter, body UpdateClusterAuthenticationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateClusterAuthenticationRequest(c.Server, uuid, name, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetKubernetesClusterOIDCKubeconfig Get OIDC kubeconfig
+//
+// Returns a kubeconfig for the cluster whose user authenticates via the kubelogin (`kubectl oidc-login`) exec credential plugin, using the cluster's configured OIDC issuer identified by the `name` path parameter. The plugin (kubelogin) must be installed on the client. No long-lived credential is embedded. The OIDC client secret and any provider-specific kubelogin flags are not injected by the server; the returned kubeconfig includes comments describing how to add them.
+//
+// Corresponds with GET /1.3/kubernetes/{uuid}/authentication/{name}/kubeconfig (the `GetKubernetesClusterOIDCKubeconfig` operationId).
+func (c *Client) GetKubernetesClusterOIDCKubeconfig(ctx context.Context, uuid KubernetesUuidParameter, name KubernetesNameParameter, params *GetKubernetesClusterOIDCKubeconfigParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetKubernetesClusterOIDCKubeconfigRequest(c.Server, uuid, name, params)
 	if err != nil {
 		return nil, err
 	}
@@ -800,6 +1088,374 @@ func NewModifyKubernetesClusterRequestWithBody(server string, uuid KubernetesUui
 	}
 
 	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewListClusterAuthenticationRequest constructs an http.Request for the ListClusterAuthentication method
+func NewListClusterAuthenticationRequest(server string, uuid KubernetesUuidParameter) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/kubernetes/%s/authentication", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateClusterAuthenticationRequest calls the generic CreateClusterAuthentication builder with application/json body
+func NewCreateClusterAuthenticationRequest(server string, uuid KubernetesUuidParameter, body CreateClusterAuthenticationJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateClusterAuthenticationRequestWithBody(server, uuid, "application/json", bodyReader)
+}
+
+// NewCreateClusterAuthenticationRequestWithBody constructs an http.Request for the CreateClusterAuthentication method, with any body, and a specified content type
+func NewCreateClusterAuthenticationRequestWithBody(server string, uuid KubernetesUuidParameter, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/kubernetes/%s/authentication", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewSetClusterAuthenticationRequest calls the generic SetClusterAuthentication builder with application/json body
+func NewSetClusterAuthenticationRequest(server string, uuid KubernetesUuidParameter, body SetClusterAuthenticationJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewSetClusterAuthenticationRequestWithBody(server, uuid, "application/json", bodyReader)
+}
+
+// NewSetClusterAuthenticationRequestWithBody constructs an http.Request for the SetClusterAuthentication method, with any body, and a specified content type
+func NewSetClusterAuthenticationRequestWithBody(server string, uuid KubernetesUuidParameter, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/kubernetes/%s/authentication", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewImportClusterAuthenticationRequestWithBody constructs an http.Request for the ImportClusterAuthentication method, with any body, and a specified content type
+func NewImportClusterAuthenticationRequestWithBody(server string, uuid KubernetesUuidParameter, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/kubernetes/%s/authentication/import", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeleteClusterAuthenticationRequest constructs an http.Request for the DeleteClusterAuthentication method
+func NewDeleteClusterAuthenticationRequest(server string, uuid KubernetesUuidParameter, name KubernetesNameParameter) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "name", name, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/kubernetes/%s/authentication/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetClusterAuthenticationRequest constructs an http.Request for the GetClusterAuthentication method
+func NewGetClusterAuthenticationRequest(server string, uuid KubernetesUuidParameter, name KubernetesNameParameter) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "name", name, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/kubernetes/%s/authentication/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUpdateClusterAuthenticationRequest calls the generic UpdateClusterAuthentication builder with application/json body
+func NewUpdateClusterAuthenticationRequest(server string, uuid KubernetesUuidParameter, name KubernetesNameParameter, body UpdateClusterAuthenticationJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateClusterAuthenticationRequestWithBody(server, uuid, name, "application/json", bodyReader)
+}
+
+// NewUpdateClusterAuthenticationRequestWithBody constructs an http.Request for the UpdateClusterAuthentication method, with any body, and a specified content type
+func NewUpdateClusterAuthenticationRequestWithBody(server string, uuid KubernetesUuidParameter, name KubernetesNameParameter, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "name", name, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/kubernetes/%s/authentication/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewGetKubernetesClusterOIDCKubeconfigRequest constructs an http.Request for the GetKubernetesClusterOIDCKubeconfig method
+func NewGetKubernetesClusterOIDCKubeconfigRequest(server string, uuid KubernetesUuidParameter, name KubernetesNameParameter, params *GetKubernetesClusterOIDCKubeconfigParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "name", name, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/kubernetes/%s/authentication/%s/kubeconfig", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Audience != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "audience", *params.Audience, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
 
 	return req, nil
 }
@@ -1267,6 +1923,103 @@ type KubernetesClientWithResponsesInterface interface {
 	//
 	// Corresponds with PATCH /1.3/kubernetes/{uuid} (the `ModifyKubernetesCluster` operationId).
 	ModifyKubernetesClusterWithResponse(ctx context.Context, uuid KubernetesUuidParameter, body ModifyKubernetesClusterJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyKubernetesClusterResp, error)
+
+	// ListClusterAuthenticationWithResponse List cluster authentication entries
+	//
+	// Returns all OIDC authentication issuer configurations for a cluster.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/kubernetes/{uuid}/authentication (the `ListClusterAuthentication` operationId).
+	ListClusterAuthenticationWithResponse(ctx context.Context, uuid KubernetesUuidParameter, reqEditors ...RequestEditorFn) (*ListClusterAuthenticationResp, error)
+
+	// CreateClusterAuthenticationWithBodyWithResponse Create a cluster authentication entry
+	//
+	// Creates a new OIDC authentication issuer configuration. The new entry is validated together with the cluster's existing entries before being applied. Fails if an entry with the same name already exists.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/kubernetes/{uuid}/authentication (the `CreateClusterAuthentication` operationId).
+	CreateClusterAuthenticationWithBodyWithResponse(ctx context.Context, uuid KubernetesUuidParameter, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateClusterAuthenticationResp, error)
+
+	// CreateClusterAuthenticationWithResponse Create a cluster authentication entry
+	//
+	// Creates a new OIDC authentication issuer configuration. The new entry is validated together with the cluster's existing entries before being applied. Fails if an entry with the same name already exists.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/kubernetes/{uuid}/authentication (the `CreateClusterAuthentication` operationId).
+	CreateClusterAuthenticationWithResponse(ctx context.Context, uuid KubernetesUuidParameter, body CreateClusterAuthenticationJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClusterAuthenticationResp, error)
+
+	// SetClusterAuthenticationWithBodyWithResponse Replace the full cluster authentication configuration
+	//
+	// Replaces the entire set of OIDC authentication issuer configurations for a cluster with the supplied JSON list of issuers. The full set is validated before being applied. An empty list clears all issuers.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /1.3/kubernetes/{uuid}/authentication (the `SetClusterAuthentication` operationId).
+	SetClusterAuthenticationWithBodyWithResponse(ctx context.Context, uuid KubernetesUuidParameter, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*SetClusterAuthenticationResp, error)
+
+	// SetClusterAuthenticationWithResponse Replace the full cluster authentication configuration
+	//
+	// Replaces the entire set of OIDC authentication issuer configurations for a cluster with the supplied JSON list of issuers. The full set is validated before being applied. An empty list clears all issuers.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /1.3/kubernetes/{uuid}/authentication (the `SetClusterAuthentication` operationId).
+	SetClusterAuthenticationWithResponse(ctx context.Context, uuid KubernetesUuidParameter, body SetClusterAuthenticationJSONRequestBody, reqEditors ...RequestEditorFn) (*SetClusterAuthenticationResp, error)
+
+	// ImportClusterAuthenticationWithBodyWithResponse Import a full cluster authentication configuration
+	//
+	// Replaces the entire set of OIDC authentication issuer configurations for a cluster with the supplied native kube-apiserver v1 AuthenticationConfiguration YAML document. Issuers are named deterministically from their issuer URL host. The top-level `anonymous` field is not supported and any configuration that would drop data is rejected.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /1.3/kubernetes/{uuid}/authentication/import (the `ImportClusterAuthentication` operationId).
+	ImportClusterAuthenticationWithBodyWithResponse(ctx context.Context, uuid KubernetesUuidParameter, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ImportClusterAuthenticationResp, error)
+
+	// DeleteClusterAuthenticationWithResponse Delete a cluster authentication entry
+	//
+	// Removes an OIDC authentication issuer configuration by name.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /1.3/kubernetes/{uuid}/authentication/{name} (the `DeleteClusterAuthentication` operationId).
+	DeleteClusterAuthenticationWithResponse(ctx context.Context, uuid KubernetesUuidParameter, name KubernetesNameParameter, reqEditors ...RequestEditorFn) (*DeleteClusterAuthenticationResp, error)
+
+	// GetClusterAuthenticationWithResponse Get a cluster authentication entry
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/kubernetes/{uuid}/authentication/{name} (the `GetClusterAuthentication` operationId).
+	GetClusterAuthenticationWithResponse(ctx context.Context, uuid KubernetesUuidParameter, name KubernetesNameParameter, reqEditors ...RequestEditorFn) (*GetClusterAuthenticationResp, error)
+
+	// UpdateClusterAuthenticationWithBodyWithResponse Update a cluster authentication entry
+	//
+	// Updates an existing OIDC authentication issuer configuration. The name in the path is authoritative. The updated entry is validated together with the cluster's other entries before being applied.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /1.3/kubernetes/{uuid}/authentication/{name} (the `UpdateClusterAuthentication` operationId).
+	UpdateClusterAuthenticationWithBodyWithResponse(ctx context.Context, uuid KubernetesUuidParameter, name KubernetesNameParameter, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateClusterAuthenticationResp, error)
+
+	// UpdateClusterAuthenticationWithResponse Update a cluster authentication entry
+	//
+	// Updates an existing OIDC authentication issuer configuration. The name in the path is authoritative. The updated entry is validated together with the cluster's other entries before being applied.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /1.3/kubernetes/{uuid}/authentication/{name} (the `UpdateClusterAuthentication` operationId).
+	UpdateClusterAuthenticationWithResponse(ctx context.Context, uuid KubernetesUuidParameter, name KubernetesNameParameter, body UpdateClusterAuthenticationJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateClusterAuthenticationResp, error)
+
+	// GetKubernetesClusterOIDCKubeconfigWithResponse Get OIDC kubeconfig
+	//
+	// Returns a kubeconfig for the cluster whose user authenticates via the kubelogin (`kubectl oidc-login`) exec credential plugin, using the cluster's configured OIDC issuer identified by the `name` path parameter. The plugin (kubelogin) must be installed on the client. No long-lived credential is embedded. The OIDC client secret and any provider-specific kubelogin flags are not injected by the server; the returned kubeconfig includes comments describing how to add them.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/kubernetes/{uuid}/authentication/{name}/kubeconfig (the `GetKubernetesClusterOIDCKubeconfig` operationId).
+	GetKubernetesClusterOIDCKubeconfigWithResponse(ctx context.Context, uuid KubernetesUuidParameter, name KubernetesNameParameter, params *GetKubernetesClusterOIDCKubeconfigParams, reqEditors ...RequestEditorFn) (*GetKubernetesClusterOIDCKubeconfigResp, error)
 
 	// GetKubernetesClusterAvailableUpgradesWithResponse Get available upgrades
 	//
@@ -1821,6 +2574,537 @@ func (r ModifyKubernetesClusterResp) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r ModifyKubernetesClusterResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListClusterAuthenticationResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *KubernetesListClusterAuthentication200
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *KubernetesUnAuthorized
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *KubernetesNotFound
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *KubernetesInternalServerError
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListClusterAuthenticationResp) GetJSON200() *KubernetesListClusterAuthentication200 {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListClusterAuthenticationResp) GetApplicationproblemJSON401() *KubernetesUnAuthorized {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListClusterAuthenticationResp) GetApplicationproblemJSON404() *KubernetesNotFound {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ListClusterAuthenticationResp) GetApplicationproblemJSONDefault() *KubernetesInternalServerError {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r ListClusterAuthenticationResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListClusterAuthenticationResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListClusterAuthenticationResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListClusterAuthenticationResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateClusterAuthenticationResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *KubernetesCreateClusterAuthentication201
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *KubernetesBadRequest
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *KubernetesUnAuthorized
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *KubernetesNotFound
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *KubernetesConflict
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *KubernetesInternalServerError
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateClusterAuthenticationResp) GetJSON201() *KubernetesCreateClusterAuthentication201 {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateClusterAuthenticationResp) GetApplicationproblemJSON400() *KubernetesBadRequest {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateClusterAuthenticationResp) GetApplicationproblemJSON401() *KubernetesUnAuthorized {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateClusterAuthenticationResp) GetApplicationproblemJSON404() *KubernetesNotFound {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r CreateClusterAuthenticationResp) GetApplicationproblemJSON409() *KubernetesConflict {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r CreateClusterAuthenticationResp) GetApplicationproblemJSONDefault() *KubernetesInternalServerError {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateClusterAuthenticationResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateClusterAuthenticationResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateClusterAuthenticationResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateClusterAuthenticationResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type SetClusterAuthenticationResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *KubernetesSetClusterAuthentication200
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *KubernetesBadRequest
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *KubernetesUnAuthorized
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *KubernetesNotFound
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *KubernetesInternalServerError
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r SetClusterAuthenticationResp) GetJSON200() *KubernetesSetClusterAuthentication200 {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r SetClusterAuthenticationResp) GetApplicationproblemJSON400() *KubernetesBadRequest {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r SetClusterAuthenticationResp) GetApplicationproblemJSON401() *KubernetesUnAuthorized {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r SetClusterAuthenticationResp) GetApplicationproblemJSON404() *KubernetesNotFound {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r SetClusterAuthenticationResp) GetApplicationproblemJSONDefault() *KubernetesInternalServerError {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r SetClusterAuthenticationResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r SetClusterAuthenticationResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r SetClusterAuthenticationResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r SetClusterAuthenticationResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ImportClusterAuthenticationResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *KubernetesImportClusterAuthentication200
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *KubernetesBadRequest
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *KubernetesUnAuthorized
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *KubernetesNotFound
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *KubernetesInternalServerError
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ImportClusterAuthenticationResp) GetJSON200() *KubernetesImportClusterAuthentication200 {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ImportClusterAuthenticationResp) GetApplicationproblemJSON400() *KubernetesBadRequest {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ImportClusterAuthenticationResp) GetApplicationproblemJSON401() *KubernetesUnAuthorized {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ImportClusterAuthenticationResp) GetApplicationproblemJSON404() *KubernetesNotFound {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ImportClusterAuthenticationResp) GetApplicationproblemJSONDefault() *KubernetesInternalServerError {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r ImportClusterAuthenticationResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ImportClusterAuthenticationResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ImportClusterAuthenticationResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ImportClusterAuthenticationResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteClusterAuthenticationResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *KubernetesUnAuthorized
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *KubernetesNotFound
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *KubernetesInternalServerError
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DeleteClusterAuthenticationResp) GetApplicationproblemJSON401() *KubernetesUnAuthorized {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DeleteClusterAuthenticationResp) GetApplicationproblemJSON404() *KubernetesNotFound {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r DeleteClusterAuthenticationResp) GetApplicationproblemJSONDefault() *KubernetesInternalServerError {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteClusterAuthenticationResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteClusterAuthenticationResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteClusterAuthenticationResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteClusterAuthenticationResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetClusterAuthenticationResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *KubernetesGetClusterAuthentication200
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *KubernetesUnAuthorized
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *KubernetesNotFound
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *KubernetesInternalServerError
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetClusterAuthenticationResp) GetJSON200() *KubernetesGetClusterAuthentication200 {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetClusterAuthenticationResp) GetApplicationproblemJSON401() *KubernetesUnAuthorized {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetClusterAuthenticationResp) GetApplicationproblemJSON404() *KubernetesNotFound {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetClusterAuthenticationResp) GetApplicationproblemJSONDefault() *KubernetesInternalServerError {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetClusterAuthenticationResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetClusterAuthenticationResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetClusterAuthenticationResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetClusterAuthenticationResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateClusterAuthenticationResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *KubernetesUpdateClusterAuthentication200
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *KubernetesBadRequest
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *KubernetesUnAuthorized
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *KubernetesNotFound
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *KubernetesInternalServerError
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateClusterAuthenticationResp) GetJSON200() *KubernetesUpdateClusterAuthentication200 {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UpdateClusterAuthenticationResp) GetApplicationproblemJSON400() *KubernetesBadRequest {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UpdateClusterAuthenticationResp) GetApplicationproblemJSON401() *KubernetesUnAuthorized {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UpdateClusterAuthenticationResp) GetApplicationproblemJSON404() *KubernetesNotFound {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r UpdateClusterAuthenticationResp) GetApplicationproblemJSONDefault() *KubernetesInternalServerError {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateClusterAuthenticationResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateClusterAuthenticationResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateClusterAuthenticationResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateClusterAuthenticationResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetKubernetesClusterOIDCKubeconfigResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *KubernetesGetClusterKubeconfig
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *KubernetesBadRequest
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *KubernetesUnAuthorized
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *KubernetesNotFound
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *KubernetesInternalServerError
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetKubernetesClusterOIDCKubeconfigResp) GetJSON200() *KubernetesGetClusterKubeconfig {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r GetKubernetesClusterOIDCKubeconfigResp) GetApplicationproblemJSON400() *KubernetesBadRequest {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetKubernetesClusterOIDCKubeconfigResp) GetApplicationproblemJSON401() *KubernetesUnAuthorized {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetKubernetesClusterOIDCKubeconfigResp) GetApplicationproblemJSON404() *KubernetesNotFound {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetKubernetesClusterOIDCKubeconfigResp) GetApplicationproblemJSONDefault() *KubernetesInternalServerError {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetKubernetesClusterOIDCKubeconfigResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetKubernetesClusterOIDCKubeconfigResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetKubernetesClusterOIDCKubeconfigResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetKubernetesClusterOIDCKubeconfigResp) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -2541,6 +3825,169 @@ func (c *ClientWithResponses) ModifyKubernetesClusterWithResponse(ctx context.Co
 	return ParseModifyKubernetesClusterResp(rsp)
 }
 
+// ListClusterAuthenticationWithResponse List cluster authentication entries
+//
+// Returns all OIDC authentication issuer configurations for a cluster.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/kubernetes/{uuid}/authentication (the `ListClusterAuthentication` operationId).
+func (c *ClientWithResponses) ListClusterAuthenticationWithResponse(ctx context.Context, uuid KubernetesUuidParameter, reqEditors ...RequestEditorFn) (*ListClusterAuthenticationResp, error) {
+	rsp, err := c.ListClusterAuthentication(ctx, uuid, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListClusterAuthenticationResp(rsp)
+}
+
+// CreateClusterAuthenticationWithBodyWithResponse Create a cluster authentication entry
+//
+// Creates a new OIDC authentication issuer configuration. The new entry is validated together with the cluster's existing entries before being applied. Fails if an entry with the same name already exists.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/kubernetes/{uuid}/authentication (the `CreateClusterAuthentication` operationId).
+func (c *ClientWithResponses) CreateClusterAuthenticationWithBodyWithResponse(ctx context.Context, uuid KubernetesUuidParameter, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateClusterAuthenticationResp, error) {
+	rsp, err := c.CreateClusterAuthenticationWithBody(ctx, uuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateClusterAuthenticationResp(rsp)
+}
+
+// CreateClusterAuthenticationWithResponse Create a cluster authentication entry
+//
+// Creates a new OIDC authentication issuer configuration. The new entry is validated together with the cluster's existing entries before being applied. Fails if an entry with the same name already exists.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/kubernetes/{uuid}/authentication (the `CreateClusterAuthentication` operationId).
+func (c *ClientWithResponses) CreateClusterAuthenticationWithResponse(ctx context.Context, uuid KubernetesUuidParameter, body CreateClusterAuthenticationJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClusterAuthenticationResp, error) {
+	rsp, err := c.CreateClusterAuthentication(ctx, uuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateClusterAuthenticationResp(rsp)
+}
+
+// SetClusterAuthenticationWithBodyWithResponse Replace the full cluster authentication configuration
+//
+// Replaces the entire set of OIDC authentication issuer configurations for a cluster with the supplied JSON list of issuers. The full set is validated before being applied. An empty list clears all issuers.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /1.3/kubernetes/{uuid}/authentication (the `SetClusterAuthentication` operationId).
+func (c *ClientWithResponses) SetClusterAuthenticationWithBodyWithResponse(ctx context.Context, uuid KubernetesUuidParameter, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*SetClusterAuthenticationResp, error) {
+	rsp, err := c.SetClusterAuthenticationWithBody(ctx, uuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseSetClusterAuthenticationResp(rsp)
+}
+
+// SetClusterAuthenticationWithResponse Replace the full cluster authentication configuration
+//
+// Replaces the entire set of OIDC authentication issuer configurations for a cluster with the supplied JSON list of issuers. The full set is validated before being applied. An empty list clears all issuers.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /1.3/kubernetes/{uuid}/authentication (the `SetClusterAuthentication` operationId).
+func (c *ClientWithResponses) SetClusterAuthenticationWithResponse(ctx context.Context, uuid KubernetesUuidParameter, body SetClusterAuthenticationJSONRequestBody, reqEditors ...RequestEditorFn) (*SetClusterAuthenticationResp, error) {
+	rsp, err := c.SetClusterAuthentication(ctx, uuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseSetClusterAuthenticationResp(rsp)
+}
+
+// ImportClusterAuthenticationWithBodyWithResponse Import a full cluster authentication configuration
+//
+// Replaces the entire set of OIDC authentication issuer configurations for a cluster with the supplied native kube-apiserver v1 AuthenticationConfiguration YAML document. Issuers are named deterministically from their issuer URL host. The top-level `anonymous` field is not supported and any configuration that would drop data is rejected.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /1.3/kubernetes/{uuid}/authentication/import (the `ImportClusterAuthentication` operationId).
+func (c *ClientWithResponses) ImportClusterAuthenticationWithBodyWithResponse(ctx context.Context, uuid KubernetesUuidParameter, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ImportClusterAuthenticationResp, error) {
+	rsp, err := c.ImportClusterAuthenticationWithBody(ctx, uuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseImportClusterAuthenticationResp(rsp)
+}
+
+// DeleteClusterAuthenticationWithResponse Delete a cluster authentication entry
+//
+// Removes an OIDC authentication issuer configuration by name.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /1.3/kubernetes/{uuid}/authentication/{name} (the `DeleteClusterAuthentication` operationId).
+func (c *ClientWithResponses) DeleteClusterAuthenticationWithResponse(ctx context.Context, uuid KubernetesUuidParameter, name KubernetesNameParameter, reqEditors ...RequestEditorFn) (*DeleteClusterAuthenticationResp, error) {
+	rsp, err := c.DeleteClusterAuthentication(ctx, uuid, name, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteClusterAuthenticationResp(rsp)
+}
+
+// GetClusterAuthenticationWithResponse Get a cluster authentication entry
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/kubernetes/{uuid}/authentication/{name} (the `GetClusterAuthentication` operationId).
+func (c *ClientWithResponses) GetClusterAuthenticationWithResponse(ctx context.Context, uuid KubernetesUuidParameter, name KubernetesNameParameter, reqEditors ...RequestEditorFn) (*GetClusterAuthenticationResp, error) {
+	rsp, err := c.GetClusterAuthentication(ctx, uuid, name, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetClusterAuthenticationResp(rsp)
+}
+
+// UpdateClusterAuthenticationWithBodyWithResponse Update a cluster authentication entry
+//
+// Updates an existing OIDC authentication issuer configuration. The name in the path is authoritative. The updated entry is validated together with the cluster's other entries before being applied.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /1.3/kubernetes/{uuid}/authentication/{name} (the `UpdateClusterAuthentication` operationId).
+func (c *ClientWithResponses) UpdateClusterAuthenticationWithBodyWithResponse(ctx context.Context, uuid KubernetesUuidParameter, name KubernetesNameParameter, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateClusterAuthenticationResp, error) {
+	rsp, err := c.UpdateClusterAuthenticationWithBody(ctx, uuid, name, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateClusterAuthenticationResp(rsp)
+}
+
+// UpdateClusterAuthenticationWithResponse Update a cluster authentication entry
+//
+// Updates an existing OIDC authentication issuer configuration. The name in the path is authoritative. The updated entry is validated together with the cluster's other entries before being applied.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /1.3/kubernetes/{uuid}/authentication/{name} (the `UpdateClusterAuthentication` operationId).
+func (c *ClientWithResponses) UpdateClusterAuthenticationWithResponse(ctx context.Context, uuid KubernetesUuidParameter, name KubernetesNameParameter, body UpdateClusterAuthenticationJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateClusterAuthenticationResp, error) {
+	rsp, err := c.UpdateClusterAuthentication(ctx, uuid, name, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateClusterAuthenticationResp(rsp)
+}
+
+// GetKubernetesClusterOIDCKubeconfigWithResponse Get OIDC kubeconfig
+//
+// Returns a kubeconfig for the cluster whose user authenticates via the kubelogin (`kubectl oidc-login`) exec credential plugin, using the cluster's configured OIDC issuer identified by the `name` path parameter. The plugin (kubelogin) must be installed on the client. No long-lived credential is embedded. The OIDC client secret and any provider-specific kubelogin flags are not injected by the server; the returned kubeconfig includes comments describing how to add them.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/kubernetes/{uuid}/authentication/{name}/kubeconfig (the `GetKubernetesClusterOIDCKubeconfig` operationId).
+func (c *ClientWithResponses) GetKubernetesClusterOIDCKubeconfigWithResponse(ctx context.Context, uuid KubernetesUuidParameter, name KubernetesNameParameter, params *GetKubernetesClusterOIDCKubeconfigParams, reqEditors ...RequestEditorFn) (*GetKubernetesClusterOIDCKubeconfigResp, error) {
+	rsp, err := c.GetKubernetesClusterOIDCKubeconfig(ctx, uuid, name, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetKubernetesClusterOIDCKubeconfigResp(rsp)
+}
+
 // GetKubernetesClusterAvailableUpgradesWithResponse Get available upgrades
 //
 // Returns a list of available versions that can be used to upgrade the cluster.
@@ -3028,6 +4475,420 @@ func ParseModifyKubernetesClusterResp(rsp *http.Response) (*ModifyKubernetesClus
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest KubernetesPatchClusterResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest KubernetesBadRequest
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest KubernetesUnAuthorized
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest KubernetesNotFound
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest KubernetesInternalServerError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListClusterAuthenticationResp parses an HTTP response from a ListClusterAuthenticationWithResponse call
+func ParseListClusterAuthenticationResp(rsp *http.Response) (*ListClusterAuthenticationResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListClusterAuthenticationResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest KubernetesListClusterAuthentication200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest KubernetesUnAuthorized
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest KubernetesNotFound
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest KubernetesInternalServerError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateClusterAuthenticationResp parses an HTTP response from a CreateClusterAuthenticationWithResponse call
+func ParseCreateClusterAuthenticationResp(rsp *http.Response) (*CreateClusterAuthenticationResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateClusterAuthenticationResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest KubernetesCreateClusterAuthentication201
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest KubernetesBadRequest
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest KubernetesUnAuthorized
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest KubernetesNotFound
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest KubernetesConflict
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest KubernetesInternalServerError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseSetClusterAuthenticationResp parses an HTTP response from a SetClusterAuthenticationWithResponse call
+func ParseSetClusterAuthenticationResp(rsp *http.Response) (*SetClusterAuthenticationResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &SetClusterAuthenticationResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest KubernetesSetClusterAuthentication200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest KubernetesBadRequest
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest KubernetesUnAuthorized
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest KubernetesNotFound
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest KubernetesInternalServerError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseImportClusterAuthenticationResp parses an HTTP response from a ImportClusterAuthenticationWithResponse call
+func ParseImportClusterAuthenticationResp(rsp *http.Response) (*ImportClusterAuthenticationResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ImportClusterAuthenticationResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest KubernetesImportClusterAuthentication200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest KubernetesBadRequest
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest KubernetesUnAuthorized
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest KubernetesNotFound
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest KubernetesInternalServerError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteClusterAuthenticationResp parses an HTTP response from a DeleteClusterAuthenticationWithResponse call
+func ParseDeleteClusterAuthenticationResp(rsp *http.Response) (*DeleteClusterAuthenticationResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteClusterAuthenticationResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest KubernetesUnAuthorized
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest KubernetesNotFound
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest KubernetesInternalServerError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetClusterAuthenticationResp parses an HTTP response from a GetClusterAuthenticationWithResponse call
+func ParseGetClusterAuthenticationResp(rsp *http.Response) (*GetClusterAuthenticationResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetClusterAuthenticationResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest KubernetesGetClusterAuthentication200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest KubernetesUnAuthorized
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest KubernetesNotFound
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest KubernetesInternalServerError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateClusterAuthenticationResp parses an HTTP response from a UpdateClusterAuthenticationWithResponse call
+func ParseUpdateClusterAuthenticationResp(rsp *http.Response) (*UpdateClusterAuthenticationResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateClusterAuthenticationResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest KubernetesUpdateClusterAuthentication200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest KubernetesBadRequest
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest KubernetesUnAuthorized
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest KubernetesNotFound
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest KubernetesInternalServerError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetKubernetesClusterOIDCKubeconfigResp parses an HTTP response from a GetKubernetesClusterOIDCKubeconfigWithResponse call
+func ParseGetKubernetesClusterOIDCKubeconfigResp(rsp *http.Response) (*GetKubernetesClusterOIDCKubeconfigResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetKubernetesClusterOIDCKubeconfigResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest KubernetesGetClusterKubeconfig
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
