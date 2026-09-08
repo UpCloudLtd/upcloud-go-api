@@ -8,6 +8,7 @@ import (
 
 	"github.com/UpCloudLtd/upcloud-go-api/v8/upcloud"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestRetry_noInverse(t *testing.T) {
@@ -78,8 +79,9 @@ func TestRetry_noInterval(t *testing.T) {
 				return &i, nil
 			}, test.config)
 
-			assert.Error(t, err)
-			assert.Nil(t, value)
+			assert.NoError(t, err)
+			require.NotNil(t, value)
+			assert.Equal(t, 0, *value)
 		})
 	}
 }
@@ -130,4 +132,57 @@ func TestRetry_retry500(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestRetry_deadline(t *testing.T) {
+	t.Parallel()
+
+	t.Run("Before interval", func(t *testing.T) {
+		t.Parallel()
+
+		ctx, cancel := context.WithTimeout(t.Context(), time.Second*2)
+		defer cancel()
+
+		wantValue := 0
+		gotValue, err := retry(ctx, func(i int, ctx context.Context) (*int, error) {
+			return &i, ctx.Err()
+		}, &retryConfig{interval: time.Second * 10})
+
+		require.NoError(t, err)
+		require.NotNil(t, gotValue)
+		require.Equal(t, wantValue, *gotValue)
+	})
+
+	t.Run("After interval", func(t *testing.T) {
+		t.Parallel()
+
+		ctx, cancel := context.WithTimeout(t.Context(), time.Second*2)
+		defer cancel()
+
+		c := 0
+		gotValue, err := retry(ctx, func(i int, ctx context.Context) (*int, error) {
+			c++
+			return nil, nil
+		}, &retryConfig{interval: time.Second})
+
+		require.ErrorIs(t, err, context.DeadlineExceeded)
+		require.Nil(t, gotValue)
+		require.Greater(t, c, 1)
+	})
+
+	t.Run("Reached", func(t *testing.T) {
+		t.Parallel()
+
+		ctx, cancel := context.WithTimeout(t.Context(), -time.Second)
+		defer cancel()
+
+		wantValue := 0
+		gotValue, err := retry(ctx, func(i int, ctx context.Context) (*int, error) {
+			return &i, ctx.Err()
+		}, &retryConfig{interval: time.Second * 10})
+
+		require.ErrorIs(t, err, context.DeadlineExceeded)
+		require.NotNil(t, gotValue)
+		require.Equal(t, wantValue, *gotValue)
+	})
 }
