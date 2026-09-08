@@ -35,6 +35,22 @@ func TestParseJSONServiceErrorMinimal(t *testing.T) {
 	assert.Equal(t, want, got)
 }
 
+func TestParseJSONServiceErrorWithProblemMinimal(t *testing.T) {
+	want := &upcloud.Problem{
+		Status: http.StatusBadRequest,
+	}
+
+	got := parseJSONServiceError(&client.Error{
+		ErrorCode: http.StatusBadRequest,
+		Type:      client.ErrorTypeProblem,
+		ResponseBody: []byte(`
+			{
+			}
+		`),
+	})
+	assert.Equal(t, want, got)
+}
+
 func TestParseJSONServiceErrorWithProblem(t *testing.T) {
 	want := &upcloud.Problem{
 		Type:          "typexx",
