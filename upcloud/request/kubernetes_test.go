@@ -443,6 +443,11 @@ func TestModifyKubernetesNodeGroupRequest(t *testing.T) {
 		"count": 4
 	}
 	`
+	const expectedZeroCountJSON string = `
+	{
+		"count": 0
+	}
+	`
 	r := ModifyKubernetesNodeGroupRequest{
 		ClusterUUID: "id",
 		Name:        "nid",
@@ -456,6 +461,11 @@ func TestModifyKubernetesNodeGroupRequest(t *testing.T) {
 		return
 	}
 	assert.JSONEq(t, expectedJSON, string(gotJS))
+
+	r.NodeGroup.Count = 0
+	gotJS, err = json.Marshal(&r)
+	require.NoError(t, err)
+	assert.JSONEq(t, expectedZeroCountJSON, string(gotJS))
 }
 
 func TestDeleteKubernetesNodeGroupNodeRequest(t *testing.T) {
