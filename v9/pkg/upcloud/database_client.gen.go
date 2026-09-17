@@ -122,6 +122,13 @@ type DatabaseClientInterface interface {
 	// Corresponds with GET /1.3/database/pg/available-extensions (the `GetPGAvailableExtensions` operationId).
 	GetPGAvailableExtensions(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ListDatabasePlans List database plans
+	//
+	// Lists available componentised database plans.
+	//
+	// Corresponds with GET /1.3/database/plans (the `ListDatabasePlans` operationId).
+	ListDatabasePlans(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ListDatabaseTypes List database types
 	//
 	// Returns a list of available database types. Contains available legacy plans, zones, database versions supported and the configuration properties for each database. PostgreSQL and MySQL componentised (rdb.*) plans are selected with the plan_* request fields instead of a listed plan name.
@@ -968,6 +975,23 @@ func (c *Client) ModifyDatabaseIntegrationEndpoint(ctx context.Context, integrat
 // Corresponds with GET /1.3/database/pg/available-extensions (the `GetPGAvailableExtensions` operationId).
 func (c *Client) GetPGAvailableExtensions(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetPGAvailableExtensionsRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListDatabasePlans List database plans
+//
+// Lists available componentised database plans.
+//
+// Corresponds with GET /1.3/database/plans (the `ListDatabasePlans` operationId).
+func (c *Client) ListDatabasePlans(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListDatabasePlansRequest(c.Server)
 	if err != nil {
 		return nil, err
 	}
@@ -2744,6 +2768,33 @@ func NewGetPGAvailableExtensionsRequest(server string) (*http.Request, error) {
 	}
 
 	operationPath := fmt.Sprintf("/1.3/database/pg/available-extensions")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewListDatabasePlansRequest constructs an http.Request for the ListDatabasePlans method
+func NewListDatabasePlansRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/database/plans")
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -5433,6 +5484,15 @@ type DatabaseClientWithResponsesInterface interface {
 	// Corresponds with GET /1.3/database/pg/available-extensions (the `GetPGAvailableExtensions` operationId).
 	GetPGAvailableExtensionsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetPGAvailableExtensionsResp, error)
 
+	// ListDatabasePlansWithResponse List database plans
+	//
+	// Lists available componentised database plans.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/database/plans (the `ListDatabasePlans` operationId).
+	ListDatabasePlansWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListDatabasePlansResp, error)
+
 	// ListDatabaseTypesWithResponse List database types
 	//
 	// Returns a list of available database types. Contains available legacy plans, zones, database versions supported and the configuration properties for each database. PostgreSQL and MySQL componentised (rdb.*) plans are selected with the plan_* request fields instead of a listed plan name.
@@ -6610,6 +6670,54 @@ func (r GetPGAvailableExtensionsResp) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r GetPGAvailableExtensionsResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListDatabasePlansResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ListDatabasePlans200
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ListDatabasePlansDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListDatabasePlansResp) GetJSON200() *ListDatabasePlans200 {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ListDatabasePlansResp) GetApplicationproblemJSONDefault() *ListDatabasePlansDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r ListDatabasePlansResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListDatabasePlansResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListDatabasePlansResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListDatabasePlansResp) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -9587,6 +9695,21 @@ func (c *ClientWithResponses) GetPGAvailableExtensionsWithResponse(ctx context.C
 	return ParseGetPGAvailableExtensionsResp(rsp)
 }
 
+// ListDatabasePlansWithResponse List database plans
+//
+// Lists available componentised database plans.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/database/plans (the `ListDatabasePlans` operationId).
+func (c *ClientWithResponses) ListDatabasePlansWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListDatabasePlansResp, error) {
+	rsp, err := c.ListDatabasePlans(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListDatabasePlansResp(rsp)
+}
+
 // ListDatabaseTypesWithResponse List database types
 //
 // Returns a list of available database types. Contains available legacy plans, zones, database versions supported and the configuration properties for each database. PostgreSQL and MySQL componentised (rdb.*) plans are selected with the plan_* request fields instead of a listed plan name.
@@ -11086,6 +11209,39 @@ func ParseGetPGAvailableExtensionsResp(rsp *http.Response) (*GetPGAvailableExten
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest DatabaseGetPGAvailableExtensionsDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListDatabasePlansResp parses an HTTP response from a ListDatabasePlansWithResponse call
+func ParseListDatabasePlansResp(rsp *http.Response) (*ListDatabasePlansResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListDatabasePlansResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ListDatabasePlans200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ListDatabasePlansDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}

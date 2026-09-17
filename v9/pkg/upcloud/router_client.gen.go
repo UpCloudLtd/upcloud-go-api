@@ -21,55 +21,67 @@ type RouterClientInterface interface {
 
 	// ListRouters List routers
 	//
-	// Retrieves a list of routers.
+	// Returns a list of all available routers associated with the current account.
+	//
+	// It is also possible to filter routers with label URL parameters, e.g.
+	// `?label=env` or `?label=env%3Dprod`. URL parameter can be given multiple
+	// times to add more filters (e.g. `?label=env%3Dprod&label=v2`), where
+	// only routers that match all labels are returned.
+	// Label keys are matched case insensitively.
 	//
 	// Corresponds with GET /1.3/router (the `ListRouters` operationId).
 	ListRouters(ctx context.Context, params *ListRoutersParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateRouterWithBody Create a new router
+	// CreateRouterWithBody Create router
 	//
 	// Creates a new router.
+	// Routers can be used to connect multiple Private Networks. Cloud Servers on any attached network can communicate
+	// directly with each other.
 	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with POST /1.3/router (the `CreateRouter` operationId).
 	CreateRouterWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateRouter Create a new router
+	// CreateRouter Create router
 	//
 	// Creates a new router.
+	// Routers can be used to connect multiple Private Networks. Cloud Servers on any attached network can communicate
+	// directly with each other.
 	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /1.3/router (the `CreateRouter` operationId).
 	CreateRouter(ctx context.Context, body CreateRouterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// DeleteRouter Delete a router
+	// DeleteRouter Delete router
 	//
 	// Deletes a specific router.
 	//
 	// Corresponds with DELETE /1.3/router/{router} (the `DeleteRouter` operationId).
 	DeleteRouter(ctx context.Context, router DeleteRouterRouter, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetRouter Get router details
+	// GetRouter Get router
 	//
 	// Retrieves details of a specific router.
 	//
 	// Corresponds with GET /1.3/router/{router} (the `GetRouter` operationId).
 	GetRouter(ctx context.Context, router GetRouterRouter, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ModifyRouterWithBody Modify a router
+	// ModifyRouterWithBody Modify router
 	//
 	// Modifies attributes of a specific router.
+	// Modifications to static routes of type `service` will be ignored.
 	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with PATCH /1.3/router/{router} (the `ModifyRouter` operationId).
 	ModifyRouterWithBody(ctx context.Context, router ModifyRouterRouter, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ModifyRouter Modify a router
+	// ModifyRouter Modify router
 	//
 	// Modifies attributes of a specific router.
+	// Modifications to static routes of type `service` will be ignored.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -79,7 +91,13 @@ type RouterClientInterface interface {
 
 // ListRouters List routers
 //
-// Retrieves a list of routers.
+// Returns a list of all available routers associated with the current account.
+//
+// It is also possible to filter routers with label URL parameters, e.g.
+// `?label=env` or `?label=env%3Dprod`. URL parameter can be given multiple
+// times to add more filters (e.g. `?label=env%3Dprod&label=v2`), where
+// only routers that match all labels are returned.
+// Label keys are matched case insensitively.
 //
 // Corresponds with GET /1.3/router (the `ListRouters` operationId).
 func (c *Client) ListRouters(ctx context.Context, params *ListRoutersParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -94,9 +112,11 @@ func (c *Client) ListRouters(ctx context.Context, params *ListRoutersParams, req
 	return c.Client.Do(req)
 }
 
-// CreateRouterWithBody Create a new router
+// CreateRouterWithBody Create router
 //
 // Creates a new router.
+// Routers can be used to connect multiple Private Networks. Cloud Servers on any attached network can communicate
+// directly with each other.
 //
 // Takes any type of body and a specified content type.
 //
@@ -113,9 +133,11 @@ func (c *Client) CreateRouterWithBody(ctx context.Context, contentType string, b
 	return c.Client.Do(req)
 }
 
-// CreateRouter Create a new router
+// CreateRouter Create router
 //
 // Creates a new router.
+// Routers can be used to connect multiple Private Networks. Cloud Servers on any attached network can communicate
+// directly with each other.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -132,7 +154,7 @@ func (c *Client) CreateRouter(ctx context.Context, body CreateRouterJSONRequestB
 	return c.Client.Do(req)
 }
 
-// DeleteRouter Delete a router
+// DeleteRouter Delete router
 //
 // Deletes a specific router.
 //
@@ -149,7 +171,7 @@ func (c *Client) DeleteRouter(ctx context.Context, router DeleteRouterRouter, re
 	return c.Client.Do(req)
 }
 
-// GetRouter Get router details
+// GetRouter Get router
 //
 // Retrieves details of a specific router.
 //
@@ -166,9 +188,10 @@ func (c *Client) GetRouter(ctx context.Context, router GetRouterRouter, reqEdito
 	return c.Client.Do(req)
 }
 
-// ModifyRouterWithBody Modify a router
+// ModifyRouterWithBody Modify router
 //
 // Modifies attributes of a specific router.
+// Modifications to static routes of type `service` will be ignored.
 //
 // Takes any type of body and a specified content type.
 //
@@ -185,9 +208,10 @@ func (c *Client) ModifyRouterWithBody(ctx context.Context, router ModifyRouterRo
 	return c.Client.Do(req)
 }
 
-// ModifyRouter Modify a router
+// ModifyRouter Modify router
 //
 // Modifies attributes of a specific router.
+// Modifications to static routes of type `service` will be ignored.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -418,32 +442,42 @@ type RouterClientWithResponsesInterface interface {
 
 	// ListRoutersWithResponse List routers
 	//
-	// Retrieves a list of routers.
+	// Returns a list of all available routers associated with the current account.
+	//
+	// It is also possible to filter routers with label URL parameters, e.g.
+	// `?label=env` or `?label=env%3Dprod`. URL parameter can be given multiple
+	// times to add more filters (e.g. `?label=env%3Dprod&label=v2`), where
+	// only routers that match all labels are returned.
+	// Label keys are matched case insensitively.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/router (the `ListRouters` operationId).
 	ListRoutersWithResponse(ctx context.Context, params *ListRoutersParams, reqEditors ...RequestEditorFn) (*ListRoutersResp, error)
 
-	// CreateRouterWithBodyWithResponse Create a new router
+	// CreateRouterWithBodyWithResponse Create router
 	//
 	// Creates a new router.
+	// Routers can be used to connect multiple Private Networks. Cloud Servers on any attached network can communicate
+	// directly with each other.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/router (the `CreateRouter` operationId).
 	CreateRouterWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateRouterResp, error)
 
-	// CreateRouterWithResponse Create a new router
+	// CreateRouterWithResponse Create router
 	//
 	// Creates a new router.
+	// Routers can be used to connect multiple Private Networks. Cloud Servers on any attached network can communicate
+	// directly with each other.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/router (the `CreateRouter` operationId).
 	CreateRouterWithResponse(ctx context.Context, body CreateRouterJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateRouterResp, error)
 
-	// DeleteRouterWithResponse Delete a router
+	// DeleteRouterWithResponse Delete router
 	//
 	// Deletes a specific router.
 	//
@@ -452,7 +486,7 @@ type RouterClientWithResponsesInterface interface {
 	// Corresponds with DELETE /1.3/router/{router} (the `DeleteRouter` operationId).
 	DeleteRouterWithResponse(ctx context.Context, router DeleteRouterRouter, reqEditors ...RequestEditorFn) (*DeleteRouterResp, error)
 
-	// GetRouterWithResponse Get router details
+	// GetRouterWithResponse Get router
 	//
 	// Retrieves details of a specific router.
 	//
@@ -461,18 +495,20 @@ type RouterClientWithResponsesInterface interface {
 	// Corresponds with GET /1.3/router/{router} (the `GetRouter` operationId).
 	GetRouterWithResponse(ctx context.Context, router GetRouterRouter, reqEditors ...RequestEditorFn) (*GetRouterResp, error)
 
-	// ModifyRouterWithBodyWithResponse Modify a router
+	// ModifyRouterWithBodyWithResponse Modify router
 	//
 	// Modifies attributes of a specific router.
+	// Modifications to static routes of type `service` will be ignored.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PATCH /1.3/router/{router} (the `ModifyRouter` operationId).
 	ModifyRouterWithBodyWithResponse(ctx context.Context, router ModifyRouterRouter, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyRouterResp, error)
 
-	// ModifyRouterWithResponse Modify a router
+	// ModifyRouterWithResponse Modify router
 	//
 	// Modifies attributes of a specific router.
+	// Modifications to static routes of type `service` will be ignored.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -771,7 +807,13 @@ func (r ModifyRouterResp) ContentType() string {
 
 // ListRoutersWithResponse List routers
 //
-// Retrieves a list of routers.
+// Returns a list of all available routers associated with the current account.
+//
+// It is also possible to filter routers with label URL parameters, e.g.
+// `?label=env` or `?label=env%3Dprod`. URL parameter can be given multiple
+// times to add more filters (e.g. `?label=env%3Dprod&label=v2`), where
+// only routers that match all labels are returned.
+// Label keys are matched case insensitively.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -784,9 +826,11 @@ func (c *ClientWithResponses) ListRoutersWithResponse(ctx context.Context, param
 	return ParseListRoutersResp(rsp)
 }
 
-// CreateRouterWithBodyWithResponse Create a new router
+// CreateRouterWithBodyWithResponse Create router
 //
 // Creates a new router.
+// Routers can be used to connect multiple Private Networks. Cloud Servers on any attached network can communicate
+// directly with each other.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -799,9 +843,11 @@ func (c *ClientWithResponses) CreateRouterWithBodyWithResponse(ctx context.Conte
 	return ParseCreateRouterResp(rsp)
 }
 
-// CreateRouterWithResponse Create a new router
+// CreateRouterWithResponse Create router
 //
 // Creates a new router.
+// Routers can be used to connect multiple Private Networks. Cloud Servers on any attached network can communicate
+// directly with each other.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -814,7 +860,7 @@ func (c *ClientWithResponses) CreateRouterWithResponse(ctx context.Context, body
 	return ParseCreateRouterResp(rsp)
 }
 
-// DeleteRouterWithResponse Delete a router
+// DeleteRouterWithResponse Delete router
 //
 // Deletes a specific router.
 //
@@ -829,7 +875,7 @@ func (c *ClientWithResponses) DeleteRouterWithResponse(ctx context.Context, rout
 	return ParseDeleteRouterResp(rsp)
 }
 
-// GetRouterWithResponse Get router details
+// GetRouterWithResponse Get router
 //
 // Retrieves details of a specific router.
 //
@@ -844,9 +890,10 @@ func (c *ClientWithResponses) GetRouterWithResponse(ctx context.Context, router 
 	return ParseGetRouterResp(rsp)
 }
 
-// ModifyRouterWithBodyWithResponse Modify a router
+// ModifyRouterWithBodyWithResponse Modify router
 //
 // Modifies attributes of a specific router.
+// Modifications to static routes of type `service` will be ignored.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -859,9 +906,10 @@ func (c *ClientWithResponses) ModifyRouterWithBodyWithResponse(ctx context.Conte
 	return ParseModifyRouterResp(rsp)
 }
 
-// ModifyRouterWithResponse Modify a router
+// ModifyRouterWithResponse Modify router
 //
 // Modifies attributes of a specific router.
+// Modifications to static routes of type `service` will be ignored.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //

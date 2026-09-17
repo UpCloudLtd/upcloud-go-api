@@ -11,6 +11,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/oapi-codegen/runtime"
 )
 
 // The interface specification for the client above.
@@ -19,14 +21,14 @@ type PriceClientInterface interface {
 	// GetPrice Returns a price list.
 	//
 	// Corresponds with GET /1.3/price (the `GetPrice` operationId).
-	GetPrice(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetPrice(ctx context.Context, params *GetPriceParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
 // GetPrice Returns a price list.
 //
 // Corresponds with GET /1.3/price (the `GetPrice` operationId).
-func (c *Client) GetPrice(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetPriceRequest(c.Server)
+func (c *Client) GetPrice(ctx context.Context, params *GetPriceParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetPriceRequest(c.Server, params)
 	if err != nil {
 		return nil, err
 	}
@@ -38,7 +40,7 @@ func (c *Client) GetPrice(ctx context.Context, reqEditors ...RequestEditorFn) (*
 }
 
 // NewGetPriceRequest constructs an http.Request for the GetPrice method
-func NewGetPriceRequest(server string) (*http.Request, error) {
+func NewGetPriceRequest(server string, params *GetPriceParams) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -54,6 +56,33 @@ func NewGetPriceRequest(server string) (*http.Request, error) {
 	queryURL, err := serverURL.Parse(operationPath)
 	if err != nil {
 		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Zone != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "zone", *params.Zone, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
 	}
 
 	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
@@ -72,7 +101,7 @@ type PriceClientWithResponsesInterface interface {
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/price (the `GetPrice` operationId).
-	GetPriceWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetPriceResp, error)
+	GetPriceWithResponse(ctx context.Context, params *GetPriceParams, reqEditors ...RequestEditorFn) (*GetPriceResp, error)
 }
 
 type GetPriceResp struct {
@@ -135,8 +164,8 @@ func (r GetPriceResp) ContentType() string {
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /1.3/price (the `GetPrice` operationId).
-func (c *ClientWithResponses) GetPriceWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetPriceResp, error) {
-	rsp, err := c.GetPrice(ctx, reqEditors...)
+func (c *ClientWithResponses) GetPriceWithResponse(ctx context.Context, params *GetPriceParams, reqEditors ...RequestEditorFn) (*GetPriceResp, error) {
+	rsp, err := c.GetPrice(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}

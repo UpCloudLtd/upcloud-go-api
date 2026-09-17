@@ -7,6 +7,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
+
+	openapi_types "github.com/oapi-codegen/runtime/types"
 )
 
 // Defines values for AccountBoolean01.
@@ -21,6 +23,24 @@ func (e AccountBoolean01) Valid() bool {
 	case AccountBoolean01N0:
 		return true
 	case AccountBoolean01N1:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AccountBooleanYesno.
+const (
+	AccountBooleanYesnoNo  AccountBooleanYesno = "no"
+	AccountBooleanYesnoYes AccountBooleanYesno = "yes"
+)
+
+// Valid indicates whether the value is a known member of the AccountBooleanYesno enum.
+func (e AccountBooleanYesno) Valid() bool {
+	switch e {
+	case AccountBooleanYesnoNo:
+		return true
+	case AccountBooleanYesnoYes:
 		return true
 	default:
 		return false
@@ -51,14 +71,115 @@ func (e AccountCreateMsLmaSigningLinkResponseSigningStatusState) Valid() bool {
 	}
 }
 
+// Defines values for AccountResourceNetworkUsageType.
+const (
+	AccountResourceNetworkUsageTypeLoadBalancerPrivate       AccountResourceNetworkUsageType = "load_balancer_private"
+	AccountResourceNetworkUsageTypeLoadBalancerPrivateVlan   AccountResourceNetworkUsageType = "load_balancer_private_vlan"
+	AccountResourceNetworkUsageTypeLoadBalancerPublic        AccountResourceNetworkUsageType = "load_balancer_public"
+	AccountResourceNetworkUsageTypeNetworkGatewayPrivate     AccountResourceNetworkUsageType = "network_gateway_private"
+	AccountResourceNetworkUsageTypeNetworkGatewayPrivateVlan AccountResourceNetworkUsageType = "network_gateway_private_vlan"
+	AccountResourceNetworkUsageTypeNetworkGatewayPublic      AccountResourceNetworkUsageType = "network_gateway_public"
+	AccountResourceNetworkUsageTypeObjectStorageV2Private    AccountResourceNetworkUsageType = "object_storage_v2_private"
+	AccountResourceNetworkUsageTypeObjectStorageV2Public     AccountResourceNetworkUsageType = "object_storage_v2_public"
+	AccountResourceNetworkUsageTypeServerPrivate             AccountResourceNetworkUsageType = "server_private"
+	AccountResourceNetworkUsageTypeServerPrivateVlan         AccountResourceNetworkUsageType = "server_private_vlan"
+	AccountResourceNetworkUsageTypeServerPublic              AccountResourceNetworkUsageType = "server_public"
+)
+
+// Valid indicates whether the value is a known member of the AccountResourceNetworkUsageType enum.
+func (e AccountResourceNetworkUsageType) Valid() bool {
+	switch e {
+	case AccountResourceNetworkUsageTypeLoadBalancerPrivate:
+		return true
+	case AccountResourceNetworkUsageTypeLoadBalancerPrivateVlan:
+		return true
+	case AccountResourceNetworkUsageTypeLoadBalancerPublic:
+		return true
+	case AccountResourceNetworkUsageTypeNetworkGatewayPrivate:
+		return true
+	case AccountResourceNetworkUsageTypeNetworkGatewayPrivateVlan:
+		return true
+	case AccountResourceNetworkUsageTypeNetworkGatewayPublic:
+		return true
+	case AccountResourceNetworkUsageTypeObjectStorageV2Private:
+		return true
+	case AccountResourceNetworkUsageTypeObjectStorageV2Public:
+		return true
+	case AccountResourceNetworkUsageTypeServerPrivate:
+		return true
+	case AccountResourceNetworkUsageTypeServerPrivateVlan:
+		return true
+	case AccountResourceNetworkUsageTypeServerPublic:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AccountUsageAccumulateParameter.
+const (
+	AccountUsageAccumulateParameterDay  AccountUsageAccumulateParameter = "day"
+	AccountUsageAccumulateParameterHour AccountUsageAccumulateParameter = "hour"
+)
+
+// Valid indicates whether the value is a known member of the AccountUsageAccumulateParameter enum.
+func (e AccountUsageAccumulateParameter) Valid() bool {
+	switch e {
+	case AccountUsageAccumulateParameterDay:
+		return true
+	case AccountUsageAccumulateParameterHour:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AccountsAccountsAccountType.
+const (
+	AccountsAccountsAccountTypeMain AccountsAccountsAccountType = "main"
+	AccountsAccountsAccountTypeSub  AccountsAccountsAccountType = "sub"
+)
+
+// Valid indicates whether the value is a known member of the AccountsAccountsAccountType enum.
+func (e AccountsAccountsAccountType) Valid() bool {
+	switch e {
+	case AccountsAccountsAccountTypeMain:
+		return true
+	case AccountsAccountsAccountTypeSub:
+		return true
+	default:
+		return false
+	}
+}
+
 // Account Response schema containing account details.
 type Account struct {
 	// Account Detailed account information and limits.
 	Account AccountDetails `json:"account"`
 }
 
+// AccountBillingSummary Monthly billing totals grouped by resource type and subtype.
+type AccountBillingSummary struct {
+	// Currency ISO 4217 code
+	Currency             *AccountCurrencyCode   `json:"currency,omitempty"`
+	TotalAmount          *float32               `json:"total_amount,omitempty"`
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+
+// AccountBillingSummaryResponse Response containing a monthly billing summary.
+type AccountBillingSummaryResponse struct {
+	// Billing Monthly billing totals grouped by resource type and subtype.
+	Billing AccountBillingSummary `json:"billing"`
+}
+
 // AccountBoolean01 Schema for boolean-like values encoded as 0 or 1.
 type AccountBoolean01 int64
+
+// AccountBooleanYesno Boolean value represented as yes/no
+type AccountBooleanYesno string
+
+// AccountCountryCode ISO 3166-1 Alpha-3 code
+type AccountCountryCode = string
 
 // AccountCreateMsLmaSigningLinkResponse Response schema for Microsoft LMA signing link creation.
 type AccountCreateMsLmaSigningLinkResponse struct {
@@ -80,6 +201,26 @@ type AccountCreateMsLmaSigningLinkResponseSigningStatusState string
 
 // AccountCredits Current account credit balance.
 type AccountCredits = float64
+
+// AccountCurrencyCode ISO 4217 code
+type AccountCurrencyCode = string
+
+// AccountCurrentNetworkUsage Current Fair Transfer Policy usage for an account.
+type AccountCurrentNetworkUsage struct {
+	Stats struct {
+		CurrentNetworkUsage struct {
+			AccumulatedQuotaBytes      int64 `json:"accumulated_quota_bytes"`
+			HourlyQuotaIncreaseBytes   int64 `json:"hourly_quota_increase_bytes"`
+			ProjectedMonthlyQuotaBytes int64 `json:"projected_monthly_quota_bytes"`
+			TotalSentBytes             int64 `json:"total_sent_bytes"`
+
+			// Updated Datetime in RFC 3339 format
+			//
+			// Examples: 2026-07-01T00:00:00Z, 2026-07-31T23:59:59Z
+			Updated AccountRfc3339Datetime `json:"updated"`
+		} `json:"current_network_usage"`
+	} `json:"stats"`
+}
 
 // AccountDetails Detailed account information and limits.
 type AccountDetails struct {
@@ -106,6 +247,50 @@ type AccountError struct {
 		// ErrorMessage Examples: Your request could not be fulfilled due to a technical issue.
 		ErrorMessage string `json:"error_message"`
 	} `json:"error"`
+}
+
+// AccountLabel A key/value pair to label and categorize resources
+type AccountLabel struct {
+	// Key Label key used to classify the resource
+	Key string `json:"key"`
+
+	// Value Value associated with the label key
+	Value string `json:"value"`
+}
+
+// AccountLanguageCode ISO 639-1 code
+type AccountLanguageCode = string
+
+// AccountNetworkUsage Account network usage and Fair Transfer Policy quota statistics.
+type AccountNetworkUsage struct {
+	Stats struct {
+		Stat []struct {
+			AccumulatedQuotaBytes      int64 `json:"accumulated_quota_bytes"`
+			ProjectedMonthlyQuotaBytes int64 `json:"projected_monthly_quota_bytes"`
+			QuotaIncreaseBytes         int64 `json:"quota_increase_bytes"`
+			SentBytes                  int64 `json:"sent_bytes"`
+
+			// StartTime Datetime in RFC 3339 format
+			//
+			// Examples: 2026-07-01T00:00:00Z, 2026-07-31T23:59:59Z
+			StartTime      AccountRfc3339Datetime `json:"start_time"`
+			TotalSentBytes int64                  `json:"total_sent_bytes"`
+		} `json:"stat"`
+	} `json:"stats"`
+}
+
+// AccountPhoneNumber Phone number in international format.
+type AccountPhoneNumber = string
+
+// AccountResourceBillingSummaryResponse Response containing the monthly billing summary for a resource.
+type AccountResourceBillingSummaryResponse struct {
+	Billing struct {
+		// Currency ISO 4217 code
+		Currency    *AccountCurrencyCode    `json:"currency,omitempty"`
+		DailySums   *map[string]float32     `json:"daily_sums,omitempty"`
+		Details     *map[string]interface{} `json:"details,omitempty"`
+		TotalAmount *float32                `json:"total_amount,omitempty"`
+	} `json:"billing"`
 }
 
 // AccountResourceLimits Per-resource quota limits for an account.
@@ -138,6 +323,9 @@ type AccountResourceLimits struct {
 
 	// LoadBalancersEssentials The maximum number of essential load balancers allowed.
 	LoadBalancersEssentials *int64 `json:"load_balancers_essentials,omitempty"`
+
+	// ManagedContainerRegistries The maximum number of managed container registries allowed.
+	ManagedContainerRegistries *int64 `json:"managed_container_registries,omitempty"`
 
 	// ManagedDatabases The maximum number of managed databases allowed.
 	ManagedDatabases *int64 `json:"managed_databases,omitempty"`
@@ -196,8 +384,216 @@ type AccountResourceLimits struct {
 	Type interface{} `json:"type,omitempty"`
 }
 
+// AccountResourceNetworkUsage Network usage statistics grouped by resource.
+type AccountResourceNetworkUsage struct {
+	Stats struct {
+		Stat []struct {
+			// ResourceId Universally unique identifier
+			ResourceId AccountUuid `json:"resource_id"`
+			SentBytes  *int64      `json:"sent_bytes"`
+
+			// Service Network usage type for resource
+			Service AccountResourceNetworkUsageType `json:"service"`
+
+			// StartTime Datetime in RFC 3339 format
+			//
+			// Examples: 2026-07-01T00:00:00Z, 2026-07-31T23:59:59Z
+			StartTime AccountRfc3339Datetime `json:"start_time"`
+
+			// Zone Zone identifier
+			//
+			// Examples: fi-hel1, de-fra1, us-nyc1
+			Zone AccountZone `json:"zone"`
+		} `json:"stat"`
+	} `json:"stats"`
+}
+
+// AccountResourceNetworkUsageType Network usage type for resource
+type AccountResourceNetworkUsageType string
+
+// AccountResourceUsage Current account resource usage keyed by resource limit name.
+type AccountResourceUsage map[string]int
+
+// AccountRfc3339Datetime Datetime in RFC 3339 format
+//
+// Examples: 2026-07-01T00:00:00Z, 2026-07-31T23:59:59Z
+type AccountRfc3339Datetime = time.Time
+
+// AccountUsageAccumulateParameter Usage accumulator hour or day parameter
+type AccountUsageAccumulateParameter string
+
 // AccountUserName Username for an account.
 type AccountUserName = string
+
+// AccountUuid Universally unique identifier
+type AccountUuid = openapi_types.UUID
+
+// AccountZone Zone identifier
+//
+// Examples: fi-hel1, de-fra1, us-nyc1
+type AccountZone = string
+
+// Accounts Main account and subaccounts accessible to the authenticated account.
+type Accounts struct {
+	Accounts struct {
+		Account []struct {
+			Labels []AccountLabel `json:"labels"`
+			Roles  struct {
+				Role []string `json:"role"`
+			} `json:"roles"`
+			Type AccountsAccountsAccountType `json:"type"`
+
+			// Username Username for an account.
+			Username AccountUserName `json:"username"`
+		} `json:"account"`
+	} `json:"accounts"`
+}
+
+// AccountsAccountsAccountType defines model for Accounts.Accounts.Account.Type.
+type AccountsAccountsAccountType string
+
+// CreateSubaccountRequest Request for creating a subaccount.
+type CreateSubaccountRequest struct {
+	SubAccount struct {
+		Address *string `json:"address,omitempty"`
+
+		// AllowApi Boolean value represented as yes/no
+		AllowApi *AccountBooleanYesno `json:"allow_api,omitempty"`
+
+		// AllowGui Boolean value represented as yes/no
+		AllowGui *AccountBooleanYesno `json:"allow_gui,omitempty"`
+		City     *string              `json:"city,omitempty"`
+		Company  *string              `json:"company,omitempty"`
+
+		// Country ISO 3166-1 Alpha-3 code
+		Country *AccountCountryCode `json:"country,omitempty"`
+
+		// Currency ISO 4217 code
+		Currency *AccountCurrencyCode `json:"currency,omitempty"`
+		Email    openapi_types.Email  `json:"email"`
+
+		// Enable3rdPartyServices Boolean value represented as yes/no
+		Enable3rdPartyServices *AccountBooleanYesno `json:"enable_3rd_party_services,omitempty"`
+		FirstName              *string              `json:"first_name,omitempty"`
+		IpFilters              *struct {
+			IpFilter []string `json:"ip_filter"`
+		} `json:"ip_filters,omitempty"`
+		Labels *[]AccountLabel `json:"labels,omitempty"`
+
+		// Language ISO 639-1 code
+		Language      AccountLanguageCode     `json:"language"`
+		LastName      *string                 `json:"last_name,omitempty"`
+		NetworkAccess *map[string]interface{} `json:"network_access,omitempty"`
+		Password      *string                 `json:"password,omitempty"`
+
+		// Phone Phone number in international format.
+		Phone      AccountPhoneNumber `json:"phone"`
+		PostalCode *string            `json:"postal_code,omitempty"`
+		Roles      *struct {
+			Role []string `json:"role"`
+		} `json:"roles,omitempty"`
+		ServerAccess  *map[string]interface{} `json:"server_access,omitempty"`
+		State         *string                 `json:"state,omitempty"`
+		StorageAccess *map[string]interface{} `json:"storage_access,omitempty"`
+		TagAccess     *map[string]interface{} `json:"tag_access,omitempty"`
+		Timezone      string                  `json:"timezone"`
+
+		// Username Username for an account.
+		Username  AccountUserName `json:"username"`
+		VatNumber *string         `json:"vat_number,omitempty"`
+	} `json:"sub_account"`
+}
+
+// AccountGetMonthlyBillingSummaryMonth defines model for accountGetMonthlyBillingSummaryMonth.
+type AccountGetMonthlyBillingSummaryMonth = string
+
+// AccountGetMonthlyBillingSummaryYear defines model for accountGetMonthlyBillingSummaryYear.
+type AccountGetMonthlyBillingSummaryYear = string
+
+// AccountGetMonthlyDetailedBillingSummaryMonth defines model for accountGetMonthlyDetailedBillingSummaryMonth.
+type AccountGetMonthlyDetailedBillingSummaryMonth = string
+
+// AccountGetMonthlyDetailedBillingSummaryResourceId defines model for accountGetMonthlyDetailedBillingSummaryResourceId.
+type AccountGetMonthlyDetailedBillingSummaryResourceId = string
+
+// AccountGetMonthlyDetailedBillingSummaryUsername Username for an account.
+type AccountGetMonthlyDetailedBillingSummaryUsername = AccountUserName
+
+// AccountGetMonthlyDetailedBillingSummaryYear defines model for accountGetMonthlyDetailedBillingSummaryYear.
+type AccountGetMonthlyDetailedBillingSummaryYear = string
+
+// AccountGetMonthlyResourceBillingSummaryMonth defines model for accountGetMonthlyResourceBillingSummaryMonth.
+type AccountGetMonthlyResourceBillingSummaryMonth = string
+
+// AccountGetMonthlyResourceBillingSummaryResourceId defines model for accountGetMonthlyResourceBillingSummaryResourceId.
+type AccountGetMonthlyResourceBillingSummaryResourceId = string
+
+// AccountGetMonthlyResourceBillingSummaryYear defines model for accountGetMonthlyResourceBillingSummaryYear.
+type AccountGetMonthlyResourceBillingSummaryYear = string
+
+// DeleteSubaccountUsername Username for an account.
+type DeleteSubaccountUsername = AccountUserName
+
+// GetAccountNetworkTopUsageAccumulate Usage accumulator hour or day parameter
+type GetAccountNetworkTopUsageAccumulate = AccountUsageAccumulateParameter
+
+// GetAccountNetworkTopUsageFrom Datetime in RFC 3339 format
+//
+// Examples: 2026-07-01T00:00:00Z, 2026-07-31T23:59:59Z
+type GetAccountNetworkTopUsageFrom = AccountRfc3339Datetime
+
+// GetAccountNetworkTopUsageService Network usage type for resource
+type GetAccountNetworkTopUsageService = AccountResourceNetworkUsageType
+
+// GetAccountNetworkTopUsageTo Datetime in RFC 3339 format
+//
+// Examples: 2026-07-01T00:00:00Z, 2026-07-31T23:59:59Z
+type GetAccountNetworkTopUsageTo = AccountRfc3339Datetime
+
+// GetAccountNetworkTopUsageZone Zone identifier
+//
+// Examples: fi-hel1, de-fra1, us-nyc1
+type GetAccountNetworkTopUsageZone = AccountZone
+
+// GetAccountNetworkUsageAccumulate Usage accumulator hour or day parameter
+type GetAccountNetworkUsageAccumulate = AccountUsageAccumulateParameter
+
+// GetAccountNetworkUsageFrom Datetime in RFC 3339 format
+//
+// Examples: 2026-07-01T00:00:00Z, 2026-07-31T23:59:59Z
+type GetAccountNetworkUsageFrom = AccountRfc3339Datetime
+
+// GetAccountNetworkUsageTo Datetime in RFC 3339 format
+//
+// Examples: 2026-07-01T00:00:00Z, 2026-07-31T23:59:59Z
+type GetAccountNetworkUsageTo = AccountRfc3339Datetime
+
+// GetAccountResourceNetworkUsageAccumulate Usage accumulator hour or day parameter
+type GetAccountResourceNetworkUsageAccumulate = AccountUsageAccumulateParameter
+
+// GetAccountResourceNetworkUsageFrom Datetime in RFC 3339 format
+//
+// Examples: 2026-07-01T00:00:00Z, 2026-07-31T23:59:59Z
+type GetAccountResourceNetworkUsageFrom = AccountRfc3339Datetime
+
+// GetAccountResourceNetworkUsageResourceId Universally unique identifier
+type GetAccountResourceNetworkUsageResourceId = AccountUuid
+
+// GetAccountResourceNetworkUsageService Network usage type for resource
+type GetAccountResourceNetworkUsageService = AccountResourceNetworkUsageType
+
+// GetAccountResourceNetworkUsageTo Datetime in RFC 3339 format
+//
+// Examples: 2026-07-01T00:00:00Z, 2026-07-31T23:59:59Z
+type GetAccountResourceNetworkUsageTo = AccountRfc3339Datetime
+
+// GetAccountResourceNetworkUsageZone Zone identifier
+//
+// Examples: fi-hel1, de-fra1, us-nyc1
+type GetAccountResourceNetworkUsageZone = AccountZone
+
+// ListAccountsLabel defines model for listAccountsLabel.
+type ListAccountsLabel = string
 
 // AccountCreateMSLMASigningLink201 Response schema for Microsoft LMA signing link creation.
 type AccountCreateMSLMASigningLink201 = AccountCreateMsLmaSigningLinkResponse
@@ -210,6 +606,221 @@ type AccountDetails200 = Account
 
 // AccountDetailsDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type AccountDetailsDefault = AccountError
+
+// AccountGetCurrentNetworkUsage200 Current Fair Transfer Policy usage for an account.
+type AccountGetCurrentNetworkUsage200 = AccountCurrentNetworkUsage
+
+// AccountGetCurrentNetworkUsageDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type AccountGetCurrentNetworkUsageDefault = AccountError
+
+// AccountGetMonthlyBillingSummary200 Response containing a monthly billing summary.
+type AccountGetMonthlyBillingSummary200 = AccountBillingSummaryResponse
+
+// AccountGetMonthlyBillingSummaryDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type AccountGetMonthlyBillingSummaryDefault = AccountError
+
+// AccountGetMonthlyDetailedBillingSummary200 Monthly billing totals grouped by resource type and subtype.
+type AccountGetMonthlyDetailedBillingSummary200 = AccountBillingSummary
+
+// AccountGetMonthlyDetailedBillingSummaryDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type AccountGetMonthlyDetailedBillingSummaryDefault = AccountError
+
+// AccountGetMonthlyResourceBillingSummary200 Response containing the monthly billing summary for a resource.
+type AccountGetMonthlyResourceBillingSummary200 = AccountResourceBillingSummaryResponse
+
+// AccountGetMonthlyResourceBillingSummaryDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type AccountGetMonthlyResourceBillingSummaryDefault = AccountError
+
+// CreateSubaccountDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type CreateSubaccountDefault = AccountError
+
+// DeleteSubaccountDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type DeleteSubaccountDefault = AccountError
+
+// GetAccountNetworkTopUsage200 Network usage statistics grouped by resource.
+type GetAccountNetworkTopUsage200 = AccountResourceNetworkUsage
+
+// GetAccountNetworkTopUsageDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type GetAccountNetworkTopUsageDefault = AccountError
+
+// GetAccountNetworkUsage200 Account network usage and Fair Transfer Policy quota statistics.
+type GetAccountNetworkUsage200 = AccountNetworkUsage
+
+// GetAccountNetworkUsageDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type GetAccountNetworkUsageDefault = AccountError
+
+// GetAccountResourceNetworkUsage200 Network usage statistics grouped by resource.
+type GetAccountResourceNetworkUsage200 = AccountResourceNetworkUsage
+
+// GetAccountResourceNetworkUsageDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type GetAccountResourceNetworkUsageDefault = AccountError
+
+// GetAccountResourceUsage200 Current account resource usage keyed by resource limit name.
+type GetAccountResourceUsage200 = AccountResourceUsage
+
+// GetAccountResourceUsageDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type GetAccountResourceUsageDefault = AccountError
+
+// ListAccounts200 Main account and subaccounts accessible to the authenticated account.
+type ListAccounts200 = Accounts
+
+// ListAccountsDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type ListAccountsDefault = AccountError
+
+// CreateSubaccount Request for creating a subaccount.
+type CreateSubaccount = CreateSubaccountRequest
+
+// GetMonthlyDetailedBillingSummaryParams defines parameters for GetMonthlyDetailedBillingSummary.
+type GetMonthlyDetailedBillingSummaryParams struct {
+	// Username Return the billing summary for this account instead of the calling account. Requires Partner API access and an existing association with the account.
+	Username *AccountGetMonthlyDetailedBillingSummaryUsername `form:"username,omitempty" json:"username,omitempty"`
+
+	// ResourceId Return details only for this resource UUID or IP address.
+	ResourceId *AccountGetMonthlyDetailedBillingSummaryResourceId `form:"resource_id,omitempty" json:"resource_id,omitempty"`
+}
+
+// ListAccountsParams defines parameters for ListAccounts.
+type ListAccountsParams struct {
+	// Label Filter by label key or key-value pair. Repeat the parameter to require all labels. Label keys are matched case-insensitively.
+	Label *ListAccountsLabel `form:"label,omitempty" json:"label,omitempty"`
+}
+
+// GetAccountNetworkTopUsageParams defines parameters for GetAccountNetworkTopUsage.
+type GetAccountNetworkTopUsageParams struct {
+	// From Start of the usage period.
+	From GetAccountNetworkTopUsageFrom `form:"from" json:"from"`
+
+	// To End of the usage period.
+	To GetAccountNetworkTopUsageTo `form:"to" json:"to"`
+
+	// Service Filter by service type. Repeat the parameter to include multiple service types.
+	Service *GetAccountNetworkTopUsageService `form:"service,omitempty" json:"service,omitempty"`
+
+	// Zone Filter by zone. Repeat the parameter to include multiple zones.
+	Zone *GetAccountNetworkTopUsageZone `form:"zone,omitempty" json:"zone,omitempty"`
+
+	// Accumulate Accumulation period for the usage statistics.
+	Accumulate *GetAccountNetworkTopUsageAccumulate `form:"accumulate,omitempty" json:"accumulate,omitempty"`
+}
+
+// GetAccountNetworkUsageParams defines parameters for GetAccountNetworkUsage.
+type GetAccountNetworkUsageParams struct {
+	// From First measurement timestamp in RFC 3339 format.
+	From GetAccountNetworkUsageFrom `form:"from" json:"from"`
+
+	// To Last measurement timestamp in RFC 3339 format.
+	To GetAccountNetworkUsageTo `form:"to" json:"to"`
+
+	// Accumulate Accumulate the transfer statistics by hour or day.
+	Accumulate *GetAccountNetworkUsageAccumulate `form:"accumulate,omitempty" json:"accumulate,omitempty"`
+}
+
+// GetAccountResourceNetworkUsageParams defines parameters for GetAccountResourceNetworkUsage.
+type GetAccountResourceNetworkUsageParams struct {
+	// From Data start timestamp in RFC 3339 format.
+	From GetAccountResourceNetworkUsageFrom `form:"from" json:"from"`
+
+	// To Data end timestamp in RFC 3339 format.
+	To GetAccountResourceNetworkUsageTo `form:"to" json:"to"`
+
+	// Service Limit results to a service type. Repeat the parameter to include multiple service types.
+	Service *GetAccountResourceNetworkUsageService `form:"service,omitempty" json:"service,omitempty"`
+
+	// ResourceId Limit results to this resource UUID.
+	ResourceId *GetAccountResourceNetworkUsageResourceId `form:"resource_id,omitempty" json:"resource_id,omitempty"`
+
+	// Zone Limit results to a zone. Repeat the parameter to include multiple zones.
+	Zone *GetAccountResourceNetworkUsageZone `form:"zone,omitempty" json:"zone,omitempty"`
+
+	// Accumulate Accumulate the transfer statistics by hour or day.
+	Accumulate *GetAccountResourceNetworkUsageAccumulate `form:"accumulate,omitempty" json:"accumulate,omitempty"`
+}
+
+// CreateSubaccountJSONRequestBody defines body for CreateSubaccount for application/json ContentType.
+type CreateSubaccountJSONRequestBody = CreateSubaccountRequest
+
+// Getter for additional properties for AccountBillingSummary. Returns the specified
+// element and whether it was found
+func (a AccountBillingSummary) Get(fieldName string) (value interface{}, found bool) {
+	if a.AdditionalProperties != nil {
+		value, found = a.AdditionalProperties[fieldName]
+	}
+	return
+}
+
+// Setter for additional properties for AccountBillingSummary
+func (a *AccountBillingSummary) Set(fieldName string, value interface{}) {
+	if a.AdditionalProperties == nil {
+		a.AdditionalProperties = make(map[string]interface{})
+	}
+	a.AdditionalProperties[fieldName] = value
+}
+
+// Override default JSON handling for AccountBillingSummary to handle AdditionalProperties
+func (a *AccountBillingSummary) UnmarshalJSON(b []byte) error {
+	object := make(map[string]json.RawMessage)
+	err := json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["currency"]; found {
+		err = json.Unmarshal(raw, &a.Currency)
+		if err != nil {
+			return fmt.Errorf("error reading 'currency': %w", err)
+		}
+		delete(object, "currency")
+	}
+
+	if raw, found := object["total_amount"]; found {
+		err = json.Unmarshal(raw, &a.TotalAmount)
+		if err != nil {
+			return fmt.Errorf("error reading 'total_amount': %w", err)
+		}
+		delete(object, "total_amount")
+	}
+
+	if len(object) != 0 {
+		a.AdditionalProperties = make(map[string]interface{})
+		for fieldName, fieldBuf := range object {
+			var fieldVal interface{}
+			err := json.Unmarshal(fieldBuf, &fieldVal)
+			if err != nil {
+				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
+			}
+			a.AdditionalProperties[fieldName] = fieldVal
+		}
+	}
+	return nil
+}
+
+// Override default JSON handling for AccountBillingSummary to handle AdditionalProperties
+func (a AccountBillingSummary) MarshalJSON() ([]byte, error) {
+	var err error
+	object := make(map[string]json.RawMessage)
+
+	if a.Currency != nil {
+		object["currency"], err = json.Marshal(a.Currency)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'currency': %w", err)
+		}
+	}
+
+	if a.TotalAmount != nil {
+		object["total_amount"], err = json.Marshal(a.TotalAmount)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'total_amount': %w", err)
+		}
+	}
+
+	for fieldName, field := range a.AdditionalProperties {
+		object[fieldName], err = json.Marshal(field)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+		}
+	}
+	return json.Marshal(object)
+}
 
 // Getter for additional properties for AccountDetails. Returns the specified
 // element and whether it was found

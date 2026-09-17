@@ -85,12 +85,12 @@ type Plan struct {
 			// PublicTrafficOut The amount of public traffic out included in the plan, measured in gigabytes (GB).
 			PublicTrafficOut *PlanPublicTrafficOut `json:"public_traffic_out,omitempty"`
 
-			// StorageSize The storage size for the plan in gibibytes (GiB). Is 0 if the plan does not include storage.
+			// StorageSize The block storage size for the plan in gibibytes (GiB). The value is 0 if the plan does not include block storage.
 			StorageSize *PlanStorageSize `json:"storage_size,omitempty"`
 
-			// StorageTier The storage tier for the plan. Is null if the plan does not include storage.
+			// StorageTier Block storage performance and pricing tier. `maxiops` is high-performance block storage, `standard` is general-purpose block storage, and `hdd` is the API name for the high-capacity Archive tier. The value can be null when a plan does not include block storage.
 			//
-			// Examples: standard, maxiops, null
+			// Examples: hdd, standard, maxiops, null
 			StorageTier *PlanStorageTier `json:"storage_tier,omitempty"`
 		} `json:"plan"`
 	} `json:"plans"`
@@ -137,12 +137,12 @@ type PlanName = string
 // PlanPublicTrafficOut The amount of public traffic out included in the plan, measured in gigabytes (GB).
 type PlanPublicTrafficOut = int64
 
-// PlanStorageSize The storage size for the plan in gibibytes (GiB). Is 0 if the plan does not include storage.
+// PlanStorageSize The block storage size for the plan in gibibytes (GiB). The value is 0 if the plan does not include block storage.
 type PlanStorageSize = int64
 
-// PlanStorageTier The storage tier for the plan. Is null if the plan does not include storage.
+// PlanStorageTier Block storage performance and pricing tier. `maxiops` is high-performance block storage, `standard` is general-purpose block storage, and `hdd` is the API name for the high-capacity Archive tier. The value can be null when a plan does not include block storage.
 //
-// Examples: standard, maxiops, null
+// Examples: hdd, standard, maxiops, null
 type PlanStorageTier = string
 
 // ListPlans200 List response containing available server plans.

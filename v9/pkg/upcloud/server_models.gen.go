@@ -12,21 +12,162 @@ import (
 	openapi_types "github.com/oapi-codegen/runtime/types"
 )
 
-// Defines values for ServerAccess.
+// Defines values for FirewallRulesetRelatedServersServersFirewallPrivateDefaultIncomingAction.
 const (
-	ServerAccessPrivate ServerAccess = "private"
-	ServerAccessPublic  ServerAccess = "public"
-	ServerAccessUtility ServerAccess = "utility"
+	FirewallRulesetRelatedServersServersFirewallPrivateDefaultIncomingActionAccept FirewallRulesetRelatedServersServersFirewallPrivateDefaultIncomingAction = "accept"
+	FirewallRulesetRelatedServersServersFirewallPrivateDefaultIncomingActionDrop   FirewallRulesetRelatedServersServersFirewallPrivateDefaultIncomingAction = "drop"
 )
 
-// Valid indicates whether the value is a known member of the ServerAccess enum.
-func (e ServerAccess) Valid() bool {
+// Valid indicates whether the value is a known member of the FirewallRulesetRelatedServersServersFirewallPrivateDefaultIncomingAction enum.
+func (e FirewallRulesetRelatedServersServersFirewallPrivateDefaultIncomingAction) Valid() bool {
 	switch e {
-	case ServerAccessPrivate:
+	case FirewallRulesetRelatedServersServersFirewallPrivateDefaultIncomingActionAccept:
 		return true
-	case ServerAccessPublic:
+	case FirewallRulesetRelatedServersServersFirewallPrivateDefaultIncomingActionDrop:
 		return true
-	case ServerAccessUtility:
+	default:
+		return false
+	}
+}
+
+// Defines values for FirewallRulesetRelatedServersServersFirewallPrivateDefaultOutgoingAction.
+const (
+	FirewallRulesetRelatedServersServersFirewallPrivateDefaultOutgoingActionAccept FirewallRulesetRelatedServersServersFirewallPrivateDefaultOutgoingAction = "accept"
+	FirewallRulesetRelatedServersServersFirewallPrivateDefaultOutgoingActionDrop   FirewallRulesetRelatedServersServersFirewallPrivateDefaultOutgoingAction = "drop"
+)
+
+// Valid indicates whether the value is a known member of the FirewallRulesetRelatedServersServersFirewallPrivateDefaultOutgoingAction enum.
+func (e FirewallRulesetRelatedServersServersFirewallPrivateDefaultOutgoingAction) Valid() bool {
+	switch e {
+	case FirewallRulesetRelatedServersServersFirewallPrivateDefaultOutgoingActionAccept:
+		return true
+	case FirewallRulesetRelatedServersServersFirewallPrivateDefaultOutgoingActionDrop:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ModifyServerServerFirewallPrivateDefaultIncomingAction.
+const (
+	ModifyServerServerFirewallPrivateDefaultIncomingActionAccept ModifyServerServerFirewallPrivateDefaultIncomingAction = "accept"
+	ModifyServerServerFirewallPrivateDefaultIncomingActionDrop   ModifyServerServerFirewallPrivateDefaultIncomingAction = "drop"
+)
+
+// Valid indicates whether the value is a known member of the ModifyServerServerFirewallPrivateDefaultIncomingAction enum.
+func (e ModifyServerServerFirewallPrivateDefaultIncomingAction) Valid() bool {
+	switch e {
+	case ModifyServerServerFirewallPrivateDefaultIncomingActionAccept:
+		return true
+	case ModifyServerServerFirewallPrivateDefaultIncomingActionDrop:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ModifyServerServerFirewallPrivateDefaultOutgoingAction.
+const (
+	ModifyServerServerFirewallPrivateDefaultOutgoingActionAccept ModifyServerServerFirewallPrivateDefaultOutgoingAction = "accept"
+	ModifyServerServerFirewallPrivateDefaultOutgoingActionDrop   ModifyServerServerFirewallPrivateDefaultOutgoingAction = "drop"
+)
+
+// Valid indicates whether the value is a known member of the ModifyServerServerFirewallPrivateDefaultOutgoingAction enum.
+func (e ModifyServerServerFirewallPrivateDefaultOutgoingAction) Valid() bool {
+	switch e {
+	case ModifyServerServerFirewallPrivateDefaultOutgoingActionAccept:
+		return true
+	case ModifyServerServerFirewallPrivateDefaultOutgoingActionDrop:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ModifyServerServerFirewallPublicDefaultIncomingAction.
+const (
+	ModifyServerServerFirewallPublicDefaultIncomingActionAccept ModifyServerServerFirewallPublicDefaultIncomingAction = "accept"
+	ModifyServerServerFirewallPublicDefaultIncomingActionDrop   ModifyServerServerFirewallPublicDefaultIncomingAction = "drop"
+)
+
+// Valid indicates whether the value is a known member of the ModifyServerServerFirewallPublicDefaultIncomingAction enum.
+func (e ModifyServerServerFirewallPublicDefaultIncomingAction) Valid() bool {
+	switch e {
+	case ModifyServerServerFirewallPublicDefaultIncomingActionAccept:
+		return true
+	case ModifyServerServerFirewallPublicDefaultIncomingActionDrop:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ModifyServerServerFirewallPublicDefaultOutgoingAction.
+const (
+	ModifyServerServerFirewallPublicDefaultOutgoingActionAccept ModifyServerServerFirewallPublicDefaultOutgoingAction = "accept"
+	ModifyServerServerFirewallPublicDefaultOutgoingActionDrop   ModifyServerServerFirewallPublicDefaultOutgoingAction = "drop"
+)
+
+// Valid indicates whether the value is a known member of the ModifyServerServerFirewallPublicDefaultOutgoingAction enum.
+func (e ModifyServerServerFirewallPublicDefaultOutgoingAction) Valid() bool {
+	switch e {
+	case ModifyServerServerFirewallPublicDefaultOutgoingActionAccept:
+		return true
+	case ModifyServerServerFirewallPublicDefaultOutgoingActionDrop:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for RestartServerRestartServerStopType.
+const (
+	RestartServerRestartServerStopTypeHard RestartServerRestartServerStopType = "hard"
+	RestartServerRestartServerStopTypeSoft RestartServerRestartServerStopType = "soft"
+)
+
+// Valid indicates whether the value is a known member of the RestartServerRestartServerStopType enum.
+func (e RestartServerRestartServerStopType) Valid() bool {
+	switch e {
+	case RestartServerRestartServerStopTypeHard:
+		return true
+	case RestartServerRestartServerStopTypeSoft:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for RestartServerRestartServerTimeoutAction.
+const (
+	RestartServerRestartServerTimeoutActionDestroy RestartServerRestartServerTimeoutAction = "destroy"
+	RestartServerRestartServerTimeoutActionIgnore  RestartServerRestartServerTimeoutAction = "ignore"
+)
+
+// Valid indicates whether the value is a known member of the RestartServerRestartServerTimeoutAction enum.
+func (e RestartServerRestartServerTimeoutAction) Valid() bool {
+	switch e {
+	case RestartServerRestartServerTimeoutActionDestroy:
+		return true
+	case RestartServerRestartServerTimeoutActionIgnore:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ServerAttachStorageStorageDeviceType.
+const (
+	ServerAttachStorageStorageDeviceTypeCdrom ServerAttachStorageStorageDeviceType = "cdrom"
+	ServerAttachStorageStorageDeviceTypeDisk  ServerAttachStorageStorageDeviceType = "disk"
+)
+
+// Valid indicates whether the value is a known member of the ServerAttachStorageStorageDeviceType enum.
+func (e ServerAttachStorageStorageDeviceType) Valid() bool {
+	switch e {
+	case ServerAttachStorageStorageDeviceTypeCdrom:
+		return true
+	case ServerAttachStorageStorageDeviceTypeDisk:
 		return true
 	default:
 		return false
@@ -87,123 +228,387 @@ func (e ServerBooleanYesno) Valid() bool {
 	}
 }
 
-// Defines values for ServerError400ErrorCode.
+// Defines values for ServerCpuStatsSummaryVariableTitle.
 const (
-	ServerError400ErrorCodeASYNCINVALID                 ServerError400ErrorCode = "ASYNC_INVALID"
-	ServerError400ErrorCodeBACKUPDELETIONPOLICYINVALID  ServerError400ErrorCode = "BACKUP_DELETION_POLICY_INVALID"
-	ServerError400ErrorCodeDEVICESNOTAVAILABLE          ServerError400ErrorCode = "DEVICES_NOT_AVAILABLE"
-	ServerError400ErrorCodeDEVICESREQUIREHOST           ServerError400ErrorCode = "DEVICES_REQUIRE_HOST"
-	ServerError400ErrorCodeINVALIDDEVICEFILTER          ServerError400ErrorCode = "INVALID_DEVICE_FILTER"
-	ServerError400ErrorCodeINVALIDDEVICEFILTERKEY       ServerError400ErrorCode = "INVALID_DEVICE_FILTER_KEY"
-	ServerError400ErrorCodeINVALIDDEVICEFILTERTYPEVALUE ServerError400ErrorCode = "INVALID_DEVICE_FILTER_TYPE_VALUE"
-	ServerError400ErrorCodeINVALIDDEVICEFILTERVALUE     ServerError400ErrorCode = "INVALID_DEVICE_FILTER_VALUE"
-	ServerError400ErrorCodeINVALIDHOSTID                ServerError400ErrorCode = "INVALID_HOST_ID"
-	ServerError400ErrorCodeINVALIDORDERBY               ServerError400ErrorCode = "INVALID_ORDER_BY"
-	ServerError400ErrorCodeINVALIDSEARCH                ServerError400ErrorCode = "INVALID_SEARCH"
-	ServerError400ErrorCodeREQUESTINVALID               ServerError400ErrorCode = "REQUEST_INVALID"
-	ServerError400ErrorCodeSERVERINVALID                ServerError400ErrorCode = "SERVER_INVALID"
-	ServerError400ErrorCodeSTORAGEDELETIONPOLICYINVALID ServerError400ErrorCode = "STORAGE_DELETION_POLICY_INVALID"
+	ServerCpuStatsSummaryVariableTitleCPUUsage ServerCpuStatsSummaryVariableTitle = "CPU usage %"
 )
 
-// Valid indicates whether the value is a known member of the ServerError400ErrorCode enum.
-func (e ServerError400ErrorCode) Valid() bool {
+// Valid indicates whether the value is a known member of the ServerCpuStatsSummaryVariableTitle enum.
+func (e ServerCpuStatsSummaryVariableTitle) Valid() bool {
 	switch e {
-	case ServerError400ErrorCodeASYNCINVALID:
-		return true
-	case ServerError400ErrorCodeBACKUPDELETIONPOLICYINVALID:
-		return true
-	case ServerError400ErrorCodeDEVICESNOTAVAILABLE:
-		return true
-	case ServerError400ErrorCodeDEVICESREQUIREHOST:
-		return true
-	case ServerError400ErrorCodeINVALIDDEVICEFILTER:
-		return true
-	case ServerError400ErrorCodeINVALIDDEVICEFILTERKEY:
-		return true
-	case ServerError400ErrorCodeINVALIDDEVICEFILTERTYPEVALUE:
-		return true
-	case ServerError400ErrorCodeINVALIDDEVICEFILTERVALUE:
-		return true
-	case ServerError400ErrorCodeINVALIDHOSTID:
-		return true
-	case ServerError400ErrorCodeINVALIDORDERBY:
-		return true
-	case ServerError400ErrorCodeINVALIDSEARCH:
-		return true
-	case ServerError400ErrorCodeREQUESTINVALID:
-		return true
-	case ServerError400ErrorCodeSERVERINVALID:
-		return true
-	case ServerError400ErrorCodeSTORAGEDELETIONPOLICYINVALID:
+	case ServerCpuStatsSummaryVariableTitleCPUUsage:
 		return true
 	default:
 		return false
 	}
 }
 
-// Defines values for ServerError403ErrorCode.
+// Defines values for ServerCreateFirewallRuleFirewallRuleAction.
 const (
-	ServerError403ErrorCodeSERVERFORBIDDEN ServerError403ErrorCode = "SERVER_FORBIDDEN"
+	ServerCreateFirewallRuleFirewallRuleActionAccept ServerCreateFirewallRuleFirewallRuleAction = "accept"
+	ServerCreateFirewallRuleFirewallRuleActionDrop   ServerCreateFirewallRuleFirewallRuleAction = "drop"
 )
 
-// Valid indicates whether the value is a known member of the ServerError403ErrorCode enum.
-func (e ServerError403ErrorCode) Valid() bool {
+// Valid indicates whether the value is a known member of the ServerCreateFirewallRuleFirewallRuleAction enum.
+func (e ServerCreateFirewallRuleFirewallRuleAction) Valid() bool {
 	switch e {
-	case ServerError403ErrorCodeSERVERFORBIDDEN:
+	case ServerCreateFirewallRuleFirewallRuleActionAccept:
+		return true
+	case ServerCreateFirewallRuleFirewallRuleActionDrop:
 		return true
 	default:
 		return false
 	}
 }
 
-// Defines values for ServerError404ErrorCode.
+// Defines values for ServerCreateFirewallRuleFirewallRuleDirection.
 const (
-	ServerError404ErrorCodeDEVICENOTFOUND ServerError404ErrorCode = "DEVICE_NOT_FOUND"
-	ServerError404ErrorCodeSERVERNOTFOUND ServerError404ErrorCode = "SERVER_NOT_FOUND"
+	ServerCreateFirewallRuleFirewallRuleDirectionIn  ServerCreateFirewallRuleFirewallRuleDirection = "in"
+	ServerCreateFirewallRuleFirewallRuleDirectionOut ServerCreateFirewallRuleFirewallRuleDirection = "out"
 )
 
-// Valid indicates whether the value is a known member of the ServerError404ErrorCode enum.
-func (e ServerError404ErrorCode) Valid() bool {
+// Valid indicates whether the value is a known member of the ServerCreateFirewallRuleFirewallRuleDirection enum.
+func (e ServerCreateFirewallRuleFirewallRuleDirection) Valid() bool {
 	switch e {
-	case ServerError404ErrorCodeDEVICENOTFOUND:
+	case ServerCreateFirewallRuleFirewallRuleDirectionIn:
 		return true
-	case ServerError404ErrorCodeSERVERNOTFOUND:
+	case ServerCreateFirewallRuleFirewallRuleDirectionOut:
 		return true
 	default:
 		return false
 	}
 }
 
-// Defines values for ServerError409ErrorCode.
+// Defines values for ServerCreateFirewallRuleFirewallRuleFamily.
 const (
-	ServerError409ErrorCodeDEVICEALLOCATIONFAILED   ServerError409ErrorCode = "DEVICE_ALLOCATION_FAILED"
-	ServerError409ErrorCodeDEVICEDISABLED           ServerError409ErrorCode = "DEVICE_DISABLED"
-	ServerError409ErrorCodeDEVICEFILTERLIMITREACHED ServerError409ErrorCode = "DEVICE_FILTER_LIMIT_REACHED"
-	ServerError409ErrorCodeDEVICEHOSTMISMATCH       ServerError409ErrorCode = "DEVICE_HOST_MISMATCH"
-	ServerError409ErrorCodeDEVICEUNAVAILABLE        ServerError409ErrorCode = "DEVICE_UNAVAILABLE"
-	ServerError409ErrorCodeINVALIDUUID              ServerError409ErrorCode = "INVALID_UUID"
-	ServerError409ErrorCodeSERVERHASDEVICES         ServerError409ErrorCode = "SERVER_HAS_DEVICES"
-	ServerError409ErrorCodeUUIDFILTERLIMITREACHED   ServerError409ErrorCode = "UUID_FILTER_LIMIT_REACHED"
+	ServerCreateFirewallRuleFirewallRuleFamilyIPv4 ServerCreateFirewallRuleFirewallRuleFamily = "IPv4"
+	ServerCreateFirewallRuleFirewallRuleFamilyIPv6 ServerCreateFirewallRuleFirewallRuleFamily = "IPv6"
 )
 
-// Valid indicates whether the value is a known member of the ServerError409ErrorCode enum.
-func (e ServerError409ErrorCode) Valid() bool {
+// Valid indicates whether the value is a known member of the ServerCreateFirewallRuleFirewallRuleFamily enum.
+func (e ServerCreateFirewallRuleFirewallRuleFamily) Valid() bool {
 	switch e {
-	case ServerError409ErrorCodeDEVICEALLOCATIONFAILED:
+	case ServerCreateFirewallRuleFirewallRuleFamilyIPv4:
 		return true
-	case ServerError409ErrorCodeDEVICEDISABLED:
+	case ServerCreateFirewallRuleFirewallRuleFamilyIPv6:
 		return true
-	case ServerError409ErrorCodeDEVICEFILTERLIMITREACHED:
+	default:
+		return false
+	}
+}
+
+// Defines values for ServerCreateFirewallRuleFirewallRuleProtocol.
+const (
+	ServerCreateFirewallRuleFirewallRuleProtocolIcmp ServerCreateFirewallRuleFirewallRuleProtocol = "icmp"
+	ServerCreateFirewallRuleFirewallRuleProtocolTcp  ServerCreateFirewallRuleFirewallRuleProtocol = "tcp"
+	ServerCreateFirewallRuleFirewallRuleProtocolUdp  ServerCreateFirewallRuleFirewallRuleProtocol = "udp"
+)
+
+// Valid indicates whether the value is a known member of the ServerCreateFirewallRuleFirewallRuleProtocol enum.
+func (e ServerCreateFirewallRuleFirewallRuleProtocol) Valid() bool {
+	switch e {
+	case ServerCreateFirewallRuleFirewallRuleProtocolIcmp:
 		return true
-	case ServerError409ErrorCodeDEVICEHOSTMISMATCH:
+	case ServerCreateFirewallRuleFirewallRuleProtocolTcp:
 		return true
-	case ServerError409ErrorCodeDEVICEUNAVAILABLE:
+	case ServerCreateFirewallRuleFirewallRuleProtocolUdp:
 		return true
-	case ServerError409ErrorCodeINVALIDUUID:
+	default:
+		return false
+	}
+}
+
+// Defines values for ServerDetailsFirewallPrivateDefaultIncomingAction.
+const (
+	ServerDetailsFirewallPrivateDefaultIncomingActionAccept ServerDetailsFirewallPrivateDefaultIncomingAction = "accept"
+	ServerDetailsFirewallPrivateDefaultIncomingActionDrop   ServerDetailsFirewallPrivateDefaultIncomingAction = "drop"
+)
+
+// Valid indicates whether the value is a known member of the ServerDetailsFirewallPrivateDefaultIncomingAction enum.
+func (e ServerDetailsFirewallPrivateDefaultIncomingAction) Valid() bool {
+	switch e {
+	case ServerDetailsFirewallPrivateDefaultIncomingActionAccept:
 		return true
-	case ServerError409ErrorCodeSERVERHASDEVICES:
+	case ServerDetailsFirewallPrivateDefaultIncomingActionDrop:
 		return true
-	case ServerError409ErrorCodeUUIDFILTERLIMITREACHED:
+	default:
+		return false
+	}
+}
+
+// Defines values for ServerDetailsFirewallPrivateDefaultOutgoingAction.
+const (
+	ServerDetailsFirewallPrivateDefaultOutgoingActionAccept ServerDetailsFirewallPrivateDefaultOutgoingAction = "accept"
+	ServerDetailsFirewallPrivateDefaultOutgoingActionDrop   ServerDetailsFirewallPrivateDefaultOutgoingAction = "drop"
+)
+
+// Valid indicates whether the value is a known member of the ServerDetailsFirewallPrivateDefaultOutgoingAction enum.
+func (e ServerDetailsFirewallPrivateDefaultOutgoingAction) Valid() bool {
+	switch e {
+	case ServerDetailsFirewallPrivateDefaultOutgoingActionAccept:
+		return true
+	case ServerDetailsFirewallPrivateDefaultOutgoingActionDrop:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ServerDetailsFirewallPublicDefaultIncomingAction.
+const (
+	ServerDetailsFirewallPublicDefaultIncomingActionAccept ServerDetailsFirewallPublicDefaultIncomingAction = "accept"
+	ServerDetailsFirewallPublicDefaultIncomingActionDrop   ServerDetailsFirewallPublicDefaultIncomingAction = "drop"
+)
+
+// Valid indicates whether the value is a known member of the ServerDetailsFirewallPublicDefaultIncomingAction enum.
+func (e ServerDetailsFirewallPublicDefaultIncomingAction) Valid() bool {
+	switch e {
+	case ServerDetailsFirewallPublicDefaultIncomingActionAccept:
+		return true
+	case ServerDetailsFirewallPublicDefaultIncomingActionDrop:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ServerDetailsFirewallPublicDefaultOutgoingAction.
+const (
+	ServerDetailsFirewallPublicDefaultOutgoingActionAccept ServerDetailsFirewallPublicDefaultOutgoingAction = "accept"
+	ServerDetailsFirewallPublicDefaultOutgoingActionDrop   ServerDetailsFirewallPublicDefaultOutgoingAction = "drop"
+)
+
+// Valid indicates whether the value is a known member of the ServerDetailsFirewallPublicDefaultOutgoingAction enum.
+func (e ServerDetailsFirewallPublicDefaultOutgoingAction) Valid() bool {
+	switch e {
+	case ServerDetailsFirewallPublicDefaultOutgoingActionAccept:
+		return true
+	case ServerDetailsFirewallPublicDefaultOutgoingActionDrop:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ServerDiskStatsSummaryVariableTitle.
+const (
+	ServerDiskStatsSummaryVariableTitleRead  ServerDiskStatsSummaryVariableTitle = "Read"
+	ServerDiskStatsSummaryVariableTitleWrite ServerDiskStatsSummaryVariableTitle = "Write"
+)
+
+// Valid indicates whether the value is a known member of the ServerDiskStatsSummaryVariableTitle enum.
+func (e ServerDiskStatsSummaryVariableTitle) Valid() bool {
+	switch e {
+	case ServerDiskStatsSummaryVariableTitleRead:
+		return true
+	case ServerDiskStatsSummaryVariableTitleWrite:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ServerFirewallRuleItemAction.
+const (
+	ServerFirewallRuleItemActionAccept ServerFirewallRuleItemAction = "accept"
+	ServerFirewallRuleItemActionDrop   ServerFirewallRuleItemAction = "drop"
+)
+
+// Valid indicates whether the value is a known member of the ServerFirewallRuleItemAction enum.
+func (e ServerFirewallRuleItemAction) Valid() bool {
+	switch e {
+	case ServerFirewallRuleItemActionAccept:
+		return true
+	case ServerFirewallRuleItemActionDrop:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ServerFirewallRuleItemDirection.
+const (
+	ServerFirewallRuleItemDirectionIn  ServerFirewallRuleItemDirection = "in"
+	ServerFirewallRuleItemDirectionOut ServerFirewallRuleItemDirection = "out"
+)
+
+// Valid indicates whether the value is a known member of the ServerFirewallRuleItemDirection enum.
+func (e ServerFirewallRuleItemDirection) Valid() bool {
+	switch e {
+	case ServerFirewallRuleItemDirectionIn:
+		return true
+	case ServerFirewallRuleItemDirectionOut:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ServerFirewallRuleItemFamily.
+const (
+	ServerFirewallRuleItemFamilyIPv4 ServerFirewallRuleItemFamily = "IPv4"
+	ServerFirewallRuleItemFamilyIPv6 ServerFirewallRuleItemFamily = "IPv6"
+)
+
+// Valid indicates whether the value is a known member of the ServerFirewallRuleItemFamily enum.
+func (e ServerFirewallRuleItemFamily) Valid() bool {
+	switch e {
+	case ServerFirewallRuleItemFamilyIPv4:
+		return true
+	case ServerFirewallRuleItemFamilyIPv6:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ServerFirewallRuleItemProtocol.
+const (
+	ServerFirewallRuleItemProtocolIcmp ServerFirewallRuleItemProtocol = "icmp"
+	ServerFirewallRuleItemProtocolTcp  ServerFirewallRuleItemProtocol = "tcp"
+	ServerFirewallRuleItemProtocolUdp  ServerFirewallRuleItemProtocol = "udp"
+)
+
+// Valid indicates whether the value is a known member of the ServerFirewallRuleItemProtocol enum.
+func (e ServerFirewallRuleItemProtocol) Valid() bool {
+	switch e {
+	case ServerFirewallRuleItemProtocolIcmp:
+		return true
+	case ServerFirewallRuleItemProtocolTcp:
+		return true
+	case ServerFirewallRuleItemProtocolUdp:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ServerFirewallRuleResponseItemAction.
+const (
+	ServerFirewallRuleResponseItemActionAccept ServerFirewallRuleResponseItemAction = "accept"
+	ServerFirewallRuleResponseItemActionDrop   ServerFirewallRuleResponseItemAction = "drop"
+)
+
+// Valid indicates whether the value is a known member of the ServerFirewallRuleResponseItemAction enum.
+func (e ServerFirewallRuleResponseItemAction) Valid() bool {
+	switch e {
+	case ServerFirewallRuleResponseItemActionAccept:
+		return true
+	case ServerFirewallRuleResponseItemActionDrop:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ServerFirewallRuleResponseItemDirection.
+const (
+	ServerFirewallRuleResponseItemDirectionIn  ServerFirewallRuleResponseItemDirection = "in"
+	ServerFirewallRuleResponseItemDirectionOut ServerFirewallRuleResponseItemDirection = "out"
+)
+
+// Valid indicates whether the value is a known member of the ServerFirewallRuleResponseItemDirection enum.
+func (e ServerFirewallRuleResponseItemDirection) Valid() bool {
+	switch e {
+	case ServerFirewallRuleResponseItemDirectionIn:
+		return true
+	case ServerFirewallRuleResponseItemDirectionOut:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ServerFirewallRuleResponseItemFamily.
+const (
+	ServerFirewallRuleResponseItemFamilyEmpty ServerFirewallRuleResponseItemFamily = ""
+	ServerFirewallRuleResponseItemFamilyIPv4  ServerFirewallRuleResponseItemFamily = "IPv4"
+	ServerFirewallRuleResponseItemFamilyIPv6  ServerFirewallRuleResponseItemFamily = "IPv6"
+)
+
+// Valid indicates whether the value is a known member of the ServerFirewallRuleResponseItemFamily enum.
+func (e ServerFirewallRuleResponseItemFamily) Valid() bool {
+	switch e {
+	case ServerFirewallRuleResponseItemFamilyEmpty:
+		return true
+	case ServerFirewallRuleResponseItemFamilyIPv4:
+		return true
+	case ServerFirewallRuleResponseItemFamilyIPv6:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ServerFirewallRuleResponseItemProtocol.
+const (
+	ServerFirewallRuleResponseItemProtocolEmpty ServerFirewallRuleResponseItemProtocol = ""
+	ServerFirewallRuleResponseItemProtocolIcmp  ServerFirewallRuleResponseItemProtocol = "icmp"
+	ServerFirewallRuleResponseItemProtocolTcp   ServerFirewallRuleResponseItemProtocol = "tcp"
+	ServerFirewallRuleResponseItemProtocolUdp   ServerFirewallRuleResponseItemProtocol = "udp"
+)
+
+// Valid indicates whether the value is a known member of the ServerFirewallRuleResponseItemProtocol enum.
+func (e ServerFirewallRuleResponseItemProtocol) Valid() bool {
+	switch e {
+	case ServerFirewallRuleResponseItemProtocolEmpty:
+		return true
+	case ServerFirewallRuleResponseItemProtocolIcmp:
+		return true
+	case ServerFirewallRuleResponseItemProtocolTcp:
+		return true
+	case ServerFirewallRuleResponseItemProtocolUdp:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ServerFirewallRulesetRelationshipType.
+const (
+	ServerFirewallRulesetRelationshipTypePrivate ServerFirewallRulesetRelationshipType = "private"
+	ServerFirewallRulesetRelationshipTypePublic  ServerFirewallRulesetRelationshipType = "public"
+)
+
+// Valid indicates whether the value is a known member of the ServerFirewallRulesetRelationshipType enum.
+func (e ServerFirewallRulesetRelationshipType) Valid() bool {
+	switch e {
+	case ServerFirewallRulesetRelationshipTypePrivate:
+		return true
+	case ServerFirewallRulesetRelationshipTypePublic:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ServerFirewallRulesetRelationshipDetailsType.
+const (
+	ServerFirewallRulesetRelationshipDetailsTypePrivate ServerFirewallRulesetRelationshipDetailsType = "private"
+)
+
+// Valid indicates whether the value is a known member of the ServerFirewallRulesetRelationshipDetailsType enum.
+func (e ServerFirewallRulesetRelationshipDetailsType) Valid() bool {
+	switch e {
+	case ServerFirewallRulesetRelationshipDetailsTypePrivate:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ServerFirewallRulesetRelationshipInternalType.
+const (
+	ServerFirewallRulesetRelationshipInternalTypePrivate ServerFirewallRulesetRelationshipInternalType = "private"
+	ServerFirewallRulesetRelationshipInternalTypePublic  ServerFirewallRulesetRelationshipInternalType = "public"
+)
+
+// Valid indicates whether the value is a known member of the ServerFirewallRulesetRelationshipInternalType enum.
+func (e ServerFirewallRulesetRelationshipInternalType) Valid() bool {
+	switch e {
+	case ServerFirewallRulesetRelationshipInternalTypePrivate:
+		return true
+	case ServerFirewallRulesetRelationshipInternalTypePublic:
 		return true
 	default:
 		return false
@@ -240,6 +645,66 @@ func (e ServerIpReleasePolicy) Valid() bool {
 	case ServerIpReleasePolicyKeep:
 		return true
 	case ServerIpReleasePolicyRelease:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ServerLegacyBoolean.
+const (
+	ServerLegacyBooleanFalse ServerLegacyBoolean = "false"
+	ServerLegacyBooleanN     ServerLegacyBoolean = "n"
+	ServerLegacyBooleanN0    ServerLegacyBoolean = "0"
+	ServerLegacyBooleanN1    ServerLegacyBoolean = "1"
+	ServerLegacyBooleanNo    ServerLegacyBoolean = "no"
+	ServerLegacyBooleanOff   ServerLegacyBoolean = "off"
+	ServerLegacyBooleanOn    ServerLegacyBoolean = "on"
+	ServerLegacyBooleanTrue  ServerLegacyBoolean = "true"
+	ServerLegacyBooleanY     ServerLegacyBoolean = "y"
+	ServerLegacyBooleanYes   ServerLegacyBoolean = "yes"
+)
+
+// Valid indicates whether the value is a known member of the ServerLegacyBoolean enum.
+func (e ServerLegacyBoolean) Valid() bool {
+	switch e {
+	case ServerLegacyBooleanFalse:
+		return true
+	case ServerLegacyBooleanN:
+		return true
+	case ServerLegacyBooleanN0:
+		return true
+	case ServerLegacyBooleanN1:
+		return true
+	case ServerLegacyBooleanNo:
+		return true
+	case ServerLegacyBooleanOff:
+		return true
+	case ServerLegacyBooleanOn:
+		return true
+	case ServerLegacyBooleanTrue:
+		return true
+	case ServerLegacyBooleanY:
+		return true
+	case ServerLegacyBooleanYes:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ServerNetworkStatsSummaryVariableTitle.
+const (
+	ServerNetworkStatsSummaryVariableTitleIn  ServerNetworkStatsSummaryVariableTitle = "In"
+	ServerNetworkStatsSummaryVariableTitleOut ServerNetworkStatsSummaryVariableTitle = "Out"
+)
+
+// Valid indicates whether the value is a known member of the ServerNetworkStatsSummaryVariableTitle enum.
+func (e ServerNetworkStatsSummaryVariableTitle) Valid() bool {
+	switch e {
+	case ServerNetworkStatsSummaryVariableTitleIn:
+		return true
+	case ServerNetworkStatsSummaryVariableTitleOut:
 		return true
 	default:
 		return false
@@ -288,45 +753,6 @@ func (e ServerNicModel) Valid() bool {
 	}
 }
 
-// Defines values for ServerOsType.
-const (
-	ServerOsTypeCentos      ServerOsType = "centos"
-	ServerOsTypeCoreos      ServerOsType = "coreos"
-	ServerOsTypeDebian      ServerOsType = "debian"
-	ServerOsTypeFedora      ServerOsType = "fedora"
-	ServerOsTypeUbuntu      ServerOsType = "ubuntu"
-	ServerOsTypeUnknown     ServerOsType = "unknown"
-	ServerOsTypeWindows2003 ServerOsType = "windows2003"
-	ServerOsTypeWindows2008 ServerOsType = "windows2008"
-	ServerOsTypeWindows2012 ServerOsType = "windows2012"
-)
-
-// Valid indicates whether the value is a known member of the ServerOsType enum.
-func (e ServerOsType) Valid() bool {
-	switch e {
-	case ServerOsTypeCentos:
-		return true
-	case ServerOsTypeCoreos:
-		return true
-	case ServerOsTypeDebian:
-		return true
-	case ServerOsTypeFedora:
-		return true
-	case ServerOsTypeUbuntu:
-		return true
-	case ServerOsTypeUnknown:
-		return true
-	case ServerOsTypeWindows2003:
-		return true
-	case ServerOsTypeWindows2008:
-		return true
-	case ServerOsTypeWindows2012:
-		return true
-	default:
-		return false
-	}
-}
-
 // Defines values for ServerRebuildServerRebuildPasswordDelivery.
 const (
 	ServerRebuildServerRebuildPasswordDeliveryEmail ServerRebuildServerRebuildPasswordDelivery = "email"
@@ -368,15 +794,12 @@ func (e ServerRemoteAccessEnabled) Valid() bool {
 
 // Defines values for ServerRemoteAccessType.
 const (
-	ServerRemoteAccessTypeSpice ServerRemoteAccessType = "spice"
-	ServerRemoteAccessTypeVnc   ServerRemoteAccessType = "vnc"
+	ServerRemoteAccessTypeVnc ServerRemoteAccessType = "vnc"
 )
 
 // Valid indicates whether the value is a known member of the ServerRemoteAccessType enum.
 func (e ServerRemoteAccessType) Valid() bool {
 	switch e {
-	case ServerRemoteAccessTypeSpice:
-		return true
 	case ServerRemoteAccessTypeVnc:
 		return true
 	default:
@@ -453,6 +876,135 @@ func (e ServerStatsPeriod) Valid() bool {
 	}
 }
 
+// Defines values for ServerStorageDevicesStorageDeviceAction.
+const (
+	ServerStorageDevicesStorageDeviceActionAttach ServerStorageDevicesStorageDeviceAction = "attach"
+	ServerStorageDevicesStorageDeviceActionClone  ServerStorageDevicesStorageDeviceAction = "clone"
+	ServerStorageDevicesStorageDeviceActionCreate ServerStorageDevicesStorageDeviceAction = "create"
+)
+
+// Valid indicates whether the value is a known member of the ServerStorageDevicesStorageDeviceAction enum.
+func (e ServerStorageDevicesStorageDeviceAction) Valid() bool {
+	switch e {
+	case ServerStorageDevicesStorageDeviceActionAttach:
+		return true
+	case ServerStorageDevicesStorageDeviceActionClone:
+		return true
+	case ServerStorageDevicesStorageDeviceActionCreate:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ServerStorageDevicesResponseStorageDeviceBootDisk.
+const (
+	ServerStorageDevicesResponseStorageDeviceBootDiskN0 ServerStorageDevicesResponseStorageDeviceBootDisk = "0"
+	ServerStorageDevicesResponseStorageDeviceBootDiskN1 ServerStorageDevicesResponseStorageDeviceBootDisk = "1"
+)
+
+// Valid indicates whether the value is a known member of the ServerStorageDevicesResponseStorageDeviceBootDisk enum.
+func (e ServerStorageDevicesResponseStorageDeviceBootDisk) Valid() bool {
+	switch e {
+	case ServerStorageDevicesResponseStorageDeviceBootDiskN0:
+		return true
+	case ServerStorageDevicesResponseStorageDeviceBootDiskN1:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ServerStorageDevicesResponseStorageDeviceType.
+const (
+	ServerStorageDevicesResponseStorageDeviceTypeCdrom ServerStorageDevicesResponseStorageDeviceType = "cdrom"
+	ServerStorageDevicesResponseStorageDeviceTypeDisk  ServerStorageDevicesResponseStorageDeviceType = "disk"
+)
+
+// Valid indicates whether the value is a known member of the ServerStorageDevicesResponseStorageDeviceType enum.
+func (e ServerStorageDevicesResponseStorageDeviceType) Valid() bool {
+	switch e {
+	case ServerStorageDevicesResponseStorageDeviceTypeCdrom:
+		return true
+	case ServerStorageDevicesResponseStorageDeviceTypeDisk:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ServerVncPort1.
+const (
+	ServerVncPort1Empty ServerVncPort1 = ""
+)
+
+// Valid indicates whether the value is a known member of the ServerVncPort1 enum.
+func (e ServerVncPort1) Valid() bool {
+	switch e {
+	case ServerVncPort1Empty:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StartServerServerStartType.
+const (
+	StartServerServerStartTypeAsync StartServerServerStartType = "async"
+	StartServerServerStartTypeSync  StartServerServerStartType = "sync"
+)
+
+// Valid indicates whether the value is a known member of the StartServerServerStartType enum.
+func (e StartServerServerStartType) Valid() bool {
+	switch e {
+	case StartServerServerStartTypeAsync:
+		return true
+	case StartServerServerStartTypeSync:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StopServerStopServerStopType.
+const (
+	StopServerStopServerStopTypeHard StopServerStopServerStopType = "hard"
+	StopServerStopServerStopTypeSoft StopServerStopServerStopType = "soft"
+)
+
+// Valid indicates whether the value is a known member of the StopServerStopServerStopType enum.
+func (e StopServerStopServerStopType) Valid() bool {
+	switch e {
+	case StopServerStopServerStopTypeHard:
+		return true
+	case StopServerStopServerStopTypeSoft:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DeleteServerBackups.
+const (
+	DeleteServerBackupsDelete     DeleteServerBackups = "delete"
+	DeleteServerBackupsKeep       DeleteServerBackups = "keep"
+	DeleteServerBackupsKeepLatest DeleteServerBackups = "keep_latest"
+)
+
+// Valid indicates whether the value is a known member of the DeleteServerBackups enum.
+func (e DeleteServerBackups) Valid() bool {
+	switch e {
+	case DeleteServerBackupsDelete:
+		return true
+	case DeleteServerBackupsKeep:
+		return true
+	case DeleteServerBackupsKeepLatest:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ListServersOrderBy.
 const (
 	ListServersOrderByAsc  ListServersOrderBy = "asc"
@@ -465,6 +1017,36 @@ func (e ListServersOrderBy) Valid() bool {
 	case ListServersOrderByAsc:
 		return true
 	case ListServersOrderByDesc:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ListServersSortBy.
+const (
+	ListServersSortByCores      ListServersSortBy = "cores"
+	ListServersSortByMemory     ListServersSortBy = "memory"
+	ListServersSortByPopularity ListServersSortBy = "popularity"
+	ListServersSortBySize       ListServersSortBy = "size"
+	ListServersSortByTitle      ListServersSortBy = "title"
+	ListServersSortByZone       ListServersSortBy = "zone"
+)
+
+// Valid indicates whether the value is a known member of the ListServersSortBy enum.
+func (e ListServersSortBy) Valid() bool {
+	switch e {
+	case ListServersSortByCores:
+		return true
+	case ListServersSortByMemory:
+		return true
+	case ListServersSortByPopularity:
+		return true
+	case ListServersSortBySize:
+		return true
+	case ListServersSortByTitle:
+		return true
+	case ListServersSortByZone:
 		return true
 	default:
 		return false
@@ -555,6 +1137,36 @@ func (e ListServersParamsState) Valid() bool {
 	}
 }
 
+// Defines values for ListServersParamsSortBy.
+const (
+	ListServersParamsSortByCores      ListServersParamsSortBy = "cores"
+	ListServersParamsSortByMemory     ListServersParamsSortBy = "memory"
+	ListServersParamsSortByPopularity ListServersParamsSortBy = "popularity"
+	ListServersParamsSortBySize       ListServersParamsSortBy = "size"
+	ListServersParamsSortByTitle      ListServersParamsSortBy = "title"
+	ListServersParamsSortByZone       ListServersParamsSortBy = "zone"
+)
+
+// Valid indicates whether the value is a known member of the ListServersParamsSortBy enum.
+func (e ListServersParamsSortBy) Valid() bool {
+	switch e {
+	case ListServersParamsSortByCores:
+		return true
+	case ListServersParamsSortByMemory:
+		return true
+	case ListServersParamsSortByPopularity:
+		return true
+	case ListServersParamsSortBySize:
+		return true
+	case ListServersParamsSortByTitle:
+		return true
+	case ListServersParamsSortByZone:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ListServersParamsOrderBy.
 const (
 	ListServersParamsOrderByAsc  ListServersParamsOrderBy = "asc"
@@ -567,6 +1179,27 @@ func (e ListServersParamsOrderBy) Valid() bool {
 	case ListServersParamsOrderByAsc:
 		return true
 	case ListServersParamsOrderByDesc:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DeleteServerParamsBackups.
+const (
+	DeleteServerParamsBackupsDelete     DeleteServerParamsBackups = "delete"
+	DeleteServerParamsBackupsKeep       DeleteServerParamsBackups = "keep"
+	DeleteServerParamsBackupsKeepLatest DeleteServerParamsBackups = "keep_latest"
+)
+
+// Valid indicates whether the value is a known member of the DeleteServerParamsBackups enum.
+func (e DeleteServerParamsBackups) Valid() bool {
+	switch e {
+	case DeleteServerParamsBackupsDelete:
+		return true
+	case DeleteServerParamsBackupsKeep:
+		return true
+	case DeleteServerParamsBackupsKeepLatest:
 		return true
 	default:
 		return false
@@ -609,44 +1242,51 @@ func (e GetDiskStatsByPeriodParamsType) Valid() bool {
 	}
 }
 
-// CreateServer Server creation parameters
+// CreateServer Cloud Server creation parameters
 type CreateServer struct {
 	Server struct {
-		// AvoidHost Encoded host id
+		// AvoidHost Encoded Private Cloud host ID
+		//
+		// Examples: 7653311107
 		AvoidHost *ServerEncodedHostId `json:"avoid_host,omitempty"`
 
 		// BootOrder Boot device order (comma-separated list)
 		BootOrder *ServerBootOrder `json:"boot_order,omitempty"`
 
-		// CloneSource UUID of server or storage to clone from
-		CloneSource *ServerCloneSource `json:"clone_source,omitempty"`
-
 		// CoreNumber Number of CPU cores
 		CoreNumber *ServerCoreNumber `json:"core_number,omitempty"`
+
+		// Devices Passthrough devices requested for a new Cloud Server
+		Devices *ServerCreateDevices `json:"devices,omitempty"`
 
 		// Firewall Boolean value represented as on/off
 		Firewall *ServerBooleanOnoff `json:"firewall,omitempty"`
 
-		// Host Encoded host id
+		// Host Encoded Private Cloud host ID
+		//
+		// Examples: 7653311107
 		Host *ServerEncodedHostId `json:"host,omitempty"`
 
-		// Hostname Server hostname
+		// Hostname Cloud Server hostname
 		Hostname ServerHostname `json:"hostname"`
 
-		// IpAddresses IP addresses assigned to the server
+		// IpAddresses IP addresses assigned to the Cloud Server
 		IpAddresses *ServerIpAddresses `json:"ip_addresses,omitempty"`
 
-		// Labels Server labels
+		// Labels Cloud Server labels
 		Labels *ServerLabels `json:"labels,omitempty"`
 
-		// LoginUser Login user configuration for server creation
+		// LoginUser Login user configuration for Cloud Server creation
 		LoginUser *ServerLoginUser `json:"login_user,omitempty"`
 
 		// MemoryAmount Amount of memory in MB
 		MemoryAmount *ServerMemoryAmount `json:"memory_amount,omitempty"`
 
-		// Networking Network configuration for the server
-		Networking *ServerNetworking `json:"networking,omitempty"`
+		// Metadata Boolean value represented as yes/no
+		Metadata *ServerBooleanYesno `json:"metadata,omitempty"`
+
+		// Networking Network interfaces for a new Cloud Server
+		Networking *ServerCreateNetworking `json:"networking,omitempty"`
 
 		// NicModel Network interface card model
 		NicModel *ServerNicModel `json:"nic_model,omitempty"`
@@ -654,42 +1294,44 @@ type CreateServer struct {
 		// PasswordDelivery Password delivery method
 		PasswordDelivery *ServerPasswordDelivery `json:"password_delivery,omitempty"`
 
-		// Plan Server plan name
+		// Plan Cloud Server plan name
 		Plan *ServerPlan `json:"plan,omitempty"`
 
-		// ServerGroup UUID string or null
+		// RemoteAccessEnabled Whether remote access is enabled
+		RemoteAccessEnabled *ServerRemoteAccessEnabled `json:"remote_access_enabled,omitempty"`
+
+		// RemoteAccessPassword Eight-character alphanumeric password used to authenticate remote access
+		RemoteAccessPassword *ServerRemoteAccessPassword `json:"remote_access_password,omitempty"`
+
+		// RemoteAccessType Protocol used for remote access
+		RemoteAccessType *ServerRemoteAccessType `json:"remote_access_type,omitempty"`
+
+		// ServerGroup UUID of the server group containing the Cloud Server, or null when the Cloud Server is not in a group.
 		ServerGroup *ServerServerGroup `json:"server_group,omitempty"`
 
-		// SimpleBackup HHMM, with dailies, weeklies, or monthlies option separated by comma, or no
+		// SimpleBackup Simple backup start time in UTC and frequency, separated by a comma, or no to disable
+		//
+		// Examples: 0100,dailies, no
 		SimpleBackup *ServerSimpleBackup `json:"simple_backup,omitempty"`
 
-		// StorageDevices Storage devices attached to the server
+		// StorageDevices Storage devices to create or attach to the Cloud Server
 		StorageDevices ServerStorageDevices `json:"storage_devices"`
 
-		// StorageSizeFactor Storage size multiplication factor
-		StorageSizeFactor *ServerStorageSizeFactor `json:"storage_size_factor,omitempty"`
-
-		// Timezone Server timezone
+		// Timezone Cloud Server timezone
 		Timezone *ServerTimezone `json:"timezone,omitempty"`
 
-		// Title Server title
+		// Title Cloud Server title
 		Title ServerTitle `json:"title"`
 
-		// UserData User data (cloud-init script) to run on server creation
+		// UserData Setup script body or URL processed during Cloud Server initialization
 		UserData *ServerUserData `json:"user_data,omitempty"`
 
 		// VideoModel Video adapter model
 		VideoModel *ServerVideoModel `json:"video_model,omitempty"`
 
-		// Vnc VNC enabled status (yes/no)
-		Vnc *ServerVnc `json:"vnc,omitempty"`
-
 		// VncKeymap VNC keyboard layout
 		VncKeymap *ServerVncKeymap `json:"vnc_keymap,omitempty"`
 
-		// VncPassword VNC password
-		VncPassword *ServerVncPassword `json:"vnc_password,omitempty"`
-
 		// Zone Zone identifier
 		//
 		// Examples: fi-hel1, de-fra1, us-nyc1
@@ -697,208 +1339,133 @@ type CreateServer struct {
 	} `json:"server"`
 }
 
-// CreateServerResponse Response schema for creating a server
+// CreateServerResponse Newly created Cloud Server and optional one-time login credentials
 type CreateServerResponse struct {
-	Server struct {
-		// AvoidHost Encoded host id
-		AvoidHost   *ServerEncodedHostId `json:"avoid_host,omitempty"`
-		BootOrder   *string              `json:"boot_order,omitempty"`
-		CloneSource *string              `json:"clone_source,omitempty"`
-		CoreNumber  *string              `json:"core_number,omitempty"`
+	// Server Detailed public information about a Cloud Server
+	Server ServerDetails `json:"server"`
+}
+
+// FirewallRulesetRelatedServers Accessible Cloud Servers related to a private firewall ruleset and their private ruleset relationships.
+type FirewallRulesetRelatedServers struct {
+	// Servers Cloud Servers visible to the authenticated account that are related to the ruleset.
+	Servers []struct {
+		// AttachedRulesets Private firewall rulesets attached to the Cloud Server.
+		AttachedRulesets []ServerFirewallRulesetRelationshipInternal `json:"attached_rulesets"`
 
 		// Firewall Boolean value represented as on/off
-		Firewall *ServerBooleanOnoff `json:"firewall,omitempty"`
+		Firewall ServerBooleanOnoff `json:"firewall"`
 
-		// Host Encoded host id
-		Host        *ServerEncodedHostId `json:"host,omitempty"`
-		Hostname    string               `json:"hostname"`
-		IpAddresses *struct {
-			IpAddress []struct {
-				// Access Network access level
-				Access ServerAccess `json:"access"`
+		// FirewallPrivate Boolean value represented as on/off
+		FirewallPrivate ServerBooleanOnoff `json:"firewall_private"`
 
-				// Family IP address family
-				Family ServerIpFamily `json:"family"`
-				VlanId *string        `json:"vlan_id,omitempty"`
-			} `json:"ip_address"`
-		} `json:"ip_addresses,omitempty"`
-		Labels *struct {
-			Label *[]ServerLabel `json:"label,omitempty"`
-		} `json:"labels,omitempty"`
-		LoginUser *struct {
-			// CreatePassword Boolean value represented as yes/no
-			CreatePassword *ServerBooleanYesno `json:"create_password,omitempty"`
-			SshKeys        *struct {
-				SshKey *[]string `json:"ssh_key,omitempty"`
-			} `json:"ssh_keys,omitempty"`
-			Username *string `json:"username,omitempty"`
-		} `json:"login_user,omitempty"`
-		MemoryAmount *string `json:"memory_amount,omitempty"`
+		// FirewallPrivateDefaultIncomingAction Default action for unmatched incoming traffic on private interfaces.
+		FirewallPrivateDefaultIncomingAction FirewallRulesetRelatedServersServersFirewallPrivateDefaultIncomingAction `json:"firewall_private_default_incoming_action"`
 
-		// Networking Network configuration for the server
-		Networking *ServerNetworking `json:"networking,omitempty"`
+		// FirewallPrivateDefaultOutgoingAction Default action for unmatched outgoing traffic on private interfaces.
+		FirewallPrivateDefaultOutgoingAction FirewallRulesetRelatedServersServersFirewallPrivateDefaultOutgoingAction `json:"firewall_private_default_outgoing_action"`
 
-		// NicModel Network interface card model
-		NicModel         *ServerNicModel `json:"nic_model,omitempty"`
-		Password         *string         `json:"password,omitempty"`
-		PasswordDelivery *string         `json:"password_delivery,omitempty"`
+		// Title Cloud Server title.
+		Title string `json:"title"`
 
-		// Plan Server plan identifier
-		//
-		// Examples: 1xCPU-1GB, DEV-1xCPU-4GB, CLOUDNATIVE-1xCPU-8GB, GPU-12xCPU-128GB-2xL40S
-		Plan *ServerPlanName `json:"plan,omitempty"`
-
-		// ServerGroup UUID string or null
-		ServerGroup *ServerServerGroup `json:"server_group,omitempty"`
-
-		// SimpleBackup HHMM, with dailies, weeklies, or monthlies option separated by comma, or no
-		SimpleBackup   *ServerSimpleBackup `json:"simple_backup,omitempty"`
-		StorageDevices struct {
-			StorageDevice *[]struct {
-				Action     *string `json:"action,omitempty"`
-				Address    *string `json:"address,omitempty"`
-				BackupRule *string `json:"backup_rule,omitempty"`
-				Size       *string `json:"size,omitempty"`
-				Storage    *string `json:"storage,omitempty"`
-				Tier       *string `json:"tier,omitempty"`
-				Title      *string `json:"title,omitempty"`
-				Type       *string `json:"type,omitempty"`
-			} `json:"storage_device,omitempty"`
-		} `json:"storage_devices"`
-		StorageSizeFactor *string `json:"storage_size_factor,omitempty"`
-		Timezone          *string `json:"timezone,omitempty"`
-		Title             string  `json:"title"`
-		UserData          *string `json:"user_data,omitempty"`
-		VideoModel        *string `json:"video_model,omitempty"`
-		Vnc               *string `json:"vnc,omitempty"`
-		VncKeymap         *string `json:"vnc_keymap,omitempty"`
-		VncPassword       *string `json:"vnc_password,omitempty"`
-
-		// Zone Zone identifier
-		//
-		// Examples: fi-hel1, de-fra1, us-nyc1
-		Zone ServerZone `json:"zone"`
-	} `json:"server"`
+		// Uuid Universally unique identifier
+		Uuid ServerUuid `json:"uuid"`
+	} `json:"servers"`
 }
 
-// FirewallRulesetRelatedServers Servers related to a firewall ruleset and their attached rulesets
-type FirewallRulesetRelatedServers struct {
-	Servers []struct {
-		AttachedRulesets *[]ServerFirewallRulesetRelationship `json:"attached_rulesets,omitempty"`
+// FirewallRulesetRelatedServersServersFirewallPrivateDefaultIncomingAction Default action for unmatched incoming traffic on private interfaces.
+type FirewallRulesetRelatedServersServersFirewallPrivateDefaultIncomingAction string
+
+// FirewallRulesetRelatedServersServersFirewallPrivateDefaultOutgoingAction Default action for unmatched outgoing traffic on private interfaces.
+type FirewallRulesetRelatedServersServersFirewallPrivateDefaultOutgoingAction string
+
+// GetAllServerLabels Unique label key-value pairs used by accessible Cloud Servers, sorted by key and then value. The array may be empty.
+type GetAllServerLabels = []ServerLabel
+
+// GetServerList Schema for the Cloud Server list response.
+type GetServerList struct {
+	Servers struct {
+		Server *[]ServerInGetServerList `json:"server,omitempty"`
+	} `json:"servers"`
+}
+
+// ModifyServer Fields that can be changed on an existing Cloud Server
+type ModifyServer struct {
+	Server struct {
+		// BootOrder Boot device order (comma-separated list)
+		BootOrder *ServerBootOrder `json:"boot_order,omitempty"`
+
+		// CoreNumber Number of CPU cores
+		CoreNumber *ServerCoreNumber `json:"core_number,omitempty"`
 
 		// Firewall Boolean value represented as on/off
 		Firewall *ServerBooleanOnoff `json:"firewall,omitempty"`
 
 		// FirewallPrivate Boolean value represented as on/off
-		FirewallPrivate                      *ServerBooleanOnoff `json:"firewall_private,omitempty"`
-		FirewallPrivateDefaultIncomingAction *string             `json:"firewall_private_default_incoming_action,omitempty"`
-		FirewallPrivateDefaultOutgoingAction *string             `json:"firewall_private_default_outgoing_action,omitempty"`
-		Title                                *string             `json:"title,omitempty"`
+		FirewallPrivate                      *ServerBooleanOnoff                                     `json:"firewall_private,omitempty"`
+		FirewallPrivateDefaultIncomingAction *ModifyServerServerFirewallPrivateDefaultIncomingAction `json:"firewall_private_default_incoming_action,omitempty"`
+		FirewallPrivateDefaultOutgoingAction *ModifyServerServerFirewallPrivateDefaultOutgoingAction `json:"firewall_private_default_outgoing_action,omitempty"`
+		FirewallPublicDefaultIncomingAction  *ModifyServerServerFirewallPublicDefaultIncomingAction  `json:"firewall_public_default_incoming_action,omitempty"`
+		FirewallPublicDefaultOutgoingAction  *ModifyServerServerFirewallPublicDefaultOutgoingAction  `json:"firewall_public_default_outgoing_action,omitempty"`
 
-		// Uuid Universally unique identifier
-		Uuid *ServerUuid `json:"uuid,omitempty"`
-	} `json:"servers"`
-}
+		// Hostname Cloud Server hostname
+		Hostname *ServerHostname `json:"hostname,omitempty"`
 
-// FullServerDetails Response schema for creating a server
-type FullServerDetails struct {
-	Server struct {
-		// AvoidHost Encoded host id
-		AvoidHost   *ServerEncodedHostId `json:"avoid_host,omitempty"`
-		BootOrder   *string              `json:"boot_order,omitempty"`
-		CloneSource *string              `json:"clone_source,omitempty"`
-		CoreNumber  *string              `json:"core_number,omitempty"`
-		Devices     *struct {
-			Device []ServerDevice `json:"device"`
-		} `json:"devices,omitempty"`
+		// Labels Cloud Server labels
+		Labels *ServerLabels `json:"labels,omitempty"`
 
-		// Firewall Boolean value represented as on/off
-		Firewall *ServerBooleanOnoff `json:"firewall,omitempty"`
+		// MemoryAmount Amount of memory in MB
+		MemoryAmount *ServerMemoryAmount `json:"memory_amount,omitempty"`
 
-		// Host Encoded host id
-		Host        *ServerEncodedHostId `json:"host,omitempty"`
-		Hostname    string               `json:"hostname"`
-		IpAddresses *struct {
-			IpAddress []struct {
-				// Access Network access level
-				Access ServerAccess `json:"access"`
-
-				// Family IP address family
-				Family ServerIpFamily `json:"family"`
-				VlanId *string        `json:"vlan_id,omitempty"`
-			} `json:"ip_address"`
-		} `json:"ip_addresses,omitempty"`
-		Labels *struct {
-			Label *[]ServerLabel `json:"label,omitempty"`
-		} `json:"labels,omitempty"`
-		LoginUser *struct {
-			// CreatePassword Boolean value represented as yes/no
-			CreatePassword *ServerBooleanYesno `json:"create_password,omitempty"`
-			SshKeys        *struct {
-				SshKey *[]string `json:"ssh_key,omitempty"`
-			} `json:"ssh_keys,omitempty"`
-			Username *string `json:"username,omitempty"`
-		} `json:"login_user,omitempty"`
-		MemoryAmount *string `json:"memory_amount,omitempty"`
-
-		// Networking Network configuration for the server
-		Networking *ServerNetworking `json:"networking,omitempty"`
+		// Metadata Boolean value represented as yes/no
+		Metadata *ServerBooleanYesno `json:"metadata,omitempty"`
 
 		// NicModel Network interface card model
-		NicModel         *ServerNicModel `json:"nic_model,omitempty"`
-		Password         *string         `json:"password,omitempty"`
-		PasswordDelivery *string         `json:"password_delivery,omitempty"`
+		NicModel *ServerNicModel `json:"nic_model,omitempty"`
 
-		// Plan Server plan identifier
+		// Plan Cloud Server plan name
+		Plan *ServerPlan `json:"plan,omitempty"`
+
+		// RemoteAccessEnabled Whether remote access is enabled
+		RemoteAccessEnabled *ServerRemoteAccessEnabled `json:"remote_access_enabled,omitempty"`
+
+		// RemoteAccessPassword Eight-character alphanumeric password used to authenticate remote access
+		RemoteAccessPassword *ServerRemoteAccessPassword `json:"remote_access_password,omitempty"`
+
+		// RemoteAccessType Protocol used for remote access
+		RemoteAccessType *ServerRemoteAccessType `json:"remote_access_type,omitempty"`
+
+		// SimpleBackup Simple backup start time in UTC and frequency, separated by a comma, or no to disable
 		//
-		// Examples: 1xCPU-1GB, DEV-1xCPU-4GB, CLOUDNATIVE-1xCPU-8GB, GPU-12xCPU-128GB-2xL40S
-		Plan *ServerPlanName `json:"plan,omitempty"`
+		// Examples: 0100,dailies, no
+		SimpleBackup *ServerSimpleBackup `json:"simple_backup,omitempty"`
 
-		// ServerGroup UUID string or null
-		ServerGroup *ServerServerGroup `json:"server_group,omitempty"`
+		// Timezone Cloud Server timezone
+		Timezone *ServerTimezone `json:"timezone,omitempty"`
 
-		// SimpleBackup HHMM, with dailies, weeklies, or monthlies option separated by comma, or no
-		SimpleBackup   *ServerSimpleBackup `json:"simple_backup,omitempty"`
-		StorageDevices struct {
-			StorageDevice *[]struct {
-				Action     *string `json:"action,omitempty"`
-				Address    *string `json:"address,omitempty"`
-				BackupRule *string `json:"backup_rule,omitempty"`
-				Size       *string `json:"size,omitempty"`
-				Storage    *string `json:"storage,omitempty"`
-				Tier       *string `json:"tier,omitempty"`
-				Title      *string `json:"title,omitempty"`
-				Type       *string `json:"type,omitempty"`
-			} `json:"storage_device,omitempty"`
-		} `json:"storage_devices"`
-		StorageSizeFactor *string `json:"storage_size_factor,omitempty"`
-		Timezone          *string `json:"timezone,omitempty"`
-		Title             string  `json:"title"`
-		UserData          *string `json:"user_data,omitempty"`
-		VideoModel        *string `json:"video_model,omitempty"`
-		Vnc               *string `json:"vnc,omitempty"`
-		VncKeymap         *string `json:"vnc_keymap,omitempty"`
-		VncPassword       *string `json:"vnc_password,omitempty"`
+		// Title Cloud Server title
+		Title *ServerTitle `json:"title,omitempty"`
 
-		// Zone Zone identifier
-		//
-		// Examples: fi-hel1, de-fra1, us-nyc1
-		Zone ServerZone `json:"zone"`
+		// VideoModel Video adapter model
+		VideoModel *ServerVideoModel `json:"video_model,omitempty"`
+
+		// VncKeymap VNC keyboard layout
+		VncKeymap *ServerVncKeymap `json:"vnc_keymap,omitempty"`
 	} `json:"server"`
-	AdditionalProperties map[string]interface{} `json:"-"`
 }
 
-// GetAllServerLabels The response is an array of label objects. The array may be empty.
-type GetAllServerLabels = []ServerLabel
+// ModifyServerServerFirewallPrivateDefaultIncomingAction defines model for ModifyServer.Server.FirewallPrivateDefaultIncomingAction.
+type ModifyServerServerFirewallPrivateDefaultIncomingAction string
 
-// GetServerList Schema for the server list response.
-type GetServerList struct {
-	Servers struct {
-		Server *[]ServerDetails `json:"server,omitempty"`
-	} `json:"servers"`
-}
+// ModifyServerServerFirewallPrivateDefaultOutgoingAction defines model for ModifyServer.Server.FirewallPrivateDefaultOutgoingAction.
+type ModifyServerServerFirewallPrivateDefaultOutgoingAction string
 
-// RelocateServer Relocate server request
+// ModifyServerServerFirewallPublicDefaultIncomingAction defines model for ModifyServer.Server.FirewallPublicDefaultIncomingAction.
+type ModifyServerServerFirewallPublicDefaultIncomingAction string
+
+// ModifyServerServerFirewallPublicDefaultOutgoingAction defines model for ModifyServer.Server.FirewallPublicDefaultOutgoingAction.
+type ModifyServerServerFirewallPublicDefaultOutgoingAction string
+
+// RelocateServer Relocate Cloud Server request
 type RelocateServer struct {
 	// Zone Zone identifier
 	//
@@ -906,36 +1473,63 @@ type RelocateServer struct {
 	Zone ServerZone `json:"zone"`
 }
 
-// RestartServer TODO
+// RestartServer Restart Cloud Server request
 type RestartServer struct {
-	RestartServer struct {
-		// Host Encoded host id
-		Host *ServerEncodedHostId `json:"host,omitempty"`
-
-		// Reason Schema for reason strings used in API payloads.
-		Reason        *ServerReason `json:"reason,omitempty"`
-		StopType      *string       `json:"stop_type,omitempty"`
-		Timeout       *string       `json:"timeout,omitempty"`
-		TimeoutAction *string       `json:"timeout_action,omitempty"`
-	} `json:"restart_server"`
+	RestartServer RestartServer_RestartServer `json:"restart_server"`
 }
 
-// Server Server object returned in responses
+// RestartServerRestartServerStopType Type of stop performed before starting again.
+type RestartServerRestartServerStopType string
+
+// RestartServerRestartServerTimeoutAction Action when the soft-stop timeout expires.
+type RestartServerRestartServerTimeoutAction string
+
+// RestartServerRestartServer0 defines model for RestartServer.RestartServer.0.
+type RestartServerRestartServer0 struct {
+	StopType interface{} `json:"stop_type"`
+}
+
+// RestartServerRestartServer1 defines model for RestartServer.RestartServer.1.
+type RestartServerRestartServer1 = interface{}
+
+// RestartServer_RestartServer defines model for RestartServer.RestartServer.
+type RestartServer_RestartServer struct {
+	// Host Encoded Private Cloud host ID
+	//
+	// Examples: 7653311107
+	Host *ServerEncodedHostId `json:"host,omitempty"`
+
+	// Reason Schema for reason strings used in API payloads.
+	Reason *ServerReason `json:"reason,omitempty"`
+
+	// StopType Type of stop performed before starting again.
+	StopType *RestartServerRestartServerStopType `json:"stop_type,omitempty"`
+
+	// Timeout Soft-stop timeout in seconds.
+	Timeout *string `json:"timeout,omitempty"`
+
+	// TimeoutAction Action when the soft-stop timeout expires.
+	TimeoutAction *RestartServerRestartServerTimeoutAction `json:"timeout_action,omitempty"`
+	union         json.RawMessage
+}
+
+// Server Cloud Server object returned in responses
 type Server struct {
-	// Server Detailed information about a server
+	// Server Detailed public information about a Cloud Server
 	Server ServerDetails `json:"server"`
 }
-
-// ServerAccess Network access level
-type ServerAccess string
 
 // ServerAddInterface Add network interface request
 type ServerAddInterface struct {
 	Interface struct {
 		// Bootable Boolean value represented as yes/no
-		Bootable    *ServerBooleanYesno `json:"bootable,omitempty"`
-		Index       *int32              `json:"index,omitempty"`
-		IpAddresses *struct {
+		Bootable *ServerBooleanYesno `json:"bootable,omitempty"`
+
+		// Index Interface index; the next available index is used when omitted
+		Index *int32 `json:"index,omitempty"`
+
+		// IpAddresses IP addresses to attach to the interface
+		IpAddresses struct {
 			IpAddress []struct {
 				// Address IP address
 				Address *ServerIpAddress `json:"address,omitempty"`
@@ -944,15 +1538,12 @@ type ServerAddInterface struct {
 				DhcpProvided *ServerBooleanYesno `json:"dhcp_provided,omitempty"`
 
 				// Family IP address family
-				Family *ServerIpFamily `json:"family,omitempty"`
+				Family ServerIpFamily `json:"family"`
 
-				// ReleasePolicy IP Release policy defines what happens to the address when the referencing resource is deleted
+				// ReleasePolicy Action taken when the resource using the address is deleted: release deletes the address, while keep preserves it as a detached floating IP address
 				ReleasePolicy *ServerIpReleasePolicy `json:"release_policy,omitempty"`
 			} `json:"ip_address"`
-		} `json:"ip_addresses,omitempty"`
-
-		// Mac MAC address
-		Mac *ServerMacAddress `json:"mac,omitempty"`
+		} `json:"ip_addresses"`
 
 		// Network Universally unique identifier
 		Network *ServerUuid `json:"network,omitempty"`
@@ -961,7 +1552,7 @@ type ServerAddInterface struct {
 		SourceIpFiltering *ServerBooleanYesno `json:"source_ip_filtering,omitempty"`
 
 		// Type Network access type
-		Type *ServerNetworkType `json:"type,omitempty"`
+		Type ServerNetworkType `json:"type"`
 	} `json:"interface"`
 }
 
@@ -972,30 +1563,39 @@ type ServerAddIpAddress struct {
 		Address *ServerIpAddress `json:"address,omitempty"`
 
 		// Family IP address family
-		Family *ServerIpFamily `json:"family,omitempty"`
+		Family ServerIpFamily `json:"family"`
 	} `json:"ip_address"`
 }
 
-// ServerAttachPrivateFirewallRuleset Attach or detach a private firewall ruleset relationship request
+// ServerAttachPrivateFirewallRuleset Parameters for attaching a private firewall ruleset to a Cloud Server.
 type ServerAttachPrivateFirewallRuleset struct {
+	// FirewallRuleset Private firewall ruleset to attach.
 	FirewallRuleset struct {
 		// FirewallRulesetUuid Universally unique identifier
 		FirewallRulesetUuid ServerUuid `json:"firewall_ruleset_uuid"`
-
-		// Force Schema for boolean-like values encoded as 0 or 1.
-		Force   *ServerBoolean01 `json:"force,omitempty"`
-		Version *string          `json:"version,omitempty"`
 	} `json:"firewall_ruleset"`
 }
 
-// ServerAttachStorage Schema for attaching a storage device to a server
+// ServerAttachStorage Parameters for attaching a storage device to a Cloud Server.
 type ServerAttachStorage struct {
+	// StorageDevice Storage device to attach.
 	StorageDevice struct {
+		// Address Device address or bus. When only a bus is specified, the next available address on that bus is selected. Defaults to the next available virtio address for disks and IDE address for CD-ROM devices.
 		Address *string `json:"address,omitempty"`
-		Storage *string `json:"storage,omitempty"`
-		Type    *string `json:"type,omitempty"`
+
+		// BootDisk Whether to use this storage device as the boot disk. The Cloud Server boot_order setting takes precedence.
+		BootDisk *ServerBoolean01 `json:"boot_disk,omitempty"`
+
+		// Storage Universally unique identifier
+		Storage *ServerUuid `json:"storage,omitempty"`
+
+		// Type Type of device to attach.
+		Type *ServerAttachStorageStorageDeviceType `json:"type,omitempty"`
 	} `json:"storage_device"`
 }
+
+// ServerAttachStorageStorageDeviceType Type of device to attach.
+type ServerAttachStorageStorageDeviceType string
 
 // ServerBoolean01 Schema for boolean-like values encoded as 0 or 1.
 type ServerBoolean01 int64
@@ -1009,107 +1609,237 @@ type ServerBooleanYesno string
 // ServerBootOrder Boot device order (comma-separated list)
 type ServerBootOrder = string
 
-// ServerCloneSource UUID of server or storage to clone from
-type ServerCloneSource = string
-
 // ServerCoreNumber Number of CPU cores
 type ServerCoreNumber = int32
 
-// ServerCpuStats Schema for CPU statistics response payloads.
+// ServerCpuStats CPU usage statistics grouped by period
 type ServerCpuStats struct {
-	Stats *struct {
+	Stats struct {
 		Daily *struct {
-			// Summary Schema for summarized CPU statistics values.
-			Summary *ServerCpuStatsSummary `json:"summary,omitempty"`
+			// Summary Summarized CPU statistics values.
+			Summary ServerCpuStatsSummary `json:"summary"`
 		} `json:"daily,omitempty"`
 		Monthly *struct {
-			// Summary Schema for summarized CPU statistics values.
-			Summary *ServerCpuStatsSummary `json:"summary,omitempty"`
+			// Summary Summarized CPU statistics values.
+			Summary ServerCpuStatsSummary `json:"summary"`
 		} `json:"monthly,omitempty"`
 		Weekly *struct {
-			// Summary Schema for summarized CPU statistics values.
-			Summary *ServerCpuStatsSummary `json:"summary,omitempty"`
+			// Summary Summarized CPU statistics values.
+			Summary ServerCpuStatsSummary `json:"summary"`
 		} `json:"weekly,omitempty"`
-	} `json:"stats,omitempty"`
+		Yearly *struct {
+			// Summary Summarized CPU statistics values.
+			Summary ServerCpuStatsSummary `json:"summary"`
+		} `json:"yearly,omitempty"`
+	} `json:"stats"`
 }
 
-// ServerCpuStatsSummary Schema for summarized CPU statistics values.
+// ServerCpuStatsSummary Summarized CPU statistics values.
 type ServerCpuStatsSummary struct {
-	Variable *[]struct {
+	Variable []struct {
+		// Average Average CPU usage during the period.
 		Average string `json:"average"`
+
+		// Current Most recent CPU usage.
 		Current string `json:"current"`
-		Maximum string `json:"maximum"`
-		Title   string `json:"title"`
-		Total   string `json:"total"`
-	} `json:"variable,omitempty"`
+
+		// Maximum Maximum CPU usage during the period.
+		Maximum string                             `json:"maximum"`
+		Title   ServerCpuStatsSummaryVariableTitle `json:"title"`
+
+		// Total Total CPU time consumed during the period.
+		Total string `json:"total"`
+	} `json:"variable"`
 }
 
-// ServerCreateFirewallRule Create a new firewall rule
+// ServerCpuStatsSummaryVariableTitle defines model for ServerCpuStatsSummary.Variable.Title.
+type ServerCpuStatsSummaryVariableTitle string
+
+// ServerCreateDevices Passthrough devices requested for a new Cloud Server
+type ServerCreateDevices struct {
+	Device []struct {
+		// Serial Serial identifier of the attached device
+		Serial string `json:"serial"`
+
+		// Type Type of passthrough device to attach
+		Type string `json:"type"`
+	} `json:"device"`
+}
+
+// ServerCreateFirewallRule Parameters for creating a firewall rule.
 type ServerCreateFirewallRule struct {
 	FirewallRule struct {
-		Action                  string  `json:"action"`
-		Comment                 *string `json:"comment,omitempty"`
-		DestinationAddressEnd   *string `json:"destination_address_end,omitempty"`
-		DestinationAddressStart *string `json:"destination_address_start,omitempty"`
-		DestinationPortEnd      *string `json:"destination_port_end,omitempty"`
-		DestinationPortStart    *string `json:"destination_port_start,omitempty"`
-		Direction               string  `json:"direction"`
-		Family                  string  `json:"family"`
-		IcmpType                *string `json:"icmp_type,omitempty"`
-		Position                *string `json:"position,omitempty"`
-		Protocol                *string `json:"protocol,omitempty"`
-		SourceAddressEnd        *string `json:"source_address_end,omitempty"`
-		SourceAddressStart      *string `json:"source_address_start,omitempty"`
-		SourcePortEnd           *string `json:"source_port_end,omitempty"`
-		SourcePortStart         *string `json:"source_port_start,omitempty"`
+		// Action Action taken when the rule matches.
+		Action ServerCreateFirewallRuleFirewallRuleAction `json:"action"`
+
+		// Comment Free-form rule description.
+		Comment *string `json:"comment,omitempty"`
+
+		// DestinationAddressEnd Last destination IP address in the range. Must be specified with destination_address_start.
+		DestinationAddressEnd *string `json:"destination_address_end,omitempty"`
+
+		// DestinationAddressStart First destination IP address in the range. Must be specified with destination_address_end.
+		DestinationAddressStart *string                 `json:"destination_address_start,omitempty"`
+		DestinationPortEnd      *ServerFirewallRulePort `json:"destination_port_end,omitempty"`
+		DestinationPortStart    *ServerFirewallRulePort `json:"destination_port_start,omitempty"`
+
+		// Direction Traffic direction to which the rule applies.
+		Direction ServerCreateFirewallRuleFirewallRuleDirection `json:"direction"`
+
+		// Family IP address family. Required when protocol, addresses, ports, or ICMP type are specified.
+		Family   *ServerCreateFirewallRuleFirewallRuleFamily `json:"family,omitempty"`
+		IcmpType *ServerFirewallRuleIcmpType                 `json:"icmp_type,omitempty"`
+
+		// Position Position at which to insert the rule. Rules at and after this position are shifted down. If omitted or greater than the current rule count, the rule is appended.
+		Position *string `json:"position,omitempty"`
+
+		// Protocol Network protocol to match.
+		Protocol *ServerCreateFirewallRuleFirewallRuleProtocol `json:"protocol,omitempty"`
+
+		// SourceAddressEnd Last source IP address in the range. Must be specified with source_address_start.
+		SourceAddressEnd *string `json:"source_address_end,omitempty"`
+
+		// SourceAddressStart First source IP address in the range. Must be specified with source_address_end.
+		SourceAddressStart *string                 `json:"source_address_start,omitempty"`
+		SourcePortEnd      *ServerFirewallRulePort `json:"source_port_end,omitempty"`
+		SourcePortStart    *ServerFirewallRulePort `json:"source_port_start,omitempty"`
 	} `json:"firewall_rule"`
+}
+
+// ServerCreateFirewallRuleFirewallRuleAction Action taken when the rule matches.
+type ServerCreateFirewallRuleFirewallRuleAction string
+
+// ServerCreateFirewallRuleFirewallRuleDirection Traffic direction to which the rule applies.
+type ServerCreateFirewallRuleFirewallRuleDirection string
+
+// ServerCreateFirewallRuleFirewallRuleFamily IP address family. Required when protocol, addresses, ports, or ICMP type are specified.
+type ServerCreateFirewallRuleFirewallRuleFamily string
+
+// ServerCreateFirewallRuleFirewallRuleProtocol Network protocol to match.
+type ServerCreateFirewallRuleFirewallRuleProtocol string
+
+// ServerCreateNetworking Network interfaces for a new Cloud Server
+type ServerCreateNetworking struct {
+	Interfaces struct {
+		Interface []struct {
+			// Bootable Boolean value represented as yes/no
+			Bootable *ServerBooleanYesno `json:"bootable,omitempty"`
+
+			// Index Index used to identify and order the network interface
+			Index       *int `json:"index,omitempty"`
+			IpAddresses struct {
+				IpAddress []struct {
+					// Address IP address
+					Address *ServerIpAddress `json:"address,omitempty"`
+
+					// DhcpProvided Boolean value represented as yes/no
+					DhcpProvided *ServerBooleanYesno `json:"dhcp_provided,omitempty"`
+
+					// Family IP address family
+					Family ServerIpFamily `json:"family"`
+				} `json:"ip_address"`
+			} `json:"ip_addresses"`
+
+			// Network Universally unique identifier
+			Network *ServerUuid `json:"network,omitempty"`
+
+			// SourceIpFiltering Boolean value represented as yes/no
+			SourceIpFiltering *ServerBooleanYesno `json:"source_ip_filtering,omitempty"`
+
+			// Type Network access type
+			Type ServerNetworkType `json:"type"`
+		} `json:"interface"`
+	} `json:"interfaces"`
 }
 
 // ServerCreated Creation timestamp (Unix epoch time)
 type ServerCreated = int64
 
-// ServerDetachStorage Schema for detaching a storage device from a server
-type ServerDetachStorage struct {
-	StorageDevice struct {
-		Address *string `json:"address,omitempty"`
-		Storage *string `json:"storage,omitempty"`
-	} `json:"storage_device"`
+// ServerDetachPrivateFirewallRuleset Parameters for detaching a private firewall ruleset from a Cloud Server.
+type ServerDetachPrivateFirewallRuleset struct {
+	// FirewallRuleset Private firewall ruleset to detach.
+	FirewallRuleset struct {
+		// FirewallRulesetUuid Universally unique identifier
+		FirewallRulesetUuid ServerUuid `json:"firewall_ruleset_uuid"`
+	} `json:"firewall_ruleset"`
 }
 
-// ServerDetails Detailed information about a server
+// ServerDetachStorage Parameters for detaching a storage device from a Cloud Server.
+type ServerDetachStorage struct {
+	// StorageDevice Storage device to detach, identified by either its device address or storage resource UUID.
+	StorageDevice ServerDetachStorage_StorageDevice `json:"storage_device"`
+}
+
+// ServerDetachStorageStorageDevice0 defines model for ServerDetachStorage.StorageDevice.0.
+type ServerDetachStorageStorageDevice0 = interface{}
+
+// ServerDetachStorageStorageDevice1 defines model for ServerDetachStorage.StorageDevice.1.
+type ServerDetachStorageStorageDevice1 = interface{}
+
+// ServerDetachStorage_StorageDevice Storage device to detach, identified by either its device address or storage resource UUID.
+type ServerDetachStorage_StorageDevice struct {
+	// Address Address of the storage device on the Cloud Server.
+	Address *string `json:"address,omitempty"`
+
+	// Storage Universally unique identifier
+	Storage *ServerUuid `json:"storage,omitempty"`
+	union   json.RawMessage
+}
+
+// ServerDetails Detailed public information about a Cloud Server
 type ServerDetails struct {
 	// BootOrder Boot device order (comma-separated list)
 	BootOrder *ServerBootOrder `json:"boot_order,omitempty"`
 
-	// CoreNumber Number of CPU cores
-	CoreNumber ServerCoreNumber `json:"core_number"`
+	// CoreNumber Number of CPU cores.
+	CoreNumber string `json:"core_number"`
 
 	// Created Creation timestamp (Unix epoch time)
 	Created ServerCreated `json:"created"`
+	Devices *struct {
+		Device []ServerDevice `json:"device"`
+	} `json:"devices,omitempty"`
 
 	// Firewall Boolean value represented as on/off
 	Firewall *ServerBooleanOnoff `json:"firewall,omitempty"`
 
-	// Host Encoded host id
-	Host     *ServerEncodedHostId `json:"host,omitempty"`
-	Hostname string               `json:"hostname"`
-	Labels   *struct {
-		Label *[]ServerLabel `json:"label,omitempty"`
-	} `json:"labels,omitempty"`
+	// FirewallPrivate Boolean value represented as on/off
+	FirewallPrivate                      *ServerBooleanOnoff                                `json:"firewall_private,omitempty"`
+	FirewallPrivateDefaultIncomingAction *ServerDetailsFirewallPrivateDefaultIncomingAction `json:"firewall_private_default_incoming_action,omitempty"`
+	FirewallPrivateDefaultOutgoingAction *ServerDetailsFirewallPrivateDefaultOutgoingAction `json:"firewall_private_default_outgoing_action,omitempty"`
+	FirewallPublicDefaultIncomingAction  *ServerDetailsFirewallPublicDefaultIncomingAction  `json:"firewall_public_default_incoming_action,omitempty"`
+	FirewallPublicDefaultOutgoingAction  *ServerDetailsFirewallPublicDefaultOutgoingAction  `json:"firewall_public_default_outgoing_action,omitempty"`
 
-	// License License type
-	License int64 `json:"license"`
+	// Host Encoded Private Cloud host ID
+	//
+	// Examples: 7653311107
+	Host *ServerEncodedHostId `json:"host,omitempty"`
 
-	// MemoryAmount Amount of memory in MB
-	MemoryAmount ServerMemoryAmount `json:"memory_amount"`
+	// Hostname Cloud Server hostname.
+	Hostname string `json:"hostname"`
+
+	// IpAddresses IP addresses assigned to the Cloud Server
+	IpAddresses *ServerIpAddresses `json:"ip_addresses,omitempty"`
+
+	// Labels Cloud Server labels
+	Labels *ServerLabels `json:"labels,omitempty"`
+
+	// License Hourly license price
+	License string `json:"license"`
+
+	// MemoryAmount Memory in MiB.
+	MemoryAmount string `json:"memory_amount"`
+
+	// Metadata Boolean value represented as yes/no
+	Metadata *ServerBooleanYesno `json:"metadata,omitempty"`
+
+	// Networking Network interfaces configured for the Cloud Server
+	Networking *ServerNetworking `json:"networking,omitempty"`
 
 	// NicModel Network interface card model
 	NicModel *ServerNicModel `json:"nic_model,omitempty"`
 
-	// OsType Operating system type
-	OsType *ServerOsType `json:"os_type,omitempty"`
-
-	// Password Only present on server create
+	// Password One-time login password returned when the Cloud Server is created.
 	Password *string `json:"password,omitempty"`
 
 	// Plan Server plan identifier
@@ -1117,30 +1847,52 @@ type ServerDetails struct {
 	// Examples: 1xCPU-1GB, DEV-1xCPU-4GB, CLOUDNATIVE-1xCPU-8GB, GPU-12xCPU-128GB-2xL40S
 	Plan *ServerPlanName `json:"plan,omitempty"`
 
-	// PlanIpv4Bytes Plan IPv4 traffic limit in bytes
-	PlanIpv4Bytes *int64 `json:"plan_ipv4_bytes,omitempty"`
+	// PlanIpv4Bytes Public IPv4 outbound traffic this billing month, in bytes.
+	PlanIpv4Bytes *string `json:"plan_ipv4_bytes,omitempty"`
 
-	// PlanIpv6Bytes Plan IPv6 traffic limit in bytes
-	PlanIpv6Bytes *int64 `json:"plan_ipv6_bytes,omitempty"`
+	// PlanIpv6Bytes Public IPv6 outbound traffic this billing month, in bytes.
+	PlanIpv6Bytes *string `json:"plan_ipv6_bytes,omitempty"`
 
-	// Progress TODO
+	// Progress Progress percentage for an operation in progress.
 	Progress *string `json:"progress,omitempty"`
 
-	// ServerGroup UUID string or null
+	// RemoteAccessEnabled Whether remote access is enabled
+	RemoteAccessEnabled *ServerRemoteAccessEnabled `json:"remote_access_enabled,omitempty"`
+
+	// RemoteAccessHost Remote access hostname.
+	RemoteAccessHost *string `json:"remote_access_host,omitempty"`
+
+	// RemoteAccessPassword Eight-character alphanumeric password used to authenticate remote access
+	RemoteAccessPassword *ServerRemoteAccessPassword `json:"remote_access_password,omitempty"`
+
+	// RemoteAccessPort Remote access port.
+	RemoteAccessPort *string `json:"remote_access_port,omitempty"`
+
+	// RemoteAccessType Protocol used for remote access
+	RemoteAccessType *ServerRemoteAccessType `json:"remote_access_type,omitempty"`
+
+	// ServerGroup UUID of the server group containing the Cloud Server, or null when the Cloud Server is not in a group.
 	ServerGroup *ServerServerGroup `json:"server_group,omitempty"`
 
-	// SimpleBackup HHMM, with dailies, weeklies, or monthlies option separated by comma, or no
+	// SimpleBackup Simple backup start time in UTC and frequency, separated by a comma, or no to disable
+	//
+	// Examples: 0100,dailies, no
 	SimpleBackup *ServerSimpleBackup `json:"simple_backup,omitempty"`
 
-	// State Current state of the server
+	// State Current state of the Cloud Server
 	State ServerState `json:"state"`
+
+	// StorageDevices Storage devices attached to a Cloud Server
+	StorageDevices *ServerStorageDevicesResponse `json:"storage_devices,omitempty"`
 
 	// Tags tags can be an empty array or an object with a tag array
 	Tags *ServerTags `json:"tags,omitempty"`
 
-	// Timezone TODO
+	// Timezone Configured timezone.
 	Timezone *string `json:"timezone,omitempty"`
-	Title    string  `json:"title"`
+
+	// Title Display title.
+	Title string `json:"title"`
 
 	// Username Username for an account.
 	Username *ServerUserName `json:"username,omitempty"`
@@ -1148,12 +1900,26 @@ type ServerDetails struct {
 	// Uuid Universally unique identifier
 	Uuid ServerUuid `json:"uuid"`
 
+	// VideoModel Video adapter model
+	VideoModel *ServerVideoModel `json:"video_model,omitempty"`
+
 	// Zone Zone identifier
 	//
 	// Examples: fi-hel1, de-fra1, us-nyc1
-	Zone                 ServerZone             `json:"zone"`
-	AdditionalProperties map[string]interface{} `json:"-"`
+	Zone ServerZone `json:"zone"`
 }
+
+// ServerDetailsFirewallPrivateDefaultIncomingAction defines model for ServerDetails.FirewallPrivateDefaultIncomingAction.
+type ServerDetailsFirewallPrivateDefaultIncomingAction string
+
+// ServerDetailsFirewallPrivateDefaultOutgoingAction defines model for ServerDetails.FirewallPrivateDefaultOutgoingAction.
+type ServerDetailsFirewallPrivateDefaultOutgoingAction string
+
+// ServerDetailsFirewallPublicDefaultIncomingAction defines model for ServerDetails.FirewallPublicDefaultIncomingAction.
+type ServerDetailsFirewallPublicDefaultIncomingAction string
+
+// ServerDetailsFirewallPublicDefaultOutgoingAction defines model for ServerDetails.FirewallPublicDefaultOutgoingAction.
+type ServerDetailsFirewallPublicDefaultOutgoingAction string
 
 // ServerDevice Schema for passthrough device information.
 type ServerDevice struct {
@@ -1170,36 +1936,52 @@ type ServerDevice struct {
 	Type   string `json:"type"`
 }
 
-// ServerDiskStats Schema for disk statistics response payloads.
+// ServerDiskStats Aggregate disk read and write statistics grouped by period
 type ServerDiskStats struct {
-	Stats *struct {
+	Stats struct {
 		Daily *struct {
-			// Summary Schema for summarized disk statistics values.
-			Summary *ServerDiskStatsSummary `json:"summary,omitempty"`
+			// Summary Summarized disk read and write statistics values.
+			Summary ServerDiskStatsSummary `json:"summary"`
 		} `json:"daily,omitempty"`
 		Monthly *struct {
-			// Summary Schema for summarized disk statistics values.
-			Summary *ServerDiskStatsSummary `json:"summary,omitempty"`
+			// Summary Summarized disk read and write statistics values.
+			Summary ServerDiskStatsSummary `json:"summary"`
 		} `json:"monthly,omitempty"`
 		Weekly *struct {
-			// Summary Schema for summarized disk statistics values.
-			Summary *ServerDiskStatsSummary `json:"summary,omitempty"`
+			// Summary Summarized disk read and write statistics values.
+			Summary ServerDiskStatsSummary `json:"summary"`
 		} `json:"weekly,omitempty"`
-	} `json:"stats,omitempty"`
+		Yearly *struct {
+			// Summary Summarized disk read and write statistics values.
+			Summary ServerDiskStatsSummary `json:"summary"`
+		} `json:"yearly,omitempty"`
+	} `json:"stats"`
 }
 
-// ServerDiskStatsSummary Schema for summarized disk statistics values.
+// ServerDiskStatsSummary Summarized disk read and write statistics values.
 type ServerDiskStatsSummary struct {
-	Variable *[]struct {
+	Variable []struct {
+		// Average Average transfer rate or request rate during the period.
 		Average string `json:"average"`
+
+		// Current Most recent transfer rate or request rate.
 		Current string `json:"current"`
-		Maximum string `json:"maximum"`
-		Title   string `json:"title"`
-		Total   string `json:"total"`
-	} `json:"variable,omitempty"`
+
+		// Maximum Maximum transfer rate or request rate during the period.
+		Maximum string                              `json:"maximum"`
+		Title   ServerDiskStatsSummaryVariableTitle `json:"title"`
+
+		// Total Total transferred data or I/O requests during the period.
+		Total string `json:"total"`
+	} `json:"variable"`
 }
 
-// ServerEncodedHostId Encoded host id
+// ServerDiskStatsSummaryVariableTitle defines model for ServerDiskStatsSummary.Variable.Title.
+type ServerDiskStatsSummaryVariableTitle string
+
+// ServerEncodedHostId Encoded Private Cloud host ID
+//
+// Examples: 7653311107
 type ServerEncodedHostId = int64
 
 // ServerError A general error response indicating that the request could not be fulfilled due to a technical issue.
@@ -1217,131 +1999,268 @@ type ServerError struct {
 type ServerError400 struct {
 	Error struct {
 		// Code Examples: SERVER_INVALID
-		Code ServerError400ErrorCode `json:"code"`
+		Code string `json:"code"`
 
 		// Message Examples: The server UUID is invalid
 		Message string `json:"message"`
 	} `json:"error"`
 }
 
-// ServerError400ErrorCode Examples: SERVER_INVALID
-type ServerError400ErrorCode string
-
 // ServerError403 Forbidden error
 type ServerError403 struct {
 	Error struct {
 		// Code Examples: SERVER_FORBIDDEN
-		Code ServerError403ErrorCode `json:"code"`
+		Code string `json:"code"`
 
 		// Message Examples: Access denied or insufficient permissions
 		Message string `json:"message"`
 	} `json:"error"`
 }
 
-// ServerError403ErrorCode Examples: SERVER_FORBIDDEN
-type ServerError403ErrorCode string
-
-// ServerError404 Schema for server 404 error responses.
+// ServerError404 Schema for Cloud Server 404 error responses.
 type ServerError404 struct {
 	Error struct {
 		// Code Examples: SERVER_NOT_FOUND
-		Code ServerError404ErrorCode `json:"code"`
+		Code string `json:"code"`
 
 		// Message Examples: The server UUID does not exist
 		Message string `json:"message"`
 	} `json:"error"`
 }
 
-// ServerError404ErrorCode Examples: SERVER_NOT_FOUND
-type ServerError404ErrorCode string
-
 // ServerError409 Conflict error
 type ServerError409 struct {
 	Error struct {
-		Code    ServerError409ErrorCode `json:"code"`
-		Message string                  `json:"message"`
+		// Code Examples: SERVER_STATE_ILLEGAL
+		Code string `json:"code"`
+
+		// Message Examples: The server is in a state in which it cannot be used
+		Message string `json:"message"`
 	} `json:"error"`
 }
 
-// ServerError409ErrorCode defines model for ServerError409.Error.Code.
-type ServerError409ErrorCode string
-
-// ServerFirewallRule Schema for a single firewall rule object.
-type ServerFirewallRule = []struct {
-	Action                  *string `json:"action,omitempty"`
-	Comment                 *string `json:"comment,omitempty"`
-	DestinationAddressEnd   *string `json:"destination_address_end,omitempty"`
-	DestinationAddressStart *string `json:"destination_address_start,omitempty"`
-	DestinationPortEnd      *string `json:"destination_port_end,omitempty"`
-	DestinationPortStart    *string `json:"destination_port_start,omitempty"`
-	Direction               *string `json:"direction,omitempty"`
-	Family                  *string `json:"family,omitempty"`
-	IcmpType                *string `json:"icmp_type,omitempty"`
-	Protocol                *string `json:"protocol,omitempty"`
-	SourceAddressEnd        *string `json:"source_address_end,omitempty"`
-	SourceAddressStart      *string `json:"source_address_start,omitempty"`
-	SourcePortEnd           *string `json:"source_port_end,omitempty"`
-	SourcePortStart         *string `json:"source_port_start,omitempty"`
+// ServerError511 Operation failed error
+type ServerError511 struct {
+	Error struct {
+		Code    string `json:"code"`
+		Message string `json:"message"`
+	} `json:"error"`
 }
 
-// ServerFirewallRules Firewall rules
+// ServerFirewallRule A firewall rule with its position in the Cloud Server's rule chain.
+type ServerFirewallRule struct {
+	// FirewallRule A firewall rule with its position in the Cloud Server's rule chain.
+	FirewallRule ServerFirewallRuleResponseItem `json:"firewall_rule"`
+}
+
+// ServerFirewallRuleIcmpType defines model for serverFirewallRuleIcmpType.
+type ServerFirewallRuleIcmpType = string
+
+// ServerFirewallRuleItem Firewall rule conditions and action.
+type ServerFirewallRuleItem struct {
+	// Action Action taken when the rule matches.
+	Action ServerFirewallRuleItemAction `json:"action"`
+
+	// Comment Free-form rule description.
+	Comment *string `json:"comment,omitempty"`
+
+	// DestinationAddressEnd Last destination IP address in the range. Must be specified with destination_address_start.
+	DestinationAddressEnd *string `json:"destination_address_end,omitempty"`
+
+	// DestinationAddressStart First destination IP address in the range. Must be specified with destination_address_end.
+	DestinationAddressStart *string                 `json:"destination_address_start,omitempty"`
+	DestinationPortEnd      *ServerFirewallRulePort `json:"destination_port_end,omitempty"`
+	DestinationPortStart    *ServerFirewallRulePort `json:"destination_port_start,omitempty"`
+
+	// Direction Traffic direction to which the rule applies.
+	Direction ServerFirewallRuleItemDirection `json:"direction"`
+
+	// Family IP address family. Required when protocol, addresses, ports, or ICMP type are specified.
+	Family   *ServerFirewallRuleItemFamily `json:"family,omitempty"`
+	IcmpType *ServerFirewallRuleIcmpType   `json:"icmp_type,omitempty"`
+
+	// Protocol Network protocol to match.
+	Protocol *ServerFirewallRuleItemProtocol `json:"protocol,omitempty"`
+
+	// SourceAddressEnd Last source IP address in the range. Must be specified with source_address_start.
+	SourceAddressEnd *string `json:"source_address_end,omitempty"`
+
+	// SourceAddressStart First source IP address in the range. Must be specified with source_address_end.
+	SourceAddressStart *string                 `json:"source_address_start,omitempty"`
+	SourcePortEnd      *ServerFirewallRulePort `json:"source_port_end,omitempty"`
+	SourcePortStart    *ServerFirewallRulePort `json:"source_port_start,omitempty"`
+}
+
+// ServerFirewallRuleItemAction Action taken when the rule matches.
+type ServerFirewallRuleItemAction string
+
+// ServerFirewallRuleItemDirection Traffic direction to which the rule applies.
+type ServerFirewallRuleItemDirection string
+
+// ServerFirewallRuleItemFamily IP address family. Required when protocol, addresses, ports, or ICMP type are specified.
+type ServerFirewallRuleItemFamily string
+
+// ServerFirewallRuleItemProtocol Network protocol to match.
+type ServerFirewallRuleItemProtocol string
+
+// ServerFirewallRulePort defines model for serverFirewallRulePort.
+type ServerFirewallRulePort = string
+
+// ServerFirewallRuleRequirements defines model for serverFirewallRuleRequirements.
+type ServerFirewallRuleRequirements = interface{}
+
+// ServerFirewallRuleResponseItem A firewall rule with its position in the Cloud Server's rule chain.
+type ServerFirewallRuleResponseItem struct {
+	// Action Action taken when the rule matches.
+	Action ServerFirewallRuleResponseItemAction `json:"action"`
+
+	// Comment Free-form rule description.
+	Comment string `json:"comment"`
+
+	// DestinationAddressEnd Last destination IP address in the matched range, or an empty string when unrestricted.
+	DestinationAddressEnd string `json:"destination_address_end"`
+
+	// DestinationAddressStart First destination IP address in the matched range, or an empty string when unrestricted.
+	DestinationAddressStart string `json:"destination_address_start"`
+
+	// DestinationPortEnd Last destination port in the matched range, or an empty string when unrestricted.
+	DestinationPortEnd string `json:"destination_port_end"`
+
+	// DestinationPortStart First destination port in the matched range, or an empty string when unrestricted.
+	DestinationPortStart string `json:"destination_port_start"`
+
+	// Direction Traffic direction to which the rule applies.
+	Direction ServerFirewallRuleResponseItemDirection `json:"direction"`
+
+	// Family IP address family, or an empty string when unrestricted.
+	Family ServerFirewallRuleResponseItemFamily `json:"family"`
+
+	// IcmpType ICMP packet type, or an empty string when unrestricted.
+	IcmpType string `json:"icmp_type"`
+
+	// Position One-based position in the Cloud Server's firewall rule chain.
+	Position string `json:"position"`
+
+	// Protocol Matched network protocol, or an empty string when unrestricted.
+	Protocol ServerFirewallRuleResponseItemProtocol `json:"protocol"`
+
+	// SourceAddressEnd Last source IP address in the matched range, or an empty string when unrestricted.
+	SourceAddressEnd string `json:"source_address_end"`
+
+	// SourceAddressStart First source IP address in the matched range, or an empty string when unrestricted.
+	SourceAddressStart string `json:"source_address_start"`
+
+	// SourcePortEnd Last source port in the matched range, or an empty string when unrestricted.
+	SourcePortEnd string `json:"source_port_end"`
+
+	// SourcePortStart First source port in the matched range, or an empty string when unrestricted.
+	SourcePortStart string `json:"source_port_start"`
+}
+
+// ServerFirewallRuleResponseItemAction Action taken when the rule matches.
+type ServerFirewallRuleResponseItemAction string
+
+// ServerFirewallRuleResponseItemDirection Traffic direction to which the rule applies.
+type ServerFirewallRuleResponseItemDirection string
+
+// ServerFirewallRuleResponseItemFamily IP address family, or an empty string when unrestricted.
+type ServerFirewallRuleResponseItemFamily string
+
+// ServerFirewallRuleResponseItemProtocol Matched network protocol, or an empty string when unrestricted.
+type ServerFirewallRuleResponseItemProtocol string
+
+// ServerFirewallRules Ordered firewall rules configured for a Cloud Server.
 type ServerFirewallRules struct {
 	FirewallRules struct {
-		FirewallRule *[]struct {
-			Action                  *string `json:"action,omitempty"`
-			Comment                 *string `json:"comment,omitempty"`
-			DestinationAddressEnd   *string `json:"destination_address_end,omitempty"`
-			DestinationAddressStart *string `json:"destination_address_start,omitempty"`
-			DestinationPortEnd      *string `json:"destination_port_end,omitempty"`
-			DestinationPortStart    *string `json:"destination_port_start,omitempty"`
-			Direction               *string `json:"direction,omitempty"`
-			Family                  *string `json:"family,omitempty"`
-			IcmpType                *string `json:"icmp_type,omitempty"`
-			Protocol                *string `json:"protocol,omitempty"`
-			SourceAddressEnd        *string `json:"source_address_end,omitempty"`
-			SourceAddressStart      *string `json:"source_address_start,omitempty"`
-			SourcePortEnd           *string `json:"source_port_end,omitempty"`
-			SourcePortStart         *string `json:"source_port_start,omitempty"`
-		} `json:"firewall_rule,omitempty"`
+		FirewallRule []ServerFirewallRuleResponseItem `json:"firewall_rule"`
 	} `json:"firewall_rules"`
 }
 
-// ServerFirewallRulesetRelationship A relationship between a server and a firewall ruleset
+// ServerFirewallRulesetRelationship Relationship between a Cloud Server and a firewall ruleset.
 type ServerFirewallRulesetRelationship struct {
+	// FirewallRulesetUuid Universally unique identifier
+	FirewallRulesetUuid ServerUuid `json:"firewall_ruleset_uuid"`
+
+	// ServerUuid Universally unique identifier
+	ServerUuid ServerUuid `json:"server_uuid"`
+
+	// Type Network interface class to which the ruleset applies.
+	Type ServerFirewallRulesetRelationshipType `json:"type"`
+}
+
+// ServerFirewallRulesetRelationshipType Network interface class to which the ruleset applies.
+type ServerFirewallRulesetRelationshipType string
+
+// ServerFirewallRulesetRelationshipDetails Detailed private firewall ruleset relationship for a Cloud Server.
+type ServerFirewallRulesetRelationshipDetails struct {
+	// AppliedVersion Ruleset version most recently applied to the Cloud Server.
+	AppliedVersion *int `json:"applied_version"`
+
 	// CreatedAt Datetime in RFC 3339 format
 	//
 	// Examples: 2026-07-01T00:00:00Z, 2026-07-31T23:59:59Z
-	CreatedAt *ServerRfc3339Datetime `json:"created_at,omitempty"`
+	CreatedAt ServerRfc3339Datetime `json:"created_at"`
 
 	// FirewallRulesetUuid Universally unique identifier
-	FirewallRulesetUuid *ServerUuid `json:"firewall_ruleset_uuid,omitempty"`
-	LastAppliedAt       *string     `json:"last_applied_at,omitempty"`
+	FirewallRulesetUuid ServerUuid `json:"firewall_ruleset_uuid"`
+
+	// LastAppliedAt Time when this ruleset was last applied, or null if it has not been applied.
+	LastAppliedAt *ServerRfc3339Datetime `json:"last_applied_at"`
 
 	// ServerUuid Universally unique identifier
-	ServerUuid *ServerUuid `json:"server_uuid,omitempty"`
-	Type       *string     `json:"type,omitempty"`
-	UpdatedAt  *string     `json:"updated_at,omitempty"`
-	Version    *string     `json:"version,omitempty"`
+	ServerUuid ServerUuid `json:"server_uuid"`
+
+	// Type Network interface class to which the ruleset applies.
+	Type ServerFirewallRulesetRelationshipDetailsType `json:"type"`
+
+	// UpdatedAt Time when the relationship was last updated, or null if it has not been updated.
+	UpdatedAt *ServerRfc3339Datetime `json:"updated_at"`
+
+	// Version Ruleset version selected for the relationship.
+	Version int `json:"version"`
 }
 
-// ServerFirewallRulesetRelationships Private firewall ruleset relationships for a server
+// ServerFirewallRulesetRelationshipDetailsType Network interface class to which the ruleset applies.
+type ServerFirewallRulesetRelationshipDetailsType string
+
+// ServerFirewallRulesetRelationshipInternal Firewall ruleset relationship with Unix timestamps.
+type ServerFirewallRulesetRelationshipInternal struct {
+	AppliedVersion *int `json:"applied_version"`
+	CreatedAt      int  `json:"created_at"`
+
+	// FirewallRulesetUuid Universally unique identifier
+	FirewallRulesetUuid ServerUuid `json:"firewall_ruleset_uuid"`
+	LastAppliedAt       *int       `json:"last_applied_at"`
+
+	// ServerUuid Universally unique identifier
+	ServerUuid ServerUuid                                    `json:"server_uuid"`
+	Type       ServerFirewallRulesetRelationshipInternalType `json:"type"`
+	UpdatedAt  *int                                          `json:"updated_at"`
+	Version    int                                           `json:"version"`
+}
+
+// ServerFirewallRulesetRelationshipInternalType defines model for ServerFirewallRulesetRelationshipInternal.Type.
+type ServerFirewallRulesetRelationshipInternalType string
+
+// ServerFirewallRulesetRelationships Private firewall ruleset relationships for a Cloud Server.
 type ServerFirewallRulesetRelationships struct {
 	FirewallRulesetRelationships struct {
-		Private []ServerFirewallRulesetRelationship `json:"private"`
+		// Private Private firewall rulesets attached to the Cloud Server.
+		Private []ServerFirewallRulesetRelationshipDetails `json:"private"`
 	} `json:"firewall_ruleset_relationships"`
 }
 
-// ServerGpus Schema for GPU information
+// ServerGpus GPUs attached to a Cloud Server. The array is empty when no GPUs are attached.
 type ServerGpus struct {
-	Gpus *[]struct {
-		// Cores Number of cores in the GPU
-		Cores int32 `json:"cores"`
+	Gpus []struct {
+		// Cores Number of processing cores in the GPU
+		Cores *int32 `json:"cores,omitempty"`
 
 		// Firmware Firmware version of the GPU
 		Firmware *string `json:"firmware,omitempty"`
 
 		// MemoryGib Memory size of the GPU in GiB
-		MemoryGib int32 `json:"memory_gib"`
+		MemoryGib *int32 `json:"memory_gib,omitempty"`
 
 		// Model Model name of the GPU
 		Model string `json:"model"`
@@ -1351,17 +2270,88 @@ type ServerGpus struct {
 
 		// Serial Serial number of the GPU
 		Serial *string `json:"serial,omitempty"`
-	} `json:"gpus,omitempty"`
+	} `json:"gpus"`
 }
 
-// ServerHostname Server hostname
+// ServerHostname Cloud Server hostname
 type ServerHostname = string
 
-// ServerInterface Network interface
+// ServerInGetServerList Schema for a Cloud Server item returned in Cloud Server list responses.
+type ServerInGetServerList struct {
+	// CoreNumber Number of CPU cores allocated to the Cloud Server.
+	CoreNumber string `json:"core_number"`
+
+	// Created Creation timestamp (Unix epoch time)
+	Created ServerCreated `json:"created"`
+
+	// Host Encoded Private Cloud host ID
+	//
+	// Examples: 7653311107
+	Host *ServerEncodedHostId `json:"host,omitempty"`
+
+	// Hostname Hostname configured for the Cloud Server.
+	Hostname string `json:"hostname"`
+
+	// Labels Labels assigned to the Cloud Server.
+	Labels *struct {
+		Label *[]ServerLabel `json:"label,omitempty"`
+	} `json:"labels,omitempty"`
+
+	// License Hourly operating system license charge in credits.
+	License string `json:"license"`
+
+	// MemoryAmount Amount of memory allocated to the Cloud Server, in MiB.
+	MemoryAmount string `json:"memory_amount"`
+
+	// Plan Server plan identifier
+	//
+	// Examples: 1xCPU-1GB, DEV-1xCPU-4GB, CLOUDNATIVE-1xCPU-8GB, GPU-12xCPU-128GB-2xL40S
+	Plan *ServerPlanName `json:"plan,omitempty"`
+
+	// PlanIpv4Bytes Public IPv4 outbound traffic used during the current billing month, in bytes.
+	PlanIpv4Bytes *string `json:"plan_ipv4_bytes,omitempty"`
+
+	// PlanIpv6Bytes Public IPv6 outbound traffic used during the current billing month, in bytes.
+	PlanIpv6Bytes *string `json:"plan_ipv6_bytes,omitempty"`
+
+	// Progress Progress percentage for an operation that places the Cloud Server in maintenance state.
+	Progress *string `json:"progress,omitempty"`
+
+	// ServerGroup UUID of the server group containing the Cloud Server, or null when the Cloud Server is not in a group.
+	ServerGroup *ServerServerGroup `json:"server_group,omitempty"`
+
+	// SimpleBackup Simple backup start time in UTC and frequency, separated by a comma, or no to disable
+	//
+	// Examples: 0100,dailies, no
+	SimpleBackup *ServerSimpleBackup `json:"simple_backup,omitempty"`
+
+	// State Current state of the Cloud Server
+	State ServerState `json:"state"`
+
+	// Tags tags can be an empty array or an object with a tag array
+	Tags *ServerTags `json:"tags,omitempty"`
+
+	// Title Display title of the Cloud Server.
+	Title string `json:"title"`
+
+	// Uuid Universally unique identifier
+	Uuid ServerUuid `json:"uuid"`
+
+	// Zone Zone identifier
+	//
+	// Examples: fi-hel1, de-fra1, us-nyc1
+	Zone ServerZone `json:"zone"`
+}
+
+// ServerInterface Network interface attached to a Cloud Server
 type ServerInterface struct {
 	// Bootable Boolean value represented as yes/no
-	Bootable    *ServerBooleanYesno `json:"bootable,omitempty"`
-	Index       *int32              `json:"index,omitempty"`
+	Bootable *ServerBooleanYesno `json:"bootable,omitempty"`
+
+	// Index Index that identifies and orders the interface
+	Index *int32 `json:"index,omitempty"`
+
+	// IpAddresses IP addresses attached to the interface
 	IpAddresses *struct {
 		IpAddress []ServerInterfaceIpAddress `json:"ip_address"`
 	} `json:"ip_addresses,omitempty"`
@@ -1391,15 +2381,15 @@ type ServerInterfaceIpAddress struct {
 	Family ServerIpFamily `json:"family"`
 
 	// Floating Boolean value represented as yes/no
-	Floating ServerBooleanYesno `json:"floating"`
+	Floating *ServerBooleanYesno `json:"floating,omitempty"`
 
-	// ReleasePolicy IP Release policy defines what happens to the address when the referencing resource is deleted
+	// ReleasePolicy Action taken when the resource using the address is deleted: release deletes the address, while keep preserves it as a detached floating IP address
 	ReleasePolicy *ServerIpReleasePolicy `json:"release_policy,omitempty"`
 }
 
 // ServerInterfaceResponse Network interface response
 type ServerInterfaceResponse struct {
-	// Interface Network interface
+	// Interface Network interface attached to a Cloud Server
 	Interface ServerInterface `json:"interface"`
 }
 
@@ -1420,49 +2410,69 @@ type ServerIpAddressInterfaceResponse struct {
 	IpAddress ServerInterfaceIpAddress `json:"ip_address"`
 }
 
-// ServerIpAddresses IP addresses assigned to the server
+// ServerIpAddresses IP addresses assigned to the Cloud Server
 type ServerIpAddresses struct {
 	IpAddress []struct {
 		// Access Network access type
 		Access ServerNetworkType `json:"access"`
 
+		// Address IP address
+		Address *ServerIpAddress `json:"address,omitempty"`
+
 		// Family IP address family
 		Family ServerIpFamily `json:"family"`
-		VlanId *string        `json:"vlan_id,omitempty"`
+
+		// Prefix Network prefix length of the IP address
+		Prefix *string `json:"prefix,omitempty"`
 	} `json:"ip_address"`
 }
 
 // ServerIpFamily IP address family
 type ServerIpFamily string
 
-// ServerIpReleasePolicy IP Release policy defines what happens to the address when the referencing resource is deleted
+// ServerIpReleasePolicy Action taken when the resource using the address is deleted: release deletes the address, while keep preserves it as a detached floating IP address
 type ServerIpReleasePolicy string
 
 // ServerLabel A key/value pair to label and categorize resources
 type ServerLabel struct {
-	Key   string `json:"key"`
+	// Key Label key used to classify the resource
+	Key string `json:"key"`
+
+	// Value Value associated with the label key
 	Value string `json:"value"`
 }
 
-// ServerLabels Server labels
+// ServerLabels Cloud Server labels
 type ServerLabels struct {
 	Label *[]ServerLabel `json:"label,omitempty"`
 }
 
-// ServerLoadCdrom Schema for loading a CD-ROM into a server
+// ServerLegacyBoolean Boolean value accepted by the legacy API
+type ServerLegacyBoolean string
+
+// ServerLimit Maximum number of items to return. Default is 25.
+//
+// Examples: 25, 50, 100
+type ServerLimit = int
+
+// ServerLoadCdrom Parameters for loading a storage into a Cloud Server's CD-ROM device.
 type ServerLoadCdrom struct {
+	// StorageDevice Storage to load into the attached CD-ROM device.
 	StorageDevice struct {
-		Storage *string `json:"storage,omitempty"`
+		// Storage Universally unique identifier
+		Storage ServerUuid `json:"storage"`
 	} `json:"storage_device"`
 }
 
-// ServerLoginUser Login user configuration for server creation
+// ServerLoginUser Login user configuration for Cloud Server creation
 type ServerLoginUser struct {
 	// CreatePassword Boolean value represented as yes/no
 	CreatePassword *ServerBooleanYesno `json:"create_password,omitempty"`
 	SshKeys        *struct {
-		SshKey *[]string `json:"ssh_key,omitempty"`
+		SshKey []string `json:"ssh_key"`
 	} `json:"ssh_keys,omitempty"`
+
+	// Username Username for logging in to the Cloud Server
 	Username *string `json:"username,omitempty"`
 }
 
@@ -1476,8 +2486,12 @@ type ServerMemoryAmount = int32
 type ServerModifyInterface struct {
 	Interface struct {
 		// Bootable Boolean value represented as yes/no
-		Bootable    *ServerBooleanYesno `json:"bootable,omitempty"`
-		Index       *int32              `json:"index,omitempty"`
+		Bootable *ServerBooleanYesno `json:"bootable,omitempty"`
+
+		// Index New index for the interface; defaults to the index in the request path
+		Index *int32 `json:"index,omitempty"`
+
+		// IpAddresses Complete replacement list of IP addresses for the interface
 		IpAddresses *struct {
 			IpAddress []struct {
 				// Address IP address
@@ -1487,79 +2501,88 @@ type ServerModifyInterface struct {
 				DhcpProvided *ServerBooleanYesno `json:"dhcp_provided,omitempty"`
 
 				// Family IP address family
-				Family *ServerIpFamily `json:"family,omitempty"`
+				Family ServerIpFamily `json:"family"`
 			} `json:"ip_address"`
 		} `json:"ip_addresses,omitempty"`
 
-		// Mac MAC address
-		Mac *ServerMacAddress `json:"mac,omitempty"`
-
-		// Network Universally unique identifier
-		Network *ServerUuid `json:"network,omitempty"`
-
 		// SourceIpFiltering Boolean value represented as yes/no
 		SourceIpFiltering *ServerBooleanYesno `json:"source_ip_filtering,omitempty"`
-
-		// Type Network access type
-		Type *ServerNetworkType `json:"type,omitempty"`
 	} `json:"interface"`
 }
 
-// ServerNetworkStats Schema for network statistics response payloads.
+// ServerNetworkStats Aggregate inbound and outbound network statistics grouped by period
 type ServerNetworkStats struct {
-	Stats *struct {
+	Stats struct {
 		Daily *struct {
-			// Summary Schema for summarized network statistics values.
-			Summary *ServerNetworkStatsSummary `json:"summary,omitempty"`
+			// Summary Summarized inbound and outbound network statistics values.
+			Summary ServerNetworkStatsSummary `json:"summary"`
 		} `json:"daily,omitempty"`
 		Monthly *struct {
-			// Summary Schema for summarized network statistics values.
-			Summary *ServerNetworkStatsSummary `json:"summary,omitempty"`
+			// Summary Summarized inbound and outbound network statistics values.
+			Summary ServerNetworkStatsSummary `json:"summary"`
 		} `json:"monthly,omitempty"`
 		Weekly *struct {
-			// Summary Schema for summarized network statistics values.
-			Summary *ServerNetworkStatsSummary `json:"summary,omitempty"`
+			// Summary Summarized inbound and outbound network statistics values.
+			Summary ServerNetworkStatsSummary `json:"summary"`
 		} `json:"weekly,omitempty"`
-	} `json:"stats,omitempty"`
+		Yearly *struct {
+			// Summary Summarized inbound and outbound network statistics values.
+			Summary ServerNetworkStatsSummary `json:"summary"`
+		} `json:"yearly,omitempty"`
+	} `json:"stats"`
 }
 
-// ServerNetworkStatsSummary Schema for summarized network statistics values.
+// ServerNetworkStatsSummary Summarized inbound and outbound network statistics values.
 type ServerNetworkStatsSummary struct {
-	Variable *[]struct {
+	Variable []struct {
+		// Average Average bit rate or packet rate during the period.
 		Average string `json:"average"`
+
+		// Current Most recent bit rate or packet rate.
 		Current string `json:"current"`
-		Maximum string `json:"maximum"`
-		Title   string `json:"title"`
-		Total   string `json:"total"`
-	} `json:"variable,omitempty"`
+
+		// Maximum Maximum bit rate or packet rate during the period.
+		Maximum string                                 `json:"maximum"`
+		Title   ServerNetworkStatsSummaryVariableTitle `json:"title"`
+
+		// Total Total transferred data or packets during the period.
+		Total string `json:"total"`
+	} `json:"variable"`
 }
+
+// ServerNetworkStatsSummaryVariableTitle defines model for ServerNetworkStatsSummary.Variable.Title.
+type ServerNetworkStatsSummaryVariableTitle string
 
 // ServerNetworkType Network access type
 type ServerNetworkType string
 
-// ServerNetworking Network configuration for the server
+// ServerNetworking Network interfaces configured for the Cloud Server
 type ServerNetworking struct {
+	// Interfaces Network interfaces attached to the Cloud Server
 	Interfaces *struct {
+		// Interface Network interfaces ordered by interface index
 		Interface []ServerInterface `json:"interface"`
 	} `json:"interfaces,omitempty"`
 }
 
-// ServerNetworkingResponse Server networking response
+// ServerNetworkingResponse Cloud Server networking response
 type ServerNetworkingResponse struct {
-	// Networking Network configuration for the server
+	// Networking Network interfaces configured for the Cloud Server
 	Networking ServerNetworking `json:"networking"`
 }
 
 // ServerNicModel Network interface card model
 type ServerNicModel string
 
-// ServerOsType Operating system type
-type ServerOsType string
+// ServerOffset Number of items to skip before starting to return results. Default is 0.
+//
+// Examples: 0, 25, 50, 100
+type ServerOffset = int
 
 // ServerPasswordDelivery Password delivery method
 type ServerPasswordDelivery = string
 
-// ServerPlan Server plan name
+// ServerPlan Cloud Server plan name
 type ServerPlan = string
 
 // ServerPlanName Server plan identifier
@@ -1570,61 +2593,79 @@ type ServerPlanName = string
 // ServerReason Schema for reason strings used in API payloads.
 type ServerReason = string
 
-// ServerRebuild Schema for rebuilding a server
+// ServerRebuild Rebuild Cloud Server request
 type ServerRebuild struct {
-	ServerRebuild *struct {
-		CloneSource        openapi_types.UUID  `json:"clone_source"`
-		DeleteDetachedDisk *bool               `json:"delete_detached_disk,omitempty"`
-		DetachDisk         *openapi_types.UUID `json:"detach_disk,omitempty"`
-		Encrypted          *bool               `json:"encrypted,omitempty"`
-		LoginUser          struct {
-			CreatePassword *bool `json:"create_password,omitempty"`
+	ServerRebuild struct {
+		// CloneSource UUID of the public template used for the new system disk.
+		CloneSource openapi_types.UUID `json:"clone_source"`
+
+		// DeleteDetachedDisk Boolean value accepted by the legacy API
+		DeleteDetachedDisk *ServerLegacyBoolean `json:"delete_detached_disk,omitempty"`
+
+		// DetachDisk UUID of the storage to detach before rebuilding.
+		DetachDisk *openapi_types.UUID `json:"detach_disk,omitempty"`
+
+		// Encrypted Boolean value accepted by the legacy API
+		Encrypted *ServerLegacyBoolean `json:"encrypted,omitempty"`
+		LoginUser *struct {
+			// CreatePassword Boolean value accepted by the legacy API
+			CreatePassword *ServerLegacyBoolean `json:"create_password,omitempty"`
 			SshKeys        *struct {
-				SshKey *[]string `json:"ssh_key,omitempty"`
+				// SshKey SSH public keys in OpenSSH format.
+				SshKey []string `json:"ssh_key"`
 			} `json:"ssh_keys,omitempty"`
+
+			// Username Login username.
 			Username *string `json:"username,omitempty"`
-		} `json:"login_user"`
+		} `json:"login_user,omitempty"`
+
+		// PasswordDelivery One-time password delivery method.
 		PasswordDelivery *ServerRebuildServerRebuildPasswordDelivery `json:"password_delivery,omitempty"`
-		StorateTitle     *string                                     `json:"storate_title,omitempty"`
-	} `json:"server_rebuild,omitempty"`
+
+		// StorageTitle Title of the new system storage.
+		StorageTitle *string `json:"storage_title,omitempty"`
+
+		// UserData User data supplied to cloud-init.
+		UserData *string `json:"user_data,omitempty"`
+	} `json:"server_rebuild"`
 }
 
-// ServerRebuildServerRebuildPasswordDelivery defines model for ServerRebuild.ServerRebuild.PasswordDelivery.
+// ServerRebuildServerRebuildPasswordDelivery One-time password delivery method.
 type ServerRebuildServerRebuildPasswordDelivery string
 
-// ServerRemoteAccessDetails Remote access details for the server
+// ServerRemoteAccessDetails Remote access settings and VNC connection details for a Cloud Server
 type ServerRemoteAccessDetails struct {
-	Server *struct {
-		// RemoteAccessEnabled Schema for remote access enabled flag values.
-		RemoteAccessEnabled *ServerRemoteAccessEnabled `json:"remote_access_enabled,omitempty"`
+	Server struct {
+		// RemoteAccessEnabled Whether remote access is enabled
+		RemoteAccessEnabled ServerRemoteAccessEnabled `json:"remote_access_enabled"`
 
-		// RemoteAccessPassword Schema for remote access password values.
-		RemoteAccessPassword *ServerRemoteAccessPassword `json:"remote_access_password,omitempty"`
+		// RemoteAccessPassword Eight-character alphanumeric password used to authenticate remote access
+		RemoteAccessPassword ServerRemoteAccessPassword `json:"remote_access_password"`
 
-		// RemoteAccessType Schema for remote access type values.
-		RemoteAccessType *ServerRemoteAccessType `json:"remote_access_type,omitempty"`
+		// RemoteAccessType Protocol used for remote access
+		RemoteAccessType ServerRemoteAccessType `json:"remote_access_type"`
 
-		// State Current state of the server
-		State *ServerState `json:"state,omitempty"`
+		// State Current state of the Cloud Server
+		State ServerState `json:"state"`
 
-		// VncHost Schema for VNC host values.
-		VncHost *ServerVncHost `json:"vnc_host,omitempty"`
+		// VncHost VNC host IP address or noVNC proxy hostname. Empty when no VNC endpoint is assigned.
+		VncHost ServerVncHost `json:"vnc_host"`
 
 		// VncPassword VNC password
-		VncPassword *ServerVncPassword `json:"vnc_password,omitempty"`
+		VncPassword ServerVncPassword `json:"vnc_password"`
 
-		// VncPort VNC port number
-		VncPort *ServerVncPort `json:"vnc_port,omitempty"`
-	} `json:"server,omitempty"`
+		// VncPort VNC or noVNC proxy port. Empty when no VNC endpoint is assigned.
+		VncPort ServerVncPort `json:"vnc_port"`
+	} `json:"server"`
 }
 
-// ServerRemoteAccessEnabled Schema for remote access enabled flag values.
+// ServerRemoteAccessEnabled Whether remote access is enabled
 type ServerRemoteAccessEnabled string
 
-// ServerRemoteAccessPassword Schema for remote access password values.
+// ServerRemoteAccessPassword Eight-character alphanumeric password used to authenticate remote access
 type ServerRemoteAccessPassword = string
 
-// ServerRemoteAccessType Schema for remote access type values.
+// ServerRemoteAccessType Protocol used for remote access
 type ServerRemoteAccessType string
 
 // ServerRfc3339Datetime Datetime in RFC 3339 format
@@ -1632,37 +2673,106 @@ type ServerRemoteAccessType string
 // Examples: 2026-07-01T00:00:00Z, 2026-07-31T23:59:59Z
 type ServerRfc3339Datetime = time.Time
 
-// ServerServerGroup UUID string or null
+// ServerServerGroup UUID of the server group containing the Cloud Server, or null when the Cloud Server is not in a group.
 type ServerServerGroup = string
 
-// ServerSimpleBackup HHMM, with dailies, weeklies, or monthlies option separated by comma, or no
+// ServerSimpleBackup Simple backup start time in UTC and frequency, separated by a comma, or no to disable
+//
+// Examples: 0100,dailies, no
 type ServerSimpleBackup = string
 
-// ServerState Current state of the server
+// ServerState Current state of the Cloud Server
 type ServerState string
 
-// ServerStatsNetworkType Schema for network statistics type values.
+// ServerStatsNetworkType Unit used to measure network activity.
 type ServerStatsNetworkType string
 
 // ServerStatsPeriod The period for which statistics are calculated.
 type ServerStatsPeriod string
 
-// ServerStorageDevices Storage devices attached to the server
+// ServerStorageDevices Storage devices to create or attach to the Cloud Server
 type ServerStorageDevices struct {
-	StorageDevice *[]struct {
-		Action     *string `json:"action,omitempty"`
+	StorageDevice []struct {
+		// Action Method used to create, clone, or attach storage for the device
+		Action ServerStorageDevicesStorageDeviceAction `json:"action"`
+
+		// Address Device address on the Cloud Server
 		Address    *string `json:"address,omitempty"`
-		BackupRule *string `json:"backup_rule,omitempty"`
-		Size       *string `json:"size,omitempty"`
-		Storage    *string `json:"storage,omitempty"`
-		Tier       *string `json:"tier,omitempty"`
-		Title      *string `json:"title,omitempty"`
-		Type       *string `json:"type,omitempty"`
-	} `json:"storage_device,omitempty"`
+		BackupRule *struct {
+			// Interval Backup weekday, or daily to create a backup every day
+			Interval *string `json:"interval,omitempty"`
+
+			// Retention Number of days before an automatic backup is deleted
+			Retention *int `json:"retention,omitempty"`
+
+			// Time UTC backup start time in HHMM format
+			Time *string `json:"time,omitempty"`
+		} `json:"backup_rule,omitempty"`
+
+		// Encrypted Boolean value represented as yes/no
+		Encrypted *ServerBooleanYesno `json:"encrypted,omitempty"`
+		Labels    *[]ServerLabel      `json:"labels,omitempty"`
+
+		// Size Requested block storage size in gigabytes
+		Size *int `json:"size,omitempty"`
+
+		// Storage UUID of the storage resource to attach or clone
+		Storage *string `json:"storage,omitempty"`
+
+		// Tier Performance and pricing tier of the block storage
+		Tier *string `json:"tier,omitempty"`
+
+		// Title Short informational description of the block storage
+		Title *string `json:"title,omitempty"`
+
+		// Type Storage device type: disk or cdrom
+		Type *string `json:"type,omitempty"`
+	} `json:"storage_device"`
 }
 
-// ServerStorageSizeFactor Storage size multiplication factor
-type ServerStorageSizeFactor = string
+// ServerStorageDevicesStorageDeviceAction Method used to create, clone, or attach storage for the device
+type ServerStorageDevicesStorageDeviceAction string
+
+// ServerStorageDevicesResponse Storage devices attached to a Cloud Server
+type ServerStorageDevicesResponse struct {
+	StorageDevice []struct {
+		// Address Device address on the Cloud Server.
+		Address string `json:"address"`
+
+		// BootDisk Whether this device is the Cloud Server's boot disk, encoded as 0 or 1.
+		BootDisk ServerStorageDevicesResponseStorageDeviceBootDisk `json:"boot_disk"`
+
+		// Labels Labels assigned to the storage resource.
+		Labels []ServerLabel `json:"labels"`
+
+		// PartOfPlan Boolean value represented as yes/no
+		PartOfPlan *ServerBooleanYesno `json:"part_of_plan,omitempty"`
+
+		// Storage Storage resource UUID. Empty for an unloaded CD-ROM device.
+		Storage string `json:"storage"`
+
+		// StorageEncrypted Boolean value represented as yes/no
+		StorageEncrypted ServerBooleanYesno `json:"storage_encrypted"`
+
+		// StorageSize Storage resource size in gibibytes.
+		StorageSize int `json:"storage_size"`
+
+		// StorageTier Storage resource performance tier.
+		StorageTier *string `json:"storage_tier,omitempty"`
+
+		// StorageTitle Storage resource title.
+		StorageTitle string `json:"storage_title"`
+
+		// Type Attached device type.
+		Type ServerStorageDevicesResponseStorageDeviceType `json:"type"`
+	} `json:"storage_device"`
+}
+
+// ServerStorageDevicesResponseStorageDeviceBootDisk Whether this device is the Cloud Server's boot disk, encoded as 0 or 1.
+type ServerStorageDevicesResponseStorageDeviceBootDisk string
+
+// ServerStorageDevicesResponseStorageDeviceType Attached device type.
+type ServerStorageDevicesResponseStorageDeviceType string
 
 // ServerTagList One or more tag names. Use commas to match any tag, or colons to require all tags.
 type ServerTagList = string
@@ -1680,13 +2790,21 @@ type ServerTags1 struct {
 	Tag []string `json:"tag"`
 }
 
-// ServerTimezone Server timezone
+// ServerTimezone Cloud Server timezone
 type ServerTimezone = string
 
-// ServerTitle Server title
+// ServerTitle Cloud Server title
 type ServerTitle = string
 
-// ServerUserData User data (cloud-init script) to run on server creation
+// ServerUpdateFirewallRules Complete replacement for a Cloud Server's firewall rule chain. Array order determines rule positions.
+type ServerUpdateFirewallRules struct {
+	FirewallRules struct {
+		// FirewallRule Ordered firewall rules. Supplying an empty array removes all rules.
+		FirewallRule []ServerFirewallRuleItem `json:"firewall_rule"`
+	} `json:"firewall_rules"`
+}
+
+// ServerUserData Setup script body or URL processed during Cloud Server initialization
 type ServerUserData = string
 
 // ServerUserName Username for an account.
@@ -1698,10 +2816,7 @@ type ServerUuid = openapi_types.UUID
 // ServerVideoModel Video adapter model
 type ServerVideoModel = string
 
-// ServerVnc VNC enabled status (yes/no)
-type ServerVnc = string
-
-// ServerVncHost Schema for VNC host values.
+// ServerVncHost VNC host IP address or noVNC proxy hostname. Empty when no VNC endpoint is assigned.
 type ServerVncHost = string
 
 // ServerVncKeymap VNC keyboard layout
@@ -1710,40 +2825,65 @@ type ServerVncKeymap = string
 // ServerVncPassword VNC password
 type ServerVncPassword = string
 
-// ServerVncPort VNC port number
-type ServerVncPort = int32
+// ServerVncPort VNC or noVNC proxy port. Empty when no VNC endpoint is assigned.
+type ServerVncPort struct {
+	union json.RawMessage
+}
+
+// ServerVncPort0 defines model for ServerVncPort.0.
+type ServerVncPort0 = int32
+
+// ServerVncPort1 defines model for ServerVncPort.1.
+type ServerVncPort1 string
 
 // ServerZone Zone identifier
 //
 // Examples: fi-hel1, de-fra1, us-nyc1
 type ServerZone = string
 
-// StartServer Start server request
+// StartServer Start Cloud Server request
 type StartServer struct {
 	Server struct {
-		// AvoidHost Encoded host id
+		// AvoidHost Encoded Private Cloud host ID
+		//
+		// Examples: 7653311107
 		AvoidHost *ServerEncodedHostId `json:"avoid_host,omitempty"`
 
-		// Host Encoded host id
+		// Host Encoded Private Cloud host ID
+		//
+		// Examples: 7653311107
 		Host *ServerEncodedHostId `json:"host,omitempty"`
 
 		// Reason Schema for reason strings used in API payloads.
 		Reason *ServerReason `json:"reason,omitempty"`
+
+		// StartType Whether to wait for the Cloud Server to start.
+		StartType *StartServerServerStartType `json:"start_type,omitempty"`
 	} `json:"server"`
 }
 
-// StopServer Stop server request
+// StartServerServerStartType Whether to wait for the Cloud Server to start.
+type StartServerServerStartType string
+
+// StopServer Stop Cloud Server request
 type StopServer struct {
 	StopServer struct {
 		// Reason Schema for reason strings used in API payloads.
-		Reason   *ServerReason `json:"reason,omitempty"`
-		StopType *string       `json:"stop_type,omitempty"`
-		Timeout  *string       `json:"timeout,omitempty"`
+		Reason *ServerReason `json:"reason,omitempty"`
+
+		// StopType Type of stop operation.
+		StopType *StopServerStopServerStopType `json:"stop_type,omitempty"`
+
+		// Timeout Soft-stop timeout in seconds.
+		Timeout *string `json:"timeout,omitempty"`
 	} `json:"stop_server"`
 }
 
-// AddServerInterfaceIpAddressForce Schema for boolean-like values encoded as 0 or 1.
-type AddServerInterfaceIpAddressForce = ServerBoolean01
+// StopServerStopServerStopType Type of stop operation.
+type StopServerStopServerStopType string
+
+// AddServerInterfaceIpAddressForce Boolean value represented as yes/no
+type AddServerInterfaceIpAddressForce = ServerBooleanYesno
 
 // AddServerInterfaceIpAddressIndex defines model for addServerInterfaceIpAddressIndex.
 type AddServerInterfaceIpAddressIndex = int32
@@ -1756,6 +2896,9 @@ type AddServerInterfaceUuid = ServerUuid
 
 // CancelServerOperationUuid Universally unique identifier
 type CancelServerOperationUuid = ServerUuid
+
+// DeleteServerBackups defines model for deleteServerBackups.
+type DeleteServerBackups string
 
 // DeleteServerInterfaceIndex defines model for deleteServerInterfaceIndex.
 type DeleteServerInterfaceIndex = int32
@@ -1772,8 +2915,8 @@ type DeleteServerInterfaceIpAddressUuid = ServerUuid
 // DeleteServerInterfaceUuid Universally unique identifier
 type DeleteServerInterfaceUuid = ServerUuid
 
-// DeleteServerStorages Schema for boolean-like values encoded as 0 or 1.
-type DeleteServerStorages = ServerBoolean01
+// DeleteServerStorages Boolean value accepted by the legacy API
+type DeleteServerStorages = ServerLegacyBoolean
 
 // DeleteServerUuid Universally unique identifier
 type DeleteServerUuid = ServerUuid
@@ -1790,11 +2933,23 @@ type ListServerGPUsUuid = ServerUuid
 // ListServersDevice defines model for listServersDevice.
 type ListServersDevice = string
 
-// ListServersHost Encoded host id
+// ListServersHost Encoded Private Cloud host ID
+//
+// Examples: 7653311107
 type ListServersHost = ServerEncodedHostId
 
 // ListServersLabel defines model for listServersLabel.
 type ListServersLabel = string
+
+// ListServersLimit Maximum number of items to return. Default is 25.
+//
+// Examples: 25, 50, 100
+type ListServersLimit = ServerLimit
+
+// ListServersOffset Number of items to skip before starting to return results. Default is 0.
+//
+// Examples: 0, 25, 50, 100
+type ListServersOffset = ServerOffset
 
 // ListServersOrderBy defines model for listServersOrderBy.
 type ListServersOrderBy string
@@ -1803,7 +2958,7 @@ type ListServersOrderBy string
 type ListServersSearch = string
 
 // ListServersSortBy defines model for listServersSortBy.
-type ListServersSortBy = string
+type ListServersSortBy string
 
 // ListServersState defines model for listServersState.
 type ListServersState string
@@ -1819,6 +2974,9 @@ type ModifyServerInterfaceIndex = int32
 
 // ModifyServerInterfaceUuid Universally unique identifier
 type ModifyServerInterfaceUuid = ServerUuid
+
+// ModifyServerUuid Universally unique identifier
+type ModifyServerUuid = ServerUuid
 
 // RebuildServerUuid Universally unique identifier
 type RebuildServerUuid = ServerUuid
@@ -1889,7 +3047,7 @@ type ServerGetNetworkStatsByNetworkAndPeriodNetwork = ServerNetworkType
 // ServerGetNetworkStatsByNetworkAndPeriodPeriod The period for which statistics are calculated.
 type ServerGetNetworkStatsByNetworkAndPeriodPeriod = ServerStatsPeriod
 
-// ServerGetNetworkStatsByNetworkAndPeriodType Schema for network statistics type values.
+// ServerGetNetworkStatsByNetworkAndPeriodType Unit used to measure network activity.
 type ServerGetNetworkStatsByNetworkAndPeriodType = ServerStatsNetworkType
 
 // ServerGetNetworkStatsByNetworkAndPeriodUuid Universally unique identifier
@@ -1898,13 +3056,13 @@ type ServerGetNetworkStatsByNetworkAndPeriodUuid = ServerUuid
 // ServerGetNetworkStatsByNetworkNetwork Network access type
 type ServerGetNetworkStatsByNetworkNetwork = ServerNetworkType
 
-// ServerGetNetworkStatsByNetworkType Schema for network statistics type values.
+// ServerGetNetworkStatsByNetworkType Unit used to measure network activity.
 type ServerGetNetworkStatsByNetworkType = ServerStatsNetworkType
 
 // ServerGetNetworkStatsByNetworkUuid Universally unique identifier
 type ServerGetNetworkStatsByNetworkUuid = ServerUuid
 
-// ServerGetNetworkStatsType Schema for network statistics type values.
+// ServerGetNetworkStatsType Unit used to measure network activity.
 type ServerGetNetworkStatsType = ServerStatsNetworkType
 
 // ServerGetNetworkStatsUuid Universally unique identifier
@@ -1928,9 +3086,6 @@ type ServerListPrivateFirewallRulesetRelationshipsUuid = ServerUuid
 // ServerLoadCDROMUuid Universally unique identifier
 type ServerLoadCDROMUuid = ServerUuid
 
-// ServerUpdateFirewallRulesForceUuid Universally unique identifier
-type ServerUpdateFirewallRulesForceUuid = ServerUuid
-
 // ServerUpdateFirewallRulesUuid Universally unique identifier
 type ServerUpdateFirewallRulesUuid = ServerUuid
 
@@ -1949,7 +3104,7 @@ type AddServerInterface400 = ServerError400
 // AddServerInterface403 Forbidden error
 type AddServerInterface403 = ServerError403
 
-// AddServerInterface404 Schema for server 404 error responses.
+// AddServerInterface404 Schema for Cloud Server 404 error responses.
 type AddServerInterface404 = ServerError404
 
 // AddServerInterface409 Conflict error
@@ -1967,7 +3122,7 @@ type AddServerInterfaceIpAddress400 = ServerError400
 // AddServerInterfaceIpAddress403 Forbidden error
 type AddServerInterfaceIpAddress403 = ServerError403
 
-// AddServerInterfaceIpAddress404 Schema for server 404 error responses.
+// AddServerInterfaceIpAddress404 Schema for Cloud Server 404 error responses.
 type AddServerInterfaceIpAddress404 = ServerError404
 
 // AddServerInterfaceIpAddress409 Conflict error
@@ -1982,7 +3137,7 @@ type CancelServerOperation400 = ServerError400
 // CancelServerOperation403 Forbidden error
 type CancelServerOperation403 = ServerError403
 
-// CancelServerOperation404 Schema for server 404 error responses.
+// CancelServerOperation404 Schema for Cloud Server 404 error responses.
 type CancelServerOperation404 = ServerError404
 
 // CancelServerOperation409 Conflict error
@@ -1991,7 +3146,7 @@ type CancelServerOperation409 = ServerError409
 // CancelServerOperationDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type CancelServerOperationDefault = ServerError
 
-// CreateServer202 Response schema for creating a server
+// CreateServer202 Newly created Cloud Server and optional one-time login credentials
 type CreateServer202 = CreateServerResponse
 
 // CreateServer400 Bad request error
@@ -2000,7 +3155,7 @@ type CreateServer400 = ServerError400
 // CreateServer403 Forbidden error
 type CreateServer403 = ServerError403
 
-// CreateServer404 Schema for server 404 error responses.
+// CreateServer404 Schema for Cloud Server 404 error responses.
 type CreateServer404 = ServerError404
 
 // CreateServer409 Conflict error
@@ -2008,6 +3163,18 @@ type CreateServer409 = ServerError409
 
 // CreateServerDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type CreateServerDefault = ServerError
+
+// DeleteServer400 Bad request error
+type DeleteServer400 = ServerError400
+
+// DeleteServer403 Forbidden error
+type DeleteServer403 = ServerError403
+
+// DeleteServer404 Schema for Cloud Server 404 error responses.
+type DeleteServer404 = ServerError404
+
+// DeleteServer409 Conflict error
+type DeleteServer409 = ServerError409
 
 // DeleteServerDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type DeleteServerDefault = ServerError
@@ -2018,8 +3185,11 @@ type DeleteServerInterface400 = ServerError400
 // DeleteServerInterface403 Forbidden error
 type DeleteServerInterface403 = ServerError403
 
-// DeleteServerInterface404 Schema for server 404 error responses.
+// DeleteServerInterface404 Schema for Cloud Server 404 error responses.
 type DeleteServerInterface404 = ServerError404
+
+// DeleteServerInterface409 Conflict error
+type DeleteServerInterface409 = ServerError409
 
 // DeleteServerInterfaceDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type DeleteServerInterfaceDefault = ServerError
@@ -2030,7 +3200,7 @@ type DeleteServerInterfaceIpAddress400 = ServerError400
 // DeleteServerInterfaceIpAddress403 Forbidden error
 type DeleteServerInterfaceIpAddress403 = ServerError403
 
-// DeleteServerInterfaceIpAddress404 Schema for server 404 error responses.
+// DeleteServerInterfaceIpAddress404 Schema for Cloud Server 404 error responses.
 type DeleteServerInterfaceIpAddress404 = ServerError404
 
 // DeleteServerInterfaceIpAddress409 Conflict error
@@ -2039,7 +3209,7 @@ type DeleteServerInterfaceIpAddress409 = ServerError409
 // DeleteServerInterfaceIpAddressDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type DeleteServerInterfaceIpAddressDefault = ServerError
 
-// GetServer200 Server object returned in responses
+// GetServer200 Cloud Server object returned in responses
 type GetServer200 = Server
 
 // GetServer400 Bad request error
@@ -2048,13 +3218,13 @@ type GetServer400 = ServerError400
 // GetServer403 Forbidden error
 type GetServer403 = ServerError403
 
-// GetServer404 Schema for server 404 error responses.
+// GetServer404 Schema for Cloud Server 404 error responses.
 type GetServer404 = ServerError404
 
 // GetServerDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type GetServerDefault = ServerError
 
-// GetServerNetworking200 Server networking response
+// GetServerNetworking200 Cloud Server networking response
 type GetServerNetworking200 = ServerNetworkingResponse
 
 // GetServerNetworking400 Bad request error
@@ -2063,13 +3233,13 @@ type GetServerNetworking400 = ServerError400
 // GetServerNetworking403 Forbidden error
 type GetServerNetworking403 = ServerError403
 
-// GetServerNetworking404 Schema for server 404 error responses.
+// GetServerNetworking404 Schema for Cloud Server 404 error responses.
 type GetServerNetworking404 = ServerError404
 
 // GetServerNetworkingDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type GetServerNetworkingDefault = ServerError
 
-// ListServerGPUs200 Schema for GPU information
+// ListServerGPUs200 GPUs attached to a Cloud Server. The array is empty when no GPUs are attached.
 type ListServerGPUs200 = ServerGpus
 
 // ListServerGPUs400 Bad request error
@@ -2078,13 +3248,13 @@ type ListServerGPUs400 = ServerError400
 // ListServerGPUs403 Forbidden error
 type ListServerGPUs403 = ServerError403
 
-// ListServerGPUs404 Schema for server 404 error responses.
+// ListServerGPUs404 Schema for Cloud Server 404 error responses.
 type ListServerGPUs404 = ServerError404
 
 // ListServerGPUsDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ListServerGPUsDefault = ServerError
 
-// ListServers200 Schema for the server list response.
+// ListServers200 Schema for the Cloud Server list response.
 type ListServers200 = GetServerList
 
 // ListServers400 Bad request error
@@ -2093,13 +3263,16 @@ type ListServers400 = ServerError400
 // ListServers403 Forbidden error
 type ListServers403 = ServerError403
 
+// ListServers404 Schema for Cloud Server 404 error responses.
+type ListServers404 = ServerError404
+
 // ListServers409 Conflict error
 type ListServers409 = ServerError409
 
 // ListServersDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ListServersDefault = ServerError
 
-// ModifyServer202 Server object returned in responses
+// ModifyServer202 Cloud Server object returned in responses
 type ModifyServer202 = Server
 
 // ModifyServer400 Bad request error
@@ -2107,6 +3280,9 @@ type ModifyServer400 = ServerError400
 
 // ModifyServer403 Forbidden error
 type ModifyServer403 = ServerError403
+
+// ModifyServer404 Schema for Cloud Server 404 error responses.
+type ModifyServer404 = ServerError404
 
 // ModifyServer409 Conflict error
 type ModifyServer409 = ServerError409
@@ -2123,7 +3299,7 @@ type ModifyServerInterface400 = ServerError400
 // ModifyServerInterface403 Forbidden error
 type ModifyServerInterface403 = ServerError403
 
-// ModifyServerInterface404 Schema for server 404 error responses.
+// ModifyServerInterface404 Schema for Cloud Server 404 error responses.
 type ModifyServerInterface404 = ServerError404
 
 // ModifyServerInterface409 Conflict error
@@ -2132,8 +3308,8 @@ type ModifyServerInterface409 = ServerError409
 // ModifyServerInterfaceDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ModifyServerInterfaceDefault = ServerError
 
-// RebuildServer200 Detailed information about a server
-type RebuildServer200 = ServerDetails
+// RebuildServer202 Cloud Server object returned in responses
+type RebuildServer202 = Server
 
 // RebuildServer400 Bad request error
 type RebuildServer400 = ServerError400
@@ -2141,7 +3317,7 @@ type RebuildServer400 = ServerError400
 // RebuildServer403 Forbidden error
 type RebuildServer403 = ServerError403
 
-// RebuildServer404 Schema for server 404 error responses.
+// RebuildServer404 Schema for Cloud Server 404 error responses.
 type RebuildServer404 = ServerError404
 
 // RebuildServer409 Conflict error
@@ -2150,8 +3326,8 @@ type RebuildServer409 = ServerError409
 // RebuildServerDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type RebuildServerDefault = ServerError
 
-// RelocateServer200 Detailed information about a server
-type RelocateServer200 = ServerDetails
+// RelocateServer200 Cloud Server object returned in responses
+type RelocateServer200 = Server
 
 // RelocateServer400 Bad request error
 type RelocateServer400 = ServerError400
@@ -2159,7 +3335,7 @@ type RelocateServer400 = ServerError400
 // RelocateServer403 Forbidden error
 type RelocateServer403 = ServerError403
 
-// RelocateServer404 Schema for server 404 error responses.
+// RelocateServer404 Schema for Cloud Server 404 error responses.
 type RelocateServer404 = ServerError404
 
 // RelocateServer409 Conflict error
@@ -2168,8 +3344,8 @@ type RelocateServer409 = ServerError409
 // RelocateServerDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type RelocateServerDefault = ServerError
 
-// RestartServer200 Detailed information about a server
-type RestartServer200 = ServerDetails
+// RestartServer200 Cloud Server object returned in responses
+type RestartServer200 = Server
 
 // RestartServer400 Bad request error
 type RestartServer400 = ServerError400
@@ -2177,7 +3353,7 @@ type RestartServer400 = ServerError400
 // RestartServer403 Forbidden error
 type RestartServer403 = ServerError403
 
-// RestartServer404 Schema for server 404 error responses.
+// RestartServer404 Schema for Cloud Server 404 error responses.
 type RestartServer404 = ServerError404
 
 // RestartServer409 Conflict error
@@ -2186,7 +3362,7 @@ type RestartServer409 = ServerError409
 // RestartServerDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type RestartServerDefault = ServerError
 
-// ServerAttachPrivateFirewallRuleset200 A relationship between a server and a firewall ruleset
+// ServerAttachPrivateFirewallRuleset200 Relationship between a Cloud Server and a firewall ruleset.
 type ServerAttachPrivateFirewallRuleset200 = ServerFirewallRulesetRelationship
 
 // ServerAttachPrivateFirewallRuleset400 Bad request error
@@ -2195,14 +3371,17 @@ type ServerAttachPrivateFirewallRuleset400 = ServerError400
 // ServerAttachPrivateFirewallRuleset403 Forbidden error
 type ServerAttachPrivateFirewallRuleset403 = ServerError403
 
-// ServerAttachPrivateFirewallRuleset404 Schema for server 404 error responses.
+// ServerAttachPrivateFirewallRuleset404 Schema for Cloud Server 404 error responses.
 type ServerAttachPrivateFirewallRuleset404 = ServerError404
+
+// ServerAttachPrivateFirewallRuleset409 Conflict error
+type ServerAttachPrivateFirewallRuleset409 = ServerError409
 
 // ServerAttachPrivateFirewallRulesetDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ServerAttachPrivateFirewallRulesetDefault = ServerError
 
-// ServerAttachStorageDevice200 Detailed information about a server
-type ServerAttachStorageDevice200 = ServerDetails
+// ServerAttachStorageDevice200 Cloud Server object returned in responses
+type ServerAttachStorageDevice200 = Server
 
 // ServerAttachStorageDevice400 Bad request error
 type ServerAttachStorageDevice400 = ServerError400
@@ -2210,7 +3389,7 @@ type ServerAttachStorageDevice400 = ServerError400
 // ServerAttachStorageDevice403 Forbidden error
 type ServerAttachStorageDevice403 = ServerError403
 
-// ServerAttachStorageDevice404 Schema for server 404 error responses.
+// ServerAttachStorageDevice404 Schema for Cloud Server 404 error responses.
 type ServerAttachStorageDevice404 = ServerError404
 
 // ServerAttachStorageDevice409 Conflict error
@@ -2219,8 +3398,8 @@ type ServerAttachStorageDevice409 = ServerError409
 // ServerAttachStorageDeviceDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ServerAttachStorageDeviceDefault = ServerError
 
-// ServerCreateFirewallRule200 Schema for a single firewall rule object.
-type ServerCreateFirewallRule200 = ServerFirewallRule
+// ServerCreateFirewallRule201 A firewall rule with its position in the Cloud Server's rule chain.
+type ServerCreateFirewallRule201 = ServerFirewallRule
 
 // ServerCreateFirewallRule400 Bad request error
 type ServerCreateFirewallRule400 = ServerError400
@@ -2228,7 +3407,7 @@ type ServerCreateFirewallRule400 = ServerError400
 // ServerCreateFirewallRule403 Forbidden error
 type ServerCreateFirewallRule403 = ServerError403
 
-// ServerCreateFirewallRule404 Schema for server 404 error responses.
+// ServerCreateFirewallRule404 Schema for Cloud Server 404 error responses.
 type ServerCreateFirewallRule404 = ServerError404
 
 // ServerCreateFirewallRule409 Conflict error
@@ -2243,7 +3422,7 @@ type ServerDeleteFirewallRule400 = ServerError400
 // ServerDeleteFirewallRule403 Forbidden error
 type ServerDeleteFirewallRule403 = ServerError403
 
-// ServerDeleteFirewallRule404 Schema for server 404 error responses.
+// ServerDeleteFirewallRule404 Schema for Cloud Server 404 error responses.
 type ServerDeleteFirewallRule404 = ServerError404
 
 // ServerDeleteFirewallRule409 Conflict error
@@ -2252,7 +3431,7 @@ type ServerDeleteFirewallRule409 = ServerError409
 // ServerDeleteFirewallRuleDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ServerDeleteFirewallRuleDefault = ServerError
 
-// ServerDetachPrivateFirewallRuleset200 A relationship between a server and a firewall ruleset
+// ServerDetachPrivateFirewallRuleset200 Relationship between a Cloud Server and a firewall ruleset.
 type ServerDetachPrivateFirewallRuleset200 = ServerFirewallRulesetRelationship
 
 // ServerDetachPrivateFirewallRuleset400 Bad request error
@@ -2261,14 +3440,17 @@ type ServerDetachPrivateFirewallRuleset400 = ServerError400
 // ServerDetachPrivateFirewallRuleset403 Forbidden error
 type ServerDetachPrivateFirewallRuleset403 = ServerError403
 
-// ServerDetachPrivateFirewallRuleset404 Schema for server 404 error responses.
+// ServerDetachPrivateFirewallRuleset404 Schema for Cloud Server 404 error responses.
 type ServerDetachPrivateFirewallRuleset404 = ServerError404
+
+// ServerDetachPrivateFirewallRuleset409 Conflict error
+type ServerDetachPrivateFirewallRuleset409 = ServerError409
 
 // ServerDetachPrivateFirewallRulesetDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ServerDetachPrivateFirewallRulesetDefault = ServerError
 
-// ServerDetachStorageDevice200 Detailed information about a server
-type ServerDetachStorageDevice200 = ServerDetails
+// ServerDetachStorageDevice200 Cloud Server object returned in responses
+type ServerDetachStorageDevice200 = Server
 
 // ServerDetachStorageDevice400 Bad request error
 type ServerDetachStorageDevice400 = ServerError400
@@ -2276,17 +3458,20 @@ type ServerDetachStorageDevice400 = ServerError400
 // ServerDetachStorageDevice403 Forbidden error
 type ServerDetachStorageDevice403 = ServerError403
 
-// ServerDetachStorageDevice404 Schema for server 404 error responses.
+// ServerDetachStorageDevice404 Schema for Cloud Server 404 error responses.
 type ServerDetachStorageDevice404 = ServerError404
 
 // ServerDetachStorageDevice409 Conflict error
 type ServerDetachStorageDevice409 = ServerError409
 
+// ServerDetachStorageDevice511 Operation failed error
+type ServerDetachStorageDevice511 = ServerError511
+
 // ServerDetachStorageDeviceDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ServerDetachStorageDeviceDefault = ServerError
 
-// ServerEjectCDROM200 Detailed information about a server
-type ServerEjectCDROM200 = ServerDetails
+// ServerEjectCDROM200 Cloud Server object returned in responses
+type ServerEjectCDROM200 = Server
 
 // ServerEjectCDROM400 Bad request error
 type ServerEjectCDROM400 = ServerError400
@@ -2294,20 +3479,41 @@ type ServerEjectCDROM400 = ServerError400
 // ServerEjectCDROM403 Forbidden error
 type ServerEjectCDROM403 = ServerError403
 
-// ServerEjectCDROM404 Schema for server 404 error responses.
+// ServerEjectCDROM404 Schema for Cloud Server 404 error responses.
 type ServerEjectCDROM404 = ServerError404
 
 // ServerEjectCDROM409 Conflict error
 type ServerEjectCDROM409 = ServerError409
 
+// ServerEjectCDROM511 Operation failed error
+type ServerEjectCDROM511 = ServerError511
+
 // ServerEjectCDROMDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ServerEjectCDROMDefault = ServerError
 
-// ServerGetCPUStats200 Schema for CPU statistics response payloads.
+// ServerGetCPUStats200 CPU usage statistics grouped by period
 type ServerGetCPUStats200 = ServerCpuStats
 
-// ServerGetCPUStatsByPeriod200 Schema for CPU statistics response payloads.
+// ServerGetCPUStats400 Bad request error
+type ServerGetCPUStats400 = ServerError400
+
+// ServerGetCPUStats403 Forbidden error
+type ServerGetCPUStats403 = ServerError403
+
+// ServerGetCPUStats404 Schema for Cloud Server 404 error responses.
+type ServerGetCPUStats404 = ServerError404
+
+// ServerGetCPUStatsByPeriod200 CPU usage statistics grouped by period
 type ServerGetCPUStatsByPeriod200 = ServerCpuStats
+
+// ServerGetCPUStatsByPeriod400 Bad request error
+type ServerGetCPUStatsByPeriod400 = ServerError400
+
+// ServerGetCPUStatsByPeriod403 Forbidden error
+type ServerGetCPUStatsByPeriod403 = ServerError403
+
+// ServerGetCPUStatsByPeriod404 Schema for Cloud Server 404 error responses.
+type ServerGetCPUStatsByPeriod404 = ServerError404
 
 // ServerGetCPUStatsByPeriodDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ServerGetCPUStatsByPeriodDefault = ServerError
@@ -2315,11 +3521,29 @@ type ServerGetCPUStatsByPeriodDefault = ServerError
 // ServerGetCPUStatsDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ServerGetCPUStatsDefault = ServerError
 
-// ServerGetDiskStats200 Schema for disk statistics response payloads.
+// ServerGetDiskStats200 Aggregate disk read and write statistics grouped by period
 type ServerGetDiskStats200 = ServerDiskStats
 
-// ServerGetDiskStatsByPeriod200 Schema for disk statistics response payloads.
+// ServerGetDiskStats400 Bad request error
+type ServerGetDiskStats400 = ServerError400
+
+// ServerGetDiskStats403 Forbidden error
+type ServerGetDiskStats403 = ServerError403
+
+// ServerGetDiskStats404 Schema for Cloud Server 404 error responses.
+type ServerGetDiskStats404 = ServerError404
+
+// ServerGetDiskStatsByPeriod200 Aggregate disk read and write statistics grouped by period
 type ServerGetDiskStatsByPeriod200 = ServerDiskStats
+
+// ServerGetDiskStatsByPeriod400 Bad request error
+type ServerGetDiskStatsByPeriod400 = ServerError400
+
+// ServerGetDiskStatsByPeriod403 Forbidden error
+type ServerGetDiskStatsByPeriod403 = ServerError403
+
+// ServerGetDiskStatsByPeriod404 Schema for Cloud Server 404 error responses.
+type ServerGetDiskStatsByPeriod404 = ServerError404
 
 // ServerGetDiskStatsByPeriodDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ServerGetDiskStatsByPeriodDefault = ServerError
@@ -2327,7 +3551,7 @@ type ServerGetDiskStatsByPeriodDefault = ServerError
 // ServerGetDiskStatsDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ServerGetDiskStatsDefault = ServerError
 
-// ServerGetFirewallRule200 Schema for a single firewall rule object.
+// ServerGetFirewallRule200 A firewall rule with its position in the Cloud Server's rule chain.
 type ServerGetFirewallRule200 = ServerFirewallRule
 
 // ServerGetFirewallRule400 Bad request error
@@ -2336,26 +3560,53 @@ type ServerGetFirewallRule400 = ServerError400
 // ServerGetFirewallRule403 Forbidden error
 type ServerGetFirewallRule403 = ServerError403
 
-// ServerGetFirewallRule404 Schema for server 404 error responses.
+// ServerGetFirewallRule404 Schema for Cloud Server 404 error responses.
 type ServerGetFirewallRule404 = ServerError404
 
 // ServerGetFirewallRuleDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ServerGetFirewallRuleDefault = ServerError
 
-// ServerGetLabels200 The response is an array of label objects. The array may be empty.
+// ServerGetLabels200 Unique label key-value pairs used by accessible Cloud Servers, sorted by key and then value. The array may be empty.
 type ServerGetLabels200 = GetAllServerLabels
 
 // ServerGetLabelsDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ServerGetLabelsDefault = ServerError
 
-// ServerGetNetworkStats200 Schema for network statistics response payloads.
+// ServerGetNetworkStats200 Aggregate inbound and outbound network statistics grouped by period
 type ServerGetNetworkStats200 = ServerNetworkStats
 
-// ServerGetNetworkStatsByNetwork200 Schema for network statistics response payloads.
+// ServerGetNetworkStats400 Bad request error
+type ServerGetNetworkStats400 = ServerError400
+
+// ServerGetNetworkStats403 Forbidden error
+type ServerGetNetworkStats403 = ServerError403
+
+// ServerGetNetworkStats404 Schema for Cloud Server 404 error responses.
+type ServerGetNetworkStats404 = ServerError404
+
+// ServerGetNetworkStatsByNetwork200 Aggregate inbound and outbound network statistics grouped by period
 type ServerGetNetworkStatsByNetwork200 = ServerNetworkStats
 
-// ServerGetNetworkStatsByNetworkAndPeriod200 Schema for network statistics response payloads.
+// ServerGetNetworkStatsByNetwork400 Bad request error
+type ServerGetNetworkStatsByNetwork400 = ServerError400
+
+// ServerGetNetworkStatsByNetwork403 Forbidden error
+type ServerGetNetworkStatsByNetwork403 = ServerError403
+
+// ServerGetNetworkStatsByNetwork404 Schema for Cloud Server 404 error responses.
+type ServerGetNetworkStatsByNetwork404 = ServerError404
+
+// ServerGetNetworkStatsByNetworkAndPeriod200 Aggregate inbound and outbound network statistics grouped by period
 type ServerGetNetworkStatsByNetworkAndPeriod200 = ServerNetworkStats
+
+// ServerGetNetworkStatsByNetworkAndPeriod400 Bad request error
+type ServerGetNetworkStatsByNetworkAndPeriod400 = ServerError400
+
+// ServerGetNetworkStatsByNetworkAndPeriod403 Forbidden error
+type ServerGetNetworkStatsByNetworkAndPeriod403 = ServerError403
+
+// ServerGetNetworkStatsByNetworkAndPeriod404 Schema for Cloud Server 404 error responses.
+type ServerGetNetworkStatsByNetworkAndPeriod404 = ServerError404
 
 // ServerGetNetworkStatsByNetworkAndPeriodDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ServerGetNetworkStatsByNetworkAndPeriodDefault = ServerError
@@ -2366,7 +3617,7 @@ type ServerGetNetworkStatsByNetworkDefault = ServerError
 // ServerGetNetworkStatsDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ServerGetNetworkStatsDefault = ServerError
 
-// ServerGetRemoteAccessDetails200 Remote access details for the server
+// ServerGetRemoteAccessDetails200 Remote access settings and VNC connection details for a Cloud Server
 type ServerGetRemoteAccessDetails200 = ServerRemoteAccessDetails
 
 // ServerGetRemoteAccessDetails400 Bad request error
@@ -2375,13 +3626,13 @@ type ServerGetRemoteAccessDetails400 = ServerError400
 // ServerGetRemoteAccessDetails403 Forbidden error
 type ServerGetRemoteAccessDetails403 = ServerError403
 
-// ServerGetRemoteAccessDetails404 Schema for server 404 error responses.
+// ServerGetRemoteAccessDetails404 Schema for Cloud Server 404 error responses.
 type ServerGetRemoteAccessDetails404 = ServerError404
 
 // ServerGetRemoteAccessDetailsDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ServerGetRemoteAccessDetailsDefault = ServerError
 
-// ServerGetVNCDetails200 Remote access details for the server
+// ServerGetVNCDetails200 Remote access settings and VNC connection details for a Cloud Server
 type ServerGetVNCDetails200 = ServerRemoteAccessDetails
 
 // ServerGetVNCDetails400 Bad request error
@@ -2390,13 +3641,13 @@ type ServerGetVNCDetails400 = ServerError400
 // ServerGetVNCDetails403 Forbidden error
 type ServerGetVNCDetails403 = ServerError403
 
-// ServerGetVNCDetails404 Schema for server 404 error responses.
+// ServerGetVNCDetails404 Schema for Cloud Server 404 error responses.
 type ServerGetVNCDetails404 = ServerError404
 
 // ServerGetVNCDetailsDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ServerGetVNCDetailsDefault = ServerError
 
-// ServerListFirewallRules200 Firewall rules
+// ServerListFirewallRules200 Ordered firewall rules configured for a Cloud Server.
 type ServerListFirewallRules200 = ServerFirewallRules
 
 // ServerListFirewallRules400 Bad request error
@@ -2405,13 +3656,13 @@ type ServerListFirewallRules400 = ServerError400
 // ServerListFirewallRules403 Forbidden error
 type ServerListFirewallRules403 = ServerError403
 
-// ServerListFirewallRules404 Schema for server 404 error responses.
+// ServerListFirewallRules404 Schema for Cloud Server 404 error responses.
 type ServerListFirewallRules404 = ServerError404
 
 // ServerListFirewallRulesDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ServerListFirewallRulesDefault = ServerError
 
-// ServerListFirewallRulesetRelationships200 Servers related to a firewall ruleset and their attached rulesets
+// ServerListFirewallRulesetRelationships200 Accessible Cloud Servers related to a private firewall ruleset and their private ruleset relationships.
 type ServerListFirewallRulesetRelationships200 = FirewallRulesetRelatedServers
 
 // ServerListFirewallRulesetRelationships400 Bad request error
@@ -2420,7 +3671,7 @@ type ServerListFirewallRulesetRelationships400 = ServerError400
 // ServerListFirewallRulesetRelationshipsDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ServerListFirewallRulesetRelationshipsDefault = ServerError
 
-// ServerListPrivateFirewallRulesetRelationships200 Private firewall ruleset relationships for a server
+// ServerListPrivateFirewallRulesetRelationships200 Private firewall ruleset relationships for a Cloud Server.
 type ServerListPrivateFirewallRulesetRelationships200 = ServerFirewallRulesetRelationships
 
 // ServerListPrivateFirewallRulesetRelationships400 Bad request error
@@ -2429,14 +3680,14 @@ type ServerListPrivateFirewallRulesetRelationships400 = ServerError400
 // ServerListPrivateFirewallRulesetRelationships403 Forbidden error
 type ServerListPrivateFirewallRulesetRelationships403 = ServerError403
 
-// ServerListPrivateFirewallRulesetRelationships404 Schema for server 404 error responses.
+// ServerListPrivateFirewallRulesetRelationships404 Schema for Cloud Server 404 error responses.
 type ServerListPrivateFirewallRulesetRelationships404 = ServerError404
 
 // ServerListPrivateFirewallRulesetRelationshipsDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ServerListPrivateFirewallRulesetRelationshipsDefault = ServerError
 
-// ServerLoadCDROM200 Detailed information about a server
-type ServerLoadCDROM200 = ServerDetails
+// ServerLoadCDROM200 Cloud Server object returned in responses
+type ServerLoadCDROM200 = Server
 
 // ServerLoadCDROM400 Bad request error
 type ServerLoadCDROM400 = ServerError400
@@ -2444,17 +3695,17 @@ type ServerLoadCDROM400 = ServerError400
 // ServerLoadCDROM403 Forbidden error
 type ServerLoadCDROM403 = ServerError403
 
-// ServerLoadCDROM404 Schema for server 404 error responses.
+// ServerLoadCDROM404 Schema for Cloud Server 404 error responses.
 type ServerLoadCDROM404 = ServerError404
 
 // ServerLoadCDROM409 Conflict error
 type ServerLoadCDROM409 = ServerError409
 
+// ServerLoadCDROM511 Operation failed error
+type ServerLoadCDROM511 = ServerError511
+
 // ServerLoadCDROMDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ServerLoadCDROMDefault = ServerError
-
-// ServerUpdateFirewallRules200 Firewall rules
-type ServerUpdateFirewallRules200 = ServerFirewallRules
 
 // ServerUpdateFirewallRules400 Bad request error
 type ServerUpdateFirewallRules400 = ServerError400
@@ -2462,7 +3713,7 @@ type ServerUpdateFirewallRules400 = ServerError400
 // ServerUpdateFirewallRules403 Forbidden error
 type ServerUpdateFirewallRules403 = ServerError403
 
-// ServerUpdateFirewallRules404 Schema for server 404 error responses.
+// ServerUpdateFirewallRules404 Schema for Cloud Server 404 error responses.
 type ServerUpdateFirewallRules404 = ServerError404
 
 // ServerUpdateFirewallRules409 Conflict error
@@ -2471,26 +3722,8 @@ type ServerUpdateFirewallRules409 = ServerError409
 // ServerUpdateFirewallRulesDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ServerUpdateFirewallRulesDefault = ServerError
 
-// ServerUpdateFirewallRulesForce200 Firewall rules
-type ServerUpdateFirewallRulesForce200 = ServerFirewallRules
-
-// ServerUpdateFirewallRulesForce400 Bad request error
-type ServerUpdateFirewallRulesForce400 = ServerError400
-
-// ServerUpdateFirewallRulesForce403 Forbidden error
-type ServerUpdateFirewallRulesForce403 = ServerError403
-
-// ServerUpdateFirewallRulesForce404 Schema for server 404 error responses.
-type ServerUpdateFirewallRulesForce404 = ServerError404
-
-// ServerUpdateFirewallRulesForce409 Conflict error
-type ServerUpdateFirewallRulesForce409 = ServerError409
-
-// ServerUpdateFirewallRulesForceDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
-type ServerUpdateFirewallRulesForceDefault = ServerError
-
-// StartServer200 Response schema for creating a server
-type StartServer200 = FullServerDetails
+// StartServer200 Cloud Server object returned in responses
+type StartServer200 = Server
 
 // StartServer400 Bad request error
 type StartServer400 = ServerError400
@@ -2498,7 +3731,7 @@ type StartServer400 = ServerError400
 // StartServer403 Forbidden error
 type StartServer403 = ServerError403
 
-// StartServer404 Schema for server 404 error responses.
+// StartServer404 Schema for Cloud Server 404 error responses.
 type StartServer404 = ServerError404
 
 // StartServer409 Conflict error
@@ -2507,8 +3740,8 @@ type StartServer409 = ServerError409
 // StartServerDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type StartServerDefault = ServerError
 
-// StopServer200 Response schema for creating a server
-type StopServer200 = FullServerDetails
+// StopServer200 Cloud Server object returned in responses
+type StopServer200 = Server
 
 // StopServer400 Bad request error
 type StopServer400 = ServerError400
@@ -2516,7 +3749,7 @@ type StopServer400 = ServerError400
 // StopServer403 Forbidden error
 type StopServer403 = ServerError403
 
-// StopServer404 Schema for server 404 error responses.
+// StopServer404 Schema for Cloud Server 404 error responses.
 type StopServer404 = ServerError404
 
 // StopServer409 Conflict error
@@ -2531,99 +3764,111 @@ type AddServerInterface = ServerAddInterface
 // AddServerInterfaceIpAddress Add IP address to a network interface request
 type AddServerInterfaceIpAddress = ServerAddIpAddress
 
-// CreateServerRequestBody Server creation parameters
+// CreateServerRequestBody Cloud Server creation parameters
 type CreateServerRequestBody = CreateServer
 
-// ModifyServer Server object returned in responses
-type ModifyServer = Server
+// ModifyServerRequestBody Fields that can be changed on an existing Cloud Server
+type ModifyServerRequestBody = ModifyServer
 
 // ModifyServerInterface Modify network interface request
 type ModifyServerInterface = ServerModifyInterface
 
-// RebuildServer Schema for rebuilding a server
+// RebuildServer Rebuild Cloud Server request
 type RebuildServer = ServerRebuild
 
-// RelocateServerRequestBody Relocate server request
+// RelocateServerRequestBody Relocate Cloud Server request
 type RelocateServerRequestBody = RelocateServer
 
-// RestartServerRequestBody TODO
+// RestartServerRequestBody Restart Cloud Server request
 type RestartServerRequestBody = RestartServer
 
-// ServerAttachPrivateFirewallRulesetRequestBody Attach or detach a private firewall ruleset relationship request
+// ServerAttachPrivateFirewallRulesetRequestBody Parameters for attaching a private firewall ruleset to a Cloud Server.
 type ServerAttachPrivateFirewallRulesetRequestBody = ServerAttachPrivateFirewallRuleset
 
-// ServerAttachStorageDevice Schema for attaching a storage device to a server
+// ServerAttachStorageDevice Parameters for attaching a storage device to a Cloud Server.
 type ServerAttachStorageDevice = ServerAttachStorage
 
-// ServerCreateFirewallRuleRequestBody Create a new firewall rule
+// ServerCreateFirewallRuleRequestBody Parameters for creating a firewall rule.
 type ServerCreateFirewallRuleRequestBody = ServerCreateFirewallRule
 
-// ServerDetachPrivateFirewallRuleset Attach or detach a private firewall ruleset relationship request
-type ServerDetachPrivateFirewallRuleset = ServerAttachPrivateFirewallRuleset
+// ServerDetachPrivateFirewallRulesetRequestBody Parameters for detaching a private firewall ruleset from a Cloud Server.
+type ServerDetachPrivateFirewallRulesetRequestBody = ServerDetachPrivateFirewallRuleset
 
-// ServerDetachStorageDevice Schema for detaching a storage device from a server
+// ServerDetachStorageDevice Parameters for detaching a storage device from a Cloud Server.
 type ServerDetachStorageDevice = ServerDetachStorage
 
-// ServerLoadCDROM Schema for loading a CD-ROM into a server
+// ServerLoadCDROM Parameters for loading a storage into a Cloud Server's CD-ROM device.
 type ServerLoadCDROM = ServerLoadCdrom
 
-// ServerUpdateFirewallRules Firewall rules
-type ServerUpdateFirewallRules = ServerFirewallRules
+// ServerUpdateFirewallRulesRequestBody Complete replacement for a Cloud Server's firewall rule chain. Array order determines rule positions.
+type ServerUpdateFirewallRulesRequestBody = ServerUpdateFirewallRules
 
-// ServerUpdateFirewallRulesForce Firewall rules
-type ServerUpdateFirewallRulesForce = ServerFirewallRules
-
-// StartServerRequestBody Start server request
+// StartServerRequestBody Start Cloud Server request
 type StartServerRequestBody = StartServer
 
-// StopServerRequestBody Stop server request
+// StopServerRequestBody Stop Cloud Server request
 type StopServerRequestBody = StopServer
 
 // ListServersParams defines parameters for ListServers.
 type ListServersParams struct {
-	// Label Filter by label. Repeat for multiple labels. Use "key" or "key=value" form.
+	// Label Filter by label key or key-value pair using "key" or "key=value". Repeat the parameter to require all labels.
 	Label *ListServersLabel `form:"label,omitempty" json:"label,omitempty"`
 
-	// Uuid Filter by server UUID. Repeat for multiple UUIDs.
+	// Uuid Filter by Cloud Server UUID. Repeat the parameter to match any of up to five UUIDs.
 	Uuid *ListServersUuid `form:"uuid,omitempty" json:"uuid,omitempty"`
 
-	// Host Filter by server host id. Repeat for multiple hosts.
+	// Host Filter by Private Cloud host ID. Repeat the parameter to match any of up to five hosts.
 	Host *ListServersHost `form:"host,omitempty" json:"host,omitempty"`
 
-	// Device Filter by device. Use "key=value" or "key!=value" form. Repeat for multiple filters.
+	// Device Filter by attached device using "type=gpu" or "type!=gpu". Repeat the parameter for up to five filters.
 	Device *ListServersDevice `form:"device,omitempty" json:"device,omitempty"`
 
-	// State Filter by server state
+	// State Filter by the current Cloud Server state.
 	State *ListServersParamsState `form:"state,omitempty" json:"state,omitempty"`
 
-	// Tag Filter by tag. Use commas to match any tag, or colons to require all tags.
+	// Tag Filter by tag name. Separate names with commas to match any tag or colons to require all tags.
 	Tag *ListServersTag `form:"tag,omitempty" json:"tag,omitempty"`
 
-	// Search Free-text search filter
+	// Search Search UUIDs, titles, hostnames, zones, zone descriptions, IP addresses, tags, and template names.
 	Search *ListServersSearch `form:"search,omitempty" json:"search,omitempty"`
 
-	// SortBy Field to sort the results by
-	SortBy *ListServersSortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
+	// SortBy Field to sort by.
+	SortBy *ListServersParamsSortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
 
-	// OrderBy Sort order
+	// OrderBy Sort direction. Only applied when sort_by is specified.
 	OrderBy *ListServersParamsOrderBy `form:"order_by,omitempty" json:"order_by,omitempty"`
+
+	// Limit Maximum number of Cloud Servers to return.
+	Limit *ListServersLimit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Offset Number of Cloud Servers to skip.
+	Offset *ListServersOffset `form:"offset,omitempty" json:"offset,omitempty"`
 }
 
 // ListServersParamsState defines parameters for ListServers.
 type ListServersParamsState string
+
+// ListServersParamsSortBy defines parameters for ListServers.
+type ListServersParamsSortBy string
 
 // ListServersParamsOrderBy defines parameters for ListServers.
 type ListServersParamsOrderBy string
 
 // DeleteServerParams defines parameters for DeleteServer.
 type DeleteServerParams struct {
-	// Storages If set to 1, server's storages will be deleted as well
+	// Storages Whether to delete attached storage devices.
 	Storages *DeleteServerStorages `form:"storages,omitempty" json:"storages,omitempty"`
+
+	// Backups How to handle backups when deleting storage devices. The delete value is valid only when storages is set to a truthy value.
+	Backups *DeleteServerParamsBackups `form:"backups,omitempty" json:"backups,omitempty"`
 }
+
+// DeleteServerParamsBackups defines parameters for DeleteServer.
+type DeleteServerParamsBackups string
 
 // AddServerInterfaceIpAddressParams defines parameters for AddServerInterfaceIpAddress.
 type AddServerInterfaceIpAddressParams struct {
-	// Force Force adding the IP address
+	// Force Move the address from another interface when that interface can retain its required minimum number of addresses
 	Force *AddServerInterfaceIpAddressForce `form:"force,omitempty" json:"force,omitempty"`
 }
 
@@ -2637,7 +3882,7 @@ type GetDiskStatsByPeriodParamsType string
 type CreateServerJSONRequestBody = CreateServer
 
 // ModifyServerJSONRequestBody defines body for ModifyServer for application/json ContentType.
-type ModifyServerJSONRequestBody = Server
+type ModifyServerJSONRequestBody = ModifyServer
 
 // AttachPrivateFirewallRulesetJSONRequestBody defines body for AttachPrivateFirewallRuleset for application/json ContentType.
 type AttachPrivateFirewallRulesetJSONRequestBody = ServerAttachPrivateFirewallRuleset
@@ -2646,16 +3891,13 @@ type AttachPrivateFirewallRulesetJSONRequestBody = ServerAttachPrivateFirewallRu
 type LoadCDROMJSONRequestBody = ServerLoadCdrom
 
 // DetachPrivateFirewallRulesetJSONRequestBody defines body for DetachPrivateFirewallRuleset for application/json ContentType.
-type DetachPrivateFirewallRulesetJSONRequestBody = ServerAttachPrivateFirewallRuleset
+type DetachPrivateFirewallRulesetJSONRequestBody = ServerDetachPrivateFirewallRuleset
 
 // CreateFirewallRuleJSONRequestBody defines body for CreateFirewallRule for application/json ContentType.
 type CreateFirewallRuleJSONRequestBody = ServerCreateFirewallRule
 
 // UpdateFirewallRulesJSONRequestBody defines body for UpdateFirewallRules for application/json ContentType.
-type UpdateFirewallRulesJSONRequestBody = ServerFirewallRules
-
-// UpdateFirewallRulesForceJSONRequestBody defines body for UpdateFirewallRulesForce for application/json ContentType.
-type UpdateFirewallRulesForceJSONRequestBody = ServerFirewallRules
+type UpdateFirewallRulesJSONRequestBody = ServerUpdateFirewallRules
 
 // AddServerInterfaceJSONRequestBody defines body for AddServerInterface for application/json ContentType.
 type AddServerInterfaceJSONRequestBody = ServerAddInterface
@@ -2687,480 +3929,266 @@ type AttachStorageDeviceJSONRequestBody = ServerAttachStorage
 // DetachStorageDeviceJSONRequestBody defines body for DetachStorageDevice for application/json ContentType.
 type DetachStorageDeviceJSONRequestBody = ServerDetachStorage
 
-// Getter for additional properties for FullServerDetails. Returns the specified
-// element and whether it was found
-func (a FullServerDetails) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
+// AsRestartServerRestartServer0 returns the union data inside the RestartServer_RestartServer as a RestartServerRestartServer0
+func (t RestartServer_RestartServer) AsRestartServerRestartServer0() (RestartServerRestartServer0, error) {
+	var body RestartServerRestartServer0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
 }
 
-// Setter for additional properties for FullServerDetails
-func (a *FullServerDetails) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
+// FromRestartServerRestartServer0 overwrites any union data inside the RestartServer_RestartServer as the provided RestartServerRestartServer0
+func (t *RestartServer_RestartServer) FromRestartServerRestartServer0(v RestartServerRestartServer0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
 }
 
-// Override default JSON handling for FullServerDetails to handle AdditionalProperties
-func (a *FullServerDetails) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
+// MergeRestartServerRestartServer0 performs a merge with any union data inside the RestartServer_RestartServer, using the provided RestartServerRestartServer0
+func (t *RestartServer_RestartServer) MergeRestartServerRestartServer0(v RestartServerRestartServer0) error {
+	b, err := json.Marshal(v)
 	if err != nil {
 		return err
 	}
 
-	if raw, found := object["server"]; found {
-		err = json.Unmarshal(raw, &a.Server)
-		if err != nil {
-			return fmt.Errorf("error reading 'server': %w", err)
-		}
-		delete(object, "server")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
 }
 
-// Override default JSON handling for FullServerDetails to handle AdditionalProperties
-func (a FullServerDetails) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
-
-	object["server"], err = json.Marshal(a.Server)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'server': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
+// AsRestartServerRestartServer1 returns the union data inside the RestartServer_RestartServer as a RestartServerRestartServer1
+func (t RestartServer_RestartServer) AsRestartServerRestartServer1() (RestartServerRestartServer1, error) {
+	var body RestartServerRestartServer1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
 }
 
-// Getter for additional properties for ServerDetails. Returns the specified
-// element and whether it was found
-func (a ServerDetails) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
+// FromRestartServerRestartServer1 overwrites any union data inside the RestartServer_RestartServer as the provided RestartServerRestartServer1
+func (t *RestartServer_RestartServer) FromRestartServerRestartServer1(v RestartServerRestartServer1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
 }
 
-// Setter for additional properties for ServerDetails
-func (a *ServerDetails) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
-}
-
-// Override default JSON handling for ServerDetails to handle AdditionalProperties
-func (a *ServerDetails) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
+// MergeRestartServerRestartServer1 performs a merge with any union data inside the RestartServer_RestartServer, using the provided RestartServerRestartServer1
+func (t *RestartServer_RestartServer) MergeRestartServerRestartServer1(v RestartServerRestartServer1) error {
+	b, err := json.Marshal(v)
 	if err != nil {
 		return err
 	}
 
-	if raw, found := object["boot_order"]; found {
-		err = json.Unmarshal(raw, &a.BootOrder)
-		if err != nil {
-			return fmt.Errorf("error reading 'boot_order': %w", err)
-		}
-		delete(object, "boot_order")
-	}
-
-	if raw, found := object["core_number"]; found {
-		err = json.Unmarshal(raw, &a.CoreNumber)
-		if err != nil {
-			return fmt.Errorf("error reading 'core_number': %w", err)
-		}
-		delete(object, "core_number")
-	}
-
-	if raw, found := object["created"]; found {
-		err = json.Unmarshal(raw, &a.Created)
-		if err != nil {
-			return fmt.Errorf("error reading 'created': %w", err)
-		}
-		delete(object, "created")
-	}
-
-	if raw, found := object["firewall"]; found {
-		err = json.Unmarshal(raw, &a.Firewall)
-		if err != nil {
-			return fmt.Errorf("error reading 'firewall': %w", err)
-		}
-		delete(object, "firewall")
-	}
-
-	if raw, found := object["host"]; found {
-		err = json.Unmarshal(raw, &a.Host)
-		if err != nil {
-			return fmt.Errorf("error reading 'host': %w", err)
-		}
-		delete(object, "host")
-	}
-
-	if raw, found := object["hostname"]; found {
-		err = json.Unmarshal(raw, &a.Hostname)
-		if err != nil {
-			return fmt.Errorf("error reading 'hostname': %w", err)
-		}
-		delete(object, "hostname")
-	}
-
-	if raw, found := object["labels"]; found {
-		err = json.Unmarshal(raw, &a.Labels)
-		if err != nil {
-			return fmt.Errorf("error reading 'labels': %w", err)
-		}
-		delete(object, "labels")
-	}
-
-	if raw, found := object["license"]; found {
-		err = json.Unmarshal(raw, &a.License)
-		if err != nil {
-			return fmt.Errorf("error reading 'license': %w", err)
-		}
-		delete(object, "license")
-	}
-
-	if raw, found := object["memory_amount"]; found {
-		err = json.Unmarshal(raw, &a.MemoryAmount)
-		if err != nil {
-			return fmt.Errorf("error reading 'memory_amount': %w", err)
-		}
-		delete(object, "memory_amount")
-	}
-
-	if raw, found := object["nic_model"]; found {
-		err = json.Unmarshal(raw, &a.NicModel)
-		if err != nil {
-			return fmt.Errorf("error reading 'nic_model': %w", err)
-		}
-		delete(object, "nic_model")
-	}
-
-	if raw, found := object["os_type"]; found {
-		err = json.Unmarshal(raw, &a.OsType)
-		if err != nil {
-			return fmt.Errorf("error reading 'os_type': %w", err)
-		}
-		delete(object, "os_type")
-	}
-
-	if raw, found := object["password"]; found {
-		err = json.Unmarshal(raw, &a.Password)
-		if err != nil {
-			return fmt.Errorf("error reading 'password': %w", err)
-		}
-		delete(object, "password")
-	}
-
-	if raw, found := object["plan"]; found {
-		err = json.Unmarshal(raw, &a.Plan)
-		if err != nil {
-			return fmt.Errorf("error reading 'plan': %w", err)
-		}
-		delete(object, "plan")
-	}
-
-	if raw, found := object["plan_ipv4_bytes"]; found {
-		err = json.Unmarshal(raw, &a.PlanIpv4Bytes)
-		if err != nil {
-			return fmt.Errorf("error reading 'plan_ipv4_bytes': %w", err)
-		}
-		delete(object, "plan_ipv4_bytes")
-	}
-
-	if raw, found := object["plan_ipv6_bytes"]; found {
-		err = json.Unmarshal(raw, &a.PlanIpv6Bytes)
-		if err != nil {
-			return fmt.Errorf("error reading 'plan_ipv6_bytes': %w", err)
-		}
-		delete(object, "plan_ipv6_bytes")
-	}
-
-	if raw, found := object["progress"]; found {
-		err = json.Unmarshal(raw, &a.Progress)
-		if err != nil {
-			return fmt.Errorf("error reading 'progress': %w", err)
-		}
-		delete(object, "progress")
-	}
-
-	if raw, found := object["server_group"]; found {
-		err = json.Unmarshal(raw, &a.ServerGroup)
-		if err != nil {
-			return fmt.Errorf("error reading 'server_group': %w", err)
-		}
-		delete(object, "server_group")
-	}
-
-	if raw, found := object["simple_backup"]; found {
-		err = json.Unmarshal(raw, &a.SimpleBackup)
-		if err != nil {
-			return fmt.Errorf("error reading 'simple_backup': %w", err)
-		}
-		delete(object, "simple_backup")
-	}
-
-	if raw, found := object["state"]; found {
-		err = json.Unmarshal(raw, &a.State)
-		if err != nil {
-			return fmt.Errorf("error reading 'state': %w", err)
-		}
-		delete(object, "state")
-	}
-
-	if raw, found := object["tags"]; found {
-		err = json.Unmarshal(raw, &a.Tags)
-		if err != nil {
-			return fmt.Errorf("error reading 'tags': %w", err)
-		}
-		delete(object, "tags")
-	}
-
-	if raw, found := object["timezone"]; found {
-		err = json.Unmarshal(raw, &a.Timezone)
-		if err != nil {
-			return fmt.Errorf("error reading 'timezone': %w", err)
-		}
-		delete(object, "timezone")
-	}
-
-	if raw, found := object["title"]; found {
-		err = json.Unmarshal(raw, &a.Title)
-		if err != nil {
-			return fmt.Errorf("error reading 'title': %w", err)
-		}
-		delete(object, "title")
-	}
-
-	if raw, found := object["username"]; found {
-		err = json.Unmarshal(raw, &a.Username)
-		if err != nil {
-			return fmt.Errorf("error reading 'username': %w", err)
-		}
-		delete(object, "username")
-	}
-
-	if raw, found := object["uuid"]; found {
-		err = json.Unmarshal(raw, &a.Uuid)
-		if err != nil {
-			return fmt.Errorf("error reading 'uuid': %w", err)
-		}
-		delete(object, "uuid")
-	}
-
-	if raw, found := object["zone"]; found {
-		err = json.Unmarshal(raw, &a.Zone)
-		if err != nil {
-			return fmt.Errorf("error reading 'zone': %w", err)
-		}
-		delete(object, "zone")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
 }
 
-// Override default JSON handling for ServerDetails to handle AdditionalProperties
-func (a ServerDetails) MarshalJSON() ([]byte, error) {
-	var err error
+func (t RestartServer_RestartServer) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	if err != nil {
+		return nil, err
+	}
 	object := make(map[string]json.RawMessage)
-
-	if a.BootOrder != nil {
-		object["boot_order"], err = json.Marshal(a.BootOrder)
+	if t.union != nil {
+		err = json.Unmarshal(b, &object)
 		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'boot_order': %w", err)
+			return nil, err
 		}
 	}
 
-	object["core_number"], err = json.Marshal(a.CoreNumber)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'core_number': %w", err)
-	}
-
-	object["created"], err = json.Marshal(a.Created)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'created': %w", err)
-	}
-
-	if a.Firewall != nil {
-		object["firewall"], err = json.Marshal(a.Firewall)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'firewall': %w", err)
-		}
-	}
-
-	if a.Host != nil {
-		object["host"], err = json.Marshal(a.Host)
+	if t.Host != nil {
+		object["host"], err = json.Marshal(t.Host)
 		if err != nil {
 			return nil, fmt.Errorf("error marshaling 'host': %w", err)
 		}
 	}
 
-	object["hostname"], err = json.Marshal(a.Hostname)
+	if t.Reason != nil {
+		object["reason"], err = json.Marshal(t.Reason)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'reason': %w", err)
+		}
+	}
+
+	if t.StopType != nil {
+		object["stop_type"], err = json.Marshal(t.StopType)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'stop_type': %w", err)
+		}
+	}
+
+	if t.Timeout != nil {
+		object["timeout"], err = json.Marshal(t.Timeout)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'timeout': %w", err)
+		}
+	}
+
+	if t.TimeoutAction != nil {
+		object["timeout_action"], err = json.Marshal(t.TimeoutAction)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'timeout_action': %w", err)
+		}
+	}
+	b, err = json.Marshal(object)
+	return b, err
+}
+
+func (t *RestartServer_RestartServer) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
 	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'hostname': %w", err)
+		return err
 	}
-
-	if a.Labels != nil {
-		object["labels"], err = json.Marshal(a.Labels)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'labels': %w", err)
-		}
-	}
-
-	object["license"], err = json.Marshal(a.License)
+	object := make(map[string]json.RawMessage)
+	err = json.Unmarshal(b, &object)
 	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'license': %w", err)
+		return err
 	}
 
-	object["memory_amount"], err = json.Marshal(a.MemoryAmount)
+	if raw, found := object["host"]; found {
+		err = json.Unmarshal(raw, &t.Host)
+		if err != nil {
+			return fmt.Errorf("error reading 'host': %w", err)
+		}
+	}
+
+	if raw, found := object["reason"]; found {
+		err = json.Unmarshal(raw, &t.Reason)
+		if err != nil {
+			return fmt.Errorf("error reading 'reason': %w", err)
+		}
+	}
+
+	if raw, found := object["stop_type"]; found {
+		err = json.Unmarshal(raw, &t.StopType)
+		if err != nil {
+			return fmt.Errorf("error reading 'stop_type': %w", err)
+		}
+	}
+
+	if raw, found := object["timeout"]; found {
+		err = json.Unmarshal(raw, &t.Timeout)
+		if err != nil {
+			return fmt.Errorf("error reading 'timeout': %w", err)
+		}
+	}
+
+	if raw, found := object["timeout_action"]; found {
+		err = json.Unmarshal(raw, &t.TimeoutAction)
+		if err != nil {
+			return fmt.Errorf("error reading 'timeout_action': %w", err)
+		}
+	}
+
+	return err
+}
+
+// AsServerDetachStorageStorageDevice0 returns the union data inside the ServerDetachStorage_StorageDevice as a ServerDetachStorageStorageDevice0
+func (t ServerDetachStorage_StorageDevice) AsServerDetachStorageStorageDevice0() (ServerDetachStorageStorageDevice0, error) {
+	var body ServerDetachStorageStorageDevice0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromServerDetachStorageStorageDevice0 overwrites any union data inside the ServerDetachStorage_StorageDevice as the provided ServerDetachStorageStorageDevice0
+func (t *ServerDetachStorage_StorageDevice) FromServerDetachStorageStorageDevice0(v ServerDetachStorageStorageDevice0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeServerDetachStorageStorageDevice0 performs a merge with any union data inside the ServerDetachStorage_StorageDevice, using the provided ServerDetachStorageStorageDevice0
+func (t *ServerDetachStorage_StorageDevice) MergeServerDetachStorageStorageDevice0(v ServerDetachStorageStorageDevice0) error {
+	b, err := json.Marshal(v)
 	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'memory_amount': %w", err)
+		return err
 	}
 
-	if a.NicModel != nil {
-		object["nic_model"], err = json.Marshal(a.NicModel)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'nic_model': %w", err)
-		}
-	}
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
 
-	if a.OsType != nil {
-		object["os_type"], err = json.Marshal(a.OsType)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'os_type': %w", err)
-		}
-	}
+// AsServerDetachStorageStorageDevice1 returns the union data inside the ServerDetachStorage_StorageDevice as a ServerDetachStorageStorageDevice1
+func (t ServerDetachStorage_StorageDevice) AsServerDetachStorageStorageDevice1() (ServerDetachStorageStorageDevice1, error) {
+	var body ServerDetachStorageStorageDevice1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
 
-	if a.Password != nil {
-		object["password"], err = json.Marshal(a.Password)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'password': %w", err)
-		}
-	}
+// FromServerDetachStorageStorageDevice1 overwrites any union data inside the ServerDetachStorage_StorageDevice as the provided ServerDetachStorageStorageDevice1
+func (t *ServerDetachStorage_StorageDevice) FromServerDetachStorageStorageDevice1(v ServerDetachStorageStorageDevice1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
 
-	if a.Plan != nil {
-		object["plan"], err = json.Marshal(a.Plan)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'plan': %w", err)
-		}
-	}
-
-	if a.PlanIpv4Bytes != nil {
-		object["plan_ipv4_bytes"], err = json.Marshal(a.PlanIpv4Bytes)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'plan_ipv4_bytes': %w", err)
-		}
-	}
-
-	if a.PlanIpv6Bytes != nil {
-		object["plan_ipv6_bytes"], err = json.Marshal(a.PlanIpv6Bytes)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'plan_ipv6_bytes': %w", err)
-		}
-	}
-
-	if a.Progress != nil {
-		object["progress"], err = json.Marshal(a.Progress)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'progress': %w", err)
-		}
-	}
-
-	if a.ServerGroup != nil {
-		object["server_group"], err = json.Marshal(a.ServerGroup)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'server_group': %w", err)
-		}
-	}
-
-	if a.SimpleBackup != nil {
-		object["simple_backup"], err = json.Marshal(a.SimpleBackup)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'simple_backup': %w", err)
-		}
-	}
-
-	object["state"], err = json.Marshal(a.State)
+// MergeServerDetachStorageStorageDevice1 performs a merge with any union data inside the ServerDetachStorage_StorageDevice, using the provided ServerDetachStorageStorageDevice1
+func (t *ServerDetachStorage_StorageDevice) MergeServerDetachStorageStorageDevice1(v ServerDetachStorageStorageDevice1) error {
+	b, err := json.Marshal(v)
 	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'state': %w", err)
+		return err
 	}
 
-	if a.Tags != nil {
-		object["tags"], err = json.Marshal(a.Tags)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'tags': %w", err)
-		}
-	}
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
 
-	if a.Timezone != nil {
-		object["timezone"], err = json.Marshal(a.Timezone)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'timezone': %w", err)
-		}
-	}
-
-	object["title"], err = json.Marshal(a.Title)
+func (t ServerDetachStorage_StorageDevice) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
 	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'title': %w", err)
+		return nil, err
 	}
-
-	if a.Username != nil {
-		object["username"], err = json.Marshal(a.Username)
+	object := make(map[string]json.RawMessage)
+	if t.union != nil {
+		err = json.Unmarshal(b, &object)
 		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'username': %w", err)
+			return nil, err
 		}
 	}
 
-	object["uuid"], err = json.Marshal(a.Uuid)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'uuid': %w", err)
-	}
-
-	object["zone"], err = json.Marshal(a.Zone)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'zone': %w", err)
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
+	if t.Address != nil {
+		object["address"], err = json.Marshal(t.Address)
 		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
+			return nil, fmt.Errorf("error marshaling 'address': %w", err)
 		}
 	}
-	return json.Marshal(object)
+
+	if t.Storage != nil {
+		object["storage"], err = json.Marshal(t.Storage)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'storage': %w", err)
+		}
+	}
+	b, err = json.Marshal(object)
+	return b, err
+}
+
+func (t *ServerDetachStorage_StorageDevice) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	if err != nil {
+		return err
+	}
+	object := make(map[string]json.RawMessage)
+	err = json.Unmarshal(b, &object)
+	if err != nil {
+		return err
+	}
+
+	if raw, found := object["address"]; found {
+		err = json.Unmarshal(raw, &t.Address)
+		if err != nil {
+			return fmt.Errorf("error reading 'address': %w", err)
+		}
+	}
+
+	if raw, found := object["storage"]; found {
+		err = json.Unmarshal(raw, &t.Storage)
+		if err != nil {
+			return fmt.Errorf("error reading 'storage': %w", err)
+		}
+	}
+
+	return err
 }
 
 // AsServerIpAddress0 returns the union data inside the ServerIpAddress as a ServerIpAddress0
@@ -3283,6 +4311,68 @@ func (t ServerTags) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ServerTags) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsServerVncPort0 returns the union data inside the ServerVncPort as a ServerVncPort0
+func (t ServerVncPort) AsServerVncPort0() (ServerVncPort0, error) {
+	var body ServerVncPort0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromServerVncPort0 overwrites any union data inside the ServerVncPort as the provided ServerVncPort0
+func (t *ServerVncPort) FromServerVncPort0(v ServerVncPort0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeServerVncPort0 performs a merge with any union data inside the ServerVncPort, using the provided ServerVncPort0
+func (t *ServerVncPort) MergeServerVncPort0(v ServerVncPort0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsServerVncPort1 returns the union data inside the ServerVncPort as a ServerVncPort1
+func (t ServerVncPort) AsServerVncPort1() (ServerVncPort1, error) {
+	var body ServerVncPort1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromServerVncPort1 overwrites any union data inside the ServerVncPort as the provided ServerVncPort1
+func (t *ServerVncPort) FromServerVncPort1(v ServerVncPort1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeServerVncPort1 performs a merge with any union data inside the ServerVncPort, using the provided ServerVncPort1
+func (t *ServerVncPort) MergeServerVncPort1(v ServerVncPort1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t ServerVncPort) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *ServerVncPort) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
 	return err
 }

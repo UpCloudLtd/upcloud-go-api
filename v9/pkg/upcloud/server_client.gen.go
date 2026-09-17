@@ -19,76 +19,80 @@ import (
 // The interface specification for the client above.
 type ServerClientInterface interface {
 
-	// ListServers Returns a list of servers
+	// ListServers List Cloud Servers
+	//
+	// Returns the most relevant information for Cloud Servers associated with the current account.
 	//
 	// Corresponds with GET /1.3/server (the `ListServers` operationId).
 	ListServers(ctx context.Context, params *ListServersParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateServerWithBody Create a new server
+	// CreateServerWithBody Create a new Cloud Server
 	//
-	// Creates a new server.
+	// Creates a new Cloud Server.
 	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with POST /1.3/server (the `CreateServer` operationId).
 	CreateServerWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateServer Create a new server
+	// CreateServer Create a new Cloud Server
 	//
-	// Creates a new server.
+	// Creates a new Cloud Server.
 	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /1.3/server (the `CreateServer` operationId).
 	CreateServer(ctx context.Context, body CreateServerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ModifyServerWithBody Modify an existing server
+	// ListFirewallRulesetRelationships List Cloud Servers related to a private firewall ruleset
 	//
-	// Modifies an existing server.
-	//
-	// Takes any type of body and a specified content type.
-	//
-	// Corresponds with PUT /1.3/server (the `ModifyServer` operationId).
-	ModifyServerWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// ModifyServer Modify an existing server
-	//
-	// Modifies an existing server.
-	//
-	// Takes a body of the `application/json` content type.
-	//
-	// Corresponds with PUT /1.3/server (the `ModifyServer` operationId).
-	ModifyServer(ctx context.Context, body ModifyServerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// ListFirewallRulesetRelationships List servers related to a private firewall ruleset
-	//
-	// Returns servers related to a specific private firewall ruleset.
+	// Return Cloud Servers visible to the authenticated account that are related to a private firewall ruleset, including each Cloud Server's private ruleset relationships.
 	//
 	// Corresponds with GET /1.3/server/firewall_ruleset_relationships/private/{ruleset_uuid} (the `ListFirewallRulesetRelationships` operationId).
 	ListFirewallRulesetRelationships(ctx context.Context, rulesetUuid ServerListFirewallRulesetRelationshipsRulesetUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetLabels Returns a list of server labels
+	// GetLabels List Cloud Server labels
+	//
+	// Returns the unique label key-value pairs used by Cloud Servers accessible to the current account.
 	//
 	// Corresponds with GET /1.3/server/labels (the `GetLabels` operationId).
 	GetLabels(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// DeleteServer Delete a server
+	// DeleteServer Delete a Cloud Server
 	//
-	// Deletes a server. With query option ?storages=1, one can delete server's storages as well
+	// Deletes a stopped Cloud Server and releases its IP addresses. Deleting backups requires deleting the associated storage devices.
 	//
 	// Corresponds with DELETE /1.3/server/{uuid} (the `DeleteServer` operationId).
 	DeleteServer(ctx context.Context, uuid DeleteServerUuid, params *DeleteServerParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetServer Get server details
+	// GetServer Get Cloud Server details
 	//
-	// Returns details for a specific server.
+	// Returns detailed information about a Cloud Server.
 	//
 	// Corresponds with GET /1.3/server/{uuid} (the `GetServer` operationId).
 	GetServer(ctx context.Context, uuid GetServerUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ModifyServerWithBody Modify an existing Cloud Server
+	//
+	// Modifies an existing Cloud Server configuration.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PUT /1.3/server/{uuid} (the `ModifyServer` operationId).
+	ModifyServerWithBody(ctx context.Context, uuid ModifyServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ModifyServer Modify an existing Cloud Server
+	//
+	// Modifies an existing Cloud Server configuration.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PUT /1.3/server/{uuid} (the `ModifyServer` operationId).
+	ModifyServer(ctx context.Context, uuid ModifyServerUuid, body ModifyServerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// AttachPrivateFirewallRulesetWithBody Attach a private firewall ruleset
 	//
-	// Attach a private firewall ruleset to a specific server.
+	// Attach a private, stateful firewall ruleset to a Cloud Server. The latest ruleset version is selected and applied to private network interfaces.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -97,31 +101,39 @@ type ServerClientInterface interface {
 
 	// AttachPrivateFirewallRuleset Attach a private firewall ruleset
 	//
-	// Attach a private firewall ruleset to a specific server.
+	// Attach a private, stateful firewall ruleset to a Cloud Server. The latest ruleset version is selected and applied to private network interfaces.
 	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /1.3/server/{uuid}/attach_firewall_ruleset/private (the `AttachPrivateFirewallRuleset` operationId).
 	AttachPrivateFirewallRuleset(ctx context.Context, uuid ServerAttachPrivateFirewallRulesetUuid, body AttachPrivateFirewallRulesetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CancelServerOperation Cancel an ongoing operation for a specific server
+	// CancelServerOperation Cancel a Cloud Server operation
+	//
+	// Cancels an operation while the Cloud Server is in maintenance state.
 	//
 	// Corresponds with POST /1.3/server/{uuid}/cancel (the `CancelServerOperation` operationId).
 	CancelServerOperation(ctx context.Context, uuid CancelServerOperationUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// EjectCDROM Eject the CD-ROM image from a server
+	// EjectCDROM Eject the CD-ROM image from a Cloud Server
+	//
+	// Eject the storage from the Cloud Server's attached CD-ROM device.
 	//
 	// Corresponds with POST /1.3/server/{uuid}/cdrom/eject (the `EjectCDROM` operationId).
 	EjectCDROM(ctx context.Context, uuid ServerEjectCDROMUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// LoadCDROMWithBody Load a CD-ROM image into a server
+	// LoadCDROMWithBody Load a CD-ROM image into a Cloud Server
+	//
+	// Load a storage of type normal or cdrom into the Cloud Server's attached CD-ROM device. If media is already loaded, it is ejected first.
 	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with POST /1.3/server/{uuid}/cdrom/load (the `LoadCDROM` operationId).
 	LoadCDROMWithBody(ctx context.Context, uuid ServerLoadCDROMUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// LoadCDROM Load a CD-ROM image into a server
+	// LoadCDROM Load a CD-ROM image into a Cloud Server
+	//
+	// Load a storage of type normal or cdrom into the Cloud Server's attached CD-ROM device. If media is already loaded, it is ejected first.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -130,7 +142,7 @@ type ServerClientInterface interface {
 
 	// DetachPrivateFirewallRulesetWithBody Detach a private firewall ruleset
 	//
-	// Detach a private firewall ruleset from a specific server.
+	// Detach a private firewall ruleset from a Cloud Server and reapply private-interface firewall rules.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -139,96 +151,94 @@ type ServerClientInterface interface {
 
 	// DetachPrivateFirewallRuleset Detach a private firewall ruleset
 	//
-	// Detach a private firewall ruleset from a specific server.
+	// Detach a private firewall ruleset from a Cloud Server and reapply private-interface firewall rules.
 	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /1.3/server/{uuid}/detach_firewall_ruleset/private (the `DetachPrivateFirewallRuleset` operationId).
 	DetachPrivateFirewallRuleset(ctx context.Context, uuid ServerDetachPrivateFirewallRulesetUuid, body DetachPrivateFirewallRulesetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ListFirewallRules Returns a list of firewall rules for a specific server
+	// ListFirewallRules List firewall rules
+	//
+	// Return the Cloud Server firewall rules in evaluation order. Changes to firewall rules can take 1-2 minutes to take effect.
 	//
 	// Corresponds with GET /1.3/server/{uuid}/firewall_rule (the `ListFirewallRules` operationId).
 	ListFirewallRules(ctx context.Context, uuid ServerListFirewallRulesUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateFirewallRuleWithBody Create a new firewall rule for a specific server
+	// CreateFirewallRuleWithBody Create a firewall rule
+	//
+	// Create a firewall rule. Rules are evaluated in position order; if position is omitted, the rule is appended. Changes can take 1-2 minutes to take effect.
 	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with POST /1.3/server/{uuid}/firewall_rule (the `CreateFirewallRule` operationId).
 	CreateFirewallRuleWithBody(ctx context.Context, uuid ServerCreateFirewallRuleUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateFirewallRule Create a new firewall rule for a specific server
+	// CreateFirewallRule Create a firewall rule
+	//
+	// Create a firewall rule. Rules are evaluated in position order; if position is omitted, the rule is appended. Changes can take 1-2 minutes to take effect.
 	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /1.3/server/{uuid}/firewall_rule (the `CreateFirewallRule` operationId).
 	CreateFirewallRule(ctx context.Context, uuid ServerCreateFirewallRuleUuid, body CreateFirewallRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// UpdateFirewallRulesWithBody Update firewall rules for a specific server
+	// UpdateFirewallRulesWithBody Replace firewall rules
+	//
+	// Replace the Cloud Server's complete firewall rule chain. Array order determines rule positions. Changes can take 1-2 minutes to take effect.
 	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with PUT /1.3/server/{uuid}/firewall_rule (the `UpdateFirewallRules` operationId).
 	UpdateFirewallRulesWithBody(ctx context.Context, uuid ServerUpdateFirewallRulesUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// UpdateFirewallRules Update firewall rules for a specific server
+	// UpdateFirewallRules Replace firewall rules
+	//
+	// Replace the Cloud Server's complete firewall rule chain. Array order determines rule positions. Changes can take 1-2 minutes to take effect.
 	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with PUT /1.3/server/{uuid}/firewall_rule (the `UpdateFirewallRules` operationId).
 	UpdateFirewallRules(ctx context.Context, uuid ServerUpdateFirewallRulesUuid, body UpdateFirewallRulesJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// UpdateFirewallRulesForceWithBody Update firewall rules for a specific server
+	// DeleteFirewallRule Delete a firewall rule
 	//
-	// Update firewall rules for a specific server. Using /force applies rules even if another operation is in progress for the server
-	//
-	// Takes any type of body and a specified content type.
-	//
-	// Corresponds with PUT /1.3/server/{uuid}/firewall_rule/force (the `UpdateFirewallRulesForce` operationId).
-	UpdateFirewallRulesForceWithBody(ctx context.Context, uuid ServerUpdateFirewallRulesForceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// UpdateFirewallRulesForce Update firewall rules for a specific server
-	//
-	// Update firewall rules for a specific server. Using /force applies rules even if another operation is in progress for the server
-	//
-	// Takes a body of the `application/json` content type.
-	//
-	// Corresponds with PUT /1.3/server/{uuid}/firewall_rule/force (the `UpdateFirewallRulesForce` operationId).
-	UpdateFirewallRulesForce(ctx context.Context, uuid ServerUpdateFirewallRulesForceUuid, body UpdateFirewallRulesForceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// DeleteFirewallRule Delete a specific firewall rule from a server
+	// Delete the firewall rule at the specified one-based position. Remaining rules are renumbered. Changes can take 1-2 minutes to take effect.
 	//
 	// Corresponds with DELETE /1.3/server/{uuid}/firewall_rule/{position} (the `DeleteFirewallRule` operationId).
 	DeleteFirewallRule(ctx context.Context, uuid ServerDeleteFirewallRuleUuid, position ServerDeleteFirewallRulePosition, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetFirewallRule Returns details for a specific firewall rule
+	// GetFirewallRule Get a firewall rule
+	//
+	// Return the firewall rule at the specified one-based position in the Cloud Server rule chain.
 	//
 	// Corresponds with GET /1.3/server/{uuid}/firewall_rule/{position} (the `GetFirewallRule` operationId).
 	GetFirewallRule(ctx context.Context, uuid ServerGetFirewallRuleUuid, position ServerGetFirewallRulePosition, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ListPrivateFirewallRulesetRelationships List private firewall ruleset relationships for a server
+	// ListPrivateFirewallRulesetRelationships List private firewall ruleset relationships for a Cloud Server
 	//
-	// Returns private firewall ruleset relationships for a specific server.
+	// Return all private firewall ruleset relationships configured for a Cloud Server.
 	//
 	// Corresponds with GET /1.3/server/{uuid}/firewall_ruleset_relationships/private (the `ListPrivateFirewallRulesetRelationships` operationId).
 	ListPrivateFirewallRulesetRelationships(ctx context.Context, uuid ServerListPrivateFirewallRulesetRelationshipsUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ListServerGPUs Returns a list of GPUs assigned to a specific server
+	// ListServerGPUs List Cloud Server GPUs
+	//
+	// Returns GPUs attached to a Cloud Server.
 	//
 	// Corresponds with GET /1.3/server/{uuid}/gpus (the `ListServerGPUs` operationId).
 	ListServerGPUs(ctx context.Context, uuid ListServerGPUsUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetServerNetworking Get server networking details
+	// GetServerNetworking Get Cloud Server networking details
 	//
-	// Returns networking details for a specific server.
+	// Return all network interfaces and IP addresses configured for a Cloud Server.
 	//
 	// Corresponds with GET /1.3/server/{uuid}/networking (the `GetServerNetworking` operationId).
 	GetServerNetworking(ctx context.Context, uuid GetServerNetworkingUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// AddServerInterfaceWithBody Add a network interface
 	//
-	// Add a network interface to a specific server.
+	// Add a network interface to a stopped Cloud Server. A private interface must identify the SDN network to attach. The combined limit of network interfaces and storage devices is 24.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -237,7 +247,7 @@ type ServerClientInterface interface {
 
 	// AddServerInterface Add a network interface
 	//
-	// Add a network interface to a specific server.
+	// Add a network interface to a stopped Cloud Server. A private interface must identify the SDN network to attach. The combined limit of network interfaces and storage devices is 24.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -246,14 +256,14 @@ type ServerClientInterface interface {
 
 	// DeleteServerInterface Delete a network interface
 	//
-	// Delete a network interface from a specific server.
+	// Delete a network interface from a stopped Cloud Server. IP addresses attached to the interface are released according to their release policies.
 	//
 	// Corresponds with DELETE /1.3/server/{uuid}/networking/interface/{index} (the `DeleteServerInterface` operationId).
 	DeleteServerInterface(ctx context.Context, uuid DeleteServerInterfaceUuid, index DeleteServerInterfaceIndex, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ModifyServerInterfaceWithBody Modify a network interface
 	//
-	// Modify a network interface of a specific server.
+	// Modify the IP addresses, source IP filtering, boot setting, or index of a network interface on a stopped Cloud Server. Changing the interface network or type is not supported.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -262,7 +272,7 @@ type ServerClientInterface interface {
 
 	// ModifyServerInterface Modify a network interface
 	//
-	// Modify a network interface of a specific server.
+	// Modify the IP addresses, source IP filtering, boot setting, or index of a network interface on a stopped Cloud Server. Changing the interface network or type is not supported.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -271,7 +281,7 @@ type ServerClientInterface interface {
 
 	// AddServerInterfaceIpAddressWithBody Add an IP address to a network interface
 	//
-	// Add an IP address to a network interface of a specific server.
+	// Add an IPv4 or IPv6 address to a private network interface. The interface cannot contain addresses from both families and can have at most five addresses.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -280,7 +290,7 @@ type ServerClientInterface interface {
 
 	// AddServerInterfaceIpAddress Add an IP address to a network interface
 	//
-	// Add an IP address to a network interface of a specific server.
+	// Add an IPv4 or IPv6 address to a private network interface. The interface cannot contain addresses from both families and can have at most five addresses.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -289,33 +299,41 @@ type ServerClientInterface interface {
 
 	// DeleteServerInterfaceIpAddress Delete an IP address from a network interface
 	//
-	// Delete an IP address from a network interface of a specific server.
+	// Delete an IP address from a private network interface. At least one IP address must remain attached to the interface.
 	//
 	// Corresponds with DELETE /1.3/server/{uuid}/networking/interface/{index}/ip_address/{ip} (the `DeleteServerInterfaceIpAddress` operationId).
 	DeleteServerInterfaceIpAddress(ctx context.Context, uuid DeleteServerInterfaceIpAddressUuid, index DeleteServerInterfaceIpAddressIndex, ip DeleteServerInterfaceIpAddressIp, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// RebuildServerWithBody Rebuild a server from a specified storage device
+	// RebuildServerWithBody Rebuild a Cloud Server
+	//
+	// Reinstalls a stopped Cloud Server from a public template.
 	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with POST /1.3/server/{uuid}/rebuild (the `RebuildServer` operationId).
 	RebuildServerWithBody(ctx context.Context, uuid RebuildServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// RebuildServer Rebuild a server from a specified storage device
+	// RebuildServer Rebuild a Cloud Server
+	//
+	// Reinstalls a stopped Cloud Server from a public template.
 	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /1.3/server/{uuid}/rebuild (the `RebuildServer` operationId).
 	RebuildServer(ctx context.Context, uuid RebuildServerUuid, body RebuildServerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// RelocateServerWithBody Relocate a server to another zone
+	// RelocateServerWithBody Relocate a Cloud Server to another zone
+	//
+	// Relocates a stopped Cloud Server to another zone in the same physical location (datacenter).
 	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with POST /1.3/server/{uuid}/relocate (the `RelocateServer` operationId).
 	RelocateServerWithBody(ctx context.Context, uuid RelocateServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// RelocateServer Relocate a server to another zone
+	// RelocateServer Relocate a Cloud Server to another zone
+	//
+	// Relocates a stopped Cloud Server to another zone in the same physical location (datacenter).
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -324,116 +342,144 @@ type ServerClientInterface interface {
 
 	// GetRemoteAccessDetails Get remote access connection details
 	//
-	// Returns remote access connection details for a specific server.
+	// Returns remote access settings and VNC connection details for a Cloud Server.
 	//
 	// Corresponds with GET /1.3/server/{uuid}/remote_access_details (the `GetRemoteAccessDetails` operationId).
 	GetRemoteAccessDetails(ctx context.Context, uuid ServerGetRemoteAccessDetailsUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// RestartServerWithBody Restart a server
+	// RestartServerWithBody Restart a Cloud Server
+	//
+	// Stops and starts a Cloud Server in started state.
 	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with POST /1.3/server/{uuid}/restart (the `RestartServer` operationId).
 	RestartServerWithBody(ctx context.Context, uuid RestartServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// RestartServer Restart a server
+	// RestartServer Restart a Cloud Server
+	//
+	// Stops and starts a Cloud Server in started state.
 	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /1.3/server/{uuid}/restart (the `RestartServer` operationId).
 	RestartServer(ctx context.Context, uuid RestartServerUuid, body RestartServerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// StartServerWithBody Start a server
+	// StartServerWithBody Start a Cloud Server
+	//
+	// Starts a Cloud Server in stopped state.
 	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with POST /1.3/server/{uuid}/start (the `StartServer` operationId).
 	StartServerWithBody(ctx context.Context, uuid StartServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// StartServer Start a server
+	// StartServer Start a Cloud Server
+	//
+	// Starts a Cloud Server in stopped state.
 	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /1.3/server/{uuid}/start (the `StartServer` operationId).
 	StartServer(ctx context.Context, uuid StartServerUuid, body StartServerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetCPUStats Get CPU stats for a specific server
+	// GetCPUStats Get Cloud Server CPU statistics
+	//
+	// Returns CPU usage statistics for all supported periods.
 	//
 	// Corresponds with GET /1.3/server/{uuid}/stats/cpu (the `GetCPUStats` operationId).
 	GetCPUStats(ctx context.Context, uuid ServerGetCPUStatsUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetCPUStatsByPeriod Get CPU stats for a specific server
+	// GetCPUStatsByPeriod Get Cloud Server CPU statistics by period
+	//
+	// Returns CPU usage statistics for the selected period.
 	//
 	// Corresponds with GET /1.3/server/{uuid}/stats/cpu/{period} (the `GetCPUStatsByPeriod` operationId).
 	GetCPUStatsByPeriod(ctx context.Context, uuid ServerGetCPUStatsByPeriodUuid, period ServerGetCPUStatsByPeriodPeriod, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetDiskStats Get disk stats for a specific server
+	// GetDiskStats Get Cloud Server disk statistics
+	//
+	// Returns aggregate disk read and write statistics for all supported periods.
 	//
 	// Corresponds with GET /1.3/server/{uuid}/stats/disk/{type} (the `GetDiskStats` operationId).
 	GetDiskStats(ctx context.Context, uuid ServerGetDiskStatsUuid, pType GetDiskStatsParamsType, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetDiskStatsByPeriod Get disk stats for a specific server
+	// GetDiskStatsByPeriod Get Cloud Server disk statistics by period
+	//
+	// Returns aggregate disk read and write statistics for the selected period.
 	//
 	// Corresponds with GET /1.3/server/{uuid}/stats/disk/{type}/{period} (the `GetDiskStatsByPeriod` operationId).
 	GetDiskStatsByPeriod(ctx context.Context, uuid ServerGetDiskStatsByPeriodUuid, pType GetDiskStatsByPeriodParamsType, period ServerGetDiskStatsByPeriodPeriod, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetNetworkStats Get network stats for a specific server
+	// GetNetworkStats Get Cloud Server network statistics
 	//
-	// Get disk stats for a specific server.
+	// Returns aggregate inbound and outbound network statistics for all interfaces and periods.
 	//
 	// Corresponds with GET /1.3/server/{uuid}/stats/network/{type} (the `GetNetworkStats` operationId).
 	GetNetworkStats(ctx context.Context, uuid ServerGetNetworkStatsUuid, pType ServerGetNetworkStatsType, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetNetworkStatsByNetwork Get network stats for a specific server
+	// GetNetworkStatsByNetwork Get Cloud Server network statistics by network type
 	//
-	// Get disk stats for a specific server.
+	// Returns inbound and outbound network statistics for the selected network type and all periods.
 	//
 	// Corresponds with GET /1.3/server/{uuid}/stats/network/{type}/{network} (the `GetNetworkStatsByNetwork` operationId).
 	GetNetworkStatsByNetwork(ctx context.Context, uuid ServerGetNetworkStatsByNetworkUuid, pType ServerGetNetworkStatsByNetworkType, network ServerGetNetworkStatsByNetworkNetwork, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetNetworkStatsByNetworkAndPeriod Get network stats for a specific server
+	// GetNetworkStatsByNetworkAndPeriod Get Cloud Server network statistics by network type and period
 	//
-	// Get disk stats for a specific server.
+	// Returns inbound and outbound network statistics for the selected network type and period.
 	//
 	// Corresponds with GET /1.3/server/{uuid}/stats/network/{type}/{network}/{period} (the `GetNetworkStatsByNetworkAndPeriod` operationId).
 	GetNetworkStatsByNetworkAndPeriod(ctx context.Context, uuid ServerGetNetworkStatsByNetworkAndPeriodUuid, pType ServerGetNetworkStatsByNetworkAndPeriodType, network ServerGetNetworkStatsByNetworkAndPeriodNetwork, period ServerGetNetworkStatsByNetworkAndPeriodPeriod, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// StopServerWithBody Stop a server
+	// StopServerWithBody Stop a Cloud Server
+	//
+	// Stops a Cloud Server in started state.
 	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with POST /1.3/server/{uuid}/stop (the `StopServer` operationId).
 	StopServerWithBody(ctx context.Context, uuid StopServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// StopServer Stop a server
+	// StopServer Stop a Cloud Server
+	//
+	// Stops a Cloud Server in started state.
 	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /1.3/server/{uuid}/stop (the `StopServer` operationId).
 	StopServer(ctx context.Context, uuid StopServerUuid, body StopServerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// AttachStorageDeviceWithBody Attach a storage device to a server
+	// AttachStorageDeviceWithBody Attach a storage device to a Cloud Server
+	//
+	// Attach a storage resource as a disk or CD-ROM device to a Cloud Server. SCSI and virtio disks can be attached while the Cloud Server is started; IDE and CD-ROM devices require a stopped Cloud Server. An empty CD-ROM device can be attached without specifying a storage resource.
 	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with POST /1.3/server/{uuid}/storage/attach (the `AttachStorageDevice` operationId).
 	AttachStorageDeviceWithBody(ctx context.Context, uuid ServerAttachStorageDeviceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// AttachStorageDevice Attach a storage device to a server
+	// AttachStorageDevice Attach a storage device to a Cloud Server
+	//
+	// Attach a storage resource as a disk or CD-ROM device to a Cloud Server. SCSI and virtio disks can be attached while the Cloud Server is started; IDE and CD-ROM devices require a stopped Cloud Server. An empty CD-ROM device can be attached without specifying a storage resource.
 	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /1.3/server/{uuid}/storage/attach (the `AttachStorageDevice` operationId).
 	AttachStorageDevice(ctx context.Context, uuid ServerAttachStorageDeviceUuid, body AttachStorageDeviceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// DetachStorageDeviceWithBody Detach a storage device from a server
+	// DetachStorageDeviceWithBody Detach a storage device from a Cloud Server
+	//
+	// Detach a storage device identified by its device address or storage resource UUID. IDE and CD-ROM devices cannot be detached while the Cloud Server is started.
 	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with POST /1.3/server/{uuid}/storage/detach (the `DetachStorageDevice` operationId).
 	DetachStorageDeviceWithBody(ctx context.Context, uuid ServerDetachStorageDeviceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// DetachStorageDevice Detach a storage device from a server
+	// DetachStorageDevice Detach a storage device from a Cloud Server
+	//
+	// Detach a storage device identified by its device address or storage resource UUID. IDE and CD-ROM devices cannot be detached while the Cloud Server is started.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -442,13 +488,15 @@ type ServerClientInterface interface {
 
 	// GetVNCDetails Get VNC connection details
 	//
-	// Returns VNC connection details for a specific server.
+	// Returns VNC connection details and remote access settings for a Cloud Server.
 	//
 	// Corresponds with GET /1.3/server/{uuid}/vnc_details (the `GetVNCDetails` operationId).
 	GetVNCDetails(ctx context.Context, uuid ServerGetVNCDetailsUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
-// ListServers Returns a list of servers
+// ListServers List Cloud Servers
+//
+// Returns the most relevant information for Cloud Servers associated with the current account.
 //
 // Corresponds with GET /1.3/server (the `ListServers` operationId).
 func (c *Client) ListServers(ctx context.Context, params *ListServersParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -463,9 +511,9 @@ func (c *Client) ListServers(ctx context.Context, params *ListServersParams, req
 	return c.Client.Do(req)
 }
 
-// CreateServerWithBody Create a new server
+// CreateServerWithBody Create a new Cloud Server
 //
-// Creates a new server.
+// Creates a new Cloud Server.
 //
 // Takes any type of body and a specified content type.
 //
@@ -482,9 +530,9 @@ func (c *Client) CreateServerWithBody(ctx context.Context, contentType string, b
 	return c.Client.Do(req)
 }
 
-// CreateServer Create a new server
+// CreateServer Create a new Cloud Server
 //
-// Creates a new server.
+// Creates a new Cloud Server.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -501,47 +549,9 @@ func (c *Client) CreateServer(ctx context.Context, body CreateServerJSONRequestB
 	return c.Client.Do(req)
 }
 
-// ModifyServerWithBody Modify an existing server
+// ListFirewallRulesetRelationships List Cloud Servers related to a private firewall ruleset
 //
-// Modifies an existing server.
-//
-// Takes any type of body and a specified content type.
-//
-// Corresponds with PUT /1.3/server (the `ModifyServer` operationId).
-func (c *Client) ModifyServerWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewModifyServerRequestWithBody(c.Server, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// ModifyServer Modify an existing server
-//
-// Modifies an existing server.
-//
-// Takes a body of the `application/json` content type.
-//
-// Corresponds with PUT /1.3/server (the `ModifyServer` operationId).
-func (c *Client) ModifyServer(ctx context.Context, body ModifyServerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewModifyServerRequest(c.Server, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// ListFirewallRulesetRelationships List servers related to a private firewall ruleset
-//
-// Returns servers related to a specific private firewall ruleset.
+// Return Cloud Servers visible to the authenticated account that are related to a private firewall ruleset, including each Cloud Server's private ruleset relationships.
 //
 // Corresponds with GET /1.3/server/firewall_ruleset_relationships/private/{ruleset_uuid} (the `ListFirewallRulesetRelationships` operationId).
 func (c *Client) ListFirewallRulesetRelationships(ctx context.Context, rulesetUuid ServerListFirewallRulesetRelationshipsRulesetUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -556,7 +566,9 @@ func (c *Client) ListFirewallRulesetRelationships(ctx context.Context, rulesetUu
 	return c.Client.Do(req)
 }
 
-// GetLabels Returns a list of server labels
+// GetLabels List Cloud Server labels
+//
+// Returns the unique label key-value pairs used by Cloud Servers accessible to the current account.
 //
 // Corresponds with GET /1.3/server/labels (the `GetLabels` operationId).
 func (c *Client) GetLabels(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -571,9 +583,9 @@ func (c *Client) GetLabels(ctx context.Context, reqEditors ...RequestEditorFn) (
 	return c.Client.Do(req)
 }
 
-// DeleteServer Delete a server
+// DeleteServer Delete a Cloud Server
 //
-// Deletes a server. With query option ?storages=1, one can delete server's storages as well
+// Deletes a stopped Cloud Server and releases its IP addresses. Deleting backups requires deleting the associated storage devices.
 //
 // Corresponds with DELETE /1.3/server/{uuid} (the `DeleteServer` operationId).
 func (c *Client) DeleteServer(ctx context.Context, uuid DeleteServerUuid, params *DeleteServerParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -588,9 +600,9 @@ func (c *Client) DeleteServer(ctx context.Context, uuid DeleteServerUuid, params
 	return c.Client.Do(req)
 }
 
-// GetServer Get server details
+// GetServer Get Cloud Server details
 //
-// Returns details for a specific server.
+// Returns detailed information about a Cloud Server.
 //
 // Corresponds with GET /1.3/server/{uuid} (the `GetServer` operationId).
 func (c *Client) GetServer(ctx context.Context, uuid GetServerUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -605,9 +617,47 @@ func (c *Client) GetServer(ctx context.Context, uuid GetServerUuid, reqEditors .
 	return c.Client.Do(req)
 }
 
+// ModifyServerWithBody Modify an existing Cloud Server
+//
+// Modifies an existing Cloud Server configuration.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PUT /1.3/server/{uuid} (the `ModifyServer` operationId).
+func (c *Client) ModifyServerWithBody(ctx context.Context, uuid ModifyServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewModifyServerRequestWithBody(c.Server, uuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ModifyServer Modify an existing Cloud Server
+//
+// Modifies an existing Cloud Server configuration.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PUT /1.3/server/{uuid} (the `ModifyServer` operationId).
+func (c *Client) ModifyServer(ctx context.Context, uuid ModifyServerUuid, body ModifyServerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewModifyServerRequest(c.Server, uuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // AttachPrivateFirewallRulesetWithBody Attach a private firewall ruleset
 //
-// Attach a private firewall ruleset to a specific server.
+// Attach a private, stateful firewall ruleset to a Cloud Server. The latest ruleset version is selected and applied to private network interfaces.
 //
 // Takes any type of body and a specified content type.
 //
@@ -626,7 +676,7 @@ func (c *Client) AttachPrivateFirewallRulesetWithBody(ctx context.Context, uuid 
 
 // AttachPrivateFirewallRuleset Attach a private firewall ruleset
 //
-// Attach a private firewall ruleset to a specific server.
+// Attach a private, stateful firewall ruleset to a Cloud Server. The latest ruleset version is selected and applied to private network interfaces.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -643,7 +693,9 @@ func (c *Client) AttachPrivateFirewallRuleset(ctx context.Context, uuid ServerAt
 	return c.Client.Do(req)
 }
 
-// CancelServerOperation Cancel an ongoing operation for a specific server
+// CancelServerOperation Cancel a Cloud Server operation
+//
+// Cancels an operation while the Cloud Server is in maintenance state.
 //
 // Corresponds with POST /1.3/server/{uuid}/cancel (the `CancelServerOperation` operationId).
 func (c *Client) CancelServerOperation(ctx context.Context, uuid CancelServerOperationUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -658,7 +710,9 @@ func (c *Client) CancelServerOperation(ctx context.Context, uuid CancelServerOpe
 	return c.Client.Do(req)
 }
 
-// EjectCDROM Eject the CD-ROM image from a server
+// EjectCDROM Eject the CD-ROM image from a Cloud Server
+//
+// Eject the storage from the Cloud Server's attached CD-ROM device.
 //
 // Corresponds with POST /1.3/server/{uuid}/cdrom/eject (the `EjectCDROM` operationId).
 func (c *Client) EjectCDROM(ctx context.Context, uuid ServerEjectCDROMUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -673,7 +727,9 @@ func (c *Client) EjectCDROM(ctx context.Context, uuid ServerEjectCDROMUuid, reqE
 	return c.Client.Do(req)
 }
 
-// LoadCDROMWithBody Load a CD-ROM image into a server
+// LoadCDROMWithBody Load a CD-ROM image into a Cloud Server
+//
+// Load a storage of type normal or cdrom into the Cloud Server's attached CD-ROM device. If media is already loaded, it is ejected first.
 //
 // Takes any type of body and a specified content type.
 //
@@ -690,7 +746,9 @@ func (c *Client) LoadCDROMWithBody(ctx context.Context, uuid ServerLoadCDROMUuid
 	return c.Client.Do(req)
 }
 
-// LoadCDROM Load a CD-ROM image into a server
+// LoadCDROM Load a CD-ROM image into a Cloud Server
+//
+// Load a storage of type normal or cdrom into the Cloud Server's attached CD-ROM device. If media is already loaded, it is ejected first.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -709,7 +767,7 @@ func (c *Client) LoadCDROM(ctx context.Context, uuid ServerLoadCDROMUuid, body L
 
 // DetachPrivateFirewallRulesetWithBody Detach a private firewall ruleset
 //
-// Detach a private firewall ruleset from a specific server.
+// Detach a private firewall ruleset from a Cloud Server and reapply private-interface firewall rules.
 //
 // Takes any type of body and a specified content type.
 //
@@ -728,7 +786,7 @@ func (c *Client) DetachPrivateFirewallRulesetWithBody(ctx context.Context, uuid 
 
 // DetachPrivateFirewallRuleset Detach a private firewall ruleset
 //
-// Detach a private firewall ruleset from a specific server.
+// Detach a private firewall ruleset from a Cloud Server and reapply private-interface firewall rules.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -745,7 +803,9 @@ func (c *Client) DetachPrivateFirewallRuleset(ctx context.Context, uuid ServerDe
 	return c.Client.Do(req)
 }
 
-// ListFirewallRules Returns a list of firewall rules for a specific server
+// ListFirewallRules List firewall rules
+//
+// Return the Cloud Server firewall rules in evaluation order. Changes to firewall rules can take 1-2 minutes to take effect.
 //
 // Corresponds with GET /1.3/server/{uuid}/firewall_rule (the `ListFirewallRules` operationId).
 func (c *Client) ListFirewallRules(ctx context.Context, uuid ServerListFirewallRulesUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -760,7 +820,9 @@ func (c *Client) ListFirewallRules(ctx context.Context, uuid ServerListFirewallR
 	return c.Client.Do(req)
 }
 
-// CreateFirewallRuleWithBody Create a new firewall rule for a specific server
+// CreateFirewallRuleWithBody Create a firewall rule
+//
+// Create a firewall rule. Rules are evaluated in position order; if position is omitted, the rule is appended. Changes can take 1-2 minutes to take effect.
 //
 // Takes any type of body and a specified content type.
 //
@@ -777,7 +839,9 @@ func (c *Client) CreateFirewallRuleWithBody(ctx context.Context, uuid ServerCrea
 	return c.Client.Do(req)
 }
 
-// CreateFirewallRule Create a new firewall rule for a specific server
+// CreateFirewallRule Create a firewall rule
+//
+// Create a firewall rule. Rules are evaluated in position order; if position is omitted, the rule is appended. Changes can take 1-2 minutes to take effect.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -794,7 +858,9 @@ func (c *Client) CreateFirewallRule(ctx context.Context, uuid ServerCreateFirewa
 	return c.Client.Do(req)
 }
 
-// UpdateFirewallRulesWithBody Update firewall rules for a specific server
+// UpdateFirewallRulesWithBody Replace firewall rules
+//
+// Replace the Cloud Server's complete firewall rule chain. Array order determines rule positions. Changes can take 1-2 minutes to take effect.
 //
 // Takes any type of body and a specified content type.
 //
@@ -811,7 +877,9 @@ func (c *Client) UpdateFirewallRulesWithBody(ctx context.Context, uuid ServerUpd
 	return c.Client.Do(req)
 }
 
-// UpdateFirewallRules Update firewall rules for a specific server
+// UpdateFirewallRules Replace firewall rules
+//
+// Replace the Cloud Server's complete firewall rule chain. Array order determines rule positions. Changes can take 1-2 minutes to take effect.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -828,45 +896,9 @@ func (c *Client) UpdateFirewallRules(ctx context.Context, uuid ServerUpdateFirew
 	return c.Client.Do(req)
 }
 
-// UpdateFirewallRulesForceWithBody Update firewall rules for a specific server
+// DeleteFirewallRule Delete a firewall rule
 //
-// Update firewall rules for a specific server. Using /force applies rules even if another operation is in progress for the server
-//
-// Takes any type of body and a specified content type.
-//
-// Corresponds with PUT /1.3/server/{uuid}/firewall_rule/force (the `UpdateFirewallRulesForce` operationId).
-func (c *Client) UpdateFirewallRulesForceWithBody(ctx context.Context, uuid ServerUpdateFirewallRulesForceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateFirewallRulesForceRequestWithBody(c.Server, uuid, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// UpdateFirewallRulesForce Update firewall rules for a specific server
-//
-// Update firewall rules for a specific server. Using /force applies rules even if another operation is in progress for the server
-//
-// Takes a body of the `application/json` content type.
-//
-// Corresponds with PUT /1.3/server/{uuid}/firewall_rule/force (the `UpdateFirewallRulesForce` operationId).
-func (c *Client) UpdateFirewallRulesForce(ctx context.Context, uuid ServerUpdateFirewallRulesForceUuid, body UpdateFirewallRulesForceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateFirewallRulesForceRequest(c.Server, uuid, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// DeleteFirewallRule Delete a specific firewall rule from a server
+// Delete the firewall rule at the specified one-based position. Remaining rules are renumbered. Changes can take 1-2 minutes to take effect.
 //
 // Corresponds with DELETE /1.3/server/{uuid}/firewall_rule/{position} (the `DeleteFirewallRule` operationId).
 func (c *Client) DeleteFirewallRule(ctx context.Context, uuid ServerDeleteFirewallRuleUuid, position ServerDeleteFirewallRulePosition, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -881,7 +913,9 @@ func (c *Client) DeleteFirewallRule(ctx context.Context, uuid ServerDeleteFirewa
 	return c.Client.Do(req)
 }
 
-// GetFirewallRule Returns details for a specific firewall rule
+// GetFirewallRule Get a firewall rule
+//
+// Return the firewall rule at the specified one-based position in the Cloud Server rule chain.
 //
 // Corresponds with GET /1.3/server/{uuid}/firewall_rule/{position} (the `GetFirewallRule` operationId).
 func (c *Client) GetFirewallRule(ctx context.Context, uuid ServerGetFirewallRuleUuid, position ServerGetFirewallRulePosition, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -896,9 +930,9 @@ func (c *Client) GetFirewallRule(ctx context.Context, uuid ServerGetFirewallRule
 	return c.Client.Do(req)
 }
 
-// ListPrivateFirewallRulesetRelationships List private firewall ruleset relationships for a server
+// ListPrivateFirewallRulesetRelationships List private firewall ruleset relationships for a Cloud Server
 //
-// Returns private firewall ruleset relationships for a specific server.
+// Return all private firewall ruleset relationships configured for a Cloud Server.
 //
 // Corresponds with GET /1.3/server/{uuid}/firewall_ruleset_relationships/private (the `ListPrivateFirewallRulesetRelationships` operationId).
 func (c *Client) ListPrivateFirewallRulesetRelationships(ctx context.Context, uuid ServerListPrivateFirewallRulesetRelationshipsUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -913,7 +947,9 @@ func (c *Client) ListPrivateFirewallRulesetRelationships(ctx context.Context, uu
 	return c.Client.Do(req)
 }
 
-// ListServerGPUs Returns a list of GPUs assigned to a specific server
+// ListServerGPUs List Cloud Server GPUs
+//
+// Returns GPUs attached to a Cloud Server.
 //
 // Corresponds with GET /1.3/server/{uuid}/gpus (the `ListServerGPUs` operationId).
 func (c *Client) ListServerGPUs(ctx context.Context, uuid ListServerGPUsUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -928,9 +964,9 @@ func (c *Client) ListServerGPUs(ctx context.Context, uuid ListServerGPUsUuid, re
 	return c.Client.Do(req)
 }
 
-// GetServerNetworking Get server networking details
+// GetServerNetworking Get Cloud Server networking details
 //
-// Returns networking details for a specific server.
+// Return all network interfaces and IP addresses configured for a Cloud Server.
 //
 // Corresponds with GET /1.3/server/{uuid}/networking (the `GetServerNetworking` operationId).
 func (c *Client) GetServerNetworking(ctx context.Context, uuid GetServerNetworkingUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -947,7 +983,7 @@ func (c *Client) GetServerNetworking(ctx context.Context, uuid GetServerNetworki
 
 // AddServerInterfaceWithBody Add a network interface
 //
-// Add a network interface to a specific server.
+// Add a network interface to a stopped Cloud Server. A private interface must identify the SDN network to attach. The combined limit of network interfaces and storage devices is 24.
 //
 // Takes any type of body and a specified content type.
 //
@@ -966,7 +1002,7 @@ func (c *Client) AddServerInterfaceWithBody(ctx context.Context, uuid AddServerI
 
 // AddServerInterface Add a network interface
 //
-// Add a network interface to a specific server.
+// Add a network interface to a stopped Cloud Server. A private interface must identify the SDN network to attach. The combined limit of network interfaces and storage devices is 24.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -985,7 +1021,7 @@ func (c *Client) AddServerInterface(ctx context.Context, uuid AddServerInterface
 
 // DeleteServerInterface Delete a network interface
 //
-// Delete a network interface from a specific server.
+// Delete a network interface from a stopped Cloud Server. IP addresses attached to the interface are released according to their release policies.
 //
 // Corresponds with DELETE /1.3/server/{uuid}/networking/interface/{index} (the `DeleteServerInterface` operationId).
 func (c *Client) DeleteServerInterface(ctx context.Context, uuid DeleteServerInterfaceUuid, index DeleteServerInterfaceIndex, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -1002,7 +1038,7 @@ func (c *Client) DeleteServerInterface(ctx context.Context, uuid DeleteServerInt
 
 // ModifyServerInterfaceWithBody Modify a network interface
 //
-// Modify a network interface of a specific server.
+// Modify the IP addresses, source IP filtering, boot setting, or index of a network interface on a stopped Cloud Server. Changing the interface network or type is not supported.
 //
 // Takes any type of body and a specified content type.
 //
@@ -1021,7 +1057,7 @@ func (c *Client) ModifyServerInterfaceWithBody(ctx context.Context, uuid ModifyS
 
 // ModifyServerInterface Modify a network interface
 //
-// Modify a network interface of a specific server.
+// Modify the IP addresses, source IP filtering, boot setting, or index of a network interface on a stopped Cloud Server. Changing the interface network or type is not supported.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -1040,7 +1076,7 @@ func (c *Client) ModifyServerInterface(ctx context.Context, uuid ModifyServerInt
 
 // AddServerInterfaceIpAddressWithBody Add an IP address to a network interface
 //
-// Add an IP address to a network interface of a specific server.
+// Add an IPv4 or IPv6 address to a private network interface. The interface cannot contain addresses from both families and can have at most five addresses.
 //
 // Takes any type of body and a specified content type.
 //
@@ -1059,7 +1095,7 @@ func (c *Client) AddServerInterfaceIpAddressWithBody(ctx context.Context, uuid A
 
 // AddServerInterfaceIpAddress Add an IP address to a network interface
 //
-// Add an IP address to a network interface of a specific server.
+// Add an IPv4 or IPv6 address to a private network interface. The interface cannot contain addresses from both families and can have at most five addresses.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -1078,7 +1114,7 @@ func (c *Client) AddServerInterfaceIpAddress(ctx context.Context, uuid AddServer
 
 // DeleteServerInterfaceIpAddress Delete an IP address from a network interface
 //
-// Delete an IP address from a network interface of a specific server.
+// Delete an IP address from a private network interface. At least one IP address must remain attached to the interface.
 //
 // Corresponds with DELETE /1.3/server/{uuid}/networking/interface/{index}/ip_address/{ip} (the `DeleteServerInterfaceIpAddress` operationId).
 func (c *Client) DeleteServerInterfaceIpAddress(ctx context.Context, uuid DeleteServerInterfaceIpAddressUuid, index DeleteServerInterfaceIpAddressIndex, ip DeleteServerInterfaceIpAddressIp, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -1093,7 +1129,9 @@ func (c *Client) DeleteServerInterfaceIpAddress(ctx context.Context, uuid Delete
 	return c.Client.Do(req)
 }
 
-// RebuildServerWithBody Rebuild a server from a specified storage device
+// RebuildServerWithBody Rebuild a Cloud Server
+//
+// Reinstalls a stopped Cloud Server from a public template.
 //
 // Takes any type of body and a specified content type.
 //
@@ -1110,7 +1148,9 @@ func (c *Client) RebuildServerWithBody(ctx context.Context, uuid RebuildServerUu
 	return c.Client.Do(req)
 }
 
-// RebuildServer Rebuild a server from a specified storage device
+// RebuildServer Rebuild a Cloud Server
+//
+// Reinstalls a stopped Cloud Server from a public template.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -1127,7 +1167,9 @@ func (c *Client) RebuildServer(ctx context.Context, uuid RebuildServerUuid, body
 	return c.Client.Do(req)
 }
 
-// RelocateServerWithBody Relocate a server to another zone
+// RelocateServerWithBody Relocate a Cloud Server to another zone
+//
+// Relocates a stopped Cloud Server to another zone in the same physical location (datacenter).
 //
 // Takes any type of body and a specified content type.
 //
@@ -1144,7 +1186,9 @@ func (c *Client) RelocateServerWithBody(ctx context.Context, uuid RelocateServer
 	return c.Client.Do(req)
 }
 
-// RelocateServer Relocate a server to another zone
+// RelocateServer Relocate a Cloud Server to another zone
+//
+// Relocates a stopped Cloud Server to another zone in the same physical location (datacenter).
 //
 // Takes a body of the `application/json` content type.
 //
@@ -1163,7 +1207,7 @@ func (c *Client) RelocateServer(ctx context.Context, uuid RelocateServerUuid, bo
 
 // GetRemoteAccessDetails Get remote access connection details
 //
-// Returns remote access connection details for a specific server.
+// Returns remote access settings and VNC connection details for a Cloud Server.
 //
 // Corresponds with GET /1.3/server/{uuid}/remote_access_details (the `GetRemoteAccessDetails` operationId).
 func (c *Client) GetRemoteAccessDetails(ctx context.Context, uuid ServerGetRemoteAccessDetailsUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -1178,7 +1222,9 @@ func (c *Client) GetRemoteAccessDetails(ctx context.Context, uuid ServerGetRemot
 	return c.Client.Do(req)
 }
 
-// RestartServerWithBody Restart a server
+// RestartServerWithBody Restart a Cloud Server
+//
+// Stops and starts a Cloud Server in started state.
 //
 // Takes any type of body and a specified content type.
 //
@@ -1195,7 +1241,9 @@ func (c *Client) RestartServerWithBody(ctx context.Context, uuid RestartServerUu
 	return c.Client.Do(req)
 }
 
-// RestartServer Restart a server
+// RestartServer Restart a Cloud Server
+//
+// Stops and starts a Cloud Server in started state.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -1212,7 +1260,9 @@ func (c *Client) RestartServer(ctx context.Context, uuid RestartServerUuid, body
 	return c.Client.Do(req)
 }
 
-// StartServerWithBody Start a server
+// StartServerWithBody Start a Cloud Server
+//
+// Starts a Cloud Server in stopped state.
 //
 // Takes any type of body and a specified content type.
 //
@@ -1229,7 +1279,9 @@ func (c *Client) StartServerWithBody(ctx context.Context, uuid StartServerUuid, 
 	return c.Client.Do(req)
 }
 
-// StartServer Start a server
+// StartServer Start a Cloud Server
+//
+// Starts a Cloud Server in stopped state.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -1246,7 +1298,9 @@ func (c *Client) StartServer(ctx context.Context, uuid StartServerUuid, body Sta
 	return c.Client.Do(req)
 }
 
-// GetCPUStats Get CPU stats for a specific server
+// GetCPUStats Get Cloud Server CPU statistics
+//
+// Returns CPU usage statistics for all supported periods.
 //
 // Corresponds with GET /1.3/server/{uuid}/stats/cpu (the `GetCPUStats` operationId).
 func (c *Client) GetCPUStats(ctx context.Context, uuid ServerGetCPUStatsUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -1261,7 +1315,9 @@ func (c *Client) GetCPUStats(ctx context.Context, uuid ServerGetCPUStatsUuid, re
 	return c.Client.Do(req)
 }
 
-// GetCPUStatsByPeriod Get CPU stats for a specific server
+// GetCPUStatsByPeriod Get Cloud Server CPU statistics by period
+//
+// Returns CPU usage statistics for the selected period.
 //
 // Corresponds with GET /1.3/server/{uuid}/stats/cpu/{period} (the `GetCPUStatsByPeriod` operationId).
 func (c *Client) GetCPUStatsByPeriod(ctx context.Context, uuid ServerGetCPUStatsByPeriodUuid, period ServerGetCPUStatsByPeriodPeriod, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -1276,7 +1332,9 @@ func (c *Client) GetCPUStatsByPeriod(ctx context.Context, uuid ServerGetCPUStats
 	return c.Client.Do(req)
 }
 
-// GetDiskStats Get disk stats for a specific server
+// GetDiskStats Get Cloud Server disk statistics
+//
+// Returns aggregate disk read and write statistics for all supported periods.
 //
 // Corresponds with GET /1.3/server/{uuid}/stats/disk/{type} (the `GetDiskStats` operationId).
 func (c *Client) GetDiskStats(ctx context.Context, uuid ServerGetDiskStatsUuid, pType GetDiskStatsParamsType, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -1291,7 +1349,9 @@ func (c *Client) GetDiskStats(ctx context.Context, uuid ServerGetDiskStatsUuid, 
 	return c.Client.Do(req)
 }
 
-// GetDiskStatsByPeriod Get disk stats for a specific server
+// GetDiskStatsByPeriod Get Cloud Server disk statistics by period
+//
+// Returns aggregate disk read and write statistics for the selected period.
 //
 // Corresponds with GET /1.3/server/{uuid}/stats/disk/{type}/{period} (the `GetDiskStatsByPeriod` operationId).
 func (c *Client) GetDiskStatsByPeriod(ctx context.Context, uuid ServerGetDiskStatsByPeriodUuid, pType GetDiskStatsByPeriodParamsType, period ServerGetDiskStatsByPeriodPeriod, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -1306,9 +1366,9 @@ func (c *Client) GetDiskStatsByPeriod(ctx context.Context, uuid ServerGetDiskSta
 	return c.Client.Do(req)
 }
 
-// GetNetworkStats Get network stats for a specific server
+// GetNetworkStats Get Cloud Server network statistics
 //
-// Get disk stats for a specific server.
+// Returns aggregate inbound and outbound network statistics for all interfaces and periods.
 //
 // Corresponds with GET /1.3/server/{uuid}/stats/network/{type} (the `GetNetworkStats` operationId).
 func (c *Client) GetNetworkStats(ctx context.Context, uuid ServerGetNetworkStatsUuid, pType ServerGetNetworkStatsType, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -1323,9 +1383,9 @@ func (c *Client) GetNetworkStats(ctx context.Context, uuid ServerGetNetworkStats
 	return c.Client.Do(req)
 }
 
-// GetNetworkStatsByNetwork Get network stats for a specific server
+// GetNetworkStatsByNetwork Get Cloud Server network statistics by network type
 //
-// Get disk stats for a specific server.
+// Returns inbound and outbound network statistics for the selected network type and all periods.
 //
 // Corresponds with GET /1.3/server/{uuid}/stats/network/{type}/{network} (the `GetNetworkStatsByNetwork` operationId).
 func (c *Client) GetNetworkStatsByNetwork(ctx context.Context, uuid ServerGetNetworkStatsByNetworkUuid, pType ServerGetNetworkStatsByNetworkType, network ServerGetNetworkStatsByNetworkNetwork, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -1340,9 +1400,9 @@ func (c *Client) GetNetworkStatsByNetwork(ctx context.Context, uuid ServerGetNet
 	return c.Client.Do(req)
 }
 
-// GetNetworkStatsByNetworkAndPeriod Get network stats for a specific server
+// GetNetworkStatsByNetworkAndPeriod Get Cloud Server network statistics by network type and period
 //
-// Get disk stats for a specific server.
+// Returns inbound and outbound network statistics for the selected network type and period.
 //
 // Corresponds with GET /1.3/server/{uuid}/stats/network/{type}/{network}/{period} (the `GetNetworkStatsByNetworkAndPeriod` operationId).
 func (c *Client) GetNetworkStatsByNetworkAndPeriod(ctx context.Context, uuid ServerGetNetworkStatsByNetworkAndPeriodUuid, pType ServerGetNetworkStatsByNetworkAndPeriodType, network ServerGetNetworkStatsByNetworkAndPeriodNetwork, period ServerGetNetworkStatsByNetworkAndPeriodPeriod, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -1357,7 +1417,9 @@ func (c *Client) GetNetworkStatsByNetworkAndPeriod(ctx context.Context, uuid Ser
 	return c.Client.Do(req)
 }
 
-// StopServerWithBody Stop a server
+// StopServerWithBody Stop a Cloud Server
+//
+// Stops a Cloud Server in started state.
 //
 // Takes any type of body and a specified content type.
 //
@@ -1374,7 +1436,9 @@ func (c *Client) StopServerWithBody(ctx context.Context, uuid StopServerUuid, co
 	return c.Client.Do(req)
 }
 
-// StopServer Stop a server
+// StopServer Stop a Cloud Server
+//
+// Stops a Cloud Server in started state.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -1391,7 +1455,9 @@ func (c *Client) StopServer(ctx context.Context, uuid StopServerUuid, body StopS
 	return c.Client.Do(req)
 }
 
-// AttachStorageDeviceWithBody Attach a storage device to a server
+// AttachStorageDeviceWithBody Attach a storage device to a Cloud Server
+//
+// Attach a storage resource as a disk or CD-ROM device to a Cloud Server. SCSI and virtio disks can be attached while the Cloud Server is started; IDE and CD-ROM devices require a stopped Cloud Server. An empty CD-ROM device can be attached without specifying a storage resource.
 //
 // Takes any type of body and a specified content type.
 //
@@ -1408,7 +1474,9 @@ func (c *Client) AttachStorageDeviceWithBody(ctx context.Context, uuid ServerAtt
 	return c.Client.Do(req)
 }
 
-// AttachStorageDevice Attach a storage device to a server
+// AttachStorageDevice Attach a storage device to a Cloud Server
+//
+// Attach a storage resource as a disk or CD-ROM device to a Cloud Server. SCSI and virtio disks can be attached while the Cloud Server is started; IDE and CD-ROM devices require a stopped Cloud Server. An empty CD-ROM device can be attached without specifying a storage resource.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -1425,7 +1493,9 @@ func (c *Client) AttachStorageDevice(ctx context.Context, uuid ServerAttachStora
 	return c.Client.Do(req)
 }
 
-// DetachStorageDeviceWithBody Detach a storage device from a server
+// DetachStorageDeviceWithBody Detach a storage device from a Cloud Server
+//
+// Detach a storage device identified by its device address or storage resource UUID. IDE and CD-ROM devices cannot be detached while the Cloud Server is started.
 //
 // Takes any type of body and a specified content type.
 //
@@ -1442,7 +1512,9 @@ func (c *Client) DetachStorageDeviceWithBody(ctx context.Context, uuid ServerDet
 	return c.Client.Do(req)
 }
 
-// DetachStorageDevice Detach a storage device from a server
+// DetachStorageDevice Detach a storage device from a Cloud Server
+//
+// Detach a storage device identified by its device address or storage resource UUID. IDE and CD-ROM devices cannot be detached while the Cloud Server is started.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -1461,7 +1533,7 @@ func (c *Client) DetachStorageDevice(ctx context.Context, uuid ServerDetachStora
 
 // GetVNCDetails Get VNC connection details
 //
-// Returns VNC connection details for a specific server.
+// Returns VNC connection details and remote access settings for a Cloud Server.
 //
 // Corresponds with GET /1.3/server/{uuid}/vnc_details (the `GetVNCDetails` operationId).
 func (c *Client) GetVNCDetails(ctx context.Context, uuid ServerGetVNCDetailsUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -1612,6 +1684,30 @@ func NewListServersRequest(server string, params *ListServersParams) (*http.Requ
 
 		}
 
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Offset != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "offset", *params.Offset, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
 		if encoded := queryValues.Encode(); encoded != "" {
 			rawQueryFragments = append(rawQueryFragments, encoded)
 		}
@@ -1657,46 +1753,6 @@ func NewCreateServerRequestWithBody(server string, contentType string, body io.R
 	}
 
 	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
-// NewModifyServerRequest calls the generic ModifyServer builder with application/json body
-func NewModifyServerRequest(server string, body ModifyServerJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewModifyServerRequestWithBody(server, "application/json", bodyReader)
-}
-
-// NewModifyServerRequestWithBody constructs an http.Request for the ModifyServer method, with any body, and a specified content type
-func NewModifyServerRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/1.3/server")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
@@ -1804,7 +1860,19 @@ func NewDeleteServerRequest(server string, uuid DeleteServerUuid, params *Delete
 
 		if params.Storages != nil {
 
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "storages", *params.Storages, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int64"}); err != nil {
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "storages", *params.Storages, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Backups != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "backups", *params.Backups, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
 				return nil, err
 			} else {
 				for _, qp := range strings.Split(queryFrag, "&") {
@@ -1858,6 +1926,53 @@ func NewGetServerRequest(server string, uuid GetServerUuid) (*http.Request, erro
 	if err != nil {
 		return nil, err
 	}
+
+	return req, nil
+}
+
+// NewModifyServerRequest calls the generic ModifyServer builder with application/json body
+func NewModifyServerRequest(server string, uuid ModifyServerUuid, body ModifyServerJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewModifyServerRequestWithBody(server, uuid, "application/json", bodyReader)
+}
+
+// NewModifyServerRequestWithBody constructs an http.Request for the ModifyServer method, with any body, and a specified content type
+func NewModifyServerRequestWithBody(server string, uuid ModifyServerUuid, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/server/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -2180,53 +2295,6 @@ func NewUpdateFirewallRulesRequestWithBody(server string, uuid ServerUpdateFirew
 	}
 
 	operationPath := fmt.Sprintf("/1.3/server/%s/firewall_rule", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
-// NewUpdateFirewallRulesForceRequest calls the generic UpdateFirewallRulesForce builder with application/json body
-func NewUpdateFirewallRulesForceRequest(server string, uuid ServerUpdateFirewallRulesForceUuid, body UpdateFirewallRulesForceJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewUpdateFirewallRulesForceRequestWithBody(server, uuid, "application/json", bodyReader)
-}
-
-// NewUpdateFirewallRulesForceRequestWithBody constructs an http.Request for the UpdateFirewallRulesForce method, with any body, and a specified content type
-func NewUpdateFirewallRulesForceRequestWithBody(server string, uuid ServerUpdateFirewallRulesForceUuid, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/1.3/server/%s/firewall_rule/force", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -2627,7 +2695,7 @@ func NewAddServerInterfaceIpAddressRequestWithBody(server string, uuid AddServer
 
 		if params.Force != nil {
 
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "force", *params.Force, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int64"}); err != nil {
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "force", *params.Force, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
 				return nil, err
 			} else {
 				for _, qp := range strings.Split(queryFrag, "&") {
@@ -3409,86 +3477,90 @@ func NewGetVNCDetailsRequest(server string, uuid ServerGetVNCDetailsUuid) (*http
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ServerClientWithResponsesInterface interface {
 
-	// ListServersWithResponse Returns a list of servers
+	// ListServersWithResponse List Cloud Servers
+	//
+	// Returns the most relevant information for Cloud Servers associated with the current account.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/server (the `ListServers` operationId).
 	ListServersWithResponse(ctx context.Context, params *ListServersParams, reqEditors ...RequestEditorFn) (*ListServersResp, error)
 
-	// CreateServerWithBodyWithResponse Create a new server
+	// CreateServerWithBodyWithResponse Create a new Cloud Server
 	//
-	// Creates a new server.
+	// Creates a new Cloud Server.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/server (the `CreateServer` operationId).
 	CreateServerWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateServerResp, error)
 
-	// CreateServerWithResponse Create a new server
+	// CreateServerWithResponse Create a new Cloud Server
 	//
-	// Creates a new server.
+	// Creates a new Cloud Server.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/server (the `CreateServer` operationId).
 	CreateServerWithResponse(ctx context.Context, body CreateServerJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateServerResp, error)
 
-	// ModifyServerWithBodyWithResponse Modify an existing server
+	// ListFirewallRulesetRelationshipsWithResponse List Cloud Servers related to a private firewall ruleset
 	//
-	// Modifies an existing server.
-	//
-	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with PUT /1.3/server (the `ModifyServer` operationId).
-	ModifyServerWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyServerResp, error)
-
-	// ModifyServerWithResponse Modify an existing server
-	//
-	// Modifies an existing server.
-	//
-	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with PUT /1.3/server (the `ModifyServer` operationId).
-	ModifyServerWithResponse(ctx context.Context, body ModifyServerJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyServerResp, error)
-
-	// ListFirewallRulesetRelationshipsWithResponse List servers related to a private firewall ruleset
-	//
-	// Returns servers related to a specific private firewall ruleset.
+	// Return Cloud Servers visible to the authenticated account that are related to a private firewall ruleset, including each Cloud Server's private ruleset relationships.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/server/firewall_ruleset_relationships/private/{ruleset_uuid} (the `ListFirewallRulesetRelationships` operationId).
 	ListFirewallRulesetRelationshipsWithResponse(ctx context.Context, rulesetUuid ServerListFirewallRulesetRelationshipsRulesetUuid, reqEditors ...RequestEditorFn) (*ListFirewallRulesetRelationshipsResp, error)
 
-	// GetLabelsWithResponse Returns a list of server labels
+	// GetLabelsWithResponse List Cloud Server labels
+	//
+	// Returns the unique label key-value pairs used by Cloud Servers accessible to the current account.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/server/labels (the `GetLabels` operationId).
 	GetLabelsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetLabelsResp, error)
 
-	// DeleteServerWithResponse Delete a server
+	// DeleteServerWithResponse Delete a Cloud Server
 	//
-	// Deletes a server. With query option ?storages=1, one can delete server's storages as well
+	// Deletes a stopped Cloud Server and releases its IP addresses. Deleting backups requires deleting the associated storage devices.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /1.3/server/{uuid} (the `DeleteServer` operationId).
 	DeleteServerWithResponse(ctx context.Context, uuid DeleteServerUuid, params *DeleteServerParams, reqEditors ...RequestEditorFn) (*DeleteServerResp, error)
 
-	// GetServerWithResponse Get server details
+	// GetServerWithResponse Get Cloud Server details
 	//
-	// Returns details for a specific server.
+	// Returns detailed information about a Cloud Server.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/server/{uuid} (the `GetServer` operationId).
 	GetServerWithResponse(ctx context.Context, uuid GetServerUuid, reqEditors ...RequestEditorFn) (*GetServerResp, error)
 
+	// ModifyServerWithBodyWithResponse Modify an existing Cloud Server
+	//
+	// Modifies an existing Cloud Server configuration.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /1.3/server/{uuid} (the `ModifyServer` operationId).
+	ModifyServerWithBodyWithResponse(ctx context.Context, uuid ModifyServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyServerResp, error)
+
+	// ModifyServerWithResponse Modify an existing Cloud Server
+	//
+	// Modifies an existing Cloud Server configuration.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /1.3/server/{uuid} (the `ModifyServer` operationId).
+	ModifyServerWithResponse(ctx context.Context, uuid ModifyServerUuid, body ModifyServerJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyServerResp, error)
+
 	// AttachPrivateFirewallRulesetWithBodyWithResponse Attach a private firewall ruleset
 	//
-	// Attach a private firewall ruleset to a specific server.
+	// Attach a private, stateful firewall ruleset to a Cloud Server. The latest ruleset version is selected and applied to private network interfaces.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -3497,35 +3569,43 @@ type ServerClientWithResponsesInterface interface {
 
 	// AttachPrivateFirewallRulesetWithResponse Attach a private firewall ruleset
 	//
-	// Attach a private firewall ruleset to a specific server.
+	// Attach a private, stateful firewall ruleset to a Cloud Server. The latest ruleset version is selected and applied to private network interfaces.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/server/{uuid}/attach_firewall_ruleset/private (the `AttachPrivateFirewallRuleset` operationId).
 	AttachPrivateFirewallRulesetWithResponse(ctx context.Context, uuid ServerAttachPrivateFirewallRulesetUuid, body AttachPrivateFirewallRulesetJSONRequestBody, reqEditors ...RequestEditorFn) (*AttachPrivateFirewallRulesetResp, error)
 
-	// CancelServerOperationWithResponse Cancel an ongoing operation for a specific server
+	// CancelServerOperationWithResponse Cancel a Cloud Server operation
+	//
+	// Cancels an operation while the Cloud Server is in maintenance state.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/server/{uuid}/cancel (the `CancelServerOperation` operationId).
 	CancelServerOperationWithResponse(ctx context.Context, uuid CancelServerOperationUuid, reqEditors ...RequestEditorFn) (*CancelServerOperationResp, error)
 
-	// EjectCDROMWithResponse Eject the CD-ROM image from a server
+	// EjectCDROMWithResponse Eject the CD-ROM image from a Cloud Server
+	//
+	// Eject the storage from the Cloud Server's attached CD-ROM device.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/server/{uuid}/cdrom/eject (the `EjectCDROM` operationId).
 	EjectCDROMWithResponse(ctx context.Context, uuid ServerEjectCDROMUuid, reqEditors ...RequestEditorFn) (*EjectCDROMResp, error)
 
-	// LoadCDROMWithBodyWithResponse Load a CD-ROM image into a server
+	// LoadCDROMWithBodyWithResponse Load a CD-ROM image into a Cloud Server
+	//
+	// Load a storage of type normal or cdrom into the Cloud Server's attached CD-ROM device. If media is already loaded, it is ejected first.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/server/{uuid}/cdrom/load (the `LoadCDROM` operationId).
 	LoadCDROMWithBodyWithResponse(ctx context.Context, uuid ServerLoadCDROMUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*LoadCDROMResp, error)
 
-	// LoadCDROMWithResponse Load a CD-ROM image into a server
+	// LoadCDROMWithResponse Load a CD-ROM image into a Cloud Server
+	//
+	// Load a storage of type normal or cdrom into the Cloud Server's attached CD-ROM device. If media is already loaded, it is ejected first.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -3534,7 +3614,7 @@ type ServerClientWithResponsesInterface interface {
 
 	// DetachPrivateFirewallRulesetWithBodyWithResponse Detach a private firewall ruleset
 	//
-	// Detach a private firewall ruleset from a specific server.
+	// Detach a private firewall ruleset from a Cloud Server and reapply private-interface firewall rules.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -3543,99 +3623,97 @@ type ServerClientWithResponsesInterface interface {
 
 	// DetachPrivateFirewallRulesetWithResponse Detach a private firewall ruleset
 	//
-	// Detach a private firewall ruleset from a specific server.
+	// Detach a private firewall ruleset from a Cloud Server and reapply private-interface firewall rules.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/server/{uuid}/detach_firewall_ruleset/private (the `DetachPrivateFirewallRuleset` operationId).
 	DetachPrivateFirewallRulesetWithResponse(ctx context.Context, uuid ServerDetachPrivateFirewallRulesetUuid, body DetachPrivateFirewallRulesetJSONRequestBody, reqEditors ...RequestEditorFn) (*DetachPrivateFirewallRulesetResp, error)
 
-	// ListFirewallRulesWithResponse Returns a list of firewall rules for a specific server
+	// ListFirewallRulesWithResponse List firewall rules
+	//
+	// Return the Cloud Server firewall rules in evaluation order. Changes to firewall rules can take 1-2 minutes to take effect.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/server/{uuid}/firewall_rule (the `ListFirewallRules` operationId).
 	ListFirewallRulesWithResponse(ctx context.Context, uuid ServerListFirewallRulesUuid, reqEditors ...RequestEditorFn) (*ListFirewallRulesResp, error)
 
-	// CreateFirewallRuleWithBodyWithResponse Create a new firewall rule for a specific server
+	// CreateFirewallRuleWithBodyWithResponse Create a firewall rule
+	//
+	// Create a firewall rule. Rules are evaluated in position order; if position is omitted, the rule is appended. Changes can take 1-2 minutes to take effect.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/server/{uuid}/firewall_rule (the `CreateFirewallRule` operationId).
 	CreateFirewallRuleWithBodyWithResponse(ctx context.Context, uuid ServerCreateFirewallRuleUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateFirewallRuleResp, error)
 
-	// CreateFirewallRuleWithResponse Create a new firewall rule for a specific server
+	// CreateFirewallRuleWithResponse Create a firewall rule
+	//
+	// Create a firewall rule. Rules are evaluated in position order; if position is omitted, the rule is appended. Changes can take 1-2 minutes to take effect.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/server/{uuid}/firewall_rule (the `CreateFirewallRule` operationId).
 	CreateFirewallRuleWithResponse(ctx context.Context, uuid ServerCreateFirewallRuleUuid, body CreateFirewallRuleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateFirewallRuleResp, error)
 
-	// UpdateFirewallRulesWithBodyWithResponse Update firewall rules for a specific server
+	// UpdateFirewallRulesWithBodyWithResponse Replace firewall rules
+	//
+	// Replace the Cloud Server's complete firewall rule chain. Array order determines rule positions. Changes can take 1-2 minutes to take effect.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PUT /1.3/server/{uuid}/firewall_rule (the `UpdateFirewallRules` operationId).
 	UpdateFirewallRulesWithBodyWithResponse(ctx context.Context, uuid ServerUpdateFirewallRulesUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateFirewallRulesResp, error)
 
-	// UpdateFirewallRulesWithResponse Update firewall rules for a specific server
+	// UpdateFirewallRulesWithResponse Replace firewall rules
+	//
+	// Replace the Cloud Server's complete firewall rule chain. Array order determines rule positions. Changes can take 1-2 minutes to take effect.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PUT /1.3/server/{uuid}/firewall_rule (the `UpdateFirewallRules` operationId).
 	UpdateFirewallRulesWithResponse(ctx context.Context, uuid ServerUpdateFirewallRulesUuid, body UpdateFirewallRulesJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateFirewallRulesResp, error)
 
-	// UpdateFirewallRulesForceWithBodyWithResponse Update firewall rules for a specific server
+	// DeleteFirewallRuleWithResponse Delete a firewall rule
 	//
-	// Update firewall rules for a specific server. Using /force applies rules even if another operation is in progress for the server
-	//
-	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with PUT /1.3/server/{uuid}/firewall_rule/force (the `UpdateFirewallRulesForce` operationId).
-	UpdateFirewallRulesForceWithBodyWithResponse(ctx context.Context, uuid ServerUpdateFirewallRulesForceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateFirewallRulesForceResp, error)
-
-	// UpdateFirewallRulesForceWithResponse Update firewall rules for a specific server
-	//
-	// Update firewall rules for a specific server. Using /force applies rules even if another operation is in progress for the server
-	//
-	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with PUT /1.3/server/{uuid}/firewall_rule/force (the `UpdateFirewallRulesForce` operationId).
-	UpdateFirewallRulesForceWithResponse(ctx context.Context, uuid ServerUpdateFirewallRulesForceUuid, body UpdateFirewallRulesForceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateFirewallRulesForceResp, error)
-
-	// DeleteFirewallRuleWithResponse Delete a specific firewall rule from a server
+	// Delete the firewall rule at the specified one-based position. Remaining rules are renumbered. Changes can take 1-2 minutes to take effect.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /1.3/server/{uuid}/firewall_rule/{position} (the `DeleteFirewallRule` operationId).
 	DeleteFirewallRuleWithResponse(ctx context.Context, uuid ServerDeleteFirewallRuleUuid, position ServerDeleteFirewallRulePosition, reqEditors ...RequestEditorFn) (*DeleteFirewallRuleResp, error)
 
-	// GetFirewallRuleWithResponse Returns details for a specific firewall rule
+	// GetFirewallRuleWithResponse Get a firewall rule
+	//
+	// Return the firewall rule at the specified one-based position in the Cloud Server rule chain.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/server/{uuid}/firewall_rule/{position} (the `GetFirewallRule` operationId).
 	GetFirewallRuleWithResponse(ctx context.Context, uuid ServerGetFirewallRuleUuid, position ServerGetFirewallRulePosition, reqEditors ...RequestEditorFn) (*GetFirewallRuleResp, error)
 
-	// ListPrivateFirewallRulesetRelationshipsWithResponse List private firewall ruleset relationships for a server
+	// ListPrivateFirewallRulesetRelationshipsWithResponse List private firewall ruleset relationships for a Cloud Server
 	//
-	// Returns private firewall ruleset relationships for a specific server.
+	// Return all private firewall ruleset relationships configured for a Cloud Server.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/server/{uuid}/firewall_ruleset_relationships/private (the `ListPrivateFirewallRulesetRelationships` operationId).
 	ListPrivateFirewallRulesetRelationshipsWithResponse(ctx context.Context, uuid ServerListPrivateFirewallRulesetRelationshipsUuid, reqEditors ...RequestEditorFn) (*ListPrivateFirewallRulesetRelationshipsResp, error)
 
-	// ListServerGPUsWithResponse Returns a list of GPUs assigned to a specific server
+	// ListServerGPUsWithResponse List Cloud Server GPUs
+	//
+	// Returns GPUs attached to a Cloud Server.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/server/{uuid}/gpus (the `ListServerGPUs` operationId).
 	ListServerGPUsWithResponse(ctx context.Context, uuid ListServerGPUsUuid, reqEditors ...RequestEditorFn) (*ListServerGPUsResp, error)
 
-	// GetServerNetworkingWithResponse Get server networking details
+	// GetServerNetworkingWithResponse Get Cloud Server networking details
 	//
-	// Returns networking details for a specific server.
+	// Return all network interfaces and IP addresses configured for a Cloud Server.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -3644,7 +3722,7 @@ type ServerClientWithResponsesInterface interface {
 
 	// AddServerInterfaceWithBodyWithResponse Add a network interface
 	//
-	// Add a network interface to a specific server.
+	// Add a network interface to a stopped Cloud Server. A private interface must identify the SDN network to attach. The combined limit of network interfaces and storage devices is 24.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -3653,7 +3731,7 @@ type ServerClientWithResponsesInterface interface {
 
 	// AddServerInterfaceWithResponse Add a network interface
 	//
-	// Add a network interface to a specific server.
+	// Add a network interface to a stopped Cloud Server. A private interface must identify the SDN network to attach. The combined limit of network interfaces and storage devices is 24.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -3662,7 +3740,7 @@ type ServerClientWithResponsesInterface interface {
 
 	// DeleteServerInterfaceWithResponse Delete a network interface
 	//
-	// Delete a network interface from a specific server.
+	// Delete a network interface from a stopped Cloud Server. IP addresses attached to the interface are released according to their release policies.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -3671,7 +3749,7 @@ type ServerClientWithResponsesInterface interface {
 
 	// ModifyServerInterfaceWithBodyWithResponse Modify a network interface
 	//
-	// Modify a network interface of a specific server.
+	// Modify the IP addresses, source IP filtering, boot setting, or index of a network interface on a stopped Cloud Server. Changing the interface network or type is not supported.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -3680,7 +3758,7 @@ type ServerClientWithResponsesInterface interface {
 
 	// ModifyServerInterfaceWithResponse Modify a network interface
 	//
-	// Modify a network interface of a specific server.
+	// Modify the IP addresses, source IP filtering, boot setting, or index of a network interface on a stopped Cloud Server. Changing the interface network or type is not supported.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -3689,7 +3767,7 @@ type ServerClientWithResponsesInterface interface {
 
 	// AddServerInterfaceIpAddressWithBodyWithResponse Add an IP address to a network interface
 	//
-	// Add an IP address to a network interface of a specific server.
+	// Add an IPv4 or IPv6 address to a private network interface. The interface cannot contain addresses from both families and can have at most five addresses.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -3698,7 +3776,7 @@ type ServerClientWithResponsesInterface interface {
 
 	// AddServerInterfaceIpAddressWithResponse Add an IP address to a network interface
 	//
-	// Add an IP address to a network interface of a specific server.
+	// Add an IPv4 or IPv6 address to a private network interface. The interface cannot contain addresses from both families and can have at most five addresses.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -3707,35 +3785,43 @@ type ServerClientWithResponsesInterface interface {
 
 	// DeleteServerInterfaceIpAddressWithResponse Delete an IP address from a network interface
 	//
-	// Delete an IP address from a network interface of a specific server.
+	// Delete an IP address from a private network interface. At least one IP address must remain attached to the interface.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /1.3/server/{uuid}/networking/interface/{index}/ip_address/{ip} (the `DeleteServerInterfaceIpAddress` operationId).
 	DeleteServerInterfaceIpAddressWithResponse(ctx context.Context, uuid DeleteServerInterfaceIpAddressUuid, index DeleteServerInterfaceIpAddressIndex, ip DeleteServerInterfaceIpAddressIp, reqEditors ...RequestEditorFn) (*DeleteServerInterfaceIpAddressResp, error)
 
-	// RebuildServerWithBodyWithResponse Rebuild a server from a specified storage device
+	// RebuildServerWithBodyWithResponse Rebuild a Cloud Server
+	//
+	// Reinstalls a stopped Cloud Server from a public template.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/server/{uuid}/rebuild (the `RebuildServer` operationId).
 	RebuildServerWithBodyWithResponse(ctx context.Context, uuid RebuildServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RebuildServerResp, error)
 
-	// RebuildServerWithResponse Rebuild a server from a specified storage device
+	// RebuildServerWithResponse Rebuild a Cloud Server
+	//
+	// Reinstalls a stopped Cloud Server from a public template.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/server/{uuid}/rebuild (the `RebuildServer` operationId).
 	RebuildServerWithResponse(ctx context.Context, uuid RebuildServerUuid, body RebuildServerJSONRequestBody, reqEditors ...RequestEditorFn) (*RebuildServerResp, error)
 
-	// RelocateServerWithBodyWithResponse Relocate a server to another zone
+	// RelocateServerWithBodyWithResponse Relocate a Cloud Server to another zone
+	//
+	// Relocates a stopped Cloud Server to another zone in the same physical location (datacenter).
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/server/{uuid}/relocate (the `RelocateServer` operationId).
 	RelocateServerWithBodyWithResponse(ctx context.Context, uuid RelocateServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RelocateServerResp, error)
 
-	// RelocateServerWithResponse Relocate a server to another zone
+	// RelocateServerWithResponse Relocate a Cloud Server to another zone
+	//
+	// Relocates a stopped Cloud Server to another zone in the same physical location (datacenter).
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -3744,132 +3830,160 @@ type ServerClientWithResponsesInterface interface {
 
 	// GetRemoteAccessDetailsWithResponse Get remote access connection details
 	//
-	// Returns remote access connection details for a specific server.
+	// Returns remote access settings and VNC connection details for a Cloud Server.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/server/{uuid}/remote_access_details (the `GetRemoteAccessDetails` operationId).
 	GetRemoteAccessDetailsWithResponse(ctx context.Context, uuid ServerGetRemoteAccessDetailsUuid, reqEditors ...RequestEditorFn) (*GetRemoteAccessDetailsResp, error)
 
-	// RestartServerWithBodyWithResponse Restart a server
+	// RestartServerWithBodyWithResponse Restart a Cloud Server
+	//
+	// Stops and starts a Cloud Server in started state.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/server/{uuid}/restart (the `RestartServer` operationId).
 	RestartServerWithBodyWithResponse(ctx context.Context, uuid RestartServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RestartServerResp, error)
 
-	// RestartServerWithResponse Restart a server
+	// RestartServerWithResponse Restart a Cloud Server
+	//
+	// Stops and starts a Cloud Server in started state.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/server/{uuid}/restart (the `RestartServer` operationId).
 	RestartServerWithResponse(ctx context.Context, uuid RestartServerUuid, body RestartServerJSONRequestBody, reqEditors ...RequestEditorFn) (*RestartServerResp, error)
 
-	// StartServerWithBodyWithResponse Start a server
+	// StartServerWithBodyWithResponse Start a Cloud Server
+	//
+	// Starts a Cloud Server in stopped state.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/server/{uuid}/start (the `StartServer` operationId).
 	StartServerWithBodyWithResponse(ctx context.Context, uuid StartServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*StartServerResp, error)
 
-	// StartServerWithResponse Start a server
+	// StartServerWithResponse Start a Cloud Server
+	//
+	// Starts a Cloud Server in stopped state.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/server/{uuid}/start (the `StartServer` operationId).
 	StartServerWithResponse(ctx context.Context, uuid StartServerUuid, body StartServerJSONRequestBody, reqEditors ...RequestEditorFn) (*StartServerResp, error)
 
-	// GetCPUStatsWithResponse Get CPU stats for a specific server
+	// GetCPUStatsWithResponse Get Cloud Server CPU statistics
+	//
+	// Returns CPU usage statistics for all supported periods.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/server/{uuid}/stats/cpu (the `GetCPUStats` operationId).
 	GetCPUStatsWithResponse(ctx context.Context, uuid ServerGetCPUStatsUuid, reqEditors ...RequestEditorFn) (*GetCPUStatsResp, error)
 
-	// GetCPUStatsByPeriodWithResponse Get CPU stats for a specific server
+	// GetCPUStatsByPeriodWithResponse Get Cloud Server CPU statistics by period
+	//
+	// Returns CPU usage statistics for the selected period.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/server/{uuid}/stats/cpu/{period} (the `GetCPUStatsByPeriod` operationId).
 	GetCPUStatsByPeriodWithResponse(ctx context.Context, uuid ServerGetCPUStatsByPeriodUuid, period ServerGetCPUStatsByPeriodPeriod, reqEditors ...RequestEditorFn) (*GetCPUStatsByPeriodResp, error)
 
-	// GetDiskStatsWithResponse Get disk stats for a specific server
+	// GetDiskStatsWithResponse Get Cloud Server disk statistics
+	//
+	// Returns aggregate disk read and write statistics for all supported periods.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/server/{uuid}/stats/disk/{type} (the `GetDiskStats` operationId).
 	GetDiskStatsWithResponse(ctx context.Context, uuid ServerGetDiskStatsUuid, pType GetDiskStatsParamsType, reqEditors ...RequestEditorFn) (*GetDiskStatsResp, error)
 
-	// GetDiskStatsByPeriodWithResponse Get disk stats for a specific server
+	// GetDiskStatsByPeriodWithResponse Get Cloud Server disk statistics by period
+	//
+	// Returns aggregate disk read and write statistics for the selected period.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/server/{uuid}/stats/disk/{type}/{period} (the `GetDiskStatsByPeriod` operationId).
 	GetDiskStatsByPeriodWithResponse(ctx context.Context, uuid ServerGetDiskStatsByPeriodUuid, pType GetDiskStatsByPeriodParamsType, period ServerGetDiskStatsByPeriodPeriod, reqEditors ...RequestEditorFn) (*GetDiskStatsByPeriodResp, error)
 
-	// GetNetworkStatsWithResponse Get network stats for a specific server
+	// GetNetworkStatsWithResponse Get Cloud Server network statistics
 	//
-	// Get disk stats for a specific server.
+	// Returns aggregate inbound and outbound network statistics for all interfaces and periods.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/server/{uuid}/stats/network/{type} (the `GetNetworkStats` operationId).
 	GetNetworkStatsWithResponse(ctx context.Context, uuid ServerGetNetworkStatsUuid, pType ServerGetNetworkStatsType, reqEditors ...RequestEditorFn) (*GetNetworkStatsResp, error)
 
-	// GetNetworkStatsByNetworkWithResponse Get network stats for a specific server
+	// GetNetworkStatsByNetworkWithResponse Get Cloud Server network statistics by network type
 	//
-	// Get disk stats for a specific server.
+	// Returns inbound and outbound network statistics for the selected network type and all periods.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/server/{uuid}/stats/network/{type}/{network} (the `GetNetworkStatsByNetwork` operationId).
 	GetNetworkStatsByNetworkWithResponse(ctx context.Context, uuid ServerGetNetworkStatsByNetworkUuid, pType ServerGetNetworkStatsByNetworkType, network ServerGetNetworkStatsByNetworkNetwork, reqEditors ...RequestEditorFn) (*GetNetworkStatsByNetworkResp, error)
 
-	// GetNetworkStatsByNetworkAndPeriodWithResponse Get network stats for a specific server
+	// GetNetworkStatsByNetworkAndPeriodWithResponse Get Cloud Server network statistics by network type and period
 	//
-	// Get disk stats for a specific server.
+	// Returns inbound and outbound network statistics for the selected network type and period.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/server/{uuid}/stats/network/{type}/{network}/{period} (the `GetNetworkStatsByNetworkAndPeriod` operationId).
 	GetNetworkStatsByNetworkAndPeriodWithResponse(ctx context.Context, uuid ServerGetNetworkStatsByNetworkAndPeriodUuid, pType ServerGetNetworkStatsByNetworkAndPeriodType, network ServerGetNetworkStatsByNetworkAndPeriodNetwork, period ServerGetNetworkStatsByNetworkAndPeriodPeriod, reqEditors ...RequestEditorFn) (*GetNetworkStatsByNetworkAndPeriodResp, error)
 
-	// StopServerWithBodyWithResponse Stop a server
+	// StopServerWithBodyWithResponse Stop a Cloud Server
+	//
+	// Stops a Cloud Server in started state.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/server/{uuid}/stop (the `StopServer` operationId).
 	StopServerWithBodyWithResponse(ctx context.Context, uuid StopServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*StopServerResp, error)
 
-	// StopServerWithResponse Stop a server
+	// StopServerWithResponse Stop a Cloud Server
+	//
+	// Stops a Cloud Server in started state.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/server/{uuid}/stop (the `StopServer` operationId).
 	StopServerWithResponse(ctx context.Context, uuid StopServerUuid, body StopServerJSONRequestBody, reqEditors ...RequestEditorFn) (*StopServerResp, error)
 
-	// AttachStorageDeviceWithBodyWithResponse Attach a storage device to a server
+	// AttachStorageDeviceWithBodyWithResponse Attach a storage device to a Cloud Server
+	//
+	// Attach a storage resource as a disk or CD-ROM device to a Cloud Server. SCSI and virtio disks can be attached while the Cloud Server is started; IDE and CD-ROM devices require a stopped Cloud Server. An empty CD-ROM device can be attached without specifying a storage resource.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/server/{uuid}/storage/attach (the `AttachStorageDevice` operationId).
 	AttachStorageDeviceWithBodyWithResponse(ctx context.Context, uuid ServerAttachStorageDeviceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AttachStorageDeviceResp, error)
 
-	// AttachStorageDeviceWithResponse Attach a storage device to a server
+	// AttachStorageDeviceWithResponse Attach a storage device to a Cloud Server
+	//
+	// Attach a storage resource as a disk or CD-ROM device to a Cloud Server. SCSI and virtio disks can be attached while the Cloud Server is started; IDE and CD-ROM devices require a stopped Cloud Server. An empty CD-ROM device can be attached without specifying a storage resource.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/server/{uuid}/storage/attach (the `AttachStorageDevice` operationId).
 	AttachStorageDeviceWithResponse(ctx context.Context, uuid ServerAttachStorageDeviceUuid, body AttachStorageDeviceJSONRequestBody, reqEditors ...RequestEditorFn) (*AttachStorageDeviceResp, error)
 
-	// DetachStorageDeviceWithBodyWithResponse Detach a storage device from a server
+	// DetachStorageDeviceWithBodyWithResponse Detach a storage device from a Cloud Server
+	//
+	// Detach a storage device identified by its device address or storage resource UUID. IDE and CD-ROM devices cannot be detached while the Cloud Server is started.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/server/{uuid}/storage/detach (the `DetachStorageDevice` operationId).
 	DetachStorageDeviceWithBodyWithResponse(ctx context.Context, uuid ServerDetachStorageDeviceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*DetachStorageDeviceResp, error)
 
-	// DetachStorageDeviceWithResponse Detach a storage device from a server
+	// DetachStorageDeviceWithResponse Detach a storage device from a Cloud Server
+	//
+	// Detach a storage device identified by its device address or storage resource UUID. IDE and CD-ROM devices cannot be detached while the Cloud Server is started.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -3878,7 +3992,7 @@ type ServerClientWithResponsesInterface interface {
 
 	// GetVNCDetailsWithResponse Get VNC connection details
 	//
-	// Returns VNC connection details for a specific server.
+	// Returns VNC connection details and remote access settings for a Cloud Server.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -3895,6 +4009,8 @@ type ListServersResp struct {
 	JSON400 *ListServers400
 	// JSON403 the response for an HTTP 403 `application/json` response
 	JSON403 *ListServers403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ListServers404
 	// JSON409 the response for an HTTP 409 `application/json` response
 	JSON409 *ListServers409
 	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
@@ -3914,6 +4030,11 @@ func (r ListServersResp) GetJSON400() *ListServers400 {
 // GetJSON403 returns the response for an HTTP 403 `application/json` response
 func (r ListServersResp) GetJSON403() *ListServers403 {
 	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r ListServersResp) GetJSON404() *ListServers404 {
+	return r.JSON404
 }
 
 // GetJSON409 returns the response for an HTTP 409 `application/json` response
@@ -4031,75 +4152,6 @@ func (r CreateServerResp) ContentType() string {
 	return ""
 }
 
-type ModifyServerResp struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON202 the response for an HTTP 202 `application/json` response
-	JSON202 *ModifyServer202
-	// JSON400 the response for an HTTP 400 `application/json` response
-	JSON400 *ModifyServer400
-	// JSON403 the response for an HTTP 403 `application/json` response
-	JSON403 *ModifyServer403
-	// JSON409 the response for an HTTP 409 `application/json` response
-	JSON409 *ModifyServer409
-	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
-	ApplicationproblemJSONDefault *ModifyServerDefault
-}
-
-// GetJSON202 returns the response for an HTTP 202 `application/json` response
-func (r ModifyServerResp) GetJSON202() *ModifyServer202 {
-	return r.JSON202
-}
-
-// GetJSON400 returns the response for an HTTP 400 `application/json` response
-func (r ModifyServerResp) GetJSON400() *ModifyServer400 {
-	return r.JSON400
-}
-
-// GetJSON403 returns the response for an HTTP 403 `application/json` response
-func (r ModifyServerResp) GetJSON403() *ModifyServer403 {
-	return r.JSON403
-}
-
-// GetJSON409 returns the response for an HTTP 409 `application/json` response
-func (r ModifyServerResp) GetJSON409() *ModifyServer409 {
-	return r.JSON409
-}
-
-// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
-func (r ModifyServerResp) GetApplicationproblemJSONDefault() *ModifyServerDefault {
-	return r.ApplicationproblemJSONDefault
-}
-
-// GetBody returns the raw response body bytes
-func (r ModifyServerResp) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r ModifyServerResp) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r ModifyServerResp) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r ModifyServerResp) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
 type ListFirewallRulesetRelationshipsResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -4206,8 +4258,36 @@ func (r GetLabelsResp) ContentType() string {
 type DeleteServerResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *DeleteServer400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *DeleteServer403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *DeleteServer404
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *DeleteServer409
 	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
 	ApplicationproblemJSONDefault *DeleteServerDefault
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r DeleteServerResp) GetJSON400() *DeleteServer400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r DeleteServerResp) GetJSON403() *DeleteServer403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r DeleteServerResp) GetJSON404() *DeleteServer404 {
+	return r.JSON404
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r DeleteServerResp) GetJSON409() *DeleteServer409 {
+	return r.JSON409
 }
 
 // GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
@@ -4313,6 +4393,82 @@ func (r GetServerResp) ContentType() string {
 	return ""
 }
 
+type ModifyServerResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON202 the response for an HTTP 202 `application/json` response
+	JSON202 *ModifyServer202
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ModifyServer400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ModifyServer403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ModifyServer404
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *ModifyServer409
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ModifyServerDefault
+}
+
+// GetJSON202 returns the response for an HTTP 202 `application/json` response
+func (r ModifyServerResp) GetJSON202() *ModifyServer202 {
+	return r.JSON202
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r ModifyServerResp) GetJSON400() *ModifyServer400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ModifyServerResp) GetJSON403() *ModifyServer403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r ModifyServerResp) GetJSON404() *ModifyServer404 {
+	return r.JSON404
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r ModifyServerResp) GetJSON409() *ModifyServer409 {
+	return r.JSON409
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ModifyServerResp) GetApplicationproblemJSONDefault() *ModifyServerDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r ModifyServerResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ModifyServerResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ModifyServerResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ModifyServerResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type AttachPrivateFirewallRulesetResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -4324,6 +4480,8 @@ type AttachPrivateFirewallRulesetResp struct {
 	JSON403 *ServerAttachPrivateFirewallRuleset403
 	// JSON404 the response for an HTTP 404 `application/json` response
 	JSON404 *ServerAttachPrivateFirewallRuleset404
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *ServerAttachPrivateFirewallRuleset409
 	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
 	ApplicationproblemJSONDefault *ServerAttachPrivateFirewallRulesetDefault
 }
@@ -4346,6 +4504,11 @@ func (r AttachPrivateFirewallRulesetResp) GetJSON403() *ServerAttachPrivateFirew
 // GetJSON404 returns the response for an HTTP 404 `application/json` response
 func (r AttachPrivateFirewallRulesetResp) GetJSON404() *ServerAttachPrivateFirewallRuleset404 {
 	return r.JSON404
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r AttachPrivateFirewallRulesetResp) GetJSON409() *ServerAttachPrivateFirewallRuleset409 {
+	return r.JSON409
 }
 
 // GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
@@ -4464,6 +4627,8 @@ type EjectCDROMResp struct {
 	JSON404 *ServerEjectCDROM404
 	// JSON409 the response for an HTTP 409 `application/json` response
 	JSON409 *ServerEjectCDROM409
+	// JSON511 the response for an HTTP 511 `application/json` response
+	JSON511 *ServerEjectCDROM511
 	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
 	ApplicationproblemJSONDefault *ServerEjectCDROMDefault
 }
@@ -4491,6 +4656,11 @@ func (r EjectCDROMResp) GetJSON404() *ServerEjectCDROM404 {
 // GetJSON409 returns the response for an HTTP 409 `application/json` response
 func (r EjectCDROMResp) GetJSON409() *ServerEjectCDROM409 {
 	return r.JSON409
+}
+
+// GetJSON511 returns the response for an HTTP 511 `application/json` response
+func (r EjectCDROMResp) GetJSON511() *ServerEjectCDROM511 {
+	return r.JSON511
 }
 
 // GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
@@ -4540,6 +4710,8 @@ type LoadCDROMResp struct {
 	JSON404 *ServerLoadCDROM404
 	// JSON409 the response for an HTTP 409 `application/json` response
 	JSON409 *ServerLoadCDROM409
+	// JSON511 the response for an HTTP 511 `application/json` response
+	JSON511 *ServerLoadCDROM511
 	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
 	ApplicationproblemJSONDefault *ServerLoadCDROMDefault
 }
@@ -4567,6 +4739,11 @@ func (r LoadCDROMResp) GetJSON404() *ServerLoadCDROM404 {
 // GetJSON409 returns the response for an HTTP 409 `application/json` response
 func (r LoadCDROMResp) GetJSON409() *ServerLoadCDROM409 {
 	return r.JSON409
+}
+
+// GetJSON511 returns the response for an HTTP 511 `application/json` response
+func (r LoadCDROMResp) GetJSON511() *ServerLoadCDROM511 {
+	return r.JSON511
 }
 
 // GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
@@ -4614,6 +4791,8 @@ type DetachPrivateFirewallRulesetResp struct {
 	JSON403 *ServerDetachPrivateFirewallRuleset403
 	// JSON404 the response for an HTTP 404 `application/json` response
 	JSON404 *ServerDetachPrivateFirewallRuleset404
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *ServerDetachPrivateFirewallRuleset409
 	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
 	ApplicationproblemJSONDefault *ServerDetachPrivateFirewallRulesetDefault
 }
@@ -4636,6 +4815,11 @@ func (r DetachPrivateFirewallRulesetResp) GetJSON403() *ServerDetachPrivateFirew
 // GetJSON404 returns the response for an HTTP 404 `application/json` response
 func (r DetachPrivateFirewallRulesetResp) GetJSON404() *ServerDetachPrivateFirewallRuleset404 {
 	return r.JSON404
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r DetachPrivateFirewallRulesetResp) GetJSON409() *ServerDetachPrivateFirewallRuleset409 {
+	return r.JSON409
 }
 
 // GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
@@ -4744,8 +4928,8 @@ func (r ListFirewallRulesResp) ContentType() string {
 type CreateFirewallRuleResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *ServerCreateFirewallRule200
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *ServerCreateFirewallRule201
 	// JSON400 the response for an HTTP 400 `application/json` response
 	JSON400 *ServerCreateFirewallRule400
 	// JSON403 the response for an HTTP 403 `application/json` response
@@ -4758,9 +4942,9 @@ type CreateFirewallRuleResp struct {
 	ApplicationproblemJSONDefault *ServerCreateFirewallRuleDefault
 }
 
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r CreateFirewallRuleResp) GetJSON200() *ServerCreateFirewallRule200 {
-	return r.JSON200
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateFirewallRuleResp) GetJSON201() *ServerCreateFirewallRule201 {
+	return r.JSON201
 }
 
 // GetJSON400 returns the response for an HTTP 400 `application/json` response
@@ -4820,8 +5004,6 @@ func (r CreateFirewallRuleResp) ContentType() string {
 type UpdateFirewallRulesResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *ServerUpdateFirewallRules200
 	// JSON400 the response for an HTTP 400 `application/json` response
 	JSON400 *ServerUpdateFirewallRules400
 	// JSON403 the response for an HTTP 403 `application/json` response
@@ -4832,11 +5014,6 @@ type UpdateFirewallRulesResp struct {
 	JSON409 *ServerUpdateFirewallRules409
 	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
 	ApplicationproblemJSONDefault *ServerUpdateFirewallRulesDefault
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r UpdateFirewallRulesResp) GetJSON200() *ServerUpdateFirewallRules200 {
-	return r.JSON200
 }
 
 // GetJSON400 returns the response for an HTTP 400 `application/json` response
@@ -4887,82 +5064,6 @@ func (r UpdateFirewallRulesResp) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r UpdateFirewallRulesResp) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type UpdateFirewallRulesForceResp struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *ServerUpdateFirewallRulesForce200
-	// JSON400 the response for an HTTP 400 `application/json` response
-	JSON400 *ServerUpdateFirewallRulesForce400
-	// JSON403 the response for an HTTP 403 `application/json` response
-	JSON403 *ServerUpdateFirewallRulesForce403
-	// JSON404 the response for an HTTP 404 `application/json` response
-	JSON404 *ServerUpdateFirewallRulesForce404
-	// JSON409 the response for an HTTP 409 `application/json` response
-	JSON409 *ServerUpdateFirewallRulesForce409
-	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
-	ApplicationproblemJSONDefault *ServerUpdateFirewallRulesForceDefault
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r UpdateFirewallRulesForceResp) GetJSON200() *ServerUpdateFirewallRulesForce200 {
-	return r.JSON200
-}
-
-// GetJSON400 returns the response for an HTTP 400 `application/json` response
-func (r UpdateFirewallRulesForceResp) GetJSON400() *ServerUpdateFirewallRulesForce400 {
-	return r.JSON400
-}
-
-// GetJSON403 returns the response for an HTTP 403 `application/json` response
-func (r UpdateFirewallRulesForceResp) GetJSON403() *ServerUpdateFirewallRulesForce403 {
-	return r.JSON403
-}
-
-// GetJSON404 returns the response for an HTTP 404 `application/json` response
-func (r UpdateFirewallRulesForceResp) GetJSON404() *ServerUpdateFirewallRulesForce404 {
-	return r.JSON404
-}
-
-// GetJSON409 returns the response for an HTTP 409 `application/json` response
-func (r UpdateFirewallRulesForceResp) GetJSON409() *ServerUpdateFirewallRulesForce409 {
-	return r.JSON409
-}
-
-// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
-func (r UpdateFirewallRulesForceResp) GetApplicationproblemJSONDefault() *ServerUpdateFirewallRulesForceDefault {
-	return r.ApplicationproblemJSONDefault
-}
-
-// GetBody returns the raw response body bytes
-func (r UpdateFirewallRulesForceResp) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r UpdateFirewallRulesForceResp) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r UpdateFirewallRulesForceResp) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r UpdateFirewallRulesForceResp) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -5399,6 +5500,8 @@ type DeleteServerInterfaceResp struct {
 	JSON403 *DeleteServerInterface403
 	// JSON404 the response for an HTTP 404 `application/json` response
 	JSON404 *DeleteServerInterface404
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *DeleteServerInterface409
 	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
 	ApplicationproblemJSONDefault *DeleteServerInterfaceDefault
 }
@@ -5416,6 +5519,11 @@ func (r DeleteServerInterfaceResp) GetJSON403() *DeleteServerInterface403 {
 // GetJSON404 returns the response for an HTTP 404 `application/json` response
 func (r DeleteServerInterfaceResp) GetJSON404() *DeleteServerInterface404 {
 	return r.JSON404
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r DeleteServerInterfaceResp) GetJSON409() *DeleteServerInterface409 {
+	return r.JSON409
 }
 
 // GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
@@ -5676,8 +5784,8 @@ func (r DeleteServerInterfaceIpAddressResp) ContentType() string {
 type RebuildServerResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *RebuildServer200
+	// JSON202 the response for an HTTP 202 `application/json` response
+	JSON202 *RebuildServer202
 	// JSON400 the response for an HTTP 400 `application/json` response
 	JSON400 *RebuildServer400
 	// JSON403 the response for an HTTP 403 `application/json` response
@@ -5690,9 +5798,9 @@ type RebuildServerResp struct {
 	ApplicationproblemJSONDefault *RebuildServerDefault
 }
 
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r RebuildServerResp) GetJSON200() *RebuildServer200 {
-	return r.JSON200
+// GetJSON202 returns the response for an HTTP 202 `application/json` response
+func (r RebuildServerResp) GetJSON202() *RebuildServer202 {
+	return r.JSON202
 }
 
 // GetJSON400 returns the response for an HTTP 400 `application/json` response
@@ -6051,6 +6159,12 @@ type GetCPUStatsResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ServerGetCPUStats200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ServerGetCPUStats400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ServerGetCPUStats403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ServerGetCPUStats404
 	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
 	ApplicationproblemJSONDefault *ServerGetCPUStatsDefault
 }
@@ -6058,6 +6172,21 @@ type GetCPUStatsResp struct {
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r GetCPUStatsResp) GetJSON200() *ServerGetCPUStats200 {
 	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r GetCPUStatsResp) GetJSON400() *ServerGetCPUStats400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r GetCPUStatsResp) GetJSON403() *ServerGetCPUStats403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r GetCPUStatsResp) GetJSON404() *ServerGetCPUStats404 {
+	return r.JSON404
 }
 
 // GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
@@ -6099,6 +6228,12 @@ type GetCPUStatsByPeriodResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ServerGetCPUStatsByPeriod200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ServerGetCPUStatsByPeriod400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ServerGetCPUStatsByPeriod403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ServerGetCPUStatsByPeriod404
 	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
 	ApplicationproblemJSONDefault *ServerGetCPUStatsByPeriodDefault
 }
@@ -6106,6 +6241,21 @@ type GetCPUStatsByPeriodResp struct {
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r GetCPUStatsByPeriodResp) GetJSON200() *ServerGetCPUStatsByPeriod200 {
 	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r GetCPUStatsByPeriodResp) GetJSON400() *ServerGetCPUStatsByPeriod400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r GetCPUStatsByPeriodResp) GetJSON403() *ServerGetCPUStatsByPeriod403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r GetCPUStatsByPeriodResp) GetJSON404() *ServerGetCPUStatsByPeriod404 {
+	return r.JSON404
 }
 
 // GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
@@ -6147,6 +6297,12 @@ type GetDiskStatsResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ServerGetDiskStats200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ServerGetDiskStats400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ServerGetDiskStats403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ServerGetDiskStats404
 	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
 	ApplicationproblemJSONDefault *ServerGetDiskStatsDefault
 }
@@ -6154,6 +6310,21 @@ type GetDiskStatsResp struct {
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r GetDiskStatsResp) GetJSON200() *ServerGetDiskStats200 {
 	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r GetDiskStatsResp) GetJSON400() *ServerGetDiskStats400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r GetDiskStatsResp) GetJSON403() *ServerGetDiskStats403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r GetDiskStatsResp) GetJSON404() *ServerGetDiskStats404 {
+	return r.JSON404
 }
 
 // GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
@@ -6195,6 +6366,12 @@ type GetDiskStatsByPeriodResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ServerGetDiskStatsByPeriod200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ServerGetDiskStatsByPeriod400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ServerGetDiskStatsByPeriod403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ServerGetDiskStatsByPeriod404
 	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
 	ApplicationproblemJSONDefault *ServerGetDiskStatsByPeriodDefault
 }
@@ -6202,6 +6379,21 @@ type GetDiskStatsByPeriodResp struct {
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r GetDiskStatsByPeriodResp) GetJSON200() *ServerGetDiskStatsByPeriod200 {
 	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r GetDiskStatsByPeriodResp) GetJSON400() *ServerGetDiskStatsByPeriod400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r GetDiskStatsByPeriodResp) GetJSON403() *ServerGetDiskStatsByPeriod403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r GetDiskStatsByPeriodResp) GetJSON404() *ServerGetDiskStatsByPeriod404 {
+	return r.JSON404
 }
 
 // GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
@@ -6243,6 +6435,12 @@ type GetNetworkStatsResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ServerGetNetworkStats200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ServerGetNetworkStats400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ServerGetNetworkStats403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ServerGetNetworkStats404
 	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
 	ApplicationproblemJSONDefault *ServerGetNetworkStatsDefault
 }
@@ -6250,6 +6448,21 @@ type GetNetworkStatsResp struct {
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r GetNetworkStatsResp) GetJSON200() *ServerGetNetworkStats200 {
 	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r GetNetworkStatsResp) GetJSON400() *ServerGetNetworkStats400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r GetNetworkStatsResp) GetJSON403() *ServerGetNetworkStats403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r GetNetworkStatsResp) GetJSON404() *ServerGetNetworkStats404 {
+	return r.JSON404
 }
 
 // GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
@@ -6291,6 +6504,12 @@ type GetNetworkStatsByNetworkResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ServerGetNetworkStatsByNetwork200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ServerGetNetworkStatsByNetwork400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ServerGetNetworkStatsByNetwork403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ServerGetNetworkStatsByNetwork404
 	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
 	ApplicationproblemJSONDefault *ServerGetNetworkStatsByNetworkDefault
 }
@@ -6298,6 +6517,21 @@ type GetNetworkStatsByNetworkResp struct {
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r GetNetworkStatsByNetworkResp) GetJSON200() *ServerGetNetworkStatsByNetwork200 {
 	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r GetNetworkStatsByNetworkResp) GetJSON400() *ServerGetNetworkStatsByNetwork400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r GetNetworkStatsByNetworkResp) GetJSON403() *ServerGetNetworkStatsByNetwork403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r GetNetworkStatsByNetworkResp) GetJSON404() *ServerGetNetworkStatsByNetwork404 {
+	return r.JSON404
 }
 
 // GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
@@ -6339,6 +6573,12 @@ type GetNetworkStatsByNetworkAndPeriodResp struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *ServerGetNetworkStatsByNetworkAndPeriod200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ServerGetNetworkStatsByNetworkAndPeriod400
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ServerGetNetworkStatsByNetworkAndPeriod403
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ServerGetNetworkStatsByNetworkAndPeriod404
 	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
 	ApplicationproblemJSONDefault *ServerGetNetworkStatsByNetworkAndPeriodDefault
 }
@@ -6346,6 +6586,21 @@ type GetNetworkStatsByNetworkAndPeriodResp struct {
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r GetNetworkStatsByNetworkAndPeriodResp) GetJSON200() *ServerGetNetworkStatsByNetworkAndPeriod200 {
 	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r GetNetworkStatsByNetworkAndPeriodResp) GetJSON400() *ServerGetNetworkStatsByNetworkAndPeriod400 {
+	return r.JSON400
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r GetNetworkStatsByNetworkAndPeriodResp) GetJSON403() *ServerGetNetworkStatsByNetworkAndPeriod403 {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r GetNetworkStatsByNetworkAndPeriodResp) GetJSON404() *ServerGetNetworkStatsByNetworkAndPeriod404 {
+	return r.JSON404
 }
 
 // GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
@@ -6547,6 +6802,8 @@ type DetachStorageDeviceResp struct {
 	JSON404 *ServerDetachStorageDevice404
 	// JSON409 the response for an HTTP 409 `application/json` response
 	JSON409 *ServerDetachStorageDevice409
+	// JSON511 the response for an HTTP 511 `application/json` response
+	JSON511 *ServerDetachStorageDevice511
 	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
 	ApplicationproblemJSONDefault *ServerDetachStorageDeviceDefault
 }
@@ -6574,6 +6831,11 @@ func (r DetachStorageDeviceResp) GetJSON404() *ServerDetachStorageDevice404 {
 // GetJSON409 returns the response for an HTTP 409 `application/json` response
 func (r DetachStorageDeviceResp) GetJSON409() *ServerDetachStorageDevice409 {
 	return r.JSON409
+}
+
+// GetJSON511 returns the response for an HTTP 511 `application/json` response
+func (r DetachStorageDeviceResp) GetJSON511() *ServerDetachStorageDevice511 {
+	return r.JSON511
 }
 
 // GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
@@ -6679,7 +6941,9 @@ func (r GetVNCDetailsResp) ContentType() string {
 	return ""
 }
 
-// ListServersWithResponse Returns a list of servers
+// ListServersWithResponse List Cloud Servers
+//
+// Returns the most relevant information for Cloud Servers associated with the current account.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -6692,9 +6956,9 @@ func (c *ClientWithResponses) ListServersWithResponse(ctx context.Context, param
 	return ParseListServersResp(rsp)
 }
 
-// CreateServerWithBodyWithResponse Create a new server
+// CreateServerWithBodyWithResponse Create a new Cloud Server
 //
-// Creates a new server.
+// Creates a new Cloud Server.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -6707,9 +6971,9 @@ func (c *ClientWithResponses) CreateServerWithBodyWithResponse(ctx context.Conte
 	return ParseCreateServerResp(rsp)
 }
 
-// CreateServerWithResponse Create a new server
+// CreateServerWithResponse Create a new Cloud Server
 //
-// Creates a new server.
+// Creates a new Cloud Server.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -6722,39 +6986,9 @@ func (c *ClientWithResponses) CreateServerWithResponse(ctx context.Context, body
 	return ParseCreateServerResp(rsp)
 }
 
-// ModifyServerWithBodyWithResponse Modify an existing server
+// ListFirewallRulesetRelationshipsWithResponse List Cloud Servers related to a private firewall ruleset
 //
-// Modifies an existing server.
-//
-// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with PUT /1.3/server (the `ModifyServer` operationId).
-func (c *ClientWithResponses) ModifyServerWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyServerResp, error) {
-	rsp, err := c.ModifyServerWithBody(ctx, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseModifyServerResp(rsp)
-}
-
-// ModifyServerWithResponse Modify an existing server
-//
-// Modifies an existing server.
-//
-// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with PUT /1.3/server (the `ModifyServer` operationId).
-func (c *ClientWithResponses) ModifyServerWithResponse(ctx context.Context, body ModifyServerJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyServerResp, error) {
-	rsp, err := c.ModifyServer(ctx, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseModifyServerResp(rsp)
-}
-
-// ListFirewallRulesetRelationshipsWithResponse List servers related to a private firewall ruleset
-//
-// Returns servers related to a specific private firewall ruleset.
+// Return Cloud Servers visible to the authenticated account that are related to a private firewall ruleset, including each Cloud Server's private ruleset relationships.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -6767,7 +7001,9 @@ func (c *ClientWithResponses) ListFirewallRulesetRelationshipsWithResponse(ctx c
 	return ParseListFirewallRulesetRelationshipsResp(rsp)
 }
 
-// GetLabelsWithResponse Returns a list of server labels
+// GetLabelsWithResponse List Cloud Server labels
+//
+// Returns the unique label key-value pairs used by Cloud Servers accessible to the current account.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -6780,9 +7016,9 @@ func (c *ClientWithResponses) GetLabelsWithResponse(ctx context.Context, reqEdit
 	return ParseGetLabelsResp(rsp)
 }
 
-// DeleteServerWithResponse Delete a server
+// DeleteServerWithResponse Delete a Cloud Server
 //
-// Deletes a server. With query option ?storages=1, one can delete server's storages as well
+// Deletes a stopped Cloud Server and releases its IP addresses. Deleting backups requires deleting the associated storage devices.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -6795,9 +7031,9 @@ func (c *ClientWithResponses) DeleteServerWithResponse(ctx context.Context, uuid
 	return ParseDeleteServerResp(rsp)
 }
 
-// GetServerWithResponse Get server details
+// GetServerWithResponse Get Cloud Server details
 //
-// Returns details for a specific server.
+// Returns detailed information about a Cloud Server.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -6810,9 +7046,39 @@ func (c *ClientWithResponses) GetServerWithResponse(ctx context.Context, uuid Ge
 	return ParseGetServerResp(rsp)
 }
 
+// ModifyServerWithBodyWithResponse Modify an existing Cloud Server
+//
+// Modifies an existing Cloud Server configuration.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /1.3/server/{uuid} (the `ModifyServer` operationId).
+func (c *ClientWithResponses) ModifyServerWithBodyWithResponse(ctx context.Context, uuid ModifyServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyServerResp, error) {
+	rsp, err := c.ModifyServerWithBody(ctx, uuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseModifyServerResp(rsp)
+}
+
+// ModifyServerWithResponse Modify an existing Cloud Server
+//
+// Modifies an existing Cloud Server configuration.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /1.3/server/{uuid} (the `ModifyServer` operationId).
+func (c *ClientWithResponses) ModifyServerWithResponse(ctx context.Context, uuid ModifyServerUuid, body ModifyServerJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyServerResp, error) {
+	rsp, err := c.ModifyServer(ctx, uuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseModifyServerResp(rsp)
+}
+
 // AttachPrivateFirewallRulesetWithBodyWithResponse Attach a private firewall ruleset
 //
-// Attach a private firewall ruleset to a specific server.
+// Attach a private, stateful firewall ruleset to a Cloud Server. The latest ruleset version is selected and applied to private network interfaces.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -6827,7 +7093,7 @@ func (c *ClientWithResponses) AttachPrivateFirewallRulesetWithBodyWithResponse(c
 
 // AttachPrivateFirewallRulesetWithResponse Attach a private firewall ruleset
 //
-// Attach a private firewall ruleset to a specific server.
+// Attach a private, stateful firewall ruleset to a Cloud Server. The latest ruleset version is selected and applied to private network interfaces.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -6840,7 +7106,9 @@ func (c *ClientWithResponses) AttachPrivateFirewallRulesetWithResponse(ctx conte
 	return ParseAttachPrivateFirewallRulesetResp(rsp)
 }
 
-// CancelServerOperationWithResponse Cancel an ongoing operation for a specific server
+// CancelServerOperationWithResponse Cancel a Cloud Server operation
+//
+// Cancels an operation while the Cloud Server is in maintenance state.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -6853,7 +7121,9 @@ func (c *ClientWithResponses) CancelServerOperationWithResponse(ctx context.Cont
 	return ParseCancelServerOperationResp(rsp)
 }
 
-// EjectCDROMWithResponse Eject the CD-ROM image from a server
+// EjectCDROMWithResponse Eject the CD-ROM image from a Cloud Server
+//
+// Eject the storage from the Cloud Server's attached CD-ROM device.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -6866,7 +7136,9 @@ func (c *ClientWithResponses) EjectCDROMWithResponse(ctx context.Context, uuid S
 	return ParseEjectCDROMResp(rsp)
 }
 
-// LoadCDROMWithBodyWithResponse Load a CD-ROM image into a server
+// LoadCDROMWithBodyWithResponse Load a CD-ROM image into a Cloud Server
+//
+// Load a storage of type normal or cdrom into the Cloud Server's attached CD-ROM device. If media is already loaded, it is ejected first.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -6879,7 +7151,9 @@ func (c *ClientWithResponses) LoadCDROMWithBodyWithResponse(ctx context.Context,
 	return ParseLoadCDROMResp(rsp)
 }
 
-// LoadCDROMWithResponse Load a CD-ROM image into a server
+// LoadCDROMWithResponse Load a CD-ROM image into a Cloud Server
+//
+// Load a storage of type normal or cdrom into the Cloud Server's attached CD-ROM device. If media is already loaded, it is ejected first.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -6894,7 +7168,7 @@ func (c *ClientWithResponses) LoadCDROMWithResponse(ctx context.Context, uuid Se
 
 // DetachPrivateFirewallRulesetWithBodyWithResponse Detach a private firewall ruleset
 //
-// Detach a private firewall ruleset from a specific server.
+// Detach a private firewall ruleset from a Cloud Server and reapply private-interface firewall rules.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -6909,7 +7183,7 @@ func (c *ClientWithResponses) DetachPrivateFirewallRulesetWithBodyWithResponse(c
 
 // DetachPrivateFirewallRulesetWithResponse Detach a private firewall ruleset
 //
-// Detach a private firewall ruleset from a specific server.
+// Detach a private firewall ruleset from a Cloud Server and reapply private-interface firewall rules.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -6922,7 +7196,9 @@ func (c *ClientWithResponses) DetachPrivateFirewallRulesetWithResponse(ctx conte
 	return ParseDetachPrivateFirewallRulesetResp(rsp)
 }
 
-// ListFirewallRulesWithResponse Returns a list of firewall rules for a specific server
+// ListFirewallRulesWithResponse List firewall rules
+//
+// Return the Cloud Server firewall rules in evaluation order. Changes to firewall rules can take 1-2 minutes to take effect.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -6935,7 +7211,9 @@ func (c *ClientWithResponses) ListFirewallRulesWithResponse(ctx context.Context,
 	return ParseListFirewallRulesResp(rsp)
 }
 
-// CreateFirewallRuleWithBodyWithResponse Create a new firewall rule for a specific server
+// CreateFirewallRuleWithBodyWithResponse Create a firewall rule
+//
+// Create a firewall rule. Rules are evaluated in position order; if position is omitted, the rule is appended. Changes can take 1-2 minutes to take effect.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -6948,7 +7226,9 @@ func (c *ClientWithResponses) CreateFirewallRuleWithBodyWithResponse(ctx context
 	return ParseCreateFirewallRuleResp(rsp)
 }
 
-// CreateFirewallRuleWithResponse Create a new firewall rule for a specific server
+// CreateFirewallRuleWithResponse Create a firewall rule
+//
+// Create a firewall rule. Rules are evaluated in position order; if position is omitted, the rule is appended. Changes can take 1-2 minutes to take effect.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -6961,7 +7241,9 @@ func (c *ClientWithResponses) CreateFirewallRuleWithResponse(ctx context.Context
 	return ParseCreateFirewallRuleResp(rsp)
 }
 
-// UpdateFirewallRulesWithBodyWithResponse Update firewall rules for a specific server
+// UpdateFirewallRulesWithBodyWithResponse Replace firewall rules
+//
+// Replace the Cloud Server's complete firewall rule chain. Array order determines rule positions. Changes can take 1-2 minutes to take effect.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -6974,7 +7256,9 @@ func (c *ClientWithResponses) UpdateFirewallRulesWithBodyWithResponse(ctx contex
 	return ParseUpdateFirewallRulesResp(rsp)
 }
 
-// UpdateFirewallRulesWithResponse Update firewall rules for a specific server
+// UpdateFirewallRulesWithResponse Replace firewall rules
+//
+// Replace the Cloud Server's complete firewall rule chain. Array order determines rule positions. Changes can take 1-2 minutes to take effect.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -6987,37 +7271,9 @@ func (c *ClientWithResponses) UpdateFirewallRulesWithResponse(ctx context.Contex
 	return ParseUpdateFirewallRulesResp(rsp)
 }
 
-// UpdateFirewallRulesForceWithBodyWithResponse Update firewall rules for a specific server
+// DeleteFirewallRuleWithResponse Delete a firewall rule
 //
-// Update firewall rules for a specific server. Using /force applies rules even if another operation is in progress for the server
-//
-// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with PUT /1.3/server/{uuid}/firewall_rule/force (the `UpdateFirewallRulesForce` operationId).
-func (c *ClientWithResponses) UpdateFirewallRulesForceWithBodyWithResponse(ctx context.Context, uuid ServerUpdateFirewallRulesForceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateFirewallRulesForceResp, error) {
-	rsp, err := c.UpdateFirewallRulesForceWithBody(ctx, uuid, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseUpdateFirewallRulesForceResp(rsp)
-}
-
-// UpdateFirewallRulesForceWithResponse Update firewall rules for a specific server
-//
-// Update firewall rules for a specific server. Using /force applies rules even if another operation is in progress for the server
-//
-// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with PUT /1.3/server/{uuid}/firewall_rule/force (the `UpdateFirewallRulesForce` operationId).
-func (c *ClientWithResponses) UpdateFirewallRulesForceWithResponse(ctx context.Context, uuid ServerUpdateFirewallRulesForceUuid, body UpdateFirewallRulesForceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateFirewallRulesForceResp, error) {
-	rsp, err := c.UpdateFirewallRulesForce(ctx, uuid, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseUpdateFirewallRulesForceResp(rsp)
-}
-
-// DeleteFirewallRuleWithResponse Delete a specific firewall rule from a server
+// Delete the firewall rule at the specified one-based position. Remaining rules are renumbered. Changes can take 1-2 minutes to take effect.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -7030,7 +7286,9 @@ func (c *ClientWithResponses) DeleteFirewallRuleWithResponse(ctx context.Context
 	return ParseDeleteFirewallRuleResp(rsp)
 }
 
-// GetFirewallRuleWithResponse Returns details for a specific firewall rule
+// GetFirewallRuleWithResponse Get a firewall rule
+//
+// Return the firewall rule at the specified one-based position in the Cloud Server rule chain.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -7043,9 +7301,9 @@ func (c *ClientWithResponses) GetFirewallRuleWithResponse(ctx context.Context, u
 	return ParseGetFirewallRuleResp(rsp)
 }
 
-// ListPrivateFirewallRulesetRelationshipsWithResponse List private firewall ruleset relationships for a server
+// ListPrivateFirewallRulesetRelationshipsWithResponse List private firewall ruleset relationships for a Cloud Server
 //
-// Returns private firewall ruleset relationships for a specific server.
+// Return all private firewall ruleset relationships configured for a Cloud Server.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -7058,7 +7316,9 @@ func (c *ClientWithResponses) ListPrivateFirewallRulesetRelationshipsWithRespons
 	return ParseListPrivateFirewallRulesetRelationshipsResp(rsp)
 }
 
-// ListServerGPUsWithResponse Returns a list of GPUs assigned to a specific server
+// ListServerGPUsWithResponse List Cloud Server GPUs
+//
+// Returns GPUs attached to a Cloud Server.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -7071,9 +7331,9 @@ func (c *ClientWithResponses) ListServerGPUsWithResponse(ctx context.Context, uu
 	return ParseListServerGPUsResp(rsp)
 }
 
-// GetServerNetworkingWithResponse Get server networking details
+// GetServerNetworkingWithResponse Get Cloud Server networking details
 //
-// Returns networking details for a specific server.
+// Return all network interfaces and IP addresses configured for a Cloud Server.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -7088,7 +7348,7 @@ func (c *ClientWithResponses) GetServerNetworkingWithResponse(ctx context.Contex
 
 // AddServerInterfaceWithBodyWithResponse Add a network interface
 //
-// Add a network interface to a specific server.
+// Add a network interface to a stopped Cloud Server. A private interface must identify the SDN network to attach. The combined limit of network interfaces and storage devices is 24.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -7103,7 +7363,7 @@ func (c *ClientWithResponses) AddServerInterfaceWithBodyWithResponse(ctx context
 
 // AddServerInterfaceWithResponse Add a network interface
 //
-// Add a network interface to a specific server.
+// Add a network interface to a stopped Cloud Server. A private interface must identify the SDN network to attach. The combined limit of network interfaces and storage devices is 24.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -7118,7 +7378,7 @@ func (c *ClientWithResponses) AddServerInterfaceWithResponse(ctx context.Context
 
 // DeleteServerInterfaceWithResponse Delete a network interface
 //
-// Delete a network interface from a specific server.
+// Delete a network interface from a stopped Cloud Server. IP addresses attached to the interface are released according to their release policies.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -7133,7 +7393,7 @@ func (c *ClientWithResponses) DeleteServerInterfaceWithResponse(ctx context.Cont
 
 // ModifyServerInterfaceWithBodyWithResponse Modify a network interface
 //
-// Modify a network interface of a specific server.
+// Modify the IP addresses, source IP filtering, boot setting, or index of a network interface on a stopped Cloud Server. Changing the interface network or type is not supported.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -7148,7 +7408,7 @@ func (c *ClientWithResponses) ModifyServerInterfaceWithBodyWithResponse(ctx cont
 
 // ModifyServerInterfaceWithResponse Modify a network interface
 //
-// Modify a network interface of a specific server.
+// Modify the IP addresses, source IP filtering, boot setting, or index of a network interface on a stopped Cloud Server. Changing the interface network or type is not supported.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -7163,7 +7423,7 @@ func (c *ClientWithResponses) ModifyServerInterfaceWithResponse(ctx context.Cont
 
 // AddServerInterfaceIpAddressWithBodyWithResponse Add an IP address to a network interface
 //
-// Add an IP address to a network interface of a specific server.
+// Add an IPv4 or IPv6 address to a private network interface. The interface cannot contain addresses from both families and can have at most five addresses.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -7178,7 +7438,7 @@ func (c *ClientWithResponses) AddServerInterfaceIpAddressWithBodyWithResponse(ct
 
 // AddServerInterfaceIpAddressWithResponse Add an IP address to a network interface
 //
-// Add an IP address to a network interface of a specific server.
+// Add an IPv4 or IPv6 address to a private network interface. The interface cannot contain addresses from both families and can have at most five addresses.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -7193,7 +7453,7 @@ func (c *ClientWithResponses) AddServerInterfaceIpAddressWithResponse(ctx contex
 
 // DeleteServerInterfaceIpAddressWithResponse Delete an IP address from a network interface
 //
-// Delete an IP address from a network interface of a specific server.
+// Delete an IP address from a private network interface. At least one IP address must remain attached to the interface.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -7206,7 +7466,9 @@ func (c *ClientWithResponses) DeleteServerInterfaceIpAddressWithResponse(ctx con
 	return ParseDeleteServerInterfaceIpAddressResp(rsp)
 }
 
-// RebuildServerWithBodyWithResponse Rebuild a server from a specified storage device
+// RebuildServerWithBodyWithResponse Rebuild a Cloud Server
+//
+// Reinstalls a stopped Cloud Server from a public template.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -7219,7 +7481,9 @@ func (c *ClientWithResponses) RebuildServerWithBodyWithResponse(ctx context.Cont
 	return ParseRebuildServerResp(rsp)
 }
 
-// RebuildServerWithResponse Rebuild a server from a specified storage device
+// RebuildServerWithResponse Rebuild a Cloud Server
+//
+// Reinstalls a stopped Cloud Server from a public template.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -7232,7 +7496,9 @@ func (c *ClientWithResponses) RebuildServerWithResponse(ctx context.Context, uui
 	return ParseRebuildServerResp(rsp)
 }
 
-// RelocateServerWithBodyWithResponse Relocate a server to another zone
+// RelocateServerWithBodyWithResponse Relocate a Cloud Server to another zone
+//
+// Relocates a stopped Cloud Server to another zone in the same physical location (datacenter).
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -7245,7 +7511,9 @@ func (c *ClientWithResponses) RelocateServerWithBodyWithResponse(ctx context.Con
 	return ParseRelocateServerResp(rsp)
 }
 
-// RelocateServerWithResponse Relocate a server to another zone
+// RelocateServerWithResponse Relocate a Cloud Server to another zone
+//
+// Relocates a stopped Cloud Server to another zone in the same physical location (datacenter).
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -7260,7 +7528,7 @@ func (c *ClientWithResponses) RelocateServerWithResponse(ctx context.Context, uu
 
 // GetRemoteAccessDetailsWithResponse Get remote access connection details
 //
-// Returns remote access connection details for a specific server.
+// Returns remote access settings and VNC connection details for a Cloud Server.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -7273,7 +7541,9 @@ func (c *ClientWithResponses) GetRemoteAccessDetailsWithResponse(ctx context.Con
 	return ParseGetRemoteAccessDetailsResp(rsp)
 }
 
-// RestartServerWithBodyWithResponse Restart a server
+// RestartServerWithBodyWithResponse Restart a Cloud Server
+//
+// Stops and starts a Cloud Server in started state.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -7286,7 +7556,9 @@ func (c *ClientWithResponses) RestartServerWithBodyWithResponse(ctx context.Cont
 	return ParseRestartServerResp(rsp)
 }
 
-// RestartServerWithResponse Restart a server
+// RestartServerWithResponse Restart a Cloud Server
+//
+// Stops and starts a Cloud Server in started state.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -7299,7 +7571,9 @@ func (c *ClientWithResponses) RestartServerWithResponse(ctx context.Context, uui
 	return ParseRestartServerResp(rsp)
 }
 
-// StartServerWithBodyWithResponse Start a server
+// StartServerWithBodyWithResponse Start a Cloud Server
+//
+// Starts a Cloud Server in stopped state.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -7312,7 +7586,9 @@ func (c *ClientWithResponses) StartServerWithBodyWithResponse(ctx context.Contex
 	return ParseStartServerResp(rsp)
 }
 
-// StartServerWithResponse Start a server
+// StartServerWithResponse Start a Cloud Server
+//
+// Starts a Cloud Server in stopped state.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -7325,7 +7601,9 @@ func (c *ClientWithResponses) StartServerWithResponse(ctx context.Context, uuid 
 	return ParseStartServerResp(rsp)
 }
 
-// GetCPUStatsWithResponse Get CPU stats for a specific server
+// GetCPUStatsWithResponse Get Cloud Server CPU statistics
+//
+// Returns CPU usage statistics for all supported periods.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -7338,7 +7616,9 @@ func (c *ClientWithResponses) GetCPUStatsWithResponse(ctx context.Context, uuid 
 	return ParseGetCPUStatsResp(rsp)
 }
 
-// GetCPUStatsByPeriodWithResponse Get CPU stats for a specific server
+// GetCPUStatsByPeriodWithResponse Get Cloud Server CPU statistics by period
+//
+// Returns CPU usage statistics for the selected period.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -7351,7 +7631,9 @@ func (c *ClientWithResponses) GetCPUStatsByPeriodWithResponse(ctx context.Contex
 	return ParseGetCPUStatsByPeriodResp(rsp)
 }
 
-// GetDiskStatsWithResponse Get disk stats for a specific server
+// GetDiskStatsWithResponse Get Cloud Server disk statistics
+//
+// Returns aggregate disk read and write statistics for all supported periods.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -7364,7 +7646,9 @@ func (c *ClientWithResponses) GetDiskStatsWithResponse(ctx context.Context, uuid
 	return ParseGetDiskStatsResp(rsp)
 }
 
-// GetDiskStatsByPeriodWithResponse Get disk stats for a specific server
+// GetDiskStatsByPeriodWithResponse Get Cloud Server disk statistics by period
+//
+// Returns aggregate disk read and write statistics for the selected period.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -7377,9 +7661,9 @@ func (c *ClientWithResponses) GetDiskStatsByPeriodWithResponse(ctx context.Conte
 	return ParseGetDiskStatsByPeriodResp(rsp)
 }
 
-// GetNetworkStatsWithResponse Get network stats for a specific server
+// GetNetworkStatsWithResponse Get Cloud Server network statistics
 //
-// Get disk stats for a specific server.
+// Returns aggregate inbound and outbound network statistics for all interfaces and periods.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -7392,9 +7676,9 @@ func (c *ClientWithResponses) GetNetworkStatsWithResponse(ctx context.Context, u
 	return ParseGetNetworkStatsResp(rsp)
 }
 
-// GetNetworkStatsByNetworkWithResponse Get network stats for a specific server
+// GetNetworkStatsByNetworkWithResponse Get Cloud Server network statistics by network type
 //
-// Get disk stats for a specific server.
+// Returns inbound and outbound network statistics for the selected network type and all periods.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -7407,9 +7691,9 @@ func (c *ClientWithResponses) GetNetworkStatsByNetworkWithResponse(ctx context.C
 	return ParseGetNetworkStatsByNetworkResp(rsp)
 }
 
-// GetNetworkStatsByNetworkAndPeriodWithResponse Get network stats for a specific server
+// GetNetworkStatsByNetworkAndPeriodWithResponse Get Cloud Server network statistics by network type and period
 //
-// Get disk stats for a specific server.
+// Returns inbound and outbound network statistics for the selected network type and period.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -7422,7 +7706,9 @@ func (c *ClientWithResponses) GetNetworkStatsByNetworkAndPeriodWithResponse(ctx 
 	return ParseGetNetworkStatsByNetworkAndPeriodResp(rsp)
 }
 
-// StopServerWithBodyWithResponse Stop a server
+// StopServerWithBodyWithResponse Stop a Cloud Server
+//
+// Stops a Cloud Server in started state.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -7435,7 +7721,9 @@ func (c *ClientWithResponses) StopServerWithBodyWithResponse(ctx context.Context
 	return ParseStopServerResp(rsp)
 }
 
-// StopServerWithResponse Stop a server
+// StopServerWithResponse Stop a Cloud Server
+//
+// Stops a Cloud Server in started state.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -7448,7 +7736,9 @@ func (c *ClientWithResponses) StopServerWithResponse(ctx context.Context, uuid S
 	return ParseStopServerResp(rsp)
 }
 
-// AttachStorageDeviceWithBodyWithResponse Attach a storage device to a server
+// AttachStorageDeviceWithBodyWithResponse Attach a storage device to a Cloud Server
+//
+// Attach a storage resource as a disk or CD-ROM device to a Cloud Server. SCSI and virtio disks can be attached while the Cloud Server is started; IDE and CD-ROM devices require a stopped Cloud Server. An empty CD-ROM device can be attached without specifying a storage resource.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -7461,7 +7751,9 @@ func (c *ClientWithResponses) AttachStorageDeviceWithBodyWithResponse(ctx contex
 	return ParseAttachStorageDeviceResp(rsp)
 }
 
-// AttachStorageDeviceWithResponse Attach a storage device to a server
+// AttachStorageDeviceWithResponse Attach a storage device to a Cloud Server
+//
+// Attach a storage resource as a disk or CD-ROM device to a Cloud Server. SCSI and virtio disks can be attached while the Cloud Server is started; IDE and CD-ROM devices require a stopped Cloud Server. An empty CD-ROM device can be attached without specifying a storage resource.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -7474,7 +7766,9 @@ func (c *ClientWithResponses) AttachStorageDeviceWithResponse(ctx context.Contex
 	return ParseAttachStorageDeviceResp(rsp)
 }
 
-// DetachStorageDeviceWithBodyWithResponse Detach a storage device from a server
+// DetachStorageDeviceWithBodyWithResponse Detach a storage device from a Cloud Server
+//
+// Detach a storage device identified by its device address or storage resource UUID. IDE and CD-ROM devices cannot be detached while the Cloud Server is started.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -7487,7 +7781,9 @@ func (c *ClientWithResponses) DetachStorageDeviceWithBodyWithResponse(ctx contex
 	return ParseDetachStorageDeviceResp(rsp)
 }
 
-// DetachStorageDeviceWithResponse Detach a storage device from a server
+// DetachStorageDeviceWithResponse Detach a storage device from a Cloud Server
+//
+// Detach a storage device identified by its device address or storage resource UUID. IDE and CD-ROM devices cannot be detached while the Cloud Server is started.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -7502,7 +7798,7 @@ func (c *ClientWithResponses) DetachStorageDeviceWithResponse(ctx context.Contex
 
 // GetVNCDetailsWithResponse Get VNC connection details
 //
-// Returns VNC connection details for a specific server.
+// Returns VNC connection details and remote access settings for a Cloud Server.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -7549,6 +7845,13 @@ func ParseListServersResp(rsp *http.Response) (*ListServersResp, error) {
 			return nil, err
 		}
 		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ListServers404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
 		var dest ListServers409
@@ -7620,60 +7923,6 @@ func ParseCreateServerResp(rsp *http.Response) (*CreateServerResp, error) {
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest CreateServerDefault
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSONDefault = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseModifyServerResp parses an HTTP response from a ModifyServerWithResponse call
-func ParseModifyServerResp(rsp *http.Response) (*ModifyServerResp, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &ModifyServerResp{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
-		var dest ModifyServer202
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON202 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest ModifyServer400
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON400 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest ModifyServer403
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest ModifyServer409
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON409 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ModifyServerDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -7774,6 +8023,34 @@ func ParseDeleteServerResp(rsp *http.Response) (*DeleteServerResp, error) {
 	case rsp.StatusCode == 204:
 		break // No content-type
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest DeleteServer400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest DeleteServer403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest DeleteServer404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest DeleteServer409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest DeleteServerDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -7840,6 +8117,67 @@ func ParseGetServerResp(rsp *http.Response) (*GetServerResp, error) {
 	return response, nil
 }
 
+// ParseModifyServerResp parses an HTTP response from a ModifyServerWithResponse call
+func ParseModifyServerResp(rsp *http.Response) (*ModifyServerResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ModifyServerResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest ModifyServer202
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ModifyServer400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ModifyServer403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ModifyServer404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ModifyServer409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ModifyServerDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseAttachPrivateFirewallRulesetResp parses an HTTP response from a AttachPrivateFirewallRulesetWithResponse call
 func ParseAttachPrivateFirewallRulesetResp(rsp *http.Response) (*AttachPrivateFirewallRulesetResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -7881,6 +8219,13 @@ func ParseAttachPrivateFirewallRulesetResp(rsp *http.Response) (*AttachPrivateFi
 			return nil, err
 		}
 		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ServerAttachPrivateFirewallRuleset409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest ServerAttachPrivateFirewallRulesetDefault
@@ -8000,6 +8345,13 @@ func ParseEjectCDROMResp(rsp *http.Response) (*EjectCDROMResp, error) {
 		}
 		response.JSON409 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 511:
+		var dest ServerEjectCDROM511
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON511 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest ServerEjectCDROMDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -8061,6 +8413,13 @@ func ParseLoadCDROMResp(rsp *http.Response) (*LoadCDROMResp, error) {
 		}
 		response.JSON409 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 511:
+		var dest ServerLoadCDROM511
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON511 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest ServerLoadCDROMDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -8114,6 +8473,13 @@ func ParseDetachPrivateFirewallRulesetResp(rsp *http.Response) (*DetachPrivateFi
 			return nil, err
 		}
 		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ServerDetachPrivateFirewallRuleset409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest ServerDetachPrivateFirewallRulesetDefault
@@ -8195,12 +8561,12 @@ func ParseCreateFirewallRuleResp(rsp *http.Response) (*CreateFirewallRuleResp, e
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ServerCreateFirewallRule200
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest ServerCreateFirewallRule201
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSON200 = &dest
+		response.JSON201 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
 		var dest ServerCreateFirewallRule400
@@ -8256,12 +8622,8 @@ func ParseUpdateFirewallRulesResp(rsp *http.Response) (*UpdateFirewallRulesResp,
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ServerUpdateFirewallRules200
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
+	case rsp.StatusCode == 204:
+		break // No content-type
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
 		var dest ServerUpdateFirewallRules400
@@ -8293,67 +8655,6 @@ func ParseUpdateFirewallRulesResp(rsp *http.Response) (*UpdateFirewallRulesResp,
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest ServerUpdateFirewallRulesDefault
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSONDefault = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseUpdateFirewallRulesForceResp parses an HTTP response from a UpdateFirewallRulesForceWithResponse call
-func ParseUpdateFirewallRulesForceResp(rsp *http.Response) (*UpdateFirewallRulesForceResp, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &UpdateFirewallRulesForceResp{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ServerUpdateFirewallRulesForce200
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest ServerUpdateFirewallRulesForce400
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON400 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest ServerUpdateFirewallRulesForce403
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest ServerUpdateFirewallRulesForce404
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON404 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest ServerUpdateFirewallRulesForce409
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON409 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ServerUpdateFirewallRulesForceDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -8736,6 +9037,13 @@ func ParseDeleteServerInterfaceResp(rsp *http.Response) (*DeleteServerInterfaceR
 		}
 		response.JSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest DeleteServerInterface409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest DeleteServerInterfaceDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -8941,12 +9249,12 @@ func ParseRebuildServerResp(rsp *http.Response) (*RebuildServerResp, error) {
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest RebuildServer200
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest RebuildServer202
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSON200 = &dest
+		response.JSON202 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
 		var dest RebuildServer400
@@ -9246,6 +9554,27 @@ func ParseGetCPUStatsResp(rsp *http.Response) (*GetCPUStatsResp, error) {
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ServerGetCPUStats400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ServerGetCPUStats403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ServerGetCPUStats404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest ServerGetCPUStatsDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -9278,6 +9607,27 @@ func ParseGetCPUStatsByPeriodResp(rsp *http.Response) (*GetCPUStatsByPeriodResp,
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ServerGetCPUStatsByPeriod400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ServerGetCPUStatsByPeriod403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ServerGetCPUStatsByPeriod404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest ServerGetCPUStatsByPeriodDefault
@@ -9312,6 +9662,27 @@ func ParseGetDiskStatsResp(rsp *http.Response) (*GetDiskStatsResp, error) {
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ServerGetDiskStats400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ServerGetDiskStats403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ServerGetDiskStats404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest ServerGetDiskStatsDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -9344,6 +9715,27 @@ func ParseGetDiskStatsByPeriodResp(rsp *http.Response) (*GetDiskStatsByPeriodRes
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ServerGetDiskStatsByPeriod400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ServerGetDiskStatsByPeriod403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ServerGetDiskStatsByPeriod404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest ServerGetDiskStatsByPeriodDefault
@@ -9378,6 +9770,27 @@ func ParseGetNetworkStatsResp(rsp *http.Response) (*GetNetworkStatsResp, error) 
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ServerGetNetworkStats400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ServerGetNetworkStats403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ServerGetNetworkStats404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest ServerGetNetworkStatsDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -9411,6 +9824,27 @@ func ParseGetNetworkStatsByNetworkResp(rsp *http.Response) (*GetNetworkStatsByNe
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ServerGetNetworkStatsByNetwork400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ServerGetNetworkStatsByNetwork403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ServerGetNetworkStatsByNetwork404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest ServerGetNetworkStatsByNetworkDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -9443,6 +9877,27 @@ func ParseGetNetworkStatsByNetworkAndPeriodResp(rsp *http.Response) (*GetNetwork
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ServerGetNetworkStatsByNetworkAndPeriod400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ServerGetNetworkStatsByNetworkAndPeriod403
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ServerGetNetworkStatsByNetworkAndPeriod404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest ServerGetNetworkStatsByNetworkAndPeriodDefault
@@ -9626,6 +10081,13 @@ func ParseDetachStorageDeviceResp(rsp *http.Response) (*DetachStorageDeviceResp,
 			return nil, err
 		}
 		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 511:
+		var dest ServerDetachStorageDevice511
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON511 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest ServerDetachStorageDeviceDefault

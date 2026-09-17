@@ -26,21 +26,75 @@ type IpAddressClientInterface interface {
 	// Corresponds with GET /1.3/ip_address (the `ListIPAddresses` operationId).
 	ListIPAddresses(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// DeleteIPAddress Delete an IP address
+	// AddIPAddressWithBody Add an IP address
+	//
+	// Adds a new IP address.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /1.3/ip_address (the `AddIPAddress` operationId).
+	AddIPAddressWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// AddIPAddress Add an IP address
+	//
+	// Adds a new IP address.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /1.3/ip_address (the `AddIPAddress` operationId).
+	AddIPAddress(ctx context.Context, body AddIPAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// BulkModifyIPAddressesWithBody Bulk modify IP addresses
+	//
+	// Modifies attributes of multiple IP addresses in a single request.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /1.3/ip_address/bulk (the `BulkModifyIPAddresses` operationId).
+	BulkModifyIPAddressesWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// BulkModifyIPAddresses Bulk modify IP addresses
+	//
+	// Modifies attributes of multiple IP addresses in a single request.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /1.3/ip_address/bulk (the `BulkModifyIPAddresses` operationId).
+	BulkModifyIPAddresses(ctx context.Context, body BulkModifyIPAddressesJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteIPAddress Delete IP address
 	//
 	// Deletes a specific IP address.
 	//
 	// Corresponds with DELETE /1.3/ip_address/{address} (the `DeleteIPAddress` operationId).
 	DeleteIPAddress(ctx context.Context, address DeleteIPAddressAddress, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetIPAddressDetails Get IP address details
+	// GetIPAddressDetails Get IP address
 	//
 	// Retrieves details of a specific IP address.
 	//
 	// Corresponds with GET /1.3/ip_address/{address} (the `GetIPAddressDetails` operationId).
 	GetIPAddressDetails(ctx context.Context, address GetIPAddressDetailsAddress, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ModifyIPAddressWithBody Modify an IP address
+	// PatchModifyIPAddressWithBody Modify an IP address
+	//
+	// Modifies attributes of a specific IP address.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /1.3/ip_address/{address} (the `PatchModifyIPAddress` operationId).
+	PatchModifyIPAddressWithBody(ctx context.Context, address PatchModifyIPAddressAddress, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// PatchModifyIPAddress Modify an IP address
+	//
+	// Modifies attributes of a specific IP address.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /1.3/ip_address/{address} (the `PatchModifyIPAddress` operationId).
+	PatchModifyIPAddress(ctx context.Context, address PatchModifyIPAddressAddress, body PatchModifyIPAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ModifyIPAddressWithBody Modify IP address
 	//
 	// Modifies attributes of a specific IP address.
 	//
@@ -49,7 +103,7 @@ type IpAddressClientInterface interface {
 	// Corresponds with PUT /1.3/ip_address/{address} (the `ModifyIPAddress` operationId).
 	ModifyIPAddressWithBody(ctx context.Context, address ModifyIPAddressAddress, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ModifyIPAddress Modify an IP address
+	// ModifyIPAddress Modify IP address
 	//
 	// Modifies attributes of a specific IP address.
 	//
@@ -76,7 +130,83 @@ func (c *Client) ListIPAddresses(ctx context.Context, reqEditors ...RequestEdito
 	return c.Client.Do(req)
 }
 
-// DeleteIPAddress Delete an IP address
+// AddIPAddressWithBody Add an IP address
+//
+// Adds a new IP address.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /1.3/ip_address (the `AddIPAddress` operationId).
+func (c *Client) AddIPAddressWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAddIPAddressRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// AddIPAddress Add an IP address
+//
+// Adds a new IP address.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /1.3/ip_address (the `AddIPAddress` operationId).
+func (c *Client) AddIPAddress(ctx context.Context, body AddIPAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAddIPAddressRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// BulkModifyIPAddressesWithBody Bulk modify IP addresses
+//
+// Modifies attributes of multiple IP addresses in a single request.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /1.3/ip_address/bulk (the `BulkModifyIPAddresses` operationId).
+func (c *Client) BulkModifyIPAddressesWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewBulkModifyIPAddressesRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// BulkModifyIPAddresses Bulk modify IP addresses
+//
+// Modifies attributes of multiple IP addresses in a single request.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /1.3/ip_address/bulk (the `BulkModifyIPAddresses` operationId).
+func (c *Client) BulkModifyIPAddresses(ctx context.Context, body BulkModifyIPAddressesJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewBulkModifyIPAddressesRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteIPAddress Delete IP address
 //
 // Deletes a specific IP address.
 //
@@ -93,7 +223,7 @@ func (c *Client) DeleteIPAddress(ctx context.Context, address DeleteIPAddressAdd
 	return c.Client.Do(req)
 }
 
-// GetIPAddressDetails Get IP address details
+// GetIPAddressDetails Get IP address
 //
 // Retrieves details of a specific IP address.
 //
@@ -110,7 +240,45 @@ func (c *Client) GetIPAddressDetails(ctx context.Context, address GetIPAddressDe
 	return c.Client.Do(req)
 }
 
-// ModifyIPAddressWithBody Modify an IP address
+// PatchModifyIPAddressWithBody Modify an IP address
+//
+// Modifies attributes of a specific IP address.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /1.3/ip_address/{address} (the `PatchModifyIPAddress` operationId).
+func (c *Client) PatchModifyIPAddressWithBody(ctx context.Context, address PatchModifyIPAddressAddress, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPatchModifyIPAddressRequestWithBody(c.Server, address, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// PatchModifyIPAddress Modify an IP address
+//
+// Modifies attributes of a specific IP address.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /1.3/ip_address/{address} (the `PatchModifyIPAddress` operationId).
+func (c *Client) PatchModifyIPAddress(ctx context.Context, address PatchModifyIPAddressAddress, body PatchModifyIPAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPatchModifyIPAddressRequest(c.Server, address, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ModifyIPAddressWithBody Modify IP address
 //
 // Modifies attributes of a specific IP address.
 //
@@ -129,7 +297,7 @@ func (c *Client) ModifyIPAddressWithBody(ctx context.Context, address ModifyIPAd
 	return c.Client.Do(req)
 }
 
-// ModifyIPAddress Modify an IP address
+// ModifyIPAddress Modify IP address
 //
 // Modifies attributes of a specific IP address.
 //
@@ -171,6 +339,86 @@ func NewListIPAddressesRequest(server string) (*http.Request, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	return req, nil
+}
+
+// NewAddIPAddressRequest calls the generic AddIPAddress builder with application/json body
+func NewAddIPAddressRequest(server string, body AddIPAddressJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewAddIPAddressRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewAddIPAddressRequestWithBody constructs an http.Request for the AddIPAddress method, with any body, and a specified content type
+func NewAddIPAddressRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/ip_address")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewBulkModifyIPAddressesRequest calls the generic BulkModifyIPAddresses builder with application/json body
+func NewBulkModifyIPAddressesRequest(server string, body BulkModifyIPAddressesJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewBulkModifyIPAddressesRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewBulkModifyIPAddressesRequestWithBody constructs an http.Request for the BulkModifyIPAddresses method, with any body, and a specified content type
+func NewBulkModifyIPAddressesRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/ip_address/bulk")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -243,6 +491,53 @@ func NewGetIPAddressDetailsRequest(server string, address GetIPAddressDetailsAdd
 	return req, nil
 }
 
+// NewPatchModifyIPAddressRequest calls the generic PatchModifyIPAddress builder with application/json body
+func NewPatchModifyIPAddressRequest(server string, address PatchModifyIPAddressAddress, body PatchModifyIPAddressJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewPatchModifyIPAddressRequestWithBody(server, address, "application/json", bodyReader)
+}
+
+// NewPatchModifyIPAddressRequestWithBody constructs an http.Request for the PatchModifyIPAddress method, with any body, and a specified content type
+func NewPatchModifyIPAddressRequestWithBody(server string, address PatchModifyIPAddressAddress, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "address", address, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "ipv4"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/ip_address/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
 // NewModifyIPAddressRequest calls the generic ModifyIPAddress builder with application/json body
 func NewModifyIPAddressRequest(server string, address ModifyIPAddressAddress, body ModifyIPAddressJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -302,7 +597,43 @@ type IpAddressClientWithResponsesInterface interface {
 	// Corresponds with GET /1.3/ip_address (the `ListIPAddresses` operationId).
 	ListIPAddressesWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListIPAddressesResp, error)
 
-	// DeleteIPAddressWithResponse Delete an IP address
+	// AddIPAddressWithBodyWithResponse Add an IP address
+	//
+	// Adds a new IP address.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/ip_address (the `AddIPAddress` operationId).
+	AddIPAddressWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddIPAddressResp, error)
+
+	// AddIPAddressWithResponse Add an IP address
+	//
+	// Adds a new IP address.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/ip_address (the `AddIPAddress` operationId).
+	AddIPAddressWithResponse(ctx context.Context, body AddIPAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*AddIPAddressResp, error)
+
+	// BulkModifyIPAddressesWithBodyWithResponse Bulk modify IP addresses
+	//
+	// Modifies attributes of multiple IP addresses in a single request.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /1.3/ip_address/bulk (the `BulkModifyIPAddresses` operationId).
+	BulkModifyIPAddressesWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*BulkModifyIPAddressesResp, error)
+
+	// BulkModifyIPAddressesWithResponse Bulk modify IP addresses
+	//
+	// Modifies attributes of multiple IP addresses in a single request.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /1.3/ip_address/bulk (the `BulkModifyIPAddresses` operationId).
+	BulkModifyIPAddressesWithResponse(ctx context.Context, body BulkModifyIPAddressesJSONRequestBody, reqEditors ...RequestEditorFn) (*BulkModifyIPAddressesResp, error)
+
+	// DeleteIPAddressWithResponse Delete IP address
 	//
 	// Deletes a specific IP address.
 	//
@@ -311,7 +642,7 @@ type IpAddressClientWithResponsesInterface interface {
 	// Corresponds with DELETE /1.3/ip_address/{address} (the `DeleteIPAddress` operationId).
 	DeleteIPAddressWithResponse(ctx context.Context, address DeleteIPAddressAddress, reqEditors ...RequestEditorFn) (*DeleteIPAddressResp, error)
 
-	// GetIPAddressDetailsWithResponse Get IP address details
+	// GetIPAddressDetailsWithResponse Get IP address
 	//
 	// Retrieves details of a specific IP address.
 	//
@@ -320,7 +651,25 @@ type IpAddressClientWithResponsesInterface interface {
 	// Corresponds with GET /1.3/ip_address/{address} (the `GetIPAddressDetails` operationId).
 	GetIPAddressDetailsWithResponse(ctx context.Context, address GetIPAddressDetailsAddress, reqEditors ...RequestEditorFn) (*GetIPAddressDetailsResp, error)
 
-	// ModifyIPAddressWithBodyWithResponse Modify an IP address
+	// PatchModifyIPAddressWithBodyWithResponse Modify an IP address
+	//
+	// Modifies attributes of a specific IP address.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /1.3/ip_address/{address} (the `PatchModifyIPAddress` operationId).
+	PatchModifyIPAddressWithBodyWithResponse(ctx context.Context, address PatchModifyIPAddressAddress, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PatchModifyIPAddressResp, error)
+
+	// PatchModifyIPAddressWithResponse Modify an IP address
+	//
+	// Modifies attributes of a specific IP address.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /1.3/ip_address/{address} (the `PatchModifyIPAddress` operationId).
+	PatchModifyIPAddressWithResponse(ctx context.Context, address PatchModifyIPAddressAddress, body PatchModifyIPAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchModifyIPAddressResp, error)
+
+	// ModifyIPAddressWithBodyWithResponse Modify IP address
 	//
 	// Modifies attributes of a specific IP address.
 	//
@@ -329,7 +678,7 @@ type IpAddressClientWithResponsesInterface interface {
 	// Corresponds with PUT /1.3/ip_address/{address} (the `ModifyIPAddress` operationId).
 	ModifyIPAddressWithBodyWithResponse(ctx context.Context, address ModifyIPAddressAddress, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyIPAddressResp, error)
 
-	// ModifyIPAddressWithResponse Modify an IP address
+	// ModifyIPAddressWithResponse Modify IP address
 	//
 	// Modifies attributes of a specific IP address.
 	//
@@ -381,6 +730,95 @@ func (r ListIPAddressesResp) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r ListIPAddressesResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type AddIPAddressResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *AddIPAddress201
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *AddIPAddressDefault
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r AddIPAddressResp) GetJSON201() *AddIPAddress201 {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r AddIPAddressResp) GetApplicationproblemJSONDefault() *AddIPAddressDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r AddIPAddressResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r AddIPAddressResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r AddIPAddressResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r AddIPAddressResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type BulkModifyIPAddressesResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *BulkModifyIPAddressesDefault
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r BulkModifyIPAddressesResp) GetApplicationproblemJSONDefault() *BulkModifyIPAddressesDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r BulkModifyIPAddressesResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r BulkModifyIPAddressesResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r BulkModifyIPAddressesResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r BulkModifyIPAddressesResp) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -476,6 +914,54 @@ func (r GetIPAddressDetailsResp) ContentType() string {
 	return ""
 }
 
+type PatchModifyIPAddressResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON202 the response for an HTTP 202 `application/json` response
+	JSON202 *PatchModifyIPAddress202
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *PatchModifyIPAddressDefault
+}
+
+// GetJSON202 returns the response for an HTTP 202 `application/json` response
+func (r PatchModifyIPAddressResp) GetJSON202() *PatchModifyIPAddress202 {
+	return r.JSON202
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r PatchModifyIPAddressResp) GetApplicationproblemJSONDefault() *PatchModifyIPAddressDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r PatchModifyIPAddressResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r PatchModifyIPAddressResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r PatchModifyIPAddressResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r PatchModifyIPAddressResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type ModifyIPAddressResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -539,7 +1025,67 @@ func (c *ClientWithResponses) ListIPAddressesWithResponse(ctx context.Context, r
 	return ParseListIPAddressesResp(rsp)
 }
 
-// DeleteIPAddressWithResponse Delete an IP address
+// AddIPAddressWithBodyWithResponse Add an IP address
+//
+// Adds a new IP address.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/ip_address (the `AddIPAddress` operationId).
+func (c *ClientWithResponses) AddIPAddressWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddIPAddressResp, error) {
+	rsp, err := c.AddIPAddressWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAddIPAddressResp(rsp)
+}
+
+// AddIPAddressWithResponse Add an IP address
+//
+// Adds a new IP address.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/ip_address (the `AddIPAddress` operationId).
+func (c *ClientWithResponses) AddIPAddressWithResponse(ctx context.Context, body AddIPAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*AddIPAddressResp, error) {
+	rsp, err := c.AddIPAddress(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAddIPAddressResp(rsp)
+}
+
+// BulkModifyIPAddressesWithBodyWithResponse Bulk modify IP addresses
+//
+// Modifies attributes of multiple IP addresses in a single request.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /1.3/ip_address/bulk (the `BulkModifyIPAddresses` operationId).
+func (c *ClientWithResponses) BulkModifyIPAddressesWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*BulkModifyIPAddressesResp, error) {
+	rsp, err := c.BulkModifyIPAddressesWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseBulkModifyIPAddressesResp(rsp)
+}
+
+// BulkModifyIPAddressesWithResponse Bulk modify IP addresses
+//
+// Modifies attributes of multiple IP addresses in a single request.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /1.3/ip_address/bulk (the `BulkModifyIPAddresses` operationId).
+func (c *ClientWithResponses) BulkModifyIPAddressesWithResponse(ctx context.Context, body BulkModifyIPAddressesJSONRequestBody, reqEditors ...RequestEditorFn) (*BulkModifyIPAddressesResp, error) {
+	rsp, err := c.BulkModifyIPAddresses(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseBulkModifyIPAddressesResp(rsp)
+}
+
+// DeleteIPAddressWithResponse Delete IP address
 //
 // Deletes a specific IP address.
 //
@@ -554,7 +1100,7 @@ func (c *ClientWithResponses) DeleteIPAddressWithResponse(ctx context.Context, a
 	return ParseDeleteIPAddressResp(rsp)
 }
 
-// GetIPAddressDetailsWithResponse Get IP address details
+// GetIPAddressDetailsWithResponse Get IP address
 //
 // Retrieves details of a specific IP address.
 //
@@ -569,7 +1115,37 @@ func (c *ClientWithResponses) GetIPAddressDetailsWithResponse(ctx context.Contex
 	return ParseGetIPAddressDetailsResp(rsp)
 }
 
-// ModifyIPAddressWithBodyWithResponse Modify an IP address
+// PatchModifyIPAddressWithBodyWithResponse Modify an IP address
+//
+// Modifies attributes of a specific IP address.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /1.3/ip_address/{address} (the `PatchModifyIPAddress` operationId).
+func (c *ClientWithResponses) PatchModifyIPAddressWithBodyWithResponse(ctx context.Context, address PatchModifyIPAddressAddress, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PatchModifyIPAddressResp, error) {
+	rsp, err := c.PatchModifyIPAddressWithBody(ctx, address, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePatchModifyIPAddressResp(rsp)
+}
+
+// PatchModifyIPAddressWithResponse Modify an IP address
+//
+// Modifies attributes of a specific IP address.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /1.3/ip_address/{address} (the `PatchModifyIPAddress` operationId).
+func (c *ClientWithResponses) PatchModifyIPAddressWithResponse(ctx context.Context, address PatchModifyIPAddressAddress, body PatchModifyIPAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchModifyIPAddressResp, error) {
+	rsp, err := c.PatchModifyIPAddress(ctx, address, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePatchModifyIPAddressResp(rsp)
+}
+
+// ModifyIPAddressWithBodyWithResponse Modify IP address
 //
 // Modifies attributes of a specific IP address.
 //
@@ -584,7 +1160,7 @@ func (c *ClientWithResponses) ModifyIPAddressWithBodyWithResponse(ctx context.Co
 	return ParseModifyIPAddressResp(rsp)
 }
 
-// ModifyIPAddressWithResponse Modify an IP address
+// ModifyIPAddressWithResponse Modify IP address
 //
 // Modifies attributes of a specific IP address.
 //
@@ -622,6 +1198,68 @@ func ParseListIPAddressesResp(rsp *http.Response) (*ListIPAddressesResp, error) 
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest ListIPAddressesDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseAddIPAddressResp parses an HTTP response from a AddIPAddressWithResponse call
+func ParseAddIPAddressResp(rsp *http.Response) (*AddIPAddressResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &AddIPAddressResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest AddIPAddress201
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest AddIPAddressDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseBulkModifyIPAddressesResp parses an HTTP response from a BulkModifyIPAddressesWithResponse call
+func ParseBulkModifyIPAddressesResp(rsp *http.Response) (*BulkModifyIPAddressesResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &BulkModifyIPAddressesResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest BulkModifyIPAddressesDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -684,6 +1322,39 @@ func ParseGetIPAddressDetailsResp(rsp *http.Response) (*GetIPAddressDetailsResp,
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest GetIPAddressDetailsDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParsePatchModifyIPAddressResp parses an HTTP response from a PatchModifyIPAddressWithResponse call
+func ParsePatchModifyIPAddressResp(rsp *http.Response) (*PatchModifyIPAddressResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &PatchModifyIPAddressResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest PatchModifyIPAddress202
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest PatchModifyIPAddressDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}

@@ -4,6 +4,7 @@
 package upcloud
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -11,23 +12,119 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/oapi-codegen/runtime"
 )
 
 // The interface specification for the client above.
 type AccountClientInterface interface {
 
-	// AccountDetails Returns account details for the authenticated user
+	// AccountDetails Account details
+	//
+	// Returns account details for the authenticated user.
 	//
 	// Corresponds with GET /1.3/account (the `AccountDetails` operationId).
 	AccountDetails(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateMSLMASigningLink Create a new Microsoft LMA signing link
+	// GetMonthlyDetailedBillingSummary Get monthly billing summary with resource details
+	//
+	// Returns a billing summary grouped by resource, including billing detail changes during the specified month. The API user must have permission to read billing details.
+	//
+	// Corresponds with GET /1.3/account/billing/summary/{year}-{month} (the `GetMonthlyDetailedBillingSummary` operationId).
+	GetMonthlyDetailedBillingSummary(ctx context.Context, year AccountGetMonthlyDetailedBillingSummaryYear, month AccountGetMonthlyDetailedBillingSummaryMonth, params *GetMonthlyDetailedBillingSummaryParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetMonthlyBillingSummary Get monthly billing summary
+	//
+	// Returns a billing summary for the specified month. The API user must have permission to read billing details. This endpoint is deprecated; use the monthly billing summary with resource details instead.
+	//
+	// Corresponds with GET /1.3/account/billing_summary/{year}-{month} (the `GetMonthlyBillingSummary` operationId).
+	GetMonthlyBillingSummary(ctx context.Context, year AccountGetMonthlyBillingSummaryYear, month AccountGetMonthlyBillingSummaryMonth, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetCurrentNetworkUsage Get current network usage
+	//
+	// Returns the latest Network Transfer Pool usage report for the account.
+	//
+	// Corresponds with GET /1.3/account/current_network_usage (the `GetCurrentNetworkUsage` operationId).
+	GetCurrentNetworkUsage(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListAccounts List accounts
+	//
+	// Returns the main account and its subaccounts. Account listing is available only to the main account.
+	//
+	// Corresponds with GET /1.3/account/list (the `ListAccounts` operationId).
+	ListAccounts(ctx context.Context, params *ListAccountsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateMSLMASigningLink Create Microsoft LMA signing link
+	//
+	// Create a new Microsoft LMA signing link.
 	//
 	// Corresponds with POST /1.3/account/ms_lma (the `CreateMSLMASigningLink` operationId).
 	CreateMSLMASigningLink(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetAccountNetworkTopUsage Get top network usage
+	//
+	// Returns the resources with the highest network usage.
+	//
+	// Corresponds with GET /1.3/account/network_top_usage (the `GetAccountNetworkTopUsage` operationId).
+	GetAccountNetworkTopUsage(ctx context.Context, params *GetAccountNetworkTopUsageParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetAccountNetworkUsage Get network transfer statistics
+	//
+	// Returns network transfer statistics. JSON responses support a maximum time window of 31 days; CSV responses have no time-window limit. Select the output format with the Accept header using application/json or text/csv.
+	//
+	// Corresponds with GET /1.3/account/network_usage (the `GetAccountNetworkUsage` operationId).
+	GetAccountNetworkUsage(ctx context.Context, params *GetAccountNetworkUsageParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetAccountResourceUsage Get resource usage
+	//
+	// Returns current resource usage counts for the account.
+	//
+	// Corresponds with GET /1.3/account/resource-usage (the `GetAccountResourceUsage` operationId).
+	GetAccountResourceUsage(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetMonthlyResourceBillingSummary Get monthly resource billing summary
+	//
+	// Returns a billing summary for one resource during the specified month. The API user must have permission to read billing details.
+	//
+	// Corresponds with GET /1.3/account/resource_billing_summary/{resource_id}/{year}-{month} (the `GetMonthlyResourceBillingSummary` operationId).
+	GetMonthlyResourceBillingSummary(ctx context.Context, resourceId AccountGetMonthlyResourceBillingSummaryResourceId, year AccountGetMonthlyResourceBillingSummaryYear, month AccountGetMonthlyResourceBillingSummaryMonth, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetAccountResourceNetworkUsage Get resource transfer statistics
+	//
+	// Returns network transfer statistics grouped by resource, service, and zone. JSON responses support a maximum time window of 31 days; CSV responses have no time-window limit. Select the output format with the Accept header using application/json or text/csv.
+	//
+	// Corresponds with GET /1.3/account/resource_network_usage (the `GetAccountResourceNetworkUsage` operationId).
+	GetAccountResourceNetworkUsage(ctx context.Context, params *GetAccountResourceNetworkUsageParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateSubaccountWithBody Create subaccount
+	//
+	// Creates a subaccount for the authenticated main account.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /1.3/account/sub (the `CreateSubaccount` operationId).
+	CreateSubaccountWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateSubaccount Create subaccount
+	//
+	// Creates a subaccount for the authenticated main account.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /1.3/account/sub (the `CreateSubaccount` operationId).
+	CreateSubaccount(ctx context.Context, body CreateSubaccountJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteSubaccount Delete subaccount
+	//
+	// Deletes a subaccount from the authenticated main account.
+	//
+	// Corresponds with DELETE /1.3/account/sub/{username} (the `DeleteSubaccount` operationId).
+	DeleteSubaccount(ctx context.Context, username DeleteSubaccountUsername, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
-// AccountDetails Returns account details for the authenticated user
+// AccountDetails Account details
+//
+// Returns account details for the authenticated user.
 //
 // Corresponds with GET /1.3/account (the `AccountDetails` operationId).
 func (c *Client) AccountDetails(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -42,11 +139,221 @@ func (c *Client) AccountDetails(ctx context.Context, reqEditors ...RequestEditor
 	return c.Client.Do(req)
 }
 
-// CreateMSLMASigningLink Create a new Microsoft LMA signing link
+// GetMonthlyDetailedBillingSummary Get monthly billing summary with resource details
+//
+// Returns a billing summary grouped by resource, including billing detail changes during the specified month. The API user must have permission to read billing details.
+//
+// Corresponds with GET /1.3/account/billing/summary/{year}-{month} (the `GetMonthlyDetailedBillingSummary` operationId).
+func (c *Client) GetMonthlyDetailedBillingSummary(ctx context.Context, year AccountGetMonthlyDetailedBillingSummaryYear, month AccountGetMonthlyDetailedBillingSummaryMonth, params *GetMonthlyDetailedBillingSummaryParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetMonthlyDetailedBillingSummaryRequest(c.Server, year, month, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetMonthlyBillingSummary Get monthly billing summary
+//
+// Returns a billing summary for the specified month. The API user must have permission to read billing details. This endpoint is deprecated; use the monthly billing summary with resource details instead.
+//
+// Corresponds with GET /1.3/account/billing_summary/{year}-{month} (the `GetMonthlyBillingSummary` operationId).
+func (c *Client) GetMonthlyBillingSummary(ctx context.Context, year AccountGetMonthlyBillingSummaryYear, month AccountGetMonthlyBillingSummaryMonth, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetMonthlyBillingSummaryRequest(c.Server, year, month)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetCurrentNetworkUsage Get current network usage
+//
+// Returns the latest Network Transfer Pool usage report for the account.
+//
+// Corresponds with GET /1.3/account/current_network_usage (the `GetCurrentNetworkUsage` operationId).
+func (c *Client) GetCurrentNetworkUsage(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetCurrentNetworkUsageRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListAccounts List accounts
+//
+// Returns the main account and its subaccounts. Account listing is available only to the main account.
+//
+// Corresponds with GET /1.3/account/list (the `ListAccounts` operationId).
+func (c *Client) ListAccounts(ctx context.Context, params *ListAccountsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListAccountsRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateMSLMASigningLink Create Microsoft LMA signing link
+//
+// Create a new Microsoft LMA signing link.
 //
 // Corresponds with POST /1.3/account/ms_lma (the `CreateMSLMASigningLink` operationId).
 func (c *Client) CreateMSLMASigningLink(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateMSLMASigningLinkRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetAccountNetworkTopUsage Get top network usage
+//
+// Returns the resources with the highest network usage.
+//
+// Corresponds with GET /1.3/account/network_top_usage (the `GetAccountNetworkTopUsage` operationId).
+func (c *Client) GetAccountNetworkTopUsage(ctx context.Context, params *GetAccountNetworkTopUsageParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetAccountNetworkTopUsageRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetAccountNetworkUsage Get network transfer statistics
+//
+// Returns network transfer statistics. JSON responses support a maximum time window of 31 days; CSV responses have no time-window limit. Select the output format with the Accept header using application/json or text/csv.
+//
+// Corresponds with GET /1.3/account/network_usage (the `GetAccountNetworkUsage` operationId).
+func (c *Client) GetAccountNetworkUsage(ctx context.Context, params *GetAccountNetworkUsageParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetAccountNetworkUsageRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetAccountResourceUsage Get resource usage
+//
+// Returns current resource usage counts for the account.
+//
+// Corresponds with GET /1.3/account/resource-usage (the `GetAccountResourceUsage` operationId).
+func (c *Client) GetAccountResourceUsage(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetAccountResourceUsageRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetMonthlyResourceBillingSummary Get monthly resource billing summary
+//
+// Returns a billing summary for one resource during the specified month. The API user must have permission to read billing details.
+//
+// Corresponds with GET /1.3/account/resource_billing_summary/{resource_id}/{year}-{month} (the `GetMonthlyResourceBillingSummary` operationId).
+func (c *Client) GetMonthlyResourceBillingSummary(ctx context.Context, resourceId AccountGetMonthlyResourceBillingSummaryResourceId, year AccountGetMonthlyResourceBillingSummaryYear, month AccountGetMonthlyResourceBillingSummaryMonth, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetMonthlyResourceBillingSummaryRequest(c.Server, resourceId, year, month)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetAccountResourceNetworkUsage Get resource transfer statistics
+//
+// Returns network transfer statistics grouped by resource, service, and zone. JSON responses support a maximum time window of 31 days; CSV responses have no time-window limit. Select the output format with the Accept header using application/json or text/csv.
+//
+// Corresponds with GET /1.3/account/resource_network_usage (the `GetAccountResourceNetworkUsage` operationId).
+func (c *Client) GetAccountResourceNetworkUsage(ctx context.Context, params *GetAccountResourceNetworkUsageParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetAccountResourceNetworkUsageRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateSubaccountWithBody Create subaccount
+//
+// Creates a subaccount for the authenticated main account.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /1.3/account/sub (the `CreateSubaccount` operationId).
+func (c *Client) CreateSubaccountWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateSubaccountRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateSubaccount Create subaccount
+//
+// Creates a subaccount for the authenticated main account.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /1.3/account/sub (the `CreateSubaccount` operationId).
+func (c *Client) CreateSubaccount(ctx context.Context, body CreateSubaccountJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateSubaccountRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteSubaccount Delete subaccount
+//
+// Deletes a subaccount from the authenticated main account.
+//
+// Corresponds with DELETE /1.3/account/sub/{username} (the `DeleteSubaccount` operationId).
+func (c *Client) DeleteSubaccount(ctx context.Context, username DeleteSubaccountUsername, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteSubaccountRequest(c.Server, username)
 	if err != nil {
 		return nil, err
 	}
@@ -84,6 +391,208 @@ func NewAccountDetailsRequest(server string) (*http.Request, error) {
 	return req, nil
 }
 
+// NewGetMonthlyDetailedBillingSummaryRequest constructs an http.Request for the GetMonthlyDetailedBillingSummary method
+func NewGetMonthlyDetailedBillingSummaryRequest(server string, year AccountGetMonthlyDetailedBillingSummaryYear, month AccountGetMonthlyDetailedBillingSummaryMonth, params *GetMonthlyDetailedBillingSummaryParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "year", year, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "month", month, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/account/billing/summary/%s-%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Username != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "username", *params.Username, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.ResourceId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "resource_id", *params.ResourceId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetMonthlyBillingSummaryRequest constructs an http.Request for the GetMonthlyBillingSummary method
+func NewGetMonthlyBillingSummaryRequest(server string, year AccountGetMonthlyBillingSummaryYear, month AccountGetMonthlyBillingSummaryMonth) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "year", year, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "month", month, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/account/billing_summary/%s-%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetCurrentNetworkUsageRequest constructs an http.Request for the GetCurrentNetworkUsage method
+func NewGetCurrentNetworkUsageRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/account/current_network_usage")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewListAccountsRequest constructs an http.Request for the ListAccounts method
+func NewListAccountsRequest(server string, params *ListAccountsParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/account/list")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Label != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "label", *params.Label, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewCreateMSLMASigningLinkRequest constructs an http.Request for the CreateMSLMASigningLink method
 func NewCreateMSLMASigningLinkRequest(server string) (*http.Request, error) {
 	var err error
@@ -111,22 +620,553 @@ func NewCreateMSLMASigningLinkRequest(server string) (*http.Request, error) {
 	return req, nil
 }
 
+// NewGetAccountNetworkTopUsageRequest constructs an http.Request for the GetAccountNetworkTopUsage method
+func NewGetAccountNetworkTopUsageRequest(server string, params *GetAccountNetworkTopUsageParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/account/network_top_usage")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if queryFrag, err := runtime.StyleParamWithOptions("form", true, "from", params.From, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date-time"}); err != nil {
+			return nil, err
+		} else {
+			for _, qp := range strings.Split(queryFrag, "&") {
+				rawQueryFragments = append(rawQueryFragments, qp)
+			}
+		}
+
+		if queryFrag, err := runtime.StyleParamWithOptions("form", true, "to", params.To, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date-time"}); err != nil {
+			return nil, err
+		} else {
+			for _, qp := range strings.Split(queryFrag, "&") {
+				rawQueryFragments = append(rawQueryFragments, qp)
+			}
+		}
+
+		if params.Service != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "service", *params.Service, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Zone != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "zone", *params.Zone, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Accumulate != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "accumulate", *params.Accumulate, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetAccountNetworkUsageRequest constructs an http.Request for the GetAccountNetworkUsage method
+func NewGetAccountNetworkUsageRequest(server string, params *GetAccountNetworkUsageParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/account/network_usage")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if queryFrag, err := runtime.StyleParamWithOptions("form", true, "from", params.From, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date-time"}); err != nil {
+			return nil, err
+		} else {
+			for _, qp := range strings.Split(queryFrag, "&") {
+				rawQueryFragments = append(rawQueryFragments, qp)
+			}
+		}
+
+		if queryFrag, err := runtime.StyleParamWithOptions("form", true, "to", params.To, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date-time"}); err != nil {
+			return nil, err
+		} else {
+			for _, qp := range strings.Split(queryFrag, "&") {
+				rawQueryFragments = append(rawQueryFragments, qp)
+			}
+		}
+
+		if params.Accumulate != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "accumulate", *params.Accumulate, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetAccountResourceUsageRequest constructs an http.Request for the GetAccountResourceUsage method
+func NewGetAccountResourceUsageRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/account/resource-usage")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetMonthlyResourceBillingSummaryRequest constructs an http.Request for the GetMonthlyResourceBillingSummary method
+func NewGetMonthlyResourceBillingSummaryRequest(server string, resourceId AccountGetMonthlyResourceBillingSummaryResourceId, year AccountGetMonthlyResourceBillingSummaryYear, month AccountGetMonthlyResourceBillingSummaryMonth) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "resource_id", resourceId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "year", year, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam2 string
+
+	pathParam2, err = runtime.StyleParamWithOptions("simple", false, "month", month, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/account/resource_billing_summary/%s/%s-%s", pathParam0, pathParam1, pathParam2)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetAccountResourceNetworkUsageRequest constructs an http.Request for the GetAccountResourceNetworkUsage method
+func NewGetAccountResourceNetworkUsageRequest(server string, params *GetAccountResourceNetworkUsageParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/account/resource_network_usage")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if queryFrag, err := runtime.StyleParamWithOptions("form", true, "from", params.From, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date-time"}); err != nil {
+			return nil, err
+		} else {
+			for _, qp := range strings.Split(queryFrag, "&") {
+				rawQueryFragments = append(rawQueryFragments, qp)
+			}
+		}
+
+		if queryFrag, err := runtime.StyleParamWithOptions("form", true, "to", params.To, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date-time"}); err != nil {
+			return nil, err
+		} else {
+			for _, qp := range strings.Split(queryFrag, "&") {
+				rawQueryFragments = append(rawQueryFragments, qp)
+			}
+		}
+
+		if params.Service != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "service", *params.Service, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.ResourceId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "resource_id", *params.ResourceId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Zone != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "zone", *params.Zone, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Accumulate != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "accumulate", *params.Accumulate, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateSubaccountRequest calls the generic CreateSubaccount builder with application/json body
+func NewCreateSubaccountRequest(server string, body CreateSubaccountJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateSubaccountRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCreateSubaccountRequestWithBody constructs an http.Request for the CreateSubaccount method, with any body, and a specified content type
+func NewCreateSubaccountRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/account/sub")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeleteSubaccountRequest constructs an http.Request for the DeleteSubaccount method
+func NewDeleteSubaccountRequest(server string, username DeleteSubaccountUsername) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "username", username, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/account/sub/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type AccountClientWithResponsesInterface interface {
 
-	// AccountDetailsWithResponse Returns account details for the authenticated user
+	// AccountDetailsWithResponse Account details
+	//
+	// Returns account details for the authenticated user.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/account (the `AccountDetails` operationId).
 	AccountDetailsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*AccountDetailsResp, error)
 
-	// CreateMSLMASigningLinkWithResponse Create a new Microsoft LMA signing link
+	// GetMonthlyDetailedBillingSummaryWithResponse Get monthly billing summary with resource details
+	//
+	// Returns a billing summary grouped by resource, including billing detail changes during the specified month. The API user must have permission to read billing details.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/account/billing/summary/{year}-{month} (the `GetMonthlyDetailedBillingSummary` operationId).
+	GetMonthlyDetailedBillingSummaryWithResponse(ctx context.Context, year AccountGetMonthlyDetailedBillingSummaryYear, month AccountGetMonthlyDetailedBillingSummaryMonth, params *GetMonthlyDetailedBillingSummaryParams, reqEditors ...RequestEditorFn) (*GetMonthlyDetailedBillingSummaryResp, error)
+
+	// GetMonthlyBillingSummaryWithResponse Get monthly billing summary
+	//
+	// Returns a billing summary for the specified month. The API user must have permission to read billing details. This endpoint is deprecated; use the monthly billing summary with resource details instead.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/account/billing_summary/{year}-{month} (the `GetMonthlyBillingSummary` operationId).
+	GetMonthlyBillingSummaryWithResponse(ctx context.Context, year AccountGetMonthlyBillingSummaryYear, month AccountGetMonthlyBillingSummaryMonth, reqEditors ...RequestEditorFn) (*GetMonthlyBillingSummaryResp, error)
+
+	// GetCurrentNetworkUsageWithResponse Get current network usage
+	//
+	// Returns the latest Network Transfer Pool usage report for the account.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/account/current_network_usage (the `GetCurrentNetworkUsage` operationId).
+	GetCurrentNetworkUsageWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetCurrentNetworkUsageResp, error)
+
+	// ListAccountsWithResponse List accounts
+	//
+	// Returns the main account and its subaccounts. Account listing is available only to the main account.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/account/list (the `ListAccounts` operationId).
+	ListAccountsWithResponse(ctx context.Context, params *ListAccountsParams, reqEditors ...RequestEditorFn) (*ListAccountsResp, error)
+
+	// CreateMSLMASigningLinkWithResponse Create Microsoft LMA signing link
+	//
+	// Create a new Microsoft LMA signing link.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/account/ms_lma (the `CreateMSLMASigningLink` operationId).
 	CreateMSLMASigningLinkWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*CreateMSLMASigningLinkResp, error)
+
+	// GetAccountNetworkTopUsageWithResponse Get top network usage
+	//
+	// Returns the resources with the highest network usage.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/account/network_top_usage (the `GetAccountNetworkTopUsage` operationId).
+	GetAccountNetworkTopUsageWithResponse(ctx context.Context, params *GetAccountNetworkTopUsageParams, reqEditors ...RequestEditorFn) (*GetAccountNetworkTopUsageResp, error)
+
+	// GetAccountNetworkUsageWithResponse Get network transfer statistics
+	//
+	// Returns network transfer statistics. JSON responses support a maximum time window of 31 days; CSV responses have no time-window limit. Select the output format with the Accept header using application/json or text/csv.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/account/network_usage (the `GetAccountNetworkUsage` operationId).
+	GetAccountNetworkUsageWithResponse(ctx context.Context, params *GetAccountNetworkUsageParams, reqEditors ...RequestEditorFn) (*GetAccountNetworkUsageResp, error)
+
+	// GetAccountResourceUsageWithResponse Get resource usage
+	//
+	// Returns current resource usage counts for the account.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/account/resource-usage (the `GetAccountResourceUsage` operationId).
+	GetAccountResourceUsageWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetAccountResourceUsageResp, error)
+
+	// GetMonthlyResourceBillingSummaryWithResponse Get monthly resource billing summary
+	//
+	// Returns a billing summary for one resource during the specified month. The API user must have permission to read billing details.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/account/resource_billing_summary/{resource_id}/{year}-{month} (the `GetMonthlyResourceBillingSummary` operationId).
+	GetMonthlyResourceBillingSummaryWithResponse(ctx context.Context, resourceId AccountGetMonthlyResourceBillingSummaryResourceId, year AccountGetMonthlyResourceBillingSummaryYear, month AccountGetMonthlyResourceBillingSummaryMonth, reqEditors ...RequestEditorFn) (*GetMonthlyResourceBillingSummaryResp, error)
+
+	// GetAccountResourceNetworkUsageWithResponse Get resource transfer statistics
+	//
+	// Returns network transfer statistics grouped by resource, service, and zone. JSON responses support a maximum time window of 31 days; CSV responses have no time-window limit. Select the output format with the Accept header using application/json or text/csv.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/account/resource_network_usage (the `GetAccountResourceNetworkUsage` operationId).
+	GetAccountResourceNetworkUsageWithResponse(ctx context.Context, params *GetAccountResourceNetworkUsageParams, reqEditors ...RequestEditorFn) (*GetAccountResourceNetworkUsageResp, error)
+
+	// CreateSubaccountWithBodyWithResponse Create subaccount
+	//
+	// Creates a subaccount for the authenticated main account.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/account/sub (the `CreateSubaccount` operationId).
+	CreateSubaccountWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateSubaccountResp, error)
+
+	// CreateSubaccountWithResponse Create subaccount
+	//
+	// Creates a subaccount for the authenticated main account.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/account/sub (the `CreateSubaccount` operationId).
+	CreateSubaccountWithResponse(ctx context.Context, body CreateSubaccountJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateSubaccountResp, error)
+
+	// DeleteSubaccountWithResponse Delete subaccount
+	//
+	// Deletes a subaccount from the authenticated main account.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /1.3/account/sub/{username} (the `DeleteSubaccount` operationId).
+	DeleteSubaccountWithResponse(ctx context.Context, username DeleteSubaccountUsername, reqEditors ...RequestEditorFn) (*DeleteSubaccountResp, error)
 }
 
 type AccountDetailsResp struct {
@@ -171,6 +1211,198 @@ func (r AccountDetailsResp) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r AccountDetailsResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetMonthlyDetailedBillingSummaryResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AccountGetMonthlyDetailedBillingSummary200
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *AccountGetMonthlyDetailedBillingSummaryDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetMonthlyDetailedBillingSummaryResp) GetJSON200() *AccountGetMonthlyDetailedBillingSummary200 {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetMonthlyDetailedBillingSummaryResp) GetApplicationproblemJSONDefault() *AccountGetMonthlyDetailedBillingSummaryDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetMonthlyDetailedBillingSummaryResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetMonthlyDetailedBillingSummaryResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetMonthlyDetailedBillingSummaryResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetMonthlyDetailedBillingSummaryResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetMonthlyBillingSummaryResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AccountGetMonthlyBillingSummary200
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *AccountGetMonthlyBillingSummaryDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetMonthlyBillingSummaryResp) GetJSON200() *AccountGetMonthlyBillingSummary200 {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetMonthlyBillingSummaryResp) GetApplicationproblemJSONDefault() *AccountGetMonthlyBillingSummaryDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetMonthlyBillingSummaryResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetMonthlyBillingSummaryResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetMonthlyBillingSummaryResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetMonthlyBillingSummaryResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetCurrentNetworkUsageResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AccountGetCurrentNetworkUsage200
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *AccountGetCurrentNetworkUsageDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetCurrentNetworkUsageResp) GetJSON200() *AccountGetCurrentNetworkUsage200 {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetCurrentNetworkUsageResp) GetApplicationproblemJSONDefault() *AccountGetCurrentNetworkUsageDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetCurrentNetworkUsageResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetCurrentNetworkUsageResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetCurrentNetworkUsageResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetCurrentNetworkUsageResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListAccountsResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ListAccounts200
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ListAccountsDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListAccountsResp) GetJSON200() *ListAccounts200 {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ListAccountsResp) GetApplicationproblemJSONDefault() *ListAccountsDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r ListAccountsResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListAccountsResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListAccountsResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListAccountsResp) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -225,7 +1457,331 @@ func (r CreateMSLMASigningLinkResp) ContentType() string {
 	return ""
 }
 
-// AccountDetailsWithResponse Returns account details for the authenticated user
+type GetAccountNetworkTopUsageResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *GetAccountNetworkTopUsage200
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *GetAccountNetworkTopUsageDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetAccountNetworkTopUsageResp) GetJSON200() *GetAccountNetworkTopUsage200 {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetAccountNetworkTopUsageResp) GetApplicationproblemJSONDefault() *GetAccountNetworkTopUsageDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetAccountNetworkTopUsageResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetAccountNetworkTopUsageResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetAccountNetworkTopUsageResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetAccountNetworkTopUsageResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetAccountNetworkUsageResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *GetAccountNetworkUsage200
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *GetAccountNetworkUsageDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetAccountNetworkUsageResp) GetJSON200() *GetAccountNetworkUsage200 {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetAccountNetworkUsageResp) GetApplicationproblemJSONDefault() *GetAccountNetworkUsageDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetAccountNetworkUsageResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetAccountNetworkUsageResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetAccountNetworkUsageResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetAccountNetworkUsageResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetAccountResourceUsageResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *GetAccountResourceUsage200
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *GetAccountResourceUsageDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetAccountResourceUsageResp) GetJSON200() *GetAccountResourceUsage200 {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetAccountResourceUsageResp) GetApplicationproblemJSONDefault() *GetAccountResourceUsageDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetAccountResourceUsageResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetAccountResourceUsageResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetAccountResourceUsageResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetAccountResourceUsageResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetMonthlyResourceBillingSummaryResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AccountGetMonthlyResourceBillingSummary200
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *AccountGetMonthlyResourceBillingSummaryDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetMonthlyResourceBillingSummaryResp) GetJSON200() *AccountGetMonthlyResourceBillingSummary200 {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetMonthlyResourceBillingSummaryResp) GetApplicationproblemJSONDefault() *AccountGetMonthlyResourceBillingSummaryDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetMonthlyResourceBillingSummaryResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetMonthlyResourceBillingSummaryResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetMonthlyResourceBillingSummaryResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetMonthlyResourceBillingSummaryResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetAccountResourceNetworkUsageResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *GetAccountResourceNetworkUsage200
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *GetAccountResourceNetworkUsageDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetAccountResourceNetworkUsageResp) GetJSON200() *GetAccountResourceNetworkUsage200 {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetAccountResourceNetworkUsageResp) GetApplicationproblemJSONDefault() *GetAccountResourceNetworkUsageDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetAccountResourceNetworkUsageResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetAccountResourceNetworkUsageResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetAccountResourceNetworkUsageResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetAccountResourceNetworkUsageResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateSubaccountResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *CreateSubaccountDefault
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r CreateSubaccountResp) GetApplicationproblemJSONDefault() *CreateSubaccountDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateSubaccountResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateSubaccountResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateSubaccountResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateSubaccountResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteSubaccountResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *DeleteSubaccountDefault
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r DeleteSubaccountResp) GetApplicationproblemJSONDefault() *DeleteSubaccountDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteSubaccountResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteSubaccountResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteSubaccountResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteSubaccountResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+// AccountDetailsWithResponse Account details
+//
+// Returns account details for the authenticated user.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -238,7 +1794,69 @@ func (c *ClientWithResponses) AccountDetailsWithResponse(ctx context.Context, re
 	return ParseAccountDetailsResp(rsp)
 }
 
-// CreateMSLMASigningLinkWithResponse Create a new Microsoft LMA signing link
+// GetMonthlyDetailedBillingSummaryWithResponse Get monthly billing summary with resource details
+//
+// Returns a billing summary grouped by resource, including billing detail changes during the specified month. The API user must have permission to read billing details.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/account/billing/summary/{year}-{month} (the `GetMonthlyDetailedBillingSummary` operationId).
+func (c *ClientWithResponses) GetMonthlyDetailedBillingSummaryWithResponse(ctx context.Context, year AccountGetMonthlyDetailedBillingSummaryYear, month AccountGetMonthlyDetailedBillingSummaryMonth, params *GetMonthlyDetailedBillingSummaryParams, reqEditors ...RequestEditorFn) (*GetMonthlyDetailedBillingSummaryResp, error) {
+	rsp, err := c.GetMonthlyDetailedBillingSummary(ctx, year, month, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetMonthlyDetailedBillingSummaryResp(rsp)
+}
+
+// GetMonthlyBillingSummaryWithResponse Get monthly billing summary
+//
+// Returns a billing summary for the specified month. The API user must have permission to read billing details. This endpoint is deprecated; use the monthly billing summary with resource details instead.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/account/billing_summary/{year}-{month} (the `GetMonthlyBillingSummary` operationId).
+func (c *ClientWithResponses) GetMonthlyBillingSummaryWithResponse(ctx context.Context, year AccountGetMonthlyBillingSummaryYear, month AccountGetMonthlyBillingSummaryMonth, reqEditors ...RequestEditorFn) (*GetMonthlyBillingSummaryResp, error) {
+	rsp, err := c.GetMonthlyBillingSummary(ctx, year, month, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetMonthlyBillingSummaryResp(rsp)
+}
+
+// GetCurrentNetworkUsageWithResponse Get current network usage
+//
+// Returns the latest Network Transfer Pool usage report for the account.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/account/current_network_usage (the `GetCurrentNetworkUsage` operationId).
+func (c *ClientWithResponses) GetCurrentNetworkUsageWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetCurrentNetworkUsageResp, error) {
+	rsp, err := c.GetCurrentNetworkUsage(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetCurrentNetworkUsageResp(rsp)
+}
+
+// ListAccountsWithResponse List accounts
+//
+// Returns the main account and its subaccounts. Account listing is available only to the main account.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/account/list (the `ListAccounts` operationId).
+func (c *ClientWithResponses) ListAccountsWithResponse(ctx context.Context, params *ListAccountsParams, reqEditors ...RequestEditorFn) (*ListAccountsResp, error) {
+	rsp, err := c.ListAccounts(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListAccountsResp(rsp)
+}
+
+// CreateMSLMASigningLinkWithResponse Create Microsoft LMA signing link
+//
+// Create a new Microsoft LMA signing link.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -249,6 +1867,126 @@ func (c *ClientWithResponses) CreateMSLMASigningLinkWithResponse(ctx context.Con
 		return nil, err
 	}
 	return ParseCreateMSLMASigningLinkResp(rsp)
+}
+
+// GetAccountNetworkTopUsageWithResponse Get top network usage
+//
+// Returns the resources with the highest network usage.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/account/network_top_usage (the `GetAccountNetworkTopUsage` operationId).
+func (c *ClientWithResponses) GetAccountNetworkTopUsageWithResponse(ctx context.Context, params *GetAccountNetworkTopUsageParams, reqEditors ...RequestEditorFn) (*GetAccountNetworkTopUsageResp, error) {
+	rsp, err := c.GetAccountNetworkTopUsage(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetAccountNetworkTopUsageResp(rsp)
+}
+
+// GetAccountNetworkUsageWithResponse Get network transfer statistics
+//
+// Returns network transfer statistics. JSON responses support a maximum time window of 31 days; CSV responses have no time-window limit. Select the output format with the Accept header using application/json or text/csv.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/account/network_usage (the `GetAccountNetworkUsage` operationId).
+func (c *ClientWithResponses) GetAccountNetworkUsageWithResponse(ctx context.Context, params *GetAccountNetworkUsageParams, reqEditors ...RequestEditorFn) (*GetAccountNetworkUsageResp, error) {
+	rsp, err := c.GetAccountNetworkUsage(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetAccountNetworkUsageResp(rsp)
+}
+
+// GetAccountResourceUsageWithResponse Get resource usage
+//
+// Returns current resource usage counts for the account.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/account/resource-usage (the `GetAccountResourceUsage` operationId).
+func (c *ClientWithResponses) GetAccountResourceUsageWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetAccountResourceUsageResp, error) {
+	rsp, err := c.GetAccountResourceUsage(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetAccountResourceUsageResp(rsp)
+}
+
+// GetMonthlyResourceBillingSummaryWithResponse Get monthly resource billing summary
+//
+// Returns a billing summary for one resource during the specified month. The API user must have permission to read billing details.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/account/resource_billing_summary/{resource_id}/{year}-{month} (the `GetMonthlyResourceBillingSummary` operationId).
+func (c *ClientWithResponses) GetMonthlyResourceBillingSummaryWithResponse(ctx context.Context, resourceId AccountGetMonthlyResourceBillingSummaryResourceId, year AccountGetMonthlyResourceBillingSummaryYear, month AccountGetMonthlyResourceBillingSummaryMonth, reqEditors ...RequestEditorFn) (*GetMonthlyResourceBillingSummaryResp, error) {
+	rsp, err := c.GetMonthlyResourceBillingSummary(ctx, resourceId, year, month, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetMonthlyResourceBillingSummaryResp(rsp)
+}
+
+// GetAccountResourceNetworkUsageWithResponse Get resource transfer statistics
+//
+// Returns network transfer statistics grouped by resource, service, and zone. JSON responses support a maximum time window of 31 days; CSV responses have no time-window limit. Select the output format with the Accept header using application/json or text/csv.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/account/resource_network_usage (the `GetAccountResourceNetworkUsage` operationId).
+func (c *ClientWithResponses) GetAccountResourceNetworkUsageWithResponse(ctx context.Context, params *GetAccountResourceNetworkUsageParams, reqEditors ...RequestEditorFn) (*GetAccountResourceNetworkUsageResp, error) {
+	rsp, err := c.GetAccountResourceNetworkUsage(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetAccountResourceNetworkUsageResp(rsp)
+}
+
+// CreateSubaccountWithBodyWithResponse Create subaccount
+//
+// Creates a subaccount for the authenticated main account.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/account/sub (the `CreateSubaccount` operationId).
+func (c *ClientWithResponses) CreateSubaccountWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateSubaccountResp, error) {
+	rsp, err := c.CreateSubaccountWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateSubaccountResp(rsp)
+}
+
+// CreateSubaccountWithResponse Create subaccount
+//
+// Creates a subaccount for the authenticated main account.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/account/sub (the `CreateSubaccount` operationId).
+func (c *ClientWithResponses) CreateSubaccountWithResponse(ctx context.Context, body CreateSubaccountJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateSubaccountResp, error) {
+	rsp, err := c.CreateSubaccount(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateSubaccountResp(rsp)
+}
+
+// DeleteSubaccountWithResponse Delete subaccount
+//
+// Deletes a subaccount from the authenticated main account.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /1.3/account/sub/{username} (the `DeleteSubaccount` operationId).
+func (c *ClientWithResponses) DeleteSubaccountWithResponse(ctx context.Context, username DeleteSubaccountUsername, reqEditors ...RequestEditorFn) (*DeleteSubaccountResp, error) {
+	rsp, err := c.DeleteSubaccount(ctx, username, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteSubaccountResp(rsp)
 }
 
 // ParseAccountDetailsResp parses an HTTP response from a AccountDetailsWithResponse call
@@ -284,6 +2022,138 @@ func ParseAccountDetailsResp(rsp *http.Response) (*AccountDetailsResp, error) {
 	return response, nil
 }
 
+// ParseGetMonthlyDetailedBillingSummaryResp parses an HTTP response from a GetMonthlyDetailedBillingSummaryWithResponse call
+func ParseGetMonthlyDetailedBillingSummaryResp(rsp *http.Response) (*GetMonthlyDetailedBillingSummaryResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetMonthlyDetailedBillingSummaryResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AccountGetMonthlyDetailedBillingSummary200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest AccountGetMonthlyDetailedBillingSummaryDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetMonthlyBillingSummaryResp parses an HTTP response from a GetMonthlyBillingSummaryWithResponse call
+func ParseGetMonthlyBillingSummaryResp(rsp *http.Response) (*GetMonthlyBillingSummaryResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetMonthlyBillingSummaryResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AccountGetMonthlyBillingSummary200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest AccountGetMonthlyBillingSummaryDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetCurrentNetworkUsageResp parses an HTTP response from a GetCurrentNetworkUsageWithResponse call
+func ParseGetCurrentNetworkUsageResp(rsp *http.Response) (*GetCurrentNetworkUsageResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetCurrentNetworkUsageResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AccountGetCurrentNetworkUsage200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest AccountGetCurrentNetworkUsageDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListAccountsResp parses an HTTP response from a ListAccountsWithResponse call
+func ParseListAccountsResp(rsp *http.Response) (*ListAccountsResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListAccountsResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ListAccounts200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ListAccountsDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseCreateMSLMASigningLinkResp parses an HTTP response from a CreateMSLMASigningLinkWithResponse call
 func ParseCreateMSLMASigningLinkResp(rsp *http.Response) (*CreateMSLMASigningLinkResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -307,6 +2177,229 @@ func ParseCreateMSLMASigningLinkResp(rsp *http.Response) (*CreateMSLMASigningLin
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest AccountCreateMSLMASigningLinkDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetAccountNetworkTopUsageResp parses an HTTP response from a GetAccountNetworkTopUsageWithResponse call
+func ParseGetAccountNetworkTopUsageResp(rsp *http.Response) (*GetAccountNetworkTopUsageResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetAccountNetworkTopUsageResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest GetAccountNetworkTopUsage200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest GetAccountNetworkTopUsageDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetAccountNetworkUsageResp parses an HTTP response from a GetAccountNetworkUsageWithResponse call
+func ParseGetAccountNetworkUsageResp(rsp *http.Response) (*GetAccountNetworkUsageResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetAccountNetworkUsageResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest GetAccountNetworkUsage200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest GetAccountNetworkUsageDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetAccountResourceUsageResp parses an HTTP response from a GetAccountResourceUsageWithResponse call
+func ParseGetAccountResourceUsageResp(rsp *http.Response) (*GetAccountResourceUsageResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetAccountResourceUsageResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest GetAccountResourceUsage200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest GetAccountResourceUsageDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetMonthlyResourceBillingSummaryResp parses an HTTP response from a GetMonthlyResourceBillingSummaryWithResponse call
+func ParseGetMonthlyResourceBillingSummaryResp(rsp *http.Response) (*GetMonthlyResourceBillingSummaryResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetMonthlyResourceBillingSummaryResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AccountGetMonthlyResourceBillingSummary200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest AccountGetMonthlyResourceBillingSummaryDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetAccountResourceNetworkUsageResp parses an HTTP response from a GetAccountResourceNetworkUsageWithResponse call
+func ParseGetAccountResourceNetworkUsageResp(rsp *http.Response) (*GetAccountResourceNetworkUsageResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetAccountResourceNetworkUsageResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest GetAccountResourceNetworkUsage200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest GetAccountResourceNetworkUsageDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateSubaccountResp parses an HTTP response from a CreateSubaccountWithResponse call
+func ParseCreateSubaccountResp(rsp *http.Response) (*CreateSubaccountResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateSubaccountResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest CreateSubaccountDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteSubaccountResp parses an HTTP response from a DeleteSubaccountWithResponse call
+func ParseDeleteSubaccountResp(rsp *http.Response) (*DeleteSubaccountResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteSubaccountResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest DeleteSubaccountDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}

@@ -219,6 +219,87 @@ func (e DatabasePlanComponentsResponseComputeFamily) Valid() bool {
 	}
 }
 
+// Defines values for DatabasePlansResponseServiceTypesBackupTiers.
+const (
+	DatabasePlansResponseServiceTypesBackupTiersExtended DatabasePlansResponseServiceTypesBackupTiers = "extended"
+	DatabasePlansResponseServiceTypesBackupTiersMini     DatabasePlansResponseServiceTypesBackupTiers = "mini"
+	DatabasePlansResponseServiceTypesBackupTiersRegular  DatabasePlansResponseServiceTypesBackupTiers = "regular"
+)
+
+// Valid indicates whether the value is a known member of the DatabasePlansResponseServiceTypesBackupTiers enum.
+func (e DatabasePlansResponseServiceTypesBackupTiers) Valid() bool {
+	switch e {
+	case DatabasePlansResponseServiceTypesBackupTiersExtended:
+		return true
+	case DatabasePlansResponseServiceTypesBackupTiersMini:
+		return true
+	case DatabasePlansResponseServiceTypesBackupTiersRegular:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DatabasePlansResponseServiceTypesComputeShapesBackups.
+const (
+	DatabasePlansResponseServiceTypesComputeShapesBackupsExtended DatabasePlansResponseServiceTypesComputeShapesBackups = "extended"
+	DatabasePlansResponseServiceTypesComputeShapesBackupsMini     DatabasePlansResponseServiceTypesComputeShapesBackups = "mini"
+	DatabasePlansResponseServiceTypesComputeShapesBackupsRegular  DatabasePlansResponseServiceTypesComputeShapesBackups = "regular"
+)
+
+// Valid indicates whether the value is a known member of the DatabasePlansResponseServiceTypesComputeShapesBackups enum.
+func (e DatabasePlansResponseServiceTypesComputeShapesBackups) Valid() bool {
+	switch e {
+	case DatabasePlansResponseServiceTypesComputeShapesBackupsExtended:
+		return true
+	case DatabasePlansResponseServiceTypesComputeShapesBackupsMini:
+		return true
+	case DatabasePlansResponseServiceTypesComputeShapesBackupsRegular:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DatabasePlansResponseServiceTypesComputeShapesFamily.
+const (
+	DatabasePlansResponseServiceTypesComputeShapesFamilyDevelopment DatabasePlansResponseServiceTypesComputeShapesFamily = "development"
+	DatabasePlansResponseServiceTypesComputeShapesFamilyMemory      DatabasePlansResponseServiceTypesComputeShapesFamily = "memory"
+	DatabasePlansResponseServiceTypesComputeShapesFamilyStandard    DatabasePlansResponseServiceTypesComputeShapesFamily = "standard"
+)
+
+// Valid indicates whether the value is a known member of the DatabasePlansResponseServiceTypesComputeShapesFamily enum.
+func (e DatabasePlansResponseServiceTypesComputeShapesFamily) Valid() bool {
+	switch e {
+	case DatabasePlansResponseServiceTypesComputeShapesFamilyDevelopment:
+		return true
+	case DatabasePlansResponseServiceTypesComputeShapesFamilyMemory:
+		return true
+	case DatabasePlansResponseServiceTypesComputeShapesFamilyStandard:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DatabasePlansResponseServiceTypesType.
+const (
+	DatabasePlansResponseServiceTypesTypeMysql DatabasePlansResponseServiceTypesType = "mysql"
+	DatabasePlansResponseServiceTypesTypePg    DatabasePlansResponseServiceTypesType = "pg"
+)
+
+// Valid indicates whether the value is a known member of the DatabasePlansResponseServiceTypesType enum.
+func (e DatabasePlansResponseServiceTypesType) Valid() bool {
+	switch e {
+	case DatabasePlansResponseServiceTypesTypeMysql:
+		return true
+	case DatabasePlansResponseServiceTypesTypePg:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for DatabaseQueryParamSort.
 const (
 	DatabaseQueryParamSortCreatedAt             DatabaseQueryParamSort = "created_at"
@@ -1960,23 +2041,27 @@ type DatabaseMaintenancePendingUpdatesResponse struct {
 	StartAt *time.Time `json:"start_at,omitempty"`
 }
 
-// DatabaseMaintenanceTime Time of day for maintenance window in HH:MM format
+// DatabaseMaintenanceTime Time of day for maintenance window in HH:MM:SS format
 //
-// Examples: 02:00, 14:30, 23:45
+// Examples: 02:00:00, 14:30:00, 23:45:00
 type DatabaseMaintenanceTime = string
 
 // DatabaseMaintenanceWindowResponse Schema for a maintenance window response.
 //
-// Examples: {"dow":"Monday","pending_updates":[{"deadline":"2022-01-21T12:21:00Z","description":"description related to the update","start_after":"2022-01-21T12:21:00Z","start_at":"2022-10-21T12:21:00Z"}],"time":"2023-05-07T15:55:24.655776Z"}
+// Examples: {"dow":"Monday","pending_updates":[{"deadline":"2022-01-21T12:21:00Z","description":"description related to the update","start_after":"2022-01-21T12:21:00Z","start_at":"2022-10-21T12:21:00Z"}],"time":"02:00:00"}
 type DatabaseMaintenanceWindowResponse struct {
 	// Dow Day of the week when maintenance occurs (e.g., Monday, Tuesday).
+	//
+	// Examples: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
 	Dow *string `json:"dow,omitempty"`
 
 	// PendingUpdates List of updates pending during this maintenance window.
 	PendingUpdates *[]DatabaseMaintenancePendingUpdatesResponse `json:"pending_updates,omitempty"`
 
-	// Time Time of day when maintenance should start (e.g., HH:MM format).
-	Time *time.Time `json:"time,omitempty"`
+	// Time Time of day when maintenance should start (e.g., HH:MM:SS format).
+	//
+	// Examples: 02:00:00, 14:30:00, 23:59:00
+	Time *string `json:"time,omitempty"`
 }
 
 // DatabaseMetricsColumnHeaderResponse Schema for a metrics column header response.
@@ -2410,6 +2495,119 @@ type DatabasePlanComponentsResponseBackupsName string
 
 // DatabasePlanComponentsResponseComputeFamily Compute family for tiered plans. Omitted for classic plans.
 type DatabasePlanComponentsResponseComputeFamily string
+
+// DatabasePlansResponse Lists available componentised database plans.
+//
+// Examples: {"service_types":[{"backup_tiers":["regular","extended"],"componentised":true,"compute_shapes":[{"backups":["regular"],"compute":"rdb.standard.2CPU-8GB","cpu":2,"dynamic_storage_supported":true,"family":"standard","memory_gb":8,"node_counts":[1,2,3],"storage":{"dynamic_max_multiplier":4,"options":[{"base_gib":80,"max_gib":400}],"step_gib":10,"total_cap_gib":10240}}],"latest_version":"18.6","node_counts":[1,2,3],"type":"pg","zones":["fi-hel1","de-fra1"]}]}
+type DatabasePlansResponse struct {
+	// ServiceTypes Available service types that offer componentised plans.
+	ServiceTypes []struct {
+		// BackupTiers Backup tiers offered across this service type's plans. Omitted when the service type exposes no named backup tiers.
+		BackupTiers *[]DatabasePlansResponseServiceTypesBackupTiers `json:"backup_tiers,omitempty"`
+
+		// Componentised Always true for entries in this response; kept as an explicit indicator of componentised plans.
+		//
+		// Examples: true
+		Componentised bool `json:"componentised"`
+
+		// ComputeShapes Distinct compute shapes offered for this service type.
+		ComputeShapes []struct {
+			// Backups Backup tiers available for this compute shape. Omitted when the shape exposes no named backup tiers.
+			Backups *[]DatabasePlansResponseServiceTypesComputeShapesBackups `json:"backups,omitempty"`
+
+			// Compute Compute shape name, usable as plan_compute in requests.
+			//
+			// Examples: rdb.standard.2CPU-8GB
+			Compute string `json:"compute"`
+
+			// Cpu CPU cores per node.
+			//
+			// Examples: 2
+			Cpu int32 `json:"cpu"`
+
+			// DynamicStorageSupported Whether the storage total can be scaled beyond the base storage via dynamic storage.
+			//
+			// Examples: true
+			DynamicStorageSupported bool `json:"dynamic_storage_supported"`
+
+			// Family Compute family.
+			//
+			// Examples: standard
+			Family DatabasePlansResponseServiceTypesComputeShapesFamily `json:"family"`
+
+			// MemoryGb Memory per node in GB.
+			//
+			// Examples: 8
+			MemoryGb int32 `json:"memory_gb"`
+
+			// NodeCounts Node counts available for this compute shape.
+			NodeCounts []int32 `json:"node_counts"`
+
+			// Storage Storage choices for this compute shape: the distinct base sizes with the total each scales to, plus the shared dynamic-storage rules. Null for shapes without customer storage.
+			Storage *struct {
+				// DynamicMaxMultiplier Maximum multiplier applied to a base size when scaling storage dynamically.
+				//
+				// Examples: 4
+				DynamicMaxMultiplier int32 `json:"dynamic_max_multiplier"`
+
+				// Options Base-storage options offered for this compute shape.
+				Options []struct {
+					// BaseGib Base storage size, in GiB.
+					//
+					// Examples: 80
+					BaseGib int32 `json:"base_gib"`
+
+					// MaxGib Largest total storage reachable from this base via dynamic storage (base plus multiplier times base), capped at total_cap_gib where it applies.
+					//
+					// Examples: 400
+					MaxGib int32 `json:"max_gib"`
+				} `json:"options"`
+
+				// StepGib Granularity, in GiB, at which dynamic storage can be adjusted.
+				//
+				// Examples: 10
+				StepGib int32 `json:"step_gib"`
+
+				// TotalCapGib Hard ceiling on base plus dynamic storage, in GiB, or null when the engine enforces no fixed total cap.
+				//
+				// Examples: 10240
+				TotalCapGib *int32 `json:"total_cap_gib"`
+			} `json:"storage,omitempty"`
+		} `json:"compute_shapes"`
+
+		// LatestVersion Latest available major version for this service type. Omitted when not applicable.
+		//
+		// Examples: 18.6, 8.4.8
+		LatestVersion *string `json:"latest_version,omitempty"`
+
+		// NodeCounts Distinct node counts offered across this service type's plans.
+		NodeCounts []int32 `json:"node_counts"`
+
+		// Type Service type identifier.
+		//
+		// Examples: pg, mysql
+		Type DatabasePlansResponseServiceTypesType `json:"type"`
+
+		// Zones Zones where this service type is available.
+		Zones []string `json:"zones"`
+	} `json:"service_types"`
+}
+
+// DatabasePlansResponseServiceTypesBackupTiers Examples: regular
+type DatabasePlansResponseServiceTypesBackupTiers string
+
+// DatabasePlansResponseServiceTypesComputeShapesBackups Examples: regular
+type DatabasePlansResponseServiceTypesComputeShapesBackups string
+
+// DatabasePlansResponseServiceTypesComputeShapesFamily Compute family.
+//
+// Examples: standard
+type DatabasePlansResponseServiceTypesComputeShapesFamily string
+
+// DatabasePlansResponseServiceTypesType Service type identifier.
+//
+// Examples: pg, mysql
+type DatabasePlansResponseServiceTypesType string
 
 // DatabaseProjectAlertResponse Schema for a project alert response
 //
@@ -2858,9 +3056,9 @@ type DatabaseServiceCloneMysql struct {
 		// Examples: sunday, monday, tuesday, wednesday, thursday, friday, saturday
 		Dow DatabaseMaintenanceDow `json:"dow"`
 
-		// Time Time of day for maintenance window in HH:MM format
+		// Time Time of day for maintenance window in HH:MM:SS format
 		//
-		// Examples: 02:00, 14:30, 23:45
+		// Examples: 02:00:00, 14:30:00, 23:45:00
 		Time DatabaseMaintenanceTime `json:"time"`
 	} `json:"maintenance,omitempty"`
 
@@ -2995,9 +3193,9 @@ type DatabaseServiceCloneOpensearch struct {
 		// Examples: sunday, monday, tuesday, wednesday, thursday, friday, saturday
 		Dow DatabaseMaintenanceDow `json:"dow"`
 
-		// Time Time of day for maintenance window in HH:MM format
+		// Time Time of day for maintenance window in HH:MM:SS format
 		//
-		// Examples: 02:00, 14:30, 23:45
+		// Examples: 02:00:00, 14:30:00, 23:45:00
 		Time DatabaseMaintenanceTime `json:"time"`
 	} `json:"maintenance,omitempty"`
 
@@ -3091,9 +3289,9 @@ type DatabaseServiceClonePg struct {
 		// Examples: sunday, monday, tuesday, wednesday, thursday, friday, saturday
 		Dow DatabaseMaintenanceDow `json:"dow"`
 
-		// Time Time of day for maintenance window in HH:MM format
+		// Time Time of day for maintenance window in HH:MM:SS format
 		//
-		// Examples: 02:00, 14:30, 23:45
+		// Examples: 02:00:00, 14:30:00, 23:45:00
 		Time DatabaseMaintenanceTime `json:"time"`
 	} `json:"maintenance,omitempty"`
 	Networks *[]DatabaseNetworkCreate `json:"networks,omitempty"`
@@ -3180,9 +3378,9 @@ type DatabaseServiceCloneRedis struct {
 		// Examples: sunday, monday, tuesday, wednesday, thursday, friday, saturday
 		Dow DatabaseMaintenanceDow `json:"dow"`
 
-		// Time Time of day for maintenance window in HH:MM format
+		// Time Time of day for maintenance window in HH:MM:SS format
 		//
-		// Examples: 02:00, 14:30, 23:45
+		// Examples: 02:00:00, 14:30:00, 23:45:00
 		Time DatabaseMaintenanceTime `json:"time"`
 	} `json:"maintenance,omitempty"`
 	Networks *[]DatabaseNetworkCreate `json:"networks,omitempty"`
@@ -3268,9 +3466,9 @@ type DatabaseServiceCloneValkey struct {
 		// Examples: sunday, monday, tuesday, wednesday, thursday, friday, saturday
 		Dow DatabaseMaintenanceDow `json:"dow"`
 
-		// Time Time of day for maintenance window in HH:MM format
+		// Time Time of day for maintenance window in HH:MM:SS format
 		//
-		// Examples: 02:00, 14:30, 23:45
+		// Examples: 02:00:00, 14:30:00, 23:45:00
 		Time DatabaseMaintenanceTime `json:"time"`
 	} `json:"maintenance,omitempty"`
 	Networks *[]DatabaseNetworkCreate `json:"networks,omitempty"`
@@ -3362,6 +3560,32 @@ type DatabaseServiceCreateOpenAPI struct {
 	// Deprecated: this property has been marked as deprecated upstream, but no `x-deprecated-reason` was set
 	AdditionalDiskSpaceGib *int `json:"additional_disk_space_gib,omitempty"`
 
+	// HostnamePrefix Hostname prefix for the service nodes.
+	//
+	// Examples: doc-api-unique-prefix
+	HostnamePrefix string `json:"hostname_prefix"`
+
+	// Labels Labels used for service filtering.
+	Labels *[]DatabaseLabelCreate `json:"labels,omitempty"`
+
+	// Maintenance Weekly maintenance window.
+	//
+	// Examples: {"dow":"sunday","time":"05:00:00"}
+	Maintenance *struct {
+		// Dow Day of the week for maintenance window
+		//
+		// Examples: sunday, monday, tuesday, wednesday, thursday, friday, saturday
+		Dow DatabaseMaintenanceDow `json:"dow"`
+
+		// Time Time of day for maintenance window in HH:MM:SS format
+		//
+		// Examples: 02:00:00, 14:30:00, 23:45:00
+		Time DatabaseMaintenanceTime `json:"time"`
+	} `json:"maintenance,omitempty"`
+
+	// Networks SDN networks to attach to the service.
+	Networks *[]DatabaseNetworkCreate `json:"networks,omitempty"`
+
 	// Plan Deprecated: prefer the plan_* selection fields (plan_compute, plan_node_count, plan_storage_gib, plan_backups) for PostgreSQL and MySQL. The plan name remains supported, and required for engines without componentised plans. For componentised (rdb.*) plans the storage segment is the desired TOTAL storage per node: any total reachable from a catalog plan's included storage in the plan's storage steps (within its cap) is a valid plan name, e.g. rdb.standard.2x-2CPU-8GB-120GB-regular selects the 80GB catalog plan with a 40GB dynamic top-up.
 	//
 	// Examples: 1x1xCPU-2GB-25GB, rdb.standard.2x-2CPU-8GB-120GB-regular
@@ -3387,13 +3611,48 @@ type DatabaseServiceCreateOpenAPI struct {
 	//
 	// Examples: 120
 	PlanStorageGib *int `json:"plan_storage_gib,omitempty"`
-	union          json.RawMessage
+
+	// Properties Engine-specific configuration properties. The allowed keys depend on the selected service type; provide the property set matching the chosen type.
+	Properties *DatabaseServiceCreateOpenAPI_Properties `json:"properties,omitempty"`
+
+	// ServiceIntegrations Service integrations to configure on creation.
+	ServiceIntegrations *[]DatabaseServiceIntegrationCreate `json:"service_integrations,omitempty"`
+
+	// SetServiceUuid Optional UUID to assign to the created service.
+	//
+	// Examples: 550e8400-e29b-41d4-a716-446655440000
+	SetServiceUuid *openapi_types.UUID `json:"set_service_uuid,omitempty"`
+
+	// TerminationProtection When enabled, the service cannot be deleted until termination protection is disabled.
+	//
+	// Examples: false
+	TerminationProtection *bool `json:"termination_protection,omitempty"`
+
+	// Title Human-readable title for the service.
+	//
+	// Examples: my-managed-database
+	Title string `json:"title"`
+
+	// Type The type of service.
+	//
+	// Examples: mysql, pg, opensearch, valkey
+	Type DatabaseServiceType `json:"type"`
+
+	// Zone Zone where the service is created.
+	//
+	// Examples: de-fra1
+	Zone string `json:"zone"`
 }
 
 // DatabaseServiceCreateOpenAPIPlanBackups Plan selection: backup tier. PostgreSQL and MySQL tiered plans only.
 //
 // Examples: regular
 type DatabaseServiceCreateOpenAPIPlanBackups string
+
+// DatabaseServiceCreateOpenAPI_Properties Engine-specific configuration properties. The allowed keys depend on the selected service type; provide the property set matching the chosen type.
+type DatabaseServiceCreateOpenAPI_Properties struct {
+	union json.RawMessage
+}
 
 // DatabaseServiceInformationListResponse Schema for a list of service information
 //
@@ -3444,7 +3703,7 @@ type DatabaseServiceInformationResponse struct {
 
 	// Maintenance Schema for a maintenance window response.
 	//
-	// Examples: {"dow":"Monday","pending_updates":[{"deadline":"2022-01-21T12:21:00Z","description":"description related to the update","start_after":"2022-01-21T12:21:00Z","start_at":"2022-10-21T12:21:00Z"}],"time":"2023-05-07T15:55:24.655776Z"}
+	// Examples: {"dow":"Monday","pending_updates":[{"deadline":"2022-01-21T12:21:00Z","description":"description related to the update","start_after":"2022-01-21T12:21:00Z","start_at":"2022-10-21T12:21:00Z"}],"time":"02:00:00"}
 	Maintenance *DatabaseMaintenanceWindowResponse `json:"maintenance,omitempty"`
 
 	// Metadata A map of metadata key-value pairs for the service.
@@ -3652,6 +3911,27 @@ type DatabaseServiceModifyOpenAPI struct {
 	// Deprecated: this property has been marked as deprecated upstream, but no `x-deprecated-reason` was set
 	AdditionalDiskSpaceGib *int `json:"additional_disk_space_gib,omitempty"`
 
+	// Labels Labels used for service filtering.
+	Labels *[]DatabaseLabelCreate `json:"labels,omitempty"`
+
+	// Maintenance Weekly maintenance window.
+	//
+	// Examples: {"dow":"sunday","time":"12:00:00"}
+	Maintenance *struct {
+		// Dow Day of the week for maintenance window
+		//
+		// Examples: sunday, monday, tuesday, wednesday, thursday, friday, saturday
+		Dow DatabaseMaintenanceDow `json:"dow"`
+
+		// Time Time of day for maintenance window in HH:MM:SS format
+		//
+		// Examples: 02:00:00, 14:30:00, 23:45:00
+		Time DatabaseMaintenanceTime `json:"time"`
+	} `json:"maintenance,omitempty"`
+
+	// Networks SDN networks attached to the service.
+	Networks *[]DatabaseNetworkCreate `json:"networks,omitempty"`
+
 	// Plan Deprecated: prefer the plan_* selection fields (plan_compute, plan_node_count, plan_storage_gib, plan_backups) for PostgreSQL and MySQL. The plan name remains supported, and required for engines without componentised plans. For componentised (rdb.*) plans the storage segment is the desired TOTAL storage per node: any total reachable from a catalog plan's included storage in the plan's storage steps (within its cap) is a valid plan name, e.g. rdb.standard.2x-2CPU-8GB-120GB-regular selects the 80GB catalog plan with a 40GB dynamic top-up.
 	//
 	// Examples: 1x1xCPU-2GB-25GB, rdb.standard.2x-2CPU-8GB-120GB-regular
@@ -3677,13 +3957,45 @@ type DatabaseServiceModifyOpenAPI struct {
 	//
 	// Examples: 120
 	PlanStorageGib *int `json:"plan_storage_gib,omitempty"`
-	union          json.RawMessage
+
+	// Powered Desired power state of the service.
+	//
+	// Examples: true
+	Powered *bool `json:"powered,omitempty"`
+
+	// Properties Engine-specific configuration properties. The allowed keys depend on the service type; provide the property set matching the service's type.
+	Properties *DatabaseServiceModifyOpenAPI_Properties `json:"properties,omitempty"`
+
+	// TerminationProtection When enabled, the service cannot be deleted until termination protection is disabled.
+	//
+	// Examples: false
+	TerminationProtection *bool `json:"termination_protection,omitempty"`
+
+	// Title Human-readable title for the service.
+	//
+	// Examples: my-managed-database
+	Title *string `json:"title,omitempty"`
+
+	// Type The type of service.
+	//
+	// Examples: mysql, pg, opensearch, valkey
+	Type *DatabaseServiceType `json:"type,omitempty"`
+
+	// Zone Zone to migrate the service to.
+	//
+	// Examples: de-fra1
+	Zone *string `json:"zone,omitempty"`
 }
 
 // DatabaseServiceModifyOpenAPIPlanBackups Plan selection: backup tier. PostgreSQL and MySQL tiered plans only.
 //
 // Examples: regular
 type DatabaseServiceModifyOpenAPIPlanBackups string
+
+// DatabaseServiceModifyOpenAPI_Properties Engine-specific configuration properties. The allowed keys depend on the service type; provide the property set matching the service's type.
+type DatabaseServiceModifyOpenAPI_Properties struct {
+	union json.RawMessage
+}
 
 // DatabaseServiceNetworkDetailsResponse Schema for service network details response
 //
@@ -6549,6 +6861,14 @@ type ListDatabaseNetworks200 = DatabaseNetworksInformationResponse
 // ListDatabaseNetworksDefault Schema for error responses from the API.
 type ListDatabaseNetworksDefault = DatabaseErrorResponse
 
+// ListDatabasePlans200 Lists available componentised database plans.
+//
+// Examples: {"service_types":[{"backup_tiers":["regular","extended"],"componentised":true,"compute_shapes":[{"backups":["regular"],"compute":"rdb.standard.2CPU-8GB","cpu":2,"dynamic_storage_supported":true,"family":"standard","memory_gb":8,"node_counts":[1,2,3],"storage":{"dynamic_max_multiplier":4,"options":[{"base_gib":80,"max_gib":400}],"step_gib":10,"total_cap_gib":10240}}],"latest_version":"18.6","node_counts":[1,2,3],"type":"pg","zones":["fi-hel1","de-fra1"]}]}
+type ListDatabasePlans200 = DatabasePlansResponse
+
+// ListDatabasePlansDefault Schema for error responses from the API.
+type ListDatabasePlansDefault = DatabaseErrorResponse
+
 // ListDatabaseTypes200 Response map schema for available service types
 //
 // Examples: {"postgres":{"dependencies":{},"description":"PostgreSQL - Object-Relational Database Management System","latest_available_version":"18.1","name":"postgresql","properties":{"automatic_utility_network_ip_filter":false,"ip_filter":["0.0.0.0/0"],"public_access":true,"version":"13"},"service_plans":[{"backup_config":{"interval":24,"max_count":7,"recovery_mode":"point_in_time"},"backup_retention":7,"core_number":2,"max_memory_percent":90,"memory_amount":8192,"node_count":3,"plan":"2x2xCPU-4GB-50G","storage_size":51200,"zones":{"zone":[{"description":"Primary zone","name":"zone1"},{"description":"Secondary zone","name":"zone2"}]}}]}}
@@ -7139,22 +7459,22 @@ func (t *DatabaseServiceCloneOpenAPI) UnmarshalJSON(b []byte) error {
 	return err
 }
 
-// AsDatabaseServicePropertiesMysql returns the union data inside the DatabaseServiceCreateOpenAPI as a DatabaseServicePropertiesMysql
-func (t DatabaseServiceCreateOpenAPI) AsDatabaseServicePropertiesMysql() (DatabaseServicePropertiesMysql, error) {
+// AsDatabaseServicePropertiesMysql returns the union data inside the DatabaseServiceCreateOpenAPI_Properties as a DatabaseServicePropertiesMysql
+func (t DatabaseServiceCreateOpenAPI_Properties) AsDatabaseServicePropertiesMysql() (DatabaseServicePropertiesMysql, error) {
 	var body DatabaseServicePropertiesMysql
 	err := json.Unmarshal(t.union, &body)
 	return body, err
 }
 
-// FromDatabaseServicePropertiesMysql overwrites any union data inside the DatabaseServiceCreateOpenAPI as the provided DatabaseServicePropertiesMysql
-func (t *DatabaseServiceCreateOpenAPI) FromDatabaseServicePropertiesMysql(v DatabaseServicePropertiesMysql) error {
+// FromDatabaseServicePropertiesMysql overwrites any union data inside the DatabaseServiceCreateOpenAPI_Properties as the provided DatabaseServicePropertiesMysql
+func (t *DatabaseServiceCreateOpenAPI_Properties) FromDatabaseServicePropertiesMysql(v DatabaseServicePropertiesMysql) error {
 	b, err := json.Marshal(v)
 	t.union = b
 	return err
 }
 
-// MergeDatabaseServicePropertiesMysql performs a merge with any union data inside the DatabaseServiceCreateOpenAPI, using the provided DatabaseServicePropertiesMysql
-func (t *DatabaseServiceCreateOpenAPI) MergeDatabaseServicePropertiesMysql(v DatabaseServicePropertiesMysql) error {
+// MergeDatabaseServicePropertiesMysql performs a merge with any union data inside the DatabaseServiceCreateOpenAPI_Properties, using the provided DatabaseServicePropertiesMysql
+func (t *DatabaseServiceCreateOpenAPI_Properties) MergeDatabaseServicePropertiesMysql(v DatabaseServicePropertiesMysql) error {
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
@@ -7165,22 +7485,22 @@ func (t *DatabaseServiceCreateOpenAPI) MergeDatabaseServicePropertiesMysql(v Dat
 	return err
 }
 
-// AsDatabaseServicePropertiesPg returns the union data inside the DatabaseServiceCreateOpenAPI as a DatabaseServicePropertiesPg
-func (t DatabaseServiceCreateOpenAPI) AsDatabaseServicePropertiesPg() (DatabaseServicePropertiesPg, error) {
+// AsDatabaseServicePropertiesPg returns the union data inside the DatabaseServiceCreateOpenAPI_Properties as a DatabaseServicePropertiesPg
+func (t DatabaseServiceCreateOpenAPI_Properties) AsDatabaseServicePropertiesPg() (DatabaseServicePropertiesPg, error) {
 	var body DatabaseServicePropertiesPg
 	err := json.Unmarshal(t.union, &body)
 	return body, err
 }
 
-// FromDatabaseServicePropertiesPg overwrites any union data inside the DatabaseServiceCreateOpenAPI as the provided DatabaseServicePropertiesPg
-func (t *DatabaseServiceCreateOpenAPI) FromDatabaseServicePropertiesPg(v DatabaseServicePropertiesPg) error {
+// FromDatabaseServicePropertiesPg overwrites any union data inside the DatabaseServiceCreateOpenAPI_Properties as the provided DatabaseServicePropertiesPg
+func (t *DatabaseServiceCreateOpenAPI_Properties) FromDatabaseServicePropertiesPg(v DatabaseServicePropertiesPg) error {
 	b, err := json.Marshal(v)
 	t.union = b
 	return err
 }
 
-// MergeDatabaseServicePropertiesPg performs a merge with any union data inside the DatabaseServiceCreateOpenAPI, using the provided DatabaseServicePropertiesPg
-func (t *DatabaseServiceCreateOpenAPI) MergeDatabaseServicePropertiesPg(v DatabaseServicePropertiesPg) error {
+// MergeDatabaseServicePropertiesPg performs a merge with any union data inside the DatabaseServiceCreateOpenAPI_Properties, using the provided DatabaseServicePropertiesPg
+func (t *DatabaseServiceCreateOpenAPI_Properties) MergeDatabaseServicePropertiesPg(v DatabaseServicePropertiesPg) error {
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
@@ -7191,22 +7511,22 @@ func (t *DatabaseServiceCreateOpenAPI) MergeDatabaseServicePropertiesPg(v Databa
 	return err
 }
 
-// AsDatabaseServicePropertiesRedis returns the union data inside the DatabaseServiceCreateOpenAPI as a DatabaseServicePropertiesRedis
-func (t DatabaseServiceCreateOpenAPI) AsDatabaseServicePropertiesRedis() (DatabaseServicePropertiesRedis, error) {
+// AsDatabaseServicePropertiesRedis returns the union data inside the DatabaseServiceCreateOpenAPI_Properties as a DatabaseServicePropertiesRedis
+func (t DatabaseServiceCreateOpenAPI_Properties) AsDatabaseServicePropertiesRedis() (DatabaseServicePropertiesRedis, error) {
 	var body DatabaseServicePropertiesRedis
 	err := json.Unmarshal(t.union, &body)
 	return body, err
 }
 
-// FromDatabaseServicePropertiesRedis overwrites any union data inside the DatabaseServiceCreateOpenAPI as the provided DatabaseServicePropertiesRedis
-func (t *DatabaseServiceCreateOpenAPI) FromDatabaseServicePropertiesRedis(v DatabaseServicePropertiesRedis) error {
+// FromDatabaseServicePropertiesRedis overwrites any union data inside the DatabaseServiceCreateOpenAPI_Properties as the provided DatabaseServicePropertiesRedis
+func (t *DatabaseServiceCreateOpenAPI_Properties) FromDatabaseServicePropertiesRedis(v DatabaseServicePropertiesRedis) error {
 	b, err := json.Marshal(v)
 	t.union = b
 	return err
 }
 
-// MergeDatabaseServicePropertiesRedis performs a merge with any union data inside the DatabaseServiceCreateOpenAPI, using the provided DatabaseServicePropertiesRedis
-func (t *DatabaseServiceCreateOpenAPI) MergeDatabaseServicePropertiesRedis(v DatabaseServicePropertiesRedis) error {
+// MergeDatabaseServicePropertiesRedis performs a merge with any union data inside the DatabaseServiceCreateOpenAPI_Properties, using the provided DatabaseServicePropertiesRedis
+func (t *DatabaseServiceCreateOpenAPI_Properties) MergeDatabaseServicePropertiesRedis(v DatabaseServicePropertiesRedis) error {
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
@@ -7217,22 +7537,22 @@ func (t *DatabaseServiceCreateOpenAPI) MergeDatabaseServicePropertiesRedis(v Dat
 	return err
 }
 
-// AsDatabaseServicePropertiesOpensearch returns the union data inside the DatabaseServiceCreateOpenAPI as a DatabaseServicePropertiesOpensearch
-func (t DatabaseServiceCreateOpenAPI) AsDatabaseServicePropertiesOpensearch() (DatabaseServicePropertiesOpensearch, error) {
+// AsDatabaseServicePropertiesOpensearch returns the union data inside the DatabaseServiceCreateOpenAPI_Properties as a DatabaseServicePropertiesOpensearch
+func (t DatabaseServiceCreateOpenAPI_Properties) AsDatabaseServicePropertiesOpensearch() (DatabaseServicePropertiesOpensearch, error) {
 	var body DatabaseServicePropertiesOpensearch
 	err := json.Unmarshal(t.union, &body)
 	return body, err
 }
 
-// FromDatabaseServicePropertiesOpensearch overwrites any union data inside the DatabaseServiceCreateOpenAPI as the provided DatabaseServicePropertiesOpensearch
-func (t *DatabaseServiceCreateOpenAPI) FromDatabaseServicePropertiesOpensearch(v DatabaseServicePropertiesOpensearch) error {
+// FromDatabaseServicePropertiesOpensearch overwrites any union data inside the DatabaseServiceCreateOpenAPI_Properties as the provided DatabaseServicePropertiesOpensearch
+func (t *DatabaseServiceCreateOpenAPI_Properties) FromDatabaseServicePropertiesOpensearch(v DatabaseServicePropertiesOpensearch) error {
 	b, err := json.Marshal(v)
 	t.union = b
 	return err
 }
 
-// MergeDatabaseServicePropertiesOpensearch performs a merge with any union data inside the DatabaseServiceCreateOpenAPI, using the provided DatabaseServicePropertiesOpensearch
-func (t *DatabaseServiceCreateOpenAPI) MergeDatabaseServicePropertiesOpensearch(v DatabaseServicePropertiesOpensearch) error {
+// MergeDatabaseServicePropertiesOpensearch performs a merge with any union data inside the DatabaseServiceCreateOpenAPI_Properties, using the provided DatabaseServicePropertiesOpensearch
+func (t *DatabaseServiceCreateOpenAPI_Properties) MergeDatabaseServicePropertiesOpensearch(v DatabaseServicePropertiesOpensearch) error {
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
@@ -7243,22 +7563,22 @@ func (t *DatabaseServiceCreateOpenAPI) MergeDatabaseServicePropertiesOpensearch(
 	return err
 }
 
-// AsDatabaseServicePropertiesValkey returns the union data inside the DatabaseServiceCreateOpenAPI as a DatabaseServicePropertiesValkey
-func (t DatabaseServiceCreateOpenAPI) AsDatabaseServicePropertiesValkey() (DatabaseServicePropertiesValkey, error) {
+// AsDatabaseServicePropertiesValkey returns the union data inside the DatabaseServiceCreateOpenAPI_Properties as a DatabaseServicePropertiesValkey
+func (t DatabaseServiceCreateOpenAPI_Properties) AsDatabaseServicePropertiesValkey() (DatabaseServicePropertiesValkey, error) {
 	var body DatabaseServicePropertiesValkey
 	err := json.Unmarshal(t.union, &body)
 	return body, err
 }
 
-// FromDatabaseServicePropertiesValkey overwrites any union data inside the DatabaseServiceCreateOpenAPI as the provided DatabaseServicePropertiesValkey
-func (t *DatabaseServiceCreateOpenAPI) FromDatabaseServicePropertiesValkey(v DatabaseServicePropertiesValkey) error {
+// FromDatabaseServicePropertiesValkey overwrites any union data inside the DatabaseServiceCreateOpenAPI_Properties as the provided DatabaseServicePropertiesValkey
+func (t *DatabaseServiceCreateOpenAPI_Properties) FromDatabaseServicePropertiesValkey(v DatabaseServicePropertiesValkey) error {
 	b, err := json.Marshal(v)
 	t.union = b
 	return err
 }
 
-// MergeDatabaseServicePropertiesValkey performs a merge with any union data inside the DatabaseServiceCreateOpenAPI, using the provided DatabaseServicePropertiesValkey
-func (t *DatabaseServiceCreateOpenAPI) MergeDatabaseServicePropertiesValkey(v DatabaseServicePropertiesValkey) error {
+// MergeDatabaseServicePropertiesValkey performs a merge with any union data inside the DatabaseServiceCreateOpenAPI_Properties, using the provided DatabaseServicePropertiesValkey
+func (t *DatabaseServiceCreateOpenAPI_Properties) MergeDatabaseServicePropertiesValkey(v DatabaseServicePropertiesValkey) error {
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
@@ -7269,136 +7589,32 @@ func (t *DatabaseServiceCreateOpenAPI) MergeDatabaseServicePropertiesValkey(v Da
 	return err
 }
 
-func (t DatabaseServiceCreateOpenAPI) MarshalJSON() ([]byte, error) {
+func (t DatabaseServiceCreateOpenAPI_Properties) MarshalJSON() ([]byte, error) {
 	b, err := t.union.MarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	object := make(map[string]json.RawMessage)
-	if t.union != nil {
-		err = json.Unmarshal(b, &object)
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	if t.AdditionalDiskSpaceGib != nil {
-		object["additional_disk_space_gib"], err = json.Marshal(t.AdditionalDiskSpaceGib)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'additional_disk_space_gib': %w", err)
-		}
-	}
-
-	if t.Plan != nil {
-		object["plan"], err = json.Marshal(t.Plan)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'plan': %w", err)
-		}
-	}
-
-	if t.PlanBackups != nil {
-		object["plan_backups"], err = json.Marshal(t.PlanBackups)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'plan_backups': %w", err)
-		}
-	}
-
-	if t.PlanCompute != nil {
-		object["plan_compute"], err = json.Marshal(t.PlanCompute)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'plan_compute': %w", err)
-		}
-	}
-
-	if t.PlanNodeCount != nil {
-		object["plan_node_count"], err = json.Marshal(t.PlanNodeCount)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'plan_node_count': %w", err)
-		}
-	}
-
-	if t.PlanStorageGib != nil {
-		object["plan_storage_gib"], err = json.Marshal(t.PlanStorageGib)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'plan_storage_gib': %w", err)
-		}
-	}
-	b, err = json.Marshal(object)
 	return b, err
 }
 
-func (t *DatabaseServiceCreateOpenAPI) UnmarshalJSON(b []byte) error {
+func (t *DatabaseServiceCreateOpenAPI_Properties) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
-	if err != nil {
-		return err
-	}
-	object := make(map[string]json.RawMessage)
-	err = json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["additional_disk_space_gib"]; found {
-		err = json.Unmarshal(raw, &t.AdditionalDiskSpaceGib)
-		if err != nil {
-			return fmt.Errorf("error reading 'additional_disk_space_gib': %w", err)
-		}
-	}
-
-	if raw, found := object["plan"]; found {
-		err = json.Unmarshal(raw, &t.Plan)
-		if err != nil {
-			return fmt.Errorf("error reading 'plan': %w", err)
-		}
-	}
-
-	if raw, found := object["plan_backups"]; found {
-		err = json.Unmarshal(raw, &t.PlanBackups)
-		if err != nil {
-			return fmt.Errorf("error reading 'plan_backups': %w", err)
-		}
-	}
-
-	if raw, found := object["plan_compute"]; found {
-		err = json.Unmarshal(raw, &t.PlanCompute)
-		if err != nil {
-			return fmt.Errorf("error reading 'plan_compute': %w", err)
-		}
-	}
-
-	if raw, found := object["plan_node_count"]; found {
-		err = json.Unmarshal(raw, &t.PlanNodeCount)
-		if err != nil {
-			return fmt.Errorf("error reading 'plan_node_count': %w", err)
-		}
-	}
-
-	if raw, found := object["plan_storage_gib"]; found {
-		err = json.Unmarshal(raw, &t.PlanStorageGib)
-		if err != nil {
-			return fmt.Errorf("error reading 'plan_storage_gib': %w", err)
-		}
-	}
-
 	return err
 }
 
-// AsDatabaseServicePropertiesMysql returns the union data inside the DatabaseServiceModifyOpenAPI as a DatabaseServicePropertiesMysql
-func (t DatabaseServiceModifyOpenAPI) AsDatabaseServicePropertiesMysql() (DatabaseServicePropertiesMysql, error) {
+// AsDatabaseServicePropertiesMysql returns the union data inside the DatabaseServiceModifyOpenAPI_Properties as a DatabaseServicePropertiesMysql
+func (t DatabaseServiceModifyOpenAPI_Properties) AsDatabaseServicePropertiesMysql() (DatabaseServicePropertiesMysql, error) {
 	var body DatabaseServicePropertiesMysql
 	err := json.Unmarshal(t.union, &body)
 	return body, err
 }
 
-// FromDatabaseServicePropertiesMysql overwrites any union data inside the DatabaseServiceModifyOpenAPI as the provided DatabaseServicePropertiesMysql
-func (t *DatabaseServiceModifyOpenAPI) FromDatabaseServicePropertiesMysql(v DatabaseServicePropertiesMysql) error {
+// FromDatabaseServicePropertiesMysql overwrites any union data inside the DatabaseServiceModifyOpenAPI_Properties as the provided DatabaseServicePropertiesMysql
+func (t *DatabaseServiceModifyOpenAPI_Properties) FromDatabaseServicePropertiesMysql(v DatabaseServicePropertiesMysql) error {
 	b, err := json.Marshal(v)
 	t.union = b
 	return err
 }
 
-// MergeDatabaseServicePropertiesMysql performs a merge with any union data inside the DatabaseServiceModifyOpenAPI, using the provided DatabaseServicePropertiesMysql
-func (t *DatabaseServiceModifyOpenAPI) MergeDatabaseServicePropertiesMysql(v DatabaseServicePropertiesMysql) error {
+// MergeDatabaseServicePropertiesMysql performs a merge with any union data inside the DatabaseServiceModifyOpenAPI_Properties, using the provided DatabaseServicePropertiesMysql
+func (t *DatabaseServiceModifyOpenAPI_Properties) MergeDatabaseServicePropertiesMysql(v DatabaseServicePropertiesMysql) error {
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
@@ -7409,22 +7625,22 @@ func (t *DatabaseServiceModifyOpenAPI) MergeDatabaseServicePropertiesMysql(v Dat
 	return err
 }
 
-// AsDatabaseServicePropertiesPg returns the union data inside the DatabaseServiceModifyOpenAPI as a DatabaseServicePropertiesPg
-func (t DatabaseServiceModifyOpenAPI) AsDatabaseServicePropertiesPg() (DatabaseServicePropertiesPg, error) {
+// AsDatabaseServicePropertiesPg returns the union data inside the DatabaseServiceModifyOpenAPI_Properties as a DatabaseServicePropertiesPg
+func (t DatabaseServiceModifyOpenAPI_Properties) AsDatabaseServicePropertiesPg() (DatabaseServicePropertiesPg, error) {
 	var body DatabaseServicePropertiesPg
 	err := json.Unmarshal(t.union, &body)
 	return body, err
 }
 
-// FromDatabaseServicePropertiesPg overwrites any union data inside the DatabaseServiceModifyOpenAPI as the provided DatabaseServicePropertiesPg
-func (t *DatabaseServiceModifyOpenAPI) FromDatabaseServicePropertiesPg(v DatabaseServicePropertiesPg) error {
+// FromDatabaseServicePropertiesPg overwrites any union data inside the DatabaseServiceModifyOpenAPI_Properties as the provided DatabaseServicePropertiesPg
+func (t *DatabaseServiceModifyOpenAPI_Properties) FromDatabaseServicePropertiesPg(v DatabaseServicePropertiesPg) error {
 	b, err := json.Marshal(v)
 	t.union = b
 	return err
 }
 
-// MergeDatabaseServicePropertiesPg performs a merge with any union data inside the DatabaseServiceModifyOpenAPI, using the provided DatabaseServicePropertiesPg
-func (t *DatabaseServiceModifyOpenAPI) MergeDatabaseServicePropertiesPg(v DatabaseServicePropertiesPg) error {
+// MergeDatabaseServicePropertiesPg performs a merge with any union data inside the DatabaseServiceModifyOpenAPI_Properties, using the provided DatabaseServicePropertiesPg
+func (t *DatabaseServiceModifyOpenAPI_Properties) MergeDatabaseServicePropertiesPg(v DatabaseServicePropertiesPg) error {
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
@@ -7435,22 +7651,22 @@ func (t *DatabaseServiceModifyOpenAPI) MergeDatabaseServicePropertiesPg(v Databa
 	return err
 }
 
-// AsDatabaseServicePropertiesRedis returns the union data inside the DatabaseServiceModifyOpenAPI as a DatabaseServicePropertiesRedis
-func (t DatabaseServiceModifyOpenAPI) AsDatabaseServicePropertiesRedis() (DatabaseServicePropertiesRedis, error) {
+// AsDatabaseServicePropertiesRedis returns the union data inside the DatabaseServiceModifyOpenAPI_Properties as a DatabaseServicePropertiesRedis
+func (t DatabaseServiceModifyOpenAPI_Properties) AsDatabaseServicePropertiesRedis() (DatabaseServicePropertiesRedis, error) {
 	var body DatabaseServicePropertiesRedis
 	err := json.Unmarshal(t.union, &body)
 	return body, err
 }
 
-// FromDatabaseServicePropertiesRedis overwrites any union data inside the DatabaseServiceModifyOpenAPI as the provided DatabaseServicePropertiesRedis
-func (t *DatabaseServiceModifyOpenAPI) FromDatabaseServicePropertiesRedis(v DatabaseServicePropertiesRedis) error {
+// FromDatabaseServicePropertiesRedis overwrites any union data inside the DatabaseServiceModifyOpenAPI_Properties as the provided DatabaseServicePropertiesRedis
+func (t *DatabaseServiceModifyOpenAPI_Properties) FromDatabaseServicePropertiesRedis(v DatabaseServicePropertiesRedis) error {
 	b, err := json.Marshal(v)
 	t.union = b
 	return err
 }
 
-// MergeDatabaseServicePropertiesRedis performs a merge with any union data inside the DatabaseServiceModifyOpenAPI, using the provided DatabaseServicePropertiesRedis
-func (t *DatabaseServiceModifyOpenAPI) MergeDatabaseServicePropertiesRedis(v DatabaseServicePropertiesRedis) error {
+// MergeDatabaseServicePropertiesRedis performs a merge with any union data inside the DatabaseServiceModifyOpenAPI_Properties, using the provided DatabaseServicePropertiesRedis
+func (t *DatabaseServiceModifyOpenAPI_Properties) MergeDatabaseServicePropertiesRedis(v DatabaseServicePropertiesRedis) error {
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
@@ -7461,22 +7677,22 @@ func (t *DatabaseServiceModifyOpenAPI) MergeDatabaseServicePropertiesRedis(v Dat
 	return err
 }
 
-// AsDatabaseServicePropertiesOpensearch returns the union data inside the DatabaseServiceModifyOpenAPI as a DatabaseServicePropertiesOpensearch
-func (t DatabaseServiceModifyOpenAPI) AsDatabaseServicePropertiesOpensearch() (DatabaseServicePropertiesOpensearch, error) {
+// AsDatabaseServicePropertiesOpensearch returns the union data inside the DatabaseServiceModifyOpenAPI_Properties as a DatabaseServicePropertiesOpensearch
+func (t DatabaseServiceModifyOpenAPI_Properties) AsDatabaseServicePropertiesOpensearch() (DatabaseServicePropertiesOpensearch, error) {
 	var body DatabaseServicePropertiesOpensearch
 	err := json.Unmarshal(t.union, &body)
 	return body, err
 }
 
-// FromDatabaseServicePropertiesOpensearch overwrites any union data inside the DatabaseServiceModifyOpenAPI as the provided DatabaseServicePropertiesOpensearch
-func (t *DatabaseServiceModifyOpenAPI) FromDatabaseServicePropertiesOpensearch(v DatabaseServicePropertiesOpensearch) error {
+// FromDatabaseServicePropertiesOpensearch overwrites any union data inside the DatabaseServiceModifyOpenAPI_Properties as the provided DatabaseServicePropertiesOpensearch
+func (t *DatabaseServiceModifyOpenAPI_Properties) FromDatabaseServicePropertiesOpensearch(v DatabaseServicePropertiesOpensearch) error {
 	b, err := json.Marshal(v)
 	t.union = b
 	return err
 }
 
-// MergeDatabaseServicePropertiesOpensearch performs a merge with any union data inside the DatabaseServiceModifyOpenAPI, using the provided DatabaseServicePropertiesOpensearch
-func (t *DatabaseServiceModifyOpenAPI) MergeDatabaseServicePropertiesOpensearch(v DatabaseServicePropertiesOpensearch) error {
+// MergeDatabaseServicePropertiesOpensearch performs a merge with any union data inside the DatabaseServiceModifyOpenAPI_Properties, using the provided DatabaseServicePropertiesOpensearch
+func (t *DatabaseServiceModifyOpenAPI_Properties) MergeDatabaseServicePropertiesOpensearch(v DatabaseServicePropertiesOpensearch) error {
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
@@ -7487,22 +7703,22 @@ func (t *DatabaseServiceModifyOpenAPI) MergeDatabaseServicePropertiesOpensearch(
 	return err
 }
 
-// AsDatabaseServicePropertiesValkey returns the union data inside the DatabaseServiceModifyOpenAPI as a DatabaseServicePropertiesValkey
-func (t DatabaseServiceModifyOpenAPI) AsDatabaseServicePropertiesValkey() (DatabaseServicePropertiesValkey, error) {
+// AsDatabaseServicePropertiesValkey returns the union data inside the DatabaseServiceModifyOpenAPI_Properties as a DatabaseServicePropertiesValkey
+func (t DatabaseServiceModifyOpenAPI_Properties) AsDatabaseServicePropertiesValkey() (DatabaseServicePropertiesValkey, error) {
 	var body DatabaseServicePropertiesValkey
 	err := json.Unmarshal(t.union, &body)
 	return body, err
 }
 
-// FromDatabaseServicePropertiesValkey overwrites any union data inside the DatabaseServiceModifyOpenAPI as the provided DatabaseServicePropertiesValkey
-func (t *DatabaseServiceModifyOpenAPI) FromDatabaseServicePropertiesValkey(v DatabaseServicePropertiesValkey) error {
+// FromDatabaseServicePropertiesValkey overwrites any union data inside the DatabaseServiceModifyOpenAPI_Properties as the provided DatabaseServicePropertiesValkey
+func (t *DatabaseServiceModifyOpenAPI_Properties) FromDatabaseServicePropertiesValkey(v DatabaseServicePropertiesValkey) error {
 	b, err := json.Marshal(v)
 	t.union = b
 	return err
 }
 
-// MergeDatabaseServicePropertiesValkey performs a merge with any union data inside the DatabaseServiceModifyOpenAPI, using the provided DatabaseServicePropertiesValkey
-func (t *DatabaseServiceModifyOpenAPI) MergeDatabaseServicePropertiesValkey(v DatabaseServicePropertiesValkey) error {
+// MergeDatabaseServicePropertiesValkey performs a merge with any union data inside the DatabaseServiceModifyOpenAPI_Properties, using the provided DatabaseServicePropertiesValkey
+func (t *DatabaseServiceModifyOpenAPI_Properties) MergeDatabaseServicePropertiesValkey(v DatabaseServicePropertiesValkey) error {
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
@@ -7513,117 +7729,13 @@ func (t *DatabaseServiceModifyOpenAPI) MergeDatabaseServicePropertiesValkey(v Da
 	return err
 }
 
-func (t DatabaseServiceModifyOpenAPI) MarshalJSON() ([]byte, error) {
+func (t DatabaseServiceModifyOpenAPI_Properties) MarshalJSON() ([]byte, error) {
 	b, err := t.union.MarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	object := make(map[string]json.RawMessage)
-	if t.union != nil {
-		err = json.Unmarshal(b, &object)
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	if t.AdditionalDiskSpaceGib != nil {
-		object["additional_disk_space_gib"], err = json.Marshal(t.AdditionalDiskSpaceGib)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'additional_disk_space_gib': %w", err)
-		}
-	}
-
-	if t.Plan != nil {
-		object["plan"], err = json.Marshal(t.Plan)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'plan': %w", err)
-		}
-	}
-
-	if t.PlanBackups != nil {
-		object["plan_backups"], err = json.Marshal(t.PlanBackups)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'plan_backups': %w", err)
-		}
-	}
-
-	if t.PlanCompute != nil {
-		object["plan_compute"], err = json.Marshal(t.PlanCompute)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'plan_compute': %w", err)
-		}
-	}
-
-	if t.PlanNodeCount != nil {
-		object["plan_node_count"], err = json.Marshal(t.PlanNodeCount)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'plan_node_count': %w", err)
-		}
-	}
-
-	if t.PlanStorageGib != nil {
-		object["plan_storage_gib"], err = json.Marshal(t.PlanStorageGib)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'plan_storage_gib': %w", err)
-		}
-	}
-	b, err = json.Marshal(object)
 	return b, err
 }
 
-func (t *DatabaseServiceModifyOpenAPI) UnmarshalJSON(b []byte) error {
+func (t *DatabaseServiceModifyOpenAPI_Properties) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
-	if err != nil {
-		return err
-	}
-	object := make(map[string]json.RawMessage)
-	err = json.Unmarshal(b, &object)
-	if err != nil {
-		return err
-	}
-
-	if raw, found := object["additional_disk_space_gib"]; found {
-		err = json.Unmarshal(raw, &t.AdditionalDiskSpaceGib)
-		if err != nil {
-			return fmt.Errorf("error reading 'additional_disk_space_gib': %w", err)
-		}
-	}
-
-	if raw, found := object["plan"]; found {
-		err = json.Unmarshal(raw, &t.Plan)
-		if err != nil {
-			return fmt.Errorf("error reading 'plan': %w", err)
-		}
-	}
-
-	if raw, found := object["plan_backups"]; found {
-		err = json.Unmarshal(raw, &t.PlanBackups)
-		if err != nil {
-			return fmt.Errorf("error reading 'plan_backups': %w", err)
-		}
-	}
-
-	if raw, found := object["plan_compute"]; found {
-		err = json.Unmarshal(raw, &t.PlanCompute)
-		if err != nil {
-			return fmt.Errorf("error reading 'plan_compute': %w", err)
-		}
-	}
-
-	if raw, found := object["plan_node_count"]; found {
-		err = json.Unmarshal(raw, &t.PlanNodeCount)
-		if err != nil {
-			return fmt.Errorf("error reading 'plan_node_count': %w", err)
-		}
-	}
-
-	if raw, found := object["plan_storage_gib"]; found {
-		err = json.Unmarshal(raw, &t.PlanStorageGib)
-		if err != nil {
-			return fmt.Errorf("error reading 'plan_storage_gib': %w", err)
-		}
-	}
-
 	return err
 }
 

@@ -19,46 +19,69 @@ import (
 // The interface specification for the client above.
 type NetworkPeeringClientInterface interface {
 
-	// ListNetworkPeerings List network peerings
+	// ListNetworkPeerings List peerings
 	//
-	// Retrieves a list of network peerings.
+	// Get a list of all peerings within the current account. Only peerings that refer to a network that the current
+	// account has access are returned.
+	//
+	// It is also possible to filter network peering with label URL parameters, e.g.
+	// `?label=env` or `?label=env%3Dprod`. The URL parameter can be given multiple
+	// times to add more filters (e.g. `?label=env%3Dprod&label=v2`), where
+	// only network peering that match all labels are returned.
+	// Label keys are matched case insensitively.
 	//
 	// Corresponds with GET /1.3/network-peering (the `ListNetworkPeerings` operationId).
 	ListNetworkPeerings(ctx context.Context, params *ListNetworkPeeringsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateNetworkPeeringWithBody Create network peering
+	// CreateNetworkPeeringWithBody Create peering
 	//
-	// Creates a new network peering between two networks.
+	// Network peerings are used to enable traffic between two networks that can be on different main accounts.
+	// The peering must be established both ways before it's considered as active. Peering is only supported between networks
+	// of type `private`.
+	//
+	// **Note**: you should only create peering between accounts and networks you trust. There is no limits on what traffic
+	// can flow. The server firewall **has no effect** for `private` type networks.
+	//
+	// It is required that both networks have a *Router* attached to the network.
 	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with POST /1.3/network-peering (the `CreateNetworkPeering` operationId).
 	CreateNetworkPeeringWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateNetworkPeering Create network peering
+	// CreateNetworkPeering Create peering
 	//
-	// Creates a new network peering between two networks.
+	// Network peerings are used to enable traffic between two networks that can be on different main accounts.
+	// The peering must be established both ways before it's considered as active. Peering is only supported between networks
+	// of type `private`.
+	//
+	// **Note**: you should only create peering between accounts and networks you trust. There is no limits on what traffic
+	// can flow. The server firewall **has no effect** for `private` type networks.
+	//
+	// It is required that both networks have a *Router* attached to the network.
 	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /1.3/network-peering (the `CreateNetworkPeering` operationId).
 	CreateNetworkPeering(ctx context.Context, body CreateNetworkPeeringJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// DeleteNetworkPeering Delete network peering
+	// DeleteNetworkPeering Delete peering
 	//
-	// Deletes a specific network peering.
+	// Deletes a network peering. It is required that the peering is in `disabled` state before delete is possible.
 	//
 	// Corresponds with DELETE /1.3/network-peering/{peering_uuid} (the `DeleteNetworkPeering` operationId).
 	DeleteNetworkPeering(ctx context.Context, peeringUuid DeleteNetworkPeeringPeeringUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetNetworkPeering Get network peering
+	// GetNetworkPeering Get peering
 	//
-	// Retrieves information about a specific network peering.
+	// Returns the state of an existing network peering.
+	//
+	// Note that the `peer_network` field only contains the network details if the peering has been defined by both accounts.
 	//
 	// Corresponds with GET /1.3/network-peering/{peering_uuid} (the `GetNetworkPeering` operationId).
 	GetNetworkPeering(ctx context.Context, peeringUuid GetNetworkPeeringPeeringUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ModifyNetworkPeeringWithBody Modify network peering
+	// ModifyNetworkPeeringWithBody Modify peering
 	//
 	// Modifies attributes of an existing network peering.
 	//
@@ -67,7 +90,7 @@ type NetworkPeeringClientInterface interface {
 	// Corresponds with PATCH /1.3/network-peering/{peering_uuid} (the `ModifyNetworkPeering` operationId).
 	ModifyNetworkPeeringWithBody(ctx context.Context, peeringUuid ModifyNetworkPeeringPeeringUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ModifyNetworkPeering Modify network peering
+	// ModifyNetworkPeering Modify peering
 	//
 	// Modifies attributes of an existing network peering.
 	//
@@ -77,9 +100,16 @@ type NetworkPeeringClientInterface interface {
 	ModifyNetworkPeering(ctx context.Context, peeringUuid ModifyNetworkPeeringPeeringUuid, body ModifyNetworkPeeringJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
-// ListNetworkPeerings List network peerings
+// ListNetworkPeerings List peerings
 //
-// Retrieves a list of network peerings.
+// Get a list of all peerings within the current account. Only peerings that refer to a network that the current
+// account has access are returned.
+//
+// It is also possible to filter network peering with label URL parameters, e.g.
+// `?label=env` or `?label=env%3Dprod`. The URL parameter can be given multiple
+// times to add more filters (e.g. `?label=env%3Dprod&label=v2`), where
+// only network peering that match all labels are returned.
+// Label keys are matched case insensitively.
 //
 // Corresponds with GET /1.3/network-peering (the `ListNetworkPeerings` operationId).
 func (c *Client) ListNetworkPeerings(ctx context.Context, params *ListNetworkPeeringsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -94,9 +124,16 @@ func (c *Client) ListNetworkPeerings(ctx context.Context, params *ListNetworkPee
 	return c.Client.Do(req)
 }
 
-// CreateNetworkPeeringWithBody Create network peering
+// CreateNetworkPeeringWithBody Create peering
 //
-// Creates a new network peering between two networks.
+// Network peerings are used to enable traffic between two networks that can be on different main accounts.
+// The peering must be established both ways before it's considered as active. Peering is only supported between networks
+// of type `private`.
+//
+// **Note**: you should only create peering between accounts and networks you trust. There is no limits on what traffic
+// can flow. The server firewall **has no effect** for `private` type networks.
+//
+// It is required that both networks have a *Router* attached to the network.
 //
 // Takes any type of body and a specified content type.
 //
@@ -113,9 +150,16 @@ func (c *Client) CreateNetworkPeeringWithBody(ctx context.Context, contentType s
 	return c.Client.Do(req)
 }
 
-// CreateNetworkPeering Create network peering
+// CreateNetworkPeering Create peering
 //
-// Creates a new network peering between two networks.
+// Network peerings are used to enable traffic between two networks that can be on different main accounts.
+// The peering must be established both ways before it's considered as active. Peering is only supported between networks
+// of type `private`.
+//
+// **Note**: you should only create peering between accounts and networks you trust. There is no limits on what traffic
+// can flow. The server firewall **has no effect** for `private` type networks.
+//
+// It is required that both networks have a *Router* attached to the network.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -132,9 +176,9 @@ func (c *Client) CreateNetworkPeering(ctx context.Context, body CreateNetworkPee
 	return c.Client.Do(req)
 }
 
-// DeleteNetworkPeering Delete network peering
+// DeleteNetworkPeering Delete peering
 //
-// Deletes a specific network peering.
+// Deletes a network peering. It is required that the peering is in `disabled` state before delete is possible.
 //
 // Corresponds with DELETE /1.3/network-peering/{peering_uuid} (the `DeleteNetworkPeering` operationId).
 func (c *Client) DeleteNetworkPeering(ctx context.Context, peeringUuid DeleteNetworkPeeringPeeringUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -149,9 +193,11 @@ func (c *Client) DeleteNetworkPeering(ctx context.Context, peeringUuid DeleteNet
 	return c.Client.Do(req)
 }
 
-// GetNetworkPeering Get network peering
+// GetNetworkPeering Get peering
 //
-// Retrieves information about a specific network peering.
+// Returns the state of an existing network peering.
+//
+// Note that the `peer_network` field only contains the network details if the peering has been defined by both accounts.
 //
 // Corresponds with GET /1.3/network-peering/{peering_uuid} (the `GetNetworkPeering` operationId).
 func (c *Client) GetNetworkPeering(ctx context.Context, peeringUuid GetNetworkPeeringPeeringUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -166,7 +212,7 @@ func (c *Client) GetNetworkPeering(ctx context.Context, peeringUuid GetNetworkPe
 	return c.Client.Do(req)
 }
 
-// ModifyNetworkPeeringWithBody Modify network peering
+// ModifyNetworkPeeringWithBody Modify peering
 //
 // Modifies attributes of an existing network peering.
 //
@@ -185,7 +231,7 @@ func (c *Client) ModifyNetworkPeeringWithBody(ctx context.Context, peeringUuid M
 	return c.Client.Do(req)
 }
 
-// ModifyNetworkPeering Modify network peering
+// ModifyNetworkPeering Modify peering
 //
 // Modifies attributes of an existing network peering.
 //
@@ -452,52 +498,75 @@ func NewModifyNetworkPeeringRequestWithBody(server string, peeringUuid ModifyNet
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type NetworkPeeringClientWithResponsesInterface interface {
 
-	// ListNetworkPeeringsWithResponse List network peerings
+	// ListNetworkPeeringsWithResponse List peerings
 	//
-	// Retrieves a list of network peerings.
+	// Get a list of all peerings within the current account. Only peerings that refer to a network that the current
+	// account has access are returned.
+	//
+	// It is also possible to filter network peering with label URL parameters, e.g.
+	// `?label=env` or `?label=env%3Dprod`. The URL parameter can be given multiple
+	// times to add more filters (e.g. `?label=env%3Dprod&label=v2`), where
+	// only network peering that match all labels are returned.
+	// Label keys are matched case insensitively.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/network-peering (the `ListNetworkPeerings` operationId).
 	ListNetworkPeeringsWithResponse(ctx context.Context, params *ListNetworkPeeringsParams, reqEditors ...RequestEditorFn) (*ListNetworkPeeringsResp, error)
 
-	// CreateNetworkPeeringWithBodyWithResponse Create network peering
+	// CreateNetworkPeeringWithBodyWithResponse Create peering
 	//
-	// Creates a new network peering between two networks.
+	// Network peerings are used to enable traffic between two networks that can be on different main accounts.
+	// The peering must be established both ways before it's considered as active. Peering is only supported between networks
+	// of type `private`.
+	//
+	// **Note**: you should only create peering between accounts and networks you trust. There is no limits on what traffic
+	// can flow. The server firewall **has no effect** for `private` type networks.
+	//
+	// It is required that both networks have a *Router* attached to the network.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/network-peering (the `CreateNetworkPeering` operationId).
 	CreateNetworkPeeringWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateNetworkPeeringResp, error)
 
-	// CreateNetworkPeeringWithResponse Create network peering
+	// CreateNetworkPeeringWithResponse Create peering
 	//
-	// Creates a new network peering between two networks.
+	// Network peerings are used to enable traffic between two networks that can be on different main accounts.
+	// The peering must be established both ways before it's considered as active. Peering is only supported between networks
+	// of type `private`.
+	//
+	// **Note**: you should only create peering between accounts and networks you trust. There is no limits on what traffic
+	// can flow. The server firewall **has no effect** for `private` type networks.
+	//
+	// It is required that both networks have a *Router* attached to the network.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/network-peering (the `CreateNetworkPeering` operationId).
 	CreateNetworkPeeringWithResponse(ctx context.Context, body CreateNetworkPeeringJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateNetworkPeeringResp, error)
 
-	// DeleteNetworkPeeringWithResponse Delete network peering
+	// DeleteNetworkPeeringWithResponse Delete peering
 	//
-	// Deletes a specific network peering.
+	// Deletes a network peering. It is required that the peering is in `disabled` state before delete is possible.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /1.3/network-peering/{peering_uuid} (the `DeleteNetworkPeering` operationId).
 	DeleteNetworkPeeringWithResponse(ctx context.Context, peeringUuid DeleteNetworkPeeringPeeringUuid, reqEditors ...RequestEditorFn) (*DeleteNetworkPeeringResp, error)
 
-	// GetNetworkPeeringWithResponse Get network peering
+	// GetNetworkPeeringWithResponse Get peering
 	//
-	// Retrieves information about a specific network peering.
+	// Returns the state of an existing network peering.
+	//
+	// Note that the `peer_network` field only contains the network details if the peering has been defined by both accounts.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/network-peering/{peering_uuid} (the `GetNetworkPeering` operationId).
 	GetNetworkPeeringWithResponse(ctx context.Context, peeringUuid GetNetworkPeeringPeeringUuid, reqEditors ...RequestEditorFn) (*GetNetworkPeeringResp, error)
 
-	// ModifyNetworkPeeringWithBodyWithResponse Modify network peering
+	// ModifyNetworkPeeringWithBodyWithResponse Modify peering
 	//
 	// Modifies attributes of an existing network peering.
 	//
@@ -506,7 +575,7 @@ type NetworkPeeringClientWithResponsesInterface interface {
 	// Corresponds with PATCH /1.3/network-peering/{peering_uuid} (the `ModifyNetworkPeering` operationId).
 	ModifyNetworkPeeringWithBodyWithResponse(ctx context.Context, peeringUuid ModifyNetworkPeeringPeeringUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyNetworkPeeringResp, error)
 
-	// ModifyNetworkPeeringWithResponse Modify network peering
+	// ModifyNetworkPeeringWithResponse Modify peering
 	//
 	// Modifies attributes of an existing network peering.
 	//
@@ -798,9 +867,16 @@ func (r ModifyNetworkPeeringResp) ContentType() string {
 	return ""
 }
 
-// ListNetworkPeeringsWithResponse List network peerings
+// ListNetworkPeeringsWithResponse List peerings
 //
-// Retrieves a list of network peerings.
+// Get a list of all peerings within the current account. Only peerings that refer to a network that the current
+// account has access are returned.
+//
+// It is also possible to filter network peering with label URL parameters, e.g.
+// `?label=env` or `?label=env%3Dprod`. The URL parameter can be given multiple
+// times to add more filters (e.g. `?label=env%3Dprod&label=v2`), where
+// only network peering that match all labels are returned.
+// Label keys are matched case insensitively.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -813,9 +889,16 @@ func (c *ClientWithResponses) ListNetworkPeeringsWithResponse(ctx context.Contex
 	return ParseListNetworkPeeringsResp(rsp)
 }
 
-// CreateNetworkPeeringWithBodyWithResponse Create network peering
+// CreateNetworkPeeringWithBodyWithResponse Create peering
 //
-// Creates a new network peering between two networks.
+// Network peerings are used to enable traffic between two networks that can be on different main accounts.
+// The peering must be established both ways before it's considered as active. Peering is only supported between networks
+// of type `private`.
+//
+// **Note**: you should only create peering between accounts and networks you trust. There is no limits on what traffic
+// can flow. The server firewall **has no effect** for `private` type networks.
+//
+// It is required that both networks have a *Router* attached to the network.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -828,9 +911,16 @@ func (c *ClientWithResponses) CreateNetworkPeeringWithBodyWithResponse(ctx conte
 	return ParseCreateNetworkPeeringResp(rsp)
 }
 
-// CreateNetworkPeeringWithResponse Create network peering
+// CreateNetworkPeeringWithResponse Create peering
 //
-// Creates a new network peering between two networks.
+// Network peerings are used to enable traffic between two networks that can be on different main accounts.
+// The peering must be established both ways before it's considered as active. Peering is only supported between networks
+// of type `private`.
+//
+// **Note**: you should only create peering between accounts and networks you trust. There is no limits on what traffic
+// can flow. The server firewall **has no effect** for `private` type networks.
+//
+// It is required that both networks have a *Router* attached to the network.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -843,9 +933,9 @@ func (c *ClientWithResponses) CreateNetworkPeeringWithResponse(ctx context.Conte
 	return ParseCreateNetworkPeeringResp(rsp)
 }
 
-// DeleteNetworkPeeringWithResponse Delete network peering
+// DeleteNetworkPeeringWithResponse Delete peering
 //
-// Deletes a specific network peering.
+// Deletes a network peering. It is required that the peering is in `disabled` state before delete is possible.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -858,9 +948,11 @@ func (c *ClientWithResponses) DeleteNetworkPeeringWithResponse(ctx context.Conte
 	return ParseDeleteNetworkPeeringResp(rsp)
 }
 
-// GetNetworkPeeringWithResponse Get network peering
+// GetNetworkPeeringWithResponse Get peering
 //
-// Retrieves information about a specific network peering.
+// Returns the state of an existing network peering.
+//
+// Note that the `peer_network` field only contains the network details if the peering has been defined by both accounts.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -873,7 +965,7 @@ func (c *ClientWithResponses) GetNetworkPeeringWithResponse(ctx context.Context,
 	return ParseGetNetworkPeeringResp(rsp)
 }
 
-// ModifyNetworkPeeringWithBodyWithResponse Modify network peering
+// ModifyNetworkPeeringWithBodyWithResponse Modify peering
 //
 // Modifies attributes of an existing network peering.
 //
@@ -888,7 +980,7 @@ func (c *ClientWithResponses) ModifyNetworkPeeringWithBodyWithResponse(ctx conte
 	return ParseModifyNetworkPeeringResp(rsp)
 }
 
-// ModifyNetworkPeeringWithResponse Modify network peering
+// ModifyNetworkPeeringWithResponse Modify peering
 //
 // Modifies attributes of an existing network peering.
 //

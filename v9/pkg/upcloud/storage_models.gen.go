@@ -5,10 +5,65 @@ package upcloud
 
 import (
 	"encoding/json"
-	"fmt"
+	"time"
 
+	"github.com/oapi-codegen/runtime"
 	openapi_types "github.com/oapi-codegen/runtime/types"
 )
+
+// Defines values for AttachStorageRequestStorageDeviceBootDisk.
+const (
+	AttachStorageRequestStorageDeviceBootDiskN0 AttachStorageRequestStorageDeviceBootDisk = "0"
+	AttachStorageRequestStorageDeviceBootDiskN1 AttachStorageRequestStorageDeviceBootDisk = "1"
+)
+
+// Valid indicates whether the value is a known member of the AttachStorageRequestStorageDeviceBootDisk enum.
+func (e AttachStorageRequestStorageDeviceBootDisk) Valid() bool {
+	switch e {
+	case AttachStorageRequestStorageDeviceBootDiskN0:
+		return true
+	case AttachStorageRequestStorageDeviceBootDiskN1:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AttachStorageRequestStorageDeviceType.
+const (
+	AttachStorageRequestStorageDeviceTypeCdrom AttachStorageRequestStorageDeviceType = "cdrom"
+	AttachStorageRequestStorageDeviceTypeDisk  AttachStorageRequestStorageDeviceType = "disk"
+)
+
+// Valid indicates whether the value is a known member of the AttachStorageRequestStorageDeviceType enum.
+func (e AttachStorageRequestStorageDeviceType) Valid() bool {
+	switch e {
+	case AttachStorageRequestStorageDeviceTypeCdrom:
+		return true
+	case AttachStorageRequestStorageDeviceTypeDisk:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ModifyStorageBodyStorageFilesystemResize.
+const (
+	ModifyStorageBodyStorageFilesystemResizeNo  ModifyStorageBodyStorageFilesystemResize = "no"
+	ModifyStorageBodyStorageFilesystemResizeYes ModifyStorageBodyStorageFilesystemResize = "yes"
+)
+
+// Valid indicates whether the value is a known member of the ModifyStorageBodyStorageFilesystemResize enum.
+func (e ModifyStorageBodyStorageFilesystemResize) Valid() bool {
+	switch e {
+	case ModifyStorageBodyStorageFilesystemResizeNo:
+		return true
+	case ModifyStorageBodyStorageFilesystemResizeYes:
+		return true
+	default:
+		return false
+	}
+}
 
 // Defines values for StorageAccess.
 const (
@@ -49,24 +104,36 @@ func (e StorageAccessFilter) Valid() bool {
 	}
 }
 
-// Defines values for StorageAllowHidden.
+// Defines values for StorageBackupRuleInterval.
 const (
-	StorageAllowHiddenN0  StorageAllowHidden = "0"
-	StorageAllowHiddenN1  StorageAllowHidden = "1"
-	StorageAllowHiddenNo  StorageAllowHidden = "no"
-	StorageAllowHiddenYes StorageAllowHidden = "yes"
+	StorageBackupRuleIntervalDaily StorageBackupRuleInterval = "daily"
+	StorageBackupRuleIntervalFri   StorageBackupRuleInterval = "fri"
+	StorageBackupRuleIntervalMon   StorageBackupRuleInterval = "mon"
+	StorageBackupRuleIntervalSat   StorageBackupRuleInterval = "sat"
+	StorageBackupRuleIntervalSun   StorageBackupRuleInterval = "sun"
+	StorageBackupRuleIntervalThu   StorageBackupRuleInterval = "thu"
+	StorageBackupRuleIntervalTue   StorageBackupRuleInterval = "tue"
+	StorageBackupRuleIntervalWed   StorageBackupRuleInterval = "wed"
 )
 
-// Valid indicates whether the value is a known member of the StorageAllowHidden enum.
-func (e StorageAllowHidden) Valid() bool {
+// Valid indicates whether the value is a known member of the StorageBackupRuleInterval enum.
+func (e StorageBackupRuleInterval) Valid() bool {
 	switch e {
-	case StorageAllowHiddenN0:
+	case StorageBackupRuleIntervalDaily:
 		return true
-	case StorageAllowHiddenN1:
+	case StorageBackupRuleIntervalFri:
 		return true
-	case StorageAllowHiddenNo:
+	case StorageBackupRuleIntervalMon:
 		return true
-	case StorageAllowHiddenYes:
+	case StorageBackupRuleIntervalSat:
+		return true
+	case StorageBackupRuleIntervalSun:
+		return true
+	case StorageBackupRuleIntervalThu:
+		return true
+	case StorageBackupRuleIntervalTue:
+		return true
+	case StorageBackupRuleIntervalWed:
 		return true
 	default:
 		return false
@@ -75,15 +142,12 @@ func (e StorageAllowHidden) Valid() bool {
 
 // Defines values for StorageDetailsPartOfPlan.
 const (
-	StorageDetailsPartOfPlanNo  StorageDetailsPartOfPlan = "no"
 	StorageDetailsPartOfPlanYes StorageDetailsPartOfPlan = "yes"
 )
 
 // Valid indicates whether the value is a known member of the StorageDetailsPartOfPlan enum.
 func (e StorageDetailsPartOfPlan) Valid() bool {
 	switch e {
-	case StorageDetailsPartOfPlanNo:
-		return true
 	case StorageDetailsPartOfPlanYes:
 		return true
 	default:
@@ -109,48 +173,15 @@ func (e StorageEncrypted) Valid() bool {
 	}
 }
 
-// Defines values for StorageFavorite.
+// Defines values for StorageListItemPartOfPlan.
 const (
-	StorageFavoriteN0  StorageFavorite = "0"
-	StorageFavoriteN1  StorageFavorite = "1"
-	StorageFavoriteNo  StorageFavorite = "no"
-	StorageFavoriteYes StorageFavorite = "yes"
+	StorageListItemPartOfPlanYes StorageListItemPartOfPlan = "yes"
 )
 
-// Valid indicates whether the value is a known member of the StorageFavorite enum.
-func (e StorageFavorite) Valid() bool {
+// Valid indicates whether the value is a known member of the StorageListItemPartOfPlan enum.
+func (e StorageListItemPartOfPlan) Valid() bool {
 	switch e {
-	case StorageFavoriteN0:
-		return true
-	case StorageFavoriteN1:
-		return true
-	case StorageFavoriteNo:
-		return true
-	case StorageFavoriteYes:
-		return true
-	default:
-		return false
-	}
-}
-
-// Defines values for StorageMetadata.
-const (
-	StorageMetadataN0  StorageMetadata = "0"
-	StorageMetadataN1  StorageMetadata = "1"
-	StorageMetadataNo  StorageMetadata = "no"
-	StorageMetadataYes StorageMetadata = "yes"
-)
-
-// Valid indicates whether the value is a known member of the StorageMetadata enum.
-func (e StorageMetadata) Valid() bool {
-	switch e {
-	case StorageMetadataN0:
-		return true
-	case StorageMetadataN1:
-		return true
-	case StorageMetadataNo:
-		return true
-	case StorageMetadataYes:
+	case StorageListItemPartOfPlanYes:
 		return true
 	default:
 		return false
@@ -175,36 +206,14 @@ func (e StorageOrderBy) Valid() bool {
 	}
 }
 
-// Defines values for StorageServers.
-const (
-	StorageServersN0  StorageServers = "0"
-	StorageServersN1  StorageServers = "1"
-	StorageServersNo  StorageServers = "no"
-	StorageServersYes StorageServers = "yes"
-)
-
-// Valid indicates whether the value is a known member of the StorageServers enum.
-func (e StorageServers) Valid() bool {
-	switch e {
-	case StorageServersN0:
-		return true
-	case StorageServersN1:
-		return true
-	case StorageServersNo:
-		return true
-	case StorageServersYes:
-		return true
-	default:
-		return false
-	}
-}
-
 // Defines values for StorageSortBy.
 const (
 	StorageSortByCreated StorageSortBy = "created"
 	StorageSortBySize    StorageSortBy = "size"
+	StorageSortByTier    StorageSortBy = "tier"
 	StorageSortByTitle   StorageSortBy = "title"
 	StorageSortByType    StorageSortBy = "type"
+	StorageSortByZone    StorageSortBy = "zone"
 )
 
 // Valid indicates whether the value is a known member of the StorageSortBy enum.
@@ -214,9 +223,13 @@ func (e StorageSortBy) Valid() bool {
 		return true
 	case StorageSortBySize:
 		return true
+	case StorageSortByTier:
+		return true
 	case StorageSortByTitle:
 		return true
 	case StorageSortByType:
+		return true
+	case StorageSortByZone:
 		return true
 	default:
 		return false
@@ -259,6 +272,45 @@ func (e StorageState) Valid() bool {
 	case StorageStatePendingDelete:
 		return true
 	case StorageStateSyncing:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StorageTemplateType.
+const (
+	StorageTemplateTypeCloudInit StorageTemplateType = "cloud-init"
+	StorageTemplateTypeNative    StorageTemplateType = "native"
+)
+
+// Valid indicates whether the value is a known member of the StorageTemplateType enum.
+func (e StorageTemplateType) Valid() bool {
+	switch e {
+	case StorageTemplateTypeCloudInit:
+		return true
+	case StorageTemplateTypeNative:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StorageTier.
+const (
+	StorageTierHdd      StorageTier = "hdd"
+	StorageTierMaxiops  StorageTier = "maxiops"
+	StorageTierStandard StorageTier = "standard"
+)
+
+// Valid indicates whether the value is a known member of the StorageTier enum.
+func (e StorageTier) Valid() bool {
+	switch e {
+	case StorageTierHdd:
+		return true
+	case StorageTierMaxiops:
+		return true
+	case StorageTierStandard:
 		return true
 	default:
 		return false
@@ -331,30 +383,51 @@ func (e DeleteStorageParamsBackups) Valid() bool {
 	}
 }
 
-// AddStorageComponentRequest Schema for adding a storage component to a storage device
-type AddStorageComponentRequest struct {
-	Storage struct {
-		ForceBackend *string `json:"force_backend,omitempty"`
-	} `json:"storage"`
-}
-
-// AttachStorage Schema for attaching a storage device to a server
-type AttachStorage struct {
+// AttachStorageRequest Request schema for attaching this storage resource to a Cloud Server.
+type AttachStorageRequest struct {
+	// StorageDevice Parameters for attaching this storage resource to a Cloud Server in the same zone.
 	StorageDevice struct {
+		// Address Device address on the Cloud Server, or an `ide`, `scsi`, or `virtio` bus name for automatic address selection. Defaults to the next available address on the Cloud Server's default disk bus for disks, or the IDE bus for CD-ROM devices.
+		//
+		// Examples: scsi, scsi:0:0, virtio:0, ide:0:0
 		Address *string `json:"address,omitempty"`
-		Storage *string `json:"storage,omitempty"`
-		Type    *string `json:"type,omitempty"`
+
+		// BootDisk Whether the device is used as the boot disk unless overridden by the Cloud Server boot order. Defaults to `0`.
+		BootDisk *AttachStorageRequestStorageDeviceBootDisk `json:"boot_disk,omitempty"`
+
+		// Server Universally unique identifier
+		Server StorageUuid `json:"server"`
+
+		// Type Type of the attached device. Defaults to `disk`.
+		Type *AttachStorageRequestStorageDeviceType `json:"type,omitempty"`
 	} `json:"storage_device"`
 }
 
-// CloneStorageRequest TODO
-type CloneStorageRequest struct {
-	Storage struct {
-		// Components Storage component filter or selector.
-		Components *StorageComponents `json:"components,omitempty"`
+// AttachStorageRequestStorageDeviceBootDisk Whether the device is used as the boot disk unless overridden by the Cloud Server boot order. Defaults to `0`.
+type AttachStorageRequestStorageDeviceBootDisk string
 
-		// Tier Storage tier identifier.
-		Tier StorageTier `json:"tier"`
+// AttachStorageRequestStorageDeviceType Type of the attached device. Defaults to `disk`.
+type AttachStorageRequestStorageDeviceType string
+
+// AttachStorageResponse Response containing the attached storage resource and its Cloud Server attachment.
+type AttachStorageResponse struct {
+	// Storage Detailed information about a storage resource.
+	Storage StorageDetails `json:"storage"`
+}
+
+// CloneStorageRequest Request schema for cloning a block storage resource.
+type CloneStorageRequest struct {
+	// Storage Parameters for the cloned block storage.
+	Storage struct {
+		// Encrypted Indicates whether the resource is encrypted.
+		//
+		// Examples: yes, no
+		Encrypted *StorageEncrypted `json:"encrypted,omitempty"`
+
+		// Tier Block storage performance and pricing tier. `maxiops` is high-performance block storage, `standard` is general-purpose block storage, and `hdd` is the API name for the high-capacity Archive tier.
+		//
+		// Examples: hdd, standard, maxiops
+		Tier *StorageTier `json:"tier,omitempty"`
 
 		// Title Human-readable title for a resource.
 		Title StorageTitle `json:"title"`
@@ -366,77 +439,164 @@ type CloneStorageRequest struct {
 	} `json:"storage"`
 }
 
-// CreateStorageBackupRequest Backup rule configuration for storage backups.
+// CreateStorageBackupRequest Request schema for creating an on-demand block storage backup.
 type CreateStorageBackupRequest struct {
-	Interval  string `json:"interval"`
-	Retention string `json:"retention"`
-	Time      string `json:"time"`
+	// Storage Parameters for the point-in-time backup.
+	Storage struct {
+		// Title A short, informational description of the backup.
+		Title string `json:"title"`
+	} `json:"storage"`
 }
 
-// CreateStorageRequest Request schema for creating a storage
-type CreateStorageRequest struct {
-	Storage struct {
-		BackupRule *struct {
-			Interval  string `json:"interval"`
-			Retention string `json:"retention"`
-			Time      string `json:"time"`
-		} `json:"backup_rule,omitempty"`
-		Components   *string `json:"components,omitempty"`
-		ForceBackend *string `json:"force_backend,omitempty"`
-		Size         *int64  `json:"size,omitempty"`
-		SizeFactor   *string `json:"size_factor,omitempty"`
-		Tier         *string `json:"tier,omitempty"`
-		Title        *string `json:"title,omitempty"`
+// CreateStorageBackupResponse Response containing the on-demand backup being created.
+type CreateStorageBackupResponse struct {
+	// Storage Detailed information about a storage resource.
+	Storage StorageDetails `json:"storage"`
+}
 
-		// Uuid Universally unique identifier
-		Uuid *StorageUuid `json:"uuid,omitempty"`
+// CreateStorageRequest Request schema for creating block storage.
+type CreateStorageRequest struct {
+	// Storage Block storage creation parameters.
+	Storage struct {
+		// BackupRule Schedule for automatic backups. An empty object disables automatic         backups.
+		BackupRule *CreateStorageRequest_Storage_BackupRule `json:"backup_rule,omitempty"`
+
+		// Encrypted Indicates whether the resource is encrypted.
+		//
+		// Examples: yes, no
+		Encrypted *StorageEncrypted `json:"encrypted,omitempty"`
+
+		// Labels Labels describing and classifying the block storage. Each label contains a key and a value.
+		Labels *[]StorageLabel `json:"labels,omitempty"`
+
+		// Size Size of the block storage in gigabytes, from 1 through 4096 subject to the account's block storage limits.
+		//
+		// Examples: 100, 100
+		Size CreateStorageRequest_Storage_Size `json:"size"`
+
+		// Tier Block storage performance and pricing tier. `maxiops` is high-performance block storage, `standard` is general-purpose block storage, and `hdd` is the API name for the high-capacity Archive tier.
+		//
+		// Examples: hdd, standard, maxiops
+		Tier *StorageTier `json:"tier,omitempty"`
+
+		// Title A short, informational description of the block storage.
+		Title string `json:"title"`
 
 		// Zone Zone identifier
 		//
 		// Examples: fi-hel1, de-fra1, us-nyc1
-		Zone *StorageZone `json:"zone,omitempty"`
+		Zone StorageZone `json:"zone"`
 	} `json:"storage"`
 }
 
-// CreateStorageResponse Created storage
+// CreateStorageRequestStorageBackupRule1 defines model for CreateStorageRequest.Storage.BackupRule.1.
+type CreateStorageRequestStorageBackupRule1 = map[string]interface{}
+
+// CreateStorageRequest_Storage_BackupRule Schedule for automatic backups. An empty object disables automatic         backups.
+type CreateStorageRequest_Storage_BackupRule struct {
+	union json.RawMessage
+}
+
+// CreateStorageRequestStorageSize0 defines model for CreateStorageRequest.Storage.Size.0.
+type CreateStorageRequestStorageSize0 = int
+
+// CreateStorageRequestStorageSize1 defines model for CreateStorageRequest.Storage.Size.1.
+type CreateStorageRequestStorageSize1 = string
+
+// CreateStorageRequest_Storage_Size Size of the block storage in gigabytes, from 1 through 4096 subject to the account's block storage limits.
+//
+// Examples: 100, 100
+type CreateStorageRequest_Storage_Size struct {
+	union json.RawMessage
+}
+
+// CreateStorageResponse Response containing the created block storage resource.
 type CreateStorageResponse struct {
 	// Storage Detailed information about a storage resource.
 	Storage StorageDetails `json:"storage"`
 }
 
-// CreateStorageTemplateRequest Request schema for creating a storage template
+// CreateStorageTemplateRequest Request schema for creating a template from a block storage resource.
 type CreateStorageTemplateRequest struct {
+	// Storage Parameters for creating a template from the block storage.
 	Storage struct {
+		// Title A short, informational description of the template.
 		Title string `json:"title"`
 	} `json:"storage"`
 }
 
-// ModifyStorageBody Request schema for modifying storage properties.
+// CreateStorageTemplateResponse Response containing the private template being created.
+type CreateStorageTemplateResponse struct {
+	// Storage Detailed information about a storage resource.
+	Storage StorageDetails `json:"storage"`
+}
+
+// DetachStorageResponse Response containing the detached storage resource.
+type DetachStorageResponse struct {
+	// Storage Detailed information about a storage resource.
+	Storage StorageDetails `json:"storage"`
+}
+
+// ModifyStorageBody Request schema for modifying block storage properties.
 type ModifyStorageBody struct {
+	// Storage Block storage properties to modify.
 	Storage struct {
-		// BackupRule Backup rule configuration for storage backups.
-		BackupRule         *CreateStorageBackupRequest `json:"backup_rule,omitempty"`
-		FilesystemResize   *string                     `json:"filesystem_resize,omitempty"`
-		FlushNormalLabels  *string                     `json:"flush_normal_labels,omitempty"`
-		OsType             *string                     `json:"os_type,omitempty"`
-		PartitionTableType *string                     `json:"partition_table_type,omitempty"`
-		Size               *int64                      `json:"size,omitempty"`
-		SizeFactor         *int64                      `json:"size_factor,omitempty"`
-		TemplateType       *string                     `json:"template_type,omitempty"`
-		Title              *string                     `json:"title,omitempty"`
+		// BackupRule Schedule for automatic backups of the block storage. An empty object removes the configured schedule.
+		BackupRule *ModifyStorageBody_Storage_BackupRule `json:"backup_rule,omitempty"`
+
+		// FilesystemResize Set to `yes` when increasing `size` to also resize the last partition and its supported filesystem. The attached Cloud Server, if any, must be stopped.
+		FilesystemResize *ModifyStorageBodyStorageFilesystemResize `json:"filesystem_resize,omitempty"`
+
+		// Labels Labels describing and classifying the block storage. Each label contains a key and a value.
+		Labels *[]StorageLabel `json:"labels,omitempty"`
+
+		// Size New block storage size in gigabytes, from 1 through 4096 subject to the account's block storage limits. The new size must be greater than the current size.
+		//
+		// Examples: 100, 100
+		Size *ModifyStorageBody_Storage_Size `json:"size,omitempty"`
+
+		// Title A short, informational description of the block storage.
+		Title *string `json:"title,omitempty"`
 	} `json:"storage"`
 }
 
-// ModifyStorageResponse Response schema for storage modification operations.
+// ModifyStorageBodyStorageBackupRule1 defines model for ModifyStorageBody.Storage.BackupRule.1.
+type ModifyStorageBodyStorageBackupRule1 = map[string]interface{}
+
+// ModifyStorageBody_Storage_BackupRule Schedule for automatic backups of the block storage. An empty object removes the configured schedule.
+type ModifyStorageBody_Storage_BackupRule struct {
+	union json.RawMessage
+}
+
+// ModifyStorageBodyStorageFilesystemResize Set to `yes` when increasing `size` to also resize the last partition and its supported filesystem. The attached Cloud Server, if any, must be stopped.
+type ModifyStorageBodyStorageFilesystemResize string
+
+// ModifyStorageBodyStorageSize0 defines model for ModifyStorageBody.Storage.Size.0.
+type ModifyStorageBodyStorageSize0 = int
+
+// ModifyStorageBodyStorageSize1 defines model for ModifyStorageBody.Storage.Size.1.
+type ModifyStorageBodyStorageSize1 = string
+
+// ModifyStorageBody_Storage_Size New block storage size in gigabytes, from 1 through 4096 subject to the account's block storage limits. The new size must be greater than the current size.
+//
+// Examples: 100, 100
+type ModifyStorageBody_Storage_Size struct {
+	union json.RawMessage
+}
+
+// ModifyStorageResponse Response schema for block storage modification operations.
 type ModifyStorageResponse struct {
+	// ResizeBackup Detailed information about a storage resource.
+	ResizeBackup *StorageDetails `json:"resize_backup,omitempty"`
+
 	// Storage Detailed information about a storage resource.
 	Storage StorageDetails `json:"storage"`
 }
 
-// ResizeStorageResponse Response schema for resizing a storage volume.
+// ResizeStorageResponse Response containing the backup created before resizing the block storage partition and filesystem.
 type ResizeStorageResponse struct {
-	// Storage Detailed information about a storage resource.
-	Storage StorageDetails `json:"storage"`
+	// ResizeBackup Detailed information about a storage resource.
+	ResizeBackup StorageDetails `json:"resize_backup"`
 }
 
 // Storage Response schema containing a single storage resource.
@@ -448,68 +608,93 @@ type Storage struct {
 // StorageAccess Network access level
 type StorageAccess string
 
-// StorageAccessFilter Storage access level filter
+// StorageAccessFilter Storage resource access type to return.
+//
+// Examples: private
 type StorageAccessFilter string
 
-// StorageAllowHidden Whether to include hidden storages in the response
-//
-// Examples: yes, no
-type StorageAllowHidden string
+// StorageBackupRule Schedule for automatic block storage backups.
+type StorageBackupRule struct {
+	// Interval Weekday when the backup is created, or `daily` to create a backup every day at the same time.
+	Interval StorageBackupRuleInterval `json:"interval"`
 
-// StorageComponents Storage component filter or selector.
-type StorageComponents = string
+	// Retention Number of days before the backup is automatically deleted, from 1 through 1095.
+	Retention string `json:"retention"`
 
-// StorageCreateCdromRequest Schema for creating a new CD-ROM image
-type StorageCreateCdromRequest struct {
-	CreateCdrom struct {
-		Access            *string `json:"access,omitempty"`
-		Architecture      *string `json:"architecture,omitempty"`
-		Category          *string `json:"category,omitempty"`
-		DefaultDiskBus    *string `json:"default_disk_bus,omitempty"`
-		DefaultNicModel   *string `json:"default_nic_model,omitempty"`
-		DefaultVideoModel *string `json:"default_video_model,omitempty"`
-		DescriptionEn     *string `json:"description_en,omitempty"`
-		DescriptionFi     *string `json:"description_fi,omitempty"`
-		Md5sum            *string `json:"md5sum,omitempty"`
-		Owner             *string `json:"owner,omitempty"`
-		Title             *string `json:"title,omitempty"`
-		Url               *string `json:"url,omitempty"`
-
-		// Uuid Universally unique identifier
-		Uuid *StorageUuid `json:"uuid,omitempty"`
-
-		// Zone Zone identifier
-		//
-		// Examples: fi-hel1, de-fra1, us-nyc1
-		Zone *StorageZone `json:"zone,omitempty"`
-	} `json:"create_cdrom"`
+	// Time UTC time of day when the backup is created, in `HHMM` format.
+	Time string `json:"time"`
 }
+
+// StorageBackupRuleInterval Weekday when the backup is created, or `daily` to create a backup every day at the same time.
+type StorageBackupRuleInterval string
 
 // StorageDetails Detailed information about a storage resource.
 type StorageDetails struct {
 	// Access Network access level
 	Access StorageAccess `json:"access"`
 
+	// BackupRule Schedule for automatic backups of the storage resource. An empty object indicates that no automatic backup schedule is configured.
+	BackupRule *StorageDetails_BackupRule `json:"backup_rule,omitempty"`
+
+	// Backups Backups associated with this storage resource.
+	Backups *struct {
+		// Backup UUIDs of backups associated with this storage resource.
+		Backup []StorageUuid `json:"backup"`
+	} `json:"backups,omitempty"`
+
+	// Created Time when the private storage resource was created.
+	Created *time.Time `json:"created,omitempty"`
+
 	// Encrypted Indicates whether the resource is encrypted.
 	//
 	// Examples: yes, no
 	Encrypted StorageEncrypted `json:"encrypted"`
-	Labels    *[]StorageLabel  `json:"labels,omitempty"`
-	License   float64          `json:"license"`
 
-	// Metadata Only available with "metadata" in Options
-	Metadata   *map[string]string        `json:"metadata,omitempty"`
+	// Labels Labels describing and classifying the storage resource.
+	Labels []StorageLabel `json:"labels"`
+
+	// License Hourly license cost in credits when the storage resource contains a licensed operating system.
+	License float64 `json:"license"`
+
+	// Origin Universally unique identifier
+	Origin *StorageUuid `json:"origin,omitempty"`
+
+	// PartOfPlan Present with the value `yes` when the storage resource is included in a Cloud Server plan.
 	PartOfPlan *StorageDetailsPartOfPlan `json:"part_of_plan,omitempty"`
-	Size       int64                     `json:"size"`
 
-	// State Current lifecycle state of the storage resource.
+	// Progress Progress of an ongoing storage operation when available.
+	Progress *string `json:"progress,omitempty"`
+
+	// Servers Cloud Servers to which the storage resource is attached.
+	Servers struct {
+		// Server UUIDs of Cloud Servers to which the storage resource is attached.
+		Server []StorageUuid `json:"server"`
+	} `json:"servers"`
+
+	// Size Size of the storage resource in gigabytes.
+	Size int64 `json:"size"`
+
+	// State Current lifecycle state of the storage resource. `online` is ready for use; `maintenance` indicates ongoing maintenance or an update; `cloning`, `backuping`, and `syncing` indicate active storage operations; `error` indicates that the storage resource is inaccessible because an error occurred.
+	//
+	// Examples: online
 	State StorageState `json:"state"`
 
-	// Tier Storage tier identifier.
-	Tier  *StorageTier `json:"tier,omitempty"`
-	Title string       `json:"title"`
+	// TemplateType Template initialization mechanism. `cloud-init` templates support cloud-init metadata, while `native` templates use the operating system's native initialization.
+	//
+	// Examples: cloud-init
+	TemplateType *StorageTemplateType `json:"template_type,omitempty"`
 
-	// Type Storage type filter
+	// Tier Block storage performance and pricing tier. `maxiops` is high-performance block storage, `standard` is general-purpose block storage, and `hdd` is the API name for the high-capacity Archive tier.
+	//
+	// Examples: hdd, standard, maxiops
+	Tier *StorageTier `json:"tier,omitempty"`
+
+	// Title A short, informational description of the storage resource.
+	Title string `json:"title"`
+
+	// Type Storage resource type to return.
+	//
+	// Examples: normal
 	Type StorageType `json:"type"`
 
 	// Uuid Universally unique identifier
@@ -518,11 +703,18 @@ type StorageDetails struct {
 	// Zone Zone identifier
 	//
 	// Examples: fi-hel1, de-fra1, us-nyc1
-	Zone                 *StorageZone           `json:"zone,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
+	Zone *StorageZone `json:"zone,omitempty"`
 }
 
-// StorageDetailsPartOfPlan defines model for StorageDetails.PartOfPlan.
+// StorageDetailsBackupRule1 defines model for StorageDetails.BackupRule.1.
+type StorageDetailsBackupRule1 = map[string]interface{}
+
+// StorageDetails_BackupRule Schedule for automatic backups of the storage resource. An empty object indicates that no automatic backup schedule is configured.
+type StorageDetails_BackupRule struct {
+	union json.RawMessage
+}
+
+// StorageDetailsPartOfPlan Present with the value `yes` when the storage resource is included in a Cloud Server plan.
 type StorageDetailsPartOfPlan string
 
 // StorageEncrypted Indicates whether the resource is encrypted.
@@ -541,71 +733,133 @@ type StorageError struct {
 	} `json:"error"`
 }
 
-// StorageFavorite Filter storages by favorite status
-//
-// Examples: yes, no
-type StorageFavorite string
-
 // StorageLabel A key/value pair to label and categorize resources
 type StorageLabel struct {
-	Key   string `json:"key"`
+	// Key Label key used to classify the resource
+	Key string `json:"key"`
+
+	// Value Value associated with the label key
 	Value string `json:"value"`
 }
 
-// StorageLabelFilter Label filter in format key=value or !key=value for negation
+// StorageLabelFilter Label key or key-value pair to match. A key-only filter matches any value. Repeat the query parameter to require all specified labels; keys are matched case-insensitively.
 //
-// Examples: environment=production, !temporary=true
+// Examples: environment, environment=production
 type StorageLabelFilter = string
 
-// StorageLimit Maximum number of items to return. Default is 25.
+// StorageLimit Maximum number of storage resources to return. Default is 25.
 //
 // Examples: 25, 50, 100
 type StorageLimit = int
 
-// StorageMetadata Whether to include metadata in the response
-//
-// Examples: yes, no
-type StorageMetadata string
+// StorageListItem Storage resource summary returned by public list operations.
+type StorageListItem struct {
+	// Access Network access level
+	Access StorageAccess `json:"access"`
+
+	// Created Time when the private storage resource or backup was created.
+	Created *time.Time `json:"created,omitempty"`
+
+	// Encrypted Indicates whether the resource is encrypted.
+	//
+	// Examples: yes, no
+	Encrypted StorageEncrypted `json:"encrypted"`
+
+	// Labels Labels describing and classifying the storage resource.
+	Labels []StorageLabel `json:"labels"`
+
+	// License Hourly license fee in credits. The value is `0` when the storage resource has no license fee.
+	License float64 `json:"license"`
+
+	// Origin Universally unique identifier
+	Origin *StorageUuid `json:"origin,omitempty"`
+
+	// PartOfPlan Present with value `yes` when the storage resource is included in the Cloud Server plan.
+	PartOfPlan *StorageListItemPartOfPlan `json:"part_of_plan,omitempty"`
+
+	// Progress Progress of an active storage operation.
+	Progress *string `json:"progress,omitempty"`
+
+	// Size Size of the storage resource in gigabytes.
+	Size int64 `json:"size"`
+
+	// State Current lifecycle state of the storage resource. `online` is ready for use; `maintenance` indicates ongoing maintenance or an update; `cloning`, `backuping`, and `syncing` indicate active storage operations; `error` indicates that the storage resource is inaccessible because an error occurred.
+	//
+	// Examples: online
+	State StorageState `json:"state"`
+
+	// TemplateType Template initialization mechanism. `cloud-init` templates support cloud-init metadata, while `native` templates use the operating system's native initialization.
+	//
+	// Examples: cloud-init
+	TemplateType *StorageTemplateType `json:"template_type,omitempty"`
+
+	// Tier Block storage performance and pricing tier. `maxiops` is high-performance block storage, `standard` is general-purpose block storage, and `hdd` is the API name for the high-capacity Archive tier.
+	//
+	// Examples: hdd, standard, maxiops
+	Tier *StorageTier `json:"tier,omitempty"`
+
+	// Title A short, informational description of the storage resource.
+	Title string `json:"title"`
+
+	// Type Storage resource type to return.
+	//
+	// Examples: normal
+	Type StorageType `json:"type"`
+
+	// Uuid Universally unique identifier
+	Uuid StorageUuid `json:"uuid"`
+
+	// Zone Zone identifier
+	//
+	// Examples: fi-hel1, de-fra1, us-nyc1
+	Zone *StorageZone `json:"zone,omitempty"`
+}
+
+// StorageListItemPartOfPlan Present with value `yes` when the storage resource is included in the Cloud Server plan.
+type StorageListItemPartOfPlan string
 
 // StorageOffset Number of items to skip before starting to return results. Default is 0.
 //
 // Examples: 0, 25, 50, 100
 type StorageOffset = int
 
-// StorageOrderBy Sort order for storage results
+// StorageOrderBy Sort direction. This parameter is used only when `sort_by` is specified.
+//
+// Examples: asc
 type StorageOrderBy string
 
-// StorageSearch Search storages by title or UUID (partial match)
+// StorageSearch Partial match against the storage resource title or UUID.
 //
-// Examples: my-storage
+// Examples: database, 01f3286c
 type StorageSearch = string
 
-// StorageServers Whether to include server information in the response
+// StorageSortBy Storage resource field by which to sort the results.
 //
-// Examples: yes, no
-type StorageServers string
-
-// StorageSortBy Field to sort storage results by
+// Examples: title
 type StorageSortBy string
 
-// StorageState Current lifecycle state of the storage resource.
+// StorageState Current lifecycle state of the storage resource. `online` is ready for use; `maintenance` indicates ongoing maintenance or an update; `cloning`, `backuping`, and `syncing` indicate active storage operations; `error` indicates that the storage resource is inaccessible because an error occurred.
+//
+// Examples: online
 type StorageState string
 
-// StorageTier Storage tier identifier.
-type StorageTier = string
+// StorageTemplateType Template initialization mechanism. `cloud-init` templates support cloud-init metadata, while `native` templates use the operating system's native initialization.
+//
+// Examples: cloud-init
+type StorageTemplateType string
+
+// StorageTier Block storage performance and pricing tier. `maxiops` is high-performance block storage, `standard` is general-purpose block storage, and `hdd` is the API name for the high-capacity Archive tier.
+//
+// Examples: hdd, standard, maxiops
+type StorageTier string
 
 // StorageTitle Human-readable title for a resource.
 type StorageTitle = string
 
-// StorageType Storage type filter
+// StorageType Storage resource type to return.
+//
+// Examples: normal
 type StorageType string
-
-// StorageUpdateTemplateRequest Request schema for updating a storage template
-type StorageUpdateTemplateRequest struct {
-	UpdateTemplate struct {
-		Source *string `json:"source,omitempty"`
-	} `json:"update_template"`
-}
 
 // StorageUuid Universally unique identifier
 type StorageUuid = openapi_types.UUID
@@ -615,15 +869,12 @@ type StorageUuid = openapi_types.UUID
 // Examples: fi-hel1, de-fra1, us-nyc1
 type StorageZone = string
 
-// Storages Response schema containing a list of storage resources.
+// Storages A list of storage resources accessible to the account.
 type Storages struct {
 	Storages struct {
-		Storage []StorageDetails `json:"storage"`
+		Storage []StorageListItem `json:"storage"`
 	} `json:"storages"`
 }
-
-// AddStorageComponentUuid Universally unique identifier
-type AddStorageComponentUuid = StorageUuid
 
 // AddStorageToFavoritesUuid Universally unique identifier
 type AddStorageToFavoritesUuid = StorageUuid
@@ -652,286 +903,254 @@ type DetachStorageFromServerUuid = StorageUuid
 // GetStorageInfoUuid Universally unique identifier
 type GetStorageInfoUuid = StorageUuid
 
-// GetStorageListAllowHidden Whether to include hidden storages in the response
+// GetStorageListByBackupLabel Label key or key-value pair to match. A key-only filter matches any value. Repeat the query parameter to require all specified labels; keys are matched case-insensitively.
 //
-// Examples: yes, no
-type GetStorageListAllowHidden = StorageAllowHidden
-
-// GetStorageListByBackupAllowHidden Whether to include hidden storages in the response
-//
-// Examples: yes, no
-type GetStorageListByBackupAllowHidden = StorageAllowHidden
-
-// GetStorageListByBackupFavorite Filter storages by favorite status
-//
-// Examples: yes, no
-type GetStorageListByBackupFavorite = StorageFavorite
-
-// GetStorageListByBackupLabel Label filter in format key=value or !key=value for negation
-//
-// Examples: environment=production, !temporary=true
+// Examples: environment, environment=production
 type GetStorageListByBackupLabel = StorageLabelFilter
 
-// GetStorageListByBackupLimit Maximum number of items to return. Default is 25.
+// GetStorageListByBackupLimit Maximum number of storage resources to return. Default is 25.
 //
 // Examples: 25, 50, 100
 type GetStorageListByBackupLimit = StorageLimit
-
-// GetStorageListByBackupMetadata Whether to include metadata in the response
-//
-// Examples: yes, no
-type GetStorageListByBackupMetadata = StorageMetadata
 
 // GetStorageListByBackupOffset Number of items to skip before starting to return results. Default is 0.
 //
 // Examples: 0, 25, 50, 100
 type GetStorageListByBackupOffset = StorageOffset
 
-// GetStorageListByBackupOrderBy Sort order for storage results
+// GetStorageListByBackupOrderBy Sort direction. This parameter is used only when `sort_by` is specified.
+//
+// Examples: asc
 type GetStorageListByBackupOrderBy = StorageOrderBy
 
-// GetStorageListByBackupSearch Search storages by title or UUID (partial match)
+// GetStorageListByBackupSearch Partial match against the storage resource title or UUID.
 //
-// Examples: my-storage
+// Examples: database, 01f3286c
 type GetStorageListByBackupSearch = StorageSearch
 
-// GetStorageListByBackupServers Whether to include server information in the response
+// GetStorageListByBackupSortBy Storage resource field by which to sort the results.
 //
-// Examples: yes, no
-type GetStorageListByBackupServers = StorageServers
-
-// GetStorageListByBackupSortBy Field to sort storage results by
+// Examples: title
 type GetStorageListByBackupSortBy = StorageSortBy
 
-// GetStorageListByCdromAllowHidden Whether to include hidden storages in the response
+// GetStorageListByCdromLabel Label key or key-value pair to match. A key-only filter matches any value. Repeat the query parameter to require all specified labels; keys are matched case-insensitively.
 //
-// Examples: yes, no
-type GetStorageListByCdromAllowHidden = StorageAllowHidden
-
-// GetStorageListByCdromFavorite Filter storages by favorite status
-//
-// Examples: yes, no
-type GetStorageListByCdromFavorite = StorageFavorite
-
-// GetStorageListByCdromLabel Label filter in format key=value or !key=value for negation
-//
-// Examples: environment=production, !temporary=true
+// Examples: environment, environment=production
 type GetStorageListByCdromLabel = StorageLabelFilter
 
-// GetStorageListByCdromLimit Maximum number of items to return. Default is 25.
+// GetStorageListByCdromLimit Maximum number of storage resources to return. Default is 25.
 //
 // Examples: 25, 50, 100
 type GetStorageListByCdromLimit = StorageLimit
-
-// GetStorageListByCdromMetadata Whether to include metadata in the response
-//
-// Examples: yes, no
-type GetStorageListByCdromMetadata = StorageMetadata
 
 // GetStorageListByCdromOffset Number of items to skip before starting to return results. Default is 0.
 //
 // Examples: 0, 25, 50, 100
 type GetStorageListByCdromOffset = StorageOffset
 
-// GetStorageListByCdromOrderBy Sort order for storage results
+// GetStorageListByCdromOrderBy Sort direction. This parameter is used only when `sort_by` is specified.
+//
+// Examples: asc
 type GetStorageListByCdromOrderBy = StorageOrderBy
 
-// GetStorageListByCdromSearch Search storages by title or UUID (partial match)
+// GetStorageListByCdromSearch Partial match against the storage resource title or UUID.
 //
-// Examples: my-storage
+// Examples: database, 01f3286c
 type GetStorageListByCdromSearch = StorageSearch
 
-// GetStorageListByCdromServers Whether to include server information in the response
+// GetStorageListByCdromSortBy Storage resource field by which to sort the results.
 //
-// Examples: yes, no
-type GetStorageListByCdromServers = StorageServers
-
-// GetStorageListByCdromSortBy Field to sort storage results by
+// Examples: title
 type GetStorageListByCdromSortBy = StorageSortBy
 
-// GetStorageListByNormalAllowHidden Whether to include hidden storages in the response
+// GetStorageListByNormalLabel Label key or key-value pair to match. A key-only filter matches any value. Repeat the query parameter to require all specified labels; keys are matched case-insensitively.
 //
-// Examples: yes, no
-type GetStorageListByNormalAllowHidden = StorageAllowHidden
-
-// GetStorageListByNormalFavorite Filter storages by favorite status
-//
-// Examples: yes, no
-type GetStorageListByNormalFavorite = StorageFavorite
-
-// GetStorageListByNormalLabel Label filter in format key=value or !key=value for negation
-//
-// Examples: environment=production, !temporary=true
+// Examples: environment, environment=production
 type GetStorageListByNormalLabel = StorageLabelFilter
 
-// GetStorageListByNormalLimit Maximum number of items to return. Default is 25.
+// GetStorageListByNormalLimit Maximum number of storage resources to return. Default is 25.
 //
 // Examples: 25, 50, 100
 type GetStorageListByNormalLimit = StorageLimit
-
-// GetStorageListByNormalMetadata Whether to include metadata in the response
-//
-// Examples: yes, no
-type GetStorageListByNormalMetadata = StorageMetadata
 
 // GetStorageListByNormalOffset Number of items to skip before starting to return results. Default is 0.
 //
 // Examples: 0, 25, 50, 100
 type GetStorageListByNormalOffset = StorageOffset
 
-// GetStorageListByNormalOrderBy Sort order for storage results
+// GetStorageListByNormalOrderBy Sort direction. This parameter is used only when `sort_by` is specified.
+//
+// Examples: asc
 type GetStorageListByNormalOrderBy = StorageOrderBy
 
-// GetStorageListByNormalSearch Search storages by title or UUID (partial match)
+// GetStorageListByNormalSearch Partial match against the storage resource title or UUID.
 //
-// Examples: my-storage
+// Examples: database, 01f3286c
 type GetStorageListByNormalSearch = StorageSearch
 
-// GetStorageListByNormalServers Whether to include server information in the response
+// GetStorageListByNormalSortBy Storage resource field by which to sort the results.
 //
-// Examples: yes, no
-type GetStorageListByNormalServers = StorageServers
-
-// GetStorageListByNormalSortBy Field to sort storage results by
+// Examples: title
 type GetStorageListByNormalSortBy = StorageSortBy
 
-// GetStorageListByTemplateAllowHidden Whether to include hidden storages in the response
+// GetStorageListByPrivateAccessLabel Label key or key-value pair to match. A key-only filter matches any value. Repeat the query parameter to require all specified labels; keys are matched case-insensitively.
 //
-// Examples: yes, no
-type GetStorageListByTemplateAllowHidden = StorageAllowHidden
+// Examples: environment, environment=production
+type GetStorageListByPrivateAccessLabel = StorageLabelFilter
 
-// GetStorageListByTemplateFavorite Filter storages by favorite status
+// GetStorageListByPrivateAccessLimit Maximum number of storage resources to return. Default is 25.
 //
-// Examples: yes, no
-type GetStorageListByTemplateFavorite = StorageFavorite
+// Examples: 25, 50, 100
+type GetStorageListByPrivateAccessLimit = StorageLimit
 
-// GetStorageListByTemplateLabel Label filter in format key=value or !key=value for negation
+// GetStorageListByPrivateAccessOffset Number of items to skip before starting to return results. Default is 0.
 //
-// Examples: environment=production, !temporary=true
+// Examples: 0, 25, 50, 100
+type GetStorageListByPrivateAccessOffset = StorageOffset
+
+// GetStorageListByPrivateAccessOrderBy Sort direction. This parameter is used only when `sort_by` is specified.
+//
+// Examples: asc
+type GetStorageListByPrivateAccessOrderBy = StorageOrderBy
+
+// GetStorageListByPrivateAccessSearch Partial match against the storage resource title or UUID.
+//
+// Examples: database, 01f3286c
+type GetStorageListByPrivateAccessSearch = StorageSearch
+
+// GetStorageListByPrivateAccessSortBy Storage resource field by which to sort the results.
+//
+// Examples: title
+type GetStorageListByPrivateAccessSortBy = StorageSortBy
+
+// GetStorageListByPublicAccessLabel Label key or key-value pair to match. A key-only filter matches any value. Repeat the query parameter to require all specified labels; keys are matched case-insensitively.
+//
+// Examples: environment, environment=production
+type GetStorageListByPublicAccessLabel = StorageLabelFilter
+
+// GetStorageListByPublicAccessLimit Maximum number of storage resources to return. Default is 25.
+//
+// Examples: 25, 50, 100
+type GetStorageListByPublicAccessLimit = StorageLimit
+
+// GetStorageListByPublicAccessOffset Number of items to skip before starting to return results. Default is 0.
+//
+// Examples: 0, 25, 50, 100
+type GetStorageListByPublicAccessOffset = StorageOffset
+
+// GetStorageListByPublicAccessOrderBy Sort direction. This parameter is used only when `sort_by` is specified.
+//
+// Examples: asc
+type GetStorageListByPublicAccessOrderBy = StorageOrderBy
+
+// GetStorageListByPublicAccessSearch Partial match against the storage resource title or UUID.
+//
+// Examples: database, 01f3286c
+type GetStorageListByPublicAccessSearch = StorageSearch
+
+// GetStorageListByPublicAccessSortBy Storage resource field by which to sort the results.
+//
+// Examples: title
+type GetStorageListByPublicAccessSortBy = StorageSortBy
+
+// GetStorageListByTemplateLabel Label key or key-value pair to match. A key-only filter matches any value. Repeat the query parameter to require all specified labels; keys are matched case-insensitively.
+//
+// Examples: environment, environment=production
 type GetStorageListByTemplateLabel = StorageLabelFilter
 
-// GetStorageListByTemplateLimit Maximum number of items to return. Default is 25.
+// GetStorageListByTemplateLimit Maximum number of storage resources to return. Default is 25.
 //
 // Examples: 25, 50, 100
 type GetStorageListByTemplateLimit = StorageLimit
-
-// GetStorageListByTemplateMetadata Whether to include metadata in the response
-//
-// Examples: yes, no
-type GetStorageListByTemplateMetadata = StorageMetadata
 
 // GetStorageListByTemplateOffset Number of items to skip before starting to return results. Default is 0.
 //
 // Examples: 0, 25, 50, 100
 type GetStorageListByTemplateOffset = StorageOffset
 
-// GetStorageListByTemplateOrderBy Sort order for storage results
+// GetStorageListByTemplateOrderBy Sort direction. This parameter is used only when `sort_by` is specified.
+//
+// Examples: asc
 type GetStorageListByTemplateOrderBy = StorageOrderBy
 
-// GetStorageListByTemplateSearch Search storages by title or UUID (partial match)
+// GetStorageListByTemplateSearch Partial match against the storage resource title or UUID.
 //
-// Examples: my-storage
+// Examples: database, 01f3286c
 type GetStorageListByTemplateSearch = StorageSearch
 
-// GetStorageListByTemplateServers Whether to include server information in the response
+// GetStorageListByTemplateSortBy Storage resource field by which to sort the results.
 //
-// Examples: yes, no
-type GetStorageListByTemplateServers = StorageServers
-
-// GetStorageListByTemplateSortBy Field to sort storage results by
+// Examples: title
 type GetStorageListByTemplateSortBy = StorageSortBy
 
-// GetStorageListByTypeAndAccessAccess Storage access level filter
+// GetStorageListByTypeAndAccessAccess Storage resource access type to return.
+//
+// Examples: private
 type GetStorageListByTypeAndAccessAccess = StorageAccessFilter
 
-// GetStorageListByTypeAndAccessAllowHidden Whether to include hidden storages in the response
+// GetStorageListByTypeAndAccessLabel Label key or key-value pair to match. A key-only filter matches any value. Repeat the query parameter to require all specified labels; keys are matched case-insensitively.
 //
-// Examples: yes, no
-type GetStorageListByTypeAndAccessAllowHidden = StorageAllowHidden
-
-// GetStorageListByTypeAndAccessFavorite Filter storages by favorite status
-//
-// Examples: yes, no
-type GetStorageListByTypeAndAccessFavorite = StorageFavorite
-
-// GetStorageListByTypeAndAccessLabel Label filter in format key=value or !key=value for negation
-//
-// Examples: environment=production, !temporary=true
+// Examples: environment, environment=production
 type GetStorageListByTypeAndAccessLabel = StorageLabelFilter
 
-// GetStorageListByTypeAndAccessLimit Maximum number of items to return. Default is 25.
+// GetStorageListByTypeAndAccessLimit Maximum number of storage resources to return. Default is 25.
 //
 // Examples: 25, 50, 100
 type GetStorageListByTypeAndAccessLimit = StorageLimit
-
-// GetStorageListByTypeAndAccessMetadata Whether to include metadata in the response
-//
-// Examples: yes, no
-type GetStorageListByTypeAndAccessMetadata = StorageMetadata
 
 // GetStorageListByTypeAndAccessOffset Number of items to skip before starting to return results. Default is 0.
 //
 // Examples: 0, 25, 50, 100
 type GetStorageListByTypeAndAccessOffset = StorageOffset
 
-// GetStorageListByTypeAndAccessOrderBy Sort order for storage results
+// GetStorageListByTypeAndAccessOrderBy Sort direction. This parameter is used only when `sort_by` is specified.
+//
+// Examples: asc
 type GetStorageListByTypeAndAccessOrderBy = StorageOrderBy
 
-// GetStorageListByTypeAndAccessSearch Search storages by title or UUID (partial match)
+// GetStorageListByTypeAndAccessSearch Partial match against the storage resource title or UUID.
 //
-// Examples: my-storage
+// Examples: database, 01f3286c
 type GetStorageListByTypeAndAccessSearch = StorageSearch
 
-// GetStorageListByTypeAndAccessServers Whether to include server information in the response
+// GetStorageListByTypeAndAccessSortBy Storage resource field by which to sort the results.
 //
-// Examples: yes, no
-type GetStorageListByTypeAndAccessServers = StorageServers
-
-// GetStorageListByTypeAndAccessSortBy Field to sort storage results by
+// Examples: title
 type GetStorageListByTypeAndAccessSortBy = StorageSortBy
 
-// GetStorageListByTypeAndAccessType Storage type filter
+// GetStorageListByTypeAndAccessType Storage resource type to return.
+//
+// Examples: normal
 type GetStorageListByTypeAndAccessType = StorageType
 
-// GetStorageListFavorite Filter storages by favorite status
+// GetStorageListLabel Label key or key-value pair to match. A key-only filter matches any value. Repeat the query parameter to require all specified labels; keys are matched case-insensitively.
 //
-// Examples: yes, no
-type GetStorageListFavorite = StorageFavorite
-
-// GetStorageListLabel Label filter in format key=value or !key=value for negation
-//
-// Examples: environment=production, !temporary=true
+// Examples: environment, environment=production
 type GetStorageListLabel = StorageLabelFilter
 
-// GetStorageListLimit Maximum number of items to return. Default is 25.
+// GetStorageListLimit Maximum number of storage resources to return. Default is 25.
 //
 // Examples: 25, 50, 100
 type GetStorageListLimit = StorageLimit
-
-// GetStorageListMetadata Whether to include metadata in the response
-//
-// Examples: yes, no
-type GetStorageListMetadata = StorageMetadata
 
 // GetStorageListOffset Number of items to skip before starting to return results. Default is 0.
 //
 // Examples: 0, 25, 50, 100
 type GetStorageListOffset = StorageOffset
 
-// GetStorageListOrderBy Sort order for storage results
+// GetStorageListOrderBy Sort direction. This parameter is used only when `sort_by` is specified.
+//
+// Examples: asc
 type GetStorageListOrderBy = StorageOrderBy
 
-// GetStorageListSearch Search storages by title or UUID (partial match)
+// GetStorageListSearch Partial match against the storage resource title or UUID.
 //
-// Examples: my-storage
+// Examples: database, 01f3286c
 type GetStorageListSearch = StorageSearch
 
-// GetStorageListServers Whether to include server information in the response
+// GetStorageListSortBy Storage resource field by which to sort the results.
 //
-// Examples: yes, no
-type GetStorageListServers = StorageServers
-
-// GetStorageListSortBy Field to sort storage results by
+// Examples: title
 type GetStorageListSortBy = StorageSortBy
 
 // ModifyStorageUuid Universally unique identifier
@@ -949,14 +1168,11 @@ type RestoreStorageFromBackupUuid = StorageUuid
 // StorageCreateOnDemandBackupUuid Universally unique identifier
 type StorageCreateOnDemandBackupUuid = StorageUuid
 
-// StorageUpdatePublicTemplateFromSourceUuid Universally unique identifier
-type StorageUpdatePublicTemplateFromSourceUuid = StorageUuid
-
-// AddStorageComponentDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
-type AddStorageComponentDefault = StorageError
-
 // AddStorageToFavoritesDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type AddStorageToFavoritesDefault = StorageError
+
+// AttachStorageToServer200 Response containing the attached storage resource and its Cloud Server attachment.
+type AttachStorageToServer200 = AttachStorageResponse
 
 // AttachStorageToServerDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type AttachStorageToServerDefault = StorageError
@@ -964,26 +1180,20 @@ type AttachStorageToServerDefault = StorageError
 // CancelStorageOperationDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type CancelStorageOperationDefault = StorageError
 
-// CloneStorage201 Created storage
+// CloneStorage201 Response containing the created block storage resource.
 type CloneStorage201 = CreateStorageResponse
 
 // CloneStorageDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type CloneStorageDefault = StorageError
 
-// CreateCDROMStorage201 Created storage
-type CreateCDROMStorage201 = CreateStorageResponse
-
-// CreateCDROMStorageDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
-type CreateCDROMStorageDefault = StorageError
-
-// CreateStorage201 Created storage
+// CreateStorage201 Response containing the created block storage resource.
 type CreateStorage201 = CreateStorageResponse
 
 // CreateStorageDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type CreateStorageDefault = StorageError
 
-// CreateTemplateFromStorage201 Created storage
-type CreateTemplateFromStorage201 = CreateStorageResponse
+// CreateTemplateFromStorage201 Response containing the private template being created.
+type CreateTemplateFromStorage201 = CreateStorageTemplateResponse
 
 // CreateTemplateFromStorageDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type CreateTemplateFromStorageDefault = StorageError
@@ -991,10 +1201,13 @@ type CreateTemplateFromStorageDefault = StorageError
 // DeleteStorageDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type DeleteStorageDefault = StorageError
 
+// DetachStorageFromServer200 Response containing the detached storage resource.
+type DetachStorageFromServer200 = DetachStorageResponse
+
 // DetachStorageFromServerDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type DetachStorageFromServerDefault = StorageError
 
-// GetFavoriteStorageList200 Response schema containing a list of storage resources.
+// GetFavoriteStorageList200 A list of storage resources accessible to the account.
 type GetFavoriteStorageList200 = Storages
 
 // GetFavoriteStorageListDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
@@ -1006,13 +1219,13 @@ type GetStorageInfo200 = Storage
 // GetStorageInfoDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type GetStorageInfoDefault = StorageError
 
-// GetStorageList200 Response schema containing a list of storage resources.
+// GetStorageList200 A list of storage resources accessible to the account.
 type GetStorageList200 = Storages
 
 // GetStorageList400 A general error response indicating that the request could not be fulfilled due to a technical issue.
 type GetStorageList400 = StorageError
 
-// GetStorageListByBackup200 Response schema containing a list of storage resources.
+// GetStorageListByBackup200 A list of storage resources accessible to the account.
 type GetStorageListByBackup200 = Storages
 
 // GetStorageListByBackup400 A general error response indicating that the request could not be fulfilled due to a technical issue.
@@ -1021,7 +1234,7 @@ type GetStorageListByBackup400 = StorageError
 // GetStorageListByBackupDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type GetStorageListByBackupDefault = StorageError
 
-// GetStorageListByCdrom200 Response schema containing a list of storage resources.
+// GetStorageListByCdrom200 A list of storage resources accessible to the account.
 type GetStorageListByCdrom200 = Storages
 
 // GetStorageListByCdrom400 A general error response indicating that the request could not be fulfilled due to a technical issue.
@@ -1030,7 +1243,7 @@ type GetStorageListByCdrom400 = StorageError
 // GetStorageListByCdromDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type GetStorageListByCdromDefault = StorageError
 
-// GetStorageListByNormal200 Response schema containing a list of storage resources.
+// GetStorageListByNormal200 A list of storage resources accessible to the account.
 type GetStorageListByNormal200 = Storages
 
 // GetStorageListByNormal400 A general error response indicating that the request could not be fulfilled due to a technical issue.
@@ -1039,7 +1252,25 @@ type GetStorageListByNormal400 = StorageError
 // GetStorageListByNormalDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type GetStorageListByNormalDefault = StorageError
 
-// GetStorageListByTemplate200 Response schema containing a list of storage resources.
+// GetStorageListByPrivateAccess200 A list of storage resources accessible to the account.
+type GetStorageListByPrivateAccess200 = Storages
+
+// GetStorageListByPrivateAccess400 A general error response indicating that the request could not be fulfilled due to a technical issue.
+type GetStorageListByPrivateAccess400 = StorageError
+
+// GetStorageListByPrivateAccessDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type GetStorageListByPrivateAccessDefault = StorageError
+
+// GetStorageListByPublicAccess200 A list of storage resources accessible to the account.
+type GetStorageListByPublicAccess200 = Storages
+
+// GetStorageListByPublicAccess400 A general error response indicating that the request could not be fulfilled due to a technical issue.
+type GetStorageListByPublicAccess400 = StorageError
+
+// GetStorageListByPublicAccessDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type GetStorageListByPublicAccessDefault = StorageError
+
+// GetStorageListByTemplate200 A list of storage resources accessible to the account.
 type GetStorageListByTemplate200 = Storages
 
 // GetStorageListByTemplate400 A general error response indicating that the request could not be fulfilled due to a technical issue.
@@ -1048,7 +1279,7 @@ type GetStorageListByTemplate400 = StorageError
 // GetStorageListByTemplateDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type GetStorageListByTemplateDefault = StorageError
 
-// GetStorageListByTypeAndAccess200 Response schema containing a list of storage resources.
+// GetStorageListByTypeAndAccess200 A list of storage resources accessible to the account.
 type GetStorageListByTypeAndAccess200 = Storages
 
 // GetStorageListByTypeAndAccess400 A general error response indicating that the request could not be fulfilled due to a technical issue.
@@ -1060,7 +1291,7 @@ type GetStorageListByTypeAndAccessDefault = StorageError
 // GetStorageListDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type GetStorageListDefault = StorageError
 
-// ModifyStorage200 Response schema for storage modification operations.
+// ModifyStorage200 Response schema for block storage modification operations.
 type ModifyStorage200 = ModifyStorageResponse
 
 // ModifyStorageDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
@@ -1069,7 +1300,7 @@ type ModifyStorageDefault = StorageError
 // RemoveStorageFromFavoritesDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type RemoveStorageFromFavoritesDefault = StorageError
 
-// ResizeStorage200 Response schema for resizing a storage volume.
+// ResizeStorage200 Response containing the backup created before resizing the block storage partition and filesystem.
 type ResizeStorage200 = ResizeStorageResponse
 
 // ResizeStorageDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
@@ -1078,243 +1309,201 @@ type ResizeStorageDefault = StorageError
 // RestoreStorageFromBackupDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type RestoreStorageFromBackupDefault = StorageError
 
-// StorageCreateOnDemandBackup201 Created storage
-type StorageCreateOnDemandBackup201 = CreateStorageResponse
+// StorageCreateOnDemandBackup201 Response containing the on-demand backup being created.
+type StorageCreateOnDemandBackup201 = CreateStorageBackupResponse
 
 // StorageCreateOnDemandBackupDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type StorageCreateOnDemandBackupDefault = StorageError
 
-// StorageUpdatePublicTemplateFromSourceDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
-type StorageUpdatePublicTemplateFromSourceDefault = StorageError
+// AttachStorageToServer Request schema for attaching this storage resource to a Cloud Server.
+type AttachStorageToServer = AttachStorageRequest
 
-// AddStorageComponent Schema for adding a storage component to a storage device
-type AddStorageComponent = AddStorageComponentRequest
-
-// AttachStorageToServer Schema for attaching a storage device to a server
-type AttachStorageToServer = AttachStorage
-
-// CloneStorage TODO
+// CloneStorage Request schema for cloning a block storage resource.
 type CloneStorage = CloneStorageRequest
 
-// CreateCDROMStorage Schema for creating a new CD-ROM image
-type CreateCDROMStorage = StorageCreateCdromRequest
-
-// CreateStorage Request schema for creating a storage
+// CreateStorage Request schema for creating block storage.
 type CreateStorage = CreateStorageRequest
 
-// CreateTemplateFromStorage Request schema for creating a storage template
+// CreateTemplateFromStorage Request schema for creating a template from a block storage resource.
 type CreateTemplateFromStorage = CreateStorageTemplateRequest
 
-// ModifyStorage Request schema for modifying storage properties.
+// ModifyStorage Request schema for modifying block storage properties.
 type ModifyStorage = ModifyStorageBody
 
-// StorageCreateOnDemandBackup Backup rule configuration for storage backups.
+// StorageCreateOnDemandBackup Request schema for creating an on-demand block storage backup.
 type StorageCreateOnDemandBackup = CreateStorageBackupRequest
-
-// StorageUpdatePublicTemplateFromSource Request schema for updating a storage template
-type StorageUpdatePublicTemplateFromSource = StorageUpdateTemplateRequest
 
 // GetStorageListParams defines parameters for GetStorageList.
 type GetStorageListParams struct {
-	// Label Filter by labels. Can be specified multiple times.
+	// Label Filter by label key or key-value pair. Repeat the parameter to require multiple labels; label keys are matched case-insensitively.
 	Label *GetStorageListLabel `form:"label,omitempty" json:"label,omitempty"`
 
-	// Search Search storages by title or UUID (partial match)
+	// Search Search storage resource titles and UUIDs by partial match.
 	Search *GetStorageListSearch `form:"search,omitempty" json:"search,omitempty"`
 
-	// SortBy Sort results by the specified field
+	// SortBy Field by which to sort the results.
 	SortBy *GetStorageListSortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
 
-	// OrderBy Sort order (ascending or descending). Only valid when sort_by is also specified.
+	// OrderBy Sort direction. Used only when `sort_by` is specified.
 	OrderBy *GetStorageListOrderBy `form:"order_by,omitempty" json:"order_by,omitempty"`
 
-	// Limit Maximum number of storages to return per page
+	// Limit Maximum number of storage resources to return.
 	Limit *GetStorageListLimit `form:"limit,omitempty" json:"limit,omitempty"`
 
-	// Offset Number of storages to skip before starting to return results
+	// Offset Number of storage resources to skip before returning results.
 	Offset *GetStorageListOffset `form:"offset,omitempty" json:"offset,omitempty"`
-
-	// AllowHidden Include hidden storages in the response
-	AllowHidden *GetStorageListAllowHidden `form:"allow_hidden,omitempty" json:"allow_hidden,omitempty"`
-
-	// Favorite Filter storages by favorite status
-	Favorite *GetStorageListFavorite `form:"favorite,omitempty" json:"favorite,omitempty"`
-
-	// Metadata Whether to include metadata in the response
-	Metadata *GetStorageListMetadata `form:"metadata,omitempty" json:"metadata,omitempty"`
-
-	// Servers Whether to include server information in the response
-	Servers *GetStorageListServers `form:"servers,omitempty" json:"servers,omitempty"`
 }
 
 // GetStorageListByBackupParams defines parameters for GetStorageListByBackup.
 type GetStorageListByBackupParams struct {
-	// Label Filter by labels. Can be specified multiple times.
+	// Label Filter by label key or key-value pair. Repeat the parameter to require multiple labels; label keys are matched case-insensitively.
 	Label *GetStorageListByBackupLabel `form:"label,omitempty" json:"label,omitempty"`
 
-	// Search Search storages by title or UUID (partial match)
+	// Search Search storage resource titles and UUIDs by partial match.
 	Search *GetStorageListByBackupSearch `form:"search,omitempty" json:"search,omitempty"`
 
-	// SortBy Sort results by the specified field
+	// SortBy Field by which to sort the results.
 	SortBy *GetStorageListByBackupSortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
 
-	// OrderBy Sort order (ascending or descending). Only valid when sort_by is also specified.
+	// OrderBy Sort direction. Used only when `sort_by` is specified.
 	OrderBy *GetStorageListByBackupOrderBy `form:"order_by,omitempty" json:"order_by,omitempty"`
 
-	// Limit Maximum number of storages to return per page
+	// Limit Maximum number of storage resources to return.
 	Limit *GetStorageListByBackupLimit `form:"limit,omitempty" json:"limit,omitempty"`
 
-	// Offset Number of storages to skip before starting to return results
+	// Offset Number of storage resources to skip before returning results.
 	Offset *GetStorageListByBackupOffset `form:"offset,omitempty" json:"offset,omitempty"`
-
-	// AllowHidden Include hidden storages in the response
-	AllowHidden *GetStorageListByBackupAllowHidden `form:"allow_hidden,omitempty" json:"allow_hidden,omitempty"`
-
-	// Favorite Filter storages by favorite status
-	Favorite *GetStorageListByBackupFavorite `form:"favorite,omitempty" json:"favorite,omitempty"`
-
-	// Metadata Whether to include metadata in the response
-	Metadata *GetStorageListByBackupMetadata `form:"metadata,omitempty" json:"metadata,omitempty"`
-
-	// Servers Whether to include server information in the response
-	Servers *GetStorageListByBackupServers `form:"servers,omitempty" json:"servers,omitempty"`
 }
 
 // GetStorageListByCdromParams defines parameters for GetStorageListByCdrom.
 type GetStorageListByCdromParams struct {
-	// Label Filter by labels. Can be specified multiple times.
+	// Label Filter by label key or key-value pair. Repeat the parameter to require multiple labels; label keys are matched case-insensitively.
 	Label *GetStorageListByCdromLabel `form:"label,omitempty" json:"label,omitempty"`
 
-	// Search Search storages by title or UUID (partial match)
+	// Search Search storage resource titles and UUIDs by partial match.
 	Search *GetStorageListByCdromSearch `form:"search,omitempty" json:"search,omitempty"`
 
-	// SortBy Sort results by the specified field
+	// SortBy Field by which to sort the results.
 	SortBy *GetStorageListByCdromSortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
 
-	// OrderBy Sort order (ascending or descending). Only valid when sort_by is also specified.
+	// OrderBy Sort direction. Used only when `sort_by` is specified.
 	OrderBy *GetStorageListByCdromOrderBy `form:"order_by,omitempty" json:"order_by,omitempty"`
 
-	// Limit Maximum number of storages to return per page
+	// Limit Maximum number of storage resources to return.
 	Limit *GetStorageListByCdromLimit `form:"limit,omitempty" json:"limit,omitempty"`
 
-	// Offset Number of storages to skip before starting to return results
+	// Offset Number of storage resources to skip before returning results.
 	Offset *GetStorageListByCdromOffset `form:"offset,omitempty" json:"offset,omitempty"`
-
-	// AllowHidden Include hidden storages in the response
-	AllowHidden *GetStorageListByCdromAllowHidden `form:"allow_hidden,omitempty" json:"allow_hidden,omitempty"`
-
-	// Favorite Filter storages by favorite status
-	Favorite *GetStorageListByCdromFavorite `form:"favorite,omitempty" json:"favorite,omitempty"`
-
-	// Metadata Whether to include metadata in the response
-	Metadata *GetStorageListByCdromMetadata `form:"metadata,omitempty" json:"metadata,omitempty"`
-
-	// Servers Whether to include server information in the response
-	Servers *GetStorageListByCdromServers `form:"servers,omitempty" json:"servers,omitempty"`
 }
 
 // GetStorageListByNormalParams defines parameters for GetStorageListByNormal.
 type GetStorageListByNormalParams struct {
-	// Label Filter by labels. Can be specified multiple times.
+	// Label Filter by label key or key-value pair. Repeat the parameter to require multiple labels; label keys are matched case-insensitively.
 	Label *GetStorageListByNormalLabel `form:"label,omitempty" json:"label,omitempty"`
 
-	// Search Search storages by title or UUID (partial match)
+	// Search Search storage resource titles and UUIDs by partial match.
 	Search *GetStorageListByNormalSearch `form:"search,omitempty" json:"search,omitempty"`
 
-	// SortBy Sort results by the specified field
+	// SortBy Field by which to sort the results.
 	SortBy *GetStorageListByNormalSortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
 
-	// OrderBy Sort order (ascending or descending). Only valid when sort_by is also specified.
+	// OrderBy Sort direction. Used only when `sort_by` is specified.
 	OrderBy *GetStorageListByNormalOrderBy `form:"order_by,omitempty" json:"order_by,omitempty"`
 
-	// Limit Maximum number of storages to return per page
+	// Limit Maximum number of storage resources to return.
 	Limit *GetStorageListByNormalLimit `form:"limit,omitempty" json:"limit,omitempty"`
 
-	// Offset Number of storages to skip before starting to return results
+	// Offset Number of storage resources to skip before returning results.
 	Offset *GetStorageListByNormalOffset `form:"offset,omitempty" json:"offset,omitempty"`
+}
 
-	// AllowHidden Include hidden storages in the response
-	AllowHidden *GetStorageListByNormalAllowHidden `form:"allow_hidden,omitempty" json:"allow_hidden,omitempty"`
+// GetStorageListByPrivateAccessParams defines parameters for GetStorageListByPrivateAccess.
+type GetStorageListByPrivateAccessParams struct {
+	// Label Filter by label key or key-value pair. Repeat the parameter to require multiple labels; label keys are matched case-insensitively.
+	Label *GetStorageListByPrivateAccessLabel `form:"label,omitempty" json:"label,omitempty"`
 
-	// Favorite Filter storages by favorite status
-	Favorite *GetStorageListByNormalFavorite `form:"favorite,omitempty" json:"favorite,omitempty"`
+	// Search Search storage resource titles and UUIDs by partial match.
+	Search *GetStorageListByPrivateAccessSearch `form:"search,omitempty" json:"search,omitempty"`
 
-	// Metadata Whether to include metadata in the response
-	Metadata *GetStorageListByNormalMetadata `form:"metadata,omitempty" json:"metadata,omitempty"`
+	// SortBy Field by which to sort the results.
+	SortBy *GetStorageListByPrivateAccessSortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
 
-	// Servers Whether to include server information in the response
-	Servers *GetStorageListByNormalServers `form:"servers,omitempty" json:"servers,omitempty"`
+	// OrderBy Sort direction. Used only when `sort_by` is specified.
+	OrderBy *GetStorageListByPrivateAccessOrderBy `form:"order_by,omitempty" json:"order_by,omitempty"`
+
+	// Limit Maximum number of storage resources to return.
+	Limit *GetStorageListByPrivateAccessLimit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Offset Number of storage resources to skip before returning results.
+	Offset *GetStorageListByPrivateAccessOffset `form:"offset,omitempty" json:"offset,omitempty"`
+}
+
+// GetStorageListByPublicAccessParams defines parameters for GetStorageListByPublicAccess.
+type GetStorageListByPublicAccessParams struct {
+	// Label Filter by label key or key-value pair. Repeat the parameter to require multiple labels; label keys are matched case-insensitively.
+	Label *GetStorageListByPublicAccessLabel `form:"label,omitempty" json:"label,omitempty"`
+
+	// Search Search storage resource titles and UUIDs by partial match.
+	Search *GetStorageListByPublicAccessSearch `form:"search,omitempty" json:"search,omitempty"`
+
+	// SortBy Field by which to sort the results.
+	SortBy *GetStorageListByPublicAccessSortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
+
+	// OrderBy Sort direction. Used only when `sort_by` is specified.
+	OrderBy *GetStorageListByPublicAccessOrderBy `form:"order_by,omitempty" json:"order_by,omitempty"`
+
+	// Limit Maximum number of storage resources to return.
+	Limit *GetStorageListByPublicAccessLimit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Offset Number of storage resources to skip before returning results.
+	Offset *GetStorageListByPublicAccessOffset `form:"offset,omitempty" json:"offset,omitempty"`
 }
 
 // GetStorageListByTemplateParams defines parameters for GetStorageListByTemplate.
 type GetStorageListByTemplateParams struct {
-	// Label Filter by labels. Can be specified multiple times.
+	// Label Filter by label key or key-value pair. Repeat the parameter to require multiple labels; label keys are matched case-insensitively.
 	Label *GetStorageListByTemplateLabel `form:"label,omitempty" json:"label,omitempty"`
 
-	// Search Search storages by title or UUID (partial match)
+	// Search Search storage resource titles and UUIDs by partial match.
 	Search *GetStorageListByTemplateSearch `form:"search,omitempty" json:"search,omitempty"`
 
-	// SortBy Sort results by the specified field
+	// SortBy Field by which to sort the results.
 	SortBy *GetStorageListByTemplateSortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
 
-	// OrderBy Sort order (ascending or descending). Only valid when sort_by is also specified.
+	// OrderBy Sort direction. Used only when `sort_by` is specified.
 	OrderBy *GetStorageListByTemplateOrderBy `form:"order_by,omitempty" json:"order_by,omitempty"`
 
-	// Limit Maximum number of storages to return per page
+	// Limit Maximum number of storage resources to return.
 	Limit *GetStorageListByTemplateLimit `form:"limit,omitempty" json:"limit,omitempty"`
 
-	// Offset Number of storages to skip before starting to return results
+	// Offset Number of storage resources to skip before returning results.
 	Offset *GetStorageListByTemplateOffset `form:"offset,omitempty" json:"offset,omitempty"`
-
-	// AllowHidden Include hidden storages in the response
-	AllowHidden *GetStorageListByTemplateAllowHidden `form:"allow_hidden,omitempty" json:"allow_hidden,omitempty"`
-
-	// Favorite Filter storages by favorite status
-	Favorite *GetStorageListByTemplateFavorite `form:"favorite,omitempty" json:"favorite,omitempty"`
-
-	// Metadata Whether to include metadata in the response
-	Metadata *GetStorageListByTemplateMetadata `form:"metadata,omitempty" json:"metadata,omitempty"`
-
-	// Servers Whether to include server information in the response
-	Servers *GetStorageListByTemplateServers `form:"servers,omitempty" json:"servers,omitempty"`
 }
 
 // GetStorageListByTypeAndAccessParams defines parameters for GetStorageListByTypeAndAccess.
 type GetStorageListByTypeAndAccessParams struct {
-	// Label Filter by labels. Can be specified multiple times.
+	// Label Filter by label key or key-value pair. Repeat the parameter to require multiple labels; label keys are matched case-insensitively.
 	Label *GetStorageListByTypeAndAccessLabel `form:"label,omitempty" json:"label,omitempty"`
 
-	// Search Search storages by title or UUID (partial match)
+	// Search Search storage resource titles and UUIDs by partial match.
 	Search *GetStorageListByTypeAndAccessSearch `form:"search,omitempty" json:"search,omitempty"`
 
-	// SortBy Sort results by the specified field
+	// SortBy Field by which to sort the results.
 	SortBy *GetStorageListByTypeAndAccessSortBy `form:"sort_by,omitempty" json:"sort_by,omitempty"`
 
-	// OrderBy Sort order (ascending or descending). Only valid when sort_by is also specified.
+	// OrderBy Sort direction. Used only when `sort_by` is specified.
 	OrderBy *GetStorageListByTypeAndAccessOrderBy `form:"order_by,omitempty" json:"order_by,omitempty"`
 
-	// Limit Maximum number of storages to return per page
+	// Limit Maximum number of storage resources to return.
 	Limit *GetStorageListByTypeAndAccessLimit `form:"limit,omitempty" json:"limit,omitempty"`
 
-	// Offset Number of storages to skip before starting to return results
+	// Offset Number of storage resources to skip before returning results.
 	Offset *GetStorageListByTypeAndAccessOffset `form:"offset,omitempty" json:"offset,omitempty"`
-
-	// AllowHidden Include hidden storages in the response
-	AllowHidden *GetStorageListByTypeAndAccessAllowHidden `form:"allow_hidden,omitempty" json:"allow_hidden,omitempty"`
-
-	// Favorite Filter storages by favorite status
-	Favorite *GetStorageListByTypeAndAccessFavorite `form:"favorite,omitempty" json:"favorite,omitempty"`
-
-	// Metadata Whether to include metadata in the response
-	Metadata *GetStorageListByTypeAndAccessMetadata `form:"metadata,omitempty" json:"metadata,omitempty"`
-
-	// Servers Whether to include server information in the response
-	Servers *GetStorageListByTypeAndAccessServers `form:"servers,omitempty" json:"servers,omitempty"`
 }
 
 // DeleteStorageParams defines parameters for DeleteStorage.
 type DeleteStorageParams struct {
-	// Backups Policy for handling backups when deleting a storage. Allowed values: keep, delete, keep_latest
+	// Backups Policy for handling backups when deleting a storage resource. Defaults to `keep`. Allowed values: keep, delete, keep_latest
 	Backups *DeleteStorageParamsBackups `form:"backups,omitempty" json:"backups,omitempty"`
 }
 
@@ -1324,17 +1513,11 @@ type DeleteStorageParamsBackups string
 // CreateStorageJSONRequestBody defines body for CreateStorage for application/json ContentType.
 type CreateStorageJSONRequestBody = CreateStorageRequest
 
-// CreateCDROMStorageJSONRequestBody defines body for CreateCDROMStorage for application/json ContentType.
-type CreateCDROMStorageJSONRequestBody = StorageCreateCdromRequest
-
 // ModifyStorageJSONRequestBody defines body for ModifyStorage for application/json ContentType.
 type ModifyStorageJSONRequestBody = ModifyStorageBody
 
-// AddStorageComponentJSONRequestBody defines body for AddStorageComponent for application/json ContentType.
-type AddStorageComponentJSONRequestBody = AddStorageComponentRequest
-
 // AttachStorageToServerJSONRequestBody defines body for AttachStorageToServer for application/json ContentType.
-type AttachStorageToServerJSONRequestBody = AttachStorage
+type AttachStorageToServerJSONRequestBody = AttachStorageRequest
 
 // CreateOnDemandBackupJSONRequestBody defines body for CreateOnDemandBackup for application/json ContentType.
 type CreateOnDemandBackupJSONRequestBody = CreateStorageBackupRequest
@@ -1345,237 +1528,312 @@ type CloneStorageJSONRequestBody = CloneStorageRequest
 // CreateTemplateFromStorageJSONRequestBody defines body for CreateTemplateFromStorage for application/json ContentType.
 type CreateTemplateFromStorageJSONRequestBody = CreateStorageTemplateRequest
 
-// UpdatePublicTemplateFromSourceJSONRequestBody defines body for UpdatePublicTemplateFromSource for application/json ContentType.
-type UpdatePublicTemplateFromSourceJSONRequestBody = StorageUpdateTemplateRequest
-
-// Getter for additional properties for StorageDetails. Returns the specified
-// element and whether it was found
-func (a StorageDetails) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
+// AsStorageBackupRule returns the union data inside the CreateStorageRequest_Storage_BackupRule as a StorageBackupRule
+func (t CreateStorageRequest_Storage_BackupRule) AsStorageBackupRule() (StorageBackupRule, error) {
+	var body StorageBackupRule
+	err := json.Unmarshal(t.union, &body)
+	return body, err
 }
 
-// Setter for additional properties for StorageDetails
-func (a *StorageDetails) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
+// FromStorageBackupRule overwrites any union data inside the CreateStorageRequest_Storage_BackupRule as the provided StorageBackupRule
+func (t *CreateStorageRequest_Storage_BackupRule) FromStorageBackupRule(v StorageBackupRule) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
 }
 
-// Override default JSON handling for StorageDetails to handle AdditionalProperties
-func (a *StorageDetails) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
+// MergeStorageBackupRule performs a merge with any union data inside the CreateStorageRequest_Storage_BackupRule, using the provided StorageBackupRule
+func (t *CreateStorageRequest_Storage_BackupRule) MergeStorageBackupRule(v StorageBackupRule) error {
+	b, err := json.Marshal(v)
 	if err != nil {
 		return err
 	}
 
-	if raw, found := object["access"]; found {
-		err = json.Unmarshal(raw, &a.Access)
-		if err != nil {
-			return fmt.Errorf("error reading 'access': %w", err)
-		}
-		delete(object, "access")
-	}
-
-	if raw, found := object["encrypted"]; found {
-		err = json.Unmarshal(raw, &a.Encrypted)
-		if err != nil {
-			return fmt.Errorf("error reading 'encrypted': %w", err)
-		}
-		delete(object, "encrypted")
-	}
-
-	if raw, found := object["labels"]; found {
-		err = json.Unmarshal(raw, &a.Labels)
-		if err != nil {
-			return fmt.Errorf("error reading 'labels': %w", err)
-		}
-		delete(object, "labels")
-	}
-
-	if raw, found := object["license"]; found {
-		err = json.Unmarshal(raw, &a.License)
-		if err != nil {
-			return fmt.Errorf("error reading 'license': %w", err)
-		}
-		delete(object, "license")
-	}
-
-	if raw, found := object["metadata"]; found {
-		err = json.Unmarshal(raw, &a.Metadata)
-		if err != nil {
-			return fmt.Errorf("error reading 'metadata': %w", err)
-		}
-		delete(object, "metadata")
-	}
-
-	if raw, found := object["part_of_plan"]; found {
-		err = json.Unmarshal(raw, &a.PartOfPlan)
-		if err != nil {
-			return fmt.Errorf("error reading 'part_of_plan': %w", err)
-		}
-		delete(object, "part_of_plan")
-	}
-
-	if raw, found := object["size"]; found {
-		err = json.Unmarshal(raw, &a.Size)
-		if err != nil {
-			return fmt.Errorf("error reading 'size': %w", err)
-		}
-		delete(object, "size")
-	}
-
-	if raw, found := object["state"]; found {
-		err = json.Unmarshal(raw, &a.State)
-		if err != nil {
-			return fmt.Errorf("error reading 'state': %w", err)
-		}
-		delete(object, "state")
-	}
-
-	if raw, found := object["tier"]; found {
-		err = json.Unmarshal(raw, &a.Tier)
-		if err != nil {
-			return fmt.Errorf("error reading 'tier': %w", err)
-		}
-		delete(object, "tier")
-	}
-
-	if raw, found := object["title"]; found {
-		err = json.Unmarshal(raw, &a.Title)
-		if err != nil {
-			return fmt.Errorf("error reading 'title': %w", err)
-		}
-		delete(object, "title")
-	}
-
-	if raw, found := object["type"]; found {
-		err = json.Unmarshal(raw, &a.Type)
-		if err != nil {
-			return fmt.Errorf("error reading 'type': %w", err)
-		}
-		delete(object, "type")
-	}
-
-	if raw, found := object["uuid"]; found {
-		err = json.Unmarshal(raw, &a.Uuid)
-		if err != nil {
-			return fmt.Errorf("error reading 'uuid': %w", err)
-		}
-		delete(object, "uuid")
-	}
-
-	if raw, found := object["zone"]; found {
-		err = json.Unmarshal(raw, &a.Zone)
-		if err != nil {
-			return fmt.Errorf("error reading 'zone': %w", err)
-		}
-		delete(object, "zone")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
 }
 
-// Override default JSON handling for StorageDetails to handle AdditionalProperties
-func (a StorageDetails) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
+// AsCreateStorageRequestStorageBackupRule1 returns the union data inside the CreateStorageRequest_Storage_BackupRule as a CreateStorageRequestStorageBackupRule1
+func (t CreateStorageRequest_Storage_BackupRule) AsCreateStorageRequestStorageBackupRule1() (CreateStorageRequestStorageBackupRule1, error) {
+	var body CreateStorageRequestStorageBackupRule1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
 
-	object["access"], err = json.Marshal(a.Access)
+// FromCreateStorageRequestStorageBackupRule1 overwrites any union data inside the CreateStorageRequest_Storage_BackupRule as the provided CreateStorageRequestStorageBackupRule1
+func (t *CreateStorageRequest_Storage_BackupRule) FromCreateStorageRequestStorageBackupRule1(v CreateStorageRequestStorageBackupRule1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeCreateStorageRequestStorageBackupRule1 performs a merge with any union data inside the CreateStorageRequest_Storage_BackupRule, using the provided CreateStorageRequestStorageBackupRule1
+func (t *CreateStorageRequest_Storage_BackupRule) MergeCreateStorageRequestStorageBackupRule1(v CreateStorageRequestStorageBackupRule1) error {
+	b, err := json.Marshal(v)
 	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'access': %w", err)
+		return err
 	}
 
-	object["encrypted"], err = json.Marshal(a.Encrypted)
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t CreateStorageRequest_Storage_BackupRule) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *CreateStorageRequest_Storage_BackupRule) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsCreateStorageRequestStorageSize0 returns the union data inside the CreateStorageRequest_Storage_Size as a CreateStorageRequestStorageSize0
+func (t CreateStorageRequest_Storage_Size) AsCreateStorageRequestStorageSize0() (CreateStorageRequestStorageSize0, error) {
+	var body CreateStorageRequestStorageSize0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromCreateStorageRequestStorageSize0 overwrites any union data inside the CreateStorageRequest_Storage_Size as the provided CreateStorageRequestStorageSize0
+func (t *CreateStorageRequest_Storage_Size) FromCreateStorageRequestStorageSize0(v CreateStorageRequestStorageSize0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeCreateStorageRequestStorageSize0 performs a merge with any union data inside the CreateStorageRequest_Storage_Size, using the provided CreateStorageRequestStorageSize0
+func (t *CreateStorageRequest_Storage_Size) MergeCreateStorageRequestStorageSize0(v CreateStorageRequestStorageSize0) error {
+	b, err := json.Marshal(v)
 	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'encrypted': %w", err)
+		return err
 	}
 
-	if a.Labels != nil {
-		object["labels"], err = json.Marshal(a.Labels)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'labels': %w", err)
-		}
-	}
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
 
-	object["license"], err = json.Marshal(a.License)
+// AsCreateStorageRequestStorageSize1 returns the union data inside the CreateStorageRequest_Storage_Size as a CreateStorageRequestStorageSize1
+func (t CreateStorageRequest_Storage_Size) AsCreateStorageRequestStorageSize1() (CreateStorageRequestStorageSize1, error) {
+	var body CreateStorageRequestStorageSize1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromCreateStorageRequestStorageSize1 overwrites any union data inside the CreateStorageRequest_Storage_Size as the provided CreateStorageRequestStorageSize1
+func (t *CreateStorageRequest_Storage_Size) FromCreateStorageRequestStorageSize1(v CreateStorageRequestStorageSize1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeCreateStorageRequestStorageSize1 performs a merge with any union data inside the CreateStorageRequest_Storage_Size, using the provided CreateStorageRequestStorageSize1
+func (t *CreateStorageRequest_Storage_Size) MergeCreateStorageRequestStorageSize1(v CreateStorageRequestStorageSize1) error {
+	b, err := json.Marshal(v)
 	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'license': %w", err)
+		return err
 	}
 
-	if a.Metadata != nil {
-		object["metadata"], err = json.Marshal(a.Metadata)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'metadata': %w", err)
-		}
-	}
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
 
-	if a.PartOfPlan != nil {
-		object["part_of_plan"], err = json.Marshal(a.PartOfPlan)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'part_of_plan': %w", err)
-		}
-	}
+func (t CreateStorageRequest_Storage_Size) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
 
-	object["size"], err = json.Marshal(a.Size)
+func (t *CreateStorageRequest_Storage_Size) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsStorageBackupRule returns the union data inside the ModifyStorageBody_Storage_BackupRule as a StorageBackupRule
+func (t ModifyStorageBody_Storage_BackupRule) AsStorageBackupRule() (StorageBackupRule, error) {
+	var body StorageBackupRule
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromStorageBackupRule overwrites any union data inside the ModifyStorageBody_Storage_BackupRule as the provided StorageBackupRule
+func (t *ModifyStorageBody_Storage_BackupRule) FromStorageBackupRule(v StorageBackupRule) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeStorageBackupRule performs a merge with any union data inside the ModifyStorageBody_Storage_BackupRule, using the provided StorageBackupRule
+func (t *ModifyStorageBody_Storage_BackupRule) MergeStorageBackupRule(v StorageBackupRule) error {
+	b, err := json.Marshal(v)
 	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'size': %w", err)
+		return err
 	}
 
-	object["state"], err = json.Marshal(a.State)
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsModifyStorageBodyStorageBackupRule1 returns the union data inside the ModifyStorageBody_Storage_BackupRule as a ModifyStorageBodyStorageBackupRule1
+func (t ModifyStorageBody_Storage_BackupRule) AsModifyStorageBodyStorageBackupRule1() (ModifyStorageBodyStorageBackupRule1, error) {
+	var body ModifyStorageBodyStorageBackupRule1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromModifyStorageBodyStorageBackupRule1 overwrites any union data inside the ModifyStorageBody_Storage_BackupRule as the provided ModifyStorageBodyStorageBackupRule1
+func (t *ModifyStorageBody_Storage_BackupRule) FromModifyStorageBodyStorageBackupRule1(v ModifyStorageBodyStorageBackupRule1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeModifyStorageBodyStorageBackupRule1 performs a merge with any union data inside the ModifyStorageBody_Storage_BackupRule, using the provided ModifyStorageBodyStorageBackupRule1
+func (t *ModifyStorageBody_Storage_BackupRule) MergeModifyStorageBodyStorageBackupRule1(v ModifyStorageBodyStorageBackupRule1) error {
+	b, err := json.Marshal(v)
 	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'state': %w", err)
+		return err
 	}
 
-	if a.Tier != nil {
-		object["tier"], err = json.Marshal(a.Tier)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'tier': %w", err)
-		}
-	}
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
 
-	object["title"], err = json.Marshal(a.Title)
+func (t ModifyStorageBody_Storage_BackupRule) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *ModifyStorageBody_Storage_BackupRule) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsModifyStorageBodyStorageSize0 returns the union data inside the ModifyStorageBody_Storage_Size as a ModifyStorageBodyStorageSize0
+func (t ModifyStorageBody_Storage_Size) AsModifyStorageBodyStorageSize0() (ModifyStorageBodyStorageSize0, error) {
+	var body ModifyStorageBodyStorageSize0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromModifyStorageBodyStorageSize0 overwrites any union data inside the ModifyStorageBody_Storage_Size as the provided ModifyStorageBodyStorageSize0
+func (t *ModifyStorageBody_Storage_Size) FromModifyStorageBodyStorageSize0(v ModifyStorageBodyStorageSize0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeModifyStorageBodyStorageSize0 performs a merge with any union data inside the ModifyStorageBody_Storage_Size, using the provided ModifyStorageBodyStorageSize0
+func (t *ModifyStorageBody_Storage_Size) MergeModifyStorageBodyStorageSize0(v ModifyStorageBodyStorageSize0) error {
+	b, err := json.Marshal(v)
 	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'title': %w", err)
+		return err
 	}
 
-	object["type"], err = json.Marshal(a.Type)
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsModifyStorageBodyStorageSize1 returns the union data inside the ModifyStorageBody_Storage_Size as a ModifyStorageBodyStorageSize1
+func (t ModifyStorageBody_Storage_Size) AsModifyStorageBodyStorageSize1() (ModifyStorageBodyStorageSize1, error) {
+	var body ModifyStorageBodyStorageSize1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromModifyStorageBodyStorageSize1 overwrites any union data inside the ModifyStorageBody_Storage_Size as the provided ModifyStorageBodyStorageSize1
+func (t *ModifyStorageBody_Storage_Size) FromModifyStorageBodyStorageSize1(v ModifyStorageBodyStorageSize1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeModifyStorageBodyStorageSize1 performs a merge with any union data inside the ModifyStorageBody_Storage_Size, using the provided ModifyStorageBodyStorageSize1
+func (t *ModifyStorageBody_Storage_Size) MergeModifyStorageBodyStorageSize1(v ModifyStorageBodyStorageSize1) error {
+	b, err := json.Marshal(v)
 	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'type': %w", err)
+		return err
 	}
 
-	object["uuid"], err = json.Marshal(a.Uuid)
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t ModifyStorageBody_Storage_Size) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *ModifyStorageBody_Storage_Size) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsStorageBackupRule returns the union data inside the StorageDetails_BackupRule as a StorageBackupRule
+func (t StorageDetails_BackupRule) AsStorageBackupRule() (StorageBackupRule, error) {
+	var body StorageBackupRule
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromStorageBackupRule overwrites any union data inside the StorageDetails_BackupRule as the provided StorageBackupRule
+func (t *StorageDetails_BackupRule) FromStorageBackupRule(v StorageBackupRule) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeStorageBackupRule performs a merge with any union data inside the StorageDetails_BackupRule, using the provided StorageBackupRule
+func (t *StorageDetails_BackupRule) MergeStorageBackupRule(v StorageBackupRule) error {
+	b, err := json.Marshal(v)
 	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'uuid': %w", err)
+		return err
 	}
 
-	if a.Zone != nil {
-		object["zone"], err = json.Marshal(a.Zone)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'zone': %w", err)
-		}
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsStorageDetailsBackupRule1 returns the union data inside the StorageDetails_BackupRule as a StorageDetailsBackupRule1
+func (t StorageDetails_BackupRule) AsStorageDetailsBackupRule1() (StorageDetailsBackupRule1, error) {
+	var body StorageDetailsBackupRule1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromStorageDetailsBackupRule1 overwrites any union data inside the StorageDetails_BackupRule as the provided StorageDetailsBackupRule1
+func (t *StorageDetails_BackupRule) FromStorageDetailsBackupRule1(v StorageDetailsBackupRule1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeStorageDetailsBackupRule1 performs a merge with any union data inside the StorageDetails_BackupRule, using the provided StorageDetailsBackupRule1
+func (t *StorageDetails_BackupRule) MergeStorageDetailsBackupRule1(v StorageDetailsBackupRule1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
 	}
 
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t StorageDetails_BackupRule) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *StorageDetails_BackupRule) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
 }

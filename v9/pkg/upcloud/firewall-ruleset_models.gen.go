@@ -116,13 +116,8 @@ type CreateFirewallRuleset struct {
 	Labels *[]FirewallRulesetCreateLabel `json:"labels,omitempty"`
 
 	// Name Name of the firewall ruleset
-	Name string `json:"name"`
-
-	// ServerUuid The unique identifier for the resource.
-	//
-	// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
-	ServerUuid *FirewallRulesetUuid `json:"server_uuid,omitempty"`
-	Stateful   *bool                `json:"stateful,omitempty"`
+	Name     string `json:"name"`
+	Stateful *bool  `json:"stateful,omitempty"`
 }
 
 // FirewallRulesetCreateLabel UpCloud firewall ruleset Label
@@ -645,7 +640,7 @@ type FirewallRulesetServerFirewallRuleDetail struct {
 // FirewallRulesetServerFirewallRulePosition The server firewall rule position.
 //
 // Examples: 1, 678
-type FirewallRulesetServerFirewallRulePosition = string
+type FirewallRulesetServerFirewallRulePosition = int64
 
 // FirewallRulesetServerFirewallRules Server firewall rules.
 //
@@ -667,11 +662,6 @@ type FirewallRulesetServerMultipleFirewallRulesCreate struct {
 //
 // Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type FirewallRulesetServerUuid = openapi_types.UUID
-
-// FirewallRulesetUuid The unique identifier for the resource.
-//
-// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
-type FirewallRulesetUuid = openapi_types.UUID
 
 // FirewallRulesetVersion The firewall ruleset version.
 //

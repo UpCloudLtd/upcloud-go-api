@@ -101,7 +101,10 @@ type ServerGroupError struct {
 
 // ServerGroupLabel A key/value pair to label and categorize resources
 type ServerGroupLabel struct {
-	Key   string `json:"key"`
+	// Key Label key used to classify the resource
+	Key string `json:"key"`
+
+	// Value Value associated with the label key
 	Value string `json:"value"`
 }
 
