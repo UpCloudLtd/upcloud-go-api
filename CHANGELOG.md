@@ -5,6 +5,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+
+- server: add `FirewallPrivate`, `FirewallPrivateDefaultIncomingAction`, and `FirewallPrivateDefaultOutgoingAction` to `upcloud.ServerDetails` and `request.ModifyServerRequest`
+
 ## [8.41.0]
 
 ### Added

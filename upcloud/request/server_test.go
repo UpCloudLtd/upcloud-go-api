@@ -365,12 +365,15 @@ func TestRestartServerRequest_OmitHost(t *testing.T) {
 // TestModifyServerRequest tests that ModifyServerRequest objects behave correctly
 func TestModifyServerRequest(t *testing.T) {
 	request := ModifyServerRequest{
-		UUID:         "foo",
-		Title:        "Modified server",
-		CoreNumber:   8,
-		MemoryAmount: 16384,
-		Plan:         "custom",
-		Metadata:     upcloud.True,
+		UUID:                                 "foo",
+		Title:                                "Modified server",
+		CoreNumber:                           8,
+		MemoryAmount:                         16384,
+		Plan:                                 "custom",
+		Metadata:                             upcloud.True,
+		FirewallPrivate:                      "on",
+		FirewallPrivateDefaultIncomingAction: "accept",
+		FirewallPrivateDefaultOutgoingAction: "drop",
 	}
 
 	expectedJSON := `
@@ -380,7 +383,10 @@ func TestModifyServerRequest(t *testing.T) {
 		  "core_number": "8",
 		  "memory_amount": "16384",
 		  "plan" : "custom",
-		  "metadata": "yes"
+		  "metadata": "yes",
+		  "firewall_private": "on",
+		  "firewall_private_default_incoming_action": "accept",
+		  "firewall_private_default_outgoing_action": "drop"
 		}
 	  }
 	`

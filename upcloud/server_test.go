@@ -152,6 +152,9 @@ func TestUnmarshalServerDetails(t *testing.T) {
             ]
           },
           "firewall": "on",
+          "firewall_private": "off",
+          "firewall_private_default_incoming_action": "drop",
+          "firewall_private_default_outgoing_action": "accept",
           "host" : 9223372036854775807,
           "hostname": "server1.example.com",
           "ip_addresses": {
@@ -316,6 +319,9 @@ func TestUnmarshalServerDetails(t *testing.T) {
 	assert.Equal(t, true, serverDetails.StorageDevices[0].Encrypted.Bool())
 	assert.Equal(t, "cdrom,disk", serverDetails.BootOrder)
 	assert.Equal(t, "on", serverDetails.Firewall)
+	assert.Equal(t, "off", serverDetails.FirewallPrivate)
+	assert.Equal(t, "drop", serverDetails.FirewallPrivateDefaultIncomingAction)
+	assert.Equal(t, "accept", serverDetails.FirewallPrivateDefaultOutgoingAction)
 	assert.Len(t, serverDetails.IPAddresses, 3)
 	assert.Equal(t, "managedBy", serverDetails.Labels[0].Key)
 	assert.Equal(t, "upcloud-go-sdk-unit-test", serverDetails.Labels[0].Value)

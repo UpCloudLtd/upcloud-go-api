@@ -363,21 +363,24 @@ type ModifyServerRequest struct {
 	BootOrder  string `json:"boot_order,omitempty"`
 	CoreNumber int    `json:"core_number,omitempty,string"`
 	// TODO: Convert to boolean
-	Firewall             string              `json:"firewall,omitempty"`
-	Hostname             string              `json:"hostname,omitempty"`
-	Labels               *upcloud.LabelSlice `json:"labels,omitempty"`
-	MemoryAmount         int                 `json:"memory_amount,omitempty,string"`
-	Metadata             upcloud.Boolean     `json:"metadata,omitempty"`
-	NICModel             string              `json:"nic_model,omitempty"`
-	Plan                 string              `json:"plan,omitempty"`
-	SimpleBackup         string              `json:"simple_backup,omitempty"`
-	TimeZone             string              `json:"timezone,omitempty"`
-	Title                string              `json:"title,omitempty"`
-	VideoModel           string              `json:"video_model,omitempty"`
-	RemoteAccessEnabled  upcloud.Boolean     `json:"remote_access_enabled,omitempty"`
-	RemoteAccessType     string              `json:"remote_access_type,omitempty"`
-	RemoteAccessPassword string              `json:"remote_access_password,omitempty"`
-	Zone                 string              `json:"zone,omitempty"`
+	Firewall                             string              `json:"firewall,omitempty"`
+	FirewallPrivate                      string              `json:"firewall_private,omitempty"`
+	FirewallPrivateDefaultIncomingAction string              `json:"firewall_private_default_incoming_action,omitempty"`
+	FirewallPrivateDefaultOutgoingAction string              `json:"firewall_private_default_outgoing_action,omitempty"`
+	Hostname                             string              `json:"hostname,omitempty"`
+	Labels                               *upcloud.LabelSlice `json:"labels,omitempty"`
+	MemoryAmount                         int                 `json:"memory_amount,omitempty,string"`
+	Metadata                             upcloud.Boolean     `json:"metadata,omitempty"`
+	NICModel                             string              `json:"nic_model,omitempty"`
+	Plan                                 string              `json:"plan,omitempty"`
+	SimpleBackup                         string              `json:"simple_backup,omitempty"`
+	TimeZone                             string              `json:"timezone,omitempty"`
+	Title                                string              `json:"title,omitempty"`
+	VideoModel                           string              `json:"video_model,omitempty"`
+	RemoteAccessEnabled                  upcloud.Boolean     `json:"remote_access_enabled,omitempty"`
+	RemoteAccessType                     string              `json:"remote_access_type,omitempty"`
+	RemoteAccessPassword                 string              `json:"remote_access_password,omitempty"`
+	Zone                                 string              `json:"zone,omitempty"`
 }
 
 // MarshalJSON is a custom marshaller that deals with
