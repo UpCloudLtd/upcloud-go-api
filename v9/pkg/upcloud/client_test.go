@@ -47,7 +47,15 @@ func TestClientWithLogger(t *testing.T) {
 
 	c.ListRouters(context.TODO(), &ListRoutersParams{})
 	c.CreateRouter(context.TODO(), CreateRouterJSONRequestBody{
-		Name: "test",
+		Router: struct {
+			Labels       *[]RouterLabel `json:"labels,omitempty"`
+			Name         string         `json:"name"`
+			StaticRoutes *[]struct {
+				Name    *string                                  `json:"name,omitempty"`
+				Nexthop RouterCreate_Router_StaticRoutes_Nexthop `json:"nexthop"`
+				Route   RouterIpCidr                             `json:"route"`
+			} `json:"static_routes,omitempty"`
+		}{Name: "test"},
 	})
 
 	expected := fmt.Sprintf(`{"time":"2 Minutes to Midnight","level":"DEBUG","msg":"Sending request to 127.0.0.1","url":"http://server/1.3/router","method":"GET","headers":{"Authorization":["Bearer [REDACTED]"],"User-Agent":["upcloud-go-api/v9 openapi/%s"]},"body":""}
