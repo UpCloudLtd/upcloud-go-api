@@ -19,127 +19,131 @@ import (
 // The interface specification for the client above.
 type StorageClientInterface interface {
 
-	// GetStorageList List storages
+	// GetStorageList List storage resources
 	//
-	// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+	// Returns all storage resources accessible to the account. The results can be filtered by labels or a title and UUID search, sorted, and paginated.
 	//
 	// Corresponds with GET /1.3/storage (the `GetStorageList` operationId).
 	GetStorageList(ctx context.Context, params *GetStorageListParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateStorageWithBody Create new storage
+	// CreateStorageWithBody Create Block Storage
+	//
+	// Creates a block storage resource in a specific zone. The new block storage is not attached to a Cloud Server.
 	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with POST /1.3/storage (the `CreateStorage` operationId).
 	CreateStorageWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateStorage Create new storage
+	// CreateStorage Create Block Storage
+	//
+	// Creates a block storage resource in a specific zone. The new block storage is not attached to a Cloud Server.
 	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /1.3/storage (the `CreateStorage` operationId).
 	CreateStorage(ctx context.Context, body CreateStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetStorageListByBackup List storages
+	// GetStorageListByBackup List storage backups
 	//
-	// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+	// Returns accessible storage resources whose type is `backup`.
 	//
 	// Corresponds with GET /1.3/storage/backup (the `GetStorageListByBackup` operationId).
 	GetStorageListByBackup(ctx context.Context, params *GetStorageListByBackupParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetStorageListByCdrom List storages
+	// GetStorageListByCdrom List CD-ROM images
 	//
-	// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+	// Returns accessible storage resources whose type is `cdrom`.
 	//
 	// Corresponds with GET /1.3/storage/cdrom (the `GetStorageListByCdrom` operationId).
 	GetStorageListByCdrom(ctx context.Context, params *GetStorageListByCdromParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateCDROMStorageWithBody Create new CD-ROM storage
+	// GetFavoriteStorageList List favorite storage resources
 	//
-	// Takes any type of body and a specified content type.
-	//
-	// Corresponds with POST /1.3/storage/create_cdrom (the `CreateCDROMStorage` operationId).
-	CreateCDROMStorageWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateCDROMStorage Create new CD-ROM storage
-	//
-	// Takes a body of the `application/json` content type.
-	//
-	// Corresponds with POST /1.3/storage/create_cdrom (the `CreateCDROMStorage` operationId).
-	CreateCDROMStorage(ctx context.Context, body CreateCDROMStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetFavoriteStorageList List favorite storages
+	// Returns the public templates and CD-ROM images that the account has marked as favorites.
 	//
 	// Corresponds with GET /1.3/storage/favorite (the `GetFavoriteStorageList` operationId).
 	GetFavoriteStorageList(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetStorageListByNormal List storages
+	// GetStorageListByNormal List normal Block Storage
 	//
-	// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+	// Returns accessible Block Storage resources whose type is `normal`.
 	//
 	// Corresponds with GET /1.3/storage/normal (the `GetStorageListByNormal` operationId).
 	GetStorageListByNormal(ctx context.Context, params *GetStorageListByNormalParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetStorageListByTemplate List storages
+	// GetStorageListByPrivateAccess List private storage resources
 	//
-	// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+	// Returns accessible storage resources whose access type is `private`.
+	//
+	// Corresponds with GET /1.3/storage/private (the `GetStorageListByPrivateAccess` operationId).
+	GetStorageListByPrivateAccess(ctx context.Context, params *GetStorageListByPrivateAccessParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetStorageListByPublicAccess List public storage resources
+	//
+	// Returns accessible storage resources whose access type is `public`.
+	//
+	// Corresponds with GET /1.3/storage/public (the `GetStorageListByPublicAccess` operationId).
+	GetStorageListByPublicAccess(ctx context.Context, params *GetStorageListByPublicAccessParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetStorageListByTemplate List storage templates
+	//
+	// Returns accessible storage resources whose type is `template`.
 	//
 	// Corresponds with GET /1.3/storage/template (the `GetStorageListByTemplate` operationId).
 	GetStorageListByTemplate(ctx context.Context, params *GetStorageListByTemplateParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetStorageListByTypeAndAccess List storages
+	// GetStorageListByTypeAndAccess List storage resources by type and access
 	//
-	// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+	// Returns accessible storage resources matching both the requested storage type and access type.
 	//
 	// Corresponds with GET /1.3/storage/{type}/{access} (the `GetStorageListByTypeAndAccess` operationId).
 	GetStorageListByTypeAndAccess(ctx context.Context, pType GetStorageListByTypeAndAccessType, access GetStorageListByTypeAndAccessAccess, params *GetStorageListByTypeAndAccessParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// DeleteStorage Delete storage
+	// DeleteStorage Delete storage resource
+	//
+	// Schedules an unattached private storage resource for deletion. Associated backups are kept by default unless another backup policy is selected.
 	//
 	// Corresponds with DELETE /1.3/storage/{uuid} (the `DeleteStorage` operationId).
 	DeleteStorage(ctx context.Context, uuid DeleteStorageUuid, params *DeleteStorageParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetStorageInfo Get storage details
+	// GetStorageInfo Get storage resource details
+	//
+	// Returns detailed information about a storage resource, including its current state, attachments, labels, and backup configuration when applicable.
 	//
 	// Corresponds with GET /1.3/storage/{uuid} (the `GetStorageInfo` operationId).
 	GetStorageInfo(ctx context.Context, uuid GetStorageInfoUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ModifyStorageWithBody Modify storage
+	// ModifyStorageWithBody Modify Block Storage
+	//
+	// Modifies a block storage title, labels, automatic backup rule, or size. A new size must be greater than the current size. Set `filesystem_resize` to `yes` to also resize the last partition and its supported filesystem after increasing the block storage size.
 	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with PUT /1.3/storage/{uuid} (the `ModifyStorage` operationId).
 	ModifyStorageWithBody(ctx context.Context, uuid ModifyStorageUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ModifyStorage Modify storage
+	// ModifyStorage Modify Block Storage
+	//
+	// Modifies a block storage title, labels, automatic backup rule, or size. A new size must be greater than the current size. Set `filesystem_resize` to `yes` to also resize the last partition and its supported filesystem after increasing the block storage size.
 	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with PUT /1.3/storage/{uuid} (the `ModifyStorage` operationId).
 	ModifyStorage(ctx context.Context, uuid ModifyStorageUuid, body ModifyStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// AddStorageComponentWithBody Add storage component
+	// AttachStorageToServerWithBody Attach storage to a Cloud Server
 	//
-	// Takes any type of body and a specified content type.
-	//
-	// Corresponds with POST /1.3/storage/{uuid}/add_component (the `AddStorageComponent` operationId).
-	AddStorageComponentWithBody(ctx context.Context, uuid AddStorageComponentUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// AddStorageComponent Add storage component
-	//
-	// Takes a body of the `application/json` content type.
-	//
-	// Corresponds with POST /1.3/storage/{uuid}/add_component (the `AddStorageComponent` operationId).
-	AddStorageComponent(ctx context.Context, uuid AddStorageComponentUuid, body AddStorageComponentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// AttachStorageToServerWithBody Attach storage to server
+	// Attaches the storage resource to a Cloud Server in the same zone. The device defaults to a disk at the next available address. IDE and CD-ROM devices can be attached only while the Cloud Server is stopped; SCSI and VirtIO disks can also be attached while it is running.
 	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with POST /1.3/storage/{uuid}/attach (the `AttachStorageToServer` operationId).
 	AttachStorageToServerWithBody(ctx context.Context, uuid AttachStorageToServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// AttachStorageToServer Attach storage to server
+	// AttachStorageToServer Attach storage to a Cloud Server
+	//
+	// Attaches the storage resource to a Cloud Server in the same zone. The device defaults to a disk at the next available address. IDE and CD-ROM devices can be attached only while the Cloud Server is stopped; SCSI and VirtIO disks can also be attached while it is running.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -148,6 +152,8 @@ type StorageClientInterface interface {
 
 	// CreateOnDemandBackupWithBody Create on-demand backup
 	//
+	// Creates a point-in-time backup of private normal block storage. The operation is asynchronous: the source block storage is `backuping` while the backup is created, and the returned backup remains in `maintenance` until it is ready.
+	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with POST /1.3/storage/{uuid}/backup (the `CreateOnDemandBackup` operationId).
@@ -155,87 +161,95 @@ type StorageClientInterface interface {
 
 	// CreateOnDemandBackup Create on-demand backup
 	//
+	// Creates a point-in-time backup of private normal block storage. The operation is asynchronous: the source block storage is `backuping` while the backup is created, and the returned backup remains in `maintenance` until it is ready.
+	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /1.3/storage/{uuid}/backup (the `CreateOnDemandBackup` operationId).
 	CreateOnDemandBackup(ctx context.Context, uuid StorageCreateOnDemandBackupUuid, body CreateOnDemandBackupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CancelStorageOperation Cancel storage operation
+	// CancelStorageOperation Cancel Block Storage operation
+	//
+	// Requests cancellation of an interruptible operation on block storage in the `maintenance` state. For a running clone, cancellation removes the incomplete copy and returns the source block storage to the `online` state.
 	//
 	// Corresponds with POST /1.3/storage/{uuid}/cancel (the `CancelStorageOperation` operationId).
 	CancelStorageOperation(ctx context.Context, uuid CancelStorageOperationUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CloneStorageWithBody Clone storage
+	// CloneStorageWithBody Clone Block Storage
+	//
+	// Creates a Block Storage copy of a storage resource. Cloning is asynchronous: the returned block storage remains in the `maintenance` state until the operation completes and can be monitored with the storage resource details endpoint.
 	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with POST /1.3/storage/{uuid}/clone (the `CloneStorage` operationId).
 	CloneStorageWithBody(ctx context.Context, uuid CloneStorageUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CloneStorage Clone storage
+	// CloneStorage Clone Block Storage
+	//
+	// Creates a Block Storage copy of a storage resource. Cloning is asynchronous: the returned block storage remains in the `maintenance` state until the operation completes and can be monitored with the storage resource details endpoint.
 	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /1.3/storage/{uuid}/clone (the `CloneStorage` operationId).
 	CloneStorage(ctx context.Context, uuid CloneStorageUuid, body CloneStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// DetachStorageFromServer Detach storage from server
+	// DetachStorageFromServer Detach storage from a Cloud Server
+	//
+	// Detaches the storage resource from its attached Cloud Server. IDE and CD-ROM devices can be detached only while the Cloud Server is stopped; SCSI and VirtIO disks can also be detached while it is running. If the storage resource is already detached, it is returned unchanged.
 	//
 	// Corresponds with POST /1.3/storage/{uuid}/detach (the `DetachStorageFromServer` operationId).
 	DetachStorageFromServer(ctx context.Context, uuid DetachStorageFromServerUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// RemoveStorageFromFavorites Remove storage from favorites
+	// RemoveStorageFromFavorites Remove storage resource from favorites
+	//
+	// Removes an accessible storage resource from the account's favorites. The operation succeeds if the storage resource is not a favorite.
 	//
 	// Corresponds with DELETE /1.3/storage/{uuid}/favorite (the `RemoveStorageFromFavorites` operationId).
 	RemoveStorageFromFavorites(ctx context.Context, uuid RemoveStorageFromFavoritesUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// AddStorageToFavorites Add storage to favorites
+	// AddStorageToFavorites Add storage resource to favorites
+	//
+	// Adds an accessible storage resource to the account's favorites. The operation succeeds if the storage resource is already a favorite.
 	//
 	// Corresponds with POST /1.3/storage/{uuid}/favorite (the `AddStorageToFavorites` operationId).
 	AddStorageToFavorites(ctx context.Context, uuid AddStorageToFavoritesUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ResizeStorage Resize storage
+	// ResizeStorage Resize Block Storage partition and filesystem
+	//
+	// Resizes the last partition and its supported filesystem to use the block storage capacity already available. A backup is created before the operation and returned on success. Increase the block storage capacity first with the modify block storage endpoint.
 	//
 	// Corresponds with POST /1.3/storage/{uuid}/resize (the `ResizeStorage` operationId).
 	ResizeStorage(ctx context.Context, uuid ResizeStorageUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// RestoreStorageFromBackup Restore storage from backup
+	// RestoreStorageFromBackup Restore Block Storage from backup
+	//
+	// Starts restoring the backup identified by `uuid` to its origin block storage. If the origin block storage is attached to a Cloud Server, the Cloud Server must be stopped.
 	//
 	// Corresponds with POST /1.3/storage/{uuid}/restore (the `RestoreStorageFromBackup` operationId).
 	RestoreStorageFromBackup(ctx context.Context, uuid RestoreStorageFromBackupUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateTemplateFromStorageWithBody Create template from storage
+	// CreateTemplateFromStorageWithBody Create template from Block Storage
+	//
+	// Creates a private template from private normal block storage. The operation is asynchronous: the returned template remains in `maintenance` until it is ready. Deployments from the template use the source block storage tier.
 	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with POST /1.3/storage/{uuid}/templatize (the `CreateTemplateFromStorage` operationId).
 	CreateTemplateFromStorageWithBody(ctx context.Context, uuid CreateTemplateFromStorageUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateTemplateFromStorage Create template from storage
+	// CreateTemplateFromStorage Create template from Block Storage
+	//
+	// Creates a private template from private normal block storage. The operation is asynchronous: the returned template remains in `maintenance` until it is ready. Deployments from the template use the source block storage tier.
 	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /1.3/storage/{uuid}/templatize (the `CreateTemplateFromStorage` operationId).
 	CreateTemplateFromStorage(ctx context.Context, uuid CreateTemplateFromStorageUuid, body CreateTemplateFromStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// UpdatePublicTemplateFromSourceWithBody Update public template from source
-	//
-	// Takes any type of body and a specified content type.
-	//
-	// Corresponds with POST /1.3/storage/{uuid}/update_template (the `UpdatePublicTemplateFromSource` operationId).
-	UpdatePublicTemplateFromSourceWithBody(ctx context.Context, uuid StorageUpdatePublicTemplateFromSourceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// UpdatePublicTemplateFromSource Update public template from source
-	//
-	// Takes a body of the `application/json` content type.
-	//
-	// Corresponds with POST /1.3/storage/{uuid}/update_template (the `UpdatePublicTemplateFromSource` operationId).
-	UpdatePublicTemplateFromSource(ctx context.Context, uuid StorageUpdatePublicTemplateFromSourceUuid, body UpdatePublicTemplateFromSourceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
-// GetStorageList List storages
+// GetStorageList List storage resources
 //
-// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+// Returns all storage resources accessible to the account. The results can be filtered by labels or a title and UUID search, sorted, and paginated.
 //
 // Corresponds with GET /1.3/storage (the `GetStorageList` operationId).
 func (c *Client) GetStorageList(ctx context.Context, params *GetStorageListParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -250,7 +264,9 @@ func (c *Client) GetStorageList(ctx context.Context, params *GetStorageListParam
 	return c.Client.Do(req)
 }
 
-// CreateStorageWithBody Create new storage
+// CreateStorageWithBody Create Block Storage
+//
+// Creates a block storage resource in a specific zone. The new block storage is not attached to a Cloud Server.
 //
 // Takes any type of body and a specified content type.
 //
@@ -267,7 +283,9 @@ func (c *Client) CreateStorageWithBody(ctx context.Context, contentType string, 
 	return c.Client.Do(req)
 }
 
-// CreateStorage Create new storage
+// CreateStorage Create Block Storage
+//
+// Creates a block storage resource in a specific zone. The new block storage is not attached to a Cloud Server.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -284,9 +302,9 @@ func (c *Client) CreateStorage(ctx context.Context, body CreateStorageJSONReques
 	return c.Client.Do(req)
 }
 
-// GetStorageListByBackup List storages
+// GetStorageListByBackup List storage backups
 //
-// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+// Returns accessible storage resources whose type is `backup`.
 //
 // Corresponds with GET /1.3/storage/backup (the `GetStorageListByBackup` operationId).
 func (c *Client) GetStorageListByBackup(ctx context.Context, params *GetStorageListByBackupParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -301,9 +319,9 @@ func (c *Client) GetStorageListByBackup(ctx context.Context, params *GetStorageL
 	return c.Client.Do(req)
 }
 
-// GetStorageListByCdrom List storages
+// GetStorageListByCdrom List CD-ROM images
 //
-// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+// Returns accessible storage resources whose type is `cdrom`.
 //
 // Corresponds with GET /1.3/storage/cdrom (the `GetStorageListByCdrom` operationId).
 func (c *Client) GetStorageListByCdrom(ctx context.Context, params *GetStorageListByCdromParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -318,41 +336,9 @@ func (c *Client) GetStorageListByCdrom(ctx context.Context, params *GetStorageLi
 	return c.Client.Do(req)
 }
 
-// CreateCDROMStorageWithBody Create new CD-ROM storage
+// GetFavoriteStorageList List favorite storage resources
 //
-// Takes any type of body and a specified content type.
-//
-// Corresponds with POST /1.3/storage/create_cdrom (the `CreateCDROMStorage` operationId).
-func (c *Client) CreateCDROMStorageWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateCDROMStorageRequestWithBody(c.Server, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// CreateCDROMStorage Create new CD-ROM storage
-//
-// Takes a body of the `application/json` content type.
-//
-// Corresponds with POST /1.3/storage/create_cdrom (the `CreateCDROMStorage` operationId).
-func (c *Client) CreateCDROMStorage(ctx context.Context, body CreateCDROMStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateCDROMStorageRequest(c.Server, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// GetFavoriteStorageList List favorite storages
+// Returns the public templates and CD-ROM images that the account has marked as favorites.
 //
 // Corresponds with GET /1.3/storage/favorite (the `GetFavoriteStorageList` operationId).
 func (c *Client) GetFavoriteStorageList(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -367,9 +353,9 @@ func (c *Client) GetFavoriteStorageList(ctx context.Context, reqEditors ...Reque
 	return c.Client.Do(req)
 }
 
-// GetStorageListByNormal List storages
+// GetStorageListByNormal List normal Block Storage
 //
-// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+// Returns accessible Block Storage resources whose type is `normal`.
 //
 // Corresponds with GET /1.3/storage/normal (the `GetStorageListByNormal` operationId).
 func (c *Client) GetStorageListByNormal(ctx context.Context, params *GetStorageListByNormalParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -384,9 +370,43 @@ func (c *Client) GetStorageListByNormal(ctx context.Context, params *GetStorageL
 	return c.Client.Do(req)
 }
 
-// GetStorageListByTemplate List storages
+// GetStorageListByPrivateAccess List private storage resources
 //
-// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+// Returns accessible storage resources whose access type is `private`.
+//
+// Corresponds with GET /1.3/storage/private (the `GetStorageListByPrivateAccess` operationId).
+func (c *Client) GetStorageListByPrivateAccess(ctx context.Context, params *GetStorageListByPrivateAccessParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetStorageListByPrivateAccessRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetStorageListByPublicAccess List public storage resources
+//
+// Returns accessible storage resources whose access type is `public`.
+//
+// Corresponds with GET /1.3/storage/public (the `GetStorageListByPublicAccess` operationId).
+func (c *Client) GetStorageListByPublicAccess(ctx context.Context, params *GetStorageListByPublicAccessParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetStorageListByPublicAccessRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetStorageListByTemplate List storage templates
+//
+// Returns accessible storage resources whose type is `template`.
 //
 // Corresponds with GET /1.3/storage/template (the `GetStorageListByTemplate` operationId).
 func (c *Client) GetStorageListByTemplate(ctx context.Context, params *GetStorageListByTemplateParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -401,9 +421,9 @@ func (c *Client) GetStorageListByTemplate(ctx context.Context, params *GetStorag
 	return c.Client.Do(req)
 }
 
-// GetStorageListByTypeAndAccess List storages
+// GetStorageListByTypeAndAccess List storage resources by type and access
 //
-// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+// Returns accessible storage resources matching both the requested storage type and access type.
 //
 // Corresponds with GET /1.3/storage/{type}/{access} (the `GetStorageListByTypeAndAccess` operationId).
 func (c *Client) GetStorageListByTypeAndAccess(ctx context.Context, pType GetStorageListByTypeAndAccessType, access GetStorageListByTypeAndAccessAccess, params *GetStorageListByTypeAndAccessParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -418,7 +438,9 @@ func (c *Client) GetStorageListByTypeAndAccess(ctx context.Context, pType GetSto
 	return c.Client.Do(req)
 }
 
-// DeleteStorage Delete storage
+// DeleteStorage Delete storage resource
+//
+// Schedules an unattached private storage resource for deletion. Associated backups are kept by default unless another backup policy is selected.
 //
 // Corresponds with DELETE /1.3/storage/{uuid} (the `DeleteStorage` operationId).
 func (c *Client) DeleteStorage(ctx context.Context, uuid DeleteStorageUuid, params *DeleteStorageParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -433,7 +455,9 @@ func (c *Client) DeleteStorage(ctx context.Context, uuid DeleteStorageUuid, para
 	return c.Client.Do(req)
 }
 
-// GetStorageInfo Get storage details
+// GetStorageInfo Get storage resource details
+//
+// Returns detailed information about a storage resource, including its current state, attachments, labels, and backup configuration when applicable.
 //
 // Corresponds with GET /1.3/storage/{uuid} (the `GetStorageInfo` operationId).
 func (c *Client) GetStorageInfo(ctx context.Context, uuid GetStorageInfoUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -448,7 +472,9 @@ func (c *Client) GetStorageInfo(ctx context.Context, uuid GetStorageInfoUuid, re
 	return c.Client.Do(req)
 }
 
-// ModifyStorageWithBody Modify storage
+// ModifyStorageWithBody Modify Block Storage
+//
+// Modifies a block storage title, labels, automatic backup rule, or size. A new size must be greater than the current size. Set `filesystem_resize` to `yes` to also resize the last partition and its supported filesystem after increasing the block storage size.
 //
 // Takes any type of body and a specified content type.
 //
@@ -465,7 +491,9 @@ func (c *Client) ModifyStorageWithBody(ctx context.Context, uuid ModifyStorageUu
 	return c.Client.Do(req)
 }
 
-// ModifyStorage Modify storage
+// ModifyStorage Modify Block Storage
+//
+// Modifies a block storage title, labels, automatic backup rule, or size. A new size must be greater than the current size. Set `filesystem_resize` to `yes` to also resize the last partition and its supported filesystem after increasing the block storage size.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -482,41 +510,9 @@ func (c *Client) ModifyStorage(ctx context.Context, uuid ModifyStorageUuid, body
 	return c.Client.Do(req)
 }
 
-// AddStorageComponentWithBody Add storage component
+// AttachStorageToServerWithBody Attach storage to a Cloud Server
 //
-// Takes any type of body and a specified content type.
-//
-// Corresponds with POST /1.3/storage/{uuid}/add_component (the `AddStorageComponent` operationId).
-func (c *Client) AddStorageComponentWithBody(ctx context.Context, uuid AddStorageComponentUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewAddStorageComponentRequestWithBody(c.Server, uuid, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// AddStorageComponent Add storage component
-//
-// Takes a body of the `application/json` content type.
-//
-// Corresponds with POST /1.3/storage/{uuid}/add_component (the `AddStorageComponent` operationId).
-func (c *Client) AddStorageComponent(ctx context.Context, uuid AddStorageComponentUuid, body AddStorageComponentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewAddStorageComponentRequest(c.Server, uuid, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// AttachStorageToServerWithBody Attach storage to server
+// Attaches the storage resource to a Cloud Server in the same zone. The device defaults to a disk at the next available address. IDE and CD-ROM devices can be attached only while the Cloud Server is stopped; SCSI and VirtIO disks can also be attached while it is running.
 //
 // Takes any type of body and a specified content type.
 //
@@ -533,7 +529,9 @@ func (c *Client) AttachStorageToServerWithBody(ctx context.Context, uuid AttachS
 	return c.Client.Do(req)
 }
 
-// AttachStorageToServer Attach storage to server
+// AttachStorageToServer Attach storage to a Cloud Server
+//
+// Attaches the storage resource to a Cloud Server in the same zone. The device defaults to a disk at the next available address. IDE and CD-ROM devices can be attached only while the Cloud Server is stopped; SCSI and VirtIO disks can also be attached while it is running.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -552,6 +550,8 @@ func (c *Client) AttachStorageToServer(ctx context.Context, uuid AttachStorageTo
 
 // CreateOnDemandBackupWithBody Create on-demand backup
 //
+// Creates a point-in-time backup of private normal block storage. The operation is asynchronous: the source block storage is `backuping` while the backup is created, and the returned backup remains in `maintenance` until it is ready.
+//
 // Takes any type of body and a specified content type.
 //
 // Corresponds with POST /1.3/storage/{uuid}/backup (the `CreateOnDemandBackup` operationId).
@@ -569,6 +569,8 @@ func (c *Client) CreateOnDemandBackupWithBody(ctx context.Context, uuid StorageC
 
 // CreateOnDemandBackup Create on-demand backup
 //
+// Creates a point-in-time backup of private normal block storage. The operation is asynchronous: the source block storage is `backuping` while the backup is created, and the returned backup remains in `maintenance` until it is ready.
+//
 // Takes a body of the `application/json` content type.
 //
 // Corresponds with POST /1.3/storage/{uuid}/backup (the `CreateOnDemandBackup` operationId).
@@ -584,7 +586,9 @@ func (c *Client) CreateOnDemandBackup(ctx context.Context, uuid StorageCreateOnD
 	return c.Client.Do(req)
 }
 
-// CancelStorageOperation Cancel storage operation
+// CancelStorageOperation Cancel Block Storage operation
+//
+// Requests cancellation of an interruptible operation on block storage in the `maintenance` state. For a running clone, cancellation removes the incomplete copy and returns the source block storage to the `online` state.
 //
 // Corresponds with POST /1.3/storage/{uuid}/cancel (the `CancelStorageOperation` operationId).
 func (c *Client) CancelStorageOperation(ctx context.Context, uuid CancelStorageOperationUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -599,7 +603,9 @@ func (c *Client) CancelStorageOperation(ctx context.Context, uuid CancelStorageO
 	return c.Client.Do(req)
 }
 
-// CloneStorageWithBody Clone storage
+// CloneStorageWithBody Clone Block Storage
+//
+// Creates a Block Storage copy of a storage resource. Cloning is asynchronous: the returned block storage remains in the `maintenance` state until the operation completes and can be monitored with the storage resource details endpoint.
 //
 // Takes any type of body and a specified content type.
 //
@@ -616,7 +622,9 @@ func (c *Client) CloneStorageWithBody(ctx context.Context, uuid CloneStorageUuid
 	return c.Client.Do(req)
 }
 
-// CloneStorage Clone storage
+// CloneStorage Clone Block Storage
+//
+// Creates a Block Storage copy of a storage resource. Cloning is asynchronous: the returned block storage remains in the `maintenance` state until the operation completes and can be monitored with the storage resource details endpoint.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -633,7 +641,9 @@ func (c *Client) CloneStorage(ctx context.Context, uuid CloneStorageUuid, body C
 	return c.Client.Do(req)
 }
 
-// DetachStorageFromServer Detach storage from server
+// DetachStorageFromServer Detach storage from a Cloud Server
+//
+// Detaches the storage resource from its attached Cloud Server. IDE and CD-ROM devices can be detached only while the Cloud Server is stopped; SCSI and VirtIO disks can also be detached while it is running. If the storage resource is already detached, it is returned unchanged.
 //
 // Corresponds with POST /1.3/storage/{uuid}/detach (the `DetachStorageFromServer` operationId).
 func (c *Client) DetachStorageFromServer(ctx context.Context, uuid DetachStorageFromServerUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -648,7 +658,9 @@ func (c *Client) DetachStorageFromServer(ctx context.Context, uuid DetachStorage
 	return c.Client.Do(req)
 }
 
-// RemoveStorageFromFavorites Remove storage from favorites
+// RemoveStorageFromFavorites Remove storage resource from favorites
+//
+// Removes an accessible storage resource from the account's favorites. The operation succeeds if the storage resource is not a favorite.
 //
 // Corresponds with DELETE /1.3/storage/{uuid}/favorite (the `RemoveStorageFromFavorites` operationId).
 func (c *Client) RemoveStorageFromFavorites(ctx context.Context, uuid RemoveStorageFromFavoritesUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -663,7 +675,9 @@ func (c *Client) RemoveStorageFromFavorites(ctx context.Context, uuid RemoveStor
 	return c.Client.Do(req)
 }
 
-// AddStorageToFavorites Add storage to favorites
+// AddStorageToFavorites Add storage resource to favorites
+//
+// Adds an accessible storage resource to the account's favorites. The operation succeeds if the storage resource is already a favorite.
 //
 // Corresponds with POST /1.3/storage/{uuid}/favorite (the `AddStorageToFavorites` operationId).
 func (c *Client) AddStorageToFavorites(ctx context.Context, uuid AddStorageToFavoritesUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -678,7 +692,9 @@ func (c *Client) AddStorageToFavorites(ctx context.Context, uuid AddStorageToFav
 	return c.Client.Do(req)
 }
 
-// ResizeStorage Resize storage
+// ResizeStorage Resize Block Storage partition and filesystem
+//
+// Resizes the last partition and its supported filesystem to use the block storage capacity already available. A backup is created before the operation and returned on success. Increase the block storage capacity first with the modify block storage endpoint.
 //
 // Corresponds with POST /1.3/storage/{uuid}/resize (the `ResizeStorage` operationId).
 func (c *Client) ResizeStorage(ctx context.Context, uuid ResizeStorageUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -693,7 +709,9 @@ func (c *Client) ResizeStorage(ctx context.Context, uuid ResizeStorageUuid, reqE
 	return c.Client.Do(req)
 }
 
-// RestoreStorageFromBackup Restore storage from backup
+// RestoreStorageFromBackup Restore Block Storage from backup
+//
+// Starts restoring the backup identified by `uuid` to its origin block storage. If the origin block storage is attached to a Cloud Server, the Cloud Server must be stopped.
 //
 // Corresponds with POST /1.3/storage/{uuid}/restore (the `RestoreStorageFromBackup` operationId).
 func (c *Client) RestoreStorageFromBackup(ctx context.Context, uuid RestoreStorageFromBackupUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -708,7 +726,9 @@ func (c *Client) RestoreStorageFromBackup(ctx context.Context, uuid RestoreStora
 	return c.Client.Do(req)
 }
 
-// CreateTemplateFromStorageWithBody Create template from storage
+// CreateTemplateFromStorageWithBody Create template from Block Storage
+//
+// Creates a private template from private normal block storage. The operation is asynchronous: the returned template remains in `maintenance` until it is ready. Deployments from the template use the source block storage tier.
 //
 // Takes any type of body and a specified content type.
 //
@@ -725,47 +745,15 @@ func (c *Client) CreateTemplateFromStorageWithBody(ctx context.Context, uuid Cre
 	return c.Client.Do(req)
 }
 
-// CreateTemplateFromStorage Create template from storage
+// CreateTemplateFromStorage Create template from Block Storage
+//
+// Creates a private template from private normal block storage. The operation is asynchronous: the returned template remains in `maintenance` until it is ready. Deployments from the template use the source block storage tier.
 //
 // Takes a body of the `application/json` content type.
 //
 // Corresponds with POST /1.3/storage/{uuid}/templatize (the `CreateTemplateFromStorage` operationId).
 func (c *Client) CreateTemplateFromStorage(ctx context.Context, uuid CreateTemplateFromStorageUuid, body CreateTemplateFromStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateTemplateFromStorageRequest(c.Server, uuid, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// UpdatePublicTemplateFromSourceWithBody Update public template from source
-//
-// Takes any type of body and a specified content type.
-//
-// Corresponds with POST /1.3/storage/{uuid}/update_template (the `UpdatePublicTemplateFromSource` operationId).
-func (c *Client) UpdatePublicTemplateFromSourceWithBody(ctx context.Context, uuid StorageUpdatePublicTemplateFromSourceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdatePublicTemplateFromSourceRequestWithBody(c.Server, uuid, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// UpdatePublicTemplateFromSource Update public template from source
-//
-// Takes a body of the `application/json` content type.
-//
-// Corresponds with POST /1.3/storage/{uuid}/update_template (the `UpdatePublicTemplateFromSource` operationId).
-func (c *Client) UpdatePublicTemplateFromSource(ctx context.Context, uuid StorageUpdatePublicTemplateFromSourceUuid, body UpdatePublicTemplateFromSourceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdatePublicTemplateFromSourceRequest(c.Server, uuid, body)
 	if err != nil {
 		return nil, err
 	}
@@ -867,54 +855,6 @@ func NewGetStorageListRequest(server string, params *GetStorageListParams) (*htt
 		if params.Offset != nil {
 
 			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "offset", *params.Offset, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if params.AllowHidden != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "allow_hidden", *params.AllowHidden, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if params.Favorite != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "favorite", *params.Favorite, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if params.Metadata != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "metadata", *params.Metadata, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if params.Servers != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "servers", *params.Servers, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
 				return nil, err
 			} else {
 				for _, qp := range strings.Split(queryFrag, "&") {
@@ -1078,54 +1018,6 @@ func NewGetStorageListByBackupRequest(server string, params *GetStorageListByBac
 
 		}
 
-		if params.AllowHidden != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "allow_hidden", *params.AllowHidden, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if params.Favorite != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "favorite", *params.Favorite, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if params.Metadata != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "metadata", *params.Metadata, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if params.Servers != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "servers", *params.Servers, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
 		if encoded := queryValues.Encode(); encoded != "" {
 			rawQueryFragments = append(rawQueryFragments, encoded)
 		}
@@ -1240,54 +1132,6 @@ func NewGetStorageListByCdromRequest(server string, params *GetStorageListByCdro
 
 		}
 
-		if params.AllowHidden != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "allow_hidden", *params.AllowHidden, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if params.Favorite != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "favorite", *params.Favorite, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if params.Metadata != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "metadata", *params.Metadata, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if params.Servers != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "servers", *params.Servers, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
 		if encoded := queryValues.Encode(); encoded != "" {
 			rawQueryFragments = append(rawQueryFragments, encoded)
 		}
@@ -1298,46 +1142,6 @@ func NewGetStorageListByCdromRequest(server string, params *GetStorageListByCdro
 	if err != nil {
 		return nil, err
 	}
-
-	return req, nil
-}
-
-// NewCreateCDROMStorageRequest calls the generic CreateCDROMStorage builder with application/json body
-func NewCreateCDROMStorageRequest(server string, body CreateCDROMStorageJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewCreateCDROMStorageRequestWithBody(server, "application/json", bodyReader)
-}
-
-// NewCreateCDROMStorageRequestWithBody constructs an http.Request for the CreateCDROMStorage method, with any body, and a specified content type
-func NewCreateCDROMStorageRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/1.3/storage/create_cdrom")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -1469,9 +1273,51 @@ func NewGetStorageListByNormalRequest(server string, params *GetStorageListByNor
 
 		}
 
-		if params.AllowHidden != nil {
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
 
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "allow_hidden", *params.AllowHidden, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetStorageListByPrivateAccessRequest constructs an http.Request for the GetStorageListByPrivateAccess method
+func NewGetStorageListByPrivateAccessRequest(server string, params *GetStorageListByPrivateAccessParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/storage/private")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Label != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "label", *params.Label, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
 				return nil, err
 			} else {
 				for _, qp := range strings.Split(queryFrag, "&") {
@@ -1481,9 +1327,9 @@ func NewGetStorageListByNormalRequest(server string, params *GetStorageListByNor
 
 		}
 
-		if params.Favorite != nil {
+		if params.Search != nil {
 
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "favorite", *params.Favorite, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "search", *params.Search, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
 				return nil, err
 			} else {
 				for _, qp := range strings.Split(queryFrag, "&") {
@@ -1493,9 +1339,9 @@ func NewGetStorageListByNormalRequest(server string, params *GetStorageListByNor
 
 		}
 
-		if params.Metadata != nil {
+		if params.SortBy != nil {
 
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "metadata", *params.Metadata, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort_by", *params.SortBy, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
 				return nil, err
 			} else {
 				for _, qp := range strings.Split(queryFrag, "&") {
@@ -1505,9 +1351,147 @@ func NewGetStorageListByNormalRequest(server string, params *GetStorageListByNor
 
 		}
 
-		if params.Servers != nil {
+		if params.OrderBy != nil {
 
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "servers", *params.Servers, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "order_by", *params.OrderBy, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Offset != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "offset", *params.Offset, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetStorageListByPublicAccessRequest constructs an http.Request for the GetStorageListByPublicAccess method
+func NewGetStorageListByPublicAccessRequest(server string, params *GetStorageListByPublicAccessParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/storage/public")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Label != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "label", *params.Label, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Search != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "search", *params.Search, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.SortBy != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort_by", *params.SortBy, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.OrderBy != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "order_by", *params.OrderBy, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Offset != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "offset", *params.Offset, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
 				return nil, err
 			} else {
 				for _, qp := range strings.Split(queryFrag, "&") {
@@ -1622,54 +1606,6 @@ func NewGetStorageListByTemplateRequest(server string, params *GetStorageListByT
 		if params.Offset != nil {
 
 			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "offset", *params.Offset, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if params.AllowHidden != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "allow_hidden", *params.AllowHidden, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if params.Favorite != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "favorite", *params.Favorite, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if params.Metadata != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "metadata", *params.Metadata, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if params.Servers != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "servers", *params.Servers, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
 				return nil, err
 			} else {
 				for _, qp := range strings.Split(queryFrag, "&") {
@@ -1798,54 +1734,6 @@ func NewGetStorageListByTypeAndAccessRequest(server string, pType GetStorageList
 		if params.Offset != nil {
 
 			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "offset", *params.Offset, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if params.AllowHidden != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "allow_hidden", *params.AllowHidden, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if params.Favorite != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "favorite", *params.Favorite, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if params.Metadata != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "metadata", *params.Metadata, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if params.Servers != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "servers", *params.Servers, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
 				return nil, err
 			} else {
 				for _, qp := range strings.Split(queryFrag, "&") {
@@ -2002,53 +1890,6 @@ func NewModifyStorageRequestWithBody(server string, uuid ModifyStorageUuid, cont
 	}
 
 	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
-// NewAddStorageComponentRequest calls the generic AddStorageComponent builder with application/json body
-func NewAddStorageComponentRequest(server string, uuid AddStorageComponentUuid, body AddStorageComponentJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewAddStorageComponentRequestWithBody(server, uuid, "application/json", bodyReader)
-}
-
-// NewAddStorageComponentRequestWithBody constructs an http.Request for the AddStorageComponent method, with any body, and a specified content type
-func NewAddStorageComponentRequestWithBody(server string, uuid AddStorageComponentUuid, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/1.3/storage/%s/add_component", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
@@ -2450,195 +2291,156 @@ func NewCreateTemplateFromStorageRequestWithBody(server string, uuid CreateTempl
 	return req, nil
 }
 
-// NewUpdatePublicTemplateFromSourceRequest calls the generic UpdatePublicTemplateFromSource builder with application/json body
-func NewUpdatePublicTemplateFromSourceRequest(server string, uuid StorageUpdatePublicTemplateFromSourceUuid, body UpdatePublicTemplateFromSourceJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewUpdatePublicTemplateFromSourceRequestWithBody(server, uuid, "application/json", bodyReader)
-}
-
-// NewUpdatePublicTemplateFromSourceRequestWithBody constructs an http.Request for the UpdatePublicTemplateFromSource method, with any body, and a specified content type
-func NewUpdatePublicTemplateFromSourceRequestWithBody(server string, uuid StorageUpdatePublicTemplateFromSourceUuid, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/1.3/storage/%s/update_template", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type StorageClientWithResponsesInterface interface {
 
-	// GetStorageListWithResponse List storages
+	// GetStorageListWithResponse List storage resources
 	//
-	// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+	// Returns all storage resources accessible to the account. The results can be filtered by labels or a title and UUID search, sorted, and paginated.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/storage (the `GetStorageList` operationId).
 	GetStorageListWithResponse(ctx context.Context, params *GetStorageListParams, reqEditors ...RequestEditorFn) (*GetStorageListResp, error)
 
-	// CreateStorageWithBodyWithResponse Create new storage
+	// CreateStorageWithBodyWithResponse Create Block Storage
+	//
+	// Creates a block storage resource in a specific zone. The new block storage is not attached to a Cloud Server.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/storage (the `CreateStorage` operationId).
 	CreateStorageWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateStorageResp, error)
 
-	// CreateStorageWithResponse Create new storage
+	// CreateStorageWithResponse Create Block Storage
+	//
+	// Creates a block storage resource in a specific zone. The new block storage is not attached to a Cloud Server.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/storage (the `CreateStorage` operationId).
 	CreateStorageWithResponse(ctx context.Context, body CreateStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateStorageResp, error)
 
-	// GetStorageListByBackupWithResponse List storages
+	// GetStorageListByBackupWithResponse List storage backups
 	//
-	// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+	// Returns accessible storage resources whose type is `backup`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/storage/backup (the `GetStorageListByBackup` operationId).
 	GetStorageListByBackupWithResponse(ctx context.Context, params *GetStorageListByBackupParams, reqEditors ...RequestEditorFn) (*GetStorageListByBackupResp, error)
 
-	// GetStorageListByCdromWithResponse List storages
+	// GetStorageListByCdromWithResponse List CD-ROM images
 	//
-	// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+	// Returns accessible storage resources whose type is `cdrom`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/storage/cdrom (the `GetStorageListByCdrom` operationId).
 	GetStorageListByCdromWithResponse(ctx context.Context, params *GetStorageListByCdromParams, reqEditors ...RequestEditorFn) (*GetStorageListByCdromResp, error)
 
-	// CreateCDROMStorageWithBodyWithResponse Create new CD-ROM storage
+	// GetFavoriteStorageListWithResponse List favorite storage resources
 	//
-	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /1.3/storage/create_cdrom (the `CreateCDROMStorage` operationId).
-	CreateCDROMStorageWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateCDROMStorageResp, error)
-
-	// CreateCDROMStorageWithResponse Create new CD-ROM storage
-	//
-	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /1.3/storage/create_cdrom (the `CreateCDROMStorage` operationId).
-	CreateCDROMStorageWithResponse(ctx context.Context, body CreateCDROMStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateCDROMStorageResp, error)
-
-	// GetFavoriteStorageListWithResponse List favorite storages
+	// Returns the public templates and CD-ROM images that the account has marked as favorites.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/storage/favorite (the `GetFavoriteStorageList` operationId).
 	GetFavoriteStorageListWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetFavoriteStorageListResp, error)
 
-	// GetStorageListByNormalWithResponse List storages
+	// GetStorageListByNormalWithResponse List normal Block Storage
 	//
-	// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+	// Returns accessible Block Storage resources whose type is `normal`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/storage/normal (the `GetStorageListByNormal` operationId).
 	GetStorageListByNormalWithResponse(ctx context.Context, params *GetStorageListByNormalParams, reqEditors ...RequestEditorFn) (*GetStorageListByNormalResp, error)
 
-	// GetStorageListByTemplateWithResponse List storages
+	// GetStorageListByPrivateAccessWithResponse List private storage resources
 	//
-	// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+	// Returns accessible storage resources whose access type is `private`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/storage/private (the `GetStorageListByPrivateAccess` operationId).
+	GetStorageListByPrivateAccessWithResponse(ctx context.Context, params *GetStorageListByPrivateAccessParams, reqEditors ...RequestEditorFn) (*GetStorageListByPrivateAccessResp, error)
+
+	// GetStorageListByPublicAccessWithResponse List public storage resources
+	//
+	// Returns accessible storage resources whose access type is `public`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/storage/public (the `GetStorageListByPublicAccess` operationId).
+	GetStorageListByPublicAccessWithResponse(ctx context.Context, params *GetStorageListByPublicAccessParams, reqEditors ...RequestEditorFn) (*GetStorageListByPublicAccessResp, error)
+
+	// GetStorageListByTemplateWithResponse List storage templates
+	//
+	// Returns accessible storage resources whose type is `template`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/storage/template (the `GetStorageListByTemplate` operationId).
 	GetStorageListByTemplateWithResponse(ctx context.Context, params *GetStorageListByTemplateParams, reqEditors ...RequestEditorFn) (*GetStorageListByTemplateResp, error)
 
-	// GetStorageListByTypeAndAccessWithResponse List storages
+	// GetStorageListByTypeAndAccessWithResponse List storage resources by type and access
 	//
-	// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+	// Returns accessible storage resources matching both the requested storage type and access type.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/storage/{type}/{access} (the `GetStorageListByTypeAndAccess` operationId).
 	GetStorageListByTypeAndAccessWithResponse(ctx context.Context, pType GetStorageListByTypeAndAccessType, access GetStorageListByTypeAndAccessAccess, params *GetStorageListByTypeAndAccessParams, reqEditors ...RequestEditorFn) (*GetStorageListByTypeAndAccessResp, error)
 
-	// DeleteStorageWithResponse Delete storage
+	// DeleteStorageWithResponse Delete storage resource
+	//
+	// Schedules an unattached private storage resource for deletion. Associated backups are kept by default unless another backup policy is selected.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /1.3/storage/{uuid} (the `DeleteStorage` operationId).
 	DeleteStorageWithResponse(ctx context.Context, uuid DeleteStorageUuid, params *DeleteStorageParams, reqEditors ...RequestEditorFn) (*DeleteStorageResp, error)
 
-	// GetStorageInfoWithResponse Get storage details
+	// GetStorageInfoWithResponse Get storage resource details
+	//
+	// Returns detailed information about a storage resource, including its current state, attachments, labels, and backup configuration when applicable.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/storage/{uuid} (the `GetStorageInfo` operationId).
 	GetStorageInfoWithResponse(ctx context.Context, uuid GetStorageInfoUuid, reqEditors ...RequestEditorFn) (*GetStorageInfoResp, error)
 
-	// ModifyStorageWithBodyWithResponse Modify storage
+	// ModifyStorageWithBodyWithResponse Modify Block Storage
+	//
+	// Modifies a block storage title, labels, automatic backup rule, or size. A new size must be greater than the current size. Set `filesystem_resize` to `yes` to also resize the last partition and its supported filesystem after increasing the block storage size.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PUT /1.3/storage/{uuid} (the `ModifyStorage` operationId).
 	ModifyStorageWithBodyWithResponse(ctx context.Context, uuid ModifyStorageUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyStorageResp, error)
 
-	// ModifyStorageWithResponse Modify storage
+	// ModifyStorageWithResponse Modify Block Storage
+	//
+	// Modifies a block storage title, labels, automatic backup rule, or size. A new size must be greater than the current size. Set `filesystem_resize` to `yes` to also resize the last partition and its supported filesystem after increasing the block storage size.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PUT /1.3/storage/{uuid} (the `ModifyStorage` operationId).
 	ModifyStorageWithResponse(ctx context.Context, uuid ModifyStorageUuid, body ModifyStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyStorageResp, error)
 
-	// AddStorageComponentWithBodyWithResponse Add storage component
+	// AttachStorageToServerWithBodyWithResponse Attach storage to a Cloud Server
 	//
-	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /1.3/storage/{uuid}/add_component (the `AddStorageComponent` operationId).
-	AddStorageComponentWithBodyWithResponse(ctx context.Context, uuid AddStorageComponentUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddStorageComponentResp, error)
-
-	// AddStorageComponentWithResponse Add storage component
-	//
-	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /1.3/storage/{uuid}/add_component (the `AddStorageComponent` operationId).
-	AddStorageComponentWithResponse(ctx context.Context, uuid AddStorageComponentUuid, body AddStorageComponentJSONRequestBody, reqEditors ...RequestEditorFn) (*AddStorageComponentResp, error)
-
-	// AttachStorageToServerWithBodyWithResponse Attach storage to server
+	// Attaches the storage resource to a Cloud Server in the same zone. The device defaults to a disk at the next available address. IDE and CD-ROM devices can be attached only while the Cloud Server is stopped; SCSI and VirtIO disks can also be attached while it is running.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/storage/{uuid}/attach (the `AttachStorageToServer` operationId).
 	AttachStorageToServerWithBodyWithResponse(ctx context.Context, uuid AttachStorageToServerUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AttachStorageToServerResp, error)
 
-	// AttachStorageToServerWithResponse Attach storage to server
+	// AttachStorageToServerWithResponse Attach storage to a Cloud Server
+	//
+	// Attaches the storage resource to a Cloud Server in the same zone. The device defaults to a disk at the next available address. IDE and CD-ROM devices can be attached only while the Cloud Server is stopped; SCSI and VirtIO disks can also be attached while it is running.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -2647,6 +2449,8 @@ type StorageClientWithResponsesInterface interface {
 
 	// CreateOnDemandBackupWithBodyWithResponse Create on-demand backup
 	//
+	// Creates a point-in-time backup of private normal block storage. The operation is asynchronous: the source block storage is `backuping` while the backup is created, and the returned backup remains in `maintenance` until it is ready.
+	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/storage/{uuid}/backup (the `CreateOnDemandBackup` operationId).
@@ -2654,94 +2458,102 @@ type StorageClientWithResponsesInterface interface {
 
 	// CreateOnDemandBackupWithResponse Create on-demand backup
 	//
+	// Creates a point-in-time backup of private normal block storage. The operation is asynchronous: the source block storage is `backuping` while the backup is created, and the returned backup remains in `maintenance` until it is ready.
+	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/storage/{uuid}/backup (the `CreateOnDemandBackup` operationId).
 	CreateOnDemandBackupWithResponse(ctx context.Context, uuid StorageCreateOnDemandBackupUuid, body CreateOnDemandBackupJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOnDemandBackupResp, error)
 
-	// CancelStorageOperationWithResponse Cancel storage operation
+	// CancelStorageOperationWithResponse Cancel Block Storage operation
+	//
+	// Requests cancellation of an interruptible operation on block storage in the `maintenance` state. For a running clone, cancellation removes the incomplete copy and returns the source block storage to the `online` state.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/storage/{uuid}/cancel (the `CancelStorageOperation` operationId).
 	CancelStorageOperationWithResponse(ctx context.Context, uuid CancelStorageOperationUuid, reqEditors ...RequestEditorFn) (*CancelStorageOperationResp, error)
 
-	// CloneStorageWithBodyWithResponse Clone storage
+	// CloneStorageWithBodyWithResponse Clone Block Storage
+	//
+	// Creates a Block Storage copy of a storage resource. Cloning is asynchronous: the returned block storage remains in the `maintenance` state until the operation completes and can be monitored with the storage resource details endpoint.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/storage/{uuid}/clone (the `CloneStorage` operationId).
 	CloneStorageWithBodyWithResponse(ctx context.Context, uuid CloneStorageUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CloneStorageResp, error)
 
-	// CloneStorageWithResponse Clone storage
+	// CloneStorageWithResponse Clone Block Storage
+	//
+	// Creates a Block Storage copy of a storage resource. Cloning is asynchronous: the returned block storage remains in the `maintenance` state until the operation completes and can be monitored with the storage resource details endpoint.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/storage/{uuid}/clone (the `CloneStorage` operationId).
 	CloneStorageWithResponse(ctx context.Context, uuid CloneStorageUuid, body CloneStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*CloneStorageResp, error)
 
-	// DetachStorageFromServerWithResponse Detach storage from server
+	// DetachStorageFromServerWithResponse Detach storage from a Cloud Server
+	//
+	// Detaches the storage resource from its attached Cloud Server. IDE and CD-ROM devices can be detached only while the Cloud Server is stopped; SCSI and VirtIO disks can also be detached while it is running. If the storage resource is already detached, it is returned unchanged.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/storage/{uuid}/detach (the `DetachStorageFromServer` operationId).
 	DetachStorageFromServerWithResponse(ctx context.Context, uuid DetachStorageFromServerUuid, reqEditors ...RequestEditorFn) (*DetachStorageFromServerResp, error)
 
-	// RemoveStorageFromFavoritesWithResponse Remove storage from favorites
+	// RemoveStorageFromFavoritesWithResponse Remove storage resource from favorites
+	//
+	// Removes an accessible storage resource from the account's favorites. The operation succeeds if the storage resource is not a favorite.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /1.3/storage/{uuid}/favorite (the `RemoveStorageFromFavorites` operationId).
 	RemoveStorageFromFavoritesWithResponse(ctx context.Context, uuid RemoveStorageFromFavoritesUuid, reqEditors ...RequestEditorFn) (*RemoveStorageFromFavoritesResp, error)
 
-	// AddStorageToFavoritesWithResponse Add storage to favorites
+	// AddStorageToFavoritesWithResponse Add storage resource to favorites
+	//
+	// Adds an accessible storage resource to the account's favorites. The operation succeeds if the storage resource is already a favorite.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/storage/{uuid}/favorite (the `AddStorageToFavorites` operationId).
 	AddStorageToFavoritesWithResponse(ctx context.Context, uuid AddStorageToFavoritesUuid, reqEditors ...RequestEditorFn) (*AddStorageToFavoritesResp, error)
 
-	// ResizeStorageWithResponse Resize storage
+	// ResizeStorageWithResponse Resize Block Storage partition and filesystem
+	//
+	// Resizes the last partition and its supported filesystem to use the block storage capacity already available. A backup is created before the operation and returned on success. Increase the block storage capacity first with the modify block storage endpoint.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/storage/{uuid}/resize (the `ResizeStorage` operationId).
 	ResizeStorageWithResponse(ctx context.Context, uuid ResizeStorageUuid, reqEditors ...RequestEditorFn) (*ResizeStorageResp, error)
 
-	// RestoreStorageFromBackupWithResponse Restore storage from backup
+	// RestoreStorageFromBackupWithResponse Restore Block Storage from backup
+	//
+	// Starts restoring the backup identified by `uuid` to its origin block storage. If the origin block storage is attached to a Cloud Server, the Cloud Server must be stopped.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/storage/{uuid}/restore (the `RestoreStorageFromBackup` operationId).
 	RestoreStorageFromBackupWithResponse(ctx context.Context, uuid RestoreStorageFromBackupUuid, reqEditors ...RequestEditorFn) (*RestoreStorageFromBackupResp, error)
 
-	// CreateTemplateFromStorageWithBodyWithResponse Create template from storage
+	// CreateTemplateFromStorageWithBodyWithResponse Create template from Block Storage
+	//
+	// Creates a private template from private normal block storage. The operation is asynchronous: the returned template remains in `maintenance` until it is ready. Deployments from the template use the source block storage tier.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/storage/{uuid}/templatize (the `CreateTemplateFromStorage` operationId).
 	CreateTemplateFromStorageWithBodyWithResponse(ctx context.Context, uuid CreateTemplateFromStorageUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateTemplateFromStorageResp, error)
 
-	// CreateTemplateFromStorageWithResponse Create template from storage
+	// CreateTemplateFromStorageWithResponse Create template from Block Storage
+	//
+	// Creates a private template from private normal block storage. The operation is asynchronous: the returned template remains in `maintenance` until it is ready. Deployments from the template use the source block storage tier.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /1.3/storage/{uuid}/templatize (the `CreateTemplateFromStorage` operationId).
 	CreateTemplateFromStorageWithResponse(ctx context.Context, uuid CreateTemplateFromStorageUuid, body CreateTemplateFromStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateTemplateFromStorageResp, error)
-
-	// UpdatePublicTemplateFromSourceWithBodyWithResponse Update public template from source
-	//
-	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /1.3/storage/{uuid}/update_template (the `UpdatePublicTemplateFromSource` operationId).
-	UpdatePublicTemplateFromSourceWithBodyWithResponse(ctx context.Context, uuid StorageUpdatePublicTemplateFromSourceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdatePublicTemplateFromSourceResp, error)
-
-	// UpdatePublicTemplateFromSourceWithResponse Update public template from source
-	//
-	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /1.3/storage/{uuid}/update_template (the `UpdatePublicTemplateFromSource` operationId).
-	UpdatePublicTemplateFromSourceWithResponse(ctx context.Context, uuid StorageUpdatePublicTemplateFromSourceUuid, body UpdatePublicTemplateFromSourceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdatePublicTemplateFromSourceResp, error)
 }
 
 type GetStorageListResp struct {
@@ -2957,54 +2769,6 @@ func (r GetStorageListByCdromResp) ContentType() string {
 	return ""
 }
 
-type CreateCDROMStorageResp struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON201 the response for an HTTP 201 `application/json` response
-	JSON201 *CreateCDROMStorage201
-	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
-	ApplicationproblemJSONDefault *CreateCDROMStorageDefault
-}
-
-// GetJSON201 returns the response for an HTTP 201 `application/json` response
-func (r CreateCDROMStorageResp) GetJSON201() *CreateCDROMStorage201 {
-	return r.JSON201
-}
-
-// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
-func (r CreateCDROMStorageResp) GetApplicationproblemJSONDefault() *CreateCDROMStorageDefault {
-	return r.ApplicationproblemJSONDefault
-}
-
-// GetBody returns the raw response body bytes
-func (r CreateCDROMStorageResp) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r CreateCDROMStorageResp) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r CreateCDROMStorageResp) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r CreateCDROMStorageResp) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
 type GetFavoriteStorageListResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -3102,6 +2866,116 @@ func (r GetStorageListByNormalResp) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r GetStorageListByNormalResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetStorageListByPrivateAccessResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *GetStorageListByPrivateAccess200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *GetStorageListByPrivateAccess400
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *GetStorageListByPrivateAccessDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetStorageListByPrivateAccessResp) GetJSON200() *GetStorageListByPrivateAccess200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r GetStorageListByPrivateAccessResp) GetJSON400() *GetStorageListByPrivateAccess400 {
+	return r.JSON400
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetStorageListByPrivateAccessResp) GetApplicationproblemJSONDefault() *GetStorageListByPrivateAccessDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetStorageListByPrivateAccessResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetStorageListByPrivateAccessResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetStorageListByPrivateAccessResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetStorageListByPrivateAccessResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetStorageListByPublicAccessResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *GetStorageListByPublicAccess200
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *GetStorageListByPublicAccess400
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *GetStorageListByPublicAccessDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetStorageListByPublicAccessResp) GetJSON200() *GetStorageListByPublicAccess200 {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r GetStorageListByPublicAccessResp) GetJSON400() *GetStorageListByPublicAccess400 {
+	return r.JSON400
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetStorageListByPublicAccessResp) GetApplicationproblemJSONDefault() *GetStorageListByPublicAccessDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetStorageListByPublicAccessResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetStorageListByPublicAccessResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetStorageListByPublicAccessResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetStorageListByPublicAccessResp) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -3355,52 +3229,18 @@ func (r ModifyStorageResp) ContentType() string {
 	return ""
 }
 
-type AddStorageComponentResp struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
-	ApplicationproblemJSONDefault *AddStorageComponentDefault
-}
-
-// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
-func (r AddStorageComponentResp) GetApplicationproblemJSONDefault() *AddStorageComponentDefault {
-	return r.ApplicationproblemJSONDefault
-}
-
-// GetBody returns the raw response body bytes
-func (r AddStorageComponentResp) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r AddStorageComponentResp) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r AddStorageComponentResp) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r AddStorageComponentResp) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
 type AttachStorageToServerResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AttachStorageToServer200
 	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
 	ApplicationproblemJSONDefault *AttachStorageToServerDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r AttachStorageToServerResp) GetJSON200() *AttachStorageToServer200 {
+	return r.JSON200
 }
 
 // GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
@@ -3577,8 +3417,15 @@ func (r CloneStorageResp) ContentType() string {
 type DetachStorageFromServerResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *DetachStorageFromServer200
 	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
 	ApplicationproblemJSONDefault *DetachStorageFromServerDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r DetachStorageFromServerResp) GetJSON200() *DetachStorageFromServer200 {
+	return r.JSON200
 }
 
 // GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
@@ -3834,50 +3681,9 @@ func (r CreateTemplateFromStorageResp) ContentType() string {
 	return ""
 }
 
-type UpdatePublicTemplateFromSourceResp struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
-	ApplicationproblemJSONDefault *StorageUpdatePublicTemplateFromSourceDefault
-}
-
-// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
-func (r UpdatePublicTemplateFromSourceResp) GetApplicationproblemJSONDefault() *StorageUpdatePublicTemplateFromSourceDefault {
-	return r.ApplicationproblemJSONDefault
-}
-
-// GetBody returns the raw response body bytes
-func (r UpdatePublicTemplateFromSourceResp) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r UpdatePublicTemplateFromSourceResp) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r UpdatePublicTemplateFromSourceResp) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r UpdatePublicTemplateFromSourceResp) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-// GetStorageListWithResponse List storages
+// GetStorageListWithResponse List storage resources
 //
-// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+// Returns all storage resources accessible to the account. The results can be filtered by labels or a title and UUID search, sorted, and paginated.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -3890,7 +3696,9 @@ func (c *ClientWithResponses) GetStorageListWithResponse(ctx context.Context, pa
 	return ParseGetStorageListResp(rsp)
 }
 
-// CreateStorageWithBodyWithResponse Create new storage
+// CreateStorageWithBodyWithResponse Create Block Storage
+//
+// Creates a block storage resource in a specific zone. The new block storage is not attached to a Cloud Server.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -3903,7 +3711,9 @@ func (c *ClientWithResponses) CreateStorageWithBodyWithResponse(ctx context.Cont
 	return ParseCreateStorageResp(rsp)
 }
 
-// CreateStorageWithResponse Create new storage
+// CreateStorageWithResponse Create Block Storage
+//
+// Creates a block storage resource in a specific zone. The new block storage is not attached to a Cloud Server.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -3916,9 +3726,9 @@ func (c *ClientWithResponses) CreateStorageWithResponse(ctx context.Context, bod
 	return ParseCreateStorageResp(rsp)
 }
 
-// GetStorageListByBackupWithResponse List storages
+// GetStorageListByBackupWithResponse List storage backups
 //
-// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+// Returns accessible storage resources whose type is `backup`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -3931,9 +3741,9 @@ func (c *ClientWithResponses) GetStorageListByBackupWithResponse(ctx context.Con
 	return ParseGetStorageListByBackupResp(rsp)
 }
 
-// GetStorageListByCdromWithResponse List storages
+// GetStorageListByCdromWithResponse List CD-ROM images
 //
-// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+// Returns accessible storage resources whose type is `cdrom`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -3946,33 +3756,9 @@ func (c *ClientWithResponses) GetStorageListByCdromWithResponse(ctx context.Cont
 	return ParseGetStorageListByCdromResp(rsp)
 }
 
-// CreateCDROMStorageWithBodyWithResponse Create new CD-ROM storage
+// GetFavoriteStorageListWithResponse List favorite storage resources
 //
-// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /1.3/storage/create_cdrom (the `CreateCDROMStorage` operationId).
-func (c *ClientWithResponses) CreateCDROMStorageWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateCDROMStorageResp, error) {
-	rsp, err := c.CreateCDROMStorageWithBody(ctx, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateCDROMStorageResp(rsp)
-}
-
-// CreateCDROMStorageWithResponse Create new CD-ROM storage
-//
-// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /1.3/storage/create_cdrom (the `CreateCDROMStorage` operationId).
-func (c *ClientWithResponses) CreateCDROMStorageWithResponse(ctx context.Context, body CreateCDROMStorageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateCDROMStorageResp, error) {
-	rsp, err := c.CreateCDROMStorage(ctx, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateCDROMStorageResp(rsp)
-}
-
-// GetFavoriteStorageListWithResponse List favorite storages
+// Returns the public templates and CD-ROM images that the account has marked as favorites.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -3985,9 +3771,9 @@ func (c *ClientWithResponses) GetFavoriteStorageListWithResponse(ctx context.Con
 	return ParseGetFavoriteStorageListResp(rsp)
 }
 
-// GetStorageListByNormalWithResponse List storages
+// GetStorageListByNormalWithResponse List normal Block Storage
 //
-// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+// Returns accessible Block Storage resources whose type is `normal`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -4000,9 +3786,39 @@ func (c *ClientWithResponses) GetStorageListByNormalWithResponse(ctx context.Con
 	return ParseGetStorageListByNormalResp(rsp)
 }
 
-// GetStorageListByTemplateWithResponse List storages
+// GetStorageListByPrivateAccessWithResponse List private storage resources
 //
-// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+// Returns accessible storage resources whose access type is `private`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/storage/private (the `GetStorageListByPrivateAccess` operationId).
+func (c *ClientWithResponses) GetStorageListByPrivateAccessWithResponse(ctx context.Context, params *GetStorageListByPrivateAccessParams, reqEditors ...RequestEditorFn) (*GetStorageListByPrivateAccessResp, error) {
+	rsp, err := c.GetStorageListByPrivateAccess(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetStorageListByPrivateAccessResp(rsp)
+}
+
+// GetStorageListByPublicAccessWithResponse List public storage resources
+//
+// Returns accessible storage resources whose access type is `public`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/storage/public (the `GetStorageListByPublicAccess` operationId).
+func (c *ClientWithResponses) GetStorageListByPublicAccessWithResponse(ctx context.Context, params *GetStorageListByPublicAccessParams, reqEditors ...RequestEditorFn) (*GetStorageListByPublicAccessResp, error) {
+	rsp, err := c.GetStorageListByPublicAccess(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetStorageListByPublicAccessResp(rsp)
+}
+
+// GetStorageListByTemplateWithResponse List storage templates
+//
+// Returns accessible storage resources whose type is `template`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -4015,9 +3831,9 @@ func (c *ClientWithResponses) GetStorageListByTemplateWithResponse(ctx context.C
 	return ParseGetStorageListByTemplateResp(rsp)
 }
 
-// GetStorageListByTypeAndAccessWithResponse List storages
+// GetStorageListByTypeAndAccessWithResponse List storage resources by type and access
 //
-// Returns a list of storage devices. Supports filtering by type, access level, labels and search, as well as sorting and pagination
+// Returns accessible storage resources matching both the requested storage type and access type.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -4030,7 +3846,9 @@ func (c *ClientWithResponses) GetStorageListByTypeAndAccessWithResponse(ctx cont
 	return ParseGetStorageListByTypeAndAccessResp(rsp)
 }
 
-// DeleteStorageWithResponse Delete storage
+// DeleteStorageWithResponse Delete storage resource
+//
+// Schedules an unattached private storage resource for deletion. Associated backups are kept by default unless another backup policy is selected.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -4043,7 +3861,9 @@ func (c *ClientWithResponses) DeleteStorageWithResponse(ctx context.Context, uui
 	return ParseDeleteStorageResp(rsp)
 }
 
-// GetStorageInfoWithResponse Get storage details
+// GetStorageInfoWithResponse Get storage resource details
+//
+// Returns detailed information about a storage resource, including its current state, attachments, labels, and backup configuration when applicable.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -4056,7 +3876,9 @@ func (c *ClientWithResponses) GetStorageInfoWithResponse(ctx context.Context, uu
 	return ParseGetStorageInfoResp(rsp)
 }
 
-// ModifyStorageWithBodyWithResponse Modify storage
+// ModifyStorageWithBodyWithResponse Modify Block Storage
+//
+// Modifies a block storage title, labels, automatic backup rule, or size. A new size must be greater than the current size. Set `filesystem_resize` to `yes` to also resize the last partition and its supported filesystem after increasing the block storage size.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -4069,7 +3891,9 @@ func (c *ClientWithResponses) ModifyStorageWithBodyWithResponse(ctx context.Cont
 	return ParseModifyStorageResp(rsp)
 }
 
-// ModifyStorageWithResponse Modify storage
+// ModifyStorageWithResponse Modify Block Storage
+//
+// Modifies a block storage title, labels, automatic backup rule, or size. A new size must be greater than the current size. Set `filesystem_resize` to `yes` to also resize the last partition and its supported filesystem after increasing the block storage size.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -4082,33 +3906,9 @@ func (c *ClientWithResponses) ModifyStorageWithResponse(ctx context.Context, uui
 	return ParseModifyStorageResp(rsp)
 }
 
-// AddStorageComponentWithBodyWithResponse Add storage component
+// AttachStorageToServerWithBodyWithResponse Attach storage to a Cloud Server
 //
-// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /1.3/storage/{uuid}/add_component (the `AddStorageComponent` operationId).
-func (c *ClientWithResponses) AddStorageComponentWithBodyWithResponse(ctx context.Context, uuid AddStorageComponentUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AddStorageComponentResp, error) {
-	rsp, err := c.AddStorageComponentWithBody(ctx, uuid, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseAddStorageComponentResp(rsp)
-}
-
-// AddStorageComponentWithResponse Add storage component
-//
-// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /1.3/storage/{uuid}/add_component (the `AddStorageComponent` operationId).
-func (c *ClientWithResponses) AddStorageComponentWithResponse(ctx context.Context, uuid AddStorageComponentUuid, body AddStorageComponentJSONRequestBody, reqEditors ...RequestEditorFn) (*AddStorageComponentResp, error) {
-	rsp, err := c.AddStorageComponent(ctx, uuid, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseAddStorageComponentResp(rsp)
-}
-
-// AttachStorageToServerWithBodyWithResponse Attach storage to server
+// Attaches the storage resource to a Cloud Server in the same zone. The device defaults to a disk at the next available address. IDE and CD-ROM devices can be attached only while the Cloud Server is stopped; SCSI and VirtIO disks can also be attached while it is running.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -4121,7 +3921,9 @@ func (c *ClientWithResponses) AttachStorageToServerWithBodyWithResponse(ctx cont
 	return ParseAttachStorageToServerResp(rsp)
 }
 
-// AttachStorageToServerWithResponse Attach storage to server
+// AttachStorageToServerWithResponse Attach storage to a Cloud Server
+//
+// Attaches the storage resource to a Cloud Server in the same zone. The device defaults to a disk at the next available address. IDE and CD-ROM devices can be attached only while the Cloud Server is stopped; SCSI and VirtIO disks can also be attached while it is running.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -4136,6 +3938,8 @@ func (c *ClientWithResponses) AttachStorageToServerWithResponse(ctx context.Cont
 
 // CreateOnDemandBackupWithBodyWithResponse Create on-demand backup
 //
+// Creates a point-in-time backup of private normal block storage. The operation is asynchronous: the source block storage is `backuping` while the backup is created, and the returned backup remains in `maintenance` until it is ready.
+//
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /1.3/storage/{uuid}/backup (the `CreateOnDemandBackup` operationId).
@@ -4149,6 +3953,8 @@ func (c *ClientWithResponses) CreateOnDemandBackupWithBodyWithResponse(ctx conte
 
 // CreateOnDemandBackupWithResponse Create on-demand backup
 //
+// Creates a point-in-time backup of private normal block storage. The operation is asynchronous: the source block storage is `backuping` while the backup is created, and the returned backup remains in `maintenance` until it is ready.
+//
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /1.3/storage/{uuid}/backup (the `CreateOnDemandBackup` operationId).
@@ -4160,7 +3966,9 @@ func (c *ClientWithResponses) CreateOnDemandBackupWithResponse(ctx context.Conte
 	return ParseCreateOnDemandBackupResp(rsp)
 }
 
-// CancelStorageOperationWithResponse Cancel storage operation
+// CancelStorageOperationWithResponse Cancel Block Storage operation
+//
+// Requests cancellation of an interruptible operation on block storage in the `maintenance` state. For a running clone, cancellation removes the incomplete copy and returns the source block storage to the `online` state.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -4173,7 +3981,9 @@ func (c *ClientWithResponses) CancelStorageOperationWithResponse(ctx context.Con
 	return ParseCancelStorageOperationResp(rsp)
 }
 
-// CloneStorageWithBodyWithResponse Clone storage
+// CloneStorageWithBodyWithResponse Clone Block Storage
+//
+// Creates a Block Storage copy of a storage resource. Cloning is asynchronous: the returned block storage remains in the `maintenance` state until the operation completes and can be monitored with the storage resource details endpoint.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -4186,7 +3996,9 @@ func (c *ClientWithResponses) CloneStorageWithBodyWithResponse(ctx context.Conte
 	return ParseCloneStorageResp(rsp)
 }
 
-// CloneStorageWithResponse Clone storage
+// CloneStorageWithResponse Clone Block Storage
+//
+// Creates a Block Storage copy of a storage resource. Cloning is asynchronous: the returned block storage remains in the `maintenance` state until the operation completes and can be monitored with the storage resource details endpoint.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -4199,7 +4011,9 @@ func (c *ClientWithResponses) CloneStorageWithResponse(ctx context.Context, uuid
 	return ParseCloneStorageResp(rsp)
 }
 
-// DetachStorageFromServerWithResponse Detach storage from server
+// DetachStorageFromServerWithResponse Detach storage from a Cloud Server
+//
+// Detaches the storage resource from its attached Cloud Server. IDE and CD-ROM devices can be detached only while the Cloud Server is stopped; SCSI and VirtIO disks can also be detached while it is running. If the storage resource is already detached, it is returned unchanged.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -4212,7 +4026,9 @@ func (c *ClientWithResponses) DetachStorageFromServerWithResponse(ctx context.Co
 	return ParseDetachStorageFromServerResp(rsp)
 }
 
-// RemoveStorageFromFavoritesWithResponse Remove storage from favorites
+// RemoveStorageFromFavoritesWithResponse Remove storage resource from favorites
+//
+// Removes an accessible storage resource from the account's favorites. The operation succeeds if the storage resource is not a favorite.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -4225,7 +4041,9 @@ func (c *ClientWithResponses) RemoveStorageFromFavoritesWithResponse(ctx context
 	return ParseRemoveStorageFromFavoritesResp(rsp)
 }
 
-// AddStorageToFavoritesWithResponse Add storage to favorites
+// AddStorageToFavoritesWithResponse Add storage resource to favorites
+//
+// Adds an accessible storage resource to the account's favorites. The operation succeeds if the storage resource is already a favorite.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -4238,7 +4056,9 @@ func (c *ClientWithResponses) AddStorageToFavoritesWithResponse(ctx context.Cont
 	return ParseAddStorageToFavoritesResp(rsp)
 }
 
-// ResizeStorageWithResponse Resize storage
+// ResizeStorageWithResponse Resize Block Storage partition and filesystem
+//
+// Resizes the last partition and its supported filesystem to use the block storage capacity already available. A backup is created before the operation and returned on success. Increase the block storage capacity first with the modify block storage endpoint.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -4251,7 +4071,9 @@ func (c *ClientWithResponses) ResizeStorageWithResponse(ctx context.Context, uui
 	return ParseResizeStorageResp(rsp)
 }
 
-// RestoreStorageFromBackupWithResponse Restore storage from backup
+// RestoreStorageFromBackupWithResponse Restore Block Storage from backup
+//
+// Starts restoring the backup identified by `uuid` to its origin block storage. If the origin block storage is attached to a Cloud Server, the Cloud Server must be stopped.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -4264,7 +4086,9 @@ func (c *ClientWithResponses) RestoreStorageFromBackupWithResponse(ctx context.C
 	return ParseRestoreStorageFromBackupResp(rsp)
 }
 
-// CreateTemplateFromStorageWithBodyWithResponse Create template from storage
+// CreateTemplateFromStorageWithBodyWithResponse Create template from Block Storage
+//
+// Creates a private template from private normal block storage. The operation is asynchronous: the returned template remains in `maintenance` until it is ready. Deployments from the template use the source block storage tier.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -4277,7 +4101,9 @@ func (c *ClientWithResponses) CreateTemplateFromStorageWithBodyWithResponse(ctx 
 	return ParseCreateTemplateFromStorageResp(rsp)
 }
 
-// CreateTemplateFromStorageWithResponse Create template from storage
+// CreateTemplateFromStorageWithResponse Create template from Block Storage
+//
+// Creates a private template from private normal block storage. The operation is asynchronous: the returned template remains in `maintenance` until it is ready. Deployments from the template use the source block storage tier.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -4288,32 +4114,6 @@ func (c *ClientWithResponses) CreateTemplateFromStorageWithResponse(ctx context.
 		return nil, err
 	}
 	return ParseCreateTemplateFromStorageResp(rsp)
-}
-
-// UpdatePublicTemplateFromSourceWithBodyWithResponse Update public template from source
-//
-// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /1.3/storage/{uuid}/update_template (the `UpdatePublicTemplateFromSource` operationId).
-func (c *ClientWithResponses) UpdatePublicTemplateFromSourceWithBodyWithResponse(ctx context.Context, uuid StorageUpdatePublicTemplateFromSourceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdatePublicTemplateFromSourceResp, error) {
-	rsp, err := c.UpdatePublicTemplateFromSourceWithBody(ctx, uuid, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseUpdatePublicTemplateFromSourceResp(rsp)
-}
-
-// UpdatePublicTemplateFromSourceWithResponse Update public template from source
-//
-// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /1.3/storage/{uuid}/update_template (the `UpdatePublicTemplateFromSource` operationId).
-func (c *ClientWithResponses) UpdatePublicTemplateFromSourceWithResponse(ctx context.Context, uuid StorageUpdatePublicTemplateFromSourceUuid, body UpdatePublicTemplateFromSourceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdatePublicTemplateFromSourceResp, error) {
-	rsp, err := c.UpdatePublicTemplateFromSource(ctx, uuid, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseUpdatePublicTemplateFromSourceResp(rsp)
 }
 
 // ParseGetStorageListResp parses an HTTP response from a GetStorageListWithResponse call
@@ -4469,39 +4269,6 @@ func ParseGetStorageListByCdromResp(rsp *http.Response) (*GetStorageListByCdromR
 	return response, nil
 }
 
-// ParseCreateCDROMStorageResp parses an HTTP response from a CreateCDROMStorageWithResponse call
-func ParseCreateCDROMStorageResp(rsp *http.Response) (*CreateCDROMStorageResp, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &CreateCDROMStorageResp{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest CreateCDROMStorage201
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON201 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest CreateCDROMStorageDefault
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSONDefault = &dest
-
-	}
-
-	return response, nil
-}
-
 // ParseGetFavoriteStorageListResp parses an HTTP response from a GetFavoriteStorageListWithResponse call
 func ParseGetFavoriteStorageListResp(rsp *http.Response) (*GetFavoriteStorageListResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -4565,6 +4332,86 @@ func ParseGetStorageListByNormalResp(rsp *http.Response) (*GetStorageListByNorma
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest GetStorageListByNormalDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetStorageListByPrivateAccessResp parses an HTTP response from a GetStorageListByPrivateAccessWithResponse call
+func ParseGetStorageListByPrivateAccessResp(rsp *http.Response) (*GetStorageListByPrivateAccessResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetStorageListByPrivateAccessResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest GetStorageListByPrivateAccess200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest GetStorageListByPrivateAccess400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest GetStorageListByPrivateAccessDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetStorageListByPublicAccessResp parses an HTTP response from a GetStorageListByPublicAccessWithResponse call
+func ParseGetStorageListByPublicAccessResp(rsp *http.Response) (*GetStorageListByPublicAccessResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetStorageListByPublicAccessResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest GetStorageListByPublicAccess200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest GetStorageListByPublicAccess400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest GetStorageListByPublicAccessDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -4753,35 +4600,6 @@ func ParseModifyStorageResp(rsp *http.Response) (*ModifyStorageResp, error) {
 	return response, nil
 }
 
-// ParseAddStorageComponentResp parses an HTTP response from a AddStorageComponentWithResponse call
-func ParseAddStorageComponentResp(rsp *http.Response) (*AddStorageComponentResp, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &AddStorageComponentResp{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case rsp.StatusCode == 204:
-		break // No content-type
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest AddStorageComponentDefault
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSONDefault = &dest
-
-	}
-
-	return response, nil
-}
-
 // ParseAttachStorageToServerResp parses an HTTP response from a AttachStorageToServerWithResponse call
 func ParseAttachStorageToServerResp(rsp *http.Response) (*AttachStorageToServerResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -4796,8 +4614,12 @@ func ParseAttachStorageToServerResp(rsp *http.Response) (*AttachStorageToServerR
 	}
 
 	switch {
-	case rsp.StatusCode == 204:
-		break // No content-type
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AttachStorageToServer200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest AttachStorageToServerDefault
@@ -4923,8 +4745,12 @@ func ParseDetachStorageFromServerResp(rsp *http.Response) (*DetachStorageFromSer
 	}
 
 	switch {
-	case rsp.StatusCode == 204:
-		break // No content-type
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DetachStorageFromServer200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest DetachStorageFromServerDefault
@@ -5081,35 +4907,6 @@ func ParseCreateTemplateFromStorageResp(rsp *http.Response) (*CreateTemplateFrom
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest CreateTemplateFromStorageDefault
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSONDefault = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseUpdatePublicTemplateFromSourceResp parses an HTTP response from a UpdatePublicTemplateFromSourceWithResponse call
-func ParseUpdatePublicTemplateFromSourceResp(rsp *http.Response) (*UpdatePublicTemplateFromSourceResp, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &UpdatePublicTemplateFromSourceResp{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case rsp.StatusCode == 204:
-		break // No content-type
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest StorageUpdatePublicTemplateFromSourceDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}

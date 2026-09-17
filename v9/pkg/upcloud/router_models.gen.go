@@ -5,11 +5,73 @@ package upcloud
 
 import (
 	"encoding/json"
-	"fmt"
 
 	"github.com/oapi-codegen/runtime"
 	openapi_types "github.com/oapi-codegen/runtime/types"
 )
+
+// Defines values for RouterCreateRouterStaticRoutesNexthop1.
+const (
+	RouterCreateRouterStaticRoutesNexthop1NoNexthop RouterCreateRouterStaticRoutesNexthop1 = "no-nexthop"
+)
+
+// Valid indicates whether the value is a known member of the RouterCreateRouterStaticRoutesNexthop1 enum.
+func (e RouterCreateRouterStaticRoutesNexthop1) Valid() bool {
+	switch e {
+	case RouterCreateRouterStaticRoutesNexthop1NoNexthop:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for RouterModifyRouterStaticRoutesNexthop1.
+const (
+	RouterModifyRouterStaticRoutesNexthop1NoNexthop RouterModifyRouterStaticRoutesNexthop1 = "no-nexthop"
+)
+
+// Valid indicates whether the value is a known member of the RouterModifyRouterStaticRoutesNexthop1 enum.
+func (e RouterModifyRouterStaticRoutesNexthop1) Valid() bool {
+	switch e {
+	case RouterModifyRouterStaticRoutesNexthop1NoNexthop:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for RouterRouteNexthopNexthop1.
+const (
+	RouterRouteNexthopNexthop1NoNexthop RouterRouteNexthopNexthop1 = "no-nexthop"
+)
+
+// Valid indicates whether the value is a known member of the RouterRouteNexthopNexthop1 enum.
+func (e RouterRouteNexthopNexthop1) Valid() bool {
+	switch e {
+	case RouterRouteNexthopNexthop1NoNexthop:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for RouterStaticRouteType.
+const (
+	RouterStaticRouteTypeService RouterStaticRouteType = "service"
+	RouterStaticRouteTypeUser    RouterStaticRouteType = "user"
+)
+
+// Valid indicates whether the value is a known member of the RouterStaticRouteType enum.
+func (e RouterStaticRouteType) Valid() bool {
+	switch e {
+	case RouterStaticRouteTypeService:
+		return true
+	case RouterStaticRouteTypeUser:
+		return true
+	default:
+		return false
+	}
+}
 
 // Defines values for RouterType.
 const (
@@ -35,29 +97,55 @@ type Router struct {
 	Router RouterDetails `json:"router"`
 }
 
+// RouterCreate Request schema for creating a router
+type RouterCreate struct {
+	Router struct {
+		Labels *[]RouterLabel `json:"labels,omitempty"`
+		Name   string         `json:"name"`
+
+		// StaticRoutes Static routes that will be added to the routing table of the SDN router
+		StaticRoutes *[]struct {
+			Name    *string                                  `json:"name,omitempty"`
+			Nexthop RouterCreate_Router_StaticRoutes_Nexthop `json:"nexthop"`
+
+			// Route IP CIDR
+			Route RouterIpCidr `json:"route"`
+		} `json:"static_routes,omitempty"`
+	} `json:"router"`
+}
+
+// RouterCreateRouterStaticRoutesNexthop1 defines model for RouterCreate.Router.StaticRoutes.Nexthop.1.
+type RouterCreateRouterStaticRoutesNexthop1 string
+
+// RouterCreate_Router_StaticRoutes_Nexthop defines model for RouterCreate.Router.StaticRoutes.Nexthop.
+type RouterCreate_Router_StaticRoutes_Nexthop struct {
+	union json.RawMessage
+}
+
 // RouterDetails Router describes a virtual router that can route between SDN networks
 type RouterDetails struct {
+	// AttachedNetworkGateways Gateways of the networks attached to the router.
+	AttachedNetworkGateways []struct {
+		// Uuid Universally unique identifier
+		Uuid RouterUuid `json:"uuid"`
+	} `json:"attached_network_gateways"`
+
 	// AttachedNetworks Networks attached to the router.
-	AttachedNetworks *struct {
+	AttachedNetworks struct {
 		Network []struct {
 			// Uuid Universally unique identifier
 			Uuid RouterUuid `json:"uuid"`
 		} `json:"network"`
-	} `json:"attached_networks,omitempty"`
-
-	// Labels Collection of key/value labels for a resource.
-	Labels *RouterLabels `json:"labels,omitempty"`
-	Name   string        `json:"name"`
-
-	// StaticRoutes Static routes that will be added to the routing table of the SDN router
-	StaticRoutes *[]RouterRouteNexthop `json:"static_routes,omitempty"`
+	} `json:"attached_networks"`
+	Labels       []RouterLabel        `json:"labels"`
+	Name         string               `json:"name"`
+	StaticRoutes []RouterRouteNexthop `json:"static_routes"`
 
 	// Type Type of the router.
-	Type *RouterType `json:"type,omitempty"`
+	Type RouterType `json:"type"`
 
 	// Uuid Universally unique identifier
-	Uuid                 *RouterUuid            `json:"uuid,omitempty"`
-	AdditionalProperties map[string]interface{} `json:"-"`
+	Uuid RouterUuid `json:"uuid"`
 }
 
 // RouterError A general error response indicating that the request could not be fulfilled due to a technical issue.
@@ -87,25 +175,60 @@ type RouterIpCidr = string
 
 // RouterLabel A key/value pair to label and categorize resources
 type RouterLabel struct {
-	Key   string `json:"key"`
+	// Key Label key used to classify the resource
+	Key string `json:"key"`
+
+	// Value Value associated with the label key
 	Value string `json:"value"`
 }
 
-// RouterLabels Collection of key/value labels for a resource.
-type RouterLabels struct {
-	Label *[]RouterLabel `json:"label,omitempty"`
+// RouterModify Request schema for modifying a router
+type RouterModify struct {
+	Router struct {
+		Labels *[]RouterLabel `json:"labels,omitempty"`
+		Name   *string        `json:"name,omitempty"`
+
+		// StaticRoutes Static routes that will be added to the routing table of the SDN router
+		StaticRoutes *[]struct {
+			Name    *string                                  `json:"name,omitempty"`
+			Nexthop RouterModify_Router_StaticRoutes_Nexthop `json:"nexthop"`
+
+			// Route IP CIDR
+			Route RouterIpCidr `json:"route"`
+		} `json:"static_routes,omitempty"`
+	} `json:"router"`
+}
+
+// RouterModifyRouterStaticRoutesNexthop1 defines model for RouterModify.Router.StaticRoutes.Nexthop.1.
+type RouterModifyRouterStaticRoutesNexthop1 string
+
+// RouterModify_Router_StaticRoutes_Nexthop defines model for RouterModify.Router.StaticRoutes.Nexthop.
+type RouterModify_Router_StaticRoutes_Nexthop struct {
+	union json.RawMessage
 }
 
 // RouterRouteNexthop Static route with nexthop information.
 type RouterRouteNexthop struct {
-	Name *string `json:"name,omitempty"`
-
-	// Nexthop IP address
-	Nexthop *RouterIpAddress `json:"nexthop,omitempty"`
+	Name    string                     `json:"name"`
+	Nexthop RouterRouteNexthop_Nexthop `json:"nexthop"`
 
 	// Route IP CIDR
-	Route *RouterIpCidr `json:"route,omitempty"`
+	Route RouterIpCidr `json:"route"`
+
+	// Type Type of static route.
+	Type RouterStaticRouteType `json:"type"`
 }
+
+// RouterRouteNexthopNexthop1 defines model for RouterRouteNexthop.Nexthop.1.
+type RouterRouteNexthopNexthop1 string
+
+// RouterRouteNexthop_Nexthop defines model for RouterRouteNexthop.Nexthop.
+type RouterRouteNexthop_Nexthop struct {
+	union json.RawMessage
+}
+
+// RouterStaticRouteType Type of static route.
+type RouterStaticRouteType string
 
 // RouterType Type of the router.
 type RouterType string
@@ -183,11 +306,11 @@ type ModifyRouter409 = RouterError
 // ModifyRouterDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ModifyRouterDefault = RouterError
 
-// CreateRouter Router describes a virtual router that can route between SDN networks
-type CreateRouter = RouterDetails
+// CreateRouter Request schema for creating a router
+type CreateRouter = RouterCreate
 
-// ModifyRouter Router describes a virtual router that can route between SDN networks
-type ModifyRouter = RouterDetails
+// ModifyRouter Request schema for modifying a router
+type ModifyRouter = RouterModify
 
 // ListRoutersParams defines parameters for ListRouters.
 type ListRoutersParams struct {
@@ -196,150 +319,71 @@ type ListRoutersParams struct {
 }
 
 // CreateRouterJSONRequestBody defines body for CreateRouter for application/json ContentType.
-type CreateRouterJSONRequestBody = RouterDetails
+type CreateRouterJSONRequestBody = RouterCreate
 
 // ModifyRouterJSONRequestBody defines body for ModifyRouter for application/json ContentType.
-type ModifyRouterJSONRequestBody = RouterDetails
+type ModifyRouterJSONRequestBody = RouterModify
 
-// Getter for additional properties for RouterDetails. Returns the specified
-// element and whether it was found
-func (a RouterDetails) Get(fieldName string) (value interface{}, found bool) {
-	if a.AdditionalProperties != nil {
-		value, found = a.AdditionalProperties[fieldName]
-	}
-	return
+// AsRouterIpAddress returns the union data inside the RouterCreate_Router_StaticRoutes_Nexthop as a RouterIpAddress
+func (t RouterCreate_Router_StaticRoutes_Nexthop) AsRouterIpAddress() (RouterIpAddress, error) {
+	var body RouterIpAddress
+	err := json.Unmarshal(t.union, &body)
+	return body, err
 }
 
-// Setter for additional properties for RouterDetails
-func (a *RouterDetails) Set(fieldName string, value interface{}) {
-	if a.AdditionalProperties == nil {
-		a.AdditionalProperties = make(map[string]interface{})
-	}
-	a.AdditionalProperties[fieldName] = value
+// FromRouterIpAddress overwrites any union data inside the RouterCreate_Router_StaticRoutes_Nexthop as the provided RouterIpAddress
+func (t *RouterCreate_Router_StaticRoutes_Nexthop) FromRouterIpAddress(v RouterIpAddress) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
 }
 
-// Override default JSON handling for RouterDetails to handle AdditionalProperties
-func (a *RouterDetails) UnmarshalJSON(b []byte) error {
-	object := make(map[string]json.RawMessage)
-	err := json.Unmarshal(b, &object)
+// MergeRouterIpAddress performs a merge with any union data inside the RouterCreate_Router_StaticRoutes_Nexthop, using the provided RouterIpAddress
+func (t *RouterCreate_Router_StaticRoutes_Nexthop) MergeRouterIpAddress(v RouterIpAddress) error {
+	b, err := json.Marshal(v)
 	if err != nil {
 		return err
 	}
 
-	if raw, found := object["attached_networks"]; found {
-		err = json.Unmarshal(raw, &a.AttachedNetworks)
-		if err != nil {
-			return fmt.Errorf("error reading 'attached_networks': %w", err)
-		}
-		delete(object, "attached_networks")
-	}
-
-	if raw, found := object["labels"]; found {
-		err = json.Unmarshal(raw, &a.Labels)
-		if err != nil {
-			return fmt.Errorf("error reading 'labels': %w", err)
-		}
-		delete(object, "labels")
-	}
-
-	if raw, found := object["name"]; found {
-		err = json.Unmarshal(raw, &a.Name)
-		if err != nil {
-			return fmt.Errorf("error reading 'name': %w", err)
-		}
-		delete(object, "name")
-	}
-
-	if raw, found := object["static_routes"]; found {
-		err = json.Unmarshal(raw, &a.StaticRoutes)
-		if err != nil {
-			return fmt.Errorf("error reading 'static_routes': %w", err)
-		}
-		delete(object, "static_routes")
-	}
-
-	if raw, found := object["type"]; found {
-		err = json.Unmarshal(raw, &a.Type)
-		if err != nil {
-			return fmt.Errorf("error reading 'type': %w", err)
-		}
-		delete(object, "type")
-	}
-
-	if raw, found := object["uuid"]; found {
-		err = json.Unmarshal(raw, &a.Uuid)
-		if err != nil {
-			return fmt.Errorf("error reading 'uuid': %w", err)
-		}
-		delete(object, "uuid")
-	}
-
-	if len(object) != 0 {
-		a.AdditionalProperties = make(map[string]interface{})
-		for fieldName, fieldBuf := range object {
-			var fieldVal interface{}
-			err := json.Unmarshal(fieldBuf, &fieldVal)
-			if err != nil {
-				return fmt.Errorf("error unmarshaling field %s: %w", fieldName, err)
-			}
-			a.AdditionalProperties[fieldName] = fieldVal
-		}
-	}
-	return nil
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
 }
 
-// Override default JSON handling for RouterDetails to handle AdditionalProperties
-func (a RouterDetails) MarshalJSON() ([]byte, error) {
-	var err error
-	object := make(map[string]json.RawMessage)
+// AsRouterCreateRouterStaticRoutesNexthop1 returns the union data inside the RouterCreate_Router_StaticRoutes_Nexthop as a RouterCreateRouterStaticRoutesNexthop1
+func (t RouterCreate_Router_StaticRoutes_Nexthop) AsRouterCreateRouterStaticRoutesNexthop1() (RouterCreateRouterStaticRoutesNexthop1, error) {
+	var body RouterCreateRouterStaticRoutesNexthop1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
 
-	if a.AttachedNetworks != nil {
-		object["attached_networks"], err = json.Marshal(a.AttachedNetworks)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'attached_networks': %w", err)
-		}
-	}
+// FromRouterCreateRouterStaticRoutesNexthop1 overwrites any union data inside the RouterCreate_Router_StaticRoutes_Nexthop as the provided RouterCreateRouterStaticRoutesNexthop1
+func (t *RouterCreate_Router_StaticRoutes_Nexthop) FromRouterCreateRouterStaticRoutesNexthop1(v RouterCreateRouterStaticRoutesNexthop1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
 
-	if a.Labels != nil {
-		object["labels"], err = json.Marshal(a.Labels)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'labels': %w", err)
-		}
-	}
-
-	object["name"], err = json.Marshal(a.Name)
+// MergeRouterCreateRouterStaticRoutesNexthop1 performs a merge with any union data inside the RouterCreate_Router_StaticRoutes_Nexthop, using the provided RouterCreateRouterStaticRoutesNexthop1
+func (t *RouterCreate_Router_StaticRoutes_Nexthop) MergeRouterCreateRouterStaticRoutesNexthop1(v RouterCreateRouterStaticRoutesNexthop1) error {
+	b, err := json.Marshal(v)
 	if err != nil {
-		return nil, fmt.Errorf("error marshaling 'name': %w", err)
+		return err
 	}
 
-	if a.StaticRoutes != nil {
-		object["static_routes"], err = json.Marshal(a.StaticRoutes)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'static_routes': %w", err)
-		}
-	}
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
 
-	if a.Type != nil {
-		object["type"], err = json.Marshal(a.Type)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'type': %w", err)
-		}
-	}
+func (t RouterCreate_Router_StaticRoutes_Nexthop) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
 
-	if a.Uuid != nil {
-		object["uuid"], err = json.Marshal(a.Uuid)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling 'uuid': %w", err)
-		}
-	}
-
-	for fieldName, field := range a.AdditionalProperties {
-		object[fieldName], err = json.Marshal(field)
-		if err != nil {
-			return nil, fmt.Errorf("error marshaling '%s': %w", fieldName, err)
-		}
-	}
-	return json.Marshal(object)
+func (t *RouterCreate_Router_StaticRoutes_Nexthop) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
 }
 
 // AsRouterIpAddress0 returns the union data inside the RouterIpAddress as a RouterIpAddress0
@@ -400,6 +444,130 @@ func (t RouterIpAddress) MarshalJSON() ([]byte, error) {
 }
 
 func (t *RouterIpAddress) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsRouterIpAddress returns the union data inside the RouterModify_Router_StaticRoutes_Nexthop as a RouterIpAddress
+func (t RouterModify_Router_StaticRoutes_Nexthop) AsRouterIpAddress() (RouterIpAddress, error) {
+	var body RouterIpAddress
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromRouterIpAddress overwrites any union data inside the RouterModify_Router_StaticRoutes_Nexthop as the provided RouterIpAddress
+func (t *RouterModify_Router_StaticRoutes_Nexthop) FromRouterIpAddress(v RouterIpAddress) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeRouterIpAddress performs a merge with any union data inside the RouterModify_Router_StaticRoutes_Nexthop, using the provided RouterIpAddress
+func (t *RouterModify_Router_StaticRoutes_Nexthop) MergeRouterIpAddress(v RouterIpAddress) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsRouterModifyRouterStaticRoutesNexthop1 returns the union data inside the RouterModify_Router_StaticRoutes_Nexthop as a RouterModifyRouterStaticRoutesNexthop1
+func (t RouterModify_Router_StaticRoutes_Nexthop) AsRouterModifyRouterStaticRoutesNexthop1() (RouterModifyRouterStaticRoutesNexthop1, error) {
+	var body RouterModifyRouterStaticRoutesNexthop1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromRouterModifyRouterStaticRoutesNexthop1 overwrites any union data inside the RouterModify_Router_StaticRoutes_Nexthop as the provided RouterModifyRouterStaticRoutesNexthop1
+func (t *RouterModify_Router_StaticRoutes_Nexthop) FromRouterModifyRouterStaticRoutesNexthop1(v RouterModifyRouterStaticRoutesNexthop1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeRouterModifyRouterStaticRoutesNexthop1 performs a merge with any union data inside the RouterModify_Router_StaticRoutes_Nexthop, using the provided RouterModifyRouterStaticRoutesNexthop1
+func (t *RouterModify_Router_StaticRoutes_Nexthop) MergeRouterModifyRouterStaticRoutesNexthop1(v RouterModifyRouterStaticRoutesNexthop1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t RouterModify_Router_StaticRoutes_Nexthop) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *RouterModify_Router_StaticRoutes_Nexthop) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsRouterIpAddress returns the union data inside the RouterRouteNexthop_Nexthop as a RouterIpAddress
+func (t RouterRouteNexthop_Nexthop) AsRouterIpAddress() (RouterIpAddress, error) {
+	var body RouterIpAddress
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromRouterIpAddress overwrites any union data inside the RouterRouteNexthop_Nexthop as the provided RouterIpAddress
+func (t *RouterRouteNexthop_Nexthop) FromRouterIpAddress(v RouterIpAddress) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeRouterIpAddress performs a merge with any union data inside the RouterRouteNexthop_Nexthop, using the provided RouterIpAddress
+func (t *RouterRouteNexthop_Nexthop) MergeRouterIpAddress(v RouterIpAddress) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsRouterRouteNexthopNexthop1 returns the union data inside the RouterRouteNexthop_Nexthop as a RouterRouteNexthopNexthop1
+func (t RouterRouteNexthop_Nexthop) AsRouterRouteNexthopNexthop1() (RouterRouteNexthopNexthop1, error) {
+	var body RouterRouteNexthopNexthop1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromRouterRouteNexthopNexthop1 overwrites any union data inside the RouterRouteNexthop_Nexthop as the provided RouterRouteNexthopNexthop1
+func (t *RouterRouteNexthop_Nexthop) FromRouterRouteNexthopNexthop1(v RouterRouteNexthopNexthop1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeRouterRouteNexthopNexthop1 performs a merge with any union data inside the RouterRouteNexthop_Nexthop, using the provided RouterRouteNexthopNexthop1
+func (t *RouterRouteNexthop_Nexthop) MergeRouterRouteNexthopNexthop1(v RouterRouteNexthopNexthop1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t RouterRouteNexthop_Nexthop) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *RouterRouteNexthop_Nexthop) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
 	return err
 }

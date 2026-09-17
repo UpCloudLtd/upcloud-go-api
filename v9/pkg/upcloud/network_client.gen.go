@@ -21,12 +21,18 @@ type NetworkClientInterface interface {
 
 	// ListNetworks List networks
 	//
-	// Retrieves a list of networks.
+	// Get a list of all networks.
+	//
+	// It is also possible to filter networks with label URL parameters, e.g.
+	// `?label=env` or `?label=env%3Dprod`. URL parameter can be given multiple
+	// times to add more filters (e.g. `?label=env%3Dprod&label=v2`), where
+	// only networks that match all labels are returned.
+	// Label keys are matched case insensitively.
 	//
 	// Corresponds with GET /1.3/network (the `ListNetworks` operationId).
 	ListNetworks(ctx context.Context, params *ListNetworksParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateNetworkWithBody Create an SDN private network
+	// CreateNetworkWithBody Create SDN network
 	//
 	// Creates a new SDN private network that cloud servers from the same zone can be attached to.
 	//
@@ -35,7 +41,7 @@ type NetworkClientInterface interface {
 	// Corresponds with POST /1.3/network (the `CreateNetwork` operationId).
 	CreateNetworkWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateNetwork Create an SDN private network
+	// CreateNetwork Create SDN network
 	//
 	// Creates a new SDN private network that cloud servers from the same zone can be attached to.
 	//
@@ -44,14 +50,14 @@ type NetworkClientInterface interface {
 	// Corresponds with POST /1.3/network (the `CreateNetwork` operationId).
 	CreateNetwork(ctx context.Context, body CreateNetworkJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ListNetworkInterfaces List network interfaces
+	// ListNetworkInterfaces List interfaces
 	//
 	// Retrieves a list of network interfaces.
 	//
 	// Corresponds with GET /1.3/network/interface (the `ListNetworkInterfaces` operationId).
 	ListNetworkInterfaces(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateNetworkInterfaceWithBody Create a network interface
+	// CreateNetworkInterfaceWithBody Create interface
 	//
 	// Creates a new network interface.
 	//
@@ -60,7 +66,7 @@ type NetworkClientInterface interface {
 	// Corresponds with POST /1.3/network/interface (the `CreateNetworkInterface` operationId).
 	CreateNetworkInterfaceWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateNetworkInterface Create a network interface
+	// CreateNetworkInterface Create interface
 	//
 	// Creates a new network interface.
 	//
@@ -69,46 +75,46 @@ type NetworkClientInterface interface {
 	// Corresponds with POST /1.3/network/interface (the `CreateNetworkInterface` operationId).
 	CreateNetworkInterface(ctx context.Context, body CreateNetworkInterfaceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// DeleteNetworkInterface Delete a network interface
+	// DeleteNetworkInterface Delete interface
 	//
 	// Deletes a specific network interface.
 	//
 	// Corresponds with DELETE /1.3/network/interface/{uuid} (the `DeleteNetworkInterface` operationId).
 	DeleteNetworkInterface(ctx context.Context, uuid DeleteNetworkInterfaceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetNetworkInterfaceDetails Get network interface details
+	// GetNetworkInterfaceDetails Get interface
 	//
 	// Retrieves details of a specific network interface.
 	//
 	// Corresponds with GET /1.3/network/interface/{uuid} (the `GetNetworkInterfaceDetails` operationId).
 	GetNetworkInterfaceDetails(ctx context.Context, uuid GetNetworkInterfaceDetailsUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// DeleteNetwork Delete a network
+	// DeleteNetwork Delete network
 	//
-	// Deletes a specific network.
+	// Deletes an SDN private network. All attached cloud servers must first be detached before SDN private networks can be deleted. Utility and public networks can only be detached from servers by [Releasing the corresponding IP addresses](https://upcloudltd.github.io/upcloud-openapi-spec/api/ip-address#delete-ip-address).
 	//
 	// Corresponds with DELETE /1.3/network/{uuid} (the `DeleteNetwork` operationId).
 	DeleteNetwork(ctx context.Context, uuid DeleteNetworkUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetNetworkDetails Get network details
+	// GetNetworkDetails Get network
 	//
 	// Retrieves details of a specific network.
 	//
 	// Corresponds with GET /1.3/network/{uuid} (the `GetNetworkDetails` operationId).
 	GetNetworkDetails(ctx context.Context, uuid GetNetworkDetailsUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ModifyNetworkWithBody Modify a network
+	// ModifyNetworkWithBody Modify network
 	//
-	// Modifies attributes of a specific network.
+	// Modifies the details of a specific SDN private network. The Utility and public networks cannot be modified.
 	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with PUT /1.3/network/{uuid} (the `ModifyNetwork` operationId).
 	ModifyNetworkWithBody(ctx context.Context, uuid ModifyNetworkUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ModifyNetwork Modify a network
+	// ModifyNetwork Modify network
 	//
-	// Modifies attributes of a specific network.
+	// Modifies the details of a specific SDN private network. The Utility and public networks cannot be modified.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -118,7 +124,13 @@ type NetworkClientInterface interface {
 
 // ListNetworks List networks
 //
-// Retrieves a list of networks.
+// Get a list of all networks.
+//
+// It is also possible to filter networks with label URL parameters, e.g.
+// `?label=env` or `?label=env%3Dprod`. URL parameter can be given multiple
+// times to add more filters (e.g. `?label=env%3Dprod&label=v2`), where
+// only networks that match all labels are returned.
+// Label keys are matched case insensitively.
 //
 // Corresponds with GET /1.3/network (the `ListNetworks` operationId).
 func (c *Client) ListNetworks(ctx context.Context, params *ListNetworksParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -133,7 +145,7 @@ func (c *Client) ListNetworks(ctx context.Context, params *ListNetworksParams, r
 	return c.Client.Do(req)
 }
 
-// CreateNetworkWithBody Create an SDN private network
+// CreateNetworkWithBody Create SDN network
 //
 // Creates a new SDN private network that cloud servers from the same zone can be attached to.
 //
@@ -152,7 +164,7 @@ func (c *Client) CreateNetworkWithBody(ctx context.Context, contentType string, 
 	return c.Client.Do(req)
 }
 
-// CreateNetwork Create an SDN private network
+// CreateNetwork Create SDN network
 //
 // Creates a new SDN private network that cloud servers from the same zone can be attached to.
 //
@@ -171,7 +183,7 @@ func (c *Client) CreateNetwork(ctx context.Context, body CreateNetworkJSONReques
 	return c.Client.Do(req)
 }
 
-// ListNetworkInterfaces List network interfaces
+// ListNetworkInterfaces List interfaces
 //
 // Retrieves a list of network interfaces.
 //
@@ -188,7 +200,7 @@ func (c *Client) ListNetworkInterfaces(ctx context.Context, reqEditors ...Reques
 	return c.Client.Do(req)
 }
 
-// CreateNetworkInterfaceWithBody Create a network interface
+// CreateNetworkInterfaceWithBody Create interface
 //
 // Creates a new network interface.
 //
@@ -207,7 +219,7 @@ func (c *Client) CreateNetworkInterfaceWithBody(ctx context.Context, contentType
 	return c.Client.Do(req)
 }
 
-// CreateNetworkInterface Create a network interface
+// CreateNetworkInterface Create interface
 //
 // Creates a new network interface.
 //
@@ -226,7 +238,7 @@ func (c *Client) CreateNetworkInterface(ctx context.Context, body CreateNetworkI
 	return c.Client.Do(req)
 }
 
-// DeleteNetworkInterface Delete a network interface
+// DeleteNetworkInterface Delete interface
 //
 // Deletes a specific network interface.
 //
@@ -243,7 +255,7 @@ func (c *Client) DeleteNetworkInterface(ctx context.Context, uuid DeleteNetworkI
 	return c.Client.Do(req)
 }
 
-// GetNetworkInterfaceDetails Get network interface details
+// GetNetworkInterfaceDetails Get interface
 //
 // Retrieves details of a specific network interface.
 //
@@ -260,9 +272,9 @@ func (c *Client) GetNetworkInterfaceDetails(ctx context.Context, uuid GetNetwork
 	return c.Client.Do(req)
 }
 
-// DeleteNetwork Delete a network
+// DeleteNetwork Delete network
 //
-// Deletes a specific network.
+// Deletes an SDN private network. All attached cloud servers must first be detached before SDN private networks can be deleted. Utility and public networks can only be detached from servers by [Releasing the corresponding IP addresses](https://upcloudltd.github.io/upcloud-openapi-spec/api/ip-address#delete-ip-address).
 //
 // Corresponds with DELETE /1.3/network/{uuid} (the `DeleteNetwork` operationId).
 func (c *Client) DeleteNetwork(ctx context.Context, uuid DeleteNetworkUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -277,7 +289,7 @@ func (c *Client) DeleteNetwork(ctx context.Context, uuid DeleteNetworkUuid, reqE
 	return c.Client.Do(req)
 }
 
-// GetNetworkDetails Get network details
+// GetNetworkDetails Get network
 //
 // Retrieves details of a specific network.
 //
@@ -294,9 +306,9 @@ func (c *Client) GetNetworkDetails(ctx context.Context, uuid GetNetworkDetailsUu
 	return c.Client.Do(req)
 }
 
-// ModifyNetworkWithBody Modify a network
+// ModifyNetworkWithBody Modify network
 //
-// Modifies attributes of a specific network.
+// Modifies the details of a specific SDN private network. The Utility and public networks cannot be modified.
 //
 // Takes any type of body and a specified content type.
 //
@@ -313,9 +325,9 @@ func (c *Client) ModifyNetworkWithBody(ctx context.Context, uuid ModifyNetworkUu
 	return c.Client.Do(req)
 }
 
-// ModifyNetwork Modify a network
+// ModifyNetwork Modify network
 //
-// Modifies attributes of a specific network.
+// Modifies the details of a specific SDN private network. The Utility and public networks cannot be modified.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -681,14 +693,20 @@ type NetworkClientWithResponsesInterface interface {
 
 	// ListNetworksWithResponse List networks
 	//
-	// Retrieves a list of networks.
+	// Get a list of all networks.
+	//
+	// It is also possible to filter networks with label URL parameters, e.g.
+	// `?label=env` or `?label=env%3Dprod`. URL parameter can be given multiple
+	// times to add more filters (e.g. `?label=env%3Dprod&label=v2`), where
+	// only networks that match all labels are returned.
+	// Label keys are matched case insensitively.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /1.3/network (the `ListNetworks` operationId).
 	ListNetworksWithResponse(ctx context.Context, params *ListNetworksParams, reqEditors ...RequestEditorFn) (*ListNetworksResp, error)
 
-	// CreateNetworkWithBodyWithResponse Create an SDN private network
+	// CreateNetworkWithBodyWithResponse Create SDN network
 	//
 	// Creates a new SDN private network that cloud servers from the same zone can be attached to.
 	//
@@ -697,7 +715,7 @@ type NetworkClientWithResponsesInterface interface {
 	// Corresponds with POST /1.3/network (the `CreateNetwork` operationId).
 	CreateNetworkWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateNetworkResp, error)
 
-	// CreateNetworkWithResponse Create an SDN private network
+	// CreateNetworkWithResponse Create SDN network
 	//
 	// Creates a new SDN private network that cloud servers from the same zone can be attached to.
 	//
@@ -706,7 +724,7 @@ type NetworkClientWithResponsesInterface interface {
 	// Corresponds with POST /1.3/network (the `CreateNetwork` operationId).
 	CreateNetworkWithResponse(ctx context.Context, body CreateNetworkJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateNetworkResp, error)
 
-	// ListNetworkInterfacesWithResponse List network interfaces
+	// ListNetworkInterfacesWithResponse List interfaces
 	//
 	// Retrieves a list of network interfaces.
 	//
@@ -715,7 +733,7 @@ type NetworkClientWithResponsesInterface interface {
 	// Corresponds with GET /1.3/network/interface (the `ListNetworkInterfaces` operationId).
 	ListNetworkInterfacesWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListNetworkInterfacesResp, error)
 
-	// CreateNetworkInterfaceWithBodyWithResponse Create a network interface
+	// CreateNetworkInterfaceWithBodyWithResponse Create interface
 	//
 	// Creates a new network interface.
 	//
@@ -724,7 +742,7 @@ type NetworkClientWithResponsesInterface interface {
 	// Corresponds with POST /1.3/network/interface (the `CreateNetworkInterface` operationId).
 	CreateNetworkInterfaceWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateNetworkInterfaceResp, error)
 
-	// CreateNetworkInterfaceWithResponse Create a network interface
+	// CreateNetworkInterfaceWithResponse Create interface
 	//
 	// Creates a new network interface.
 	//
@@ -733,7 +751,7 @@ type NetworkClientWithResponsesInterface interface {
 	// Corresponds with POST /1.3/network/interface (the `CreateNetworkInterface` operationId).
 	CreateNetworkInterfaceWithResponse(ctx context.Context, body CreateNetworkInterfaceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateNetworkInterfaceResp, error)
 
-	// DeleteNetworkInterfaceWithResponse Delete a network interface
+	// DeleteNetworkInterfaceWithResponse Delete interface
 	//
 	// Deletes a specific network interface.
 	//
@@ -742,7 +760,7 @@ type NetworkClientWithResponsesInterface interface {
 	// Corresponds with DELETE /1.3/network/interface/{uuid} (the `DeleteNetworkInterface` operationId).
 	DeleteNetworkInterfaceWithResponse(ctx context.Context, uuid DeleteNetworkInterfaceUuid, reqEditors ...RequestEditorFn) (*DeleteNetworkInterfaceResp, error)
 
-	// GetNetworkInterfaceDetailsWithResponse Get network interface details
+	// GetNetworkInterfaceDetailsWithResponse Get interface
 	//
 	// Retrieves details of a specific network interface.
 	//
@@ -751,16 +769,16 @@ type NetworkClientWithResponsesInterface interface {
 	// Corresponds with GET /1.3/network/interface/{uuid} (the `GetNetworkInterfaceDetails` operationId).
 	GetNetworkInterfaceDetailsWithResponse(ctx context.Context, uuid GetNetworkInterfaceDetailsUuid, reqEditors ...RequestEditorFn) (*GetNetworkInterfaceDetailsResp, error)
 
-	// DeleteNetworkWithResponse Delete a network
+	// DeleteNetworkWithResponse Delete network
 	//
-	// Deletes a specific network.
+	// Deletes an SDN private network. All attached cloud servers must first be detached before SDN private networks can be deleted. Utility and public networks can only be detached from servers by [Releasing the corresponding IP addresses](https://upcloudltd.github.io/upcloud-openapi-spec/api/ip-address#delete-ip-address).
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /1.3/network/{uuid} (the `DeleteNetwork` operationId).
 	DeleteNetworkWithResponse(ctx context.Context, uuid DeleteNetworkUuid, reqEditors ...RequestEditorFn) (*DeleteNetworkResp, error)
 
-	// GetNetworkDetailsWithResponse Get network details
+	// GetNetworkDetailsWithResponse Get network
 	//
 	// Retrieves details of a specific network.
 	//
@@ -769,18 +787,18 @@ type NetworkClientWithResponsesInterface interface {
 	// Corresponds with GET /1.3/network/{uuid} (the `GetNetworkDetails` operationId).
 	GetNetworkDetailsWithResponse(ctx context.Context, uuid GetNetworkDetailsUuid, reqEditors ...RequestEditorFn) (*GetNetworkDetailsResp, error)
 
-	// ModifyNetworkWithBodyWithResponse Modify a network
+	// ModifyNetworkWithBodyWithResponse Modify network
 	//
-	// Modifies attributes of a specific network.
+	// Modifies the details of a specific SDN private network. The Utility and public networks cannot be modified.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PUT /1.3/network/{uuid} (the `ModifyNetwork` operationId).
 	ModifyNetworkWithBodyWithResponse(ctx context.Context, uuid ModifyNetworkUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ModifyNetworkResp, error)
 
-	// ModifyNetworkWithResponse Modify a network
+	// ModifyNetworkWithResponse Modify network
 	//
-	// Modifies attributes of a specific network.
+	// Modifies the details of a specific SDN private network. The Utility and public networks cannot be modified.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -1208,7 +1226,13 @@ func (r ModifyNetworkResp) ContentType() string {
 
 // ListNetworksWithResponse List networks
 //
-// Retrieves a list of networks.
+// Get a list of all networks.
+//
+// It is also possible to filter networks with label URL parameters, e.g.
+// `?label=env` or `?label=env%3Dprod`. URL parameter can be given multiple
+// times to add more filters (e.g. `?label=env%3Dprod&label=v2`), where
+// only networks that match all labels are returned.
+// Label keys are matched case insensitively.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -1221,7 +1245,7 @@ func (c *ClientWithResponses) ListNetworksWithResponse(ctx context.Context, para
 	return ParseListNetworksResp(rsp)
 }
 
-// CreateNetworkWithBodyWithResponse Create an SDN private network
+// CreateNetworkWithBodyWithResponse Create SDN network
 //
 // Creates a new SDN private network that cloud servers from the same zone can be attached to.
 //
@@ -1236,7 +1260,7 @@ func (c *ClientWithResponses) CreateNetworkWithBodyWithResponse(ctx context.Cont
 	return ParseCreateNetworkResp(rsp)
 }
 
-// CreateNetworkWithResponse Create an SDN private network
+// CreateNetworkWithResponse Create SDN network
 //
 // Creates a new SDN private network that cloud servers from the same zone can be attached to.
 //
@@ -1251,7 +1275,7 @@ func (c *ClientWithResponses) CreateNetworkWithResponse(ctx context.Context, bod
 	return ParseCreateNetworkResp(rsp)
 }
 
-// ListNetworkInterfacesWithResponse List network interfaces
+// ListNetworkInterfacesWithResponse List interfaces
 //
 // Retrieves a list of network interfaces.
 //
@@ -1266,7 +1290,7 @@ func (c *ClientWithResponses) ListNetworkInterfacesWithResponse(ctx context.Cont
 	return ParseListNetworkInterfacesResp(rsp)
 }
 
-// CreateNetworkInterfaceWithBodyWithResponse Create a network interface
+// CreateNetworkInterfaceWithBodyWithResponse Create interface
 //
 // Creates a new network interface.
 //
@@ -1281,7 +1305,7 @@ func (c *ClientWithResponses) CreateNetworkInterfaceWithBodyWithResponse(ctx con
 	return ParseCreateNetworkInterfaceResp(rsp)
 }
 
-// CreateNetworkInterfaceWithResponse Create a network interface
+// CreateNetworkInterfaceWithResponse Create interface
 //
 // Creates a new network interface.
 //
@@ -1296,7 +1320,7 @@ func (c *ClientWithResponses) CreateNetworkInterfaceWithResponse(ctx context.Con
 	return ParseCreateNetworkInterfaceResp(rsp)
 }
 
-// DeleteNetworkInterfaceWithResponse Delete a network interface
+// DeleteNetworkInterfaceWithResponse Delete interface
 //
 // Deletes a specific network interface.
 //
@@ -1311,7 +1335,7 @@ func (c *ClientWithResponses) DeleteNetworkInterfaceWithResponse(ctx context.Con
 	return ParseDeleteNetworkInterfaceResp(rsp)
 }
 
-// GetNetworkInterfaceDetailsWithResponse Get network interface details
+// GetNetworkInterfaceDetailsWithResponse Get interface
 //
 // Retrieves details of a specific network interface.
 //
@@ -1326,9 +1350,9 @@ func (c *ClientWithResponses) GetNetworkInterfaceDetailsWithResponse(ctx context
 	return ParseGetNetworkInterfaceDetailsResp(rsp)
 }
 
-// DeleteNetworkWithResponse Delete a network
+// DeleteNetworkWithResponse Delete network
 //
-// Deletes a specific network.
+// Deletes an SDN private network. All attached cloud servers must first be detached before SDN private networks can be deleted. Utility and public networks can only be detached from servers by [Releasing the corresponding IP addresses](https://upcloudltd.github.io/upcloud-openapi-spec/api/ip-address#delete-ip-address).
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -1341,7 +1365,7 @@ func (c *ClientWithResponses) DeleteNetworkWithResponse(ctx context.Context, uui
 	return ParseDeleteNetworkResp(rsp)
 }
 
-// GetNetworkDetailsWithResponse Get network details
+// GetNetworkDetailsWithResponse Get network
 //
 // Retrieves details of a specific network.
 //
@@ -1356,9 +1380,9 @@ func (c *ClientWithResponses) GetNetworkDetailsWithResponse(ctx context.Context,
 	return ParseGetNetworkDetailsResp(rsp)
 }
 
-// ModifyNetworkWithBodyWithResponse Modify a network
+// ModifyNetworkWithBodyWithResponse Modify network
 //
-// Modifies attributes of a specific network.
+// Modifies the details of a specific SDN private network. The Utility and public networks cannot be modified.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -1371,9 +1395,9 @@ func (c *ClientWithResponses) ModifyNetworkWithBodyWithResponse(ctx context.Cont
 	return ParseModifyNetworkResp(rsp)
 }
 
-// ModifyNetworkWithResponse Modify a network
+// ModifyNetworkWithResponse Modify network
 //
-// Modifies attributes of a specific network.
+// Modifies the details of a specific SDN private network. The Utility and public networks cannot be modified.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //

@@ -63,6 +63,9 @@ type ZonePrices struct {
 	} `json:"items,omitempty"`
 }
 
+// GetPriceZone defines model for getPriceZone.
+type GetPriceZone = string
+
 // GetPrice200 Price list for UpCloud resources and services.
 type GetPrice200 = Prices
 
@@ -71,3 +74,9 @@ type GetPrice400 = PriceError400
 
 // GetPriceDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type GetPriceDefault = PriceError
+
+// GetPriceParams defines parameters for GetPrice.
+type GetPriceParams struct {
+	// Zone Filter results to a specific zone. Can be specified multiple times.
+	Zone *GetPriceZone `form:"zone,omitempty" json:"zone,omitempty"`
+}

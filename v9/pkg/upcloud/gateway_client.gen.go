@@ -122,31 +122,6 @@ type GatewayClientInterface interface {
 	// Corresponds with GET /1.3/gateway/{service-uuid}/addresses (the `ListGatewayAddresses` operationId).
 	ListGatewayAddresses(ctx context.Context, serviceUuid ListGatewayAddressesServiceUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateGatewayAddressWithBody Create Service Address
-	//
-	// Create a new service address.
-	//
-	// Takes any type of body and a specified content type.
-	//
-	// Corresponds with POST /1.3/gateway/{service-uuid}/addresses (the `CreateGatewayAddress` operationId).
-	CreateGatewayAddressWithBody(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateGatewayAddress Create Service Address
-	//
-	// Create a new service address.
-	//
-	// Takes a body of the `application/json` content type.
-	//
-	// Corresponds with POST /1.3/gateway/{service-uuid}/addresses (the `CreateGatewayAddress` operationId).
-	CreateGatewayAddress(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, body CreateGatewayAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// DeleteGatewayAddress Delete Service Address
-	//
-	// Deletes existing service address by given {service-address-identifier}.
-	//
-	// Corresponds with DELETE /1.3/gateway/{service-uuid}/addresses/{address-name} (the `DeleteGatewayAddress` operationId).
-	DeleteGatewayAddress(ctx context.Context, serviceUuid DeleteGatewayAddressServiceUuid, addressName DeleteGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// GetGatewayAddress Get Service Address Details
 	//
 	// Get service address details.
@@ -171,6 +146,13 @@ type GatewayClientInterface interface {
 	//
 	// Corresponds with PATCH /1.3/gateway/{service-uuid}/addresses/{address-name} (the `ModifyGatewayAddress` operationId).
 	ModifyGatewayAddress(ctx context.Context, serviceUuid ModifyGatewayAddressServiceUuid, addressName ModifyGatewayAddressAddressName, body ModifyGatewayAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ReleaseGatewayFloatingIp Release Gateway Floating IP
+	//
+	// Release the user-provisioned Floating IP of an existing service address by given {service-address-identifier}, reverting it to a service-provisioned address while keeping the same name.
+	//
+	// Corresponds with POST /1.3/gateway/{service-uuid}/addresses/{address-name}/release (the `ReleaseGatewayFloatingIp` operationId).
+	ReleaseGatewayFloatingIp(ctx context.Context, serviceUuid ReleaseGatewayFloatingIpServiceUuid, addressName ReleaseGatewayFloatingIpAddressName, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListGatewayConnections List Connections
 	//
@@ -602,61 +584,6 @@ func (c *Client) ListGatewayAddresses(ctx context.Context, serviceUuid ListGatew
 	return c.Client.Do(req)
 }
 
-// CreateGatewayAddressWithBody Create Service Address
-//
-// Create a new service address.
-//
-// Takes any type of body and a specified content type.
-//
-// Corresponds with POST /1.3/gateway/{service-uuid}/addresses (the `CreateGatewayAddress` operationId).
-func (c *Client) CreateGatewayAddressWithBody(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateGatewayAddressRequestWithBody(c.Server, serviceUuid, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// CreateGatewayAddress Create Service Address
-//
-// Create a new service address.
-//
-// Takes a body of the `application/json` content type.
-//
-// Corresponds with POST /1.3/gateway/{service-uuid}/addresses (the `CreateGatewayAddress` operationId).
-func (c *Client) CreateGatewayAddress(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, body CreateGatewayAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateGatewayAddressRequest(c.Server, serviceUuid, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// DeleteGatewayAddress Delete Service Address
-//
-// Deletes existing service address by given {service-address-identifier}.
-//
-// Corresponds with DELETE /1.3/gateway/{service-uuid}/addresses/{address-name} (the `DeleteGatewayAddress` operationId).
-func (c *Client) DeleteGatewayAddress(ctx context.Context, serviceUuid DeleteGatewayAddressServiceUuid, addressName DeleteGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteGatewayAddressRequest(c.Server, serviceUuid, addressName)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 // GetGatewayAddress Get Service Address Details
 //
 // Get service address details.
@@ -702,6 +629,23 @@ func (c *Client) ModifyGatewayAddressWithBody(ctx context.Context, serviceUuid M
 // Corresponds with PATCH /1.3/gateway/{service-uuid}/addresses/{address-name} (the `ModifyGatewayAddress` operationId).
 func (c *Client) ModifyGatewayAddress(ctx context.Context, serviceUuid ModifyGatewayAddressServiceUuid, addressName ModifyGatewayAddressAddressName, body ModifyGatewayAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewModifyGatewayAddressRequest(c.Server, serviceUuid, addressName, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ReleaseGatewayFloatingIp Release Gateway Floating IP
+//
+// Release the user-provisioned Floating IP of an existing service address by given {service-address-identifier}, reverting it to a service-provisioned address while keeping the same name.
+//
+// Corresponds with POST /1.3/gateway/{service-uuid}/addresses/{address-name}/release (the `ReleaseGatewayFloatingIp` operationId).
+func (c *Client) ReleaseGatewayFloatingIp(ctx context.Context, serviceUuid ReleaseGatewayFloatingIpServiceUuid, addressName ReleaseGatewayFloatingIpAddressName, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewReleaseGatewayFloatingIpRequest(c.Server, serviceUuid, addressName)
 	if err != nil {
 		return nil, err
 	}
@@ -1596,94 +1540,6 @@ func NewListGatewayAddressesRequest(server string, serviceUuid ListGatewayAddres
 	return req, nil
 }
 
-// NewCreateGatewayAddressRequest calls the generic CreateGatewayAddress builder with application/json body
-func NewCreateGatewayAddressRequest(server string, serviceUuid CreateGatewayAddressServiceUuid, body CreateGatewayAddressJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewCreateGatewayAddressRequestWithBody(server, serviceUuid, "application/json", bodyReader)
-}
-
-// NewCreateGatewayAddressRequestWithBody constructs an http.Request for the CreateGatewayAddress method, with any body, and a specified content type
-func NewCreateGatewayAddressRequestWithBody(server string, serviceUuid CreateGatewayAddressServiceUuid, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "service-uuid", serviceUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/1.3/gateway/%s/addresses", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
-// NewDeleteGatewayAddressRequest constructs an http.Request for the DeleteGatewayAddress method
-func NewDeleteGatewayAddressRequest(server string, serviceUuid DeleteGatewayAddressServiceUuid, addressName DeleteGatewayAddressAddressName) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "service-uuid", serviceUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam1 string
-
-	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "address-name", addressName, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/1.3/gateway/%s/addresses/%s", pathParam0, pathParam1)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
 // NewGetGatewayAddressRequest constructs an http.Request for the GetGatewayAddress method
 func NewGetGatewayAddressRequest(server string, serviceUuid GetGatewayAddressServiceUuid, addressName GetGatewayAddressAddressName) (*http.Request, error) {
 	var err error
@@ -1775,6 +1631,47 @@ func NewModifyGatewayAddressRequestWithBody(server string, serviceUuid ModifyGat
 	}
 
 	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewReleaseGatewayFloatingIpRequest constructs an http.Request for the ReleaseGatewayFloatingIp method
+func NewReleaseGatewayFloatingIpRequest(server string, serviceUuid ReleaseGatewayFloatingIpServiceUuid, addressName ReleaseGatewayFloatingIpAddressName) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "service-uuid", serviceUuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "address-name", addressName, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/gateway/%s/addresses/%s/release", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
 
 	return req, nil
 }
@@ -2666,33 +2563,6 @@ type GatewayClientWithResponsesInterface interface {
 	// Corresponds with GET /1.3/gateway/{service-uuid}/addresses (the `ListGatewayAddresses` operationId).
 	ListGatewayAddressesWithResponse(ctx context.Context, serviceUuid ListGatewayAddressesServiceUuid, reqEditors ...RequestEditorFn) (*ListGatewayAddressesResp, error)
 
-	// CreateGatewayAddressWithBodyWithResponse Create Service Address
-	//
-	// Create a new service address.
-	//
-	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /1.3/gateway/{service-uuid}/addresses (the `CreateGatewayAddress` operationId).
-	CreateGatewayAddressWithBodyWithResponse(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateGatewayAddressResp, error)
-
-	// CreateGatewayAddressWithResponse Create Service Address
-	//
-	// Create a new service address.
-	//
-	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /1.3/gateway/{service-uuid}/addresses (the `CreateGatewayAddress` operationId).
-	CreateGatewayAddressWithResponse(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, body CreateGatewayAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateGatewayAddressResp, error)
-
-	// DeleteGatewayAddressWithResponse Delete Service Address
-	//
-	// Deletes existing service address by given {service-address-identifier}.
-	//
-	// Returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with DELETE /1.3/gateway/{service-uuid}/addresses/{address-name} (the `DeleteGatewayAddress` operationId).
-	DeleteGatewayAddressWithResponse(ctx context.Context, serviceUuid DeleteGatewayAddressServiceUuid, addressName DeleteGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*DeleteGatewayAddressResp, error)
-
 	// GetGatewayAddressWithResponse Get Service Address Details
 	//
 	// Get service address details.
@@ -2719,6 +2589,15 @@ type GatewayClientWithResponsesInterface interface {
 	//
 	// Corresponds with PATCH /1.3/gateway/{service-uuid}/addresses/{address-name} (the `ModifyGatewayAddress` operationId).
 	ModifyGatewayAddressWithResponse(ctx context.Context, serviceUuid ModifyGatewayAddressServiceUuid, addressName ModifyGatewayAddressAddressName, body ModifyGatewayAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*ModifyGatewayAddressResp, error)
+
+	// ReleaseGatewayFloatingIpWithResponse Release Gateway Floating IP
+	//
+	// Release the user-provisioned Floating IP of an existing service address by given {service-address-identifier}, reverting it to a service-provisioned address while keeping the same name.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/gateway/{service-uuid}/addresses/{address-name}/release (the `ReleaseGatewayFloatingIp` operationId).
+	ReleaseGatewayFloatingIpWithResponse(ctx context.Context, serviceUuid ReleaseGatewayFloatingIpServiceUuid, addressName ReleaseGatewayFloatingIpAddressName, reqEditors ...RequestEditorFn) (*ReleaseGatewayFloatingIpResp, error)
 
 	// ListGatewayConnectionsWithResponse List Connections
 	//
@@ -3424,95 +3303,6 @@ func (r ListGatewayAddressesResp) ContentType() string {
 	return ""
 }
 
-type CreateGatewayAddressResp struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON201 the response for an HTTP 201 `application/json` response
-	JSON201 *CreateGatewayAddress201
-	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
-	ApplicationproblemJSONDefault *CreateGatewayAddressDefault
-}
-
-// GetJSON201 returns the response for an HTTP 201 `application/json` response
-func (r CreateGatewayAddressResp) GetJSON201() *CreateGatewayAddress201 {
-	return r.JSON201
-}
-
-// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
-func (r CreateGatewayAddressResp) GetApplicationproblemJSONDefault() *CreateGatewayAddressDefault {
-	return r.ApplicationproblemJSONDefault
-}
-
-// GetBody returns the raw response body bytes
-func (r CreateGatewayAddressResp) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r CreateGatewayAddressResp) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r CreateGatewayAddressResp) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r CreateGatewayAddressResp) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type DeleteGatewayAddressResp struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
-	ApplicationproblemJSONDefault *DeleteGatewayAddressDefault
-}
-
-// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
-func (r DeleteGatewayAddressResp) GetApplicationproblemJSONDefault() *DeleteGatewayAddressDefault {
-	return r.ApplicationproblemJSONDefault
-}
-
-// GetBody returns the raw response body bytes
-func (r DeleteGatewayAddressResp) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r DeleteGatewayAddressResp) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r DeleteGatewayAddressResp) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r DeleteGatewayAddressResp) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
 type GetGatewayAddressResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -3603,6 +3393,47 @@ func (r ModifyGatewayAddressResp) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r ModifyGatewayAddressResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ReleaseGatewayFloatingIpResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *ReleaseGatewayFloatingIpDefault
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r ReleaseGatewayFloatingIpResp) GetApplicationproblemJSONDefault() *ReleaseGatewayFloatingIpDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r ReleaseGatewayFloatingIpResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ReleaseGatewayFloatingIpResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ReleaseGatewayFloatingIpResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ReleaseGatewayFloatingIpResp) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -4606,51 +4437,6 @@ func (c *ClientWithResponses) ListGatewayAddressesWithResponse(ctx context.Conte
 	return ParseListGatewayAddressesResp(rsp)
 }
 
-// CreateGatewayAddressWithBodyWithResponse Create Service Address
-//
-// Create a new service address.
-//
-// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /1.3/gateway/{service-uuid}/addresses (the `CreateGatewayAddress` operationId).
-func (c *ClientWithResponses) CreateGatewayAddressWithBodyWithResponse(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateGatewayAddressResp, error) {
-	rsp, err := c.CreateGatewayAddressWithBody(ctx, serviceUuid, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateGatewayAddressResp(rsp)
-}
-
-// CreateGatewayAddressWithResponse Create Service Address
-//
-// Create a new service address.
-//
-// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /1.3/gateway/{service-uuid}/addresses (the `CreateGatewayAddress` operationId).
-func (c *ClientWithResponses) CreateGatewayAddressWithResponse(ctx context.Context, serviceUuid CreateGatewayAddressServiceUuid, body CreateGatewayAddressJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateGatewayAddressResp, error) {
-	rsp, err := c.CreateGatewayAddress(ctx, serviceUuid, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateGatewayAddressResp(rsp)
-}
-
-// DeleteGatewayAddressWithResponse Delete Service Address
-//
-// Deletes existing service address by given {service-address-identifier}.
-//
-// Returns a wrapper object for the known response body format(s).
-//
-// Corresponds with DELETE /1.3/gateway/{service-uuid}/addresses/{address-name} (the `DeleteGatewayAddress` operationId).
-func (c *ClientWithResponses) DeleteGatewayAddressWithResponse(ctx context.Context, serviceUuid DeleteGatewayAddressServiceUuid, addressName DeleteGatewayAddressAddressName, reqEditors ...RequestEditorFn) (*DeleteGatewayAddressResp, error) {
-	rsp, err := c.DeleteGatewayAddress(ctx, serviceUuid, addressName, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseDeleteGatewayAddressResp(rsp)
-}
-
 // GetGatewayAddressWithResponse Get Service Address Details
 //
 // Get service address details.
@@ -4694,6 +4480,21 @@ func (c *ClientWithResponses) ModifyGatewayAddressWithResponse(ctx context.Conte
 		return nil, err
 	}
 	return ParseModifyGatewayAddressResp(rsp)
+}
+
+// ReleaseGatewayFloatingIpWithResponse Release Gateway Floating IP
+//
+// Release the user-provisioned Floating IP of an existing service address by given {service-address-identifier}, reverting it to a service-provisioned address while keeping the same name.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/gateway/{service-uuid}/addresses/{address-name}/release (the `ReleaseGatewayFloatingIp` operationId).
+func (c *ClientWithResponses) ReleaseGatewayFloatingIpWithResponse(ctx context.Context, serviceUuid ReleaseGatewayFloatingIpServiceUuid, addressName ReleaseGatewayFloatingIpAddressName, reqEditors ...RequestEditorFn) (*ReleaseGatewayFloatingIpResp, error) {
+	rsp, err := c.ReleaseGatewayFloatingIp(ctx, serviceUuid, addressName, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseReleaseGatewayFloatingIpResp(rsp)
 }
 
 // ListGatewayConnectionsWithResponse List Connections
@@ -5417,68 +5218,6 @@ func ParseListGatewayAddressesResp(rsp *http.Response) (*ListGatewayAddressesRes
 	return response, nil
 }
 
-// ParseCreateGatewayAddressResp parses an HTTP response from a CreateGatewayAddressWithResponse call
-func ParseCreateGatewayAddressResp(rsp *http.Response) (*CreateGatewayAddressResp, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &CreateGatewayAddressResp{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest CreateGatewayAddress201
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON201 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest CreateGatewayAddressDefault
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSONDefault = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseDeleteGatewayAddressResp parses an HTTP response from a DeleteGatewayAddressWithResponse call
-func ParseDeleteGatewayAddressResp(rsp *http.Response) (*DeleteGatewayAddressResp, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &DeleteGatewayAddressResp{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case rsp.StatusCode == 204:
-		break // No content-type
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest DeleteGatewayAddressDefault
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSONDefault = &dest
-
-	}
-
-	return response, nil
-}
-
 // ParseGetGatewayAddressResp parses an HTTP response from a GetGatewayAddressWithResponse call
 func ParseGetGatewayAddressResp(rsp *http.Response) (*GetGatewayAddressResp, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -5535,6 +5274,35 @@ func ParseModifyGatewayAddressResp(rsp *http.Response) (*ModifyGatewayAddressRes
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest ModifyGatewayAddressDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseReleaseGatewayFloatingIpResp parses an HTTP response from a ReleaseGatewayFloatingIpWithResponse call
+func ParseReleaseGatewayFloatingIpResp(rsp *http.Response) (*ReleaseGatewayFloatingIpResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ReleaseGatewayFloatingIpResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 202:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ReleaseGatewayFloatingIpDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}

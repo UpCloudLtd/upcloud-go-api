@@ -4,6 +4,8 @@
 package upcloud
 
 import (
+	"time"
+
 	openapi_types "github.com/oapi-codegen/runtime/types"
 )
 
@@ -107,6 +109,9 @@ func (e NetworkPeeringState) Valid() bool {
 type NetworkPeering struct {
 	ConfiguredStatus *NetworkPeeringConfiguredStatus `json:"configured_status,omitempty"`
 
+	// CreatedAt When the network peering was created
+	CreatedAt *NetworkPeeringRfc3339Datetime `json:"created_at,omitempty"`
+
 	// Name Name of a network peering relationship.
 	Name *NetworkPeeringName `json:"name,omitempty"`
 
@@ -145,6 +150,9 @@ type NetworkPeering struct {
 
 	// State Current lifecycle state of a network peering.
 	State *NetworkPeeringState `json:"state,omitempty"`
+
+	// UpdatedAt When the network peering was last updated. Null until the first modification.
+	UpdatedAt *NetworkPeeringRfc3339Datetime `json:"updated_at,omitempty"`
 
 	// Uuid Universally unique identifier
 	Uuid *NetworkPeeringUuid `json:"uuid,omitempty"`
@@ -199,6 +207,11 @@ type NetworkPeeringModify struct {
 
 // NetworkPeeringName Name of a network peering relationship.
 type NetworkPeeringName = string
+
+// NetworkPeeringRfc3339Datetime Datetime in RFC 3339 format
+//
+// Examples: 2026-07-01T00:00:00Z, 2026-07-31T23:59:59Z
+type NetworkPeeringRfc3339Datetime = time.Time
 
 // NetworkPeeringState Current lifecycle state of a network peering.
 type NetworkPeeringState string

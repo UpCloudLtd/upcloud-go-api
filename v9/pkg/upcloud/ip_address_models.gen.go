@@ -85,6 +85,52 @@ func (e IpAddressNetworkType) Valid() bool {
 	}
 }
 
+// AddIpAddressRequest Schema for adding an IP address to a server
+type AddIpAddressRequest struct {
+	IpAddress struct {
+		Access string `json:"access"`
+
+		// Family IP address family
+		Family IpAddressIpFamily `json:"family"`
+
+		// Floating Boolean value represented as yes/no
+		Floating *IpAddressBooleanYesno `json:"floating,omitempty"`
+
+		// Mac MAC address
+		Mac    *IpAddressMacAddress `json:"mac,omitempty"`
+		Prefix *string              `json:"prefix,omitempty"`
+
+		// ReleasePolicy Action taken when the resource using the address is deleted: release deletes the address, while keep preserves it as a detached floating IP address
+		ReleasePolicy *IpAddressIpReleasePolicy `json:"release_policy,omitempty"`
+
+		// Server Universally unique identifier
+		Server *IpAddressUuid `json:"server,omitempty"`
+		VlanId *string        `json:"vlan_id,omitempty"`
+
+		// Zone Zone identifier
+		//
+		// Examples: fi-hel1, de-fra1, us-nyc1
+		Zone *IpAddressZone `json:"zone,omitempty"`
+	} `json:"ip_address"`
+}
+
+// BulkPatchIpAddressesRequestV13 Request schema for bulk patching IP addresses
+type BulkPatchIpAddressesRequestV13 struct {
+	IpAddresses []struct {
+		// Address IP address
+		Address IpAddress `json:"address"`
+
+		// DelegatedToAccountId Unique numeric identifier of an account.
+		DelegatedToAccountId IpAddressAccountId `json:"delegated_to_account_id"`
+
+		// MainAccountId Unique numeric identifier of an account.
+		MainAccountId IpAddressAccountId `json:"main_account_id"`
+
+		// ReleasePolicy Action taken when the resource using the address is deleted: release deletes the address, while keep preserves it as a detached floating IP address
+		ReleasePolicy IpAddressIpReleasePolicy `json:"release_policy"`
+	} `json:"ip_addresses"`
+}
+
 // IpAddress IP address
 type IpAddress struct {
 	union json.RawMessage
@@ -132,7 +178,7 @@ type IpAddressDetails struct {
 	PartOfPlan *IpAddressBooleanYesno `json:"part_of_plan,omitempty"`
 	PtrRecord  *string                `json:"ptr_record,omitempty"`
 
-	// ReleasePolicy IP Release policy defines what happens to the address when the referencing resource is deleted
+	// ReleasePolicy Action taken when the resource using the address is deleted: release deletes the address, while keep preserves it as a detached floating IP address
 	ReleasePolicy *IpAddressIpReleasePolicy `json:"release_policy,omitempty"`
 
 	// Server Universally unique identifier
@@ -158,7 +204,7 @@ type IpAddressError struct {
 // IpAddressIpFamily IP address family
 type IpAddressIpFamily string
 
-// IpAddressIpReleasePolicy IP Release policy defines what happens to the address when the referencing resource is deleted
+// IpAddressIpReleasePolicy Action taken when the resource using the address is deleted: release deletes the address, while keep preserves it as a detached floating IP address
 type IpAddressIpReleasePolicy string
 
 // IpAddressMacAddress MAC address
@@ -166,6 +212,9 @@ type IpAddressMacAddress = string
 
 // IpAddressNetworkType Network access type
 type IpAddressNetworkType string
+
+// IpAddressPtrRecord defines model for ipAddressPtrRecord.
+type IpAddressPtrRecord = string
 
 // IpAddressRequest Request schema for IP address operations
 type IpAddressRequest struct {
@@ -205,6 +254,18 @@ type ModifyIpAddressRequestV10 struct {
 	} `json:"ip_address"`
 }
 
+// PatchIpAddressRequestV13 Request schema for modifying an IP address
+type PatchIpAddressRequestV13 struct {
+	IpAddress struct {
+		// Mac MAC address
+		Mac       *IpAddressMacAddress `json:"mac,omitempty"`
+		PtrRecord *IpAddressPtrRecord  `json:"ptr_record,omitempty"`
+
+		// ReleasePolicy Action taken when the resource using the address is deleted: release deletes the address, while keep preserves it as a detached floating IP address
+		ReleasePolicy *IpAddressIpReleasePolicy `json:"release_policy,omitempty"`
+	} `json:"ip_address"`
+}
+
 // DeleteIPAddressAddress IP address
 type DeleteIPAddressAddress = IpAddress
 
@@ -213,6 +274,18 @@ type GetIPAddressDetailsAddress = string
 
 // ModifyIPAddressAddress IP address
 type ModifyIPAddressAddress = IpAddress
+
+// PatchModifyIPAddressAddress defines model for patchModifyIPAddressAddress.
+type PatchModifyIPAddressAddress = string
+
+// AddIPAddress201 Request schema for IP address operations
+type AddIPAddress201 = IpAddressRequest
+
+// AddIPAddressDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type AddIPAddressDefault = IpAddressError
+
+// BulkModifyIPAddressesDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type BulkModifyIPAddressesDefault = IpAddressError
 
 // DeleteIPAddressDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type DeleteIPAddressDefault = IpAddressError
@@ -235,8 +308,32 @@ type ModifyIPAddress202 = IpAddressRequest
 // ModifyIPAddressDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type ModifyIPAddressDefault = IpAddressError
 
+// PatchModifyIPAddress202 Request schema for IP address operations
+type PatchModifyIPAddress202 = IpAddressRequest
+
+// PatchModifyIPAddressDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type PatchModifyIPAddressDefault = IpAddressError
+
+// AddIPAddress Schema for adding an IP address to a server
+type AddIPAddress = AddIpAddressRequest
+
+// BulkModifyIPAddresses Request schema for bulk patching IP addresses
+type BulkModifyIPAddresses = BulkPatchIpAddressesRequestV13
+
 // ModifyIPAddress Request schema for modifying an IP address
 type ModifyIPAddress = ModifyIpAddressRequestV10
+
+// PatchModifyIPAddress Request schema for modifying an IP address
+type PatchModifyIPAddress = PatchIpAddressRequestV13
+
+// AddIPAddressJSONRequestBody defines body for AddIPAddress for application/json ContentType.
+type AddIPAddressJSONRequestBody = AddIpAddressRequest
+
+// BulkModifyIPAddressesJSONRequestBody defines body for BulkModifyIPAddresses for application/json ContentType.
+type BulkModifyIPAddressesJSONRequestBody = BulkPatchIpAddressesRequestV13
+
+// PatchModifyIPAddressJSONRequestBody defines body for PatchModifyIPAddress for application/json ContentType.
+type PatchModifyIPAddressJSONRequestBody = PatchIpAddressRequestV13
 
 // ModifyIPAddressJSONRequestBody defines body for ModifyIPAddress for application/json ContentType.
 type ModifyIPAddressJSONRequestBody = ModifyIpAddressRequestV10

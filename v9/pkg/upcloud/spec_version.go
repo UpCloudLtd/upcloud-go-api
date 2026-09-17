@@ -1,3 +1,3 @@
 package upcloud
 
-const specVersion = "0.0.99"
+const specVersion = "0.0.103"

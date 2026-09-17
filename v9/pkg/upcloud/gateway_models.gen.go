@@ -511,7 +511,7 @@ type GatewayAddressListResponse = []GatewayAddressDetailsResponse
 //
 // Examples: {"address":"203.0.113.10"}
 type GatewayAddressModifyRequest struct {
-	// Address Floating IP address
+	// Address Floating IP address to assign to the service address.
 	//
 	// Examples: 203.0.113.10
 	Address string `json:"address"`
@@ -1779,11 +1779,6 @@ type GatewayTunnelOperationalState string
 // Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type GatewayUuid = openapi_types.UUID
 
-// CreateGatewayAddressServiceUuid The unique identifier for the resource.
-//
-// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
-type CreateGatewayAddressServiceUuid = GatewayUuid
-
 // CreateGatewayConnectionServiceUuid The unique identifier for the resource.
 //
 // Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
@@ -1808,16 +1803,6 @@ type CreateGatewayTunnelConnectionUuid = GatewayUuid
 //
 // Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type CreateGatewayTunnelServiceUuid = GatewayUuid
-
-// DeleteGatewayAddressAddressName The name for the resource.
-//
-// Examples: advanced, development
-type DeleteGatewayAddressAddressName = GatewayName
-
-// DeleteGatewayAddressServiceUuid The unique identifier for the resource.
-//
-// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
-type DeleteGatewayAddressServiceUuid = GatewayUuid
 
 // DeleteGatewayConnectionConnectionUuid The unique identifier for the resource.
 //
@@ -2024,20 +2009,20 @@ type ModifyGatewayTunnelServiceUuid = GatewayUuid
 // Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ModifyGatewayTunnelTunnelUuid = GatewayUuid
 
+// ReleaseGatewayFloatingIpAddressName The name for the resource.
+//
+// Examples: advanced, development
+type ReleaseGatewayFloatingIpAddressName = GatewayName
+
+// ReleaseGatewayFloatingIpServiceUuid The unique identifier for the resource.
+//
+// Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
+type ReleaseGatewayFloatingIpServiceUuid = GatewayUuid
+
 // ReplaceGatewayServiceServiceUuid The unique identifier for the resource.
 //
 // Examples: 01234567-89ab-cdef-0123-456789abcdef, fedcba98-7654-3210-fedc-ba9876543210
 type ReplaceGatewayServiceServiceUuid = GatewayUuid
-
-// CreateGatewayAddress201 Response schema for gateway address details.
-//
-// Examples: {"address":"203.0.113.10","name":"gateway-service","provisioned_by":"service"}
-type CreateGatewayAddress201 = GatewayAddressDetailsResponse
-
-// CreateGatewayAddressDefault Schema for error responses from the API.
-//
-// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
-type CreateGatewayAddressDefault = GatewayErrorResponse
 
 // CreateGatewayConnection200 Response schema for gateway connection details.
 //
@@ -2083,11 +2068,6 @@ type CreateGatewayTunnel200 = GatewayTunnelDetailsResponse
 //
 // Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type CreateGatewayTunnelDefault = GatewayErrorResponse
-
-// DeleteGatewayAddressDefault Schema for error responses from the API.
-//
-// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
-type DeleteGatewayAddressDefault = GatewayErrorResponse
 
 // DeleteGatewayConnectionDefault Schema for error responses from the API.
 //
@@ -2289,6 +2269,11 @@ type ModifyGatewayTunnel200 = GatewayTunnelDetailsResponse
 // Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type ModifyGatewayTunnelDefault = GatewayErrorResponse
 
+// ReleaseGatewayFloatingIpDefault Schema for error responses from the API.
+//
+// Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
+type ReleaseGatewayFloatingIpDefault = GatewayErrorResponse
+
 // ReplaceGatewayService200 Gateway service
 //
 // Examples: {"addresses":[],"automatic_tunnel_internal_ip_allocation":true,"configured_status":"started","connections":[],"created_at":"2025-03-26T12:34:56Z","features":[],"labels":[],"name":"gateway-service","plan":"development-gwaas-1c2g","updated_at":"2025-03-26T12:34:56Z","uuid":"01234567-89ab-cdef-0123-456789abcdef","zone":"fi-hel1"}
@@ -2298,11 +2283,6 @@ type ReplaceGatewayService200 = GatewayServiceDetailsResponse
 //
 // Examples: {"correlation_id":"01K1K2TKEASWRJ6VFP9ZV5P2H4","invalid_params":[],"status":400,"title":"Validation error.","type":"example"}
 type ReplaceGatewayServiceDefault = GatewayErrorResponse
-
-// CreateGatewayAddress Gateway address
-//
-// Examples: {"name":"gateway-service"}
-type CreateGatewayAddress = GatewayAddressCreateRequest
 
 // CreateGatewayConnection Network gateway VPN connection
 //
@@ -2388,9 +2368,6 @@ type ModifyGatewayServiceJSONRequestBody = GatewayServiceModifyRequest
 
 // ReplaceGatewayServiceJSONRequestBody defines body for ReplaceGatewayService for application/json ContentType.
 type ReplaceGatewayServiceJSONRequestBody = GatewayServiceReplaceRequest
-
-// CreateGatewayAddressJSONRequestBody defines body for CreateGatewayAddress for application/json ContentType.
-type CreateGatewayAddressJSONRequestBody = GatewayAddressCreateRequest
 
 // ModifyGatewayAddressJSONRequestBody defines body for ModifyGatewayAddress for application/json ContentType.
 type ModifyGatewayAddressJSONRequestBody = GatewayAddressModifyRequest
