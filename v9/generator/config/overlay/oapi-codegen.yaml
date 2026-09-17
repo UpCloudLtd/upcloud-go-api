@@ -3,8 +3,13 @@ overlay: 1.0.0
 x-speakeasy-jsonpath: rfc9535
 info:
   title: Overlay for oapi-codegen compatibility. Using specific schema references to keep the generated code as consistent as possible.
-  version: 0.0.2
+  version: 0.0.3
 actions:
+  # Change serverStorageDevices.storage_device items size type from [integer, string] to integer.
+  # oapi-codegen does not support arrays of primitive types.
+  - target: "$.components.schemas.serverStorageDevices.properties.storage_device.items.properties.size"
+    update:
+      type: integer
   # Replace loadBalancerFrontend.mode with a $ref for deduplication.
   # loadBalancerFrontend.mode has an inline enum that collides with the loadBalancerFrontendMode schema
   - target: "$.components.schemas.loadBalancerFrontend.properties.mode"
