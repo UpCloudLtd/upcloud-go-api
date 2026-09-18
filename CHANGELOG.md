@@ -5,6 +5,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.42.0]
+
 ### Added
 
 - server: add `FirewallPrivate`, `FirewallPrivateDefaultIncomingAction`, and `FirewallPrivateDefaultOutgoingAction` to `upcloud.ServerDetails` and `request.ModifyServerRequest`
@@ -807,7 +809,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.41.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.42.0...HEAD
+[8.42.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.41.0...v8.42.0
 [8.41.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.40.0...v8.41.0
 [8.40.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.39.0...v8.40.0
 [8.39.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.38.0...v8.39.0
