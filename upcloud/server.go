@@ -180,7 +180,10 @@ type ServerDetails struct {
 	BootOrder string      `json:"boot_order"`
 	Devices   DeviceSlice `json:"devices"`
 	// TODO: Convert to boolean
-	Firewall string `json:"firewall"`
+	Firewall                             string `json:"firewall"`
+	FirewallPrivate                      string `json:"firewall_private"`
+	FirewallPrivateDefaultIncomingAction string `json:"firewall_private_default_incoming_action"`
+	FirewallPrivateDefaultOutgoingAction string `json:"firewall_private_default_outgoing_action"`
 	// Deprecated: Use HostID instead.
 	Host        int            `json:"host"`
 	HostID      int64          `json:"-"`
