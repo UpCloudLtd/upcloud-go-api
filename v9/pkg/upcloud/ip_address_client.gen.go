@@ -741,6 +741,8 @@ type AddIPAddressResp struct {
 	HTTPResponse *http.Response
 	// JSON201 the response for an HTTP 201 `application/json` response
 	JSON201 *AddIPAddress201
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *AddIPAddress409
 	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
 	ApplicationproblemJSONDefault *AddIPAddressDefault
 }
@@ -748,6 +750,11 @@ type AddIPAddressResp struct {
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
 func (r AddIPAddressResp) GetJSON201() *AddIPAddress201 {
 	return r.JSON201
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r AddIPAddressResp) GetJSON409() *AddIPAddress409 {
+	return r.JSON409
 }
 
 // GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
@@ -1228,6 +1235,13 @@ func ParseAddIPAddressResp(rsp *http.Response) (*AddIPAddressResp, error) {
 			return nil, err
 		}
 		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest AddIPAddress409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest AddIPAddressDefault

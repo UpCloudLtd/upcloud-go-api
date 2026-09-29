@@ -47,6 +47,24 @@ func (e AttachStorageRequestStorageDeviceType) Valid() bool {
 	}
 }
 
+// Defines values for CreateStorageImportRequestStorageImportSource.
+const (
+	CreateStorageImportRequestStorageImportSourceDirectUpload CreateStorageImportRequestStorageImportSource = "direct_upload"
+	CreateStorageImportRequestStorageImportSourceHttpImport   CreateStorageImportRequestStorageImportSource = "http_import"
+)
+
+// Valid indicates whether the value is a known member of the CreateStorageImportRequestStorageImportSource enum.
+func (e CreateStorageImportRequestStorageImportSource) Valid() bool {
+	switch e {
+	case CreateStorageImportRequestStorageImportSourceDirectUpload:
+		return true
+	case CreateStorageImportRequestStorageImportSourceHttpImport:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ModifyStorageBodyStorageFilesystemResize.
 const (
 	ModifyStorageBodyStorageFilesystemResizeNo  ModifyStorageBodyStorageFilesystemResize = "no"
@@ -167,6 +185,81 @@ func (e StorageEncrypted) Valid() bool {
 	case StorageEncryptedNo:
 		return true
 	case StorageEncryptedYes:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StorageImportErrorCode.
+const (
+	StorageImportErrorCodeCLIENTFAILURE   StorageImportErrorCode = "CLIENT_FAILURE"
+	StorageImportErrorCodeEmpty           StorageImportErrorCode = ""
+	StorageImportErrorCodeIMPORTFAILURE   StorageImportErrorCode = "IMPORT_FAILURE"
+	StorageImportErrorCodeINTERNALFAILURE StorageImportErrorCode = "INTERNAL_FAILURE"
+)
+
+// Valid indicates whether the value is a known member of the StorageImportErrorCode enum.
+func (e StorageImportErrorCode) Valid() bool {
+	switch e {
+	case StorageImportErrorCodeCLIENTFAILURE:
+		return true
+	case StorageImportErrorCodeEmpty:
+		return true
+	case StorageImportErrorCodeIMPORTFAILURE:
+		return true
+	case StorageImportErrorCodeINTERNALFAILURE:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StorageImportSource.
+const (
+	StorageImportSourceDirectUpload StorageImportSource = "direct_upload"
+	StorageImportSourceHttpImport   StorageImportSource = "http_import"
+)
+
+// Valid indicates whether the value is a known member of the StorageImportSource enum.
+func (e StorageImportSource) Valid() bool {
+	switch e {
+	case StorageImportSourceDirectUpload:
+		return true
+	case StorageImportSourceHttpImport:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for StorageImportState.
+const (
+	StorageImportStateCancelled  StorageImportState = "cancelled"
+	StorageImportStateCancelling StorageImportState = "cancelling"
+	StorageImportStateCompleted  StorageImportState = "completed"
+	StorageImportStateFailed     StorageImportState = "failed"
+	StorageImportStateImporting  StorageImportState = "importing"
+	StorageImportStatePending    StorageImportState = "pending"
+	StorageImportStatePrepared   StorageImportState = "prepared"
+)
+
+// Valid indicates whether the value is a known member of the StorageImportState enum.
+func (e StorageImportState) Valid() bool {
+	switch e {
+	case StorageImportStateCancelled:
+		return true
+	case StorageImportStateCancelling:
+		return true
+	case StorageImportStateCompleted:
+		return true
+	case StorageImportStateFailed:
+		return true
+	case StorageImportStateImporting:
+		return true
+	case StorageImportStatePending:
+		return true
+	case StorageImportStatePrepared:
 		return true
 	default:
 		return false
@@ -454,6 +547,21 @@ type CreateStorageBackupResponse struct {
 	Storage StorageDetails `json:"storage"`
 }
 
+// CreateStorageImportRequest Request schema for creating a storage import task.
+type CreateStorageImportRequest struct {
+	// StorageImport Storage import parameters.
+	StorageImport struct {
+		// Source Import mode. Use `http_import` to download an image or `direct_upload` to receive a temporary upload URL.
+		Source CreateStorageImportRequestStorageImportSource `json:"source"`
+
+		// SourceLocation Publicly reachable HTTP or HTTPS URL of the image. Required for `http_import`.
+		SourceLocation *string `json:"source_location,omitempty"`
+	} `json:"storage_import"`
+}
+
+// CreateStorageImportRequestStorageImportSource Import mode. Use `http_import` to download an image or `direct_upload` to receive a temporary upload URL.
+type CreateStorageImportRequestStorageImportSource string
+
 // CreateStorageRequest Request schema for creating block storage.
 type CreateStorageRequest struct {
 	// Storage Block storage creation parameters.
@@ -733,6 +841,80 @@ type StorageError struct {
 	} `json:"error"`
 }
 
+// StorageImport Details and progress of a storage import task.
+type StorageImport struct {
+	// ClientContentLength Content length reported by the import client, in bytes.
+	ClientContentLength int `json:"client_content_length"`
+
+	// ClientContentType Content type reported by the import client.
+	ClientContentType string `json:"client_content_type"`
+
+	// Completed Completion time in RFC 3339 format, or an empty string while unfinished.
+	Completed StorageImport_Completed `json:"completed"`
+
+	// Created Time when the import task was created.
+	Created time.Time `json:"created"`
+
+	// DirectUploadUrl Temporary URL to which image data is uploaded in `direct_upload` mode.
+	DirectUploadUrl *string `json:"direct_upload_url,omitempty"`
+
+	// ErrorCode Failure category, empty unless the task failed.
+	ErrorCode StorageImportErrorCode `json:"error_code"`
+
+	// ErrorMessage Failure details, empty unless the task failed.
+	ErrorMessage string `json:"error_message"`
+
+	// Md5sum MD5 checksum of the imported data, available after completion.
+	Md5sum string `json:"md5sum"`
+
+	// ReadBytes Number of bytes read from the source.
+	ReadBytes int `json:"read_bytes"`
+
+	// Sha256sum SHA-256 checksum of the imported data, available after completion.
+	Sha256sum string `json:"sha256sum"`
+
+	// Source Import mode.
+	Source StorageImportSource `json:"source"`
+
+	// SourceLocation HTTP or HTTPS source URL for an `http_import` task.
+	SourceLocation *string `json:"source_location,omitempty"`
+
+	// State Current import task state.
+	State StorageImportState `json:"state"`
+
+	// Uuid Universally unique identifier
+	Uuid StorageUuid `json:"uuid"`
+
+	// WrittenBytes Number of bytes written to the storage resource.
+	WrittenBytes int `json:"written_bytes"`
+}
+
+// StorageImportCompleted0 defines model for StorageImport.Completed.0.
+type StorageImportCompleted0 = interface{}
+
+// StorageImportCompleted1 defines model for StorageImport.Completed.1.
+type StorageImportCompleted1 = time.Time
+
+// StorageImport_Completed Completion time in RFC 3339 format, or an empty string while unfinished.
+type StorageImport_Completed struct {
+	union json.RawMessage
+}
+
+// StorageImportErrorCode Failure category, empty unless the task failed.
+type StorageImportErrorCode string
+
+// StorageImportSource Import mode.
+type StorageImportSource string
+
+// StorageImportState Current import task state.
+type StorageImportState string
+
+// StorageImportResponse Response containing a storage import task.
+type StorageImportResponse struct {
+	// StorageImport Details and progress of a storage import task.
+	StorageImport StorageImport `json:"storage_import"`
+}
+
 // StorageLabel A key/value pair to label and categorize resources
 type StorageLabel struct {
 	// Key Label key used to classify the resource
@@ -882,11 +1064,17 @@ type AddStorageToFavoritesUuid = StorageUuid
 // AttachStorageToServerUuid Universally unique identifier
 type AttachStorageToServerUuid = StorageUuid
 
+// CancelStorageImportUuid Universally unique identifier
+type CancelStorageImportUuid = StorageUuid
+
 // CancelStorageOperationUuid Universally unique identifier
 type CancelStorageOperationUuid = StorageUuid
 
 // CloneStorageUuid Universally unique identifier
 type CloneStorageUuid = StorageUuid
+
+// CreateStorageImportUuid Universally unique identifier
+type CreateStorageImportUuid = StorageUuid
 
 // CreateTemplateFromStorageUuid Universally unique identifier
 type CreateTemplateFromStorageUuid = StorageUuid
@@ -899,6 +1087,9 @@ type DeleteStorageUuid = StorageUuid
 
 // DetachStorageFromServerUuid Universally unique identifier
 type DetachStorageFromServerUuid = StorageUuid
+
+// GetStorageImportDetailsUuid Universally unique identifier
+type GetStorageImportDetailsUuid = StorageUuid
 
 // GetStorageInfoUuid Universally unique identifier
 type GetStorageInfoUuid = StorageUuid
@@ -1177,6 +1368,18 @@ type AttachStorageToServer200 = AttachStorageResponse
 // AttachStorageToServerDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type AttachStorageToServerDefault = StorageError
 
+// CancelStorageImport202 Response containing a storage import task.
+type CancelStorageImport202 = StorageImportResponse
+
+// CancelStorageImport404 A general error response indicating that the request could not be fulfilled due to a technical issue.
+type CancelStorageImport404 = StorageError
+
+// CancelStorageImport409 A general error response indicating that the request could not be fulfilled due to a technical issue.
+type CancelStorageImport409 = StorageError
+
+// CancelStorageImportDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type CancelStorageImportDefault = StorageError
+
 // CancelStorageOperationDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type CancelStorageOperationDefault = StorageError
 
@@ -1191,6 +1394,21 @@ type CreateStorage201 = CreateStorageResponse
 
 // CreateStorageDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type CreateStorageDefault = StorageError
+
+// CreateStorageImport201 Response containing a storage import task.
+type CreateStorageImport201 = StorageImportResponse
+
+// CreateStorageImport400 A general error response indicating that the request could not be fulfilled due to a technical issue.
+type CreateStorageImport400 = StorageError
+
+// CreateStorageImport409 A general error response indicating that the request could not be fulfilled due to a technical issue.
+type CreateStorageImport409 = StorageError
+
+// CreateStorageImport503 A general error response indicating that the request could not be fulfilled due to a technical issue.
+type CreateStorageImport503 = StorageError
+
+// CreateStorageImportDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type CreateStorageImportDefault = StorageError
 
 // CreateTemplateFromStorage201 Response containing the private template being created.
 type CreateTemplateFromStorage201 = CreateStorageTemplateResponse
@@ -1212,6 +1430,15 @@ type GetFavoriteStorageList200 = Storages
 
 // GetFavoriteStorageListDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type GetFavoriteStorageListDefault = StorageError
+
+// GetStorageImportDetails200 Response containing a storage import task.
+type GetStorageImportDetails200 = StorageImportResponse
+
+// GetStorageImportDetails404 A general error response indicating that the request could not be fulfilled due to a technical issue.
+type GetStorageImportDetails404 = StorageError
+
+// GetStorageImportDetailsDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
+type GetStorageImportDetailsDefault = StorageError
 
 // GetStorageInfo200 Response schema containing a single storage resource.
 type GetStorageInfo200 = Storage
@@ -1323,6 +1550,9 @@ type CloneStorage = CloneStorageRequest
 
 // CreateStorage Request schema for creating block storage.
 type CreateStorage = CreateStorageRequest
+
+// CreateStorageImport Request schema for creating a storage import task.
+type CreateStorageImport = CreateStorageImportRequest
 
 // CreateTemplateFromStorage Request schema for creating a template from a block storage resource.
 type CreateTemplateFromStorage = CreateStorageTemplateRequest
@@ -1524,6 +1754,9 @@ type CreateOnDemandBackupJSONRequestBody = CreateStorageBackupRequest
 
 // CloneStorageJSONRequestBody defines body for CloneStorage for application/json ContentType.
 type CloneStorageJSONRequestBody = CloneStorageRequest
+
+// CreateStorageImportJSONRequestBody defines body for CreateStorageImport for application/json ContentType.
+type CreateStorageImportJSONRequestBody = CreateStorageImportRequest
 
 // CreateTemplateFromStorageJSONRequestBody defines body for CreateTemplateFromStorage for application/json ContentType.
 type CreateTemplateFromStorageJSONRequestBody = CreateStorageTemplateRequest
@@ -1834,6 +2067,68 @@ func (t StorageDetails_BackupRule) MarshalJSON() ([]byte, error) {
 }
 
 func (t *StorageDetails_BackupRule) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsStorageImportCompleted0 returns the union data inside the StorageImport_Completed as a StorageImportCompleted0
+func (t StorageImport_Completed) AsStorageImportCompleted0() (StorageImportCompleted0, error) {
+	var body StorageImportCompleted0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromStorageImportCompleted0 overwrites any union data inside the StorageImport_Completed as the provided StorageImportCompleted0
+func (t *StorageImport_Completed) FromStorageImportCompleted0(v StorageImportCompleted0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeStorageImportCompleted0 performs a merge with any union data inside the StorageImport_Completed, using the provided StorageImportCompleted0
+func (t *StorageImport_Completed) MergeStorageImportCompleted0(v StorageImportCompleted0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsStorageImportCompleted1 returns the union data inside the StorageImport_Completed as a StorageImportCompleted1
+func (t StorageImport_Completed) AsStorageImportCompleted1() (StorageImportCompleted1, error) {
+	var body StorageImportCompleted1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromStorageImportCompleted1 overwrites any union data inside the StorageImport_Completed as the provided StorageImportCompleted1
+func (t *StorageImport_Completed) FromStorageImportCompleted1(v StorageImportCompleted1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeStorageImportCompleted1 performs a merge with any union data inside the StorageImport_Completed, using the provided StorageImportCompleted1
+func (t *StorageImport_Completed) MergeStorageImportCompleted1(v StorageImportCompleted1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t StorageImport_Completed) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *StorageImport_Completed) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
 	return err
 }

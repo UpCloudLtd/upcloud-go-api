@@ -281,6 +281,9 @@ type PatchModifyIPAddressAddress = string
 // AddIPAddress201 Request schema for IP address operations
 type AddIPAddress201 = IpAddressRequest
 
+// AddIPAddress409 A general error response indicating that the request could not be fulfilled due to a technical issue.
+type AddIPAddress409 = IpAddressError
+
 // AddIPAddressDefault A general error response indicating that the request could not be fulfilled due to a technical issue.
 type AddIPAddressDefault = IpAddressError
 
