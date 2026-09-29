@@ -202,6 +202,39 @@ type AccountCreateMsLmaSigningLinkResponseSigningStatusState string
 // AccountCredits Current account credit balance.
 type AccountCredits = float64
 
+// AccountCreditsBreakdown Detailed breakdown of account credits.
+type AccountCreditsBreakdown struct {
+	// AccountCredits Paid and debt credits on the account.
+	AccountCredits struct {
+		// DebtCredits Outstanding debt credits.
+		DebtCredits float32 `json:"debt_credits"`
+
+		// MaxDebt Maximum allowed debt.
+		MaxDebt float32 `json:"max_debt"`
+
+		// PaidCredits Paid credits on the account.
+		PaidCredits float32 `json:"paid_credits"`
+	} `json:"account_credits"`
+
+	// AccountFreeCredits Free credits allocated to the account.
+	AccountFreeCredits struct {
+		// Breakdown List of individual free credit grants.
+		Breakdown []struct {
+			// FreeCreditType Type identifier for the free credit grant.
+			FreeCreditType string `json:"free_credit_type"`
+
+			// FreeCredits Amount of free credits.
+			FreeCredits float64 `json:"free_credits"`
+
+			// FreeCreditsExpire Expiry date-time of the free credits in ISO 8601 format. Absent if the credits do not expire.
+			FreeCreditsExpire *time.Time `json:"free_credits_expire,omitempty"`
+		} `json:"breakdown"`
+	} `json:"account_free_credits"`
+
+	// TotalCredits Total combined credit balance.
+	TotalCredits float64 `json:"total_credits"`
+}
+
 // AccountCurrencyCode ISO 4217 code
 type AccountCurrencyCode = string
 
@@ -226,6 +259,9 @@ type AccountCurrentNetworkUsage struct {
 type AccountDetails struct {
 	// Credits Current account credit balance.
 	Credits *AccountCredits `json:"credits,omitempty"`
+
+	// CreditsBreakdown Detailed breakdown of account credits.
+	CreditsBreakdown *AccountCreditsBreakdown `json:"credits_breakdown,omitempty"`
 
 	// ResourceLimits Per-resource quota limits for an account.
 	ResourceLimits AccountResourceLimits `json:"resource_limits"`
@@ -855,6 +891,14 @@ func (a *AccountDetails) UnmarshalJSON(b []byte) error {
 		delete(object, "credits")
 	}
 
+	if raw, found := object["credits_breakdown"]; found {
+		err = json.Unmarshal(raw, &a.CreditsBreakdown)
+		if err != nil {
+			return fmt.Errorf("error reading 'credits_breakdown': %w", err)
+		}
+		delete(object, "credits_breakdown")
+	}
+
 	if raw, found := object["resource_limits"]; found {
 		err = json.Unmarshal(raw, &a.ResourceLimits)
 		if err != nil {
@@ -902,6 +946,13 @@ func (a AccountDetails) MarshalJSON() ([]byte, error) {
 		object["credits"], err = json.Marshal(a.Credits)
 		if err != nil {
 			return nil, fmt.Errorf("error marshaling 'credits': %w", err)
+		}
+	}
+
+	if a.CreditsBreakdown != nil {
+		object["credits_breakdown"], err = json.Marshal(a.CreditsBreakdown)
+		if err != nil {
+			return nil, fmt.Errorf("error marshaling 'credits_breakdown': %w", err)
 		}
 	}
 

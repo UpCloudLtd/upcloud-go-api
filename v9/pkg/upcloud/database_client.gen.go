@@ -8886,15 +8886,8 @@ func (r GetDatabaseSessionsResp) ContentType() string {
 type TerminateDatabaseSessionResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSON204 the response for an HTTP 204 `application/json` response
-	JSON204 *TerminateDatabaseSession204
 	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
 	ApplicationproblemJSONDefault *TerminateDatabaseSessionDefault
-}
-
-// GetJSON204 returns the response for an HTTP 204 `application/json` response
-func (r TerminateDatabaseSessionResp) GetJSON204() *TerminateDatabaseSession204 {
-	return r.JSON204
 }
 
 // GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
@@ -12756,12 +12749,8 @@ func ParseTerminateDatabaseSessionResp(rsp *http.Response) (*TerminateDatabaseSe
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 204:
-		var dest TerminateDatabaseSession204
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON204 = &dest
+	case rsp.StatusCode == 204:
+		break // No content-type
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest TerminateDatabaseSessionDefault

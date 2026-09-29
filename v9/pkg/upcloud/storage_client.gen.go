@@ -214,6 +214,38 @@ type StorageClientInterface interface {
 	// Corresponds with POST /1.3/storage/{uuid}/favorite (the `AddStorageToFavorites` operationId).
 	AddStorageToFavorites(ctx context.Context, uuid AddStorageToFavoritesUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// GetStorageImportDetails Get storage import details
+	//
+	// Returns details of the latest import task for a storage resource, including its state, transferred byte counts, checksums, and any error information.
+	//
+	// Corresponds with GET /1.3/storage/{uuid}/import (the `GetStorageImportDetails` operationId).
+	GetStorageImportDetails(ctx context.Context, uuid GetStorageImportDetailsUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateStorageImportWithBody Create storage import
+	//
+	// Creates an asynchronous task that imports a raw disk image into existing Block Storage from an HTTP URL or a temporary direct-upload URL. Attached Cloud Servers must be stopped.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /1.3/storage/{uuid}/import (the `CreateStorageImport` operationId).
+	CreateStorageImportWithBody(ctx context.Context, uuid CreateStorageImportUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateStorageImport Create storage import
+	//
+	// Creates an asynchronous task that imports a raw disk image into existing Block Storage from an HTTP URL or a temporary direct-upload URL. Attached Cloud Servers must be stopped.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /1.3/storage/{uuid}/import (the `CreateStorageImport` operationId).
+	CreateStorageImport(ctx context.Context, uuid CreateStorageImportUuid, body CreateStorageImportJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CancelStorageImport Cancel storage import
+	//
+	// Requests cancellation of an ongoing storage import. The task enters the `cancelling` state while imported data is rolled back when necessary.
+	//
+	// Corresponds with POST /1.3/storage/{uuid}/import/cancel (the `CancelStorageImport` operationId).
+	CancelStorageImport(ctx context.Context, uuid CancelStorageImportUuid, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ResizeStorage Resize Block Storage partition and filesystem
 	//
 	// Resizes the last partition and its supported filesystem to use the block storage capacity already available. A backup is created before the operation and returned on success. Increase the block storage capacity first with the modify block storage endpoint.
@@ -682,6 +714,78 @@ func (c *Client) RemoveStorageFromFavorites(ctx context.Context, uuid RemoveStor
 // Corresponds with POST /1.3/storage/{uuid}/favorite (the `AddStorageToFavorites` operationId).
 func (c *Client) AddStorageToFavorites(ctx context.Context, uuid AddStorageToFavoritesUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewAddStorageToFavoritesRequest(c.Server, uuid)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetStorageImportDetails Get storage import details
+//
+// Returns details of the latest import task for a storage resource, including its state, transferred byte counts, checksums, and any error information.
+//
+// Corresponds with GET /1.3/storage/{uuid}/import (the `GetStorageImportDetails` operationId).
+func (c *Client) GetStorageImportDetails(ctx context.Context, uuid GetStorageImportDetailsUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetStorageImportDetailsRequest(c.Server, uuid)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateStorageImportWithBody Create storage import
+//
+// Creates an asynchronous task that imports a raw disk image into existing Block Storage from an HTTP URL or a temporary direct-upload URL. Attached Cloud Servers must be stopped.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /1.3/storage/{uuid}/import (the `CreateStorageImport` operationId).
+func (c *Client) CreateStorageImportWithBody(ctx context.Context, uuid CreateStorageImportUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateStorageImportRequestWithBody(c.Server, uuid, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateStorageImport Create storage import
+//
+// Creates an asynchronous task that imports a raw disk image into existing Block Storage from an HTTP URL or a temporary direct-upload URL. Attached Cloud Servers must be stopped.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /1.3/storage/{uuid}/import (the `CreateStorageImport` operationId).
+func (c *Client) CreateStorageImport(ctx context.Context, uuid CreateStorageImportUuid, body CreateStorageImportJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateStorageImportRequest(c.Server, uuid, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CancelStorageImport Cancel storage import
+//
+// Requests cancellation of an ongoing storage import. The task enters the `cancelling` state while imported data is rolled back when necessary.
+//
+// Corresponds with POST /1.3/storage/{uuid}/import/cancel (the `CancelStorageImport` operationId).
+func (c *Client) CancelStorageImport(ctx context.Context, uuid CancelStorageImportUuid, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCancelStorageImportRequest(c.Server, uuid)
 	if err != nil {
 		return nil, err
 	}
@@ -2176,6 +2280,121 @@ func NewAddStorageToFavoritesRequest(server string, uuid AddStorageToFavoritesUu
 	return req, nil
 }
 
+// NewGetStorageImportDetailsRequest constructs an http.Request for the GetStorageImportDetails method
+func NewGetStorageImportDetailsRequest(server string, uuid GetStorageImportDetailsUuid) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/storage/%s/import", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateStorageImportRequest calls the generic CreateStorageImport builder with application/json body
+func NewCreateStorageImportRequest(server string, uuid CreateStorageImportUuid, body CreateStorageImportJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateStorageImportRequestWithBody(server, uuid, "application/json", bodyReader)
+}
+
+// NewCreateStorageImportRequestWithBody constructs an http.Request for the CreateStorageImport method, with any body, and a specified content type
+func NewCreateStorageImportRequestWithBody(server string, uuid CreateStorageImportUuid, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/storage/%s/import", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewCancelStorageImportRequest constructs an http.Request for the CancelStorageImport method
+func NewCancelStorageImportRequest(server string, uuid CancelStorageImportUuid) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "uuid", uuid, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/1.3/storage/%s/import/cancel", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewResizeStorageRequest constructs an http.Request for the ResizeStorage method
 func NewResizeStorageRequest(server string, uuid ResizeStorageUuid) (*http.Request, error) {
 	var err error
@@ -2518,6 +2737,42 @@ type StorageClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /1.3/storage/{uuid}/favorite (the `AddStorageToFavorites` operationId).
 	AddStorageToFavoritesWithResponse(ctx context.Context, uuid AddStorageToFavoritesUuid, reqEditors ...RequestEditorFn) (*AddStorageToFavoritesResp, error)
+
+	// GetStorageImportDetailsWithResponse Get storage import details
+	//
+	// Returns details of the latest import task for a storage resource, including its state, transferred byte counts, checksums, and any error information.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /1.3/storage/{uuid}/import (the `GetStorageImportDetails` operationId).
+	GetStorageImportDetailsWithResponse(ctx context.Context, uuid GetStorageImportDetailsUuid, reqEditors ...RequestEditorFn) (*GetStorageImportDetailsResp, error)
+
+	// CreateStorageImportWithBodyWithResponse Create storage import
+	//
+	// Creates an asynchronous task that imports a raw disk image into existing Block Storage from an HTTP URL or a temporary direct-upload URL. Attached Cloud Servers must be stopped.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/storage/{uuid}/import (the `CreateStorageImport` operationId).
+	CreateStorageImportWithBodyWithResponse(ctx context.Context, uuid CreateStorageImportUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateStorageImportResp, error)
+
+	// CreateStorageImportWithResponse Create storage import
+	//
+	// Creates an asynchronous task that imports a raw disk image into existing Block Storage from an HTTP URL or a temporary direct-upload URL. Attached Cloud Servers must be stopped.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/storage/{uuid}/import (the `CreateStorageImport` operationId).
+	CreateStorageImportWithResponse(ctx context.Context, uuid CreateStorageImportUuid, body CreateStorageImportJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateStorageImportResp, error)
+
+	// CancelStorageImportWithResponse Cancel storage import
+	//
+	// Requests cancellation of an ongoing storage import. The task enters the `cancelling` state while imported data is rolled back when necessary.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /1.3/storage/{uuid}/import/cancel (the `CancelStorageImport` operationId).
+	CancelStorageImportWithResponse(ctx context.Context, uuid CancelStorageImportUuid, reqEditors ...RequestEditorFn) (*CancelStorageImportResp, error)
 
 	// ResizeStorageWithResponse Resize Block Storage partition and filesystem
 	//
@@ -3544,6 +3799,192 @@ func (r AddStorageToFavoritesResp) ContentType() string {
 	return ""
 }
 
+type GetStorageImportDetailsResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *GetStorageImportDetails200
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *GetStorageImportDetails404
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *GetStorageImportDetailsDefault
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetStorageImportDetailsResp) GetJSON200() *GetStorageImportDetails200 {
+	return r.JSON200
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r GetStorageImportDetailsResp) GetJSON404() *GetStorageImportDetails404 {
+	return r.JSON404
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r GetStorageImportDetailsResp) GetApplicationproblemJSONDefault() *GetStorageImportDetailsDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetStorageImportDetailsResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetStorageImportDetailsResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetStorageImportDetailsResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetStorageImportDetailsResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateStorageImportResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *CreateStorageImport201
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *CreateStorageImport400
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *CreateStorageImport409
+	// JSON503 the response for an HTTP 503 `application/json` response
+	JSON503 *CreateStorageImport503
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *CreateStorageImportDefault
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateStorageImportResp) GetJSON201() *CreateStorageImport201 {
+	return r.JSON201
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r CreateStorageImportResp) GetJSON400() *CreateStorageImport400 {
+	return r.JSON400
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r CreateStorageImportResp) GetJSON409() *CreateStorageImport409 {
+	return r.JSON409
+}
+
+// GetJSON503 returns the response for an HTTP 503 `application/json` response
+func (r CreateStorageImportResp) GetJSON503() *CreateStorageImport503 {
+	return r.JSON503
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r CreateStorageImportResp) GetApplicationproblemJSONDefault() *CreateStorageImportDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateStorageImportResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateStorageImportResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateStorageImportResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateStorageImportResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CancelStorageImportResp struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON202 the response for an HTTP 202 `application/json` response
+	JSON202 *CancelStorageImport202
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *CancelStorageImport404
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *CancelStorageImport409
+	// ApplicationproblemJSONDefault the response for an HTTP default `application/problem+json` response
+	ApplicationproblemJSONDefault *CancelStorageImportDefault
+}
+
+// GetJSON202 returns the response for an HTTP 202 `application/json` response
+func (r CancelStorageImportResp) GetJSON202() *CancelStorageImport202 {
+	return r.JSON202
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r CancelStorageImportResp) GetJSON404() *CancelStorageImport404 {
+	return r.JSON404
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r CancelStorageImportResp) GetJSON409() *CancelStorageImport409 {
+	return r.JSON409
+}
+
+// GetApplicationproblemJSONDefault returns the response for an HTTP default `application/problem+json` response
+func (r CancelStorageImportResp) GetApplicationproblemJSONDefault() *CancelStorageImportDefault {
+	return r.ApplicationproblemJSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r CancelStorageImportResp) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CancelStorageImportResp) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CancelStorageImportResp) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CancelStorageImportResp) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type ResizeStorageResp struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -4054,6 +4495,66 @@ func (c *ClientWithResponses) AddStorageToFavoritesWithResponse(ctx context.Cont
 		return nil, err
 	}
 	return ParseAddStorageToFavoritesResp(rsp)
+}
+
+// GetStorageImportDetailsWithResponse Get storage import details
+//
+// Returns details of the latest import task for a storage resource, including its state, transferred byte counts, checksums, and any error information.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /1.3/storage/{uuid}/import (the `GetStorageImportDetails` operationId).
+func (c *ClientWithResponses) GetStorageImportDetailsWithResponse(ctx context.Context, uuid GetStorageImportDetailsUuid, reqEditors ...RequestEditorFn) (*GetStorageImportDetailsResp, error) {
+	rsp, err := c.GetStorageImportDetails(ctx, uuid, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetStorageImportDetailsResp(rsp)
+}
+
+// CreateStorageImportWithBodyWithResponse Create storage import
+//
+// Creates an asynchronous task that imports a raw disk image into existing Block Storage from an HTTP URL or a temporary direct-upload URL. Attached Cloud Servers must be stopped.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/storage/{uuid}/import (the `CreateStorageImport` operationId).
+func (c *ClientWithResponses) CreateStorageImportWithBodyWithResponse(ctx context.Context, uuid CreateStorageImportUuid, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateStorageImportResp, error) {
+	rsp, err := c.CreateStorageImportWithBody(ctx, uuid, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateStorageImportResp(rsp)
+}
+
+// CreateStorageImportWithResponse Create storage import
+//
+// Creates an asynchronous task that imports a raw disk image into existing Block Storage from an HTTP URL or a temporary direct-upload URL. Attached Cloud Servers must be stopped.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/storage/{uuid}/import (the `CreateStorageImport` operationId).
+func (c *ClientWithResponses) CreateStorageImportWithResponse(ctx context.Context, uuid CreateStorageImportUuid, body CreateStorageImportJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateStorageImportResp, error) {
+	rsp, err := c.CreateStorageImport(ctx, uuid, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateStorageImportResp(rsp)
+}
+
+// CancelStorageImportWithResponse Cancel storage import
+//
+// Requests cancellation of an ongoing storage import. The task enters the `cancelling` state while imported data is rolled back when necessary.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /1.3/storage/{uuid}/import/cancel (the `CancelStorageImport` operationId).
+func (c *ClientWithResponses) CancelStorageImportWithResponse(ctx context.Context, uuid CancelStorageImportUuid, reqEditors ...RequestEditorFn) (*CancelStorageImportResp, error) {
+	rsp, err := c.CancelStorageImport(ctx, uuid, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCancelStorageImportResp(rsp)
 }
 
 // ResizeStorageWithResponse Resize Block Storage partition and filesystem
@@ -4812,6 +5313,147 @@ func ParseAddStorageToFavoritesResp(rsp *http.Response) (*AddStorageToFavoritesR
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest AddStorageToFavoritesDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetStorageImportDetailsResp parses an HTTP response from a GetStorageImportDetailsWithResponse call
+func ParseGetStorageImportDetailsResp(rsp *http.Response) (*GetStorageImportDetailsResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetStorageImportDetailsResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest GetStorageImportDetails200
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest GetStorageImportDetails404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest GetStorageImportDetailsDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateStorageImportResp parses an HTTP response from a CreateStorageImportWithResponse call
+func ParseCreateStorageImportResp(rsp *http.Response) (*CreateStorageImportResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateStorageImportResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest CreateStorageImport201
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest CreateStorageImport400
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest CreateStorageImport409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest CreateStorageImport503
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest CreateStorageImportDefault
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCancelStorageImportResp parses an HTTP response from a CancelStorageImportWithResponse call
+func ParseCancelStorageImportResp(rsp *http.Response) (*CancelStorageImportResp, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CancelStorageImportResp{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest CancelStorageImport202
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest CancelStorageImport404
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest CancelStorageImport409
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest CancelStorageImportDefault
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}

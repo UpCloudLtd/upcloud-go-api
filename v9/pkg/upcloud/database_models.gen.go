@@ -626,15 +626,12 @@ func (e DatabaseServicePropertiesMysqlMigrationMethod) Valid() bool {
 
 // Defines values for DatabaseServicePropertiesMysqlVersion.
 const (
-	DatabaseServicePropertiesMysqlVersionN8  DatabaseServicePropertiesMysqlVersion = "8"
 	DatabaseServicePropertiesMysqlVersionN84 DatabaseServicePropertiesMysqlVersion = "8.4"
 )
 
 // Valid indicates whether the value is a known member of the DatabaseServicePropertiesMysqlVersion enum.
 func (e DatabaseServicePropertiesMysqlVersion) Valid() bool {
 	switch e {
-	case DatabaseServicePropertiesMysqlVersionN8:
-		return true
 	case DatabaseServicePropertiesMysqlVersionN84:
 		return true
 	default:
@@ -969,6 +966,27 @@ func (e DatabaseServicePropertiesPgPasswordEncryption) Valid() bool {
 	case DatabaseServicePropertiesPgPasswordEncryptionMd5:
 		return true
 	case DatabaseServicePropertiesPgPasswordEncryptionScramSha256:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DatabaseServicePropertiesPgPgStatPlansTrack.
+const (
+	DatabaseServicePropertiesPgPgStatPlansTrackAll  DatabaseServicePropertiesPgPgStatPlansTrack = "all"
+	DatabaseServicePropertiesPgPgStatPlansTrackNone DatabaseServicePropertiesPgPgStatPlansTrack = "none"
+	DatabaseServicePropertiesPgPgStatPlansTrackTop  DatabaseServicePropertiesPgPgStatPlansTrack = "top"
+)
+
+// Valid indicates whether the value is a known member of the DatabaseServicePropertiesPgPgStatPlansTrack enum.
+func (e DatabaseServicePropertiesPgPgStatPlansTrack) Valid() bool {
+	switch e {
+	case DatabaseServicePropertiesPgPgStatPlansTrackAll:
+		return true
+	case DatabaseServicePropertiesPgPgStatPlansTrackNone:
+		return true
+	case DatabaseServicePropertiesPgPgStatPlansTrackTop:
 		return true
 	default:
 		return false
@@ -1452,7 +1470,6 @@ func (e DatabaseServicePropertiesValkeyValkeyPersistence) Valid() bool {
 // Defines values for DatabaseServicePropertiesValkeyValkeyVersion.
 const (
 	DatabaseServicePropertiesValkeyValkeyVersionN81 DatabaseServicePropertiesValkeyValkeyVersion = "8.1"
-	DatabaseServicePropertiesValkeyValkeyVersionN90 DatabaseServicePropertiesValkeyValkeyVersion = "9.0"
 	DatabaseServicePropertiesValkeyValkeyVersionN91 DatabaseServicePropertiesValkeyValkeyVersion = "9.1"
 )
 
@@ -1460,8 +1477,6 @@ const (
 func (e DatabaseServicePropertiesValkeyValkeyVersion) Valid() bool {
 	switch e {
 	case DatabaseServicePropertiesValkeyValkeyVersionN81:
-		return true
-	case DatabaseServicePropertiesValkeyValkeyVersionN90:
 		return true
 	case DatabaseServicePropertiesValkeyValkeyVersionN91:
 		return true
@@ -1681,7 +1696,7 @@ type DatabaseBackupResponse struct {
 	BackupTime *time.Time `json:"backup_time,omitempty"`
 
 	// DataSize The size of the backup data in bytes.
-	DataSize *int32 `json:"data_size,omitempty"`
+	DataSize *int64 `json:"data_size,omitempty"`
 }
 
 // DatabaseConnectionPoolCreate Schema for creating a connection pool.
@@ -1816,7 +1831,7 @@ type DatabaseIndexResponse struct {
 	CreateTime *time.Time `json:"create_time,omitempty"`
 
 	// Docs Number of documents in the index.
-	Docs *int32 `json:"docs,omitempty"`
+	Docs *int64 `json:"docs,omitempty"`
 
 	// Health Health status of the index.
 	Health *string `json:"health,omitempty"`
@@ -1834,7 +1849,7 @@ type DatabaseIndexResponse struct {
 	ReadOnlyAllowDelete *bool `json:"read_only_allow_delete,omitempty"`
 
 	// Size Size of the index in bytes.
-	Size *int32 `json:"size,omitempty"`
+	Size *int64 `json:"size,omitempty"`
 
 	// Status Status of the index.
 	Status *string `json:"status,omitempty"`
@@ -2375,10 +2390,10 @@ type DatabasePgCurrentSessionResponse struct {
 	BackendType *string `json:"backend_type,omitempty"`
 
 	// BackendXid Top-level transaction identifier of this service, if any.
-	BackendXid *int32 `json:"backend_xid,omitempty"`
+	BackendXid *int64 `json:"backend_xid,omitempty"`
 
 	// BackendXmin The current service's xmin horizon.
-	BackendXmin *int32 `json:"backend_xmin,omitempty"`
+	BackendXmin *int64 `json:"backend_xmin,omitempty"`
 
 	// ClientAddr IP address of the connected client.
 	ClientAddr *string `json:"client_addr,omitempty"`
@@ -2390,7 +2405,7 @@ type DatabasePgCurrentSessionResponse struct {
 	ClientPort *int32 `json:"client_port,omitempty"`
 
 	// Datid OID of the database this service is connected to.
-	Datid *int32 `json:"datid,omitempty"`
+	Datid *int64 `json:"datid,omitempty"`
 
 	// Datname Name of the database this service is connected to.
 	Datname *string `json:"datname,omitempty"`
@@ -2417,7 +2432,7 @@ type DatabasePgCurrentSessionResponse struct {
 	Usename *string `json:"usename,omitempty"`
 
 	// Usesysid OID of the user logged into this service.
-	Usesysid *int32 `json:"usesysid,omitempty"`
+	Usesysid *int64 `json:"usesysid,omitempty"`
 
 	// WaitEvent Wait event name if the service is currently waiting.
 	WaitEvent *string `json:"wait_event,omitempty"`
@@ -2730,10 +2745,10 @@ type DatabaseQueryParamSort string
 // Examples: {"avg_timer_wait":12345,"count_star":100,"digest":"abc123def456","digest_text":"SELECT * FROM users WHERE id = ?","first_seen":"2024-06-01T12:00:00Z","last_seen":"2024-06-10T15:30:00Z","max_timer_wait":54321,"min_timer_wait":100,"quantile_95":20000,"quantile_99":30000,"quantile_999":40000,"query_sample_seen":"2024-06-05T10:00:00Z","query_sample_text":"SELECT * FROM users WHERE id = 1","query_sample_timer_wait":15000,"schema_name":"my_database","sum_created_tmp_disk_tables":2,"sum_created_tmp_tables":5,"sum_errors":0,"sum_lock_time":1000,"sum_no_good_index_used":1,"sum_no_index_used":3,"sum_rows_affected":10,"sum_rows_examined":1000,"sum_rows_sent":500,"sum_select_full_join":0,"sum_select_full_range_join":0,"sum_select_range":2,"sum_select_range_check":0,"sum_select_scan":4,"sum_sort_merge_passes":1,"sum_sort_range":2,"sum_sort_rows":100,"sum_sort_scan":3,"sum_timer_wait":20000,"sum_warnings":0}
 type DatabaseQueryStatisticsMysqlResponse struct {
 	// AvgTimerWait Average wait time for the query.
-	AvgTimerWait *int32 `json:"avg_timer_wait,omitempty"`
+	AvgTimerWait *int64 `json:"avg_timer_wait,omitempty"`
 
 	// CountStar Total number of times the query was executed.
-	CountStar *int32 `json:"count_star,omitempty"`
+	CountStar *int64 `json:"count_star,omitempty"`
 
 	// Digest Query digest hash.
 	Digest *string `json:"digest,omitempty"`
@@ -2748,19 +2763,19 @@ type DatabaseQueryStatisticsMysqlResponse struct {
 	LastSeen *time.Time `json:"last_seen,omitempty"`
 
 	// MaxTimerWait Maximum wait time for the query.
-	MaxTimerWait *int32 `json:"max_timer_wait,omitempty"`
+	MaxTimerWait *int64 `json:"max_timer_wait,omitempty"`
 
 	// MinTimerWait Minimum wait time for the query.
-	MinTimerWait *int32 `json:"min_timer_wait,omitempty"`
+	MinTimerWait *int64 `json:"min_timer_wait,omitempty"`
 
 	// Quantile95 95th percentile wait time.
-	Quantile95 *int32 `json:"quantile_95,omitempty"`
+	Quantile95 *int64 `json:"quantile_95,omitempty"`
 
 	// Quantile99 99th percentile wait time.
-	Quantile99 *int32 `json:"quantile_99,omitempty"`
+	Quantile99 *int64 `json:"quantile_99,omitempty"`
 
 	// Quantile999 99.9th percentile wait time.
-	Quantile999 *int32 `json:"quantile_999,omitempty"`
+	Quantile999 *int64 `json:"quantile_999,omitempty"`
 
 	// QuerySampleSeen Timestamp when the sample query was seen.
 	QuerySampleSeen *time.Time `json:"query_sample_seen,omitempty"`
@@ -2769,70 +2784,70 @@ type DatabaseQueryStatisticsMysqlResponse struct {
 	QuerySampleText *string `json:"query_sample_text,omitempty"`
 
 	// QuerySampleTimerWait Wait time for the sample query.
-	QuerySampleTimerWait *int32 `json:"query_sample_timer_wait,omitempty"`
+	QuerySampleTimerWait *int64 `json:"query_sample_timer_wait,omitempty"`
 
 	// SchemaName Name of the database schema.
 	SchemaName *string `json:"schema_name,omitempty"`
 
 	// SumCreatedTmpDiskTables Total number of temporary disk tables created.
-	SumCreatedTmpDiskTables *int32 `json:"sum_created_tmp_disk_tables,omitempty"`
+	SumCreatedTmpDiskTables *int64 `json:"sum_created_tmp_disk_tables,omitempty"`
 
 	// SumCreatedTmpTables Total number of temporary tables created.
-	SumCreatedTmpTables *int32 `json:"sum_created_tmp_tables,omitempty"`
+	SumCreatedTmpTables *int64 `json:"sum_created_tmp_tables,omitempty"`
 
 	// SumErrors Total number of errors encountered.
-	SumErrors *int32 `json:"sum_errors,omitempty"`
+	SumErrors *int64 `json:"sum_errors,omitempty"`
 
 	// SumLockTime Total lock time for the query.
-	SumLockTime *int32 `json:"sum_lock_time,omitempty"`
+	SumLockTime *int64 `json:"sum_lock_time,omitempty"`
 
 	// SumNoGoodIndexUsed Total number of times no good index was used.
-	SumNoGoodIndexUsed *int32 `json:"sum_no_good_index_used,omitempty"`
+	SumNoGoodIndexUsed *int64 `json:"sum_no_good_index_used,omitempty"`
 
 	// SumNoIndexUsed Total number of times no index was used.
-	SumNoIndexUsed *int32 `json:"sum_no_index_used,omitempty"`
+	SumNoIndexUsed *int64 `json:"sum_no_index_used,omitempty"`
 
 	// SumRowsAffected Total number of rows affected.
-	SumRowsAffected *int32 `json:"sum_rows_affected,omitempty"`
+	SumRowsAffected *int64 `json:"sum_rows_affected,omitempty"`
 
 	// SumRowsExamined Total number of rows examined.
-	SumRowsExamined *int32 `json:"sum_rows_examined,omitempty"`
+	SumRowsExamined *int64 `json:"sum_rows_examined,omitempty"`
 
 	// SumRowsSent Total number of rows sent.
-	SumRowsSent *int32 `json:"sum_rows_sent,omitempty"`
+	SumRowsSent *int64 `json:"sum_rows_sent,omitempty"`
 
 	// SumSelectFullJoin Total number of full joins performed.
-	SumSelectFullJoin *int32 `json:"sum_select_full_join,omitempty"`
+	SumSelectFullJoin *int64 `json:"sum_select_full_join,omitempty"`
 
 	// SumSelectFullRangeJoin Total number of full range joins performed.
-	SumSelectFullRangeJoin *int32 `json:"sum_select_full_range_join,omitempty"`
+	SumSelectFullRangeJoin *int64 `json:"sum_select_full_range_join,omitempty"`
 
 	// SumSelectRange Total number of range selects performed.
-	SumSelectRange *int32 `json:"sum_select_range,omitempty"`
+	SumSelectRange *int64 `json:"sum_select_range,omitempty"`
 
 	// SumSelectRangeCheck Total number of range checks performed.
-	SumSelectRangeCheck *int32 `json:"sum_select_range_check,omitempty"`
+	SumSelectRangeCheck *int64 `json:"sum_select_range_check,omitempty"`
 
 	// SumSelectScan Total number of select scans performed.
-	SumSelectScan *int32 `json:"sum_select_scan,omitempty"`
+	SumSelectScan *int64 `json:"sum_select_scan,omitempty"`
 
 	// SumSortMergePasses Total number of sort merge passes.
-	SumSortMergePasses *int32 `json:"sum_sort_merge_passes,omitempty"`
+	SumSortMergePasses *int64 `json:"sum_sort_merge_passes,omitempty"`
 
 	// SumSortRange Total number of sort range operations.
-	SumSortRange *int32 `json:"sum_sort_range,omitempty"`
+	SumSortRange *int64 `json:"sum_sort_range,omitempty"`
 
 	// SumSortRows Total number of rows sorted.
-	SumSortRows *int32 `json:"sum_sort_rows,omitempty"`
+	SumSortRows *int64 `json:"sum_sort_rows,omitempty"`
 
 	// SumSortScan Total number of sort scans performed.
-	SumSortScan *int32 `json:"sum_sort_scan,omitempty"`
+	SumSortScan *int64 `json:"sum_sort_scan,omitempty"`
 
 	// SumTimerWait Total wait time for the query.
-	SumTimerWait *int32 `json:"sum_timer_wait,omitempty"`
+	SumTimerWait *int64 `json:"sum_timer_wait,omitempty"`
 
 	// SumWarnings Total number of warnings generated.
-	SumWarnings *int32 `json:"sum_warnings,omitempty"`
+	SumWarnings *int64 `json:"sum_warnings,omitempty"`
 }
 
 // DatabaseQueryStatisticsPgResponse Schema for PostgreSQL query statistics response.
@@ -2840,67 +2855,67 @@ type DatabaseQueryStatisticsMysqlResponse struct {
 // Examples: {"blk_read_time":120,"blk_write_time":45,"calls":10,"database_name":"mydb","local_blks_dirtied":2,"local_blks_hit":100,"local_blks_read":5,"local_blks_written":3,"max_time":300,"mean_time":150,"min_time":100,"query":"SELECT * FROM users WHERE id = 1","rows":20,"shared_blks_dirtied":4,"shared_blks_hit":200,"shared_blks_read":8,"shared_blks_written":6,"stddev_time":20,"temp_blks_read":1,"temp_blks_written":1,"total_time":1500,"user_name":"postgres"}
 type DatabaseQueryStatisticsPgResponse struct {
 	// BlkReadTime Time spent reading data blocks, in milliseconds.
-	BlkReadTime *int32 `json:"blk_read_time,omitempty"`
+	BlkReadTime *int64 `json:"blk_read_time,omitempty"`
 
 	// BlkWriteTime Time spent writing data blocks, in milliseconds.
-	BlkWriteTime *int32 `json:"blk_write_time,omitempty"`
+	BlkWriteTime *int64 `json:"blk_write_time,omitempty"`
 
 	// Calls Number of times the query was executed.
-	Calls *int32 `json:"calls,omitempty"`
+	Calls *int64 `json:"calls,omitempty"`
 
 	// DatabaseName Name of the database.
 	DatabaseName *string `json:"database_name,omitempty"`
 
 	// LocalBlksDirtied Number of local blocks dirtied.
-	LocalBlksDirtied *int32 `json:"local_blks_dirtied,omitempty"`
+	LocalBlksDirtied *int64 `json:"local_blks_dirtied,omitempty"`
 
 	// LocalBlksHit Number of local block cache hits.
-	LocalBlksHit *int32 `json:"local_blks_hit,omitempty"`
+	LocalBlksHit *int64 `json:"local_blks_hit,omitempty"`
 
 	// LocalBlksRead Number of local blocks read.
-	LocalBlksRead *int32 `json:"local_blks_read,omitempty"`
+	LocalBlksRead *int64 `json:"local_blks_read,omitempty"`
 
 	// LocalBlksWritten Number of local blocks written.
-	LocalBlksWritten *int32 `json:"local_blks_written,omitempty"`
+	LocalBlksWritten *int64 `json:"local_blks_written,omitempty"`
 
 	// MaxTime Maximum execution time, in milliseconds.
-	MaxTime *int32 `json:"max_time,omitempty"`
+	MaxTime *int64 `json:"max_time,omitempty"`
 
 	// MeanTime Mean execution time, in milliseconds.
-	MeanTime *int32 `json:"mean_time,omitempty"`
+	MeanTime *int64 `json:"mean_time,omitempty"`
 
 	// MinTime Minimum execution time, in milliseconds.
-	MinTime *int32 `json:"min_time,omitempty"`
+	MinTime *int64 `json:"min_time,omitempty"`
 
 	// Query The SQL query text.
 	Query *string `json:"query,omitempty"`
 
 	// Rows Total number of rows returned or affected.
-	Rows *int32 `json:"rows,omitempty"`
+	Rows *int64 `json:"rows,omitempty"`
 
 	// SharedBlksDirtied Number of shared blocks dirtied.
-	SharedBlksDirtied *int32 `json:"shared_blks_dirtied,omitempty"`
+	SharedBlksDirtied *int64 `json:"shared_blks_dirtied,omitempty"`
 
 	// SharedBlksHit Number of shared block cache hits.
-	SharedBlksHit *int32 `json:"shared_blks_hit,omitempty"`
+	SharedBlksHit *int64 `json:"shared_blks_hit,omitempty"`
 
 	// SharedBlksRead Number of shared blocks read.
-	SharedBlksRead *int32 `json:"shared_blks_read,omitempty"`
+	SharedBlksRead *int64 `json:"shared_blks_read,omitempty"`
 
 	// SharedBlksWritten Number of shared blocks written.
-	SharedBlksWritten *int32 `json:"shared_blks_written,omitempty"`
+	SharedBlksWritten *int64 `json:"shared_blks_written,omitempty"`
 
 	// StddevTime Standard deviation of execution time, in milliseconds.
-	StddevTime *int32 `json:"stddev_time,omitempty"`
+	StddevTime *int64 `json:"stddev_time,omitempty"`
 
 	// TempBlksRead Number of temporary blocks read.
-	TempBlksRead *int32 `json:"temp_blks_read,omitempty"`
+	TempBlksRead *int64 `json:"temp_blks_read,omitempty"`
 
 	// TempBlksWritten Number of temporary blocks written.
-	TempBlksWritten *int32 `json:"temp_blks_written,omitempty"`
+	TempBlksWritten *int64 `json:"temp_blks_written,omitempty"`
 
 	// TotalTime Total execution time, in milliseconds.
-	TotalTime *int32 `json:"total_time,omitempty"`
+	TotalTime *int64 `json:"total_time,omitempty"`
 
 	// UserName Name of the user who executed the query.
 	UserName *string `json:"user_name,omitempty"`
@@ -2934,13 +2949,13 @@ type DatabaseRedisAccessControlResponse struct {
 
 // DatabaseRedisValkeyCurrentSessionResponse Schema for Redis Valkey current session response.
 //
-// Examples: {"active_channel_subscriptions":2,"active_database":0,"active_pattern_matching_channel_subscriptions":1,"application_name":"my-app","client_addr":"[fff0:fff0:fff0:fff0:0:fff0:fff0:fff0]:39956","connection_age":2079483000000000,"connection_idle":3000000000,"flags":["N","U"],"flags_raw":"NU","id":15,"multi_exec_commands":-1,"output_buffer":0,"output_buffer_memory":0,"output_list_length":0,"query":"info","query_buffer":0,"query_buffer_free":0}
+// Examples: {"active_channel_subscriptions":2,"active_database":"0","active_pattern_matching_channel_subscriptions":1,"application_name":"my-app","client_addr":"[fff0:fff0:fff0:fff0:0:fff0:fff0:fff0]:39956","connection_age":2079483000000000,"connection_idle":3000000000,"flags":["N","U"],"flags_raw":"NU","id":"15","multi_exec_commands":-1,"output_buffer":0,"output_buffer_memory":0,"output_list_length":0,"query":"info","query_buffer":0,"query_buffer_free":0}
 type DatabaseRedisValkeyCurrentSessionResponse struct {
 	// ActiveChannelSubscriptions Number of active channel subscriptions.
 	ActiveChannelSubscriptions *int32 `json:"active_channel_subscriptions,omitempty"`
 
 	// ActiveDatabase Current database ID.
-	ActiveDatabase *int32 `json:"active_database,omitempty"`
+	ActiveDatabase *string `json:"active_database,omitempty"`
 
 	// ActivePatternMatchingChannelSubscriptions Number of pattern matching subscriptions.
 	ActivePatternMatchingChannelSubscriptions *int32 `json:"active_pattern_matching_channel_subscriptions,omitempty"`
@@ -2952,10 +2967,10 @@ type DatabaseRedisValkeyCurrentSessionResponse struct {
 	ClientAddr *string `json:"client_addr,omitempty"`
 
 	// ConnectionAge Total duration of the connection in nanoseconds.
-	ConnectionAge *int32 `json:"connection_age,omitempty"`
+	ConnectionAge *int64 `json:"connection_age,omitempty"`
 
 	// ConnectionIdle Idle time of the connection in nanoseconds.
-	ConnectionIdle *int32 `json:"connection_idle,omitempty"`
+	ConnectionIdle *int64 `json:"connection_idle,omitempty"`
 
 	// Flags List of flags describing the client connection.
 	Flags *[]string `json:"flags,omitempty"`
@@ -2964,16 +2979,16 @@ type DatabaseRedisValkeyCurrentSessionResponse struct {
 	FlagsRaw *string `json:"flags_raw,omitempty"`
 
 	// Id Process ID of this session.
-	Id *int32 `json:"id,omitempty"`
+	Id *string `json:"id,omitempty"`
 
 	// MultiExecCommands Number of commands in a MULTI/EXEC context.
 	MultiExecCommands *int32 `json:"multi_exec_commands,omitempty"`
 
 	// OutputBuffer Output buffer length.
-	OutputBuffer *int32 `json:"output_buffer,omitempty"`
+	OutputBuffer *int64 `json:"output_buffer,omitempty"`
 
 	// OutputBufferMemory Output buffer memory usage.
-	OutputBufferMemory *int32 `json:"output_buffer_memory,omitempty"`
+	OutputBufferMemory *int64 `json:"output_buffer_memory,omitempty"`
 
 	// OutputListLength Output list length (replies queued when buffer is full).
 	OutputListLength *int32 `json:"output_list_length,omitempty"`
@@ -2982,10 +2997,10 @@ type DatabaseRedisValkeyCurrentSessionResponse struct {
 	Query *string `json:"query,omitempty"`
 
 	// QueryBuffer Query buffer length (0 means no query pending).
-	QueryBuffer *int32 `json:"query_buffer,omitempty"`
+	QueryBuffer *int64 `json:"query_buffer,omitempty"`
 
 	// QueryBufferFree Free space of the query buffer (0 means the buffer is full).
-	QueryBufferFree *int32 `json:"query_buffer_free,omitempty"`
+	QueryBufferFree *int64 `json:"query_buffer_free,omitempty"`
 }
 
 // DatabaseServiceAclModify Schema for modifying service access control settings.
@@ -4152,7 +4167,7 @@ type DatabaseServicePropertiesMysql struct {
 	// InnodbLockWaitTimeout The length of time in seconds an InnoDB transaction waits for a row lock before giving up. Default is 120.
 	InnodbLockWaitTimeout *int `json:"innodb_lock_wait_timeout,omitempty"`
 
-	// InnodbLogBufferSize The size in bytes of the buffer that InnoDB uses to write to the log files on disk.
+	// InnodbLogBufferSize The size in bytes of the buffer that InnoDB uses to write to the log files on disk. Requests above 15% of the RAM provided by your service plan are rejected, because a larger buffer leaves less memory for the buffer pool and client connections.
 	InnodbLogBufferSize *int `json:"innodb_log_buffer_size,omitempty"`
 
 	// InnodbOnlineAlterLogMaxSize The upper limit in bytes on the size of the temporary log files used during online DDL operations for InnoDB tables.
@@ -4194,8 +4209,11 @@ type DatabaseServicePropertiesMysql struct {
 	// LowerCaseTableNames Sets how table and database names are stored and compared. 0 = case-sensitive (default), 1 = names stored lowercase, comparisons are case-insensitive. This option can only be set when creating the service and cannot be changed later. See https://dev.mysql.com/doc/refman/8.0/en/identifier-case-sensitivity.html for details.
 	LowerCaseTableNames *DatabaseServicePropertiesMysqlLowerCaseTableNames `json:"lower_case_table_names,omitempty"`
 
-	// MaxAllowedPacket Size of the largest message in bytes that can be received by the server. Default is 67108864 (64M)
+	// MaxAllowedPacket Size of the largest message in bytes that can be received by the server. Default is 67108864 (64M). Statements and rows larger than this are rejected with a packet too large error.
 	MaxAllowedPacket *int `json:"max_allowed_packet,omitempty"`
+
+	// MaxConnections The maximum permitted number of simultaneous client connections. Lower this to reserve memory for other work. The value cannot exceed the limit provided by your service plan. Upgrading the plan does not raise a value you have set explicitly, so increase it yourself after an upgrade.
+	MaxConnections *int `json:"max_connections,omitempty"`
 
 	// MaxExecutionTime Execution timeout in milliseconds for read-only top-level SELECT statements. 0 (the default) means no timeout.
 	MaxExecutionTime *int `json:"max_execution_time,omitempty"`
@@ -4205,7 +4223,10 @@ type DatabaseServicePropertiesMysql struct {
 
 	// MaxSeeksForKey Limit on the assumed maximum number of index seeks when looking up rows based on a key. Lowering this value causes the optimizer to prefer index lookups over table scans.
 	MaxSeeksForKey *int `json:"max_seeks_for_key,omitempty"`
-	Migration      *struct {
+
+	// MaxUserConnections The maximum number of simultaneous connections permitted to any single user account. 0, the default, means no per-account limit. Any other value must be at least 10 below max_connections, so that monitoring and your own admin sessions can still connect when an application saturates its own limit. UpCloud's replication and management connections are unaffected however low you set this.
+	MaxUserConnections *int `json:"max_user_connections,omitempty"`
+	Migration          *struct {
 		Dbname *string `json:"dbname,omitempty"`
 
 		// DumpTool Experimental! Tool to use for database dump and restore during migration. Default: mysqldump
@@ -4264,7 +4285,7 @@ type DatabaseServicePropertiesMysql struct {
 	// SlowQueryLog Slow query log enables capturing of slow queries. Setting slow_query_log to false also truncates the mysql.slow_log table.
 	SlowQueryLog *bool `json:"slow_query_log,omitempty"`
 
-	// SortBufferSize Sort buffer size in bytes for ORDER BY optimization. Default is 262144 (256K)
+	// SortBufferSize Sort buffer size in bytes for ORDER BY optimization. Default is 262144 (256K). Requests above 2% of the RAM provided by your service plan are rejected, because the buffer is allocated per session and its cost multiplies with the connection count.
 	SortBufferSize *int `json:"sort_buffer_size,omitempty"`
 
 	// SqlMode Global SQL mode. Set to empty to use MySQL server defaults. When creating a new service and not setting this field UpCloud default SQL mode (strict, SQL standard compliant) will be assigned.
@@ -4277,7 +4298,7 @@ type DatabaseServicePropertiesMysql struct {
 	TmpTableSize *int                                   `json:"tmp_table_size,omitempty"`
 	Version      *DatabaseServicePropertiesMysqlVersion `json:"version,omitempty"`
 
-	// WaitTimeout The number of seconds the server waits for activity on a noninteractive connection before closing it.
+	// WaitTimeout The number of seconds the server waits for activity on a noninteractive connection before closing it. Requests to set this below 30 are rejected, because a shorter timeout closes your own idle connections between statements.
 	WaitTimeout *int `json:"wait_timeout,omitempty"`
 
 	// WindowingUseHighPrecision Whether window functions are computed to high precision. Disabling this trades exactness for speed in window function evaluation.
@@ -4520,6 +4541,9 @@ type DatabaseServicePropertiesOpensearch struct {
 	// KnnMemoryCircuitBreakerLimit Maximum amount of memory in percentage that can be used for the KNN index. Defaults to 50% of the JVM heap size. 0 is used to set it to null which can be used to invalidate caches.
 	KnnMemoryCircuitBreakerLimit *int `json:"knn_memory_circuit_breaker_limit,omitempty"`
 
+	// MlCommonsConnectorAccessControlEnabled When set to true, the setting allows admins to control access and permissions to the connector API using backend_roles. Defaults to false.
+	MlCommonsConnectorAccessControlEnabled *bool `json:"ml_commons_connector_access_control_enabled,omitempty"`
+
 	// MlCommonsModelAccessControlEnabled Enable or disable model access control for ML Commons. When enabled, access to ML models is controlled by security permissions. Defaults to false.
 	MlCommonsModelAccessControlEnabled *bool `json:"ml_commons_model_access_control_enabled,omitempty"`
 
@@ -4528,6 +4552,9 @@ type DatabaseServicePropertiesOpensearch struct {
 
 	// MlCommonsOnlyRunOnMlNode Enable or disable running ML Commons tasks only on ML nodes. When enabled, ML tasks will only execute on nodes designated as ML nodes. Defaults to true.
 	MlCommonsOnlyRunOnMlNode *bool `json:"ml_commons_only_run_on_ml_node,omitempty"`
+
+	// MlCommonsTrustedConnectorEndpointsRegex Adds the trusted endpoints to the cluster settings. Supports Java regex expressions.
+	MlCommonsTrustedConnectorEndpointsRegex *[]string `json:"ml_commons_trusted_connector_endpoints_regex,omitempty"`
 
 	// NodeSearchCacheSize Defines a limit of how much total remote data can be referenced as a ratio of the size of the disk reserved for the file cache. This is designed to be a safeguard to prevent oversubscribing a cluster. Defaults to 5gb. Requires restarting all OpenSearch nodes.
 	NodeSearchCacheSize *string `json:"node_search_cache_size,omitempty"`
@@ -5203,6 +5230,12 @@ type DatabaseServicePropertiesPg struct {
 	// PgStatMonitorPgsmMaxBuckets Sets the maximum number of buckets. Changing this parameter causes a service restart. Only available for PostgreSQL 13+.
 	PgStatMonitorPgsmMaxBuckets *int `json:"pg_stat_monitor_pgsm_max_buckets,omitempty"`
 
+	// PgStatPlansEnable Enable the pg_stat_plans extension. Changing this parameter causes a service restart. Tracks execution plans for SQL queries
+	PgStatPlansEnable *bool `json:"pg_stat_plans_enable,omitempty"`
+
+	// PgStatPlansTrack Controls which statements' plans are tracked. Specify top to track top-level statements (those issued directly by clients), all to also track nested statements (such as statements invoked within functions), or none to disable plan tracking. The default is `top`.
+	PgStatPlansTrack *DatabaseServicePropertiesPgPgStatPlansTrack `json:"pg_stat_plans_track,omitempty"`
+
 	// PgStatStatementsTrack Controls which statements are counted. Specify top to track top-level statements (those issued directly by clients), all to also track nested statements (such as statements invoked within functions), or none to disable statement statistics collection. The default is `top`.
 	PgStatStatementsTrack *DatabaseServicePropertiesPgPgStatStatementsTrack `json:"pg_stat_statements_track,omitempty"`
 
@@ -5264,8 +5297,10 @@ type DatabaseServicePropertiesPg struct {
 		IgnoreStartupParameters *[]DatabaseServicePropertiesPgPgbouncerIgnoreStartupParameters `json:"ignore_startup_parameters,omitempty"`
 		MaxPreparedStatements   *int                                                           `json:"max_prepared_statements,omitempty"`
 		MinPoolSize             *int                                                           `json:"min_pool_size,omitempty"`
+		ServerConnectTimeout    *float32                                                       `json:"server_connect_timeout,omitempty"`
 		ServerIdleTimeout       *int                                                           `json:"server_idle_timeout,omitempty"`
 		ServerLifetime          *int                                                           `json:"server_lifetime,omitempty"`
+		ServerLoginRetry        *float32                                                       `json:"server_login_retry,omitempty"`
 		ServerResetQueryAlways  *bool                                                          `json:"server_reset_query_always,omitempty"`
 	} `json:"pgbouncer,omitempty"`
 
@@ -5349,6 +5384,9 @@ type DatabaseServicePropertiesPgMigrationMethod string
 
 // DatabaseServicePropertiesPgPasswordEncryption Chooses the algorithm for encrypting passwords.
 type DatabaseServicePropertiesPgPasswordEncryption string
+
+// DatabaseServicePropertiesPgPgStatPlansTrack Controls which statements' plans are tracked. Specify top to track top-level statements (those issued directly by clients), all to also track nested statements (such as statements invoked within functions), or none to disable plan tracking. The default is `top`.
+type DatabaseServicePropertiesPgPgStatPlansTrack string
 
 // DatabaseServicePropertiesPgPgStatStatementsTrack Controls which statements are counted. Specify top to track top-level statements (those issued directly by clients), all to also track nested statements (such as statements invoked within functions), or none to disable statement statistics collection. The default is `top`.
 type DatabaseServicePropertiesPgPgStatStatementsTrack string
@@ -5490,6 +5528,12 @@ type DatabaseServicePropertiesValkey struct {
 	// ValkeyAclChannelsDefault Determines default pub/sub channels' ACL for new users if ACL is not supplied. When this option is not defined, all_channels is assumed to keep backward compatibility. This option doesn't affect Valkey configuration acl-pubsub-default.
 	ValkeyAclChannelsDefault *DatabaseServicePropertiesValkeyValkeyAclChannelsDefault `json:"valkey_acl_channels_default,omitempty"`
 
+	// ValkeyActiveDefragIgnoreBytes Minimum amount of fragmentation waste, in bytes, before active defragmentation starts. Only takes effect when `valkey_activedefrag` is enabled.
+	ValkeyActiveDefragIgnoreBytes *int `json:"valkey_active_defrag_ignore_bytes,omitempty"`
+
+	// ValkeyActiveDefragThresholdLower Minimum percentage of fragmentation before active defragmentation starts. Only takes effect when `valkey_activedefrag` is enabled.
+	ValkeyActiveDefragThresholdLower *int `json:"valkey_active_defrag_threshold_lower,omitempty"`
+
 	// ValkeyActiveExpireEffort Valkey reclaims expired keys both when accessed and in the background. The background process scans for expired keys to free memory. Increasing the active-expire-effort setting (default 1, max 10) uses more CPU to reclaim expired keys faster, reducing memory usage but potentially increasing latency.
 	ValkeyActiveExpireEffort *int `json:"valkey_active_expire_effort,omitempty"`
 
@@ -5506,7 +5550,7 @@ type DatabaseServicePropertiesValkey struct {
 	// ValkeyNumberOfDatabases Set number of Valkey databases. Changing this will cause a restart of the Valkey service.
 	ValkeyNumberOfDatabases *int `json:"valkey_number_of_databases,omitempty"`
 
-	// ValkeyPersistence When persistence is 'rdb', Valkey does RDB dumps each 10 minutes if any key is changed. Also RDB dumps are done according to backup schedule for backup purposes. When persistence is 'off', no RDB dumps and backups are done, so data can be lost at any moment if service is restarted for any reason, or if service is powered off. Also service can't be forked.
+	// ValkeyPersistence Controls whether Valkey writes RDB dumps to disk. With `rdb`, RDB dumps are written for backups on the backup schedule and, if `frequent_snapshots` is enabled, every 10 minutes so the service can recover recent data after a restart. With `off`, no RDB dumps are written at all: backups and forking are unavailable, `frequent_snapshots` and `backup_hour`/`backup_minute` have no effect, and all data is lost if the service restarts or is powered off.
 	ValkeyPersistence *DatabaseServicePropertiesValkeyValkeyPersistence `json:"valkey_persistence,omitempty"`
 
 	// ValkeyPubsubClientOutputBufferLimit Set output buffer limit for pub / sub clients in MB. The value is the hard limit, the soft limit is 1/4 of the hard limit. When setting the limit, be mindful of the available memory in the selected service plan.
@@ -5525,7 +5569,7 @@ type DatabaseServicePropertiesValkeyValkeyAclChannelsDefault string
 // DatabaseServicePropertiesValkeyValkeyMaxmemoryPolicy defines model for DatabaseServicePropertiesValkey.ValkeyMaxmemoryPolicy.
 type DatabaseServicePropertiesValkeyValkeyMaxmemoryPolicy string
 
-// DatabaseServicePropertiesValkeyValkeyPersistence When persistence is 'rdb', Valkey does RDB dumps each 10 minutes if any key is changed. Also RDB dumps are done according to backup schedule for backup purposes. When persistence is 'off', no RDB dumps and backups are done, so data can be lost at any moment if service is restarted for any reason, or if service is powered off. Also service can't be forked.
+// DatabaseServicePropertiesValkeyValkeyPersistence Controls whether Valkey writes RDB dumps to disk. With `rdb`, RDB dumps are written for backups on the backup schedule and, if `frequent_snapshots` is enabled, every 10 minutes so the service can recover recent data after a restart. With `off`, no RDB dumps are written at all: backups and forking are unavailable, `frequent_snapshots` and `backup_hour`/`backup_minute` have no effect, and all data is lost if the service restarts or is powered off.
 type DatabaseServicePropertiesValkeyValkeyPersistence string
 
 // DatabaseServicePropertiesValkeyValkeyVersion defines model for DatabaseServicePropertiesValkey.ValkeyVersion.
@@ -5901,14 +5945,6 @@ type DatabaseServiceUserModify struct {
 //
 // Examples: ["12","13","14","15","16"]
 type DatabaseServiceVersionsResponse = []string
-
-// DatabaseTerminateSessionResponse Schema for the response received after terminating a session
-//
-// Examples: {"success":true}
-type DatabaseTerminateSessionResponse struct {
-	// Success Indicates whether the session termination was successful.
-	Success *bool `json:"success,omitempty"`
-}
 
 // DatabaseTitle The title of an entity.
 //
@@ -6974,11 +7010,6 @@ type StartDatabaseManualMaintenance200 = DatabaseUpCloudApiResponse
 
 // StartDatabaseManualMaintenanceDefault Schema for error responses from the API.
 type StartDatabaseManualMaintenanceDefault = DatabaseErrorResponse
-
-// TerminateDatabaseSession204 Schema for the response received after terminating a session
-//
-// Examples: {"success":true}
-type TerminateDatabaseSession204 = DatabaseTerminateSessionResponse
 
 // TerminateDatabaseSessionDefault Schema for error responses from the API.
 type TerminateDatabaseSessionDefault = DatabaseErrorResponse
