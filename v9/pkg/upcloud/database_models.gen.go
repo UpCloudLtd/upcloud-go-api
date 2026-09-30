@@ -2043,17 +2043,17 @@ type DatabaseMaintenanceDow string
 //
 // Examples: {"deadline":"2022-01-21T12:21:00Z","description":"description related to the update","start_after":"2022-01-21T12:21:00Z","start_at":"2022-10-21T12:21:00Z"}
 type DatabaseMaintenancePendingUpdatesResponse struct {
-	// Deadline The deadline by which the update must be applied
-	Deadline *time.Time `json:"deadline,omitempty"`
+	// Deadline The deadline by which the update must be applied as an RFC 3339 timestamp. Empty when no deadline is set.
+	Deadline *string `json:"deadline,omitempty"`
 
 	// Description A description of the pending update
 	Description *string `json:"description,omitempty"`
 
-	// StartAfter The earliest time after which the update can start
-	StartAfter *time.Time `json:"start_after,omitempty"`
+	// StartAfter The earliest time after which the update can start as an RFC 3339 timestamp. Empty when no lower bound is set.
+	StartAfter *string `json:"start_after,omitempty"`
 
-	// StartAt The exact scheduled start time for the update
-	StartAt *time.Time `json:"start_at,omitempty"`
+	// StartAt The exact scheduled start time for the update as an RFC 3339 timestamp. Empty when the update has not been scheduled.
+	StartAt *string `json:"start_at,omitempty"`
 }
 
 // DatabaseMaintenanceTime Time of day for maintenance window in HH:MM:SS format
