@@ -986,7 +986,7 @@ type GatewayLabelCreateRequest struct {
 	// Value The value of a label.
 	//
 	// Examples: production, backend, web-app, backup, engineering
-	Value GatewayLabelValue `json:"value"`
+	Value *GatewayLabelValue `json:"value"`
 }
 
 // GatewayLabelDetailsResponse Gateway label
