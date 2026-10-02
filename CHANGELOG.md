@@ -5,6 +5,12 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [8.42.1]
+
+### Added
+
+- managed database: add `AdditionalDiskSpaceGiB`, `Labels`, `Networks`, and `TerminationProtection` to `request.CloneManagedDatabaseRequest`
+
 ## [8.42.0]
 
 ### Added
@@ -809,7 +815,8 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 First stable release
 
-[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.42.0...HEAD
+[Unreleased]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.42.1...HEAD
+[8.42.1]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.42.0...v8.42.1
 [8.42.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.41.0...v8.42.0
 [8.41.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.40.0...v8.41.0
 [8.40.0]: https://github.com/UpCloudLtd/upcloud-go-api/compare/v8.39.0...v8.40.0
