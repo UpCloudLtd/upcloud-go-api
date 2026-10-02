@@ -34,6 +34,7 @@ func (c *CancelManagedDatabaseSession) RequestURL() string {
 
 // CloneManagedDatabaseRequest represents a request to cancel
 type CloneManagedDatabaseRequest struct {
+	AdditionalDiskSpaceGiB int `json:"additional_disk_space_gib,omitempty"`
 	// UUID selects an existing managed database instance to clone
 	UUID string `json:"-"`
 	// CloneTime selects a point-in-time from where to clone the data. Zero value selects the most recent available.
@@ -42,12 +43,15 @@ type CloneManagedDatabaseRequest struct {
 	// Only for Valkey. Create a clone of your database service data from the backups by name.
 	BackupName string `json:"backup_name,omitempty"`
 
-	HostNamePrefix string                                `json:"hostname_prefix"`
-	Maintenance    ManagedDatabaseMaintenanceTimeRequest `json:"maintenance,omitempty"`
-	Plan           string                                `json:"plan"`
-	Properties     ManagedDatabasePropertiesRequest      `json:"properties,omitempty"`
-	Title          string                                `json:"title,omitempty"`
-	Zone           string                                `json:"zone"`
+	HostNamePrefix        string                                `json:"hostname_prefix"`
+	Labels                []upcloud.Label                       `json:"labels,omitempty"`
+	Maintenance           ManagedDatabaseMaintenanceTimeRequest `json:"maintenance,omitempty"`
+	Networks              []upcloud.ManagedDatabaseNetwork      `json:"networks,omitempty"`
+	Plan                  string                                `json:"plan"`
+	Properties            ManagedDatabasePropertiesRequest      `json:"properties,omitempty"`
+	Title                 string                                `json:"title,omitempty"`
+	TerminationProtection *bool                                 `json:"termination_protection,omitempty"`
+	Zone                  string                                `json:"zone"`
 }
 
 // MarshalJSON implements json.Marshaler

@@ -5,6 +5,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+
+- managed database: add `AdditionalDiskSpaceGiB`, `Labels`, `Networks`, and `TerminationProtection` to `request.CloneManagedDatabaseRequest`
+
 ## [8.42.0]
 
 ### Added

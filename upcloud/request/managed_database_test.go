@@ -30,10 +30,14 @@ func TestCloneManagedDatabaseRequest_MarshalJSON(t *testing.T) {
 	})
 
 	req := CloneManagedDatabaseRequest{
-		UUID:           "fakeuuid",
-		CloneTime:      time.Date(2021, 1, 1, 0, 0, 0, 0, time.UTC),
-		HostNamePrefix: "fakename",
-		BackupName:     "backup name",
+		AdditionalDiskSpaceGiB: 20,
+		UUID:                   "fakeuuid",
+		CloneTime:              time.Date(2021, 1, 1, 0, 0, 0, 0, time.UTC),
+		HostNamePrefix:         "fakename",
+		BackupName:             "backup name",
+		Labels:                 []upcloud.Label{{Key: "env", Value: "test"}},
+		Networks:               []upcloud.ManagedDatabaseNetwork{{Family: "IPv4", Name: "private", Type: "private"}},
+		TerminationProtection:  upcloud.BoolPtr(false),
 		Maintenance: ManagedDatabaseMaintenanceTimeRequest{
 			DayOfWeek: "monday",
 			Time:      "12:00:00",
@@ -48,12 +52,16 @@ func TestCloneManagedDatabaseRequest_MarshalJSON(t *testing.T) {
 
 	const expect = `{
 	"hostname_prefix": "fakename",
+	"additional_disk_space_gib": 20,
 	"plan": "fakeplan",
 	"backup_name": "backup name",
+	"labels": [{"key": "env", "value": "test"}],
+	"networks": [{"family": "IPv4", "name": "private", "type": "private"}],
 	"properties": {
 		"fakeprop": "fakevalue"
 	},
 	"title": "faketitle",
+	"termination_protection": false,
 	"zone": "fakezone",
 	"clone_time": "2021-01-01T00:00:00Z",
 	"maintenance": {
