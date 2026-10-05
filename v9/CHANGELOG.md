@@ -8,7 +8,7 @@ It will be merged into the root `CHANGELOG.md` when v9 becomes stable and lands 
 
 ## [Unreleased]
 
-## [9.0.0-alpha.1]
+## [9.0.0-alpha.0.0.118.0] - 2026-10-05
 
 ### Changed
 
