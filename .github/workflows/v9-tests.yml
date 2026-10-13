@@ -1,0 +1,154 @@
+name: V9 Tests
+
+on:
+  pull_request:
+  push:
+    branches: [v9]
+
+permissions:
+  contents: read
+
+env:
+  GOTOOLCHAIN: local
+  GOWORK: 'off'
+
+defaults:
+  run:
+    shell: bash
+    working-directory: v9
+
+jobs:
+  v9-build:
+    name: V9 Build (Go ${{ matrix.go }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        go: ['1.25.0', '1.25.x', '1.26.x']
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: ${{ matrix.go }}
+          cache-dependency-path: v9/go.sum
+      - name: Build all packages and examples
+        run: |
+          go version
+          make build
+      - name: Run current v9 tests
+        run: make test
+
+  v9-consumer:
+    name: V9 Consumer (Go ${{ matrix.go }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        go: ['1.25.0', '1.25.x', '1.26.x']
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: ${{ matrix.go }}
+          cache-dependency-path: v9/go.sum
+      - name: Test external module consumption
+        run: make test-consumer
+
+  v9-vet:
+    name: V9 Vet
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: '1.25.0'
+          cache-dependency-path: v9/go.sum
+      - name: Vet generated code, extensions and examples
+        run: make vet
+
+  v9-lint:
+    name: V9 Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: '1.26.x'
+          cache-dependency-path: v9/go.sum
+      - uses: golangci/golangci-lint-action@ba0d7d2ec06a0ea1cb5fa41b2e4a3ab91d21278a # v9.3.0
+        with:
+          version: v2.10.1
+          working-directory: v9
+          install-only: true
+      - name: Lint SDK
+        run: make lint
+
+  v9-public-api:
+    name: V9 Public API
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: '1.25.0'
+          cache-dependency-path: v9/go.sum
+      - name: Compare reviewed baseline and merge-base API
+        env:
+          PR_BASE: ${{ github.base_ref }}
+          PUSH_BASE: ${{ github.event.before }}
+        run: |
+          args=(check --report-dir "$RUNNER_TEMP/v9-api-report")
+          if [[ -n "$PR_BASE" ]]; then
+            args+=(--base-ref "origin/$PR_BASE")
+          elif [[ -n "$PUSH_BASE" && "$PUSH_BASE" != 0000000000000000000000000000000000000000 ]]; then
+            if ! git cat-file -e "${PUSH_BASE}^{commit}"; then
+              git fetch --no-tags origin "$PUSH_BASE"
+            fi
+            args+=(--base-sha "$PUSH_BASE")
+          fi
+          bash test/scripts/check-public-api.sh "${args[@]}"
+      - name: Test API gate regressions
+        run: make test-public-api-gate
+      - name: Summarize API report
+        if: always()
+        run: |
+          if [[ -d "$RUNNER_TEMP/v9-api-report" ]]; then
+            for report in "$RUNNER_TEMP/v9-api-report"/*.diff; do
+              [[ -f "$report" ]] || continue
+              printf '### %s\n\n```text\n' "$(basename "$report")" >> "$GITHUB_STEP_SUMMARY"
+              head -c 20000 "$report" >> "$GITHUB_STEP_SUMMARY"
+              printf '\n```\n' >> "$GITHUB_STEP_SUMMARY"
+            done
+          fi
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: v9-public-api-${{ github.sha }}
+          path: ${{ runner.temp }}/v9-api-report
+          if-no-files-found: error
+
+  v9-generator-input:
+    name: V9 Generator Input (Go ${{ matrix.go }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        go: ['1.25.0', '1.26.x']
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: ${{ matrix.go }}
+          cache-dependency-path: v9/go.sum
+      - name: Test real generation input handling
+        run: |
+          command -v jq
+          make test-generator

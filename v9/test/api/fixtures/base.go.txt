@@ -1,0 +1,3 @@
+package upcloud
+
+func Existing(value string) string { return value }
