@@ -7,7 +7,7 @@ API_REPORT_DIR ?=
 export GOTOOLCHAIN := local
 export GOWORK := off
 
-.PHONY: build test vet lint test-consumer test-generator test-public-api test-public-api-gate update-public-api check
+.PHONY: build test vet lint test-consumer test-credentials test-generator test-public-api test-public-api-gate update-public-api check
 
 build:
 	$(GO) build -mod=readonly ./...
@@ -25,6 +25,9 @@ lint:
 test-consumer:
 	bash test/scripts/check-consumer.sh
 
+test-credentials:
+	cd ../credentials && $(GO) test -mod=readonly -count=1 -timeout=$(TEST_TIMEOUT) ./...
+
 test-generator:
 	$(GO) test -mod=readonly -count=1 -timeout=$(TEST_TIMEOUT) ./generator/tests
 
@@ -37,4 +40,4 @@ test-public-api-gate:
 update-public-api:
 	bash test/scripts/check-public-api.sh update
 
-check: build test vet lint test-consumer test-generator test-public-api test-public-api-gate
+check: build test vet lint test-consumer test-credentials test-generator test-public-api test-public-api-gate

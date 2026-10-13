@@ -56,6 +56,77 @@ jobs:
       - name: Test external module consumption
         run: make test-consumer
 
+  v9-credentials:
+    name: V9 Credentials (Go ${{ matrix.go }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        go: ['1.25.x', '1.26.x']
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: ${{ matrix.go }}
+          cache-dependency-path: credentials/go.sum
+      - name: Test credentials module
+        working-directory: credentials
+        run: go test -mod=readonly -count=1 -timeout=5m ./...
+
+  v9-client:
+    name: V9 Client Auth And Transport
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: '1.26.8'
+          cache-dependency-path: |
+            v9/go.sum
+            credentials/go.sum
+      - name: Prepare Area 3 evidence
+        run: mkdir -p "$RUNNER_TEMP/v9-client"
+      - name: Run client and credentials tests with race detection and coverage
+        shell: bash
+        run: |
+          set +e
+          go test -mod=readonly -race -count=1 -timeout=5m -v -json \
+            -coverpkg=./pkg/upcloud,github.com/UpCloudLtd/upcloud-go-api/credentials \
+            -coverprofile="$RUNNER_TEMP/v9-client/client-coverage.out" \
+            ./pkg/upcloud > "$RUNNER_TEMP/v9-client/client-results.json"
+          client_status=$?
+          (
+            cd ../credentials
+            go test -mod=readonly -race -count=1 -timeout=5m -v -json \
+              -coverprofile="$RUNNER_TEMP/v9-client/credentials-coverage.out" \
+              ./...
+          ) > "$RUNNER_TEMP/v9-client/credentials-results.json"
+          credentials_status=$?
+          coverage_status=0
+          if [[ -f "$RUNNER_TEMP/v9-client/client-coverage.out" ]]; then
+            if ! go tool cover -func="$RUNNER_TEMP/v9-client/client-coverage.out" \
+              > "$RUNNER_TEMP/v9-client/client-coverage-summary.txt"; then
+              coverage_status=1
+            fi
+          fi
+          if [[ -f "$RUNNER_TEMP/v9-client/credentials-coverage.out" ]]; then
+            if ! (cd ../credentials && go tool cover -func="$RUNNER_TEMP/v9-client/credentials-coverage.out") \
+              > "$RUNNER_TEMP/v9-client/credentials-coverage-summary.txt"; then
+              coverage_status=1
+            fi
+          fi
+          if (( client_status != 0 || credentials_status != 0 || coverage_status != 0 )); then
+            exit 1
+          fi
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: v9-client-area3-${{ github.sha }}
+          path: ${{ runner.temp }}/v9-client
+          if-no-files-found: warn
+
   v9-vet:
     name: V9 Vet
     runs-on: ubuntu-latest

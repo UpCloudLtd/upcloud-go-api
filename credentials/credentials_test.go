@@ -1,11 +1,21 @@
 package credentials_test
 
 import (
+	"os"
 	"testing"
 
 	"github.com/UpCloudLtd/upcloud-go-api/credentials"
 	"github.com/stretchr/testify/assert"
+	"github.com/zalando/go-keyring"
 )
+
+func TestMain(m *testing.M) {
+	keyring.MockInit()
+	_ = os.Unsetenv("UPCLOUD_USERNAME")
+	_ = os.Unsetenv("UPCLOUD_PASSWORD")
+	_ = os.Unsetenv("UPCLOUD_TOKEN")
+	os.Exit(m.Run())
+}
 
 func TestCredentials_IsDefined(t *testing.T) {
 	testdata := []struct {

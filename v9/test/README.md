@@ -15,6 +15,7 @@ the helper scripts also resolve `go` through `PATH`.
 | --- | --- |
 | `make build` | Compile all packages, examples and test code without running tests. |
 | `make test` | Run the SDK module's tests. Nested consumer tests have their own target. |
+| `make test-credentials` | Run the separate credentials module tests with an in-memory keyring. |
 | `make vet` | Analyze generated code, extensions, tests and examples. |
 | `make lint` | Run the established root lint configuration against v9. |
 | `make test-consumer` | Compile and run a disposable external consumer module. |
@@ -71,6 +72,8 @@ The root [workflow](../../.github/workflows/v9-tests.yml) emits separate checks:
 
 - `V9 Build (Go 1.25.0)`, `V9 Build (Go 1.25.x)`, `V9 Build (Go 1.26.x)`.
 - `V9 Consumer (Go 1.25.0)`, `V9 Consumer (Go 1.25.x)`, `V9 Consumer (Go 1.26.x)`.
+- `V9 Credentials (Go 1.25.x)` and `V9 Credentials (Go 1.26.x)` run the separate credentials module with an in-memory keyring.
+- `V9 Client Auth And Transport` runs client and credentials race tests and uploads named results, redacted logs, transport summaries, and coverage profiles.
 - `V9 Vet`, `V9 Lint`, `V9 Public API`, and `V9 Generator Input (Go 1.25.0)` / `V9 Generator Input (Go 1.26.x)`.
 
 Checks run on default PR events and pushes to v9, without
