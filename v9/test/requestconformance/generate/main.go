@@ -479,7 +479,7 @@ func sampleSchema(raw json.RawMessage, document specDocument, depth, variation i
 		for _, branch := range branches {
 			var branchSchema map[string]json.RawMessage
 			if json.Unmarshal(branch, &branchSchema) == nil && schemaIsObject(branchSchema) {
-				combined := make(map[string]json.RawMessage, len(schema)+1)
+				combined := make(map[string]json.RawMessage, len(schema))
 				for name, value := range schema {
 					combined[name] = value
 				}
