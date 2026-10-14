@@ -20,10 +20,19 @@ the helper scripts also resolve `go` through `PATH`.
 | `make lint` | Run the established root lint configuration against v9. |
 | `make test-consumer` | Compile and run a disposable external consumer module. |
 | `make test-generator` | Exercise generator input and output safety in disposable fixtures. |
+| `make generate-request-adapters` | Regenerate deterministic typed request adapters from the canonical spec and generated clients. |
+| `make check-request-adapters` | Fail if the spec/client inventory no longer matches checked-in adapters. |
+| `make test-request-conformance` | Execute one captured public-client request per source operation plus curated serializer cases. |
 | `make test-public-api` | Check the reviewed public API baseline. |
 | `make test-public-api-gate` | Exercise the API check's own regression fixtures. |
 | `make update-public-api` | Explicitly replace the API baseline for review. |
 | `make check` | Run every check above except the baseline update. |
+
+If `make check-request-adapters` reports stale adapters after SDK generation, run
+`make generate-request-adapters` from `v9`, review the adapter diff, and rerun
+`make test-request-conformance`. A failing request case names its operation and
+assertion; CI uploads the full JSON results and adapter diagnostics as the
+`V9 Request Conformance` artifact.
 
 `TEST_TIMEOUT` defaults to `5m` for build/test/lint. Override the linter executable
 with `GOLANGCI_LINT` if needed. Generated files and examples are excluded from lint
@@ -74,6 +83,7 @@ The root [workflow](../../.github/workflows/v9-tests.yml) emits separate checks:
 - `V9 Consumer (Go 1.25.0)`, `V9 Consumer (Go 1.25.x)`, `V9 Consumer (Go 1.26.x)`.
 - `V9 Credentials (Go 1.25.x)` and `V9 Credentials (Go 1.26.x)` run the separate credentials module with an in-memory keyring.
 - `V9 Client Auth And Transport` runs client and credentials race tests and uploads named results, redacted logs, transport summaries, and coverage profiles.
+- `V9 Request Conformance` uploads the spec-derived operation inventory, operation-to-adapter source, per-operation expected/actual request report, computed coverage counts, and named JSON test results.
 - `V9 Vet`, `V9 Lint`, `V9 Public API`, and `V9 Generator Input (Go 1.25.0)` / `V9 Generator Input (Go 1.26.x)`.
 
 Checks run on default PR events and pushes to v9, without
@@ -91,10 +101,14 @@ need an App/PAT event to trigger these checks because of GitHub's recursion guar
 
 ## Generation Safety
 
-Run generation from `v9` using `mise run generate`. The input must already exist
-at `generator/spec.json`. The regeneration workflow downloads the requested
-release archive, copies the requested member to this path, and removes it before
-opening its PR. The SDK does not need this file at runtime.
+Run generation from `v9` using `mise run generate`. The canonical input is the
+tracked `generator/openapi/spec.json`; generation never removes it. The
+regeneration workflow downloads the requested archive to runner-temporary storage,
+checks the extracted member's SHA-256 and spec version, then updates the canonical
+spec and `generator/openapi/provenance.json` in the regeneration PR. Cleanup only
+removes the temporary archive and extracted copy. After SDK generation, the
+workflow also regenerates the typed request adapters so the PR keeps the operation
+inventory in sync. The SDK does not need the spec at runtime.
 
 Generation requires Bash, jq and the Go toolchain/dependencies in the module.
 The input check requires one JSON OpenAPI 3.0/3.1 document with nonempty title,
@@ -115,8 +129,9 @@ Run the generator input-safety tests with `make test-generator` from `v9`. They
 invoke the real script, jq and pinned oapi-codegen in temporary fixtures; they
 need no private release spec or cloud credentials. Coverage includes invalid
 and unsafe inputs, unsupported tag layouts, unresolved references, a late
-template failure, output preservation, and successful generation. The success
-case parses generated Go files but does not claim full regeneration
+template failure, output preservation, valid and invalid archive checksums and
+versions, persistent canonical spec installation, and successful generation.
+The success case parses generated Go files but does not claim full regeneration
 reproducibility or consumer compilation.
 
 ### Spec Provenance Follow-Up

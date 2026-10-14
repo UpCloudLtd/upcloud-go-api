@@ -3,13 +3,36 @@ set -euo pipefail
 
 echo "== Go SDK GENERATION =="
 
-SPEC_FILE=./generator/spec.json
+SPEC_FILE=./generator/openapi/spec.json
 if [[ ! -f "$SPEC_FILE" || ! -r "$SPEC_FILE" || ! -s "$SPEC_FILE" ]]; then
   echo "ERROR: Missing, unreadable or empty OpenAPI input: $SPEC_FILE" >&2
   exit 1
 fi
+PROVENANCE_FILE=./generator/openapi/provenance.json
+if [[ ! -f "$PROVENANCE_FILE" || ! -r "$PROVENANCE_FILE" || ! -s "$PROVENANCE_FILE" ]]; then
+  echo "ERROR: Missing, unreadable or empty spec provenance: $PROVENANCE_FILE" >&2
+  exit 1
+fi
+if ! EXPECTED_SHA256=$(jq -er '.sha256 | select(type == "string" and test("^[0-9a-fA-F]{64}$"))' "$PROVENANCE_FILE"); then
+  echo "ERROR: Invalid spec SHA-256 in $PROVENANCE_FILE" >&2
+  exit 1
+fi
+if ! EXPECTED_VERSION=$(jq -er '.spec_version | select(type == "string" and length > 0)' "$PROVENANCE_FILE"); then
+  echo "ERROR: Invalid spec version in $PROVENANCE_FILE" >&2
+  exit 1
+fi
+ACTUAL_SHA256=$(sha256sum -- "$SPEC_FILE" | awk '{print $1}')
+if [[ "${EXPECTED_SHA256,,}" != "$ACTUAL_SHA256" ]]; then
+  echo "ERROR: OpenAPI input does not match SHA-256 in $PROVENANCE_FILE" >&2
+  exit 1
+fi
 if ! jq -s -e -f ./generator/scripts/validate-spec.jq "$SPEC_FILE" > /dev/null; then
   echo "ERROR: Invalid OpenAPI input or unsupported tag layout: $SPEC_FILE" >&2
+  exit 1
+fi
+ACTUAL_VERSION=$(jq -er '.info.version | strings' "$SPEC_FILE")
+if [[ "$EXPECTED_VERSION" != "$ACTUAL_VERSION" ]]; then
+  echo "ERROR: OpenAPI input version does not match $PROVENANCE_FILE" >&2
   exit 1
 fi
 

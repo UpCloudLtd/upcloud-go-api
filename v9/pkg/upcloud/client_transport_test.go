@@ -551,7 +551,12 @@ func TestClientCancellationDuringResponseBodyRead(t *testing.T) {
 		writer.Header().Set("Content-Type", "application/json")
 		writer.WriteHeader(http.StatusOK)
 		_, _ = io.WriteString(writer, `{"routers":[`)
-		writer.(http.Flusher).Flush()
+		flusher, ok := writer.(http.Flusher)
+		if !ok {
+			t.Error("response writer does not support flushing")
+			return
+		}
+		flusher.Flush()
 		close(bodyStarted)
 		<-request.Context().Done()
 	}))
