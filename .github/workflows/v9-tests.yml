@@ -187,6 +187,39 @@ jobs:
           path: ${{ runner.temp }}/v9-request-conformance
           if-no-files-found: error
 
+  v9-errors:
+    name: V9 Errors And Negative Paths
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: '1.25.0'
+          cache-dependency-path: v9/go.sum
+      - name: Prepare Area 6 evidence
+        run: mkdir -p "$RUNNER_TEMP/v9-errors"
+      - name: Run focused public error and negative-path tests
+        run: |
+          set -euo pipefail
+          results="$RUNNER_TEMP/v9-errors/results.json"
+          go test -mod=readonly -count=1 -timeout=5m -json \
+            -run '^(TestRepresentativeGeneratedErrorFamilies|TestGetRouterWithResponseDecodesTypedNotFound|TestGetRouterWithResponseReturnsParseErrorForMalformedSuccess)$' \
+            ./pkg/upcloud > "$results"
+          jq -s -e '
+            def ran($name): any(.[]; .Action == "run" and .Test == $name);
+            ran("TestRepresentativeGeneratedErrorFamilies") and
+            ran("TestGetRouterWithResponseDecodesTypedNotFound") and
+            ran("TestGetRouterWithResponseReturnsParseErrorForMalformedSuccess") and
+            ([.[] | select(.Action == "run" and (.Test // "" | startswith("TestRepresentativeGeneratedErrorFamilies/")))] | length == 8)
+          ' "$results" > /dev/null
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: v9-errors-${{ github.sha }}
+          path: ${{ runner.temp }}/v9-errors
+          if-no-files-found: error
+
   v9-vet:
     name: V9 Vet
     runs-on: ubuntu-latest
