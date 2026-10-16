@@ -105,7 +105,7 @@ Run generation from `v9` using `mise run generate`. The canonical input is the
 tracked `generator/openapi/spec.json`; generation never removes it. The
 regeneration workflow downloads the requested archive to runner-temporary storage,
 checks the extracted member's SHA-256 and spec version, then updates the canonical
-spec and `generator/openapi/provenance.json` in the regeneration PR. Cleanup only
+spec in the regeneration PR. Git retains the exact spec for each revision. Cleanup only
 removes the temporary archive and extracted copy. After SDK generation, the
 workflow also regenerates the typed request adapters so the PR keeps the operation
 inventory in sync. The SDK does not need the spec at runtime.

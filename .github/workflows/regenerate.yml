@@ -98,28 +98,6 @@ jobs:
           cache: true # [default: true] cache mise using GitHub's cache
           working_directory: v9
 
-      - name: Record canonical spec provenance
-        working-directory: v9
-        env:
-          SPEC_VERSION: ${{ github.event.inputs.version }}
-          ASSET_URL: ${{ github.event.inputs.asset_url }}
-          SPEC_FILE: ${{ github.event.inputs.spec_file }}
-          SPEC_SHA256: ${{ github.event.inputs.spec_sha256 }}
-        run: |
-          set -euo pipefail
-          CODEGEN_VERSION="$(go list -m -f '{{.Version}}' github.com/oapi-codegen/oapi-codegen/v2)"
-          GO_VERSION="$(go version)"
-          jq -n \
-            --arg spec_version "$SPEC_VERSION" \
-            --arg sha256 "${SPEC_SHA256,,}" \
-            --arg asset_url "$ASSET_URL" \
-            --arg archive_member "$SPEC_FILE" \
-            --arg codegen_version "$CODEGEN_VERSION" \
-            --arg go_version "$GO_VERSION" \
-            '{spec_version:$spec_version, sha256:$sha256, asset_url:$asset_url, archive_member:$archive_member, oapi_codegen_version:$codegen_version, go_version:$go_version}' \
-            > generator/openapi/provenance.json.tmp
-          mv generator/openapi/provenance.json.tmp generator/openapi/provenance.json
-
       - name: Generate SDK
         working-directory: v9
         run: mise run generate

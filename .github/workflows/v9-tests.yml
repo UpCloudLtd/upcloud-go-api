@@ -86,7 +86,7 @@ jobs:
           cache-dependency-path: |
             v9/go.sum
             credentials/go.sum
-      - name: Prepare Area 3 evidence
+      - name: Prepare client test reports
         run: mkdir -p "$RUNNER_TEMP/v9-client"
       - name: Run client and credentials tests with race detection and coverage
         shell: bash
@@ -123,7 +123,7 @@ jobs:
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: always()
         with:
-          name: v9-client-area3-${{ github.sha }}
+          name: v9-client-${{ github.sha }}
           path: ${{ runner.temp }}/v9-client
           if-no-files-found: warn
 
@@ -137,7 +137,7 @@ jobs:
         with:
           go-version: '1.26.8'
           cache-dependency-path: v9/go.sum
-      - name: Prepare Area 4 evidence
+      - name: Prepare request conformance reports
         run: mkdir -p "$RUNNER_TEMP/v9-request-conformance"
       - name: Record candidate and inventory provenance
         run: |
@@ -197,7 +197,7 @@ jobs:
         with:
           go-version: '1.25.0'
           cache-dependency-path: v9/go.sum
-      - name: Prepare Area 6 evidence
+      - name: Prepare error test reports
         run: mkdir -p "$RUNNER_TEMP/v9-errors"
       - name: Run focused public error and negative-path tests
         run: |

@@ -1,6 +1,0 @@
-{
-  "spec_version": "0.0.108",
-  "sha256": "73a8d259e05240d3445b82bb90586d6efc353b8524490117c86360ebf50572cc",
-  "source": "Copied from TypeScript SDK specifications at user request; info.version aligned to 0.0.108. Upstream repository and revision were not provided.",
-  "oapi_codegen_version": "v2.8.0"
-}

@@ -7,7 +7,6 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
-	"fmt"
 	"go/parser"
 	"go/token"
 	"os"
@@ -74,41 +73,6 @@ func TestGenerationPreservesOutputOnTemplateFailure(t *testing.T) {
 	}
 	if !strings.Contains(string(output), "Generating test") {
 		t.Fatalf("test did not reach tag generation: %s", output)
-	}
-	assertPreservedOutput(t, root)
-}
-
-func TestGenerationRejectsSpecDigestMismatch(t *testing.T) {
-	root := generationFixture(t)
-	writeFixture(t, filepath.Join(root, "generator/openapi/spec.json"), validSpec)
-	writeFixture(t, filepath.Join(root, "generator/openapi/provenance.json"), `{"spec_version":"fixture-1","sha256":"`+strings.Repeat("0", 64)+`"}`)
-
-	output, err := runGeneration(t, root)
-	if err == nil || !strings.Contains(string(output), "does not match SHA-256") {
-		t.Fatalf("spec digest mismatch was not rejected: %v, %s", err, output)
-	}
-	assertPreservedOutput(t, root)
-}
-
-func TestGenerationRejectsSpecVersionMismatch(t *testing.T) {
-	root := generationFixture(t)
-	writeCanonicalSpec(t, root, validSpec)
-	digest := sha256.Sum256([]byte(validSpec))
-	writeFixture(t, filepath.Join(root, "generator/openapi/provenance.json"), fmt.Sprintf(`{"spec_version":"other-version","sha256":"%x"}`, digest))
-
-	output, err := runGeneration(t, root)
-	if err == nil || !strings.Contains(string(output), "version does not match") {
-		t.Fatalf("spec version mismatch was not rejected: %v, %s", err, output)
-	}
-	assertPreservedOutput(t, root)
-}
-
-func TestGenerationRequiresSpecProvenance(t *testing.T) {
-	root := generationFixture(t)
-	writeFixture(t, filepath.Join(root, "generator/openapi/spec.json"), validSpec)
-	output, err := runGeneration(t, root)
-	if err == nil || !strings.Contains(string(output), "Missing, unreadable or empty spec provenance") {
-		t.Fatalf("missing provenance was not rejected: %v, %s", err, output)
 	}
 	assertPreservedOutput(t, root)
 }
@@ -242,9 +206,7 @@ func runSpecInstall(t *testing.T, root, archive, member, version, digest string)
 
 func writeCanonicalSpec(t *testing.T, root, contents string) {
 	t.Helper()
-	digest := sha256.Sum256([]byte(contents))
 	writeFixture(t, filepath.Join(root, "generator/openapi/spec.json"), contents)
-	writeFixture(t, filepath.Join(root, "generator/openapi/provenance.json"), fmt.Sprintf(`{"spec_version":"fixture-1","sha256":"%x"}`, digest))
 }
 
 func writeSpecArchive(t *testing.T, path, member, contents string) {
