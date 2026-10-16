@@ -53,28 +53,10 @@ jobs:
             echo "ERROR: spec_sha256 must be 64 hexadecimal characters" >&2
             exit 1
           fi
-          python3 - "$ASSET_URL" <<'PY'
-          import sys
-          from urllib.parse import urlsplit
-
-          try:
-              asset_url = urlsplit(sys.argv[1])
-              port = asset_url.port
-          except ValueError:
-              port = -1
-              asset_url = None
-
-          if (
-              asset_url is None
-              or asset_url.scheme != "https"
-              or asset_url.hostname != "api.github.com"
-              or asset_url.username is not None
-              or asset_url.password is not None
-              or port not in (None, 443)
-          ):
-              print("ERROR: asset_url must use HTTPS on api.github.com", file=sys.stderr)
-              sys.exit(1)
-          PY
+            if [[ "$ASSET_URL" != https://api.github.com/* ]]; then
+            echo "ERROR: asset_url must start with https://api.github.com/" >&2
+            exit 1
+            fi
 
           SPEC_ARCHIVE="${RUNNER_TEMP}/spec.tar.gz"
           curl --fail -L \

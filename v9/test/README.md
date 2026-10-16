@@ -84,7 +84,7 @@ The root [workflow](../../.github/workflows/v9-tests.yml) emits separate checks:
 - `V9 Credentials (Go 1.25.x)` and `V9 Credentials (Go 1.26.x)` run the separate credentials module with an in-memory keyring.
 - `V9 Client Auth And Transport` runs client and credentials race tests and uploads named results, redacted logs, transport summaries, and coverage profiles.
 - `V9 Request Conformance` uploads the spec-derived operation inventory, operation-to-adapter source, per-operation expected/actual request report, computed coverage counts, and named JSON test results.
-- `V9 Vet`, `V9 Lint`, `V9 Public API`, and `V9 Generator Input (Go 1.25.0)` / `V9 Generator Input (Go 1.26.x)`.
+- `V9 Vet`, `V9 Lint`, and `V9 Public API`. Generator input-safety tests run through `make test` in each `V9 Build` job.
 
 Checks run on default PR events and pushes to v9, without
 cloud secrets or path filters. Each job owns a separate result; aggregate local
