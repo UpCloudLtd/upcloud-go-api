@@ -1,0 +1,5 @@
+package upcloud
+
+func Existing(value string) string { return value }
+
+func Added() bool { return true }

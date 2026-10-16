@@ -16,6 +16,10 @@ on:
         description: Spec filename inside the released spec tarball
         required: true
         type: string
+      spec_sha256:
+        description: SHA-256 of the extracted spec JSON file
+        required: true
+        type: string
 
 jobs:
   regenerate:
@@ -34,17 +38,26 @@ jobs:
         env:
           ASSET_URL: ${{ github.event.inputs.asset_url }}
           SPEC_FILE: ${{ github.event.inputs.spec_file }}
+          SPEC_VERSION: ${{ github.event.inputs.version }}
+          SPEC_SHA256: ${{ github.event.inputs.spec_sha256 }}
           SPECS_ACCESS_PAT: ${{ secrets.SPECS_ACCESS_PAT }}
         run: |
           set -euo pipefail
 
           : "${ASSET_URL:?ERROR: Missing asset_url in dispatch event}"
           : "${SPEC_FILE:?ERROR: Missing spec_file in dispatch event}"
+          : "${SPEC_VERSION:?ERROR: Missing version in dispatch event}"
+          : "${SPEC_SHA256:?ERROR: Missing spec_sha256 in dispatch event}"
           : "${SPECS_ACCESS_PAT:?ERROR: SPECS_ACCESS_PAT secret is not set}"
+          if [[ ! "$SPEC_SHA256" =~ ^[[:xdigit:]]{64}$ ]]; then
+            echo "ERROR: spec_sha256 must be 64 hexadecimal characters" >&2
+            exit 1
+          fi
+            if [[ "$ASSET_URL" != https://api.github.com/* ]]; then
+            echo "ERROR: asset_url must start with https://api.github.com/" >&2
+            exit 1
+            fi
 
-          SPEC_DIR="${RUNNER_TEMP}/spec"
-          WORK_SPEC="v9/generator/spec.json"
-          mkdir -p "$SPEC_DIR"
           SPEC_ARCHIVE="${RUNNER_TEMP}/spec.tar.gz"
           curl --fail -L \
             --retry 5 \
@@ -57,8 +70,8 @@ jobs:
             "$ASSET_URL" \
             -o "$SPEC_ARCHIVE"
 
-          tar -xzf "$SPEC_ARCHIVE" -C "$SPEC_DIR"
-          cp "$SPEC_DIR/$SPEC_FILE" "$WORK_SPEC"
+          bash v9/generator/scripts/install-spec.sh \
+            "$SPEC_ARCHIVE" "$SPEC_FILE" "$SPEC_VERSION" "$SPEC_SHA256"
 
       - uses: jdx/mise-action@v4.2.1
         with:
@@ -70,6 +83,10 @@ jobs:
       - name: Generate SDK
         working-directory: v9
         run: mise run generate
+
+      - name: Generate request-conformance adapters
+        working-directory: v9
+        run: make generate-request-adapters
 
       - name: Inject spec version
         env:
@@ -83,15 +100,10 @@ jobs:
           const specVersion = "${SPEC_VERSION}"
           EOF
 
-      - name: Drop spec from the working tree
+      - name: Clean temporary spec download
         run: |
           set -euo pipefail
-          WORK_SPEC="v9/generator/spec.json"
-          if git ls-files --error-unmatch "$WORK_SPEC" >/dev/null 2>&1; then
-            git restore "$WORK_SPEC"
-          else
-            rm -f "$WORK_SPEC"
-          fi
+          rm -rf "$RUNNER_TEMP/spec" "$RUNNER_TEMP/spec.tar.gz"
 
       - name: Create PR
         uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1

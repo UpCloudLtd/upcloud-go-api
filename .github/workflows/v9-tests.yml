@@ -1,0 +1,299 @@
+name: V9 Tests
+
+on:
+  pull_request:
+  push:
+    branches: [v9]
+
+permissions:
+  contents: read
+
+env:
+  GOTOOLCHAIN: local
+  GOWORK: 'off'
+
+defaults:
+  run:
+    shell: bash
+    working-directory: v9
+
+jobs:
+  v9-build:
+    name: V9 Build (Go ${{ matrix.go }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        go: ['1.25.0', '1.25.x', '1.26.x']
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: ${{ matrix.go }}
+          cache-dependency-path: v9/go.sum
+      - name: Build all packages and examples
+        run: |
+          go version
+          make build
+      - name: Run current v9 tests
+        run: make test
+
+  v9-consumer:
+    name: V9 Consumer (Go ${{ matrix.go }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        go: ['1.25.0', '1.25.x', '1.26.x']
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: ${{ matrix.go }}
+          cache-dependency-path: v9/go.sum
+      - name: Test external module consumption
+        run: make test-consumer
+
+  v9-credentials:
+    name: V9 Credentials (Go ${{ matrix.go }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        go: ['1.25.x', '1.26.x']
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: ${{ matrix.go }}
+          cache-dependency-path: credentials/go.sum
+      - name: Test credentials module
+        working-directory: credentials
+        run: go test -mod=readonly -count=1 -timeout=5m ./...
+
+  v9-client:
+    name: V9 Client Auth And Transport
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: '1.26.8'
+          cache-dependency-path: |
+            v9/go.sum
+            credentials/go.sum
+      - name: Prepare client test reports
+        run: mkdir -p "$RUNNER_TEMP/v9-client"
+      - name: Run client and credentials tests with race detection and coverage
+        shell: bash
+        run: |
+          set +e
+          go test -mod=readonly -race -count=1 -timeout=5m -v -json \
+            -coverpkg=./pkg/upcloud,github.com/UpCloudLtd/upcloud-go-api/credentials \
+            -coverprofile="$RUNNER_TEMP/v9-client/client-coverage.out" \
+            ./pkg/upcloud > "$RUNNER_TEMP/v9-client/client-results.json"
+          client_status=$?
+          (
+            cd ../credentials
+            go test -mod=readonly -race -count=1 -timeout=5m -v -json \
+              -coverprofile="$RUNNER_TEMP/v9-client/credentials-coverage.out" \
+              ./...
+          ) > "$RUNNER_TEMP/v9-client/credentials-results.json"
+          credentials_status=$?
+          coverage_status=0
+          if [[ -f "$RUNNER_TEMP/v9-client/client-coverage.out" ]]; then
+            if ! go tool cover -func="$RUNNER_TEMP/v9-client/client-coverage.out" \
+              > "$RUNNER_TEMP/v9-client/client-coverage-summary.txt"; then
+              coverage_status=1
+            fi
+          fi
+          if [[ -f "$RUNNER_TEMP/v9-client/credentials-coverage.out" ]]; then
+            if ! (cd ../credentials && go tool cover -func="$RUNNER_TEMP/v9-client/credentials-coverage.out") \
+              > "$RUNNER_TEMP/v9-client/credentials-coverage-summary.txt"; then
+              coverage_status=1
+            fi
+          fi
+          if (( client_status != 0 || credentials_status != 0 || coverage_status != 0 )); then
+            exit 1
+          fi
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: v9-client-${{ github.sha }}
+          path: ${{ runner.temp }}/v9-client
+          if-no-files-found: warn
+
+  v9-request-conformance:
+    name: V9 Request Conformance
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: '1.26.8'
+          cache-dependency-path: v9/go.sum
+      - name: Prepare request conformance reports
+        run: mkdir -p "$RUNNER_TEMP/v9-request-conformance"
+      - name: Record candidate and inventory provenance
+        run: |
+          {
+            printf 'commit=%s\n' "$(git -C .. rev-parse HEAD)"
+            printf 'toolchain=%s\n' "$(go version)"
+            printf 'platform=%s/%s\n' "$(go env GOOS)" "$(go env GOARCH)"
+            printf 'suite=./test/requestconformance\n'
+            printf 'spec_version=%s\n' "$(jq -r '.info.version' generator/openapi/spec.json)"
+            printf 'spec_sha256=%s\n' "$(sha256sum generator/openapi/spec.json | awk '{print $1}')"
+          } > "$RUNNER_TEMP/v9-request-conformance/metadata.txt"
+      - name: Preserve operation-to-adapter map
+        run: cp test/requestconformance/adapters_gen_test.go "$RUNNER_TEMP/v9-request-conformance/adapters_gen_test.go"
+      - name: Check and execute operation adapters
+        shell: bash
+        run: |
+          set +e
+          go run -mod=readonly ./test/requestconformance/generate -check \
+            > "$RUNNER_TEMP/v9-request-conformance/adapter-inventory.txt" 2>&1
+          inventory_status=$?
+          V9_REQUEST_SWEEP_REPORT_DIR="$RUNNER_TEMP/v9-request-conformance" \
+          go test -mod=readonly -race -count=1 -timeout=10m -v -json \
+            -coverprofile="$RUNNER_TEMP/v9-request-conformance/coverage.out" \
+            ./test/requestconformance \
+            > "$RUNNER_TEMP/v9-request-conformance/request-results.json"
+          test_status=$?
+          if (( inventory_status != 0 )); then
+            echo "::error title=Request adapter inventory is stale::After regenerating SDK clients, run 'make generate-request-adapters' from v9 and review adapters_gen_test.go."
+            cat "$RUNNER_TEMP/v9-request-conformance/adapter-inventory.txt" >&2
+          fi
+          if (( test_status != 0 )); then
+            echo "::error title=Request conformance failed::Fix the named operation contract failures below; download the v9-request-conformance artifact for full JSON results."
+            echo "Failed cases:"
+            jq -r 'select(.Action == "fail" and (.Test // "") != "") | "- " + .Test' \
+              "$RUNNER_TEMP/v9-request-conformance/request-results.json" || true
+            echo "Assertion diagnostics:"
+            jq -r 'select(.Action == "output" and ((.Output // "") | test("Error Trace:|Error:|Messages:"))) | .Output' \
+              "$RUNNER_TEMP/v9-request-conformance/request-results.json" || true
+          fi
+          if (( inventory_status != 0 || test_status != 0 )); then
+            exit 1
+          fi
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: v9-request-conformance-${{ github.sha }}
+          path: ${{ runner.temp }}/v9-request-conformance
+          if-no-files-found: error
+
+  v9-errors:
+    name: V9 Errors And Negative Paths
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: '1.25.0'
+          cache-dependency-path: v9/go.sum
+      - name: Prepare error test reports
+        run: mkdir -p "$RUNNER_TEMP/v9-errors"
+      - name: Run focused public error and negative-path tests
+        run: |
+          set -euo pipefail
+          results="$RUNNER_TEMP/v9-errors/results.json"
+          go test -mod=readonly -count=1 -timeout=5m -json \
+            -run '^(TestRepresentativeGeneratedErrorFamilies|TestGetRouterWithResponseDecodesTypedNotFound|TestGetRouterWithResponseReturnsParseErrorForMalformedSuccess)$' \
+            ./pkg/upcloud > "$results"
+          jq -s -e '
+            def ran($name): any(.[]; .Action == "run" and .Test == $name);
+            ran("TestRepresentativeGeneratedErrorFamilies") and
+            ran("TestGetRouterWithResponseDecodesTypedNotFound") and
+            ran("TestGetRouterWithResponseReturnsParseErrorForMalformedSuccess") and
+            ([.[] | select(.Action == "run" and (.Test // "" | startswith("TestRepresentativeGeneratedErrorFamilies/")))] | length == 8)
+          ' "$results" > /dev/null
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: v9-errors-${{ github.sha }}
+          path: ${{ runner.temp }}/v9-errors
+          if-no-files-found: error
+
+  v9-vet:
+    name: V9 Vet
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: '1.25.0'
+          cache-dependency-path: v9/go.sum
+      - name: Vet generated code, extensions and examples
+        run: make vet
+
+  v9-lint:
+    name: V9 Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: '1.26.x'
+          cache-dependency-path: v9/go.sum
+      - uses: golangci/golangci-lint-action@ba0d7d2ec06a0ea1cb5fa41b2e4a3ab91d21278a # v9.3.0
+        with:
+          version: v2.10.1
+          working-directory: v9
+          install-only: true
+      - name: Lint SDK
+        run: make lint
+
+  v9-public-api:
+    name: V9 Public API
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: '1.25.0'
+          cache-dependency-path: v9/go.sum
+      - name: Compare reviewed baseline and merge-base API
+        env:
+          PR_BASE: ${{ github.base_ref }}
+          PUSH_BASE: ${{ github.event.before }}
+        run: |
+          args=(check --report-dir "$RUNNER_TEMP/v9-api-report")
+          if [[ -n "$PR_BASE" ]]; then
+            args+=(--base-ref "origin/$PR_BASE")
+          elif [[ -n "$PUSH_BASE" && "$PUSH_BASE" != 0000000000000000000000000000000000000000 ]]; then
+            if ! git cat-file -e "${PUSH_BASE}^{commit}"; then
+              git fetch --no-tags origin "$PUSH_BASE"
+            fi
+            args+=(--base-sha "$PUSH_BASE")
+          fi
+          bash test/scripts/check-public-api.sh "${args[@]}"
+      - name: Test API gate regressions
+        run: make test-public-api-gate
+      - name: Summarize API report
+        if: always()
+        run: |
+          if [[ -d "$RUNNER_TEMP/v9-api-report" ]]; then
+            for report in "$RUNNER_TEMP/v9-api-report"/*.diff; do
+              [[ -f "$report" ]] || continue
+              printf '### %s\n\n```text\n' "$(basename "$report")" >> "$GITHUB_STEP_SUMMARY"
+              head -c 20000 "$report" >> "$GITHUB_STEP_SUMMARY"
+              printf '\n```\n' >> "$GITHUB_STEP_SUMMARY"
+            done
+          fi
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: v9-public-api-${{ github.sha }}
+          path: ${{ runner.temp }}/v9-api-report
+          if-no-files-found: error

@@ -40,6 +40,9 @@ type Client struct {
 
 	// A list of callbacks for modifying requests before sending over the network.
 	RequestEditors []RequestEditorFn
+
+	logger            httplog.LogFn
+	loggingConfigured bool
 }
 
 // ClientOption allows setting custom parameters during construction.
@@ -63,6 +66,17 @@ func NewClient(server string, opts ...ClientOption) (*Client, error) {
 
 	if client.Client == nil {
 		client.Client = &http.Client{}
+	}
+	if client.loggingConfigured {
+		httpClient, ok := client.Client.(*http.Client)
+		if !ok {
+			return nil, errors.New("WithLogger requires an *http.Client; custom HttpRequestDoer cannot be logged")
+		}
+		httpClient.Transport = &httplog.LoggingTransport{
+			Logger:    httplog.NewLogger(client.logger),
+			Transport: httpClient.Transport,
+		}
+		client.Client = httpClient
 	}
 
 	return &client, nil
@@ -211,19 +225,13 @@ func WithInsecureSkipVerify() ClientOption {
 	})
 }
 
+// WithLogger attaches HTTP logging to the configured *http.Client. It returns
+// an error when a non-*http.Client doer is configured because replacing that
+// doer would bypass its behavior.
 func WithLogger(logger httplog.LogFn) ClientOption {
 	return func(c *Client) error {
-		client, ok := c.Client.(*http.Client)
-		if !ok {
-			client = &http.Client{}
-		}
-
-		client.Transport = &httplog.LoggingTransport{
-			Logger:    httplog.NewLogger(logger),
-			Transport: client.Transport,
-		}
-
-		c.Client = client
+		c.logger = logger
+		c.loggingConfigured = true
 		return nil
 	}
 }
