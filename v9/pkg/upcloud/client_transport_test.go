@@ -519,6 +519,30 @@ func TestNewFromEnvInsecureTLSIsOptIn(t *testing.T) {
 	require.NoError(t, response.Body.Close())
 }
 
+func TestClientDoesNotForwardTokenAcrossHostRedirect(t *testing.T) {
+	var authorization string
+	redirectedServer := httptest.NewServer(http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
+		authorization = request.Header.Get("Authorization")
+		writer.WriteHeader(http.StatusOK)
+	}))
+	defer redirectedServer.Close()
+	redirectURL := strings.Replace(redirectedServer.URL, "127.0.0.1", "localhost", 1) + "/redirected"
+
+	originServer := httptest.NewServer(http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
+		require.Equal(t, "Bearer synthetic-token", request.Header.Get("Authorization"))
+		http.Redirect(writer, request, redirectURL, http.StatusFound)
+	}))
+	defer originServer.Close()
+
+	client, err := New("synthetic-token", WithBaseURL(originServer.URL))
+	require.NoError(t, err)
+	response, err := client.ListRouters(t.Context(), nil)
+	require.NoError(t, err)
+	require.Equal(t, http.StatusOK, response.StatusCode)
+	require.NoError(t, response.Body.Close())
+	require.Empty(t, authorization)
+}
+
 func TestNewSetsTokenAndDefaultUserAgent(t *testing.T) {
 	doer := &capturedRequestDoer{}
 	client, err := New("synthetic-token", WithHTTPClient(doer))
