@@ -53,7 +53,9 @@ func main() {
 For integration tests or local debugging you can point the client at another API base URL and optionally skip TLS verification (not for production):
 
 - `UPCLOUD_DEBUG_API_BASE_URL` — override the server URL
-- `UPCLOUD_DEBUG_SKIP_CERTIFICATE_VERIFY=1` — only when using `NewFromEnv` (see `pkg/upcloud/client.go`)
+- `UPCLOUD_DEBUG_SKIP_CERTIFICATE_VERIFY=1` — skip TLS verification
+
+Both variables are honored by `New` and `NewFromEnv` (see `pkg/upcloud/client.go`).
 
 ### Error handling
 

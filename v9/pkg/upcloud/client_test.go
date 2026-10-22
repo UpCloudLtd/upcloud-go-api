@@ -341,3 +341,25 @@ func TestRouterIPAddressUnionJSONRoundTrip(t *testing.T) {
 		})
 	}
 }
+
+func TestNewHonorsDebugEnv(t *testing.T) {
+	t.Setenv(EnvDebugAPIBaseURL, "http://127.0.0.1:8080")
+	t.Setenv(EnvDebugSkipCertificateVerify, "1")
+
+	c, err := New("token")
+	require.NoError(t, err)
+	require.Equal(t, "http://127.0.0.1:8080/", c.Server)
+	tr, ok := c.Client.Client.(*http.Client).Transport.(*http.Transport)
+	require.True(t, ok)
+	require.NotNil(t, tr.TLSClientConfig)
+	require.True(t, tr.TLSClientConfig.InsecureSkipVerify)
+}
+
+func TestNewDefaultServer(t *testing.T) {
+	t.Setenv(EnvDebugAPIBaseURL, "")
+	t.Setenv(EnvDebugSkipCertificateVerify, "")
+
+	c, err := New("token")
+	require.NoError(t, err)
+	require.Equal(t, ServerUrlHttpsapiUpcloudCom+"/", c.Server)
+}
