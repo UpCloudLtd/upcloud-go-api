@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 	"go/parser"
 	"go/token"
+	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -257,28 +258,25 @@ func generationFixture(t *testing.T) string {
 		}
 		writeFixture(t, filepath.Join(root, name), string(contents))
 	}
-	err = filepath.WalkDir(filepath.Join(sdkRoot, "generator"), func(path string, entry os.DirEntry, walkErr error) error {
+	sdkFS := os.DirFS(sdkRoot)
+	err = fs.WalkDir(sdkFS, "generator", func(name string, entry fs.DirEntry, walkErr error) error {
 		if walkErr != nil {
 			return walkErr
 		}
 		if entry.IsDir() {
 			if entry.Name() == "tests" || entry.Name() == "openapi" {
-				return filepath.SkipDir
+				return fs.SkipDir
 			}
 			return nil
 		}
-		if strings.Contains(path, string(filepath.Separator)+"tests"+string(filepath.Separator)) {
+		if strings.Contains(name, "/tests/") {
 			return nil
 		}
-		relative, relativeErr := filepath.Rel(sdkRoot, path)
-		if relativeErr != nil {
-			return relativeErr
-		}
-		contents, readErr := os.ReadFile(path)
+		contents, readErr := fs.ReadFile(sdkFS, name)
 		if readErr != nil {
 			return readErr
 		}
-		writeFixture(t, filepath.Join(root, relative), string(contents))
+		writeFixture(t, filepath.Join(root, filepath.FromSlash(name)), string(contents))
 		return nil
 	})
 	if err != nil {
@@ -292,10 +290,16 @@ func generationFixture(t *testing.T) string {
 
 func writeFixture(t *testing.T, path, contents string) {
 	t.Helper()
-	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+	dir := filepath.Dir(path)
+	if err := os.MkdirAll(dir, 0o755); err != nil {
 		t.Fatal(err)
 	}
-	if err := os.WriteFile(path, []byte(contents), 0o600); err != nil {
+	root, err := os.OpenRoot(dir)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer root.Close()
+	if err := root.WriteFile(filepath.Base(path), []byte(contents), 0o600); err != nil {
 		t.Fatal(err)
 	}
 }

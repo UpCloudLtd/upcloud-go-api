@@ -29,6 +29,7 @@ var (
 )
 
 const (
+	exampleKey              = "example"
 	parameterLocationHeader = "header"
 	schemaKeyExamples       = "examples"
 	schemaTypeArray         = "array"
@@ -406,7 +407,7 @@ func sampleSchema(raw json.RawMessage, document specDocument, depth, variation i
 		}
 	}
 	container := schemaIsContainer(schema)
-	for _, key := range []string{schemaKeyExamples, "example", "default"} {
+	for _, key := range []string{schemaKeyExamples, exampleKey, "default"} {
 		if value, ok := schema[key]; ok {
 			if schemaIsContainer(schema) {
 				continue
@@ -438,7 +439,7 @@ func sampleSchema(raw json.RawMessage, document specDocument, depth, variation i
 			if schemaIsObject(schema) {
 				base := make(map[string]json.RawMessage, len(schema))
 				for name, value := range schema {
-					if name != key && name != "example" && name != schemaKeyExamples && name != "default" {
+					if name != key && name != exampleKey && name != schemaKeyExamples && name != "default" {
 						base[name] = value
 					}
 				}
@@ -819,7 +820,7 @@ func sampleString(schema map[string]json.RawMessage) (json.RawMessage, error) {
 		value = value[:maximum]
 	}
 	if pattern := rawString(schema["pattern"]); pattern != "" && !sampleMatchesPattern(pattern, value) {
-		candidates := []string{"2026", "01", "12", "123", "QA", "DEV", "fi-hel1", "ab", "x", "example", "request-sweep", "192.0.2.1", "a@example.test"}
+		candidates := []string{"2026", "01", "12", "123", "QA", "DEV", "fi-hel1", "ab", "x", exampleKey, "request-sweep", "192.0.2.1", "a@example.test"}
 		matched := false
 		for _, candidate := range candidates {
 			if len(candidate) < minimum || (maximum > 0 && len(candidate) > maximum) {
