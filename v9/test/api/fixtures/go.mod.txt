@@ -1,0 +1,3 @@
+module github.com/UpCloudLtd/upcloud-go-api/v9
+
+go 1.25.0

@@ -1,9 +1,15 @@
 package tests
 
 import (
+	"archive/tar"
+	"bytes"
+	"compress/gzip"
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"go/parser"
 	"go/token"
+	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -47,7 +53,7 @@ func TestGenerationPreservesOutputOnInvalidInput(t *testing.T) {
 		t.Run(test.name, func(t *testing.T) {
 			root := generationFixture(t)
 			if test.spec != "" {
-				writeFixture(t, filepath.Join(root, "generator/spec.json"), test.spec)
+				writeCanonicalSpec(t, root, test.spec)
 			}
 			output, err := runGeneration(t, root)
 			if err == nil {
@@ -60,7 +66,7 @@ func TestGenerationPreservesOutputOnInvalidInput(t *testing.T) {
 
 func TestGenerationPreservesOutputOnTemplateFailure(t *testing.T) {
 	root := generationFixture(t)
-	writeFixture(t, filepath.Join(root, "generator/spec.json"), validSpec)
+	writeCanonicalSpec(t, root, validSpec)
 	writeFixture(t, filepath.Join(root, "generator/config/templates/client.tmpl"), "{{invalid template syntax")
 	output, err := runGeneration(t, root)
 	if err == nil {
@@ -72,9 +78,55 @@ func TestGenerationPreservesOutputOnTemplateFailure(t *testing.T) {
 	assertPreservedOutput(t, root)
 }
 
+func TestInstallSpecPersistsVerifiedCanonicalSource(t *testing.T) {
+	root := generationFixture(t)
+	archivePath := filepath.Join(root, "release.tar.gz")
+	writeSpecArchive(t, archivePath, "release/openapi.json", validSpec)
+	digest := sha256.Sum256([]byte(validSpec))
+
+	output, err := runSpecInstall(t, root, archivePath, "release/openapi.json", "fixture-1", hex.EncodeToString(digest[:]))
+	if err != nil {
+		t.Fatalf("install failed: %v: %s", err, output)
+	}
+	contents, err := os.ReadFile(filepath.Join(root, "generator/openapi/spec.json"))
+	if err != nil || string(contents) != validSpec {
+		t.Fatalf("canonical spec was not retained: %v", err)
+	}
+}
+
+func TestInstallSpecRejectsBadHashOrVersionWithoutReplacingSource(t *testing.T) {
+	digest := sha256.Sum256([]byte(validSpec))
+	for _, test := range []struct {
+		name       string
+		version    string
+		digest     string
+		wantOutput string
+	}{
+		{name: "bad hash", version: "fixture-1", digest: strings.Repeat("0", 64), wantOutput: "does not match the supplied SHA-256"},
+		{name: "wrong version", version: "fixture-2", digest: hex.EncodeToString(digest[:]), wantOutput: "does not match spec version"},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			root := generationFixture(t)
+			archivePath := filepath.Join(root, "release.tar.gz")
+			writeSpecArchive(t, archivePath, "release/openapi.json", validSpec)
+			canonicalPath := filepath.Join(root, "generator/openapi/spec.json")
+			writeFixture(t, canonicalPath, sentinel)
+
+			output, err := runSpecInstall(t, root, archivePath, "release/openapi.json", test.version, test.digest)
+			if err == nil || !strings.Contains(string(output), test.wantOutput) {
+				t.Fatalf("invalid source accepted or wrong failure: %v, %s", err, output)
+			}
+			contents, readErr := os.ReadFile(canonicalPath)
+			if readErr != nil || string(contents) != sentinel {
+				t.Fatalf("canonical source changed after failed install: %q, %v", contents, readErr)
+			}
+		})
+	}
+}
+
 func TestGenerationPublishesValidOutput(t *testing.T) {
 	root := generationFixture(t)
-	writeFixture(t, filepath.Join(root, "generator/spec.json"), validSpec)
+	writeCanonicalSpec(t, root, validSpec)
 	output, err := runGeneration(t, root)
 	if err != nil {
 		t.Fatalf("valid generation failed: %v: %s", err, output)
@@ -119,7 +171,7 @@ func TestGenerationRejectsInvalidInputShape(t *testing.T) {
 				t.Fatal(err)
 			}
 			root := generationFixture(t)
-			writeFixture(t, filepath.Join(root, "generator/spec.json"), string(contents))
+			writeCanonicalSpec(t, root, string(contents))
 			output, err := runGeneration(t, root)
 			if err == nil || !strings.Contains(string(output), "Invalid OpenAPI input") {
 				t.Fatalf("invalid shape accepted or wrong failure: %v, %s", err, output)
@@ -144,6 +196,38 @@ func runGeneration(t *testing.T, root string) ([]byte, error) {
 		t.Fatalf("temporary files leaked: %v, %v; output: %s", entries, readErr, output)
 	}
 	return output, err
+}
+
+func runSpecInstall(t *testing.T, root, archive, member, version, digest string) ([]byte, error) {
+	t.Helper()
+	command := exec.CommandContext(t.Context(), "bash", "generator/scripts/install-spec.sh", archive, member, version, digest)
+	command.Dir = root
+	return command.CombinedOutput()
+}
+
+func writeCanonicalSpec(t *testing.T, root, contents string) {
+	t.Helper()
+	writeFixture(t, filepath.Join(root, "generator/openapi/spec.json"), contents)
+}
+
+func writeSpecArchive(t *testing.T, path, member, contents string) {
+	t.Helper()
+	var archive bytes.Buffer
+	gzipWriter := gzip.NewWriter(&archive)
+	tarWriter := tar.NewWriter(gzipWriter)
+	if err := tarWriter.WriteHeader(&tar.Header{Name: member, Mode: 0o600, Size: int64(len(contents)), Typeflag: tar.TypeReg}); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := tarWriter.Write([]byte(contents)); err != nil {
+		t.Fatal(err)
+	}
+	if err := tarWriter.Close(); err != nil {
+		t.Fatal(err)
+	}
+	if err := gzipWriter.Close(); err != nil {
+		t.Fatal(err)
+	}
+	writeFixture(t, path, archive.String())
 }
 
 func assertPreservedOutput(t *testing.T, root string) {
@@ -174,22 +258,25 @@ func generationFixture(t *testing.T) string {
 		}
 		writeFixture(t, filepath.Join(root, name), string(contents))
 	}
-	err = filepath.WalkDir(filepath.Join(sdkRoot, "generator"), func(path string, entry os.DirEntry, walkErr error) error {
+	sdkFS := os.DirFS(sdkRoot)
+	err = fs.WalkDir(sdkFS, "generator", func(name string, entry fs.DirEntry, walkErr error) error {
 		if walkErr != nil {
 			return walkErr
 		}
-		if entry.IsDir() || strings.Contains(path, string(filepath.Separator)+"tests"+string(filepath.Separator)) {
+		if entry.IsDir() {
+			if entry.Name() == "tests" || entry.Name() == "openapi" {
+				return fs.SkipDir
+			}
 			return nil
 		}
-		relative, relativeErr := filepath.Rel(sdkRoot, path)
-		if relativeErr != nil {
-			return relativeErr
+		if strings.Contains(name, "/tests/") {
+			return nil
 		}
-		contents, readErr := os.ReadFile(path)
+		contents, readErr := fs.ReadFile(sdkFS, name)
 		if readErr != nil {
 			return readErr
 		}
-		writeFixture(t, filepath.Join(root, relative), string(contents))
+		writeFixture(t, filepath.Join(root, filepath.FromSlash(name)), string(contents))
 		return nil
 	})
 	if err != nil {
@@ -203,10 +290,16 @@ func generationFixture(t *testing.T) string {
 
 func writeFixture(t *testing.T, path, contents string) {
 	t.Helper()
-	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+	dir := filepath.Dir(path)
+	if err := os.MkdirAll(dir, 0o755); err != nil {
 		t.Fatal(err)
 	}
-	if err := os.WriteFile(path, []byte(contents), 0o600); err != nil {
+	root, err := os.OpenRoot(dir)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer root.Close()
+	if err := root.WriteFile(filepath.Base(path), []byte(contents), 0o600); err != nil {
 		t.Fatal(err)
 	}
 }

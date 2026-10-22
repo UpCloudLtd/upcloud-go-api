@@ -140,19 +140,54 @@ func TestObjectStorageWaitOutcomes(t *testing.T) {
 }
 
 func TestObjectStorageWaitCancellation(t *testing.T) {
-	synctest.Test(t, func(t *testing.T) {
-		doer := &waitResponseDoer{status: 200, body: `{}`}
-		client, err := NewClientWithResponses("http://localhost", WithHTTPClient(doer))
-		require.NoError(t, err)
-		ctx, cancel := context.WithCancel(t.Context())
-		cancel()
-		require.ErrorIs(t, client.WaitForObjectStorageDeletion(ctx, "00000000-0000-4000-8000-000000000001"), context.Canceled)
-		require.Equal(t, 0, doer.calls)
-		ctx, cancel = context.WithTimeout(t.Context(), 6*time.Second)
-		defer cancel()
-		require.ErrorIs(t, client.WaitForObjectStorageDeletion(ctx, "00000000-0000-4000-8000-000000000001"), context.DeadlineExceeded)
-		require.Equal(t, 1, doer.calls)
-	})
+	testCases := []struct {
+		name string
+		body string
+		wait func(context.Context, *ClientWithResponses) error
+	}{
+		{
+			name: "operational state",
+			body: `{"operational_state":"starting"}`,
+			wait: func(ctx context.Context, client *ClientWithResponses) error {
+				_, err := client.WaitForObjectStorageOperationalState(ctx, "00000000-0000-4000-8000-000000000001", "started")
+				return err
+			},
+		},
+		{
+			name: "service deletion",
+			body: `{}`,
+			wait: func(ctx context.Context, client *ClientWithResponses) error {
+				return client.WaitForObjectStorageDeletion(ctx, "00000000-0000-4000-8000-000000000001")
+			},
+		},
+		{
+			name: "bucket deletion",
+			body: `[{"name":"test-bucket"}]`,
+			wait: func(ctx context.Context, client *ClientWithResponses) error {
+				return client.WaitForObjectStorageBucketDeletion(ctx, "00000000-0000-4000-8000-000000000001", "test-bucket")
+			},
+		},
+	}
+
+	for _, testCase := range testCases {
+		t.Run(testCase.name, func(t *testing.T) {
+			synctest.Test(t, func(t *testing.T) {
+				doer := &waitResponseDoer{status: http.StatusOK, body: testCase.body}
+				client, err := NewClientWithResponses("http://localhost", WithHTTPClient(doer))
+				require.NoError(t, err)
+
+				ctx, cancel := context.WithCancel(t.Context())
+				cancel()
+				require.ErrorIs(t, testCase.wait(ctx, client), context.Canceled)
+				require.Zero(t, doer.calls)
+
+				ctx, cancel = context.WithTimeout(t.Context(), 6*time.Second)
+				defer cancel()
+				require.ErrorIs(t, testCase.wait(ctx, client), context.DeadlineExceeded)
+				require.Equal(t, 1, doer.calls)
+			})
+		})
+	}
 }
 
 func TestObjectStorageWaitHTTPFailures(t *testing.T) {
@@ -181,5 +216,42 @@ func TestObjectStorageWaitHTTPFailures(t *testing.T) {
 				})
 			})
 		}
+	}
+}
+
+func TestObjectStorageWaitHelpersRejectInvalidUUIDWithoutRequest(t *testing.T) {
+	testCases := []struct {
+		name string
+		wait func(*ClientWithResponses) error
+	}{
+		{
+			name: "operational state",
+			wait: func(client *ClientWithResponses) error {
+				_, err := client.WaitForObjectStorageOperationalState(t.Context(), "invalid-uuid", "started")
+				return err
+			},
+		},
+		{
+			name: "service deletion",
+			wait: func(client *ClientWithResponses) error {
+				return client.WaitForObjectStorageDeletion(t.Context(), "invalid-uuid")
+			},
+		},
+		{
+			name: "bucket deletion",
+			wait: func(client *ClientWithResponses) error {
+				return client.WaitForObjectStorageBucketDeletion(t.Context(), "invalid-uuid", "fixture-bucket")
+			},
+		},
+	}
+
+	for _, testCase := range testCases {
+		t.Run(testCase.name, func(t *testing.T) {
+			doer := &waitResponseDoer{status: http.StatusOK, body: `{}`}
+			client, err := NewClientWithResponses("http://localhost", WithHTTPClient(doer))
+			require.NoError(t, err)
+			require.Error(t, testCase.wait(client))
+			require.Zero(t, doer.calls, "invalid UUID must fail before making a request")
+		})
 	}
 }

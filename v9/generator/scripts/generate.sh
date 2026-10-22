@@ -3,7 +3,7 @@ set -euo pipefail
 
 echo "== Go SDK GENERATION =="
 
-SPEC_FILE=./generator/spec.json
+SPEC_FILE=./generator/openapi/spec.json
 if [[ ! -f "$SPEC_FILE" || ! -r "$SPEC_FILE" || ! -s "$SPEC_FILE" ]]; then
   echo "ERROR: Missing, unreadable or empty OpenAPI input: $SPEC_FILE" >&2
   exit 1
