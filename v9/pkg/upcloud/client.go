@@ -139,7 +139,21 @@ func (c *Client) applyEditors(ctx context.Context, req *http.Request, additional
 	return nil
 }
 
-// New creates a client with an API token.
+// debugEnv returns the server URL and client options derived from the UPCLOUD_DEBUG_* environment variables.
+func debugEnv() (string, []ClientOption) {
+	server := ServerUrlHttpsapiUpcloudCom
+	if u := os.Getenv(EnvDebugAPIBaseURL); u != "" {
+		server = u
+	}
+
+	var opts []ClientOption
+	if os.Getenv(EnvDebugSkipCertificateVerify) == "1" {
+		opts = append(opts, WithInsecureSkipVerify())
+	}
+	return server, opts
+}
+
+// New creates a client with an API token. UPCLOUD_DEBUG_API_BASE_URL and UPCLOUD_DEBUG_SKIP_CERTIFICATE_VERIFY are honored.
 func New(token string, opts ...ClientOption) (*ClientWithResponses, error) {
 	provider, err := securityprovider.NewSecurityProviderBearerToken(token)
 	if err != nil {
@@ -149,7 +163,9 @@ func New(token string, opts ...ClientOption) (*ClientWithResponses, error) {
 		c.RequestEditors = append(c.RequestEditors, provider.Intercept)
 		return nil
 	})
-	return NewClientWithResponses(ServerUrlHttpsapiUpcloudCom, append([]ClientOption{WithDefaultUserAgent(), opt}, opts...)...)
+	server, envOpts := debugEnv()
+	allOpts := append([]ClientOption{WithDefaultUserAgent(), opt}, envOpts...)
+	return NewClientWithResponses(server, append(allOpts, opts...)...)
 }
 
 // NewFromEnv creates a client from env or keyring. Set UPCLOUD_TOKEN or UPCLOUD_USERNAME/UPCLOUD_PASSWORD.
@@ -167,15 +183,8 @@ func NewFromEnv(opts ...ClientOption) (*ClientWithResponses, error) {
 		return nil, errors.New("authentication credentials must be provided via environment variables or system keyring")
 	}
 
-	allOpts := []ClientOption{WithDefaultUserAgent(), WithCredentials(creds)}
-	if os.Getenv(EnvDebugSkipCertificateVerify) == "1" {
-		allOpts = append(allOpts, WithInsecureSkipVerify())
-	}
-
-	server := ServerUrlHttpsapiUpcloudCom
-	if u := os.Getenv(EnvDebugAPIBaseURL); u != "" {
-		server = u
-	}
+	server, envOpts := debugEnv()
+	allOpts := append([]ClientOption{WithDefaultUserAgent(), WithCredentials(creds)}, envOpts...)
 	return NewClientWithResponses(server, append(allOpts, opts...)...)
 }
 
