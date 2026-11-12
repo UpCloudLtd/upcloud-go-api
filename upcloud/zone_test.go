@@ -27,12 +27,14 @@ func TestUnmarshalZones(t *testing.T) {
         },
         {
           "description" : "Chicago #1",
+		  "trial_allowed": "yes",
           "id" : "us-chi1"
         },
         {
           "description" : "Fake private cloud",
           "id" : "fi-fake-priv-cloud",
 		  "public": false,
+		  "trial_allowed": "no",
 		  "parent_zone": "fi-hel1"
         }
       ]
@@ -47,10 +49,11 @@ func TestUnmarshalZones(t *testing.T) {
 	assert.Len(t, zones.Zones, 5)
 
 	zoneData := []struct {
-		Description string
-		ID          string
-		Public      bool
-		ParentZone  string
+		Description  string
+		ID           string
+		Public       bool
+		ParentZone   string
+		TrialAllowed Boolean
 	}{
 		{
 			ID:          "de-fra1",
@@ -65,14 +68,16 @@ func TestUnmarshalZones(t *testing.T) {
 			Description: "London #1",
 		},
 		{
-			ID:          "us-chi1",
-			Description: "Chicago #1",
+			ID:           "us-chi1",
+			Description:  "Chicago #1",
+			TrialAllowed: True,
 		},
 		{
-			ID:          "fi-fake-priv-cloud",
-			Description: "Fake private cloud",
-			Public:      false,
-			ParentZone:  "fi-hel1",
+			ID:           "fi-fake-priv-cloud",
+			Description:  "Fake private cloud",
+			Public:       false,
+			ParentZone:   "fi-hel1",
+			TrialAllowed: False,
 		},
 	}
 
@@ -80,5 +85,6 @@ func TestUnmarshalZones(t *testing.T) {
 		z := zones.Zones[i]
 		assert.Equal(t, d.Description, z.Description)
 		assert.Equal(t, d.ID, z.ID)
+		assert.Equal(t, d.TrialAllowed, z.TrialAllowed)
 	}
 }
