@@ -5,6 +5,10 @@ See updating [Changelog example here](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+
+- upcloud: add `TrialAllowed` field to `upcloud.Zone` type
+
 ## [8.42.0]
 
 ### Added
