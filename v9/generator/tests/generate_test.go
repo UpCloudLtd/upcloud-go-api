@@ -148,6 +148,27 @@ func TestGenerationPublishesValidOutput(t *testing.T) {
 	}
 }
 
+func TestGenerationAcceptsFilecacheRatioTypeArrayInAnySchema(t *testing.T) {
+	// The overlay must match the property in any schema, not one schema name.
+	const spec = `{
+		"openapi":"3.1.0",
+		"info":{"title":"Generation test","version":"fixture-1"},
+		"servers":[{"url":"https://api.upcloud.com"}],
+		"tags":[{"name":"test"}],
+		"paths":{"/test":{"get":{"tags":["test"],"operationId":"getTest",
+			"responses":{"200":{"description":"OK","content":{"application/json":{"schema":{"$ref":"#/components/schemas/databaseOpenSearch"}}}}}}}},
+		"components":{"schemas":{"databaseOpenSearch":{"type":"object","properties":{
+			"cluster_filecache_remote_data_ratio":{"type":["integer","number","null"]}
+		}}}}
+	}`
+	root := generationFixture(t)
+	writeCanonicalSpec(t, root, spec)
+	output, err := runGeneration(t, root)
+	if err != nil {
+		t.Fatalf("generation failed: %v: %s", err, output)
+	}
+}
+
 func TestGenerationRejectsInvalidInputShape(t *testing.T) {
 	for _, test := range []struct {
 		name  string

@@ -20,9 +20,10 @@ actions:
   - target: "$.components.schemas.loadBalancerMember.properties.type"
     update:
       $ref: "#/components/schemas/loadBalancerMemberType"
-  # Remove integer and null types from databaseServicePropertiesOpensearch.cluster_filecache_remote_data_ratio.
+  # Remove integer and null types from cluster_filecache_remote_data_ratio.
+  # Match any schema name. The property moved to databaseOpenSearch.
   # Using a number type with nullable true allows for float values and null.
-  - target: "$.components.schemas.databaseServicePropertiesOpensearch.properties.cluster_filecache_remote_data_ratio"
+  - target: "$..properties.cluster_filecache_remote_data_ratio"
     update:
       type: number
       nullable: true
