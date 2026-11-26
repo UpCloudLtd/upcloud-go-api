@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/refs/tags/v2.8.0/configuration-schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/refs/tags/v2.9.0/configuration-schema.json
 package: upcloud
 compatibility:
   always-prefix-enum-values: true

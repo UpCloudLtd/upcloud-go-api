@@ -1,6 +1,6 @@
 # SDK Tests
 
-Run targets from `v9`. Go 1.25.0 or newer, Bash, Make and Git are required;
+Run targets from `v9`. Go 1.26.11 or newer, Bash, Make and Git are required;
 lint additionally requires golangci-lint 2.10.1. Tools and module dependencies
 may need downloading on the first run. The tests themselves use local HTTP only,
 with no UpCloud credentials required.
@@ -79,9 +79,9 @@ bash test/scripts/check-public-api.sh check --base-sha <commit> --report-dir /tm
 
 The root [workflow](../../.github/workflows/v9-tests.yml) emits separate checks:
 
-- `V9 Build (Go 1.25.0)`, `V9 Build (Go 1.25.x)`, `V9 Build (Go 1.26.x)`.
-- `V9 Consumer (Go 1.25.0)`, `V9 Consumer (Go 1.25.x)`, `V9 Consumer (Go 1.26.x)`.
-- `V9 Credentials (Go 1.25.x)` and `V9 Credentials (Go 1.26.x)` run the separate credentials module with an in-memory keyring.
+- `V9 Build (Go 1.26.x)`, `V9 Build (Go 1.27.x)`.
+- `V9 Consumer (Go 1.26.x)`, `V9 Consumer (Go 1.27.x)`.
+- `V9 Credentials (Go 1.26.x)` and `V9 Credentials (Go 1.27.x)` run the separate credentials module with an in-memory keyring.
 - `V9 Client Auth And Transport` runs client and credentials race tests and uploads named results, redacted logs, transport summaries, and coverage profiles.
 - `V9 Request Conformance` uploads the spec-derived operation inventory, operation-to-adapter source, per-operation expected/actual request report, computed coverage counts, and named JSON test results.
 - `V9 Vet`, `V9 Lint`, and `V9 Public API`. Generator input-safety tests run through `make test` in each `V9 Build` job.

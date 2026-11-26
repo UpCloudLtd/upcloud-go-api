@@ -64,20 +64,17 @@ func TestCuratedResponseModelsAcrossResources(t *testing.T) {
 
 	t.Run("file-storage/details", func(t *testing.T) {
 		model := unmarshalFixture[GetFileStorage200](t, `{"name":"archive-share","uuid":"123e4567-e89b-12d3-a456-426614174000","size_gib":250}`)
-		require.NotNil(t, model.Name)
-		require.Equal(t, "archive-share", *model.Name)
+		require.JSONEq(t, `"archive-share"`, marshalJSON(t, model.Name))
 	})
 
 	t.Run("file-storage-share/details", func(t *testing.T) {
 		model := unmarshalFixture[GetFileStorageShare200](t, `{"name":"read-only","path":"/public"}`)
-		require.NotNil(t, model.Path)
-		require.Equal(t, "/public", *model.Path)
+		require.JSONEq(t, `"/public"`, marshalJSON(t, model.Path))
 	})
 
 	t.Run("file-storage/list", func(t *testing.T) {
 		model := unmarshalFixture[ListFileStorages200](t, `[{"name":"archive-share","size_gib":250}]`)
-		require.NotNil(t, model[0].Name)
-		require.Equal(t, "archive-share", *model[0].Name)
+		require.JSONEq(t, `"archive-share"`, marshalJSON(t, model[0].Name))
 	})
 
 	t.Run("firewall-ruleset/details", func(t *testing.T) {
@@ -212,4 +209,12 @@ func TestCuratedResponseModelsAcrossResources(t *testing.T) {
 		model := unmarshalFixture[ListPermissions200](t, `{"permissions":{"permission":[{"target_identifier":"*","target_type":"server","user":"fixture-user"}]}}`)
 		require.Equal(t, "fixture-user", model.Permissions.Permission[0].User)
 	})
+}
+
+// marshalJSON returns the JSON form of v. It works for pointer and value fields.
+func marshalJSON(t *testing.T, v any) string {
+	t.Helper()
+	b, err := json.Marshal(v)
+	require.NoError(t, err)
+	return string(b)
 }

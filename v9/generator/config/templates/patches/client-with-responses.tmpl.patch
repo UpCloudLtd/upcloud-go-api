@@ -1,0 +1,40 @@
+--- upstream/client-with-responses.tmpl
++++ generator/config/templates/client-with-responses.tmpl
+@@ -1,34 +1,9 @@
+-// ClientWithResponses builds on ClientInterface to offer response payloads
+-type ClientWithResponses struct {
+-    ClientInterface
+-}
+-
+-// NewClientWithResponses creates a new ClientWithResponses, which wraps
+-// Client with return type handling
+-func NewClientWithResponses(server string, opts ...ClientOption) (*ClientWithResponses, error) {
+-    client, err := NewClient(server, opts...)
+-    if err != nil {
+-        return nil, err
+-    }
+-    return &ClientWithResponses{client}, nil
+-}
+-
+ {{$clientTypeName := opts.OutputOptions.ClientTypeName -}}
+-
+-// WithBaseURL overrides the baseURL.
+-func WithBaseURL(baseURL string) ClientOption {
+-	return func(c *{{ $clientTypeName }}) error {
+-		newBaseURL, err := url.Parse(baseURL)
+-		if err != nil {
+-			return err
+-		}
+-		c.Server = newBaseURL.String()
+-		return nil
+-	}
+-}
++{{- $interfacePrefix := "Tag" -}}
++{{- if .}}{{ $interfacePrefix = camelCase (index (index . 0).Spec.Tags 0) }}{{else if opts.OutputOptions.IncludeTags}}{{ $interfacePrefix = camelCase (index opts.OutputOptions.IncludeTags 0) }}{{end}}
+ 
+ // ClientWithResponsesInterface is the interface specification for the client with responses above.
+-type ClientWithResponsesInterface interface {
++type {{$interfacePrefix}}ClientWithResponsesInterface interface {
+ {{range . -}}
+ {{$opid := .OperationId -}}
+ {{range .ClientMethodVariants}}

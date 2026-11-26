@@ -21,16 +21,9 @@ actions:
     update:
       $ref: "#/components/schemas/loadBalancerMemberType"
   # Remove integer and null types from cluster_filecache_remote_data_ratio.
-  # Match any schema name. The property moved to databaseOpenSearch.
+  # Match any schema name. The property moved to databaseServicePropertiesOpensearch.
   # Using a number type with nullable true allows for float values and null.
   - target: "$..properties.cluster_filecache_remote_data_ratio"
     update:
       type: number
-      nullable: true
-  # Remove null from databaseServicePropertiesPg.backup_interval_hours enum array.
-  - target: "$.components.schemas.databaseServicePropertiesPg.properties.backup_interval_hours.enum[?(@ == null)]"
-    remove: true
-  # Update databaseServicePropertiesPg.backup_interval_hours to be nullable.
-  - target: "$.components.schemas.databaseServicePropertiesPg.properties.backup_interval_hours"
-    update:
       nullable: true
