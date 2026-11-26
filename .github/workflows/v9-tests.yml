@@ -280,6 +280,8 @@ jobs:
           bash test/scripts/check-public-api.sh "${args[@]}"
       - name: Test API gate regressions
         run: make test-public-api-gate
+      - name: Test changelog promotion
+        run: make test-promote-changelog
       - name: Summarize API report
         if: always()
         run: |

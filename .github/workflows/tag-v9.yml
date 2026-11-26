@@ -1,0 +1,57 @@
+---
+name: Tag v9 release
+"on":
+  push:
+    branches: [v9]
+    paths: [v9/CHANGELOG.md]
+permissions: {}
+jobs:
+  tag:
+    name: Tag
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Tag the newest changelog release
+        id: tag
+        run: |
+          set -euo pipefail
+          version=$(bash v9/generator/scripts/changelog-version.sh \
+            v9/CHANGELOG.md)
+          if [[ "$version" != 9.* ]]; then
+            echo "No v9 release heading, skip tag"
+            exit 0
+          fi
+          tag="v$version"
+          if ! git ls-remote --exit-code --tags origin "refs/tags/$tag"; then
+            # Tag the commit that added the heading, not a later push.
+            commit=$(git log -1 --format=%H -S "## [$version]" \
+              "$GITHUB_SHA" -- v9/CHANGELOG.md)
+            git tag "$tag" "$commit"
+            # A parallel run may push the tag first. That is fine.
+            git push origin "refs/tags/$tag" ||
+              git ls-remote --exit-code --tags origin "refs/tags/$tag"
+          fi
+          # Publish also when an earlier run pushed the tag but stopped.
+          if gh release view "$tag" > /dev/null 2>&1; then
+            echo "Release $tag exists, skip publish"
+            exit 0
+          fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+  publish:
+    name: Publish
+    needs: tag
+    if: needs.tag.outputs.tag != ''
+    permissions:
+      contents: write
+    uses: ./.github/workflows/publish.yml
+    with:
+      tag: ${{ needs.tag.outputs.tag }}

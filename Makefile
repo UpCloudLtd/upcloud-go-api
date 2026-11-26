@@ -26,8 +26,9 @@ release-notes: CHANGELOG ?= CHANGELOG.md
 release-notes: CHANGELOG_HEADER = ^\#\# \[
 release-notes: CHANGELOG_VERSION = $(subst v,,$(VERSION))
 release-notes:
-	@awk \
-		'/${CHANGELOG_HEADER}${CHANGELOG_VERSION}/ { flag = 1; next } \
+	@awk -v version='$(CHANGELOG_VERSION)' \
+		'index($$0, "## [" version "]") == 1 { flag = 1; next } \
 		/${CHANGELOG_HEADER}/ { if ( flag ) { exit; } } \
-		flag { if ( n ) { print prev; } n++; prev = $$0 }' \
+		flag { lines[++n] = $$0 } \
+		END { while (n && lines[n] == "") n--; for (i = 1; i <= n; i++) print lines[i] }' \
 		$(CHANGELOG)

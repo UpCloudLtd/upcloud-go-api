@@ -7,7 +7,7 @@ API_REPORT_DIR ?=
 export GOTOOLCHAIN := local
 export GOWORK := off
 
-.PHONY: build test vet lint test-consumer test-credentials test-generator check-templates generate-request-adapters check-request-adapters test-request-conformance test-public-api test-public-api-gate update-public-api check
+.PHONY: build test vet lint test-consumer test-credentials test-generator check-templates generate-request-adapters check-request-adapters test-request-conformance test-public-api test-public-api-gate test-promote-changelog update-public-api check
 
 build:
 	$(GO) build -mod=readonly ./...
@@ -49,7 +49,10 @@ test-public-api:
 test-public-api-gate:
 	bash test/scripts/check-public-api-test.sh
 
+test-promote-changelog:
+	bash test/scripts/promote-changelog-test.sh
+
 update-public-api:
 	bash test/scripts/check-public-api.sh update
 
-check: build test vet lint test-consumer test-credentials test-generator test-request-conformance test-public-api test-public-api-gate
+check: build test vet lint test-consumer test-credentials test-generator test-request-conformance test-public-api test-public-api-gate test-promote-changelog

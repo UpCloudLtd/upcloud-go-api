@@ -100,6 +100,18 @@ jobs:
           const specVersion = "${SPEC_VERSION}"
           EOF
 
+      - name: Promote v9 changelog
+        env:
+          SPEC_VERSION: ${{ github.event.inputs.version }}
+        run: |
+          set -euo pipefail
+          if [[ -z "$(git status --porcelain -- v9/pkg)" ]]; then
+            echo "No SDK changes, skip changelog promotion"
+            exit 0
+          fi
+          bash v9/generator/scripts/promote-changelog.sh \
+            "$SPEC_VERSION" v9/CHANGELOG.md
+
       - name: Clean temporary spec download
         run: |
           set -euo pipefail
