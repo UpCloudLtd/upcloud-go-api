@@ -7,10 +7,10 @@ import (
 	"net/http"
 )
 
-const requestSweepSpecVersion = "0.0.108"
-const requestSweepSpecSHA256 = "73a8d259e05240d3445b82bb90586d6efc353b8524490117c86360ebf50572cc"
+const requestSweepSpecVersion = "0.0.117"
+const requestSweepSpecSHA256 = "4cfb024df881077c8de58ab71ab6d42b8000c986259b405685a6d7ddf5a4ae21"
 
-const requestSweepOperationCount = 487
+const requestSweepOperationCount = 538
 
 var operationAdapters = []operationAdapter{
 	{ID: "deleteSubaccount", Method: "DELETE", PathTemplate: "/1.3/account/sub/{username}",
@@ -48,6 +48,195 @@ var operationAdapters = []operationAdapter{
 			observed.expectedPath = expectedPath
 			observed.hasExpectedPath = true
 			return client.RevokeToken(ctx, tokenUuid)
+		}},
+	{ID: "deleteContainerRegistry", Method: "DELETE", PathTemplate: "/1.3/container-registry/{uuid}",
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.DeleteContainerRegistryUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}", []pathValue{
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.DeleteContainerRegistry(ctx, uuid)
+		}},
+	{ID: "deleteContainerRegistryIPAllowlistEntry", Method: "DELETE", PathTemplate: "/1.3/container-registry/{uuid}/allowlist/{entry_uuid}",
+		PathParams: []pathContract{{Name: "entry_uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}, {Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.DeleteContainerRegistryIPAllowlistEntryUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			entryUuid, err := requestSampleFromJSON[upcloud.DeleteContainerRegistryIPAllowlistEntryEntryUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/allowlist/{entry_uuid}", []pathValue{
+				{Contract: pathContract{Name: "entry_uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.DeleteContainerRegistryIPAllowlistEntry(ctx, uuid, entryUuid)
+		}},
+	{ID: "deleteContainerRegistryNetworkPeering", Method: "DELETE", PathTemplate: "/1.3/container-registry/{uuid}/networks/{peering_uuid}",
+		PathParams: []pathContract{{Name: "peering_uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}, {Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.DeleteContainerRegistryNetworkPeeringUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			peeringUuid, err := requestSampleFromJSON[upcloud.DeleteContainerRegistryNetworkPeeringPeeringUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/networks/{peering_uuid}", []pathValue{
+				{Contract: pathContract{Name: "peering_uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.DeleteContainerRegistryNetworkPeering(ctx, uuid, peeringUuid)
+		}},
+	{ID: "deleteContainerRegistryRepository", Method: "DELETE", PathTemplate: "/1.3/container-registry/{uuid}/repositories/{repo}",
+		PathParams: []pathContract{{Name: "repo", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"request-sweep-value\""}, {Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.DeleteContainerRegistryRepositoryUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			repo, err := requestSampleFromJSON[upcloud.DeleteContainerRegistryRepositoryRepo]("\"request-sweep-value\"")
+			if err != nil {
+				return nil, err
+			}
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/repositories/{repo}", []pathValue{
+				{Contract: pathContract{Name: "repo", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"request-sweep-value\"")},
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.DeleteContainerRegistryRepository(ctx, uuid, repo)
+		}},
+	{ID: "deleteContainerRegistryRepositoryManifest", Method: "DELETE", PathTemplate: "/1.3/container-registry/{uuid}/repositories/{repo}/manifests/{digest}",
+		PathParams: []pathContract{{Name: "digest", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\""}, {Name: "repo", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"request-sweep-value\""}, {Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.DeleteContainerRegistryRepositoryManifestUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			repo, err := requestSampleFromJSON[upcloud.DeleteContainerRegistryRepositoryManifestRepo]("\"request-sweep-value\"")
+			if err != nil {
+				return nil, err
+			}
+			digest, err := requestSampleFromJSON[upcloud.DeleteContainerRegistryRepositoryManifestDigest]("\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"")
+			if err != nil {
+				return nil, err
+			}
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/repositories/{repo}/manifests/{digest}", []pathValue{
+				{Contract: pathContract{Name: "digest", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"")},
+				{Contract: pathContract{Name: "repo", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"request-sweep-value\"")},
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.DeleteContainerRegistryRepositoryManifest(ctx, uuid, repo, digest)
+		}},
+	{ID: "deleteContainerRegistryRepositoryTag", Method: "DELETE", PathTemplate: "/1.3/container-registry/{uuid}/repositories/{repo}/tags/{tag}",
+		PathParams: []pathContract{{Name: "repo", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"request-sweep-value\""}, {Name: "tag", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"request-sweep-value\""}, {Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.DeleteContainerRegistryRepositoryTagUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			repo, err := requestSampleFromJSON[upcloud.DeleteContainerRegistryRepositoryTagRepo]("\"request-sweep-value\"")
+			if err != nil {
+				return nil, err
+			}
+			tag, err := requestSampleFromJSON[upcloud.DeleteContainerRegistryRepositoryTagTag]("\"request-sweep-value\"")
+			if err != nil {
+				return nil, err
+			}
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/repositories/{repo}/tags/{tag}", []pathValue{
+				{Contract: pathContract{Name: "repo", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"request-sweep-value\"")},
+				{Contract: pathContract{Name: "tag", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"request-sweep-value\"")},
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.DeleteContainerRegistryRepositoryTag(ctx, uuid, repo, tag)
+		}},
+	{ID: "deleteContainerRegistryUser", Method: "DELETE", PathTemplate: "/1.3/container-registry/{uuid}/users/{username}",
+		PathParams: []pathContract{{Name: "username", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"request-sweep-value\""}, {Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.DeleteContainerRegistryUserUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			username, err := requestSampleFromJSON[upcloud.DeleteContainerRegistryUserUsername]("\"request-sweep-value\"")
+			if err != nil {
+				return nil, err
+			}
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/users/{username}", []pathValue{
+				{Contract: pathContract{Name: "username", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"request-sweep-value\"")},
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.DeleteContainerRegistryUser(ctx, uuid, username)
+		}},
+	{ID: "deleteContainerRegistryWebhook", Method: "DELETE", PathTemplate: "/1.3/container-registry/{uuid}/webhooks/{name}",
+		PathParams: []pathContract{{Name: "name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"request-sweep-value\""}, {Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.DeleteContainerRegistryWebhookUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			name, err := requestSampleFromJSON[upcloud.DeleteContainerRegistryWebhookName]("\"request-sweep-value\"")
+			if err != nil {
+				return nil, err
+			}
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/webhooks/{name}", []pathValue{
+				{Contract: pathContract{Name: "name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"request-sweep-value\"")},
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.DeleteContainerRegistryWebhook(ctx, uuid, name)
 		}},
 	{ID: "deleteDatabaseIntegrationEndpoint", Method: "DELETE", PathTemplate: "/1.3/database/integration-endpoints/{integration-uuid}",
 		PathParams: []pathContract{{Name: "integration-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"01234567-89ab-cdef-0123-456789abcdef\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
@@ -270,15 +459,15 @@ var operationAdapters = []operationAdapter{
 			return client.DeleteDatabaseUser(ctx, uuid, username)
 		}},
 	{ID: "deleteFileStorage", Method: "DELETE", PathTemplate: "/1.3/file-storage/{service-uuid}",
-		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17fd43a5-a97e-44f7-98a8-0a787da67069\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17871d62-6964-4336-b68d-4a85a8ee10fe\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
-			serviceUuid, err := requestSampleFromJSON[upcloud.DeleteFileStorageServiceUuid]("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")
+			serviceUuid, err := requestSampleFromJSON[upcloud.DeleteFileStorageServiceUuid]("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")
 			if err != nil {
 				return nil, err
 			}
 			expectedPath, pathErr := requestPathFromTemplate("/1.3/file-storage/{service-uuid}", []pathValue{
-				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")},
+				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")},
 			})
 			if pathErr != nil {
 				return nil, pathErr
@@ -288,10 +477,10 @@ var operationAdapters = []operationAdapter{
 			return client.DeleteFileStorage(ctx, serviceUuid)
 		}},
 	{ID: "deleteFileStorageLabel", Method: "DELETE", PathTemplate: "/1.3/file-storage/{service-uuid}/labels/{label-key}",
-		PathParams: []pathContract{{Name: "label-key", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"environment\""}, {Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17fd43a5-a97e-44f7-98a8-0a787da67069\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "label-key", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"environment\""}, {Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17871d62-6964-4336-b68d-4a85a8ee10fe\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
-			serviceUuid, err := requestSampleFromJSON[upcloud.DeleteFileStorageLabelServiceUuid]("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")
+			serviceUuid, err := requestSampleFromJSON[upcloud.DeleteFileStorageLabelServiceUuid]("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")
 			if err != nil {
 				return nil, err
 			}
@@ -301,7 +490,7 @@ var operationAdapters = []operationAdapter{
 			}
 			expectedPath, pathErr := requestPathFromTemplate("/1.3/file-storage/{service-uuid}/labels/{label-key}", []pathValue{
 				{Contract: pathContract{Name: "label-key", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"environment\"")},
-				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")},
+				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")},
 			})
 			if pathErr != nil {
 				return nil, pathErr
@@ -311,20 +500,20 @@ var operationAdapters = []operationAdapter{
 			return client.DeleteFileStorageLabel(ctx, serviceUuid, labelKey)
 		}},
 	{ID: "deleteFileStorageNetwork", Method: "DELETE", PathTemplate: "/1.3/file-storage/{service-uuid}/networks/{network-name}",
-		PathParams: []pathContract{{Name: "network-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"test-name\""}, {Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17fd43a5-a97e-44f7-98a8-0a787da67069\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "network-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"production-files\""}, {Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17871d62-6964-4336-b68d-4a85a8ee10fe\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
-			serviceUuid, err := requestSampleFromJSON[upcloud.DeleteFileStorageNetworkServiceUuid]("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")
+			serviceUuid, err := requestSampleFromJSON[upcloud.DeleteFileStorageNetworkServiceUuid]("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")
 			if err != nil {
 				return nil, err
 			}
-			networkName, err := requestSampleFromJSON[upcloud.DeleteFileStorageNetworkNetworkName]("\"test-name\"")
+			networkName, err := requestSampleFromJSON[upcloud.DeleteFileStorageNetworkNetworkName]("\"production-files\"")
 			if err != nil {
 				return nil, err
 			}
 			expectedPath, pathErr := requestPathFromTemplate("/1.3/file-storage/{service-uuid}/networks/{network-name}", []pathValue{
-				{Contract: pathContract{Name: "network-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"test-name\"")},
-				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")},
+				{Contract: pathContract{Name: "network-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"production-files\"")},
+				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")},
 			})
 			if pathErr != nil {
 				return nil, pathErr
@@ -334,20 +523,20 @@ var operationAdapters = []operationAdapter{
 			return client.DeleteFileStorageNetwork(ctx, serviceUuid, networkName)
 		}},
 	{ID: "deleteFileStorageShare", Method: "DELETE", PathTemplate: "/1.3/file-storage/{service-uuid}/shares/{share-name}",
-		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17fd43a5-a97e-44f7-98a8-0a787da67069\""}, {Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"test-name\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17871d62-6964-4336-b68d-4a85a8ee10fe\""}, {Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"project-data\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
-			serviceUuid, err := requestSampleFromJSON[upcloud.DeleteFileStorageShareServiceUuid]("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")
+			serviceUuid, err := requestSampleFromJSON[upcloud.DeleteFileStorageShareServiceUuid]("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")
 			if err != nil {
 				return nil, err
 			}
-			shareName, err := requestSampleFromJSON[upcloud.DeleteFileStorageShareShareName]("\"test-name\"")
+			shareName, err := requestSampleFromJSON[upcloud.DeleteFileStorageShareShareName]("\"project-data\"")
 			if err != nil {
 				return nil, err
 			}
 			expectedPath, pathErr := requestPathFromTemplate("/1.3/file-storage/{service-uuid}/shares/{share-name}", []pathValue{
-				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")},
-				{Contract: pathContract{Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"test-name\"")},
+				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")},
+				{Contract: pathContract{Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"project-data\"")},
 			})
 			if pathErr != nil {
 				return nil, pathErr
@@ -357,25 +546,25 @@ var operationAdapters = []operationAdapter{
 			return client.DeleteFileStorageShare(ctx, serviceUuid, shareName)
 		}},
 	{ID: "deleteFileStorageAcl", Method: "DELETE", PathTemplate: "/1.3/file-storage/{service-uuid}/shares/{share-name}/acl/{acl-name}",
-		PathParams: []pathContract{{Name: "acl-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"test-name\""}, {Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17fd43a5-a97e-44f7-98a8-0a787da67069\""}, {Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"test-name\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "acl-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"production-files\""}, {Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17871d62-6964-4336-b68d-4a85a8ee10fe\""}, {Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"project-data\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
-			serviceUuid, err := requestSampleFromJSON[upcloud.DeleteFileStorageAclServiceUuid]("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")
+			serviceUuid, err := requestSampleFromJSON[upcloud.DeleteFileStorageAclServiceUuid]("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")
 			if err != nil {
 				return nil, err
 			}
-			shareName, err := requestSampleFromJSON[upcloud.DeleteFileStorageAclShareName]("\"test-name\"")
+			shareName, err := requestSampleFromJSON[upcloud.DeleteFileStorageAclShareName]("\"project-data\"")
 			if err != nil {
 				return nil, err
 			}
-			aclName, err := requestSampleFromJSON[upcloud.DeleteFileStorageAclAclName]("\"test-name\"")
+			aclName, err := requestSampleFromJSON[upcloud.DeleteFileStorageAclAclName]("\"production-files\"")
 			if err != nil {
 				return nil, err
 			}
 			expectedPath, pathErr := requestPathFromTemplate("/1.3/file-storage/{service-uuid}/shares/{share-name}/acl/{acl-name}", []pathValue{
-				{Contract: pathContract{Name: "acl-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"test-name\"")},
-				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")},
-				{Contract: pathContract{Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"test-name\"")},
+				{Contract: pathContract{Name: "acl-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"production-files\"")},
+				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")},
+				{Contract: pathContract{Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"project-data\"")},
 			})
 			if pathErr != nil {
 				return nil, pathErr
@@ -1933,6 +2122,24 @@ var operationAdapters = []operationAdapter{
 			observed.hasExpectedPath = true
 			return client.GetCurrentNetworkUsage(ctx)
 		}},
+	{ID: "getAccountProfile", Method: "GET", PathTemplate: "/1.3/account/details/{username}",
+		PathParams: []pathContract{{Name: "username", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"request-sweep-value\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			username, err := requestSampleFromJSON[upcloud.GetAccountProfileUsername]("\"request-sweep-value\"")
+			if err != nil {
+				return nil, err
+			}
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/account/details/{username}", []pathValue{
+				{Contract: pathContract{Name: "username", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"request-sweep-value\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.GetAccountProfile(ctx, username)
+		}},
 	{ID: "listAccounts", Method: "GET", PathTemplate: "/1.3/account/list",
 		PathParams: []pathContract{}, Query: []queryContract{
 			{Name: "label", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"request-sweep-value\""},
@@ -2272,6 +2479,459 @@ var operationAdapters = []operationAdapter{
 			observed.expectedPath = expectedPath
 			observed.hasExpectedPath = true
 			return client.GetAuditLog(ctx, cloudEventID)
+		}},
+	{ID: "listContainerRegistries", Method: "GET", PathTemplate: "/1.3/container-registry",
+		PathParams: []pathContract{}, Query: []queryContract{
+			{Name: "configured_status", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"started\""},
+			{Name: "operational_state", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"pending\""},
+			{Name: "region_name", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"request-sweep-value\""},
+			{Name: "tier", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"starter_beta\""},
+		}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			params, err := requestSampleParams[*upcloud.ListContainerRegistriesParams]([]queryContract{
+				{Name: "configured_status", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"started\""},
+				{Name: "operational_state", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"pending\""},
+				{Name: "region_name", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"request-sweep-value\""},
+				{Name: "tier", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"starter_beta\""},
+			})
+			if err != nil {
+				return nil, err
+			}
+			expectedQuery, err := expectedQueryFromParams(params, []queryContract{
+				{Name: "configured_status", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"started\""},
+				{Name: "operational_state", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"pending\""},
+				{Name: "region_name", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"request-sweep-value\""},
+				{Name: "tier", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"starter_beta\""},
+			})
+			if err != nil {
+				return nil, err
+			}
+			observed.expectedQuery = expectedQuery
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry", []pathValue{})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.ListContainerRegistries(ctx, params)
+		}},
+	{ID: "listContainerRegistryPlans", Method: "GET", PathTemplate: "/1.3/container-registry/plans",
+		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/plans", []pathValue{})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.ListContainerRegistryPlans(ctx)
+		}},
+	{ID: "listContainerRegistryRegions", Method: "GET", PathTemplate: "/1.3/container-registry/regions",
+		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/regions", []pathValue{})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.ListContainerRegistryRegions(ctx)
+		}},
+	{ID: "getContainerRegistry", Method: "GET", PathTemplate: "/1.3/container-registry/{uuid}",
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.GetContainerRegistryUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}", []pathValue{
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.GetContainerRegistry(ctx, uuid)
+		}},
+	{ID: "getContainerRegistryAccessMode", Method: "GET", PathTemplate: "/1.3/container-registry/{uuid}/access-mode",
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.GetContainerRegistryAccessModeUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/access-mode", []pathValue{
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.GetContainerRegistryAccessMode(ctx, uuid)
+		}},
+	{ID: "listContainerRegistryIPAllowlist", Method: "GET", PathTemplate: "/1.3/container-registry/{uuid}/allowlist",
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.ListContainerRegistryIPAllowlistUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/allowlist", []pathValue{
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.ListContainerRegistryIPAllowlist(ctx, uuid)
+		}},
+	{ID: "getContainerRegistryConnection", Method: "GET", PathTemplate: "/1.3/container-registry/{uuid}/connection",
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.GetContainerRegistryConnectionUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/connection", []pathValue{
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.GetContainerRegistryConnection(ctx, uuid)
+		}},
+	{ID: "getContainerRegistryCredentials", Method: "GET", PathTemplate: "/1.3/container-registry/{uuid}/credentials",
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.GetContainerRegistryCredentialsUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/credentials", []pathValue{
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.GetContainerRegistryCredentials(ctx, uuid)
+		}},
+	{ID: "listContainerRegistryEvents", Method: "GET", PathTemplate: "/1.3/container-registry/{uuid}/events",
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{
+			{Name: "action", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"request-sweep-value\""},
+			{Name: "actor", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"request-sweep-value\""},
+			{Name: "limit", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "100"},
+			{Name: "offset", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "0"},
+			{Name: "status", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"success\""},
+		}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.ListContainerRegistryEventsUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			params, err := requestSampleParams[*upcloud.ListContainerRegistryEventsParams]([]queryContract{
+				{Name: "action", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"request-sweep-value\""},
+				{Name: "actor", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"request-sweep-value\""},
+				{Name: "limit", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "100"},
+				{Name: "offset", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "0"},
+				{Name: "status", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"success\""},
+			})
+			if err != nil {
+				return nil, err
+			}
+			expectedQuery, err := expectedQueryFromParams(params, []queryContract{
+				{Name: "action", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"request-sweep-value\""},
+				{Name: "actor", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"request-sweep-value\""},
+				{Name: "limit", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "100"},
+				{Name: "offset", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "0"},
+				{Name: "status", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"success\""},
+			})
+			if err != nil {
+				return nil, err
+			}
+			observed.expectedQuery = expectedQuery
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/events", []pathValue{
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.ListContainerRegistryEvents(ctx, uuid, params)
+		}},
+	{ID: "getContainerRegistryMetrics", Method: "GET", PathTemplate: "/1.3/container-registry/{uuid}/metrics",
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{
+			{Name: "from", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"2026-01-02T03:04:05Z\""},
+			{Name: "resolution", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"5m\""},
+			{Name: "to", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"2026-01-02T03:04:05Z\""},
+		}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.GetContainerRegistryMetricsUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			params, err := requestSampleParams[*upcloud.GetContainerRegistryMetricsParams]([]queryContract{
+				{Name: "from", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"2026-01-02T03:04:05Z\""},
+				{Name: "resolution", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"5m\""},
+				{Name: "to", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"2026-01-02T03:04:05Z\""},
+			})
+			if err != nil {
+				return nil, err
+			}
+			expectedQuery, err := expectedQueryFromParams(params, []queryContract{
+				{Name: "from", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"2026-01-02T03:04:05Z\""},
+				{Name: "resolution", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"5m\""},
+				{Name: "to", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"2026-01-02T03:04:05Z\""},
+			})
+			if err != nil {
+				return nil, err
+			}
+			observed.expectedQuery = expectedQuery
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/metrics", []pathValue{
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.GetContainerRegistryMetrics(ctx, uuid, params)
+		}},
+	{ID: "getContainerRegistryTrafficMetrics", Method: "GET", PathTemplate: "/1.3/container-registry/{uuid}/metrics/traffic",
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{
+			{Name: "from", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"2026-01-02T03:04:05Z\""},
+			{Name: "resolution", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"1h\""},
+			{Name: "to", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"2026-01-02T03:04:05Z\""},
+		}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.GetContainerRegistryTrafficMetricsUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			params, err := requestSampleParams[*upcloud.GetContainerRegistryTrafficMetricsParams]([]queryContract{
+				{Name: "from", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"2026-01-02T03:04:05Z\""},
+				{Name: "resolution", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"1h\""},
+				{Name: "to", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"2026-01-02T03:04:05Z\""},
+			})
+			if err != nil {
+				return nil, err
+			}
+			expectedQuery, err := expectedQueryFromParams(params, []queryContract{
+				{Name: "from", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"2026-01-02T03:04:05Z\""},
+				{Name: "resolution", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"1h\""},
+				{Name: "to", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"2026-01-02T03:04:05Z\""},
+			})
+			if err != nil {
+				return nil, err
+			}
+			observed.expectedQuery = expectedQuery
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/metrics/traffic", []pathValue{
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.GetContainerRegistryTrafficMetrics(ctx, uuid, params)
+		}},
+	{ID: "listContainerRegistryNetworkPeerings", Method: "GET", PathTemplate: "/1.3/container-registry/{uuid}/networks",
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.ListContainerRegistryNetworkPeeringsUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/networks", []pathValue{
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.ListContainerRegistryNetworkPeerings(ctx, uuid)
+		}},
+	{ID: "getContainerRegistryNetworkPeering", Method: "GET", PathTemplate: "/1.3/container-registry/{uuid}/networks/{peering_uuid}",
+		PathParams: []pathContract{{Name: "peering_uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}, {Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.GetContainerRegistryNetworkPeeringUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			peeringUuid, err := requestSampleFromJSON[upcloud.GetContainerRegistryNetworkPeeringPeeringUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/networks/{peering_uuid}", []pathValue{
+				{Contract: pathContract{Name: "peering_uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.GetContainerRegistryNetworkPeering(ctx, uuid, peeringUuid)
+		}},
+	{ID: "getContainerRegistryProvisioning", Method: "GET", PathTemplate: "/1.3/container-registry/{uuid}/provisioning",
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.GetContainerRegistryProvisioningUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/provisioning", []pathValue{
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.GetContainerRegistryProvisioning(ctx, uuid)
+		}},
+	{ID: "listContainerRegistryRepositories", Method: "GET", PathTemplate: "/1.3/container-registry/{uuid}/repositories",
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{
+			{Name: "last", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"request-sweep-value\""},
+			{Name: "n", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "100"},
+			{Name: "offset", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "0"},
+		}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.ListContainerRegistryRepositoriesUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			params, err := requestSampleParams[*upcloud.ListContainerRegistryRepositoriesParams]([]queryContract{
+				{Name: "last", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"request-sweep-value\""},
+				{Name: "n", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "100"},
+				{Name: "offset", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "0"},
+			})
+			if err != nil {
+				return nil, err
+			}
+			expectedQuery, err := expectedQueryFromParams(params, []queryContract{
+				{Name: "last", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"request-sweep-value\""},
+				{Name: "n", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "100"},
+				{Name: "offset", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "0"},
+			})
+			if err != nil {
+				return nil, err
+			}
+			observed.expectedQuery = expectedQuery
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/repositories", []pathValue{
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.ListContainerRegistryRepositories(ctx, uuid, params)
+		}},
+	{ID: "listContainerRegistryRepositoryTags", Method: "GET", PathTemplate: "/1.3/container-registry/{uuid}/repositories/{repo}",
+		PathParams: []pathContract{{Name: "repo", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"request-sweep-value\""}, {Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.ListContainerRegistryRepositoryTagsUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			repo, err := requestSampleFromJSON[upcloud.ListContainerRegistryRepositoryTagsRepo]("\"request-sweep-value\"")
+			if err != nil {
+				return nil, err
+			}
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/repositories/{repo}", []pathValue{
+				{Contract: pathContract{Name: "repo", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"request-sweep-value\"")},
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.ListContainerRegistryRepositoryTags(ctx, uuid, repo)
+		}},
+	{ID: "listContainerRegistryUsers", Method: "GET", PathTemplate: "/1.3/container-registry/{uuid}/users",
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.ListContainerRegistryUsersUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/users", []pathValue{
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.ListContainerRegistryUsers(ctx, uuid)
+		}},
+	{ID: "getContainerRegistryUser", Method: "GET", PathTemplate: "/1.3/container-registry/{uuid}/users/{username}",
+		PathParams: []pathContract{{Name: "username", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"request-sweep-value\""}, {Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.GetContainerRegistryUserUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			username, err := requestSampleFromJSON[upcloud.GetContainerRegistryUserUsername]("\"request-sweep-value\"")
+			if err != nil {
+				return nil, err
+			}
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/users/{username}", []pathValue{
+				{Contract: pathContract{Name: "username", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"request-sweep-value\"")},
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.GetContainerRegistryUser(ctx, uuid, username)
+		}},
+	{ID: "listContainerRegistryWebhooks", Method: "GET", PathTemplate: "/1.3/container-registry/{uuid}/webhooks",
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.ListContainerRegistryWebhooksUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/webhooks", []pathValue{
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.ListContainerRegistryWebhooks(ctx, uuid)
 		}},
 	{ID: "listCurrencies", Method: "GET", PathTemplate: "/1.3/currency",
 		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
@@ -3074,23 +3734,26 @@ var operationAdapters = []operationAdapter{
 		}},
 	{ID: "listFileStorages", Method: "GET", PathTemplate: "/1.3/file-storage",
 		PathParams: []pathContract{}, Query: []queryContract{
-			{Name: "limit", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "10"},
-			{Name: "offset", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "0"},
+			{Name: "label", Style: "form", Explode: true, Required: false, SchemaType: "array", Properties: []string{}, SampleJSON: "[\"request-sweep-value\"]"},
+			{Name: "limit", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "25"},
+			{Name: "offset", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "20"},
 			{Name: "sort", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"created_at\""},
 		}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			params, err := requestSampleParams[*upcloud.ListFileStoragesParams]([]queryContract{
-				{Name: "limit", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "10"},
-				{Name: "offset", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "0"},
+				{Name: "label", Style: "form", Explode: true, Required: false, SchemaType: "array", Properties: []string{}, SampleJSON: "[\"request-sweep-value\"]"},
+				{Name: "limit", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "25"},
+				{Name: "offset", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "20"},
 				{Name: "sort", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"created_at\""},
 			})
 			if err != nil {
 				return nil, err
 			}
 			expectedQuery, err := expectedQueryFromParams(params, []queryContract{
-				{Name: "limit", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "10"},
-				{Name: "offset", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "0"},
+				{Name: "label", Style: "form", Explode: true, Required: false, SchemaType: "array", Properties: []string{}, SampleJSON: "[\"request-sweep-value\"]"},
+				{Name: "limit", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "25"},
+				{Name: "offset", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "20"},
 				{Name: "sort", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"created_at\""},
 			})
 			if err != nil {
@@ -3106,15 +3769,15 @@ var operationAdapters = []operationAdapter{
 			return client.ListFileStorages(ctx, params)
 		}},
 	{ID: "getFileStorage", Method: "GET", PathTemplate: "/1.3/file-storage/{service-uuid}",
-		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17fd43a5-a97e-44f7-98a8-0a787da67069\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17871d62-6964-4336-b68d-4a85a8ee10fe\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
-			serviceUuid, err := requestSampleFromJSON[upcloud.GetFileStorageServiceUuid]("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")
+			serviceUuid, err := requestSampleFromJSON[upcloud.GetFileStorageServiceUuid]("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")
 			if err != nil {
 				return nil, err
 			}
 			expectedPath, pathErr := requestPathFromTemplate("/1.3/file-storage/{service-uuid}", []pathValue{
-				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")},
+				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")},
 			})
 			if pathErr != nil {
 				return nil, pathErr
@@ -3124,15 +3787,15 @@ var operationAdapters = []operationAdapter{
 			return client.GetFileStorage(ctx, serviceUuid)
 		}},
 	{ID: "getFileStorageCurrentState", Method: "GET", PathTemplate: "/1.3/file-storage/{service-uuid}/current-state",
-		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17fd43a5-a97e-44f7-98a8-0a787da67069\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17871d62-6964-4336-b68d-4a85a8ee10fe\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
-			serviceUuid, err := requestSampleFromJSON[upcloud.GetFileStorageCurrentStateServiceUuid]("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")
+			serviceUuid, err := requestSampleFromJSON[upcloud.GetFileStorageCurrentStateServiceUuid]("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")
 			if err != nil {
 				return nil, err
 			}
 			expectedPath, pathErr := requestPathFromTemplate("/1.3/file-storage/{service-uuid}/current-state", []pathValue{
-				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")},
+				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")},
 			})
 			if pathErr != nil {
 				return nil, pathErr
@@ -3142,15 +3805,15 @@ var operationAdapters = []operationAdapter{
 			return client.GetFileStorageCurrentState(ctx, serviceUuid)
 		}},
 	{ID: "listFileStorageLabels", Method: "GET", PathTemplate: "/1.3/file-storage/{service-uuid}/labels",
-		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17fd43a5-a97e-44f7-98a8-0a787da67069\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17871d62-6964-4336-b68d-4a85a8ee10fe\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
-			serviceUuid, err := requestSampleFromJSON[upcloud.ListFileStorageLabelsServiceUuid]("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")
+			serviceUuid, err := requestSampleFromJSON[upcloud.ListFileStorageLabelsServiceUuid]("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")
 			if err != nil {
 				return nil, err
 			}
 			expectedPath, pathErr := requestPathFromTemplate("/1.3/file-storage/{service-uuid}/labels", []pathValue{
-				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")},
+				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")},
 			})
 			if pathErr != nil {
 				return nil, pathErr
@@ -3160,10 +3823,10 @@ var operationAdapters = []operationAdapter{
 			return client.ListFileStorageLabels(ctx, serviceUuid)
 		}},
 	{ID: "getFileStorageLabel", Method: "GET", PathTemplate: "/1.3/file-storage/{service-uuid}/labels/{label-key}",
-		PathParams: []pathContract{{Name: "label-key", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"environment\""}, {Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17fd43a5-a97e-44f7-98a8-0a787da67069\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "label-key", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"environment\""}, {Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17871d62-6964-4336-b68d-4a85a8ee10fe\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
-			serviceUuid, err := requestSampleFromJSON[upcloud.GetFileStorageLabelServiceUuid]("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")
+			serviceUuid, err := requestSampleFromJSON[upcloud.GetFileStorageLabelServiceUuid]("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")
 			if err != nil {
 				return nil, err
 			}
@@ -3173,7 +3836,7 @@ var operationAdapters = []operationAdapter{
 			}
 			expectedPath, pathErr := requestPathFromTemplate("/1.3/file-storage/{service-uuid}/labels/{label-key}", []pathValue{
 				{Contract: pathContract{Name: "label-key", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"environment\"")},
-				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")},
+				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")},
 			})
 			if pathErr != nil {
 				return nil, pathErr
@@ -3183,15 +3846,15 @@ var operationAdapters = []operationAdapter{
 			return client.GetFileStorageLabel(ctx, serviceUuid, labelKey)
 		}},
 	{ID: "listFileStorageNetworks", Method: "GET", PathTemplate: "/1.3/file-storage/{service-uuid}/networks",
-		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17fd43a5-a97e-44f7-98a8-0a787da67069\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17871d62-6964-4336-b68d-4a85a8ee10fe\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
-			serviceUuid, err := requestSampleFromJSON[upcloud.ListFileStorageNetworksServiceUuid]("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")
+			serviceUuid, err := requestSampleFromJSON[upcloud.ListFileStorageNetworksServiceUuid]("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")
 			if err != nil {
 				return nil, err
 			}
 			expectedPath, pathErr := requestPathFromTemplate("/1.3/file-storage/{service-uuid}/networks", []pathValue{
-				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")},
+				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")},
 			})
 			if pathErr != nil {
 				return nil, pathErr
@@ -3201,20 +3864,20 @@ var operationAdapters = []operationAdapter{
 			return client.ListFileStorageNetworks(ctx, serviceUuid)
 		}},
 	{ID: "getFileStorageNetwork", Method: "GET", PathTemplate: "/1.3/file-storage/{service-uuid}/networks/{network-name}",
-		PathParams: []pathContract{{Name: "network-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"test-name\""}, {Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17fd43a5-a97e-44f7-98a8-0a787da67069\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "network-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"production-files\""}, {Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17871d62-6964-4336-b68d-4a85a8ee10fe\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
-			serviceUuid, err := requestSampleFromJSON[upcloud.GetFileStorageNetworkServiceUuid]("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")
+			serviceUuid, err := requestSampleFromJSON[upcloud.GetFileStorageNetworkServiceUuid]("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")
 			if err != nil {
 				return nil, err
 			}
-			networkName, err := requestSampleFromJSON[upcloud.GetFileStorageNetworkNetworkName]("\"test-name\"")
+			networkName, err := requestSampleFromJSON[upcloud.GetFileStorageNetworkNetworkName]("\"production-files\"")
 			if err != nil {
 				return nil, err
 			}
 			expectedPath, pathErr := requestPathFromTemplate("/1.3/file-storage/{service-uuid}/networks/{network-name}", []pathValue{
-				{Contract: pathContract{Name: "network-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"test-name\"")},
-				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")},
+				{Contract: pathContract{Name: "network-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"production-files\"")},
+				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")},
 			})
 			if pathErr != nil {
 				return nil, pathErr
@@ -3224,15 +3887,15 @@ var operationAdapters = []operationAdapter{
 			return client.GetFileStorageNetwork(ctx, serviceUuid, networkName)
 		}},
 	{ID: "listFileStorageShares", Method: "GET", PathTemplate: "/1.3/file-storage/{service-uuid}/shares",
-		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17fd43a5-a97e-44f7-98a8-0a787da67069\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17871d62-6964-4336-b68d-4a85a8ee10fe\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
-			serviceUuid, err := requestSampleFromJSON[upcloud.ListFileStorageSharesServiceUuid]("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")
+			serviceUuid, err := requestSampleFromJSON[upcloud.ListFileStorageSharesServiceUuid]("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")
 			if err != nil {
 				return nil, err
 			}
 			expectedPath, pathErr := requestPathFromTemplate("/1.3/file-storage/{service-uuid}/shares", []pathValue{
-				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")},
+				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")},
 			})
 			if pathErr != nil {
 				return nil, pathErr
@@ -3242,20 +3905,20 @@ var operationAdapters = []operationAdapter{
 			return client.ListFileStorageShares(ctx, serviceUuid)
 		}},
 	{ID: "getFileStorageShare", Method: "GET", PathTemplate: "/1.3/file-storage/{service-uuid}/shares/{share-name}",
-		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17fd43a5-a97e-44f7-98a8-0a787da67069\""}, {Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"test-name\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17871d62-6964-4336-b68d-4a85a8ee10fe\""}, {Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"project-data\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
-			serviceUuid, err := requestSampleFromJSON[upcloud.GetFileStorageShareServiceUuid]("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")
+			serviceUuid, err := requestSampleFromJSON[upcloud.GetFileStorageShareServiceUuid]("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")
 			if err != nil {
 				return nil, err
 			}
-			shareName, err := requestSampleFromJSON[upcloud.GetFileStorageShareShareName]("\"test-name\"")
+			shareName, err := requestSampleFromJSON[upcloud.GetFileStorageShareShareName]("\"project-data\"")
 			if err != nil {
 				return nil, err
 			}
 			expectedPath, pathErr := requestPathFromTemplate("/1.3/file-storage/{service-uuid}/shares/{share-name}", []pathValue{
-				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")},
-				{Contract: pathContract{Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"test-name\"")},
+				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")},
+				{Contract: pathContract{Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"project-data\"")},
 			})
 			if pathErr != nil {
 				return nil, pathErr
@@ -3265,20 +3928,20 @@ var operationAdapters = []operationAdapter{
 			return client.GetFileStorageShare(ctx, serviceUuid, shareName)
 		}},
 	{ID: "listFileStorageAcls", Method: "GET", PathTemplate: "/1.3/file-storage/{service-uuid}/shares/{share-name}/acl",
-		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17fd43a5-a97e-44f7-98a8-0a787da67069\""}, {Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"test-name\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17871d62-6964-4336-b68d-4a85a8ee10fe\""}, {Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"project-data\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
-			serviceUuid, err := requestSampleFromJSON[upcloud.ListFileStorageAclsServiceUuid]("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")
+			serviceUuid, err := requestSampleFromJSON[upcloud.ListFileStorageAclsServiceUuid]("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")
 			if err != nil {
 				return nil, err
 			}
-			shareName, err := requestSampleFromJSON[upcloud.ListFileStorageAclsShareName]("\"test-name\"")
+			shareName, err := requestSampleFromJSON[upcloud.ListFileStorageAclsShareName]("\"project-data\"")
 			if err != nil {
 				return nil, err
 			}
 			expectedPath, pathErr := requestPathFromTemplate("/1.3/file-storage/{service-uuid}/shares/{share-name}/acl", []pathValue{
-				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")},
-				{Contract: pathContract{Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"test-name\"")},
+				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")},
+				{Contract: pathContract{Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"project-data\"")},
 			})
 			if pathErr != nil {
 				return nil, pathErr
@@ -3288,25 +3951,25 @@ var operationAdapters = []operationAdapter{
 			return client.ListFileStorageAcls(ctx, serviceUuid, shareName)
 		}},
 	{ID: "getFileStorageAcl", Method: "GET", PathTemplate: "/1.3/file-storage/{service-uuid}/shares/{share-name}/acl/{acl-name}",
-		PathParams: []pathContract{{Name: "acl-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"test-name\""}, {Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17fd43a5-a97e-44f7-98a8-0a787da67069\""}, {Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"test-name\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "acl-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"production-files\""}, {Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17871d62-6964-4336-b68d-4a85a8ee10fe\""}, {Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"project-data\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
-			serviceUuid, err := requestSampleFromJSON[upcloud.GetFileStorageAclServiceUuid]("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")
+			serviceUuid, err := requestSampleFromJSON[upcloud.GetFileStorageAclServiceUuid]("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")
 			if err != nil {
 				return nil, err
 			}
-			shareName, err := requestSampleFromJSON[upcloud.GetFileStorageAclShareName]("\"test-name\"")
+			shareName, err := requestSampleFromJSON[upcloud.GetFileStorageAclShareName]("\"project-data\"")
 			if err != nil {
 				return nil, err
 			}
-			aclName, err := requestSampleFromJSON[upcloud.GetFileStorageAclAclName]("\"test-name\"")
+			aclName, err := requestSampleFromJSON[upcloud.GetFileStorageAclAclName]("\"production-files\"")
 			if err != nil {
 				return nil, err
 			}
 			expectedPath, pathErr := requestPathFromTemplate("/1.3/file-storage/{service-uuid}/shares/{share-name}/acl/{acl-name}", []pathValue{
-				{Contract: pathContract{Name: "acl-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"test-name\"")},
-				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")},
-				{Contract: pathContract{Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"test-name\"")},
+				{Contract: pathContract{Name: "acl-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"production-files\"")},
+				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")},
+				{Contract: pathContract{Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"project-data\"")},
 			})
 			if pathErr != nil {
 				return nil, pathErr
@@ -3839,6 +4502,51 @@ var operationAdapters = []operationAdapter{
 			observed.expectedPath = expectedPath
 			observed.hasExpectedPath = true
 			return client.GetGatewayMetrics(ctx, serviceUuid)
+		}},
+	{ID: "listHosts", Method: "GET", PathTemplate: "/1.3/host",
+		PathParams: []pathContract{}, Query: []queryContract{
+			{Name: "zone", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"fi-hel1\""},
+		}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			params, err := requestSampleParams[*upcloud.ListHostsParams]([]queryContract{
+				{Name: "zone", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"fi-hel1\""},
+			})
+			if err != nil {
+				return nil, err
+			}
+			expectedQuery, err := expectedQueryFromParams(params, []queryContract{
+				{Name: "zone", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"fi-hel1\""},
+			})
+			if err != nil {
+				return nil, err
+			}
+			observed.expectedQuery = expectedQuery
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/host", []pathValue{})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.ListHosts(ctx, params)
+		}},
+	{ID: "getHost", Method: "GET", PathTemplate: "/1.3/host/{id}",
+		PathParams: []pathContract{{Name: "id", Style: "simple", Explode: false, SchemaType: "integer", Format: "int64", SampleJSON: "7653311107"}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			id, err := requestSampleFromJSON[upcloud.GetHostId]("7653311107")
+			if err != nil {
+				return nil, err
+			}
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/host/{id}", []pathValue{
+				{Contract: pathContract{Name: "id", Style: "simple", Explode: false, SchemaType: "integer", Format: "int64"}, Value: requestSampleValueFromJSON("7653311107")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.GetHost(ctx, id)
 		}},
 	{ID: "listIPAddresses", Method: "GET", PathTemplate: "/1.3/ip_address",
 		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
@@ -5115,6 +5823,57 @@ var operationAdapters = []operationAdapter{
 			observed.expectedPath = expectedPath
 			observed.hasExpectedPath = true
 			return client.ListObjectStorages(ctx, params)
+		}},
+	{ID: "listJobs", Method: "GET", PathTemplate: "/1.3/object-storage-2/jobs",
+		PathParams: []pathContract{}, Query: []queryContract{
+			{Name: "limit", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "10"},
+			{Name: "offset", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "0"},
+			{Name: "sort", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"created_at\""},
+		}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			params, err := requestSampleParams[*upcloud.ListJobsParams]([]queryContract{
+				{Name: "limit", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "10"},
+				{Name: "offset", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "0"},
+				{Name: "sort", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"created_at\""},
+			})
+			if err != nil {
+				return nil, err
+			}
+			expectedQuery, err := expectedQueryFromParams(params, []queryContract{
+				{Name: "limit", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "10"},
+				{Name: "offset", Style: "form", Explode: true, Required: false, SchemaType: "integer", Properties: []string{}, SampleJSON: "0"},
+				{Name: "sort", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"created_at\""},
+			})
+			if err != nil {
+				return nil, err
+			}
+			observed.expectedQuery = expectedQuery
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/object-storage-2/jobs", []pathValue{})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.ListJobs(ctx, params)
+		}},
+	{ID: "getJob", Method: "GET", PathTemplate: "/1.3/object-storage-2/jobs/{job-name}",
+		PathParams: []pathContract{{Name: "job-name", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"01234567-89ab-cdef-0123-456789abcdef\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			jobName, err := requestSampleFromJSON[upcloud.ObjectStorage2GetJobJobName]("\"01234567-89ab-cdef-0123-456789abcdef\"")
+			if err != nil {
+				return nil, err
+			}
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/object-storage-2/jobs/{job-name}", []pathValue{
+				{Contract: pathContract{Name: "job-name", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"01234567-89ab-cdef-0123-456789abcdef\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.GetJob(ctx, jobName)
 		}},
 	{ID: "listObjectStorageRegions", Method: "GET", PathTemplate: "/1.3/object-storage-2/regions",
 		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
@@ -7068,6 +7827,128 @@ var operationAdapters = []operationAdapter{
 			observed.hasExpectedPath = true
 			return client.ListZoneVLANs(ctx, zone)
 		}},
+	{ID: "modifyContainerRegistry", Method: "PATCH", PathTemplate: "/1.3/container-registry/{uuid}",
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.ModifyContainerRegistryUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			bodySample := bodySampleOverride
+			if bodySample == "" {
+				bodySample = "{}"
+			}
+			body, err := requestSampleFromJSON[upcloud.ModifyContainerRegistryJSONRequestBody](bodySample)
+			if err != nil {
+				return nil, err
+			}
+			observed.expectedBody = []byte(bodySample)
+			observed.hasExpectedBody = true
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}", []pathValue{
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.ModifyContainerRegistry(ctx, uuid, body)
+		}},
+	{ID: "modifyContainerRegistryAccessMode", Method: "PATCH", PathTemplate: "/1.3/container-registry/{uuid}/access-mode",
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"access_mode\":\"public\"}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.ModifyContainerRegistryAccessModeUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			bodySample := bodySampleOverride
+			if bodySample == "" {
+				bodySample = "{\"access_mode\":\"public\"}"
+			}
+			body, err := requestSampleFromJSON[upcloud.ModifyContainerRegistryAccessModeJSONRequestBody](bodySample)
+			if err != nil {
+				return nil, err
+			}
+			observed.expectedBody = []byte(bodySample)
+			observed.hasExpectedBody = true
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/access-mode", []pathValue{
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.ModifyContainerRegistryAccessMode(ctx, uuid, body)
+		}},
+	{ID: "modifyContainerRegistryUser", Method: "PATCH", PathTemplate: "/1.3/container-registry/{uuid}/users/{username}",
+		PathParams: []pathContract{{Name: "username", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"request-sweep-value\""}, {Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.ModifyContainerRegistryUserUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			username, err := requestSampleFromJSON[upcloud.ModifyContainerRegistryUserUsername]("\"request-sweep-value\"")
+			if err != nil {
+				return nil, err
+			}
+			bodySample := bodySampleOverride
+			if bodySample == "" {
+				bodySample = "{}"
+			}
+			body, err := requestSampleFromJSON[upcloud.ModifyContainerRegistryUserJSONRequestBody](bodySample)
+			if err != nil {
+				return nil, err
+			}
+			observed.expectedBody = []byte(bodySample)
+			observed.hasExpectedBody = true
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/users/{username}", []pathValue{
+				{Contract: pathContract{Name: "username", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"request-sweep-value\"")},
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.ModifyContainerRegistryUser(ctx, uuid, username, body)
+		}},
+	{ID: "modifyContainerRegistryWebhook", Method: "PATCH", PathTemplate: "/1.3/container-registry/{uuid}/webhooks/{name}",
+		PathParams: []pathContract{{Name: "name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"request-sweep-value\""}, {Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.ModifyContainerRegistryWebhookUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			name, err := requestSampleFromJSON[upcloud.ModifyContainerRegistryWebhookName]("\"request-sweep-value\"")
+			if err != nil {
+				return nil, err
+			}
+			bodySample := bodySampleOverride
+			if bodySample == "" {
+				bodySample = "{}"
+			}
+			body, err := requestSampleFromJSON[upcloud.ModifyContainerRegistryWebhookJSONRequestBody](bodySample)
+			if err != nil {
+				return nil, err
+			}
+			observed.expectedBody = []byte(bodySample)
+			observed.hasExpectedBody = true
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/webhooks/{name}", []pathValue{
+				{Contract: pathContract{Name: "name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"request-sweep-value\"")},
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.ModifyContainerRegistryWebhook(ctx, uuid, name, body)
+		}},
 	{ID: "modifyDatabaseIntegrationEndpoint", Method: "PATCH", PathTemplate: "/1.3/database/integration-endpoints/{integration-uuid}",
 		PathParams: []pathContract{{Name: "integration-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"01234567-89ab-cdef-0123-456789abcdef\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
@@ -7346,10 +8227,10 @@ var operationAdapters = []operationAdapter{
 			return client.ModifyDatabaseUserAccessControl(ctx, uuid, username, body)
 		}},
 	{ID: "modifyFileStorage", Method: "PATCH", PathTemplate: "/1.3/file-storage/{service-uuid}",
-		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17fd43a5-a97e-44f7-98a8-0a787da67069\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17871d62-6964-4336-b68d-4a85a8ee10fe\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
-			serviceUuid, err := requestSampleFromJSON[upcloud.ModifyFileStorageServiceUuid]("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")
+			serviceUuid, err := requestSampleFromJSON[upcloud.ModifyFileStorageServiceUuid]("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")
 			if err != nil {
 				return nil, err
 			}
@@ -7364,7 +8245,7 @@ var operationAdapters = []operationAdapter{
 			observed.expectedBody = []byte(bodySample)
 			observed.hasExpectedBody = true
 			expectedPath, pathErr := requestPathFromTemplate("/1.3/file-storage/{service-uuid}", []pathValue{
-				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")},
+				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")},
 			})
 			if pathErr != nil {
 				return nil, pathErr
@@ -7374,10 +8255,10 @@ var operationAdapters = []operationAdapter{
 			return client.ModifyFileStorage(ctx, serviceUuid, body)
 		}},
 	{ID: "modifyFileStorageLabel", Method: "PATCH", PathTemplate: "/1.3/file-storage/{service-uuid}/labels/{label-key}",
-		PathParams: []pathContract{{Name: "label-key", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"environment\""}, {Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17fd43a5-a97e-44f7-98a8-0a787da67069\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "label-key", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"environment\""}, {Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17871d62-6964-4336-b68d-4a85a8ee10fe\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
-			serviceUuid, err := requestSampleFromJSON[upcloud.ModifyFileStorageLabelServiceUuid]("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")
+			serviceUuid, err := requestSampleFromJSON[upcloud.ModifyFileStorageLabelServiceUuid]("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")
 			if err != nil {
 				return nil, err
 			}
@@ -7397,7 +8278,7 @@ var operationAdapters = []operationAdapter{
 			observed.hasExpectedBody = true
 			expectedPath, pathErr := requestPathFromTemplate("/1.3/file-storage/{service-uuid}/labels/{label-key}", []pathValue{
 				{Contract: pathContract{Name: "label-key", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"environment\"")},
-				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")},
+				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")},
 			})
 			if pathErr != nil {
 				return nil, pathErr
@@ -7407,14 +8288,14 @@ var operationAdapters = []operationAdapter{
 			return client.ModifyFileStorageLabel(ctx, serviceUuid, labelKey, body)
 		}},
 	{ID: "modifyFileStorageNetwork", Method: "PATCH", PathTemplate: "/1.3/file-storage/{service-uuid}/networks/{network-name}",
-		PathParams: []pathContract{{Name: "network-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"test-name\""}, {Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17fd43a5-a97e-44f7-98a8-0a787da67069\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "network-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"production-files\""}, {Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17871d62-6964-4336-b68d-4a85a8ee10fe\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
-			serviceUuid, err := requestSampleFromJSON[upcloud.ModifyFileStorageNetworkServiceUuid]("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")
+			serviceUuid, err := requestSampleFromJSON[upcloud.ModifyFileStorageNetworkServiceUuid]("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")
 			if err != nil {
 				return nil, err
 			}
-			networkName, err := requestSampleFromJSON[upcloud.ModifyFileStorageNetworkNetworkName]("\"test-name\"")
+			networkName, err := requestSampleFromJSON[upcloud.ModifyFileStorageNetworkNetworkName]("\"production-files\"")
 			if err != nil {
 				return nil, err
 			}
@@ -7429,8 +8310,8 @@ var operationAdapters = []operationAdapter{
 			observed.expectedBody = []byte(bodySample)
 			observed.hasExpectedBody = true
 			expectedPath, pathErr := requestPathFromTemplate("/1.3/file-storage/{service-uuid}/networks/{network-name}", []pathValue{
-				{Contract: pathContract{Name: "network-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"test-name\"")},
-				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")},
+				{Contract: pathContract{Name: "network-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"production-files\"")},
+				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")},
 			})
 			if pathErr != nil {
 				return nil, pathErr
@@ -7440,14 +8321,14 @@ var operationAdapters = []operationAdapter{
 			return client.ModifyFileStorageNetwork(ctx, serviceUuid, networkName, body)
 		}},
 	{ID: "modifyFileStorageShare", Method: "PATCH", PathTemplate: "/1.3/file-storage/{service-uuid}/shares/{share-name}",
-		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17fd43a5-a97e-44f7-98a8-0a787da67069\""}, {Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"test-name\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17871d62-6964-4336-b68d-4a85a8ee10fe\""}, {Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"project-data\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
-			serviceUuid, err := requestSampleFromJSON[upcloud.ModifyFileStorageShareServiceUuid]("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")
+			serviceUuid, err := requestSampleFromJSON[upcloud.ModifyFileStorageShareServiceUuid]("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")
 			if err != nil {
 				return nil, err
 			}
-			shareName, err := requestSampleFromJSON[upcloud.ModifyFileStorageShareShareName]("\"test-name\"")
+			shareName, err := requestSampleFromJSON[upcloud.ModifyFileStorageShareShareName]("\"project-data\"")
 			if err != nil {
 				return nil, err
 			}
@@ -7462,8 +8343,8 @@ var operationAdapters = []operationAdapter{
 			observed.expectedBody = []byte(bodySample)
 			observed.hasExpectedBody = true
 			expectedPath, pathErr := requestPathFromTemplate("/1.3/file-storage/{service-uuid}/shares/{share-name}", []pathValue{
-				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")},
-				{Contract: pathContract{Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"test-name\"")},
+				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")},
+				{Contract: pathContract{Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"project-data\"")},
 			})
 			if pathErr != nil {
 				return nil, pathErr
@@ -7473,18 +8354,18 @@ var operationAdapters = []operationAdapter{
 			return client.ModifyFileStorageShare(ctx, serviceUuid, shareName, body)
 		}},
 	{ID: "modifyFileStorageAcl", Method: "PATCH", PathTemplate: "/1.3/file-storage/{service-uuid}/shares/{share-name}/acl/{acl-name}",
-		PathParams: []pathContract{{Name: "acl-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"test-name\""}, {Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17fd43a5-a97e-44f7-98a8-0a787da67069\""}, {Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"test-name\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "acl-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"production-files\""}, {Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17871d62-6964-4336-b68d-4a85a8ee10fe\""}, {Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"project-data\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
-			serviceUuid, err := requestSampleFromJSON[upcloud.ModifyFileStorageAclServiceUuid]("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")
+			serviceUuid, err := requestSampleFromJSON[upcloud.ModifyFileStorageAclServiceUuid]("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")
 			if err != nil {
 				return nil, err
 			}
-			shareName, err := requestSampleFromJSON[upcloud.ModifyFileStorageAclShareName]("\"test-name\"")
+			shareName, err := requestSampleFromJSON[upcloud.ModifyFileStorageAclShareName]("\"project-data\"")
 			if err != nil {
 				return nil, err
 			}
-			aclName, err := requestSampleFromJSON[upcloud.ModifyFileStorageAclAclName]("\"test-name\"")
+			aclName, err := requestSampleFromJSON[upcloud.ModifyFileStorageAclAclName]("\"production-files\"")
 			if err != nil {
 				return nil, err
 			}
@@ -7499,9 +8380,9 @@ var operationAdapters = []operationAdapter{
 			observed.expectedBody = []byte(bodySample)
 			observed.hasExpectedBody = true
 			expectedPath, pathErr := requestPathFromTemplate("/1.3/file-storage/{service-uuid}/shares/{share-name}/acl/{acl-name}", []pathValue{
-				{Contract: pathContract{Name: "acl-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"test-name\"")},
-				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")},
-				{Contract: pathContract{Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"test-name\"")},
+				{Contract: pathContract{Name: "acl-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"production-files\"")},
+				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")},
+				{Contract: pathContract{Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"project-data\"")},
 			})
 			if pathErr != nil {
 				return nil, pathErr
@@ -7810,8 +8691,36 @@ var operationAdapters = []operationAdapter{
 			observed.hasExpectedPath = true
 			return client.ModifyGatewayServiceLabel(ctx, serviceUuid, labelKey, body)
 		}},
+	{ID: "modifyHost", Method: "PATCH", PathTemplate: "/1.3/host/{id}",
+		PathParams: []pathContract{{Name: "id", Style: "simple", Explode: false, SchemaType: "integer", Format: "int64", SampleJSON: "7653311107"}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"host\":{\"description\":\"My New Host\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			id, err := requestSampleFromJSON[upcloud.ModifyHostId]("7653311107")
+			if err != nil {
+				return nil, err
+			}
+			bodySample := bodySampleOverride
+			if bodySample == "" {
+				bodySample = "{\"host\":{\"description\":\"My New Host\"}}"
+			}
+			body, err := requestSampleFromJSON[upcloud.ModifyHostJSONRequestBody](bodySample)
+			if err != nil {
+				return nil, err
+			}
+			observed.expectedBody = []byte(bodySample)
+			observed.hasExpectedBody = true
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/host/{id}", []pathValue{
+				{Contract: pathContract{Name: "id", Style: "simple", Explode: false, SchemaType: "integer", Format: "int64"}, Value: requestSampleValueFromJSON("7653311107")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.ModifyHost(ctx, id, body)
+		}},
 	{ID: "bulkModifyIPAddresses", Method: "PATCH", PathTemplate: "/1.3/ip_address/bulk",
-		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"ip_addresses\":[{\"address\":\"192.0.2.1\",\"delegated_to_account_id\":1,\"main_account_id\":1,\"release_policy\":\"keep\"}]}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"ip_addresses\":[{\"address\":\"192.0.2.1\",\"delegated_to_account_id\":1,\"main_account_id\":1,\"release_policy\":\"keep\"}]}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			bodySample := bodySampleOverride
@@ -7833,7 +8742,7 @@ var operationAdapters = []operationAdapter{
 			return client.BulkModifyIPAddresses(ctx, body)
 		}},
 	{ID: "patchModifyIPAddress", Method: "PATCH", PathTemplate: "/1.3/ip_address/{address}",
-		PathParams: []pathContract{{Name: "address", Style: "simple", Explode: false, SchemaType: "string", Format: "ipv4", SampleJSON: "\"192.0.2.1\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"ip_address\":{}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "address", Style: "simple", Explode: false, SchemaType: "string", Format: "ipv4", SampleJSON: "\"192.0.2.1\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"ip_address\":{}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			address, err := requestSampleFromJSON[upcloud.PatchModifyIPAddressAddress]("\"192.0.2.1\"")
@@ -7889,7 +8798,7 @@ var operationAdapters = []operationAdapter{
 			return client.ModifyKubernetesCluster(ctx, uuid, body)
 		}},
 	{ID: "modifyKubernetesClusterNodeGroup", Method: "PATCH", PathTemplate: "/1.3/kubernetes/{uuid}/node-groups/{name}",
-		PathParams: []pathContract{{Name: "name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"request-sweep-value\""}, {Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"count\":0}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"request-sweep-value\""}, {Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			uuid, err := requestSampleFromJSON[upcloud.KubernetesUuidParameter]("\"00000000-0000-4000-8000-000000000000\"")
@@ -7902,7 +8811,7 @@ var operationAdapters = []operationAdapter{
 			}
 			bodySample := bodySampleOverride
 			if bodySample == "" {
-				bodySample = "{\"count\":0}"
+				bodySample = "{}"
 			}
 			body, err := requestSampleFromJSON[upcloud.ModifyKubernetesClusterNodeGroupJSONRequestBody](bodySample)
 			if err != nil {
@@ -8328,7 +9237,7 @@ var operationAdapters = []operationAdapter{
 			return client.ModifyLoadBalancerResolver(ctx, serviceUuid, resolverName, body)
 		}},
 	{ID: "modifyNetworkPeering", Method: "PATCH", PathTemplate: "/1.3/network-peering/{peering_uuid}",
-		PathParams: []pathContract{{Name: "peering_uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "peering_uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			peeringUuid, err := requestSampleFromJSON[upcloud.ModifyNetworkPeeringPeeringUuid]("\"00000000-0000-4000-8000-000000000000\"")
@@ -8587,7 +9496,7 @@ var operationAdapters = []operationAdapter{
 			return client.ModifyObjectStorageAccessKeyDetails(ctx, serviceUuid, username, accessKeyId, body)
 		}},
 	{ID: "modifyRouter", Method: "PATCH", PathTemplate: "/1.3/router/{router}",
-		PathParams: []pathContract{{Name: "router", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"0414e0d7-4436-4037-9dd8-6eaf47dce599\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"router\":{}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "router", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"0414e0d7-4436-4037-9dd8-6eaf47dce599\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"router\":{}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			router, err := requestSampleFromJSON[upcloud.ModifyRouterRouter]("\"0414e0d7-4436-4037-9dd8-6eaf47dce599\"")
@@ -8615,7 +9524,7 @@ var operationAdapters = []operationAdapter{
 			return client.ModifyRouter(ctx, router, body)
 		}},
 	{ID: "modifyServerGroup", Method: "PATCH", PathTemplate: "/1.3/server-group/{uuid}",
-		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"0414e0d7-4436-4037-9dd8-6eaf47dce599\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"server_group\":{}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"0414e0d7-4436-4037-9dd8-6eaf47dce599\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"server_group\":{}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			uuid, err := requestSampleFromJSON[upcloud.ModifyServerGroupUuid]("\"0414e0d7-4436-4037-9dd8-6eaf47dce599\"")
@@ -8655,7 +9564,7 @@ var operationAdapters = []operationAdapter{
 			return client.CreateMSLMASigningLink(ctx)
 		}},
 	{ID: "createSubaccount", Method: "POST", PathTemplate: "/1.3/account/sub",
-		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"sub_account\":{\"email\":\"request-sweep@example.test\",\"language\":\"ab\",\"phone\":\"request-sweep-value\",\"timezone\":\"request-sweep-value\",\"username\":\"request-sweep-value\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"sub_account\":{\"email\":\"request-sweep@example.test\",\"language\":\"ab\",\"phone\":\"request-sweep-value\",\"timezone\":\"request-sweep-value\",\"username\":\"request-sweep-value\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			bodySample := bodySampleOverride
@@ -8697,6 +9606,250 @@ var operationAdapters = []operationAdapter{
 			observed.expectedPath = expectedPath
 			observed.hasExpectedPath = true
 			return client.CreateToken(ctx, body)
+		}},
+	{ID: "createContainerRegistry", Method: "POST", PathTemplate: "/1.3/container-registry",
+		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"name\":\"request-sweep-value\",\"region\":\"request-sweep-value\",\"tier\":\"starter_beta\"}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			bodySample := bodySampleOverride
+			if bodySample == "" {
+				bodySample = "{\"name\":\"request-sweep-value\",\"region\":\"request-sweep-value\",\"tier\":\"starter_beta\"}"
+			}
+			body, err := requestSampleFromJSON[upcloud.CreateContainerRegistryJSONRequestBody](bodySample)
+			if err != nil {
+				return nil, err
+			}
+			observed.expectedBody = []byte(bodySample)
+			observed.hasExpectedBody = true
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry", []pathValue{})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.CreateContainerRegistry(ctx, body)
+		}},
+	{ID: "createContainerRegistryIPAllowlistEntry", Method: "POST", PathTemplate: "/1.3/container-registry/{uuid}/allowlist",
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"cidr\":\"192.0.2.0/24\"}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.CreateContainerRegistryIPAllowlistEntryUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			bodySample := bodySampleOverride
+			if bodySample == "" {
+				bodySample = "{\"cidr\":\"192.0.2.0/24\"}"
+			}
+			body, err := requestSampleFromJSON[upcloud.CreateContainerRegistryIPAllowlistEntryJSONRequestBody](bodySample)
+			if err != nil {
+				return nil, err
+			}
+			observed.expectedBody = []byte(bodySample)
+			observed.hasExpectedBody = true
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/allowlist", []pathValue{
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.CreateContainerRegistryIPAllowlistEntry(ctx, uuid, body)
+		}},
+	{ID: "rotateContainerRegistryCredentials", Method: "POST", PathTemplate: "/1.3/container-registry/{uuid}/credentials",
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.RotateContainerRegistryCredentialsUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/credentials", []pathValue{
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.RotateContainerRegistryCredentials(ctx, uuid)
+		}},
+	{ID: "createContainerRegistryNetworkPeering", Method: "POST", PathTemplate: "/1.3/container-registry/{uuid}/networks",
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"network_cidr\":\"192.0.2.0/24\",\"network_uuid\":\"00000000-0000-4000-8000-000000000000\",\"zone\":\"request-sweep-value\"}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.CreateContainerRegistryNetworkPeeringUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			bodySample := bodySampleOverride
+			if bodySample == "" {
+				bodySample = "{\"network_cidr\":\"192.0.2.0/24\",\"network_uuid\":\"00000000-0000-4000-8000-000000000000\",\"zone\":\"request-sweep-value\"}"
+			}
+			body, err := requestSampleFromJSON[upcloud.CreateContainerRegistryNetworkPeeringJSONRequestBody](bodySample)
+			if err != nil {
+				return nil, err
+			}
+			observed.expectedBody = []byte(bodySample)
+			observed.hasExpectedBody = true
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/networks", []pathValue{
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.CreateContainerRegistryNetworkPeering(ctx, uuid, body)
+		}},
+	{ID: "restartContainerRegistry", Method: "POST", PathTemplate: "/1.3/container-registry/{uuid}/restart",
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.RestartContainerRegistryUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/restart", []pathValue{
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.RestartContainerRegistry(ctx, uuid)
+		}},
+	{ID: "syncContainerRegistryStorage", Method: "POST", PathTemplate: "/1.3/container-registry/{uuid}/sync-storage",
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.SyncContainerRegistryStorageUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/sync-storage", []pathValue{
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.SyncContainerRegistryStorage(ctx, uuid)
+		}},
+	{ID: "createContainerRegistryUser", Method: "POST", PathTemplate: "/1.3/container-registry/{uuid}/users",
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"password\":\"request-sweep-value\",\"permissions\":[\"create\"],\"username\":\"request-sweep-value\"}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.CreateContainerRegistryUserUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			bodySample := bodySampleOverride
+			if bodySample == "" {
+				bodySample = "{\"password\":\"request-sweep-value\",\"permissions\":[\"create\"],\"username\":\"request-sweep-value\"}"
+			}
+			body, err := requestSampleFromJSON[upcloud.CreateContainerRegistryUserJSONRequestBody](bodySample)
+			if err != nil {
+				return nil, err
+			}
+			observed.expectedBody = []byte(bodySample)
+			observed.hasExpectedBody = true
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/users", []pathValue{
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.CreateContainerRegistryUser(ctx, uuid, body)
+		}},
+	{ID: "changeContainerRegistryUserPassword", Method: "POST", PathTemplate: "/1.3/container-registry/{uuid}/users/{username}/password",
+		PathParams: []pathContract{{Name: "username", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"request-sweep-value\""}, {Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"new_password\":\"request-sweep-value\"}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.ChangeContainerRegistryUserPasswordUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			username, err := requestSampleFromJSON[upcloud.ChangeContainerRegistryUserPasswordUsername]("\"request-sweep-value\"")
+			if err != nil {
+				return nil, err
+			}
+			bodySample := bodySampleOverride
+			if bodySample == "" {
+				bodySample = "{\"new_password\":\"request-sweep-value\"}"
+			}
+			body, err := requestSampleFromJSON[upcloud.ChangeContainerRegistryUserPasswordJSONRequestBody](bodySample)
+			if err != nil {
+				return nil, err
+			}
+			observed.expectedBody = []byte(bodySample)
+			observed.hasExpectedBody = true
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/users/{username}/password", []pathValue{
+				{Contract: pathContract{Name: "username", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"request-sweep-value\"")},
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.ChangeContainerRegistryUserPassword(ctx, uuid, username, body)
+		}},
+	{ID: "createContainerRegistryWebhook", Method: "POST", PathTemplate: "/1.3/container-registry/{uuid}/webhooks",
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"name\":\"request-sweep-value\",\"url\":\"https://example.test/request-sweep\"}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.CreateContainerRegistryWebhookUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			bodySample := bodySampleOverride
+			if bodySample == "" {
+				bodySample = "{\"name\":\"request-sweep-value\",\"url\":\"https://example.test/request-sweep\"}"
+			}
+			body, err := requestSampleFromJSON[upcloud.CreateContainerRegistryWebhookJSONRequestBody](bodySample)
+			if err != nil {
+				return nil, err
+			}
+			observed.expectedBody = []byte(bodySample)
+			observed.hasExpectedBody = true
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/webhooks", []pathValue{
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.CreateContainerRegistryWebhook(ctx, uuid, body)
+		}},
+	{ID: "rotateContainerRegistryWebhookSecret", Method: "POST", PathTemplate: "/1.3/container-registry/{uuid}/webhooks/{name}/rotate-secret",
+		PathParams: []pathContract{{Name: "name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"request-sweep-value\""}, {Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.RotateContainerRegistryWebhookSecretUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			name, err := requestSampleFromJSON[upcloud.RotateContainerRegistryWebhookSecretName]("\"request-sweep-value\"")
+			if err != nil {
+				return nil, err
+			}
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/webhooks/{name}/rotate-secret", []pathValue{
+				{Contract: pathContract{Name: "name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"request-sweep-value\"")},
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.RotateContainerRegistryWebhookSecret(ctx, uuid, name)
 		}},
 	{ID: "createDatabase", Method: "POST", PathTemplate: "/1.3/database",
 		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"hostname_prefix\":\"doc-api-unique-prefix\",\"title\":\"my-managed-database\",\"type\":\"opensearch\",\"zone\":\"de-fra1\"}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
@@ -9041,12 +10194,12 @@ var operationAdapters = []operationAdapter{
 			return client.CreateDatabaseUser(ctx, uuid, body)
 		}},
 	{ID: "createFileStorage", Method: "POST", PathTemplate: "/1.3/file-storage",
-		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"configured_status\":\"started\",\"name\":\"test-name\",\"size_gib\":250,\"zone\":\"fi-hel2\"}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"configured_status\":\"started\",\"name\":\"production-files\",\"size_gib\":250,\"zone\":\"fi-hel2\"}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			bodySample := bodySampleOverride
 			if bodySample == "" {
-				bodySample = "{\"configured_status\":\"started\",\"name\":\"test-name\",\"size_gib\":250,\"zone\":\"fi-hel2\"}"
+				bodySample = "{\"configured_status\":\"started\",\"name\":\"production-files\",\"size_gib\":250,\"zone\":\"fi-hel2\"}"
 			}
 			body, err := requestSampleFromJSON[upcloud.CreateFileStorageJSONRequestBody](bodySample)
 			if err != nil {
@@ -9063,16 +10216,16 @@ var operationAdapters = []operationAdapter{
 			return client.CreateFileStorage(ctx, body)
 		}},
 	{ID: "createFileStorageLabel", Method: "POST", PathTemplate: "/1.3/file-storage/{service-uuid}/labels",
-		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17fd43a5-a97e-44f7-98a8-0a787da67069\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"key\":\"environment\",\"value\":\"development\"}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17871d62-6964-4336-b68d-4a85a8ee10fe\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"key\":\"environment\",\"value\":\"production\"}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
-			serviceUuid, err := requestSampleFromJSON[upcloud.CreateFileStorageLabelServiceUuid]("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")
+			serviceUuid, err := requestSampleFromJSON[upcloud.CreateFileStorageLabelServiceUuid]("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")
 			if err != nil {
 				return nil, err
 			}
 			bodySample := bodySampleOverride
 			if bodySample == "" {
-				bodySample = "{\"key\":\"environment\",\"value\":\"development\"}"
+				bodySample = "{\"key\":\"environment\",\"value\":\"production\"}"
 			}
 			body, err := requestSampleFromJSON[upcloud.CreateFileStorageLabelJSONRequestBody](bodySample)
 			if err != nil {
@@ -9081,7 +10234,7 @@ var operationAdapters = []operationAdapter{
 			observed.expectedBody = []byte(bodySample)
 			observed.hasExpectedBody = true
 			expectedPath, pathErr := requestPathFromTemplate("/1.3/file-storage/{service-uuid}/labels", []pathValue{
-				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")},
+				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")},
 			})
 			if pathErr != nil {
 				return nil, pathErr
@@ -9091,16 +10244,16 @@ var operationAdapters = []operationAdapter{
 			return client.CreateFileStorageLabel(ctx, serviceUuid, body)
 		}},
 	{ID: "createFileStorageNetwork", Method: "POST", PathTemplate: "/1.3/file-storage/{service-uuid}/networks",
-		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17fd43a5-a97e-44f7-98a8-0a787da67069\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"family\":\"IPv4\",\"name\":\"test-name\",\"uuid\":\"03720d07-80a9-41ac-90b0-68a932109339\"}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17871d62-6964-4336-b68d-4a85a8ee10fe\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"family\":\"IPv4\",\"name\":\"production-files\",\"uuid\":\"03720d07-80a9-41ac-90b0-68a932109339\"}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
-			serviceUuid, err := requestSampleFromJSON[upcloud.CreateFileStorageNetworkServiceUuid]("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")
+			serviceUuid, err := requestSampleFromJSON[upcloud.CreateFileStorageNetworkServiceUuid]("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")
 			if err != nil {
 				return nil, err
 			}
 			bodySample := bodySampleOverride
 			if bodySample == "" {
-				bodySample = "{\"family\":\"IPv4\",\"name\":\"test-name\",\"uuid\":\"03720d07-80a9-41ac-90b0-68a932109339\"}"
+				bodySample = "{\"family\":\"IPv4\",\"name\":\"production-files\",\"uuid\":\"03720d07-80a9-41ac-90b0-68a932109339\"}"
 			}
 			body, err := requestSampleFromJSON[upcloud.CreateFileStorageNetworkJSONRequestBody](bodySample)
 			if err != nil {
@@ -9109,7 +10262,7 @@ var operationAdapters = []operationAdapter{
 			observed.expectedBody = []byte(bodySample)
 			observed.hasExpectedBody = true
 			expectedPath, pathErr := requestPathFromTemplate("/1.3/file-storage/{service-uuid}/networks", []pathValue{
-				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")},
+				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")},
 			})
 			if pathErr != nil {
 				return nil, pathErr
@@ -9119,16 +10272,16 @@ var operationAdapters = []operationAdapter{
 			return client.CreateFileStorageNetwork(ctx, serviceUuid, body)
 		}},
 	{ID: "createFileStorageShare", Method: "POST", PathTemplate: "/1.3/file-storage/{service-uuid}/shares",
-		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17fd43a5-a97e-44f7-98a8-0a787da67069\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"acl\":[{\"name\":\"test-name\",\"permission\":\"rw\",\"target\":\"*\"}],\"name\":\"test-name\",\"path\":\"/public\"}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17871d62-6964-4336-b68d-4a85a8ee10fe\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"acl\":[{\"name\":\"production-files\",\"permission\":\"rw\",\"target\":\"*\"}],\"name\":\"project-data\",\"path\":\"/project/data\"}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
-			serviceUuid, err := requestSampleFromJSON[upcloud.CreateFileStorageShareServiceUuid]("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")
+			serviceUuid, err := requestSampleFromJSON[upcloud.CreateFileStorageShareServiceUuid]("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")
 			if err != nil {
 				return nil, err
 			}
 			bodySample := bodySampleOverride
 			if bodySample == "" {
-				bodySample = "{\"acl\":[{\"name\":\"test-name\",\"permission\":\"rw\",\"target\":\"*\"}],\"name\":\"test-name\",\"path\":\"/public\"}"
+				bodySample = "{\"acl\":[{\"name\":\"production-files\",\"permission\":\"rw\",\"target\":\"*\"}],\"name\":\"project-data\",\"path\":\"/project/data\"}"
 			}
 			body, err := requestSampleFromJSON[upcloud.CreateFileStorageShareJSONRequestBody](bodySample)
 			if err != nil {
@@ -9137,7 +10290,7 @@ var operationAdapters = []operationAdapter{
 			observed.expectedBody = []byte(bodySample)
 			observed.hasExpectedBody = true
 			expectedPath, pathErr := requestPathFromTemplate("/1.3/file-storage/{service-uuid}/shares", []pathValue{
-				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")},
+				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")},
 			})
 			if pathErr != nil {
 				return nil, pathErr
@@ -9147,20 +10300,20 @@ var operationAdapters = []operationAdapter{
 			return client.CreateFileStorageShare(ctx, serviceUuid, body)
 		}},
 	{ID: "createFileStorageAcl", Method: "POST", PathTemplate: "/1.3/file-storage/{service-uuid}/shares/{share-name}/acl",
-		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17fd43a5-a97e-44f7-98a8-0a787da67069\""}, {Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"test-name\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"name\":\"test-name\",\"permission\":\"rw\",\"target\":\"*\"}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17871d62-6964-4336-b68d-4a85a8ee10fe\""}, {Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"project-data\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"name\":\"production-files\",\"permission\":\"rw\",\"target\":\"*\"}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
-			serviceUuid, err := requestSampleFromJSON[upcloud.CreateFileStorageAclServiceUuid]("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")
+			serviceUuid, err := requestSampleFromJSON[upcloud.CreateFileStorageAclServiceUuid]("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")
 			if err != nil {
 				return nil, err
 			}
-			shareName, err := requestSampleFromJSON[upcloud.CreateFileStorageAclShareName]("\"test-name\"")
+			shareName, err := requestSampleFromJSON[upcloud.CreateFileStorageAclShareName]("\"project-data\"")
 			if err != nil {
 				return nil, err
 			}
 			bodySample := bodySampleOverride
 			if bodySample == "" {
-				bodySample = "{\"name\":\"test-name\",\"permission\":\"rw\",\"target\":\"*\"}"
+				bodySample = "{\"name\":\"production-files\",\"permission\":\"rw\",\"target\":\"*\"}"
 			}
 			body, err := requestSampleFromJSON[upcloud.CreateFileStorageAclJSONRequestBody](bodySample)
 			if err != nil {
@@ -9169,8 +10322,8 @@ var operationAdapters = []operationAdapter{
 			observed.expectedBody = []byte(bodySample)
 			observed.hasExpectedBody = true
 			expectedPath, pathErr := requestPathFromTemplate("/1.3/file-storage/{service-uuid}/shares/{share-name}/acl", []pathValue{
-				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")},
-				{Contract: pathContract{Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"test-name\"")},
+				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")},
+				{Contract: pathContract{Name: "share-name", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"project-data\"")},
 			})
 			if pathErr != nil {
 				return nil, pathErr
@@ -9448,7 +10601,7 @@ var operationAdapters = []operationAdapter{
 			return client.CreateGatewayServiceLogSession(ctx, serviceUuid, body)
 		}},
 	{ID: "addIPAddress", Method: "POST", PathTemplate: "/1.3/ip_address",
-		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"ip_address\":{\"access\":\"request-sweep-value\",\"family\":\"IPv6\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"ip_address\":{\"access\":\"request-sweep-value\",\"family\":\"IPv6\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			bodySample := bodySampleOverride
@@ -9920,7 +11073,7 @@ var operationAdapters = []operationAdapter{
 			return client.CreateLoadBalancerResolver(ctx, serviceUuid, body)
 		}},
 	{ID: "createNetwork", Method: "POST", PathTemplate: "/1.3/network",
-		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"network\":{\"ip_networks\":{\"ip_network\":[{\"address\":\"request-sweep-value\",\"dhcp\":\"no\",\"family\":\"IPv4\"}]},\"name\":\"backend-net\",\"type\":\"private\",\"zone\":\"fi-hel1\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"network\":{\"ip_networks\":{\"ip_network\":[{\"address\":\"request-sweep-value\",\"dhcp\":\"no\",\"family\":\"IPv4\"}]},\"name\":\"backend-net\",\"type\":\"private\",\"zone\":\"fi-hel1\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			bodySample := bodySampleOverride
@@ -9942,7 +11095,7 @@ var operationAdapters = []operationAdapter{
 			return client.CreateNetwork(ctx, body)
 		}},
 	{ID: "createNetworkPeering", Method: "POST", PathTemplate: "/1.3/network-peering",
-		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"name\":\"Peering A-\\u003eB\",\"network\":{\"uuid\":\"0414e0d7-4436-4037-9dd8-6eaf47dce599\"},\"peer_network\":{\"uuid\":\"0414e0d7-4436-4037-9dd8-6eaf47dce599\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"name\":\"Peering A-\\u003eB\",\"network\":{\"uuid\":\"0414e0d7-4436-4037-9dd8-6eaf47dce599\"},\"peer_network\":{\"uuid\":\"0414e0d7-4436-4037-9dd8-6eaf47dce599\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			bodySample := bodySampleOverride
@@ -9964,7 +11117,7 @@ var operationAdapters = []operationAdapter{
 			return client.CreateNetworkPeering(ctx, body)
 		}},
 	{ID: "createNetworkInterface", Method: "POST", PathTemplate: "/1.3/network/interface",
-		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			bodySample := bodySampleOverride
@@ -10006,6 +11159,76 @@ var operationAdapters = []operationAdapter{
 			observed.expectedPath = expectedPath
 			observed.hasExpectedPath = true
 			return client.CreateObjectStorage(ctx, body)
+		}},
+	{ID: "createJob", Method: "POST", PathTemplate: "/1.3/object-storage-2/jobs",
+		PathParams: []pathContract{}, Query: []queryContract{
+			{Name: "validate_only", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"\""},
+		}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"source\":{\"access_key_id\":\"2026\",\"endpoint_url\":\"https://example.test/request-sweep\",\"secret_access_key\":\"request-sweep-value\"},\"target\":{\"access_key_id\":\"2026\",\"endpoint_url\":\"https://example.test/request-sweep\",\"secret_access_key\":\"request-sweep-value\"},\"type\":\"copy\"}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			params, err := requestSampleParams[*upcloud.CreateJobParams]([]queryContract{
+				{Name: "validate_only", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"\""},
+			})
+			if err != nil {
+				return nil, err
+			}
+			expectedQuery, err := expectedQueryFromParams(params, []queryContract{
+				{Name: "validate_only", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"\""},
+			})
+			if err != nil {
+				return nil, err
+			}
+			observed.expectedQuery = expectedQuery
+			bodySample := bodySampleOverride
+			if bodySample == "" {
+				bodySample = "{\"source\":{\"access_key_id\":\"2026\",\"endpoint_url\":\"https://example.test/request-sweep\",\"secret_access_key\":\"request-sweep-value\"},\"target\":{\"access_key_id\":\"2026\",\"endpoint_url\":\"https://example.test/request-sweep\",\"secret_access_key\":\"request-sweep-value\"},\"type\":\"copy\"}"
+			}
+			body, err := requestSampleFromJSON[upcloud.CreateJobJSONRequestBody](bodySample)
+			if err != nil {
+				return nil, err
+			}
+			observed.expectedBody = []byte(bodySample)
+			observed.hasExpectedBody = true
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/object-storage-2/jobs", []pathValue{})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.CreateJob(ctx, params, body)
+		}},
+	{ID: "cancelJob", Method: "POST", PathTemplate: "/1.3/object-storage-2/jobs/{job-name}/cancel",
+		PathParams: []pathContract{{Name: "job-name", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"01234567-89ab-cdef-0123-456789abcdef\""}}, Query: []queryContract{
+			{Name: "validate_only", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"\""},
+		}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{}, BodySampleJSON: "", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			jobName, err := requestSampleFromJSON[upcloud.ObjectStorage2CancelJobJobName]("\"01234567-89ab-cdef-0123-456789abcdef\"")
+			if err != nil {
+				return nil, err
+			}
+			params, err := requestSampleParams[*upcloud.CancelJobParams]([]queryContract{
+				{Name: "validate_only", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"\""},
+			})
+			if err != nil {
+				return nil, err
+			}
+			expectedQuery, err := expectedQueryFromParams(params, []queryContract{
+				{Name: "validate_only", Style: "form", Explode: true, Required: false, SchemaType: "string", Properties: []string{}, SampleJSON: "\"\""},
+			})
+			if err != nil {
+				return nil, err
+			}
+			observed.expectedQuery = expectedQuery
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/object-storage-2/jobs/{job-name}/cancel", []pathValue{
+				{Contract: pathContract{Name: "job-name", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"01234567-89ab-cdef-0123-456789abcdef\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.CancelJob(ctx, jobName, params)
 		}},
 	{ID: "createObjectStorageBucket", Method: "POST", PathTemplate: "/1.3/object-storage-2/{service-uuid}/buckets",
 		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"01234567-89ab-cdef-0123-456789abcdef\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"name\":\"my-bucket-1\"}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
@@ -10566,7 +11789,7 @@ var operationAdapters = []operationAdapter{
 	{ID: "grantPermission", Method: "POST", PathTemplate: "/1.3/permission/grant",
 		PathParams: []pathContract{}, Query: []queryContract{
 			{Name: "skip_target_check", Style: "form", Explode: true, Required: false, SchemaType: "boolean", Properties: []string{}, SampleJSON: "false"},
-		}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			params, err := requestSampleParams[*upcloud.GrantPermissionParams]([]queryContract{
@@ -10601,7 +11824,7 @@ var operationAdapters = []operationAdapter{
 			return client.GrantPermission(ctx, params, body)
 		}},
 	{ID: "revokePermission", Method: "POST", PathTemplate: "/1.3/permission/revoke",
-		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			bodySample := bodySampleOverride
@@ -10679,7 +11902,7 @@ var operationAdapters = []operationAdapter{
 			return client.RevokeAllPermissionsByUser(ctx, user)
 		}},
 	{ID: "createRouter", Method: "POST", PathTemplate: "/1.3/router",
-		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"router\":{\"name\":\"Example router\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"router\":{\"name\":\"Example router\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			bodySample := bodySampleOverride
@@ -10701,12 +11924,12 @@ var operationAdapters = []operationAdapter{
 			return client.CreateRouter(ctx, body)
 		}},
 	{ID: "createServer", Method: "POST", PathTemplate: "/1.3/server",
-		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"server\":{\"hostname\":\"example.upcloud.com\",\"storage_devices\":{\"storage_device\":[{\"action\":\"clone\",\"storage\":\"request-sweep-value\"}]},\"title\":\"My Server\",\"zone\":\"fi-hel1\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"server\":{\"hostname\":\"example.upcloud.com\",\"storage_devices\":{\"storage_device\":[{\"action\":\"create\",\"size\":1}]},\"title\":\"My Server\",\"zone\":\"fi-hel1\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			bodySample := bodySampleOverride
 			if bodySample == "" {
-				bodySample = "{\"server\":{\"hostname\":\"example.upcloud.com\",\"storage_devices\":{\"storage_device\":[{\"action\":\"clone\",\"storage\":\"request-sweep-value\"}]},\"title\":\"My Server\",\"zone\":\"fi-hel1\"}}"
+				bodySample = "{\"server\":{\"hostname\":\"example.upcloud.com\",\"storage_devices\":{\"storage_device\":[{\"action\":\"create\",\"size\":1}]},\"title\":\"My Server\",\"zone\":\"fi-hel1\"}}"
 			}
 			body, err := requestSampleFromJSON[upcloud.CreateServerJSONRequestBody](bodySample)
 			if err != nil {
@@ -10723,7 +11946,7 @@ var operationAdapters = []operationAdapter{
 			return client.CreateServer(ctx, body)
 		}},
 	{ID: "createServerGroup", Method: "POST", PathTemplate: "/1.3/server-group",
-		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"server_group\":{}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"server_group\":{}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			bodySample := bodySampleOverride
@@ -10745,7 +11968,7 @@ var operationAdapters = []operationAdapter{
 			return client.CreateServerGroup(ctx, body)
 		}},
 	{ID: "addServerToGroup", Method: "POST", PathTemplate: "/1.3/server-group/{uuid}/servers",
-		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"0414e0d7-4436-4037-9dd8-6eaf47dce599\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"server\":{\"uuid\":\"0414e0d7-4436-4037-9dd8-6eaf47dce599\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"0414e0d7-4436-4037-9dd8-6eaf47dce599\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"server\":{\"uuid\":\"0414e0d7-4436-4037-9dd8-6eaf47dce599\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			uuid, err := requestSampleFromJSON[upcloud.ServerGroupAddServerToGroupUuid]("\"0414e0d7-4436-4037-9dd8-6eaf47dce599\"")
@@ -11193,7 +12416,7 @@ var operationAdapters = []operationAdapter{
 			return client.DetachStorageDevice(ctx, uuid, body)
 		}},
 	{ID: "createStorage", Method: "POST", PathTemplate: "/1.3/storage",
-		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"storage\":{\"size\":1,\"title\":\"request-sweep-value\",\"zone\":\"us-nyc1\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"storage\":{\"size\":1,\"title\":\"request-sweep-value\",\"zone\":\"us-nyc1\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			bodySample := bodySampleOverride
@@ -11215,7 +12438,7 @@ var operationAdapters = []operationAdapter{
 			return client.CreateStorage(ctx, body)
 		}},
 	{ID: "attachStorageToServer", Method: "POST", PathTemplate: "/1.3/storage/{uuid}/attach",
-		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"0414e0d7-4436-4037-9dd8-6eaf47dce599\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"storage_device\":{\"server\":\"0414e0d7-4436-4037-9dd8-6eaf47dce599\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"0414e0d7-4436-4037-9dd8-6eaf47dce599\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"storage_device\":{\"server\":\"0414e0d7-4436-4037-9dd8-6eaf47dce599\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			uuid, err := requestSampleFromJSON[upcloud.AttachStorageToServerUuid]("\"0414e0d7-4436-4037-9dd8-6eaf47dce599\"")
@@ -11243,7 +12466,7 @@ var operationAdapters = []operationAdapter{
 			return client.AttachStorageToServer(ctx, uuid, body)
 		}},
 	{ID: "createOnDemandBackup", Method: "POST", PathTemplate: "/1.3/storage/{uuid}/backup",
-		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"0414e0d7-4436-4037-9dd8-6eaf47dce599\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"storage\":{\"title\":\"request-sweep-value\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"0414e0d7-4436-4037-9dd8-6eaf47dce599\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"storage\":{\"title\":\"request-sweep-value\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			uuid, err := requestSampleFromJSON[upcloud.StorageCreateOnDemandBackupUuid]("\"0414e0d7-4436-4037-9dd8-6eaf47dce599\"")
@@ -11289,7 +12512,7 @@ var operationAdapters = []operationAdapter{
 			return client.CancelStorageOperation(ctx, uuid)
 		}},
 	{ID: "cloneStorage", Method: "POST", PathTemplate: "/1.3/storage/{uuid}/clone",
-		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"0414e0d7-4436-4037-9dd8-6eaf47dce599\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"storage\":{\"title\":\"request-sweep-value\",\"zone\":\"de-fra1\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"0414e0d7-4436-4037-9dd8-6eaf47dce599\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"storage\":{\"title\":\"request-sweep-value\",\"zone\":\"de-fra1\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			uuid, err := requestSampleFromJSON[upcloud.CloneStorageUuid]("\"0414e0d7-4436-4037-9dd8-6eaf47dce599\"")
@@ -11353,7 +12576,7 @@ var operationAdapters = []operationAdapter{
 			return client.AddStorageToFavorites(ctx, uuid)
 		}},
 	{ID: "createStorageImport", Method: "POST", PathTemplate: "/1.3/storage/{uuid}/import",
-		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"0414e0d7-4436-4037-9dd8-6eaf47dce599\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"storage_import\":{\"source\":\"http_import\",\"source_location\":\"https://example.test/request-sweep\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"0414e0d7-4436-4037-9dd8-6eaf47dce599\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"storage_import\":{\"source\":\"http_import\",\"source_location\":\"https://example.test/request-sweep\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			uuid, err := requestSampleFromJSON[upcloud.CreateStorageImportUuid]("\"0414e0d7-4436-4037-9dd8-6eaf47dce599\"")
@@ -11435,7 +12658,7 @@ var operationAdapters = []operationAdapter{
 			return client.RestoreStorageFromBackup(ctx, uuid)
 		}},
 	{ID: "createTemplateFromStorage", Method: "POST", PathTemplate: "/1.3/storage/{uuid}/templatize",
-		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"0414e0d7-4436-4037-9dd8-6eaf47dce599\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"storage\":{\"title\":\"request-sweep-value\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"0414e0d7-4436-4037-9dd8-6eaf47dce599\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"storage\":{\"title\":\"request-sweep-value\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			uuid, err := requestSampleFromJSON[upcloud.CreateTemplateFromStorageUuid]("\"0414e0d7-4436-4037-9dd8-6eaf47dce599\"")
@@ -11484,6 +12707,72 @@ var operationAdapters = []operationAdapter{
 			observed.hasExpectedPath = true
 			return client.CreateTag(ctx, body)
 		}},
+	{ID: "modifyAccountProfile", Method: "PUT", PathTemplate: "/1.3/account/details/{username}",
+		PathParams: []pathContract{{Name: "username", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"request-sweep-value\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"account\":{}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			username, err := requestSampleFromJSON[upcloud.ModifyAccountProfileUsername]("\"request-sweep-value\"")
+			if err != nil {
+				return nil, err
+			}
+			bodySample := bodySampleOverride
+			if bodySample == "" {
+				bodySample = "{\"account\":{}}"
+			}
+			body, err := requestSampleFromJSON[upcloud.ModifyAccountProfileJSONRequestBody](bodySample)
+			if err != nil {
+				return nil, err
+			}
+			observed.expectedBody = []byte(bodySample)
+			observed.hasExpectedBody = true
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/account/details/{username}", []pathValue{
+				{Contract: pathContract{Name: "username", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"request-sweep-value\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.ModifyAccountProfile(ctx, username, body)
+		}},
+	{ID: "tagContainerRegistryDigest", Method: "PUT", PathTemplate: "/1.3/container-registry/{uuid}/repositories/{repo}/tags/{tag}",
+		PathParams: []pathContract{{Name: "repo", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"request-sweep-value\""}, {Name: "tag", Style: "simple", Explode: false, SchemaType: "string", Format: "", SampleJSON: "\"request-sweep-value\""}, {Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"00000000-0000-4000-8000-000000000000\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"digest\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+			observed.expectedQuery = make(map[string][]string)
+			observed.hasExpectedQuery = true
+			uuid, err := requestSampleFromJSON[upcloud.TagContainerRegistryDigestUuid]("\"00000000-0000-4000-8000-000000000000\"")
+			if err != nil {
+				return nil, err
+			}
+			repo, err := requestSampleFromJSON[upcloud.TagContainerRegistryDigestRepo]("\"request-sweep-value\"")
+			if err != nil {
+				return nil, err
+			}
+			tag, err := requestSampleFromJSON[upcloud.TagContainerRegistryDigestTag]("\"request-sweep-value\"")
+			if err != nil {
+				return nil, err
+			}
+			bodySample := bodySampleOverride
+			if bodySample == "" {
+				bodySample = "{\"digest\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}"
+			}
+			body, err := requestSampleFromJSON[upcloud.TagContainerRegistryDigestJSONRequestBody](bodySample)
+			if err != nil {
+				return nil, err
+			}
+			observed.expectedBody = []byte(bodySample)
+			observed.hasExpectedBody = true
+			expectedPath, pathErr := requestPathFromTemplate("/1.3/container-registry/{uuid}/repositories/{repo}/tags/{tag}", []pathValue{
+				{Contract: pathContract{Name: "repo", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"request-sweep-value\"")},
+				{Contract: pathContract{Name: "tag", Style: "simple", Explode: false, SchemaType: "string", Format: ""}, Value: requestSampleValueFromJSON("\"request-sweep-value\"")},
+				{Contract: pathContract{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"00000000-0000-4000-8000-000000000000\"")},
+			})
+			if pathErr != nil {
+				return nil, pathErr
+			}
+			observed.expectedPath = expectedPath
+			observed.hasExpectedPath = true
+			return client.TagContainerRegistryDigest(ctx, uuid, repo, tag, body)
+		}},
 	{ID: "modifyDatabaseSecurityAdmin", Method: "PUT", PathTemplate: "/1.3/database/{uuid}/security/admin",
 		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"01234567-89ab-cdef-0123-456789abcdef\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"admin_password\":\"current_password_123\",\"new_password\":\"new_secure_password_456\"}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
@@ -11531,16 +12820,16 @@ var operationAdapters = []operationAdapter{
 			return client.StartDatabaseManualMaintenance(ctx, uuid)
 		}},
 	{ID: "replaceFileStorage", Method: "PUT", PathTemplate: "/1.3/file-storage/{service-uuid}",
-		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17fd43a5-a97e-44f7-98a8-0a787da67069\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"configured_status\":\"started\",\"name\":\"test-name\",\"size_gib\":250}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"17871d62-6964-4336-b68d-4a85a8ee10fe\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"configured_status\":\"started\",\"name\":\"production-files\",\"size_gib\":250}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
-			serviceUuid, err := requestSampleFromJSON[upcloud.ReplaceFileStorageServiceUuid]("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")
+			serviceUuid, err := requestSampleFromJSON[upcloud.ReplaceFileStorageServiceUuid]("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")
 			if err != nil {
 				return nil, err
 			}
 			bodySample := bodySampleOverride
 			if bodySample == "" {
-				bodySample = "{\"configured_status\":\"started\",\"name\":\"test-name\",\"size_gib\":250}"
+				bodySample = "{\"configured_status\":\"started\",\"name\":\"production-files\",\"size_gib\":250}"
 			}
 			body, err := requestSampleFromJSON[upcloud.ReplaceFileStorageJSONRequestBody](bodySample)
 			if err != nil {
@@ -11549,7 +12838,7 @@ var operationAdapters = []operationAdapter{
 			observed.expectedBody = []byte(bodySample)
 			observed.hasExpectedBody = true
 			expectedPath, pathErr := requestPathFromTemplate("/1.3/file-storage/{service-uuid}", []pathValue{
-				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17fd43a5-a97e-44f7-98a8-0a787da67069\"")},
+				{Contract: pathContract{Name: "service-uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid"}, Value: requestSampleValueFromJSON("\"17871d62-6964-4336-b68d-4a85a8ee10fe\"")},
 			})
 			if pathErr != nil {
 				return nil, pathErr
@@ -11643,7 +12932,7 @@ var operationAdapters = []operationAdapter{
 			return client.ReplaceGatewayService(ctx, serviceUuid, body)
 		}},
 	{ID: "modifyIPAddress", Method: "PUT", PathTemplate: "/1.3/ip_address/{address}",
-		PathParams: []pathContract{{Name: "address", Style: "simple", Explode: false, SchemaType: "", Format: "", SampleJSON: "\"192.0.2.1\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"ip_address\":{\"ptr_record\":\"host.example.com\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "address", Style: "simple", Explode: false, SchemaType: "", Format: "", SampleJSON: "\"192.0.2.1\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"ip_address\":{\"ptr_record\":\"host.example.com\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			address, err := requestSampleFromJSON[upcloud.ModifyIPAddressAddress]("\"192.0.2.1\"")
@@ -11822,7 +13111,7 @@ var operationAdapters = []operationAdapter{
 			return client.ReplaceLoadBalancerRule(ctx, serviceUuid, frontendName, ruleName, body)
 		}},
 	{ID: "modifyNetwork", Method: "PUT", PathTemplate: "/1.3/network/{uuid}",
-		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"0414e0d7-4436-4037-9dd8-6eaf47dce599\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"network\":{\"grt_export\":0,\"ip_networks\":{\"ip_network\":[{\"address\":\"request-sweep-value\",\"family\":\"IPv4\"}]},\"labels\":{},\"main_account_id\":1,\"name\":\"request-sweep-value\",\"network_features\":\"allow-overlapping-ip-network\",\"parent_network\":\"request-sweep-value\",\"router\":\"0414e0d7-4436-4037-9dd8-6eaf47dce599\",\"tags\":{\"tags\":{\"tag\":[{\"name\":\"private\",\"servers\":{}}]}},\"type\":\"public\",\"zone\":\"de-fra1\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"0414e0d7-4436-4037-9dd8-6eaf47dce599\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"network\":{\"grt_export\":0,\"ip_networks\":{\"ip_network\":[{\"address\":\"request-sweep-value\",\"family\":\"IPv4\"}]},\"labels\":{},\"main_account_id\":1,\"name\":\"request-sweep-value\",\"network_features\":\"allow-overlapping-ip-network\",\"parent_network\":\"request-sweep-value\",\"router\":\"0414e0d7-4436-4037-9dd8-6eaf47dce599\",\"tags\":{\"tags\":{\"tag\":[{\"name\":\"private\",\"servers\":{}}]}},\"type\":\"public\",\"zone\":\"de-fra1\"}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			uuid, err := requestSampleFromJSON[upcloud.ModifyNetworkUuid]("\"0414e0d7-4436-4037-9dd8-6eaf47dce599\"")
@@ -12043,7 +13332,7 @@ var operationAdapters = []operationAdapter{
 			return client.ReplaceObjectStorageUserTags(ctx, serviceUuid, username, body)
 		}},
 	{ID: "replacePermissions", Method: "PUT", PathTemplate: "/1.3/permission",
-		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			bodySample := bodySampleOverride
@@ -12154,7 +13443,7 @@ var operationAdapters = []operationAdapter{
 			return client.ModifyServerInterface(ctx, uuid, index, body)
 		}},
 	{ID: "modifyStorage", Method: "PUT", PathTemplate: "/1.3/storage/{uuid}",
-		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"0414e0d7-4436-4037-9dd8-6eaf47dce599\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: false, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"storage\":{}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
+		PathParams: []pathContract{{Name: "uuid", Style: "simple", Explode: false, SchemaType: "string", Format: "uuid", SampleJSON: "\"0414e0d7-4436-4037-9dd8-6eaf47dce599\""}}, Query: []queryContract{}, Headers: []headerContract{}, BodyRequired: true, BodyMediaTypes: []string{"application/json"}, BodySampleJSON: "{\"storage\":{}}", Invoke: func(ctx context.Context, client *upcloud.Client, observed *capturedRequest, bodySampleOverride string) (*http.Response, error) {
 			observed.expectedQuery = make(map[string][]string)
 			observed.hasExpectedQuery = true
 			uuid, err := requestSampleFromJSON[upcloud.ModifyStorageUuid]("\"0414e0d7-4436-4037-9dd8-6eaf47dce599\"")

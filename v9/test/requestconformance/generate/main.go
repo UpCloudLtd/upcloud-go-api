@@ -820,7 +820,7 @@ func sampleString(schema map[string]json.RawMessage) (json.RawMessage, error) {
 		value = value[:maximum]
 	}
 	if pattern := rawString(schema["pattern"]); pattern != "" && !sampleMatchesPattern(pattern, value) {
-		candidates := []string{"2026", "01", "12", "123", "QA", "DEV", "fi-hel1", "ab", "x", exampleKey, "request-sweep", "192.0.2.1", "a@example.test"}
+		candidates := []string{"2026", "01", "12", "123", "QA", "DEV", "fi-hel1", "ab", "x", exampleKey, "request-sweep", "192.0.2.1", "192.0.2.0/24", "a@example.test", "sha256:" + strings.Repeat("a", 64)}
 		matched := false
 		for _, candidate := range candidates {
 			if len(candidate) < minimum || (maximum > 0 && len(candidate) > maximum) {

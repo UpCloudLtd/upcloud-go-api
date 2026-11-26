@@ -5,9 +5,9 @@ info:
   title: Overlay for oapi-codegen compatibility. Using specific schema references to keep the generated code as consistent as possible.
   version: 0.0.3
 actions:
-  # Change serverStorageDevices.storage_device items size type from [integer, string] to integer.
-  # oapi-codegen does not support arrays of primitive types.
-  - target: "$.components.schemas.serverStorageDevices.properties.storage_device.items.properties.size"
+  # Change storage_device size from [integer, string] to integer.
+  # Target every oneOf branch. oapi-codegen lacks primitive array support.
+  - target: "$.components.schemas.serverStorageDevices..properties.size"
     update:
       type: integer
   # Replace loadBalancerFrontend.mode with a $ref for deduplication.

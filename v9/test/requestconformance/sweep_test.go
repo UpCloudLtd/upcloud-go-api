@@ -188,8 +188,9 @@ func TestEverySpecOperationEmitsOneTypedRequest(t *testing.T) {
 		SpecVersion: requestSweepSpecVersion,
 		SpecSHA256:  requestSweepSpecSHA256,
 		Normalizations: []string{
-			"databaseServiceCloneOpenAPI: moved additionalProperties:false to unevaluatedProperties:false to preserve oneOf branch properties while rejecting unknown fields",
-			"objectStorage2TagKey: replaced a negative-lookahead pattern with an equivalent RE2 pattern for kin-openapi validation",
+			"databaseServiceCloneOpenapi: moved additionalProperties:false to unevaluatedProperties:false to preserve oneOf branch properties while rejecting unknown fields",
+			"storageLabelFilter: replaced a negative-lookahead pattern with an equivalent RE2 pattern for kin-openapi validation",
+			"hostModify.host.description: replaced an end-of-input lookahead with an equivalent RE2 anchor for kin-openapi validation",
 		},
 		Inventory: make([]operationInventoryEntry, 0, len(operationAdapters)),
 	}
@@ -369,7 +370,7 @@ func normalizeDatabaseCloneSchema(document *openapi3.T) error {
 	// The copied 3.1 schema applies additionalProperties:false before its oneOf
 	// branches, rejecting every branch-only property. unevaluatedProperties keeps
 	// the intended rejection after branch evaluation.
-	const schemaName = "databaseServiceCloneOpenAPI"
+	const schemaName = "databaseServiceCloneOpenapi"
 	reference := document.Components.Schemas[schemaName]
 	if reference == nil || reference.Value == nil {
 		return fmt.Errorf("canonical schema %s is missing", schemaName)
@@ -392,8 +393,11 @@ func normalizeDatabaseCloneSchema(document *openapi3.T) error {
 func normalizeOpenAPIPatterns(document *openapi3.T) error {
 	// Go's RE2 engine lacks negative lookahead; this exact rewrite excludes '_' only
 	// from the first character and keeps the same remaining alphabet and suffix.
-	const source = `^(?!_)[\x20-\x3C\x3E-\x7E]{2,32}(?:=.*)?$`
-	const replacement = `^[\x20-\x3C\x3E-\x5E\x60-\x7E][\x20-\x3C\x3E-\x7E]{1,31}(=.*)?$`
+	// (?![\s\S]) only asserts end of input, so the second rewrite keeps the same match set.
+	patternRewrites := map[string]string{
+		`^(?!_)[\x20-\x3C\x3E-\x7E]{2,32}(?:=.*)?$`: `^[\x20-\x3C\x3E-\x5E\x60-\x7E][\x20-\x3C\x3E-\x7E]{1,31}(=.*)?$`,
+		`^[^<>\x00-\x1F\x7F-\x9F]*(?![\s\S])`: `^[^<>\x00-\x1F\x7F-\x9F]*$`,
+	}
 	seen := make(map[*openapi3.Schema]struct{})
 	var visit func(*openapi3.SchemaRef) error
 	visit = func(reference *openapi3.SchemaRef) error {
@@ -407,10 +411,11 @@ func normalizeOpenAPIPatterns(document *openapi3.T) error {
 		seen[schema] = struct{}{}
 		if schema.Pattern != "" {
 			if _, err := regexp.Compile(schema.Pattern); err != nil {
-				if schema.Pattern != source {
+				rewritten, ok := patternRewrites[schema.Pattern]
+				if !ok {
 					return fmt.Errorf("unsupported schema regex %q; add a reviewed equivalent", schema.Pattern)
 				}
-				schema.Pattern = replacement
+				schema.Pattern = rewritten
 			}
 		}
 		for _, references := range []openapi3.SchemaRefs{schema.OneOf, schema.AnyOf, schema.AllOf, schema.PrefixItems} {
@@ -1107,8 +1112,10 @@ func requestSampleParams[T any](contracts []queryContract) (T, error) {
 }
 
 func requestSampleValueFromJSON(sampleJSON string) any {
+	decoder := json.NewDecoder(strings.NewReader(sampleJSON))
+	decoder.UseNumber()
 	var sample any
-	if err := json.Unmarshal([]byte(sampleJSON), &sample); err != nil {
+	if err := decoder.Decode(&sample); err != nil {
 		panic(err)
 	}
 	return sample
