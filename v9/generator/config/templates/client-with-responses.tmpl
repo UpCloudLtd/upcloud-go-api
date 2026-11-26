@@ -5,32 +5,12 @@
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type {{$interfacePrefix}}ClientWithResponsesInterface interface {
 {{range . -}}
-{{$hasParams := .RequiresParamObject -}}
-{{$pathParams := .PathParams -}}
 {{$opid := .OperationId -}}
-{{$parent := . }}
-{{$opidSuffix := ""}}
-{{- if .HasBody -}}
-{{- $opidSuffix = "WithBody" -}}
-{{- end -}}
-{{$deprecationComment := .DeprecationComment -}}
-    {{ if .HasBody }}
-        {{ .GenerateFunctionComment $opid "WithBodyWithResponse" true }}
-    {{ else }}
-        {{ .GenerateFunctionComment $opid "WithResponse" true }}
-    {{ end -}}
-    {{with $deprecationComment}}//
-    {{.}}
-    {{end -}}{{$opid}}{{if .HasBody}}WithBody{{end}}WithResponse(ctx context.Context{{genParamArgs .PathParams}}{{if .RequiresParamObject}}, params *{{$opid}}Params{{end}}{{if .HasBody}}, contentType string, body io.Reader{{end}}, reqEditors... RequestEditorFn) (*{{genResponseTypeName $opid}}, error)
-{{range .Bodies}}
-    {{if .IsSupportedByClient -}}
-        {{ .GenerateFunctionComment $opid $parent (printf "%sWithResponse" .Suffix) true }}
-        {{with $deprecationComment}}//
-        {{.}}
-        {{end -}}{{$opid}}{{.Suffix}}WithResponse(ctx context.Context{{genParamArgs $pathParams}}{{if $hasParams}}, params *{{$opid}}Params{{end}}, body {{$opid}}{{.NameTag}}RequestBody, reqEditors... RequestEditorFn) (*{{genResponseTypeName $opid}}, error)
-    {{end -}}
-{{end}}{{/* range .Bodies */}}
-{{end}}{{/* range . $opid := .OperationId */}}
+{{range .ClientMethodVariants}}
+    {{.WithResponseInterfaceComment}}
+    {{$opid}}{{.Suffix}}WithResponse(ctx context.Context{{.ArgsDecl}}, reqEditors... RequestEditorFn) (*{{genResponseTypeName $opid}}, error)
+{{end -}}
+{{end -}}{{/* range . $opid := .OperationId */}}
 }
 
 {{range .}}{{$opid := .OperationId}}{{$op := .}}
@@ -110,46 +90,17 @@ func (r {{genResponseTypeName $opid | ucFirst}}) ContentType() string {
 
 {{range .}}
 {{$opid := .OperationId -}}
-{{$parent := . }}
-{{$opidSuffix := ""}}
-{{- if .HasBody -}}
-{{- $opidSuffix = "WithBody" -}}
-{{- end -}}
-{{$deprecationComment := .DeprecationComment -}}
 {{/* Generate client methods (with responses)*/}}
-
-{{ if .HasBody }}
-    {{ .GenerateFunctionComment $opid "WithBodyWithResponse" true }}
-{{ else }}
-    {{ .GenerateFunctionComment $opid "WithResponse" true }}
-{{ end -}}
-{{with $deprecationComment}}//
-{{.}}
-{{end -}}func (c *ClientWithResponses) {{$opid}}{{if .HasBody}}WithBody{{end}}WithResponse(ctx context.Context{{genParamArgs .PathParams}}{{if .RequiresParamObject}}, params *{{$opid}}Params{{end}}{{if .HasBody}}, contentType string, body io.Reader{{end}}, reqEditors... RequestEditorFn) (*{{genResponseTypeName $opid}}, error){
-    rsp, err := c.{{$opid}}{{if .HasBody}}WithBody{{end}}(ctx{{genParamNames .PathParams}}{{if .RequiresParamObject}}, params{{end}}{{if .HasBody}}, contentType, body{{end}}, reqEditors...)
+{{range .ClientMethodVariants}}
+{{.WithResponseMethodComment}}
+func (c *ClientWithResponses) {{$opid}}{{.Suffix}}WithResponse(ctx context.Context{{.ArgsDecl}}, reqEditors... RequestEditorFn) (*{{genResponseTypeName $opid}}, error) {
+    rsp, err := c.{{$opid}}{{.Suffix}}(ctx{{.CallArgs}}, reqEditors...)
     if err != nil {
         return nil, err
     }
     return Parse{{genResponseTypeName $opid | ucFirst}}(rsp)
 }
-
-{{$hasParams := .RequiresParamObject -}}
-{{$pathParams := .PathParams -}}
-{{$bodyRequired := .BodyRequired -}}
-{{range .Bodies}}
-{{if .IsSupportedByClient -}}
-{{ .GenerateFunctionComment $opid $parent (printf "%sWithResponse" .Suffix) true }}
-{{with $deprecationComment}}{{.}}
-{{end -}}func (c *ClientWithResponses) {{$opid}}{{.Suffix}}WithResponse(ctx context.Context{{genParamArgs $pathParams}}{{if $hasParams}}, params *{{$opid}}Params{{end}}, body {{$opid}}{{.NameTag}}RequestBody, reqEditors... RequestEditorFn) (*{{genResponseTypeName $opid}}, error) {
-    rsp, err := c.{{$opid}}{{.Suffix}}(ctx{{genParamNames $pathParams}}{{if $hasParams}}, params{{end}}, body, reqEditors...)
-    if err != nil {
-        return nil, err
-    }
-    return Parse{{genResponseTypeName $opid | ucFirst}}(rsp)
-}
-{{end}}
-{{end}}
-
+{{end -}}{{/* range .ClientMethodVariants */}}
 {{end}}{{/* operations */}}
 
 {{/* Generate parse functions for responses*/}}
@@ -180,7 +131,7 @@ func Parse{{genResponseTypeName $opid | ucFirst}}(rsp *http.Response) (*{{genRes
         {{- range .Headers}}
         if values := rsp.Header.Values({{.Name | toGoString}}); len(values) > 0 {
             var value {{.Schema.TypeDecl}}
-            if err := runtime.BindStyledParameterWithOptions("simple", {{.Name | toGoString}}, values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: {{.Required}}, Type: "{{.SchemaType}}", Format: "{{.SchemaFormat}}"}); err != nil {
+            if err := runtime.BindStyledParameterWithOptions("simple", {{.Name | toGoString}}, values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: {{.Required}}, Type: "{{.SchemaType}}", Format: "{{.SchemaFormat}}"{{unionTypes .SchemaTypes}}}); err != nil {
                 return nil, err
             }
             {{- if .IsNullable}}

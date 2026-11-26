@@ -7,7 +7,7 @@ API_REPORT_DIR ?=
 export GOTOOLCHAIN := local
 export GOWORK := off
 
-.PHONY: build test vet lint test-consumer test-credentials test-generator generate-request-adapters check-request-adapters test-request-conformance test-public-api test-public-api-gate update-public-api check
+.PHONY: build test vet lint test-consumer test-credentials test-generator check-templates generate-request-adapters check-request-adapters test-request-conformance test-public-api test-public-api-gate update-public-api check
 
 build:
 	$(GO) build -mod=readonly ./...
@@ -16,7 +16,10 @@ build:
 test:
 	$(GO) test -mod=readonly -count=1 -timeout=$(TEST_TIMEOUT) ./...
 
-vet:
+check-templates:
+	GO=$(GO) bash generator/scripts/render-templates.sh check
+
+vet: check-templates
 	$(GO) vet -mod=readonly ./...
 
 lint:
