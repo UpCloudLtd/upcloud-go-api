@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/refs/tags/v2.8.0/configuration-schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/refs/tags/v2.9.0/configuration-schema.json
 package: upcloud
 compatibility:
   always-prefix-enum-values: true
@@ -14,6 +14,10 @@ output-options:
   # Example: createServer operation generates CreateServerResp instead of
   # CreateServerResponse, which would collide with the createServerResponse schema.
   response-type-suffix: "Resp"
+  # nullable-type emits nullable.Nullable[T] for nullable optional fields. An unset
+  # optional field is omitted. An explicit null sends null, which clears the field.
+  # Required nullable fields always send their key.
+  nullable-type: true
   overlay:
     path: ./generator/config/overlay/oapi-codegen.yaml
     strict: false

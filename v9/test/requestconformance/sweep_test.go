@@ -396,7 +396,7 @@ func normalizeOpenAPIPatterns(document *openapi3.T) error {
 	// (?![\s\S]) only asserts end of input, so the second rewrite keeps the same match set.
 	patternRewrites := map[string]string{
 		`^(?!_)[\x20-\x3C\x3E-\x7E]{2,32}(?:=.*)?$`: `^[\x20-\x3C\x3E-\x5E\x60-\x7E][\x20-\x3C\x3E-\x7E]{1,31}(=.*)?$`,
-		`^[^<>\x00-\x1F\x7F-\x9F]*(?![\s\S])`: `^[^<>\x00-\x1F\x7F-\x9F]*$`,
+		`^[^<>\x00-\x1F\x7F-\x9F]*(?![\s\S])`:       `^[^<>\x00-\x1F\x7F-\x9F]*$`,
 	}
 	seen := make(map[*openapi3.Schema]struct{})
 	var visit func(*openapi3.SchemaRef) error

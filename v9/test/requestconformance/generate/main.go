@@ -570,17 +570,22 @@ func sampleSchema(raw json.RawMessage, document specDocument, depth, variation i
 				var conditional struct {
 					If   json.RawMessage `json:"if"`
 					Then json.RawMessage `json:"then"`
+					Else json.RawMessage `json:"else"`
 				}
-				if err := json.Unmarshal(branch, &conditional); err != nil || len(conditional.If) == 0 || len(conditional.Then) == 0 {
+				if err := json.Unmarshal(branch, &conditional); err != nil || len(conditional.If) == 0 || (len(conditional.Then) == 0 && len(conditional.Else) == 0) {
 					continue
 				}
+				consequenceSchema := conditional.Then
 				if !conditionMatches(conditional.If, object) {
+					consequenceSchema = conditional.Else
+				}
+				if len(consequenceSchema) == 0 {
 					continue
 				}
 				var consequence struct {
 					Required []string `json:"required"`
 				}
-				if err := json.Unmarshal(conditional.Then, &consequence); err != nil {
+				if err := json.Unmarshal(consequenceSchema, &consequence); err != nil {
 					return nil, err
 				}
 				for index, name := range consequence.Required {

@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/refs/tags/v2.8.0/configuration-schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/refs/tags/v2.9.0/configuration-schema.json
 package: upcloud
 compatibility:
   always-prefix-enum-values: true
@@ -18,9 +18,10 @@ output-options:
     path: ./generator/config/overlay/oapi-codegen.yaml
     strict: false
   user-templates:
-    # client.tmpl customized to prefix ClientInterface with the tag name and remove shared client boilerplate from
-    # https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/refs/tags/v2.8.0/pkg/codegen/templates/client.tmpl
+    # Rendered from the pinned oapi-codegen upstream template and
+    # patches/client.tmpl.patch. Regenerate with:
+    # bash generator/scripts/render-templates.sh
     client.tmpl: ./generator/config/templates/client.tmpl
-    # client-with-responses.tmpl customized to prefix ClientWithResponsesInterface with the tag name and remove shared client boilerplate from
-    # https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/refs/tags/v2.8.0/pkg/codegen/templates/client-with-responses.tmpl
+    # Rendered from the pinned upstream client-with-responses.tmpl and
+    # patches/client-with-responses.tmpl.patch.
     client-with-responses.tmpl: ./generator/config/templates/client-with-responses.tmpl

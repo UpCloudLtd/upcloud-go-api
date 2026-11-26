@@ -12,7 +12,7 @@ mise run generate
 
 ## Testing
 
-Run `make test` from this directory with Go 1.25.0 or newer. Run `make check`
+Run `make test` from this directory with Go 1.26.11 or newer. Run `make check`
 for all local checks, including generator input-safety tests and lint
 (golangci-lint 2.10.1). See [test/README.md](test/README.md) for individual
 targets, generation safety, and API review guidance.
